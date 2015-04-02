@@ -124,6 +124,10 @@ trait CrudTableTrait
                 return $response;
             }
 
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
+                'section.' . $this->params('action') . '.' . $this->section
+            );
+
             return $this->redirect()->toRouteAjax(
                 null,
                 array($this->getIdentifierIndex() => $this->getIdentifier())

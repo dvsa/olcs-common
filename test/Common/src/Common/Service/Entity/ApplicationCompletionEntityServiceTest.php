@@ -1184,7 +1184,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
-            // Transport managers placeholder
+            // transport managers - Restriceted license type does not require any TMs
             'transport_managers_1' => array(
                 // Current section
                 'transport_managers',
@@ -1192,6 +1192,130 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 $initialStatus,
                 // Mocked application data
                 array(
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                    ],
+                    'transportManagers' => [],
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'trailersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // transport managers - Licence type SN does require at least one TM
+            'transport_managers_2' => array(
+                // Current section
+                'transport_managers',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ],
+                    'transportManagers' => [],
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'trailersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // transport managers - Licence type SI does require at least one TM
+            'transport_managers_3' => array(
+                // Current section
+                'transport_managers',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    ],
+                    'transportManagers' => [],
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'trailersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // transport managers - Validation passed for Licence type SN
+            'transport_managers_4' => array(
+                // Current section
+                'transport_managers',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ],
+                    'transportManagers' => [1,2,3],
                 ),
                 // Expected completion data
                 array(

@@ -1466,6 +1466,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
         $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
         $mockResponse = m::mock();
         $mockFlashMessenger = m::mock();
+        $mockFlashMessenger->shouldReceive('addSuccessMessage');
         $mockRequest = m::mock();
 
         $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
@@ -1481,6 +1482,9 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             ->shouldReceive('params')
             ->with('child_id')
             ->andReturn('123,321')
+            ->shouldReceive('params')
+            ->with('action')
+            ->andReturn('foo')
             ->shouldReceive('getLicenceId')
             ->andReturn(222)
             ->shouldReceive('postSave')
@@ -1530,6 +1534,11 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
         $bsm->setService('Lva\DeleteCompanySubsidiary', $mockBusinessService);
 
         $this->sm->setService('BusinessServiceManager', $bsm);
+        $mockFlashMessenger = m::mock();
+        $mockFlashMessenger->shouldReceive('addSuccessMessage');
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
 
         // Expectations
         $this->sut
@@ -1538,6 +1547,9 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             ->shouldReceive('params')
             ->with('child_id')
             ->andReturn('123,321')
+            ->shouldReceive('params')
+            ->with('action')
+            ->andReturn('delete')
             ->shouldReceive('getLicenceId')
             ->andReturn(222)
             ->shouldReceive('postSave')

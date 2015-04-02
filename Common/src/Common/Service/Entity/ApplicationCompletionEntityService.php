@@ -359,6 +359,19 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     protected function getTransportManagersStatus($applicationData)
     {
+        $requiredTransportManager = [
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        ];
+
+        // if licence type requires at least on Transport Manager
+        if (in_array($applicationData['licenceType']['id'], $requiredTransportManager)) {
+            // if no Transport Managers
+            if (count($applicationData['transportManagers']) === 0) {
+                return self::STATUS_INCOMPLETE;
+            }
+        }
+
         return self::STATUS_COMPLETE;
     }
 
