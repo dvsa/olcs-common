@@ -87,6 +87,7 @@ return array(
     'application-form-owners-header-directors' => 'Directors',
     'application-form-owners-header-partners' => 'Partners',
     'application-form-owners-header-persons' => 'Persons responsible for your organisation',
+    'application-grant-error-enforcement-area' => 'You must set the enforcement area before granting the application',
     'application-grant-error-fees' => 'You must process the application fees before granting this application',
     'application-grant-error-sections' => 'You must complete these sections before granting this application: %s',
     'application-grant-error-tracking' => 'You must complete the tracking section before granting the application',
