@@ -77,7 +77,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'status',
             'interimStatus',
             'licenceType',
-            'goodsOrPsv'
+            'goodsOrPsv',
+            'licence',
         )
     );
 
