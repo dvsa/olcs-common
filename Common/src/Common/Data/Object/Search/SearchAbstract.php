@@ -105,11 +105,18 @@ abstract class SearchAbstract
     }
 
     /**
+     *
+     * @param array $queryParams
      * @return array
      */
-    public function getNavigation()
+    public function getNavigation(array $queryParams = [])
     {
-        return ['label' => $this->getTitle(), 'route' => 'search', 'params' => ['index' => $this->getKey()]];
+        return [
+            'label' => $this->getTitle(),
+            'route' => 'search',
+            'params' => ['index' => $this->getKey()],
+            'query' => $queryParams
+        ];
     }
 
     /**
