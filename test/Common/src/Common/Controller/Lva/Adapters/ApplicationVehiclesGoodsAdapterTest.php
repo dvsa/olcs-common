@@ -79,4 +79,152 @@ class ApplicationVehiclesGoodsAdapterTest extends MockeryTestCase
 
         $this->assertEquals($expectedData, $this->sut->getFormData($id));
     }
+
+    /**
+     * @dataProvider providerFormatFilters
+     */
+    public function testFormatFilters($query, $expected)
+    {
+        $this->assertEquals($expected, $this->sut->formatFilters($query));
+    }
+
+    public function testGetFilteredVehiclesData()
+    {
+        $id = 111;
+        $query = [];
+        $filters = [
+            'page' => 1,
+            'limit' => 10,
+            'removalDate' => 'NULL'
+        ];
+
+        $mockLicenceVehicle = m::mock();
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicle);
+
+        $mockLicenceVehicle->shouldReceive('getVehiclesDataForApplication')
+            ->with(111, $filters)
+            ->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->getFilteredVehiclesData($id, $query));
+    }
+
+    public function providerFormatFilters()
+    {
+        return [
+            'Defaults' => [
+                [],
+                [
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Pagination' => [
+                [
+                    'page' => 2,
+                    'limit' => 25
+                ],
+                [
+                    'page' => 2,
+                    'limit' => 25,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Vrm all' => [
+                [
+                    'vrm' => 'All'
+                ],
+                [
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Vrm' => [
+                [
+                    'vrm' => 'A'
+                ],
+                [
+                    'vrm' => '~A%',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Specified all' => [
+                [
+                    'specified' => 'All'
+                ],
+                [
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Specified Y' => [
+                [
+                    'specified' => 'Y'
+                ],
+                [
+                    'specifiedDate' => 'NOT NULL',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Specified N' => [
+                [
+                    'specified' => 'N'
+                ],
+                [
+                    'specifiedDate' => 'NULL',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Include removed' => [
+                [
+                    'includeRemoved' => '1'
+                ],
+                [
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NOT NULL'
+                ]
+            ],
+            'Disc all' => [
+                [
+                    'disc' => 'All',
+                ],
+                [
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Disc Y' => [
+                [
+                    'disc' => 'Y',
+                ],
+                [
+                    'disc' => 'Y',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Disc N' => [
+                [
+                    'disc' => 'N',
+                ],
+                [
+                    'disc' => 'N',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+        ];
+    }
 }
