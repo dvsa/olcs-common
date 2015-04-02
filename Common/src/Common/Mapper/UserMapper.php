@@ -370,11 +370,16 @@ class UserMapper extends GenericMapper
      */
     private function determineUserType($existingData)
     {
-        if (isset($existingData['transportManager'])) {
-            return 'transport-manager';
-        }
-        if (isset($existingData['localAuthority'])) {
+        if (isset($existingData['team'])) {
+            return 'internal';
+        } else if (isset($existingData['localAuthority'])) {
             return 'local-authority';
+        } else if (isset($existingData['transportManager'])) {
+            return 'transport-manager';
+        } else if (isset($existingData['partnerContactDetails'])) {
+            return 'partner';
+        } else {
+            return 'self-service';
         }
     }
 }
