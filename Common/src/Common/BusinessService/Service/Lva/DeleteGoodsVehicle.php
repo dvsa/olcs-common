@@ -11,15 +11,21 @@ use Common\BusinessService\BusinessServiceInterface;
 use Common\BusinessService\Response;
 use Common\BusinessService\BusinessServiceAwareInterface;
 use Common\BusinessService\BusinessServiceAwareTrait;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Delete Goods Vehicle
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DeleteGoodsVehicle implements BusinessServiceInterface, BusinessServiceAwareInterface
+class DeleteGoodsVehicle implements
+    BusinessServiceInterface,
+    BusinessServiceAwareInterface,
+    ServiceLocatorAwareInterface
 {
-    use BusinessServiceAwareTrait;
+    use BusinessServiceAwareTrait,
+        ServiceLocatorAwareTrait;
 
     /**
      * Processes the data by passing it through a number of business rules and then persisting it

@@ -41,7 +41,7 @@ class ReprintDisc implements BusinessServiceInterface, BusinessServiceAwareInter
                 return $response;
             }
 
-            $requestDiscService->process(['licenceVehicle' => $id, 'isCopy' => 'Y']);
+            $response = $requestDiscService->process(['licenceVehicle' => $id, 'isCopy' => 'Y']);
 
             if (!$response->isOk()) {
                 return $response;

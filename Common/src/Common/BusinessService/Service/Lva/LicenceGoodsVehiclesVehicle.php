@@ -33,10 +33,6 @@ class LicenceGoodsVehiclesVehicle extends ApplicationGoodsVehiclesVehicle implem
     {
         $response = parent::process($params);
 
-        if (!$response->isOk()) {
-            return $response;
-        }
-
         $data = $response->getData();
         $licenceVehicleId = $data['licenceVehicleId'];
 
