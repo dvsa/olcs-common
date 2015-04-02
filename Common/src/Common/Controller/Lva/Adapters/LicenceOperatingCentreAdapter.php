@@ -33,17 +33,6 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     }
 
     /**
-     * Get total authorisations for licence
-     *
-     * @param int $id
-     * @return array
-     */
-    protected function getTotalAuthorisationsForLicence($id)
-    {
-        return $this->getLvaEntityService()->getTotalAuths($id);
-    }
-
-    /**
      * Alter the form
      *
      * @param \Zend\Form\Form $form
