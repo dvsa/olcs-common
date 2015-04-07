@@ -170,7 +170,17 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             'task' => $taskId
         );
 
-        $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
+        $result = $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
+
+        $this->getServiceLocator()->get('Processing\Fee')
+            ->generateDocument(
+                $feeTypeName,
+                [
+                    'fee' => $result['id'],
+                    'application' => $applicationId,
+                    'licence' => $licenceId
+                ]
+            );
     }
 
     /**
