@@ -120,4 +120,71 @@ class DocumentGenerationHelperServiceTest extends MockeryTestCase
 
         $helper->uploadGeneratedContent('foo', 'docs', 'My File');
     }
+
+    public function testGenerateAndStore()
+    {
+        /**
+         * Mocking the SUT here is okay because this method is just a wrapper for
+         * other public methods which are tested individually
+         */
+        $helper = m::mock('\Common\Service\Helper\DocumentGenerationHelperService')
+            ->makePartial();
+
+        $helper->shouldReceive('addTemplatePrefix')
+            ->with([], 'template')
+            ->andReturn('prefix-template')
+            ->shouldReceive('generateFromTemplate')
+            ->with('prefix-template', [], [])
+            ->andReturn('content')
+            ->shouldReceive('uploadGeneratedContent')
+            ->with('content', 'documents', 'description')
+            ->andReturn('result');
+
+        $this->assertEquals('result', $helper->generateAndStore('template', 'description'));
+    }
+
+    public function testAddTemplatePrefixWithNoMatchingKey()
+    {
+        $helper = new DocumentGenerationHelperService();
+
+        $this->assertEquals('template', $helper->addTemplatePrefix([], 'template'));
+    }
+
+    /**
+     * @dataProvider templatePrefixProvider
+     */
+    public function testAddTemplatePrefixWithMatchingKey($niFlag, $prefix)
+    {
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Entity\Licence')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getOverview')
+                ->with(123)
+                ->andReturn(
+                    [
+                        'niFlag' => $niFlag
+                    ]
+                )
+                ->getMock()
+            )
+            ->getMock();
+
+        $helper = new DocumentGenerationHelperService();
+        $helper->setServiceLocator($sm);
+
+        $this->assertEquals(
+            $prefix . '/template',
+            $helper->addTemplatePrefix(['licence' => 123], 'template')
+        );
+    }
+
+    public function templatePrefixProvider()
+    {
+        return [
+            ['N', 'GB'],
+            ['Y', 'NI']
+        ];
+    }
 }

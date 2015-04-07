@@ -78,13 +78,9 @@ class DocumentGenerationHelperService extends AbstractHelperService
     {
         $template = $this->addTemplatePrefix($queryData, $template);
 
-        $content = $this->getServiceLocator()
-            ->get('Helper\DocumentGeneration')
-            ->generateFromTemplate($template, $queryData, $knownValues);
+        $content = $this->generateFromTemplate($template, $queryData, $knownValues);
 
-        return $this->getServiceLocator()
-            ->get('Helper\DocumentGeneration')
-            ->uploadGeneratedContent($content, 'documents', $description);
+        return $this->uploadGeneratedContent($content, 'documents', $description);
     }
 
     public function addTemplatePrefix($queryData, $template)
