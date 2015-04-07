@@ -14,6 +14,7 @@ use Common\BusinessService\BusinessServiceAwareInterface;
 use Common\BusinessService\BusinessServiceAwareTrait;
 use Common\BusinessService\Response;
 use Common\Service\Entity\TransportManagerEntityService;
+use Common\Service\Entity\TransportManagerApplicationEntityService;
 
 /**
  * Transport Manager Application
@@ -58,9 +59,19 @@ class TransportManagerApplication implements
             }
 
             $user['transportManager'] = $response->getData();
+
+            $userData = [
+                'id' => $user['id'],
+                'version' => $user['version'],
+                'transportManager' => $user['transportManager']['id']
+            ];
+
+            // Update the user record, so we can link them to the transport manager record
+            $this->getServiceLocator()->get('Entity\User')->save($userData);
         }
 
         $tmaData = [
+            'tmApplicationStatus' => TransportManagerApplicationEntityService::STATUS_INCOMPLETE,
             'action' => 'A',
             'application' => $applicationId,
             'transportManager' => $user['transportManager']['id']

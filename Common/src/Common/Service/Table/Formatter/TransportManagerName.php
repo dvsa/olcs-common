@@ -21,7 +21,7 @@ class TransportManagerName extends Name implements FormatterInterface
         TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE => 'awaiting-signature',
         TransportManagerApplicationEntityService::STATUS_TM_SIGNED => 'tm-signed',
         TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED => 'operator-signed',
-        TransportManagerApplicationEntityService::STATUS_POSTAL_APPLCIATION => 'postal-application',
+        TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION => 'postal-application',
     ];
 
     protected static $statusColors = [
@@ -29,7 +29,7 @@ class TransportManagerName extends Name implements FormatterInterface
         TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE => 'orange',
         TransportManagerApplicationEntityService::STATUS_TM_SIGNED => 'orange',
         TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED => 'green',
-        TransportManagerApplicationEntityService::STATUS_POSTAL_APPLCIATION => 'green',
+        TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION => 'green',
     ];
 
     public static function format($data, $column = array(), $sm = null)

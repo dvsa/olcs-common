@@ -150,6 +150,9 @@ abstract class AbstractTransportManagersController extends AbstractController im
                 ->get('Lva\SendTransportManagerApplication')
                 ->process($params);
 
+            $this->getServiceLocator()->get('Helper\FlashMessenger')
+                ->addSuccessMessage('lva-tm-sent-success');
+
             return $this->redirect()->toRouteAjax(
                 null,
                 [
@@ -166,7 +169,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     protected function getTmDetailsForm($email)
     {
-        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\AddTransportManagerDetails');
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('Lva\AddTransportManagerDetails', $this->getRequest());
 
         $form->get('data')->get('guidance')->setTokens([$email]);
 
@@ -175,7 +179,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     protected function getAddForm()
     {
-        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\AddTransportManager');
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('Lva\AddTransportManager', $this->getRequest());
 
         $orgId = $this->getCurrentOrganisationId();
 
