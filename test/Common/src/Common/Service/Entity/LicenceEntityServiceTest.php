@@ -944,6 +944,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                     ],
                 ],
                 'operatingCentres',
+                'changeOfEntitys'
             ],
         ];
 
