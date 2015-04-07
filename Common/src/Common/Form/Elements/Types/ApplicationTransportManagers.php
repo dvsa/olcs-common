@@ -31,16 +31,16 @@ class ApplicationTransportManagers extends Fieldset
     {
         parent::__construct($name, $options);
 
-        $applicationSearch = new Text('application');
-        $applicationSearch->setAttributes(
+        $application = new Text('application');
+        $application->setAttributes(
             array(
                 'class' => 'short js-input',
                 'data-container-class' => 'inline'
             )
         );
-        $applicationSearch->setOption('remove_if_readonly', true);
+        $application->setOption('remove_if_readonly', true);
 
-        $this->add($applicationSearch);
+        $this->add($application);
 
         $searchButton = new Button('search', array('label' => 'Find application'));
         $searchButton->setAttributes(
@@ -53,16 +53,6 @@ class ApplicationTransportManagers extends Fieldset
         $searchButton->setValue('search');
 
         $this->add($searchButton);
-
-        $transportManager = new Select('transportManager', array('label' => '', 'empty_option' => 'Please select'));
-        $transportManager->setAttributes(
-            array(
-                'data-container-class' => 'transportManager__select'
-            )
-        );
-
-        $this->add($transportManager);
-
     }
 
     public function setMessages($messages)

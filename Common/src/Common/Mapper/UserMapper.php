@@ -309,6 +309,10 @@ class UserMapper extends GenericMapper
         $formData['userType']['userType'] = $this->determineUserType($existingData);
         $formData['userType']['team'] = $existingData['team'];
 
+        if (isset($existingData['transportManager']['id'])) {
+            $formData['userType']['transportManager'] = $existingData['transportManager']['id'];
+        }
+
         $formData['userType']['roles'] = [];
 
         if (isset($existingData['userRoles'])) {
@@ -316,8 +320,6 @@ class UserMapper extends GenericMapper
                 $formData['userType']['roles'][] = $userRole['role']['id'];
             }
         }
-
-        $formData['userType']['transportManager'] = $existingData['transportManager'];
 
         // set up contact data
         $formData['userPersonal']['forename'] = $existingData['contactDetails']['person']['forename'];
@@ -370,9 +372,7 @@ class UserMapper extends GenericMapper
      */
     private function determineUserType($existingData)
     {
-        if (isset($existingData['team'])) {
-            return 'internal';
-        } else if (isset($existingData['localAuthority'])) {
+        if (isset($existingData['localAuthority'])) {
             return 'local-authority';
         } else if (isset($existingData['transportManager'])) {
             return 'transport-manager';
