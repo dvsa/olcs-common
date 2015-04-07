@@ -2,12 +2,14 @@
 
 namespace Common\Service\Document\Bookmark;
 
+use Common\Service\Document\Bookmark\Base\DynamicBookmark;
+
 /**
  * Fee request grant number bookmark
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class FeeReqGrantNumber extends SingleValueAbstract
+class FeeReqGrantNumber extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
