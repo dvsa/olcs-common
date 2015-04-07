@@ -66,4 +66,28 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
 
         return $data['Results'];
     }
+
+    /**
+     * Get all OC for given licence for inspection request listbox
+     * 
+     * @param int $licenceId
+     * @return array
+     */
+    public function getAllForInspectionRequest($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+        ];
+        $bundle = [
+            'children' => [
+                'operatingCentre' => [
+                    'children' => [
+                        'address'
+                    ]
+                ],
+                'licence'
+            ]
+        ];
+        return $this->getAll($query, $bundle);
+    }
 }

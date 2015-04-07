@@ -310,6 +310,12 @@ class LicenceEntityService extends AbstractLvaEntityService
         ]
     ];
 
+    protected $enforcementAreaDataBundle = array(
+        'children' => array(
+            'enforcementArea'
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -719,5 +725,16 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function getConditionsAndUndertakings($id)
     {
         return $this->get($id, $this->conditionsUndertakingsBundle);
+    }
+
+    /**
+     * Get enforcement area
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getEnforcementArea($id)
+    {
+        return $this->get($id, $this->enforcementAreaDataBundle);
     }
 }
