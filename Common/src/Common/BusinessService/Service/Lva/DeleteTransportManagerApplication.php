@@ -8,8 +8,6 @@
 namespace Common\BusinessService\Service\Lva;
 
 use Common\BusinessService\BusinessServiceInterface;
-use Common\BusinessService\BusinessServiceAwareInterface;
-use Common\BusinessService\BusinessServiceAwareTrait;
 use Common\BusinessService\Response;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -19,7 +17,9 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class DeleteTransportManagerApplication implements ServiceLocatorAwareInterface
+class DeleteTransportManagerApplication implements
+    ServiceLocatorAwareInterface,
+    BusinessServiceInterface
 {
     use ServiceLocatorAwareTrait;
 
