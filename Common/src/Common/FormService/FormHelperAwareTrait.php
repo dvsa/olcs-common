@@ -23,6 +23,9 @@ trait FormHelperAwareTrait
         $this->formHelper = $formHelper;
     }
 
+    /**
+     * @return \Common\Service\Helper\FormHelperService
+     */
     public function getFormHelper()
     {
         return $this->formHelper;

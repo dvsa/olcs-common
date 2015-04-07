@@ -30,23 +30,6 @@ class LicenceVehiclesGoodsAdapterTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
     }
 
-    public function testGetVehiclesData()
-    {
-        $mockLicenceEntity = m::mock();
-        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
-
-        $mockLicenceEntity->shouldReceive('getVehiclesData')
-            ->with(3)
-            ->andReturn('RESPONSE');
-
-        $this->assertEquals('RESPONSE', $this->sut->getVehiclesData(3));
-    }
-
-    public function testSave()
-    {
-        $this->assertNull($this->sut->save([], 1));
-    }
-
     public function testGetFormData()
     {
         $id = 3;
@@ -54,143 +37,30 @@ class LicenceVehiclesGoodsAdapterTest extends MockeryTestCase
         $this->assertEquals([], $this->sut->getFormData($id));
     }
 
-    public function testShowFilters()
+    public function testGetFilteredVehiclesData()
     {
-        $this->assertTrue($this->sut->showFilters());
-    }
-
-    public function testGetFilterForm()
-    {
-        $form = m::mock();
-
-        $mockApplicationVehiclesGoodsAdapter = m::mock();
-        $this->sm->setService('ApplicationVehiclesGoodsAdapter', $mockApplicationVehiclesGoodsAdapter);
-
-        $mockApplicationVehiclesGoodsAdapter->shouldReceive('getFilterForm')
-            ->andReturn($form);
-
-        $this->sm->setService(
-            'Helper\Form',
-            m::mock()
-            ->shouldReceive('remove')
-            ->with($form, 'specified')
-            ->getMock()
-        );
-
-        $this->assertEquals($form, $this->sut->getFilterForm());
-    }
-
-    public function testGetFilters()
-    {
-        $form = m::mock();
-
-        $mockApplicationVehiclesGoodsAdapter = m::mock();
-        $this->sm->setService('ApplicationVehiclesGoodsAdapter', $mockApplicationVehiclesGoodsAdapter);
-
-        $mockApplicationVehiclesGoodsAdapter->shouldReceive('getFilters')
-            ->with(['foo' => 'bar'])
-            ->andReturn(['foo' => 'bar']);
-
-        $expected = [
-            'foo' => 'bar',
-            'specified' => 'Y'
+        $id = 111;
+        $query = [];
+        $filters = [
+            'page' => 1,
+            'limit' => 10,
+            'removalDate' => 'NULL'
         ];
 
-        $this->assertEquals($expected, $this->sut->getFilters(['foo' => 'bar']));
-    }
+        $mockAppAdapter = m::mock();
+        $this->sm->setService('ApplicationVehiclesGoodsAdapter', $mockAppAdapter);
 
-    /**
-     * Disable maybeFormatRemovedAndSpecifiedDates method
-     */
-    public function testMaybeFormatRemovedAndSpecifiedDates()
-    {
-        $licenceVehicle = [
-            'removalDate' => [
-                'month' => 1,
-                'day' => 2,
-                'year' => 2014
-            ],
-            'specifiedDate' => [
-                'month' => 3,
-                'day' => 4,
-                'year' => 2015
-            ]
-        ];
-        $this->assertEquals(
-            ['removalDate' => '2014-1-2', 'specifiedDate' => '2015-3-4'],
-            $this->sut->maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
-        );
-    }
+        $mockLicenceVehicle = m::mock();
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicle);
 
-    /**
-     * Disable maybeFormatRemovedAndSpecifiedDates method with wrong dates
-     */
-    public function testMaybeFormatRemovedAndSpecifiedDatesWrong()
-    {
-        $licenceVehicle = [
-            'removalDate' => [
-                'month' => 2,
-                'day' => 30,
-                'year' => 2014
-            ],
-            'specifiedDate' => [
-                'month' => 2,
-                'day' => 30,
-                'year' => 2015
-            ]
-        ];
-        $this->sm->setService(
-            'Helper\Date',
-            m::mock()
-            ->shouldReceive('getDate')
-            ->with('Y-m-d')
-            ->andReturn('2015-01-01')
-            ->getMock()
-        );
-        $this->assertEquals(
-            ['specifiedDate' => '2015-01-01'],
-            $this->sut->maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
-        );
-    }
+        $mockAppAdapter->shouldReceive('formatFilters')
+            ->with($query)
+            ->andReturn($filters);
 
-    /**
-     * Disable maybeDisableRemovedAndSpecifiedDates method
-     */
-    public function testMaybeDisableRemovedAndSpecifiedDates()
-    {
-        $this->assertEquals(null, $this->sut->maybeDisableRemovedAndSpecifiedDates('form', 'formHelper'));
-    }
+        $mockLicenceVehicle->shouldReceive('getVehiclesDataForLicence')
+            ->with(111, $filters)
+            ->andReturn('RESPONSE');
 
-    /**
-     * Disable maybeUnsetSpecifiedDate method
-     */
-    public function testMaybeUnsetSpecifiedDate()
-    {
-        $this->assertEquals('data', $this->sut->maybeUnsetSpecifiedDate('data'));
-    }
-
-    /**
-     * Test maybeRemoveSpecifiedDateEmptyOption method
-     */
-    public function testMaybeRemoveSpecifiedDateEmptyOption()
-    {
-        $mockForm = m::mock()
-            ->shouldReceive('get')
-            ->with('licence-vehicle')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('get')
-                ->with('specifiedDate')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('setShouldCreateEmptyOption')
-                    ->with(false)
-                    ->getMock()
-                )
-                ->getMock()
-            )
-            ->getMock();
-
-        $this->assertEquals($mockForm, $this->sut->maybeRemoveSpecifiedDateEmptyOption($mockForm, 'edit'));
+        $this->assertEquals('RESPONSE', $this->sut->getFilteredVehiclesData($id, $query));
     }
 }

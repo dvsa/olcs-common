@@ -7,8 +7,6 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Controller\Lva\Interfaces\VehiclesAdapterInterface;
-
 /**
  * Variation Vehicles Psv Adapter
  *
@@ -27,19 +25,6 @@ class VariationVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
     public function getVehiclesData($id)
     {
         return $this->getServiceLocator()->get('ApplicationVehiclesPsvAdapter')->getVehiclesData($id);
-    }
-
-    /**
-     * Disable removed and specified dates if needed
-     *
-     * @param Zend\Form\Form $form
-     * @param Common\Service\Helper\FormHelper
-     */
-    public function maybeDisableRemovedAndSpecifiedDates($form, $formHelper)
-    {
-        $dataFieldset = $form->get('licence-vehicle');
-        $formHelper->disableDateElement($dataFieldset->get('specifiedDate'));
-        $formHelper->disableDateElement($dataFieldset->get('removalDate'));
     }
 
     /**
@@ -69,17 +54,5 @@ class VariationVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
     {
         return $this->getServiceLocator()->get('ApplicationVehiclesPsvAdapter')
             ->warnIfAuthorityExceeded($applicationId, $types, $redirecting);
-    }
-
-    /**
-     * Don't create an empty option in edit mode for specified date
-     *
-     * @param Zend\Form\Form $form
-     * @param string $mode
-     * @return Zend\Form\Form
-     */
-    public function maybeRemoveSpecifiedDateEmptyOption($form, $mode)
-    {
-        return $form;
     }
 }

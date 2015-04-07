@@ -7,8 +7,7 @@
  */
 namespace CommonTest\BusinessService\Service\Lva;
 
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use PHPUnit_Framework_TestCase;
 use Common\BusinessService\Service\Lva\AddressesChangeTask;
 use Common\BusinessService\Response;
 
@@ -17,7 +16,7 @@ use Common\BusinessService\Response;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class AddressesChangeTaskTest extends MockeryTestCase
+class AddressesChangeTaskTest extends PHPUnit_Framework_TestCase
 {
     protected $sut;
 

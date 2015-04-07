@@ -7,14 +7,14 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Controller\Lva\Interfaces\VehiclesAdapterInterface;
+use Common\Controller\Lva\Interfaces\VehiclesPsvAdapterInterface;
 
 /**
  * Abstract Vehicles Psv Adapter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-abstract class AbstractVehiclesPsvAdapter extends AbstractAdapter implements VehiclesAdapterInterface
+abstract class AbstractVehiclesPsvAdapter extends AbstractAdapter implements VehiclesPsvAdapterInterface
 {
     /**
      * Get vehicles data for the given resource
