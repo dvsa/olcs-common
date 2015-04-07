@@ -406,6 +406,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         // Data
         $childId = '1,2,3';
 
+        $mockFlashMessenger = m::mock();
+        $mockFlashMessenger->shouldReceive('addSuccessMessage');
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
         // Mock
         $request = m::mock();
         $mockEntityService = m::mock();
@@ -417,6 +421,9 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->shouldReceive('params')
             ->with('child_id')
             ->andReturn($childId)
+            ->shouldReceive('params')
+            ->with('action')
+            ->andReturn('delete')
             ->shouldReceive('postSave')
             ->with('condition')
             ->shouldReceive('getIdentifier')

@@ -14,6 +14,12 @@ namespace Common\Service\Entity;
  */
 class TransportManagerApplicationEntityService extends AbstractEntityService
 {
+    const STATUS_INCOMPLETE = 'tmap_st_incomplete';
+    const STATUS_AWAITING_SIGNATURE = 'tmap_st_awaiting_signature';
+    const STATUS_TM_SIGNED = 'tmap_st_tm_signed';
+    const STATUS_OPERATOR_SIGNED = 'tmap_st_operator_signed';
+    const STATUS_POSTAL_APPLCIATION = 'tmap_st_postal_application';
+
     /**
      * Define entity for default behaviour
      *
@@ -47,6 +53,21 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             'operatingCentres',
             'otherLicences'
         ]
+    ];
+
+    protected $homeContactDetailsBundle = [
+        'children' => [
+            'tmApplicationStatus',
+            'transportManager' => [
+                'children' => [
+                    'homeCd' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ],
+                ]
+            ]
+        ],
     ];
 
     public function getGrantDataForApplication($applicationId)
@@ -98,5 +119,35 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     {
         $query = ['application' => $applicationId];
         return $this->deleteList($query);
+    }
+
+    /**
+     * Delete transport manager application(s)
+     *
+     * @param mixed $transportManagerApplicationId either one int ID or an array of int D's
+     *
+     * @return void
+     */
+    public function delete($transportManagerApplicationId)
+    {
+        if (!is_array($transportManagerApplicationId)) {
+            $transportManagerApplicationId = array($transportManagerApplicationId);
+        }
+
+        $this->deleteListByIds(['id' => $transportManagerApplicationId]);
+    }
+
+    /**
+     * Get TM applications for an application
+     *
+     * @param int $applicationId Application ID
+     *
+     * @return array ['Count' => n. 'Results' => array(...)]
+     */
+    public function getByApplicationWithHomeContactDetails($applicationId)
+    {
+        $query = ['application' => $applicationId];
+
+        return $this->getAll($query, $this->homeContactDetailsBundle);
     }
 }
