@@ -15,5 +15,4 @@ namespace Common\Controller\Lva\Adapters;
 class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
     protected $lva = 'variation';
-    //protected $entityService = 'Entity\ApplicationOperatingCentre';
 }

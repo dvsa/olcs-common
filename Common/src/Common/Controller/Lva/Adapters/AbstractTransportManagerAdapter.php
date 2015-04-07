@@ -31,7 +31,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     /**
      * Get the table
      *
-     * @return Common\Service\Table\TableBuilder
+     * @return \Common\Service\Table\TableBuilder
      */
     public function getTable($template = 'lva-transport-manangers')
     {
@@ -39,12 +39,26 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     }
 
     /**
+     * Get data for the table
+     *
+     * @param int $lvaId The Licence, Variation or Application ID
+     *
+     * @return array
+     */
+    public function getTableData($lvaId)
+    {
+        return [];
+    }
+
+    /**
      * Is this licence required to have at least one Transport Manager
+     *
+     * @param int $lvaId The Licence, Variation or Application ID
      *
      * @return boolean
      */
-    public function mustHaveAtLeastOneTm()
+    public function mustHaveAtLeastOneTm($lvaId)
     {
-        return true;
+        return false;
     }
 }

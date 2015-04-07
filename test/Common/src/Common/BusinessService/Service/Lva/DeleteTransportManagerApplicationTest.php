@@ -30,7 +30,6 @@ class DeleteTransportManagerApplicationTest extends MockeryTestCase
         $this->bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
 
         $this->sut = new DeleteTransportManagerApplication();
-        $this->sut->setBusinessServiceManager($this->bsm);
         $this->sut->setServiceLocator($this->sm);
     }
 
@@ -39,7 +38,7 @@ class DeleteTransportManagerApplicationTest extends MockeryTestCase
         $params = ['foo' => 'bar'];
         $response = $this->sut->process($params);
 
-        $this->assertEquals(\Common\BusinessService\ResponseInterface::TYPE_FAILED, $response->getType());
+        $this->assertEquals(Response::TYPE_FAILED, $response->getType());
     }
 
     public function testProcessWithOneId()

@@ -19,7 +19,9 @@ interface TransportManagerAdapterInterface extends AdapterInterface
 {
     public function getTable();
 
+    public function getTableData($lvaId);
+
     public function getForm();
 
-    public function mustHaveAtLeastOneTm();
+    public function mustHaveAtLeastOneTm($lvaId);
 }

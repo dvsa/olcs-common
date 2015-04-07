@@ -55,6 +55,21 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
+    protected $homeContactDetailsBundle = [
+        'children' => [
+            'tmApplicationStatus',
+            'transportManager' => [
+                'children' => [
+                    'homeCd' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ],
+                ]
+            ]
+        ],
+    ];
+
     public function getGrantDataForApplication($applicationId)
     {
         return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
@@ -132,21 +147,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     public function getByApplicationWithHomeContactDetails($applicationId)
     {
         $query = ['application' => $applicationId];
-        $bundle = [
-            'children' => [
-                'tmApplicationStatus',
-                'transportManager' => [
-                    'children' => [
-                        'homeCd' => [
-                            'children' => [
-                                'person'
-                            ]
-                        ],
-                    ]
-                ]
-            ],
-        ];
 
-        return $this->getAll($query, $bundle);
+        return $this->getAll($query, $this->homeContactDetailsBundle);
     }
 }

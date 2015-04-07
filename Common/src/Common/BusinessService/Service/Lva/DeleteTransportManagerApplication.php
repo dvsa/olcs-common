@@ -19,13 +19,9 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class DeleteTransportManagerApplication implements
-    BusinessServiceInterface,
-    BusinessServiceAwareInterface,
-    ServiceLocatorAwareInterface
+class DeleteTransportManagerApplication implements ServiceLocatorAwareInterface
 {
-    use BusinessServiceAwareTrait,
-        ServiceLocatorAwareTrait;
+    use ServiceLocatorAwareTrait;
 
     /**
      * Delete one or multiple Transport Manager Applications

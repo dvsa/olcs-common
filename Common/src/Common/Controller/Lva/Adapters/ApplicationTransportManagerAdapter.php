@@ -17,18 +17,14 @@ use Common\Service\Entity\LicenceEntityService;
 class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
     /**
-     * Get Table
-     *
-     * @return \Common\Service\Table\TableBuilder
+     * Load data into the table
      */
-    public function getTable()
+    public function getTableData($applicationId)
     {
-        $table = parent::getTable();
-
         /* @var $service \Common\Service\Entity\TransportManagerApplicationEntityService */
         $service = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
 
-        $data = $service->getByApplicationWithHomeContactDetails($this->getApplicationId());
+        $data = $service->getByApplicationWithHomeContactDetails($applicationId);
 
         $tableData = [];
         foreach ($data['Results'] as $row) {
@@ -38,25 +34,26 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
                 'status' => $row['tmApplicationStatus'],
                 'email' => $row['transportManager']['homeCd']['emailAddress'],
                 'dob' => $row['transportManager']['homeCd']['person']['birthDate'],
+                'transportManager' => $row['transportManager'],
             ];
         }
 
-        $table->loadData($tableData);
-
-        return $table;
+        return $tableData;
     }
 
     /**
      * Must this licence type have at least one Transport Manager
      *
+     * @param int $applicationId Application ID
+     *
      * @return bool
      */
-    public function mustHaveAtLeastOneTm()
+    public function mustHaveAtLeastOneTm($applicationId)
     {
         /* @var $service \Common\Service\Entity\ApplicationEntityService */
         $service = $this->getServiceLocator()->get('Entity\Application');
 
-        $application = $service->getLicenceType($this->getApplicationId());
+        $application = $service->getLicenceType($applicationId);
 
         $mustHaveTypes = [
             LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
@@ -64,17 +61,5 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
         ];
 
         return in_array($application['licenceType']['id'], $mustHaveTypes);
-    }
-
-    /**
-     * Get the application ID
-     *
-     * @return int
-     */
-    private function getApplicationId()
-    {
-        $applicationId = (int) $this->controller->params('application');
-
-        return $applicationId;
     }
 }

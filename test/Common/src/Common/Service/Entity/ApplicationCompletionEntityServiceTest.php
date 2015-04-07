@@ -1184,7 +1184,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
-            // transport managers - Restriceted license type does not require any TMs
+            // transport managers - Restricted license type does not require any TMs
             'transport_managers_1' => array(
                 // Current section
                 'transport_managers',

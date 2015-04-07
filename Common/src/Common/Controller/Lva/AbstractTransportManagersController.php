@@ -29,6 +29,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         /* @var $form \Zend\Form\Form */
         $form = $this->getAdapter()->getForm();
         $table = $this->getAdapter()->getTable();
+        $table->loadData($this->getAdapter()->getTableData($this->getIdentifier()));
 
         $form->get('table')->get('table')->setTable($table);
 
@@ -39,7 +40,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             $form->setData($data);
 
             // if is it not required to have at least one TM, then remove the validator
-            if (!$this->getAdapter()->mustHaveAtLeastOneTm()) {
+            if (!$this->getAdapter()->mustHaveAtLeastOneTm($this->getIdentifier())) {
                 $form->getInputFilter()->remove('table');
             }
 
