@@ -41,8 +41,10 @@ class FeeDueDate extends DynamicBookmark implements DateHelperAwareInterface
         $target = $this->dateHelper->calculateDate(
             $this->data['invoicedDate'],
             self::TARGET_DAYS,
-            true,   // skip weekends
-            true    // skip public holidays
+            // ignore weekends
+            true,
+            // ignore public holidays
+            true
         );
 
         return Date::format([$target]);

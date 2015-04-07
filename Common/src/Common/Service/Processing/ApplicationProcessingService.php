@@ -651,7 +651,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         // @NOTE: as with variations, order matters here because we diff total auth
         // creating PSV discs
-        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id); 
+        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id);
         $this->copyApplicationDataToLicence($id, $licenceId);
 
         $dataForValidating = $this->getApplicationDataForValidating($id);
