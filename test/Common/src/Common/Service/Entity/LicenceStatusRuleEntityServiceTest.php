@@ -39,6 +39,43 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals('RESPONSE', $this->sut->createStatusForLicence($licenceId));
     }
 
+    public function testUpdateStatusForLicence()
+    {
+        $licenceStatusId = 99;
+
+        $this->expectOneRestCall(
+            'LicenceStatusRule',
+            'PUT',
+            array(
+                'licence' => $licenceStatusId,
+                'licenceStatus' => null,
+                'startDate' => null,
+                'endDate' => null,
+                'startProcessedDate' => null,
+                'endProcessedDate' => null,
+                'id' => 99
+
+            )
+        )->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals(
+            'RESPONSE',
+            $this->sut->updateStatusForLicence(
+                $licenceStatusId,
+                array(
+                    'data' => array(
+                        'licence' => $licenceStatusId,
+                        'licenceStatus' => null,
+                        'startDate' => null,
+                        'endDate' => null,
+                        'startProcessedDate' => null,
+                        'endProcessedDate' => null,
+                    )
+                )
+            )
+        );
+    }
+
     public function testGetStatusesForLicence()
     {
         $licenceId = 99;
@@ -63,6 +100,26 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
             )
         );
     }
+
+    public function testGetStatusForLicence()
+    {
+        $licenceId = 99;
+
+        $this->expectOneRestCall(
+            'LicenceStatusRule',
+            'GET',
+            array(
+                'id' => $licenceId,
+                'licenceStatus' => array()
+            )
+        )->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals(
+            'RESPONSE',
+            $this->sut->getStatusForLicence($licenceId)
+        );
+    }
+
 
     public function testRemoveStatusesForLicence()
     {
