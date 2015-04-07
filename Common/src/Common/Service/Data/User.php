@@ -73,7 +73,9 @@ class User extends Generic implements ServiceLocatorAwareInterface
             throw new ResourceNotFoundException('User not found');
         }
 
-        return $this->getDataMapper()->formatMyDetailsDataForForm($data);
+        $dataMapper = $this->getDataMapper();
+
+        return $dataMapper->formatMyDetailsDataForForm($data, $dataMapper->getMyDetailsFieldMap());
     }
 
     /**
@@ -86,27 +88,54 @@ class User extends Generic implements ServiceLocatorAwareInterface
      */
     public function save($data)
     {
-        if (isset($data['id'])) {
+        $existingData = $this->fetchOne($data['id'], $this->getBundle());
+
+        //check user exists exists
+        if (!isset($existingData['id'])) {
+            throw new ResourceNotFoundException('User not found');
+        }
+
+        $mapped = $this->getDataMapper()->saveMyDetailsFormMapper($existingData, $data);
+
+        $this->getContactDetailsService()->save($mapped['contact']);
+
+        //any new phone contacts need adding separately
+        foreach ($mapped['newPhoneContacts'] as $newPhoneContact) {
+            $this->getPhoneContactService()->save($newPhoneContact);
+        }
+
+        parent::save($mapped['user']);
+
+        return $data['id'];
+    }
+
+    /**
+     * Saves a user and role form
+     *
+     * @param array $data
+     * @return mixed
+     * @throws \Common\Exception\BadRequestException
+     * @throws \Common\Exception\ResourceNotFoundException
+     */
+    public function saveUserRole($data)
+    {
+        $existingData = [];
+        if (isset($data['id']) && !empty($data['id'])) {
             $existingData = $this->fetchOne($data['id'], $this->getBundle());
 
             //check user exists exists
             if (!isset($existingData['id'])) {
                 throw new ResourceNotFoundException('User not found');
             }
-
-            $mapped = $this->getDataMapper()->saveMyDetailsFormMapper($existingData, $data);
-
-            $this->getContactDetailsService()->save($mapped['contact']);
-
-            //any new phone contacts need adding separately
-            foreach ($mapped['newPhoneContacts'] as $newPhoneContact) {
-                $this->getPhoneContactService()->save($newPhoneContact);
-            }
-
-            parent::save($mapped['user']);
-
-            return $data['id'];
         }
+
+        $mapped = $this->getDataMapper()->formatSave($data, $existingData);
+        return parent::save($mapped);
+    }
+
+    public function formatDataForUserRoleForm($data)
+    {
+        return $this->getDataMapper()->formatLoad($data);
     }
 
     /**

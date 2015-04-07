@@ -86,9 +86,35 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
         return $this->getList($args);
     }
 
-    public function updateStatusesForLicence($licenceId = null, array $args = array())
+    /**
+     * Get a licence status change by its identifier.
+     *
+     * @param int $id The status id.
+     *
+     * @return array
+     */
+    public function getStatusForLicence($id)
     {
-        $args = $this->normaliseArguments($args);
+        return $this->getStatusesForLicence(
+            array(
+                'query' => array(
+                    'id' => $id
+                )
+            )
+        );
+    }
+
+    /**
+     * Update a specific status with new data.
+     *
+     * @param null $statusId The status id.
+     * @param array $args The data to update the status with.
+     *
+     * @return mixed
+     */
+    public function updateStatusForLicence($statusId = null, array $args = array())
+    {
+        return $this->update($statusId, $args['data']);
     }
 
     /**
@@ -126,26 +152,6 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     private function normaliseQueryArguments(array $args = array())
     {
         return array_merge($this->argumentDefaults['query'], $args['query']);
-    }
-
-    /**
-     * @param int $licenceId
-     * @return array|null
-     */
-    public function getPendingChangesForLicence($licenceId)
-    {
-        // defer to generic method
-        $data = $this->getStatusesForLicence(
-            array(
-                'query' => array(
-                    'licence' => $licenceId,
-                    'deletedDate' => 'NULL',
-                    'endProcessedDate' => 'NULL',
-                ),
-            )
-        );
-
-        return $data['Count']>0 ? $data['Results'] : null;
     }
 
     /**

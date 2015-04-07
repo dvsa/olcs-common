@@ -18,12 +18,12 @@ return array(
                 'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
+        /* Temp commented out until we alter the filtering mechanism
         'paginate' => array(
             'limit' => array(
-                'default' => 10,
                 'options' => array(10, 25, 50)
             )
-        )
+        )*/
     ),
     'columns' => array(
         array(

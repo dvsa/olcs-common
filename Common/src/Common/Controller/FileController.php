@@ -27,7 +27,7 @@ class FileController extends ZendAbstractActionController
         return $fileUploader->download(
             $this->params()->fromRoute('file'),
             $this->params()->fromRoute('name'),
-            null,
+            $this->params()->fromRoute('namespace'),
             $download
         );
     }

@@ -233,7 +233,10 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
      */
     public function updateFilterValuesFromForm()
     {
-        $post = $this->getRequest()->getPost();
+        $post = array_merge(
+            (array)$this->getRequest()->getPost(),
+            (array)$this->getRequest()->getQuery()
+        );
 
         foreach ($this->getFilters() as $filterClass) {
 

@@ -1287,58 +1287,6 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * Test renderFooter without enough results
-     */
-    public function testRenderFooterWithoutEnoughResults()
-    {
-        $settings = array(
-            'paginate' => array(
-                'limit' => array(
-                    'options' => array(10, 20, 30)
-                )
-            )
-        );
-
-        $table = new TableBuilder($this->getMockServiceLocator());
-
-        $table->setSettings($settings);
-
-        $table->setType(TableBuilder::TYPE_PAGINATE);
-
-        $table->setLimit(10);
-
-        $table->setTotal(1);
-
-        $this->assertEquals('', $table->renderFooter());
-    }
-
-    /**
-     * Test renderFooter With a custom limit
-     */
-    public function testRenderFooterWithCustomLimit()
-    {
-        $settings = array(
-            'paginate' => array(
-                'limit' => array(
-                    'options' => array(10, 20, 30)
-                )
-            )
-        );
-
-        $table = new TableBuilder($this->getMockServiceLocator());
-
-        $table->setSettings($settings);
-
-        $table->setType(TableBuilder::TYPE_PAGINATE);
-
-        $table->setLimit(7);
-
-        $table->setTotal(1);
-
-        $this->assertEquals('', $table->renderFooter());
-    }
-
-    /**
      * Test renderFooter
      */
     public function testRenderFooter()

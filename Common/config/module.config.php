@@ -14,7 +14,7 @@ return array(
             'getfile' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/file/:file/:name',
+                    'route' => '/file/:file[/:namespace]/:name',
                     'defaults' => array(
                         'controller' => 'Common\Controller\File',
                         'action' => 'download'
@@ -236,6 +236,7 @@ return array(
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider',
+
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
@@ -253,6 +254,7 @@ return array(
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
             'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
+            'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
             // Added in a true Zend Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
@@ -273,6 +275,9 @@ return array(
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
+            'Common\Service\Data\Role' => 'Common\Service\Data\Role',
+            'Common\Service\Data\Team' => 'Common\Service\Data\Team',
+            'Common\Service\Data\HintQuestion' => 'Common\Service\Data\HintQuestion',
         )
     ),
     'publications' => array(
@@ -338,6 +343,7 @@ return array(
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
+            'Common\Filter\Publication\PreviousUnpublishedBus',
             'Common\Filter\Publication\BusRegServiceDesignation',
             'Common\Filter\Publication\BusRegServiceTypes',
             'Common\Filter\Publication\BusRegText1',
@@ -352,6 +358,7 @@ return array(
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
+            'Common\Filter\Publication\PreviousUnpublishedBus',
             'Common\Filter\Publication\BusRegServiceDesignation',
             'Common\Filter\Publication\BusRegVarReason',
             'Common\Filter\Publication\BusRegText1',
@@ -366,6 +373,7 @@ return array(
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
+            'Common\Filter\Publication\PreviousUnpublishedBus',
             'Common\Filter\Publication\BusRegServiceDesignation',
             'Common\Filter\Publication\BusRegText1',
             'Common\Filter\Publication\BusRegText2',
@@ -538,8 +546,7 @@ return array(
     ],
     'cache' => [
         'adapter' => [
-            // @todo this is temporary as apc_cli is not currently enabled in environments
-            'name' => (PHP_SAPI === 'cli') ? 'memory' : 'apc',
+            'name' => 'apc',
         ]
     ],
     'zfcuser' => [
