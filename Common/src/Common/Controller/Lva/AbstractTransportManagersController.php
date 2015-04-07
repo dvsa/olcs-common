@@ -33,7 +33,6 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
-
         $request = $this->getRequest();
         if ($request->isPost()) {
 

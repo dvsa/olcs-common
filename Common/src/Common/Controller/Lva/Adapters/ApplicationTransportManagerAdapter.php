@@ -23,7 +23,6 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
     {
         /* @var $service \Common\Service\Entity\TransportManagerApplicationEntityService */
         $service = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
-
         $data = $service->getByApplicationWithHomeContactDetails($applicationId);
 
         $tableData = [];
@@ -52,7 +51,6 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
     {
         /* @var $service \Common\Service\Entity\ApplicationEntityService */
         $service = $this->getServiceLocator()->get('Entity\Application');
-
         $application = $service->getLicenceType($applicationId);
 
         $mustHaveTypes = [

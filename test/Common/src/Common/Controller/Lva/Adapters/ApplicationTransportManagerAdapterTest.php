@@ -30,7 +30,7 @@ class ApplicationTransportManagerAdapterTest extends MockeryTestCase
         $this->sut->setController($this->controller);
     }
 
-    public function testGetTable()
+    public function testGetTableData()
     {
         $mockTableService = m::mock();
         $this->sm->setService('Table', $mockTableService);
@@ -40,8 +40,6 @@ class ApplicationTransportManagerAdapterTest extends MockeryTestCase
 
         $mockTmaEntityService = m::mock('StdClass');
         $this->sm->setService('Entity\TransportManagerApplication', $mockTmaEntityService);
-
-        $this->controller->shouldReceive('params')->once()->with('application')->andReturn(44);
 
         $tmaData = [
             'Results' => [
@@ -66,22 +64,29 @@ class ApplicationTransportManagerAdapterTest extends MockeryTestCase
             ->with(44)
             ->andReturn($tmaData);
 
-        $mockTable->shouldReceive('loadData')->once()->with(
+        $expectedData = [
             [
-                [
-                    'id' => 333,
-                    'name' => [
-                        'name' => 'fred',
-                        'birthDate' => '2015-04-02'
-                    ],
-                    'status' => 'status',
-                    'email' => 'bob@example.com',
-                    'dob' => '2015-04-02',
-                ]
+                'id' => 333,
+                'name' => [
+                    'name' => 'fred',
+                    'birthDate' => '2015-04-02'
+                ],
+                'status' => 'status',
+                'email' => 'bob@example.com',
+                'dob' => '2015-04-02',
+                'transportManager' => [
+                    'homeCd' => [
+                        'person' => [
+                            'name' => 'fred',
+                            'birthDate' => '2015-04-02'
+                        ],
+                        'emailAddress' => 'bob@example.com',
+                    ]
+                ],
             ]
-        );
+        ];
 
-        $this->assertEquals($mockTable, $this->sut->getTable());
+        $this->assertEquals($expectedData, $this->sut->getTableData(44));
     }
 
     /**
@@ -92,12 +97,10 @@ class ApplicationTransportManagerAdapterTest extends MockeryTestCase
         $mockApplicationEntityService = m::mock();
         $this->sm->setService('Entity\Application', $mockApplicationEntityService);
 
-        $this->controller->shouldReceive('params')->once()->with('application')->andReturn(44);
-
         $applicationData['licenceType']['id'] = $licenceType;
         $mockApplicationEntityService->shouldReceive('getLicenceType')->once()->with(44)->andReturn($applicationData);
 
-        $this->assertEquals($expected, $this->sut->mustHaveAtLeastOneTm());
+        $this->assertEquals($expected, $this->sut->mustHaveAtLeastOneTm(44));
     }
 
     public function mustHaveAtLeastOneTmData()

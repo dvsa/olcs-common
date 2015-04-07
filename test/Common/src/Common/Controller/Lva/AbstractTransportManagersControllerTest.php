@@ -26,13 +26,24 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     protected function setupIndex()
     {
-        $mockForm = $this->createMockForm('Lva\TransportManagers');
+        $this->sut->shouldReceive('getIdentifier')->andReturn(121);
+
         $mockTable = m::mock('StdClass');
+        $mockTable->shouldReceive('loadData')->once()->with(['row1', 'row2']);
+        $mockTable->shouldReceive('getRows')->andReturn(['row1', 'row2']);
 
-        $mockForm->shouldReceive('get->get->setTable')->once()->with($mockTable);
+        $mockTableElement = m::mock('StdClass');
+        $mockTableElement->shouldReceive('setTable')->with($mockTable);
+        $mockRowElement = m::mock('StdClass');
+        $mockRowElement->shouldReceive('setValue')->with(2);
 
-        $this->adapter->shouldReceive('getForm')->andReturn($mockForm);
-        $this->adapter->shouldReceive('getTable')->andReturn($mockTable);
+        $mockForm = $this->createMockForm('Lva\TransportManagers');
+        $mockForm->shouldReceive('get->get')->once()->with('table')->andReturn($mockTableElement);
+        $mockForm->shouldReceive('get->get')->once()->with('rows')->andReturn($mockRowElement);
+
+        $this->adapter->shouldReceive('getForm')->once()->andReturn($mockForm);
+        $this->adapter->shouldReceive('getTable')->once()->andReturn($mockTable);
+        $this->adapter->shouldReceive('getTableData')->once()->with(121)->andReturn(['row1', 'row2']);
 
         $this->mockForm = $mockForm;
         $this->mockTable = $mockTable;

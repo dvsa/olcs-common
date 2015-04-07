@@ -7,8 +7,6 @@
  */
 namespace Common\Service\Table\Formatter;
 
-use Common\Service\Entity\TransportManagerApplicationEntityService;
-
 /**
  * TransportManagerName for Internal Formatter
  *
