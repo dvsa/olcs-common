@@ -93,7 +93,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         if ($user['id'] == $childId) {
 
             $params = [
-                'userId' => $user['id'],
+                'userId' => $childId,
                 'applicationId' => $this->getIdentifier()
             ];
 
@@ -141,7 +141,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             $formData = $form->getData();
 
             $params = [
-                'userId' => $user['id'],
+                'userId' => $childId,
                 'applicationId' => $this->getIdentifier(),
                 'dob' => $formData['data']['birthDate']
             ];
@@ -156,8 +156,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             return $this->redirect()->toRouteAjax(
                 null,
                 [
-                    'action' => 'details',
-                    'child_id' => $response->getData()['linkId']
+                    'action' => null
                 ],
                 [],
                 true

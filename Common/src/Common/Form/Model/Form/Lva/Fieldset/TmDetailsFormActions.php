@@ -18,7 +18,7 @@ class TmDetailsFormActions
     public $send = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--secondary large"})
+     * @Form\Attributes({"id":"cancel","type":"submit","class":"action--secondary large"})
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
