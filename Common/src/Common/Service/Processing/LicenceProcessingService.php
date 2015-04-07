@@ -27,19 +27,13 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
             ->get('Entity\Licence')
             ->getOverview($licenceId);
 
-        $prefix = $this->getPrefix($licence);
-
-        $template = $prefix . '/' . $this->getTemplateName($licence);
+        $template = $this->getTemplateName($licence);
 
         $description = $this->getDescription($licence);
 
-        $content = $this->getServiceLocator()
-            ->get('Helper\DocumentGeneration')
-            ->generateFromTemplate($template, ['licence' => $licenceId]);
-
         $storedFile = $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')
-            ->uploadGeneratedContent($content, 'documents', $description);
+            ->generateAndStore($template, $description, ['licence' => $licenceId]);
 
         $this->getServiceLocator()
             ->get('PrintScheduler')
@@ -67,33 +61,24 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
 
         $licenceId = $application['licence']['id'];
 
-        $prefix = $this->getPrefix($application);
-
-        switch ($application['isVariation']) {
-            case true:
-                $template = $prefix . '/' . 'GV_INT_DIRECTION_V1';
-                $description = "GV Interim Direction";
-                break;
-
-            case false:
-                $template = $prefix . '/' . 'GV_INT_LICENCE_V1';
-                $description = "GV Interim Licence";
-                break;
+        if ($application['isVariation']) {
+            $template = 'GV_INT_DIRECTION_V1';
+            $description = "GV Interim Direction";
+        } else {
+            $template = 'GV_INT_LICENCE_V1';
+            $description = "GV Interim Licence";
         }
 
-        $content = $this->getServiceLocator()
+        $storedFile = $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')
-            ->generateFromTemplate(
+            ->generateAndStore(
                 $template,
+                $description,
                 [
                     'application' => $applicationId,
                     'licence' => $licenceId
                 ]
             );
-
-        $storedFile = $this->getServiceLocator()
-            ->get('Helper\DocumentGeneration')
-            ->uploadGeneratedContent($content, 'documents', $description);
 
         $this->getServiceLocator()
             ->get('PrintScheduler')
@@ -113,11 +98,6 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
                 'isScan'        => false
             ]
         );
-    }
-
-    private function getPrefix(array $licence)
-    {
-        return $licence['niFlag'] === 'N' ? 'GB' : 'NI';
     }
 
     private function getTemplateName(array $licence)
