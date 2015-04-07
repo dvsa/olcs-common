@@ -155,4 +155,33 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
 
         $this->assertEquals('RESPONSE', $this->sut->deleteForApplication($applicationId));
     }
+
+    public function testDeleteWithOneId()
+    {
+        $this->expectOneRestCall('TransportManagerApplication', 'DELETE', ['id' => 412])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sut->delete(412);
+
+    }
+
+    public function testDeleteWithMultipleIds()
+    {
+        $this->expectedRestCallInOrder('TransportManagerApplication', 'DELETE', ['id' => 12])
+            ->will($this->returnValue('RESPONSE'));
+        $this->expectedRestCallInOrder('TransportManagerApplication', 'DELETE', ['id' => 64])
+            ->will($this->returnValue('RESPONSE'));
+        $this->expectedRestCallInOrder('TransportManagerApplication', 'DELETE', ['id' => 345])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sut->delete([12,64,345]);
+    }
+
+    public function testGetByApplicationWithHomeContactDetails()
+    {
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', ['application' => 821, 'limit' => 'all'])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByApplicationWithHomeContactDetails(821));
+    }
 }

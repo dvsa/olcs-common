@@ -210,6 +210,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'trafficArea'
                 )
             ),
+            'transportManagers',
         )
     );
 

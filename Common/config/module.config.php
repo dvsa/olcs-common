@@ -107,6 +107,15 @@ return array(
             'LvaApplication/People' => array(
                 'Common\Controller\Lva\Delegators\ApplicationPeopleDelegator'
             ),
+            'LvaLicence/TransportManagers' => array(
+                'Common\Controller\Lva\Delegators\LicenceTransportManagerDelegator'
+            ),
+            'LvaVariation/TransportManagers' => array(
+                'Common\Controller\Lva\Delegators\VariationTransportManagerDelegator'
+            ),
+            'LvaApplication/TransportManagers' => array(
+                'Common\Controller\Lva\Delegators\ApplicationTransportManagerDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -237,6 +246,12 @@ return array(
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider',
 
+            'LicenceTransportManagerAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceTransportManagerAdapter',
+            'VariationTransportManagerAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationTransportManagerAdapter',
+            'ApplicationTransportManagerAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter',
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
@@ -590,6 +605,9 @@ return array(
             'Lva\DirtyAddresses' => 'Common\BusinessService\Service\Lva\DirtyAddresses',
             'Lva\PhoneContact' => 'Common\BusinessService\Service\Lva\PhoneContact',
             'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
+
+            'Lva\DeleteTransportManagerApplication' =>
+                'Common\BusinessService\Service\Lva\DeleteTransportManagerApplication',
         ]
     ],
 );
