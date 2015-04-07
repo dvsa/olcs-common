@@ -33,6 +33,10 @@ class FeeProcessingService implements ServiceLocatorAwareInterface
             ->get('Helper\DocumentGeneration')
             ->generateAndStore('FEE_REQ_GRANT_GV', $description, $params);
 
+        $this->getServiceLocator()
+            ->get('PrintScheduler')
+            ->enqueueFile($storedFile, $description);
+
         $this->getServiceLocator()->get('Entity\Document')->createFromFile(
             $storedFile,
             [
