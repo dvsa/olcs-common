@@ -60,6 +60,135 @@ abstract class AbstractTransportManagersController extends AbstractController im
         return $this->render('transport_managers', $form);
     }
 
+    public function addAction()
+    {
+        $request = $this->getRequest();
+        $form = $this->getAddForm();
+
+        if ($request->isPost()) {
+            $formData = (array)$request->getPost();
+            $form->setData($formData);
+
+            if ($form->isValid()) {
+                return $this->redirect()->toRoute(
+                    null,
+                    ['action' => 'addTm', 'child_id' => $formData['data']['registeredUser']],
+                    [],
+                    true
+                );
+            }
+        }
+
+        return $this->render('add-transport_managers', $form);
+    }
+
+    public function addTmAction()
+    {
+        $childId = $this->params('child_id');
+
+        $user = $this->getCurrentUser();
+
+        // User has selected [him/her]self
+        // So we don't need to continue to show the form
+        if ($user['id'] == $childId) {
+
+            $params = [
+                'userId' => $user['id'],
+                'applicationId' => $this->getIdentifier()
+            ];
+
+            $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                // Should be fine to hard code Application here, as this page is only accessible for
+                // new apps and variations
+                ->get('Lva\TransportManagerApplication')
+                ->process($params);
+
+            return $this->redirect()->toRouteAjax(
+                null,
+                [
+                    'action' => 'details',
+                    'child_id' => $response->getData()['linkId']
+                ],
+                [],
+                true
+            );
+        }
+
+        $request = $this->getRequest();
+
+        $userDetails = $this->getServiceLocator()->get('Entity\User')->getUserDetails($childId);
+
+        $form = $this->getTmDetailsForm($userDetails['contactDetails']['emailAddress']);
+
+        $formData = [
+            'data' => [
+                'forename' => $userDetails['contactDetails']['person']['forename'],
+                'familyName' => $userDetails['contactDetails']['person']['familyName'],
+                'email' => $userDetails['contactDetails']['emailAddress'],
+                'birthDate' => $userDetails['contactDetails']['person']['birthDate'],
+            ]
+        ];
+
+        if ($request->isPost()) {
+            $postData = (array)$request->getPost();
+            unset($formData['data']['birthDate']);
+            $formData = array_merge_recursive($postData, $formData);
+        }
+
+        $form->setData($formData);
+
+        if ($request->isPost() && $form->isValid()) {
+            $formData = $form->getData();
+
+            $params = [
+                'userId' => $user['id'],
+                'applicationId' => $this->getIdentifier(),
+                'dob' => $formData['data']['birthDate']
+            ];
+
+            $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                ->get('Lva\SendTransportManagerApplication')
+                ->process($params);
+
+            return $this->redirect()->toRouteAjax(
+                null,
+                [
+                    'action' => 'details',
+                    'child_id' => $response->getData()['linkId']
+                ],
+                [],
+                true
+            );
+        }
+
+        return $this->render('addTm-transport_managers', $form);
+    }
+
+    protected function getTmDetailsForm($email)
+    {
+        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\AddTransportManagerDetails');
+
+        $form->get('data')->get('guidance')->setTokens([$email]);
+
+        return $form;
+    }
+
+    protected function getAddForm()
+    {
+        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\AddTransportManager');
+
+        $orgId = $this->getCurrentOrganisationId();
+
+        $registeredUsers = $this->getServiceLocator()
+            ->get('Entity\Organisation')
+            ->getRegisteredUsersForSelect($orgId);
+
+        $form->get('data')->get('registeredUser')->setEmptyOption('Please select');
+        $form->get('data')->get('registeredUser')->setValueOptions($registeredUsers);
+
+        return $form;
+    }
+
     /**
      * Handle CrudTableTrait delete
      */

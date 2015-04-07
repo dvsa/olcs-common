@@ -1,6 +1,13 @@
 <?php
 
 return array(
+    'lva.section.title.addTm-transport_managers' => 'Transport manager details',
+    'lva-tm-details-forename' => 'First name',
+    'lva-tm-details-familyName' => 'Last name',
+    'lva-tm-details-dob' => 'Date of birth',
+    'lva-tm-details-email' => 'Email address',
+    'send-form.button' => 'Send form',
+    'lva.section.title.add-transport_managers' => 'Add transport manager',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
