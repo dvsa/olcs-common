@@ -260,7 +260,7 @@ class LicenceStatusHelperService extends AbstractHelperService
      *
      * @param null|array $licenceVehicles The licence vehicles.
      */
-    private function removeLicenceVehicles($licenceVehicles = array())
+    public function removeLicenceVehicles($licenceVehicles = array())
     {
         $vehicles = array_map(
             function ($licenceVehicle) {
@@ -277,7 +277,7 @@ class LicenceStatusHelperService extends AbstractHelperService
      *
      * @param null|array $transportManagers The TM's
      */
-    private function removeTransportManagers($transportManagers = array())
+    public function removeTransportManagers($transportManagers = array())
     {
         $transportManagers = array_map(
             function ($transportManager) {
@@ -294,7 +294,7 @@ class LicenceStatusHelperService extends AbstractHelperService
      *
      * @param array $licenceData
      */
-    private function ceaseDiscs($licenceData)
+    public function ceaseDiscs($licenceData)
     {
         $discs = array();
         if ($licenceData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
