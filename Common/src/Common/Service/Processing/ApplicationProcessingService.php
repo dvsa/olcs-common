@@ -170,7 +170,17 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             'task' => $taskId
         );
 
-        $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
+        $result = $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
+
+        $this->getServiceLocator()->get('Processing\Fee')
+            ->generateDocument(
+                $feeTypeName,
+                [
+                    'fee' => $result['id'],
+                    'application' => $applicationId,
+                    'licence' => $licenceId
+                ]
+            );
     }
 
     /**
@@ -641,7 +651,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         // @NOTE: as with variations, order matters here because we diff total auth
         // creating PSV discs
-        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id); 
+        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id);
         $this->copyApplicationDataToLicence($id, $licenceId);
 
         $dataForValidating = $this->getApplicationDataForValidating($id);

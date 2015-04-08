@@ -74,6 +74,36 @@ class DocumentGenerationHelperService extends AbstractHelperService
         return $uploader->upload($folder);
     }
 
+    public function generateAndStore($template, $description, $queryData = [], $knownValues = [])
+    {
+        $template = $this->addTemplatePrefix($queryData, $template);
+
+        $content = $this->generateFromTemplate($template, $queryData, $knownValues);
+
+        return $this->uploadGeneratedContent($content, 'documents', $description);
+    }
+
+    public function addTemplatePrefix($queryData, $template)
+    {
+        foreach (['application', 'licence'] as $key) {
+            if (isset($queryData[$key])) {
+                $entity = ucfirst($key);
+                $data = $this->getServiceLocator()
+                    ->get('Entity\\' . $entity)
+                    ->getOverview($queryData[$key]);
+
+                return $this->getPrefix($data) . '/' . $template;
+            }
+        }
+
+        return $template;
+    }
+
+    private function getPrefix(array $licence)
+    {
+        return $licence['niFlag'] === 'N' ? 'GB' : 'NI';
+    }
+
     private function getTemplate($template)
     {
         if (!isset($this->templateCache[$template])) {

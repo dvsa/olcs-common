@@ -151,7 +151,19 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         // createGrantFee
         $mockFeeService = m::mock();
         $mockFeeService->shouldReceive('save')
-            ->with($expectedFeeData);
+            ->with($expectedFeeData)
+            ->andReturn(['id' => 4321]);
+
+        $feeData = [
+            'fee' => 4321,
+            'application' => 6,
+            'licence' => 2
+        ];
+
+        $mockFeeProcessingService = m::mock()
+            ->shouldReceive('generateDocument')
+            ->with('GRANT', $feeData)
+            ->getMock();
 
         $this->sm->setService('Entity\Application', $mockApplicationService);
         $this->sm->setService('Entity\Licence', $mockLicenceService);
@@ -159,6 +171,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Entity\Task', $mockTaskService);
         $this->sm->setService('Data\FeeType', $mockFeeTypeDataService);
         $this->sm->setService('Entity\Fee', $mockFeeService);
+        $this->sm->setService('Processing\Fee', $mockFeeProcessingService);
 
         $this->sut->processGrantApplication($id);
     }
