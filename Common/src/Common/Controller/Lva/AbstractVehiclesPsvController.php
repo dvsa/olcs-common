@@ -298,7 +298,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function alterForm($form, $data)
     {
-        $post   = $this->getRequest()->getPost();
+        $post = $this->getRequest()->getPost();
 
         $isCrudPressed = (isset($post['large']['action']) && !empty($post['large']['action']))
             || (isset($post['medium']['action']) && !empty($post['medium']['action']))
@@ -344,6 +344,11 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         $licenceData = $this->getTypeOfLicenceData();
         if ($licenceData['licenceType'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED && $form->has('large')) {
             $formHelper->remove($form, 'large');
+        }
+
+        if (in_array($this->lva, ['licence', 'variation'])) {
+            $this->getServiceLocator()->get('FormServiceManager')
+                ->get('lva-licence-variation-vehicles')->alterForm($form);
         }
 
         return $form;
