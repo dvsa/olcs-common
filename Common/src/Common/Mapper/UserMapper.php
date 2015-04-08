@@ -374,9 +374,9 @@ class UserMapper extends GenericMapper
     {
         if (isset($existingData['localAuthority'])) {
             return 'local-authority';
-        } else if (isset($existingData['transportManager'])) {
+        } elseif (isset($existingData['transportManager'])) {
             return 'transport-manager';
-        } else if (isset($existingData['partnerContactDetails'])) {
+        } elseif (isset($existingData['partnerContactDetails'])) {
             return 'partner';
         } else {
             return 'self-service';
