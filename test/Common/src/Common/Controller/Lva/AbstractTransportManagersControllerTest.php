@@ -341,4 +341,215 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
         $this->assertEquals('RESPONSE', $this->sut->addTmAction());
     }
+
+    public function testAddTmActionWithDifferentUserGet()
+    {
+        $user = [
+            'id' => 333
+        ];
+
+        $selectedUser = [
+            'contactDetails' => [
+                'emailAddress' => 'foo@bar.com',
+                'person' => [
+                    'forename' => 'foo',
+                    'familyName' => 'bar',
+                    'birthDate' => '1975-05-30'
+                ]
+            ]
+        ];
+
+        $expectedFormData = [
+            'data' => [
+                'forename' => 'foo',
+                'familyName' => 'bar',
+                'email' => 'foo@bar.com',
+                'birthDate' => '1975-05-30'
+            ]
+        ];
+
+        // Mocks
+        $mockForm = $this->createMockForm('Lva\AddTransportManagerDetails');
+        $mockUser = m::mock();
+        $this->sm->setService('Entity\User', $mockUser);
+
+        // Expectations
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(111)
+            ->shouldReceive('getCurrentUser')
+            ->andReturn($user)
+            ->shouldReceive('render')
+            ->once()
+            ->with('addTm-transport_managers', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockUser->shouldReceive('getUserDetails')
+            ->with(111)
+            ->andReturn($selectedUser);
+
+        $mockForm->shouldReceive('get->get->setTokens')
+            ->once()
+            ->with(['foo@bar.com']);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData);
+
+        $this->assertEquals('RESPONSE', $this->sut->addTmAction());
+    }
+
+    public function testAddTmActionWithDifferentUserPostInvalid()
+    {
+        $user = [
+            'id' => 333
+        ];
+
+        $selectedUser = [
+            'contactDetails' => [
+                'emailAddress' => 'foo@bar.com',
+                'person' => [
+                    'forename' => 'foo',
+                    'familyName' => 'bar',
+                    'birthDate' => '1975-05-30'
+                ]
+            ]
+        ];
+
+        $expectedFormData = [
+            'data' => [
+                'forename' => 'foo',
+                'familyName' => 'bar',
+                'email' => 'foo@bar.com',
+                'birthDate' => '1975-05-29'
+            ]
+        ];
+
+        $postData = ['data' => ['birthDate' => '1975-05-29']];
+
+        $this->setPost($postData);
+
+        // Mocks
+        $mockForm = $this->createMockForm('Lva\AddTransportManagerDetails');
+        $mockUser = m::mock();
+        $this->sm->setService('Entity\User', $mockUser);
+
+        // Expectations
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(111)
+            ->shouldReceive('getCurrentUser')
+            ->andReturn($user)
+            ->shouldReceive('render')
+            ->once()
+            ->with('addTm-transport_managers', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockUser->shouldReceive('getUserDetails')
+            ->with(111)
+            ->andReturn($selectedUser);
+
+        $mockForm->shouldReceive('get->get->setTokens')
+            ->once()
+            ->with(['foo@bar.com']);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->shouldReceive('isValid')
+            ->once()
+            ->andReturn(false);
+
+        $this->assertEquals('RESPONSE', $this->sut->addTmAction());
+    }
+
+    public function testAddTmActionWithDifferentUserPostValid()
+    {
+        $user = [
+            'id' => 333
+        ];
+
+        $selectedUser = [
+            'contactDetails' => [
+                'emailAddress' => 'foo@bar.com',
+                'person' => [
+                    'forename' => 'foo',
+                    'familyName' => 'bar',
+                    'birthDate' => '1975-05-30'
+                ]
+            ]
+        ];
+
+        $expectedFormData = [
+            'data' => [
+                'forename' => 'foo',
+                'familyName' => 'bar',
+                'email' => 'foo@bar.com',
+                'birthDate' => '1975-05-29'
+            ]
+        ];
+
+        $expectedParams = [
+            'userId' => 111,
+            'applicationId' => 222,
+            'dob' => '1975-05-29'
+        ];
+
+        $postData = ['data' => ['birthDate' => '1975-05-29']];
+
+        $this->setPost($postData);
+
+        // Mocks
+        $mockForm = $this->createMockForm('Lva\AddTransportManagerDetails');
+        $mockUser = m::mock();
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $mockSendTma = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockFlashMessenger = m::mock();
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $this->sm->setService('Entity\User', $mockUser);
+        $bsm->setService('Lva\SendTransportManagerApplication', $mockSendTma);
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        // Expectations
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(111)
+            ->shouldReceive('getCurrentUser')
+            ->andReturn($user)
+            ->shouldReceive('getIdentifier')
+            ->andReturn(222);
+
+        $this->sut->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['action' => null], [], true)
+            ->andReturn('RESPONSE');
+
+        $mockUser->shouldReceive('getUserDetails')
+            ->with(111)
+            ->andReturn($selectedUser);
+
+        $mockForm->shouldReceive('get->get->setTokens')
+            ->once()
+            ->with(['foo@bar.com']);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->shouldReceive('isValid')
+            ->once()
+            ->andReturn(true)
+            ->shouldReceive('getData')
+            ->once()
+            ->andReturn($expectedFormData);
+
+        $mockSendTma->shouldReceive('process')
+            ->once()
+            ->with($expectedParams);
+
+        $mockFlashMessenger->shouldReceive('addSuccessMessage')
+            ->once()
+            ->with('lva-tm-sent-success');
+
+        $this->assertEquals('RESPONSE', $this->sut->addTmAction());
+    }
 }

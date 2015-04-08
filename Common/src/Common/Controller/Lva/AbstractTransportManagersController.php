@@ -146,7 +146,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
                 'dob' => $formData['data']['birthDate']
             ];
 
-            $response = $this->getServiceLocator()->get('BusinessServiceManager')
+            $this->getServiceLocator()->get('BusinessServiceManager')
                 ->get('Lva\SendTransportManagerApplication')
                 ->process($params);
 
