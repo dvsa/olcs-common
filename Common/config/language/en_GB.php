@@ -932,6 +932,8 @@ return array(
     'internal-application-ntu-confirm' => 'Are you sure you want to set this application to Not taken up?',
     'internal-application-ntu-title' => 'Not taken up',
     'internal-application-processing' => 'Processing',
+    'internal-application-processing-inspection-request-add' => 'Add inspection request',
+    'internal-application-processing-inspection-request-edit' => 'Edit inspection request',
     'internal-application-processing-inspection-request-label' => 'Inspection request',
     'internal-application-processing-notes' => 'Notes',
     'internal-application-processing-notes-add' => 'Add note',
