@@ -153,6 +153,22 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
+    public function testRenderForTermsBoxElementWithoutClass()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\TermsBox');
+        $this->element->setAttribute('class', null);
+        $this->element->setValue('foo');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<div name="test" class="&#x20;terms--box" id="test">foo<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
     public function testRenderForHtmlTranslatedElement()
     {
         $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');
@@ -310,5 +326,75 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
             '<p>trafficAreaSet.trafficArea</p><h3>ABC</h3><p class="hint">trafficAreaSet.hint-foo</p>',
             $markup
         );
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForGuidanceTranslatedElement()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\GuidanceTranslated');
+        $this->element->setValue('some-translation-key');
+
+        $translations = ['some-translation-key' => 'actual translated string'];
+        $viewHelper = $this->prepareViewHelper($translations);
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<div class="guidance">actual translated string<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForGuidanceTranslatedElementWithoutValue()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\GuidanceTranslated');
+
+        $viewHelper = $this->prepareViewHelper([]);
+
+        $markup = $viewHelper($this->element, 'formCollection', '/');
+
+        $this->assertEmpty($markup);
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForGuidanceTranslatedElementWithTokens()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\GuidanceTranslated');
+        $this->element->setValue('<div>%s and then %s</div>');
+        $this->element->setTokens(['foo-key', 'bar-key']);
+
+        $translations = [
+            'foo-key' => 'foo string',
+            'bar-key' => 'bar string'
+        ];
+        $viewHelper = $this->prepareViewHelper($translations);
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<div class="guidance"><div>foo string and then bar string<\/div><\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForGuidanceTranslatedElementWithTokensViaOptions()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\GuidanceTranslated');
+        $this->element->setValue('<div>%s and then %s</div>');
+        $this->element->setOptions(['tokens' => ['foo-key', 'bar-key']]);
+
+        $translations = [
+            'foo-key' => 'foo string',
+            'bar-key' => 'bar string'
+        ];
+        $viewHelper = $this->prepareViewHelper($translations);
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<div class="guidance"><div>foo string and then bar string<\/div><\/div>$/');
     }
 }

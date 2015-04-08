@@ -18,7 +18,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     const STATUS_AWAITING_SIGNATURE = 'tmap_st_awaiting_signature';
     const STATUS_TM_SIGNED = 'tmap_st_tm_signed';
     const STATUS_OPERATOR_SIGNED = 'tmap_st_operator_signed';
-    const STATUS_POSTAL_APPLCIATION = 'tmap_st_postal_application';
+    const STATUS_POSTAL_APPLICATION = 'tmap_st_postal_application';
 
     /**
      * Define entity for default behaviour

@@ -629,4 +629,57 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
             )
         );
     }
+
+    public function testGetRegisteredUsersForSelect()
+    {
+        $id = 111;
+        $data = [
+            'organisationUsers' => [
+                [
+                    'user' => [
+                        'id' => 11,
+                        'contactDetails' => [
+                            'person' => [
+                                'forename' => 'Charles',
+                                'familyName' => 'Darwin'
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'user' => [
+                        'id' => 22,
+                        'contactDetails' => [
+                            'person' => [
+                                'forename' => 'Alan',
+                                'familyName' => 'Carr'
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'user' => [
+                        'id' => 33,
+                        'contactDetails' => [
+                            'person' => [
+                                'forename' => 'Elvis',
+                                'familyName' => 'Presley'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $expected = [
+            22 => 'Alan Carr',
+            11 => 'Charles Darwin',
+            33 => 'Elvis Presley'
+        ];
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($data));
+
+        $this->assertEquals($expected, $this->sut->getRegisteredUsersForSelect($id));
+    }
 }

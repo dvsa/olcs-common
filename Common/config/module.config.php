@@ -521,9 +521,8 @@ return array(
     'sic_codes_path' => __DIR__ . '/../../Common/config/sic-codes',
     'fieldsets_path' => __DIR__ . '/../../Common/src/Common/Form/Fieldsets/',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
-    'form' => array(
-        'elements' => include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
-    ),
+    // @todo I *think* we can remove this now
+    'form' => array(),
     'rest_services' => [
         'abstract_factories' => [
             'Common\Service\Api\AbstractFactory'
@@ -655,6 +654,12 @@ return array(
             'Lva\DeleteGoodsVehicle' => 'Common\BusinessService\Service\Lva\DeleteGoodsVehicle',
             'Lva\DeleteTransportManagerApplication' =>
                 'Common\BusinessService\Service\Lva\DeleteTransportManagerApplication',
+            'Lva\TransportManagerApplication' =>
+                'Common\BusinessService\Service\Lva\TransportManagerApplication',
+            'Lva\SendTransportManagerApplication' =>
+                'Common\BusinessService\Service\Lva\SendTransportManagerApplication',
+            'Lva\TransportManager' =>
+                'Common\BusinessService\Service\Lva\TransportManager',
         ]
     ],
 );
