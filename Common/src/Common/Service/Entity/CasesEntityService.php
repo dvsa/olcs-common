@@ -57,6 +57,17 @@ class CasesEntityService extends AbstractEntityService
         ]
     ];
 
+    private $openComplaintBundle = [
+        'children' => [
+            'complaints' => [
+                'criteria' => [
+                    'isCompliance' => 0,
+                    'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
+                ]
+            ]
+        ]
+    ];
+
     public function findByIdentifier($identifier)
     {
         // a case's identifier is also its primary key...
@@ -106,5 +117,21 @@ class CasesEntityService extends AbstractEntityService
         ];
 
         return $this->getAll($query, $this->tableBundle)['Results'];
+    }
+
+    /**
+     * Get cases with complaints for a licence where open
+     *
+     * @param int $licenceId Licence Id
+     *
+     * @return array
+     */
+    public function getOpenComplaintsForLicence($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+        ];
+
+        return $this->getAll($query, $this->openComplaintBundle)['Results'];
     }
 }
