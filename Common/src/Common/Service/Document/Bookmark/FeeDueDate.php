@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
@@ -8,7 +9,7 @@ use Common\Service\Helper\DateHelperService;
 use DateTime;
 
 /**
- * Fee due ate bookmark
+ * Fee due date bookmark
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
