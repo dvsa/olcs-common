@@ -39,4 +39,12 @@ class UserEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals($response, $this->sut->getCurrentUser());
     }
+
+    public function testGetUserDetails()
+    {
+        $this->expectOneRestCall('User', 'GET', 111)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getUserDetails(111));
+    }
 }

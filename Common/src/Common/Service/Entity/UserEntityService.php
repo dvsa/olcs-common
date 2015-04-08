@@ -16,11 +16,22 @@ class UserEntityService extends AbstractEntityService
 {
     protected $entity = 'User';
 
-    protected $currentUserBundle = array(
-        'children' => array(
+    protected $currentUserBundle = [
+        'children' => [
             'team'
-        )
-    );
+        ]
+    ];
+
+    protected $userDetailsBundle = [
+        'children' => [
+            'contactDetails' => [
+                'children' => [
+                    'person'
+                ]
+            ],
+            'transportManager'
+        ]
+    ];
 
     /**
      * Get the current user
@@ -32,5 +43,10 @@ class UserEntityService extends AbstractEntityService
         $id = 1;
 
         return $this->get($id, $this->currentUserBundle);
+    }
+
+    public function getUserDetails($id)
+    {
+        return $this->get($id, $this->userDetailsBundle);
     }
 }

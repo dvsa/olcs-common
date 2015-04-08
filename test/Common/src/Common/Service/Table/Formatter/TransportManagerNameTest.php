@@ -29,7 +29,7 @@ class TransportManagerNameTest extends TestCase
             'forename' => 'Arthur',
             'familyName' => 'Smith',
             'status' => [
-                'id' => \Common\Service\Entity\TransportManagerApplicationEntityService::STATUS_POSTAL_APPLCIATION,
+                'id' => \Common\Service\Entity\TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
                 'description' => 'a description',
             ]
         ];
