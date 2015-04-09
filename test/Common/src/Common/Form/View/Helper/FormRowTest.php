@@ -356,4 +356,26 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             $markup
         );
     }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderReadonlyElement()
+    {
+        $element = $this->prepareElement(
+            'Common\Form\Elements\Types\Readonly',
+            [
+                'name' => 'readonly',
+                'label' => 'Foo'
+            ],
+            []
+        );
+
+        $element->setValue('Bar');
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputString('<div class="field read-only "><p>Foo<br><b>Bar</b></p></div>');
+    }
 }
