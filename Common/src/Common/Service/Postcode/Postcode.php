@@ -37,6 +37,7 @@ class Postcode implements ServiceLocatorAwareInterface
             $response = $this->sendGet('postcode\address', array('postcode' => $postcode), true);
 
             if (is_array($response) && count($response)) {
+                // yes, 'administritive_area' really is mis-spelled in API response :(
                 $adminArea = $response[0]['administritive_area'];
                 if ($adminArea) {
                     $bundle = array(
