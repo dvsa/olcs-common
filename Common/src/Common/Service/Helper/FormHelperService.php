@@ -638,4 +638,24 @@ class FormHelperService extends AbstractHelperService
             }
         }
     }
+
+    /**
+     * Set appropriate default values on date fields
+     *
+     * @param Zend\Form\Element $field
+     * @param DateTime $currentDate
+     * @return Zend\Form\Element
+     */
+    public function setDefaultDate($field)
+    {
+        // default to the current date if it is not set
+        $currentValue = $field->getValue();
+        $currentValue = trim($currentValue, '-'); // date element returns '--' when empty!
+        if (empty($currentValue)) {
+            $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
+            $field->setValue($today);
+        }
+
+        return $field;
+    }
 }
