@@ -58,4 +58,29 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
 
         $this->put($data);
     }
+
+    /**
+     * Get all OC for given application for inspection request listbox
+     * 
+     * @param int $applicationId
+     * @return array
+     */
+    public function getAllForInspectionRequest($applicationId)
+    {
+        $query = [
+            'application' => $applicationId,
+            'action' => '!= D'
+        ];
+        $bundle = [
+            'children' => [
+                'operatingCentre' => [
+                    'children' => [
+                        'address'
+                    ]
+                ],
+                'application'
+            ]
+        ];
+        return $this->getAll($query, $bundle);
+    }
 }

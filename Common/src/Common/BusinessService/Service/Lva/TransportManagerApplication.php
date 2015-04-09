@@ -1,87 +1,47 @@
 <?php
 
 /**
- * Transport Manager Application
+ * Create/Update Transport Manager Applications
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Mat Evans <mat.evans@valtech.co.uk>
  */
 namespace Common\BusinessService\Service\Lva;
 
 use Common\BusinessService\BusinessServiceInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Common\BusinessService\BusinessServiceAwareInterface;
-use Common\BusinessService\BusinessServiceAwareTrait;
 use Common\BusinessService\Response;
-use Common\Service\Entity\TransportManagerEntityService;
-use Common\Service\Entity\TransportManagerApplicationEntityService;
 
 /**
- * Transport Manager Application
+ * Create/Update Transport Manager Applications
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Mat Evans <mat.evans@valtech.co.uk>
  */
 class TransportManagerApplication implements
     BusinessServiceInterface,
-    ServiceLocatorAwareInterface,
-    BusinessServiceAwareInterface
+    ServiceLocatorAwareInterface
 {
-    use ServiceLocatorAwareTrait,
-        BusinessServiceAwareTrait;
+    use ServiceLocatorAwareTrait;
 
     /**
-     * Processes the data by passing it through a number of business rules and then persisting it
+     * Create/Update a Transport Manager Application
      *
-     * @param array $params
-     * @return ResponseInterface
+     * @param array $params 'data' key contains Transport Manager Application data
+     * @return ResponseInterface containing the Transport Manager Application ID
      */
     public function process(array $params)
     {
-        $userId = $params['userId'];
-        $applicationId = $params['applicationId'];
-
-        $userService = $this->getServiceLocator()->get('Entity\User');
-
-        $user = $userService->getUserDetails($userId);
-
-        if ($user['transportManager'] === null) {
-            $tmParams = [
-                'data' => [
-                    'tmStatus' => TransportManagerEntityService::TRANSPORT_MANAGER_STATUS_CURRENT,
-                    'homeCd' => $user['contactDetails']['id']
-                ]
-            ];
-
-            $response = $this->getBusinessServiceManager()->get('Lva\TransportManager')->process($tmParams);
-
-            if (!$response->isOk()) {
-                return $response;
-            }
-
-            $user['transportManager'] = $response->getData();
-
-            $userData = [
-                'id' => $user['id'],
-                'version' => $user['version'],
-                'transportManager' => $user['transportManager']['id']
-            ];
-
-            // Update the user record, so we can link them to the transport manager record
-            $this->getServiceLocator()->get('Entity\User')->save($userData);
+        if (!isset($params['data'])) {
+            throw new \InvalidArgumentException("'data' key must exists in the params.");
         }
 
-        $tmaData = [
-            'tmApplicationStatus' => TransportManagerApplicationEntityService::STATUS_INCOMPLETE,
-            'action' => 'A',
-            'application' => $applicationId,
-            'transportManager' => $user['transportManager']['id']
-        ];
-
-        $saved = $this->getServiceLocator()->get('Entity\TransportManagerApplication')->save($tmaData);
+        $saved = $this->getServiceLocator()->get('Entity\TransportManagerApplication')->save($params['data']);
+        $id = (isset($saved['id'])) ? $saved['id'] : $params['data']['id'];
 
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
-        $response->setData(['linkId' => $saved['id']]);
+        $response->setData(['id' => $id]);
+
         return $response;
     }
 }

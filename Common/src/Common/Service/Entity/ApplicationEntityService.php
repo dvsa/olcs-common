@@ -77,7 +77,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'status',
             'interimStatus',
             'licenceType',
-            'goodsOrPsv'
+            'goodsOrPsv',
+            'licence' => array(
+                'children' => array(
+                    'organisation' => array(
+                        'children' => array(
+                            'leadTcArea',
+                        ),
+                    ),
+                ),
+            ),
         )
     );
 

@@ -189,8 +189,7 @@ class ApplicationVehiclesGoodsAdapterTest extends MockeryTestCase
                 ],
                 [
                     'page' => 1,
-                    'limit' => 10,
-                    'removalDate' => 'NOT NULL'
+                    'limit' => 10
                 ]
             ],
             'Disc all' => [

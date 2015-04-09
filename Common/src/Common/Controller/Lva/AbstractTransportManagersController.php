@@ -29,7 +29,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         /* @var $form \Zend\Form\Form */
         $form = $this->getAdapter()->getForm();
         $table = $this->getAdapter()->getTable();
-        $table->loadData($this->getAdapter()->getTableData($this->getIdentifier()));
+        $table->loadData($this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId()));
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
@@ -55,7 +55,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
 
         return $this->render('transport_managers', $form);
     }
@@ -100,7 +100,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             $response = $this->getServiceLocator()->get('BusinessServiceManager')
                 // Should be fine to hard code Application here, as this page is only accessible for
                 // new apps and variations
-                ->get('Lva\TransportManagerApplication')
+                ->get('Lva\TransportManagerApplicationForUser')
                 ->process($params);
 
             return $this->redirect()->toRouteAjax(
@@ -201,11 +201,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         // get ids to delete
         $ids = explode(',', $this->params('child_id'));
 
-        /* @var $service \Common\BusinessService\Service\TransportManagerApplication\Delete */
-        $service = $this->getServiceLocator()
-            ->get('BusinessServiceManager')
-            ->get('Lva\DeleteTransportManagerApplication');
-        $service->process(['ids' => $ids]);
+        $this->getAdapter()->delete($ids, $this->getIdentifier());
     }
 
     /**

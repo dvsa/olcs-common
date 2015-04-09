@@ -49,11 +49,12 @@ class LicenceGoodsVehiclesLicenceVehicle implements
         if (isset($data['specifiedDate'])) {
             $checkDate = $this->getBusinessRuleManager()->get('CheckDate');
             $data['specifiedDate'] = $checkDate->validate($data['specifiedDate']);
-
-            if ($data['specifiedDate'] === null) {
-                $data['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d');
-            }
         }
+
+        if (!isset($data['specifiedDate'])) {
+            $data['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d');
+        }
+
         if (isset($data['removalDate'])) {
             $checkDate = $this->getBusinessRuleManager()->get('CheckDate');
             $data['removalDate'] = $checkDate->validate($data['removalDate']);

@@ -75,4 +75,15 @@ class ResponseTest extends PHPUnit_Framework_TestCase
             ]
         ];
     }
+
+    public function testConstructor()
+    {
+        // default, no type
+        $sut = new Response();
+        $this->assertNull($sut->getType());
+
+        // pass type to constructor
+        $sut = new Response(Response::TYPE_SUCCESS);
+        $this->assertEquals(Response::TYPE_SUCCESS, $sut->getType());
+    }
 }
