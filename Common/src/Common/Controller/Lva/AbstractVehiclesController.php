@@ -180,6 +180,10 @@ abstract class AbstractVehiclesController extends AbstractController implements 
             $licenceVehicle['vehicle'] = $data['id'];
         }
 
+        if (in_array($this->lva, ['application', 'variation'])) {
+            $licenceVehicle['application'] = $this->getIdentifier();
+        }
+
         $saved = $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
 
         if (isset($saved['id'])) {

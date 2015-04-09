@@ -46,9 +46,7 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
             }
         }
 
-        if (isset($query['includeRemoved']) && $query['includeRemoved'] == '1') {
-            $filters['removalDate'] = 'NOT NULL';
-        } else {
+        if (!isset($query['includeRemoved']) || $query['includeRemoved'] != '1') {
             $filters['removalDate'] = 'NULL';
         }
 

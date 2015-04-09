@@ -49,8 +49,15 @@ class LicenceGoodsVehiclesLicenceVehicleTest extends MockeryTestCase
         $expected = [
             'foo' => 'bar',
             'vehicle' => 111,
-            'licence' => 222
+            'licence' => 222,
+            'specifiedDate' => '2014-01-01'
         ];
+
+        $mockDate = m::mock();
+        $this->sm->setService('Helper\Date', $mockDate);
+        $mockDate->shouldReceive('getDate')
+            ->once()
+            ->andReturn('2014-01-01');
 
         $response = $this->sut->validate($data, $mode, $vehicleId, $licenceId, $id);
 
@@ -71,8 +78,15 @@ class LicenceGoodsVehiclesLicenceVehicleTest extends MockeryTestCase
         $id = 333;
         $expected = [
             'foo' => 'bar',
-            'vehicle' => 111
+            'vehicle' => 111,
+            'specifiedDate' => '2014-01-01'
         ];
+
+        $mockDate = m::mock();
+        $this->sm->setService('Helper\Date', $mockDate);
+        $mockDate->shouldReceive('getDate')
+            ->once()
+            ->andReturn('2014-01-01');
 
         $response = $this->sut->validate($data, $mode, $vehicleId, $licenceId, $id);
 
@@ -97,8 +111,15 @@ class LicenceGoodsVehiclesLicenceVehicleTest extends MockeryTestCase
         $expected = [
             'foo' => 'bar',
             'vehicle' => 111,
-            'licence' => 222
+            'licence' => 222,
+            'specifiedDate' => '2014-01-01'
         ];
+
+        $mockDate = m::mock();
+        $this->sm->setService('Helper\Date', $mockDate);
+        $mockDate->shouldReceive('getDate')
+            ->once()
+            ->andReturn('2014-01-01');
 
         // Mocks
         $mockCheckDate = m::mock('\Common\BusinessRule\BusinessRuleInterface');
@@ -133,8 +154,15 @@ class LicenceGoodsVehiclesLicenceVehicleTest extends MockeryTestCase
             'receivedDate' => '2014-01-01',
             'foo' => 'bar',
             'vehicle' => 111,
-            'licence' => 222
+            'licence' => 222,
+            'specifiedDate' => '2014-01-01'
         ];
+
+        $mockDate = m::mock();
+        $this->sm->setService('Helper\Date', $mockDate);
+        $mockDate->shouldReceive('getDate')
+            ->once()
+            ->andReturn('2014-01-01');
 
         // Mocks
         $mockCheckDate = m::mock('\Common\BusinessRule\BusinessRuleInterface');
@@ -247,8 +275,15 @@ class LicenceGoodsVehiclesLicenceVehicleTest extends MockeryTestCase
         $expected = [
             'foo' => 'bar',
             'vehicle' => 111,
-            'licence' => 222
+            'licence' => 222,
+            'specifiedDate' => '2014-01-01'
         ];
+
+        $mockDate = m::mock();
+        $this->sm->setService('Helper\Date', $mockDate);
+        $mockDate->shouldReceive('getDate')
+            ->once()
+            ->andReturn('2014-01-01');
 
         // Mocks
         $mockCheckDate = m::mock('\Common\BusinessRule\BusinessRuleInterface');
@@ -283,8 +318,15 @@ class LicenceGoodsVehiclesLicenceVehicleTest extends MockeryTestCase
             'removalDate' => '2014-01-01',
             'foo' => 'bar',
             'vehicle' => 111,
-            'licence' => 222
+            'licence' => 222,
+            'specifiedDate' => '2014-01-01'
         ];
+
+        $mockDate = m::mock();
+        $this->sm->setService('Helper\Date', $mockDate);
+        $mockDate->shouldReceive('getDate')
+            ->once()
+            ->andReturn('2014-01-01');
 
         // Mocks
         $mockCheckDate = m::mock('\Common\BusinessRule\BusinessRuleInterface');
