@@ -20,7 +20,8 @@ class Response implements ResponseInterface
 
     protected $message = null;
 
-    public function __construct($type = null, $data = array()) {
+    public function __construct($type = null, $data = array())
+    {
         $this->setType($type);
         $this->setData($data);
     }
