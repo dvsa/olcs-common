@@ -93,13 +93,13 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
         foreach ($ids as $id) {
             // if has "L" prefix then its a TM Licence ID, else it is a TM Application ID
             if (strpos($id, 'L') === 0) {
-                $transportManagerId = (int) trim($id, 'L');
+                $transportManagerLicenceId = (int) trim($id, 'L');
 
-                // WRONG Id is TML not
-
-                $service = $this->getServiceLocator()->get('BusinessServiceManager')->get('Lva\DeleteTransportManager');
+                $service = $this->getServiceLocator()
+                    ->get('BusinessServiceManager')
+                    ->get('Lva\DeltaDeleteTransportManagerLicence');
                 $response = $service->process(
-                    ['applicationId' => $applicationId, 'transportManagerId' => $transportManagerId]
+                    ['transportManagerLicenceId' => $transportManagerLicenceId, 'applicationId' => $applicationId]
                 );
                 if (!$response->isOk()) {
                     throw new \RuntimeException('Error deleting Transport Manager.');

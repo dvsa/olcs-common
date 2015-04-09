@@ -10,7 +10,7 @@ namespace CommonTest\BusinessService\Service\Lva;
 use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\BusinessService\Service\Lva\DeleteTransportManager;
+use Common\BusinessService\Service\Lva\DeltaDeleteTransportManagerLicence;
 use Common\BusinessService\Response;
 
 /**
@@ -25,7 +25,7 @@ class DeltaDeleteTransportManagerLicenceTest extends MockeryTestCase
 
     public function setUp()
     {
-        $this->sut = new DeleteTransportManager();
+        $this->sut = new DeltaDeleteTransportManagerLicence();
 
         $this->sm = Bootstrap::getServiceManager();
         $this->sut->setServiceLocator($this->sm);
@@ -40,23 +40,31 @@ class DeltaDeleteTransportManagerLicenceTest extends MockeryTestCase
         $this->sut->process(['foo']);
     }
 
-    public function testProcessMissingTransportManager()
+    public function testProcessMissingTransportManagerLicence()
     {
-        $this->setExpectedException('\InvalidArgumentException', 'params key "transportManager" must be set');
+        $this->setExpectedException('\InvalidArgumentException', 'params key "transportManagerLicenceId" must be set');
         $this->sut->process(['applicationId' => 12]);
     }
 
     public function testProcess()
     {
+        $mockTmlEntityService = m::mock('\Common\Service\Entity\TransportManagerLicenceEntityService');
+        $this->sm->setService('Entity\TransportManagerLicence', $mockTmlEntityService);
+
         $mockTmaBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
         $this->bsm->setService('Lva\TransportManagerApplication', $mockTmaBusinessService);
 
+        $mockTmlEntityService->shouldReceive('getTransportManagerLicence')
+            ->once()
+            ->with(432)
+            ->andReturn(['transportManager' => ['id' => 44]]);
+
         $mockTmaBusinessService->shouldReceive('process')
             ->once()
-            ->with(['data' => ['application' => 213, 'transportManager' => 432, 'action' => 'D']])
+            ->with(['data' => ['application' => 213, 'transportManager' => 44, 'action' => 'D']])
             ->andReturn('RESPONSE');
 
-        $response = $this->sut->process(['applicationId' => 213, 'transportManagerId' => 432]);
+        $response = $this->sut->process(['applicationId' => 213, 'transportManagerLicenceId' => 432]);
 
         $this->assertEquals('RESPONSE', $response);
     }

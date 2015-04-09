@@ -33,7 +33,6 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
-
         $request = $this->getRequest();
         if ($request->isPost()) {
 
@@ -223,37 +222,5 @@ abstract class AbstractTransportManagersController extends AbstractController im
     protected function getDeleteTitle()
     {
         return 'delete-tm';
-    }
-
-    /**
-     *
-     */
-    public function restoreAction()
-    {
-        // @todo MATTY
-
-        $ids = explode(',', $this->params('child_id'));
-
-        $tmaIdsToDelete = [];
-        foreach ($ids as $id) {
-            // remove "L" prefix and get int ID
-            $id = (int) trim($id, 'L');
-            // @todo find associated TMA row using application ID and TM ID
-            // add TMA ID to delete array
-            $tmaIdsToDelete[] = $tmaId;
-        }
-
-        $service = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
-        $variationData = $service->getByApplicationTransportManager($this->getIdentifier());
-
-
-
-        // if any TMA ID added to array then delete them
-        if (count($tmaIdsToDelete) > 0) {
-            $tmaDeleteService = $this->getServiceLocator()
-                ->get('BusinessServiceManager')
-                ->get('Lva\DeleteTransportManagerApplication');
-            $tmaDeleteService->process(['ids' => $tmaIdsToDelete]);
-        }
     }
 }

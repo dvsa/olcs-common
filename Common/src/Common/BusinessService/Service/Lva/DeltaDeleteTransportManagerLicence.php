@@ -47,13 +47,14 @@ class DeltaDeleteTransportManagerLicence implements
         }
         $transportManagerLicenceId = (int) $params['transportManagerLicenceId'];
 
-        // @todo MATTY
+        $tmlService = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
+        $tml = $tmlService->getTransportManagerLicence($transportManagerLicenceId);
 
         // create the transport manager application row with action D (delete)
         $tmaBusinessService = $this->getBusinessServiceManager()->get('Lva\TransportManagerApplication');
         $tma = [
             'application' => $applicationId,
-            'transportManager' => $transportManagerLicenceId,
+            'transportManager' => $tml['transportManager']['id'],
             'action' => 'D',
         ];
         $response = $tmaBusinessService->process(['data' => $tma]);
