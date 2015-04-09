@@ -178,12 +178,12 @@ class User implements
             );
         }
 
-        $id = $userDataService->saveUserRole($dataToSave);
+        $result = $userDataService->saveUserRole($dataToSave);
         $response = new Response();
 
-        if (isset($id)) {
+        if (isset($result['id'])) {
             $response->setType(Response::TYPE_SUCCESS);
-            $response->setData(['id' => $id]);
+            $response->setData($result);
         } else {
             $response->setType(Response::TYPE_FAILED);
             $response->setData($dataToSave);
