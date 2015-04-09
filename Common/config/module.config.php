@@ -654,12 +654,16 @@ return array(
             'Lva\DeleteGoodsVehicle' => 'Common\BusinessService\Service\Lva\DeleteGoodsVehicle',
             'Lva\DeleteTransportManagerApplication' =>
                 'Common\BusinessService\Service\Lva\DeleteTransportManagerApplication',
+            'Lva\TransportManagerApplicationForUser' =>
+                'Common\BusinessService\Service\Lva\TransportManagerApplicationForUser',
             'Lva\TransportManagerApplication' =>
                 'Common\BusinessService\Service\Lva\TransportManagerApplication',
             'Lva\SendTransportManagerApplication' =>
                 'Common\BusinessService\Service\Lva\SendTransportManagerApplication',
             'Lva\TransportManager' =>
                 'Common\BusinessService\Service\Lva\TransportManager',
+            'Lva\DeltaDeleteTransportManagerLicence' =>
+                'Common\BusinessService\Service\Lva\DeltaDeleteTransportManagerLicence',
         ]
     ],
 );

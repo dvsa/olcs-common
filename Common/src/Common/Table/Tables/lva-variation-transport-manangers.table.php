@@ -2,23 +2,27 @@
 
 return array(
     'variables' => array(
-        'title' => '',
+        'title' => 'Transport managers',
         'within_form' => true,
     ),
     'settings' => array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
+                'delete' => array('class' => 'secondary', 'requireRows' => true),
+                'restore' => array('class' => 'secondary', 'requireRows' => true),
             )
         ),
+        'row-disabled-callback' => function ($row) {
+            return isset($row['action']) && in_array($row['action'], ['D', 'C']);
+        }
     ),
     'attributes' => array(
     ),
     'columns' => array(
         array(
             'title' => 'Name',
-            'formatter' => 'TransportManagerName',
+            'formatter' => 'TransportManagerNameVariation',
             'name' => 'name',
         ),
         array(
@@ -33,7 +37,10 @@ return array(
         array(
             'name' => 'select',
             'width' => 'checkbox',
-            'type' => 'Checkbox'
+            'type' => 'Checkbox',
+            'data-attributes' => array(
+                'action'
+            )
         )
     )
 );

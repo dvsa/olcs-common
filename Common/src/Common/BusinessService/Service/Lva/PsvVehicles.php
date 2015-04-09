@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Goods Vehicles
+ * Psv Vehicles
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -11,11 +11,11 @@ use Common\BusinessService\BusinessServiceInterface;
 use Common\BusinessService\Response;
 
 /**
- * Goods Vehicles
+ * Psv Vehicles
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GoodsVehicles implements BusinessServiceInterface
+class PsvVehicles implements BusinessServiceInterface
 {
     /**
      * Processes the data by passing it through a number of business rules and then persisting it

@@ -86,7 +86,7 @@ class ApplicationTransportManagerAdapterTest extends MockeryTestCase
             ]
         ];
 
-        $this->assertEquals($expectedData, $this->sut->getTableData(44));
+        $this->assertEquals($expectedData, $this->sut->getTableData(44, null));
     }
 
     /**
@@ -112,5 +112,18 @@ class ApplicationTransportManagerAdapterTest extends MockeryTestCase
             [true, LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL],
             [true, LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL],
         ];
+    }
+
+    public function testDelete()
+    {
+        $mockBusinessService = m::mock('StdClass');
+        $this->sm->shouldReceive('get->get')
+            ->once()
+            ->with('Lva\DeleteTransportManagerApplication')
+            ->andReturn($mockBusinessService);
+
+        $mockBusinessService->shouldReceive('process')->once()->with(['ids' => [4, 7, 5, 234]]);
+
+        $this->sut->delete([4, 7, 5, 234], null);
     }
 }

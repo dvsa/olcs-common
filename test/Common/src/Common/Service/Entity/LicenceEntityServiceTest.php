@@ -1015,4 +1015,20 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getConditionsAndUndertakings(111));
     }
+
+    /**
+     * @group licenceEntityService
+     */
+    public function testGetEnforcementArea()
+    {
+        $bundle = [
+            'children' => [
+                'enforcementArea'
+            ]
+        ];
+        $this->expectOneRestCall('Licence', 'GET', 111, $bundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getEnforcementArea(111));
+    }
 }
