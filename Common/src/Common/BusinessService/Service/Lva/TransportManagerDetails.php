@@ -12,6 +12,7 @@ use Common\BusinessService\Response;
 use Common\BusinessService\BusinessServiceAwareInterface;
 use Common\BusinessService\BusinessServiceAwareTrait;
 use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\Service\Entity\ContactDetailsEntityService;
 
 /**
  * Transport Manager Details
@@ -128,6 +129,8 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
         if (isset($params['workContactDetails']['id'])) {
             $workContactDetails['data']['id'] = $params['workContactDetails']['id'];
             $workContactDetails['data']['version'] = $params['workContactDetails']['version'];
+        } else {
+            $workContactDetails['data']['contactType'] = ContactDetailsEntityService::CONTACT_TYPE_TRANSPORT_MANAGER;
         }
 
         return $this->getBusinessServiceManager()->get('Lva\ContactDetails')->process($workContactDetails);
@@ -184,7 +187,7 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
             'data' => [
                 'id' => $params['transportManagerApplication']['id'],
                 'version' => $params['transportManagerApplication']['version'],
-                'status' => TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE
+                'tmApplicationStatus' => TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE
             ]
         ];
 
