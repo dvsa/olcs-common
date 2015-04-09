@@ -93,9 +93,12 @@ class UserTest extends MockeryTestCase
         $mockLockedDateRule->shouldReceive('validate')->with($params['userLoginSecurity']['accountDisabled'])
             ->andReturnNull();
         $mockBirthDateRule->shouldReceive('validate')->with(m::type('array'))->andReturnNull();
-        $mockPhoneContacts->shouldReceive('validate')->with(m::type('array'),m::type('string'),
-            m::type('string'))->andReturnNull();
-        $this->mockDataService->shouldReceive('saveUserRole')->with(m::type('array'))->andReturn(['id' => $userId]);
+        $mockPhoneContacts->shouldReceive('validate')->with(
+            m::type('array'),
+            m::type('string'),
+            m::type('string')
+        )->andReturnNull();
+        $this->mockDataService->shouldReceive('saveUserRole')->with(m::type('array'))->andReturn($userId);
 
         // test
         $response = $this->sut->process($params);
@@ -121,12 +124,16 @@ class UserTest extends MockeryTestCase
         $this->brm->setService('PhoneContacts', $mockPhoneContacts);
 
         // expectations
-        $mockLockedDateRule->shouldReceive('validate')->with($params['userLoginSecurity']['accountDisabled'])
-            ->andReturnNull();
+        $mockLockedDateRule->shouldReceive('validate')->with(
+            $params['userLoginSecurity']['accountDisabled']
+        )->andReturnNull();
         $mockBirthDateRule->shouldReceive('validate')->with(m::type('array'))->andReturnNull();
-        $mockPhoneContacts->shouldReceive('validate')->with(m::type('array'),m::type('string'),
-            m::type('string'))->andReturnNull();
-        $this->mockDataService->shouldReceive('saveUserRole')->with(m::type('array'))->andReturn(['id' => 123]);
+        $mockPhoneContacts->shouldReceive('validate')->with(
+            m::type('array'),
+            m::type('string'),
+            m::type('string')
+        )->andReturnNull();
+        $this->mockDataService->shouldReceive('saveUserRole')->with(m::type('array'))->andReturn(123);
 
         // test
         $response = $this->sut->process($params);

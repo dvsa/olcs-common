@@ -181,12 +181,12 @@ class User implements
         $result = $userDataService->saveUserRole($dataToSave);
         $response = new Response();
 
-        if (isset($result['id'])) {
+        if (isset($result) && !empty($result)) {
             $response->setType(Response::TYPE_SUCCESS);
-            $response->setData($result);
+            $response->setData(['id' => $result]);
         } else {
             $response->setType(Response::TYPE_FAILED);
-            $response->setData($dataToSave);
+            $response->setData(['error' => 'Unable to save']);
         }
 
         return $response;
