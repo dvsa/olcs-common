@@ -19,7 +19,6 @@ class TransportManagerNameVariation extends TransportManagerName implements Form
     public static function format($data, $column = array(), $sm = null)
     {
         $name = parent::format($data, $column, $sm);
-        $action = (isset($data['action'])) ? static::getActionName($data['action'], $sm) : '';
 
         if (isset($data['action'])) {
             // if deleted then remove the anchor tag

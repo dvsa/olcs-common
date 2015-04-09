@@ -65,11 +65,11 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
                 'action' => $row['action'],
             ];
             switch ($row['action']) {
-                case 'U' :
+                case 'U':
                     // Mark original was as the current
                     $tableData[$row['transportManager']['id']]['action'] = 'C';
                     break;
-                case 'D' :
+                case 'D':
                     // Remove the original so that just the Delete version appears
                     unset($tableData[$row['transportManager']['id']]);
                     break;
@@ -98,12 +98,9 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
                 $service = $this->getServiceLocator()
                     ->get('BusinessServiceManager')
                     ->get('Lva\DeltaDeleteTransportManagerLicence');
-                $response = $service->process(
+                $service->process(
                     ['transportManagerLicenceId' => $transportManagerLicenceId, 'applicationId' => $applicationId]
                 );
-                if (!$response->isOk()) {
-                    throw new \RuntimeException('Error deleting Transport Manager.');
-                }
             } else {
                 // add TMA is onto list to delete
                 $transportManagerApplicationIds[] = $id;

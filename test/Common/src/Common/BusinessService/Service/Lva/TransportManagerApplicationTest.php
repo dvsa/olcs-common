@@ -63,4 +63,3 @@ class TransportManagerApplicationTest extends MockeryTestCase
         $this->assertEquals(['id' => 33], $response->getData());
     }
 }
-

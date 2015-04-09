@@ -184,4 +184,15 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
 
         $this->assertEquals('RESPONSE', $this->sut->getByApplicationWithHomeContactDetails(821));
     }
+
+    public function testGetByApplicationTransportManager()
+    {
+        $this->expectOneRestCall(
+            'TransportManagerApplication',
+            'GET',
+            ['application' => 821, 'transportManager' => 55, 'limit' => 'all']
+        )->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByApplicationTransportManager(821, 55));
+    }
 }

@@ -126,5 +126,4 @@ class ApplicationTransportManagerAdapterTest extends MockeryTestCase
 
         $this->sut->delete([4, 7, 5, 234], null);
     }
-
 }

@@ -91,6 +91,55 @@ class TransportManagerApplicationForUserTest extends MockeryTestCase
         $this->assertEquals(['linkId' => 333], $response->getData());
     }
 
+    public function testProcessWithTmServiceFails()
+    {
+        $params = [
+            'userId' => 111,
+            'applicationId' => 222
+        ];
+
+        $stubbedUser = [
+            'transportManager' => [
+                'id' => 444
+            ]
+        ];
+
+        $expectedTma = [
+            'tmApplicationStatus' => TransportManagerApplicationEntityService::STATUS_INCOMPLETE,
+            'action' => 'A',
+            'application' => 222,
+            'transportManager' => 444
+        ];
+
+        // Mocks
+        $mockUser = m::mock();
+        $this->sm->setService('Entity\User', $mockUser);
+
+        $mockBusinessTransportManagerApplication =
+            m::mock('\Common\BusinessService\Service\Lva\TransportManagerApplication');
+        $this->bsm->setService('Lva\TransportManagerApplication', $mockBusinessTransportManagerApplication);
+
+        $mockBusinessResponse = m::mock('\Common\BusinessService\Response');
+
+        // Expectations
+        $mockUser->shouldReceive('getUserDetails')
+            ->once()
+            ->with(111)
+            ->andReturn($stubbedUser);
+
+        $mockBusinessResponse->shouldReceive('isOk')->once()->andReturn(false);
+
+        $mockBusinessTransportManagerApplication->shouldReceive('process')
+            ->once()
+            ->with(['data' => $expectedTma])
+            ->andReturn($mockBusinessResponse);
+
+        // Assertions
+        $response = $this->sut->process($params);
+
+        $this->assertEquals($mockBusinessResponse, $response);
+    }
+
     public function testProcessWithoutTmWithFail()
     {
         $params = [
