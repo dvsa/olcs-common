@@ -674,6 +674,11 @@ return array(
             // User administration
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
+            // Cases business services
+            'Cases\Submission\Decision' => 'Common\BusinessService\Service\Cases\Submission\Decision',
+            'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
+            'Cases\Submission\SubmissionActionTask'
+                => 'Common\BusinessService\Service\Cases\Submission\SubmissionActionTask',
         ]
     ],
 );

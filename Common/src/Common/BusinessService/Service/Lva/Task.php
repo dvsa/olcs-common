@@ -45,11 +45,13 @@ class Task implements
 
         $data = $this->getBusinessRuleManager()->get('Task')->validate($params);
 
-        $assignment = $this->getServiceLocator()->get('Processing\Task')->getAssignment($assignmentData);
+        if (empty($data['assignedToUser'])) {
+            $assignment = $this->getServiceLocator()->get('Processing\Task')->getAssignment($assignmentData);
 
-        $saveData = array_merge($data, $assignment);
+            $data = array_merge($data, $assignment);
+        }
 
-        $saved = $this->getServiceLocator()->get('Entity\Task')->save($saveData);
+        $saved = $this->getServiceLocator()->get('Entity\Task')->save($data);
 
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
