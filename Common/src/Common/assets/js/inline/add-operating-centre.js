@@ -69,14 +69,24 @@ $(function() {
    * Horrible POC async file upload
    */
   var handleResponse = OLCS.normaliseResponse(function(response) {
-    var y = $(".modal__wrapper").scrollTop();
-    F.render(".modal__content", response.body);
-    $(".modal__wrapper").scrollTop(y);
+    var position;
+    if ($(".modal__wrapper").is(":visible")) {
+      position = $(".modal__wrapper").scrollTop();
+      F.render(".modal__content", response.body);
+      $(".modal__wrapper").scrollTop(position);
+    } else {
+      F.render(".js-body", response.body);
+    }
   });
 
-  $(".attach-action__input").on("change", function(e) {
+  $(".file-uploader .attach-action__input").on("change", function(e) {
     e.preventDefault();
     e.stopPropagation();
+
+    // @TODO bail early if not supported
+
+    var form = $(this).parents("form");
+    var container = $(this).parents(".file-uploader");
 
     // @TODO multiple?
     var file = e.target.files[0];
@@ -105,16 +115,17 @@ $(function() {
     };
 
     // make sure we take the form data as it stands
-    var fd = new FormData($("form").get(0));
+    var fd = new FormData(form.get(0));
 
-    // @TODO calculate from what was clicked
-    fd.append("advertisements[file][file-controls][file]", file);
-    fd.append("advertisements[file][upload]", "Upload");
+    var prefix = container.data("group");
+    fd.append(prefix + "[file-controls][file]", file);
+    fd.append(prefix + "[upload]", "Upload");
 
     xhr.open("POST", $("form").attr("action"), true);  // @TODO confirm third param
     xhr.setRequestHeader("X-Inline-Upload", true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     xhr.send(fd);
+
     OLCS.preloader.show();
   });
 
