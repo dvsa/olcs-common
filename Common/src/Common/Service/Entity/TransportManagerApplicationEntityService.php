@@ -57,6 +57,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
 
     protected $homeContactDetailsBundle = [
         'children' => [
+            'application',
             'tmApplicationStatus',
             'transportManager' => [
                 'children' => [
@@ -149,5 +150,21 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         $query = ['application' => $applicationId];
 
         return $this->getAll($query, $this->homeContactDetailsBundle);
+    }
+
+    /**
+     * Get transport manager applications linked to an application and a transport manager
+     *
+     * @param int $applicationId      Application ID
+     * @param int $transportManagerId Transport Manager ID
+     * @return array
+     */
+    public function getByApplicationTransportManager($applicationId, $transportManagerId)
+    {
+        $query = [
+            'application' => $applicationId,
+            'transportManager' => $transportManagerId,
+        ];
+        return $this->getAll($query);
     }
 }

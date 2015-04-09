@@ -42,11 +42,6 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         $this->assertEquals($mockTable, $this->sut->getTable('template'));
     }
 
-    public function testGetTableData()
-    {
-        $this->assertEquals([], $this->sut->getTableData(44));
-    }
-
     public function testMustHaveAtLeastOneTm()
     {
         $this->assertFalse($this->sut->mustHaveAtLeastOneTm(99));

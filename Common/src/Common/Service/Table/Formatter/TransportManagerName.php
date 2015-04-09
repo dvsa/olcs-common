@@ -36,12 +36,15 @@ class TransportManagerName extends Name implements FormatterInterface
     {
         $name = parent::format($data, $column, $sm);
         $url = static::getUrl($data, $sm);
+        $status = (isset($data['status']['id']) && isset(static::$statusColors[$data['status']['id']])) ?
+            static::$statusColors[$data['status']['id']] :
+            '';
 
         return sprintf(
             '<b><a href="%s">%s</a></b> <span class="status %s">%s</span>',
             $url,
             $name,
-            static::$statusColors[$data['status']['id']],
+            $status,
             $data['status']['description']
         );
     }

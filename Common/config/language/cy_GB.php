@@ -2105,6 +2105,7 @@ return array(
     'tm-previous-history-revoked-curtailed-suspended-licences' => 'W Revoked, Curtailed or Suspended Licences',
     'tm-responsibilities-applications' => 'W Applications',
     'tm-responsibilities-licences' => 'W Licences',
+    'tm_application.table.status.current' => 'W  (Current)',
     'tm_application.table.status.new' => 'W  (New)',
     'tm_application.table.status.removed' => 'W  (Removed)',
     'tm_application.table.status.updated' => 'W  (Updated)',
