@@ -19,6 +19,7 @@ use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\Types\TrafficAreaSet;
+use Common\Form\Elements\Types\FileUploadButton;
 
 /**
  * Render form
@@ -30,6 +31,7 @@ class FormElement extends ZendFormElement
 {
     const GUIDANCE_WRAPPER = '<div class="guidance">%s</div>';
     const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
+    const FILE_CHOOSE_WRAPPER = '<ul class="%s"><li class="%s"><label class="%s">%s %s</label><p class="%s">%s</p></li></ul>';
 
     /**
      * The form row output format.
@@ -150,6 +152,32 @@ class FormElement extends ZendFormElement
 
         if ($element instanceof Table) {
             return $element->render();
+        }
+
+        if ($element instanceof FileUploadButton) {
+
+            $attributes = $element->getAttributes();
+            if (!isset($attributes['class'])) {
+                $attributes['class'] = '';
+            }
+
+            $attributes['class'] .= ' attach-action__input';
+
+            $element->setAttributes($attributes);
+
+            $label = $element->getOption('value');
+            $hint = $element->getOption('hint');
+
+            return sprintf(
+                self::FILE_CHOOSE_WRAPPER,
+                'attach-action__list',
+                'attach-action',
+                'attach-action__label',
+                $label,
+                parent::render($element),
+                'attach-action__hint',
+                $hint
+            );
         }
 
         $markup = parent::render($element);

@@ -109,7 +109,7 @@ class FormRow extends ZendFormRow
                 $class = $element->getAttribute('data-container-class');
             }
 
-            if (strpos($element->getAttribute('class'), 'visually-hidden') !== false) {
+            if (strpos($element->getAttribute('class'), 'visually-hidden') === 0) {
                 $markup = sprintf(self::$format, 'visually-hidden', $markup);
             } elseif ($element->getOption('render-container') !== false) {
 

@@ -48,7 +48,7 @@ class FileUploadList extends Fieldset
             $file['size'] = round($size, 1) . $units[$unit];
 
             $fileItem = new FileUploadListItem('file-' . $file['id']);
-            $fileItem->setAttribute('class', 'field');
+            $fileItem->setAttribute('class', 'file');
 
             $id = new Hidden('id');
             $id->setValue($file['id']);
@@ -60,12 +60,12 @@ class FileUploadList extends Fieldset
             $html->setAttribute('data-container-class', 'file-upload');
             $html->setValue(
                 '<p><a href="' . $file['url'] . '">'
-                . $file['filename'] . '</a> <span>(' . $file['size'] . ')</span></p>'
+                . $file['filename'] . '</a> <span>' . $file['size'] . '</span></p>'
             );
 
             $remove = new Submit('remove', array('render-container' => false));
-            $remove->setValue('remove');
-            $remove->setAttribute('class', 'remove');
+            $remove->setValue('Remove');
+            $remove->setAttribute('class', 'file__remove');
             $remove->setAttribute('data-container-class', 'file-upload');
 
             $fileItem->add($html);

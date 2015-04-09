@@ -74,7 +74,7 @@ $(function() {
     $(".modal__wrapper").scrollTop(y);
   });
 
-  $(".file-upload").on("change", function(e) {
+  $(".attach-action__input").on("change", function(e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -83,10 +83,10 @@ $(function() {
 
     var xhr = new XMLHttpRequest();
 
+    /*
     var elem = $("[value=Upload]");
     elem.val("Uploading…");
 
-    /*
     xhr.upload.addEventListener("progress", function(e) {
       var pc = Math.round((e.loaded * 100) / e.total);
       if (pc !== 100) {
@@ -109,7 +109,7 @@ $(function() {
 
     // @TODO calculate from what was clicked
     fd.append("advertisements[file][file-controls][file]", file);
-    fd.append("advertisements[file][file-controls][upload]", "Upload");
+    fd.append("advertisements[file][upload]", "Upload");
 
     xhr.open("POST", $("form").attr("action"), true);  // @TODO confirm third param
     xhr.setRequestHeader("X-Inline-Upload", true);
@@ -118,7 +118,7 @@ $(function() {
     OLCS.preloader.show();
   });
 
-  $(".remove").on("click", function(e) {
+  $(".file__remove").on("click", function(e) {
     e.preventDefault();
 
     var button = $(this);
