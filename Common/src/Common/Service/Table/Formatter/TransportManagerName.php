@@ -63,7 +63,7 @@ class TransportManagerName extends Name implements FormatterInterface
             'details';
 
         $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute(null, ['action' => $action], [], true);
+        $url = $urlHelper->fromRoute(null, ['action' => $action, 'child_id' => $data['id']], [], true);
 
         return $url;
     }
