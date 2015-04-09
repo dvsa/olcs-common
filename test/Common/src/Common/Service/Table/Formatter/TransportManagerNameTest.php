@@ -16,7 +16,7 @@ class TransportManagerNameTest extends TestCase
         $mockUrlHelper = $this->getMock('\stdClass', array('fromRoute'));
         $mockUrlHelper->expects($this->once())
             ->method('fromRoute')
-            ->with(null, ['action' => 'postal-application'], [], true)
+            ->with(null, ['action' => 'postal-application', 'child_id' => 111], [], true)
             ->willReturn('a-url');
 
         $mockServerManager = $this->getMock('\stdClass', array('get'));
@@ -26,6 +26,7 @@ class TransportManagerNameTest extends TestCase
 
         $sut = new \Common\Service\Table\Formatter\TransportManagerName();
         $data = [
+            'id' => 111,
             'forename' => 'Arthur',
             'familyName' => 'Smith',
             'status' => [
