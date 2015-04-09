@@ -834,6 +834,9 @@ return array(
     'definition' => 'W Definition',
     'delete' => 'W Delete',
     'delete.confirmation.text' => 'W This action is permanent and cannot be undone.',
+    'deleting.all.vehicles.message' => 'W If you are removing all the vehicles from your licence you must be aware that
+        standard licence holders must be able to prove they have a formal arrangement for access at all times to at
+        least one vehicle registered or in circulation.',
     'description' => 'W Description',
     'director' => 'W Director',
     'disagree' => 'W Disagree',
