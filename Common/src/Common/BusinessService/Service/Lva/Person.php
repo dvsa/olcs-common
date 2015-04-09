@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Transport Manager
+ * Person
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -13,16 +13,16 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\BusinessService\Response;
 
 /**
- * Transport Manager
+ * Person
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TransportManager implements BusinessServiceInterface, ServiceLocatorAwareInterface
+class Person implements BusinessServiceInterface, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
     /**
-     * Format and save the transport manager data
+     * Format and save Person data
      *
      * @param array $params
      * @return ResponseInterface
@@ -31,7 +31,7 @@ class TransportManager implements BusinessServiceInterface, ServiceLocatorAwareI
     {
         $data = $params['data'];
 
-        $saved = $this->getServiceLocator()->get('Entity\TransportManager')->save($data);
+        $saved = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
         if (isset($data['id'])) {
             $id = $data['id'];
