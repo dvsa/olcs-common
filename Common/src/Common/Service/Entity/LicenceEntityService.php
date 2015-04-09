@@ -469,6 +469,17 @@ class LicenceEntityService extends AbstractLvaEntityService
     }
 
     /**
+     * Set enforcement area
+     *
+     * @param int $licenceId
+     * @param int $enforcementAreaId
+     */
+    public function setEnforcementArea($licenceId, $enforcementAreaId)
+    {
+        return $this->forceUpdate($licenceId, array('enforcementArea' => $enforcementAreaId));
+    }
+
+    /**
      * Generates new licences or updates existing one and saves it to licence entity
      *
      * @param string $licenceId
