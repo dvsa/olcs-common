@@ -2199,5 +2199,13 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'internal.inspection-request.form.create-inspection-request' => 'Would you like to create an inspection request?',
+    'internal.inspection-request.form.due-date' => 'Due date',
+    'internal.inspection-request.form.caseworker-notes' => 'Caseworker notes',
+    'internal.inspection-request.form.3-month' => '3 month',
+    'internal.inspection-request.form.6-month' => '6 month',
+    'internal.inspection-request.form.9-month' => '9 month',
+    'internal.inspection-request.form.12-month' => '12 month',
+    'internal.inspection-request.form.title.grant' => 'Grant'
     // Potentially unused (Not found with grep)
 );
