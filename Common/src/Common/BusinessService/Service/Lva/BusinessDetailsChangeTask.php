@@ -36,6 +36,6 @@ class BusinessDetailsChangeTask implements BusinessServiceInterface, BusinessSer
             'licence' => $params['licenceId']
         ];
 
-        return $this->getBusinessServiceManager()->get('Lva\Task')->process($taskParams);
+        return $this->getBusinessServiceManager()->get('Task')->process($taskParams);
     }
 }

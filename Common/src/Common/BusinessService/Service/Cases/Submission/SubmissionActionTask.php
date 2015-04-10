@@ -83,6 +83,6 @@ class SubmissionActionTask implements
             'case' => $params['caseId'],
         ];
 
-        return $this->getBusinessServiceManager()->get('Lva\Task')->process($taskParams);
+        return $this->getBusinessServiceManager()->get('Task')->process($taskParams);
     }
 }

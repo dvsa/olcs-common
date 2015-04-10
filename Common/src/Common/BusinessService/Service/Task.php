@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\BusinessService\Service\Lva;
+namespace Common\BusinessService\Service;
 
 use Common\BusinessService\BusinessServiceInterface;
 use Common\BusinessService\BusinessServiceAwareInterface;
