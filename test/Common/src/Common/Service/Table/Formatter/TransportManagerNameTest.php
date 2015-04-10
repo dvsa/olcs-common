@@ -30,47 +30,6 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
             ->andReturn($this->mockUrlHelper);
     }
 
-    public function dataProviderFormat()
-    {
-        return [
-            'nolvalocation' => [
-                'Arthur Smith',
-                []
-            ],
-            [
-                '<b><a href="a-url">Arthur Smith</a></b> <span class="status red">a description</span>',
-                [
-                    'name' => [
-                        'forename' => 'Arthur',
-                        'familyName' => 'Smith',
-                        'status' => [
-                            'id' => TransportManagerApplicationEntityService::STATUS_INCOMPLETE,
-                            'description' => 'a description',
-                        ]
-                    ]
-                ],
-                [
-                    'lva' => 'application',
-                    'location' => 'internal',
-                ]
-            ],
-            [
-                '<b><a href="a-url">Arthur Smith</a></b> <span class="status red">a description</span>',
-                [
-                    'name' => [
-                        'forename' => 'Arthur',
-                        'familyName' => 'Smith',
-                        'status' => [
-                            'id' => TransportManagerApplicationEntityService::STATUS_INCOMPLETE,
-                            'description' => 'a description',
-                        ]
-                    ]
-                ],
-                []
-            ],
-        ];
-    }
-
     public function testFormatNoLvaLocation()
     {
         $data = [
@@ -117,6 +76,7 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     public function testFormatApplicationExternal()
     {
         $data = [
+            'id' => 333,
             'name' => [
                 'forename' => 'Arthur',
                 'familyName' => 'Smith',
@@ -137,7 +97,7 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->with(null, ['action' => 'postal-application'], [], true)
+            ->with(null, ['action' => 'postal-application', 'child_id' => 333], [], true)
             ->andReturn('a-url');
 
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
@@ -214,6 +174,7 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
     public function testFormatVariationExternal()
     {
         $data = [
+            'id' => 333,
             'name' => [
                 'forename' => 'Arthur',
                 'familyName' => 'Smith',
@@ -236,7 +197,7 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->with(null, ['action' => 'postal-application'], [], true)
+            ->with(null, ['action' => 'postal-application', 'child_id' => 333], [], true)
             ->andReturn('a-url');
 
         $mockTranslator = m::mock();
