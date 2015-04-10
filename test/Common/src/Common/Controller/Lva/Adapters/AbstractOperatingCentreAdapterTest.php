@@ -26,6 +26,7 @@ class AbstractOperatingCentreAdapterTest extends MockeryTestCase
         $this->sm->setAllowOverride(true);
 
         $this->sut = m::mock('\Common\Controller\Lva\Adapters\AbstractOperatingCentreAdapter')
+            ->shouldAllowMockingProtectedMethods()
             ->makePartial();
 
         $this->sut->setServiceLocator($this->sm);
@@ -120,5 +121,66 @@ class AbstractOperatingCentreAdapterTest extends MockeryTestCase
         $this->sut->shouldReceive('alterForm')->with($mockForm);
 
         $this->assertSame($mockForm, $this->sut->getMainForm());
+    }
+
+    public function testSaveMainFormData()
+    {
+        $id = 99;
+        $licenceId = 101;
+
+        // stub data
+        $formData = [
+            'dataTrafficArea' => [
+                'enforcementArea' => 'V048',
+            ],
+            'data' => [
+                'id' => $id,
+                'version' => 1,
+                'totAuthVehicles' => '3',
+                'totAuthTrailers' => '4',
+            ],
+        ];
+
+        $saveData = [
+            'enforcementArea' => 'V048',
+            'id' => $id,
+            'version' => 1,
+            'totAuthVehicles' => '3',
+            'totAuthTrailers' => '4',
+        ];
+
+        // mocks
+        $mockLvaEntityService = m::mock();
+        $mockLicenceEntityService = m::mock();
+        $mockLicenceAdapter = m::mock('\Common\Controller\Lva\Interfaces\LvaAdapterInterface');
+
+        $this->sm->setService('Entity\Licence', $mockLicenceEntityService);
+        $this->sm->setService('LicenceLvaAdapter', $mockLicenceAdapter);
+
+        // use a real data helper as don't know wtf processDataMap does
+        $this->sm->setService('Helper\Data', new \Common\Service\Helper\DataHelperService());
+
+        // expectations
+        $this->sut
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($mockLvaEntityService);
+
+        $mockLvaEntityService
+            ->shouldReceive('save')
+            ->once()
+            ->with($saveData);
+
+        $mockLicenceAdapter
+            ->shouldReceive('setController')
+            ->andReturnSelf()
+            ->shouldReceive('getIdentifier')
+            ->andReturn($licenceId);
+
+        $mockLicenceEntityService
+            ->shouldReceive('setEnforcementArea')
+            ->once()
+            ->with($licenceId, 'V048');
+
+        $this->sut->saveMainFormData($formData);
     }
 }
