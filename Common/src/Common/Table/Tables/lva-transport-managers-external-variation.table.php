@@ -23,7 +23,7 @@ return array(
         array(
             'title' => 'Name',
             'formatter' => 'TransportManagerName',
-            'internal' => true,
+            'internal' => false,
             'lva' => 'variation'
         ),
         array(
@@ -36,7 +36,6 @@ return array(
             'formatter' => 'Date',
         ),
         array(
-            'name' => 'select',
             'width' => 'checkbox',
             'type' => 'Checkbox',
             'data-attributes' => array(
