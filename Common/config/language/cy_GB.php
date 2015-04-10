@@ -1175,8 +1175,10 @@ return array(
         licences before the office copy',
     'internal.community_licence.void_not_allowed' => 'W You cannot void the office copy without voiding all the
         licences',
+    'internal.delete-action-trait.title' => 'W Remove',
     'internal.documents.delete.delete_message' => 'W Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'W Deleted successfully',
+    'internal.inspection-request.remove-inspection-request' => 'W Remove inspection request',
     'internal.interim.form.grant_confirm' => 'W Are you sure you want to grant this interim?',
     'internal.interim.form.grant_not_allowed' => 'W You must process the interim fee before granting this application',
     'internal.interim.form.interim_application' => 'W Interim application',
