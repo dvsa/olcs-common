@@ -612,6 +612,9 @@ return array(
             'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
             'ApplicationGoodsVehiclesLicenceVehicle'
                 => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
+            'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
+            'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
+            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate'
         ]
     ],
     'business_service_manager' => [
@@ -668,6 +671,9 @@ return array(
                 'Common\BusinessService\Service\Lva\TransportManagerDetails',
             'Lva\Person' =>
                 'Common\BusinessService\Service\Lva\Person',
+            // User administration
+            'Admin\User' =>
+                'Common\BusinessService\Service\Admin\User',
         ]
     ],
 );
