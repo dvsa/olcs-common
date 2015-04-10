@@ -23,7 +23,7 @@ return array(
         array(
             'title' => 'Name',
             'formatter' => 'TransportManagerName',
-            'internal' => true,
+            'internal' => false,
             'lva' => 'variation'
         ),
         array(

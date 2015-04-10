@@ -14,7 +14,7 @@ use Common\Service\Entity\TransportManagerApplicationEntityService;
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class TransportManagerName extends Name implements FormatterInterface
+class TransportManagerName extends Name
 {
     protected static $linkActions = [
         TransportManagerApplicationEntityService::STATUS_INCOMPLETE => 'details',
@@ -34,19 +34,64 @@ class TransportManagerName extends Name implements FormatterInterface
 
     public static function format($data, $column = array(), $sm = null)
     {
-        $name = parent::format($data, $column, $sm);
-        $url = static::getUrl($data, $sm);
-        $status = (isset($data['status']['id']) && isset(static::$statusColors[$data['status']['id']])) ?
-            static::$statusColors[$data['status']['id']] :
-            '';
+        $name = parent::format($data['name'], $column, $sm);
 
-        return sprintf(
-            '<b><a href="%s">%s</a></b> <span class="status %s">%s</span>',
-            $url,
-            $name,
-            $status,
-            $data['status']['description']
-        );
+        if (!isset($column['internal']) || (!isset($column['lva']))) {
+            return $name;
+        }
+
+        // default
+        $html = $name;
+        if ($column['internal']) {
+            switch ($column['lva']) {
+                case 'licence':
+                    $html = $name;
+                    break;
+                case 'variation':
+                    $html = sprintf(
+                        '%s <b><a href="%s">%s</a></b> %s',
+                        static::getActionName($data, $sm),
+                        static::getInternalUrl($data, $sm),
+                        $name,
+                        static::getStatusHtml($data)
+                    );
+                    break;
+                case 'application':
+                    $html = sprintf(
+                        '<b><a href="%s">%s</a></b> %s',
+                        static::getInternalUrl($data, $sm),
+                        $name,
+                        static::getStatusHtml($data)
+                    );
+                    break;
+            }
+        } else {
+            // External
+            switch ($column['lva']) {
+                case 'licence':
+                    $html = $name;
+                    break;
+                case 'variation':
+                    $html = sprintf(
+                        '%s <b><a href="%s">%s</a></b> %s',
+                        static::getActionName($data, $sm),
+                        static::getExternalUrl($data, $sm),
+                        $name,
+                        static::getStatusHtml($data)
+                    );
+                    break;
+                case 'application':
+                    $html = sprintf(
+                        '<b><a href="%s">%s</a></b> %s',
+                        static::getExternalUrl($data, $sm),
+                        $name,
+                        static::getStatusHtml($data)
+                    );
+                    break;
+            }
+        }
+
+        return $html;
     }
 
     /**
@@ -56,7 +101,7 @@ class TransportManagerName extends Name implements FormatterInterface
      *
      * @return string
      */
-    protected static function getUrl($data, $sm)
+    protected static function getExternalUrl($data, $sm)
     {
         $action = isset(static::$linkActions[$data['status']['id']]) ?
             static::$linkActions[$data['status']['id']] :
@@ -66,5 +111,62 @@ class TransportManagerName extends Name implements FormatterInterface
         $url = $urlHelper->fromRoute(null, ['action' => $action], [], true);
 
         return $url;
+    }
+
+    /**
+     * Get URL for the Transport managers name
+     *
+     * @param array $data
+     *
+     * @return string
+     */
+    protected static function getInternalUrl($data, $sm)
+    {
+        $transportManagerId = $data['transportManager']['id'];
+        $urlHelper = $sm->get('Helper\Url');
+        $url = $urlHelper->fromRoute('transport-manager', ['transportManager' => $transportManagerId], [], true);
+
+        return $url;
+    }
+
+    /**
+     * Convert action eg "U" into its description
+     *
+     * @param string  $action 'U', 'A', etc
+     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @return string Description
+     * @throws \InvalidArgumentException
+     */
+    protected static function getActionName($data, $sm)
+    {
+        $statusMaps = [
+            'U' => 'tm_application.table.status.updated',
+            'D' => 'tm_application.table.status.removed',
+            'A' => 'tm_application.table.status.new',
+            'C' => 'tm_application.table.status.current',
+        ];
+
+        if (!isset($data['action']) || !isset($statusMaps[$data['action']])) {
+            return '';
+        }
+
+        $translator = $sm->get('Helper\Translation');
+
+        return $translator->translate($statusMaps[$data['action']]);
+    }
+
+    /**
+     * Get the html for the status
+     *
+     * @param array $data
+     * @return string HTML
+     */
+    protected static function getStatusHtml($data)
+    {
+        $statusClass = (isset($data['status']['id']) && isset(static::$statusColors[$data['status']['id']])) ?
+            static::$statusColors[$data['status']['id']] :
+            '';
+
+        return sprintf('<span class="status %s">%s</span>', $statusClass, $data['status']['description']);
     }
 }
