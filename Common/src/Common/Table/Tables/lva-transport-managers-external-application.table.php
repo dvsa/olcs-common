@@ -32,7 +32,6 @@ return array(
             'formatter' => 'Date',
         ),
         array(
-            'name' => 'select',
             'width' => 'checkbox',
             'type' => 'Checkbox'
         )

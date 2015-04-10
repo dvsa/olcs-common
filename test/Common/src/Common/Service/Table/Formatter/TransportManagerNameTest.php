@@ -250,13 +250,21 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
             'name' => [
                 'forename' => 'Arthur',
                 'familyName' => 'Smith',
-            ]
+            ],
+            'transportManager' => [
+                'id' => 432
+            ],
         ];
         $column = [
             'lva' => 'licence',
             'internal' => true,
         ];
-        $expected = 'Arthur Smith';
+        $expected = '<b><a href="a-url">Arthur Smith</a></b>';
+
+        $this->mockUrlHelper->shouldReceive('fromRoute')
+            ->once()
+            ->with('transport-manager', ['transportManager' => 432], [], true)
+            ->andReturn('a-url');
 
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
     }

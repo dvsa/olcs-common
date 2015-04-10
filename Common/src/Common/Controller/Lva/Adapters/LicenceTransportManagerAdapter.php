@@ -19,7 +19,25 @@ class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
 
     public function getTableData($applicationId, $licenceId)
     {
-        return [];
+        // Get TM's attached to licence
+        /* @var $service \Common\Service\Entity\TransportManagerLicenceEntityService */
+        $service = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
+        $licenceData = $service->getByLicenceWithHomeContactDetails($licenceId);
+
+        $tableData = [];
+        foreach ($licenceData['Results'] as $row) {
+            $tableData[$row['transportManager']['id']] = [
+                // Transport Manager Licence ID
+                'id' => 'L'. $row['id'],
+                'name' => $row['transportManager']['homeCd']['person'],
+                'status' => null,
+                'email' => $row['transportManager']['homeCd']['emailAddress'],
+                'dob' => $row['transportManager']['homeCd']['person']['birthDate'],
+                'transportManager' => $row['transportManager'],
+            ];
+        }
+
+        return $tableData;
     }
 
     public function delete(array $ids, $applicationId)

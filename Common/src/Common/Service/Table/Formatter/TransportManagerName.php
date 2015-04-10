@@ -45,7 +45,11 @@ class TransportManagerName extends Name
         if ($column['internal']) {
             switch ($column['lva']) {
                 case 'licence':
-                    $html = $name;
+                    $html = sprintf(
+                        '<b><a href="%s">%s</a></b>',
+                        static::getInternalUrl($data, $sm),
+                        $name
+                    );
                     break;
                 case 'variation':
                     $html = sprintf(
@@ -72,7 +76,7 @@ class TransportManagerName extends Name
                     $html = $name;
                     break;
                 case 'variation':
-                    // only hyperlink if Added ot Updated
+                    // only hyperlink if Added or Updated
                     if (isset($data['action']) && ($data['action'] == 'A' || $data['action'] == 'U')) {
                         $html = sprintf(
                             '%s <b><a href="%s">%s</a></b> %s',
