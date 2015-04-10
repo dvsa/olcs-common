@@ -519,6 +519,11 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
 
         if ($trafficAreaId) {
 
+            $enforcementAreas = $this->getServiceLocator()->get('Entity\TrafficAreaEnforcementArea')
+                ->getValueOptions($trafficAreaId);
+            $dataTrafficAreaFieldset->get('enforcementArea')
+                ->setValueOptions($enforcementAreas);
+
             $formHelper->remove($form, 'dataTrafficArea->trafficArea');
             $dataTrafficAreaFieldset->get('trafficAreaSet')
                 ->setValue($trafficArea['name'])
@@ -530,6 +535,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $options = $this->getServiceLocator()->get('Entity\TrafficArea')->getValueOptions();
 
         $dataTrafficAreaFieldset->remove('trafficAreaSet')
+            ->remove('enforcementArea')
             ->get('trafficArea')
             ->setValueOptions($options);
 

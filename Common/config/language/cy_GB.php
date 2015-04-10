@@ -378,6 +378,7 @@ return array(
     'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'W Traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => 'W <p class="hint">Your traffic
         area has been determined from your address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
+    'application_operating-centres_authorisation.enforcementArea.label' => 'W Enforcement area',
     'application_operating-centres_authorisation.table.address' => 'W Address',
     'application_operating-centres_authorisation.table.advertised' => 'W Advertised',
     'application_operating-centres_authorisation.table.footer.total' => 'W Totals',

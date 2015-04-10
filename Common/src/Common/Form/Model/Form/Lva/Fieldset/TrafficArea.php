@@ -34,6 +34,20 @@ class TrafficArea
     public $trafficAreaSet = null;
 
     /**
+     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Options({
+     *     "label": "application_operating-centres_authorisation.enforcementArea.label",
+     *     "value_options": {
+     *
+     *     },
+     *     "empty_option": "Please Select",
+     *     "disable_inarray_validator": false,
+     * })
+     * @Form\Type("\Zend\Form\Element\Select")
+     */
+    public $enforcementArea = null;
+
+    /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
