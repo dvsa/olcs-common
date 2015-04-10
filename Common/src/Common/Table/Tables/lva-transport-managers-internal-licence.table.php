@@ -29,10 +29,5 @@ return array(
             'name' => 'dob',
             'formatter' => 'Date',
         ),
-        array(
-            'name' => 'select',
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
     )
 );
