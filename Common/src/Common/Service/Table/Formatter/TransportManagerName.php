@@ -72,13 +72,23 @@ class TransportManagerName extends Name
                     $html = $name;
                     break;
                 case 'variation':
-                    $html = sprintf(
-                        '%s <b><a href="%s">%s</a></b> %s',
-                        static::getActionName($data, $sm),
-                        static::getExternalUrl($data, $sm),
-                        $name,
-                        static::getStatusHtml($data)
-                    );
+                    // only hyperlink if Added ot Updated
+                    if (isset($data['action']) && ($data['action'] == 'A' || $data['action'] == 'U')) {
+                        $html = sprintf(
+                            '%s <b><a href="%s">%s</a></b> %s',
+                            static::getActionName($data, $sm),
+                            static::getExternalUrl($data, $sm),
+                            $name,
+                            static::getStatusHtml($data)
+                        );
+                    } else {
+                        $html = sprintf(
+                            '%s <b>%s</b> %s',
+                            static::getActionName($data, $sm),
+                            $name,
+                            static::getStatusHtml($data)
+                        );
+                    }
                     break;
                 case 'application':
                     $html = sprintf(

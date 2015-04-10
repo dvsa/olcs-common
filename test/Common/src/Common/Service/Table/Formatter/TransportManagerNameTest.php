@@ -210,6 +210,40 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
     }
 
+    public function testFormatVariationExternalNoLink()
+    {
+        $data = [
+            'id' => 333,
+            'name' => [
+                'forename' => 'Arthur',
+                'familyName' => 'Smith',
+                ],
+            'status' => [
+                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                'description' => 'status description',
+            ],
+            'transportManager' => [
+                'id' => 432
+            ],
+            'action' => 'D',
+        ];
+        $column = [
+            'lva' => 'variation',
+            'internal' => false,
+        ];
+        $expected = 'translated <b>Arthur Smith</b> '
+            . '<span class="status green">status description</span>';
+
+        $mockTranslator = m::mock();
+        $mockTranslator->shouldReceive('translate')
+            ->once()
+            ->with('tm_application.table.status.removed')
+            ->andReturn('translated');
+        $this->sm->shouldReceive('get')->once()->with('Helper\Translation')->andReturn($mockTranslator);
+
+        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+    }
+
     public function testFormatLicenceInternal()
     {
         $data = [
