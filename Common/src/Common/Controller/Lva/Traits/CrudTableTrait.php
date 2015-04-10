@@ -160,7 +160,7 @@ trait CrudTableTrait
      *
      * @return string The modal message key.
      */
-    protected function getDeleteMessage()
+    public function getDeleteMessage()
     {
         return 'delete.confirmation.text';
     }

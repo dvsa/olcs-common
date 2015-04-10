@@ -523,6 +523,15 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
     }
 
+    /**
+     * Get the delete message.
+     *
+     * NOTE: This method is duplicated in both concrete classes due to trait inheritance.
+     * The trait requires a getDeleteMessage outside of the vehicle domain context and
+     * as trait methods supersede superclass methods..
+     *
+     * @return string
+     */
     public function getDeleteMessage()
     {
         $toDelete = count(explode(',', $this->params('child_id')));
