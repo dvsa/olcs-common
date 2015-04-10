@@ -724,6 +724,13 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $tmHeaderBundle = array(
+        'children' => [
+            'goodsOrPsv',
+            'licence'
+        ]
+    );
+
     protected $interimData = null;
 
     public function getVariationCompletionStatusData($id)
@@ -1328,5 +1335,10 @@ class ApplicationEntityService extends AbstractLvaEntityService
             }
         }
         return $activeDiscs;
+    }
+
+    public function getTmHeaderData($id)
+    {
+        return $this->get($id, $this->tmHeaderBundle);
     }
 }

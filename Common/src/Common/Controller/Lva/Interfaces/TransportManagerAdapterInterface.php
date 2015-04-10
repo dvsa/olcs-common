@@ -7,9 +7,6 @@
  */
 namespace Common\Controller\Lva\Interfaces;
 
-use Zend\Form\Form;
-use Zend\Http\Request;
-
 /**
  * Transport Manager Adapter Interface
  *

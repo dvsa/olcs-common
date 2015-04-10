@@ -26,7 +26,7 @@ class Form extends \Zend\Form\View\Helper\Form
      * @param  ZendFormInterface $form
      * @return string
      */
-    public function render(ZendFormInterface $form)
+    public function render(ZendFormInterface $form, $includeFormTags = true)
     {
         if (method_exists($form, 'prepare')) {
             $form->prepare();
@@ -55,10 +55,13 @@ class Form extends \Zend\Form\View\Helper\Form
             }
         }
 
-        return $this->openTag($form) .
-                $hiddenSubmitElement .
-                implode("\n", $fieldsets) .
-                implode("\n", $elements) .
-                $this->closeTag();
+        return sprintf(
+            '%s%s%s%s%s',
+            $includeFormTags ? $this->openTag($form) : '',
+            $hiddenSubmitElement,
+            implode("\n", $fieldsets),
+            implode("\n", $elements),
+            $includeFormTags ? $this->closeTag() : ''
+        );
     }
 }

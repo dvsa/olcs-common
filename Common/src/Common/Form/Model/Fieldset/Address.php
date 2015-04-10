@@ -34,7 +34,10 @@ class Address
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Address lines"})
+     * @Form\Options({
+     *     "label":"Address lines",
+     *     "short-label":"Address line 1"
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
@@ -66,7 +69,10 @@ class Address
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Town/City"})
+     * @Form\Options({
+     *     "label":"Town/City",
+     *     "short-label":"Town/City"
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
@@ -74,7 +80,10 @@ class Address
 
     /**
      * @Form\Attributes({"id":""})
-     * @Form\Options({"label":"Postcode"})
+     * @Form\Options({
+     *     "label":"Postcode",
+     *     "short-label":"Postcode"
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */

@@ -5,22 +5,22 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Name("tm-details-form-actions")
+ * @Form\Name("send-tm-form-actions")
  * @Form\Attributes({"class":"actions-container"})
  */
-class TmDetailsFormActions
+class SendTmFormActions
 {
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
-     * @Form\Options({"label": "tm-details-submit.button"})
+     * @Form\Options({"label": "send-form.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $submit = null;
+    public $send = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--secondary large"})
-     * @Form\Options({"label": "tm-details-save.button"})
+     * @Form\Attributes({"id":"cancel","type":"submit","class":"action--secondary large"})
+     * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
-    public $save = null;
+    public $cancel = null;
 }

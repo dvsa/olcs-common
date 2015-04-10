@@ -62,7 +62,6 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testGetContentHelper()
     {
-
         $table = new TableBuilder($this->getMockServiceLocator());
 
         $contentHelper = $table->getContentHelper();
