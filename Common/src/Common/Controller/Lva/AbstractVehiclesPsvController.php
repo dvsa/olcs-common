@@ -138,7 +138,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function smallDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction('small');
     }
 
     /**
@@ -162,7 +162,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function mediumDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction('medium');
     }
 
     /**
@@ -186,7 +186,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function largeDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction('large');
     }
 
     /**
@@ -521,5 +521,28 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     private function getPsvTypes()
     {
         return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
+    }
+
+    public function getDeleteMessage()
+    {
+        $toDelete = count(explode(',', $this->params('child_id')));
+        $total = $this->getTotalNumberOfVehicles();
+
+        $licence = $this->getServiceLocator()->get('Entity\Licence')->getOverview($this->getLicenceId());
+
+        $acceptedLicenceTypes = array(
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        );
+
+        if (!in_array($licence['licenceType']['id'], $acceptedLicenceTypes)) {
+            return 'delete.confirmation.text';
+        }
+
+        if ($total !== $toDelete) {
+            return 'delete.confirmation.text';
+        }
+
+        return 'deleting.all.vehicles.message';
     }
 }
