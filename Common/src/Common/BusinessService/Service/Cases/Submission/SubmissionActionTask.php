@@ -47,8 +47,9 @@ class SubmissionActionTask implements
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
         // translate submission action status
-        // TODO - OLCS-8532
-        $translatedActionStatus = $params['submissionActionStatus'];
+        $translatedActionStatus
+            = $this->getServiceLocator()->get('DataServiceManager')->get('\Common\Service\Data\RefData')
+                ->getDescription($params['submissionActionStatus']);
 
         // set task description
         switch ($params['subCategory']) {
