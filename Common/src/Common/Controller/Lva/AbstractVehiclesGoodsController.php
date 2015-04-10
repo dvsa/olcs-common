@@ -17,7 +17,6 @@ use Common\Service\Entity\LicenceEntityService;
  */
 abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController
 {
-    use Traits\CrudTableTrait;
 
     protected $section = 'vehicles';
 
@@ -377,37 +376,5 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         }
 
         return $this->totalVehicles;
-    }
-
-    /**
-     * Get the delete message.
-     *
-     * NOTE: This method is duplicated in both concrete classes due to trait inheritance.
-     * The trait requires a getDeleteMessage outside of the vehicle domain context and
-     * as trait methods supersede superclass methods..
-     *
-     * @return string
-     */
-    public function getDeleteMessage()
-    {
-        $toDelete = count(explode(',', $this->params('child_id')));
-        $total = $this->getTotalNumberOfVehicles();
-
-        $licence = $this->getServiceLocator()->get('Entity\Licence')->getOverview($this->getLicenceId());
-
-        $acceptedLicenceTypes = array(
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
-        );
-
-        if (!in_array($licence['licenceType']['id'], $acceptedLicenceTypes)) {
-            return 'delete.confirmation.text';
-        }
-
-        if ($total !== $toDelete) {
-            return 'delete.confirmation.text';
-        }
-
-        return 'deleting.all.vehicles.message';
     }
 }
