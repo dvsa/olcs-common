@@ -367,7 +367,7 @@ return array(
     'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'How many community licences
         do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'Your traffic area is determined by your
-        operating centre\'s location.<br />For more information and to find your traffic please visit <a href="#"
+        operating centre\'s location.<br />For more information and to find your traffic area please visit <a href="#"
         target="_blank">this link.</a>',
     'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'Your traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Traffic area',
@@ -832,6 +832,9 @@ return array(
     'definition' => 'Definition',
     'delete' => 'Delete',
     'delete.confirmation.text' => 'This action is permanent and cannot be undone.',
+    'deleting.all.vehicles.message' => 'If you are removing all the vehicles from your licence you must be aware that
+        standard licence holders must be able to prove they have a formal arrangement for access at all times to at
+        least one vehicle registered or in circulation.',
     'description' => 'Description',
     'director' => 'Director',
     'disagree' => 'Disagree',
@@ -1168,8 +1171,10 @@ return array(
     'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
         before the office copy',
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
+    'internal.delete-action-trait.title' => 'Remove',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
+    'internal.inspection-request.remove-inspection-request' => 'Remove inspection request',
     'internal.interim.form.grant_confirm' => 'Are you sure you want to grant this interim?',
     'internal.interim.form.grant_not_allowed' => 'You must process the interim fee before granting this application',
     'internal.interim.form.interim_application' => 'Interim application',

@@ -368,7 +368,7 @@ return array(
     'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'W How many community
         licences do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'W Your traffic area is determined by your
-        operating centre\'s location.<br />For more information and to find your traffic please visit <a href="#"
+        operating centre\'s location.<br />For more information and to find your traffic area please visit <a href="#"
         target="_blank">this link.</a>',
     'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'W Your traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'W Traffic area',
@@ -835,6 +835,9 @@ return array(
     'definition' => 'W Definition',
     'delete' => 'W Delete',
     'delete.confirmation.text' => 'W This action is permanent and cannot be undone.',
+    'deleting.all.vehicles.message' => 'W If you are removing all the vehicles from your licence you must be aware that
+        standard licence holders must be able to prove they have a formal arrangement for access at all times to at
+        least one vehicle registered or in circulation.',
     'description' => 'W Description',
     'director' => 'W Director',
     'disagree' => 'W Disagree',
@@ -1172,8 +1175,10 @@ return array(
         licences before the office copy',
     'internal.community_licence.void_not_allowed' => 'W You cannot void the office copy without voiding all the
         licences',
+    'internal.delete-action-trait.title' => 'W Remove',
     'internal.documents.delete.delete_message' => 'W Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'W Deleted successfully',
+    'internal.inspection-request.remove-inspection-request' => 'W Remove inspection request',
     'internal.interim.form.grant_confirm' => 'W Are you sure you want to grant this interim?',
     'internal.interim.form.grant_not_allowed' => 'W You must process the interim fee before granting this application',
     'internal.interim.form.interim_application' => 'W Interim application',
