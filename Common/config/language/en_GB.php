@@ -1168,8 +1168,10 @@ return array(
     'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
         before the office copy',
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
+    'internal.delete-action-trait.title' => 'Remove',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
+    'internal.inspection-request.remove-inspection-request' => 'Remove inspection request',
     'internal.interim.form.grant_confirm' => 'Are you sure you want to grant this interim?',
     'internal.interim.form.grant_not_allowed' => 'You must process the interim fee before granting this application',
     'internal.interim.form.interim_application' => 'Interim application',
