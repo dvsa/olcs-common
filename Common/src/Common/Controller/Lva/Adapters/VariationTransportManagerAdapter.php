@@ -15,16 +15,6 @@ namespace Common\Controller\Lva\Adapters;
 class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
     /**
-     * Override table template used
-     *
-     * @return \Common\Service\Table\TableBuilder
-     */
-    public function getTable()
-    {
-        return parent::getTable('lva-variation-transport-manangers');
-    }
-
-    /**
      * Load data into the table
      */
     public function getTableData($variationId, $licenceId)

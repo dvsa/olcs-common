@@ -4,7 +4,7 @@ namespace CommonTest\Controller\Lva\Adapters;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Controller\Lva\Adapters\VariationTransportManagerAdapter;
+use Common\Controller\Lva\Adapters\LicenceTransportManagerAdapter;
 use Common\Service\Entity\LicenceEntityService;
 
 /**
@@ -12,7 +12,7 @@ use Common\Service\Entity\LicenceEntityService;
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class VariationTransportManagerAdapterTest extends MockeryTestCase
+class LicenceTransportManagerAdapterTest extends MockeryTestCase
 {
     protected $sut;
     protected $sm;
@@ -25,7 +25,7 @@ class VariationTransportManagerAdapterTest extends MockeryTestCase
 
         $this->controller = m::mock('\Zend\Mvc\Controller\AbstractController');
 
-        $this->sut = new VariationTransportManagerAdapter();
+        $this->sut = new LicenceTransportManagerAdapter();
         $this->sut->setServiceLocator($this->sm);
         $this->sut->setController($this->controller);
     }
@@ -276,12 +276,49 @@ class VariationTransportManagerAdapterTest extends MockeryTestCase
     }
 
     /**
-     * @dataProvider dataProviderTableData
      */
-    public function testGetTableData($expectedData, $tmlData, $tmaData)
+    public function testGetTableData()
     {
-        $mockTmaEntityService = m::mock('StdClass');
-        $this->sm->setService('Entity\TransportManagerApplication', $mockTmaEntityService);
+        $tmlData = [
+            'Results' => [
+                [
+                    'id' => 12,
+                    'transportManager' => [
+                        'id' => 99,
+                        'homeCd' => [
+                            'person' => [
+                                'name' => 'fred',
+                                'birthDate' => '2015-04-02'
+                            ],
+                            'emailAddress' => 'bob@example.com',
+                        ]
+                    ],
+                ],
+            ],
+        ];
+
+        $expectedData = [
+            '99' => [
+                'id' => 'L12',
+                'name' => [
+                    'name' => 'fred',
+                    'birthDate' => '2015-04-02'
+                ],
+                'status' => null,
+                'email' => 'bob@example.com',
+                'dob' => '2015-04-02',
+                'transportManager' => [
+                    'id' => 99,
+                    'homeCd' => [
+                        'person' => [
+                            'name' => 'fred',
+                            'birthDate' => '2015-04-02'
+                        ],
+                        'emailAddress' => 'bob@example.com',
+                    ]
+                ],
+            ],
+        ];
 
         $mockTmlEntityService = m::mock('StdClass');
         $this->sm->setService('Entity\TransportManagerLicence', $mockTmlEntityService);
@@ -291,40 +328,12 @@ class VariationTransportManagerAdapterTest extends MockeryTestCase
             ->with(11)
             ->andReturn($tmlData);
 
-        $mockTmaEntityService->shouldReceive('getByApplicationWithHomeContactDetails')
-            ->once()
-            ->with(44)
-            ->andReturn($tmaData);
-
         $this->assertEquals($expectedData, $this->sut->getTableData(44, 11));
     }
 
     public function testDelete()
     {
-        $mockResponse = m::mock();
-        $mockResponse->shouldReceive('isOk')->andReturn(true);
-
-        $mockDeltaDeleteTransportManagerLicence = m::mock();
-        $this->sm->shouldReceive('get->get')
-            ->once()
-            ->with('Lva\DeltaDeleteTransportManagerLicence')
-            ->andReturn($mockDeltaDeleteTransportManagerLicence);
-
-        $mockDeltaDeleteTransportManagerLicence->shouldReceive('process')
-            ->once()
-            ->with(['transportManagerLicenceId' => 5, 'applicationId' => 66])
-            ->andReturn($mockResponse);
-
-        $mockDeleteTransportManagerApplication = m::mock();
-        $this->sm->shouldReceive('get->get')
-            ->once()
-            ->with('Lva\DeleteTransportManagerApplication')
-            ->andReturn($mockDeleteTransportManagerApplication);
-
-        $mockDeleteTransportManagerApplication->shouldReceive('process')
-            ->once()
-            ->with(['ids' => [3]]);
-
-        $this->sut->delete([3,'L5'], 66);
+        // no op there no assertions
+        $this->sut->delete([], 5);
     }
 }
