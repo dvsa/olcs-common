@@ -95,5 +95,4 @@ class ApplicationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         return $formData;
     }
-
 }

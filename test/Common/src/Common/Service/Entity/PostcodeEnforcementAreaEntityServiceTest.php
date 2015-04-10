@@ -40,15 +40,15 @@ class PostcodeEnforcementAreaEntityServiceTest extends AbstractEntityServiceTest
             'Results' => [
                 [
                     'postcodeId' => 'LS9 6',
-                    'createdOn' => NULL,
+                    'createdOn' => null,
                     'id' => 1488,
-                    'lastModifiedOn' => NULL,
+                    'lastModifiedOn' => null,
                     'version' => 1,
                     'enforcementArea' => [
                         'id' => 'V048',
-                        'createdOn' => NULL,
+                        'createdOn' => null,
                         'emailAddress' => 'foo@bar.com',
-                        'lastModifiedOn' => NULL,
+                        'lastModifiedOn' => null,
                         'name' => 'Leeds',
                         'version' => 1,
                     ],
@@ -61,9 +61,9 @@ class PostcodeEnforcementAreaEntityServiceTest extends AbstractEntityServiceTest
 
         $expected = [
             'id' => 'V048',
-            'createdOn' => NULL,
+            'createdOn' => null,
             'emailAddress' => 'foo@bar.com',
-            'lastModifiedOn' => NULL,
+            'lastModifiedOn' => null,
             'name' => 'Leeds',
             'version' => 1,
         ];
