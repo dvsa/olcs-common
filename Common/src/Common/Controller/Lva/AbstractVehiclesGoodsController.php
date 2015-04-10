@@ -7,6 +7,9 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Service\Entity\LicenceStatusRuleEntityService;
+use Common\Service\Entity\LicenceEntityService;
+
 /**
  * Goods Vehicles Controller
  *
@@ -84,6 +87,29 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     public function editAction()
     {
         return $this->addOrEdit('edit');
+    }
+
+    public function getDeleteMessage()
+    {
+        $toDelete = count(explode(',', $this->params('child_id')));
+        $total = $this->getTotalNumberOfVehicles();
+
+        $licence = $this->getServiceLocator()->get('Entity\Licence')->getOverview($this->getLicenceId());
+
+        $acceptedLicenceTypes = array(
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        );
+
+        if (!in_array($licence['licenceType']['id'], $acceptedLicenceTypes)) {
+            return 'delete.confirmation.text';
+        }
+
+        if ($total !== $toDelete) {
+            return 'delete.confirmation.text';
+        }
+
+        return 'deleting.all.vehicles.message';
     }
 
     public function reprintAction()
