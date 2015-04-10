@@ -57,10 +57,8 @@ class SubmissionActionTask implements
                 $subCategoryDescription = 'Decision';
                 break;
             case CategoryDataService::TASK_SUB_CATEGORY_RECOMMENDATION:
-                $subCategoryDescription = 'Recommendation';
-                break;
             default:
-                $subCategoryDescription = '';
+                $subCategoryDescription = 'Recommendation';
                 break;
         }
 
