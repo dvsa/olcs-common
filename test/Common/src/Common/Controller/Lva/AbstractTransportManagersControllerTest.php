@@ -552,4 +552,37 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
         $this->assertEquals('RESPONSE', $this->sut->addTmAction());
     }
+
+    public function testRestoreAction()
+    {
+        $mockTmlEntityService = m::mock();
+        $this->sm->setService('Entity\TransportManagerLicence', $mockTmlEntityService);
+
+        $mockTmaEntityService = m::mock();
+        $this->sm->setService('Entity\TransportManagerApplication', $mockTmaEntityService);
+
+        $this->sut->shouldReceive('params')->once()->with('child_id')->andReturn('4,L7');
+        $this->sut->shouldReceive('getIdentifier')->once()->andReturn(121);
+
+        $mockTmlEntityService->shouldReceive('getTransportManagerLicence')
+            ->once()
+            ->with(7)
+            ->andReturn(['transportManager' => ['id' => 55]]);
+
+        $mockTmaEntityService->shouldReceive('getByApplicationTransportManager')
+            ->once()
+            ->with(121, 55)
+            ->andReturn(['Results' => [['id' => 185], ['id' => 444]]]);
+
+        $mockBusServ = m::mock();
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $bsm->shouldReceive('get')->once()->with('Lva\DeleteTransportManagerApplication')->andReturn($mockBusServ);
+
+        $mockBusServ->shouldReceive('process')->once()->with(['ids' => [4, 185, 444]]);
+
+        $this->sut->shouldReceive('redirect->toRouteAjax')->once()->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->restoreAction());
+    }
 }

@@ -9,13 +9,9 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true),
-                'restore' => array('class' => 'secondary', 'requireRows' => true),
+                'delete' => array('class' => 'secondary', 'requireRows' => true)
             )
         ),
-        'row-disabled-callback' => function ($row) {
-            return isset($row['action']) && in_array($row['action'], ['D', 'C']);
-        }
     ),
     'attributes' => array(
     ),
@@ -23,8 +19,8 @@ return array(
         array(
             'title' => 'Name',
             'formatter' => 'TransportManagerName',
-            'internal' => true,
-            'lva' => 'variation'
+            'internal' => false,
+            'lva' => 'application',
         ),
         array(
             'title' => 'Email',
@@ -36,12 +32,8 @@ return array(
             'formatter' => 'Date',
         ),
         array(
-            'name' => 'select',
             'width' => 'checkbox',
-            'type' => 'Checkbox',
-            'data-attributes' => array(
-                'action'
-            )
+            'type' => 'Checkbox'
         )
     )
 );

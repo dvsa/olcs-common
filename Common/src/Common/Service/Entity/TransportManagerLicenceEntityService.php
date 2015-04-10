@@ -114,7 +114,9 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
     public function getByLicenceWithHomeContactDetails($licenceId)
     {
         $query = [
-            'licence' => $licenceId
+            'licence' => $licenceId,
+            'sort'  => 'id',
+            'order' => 'DESC',
         ];
 
         return $this->getAll($query, $this->homeContactDetailsBundle);
