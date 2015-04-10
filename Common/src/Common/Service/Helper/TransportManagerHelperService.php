@@ -37,4 +37,15 @@ class TransportManagerHelperService extends AbstractHelperService
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
         ];
     }
+
+    public function alterResponsibilitiesFieldset($fieldset, $ocOptions, $otherLicencesTable)
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $fieldset->get('operatingCentres')->setValueOptions($ocOptions);
+
+        $formHelper->removeOption($fieldset->get('tmType'), 'tm_t_B');
+
+        $formHelper->populateFormTable($fieldset->get('otherLicences'), $otherLicencesTable);
+    }
 }

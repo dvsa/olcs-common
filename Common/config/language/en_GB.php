@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'internal.transport-manager.responsibilities.is-owner' => 'Are you the owner/director of the organisation applying for the Vehicle Operator Licence?',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1234,12 +1235,12 @@ return array(
     'internal.transport-manager.other-licence.form.operating-centres' => 'Operating centres',
     'internal.transport-manager.other-licence.form.role' => 'Role',
     'internal.transport-manager.other-licence.form.total-auth-vehicles' => 'Vehicles',
-    'internal.transport-manager.otherlicences.table' => 'Other Licences',
-    'internal.transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
-    'internal.transport-manager.otherlicences.table.lic_no' => 'Licence Number',
-    'internal.transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
-    'internal.transport-manager.otherlicences.table.role' => 'Role',
-    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
+    'transport-manager.otherlicences.table' => 'Other Licences',
+    'transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
+    'transport-manager.otherlicences.table.lic_no' => 'Licence Number',
+    'transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
+    'transport-manager.otherlicences.table.role' => 'Role',
+    'transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
     'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete the
         selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'Deleted successfully',
@@ -1250,22 +1251,22 @@ return array(
     'internal.transport-manager.previouslicences.table.lic-no' => 'Licence no.',
     'internal.transport-manager.processing.notes.add.title' => 'Add note',
     'internal.transport-manager.processing.notes.modify.title' => 'Edit note',
-    'internal.transport-manager.responsibilities.additional-information' => 'Additional information',
-    'internal.transport-manager.responsibilities.application-id' => 'Application ID',
-    'internal.transport-manager.responsibilities.cancel' => 'Cancel',
-    'internal.transport-manager.responsibilities.continue' => 'Continue',
-    'internal.transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the
+    'transport-manager.responsibilities.additional-information' => 'Additional information',
+    'transport-manager.responsibilities.application-id' => 'Application ID',
+    'transport-manager.responsibilities.cancel' => 'Cancel',
+    'transport-manager.responsibilities.continue' => 'Continue',
+    'transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the
         selected record(s)?',
-    'internal.transport-manager.responsibilities.hours-per-week' => 'Hours per week',
-    'internal.transport-manager.responsibilities.hours-per-week-subtitle' => 'How many hours will you spend on your
+    'transport-manager.responsibilities.hours-per-week' => 'Hours per week',
+    'transport-manager.responsibilities.hours-per-week-subtitle' => 'How many hours will you spend on your
         Transport Manager duties?',
-    'internal.transport-manager.responsibilities.print' => 'Print',
-    'internal.transport-manager.responsibilities.save' => 'Save',
-    'internal.transport-manager.responsibilities.table.applications' => 'Applications',
-    'internal.transport-manager.responsibilities.table.licences' => 'Licences',
-    'internal.transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be
+    'transport-manager.responsibilities.print' => 'Print',
+    'transport-manager.responsibilities.save' => 'Save',
+    'transport-manager.responsibilities.table.applications' => 'Applications',
+    'transport-manager.responsibilities.table.licences' => 'Licences',
+    'transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be
         responsible for?',
-    'internal.transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
+    'transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',

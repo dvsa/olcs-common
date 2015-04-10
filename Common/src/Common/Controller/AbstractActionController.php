@@ -347,7 +347,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         if (!in_array($action, $this->getNoActionIdentifierRequired())) {
 
-            $id = $this->params()->fromPost('id');
+            $post = (array)$this->params()->fromPost();
+
+            if (isset($post['table']['id'])) {
+                $id = $post['table']['id'];
+            } else {
+                $id = $this->params()->fromPost('id');
+            }
 
             if (empty($id)) {
 
