@@ -7,6 +7,8 @@
  */
 namespace CommonTest\Service\Postcode;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
 use Common\Service\Postcode\Postcode;
 use CommonTest\Bootstrap;
 
@@ -15,7 +17,7 @@ use CommonTest\Bootstrap;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class PostcodeTest extends \PHPUnit_Framework_TestCase
+class PostcodeTest extends MockeryTestCase
 {
 
     /**
@@ -76,6 +78,56 @@ class PostcodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($result), 2);
         $this->assertEquals($result[0], null);
         $this->assertEquals($result[1], null);
+    }
+
+    public function testGetEnforcementAreaByPostcodePrefixAndDigit()
+    {
+        $postcode = 'LS9 6NF';
+
+        $sm = Bootstrap::getServiceManager();
+        $this->postcode->setServiceLocator($sm);
+        $mockEntityService = m::mock();
+
+        $sm->shouldReceive('get')->with('Entity\PostcodeEnforcementArea')
+            ->andReturn($mockEntityService);
+
+        $mockEntityService
+            ->shouldReceive('getEnforcementAreaByPostcodePrefix')
+            ->with('LS9 6')
+            ->once()
+            ->andReturn('ENFORCEMENT_AREA');
+
+        $this->assertEquals(
+            'ENFORCEMENT_AREA',
+            $this->postcode->getEnforcementAreaByPostcode($postcode)
+        );
+    }
+
+    public function testGetEnforcementAreaByPostcodePrefix()
+    {
+        $postcode = 'LS9 6NF';
+
+        $sm = Bootstrap::getServiceManager();
+        $this->postcode->setServiceLocator($sm);
+        $mockEntityService = m::mock();
+
+        $sm->shouldReceive('get')->with('Entity\PostcodeEnforcementArea')
+            ->andReturn($mockEntityService);
+
+        $mockEntityService
+            ->shouldReceive('getEnforcementAreaByPostcodePrefix')
+            ->with('LS9 6')
+            ->once()
+            ->andReturn(null)
+            ->shouldReceive('getEnforcementAreaByPostcodePrefix')
+            ->with('LS9')
+            ->once()
+            ->andReturn('ENFORCEMENT_AREA');
+
+        $this->assertEquals(
+            'ENFORCEMENT_AREA',
+            $this->postcode->getEnforcementAreaByPostcode($postcode)
+        );
     }
 
     /**

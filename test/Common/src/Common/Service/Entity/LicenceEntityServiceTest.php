@@ -641,6 +641,27 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testSetEnforcementArea()
+    {
+        $licenceId = 69;
+        $enforcementAreaId = 'V048';
+
+        $data = [
+            'id' => $licenceId,
+            'enforcementArea' => $enforcementAreaId,
+            '_OPTIONS_' => [
+                'force' => true
+            ],
+        ];
+
+        $this->expectOneRestCall('Licence', 'PUT', $data);
+
+        $this->sut->setEnforcementArea($licenceId, $enforcementAreaId);
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testFindByIdentifierWithResult()
     {
         $response = [
