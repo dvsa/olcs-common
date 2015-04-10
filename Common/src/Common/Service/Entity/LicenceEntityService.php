@@ -317,6 +317,13 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $operatingCentresDataBundle = array(
+        'children' => array(
+            'trafficArea',
+            'enforcementArea',
+        ),
+    );
+
     /**
      * Get data for overview
      *
@@ -466,6 +473,8 @@ class LicenceEntityService extends AbstractLvaEntityService
         if ($trafficAreaId) {
             $this->generateLicence($licenceId);
         }
+
+        return $this;
     }
 
     /**
@@ -476,7 +485,8 @@ class LicenceEntityService extends AbstractLvaEntityService
      */
     public function setEnforcementArea($licenceId, $enforcementAreaId)
     {
-        return $this->forceUpdate($licenceId, array('enforcementArea' => $enforcementAreaId));
+        $this->forceUpdate($licenceId, array('enforcementArea' => $enforcementAreaId));
+        return $this;
     }
 
     /**

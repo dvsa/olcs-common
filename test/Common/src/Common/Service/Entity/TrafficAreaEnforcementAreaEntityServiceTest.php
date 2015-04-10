@@ -33,6 +33,7 @@ class TrafficAreaEnforcementAreaEntityServiceTest extends AbstractEntityServiceT
 
         $query = [
             'trafficArea' => $trafficArea,
+            'limit' => 'all',
         ];
 
         $response = [

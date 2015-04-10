@@ -44,6 +44,8 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         )
     );
 
+    protected $operatingCentresDataBundle = array();
+
     /**
      * Get operating centres data
      *
@@ -52,9 +54,7 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
      */
     public function getOperatingCentresData($id)
     {
-        // @NOTE: we're going to be consolidating calls which
-        // no longer need to define a bundle
-        return $this->get($id);
+        return $this->get($id, $this->operatingCentresDataBundle);
     }
 
     public function getDocuments($id, $categoryId, $documentSubCategoryId)

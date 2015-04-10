@@ -731,6 +731,17 @@ class ApplicationEntityService extends AbstractLvaEntityService
         ]
     );
 
+    protected $operatingCentresDataBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'trafficArea',
+                    'enforcementArea',
+                ),
+            ),
+        ),
+    );
+
     protected $interimData = null;
 
     public function getVariationCompletionStatusData($id)

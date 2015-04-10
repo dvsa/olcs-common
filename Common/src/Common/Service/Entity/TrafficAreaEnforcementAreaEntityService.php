@@ -39,7 +39,7 @@ class TrafficAreaEnforcementAreaEntityService extends AbstractEntityService
             'trafficArea' => $trafficArea,
         ];
 
-        $all = $this->get($query, $this->bundle);
+        $all = $this->getAll($query, $this->bundle);
 
         $results = $all['Results'];
 

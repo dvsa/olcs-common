@@ -106,7 +106,12 @@ class ApplicationOperatingCentreAdapterTest extends MockeryTestCase
             ->andReturn($licenceId);
 
         $mockLicenceEntity->shouldReceive('setTrafficArea')
-            ->with($licenceId, null);
+            ->with($licenceId, null)
+            ->andReturnSelf();
+
+        $mockLicenceEntity->shouldReceive('setEnforcementArea')
+            ->with($licenceId, null)
+            ->andReturnSelf();
 
         $this->sut->delete();
     }

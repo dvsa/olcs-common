@@ -35,6 +35,7 @@ class TrafficArea
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Required(false)
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.enforcementArea.label",
      *     "value_options": {

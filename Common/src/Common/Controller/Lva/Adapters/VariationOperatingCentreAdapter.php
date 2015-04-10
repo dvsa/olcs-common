@@ -593,6 +593,10 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
             $data['dataTrafficArea']['hiddenId'] = $oldData['licence']['trafficArea']['id'];
         }
 
+        if (isset($oldData['licence']['enforcementArea']['id'])) {
+            $data['dataTrafficArea']['enforcementArea'] = $oldData['licence']['enforcementArea']['id'];
+        }
+
         return $data;
     }
 

@@ -76,4 +76,24 @@ class ApplicationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
                 ->setTrafficArea($licenceId, null);
         }
     }
+
+    /**
+     * Format data for form
+     *
+     * @param array $data
+     * @param array $tableData
+     * @param array $licenceData
+     * @return array
+     */
+    protected function formatDataForForm(array $data, array $tableData, array $licenceData)
+    {
+        $formData = parent::formatDataForForm($data, $tableData, $licenceData);
+
+        if (isset($data['licence']['enforcementArea']['id'])) {
+            $formData['dataTrafficArea']['enforcementArea'] = $data['licence']['enforcementArea']['id'];
+        }
+
+        return $formData;
+    }
+
 }

@@ -296,6 +296,8 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     {
         $appData = $this->formatDataForSave($data);
 
+        $this->getLvaEntityService()->save($appData);
+
         if (isset($appData['trafficArea']) && $appData['trafficArea']) {
 
             $this->getServiceLocator()->get('Entity\Licence')
@@ -305,7 +307,13 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
                 );
         }
 
-        $this->getLvaEntityService()->save($appData);
+        if (isset($appData['enforcementArea']) && $appData['enforcementArea']) {
+            $this->getServiceLocator()->get('Entity\Licence')
+                ->setEnforcementArea(
+                    $this->getLicenceAdapter()->getIdentifier(),
+                    $appData['enforcementArea']
+                );
+        }
     }
 
     /**
