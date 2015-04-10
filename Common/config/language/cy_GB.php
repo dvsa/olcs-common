@@ -368,7 +368,7 @@ return array(
     'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'W How many community
         licences do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'W Your traffic area is determined by your
-        operating centre\'s location.<br />For more information and to find your traffic please visit <a href="#"
+        operating centre\'s location.<br />For more information and to find your traffic area please visit <a href="#"
         target="_blank">this link.</a>',
     'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'W Your traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'W Traffic area',
