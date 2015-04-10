@@ -664,6 +664,10 @@ return array(
                 'Common\BusinessService\Service\Lva\TransportManager',
             'Lva\DeltaDeleteTransportManagerLicence' =>
                 'Common\BusinessService\Service\Lva\DeltaDeleteTransportManagerLicence',
+            'Lva\TransportManagerDetails' =>
+                'Common\BusinessService\Service\Lva\TransportManagerDetails',
+            'Lva\Person' =>
+                'Common\BusinessService\Service\Lva\Person',
         ]
     ],
 );

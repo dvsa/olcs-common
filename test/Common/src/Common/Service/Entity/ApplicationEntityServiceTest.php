@@ -1046,6 +1046,34 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->sut->saveInterimData($formData, $type);
     }
 
+    public function testGetApplicationsForLicence()
+    {
+        $licenceId = 69;
+
+        $this->expectOneRestCall(
+            'Application',
+            'GET',
+            ['licence' => $licenceId],
+            [
+                'children' => [
+                    'status',
+                    'interimStatus',
+                ]
+            ]
+        )
+        ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getApplicationsForLicence($licenceId));
+    }
+
+    public function testGetTmHeaderData()
+    {
+        $this->expectOneRestCall('Application', 'GET', 111)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getTmHeaderData(111));
+    }
+
     /**
      * Provider set interim data
      */
@@ -1464,25 +1492,5 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 ]
             ]
         ];
-    }
-
-    public function testGetApplicationsForLicence()
-    {
-        $licenceId = 69;
-
-        $this->expectOneRestCall(
-            'Application',
-            'GET',
-            ['licence' => $licenceId],
-            [
-                'children' => [
-                    'status',
-                    'interimStatus',
-                ]
-            ]
-        )
-        ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getApplicationsForLicence($licenceId));
     }
 }

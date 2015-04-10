@@ -50,7 +50,7 @@ class SendTransportManagerApplication implements
 
         unset($params['dob']);
 
-        return $this->getBusinessServiceManager()->get('Lva\TransportManagerApplication')
+        return $this->getBusinessServiceManager()->get('Lva\TransportManagerApplicationForUser')
             ->process($params);
     }
 }
