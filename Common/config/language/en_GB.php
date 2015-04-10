@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'lva-tm-details-details-responsibilities' => 'Responsibilities',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1249,7 +1250,7 @@ return array(
     'internal.transport-manager.previouslicences.table.lic-no' => 'Licence no.',
     'internal.transport-manager.processing.notes.add.title' => 'Add note',
     'internal.transport-manager.processing.notes.modify.title' => 'Edit note',
-    'internal.transport-manager.responsibilities.is-owner' => 'Are you the owner/director of the organisation applying
+    'transport-manager.responsibilities.is-owner' => 'Are you the owner/director of the organisation applying
         for the Vehicle Operator Licence?',
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',

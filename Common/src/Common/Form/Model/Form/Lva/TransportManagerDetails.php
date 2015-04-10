@@ -35,6 +35,7 @@ class TransportManagerDetails
     /**
      * @Form\Name("responsibilities")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\Responsibilities")
+     * @Form\Options({"label":"lva-tm-details-details-responsibilities"})
      */
     public $responsibilities = null;
 

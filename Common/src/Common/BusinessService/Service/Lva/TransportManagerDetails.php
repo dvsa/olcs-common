@@ -74,16 +74,13 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
             $responseData['transportManagerId'] = $tmResponse->getData()['id'];
         }
 
-        // If we are submitting, then we need to update the TMA status to awaiting signature
-        if ($params['submit']) {
-            $tmaResponse = $this->persistTransportManagerApplication($params);
+        $tmaResponse = $this->persistTransportManagerApplication($params);
 
-            if (!$tmaResponse->isOk()) {
-                return $tmaResponse;
-            }
-
-            $responseData['transportManagerApplicationId'] = $tmaResponse->getData()['id'];
+        if (!$tmaResponse->isOk()) {
+            return $tmaResponse;
         }
+
+        $responseData['transportManagerApplicationId'] = $tmaResponse->getData()['id'];
 
         return new Response(Response::TYPE_SUCCESS, $responseData);
     }
@@ -183,13 +180,31 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
      */
     protected function persistTransportManagerApplication($params)
     {
+        $responsibilities = $params['data']['responsibilities'];
+        $hours = $responsibilities['hoursOfWeek']['hoursPerWeekContent'];
+
         $tmApplicationParams = [
             'data' => [
                 'id' => $params['transportManagerApplication']['id'],
                 'version' => $params['transportManagerApplication']['version'],
-                'tmApplicationStatus' => TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE
+                'tmType' => $responsibilities['tmType'],
+                'additionalInformation' => $responsibilities['additionalInformation'],
+                'hoursMon' => $hours['hoursMon'],
+                'hoursTue' => $hours['hoursTue'],
+                'hoursWed' => $hours['hoursWed'],
+                'hoursThu' => $hours['hoursThu'],
+                'hoursFri' => $hours['hoursFri'],
+                'hoursSat' => $hours['hoursSat'],
+                'hoursSun' => $hours['hoursSun'],
+                'isOwner' => $responsibilities['isOwner'],
+                'operatingCentres' => $responsibilities['operatingCentres']
             ]
         ];
+
+        if ($params['submit']) {
+            $submitStatus = TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE;
+            $tmApplicationParams['data']['tmApplicationStatus'] = $submitStatus;
+        }
 
         return $this->getBusinessServiceManager()->get('Lva\TransportManagerApplication')
             ->process($tmApplicationParams);
