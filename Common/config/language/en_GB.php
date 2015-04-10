@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'lva-tm-details-details-responsibilities' => 'Responsibilities',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1251,8 +1250,6 @@ return array(
     'internal.transport-manager.previouslicences.table.lic-no' => 'Licence no.',
     'internal.transport-manager.processing.notes.add.title' => 'Add note',
     'internal.transport-manager.processing.notes.modify.title' => 'Edit note',
-    'transport-manager.responsibilities.is-owner' => 'Are you the owner/director of the organisation applying
-        for the Vehicle Operator Licence?',
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
@@ -1426,6 +1423,7 @@ return array(
     'lva-tm-details-details-email' => 'Email address',
     'lva-tm-details-details-homeAddress' => 'Home address',
     'lva-tm-details-details-name' => 'Name',
+    'lva-tm-details-details-responsibilities' => 'Responsibilities',
     'lva-tm-details-details-workAddress' => 'Work address',
     'lva-tm-details-dob' => 'Date of birth',
     'lva-tm-details-email' => 'Email address',
@@ -1489,6 +1487,9 @@ return array(
     'lva.section.title.trailer' => 'Trailers',
     'lva.section.title.transport_managers' => 'Transport managers',
     'lva.section.title.transport_managers-details' => 'Transport manager details',
+    'lva.section.title.transport_managers-details-add-other-licences' => 'Add other licence',
+    'lva.section.title.transport_managers-details-edit-other-licences' => 'Edit other licence',
+    'lva.section.title.transport_managers-details-other-licences-success' => 'Other licence saved successfully',
     'lva.section.title.type_of_licence' => 'Type of licence',
     'lva.section.title.undertakings' => 'Review & declarations',
     'lva.section.title.vehicles' => 'Vehicles',
@@ -2149,6 +2150,8 @@ return array(
     'transport-manager.responsibilities.hours-per-week' => 'Hours per week',
     'transport-manager.responsibilities.hours-per-week-subtitle' => 'How many hours will you spend on your Transport
         Manager duties?',
+    'transport-manager.responsibilities.is-owner' => 'Are you the owner/director of the organisation applying for the
+        Vehicle Operator Licence?',
     'transport-manager.responsibilities.print' => 'Print',
     'transport-manager.responsibilities.save' => 'Save',
     'transport-manager.responsibilities.table.applications' => 'Applications',
@@ -2156,6 +2159,7 @@ return array(
     'transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be responsible for?',
     'transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
     'transport-managers' => 'Transport Managers',
+    'transport_managers-details-OtherLicences-delete-success' => 'Other licence successfully removed',
     'type-of-licence' => 'Type of licence',
     'undertakings' => 'Undertakings',
     'united-kingdom' => 'United Kingdom',
