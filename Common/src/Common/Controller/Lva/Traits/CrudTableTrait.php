@@ -111,10 +111,8 @@ trait CrudTableTrait
      * Generic delete functionality; usually does the trick but
      * can be overridden if not
      */
-    public function deleteAction($type = null)
+    public function deleteAction()
     {
-        $this->type = $type;
-
         $request = $this->getRequest();
 
         if ($request->isPost()) {

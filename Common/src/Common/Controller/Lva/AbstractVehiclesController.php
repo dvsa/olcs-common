@@ -18,7 +18,8 @@ use Common\Service\Entity\LicenceEntityService;
  */
 abstract class AbstractVehiclesController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\AdapterAwareTrait;
+    use Traits\AdapterAwareTrait,
+        Traits\CrudTableTrait;
 
     protected $totalAuthorisedVehicles = array();
     protected $totalVehicles = array();
@@ -358,6 +359,11 @@ abstract class AbstractVehiclesController extends AbstractController implements 
         return $form;
     }
 
+    /**
+     * Get the delete message.
+     *
+     * @return string
+     */
     public function getDeleteMessage()
     {
         $toDelete = count(explode(',', $this->params('child_id')));
