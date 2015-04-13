@@ -23,4 +23,6 @@ interface TransportManagerAdapterInterface extends AdapterInterface
     public function mustHaveAtLeastOneTm($lvaId);
 
     public function delete(array $ids, $applicationId);
+
+    public function addMessages($licenceId);
 }

@@ -1902,7 +1902,7 @@ return array(
     'section.link.update.financial_history' => 'Update financial history',
     'section.link.update.licence_history' => 'Update licence history',
     'section.link.update.operating_centres' => 'Update operating centre',
-    'section.link.update.people' => 'Update directors',
+    'section.link.update.people' => 'Update people',
     'section.link.update.safety' => 'Update safety',
     'section.link.update.taxi_phv' => 'Update taxi/PHV licences',
     'section.link.update.trailers' => 'Update trailers',
