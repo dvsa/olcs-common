@@ -675,6 +675,8 @@ return array(
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
             // Cases business services
+            'Cases\Complaint\EnvironmentalComplaint'
+                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaint',
             'Cases\Submission\Decision' => 'Common\BusinessService\Service\Cases\Submission\Decision',
             'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
             'Cases\Submission\SubmissionActionTask'
