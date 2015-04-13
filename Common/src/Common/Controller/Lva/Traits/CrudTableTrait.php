@@ -48,8 +48,12 @@ trait CrudTableTrait
      * @param array $data
      * @return \Zend\Http\Response
      */
-    protected function handleCrudAction($data, $rowsNotRequired = array('add'), $childIdParamName = 'child_id')
-    {
+    protected function handleCrudAction(
+        $data,
+        $rowsNotRequired = ['add'],
+        $childIdParamName = 'child_id',
+        $route = null
+    ) {
         $action = $this->getActionFromCrudAction($data);
 
         if (is_array($data['action'])) {
@@ -73,7 +77,7 @@ trait CrudTableTrait
             $routeParams[$childIdParamName] = $data['id'];
         }
 
-        return $this->redirect()->toRoute(null, $routeParams, array(), true);
+        return $this->redirect()->toRoute($route, $routeParams, array(), true);
     }
 
     /**

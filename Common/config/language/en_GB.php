@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'section.name.transport_managers.details' => 'Details',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
