@@ -376,6 +376,7 @@ return array(
         area has been determined from your address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
     'application_operating-centres_authorisation.table.address' => 'W Address',
     'application_operating-centres_authorisation.table.advertised' => 'W Advertised',
+    'application_operating-centres_authorisation.table.complaints' => 'W Complaints',
     'application_operating-centres_authorisation.table.footer.total' => 'W Totals',
     'application_operating-centres_authorisation.table.footer.total-psv' => 'W Total vehicles',
     'application_operating-centres_authorisation.table.permission' => 'W Permission',
