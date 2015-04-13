@@ -842,4 +842,78 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             LicenceEntityService::LICENCE_STATUS_GRANTED
         );
     }
+
+    public function submitApplication($applicationId)
+    {
+        $dateHelper = $this->getServiceLocator()->get('Helper\Date');
+        $licenceId = $this->getLicenceId($applicationId);
+
+        $update = array(
+            'status' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
+            'receivedDate' => $dateHelper->getDateObject()->format('Y-m-d H:i:s'),
+            'targetCompletionDate' => $dateHelper->getDateObject()->modify('+9 week')->format('Y-m-d H:i:s')
+        );
+
+        $this->getServiceLocator()
+            ->get('Entity\Application')
+            ->forceUpdate($applicationId, $update);
+
+        // @TODO licence status on new apps
+
+        $actionDate = $dateHelper->getDate();
+
+        $assignment = $this->getServiceLocator()
+            ->get('Processing\Task')
+            ->getAssignment(['category' => CategoryDataService::CATEGORY_APPLICATION]);
+
+        $task = array_merge(
+            [
+                'category' => CategoryDataService::CATEGORY_APPLICATION,
+                'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL,
+                'description' => $this->getTaskDescription($applicationId),
+                'actionDate' => $actionDate,
+                'assignedByUser' => 1,
+                'isClosed' => 0,
+                'application' => $applicationId,
+                'licence' => $licenceId,
+            ],
+            $assignment
+        );
+
+        $this->getServiceLocator()->get('Entity\Task')->save($task);
+    }
+
+    protected function getTaskDescription($applicationId)
+    {
+        $isVariation = false;
+        $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
+        $applicationData = $applicationEntityService->getDataForValidating($applicationId);
+
+        if ($isVariation) {
+            $isUpgrade = $this->getServiceLocator()->get('Processing\VariationSection')
+                ->isLicenceUpgrade($applicationId);
+            if ($applicationData['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+                $code = $isUpgrade
+                    ? ApplicationEntityService::CODE_GV_VAR_UPGRADE
+                    : ApplicationEntityService::CODE_GV_VAR_NO_UPGRADE;
+            } else {
+                $code = $isUpgrade
+                    ? ApplicationEntityService::CODE_PSV_VAR_UPGRADE
+                    : ApplicationEntityService::CODE_PSV_VAR_NO_UPGRADE;
+            }
+        } else {
+            // new app.
+            if ($applicationData['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+                $code = ApplicationService::CODE_GV_APP;
+            } else {
+                if ($applicationData['licenceType'] === LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+                    $code = ApplicationService::CODE_PSV_APP_SR;
+                } else {
+                    $code = ApplicationService::CODE_PSV_APP;
+                }
+            }
+        }
+
+        return $code . ' Application';
+    }
 }
