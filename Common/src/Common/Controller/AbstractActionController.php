@@ -347,7 +347,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         if (!in_array($action, $this->getNoActionIdentifierRequired())) {
 
-            $post = (array)$this->params()->fromPost();
+            $post = (array)$this->getRequest()->getPost();
 
             if (isset($post['table']['id'])) {
                 $id = $post['table']['id'];
@@ -421,7 +421,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getCrudActionFromPost()
     {
-        $post = (array)$this->params()->fromPost();
+        $post = (array)$this->getRequest()->getPost();
 
         if (isset($post['table']['action'])) {
             return $post['table']['action'];
