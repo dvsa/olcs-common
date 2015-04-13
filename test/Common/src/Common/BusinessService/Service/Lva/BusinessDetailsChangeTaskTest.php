@@ -48,7 +48,7 @@ class BusinessDetailsChangeTaskTest extends MockeryTestCase
         // Mocks
         $mockTaskService = m::mock('\Common\BusinessService\BusinessServiceInterface');
 
-        $this->bsm->setService('Lva\Task', $mockTaskService);
+        $this->bsm->setService('Task', $mockTaskService);
 
         // Expectations
         $mockTaskService->shouldReceive('process')

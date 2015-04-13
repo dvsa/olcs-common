@@ -77,7 +77,7 @@ class ApplicationVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
             $type = $vehicleEntityService->getTypeFromPsvType($psvType);
             $vehicles  = (int)$this->getVehicleCountByPsvType($applicationId, $psvType);
             $authority = (int)$this->getVehicleAuthByType($applicationId, $type);
-            if ($vehicles>$authority) {
+            if ($vehicles > $authority) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->$method(
                     'more-vehicles-than-'.$type.'-authorisation'
                 );

@@ -767,6 +767,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                         )
                     ),
                     'criteria' => array(
+                        'removalDate' => 'NULL',
                         array(
                             'application' => $applicationId,
                             'specifiedDate' => 'NOT NULL'
