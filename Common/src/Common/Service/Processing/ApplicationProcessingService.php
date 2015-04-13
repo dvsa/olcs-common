@@ -848,10 +848,11 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $dateHelper = $this->getServiceLocator()->get('Helper\Date');
         $licenceId = $this->getLicenceId($applicationId);
 
+        $now = $dateHelper->getDateObject();
         $update = array(
             'status' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
-            'receivedDate' => $dateHelper->getDateObject()->format('Y-m-d H:i:s'),
-            'targetCompletionDate' => $dateHelper->getDateObject()->modify('+9 week')->format('Y-m-d H:i:s')
+            'receivedDate' => $now->format('Y-m-d H:i:s'),
+            'targetCompletionDate' => $now->modify('+9 week')->format('Y-m-d H:i:s')
         );
 
         $this->getServiceLocator()
@@ -859,8 +860,6 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             ->forceUpdate($applicationId, $update);
 
         // @TODO licence status on new apps
-
-        $actionDate = $dateHelper->getDate();
 
         $assignment = $this->getServiceLocator()
             ->get('Processing\Task')
@@ -871,7 +870,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
                 'category' => CategoryDataService::CATEGORY_APPLICATION,
                 'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL,
                 'description' => $this->getTaskDescription($applicationId),
-                'actionDate' => $actionDate,
+                'actionDate' => $now->format('Y-m-d'),
                 'assignedByUser' => 1,
                 'isClosed' => 0,
                 'application' => $applicationId,
@@ -885,11 +884,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     protected function getTaskDescription($applicationId)
     {
-        $isVariation = false;
         $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
         $applicationData = $applicationEntityService->getDataForValidating($applicationId);
 
-        if ($isVariation) {
+        if ($applicationData['isVariation'] === true) {
             $isUpgrade = $this->getServiceLocator()->get('Processing\VariationSection')
                 ->isLicenceUpgrade($applicationId);
             if ($applicationData['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
@@ -904,12 +902,12 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         } else {
             // new app.
             if ($applicationData['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-                $code = ApplicationService::CODE_GV_APP;
+                $code = ApplicationEntityService::CODE_GV_APP;
             } else {
                 if ($applicationData['licenceType'] === LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
-                    $code = ApplicationService::CODE_PSV_APP_SR;
+                    $code = ApplicationEntityService::CODE_PSV_APP_SR;
                 } else {
-                    $code = ApplicationService::CODE_PSV_APP;
+                    $code = ApplicationEntityService::CODE_PSV_APP;
                 }
             }
         }
