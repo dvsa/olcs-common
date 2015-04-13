@@ -11,7 +11,6 @@ use Common\BusinessService\BusinessServiceAwareTrait;
 use Common\BusinessService\Response;
 use Common\BusinessRule\BusinessRuleAwareInterface;
 use Common\BusinessRule\BusinessRuleAwareTrait;
-use Common\Service\Data\CategoryDataService;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
@@ -52,11 +51,16 @@ class EnvironmentalComplaint implements
 
         if (empty($params['id'])) {
             // create a task
-            $this->createTask(
-                [
-                    'caseId' => $params['caseId'],
-                ]
-            );
+            $response = $this->getBusinessServiceManager()->get('Cases\Complaint\EnvironmentalComplaintTask')
+                ->process(
+                    [
+                        'caseId' => $params['caseId'],
+                    ]
+                );
+
+            if (!$response->isOk()) {
+                return $response;
+            }
         }
 
         $response = new Response();
@@ -184,40 +188,5 @@ class EnvironmentalComplaint implements
         }
 
         return true;
-    }
-
-    /**
-     * Create a task
-     *
-     * @param array $params
-     */
-    private function createTask(array $params)
-    {
-        // get the licence for the case
-        $case = $this->getServiceLocator()->get('DataServiceManager')->get('Olcs\Service\Data\Cases')
-            ->fetchData(
-                $params['caseId'],
-                ['children' => ['licence']]
-            );
-
-        // get details of the recipient and the current user
-        $currentUser = $this->getServiceLocator()->get('Entity\User')->getCurrentUser();
-        $recipientUser = $currentUser;
-
-        // set the task details
-        $taskParams = [
-            'category' => CategoryDataService::CATEGORY_ENVIRONMENTAL,
-            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_REVIEW_COMPLAINT,
-            'description' => 'Review complaint',
-            'actionDate' => $case['licence']['reviewDate'],
-            'assignedToUser' => $recipientUser['id'],
-            'assignedToTeam' => $recipientUser['team']['id'],
-            'isClosed' => 'N',
-            'urgent' => 'N',
-            'assignedByUser' => $currentUser['id'],
-            'case' => $params['caseId'],
-        ];
-
-        return $this->getBusinessServiceManager()->get('Task')->process($taskParams);
     }
 }
