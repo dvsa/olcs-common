@@ -36,10 +36,28 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $sut->formatDataForGroups($source));
     }
 
+    public function testGetDescription()
+    {
+        $key = 'key1';
+        $description = 'decription1';
+
+        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', 0);
+        $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/' . $key))->willReturn(
+            [['id' => $key, 'description' => $description]]
+        );
+
+        $sut = new RefData();
+        $sut->setRestClient($mockRestClient);
+
+        $this->assertEquals($description, $sut->getDescription($key));
+        $this->assertEquals($description, $sut->getDescription($key));
+        $this->assertEquals($description, $sut->getDescription($key));
+    }
+
     public function testfetchListData()
     {
         $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', 0);
-        $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/test'))->willReturn([]);
+        $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/category/test'))->willReturn([]);
 
         $sut = new RefData();
         $sut->setRestClient($mockRestClient);

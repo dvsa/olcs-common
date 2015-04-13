@@ -20,18 +20,24 @@ abstract class AbstractTransportManagersController extends AbstractController im
         Traits\AdapterAwareTrait;
 
     protected $section = 'transport_managers';
+    protected $lva = 'application';
+    protected $location = 'external';
 
     /**
      * Transport managers section
      */
     public function indexAction()
     {
+        $this->getAdapter()->addMessages($this->getLicenceId());
+
         /* @var $form \Zend\Form\Form */
         $form = $this->getAdapter()->getForm();
-        $table = $this->getAdapter()->getTable();
+        $table = $this->getAdapter()->getTable('lva-transport-managers-'. $this->location .'-'. $this->lva);
         $table->loadData($this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId()));
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
+
+        $this->getServiceLocator()->get('FormServiceManager')->get('Lva\\'. ucfirst($this->lva))->alterForm($form);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -222,5 +228,52 @@ abstract class AbstractTransportManagersController extends AbstractController im
     protected function getDeleteTitle()
     {
         return 'delete-tm';
+    }
+
+    /**
+     * Restore Transport managers
+     */
+    public function restoreAction()
+    {
+        $ids = explode(',', $this->params('child_id'));
+
+        $tmaIdsToDelete = [];
+        foreach ($ids as $id) {
+            if (strpos($id, 'L') === 0) {
+                // remove "L" prefix and get int ID
+                $transportManagerLicenceId = (int) trim($id, 'L');
+
+                // get the transport manager ID from TML
+                $tmlEntityService = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
+                $tmlData = $tmlEntityService->getTransportManagerLicence($transportManagerLicenceId);
+                $transportManagerId = $tmlData['transportManager']['id'];
+
+                // get the transport manager application ID using TM
+                $tmaEntityService = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
+                $tmaData = $tmaEntityService->getByApplicationTransportManager(
+                    $this->getIdentifier(),
+                    $transportManagerId
+                );
+                foreach ($tmaData['Results'] as $row) {
+                    $tmaIdsToDelete[] = $row['id'];
+                }
+            } else {
+                // add TMA ID to delete array
+                $tmaIdsToDelete[] = $id;
+            }
+        }
+
+        // remove any duplicates, eg if restoring the current and updated versions
+        $tmaIdsToDelete = array_unique($tmaIdsToDelete);
+
+        // if any TMA ID added to array then delete them
+        if (count($tmaIdsToDelete) > 0) {
+            $tmaDeleteService = $this->getServiceLocator()
+                ->get('BusinessServiceManager')
+                    ->get('Lva\DeleteTransportManagerApplication');
+            $tmaDeleteService->process(['ids' => $tmaIdsToDelete]);
+        }
+
+        return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
     }
 }

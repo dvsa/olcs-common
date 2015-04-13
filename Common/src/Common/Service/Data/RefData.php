@@ -15,6 +15,26 @@ class RefData extends AbstractData implements ListData
     protected $serviceName = 'RefData';
 
     /**
+     * This method retrieves the description for a chosen
+     * ref data record by key.
+     *
+     * @param $key
+     * @return array
+     */
+    public function getDescription($key)
+    {
+        if (is_null($this->getData($key))) {
+
+            $data = $this->getRestClient()->get(sprintf('/%s', $key));
+            $data = reset($data);
+
+            $this->setData($key, $data['description']);
+        }
+
+        return $this->getData($key);
+    }
+
+    /**
      * Ensures only a single call is made to the backend for each dataset
      *
      * @param $category
@@ -23,7 +43,7 @@ class RefData extends AbstractData implements ListData
     public function fetchListData($category)
     {
         if (is_null($this->getData($category))) {
-            $data = $this->getRestClient()->get(sprintf('/%s', $category));
+            $data = $this->getRestClient()->get(sprintf('/category/%s', $category));
             $this->setData($category, $data);
         }
 

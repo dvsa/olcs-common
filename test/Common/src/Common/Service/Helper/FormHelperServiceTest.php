@@ -1229,4 +1229,41 @@ class FormHelperServiceTest extends MockeryTestCase
         $helper = new FormHelperService();
         $helper->attachValidator($mockForm, 'data->foo', $mockValidator);
     }
+
+    public function testSetDefaultDate()
+    {
+        $helper = new FormHelperService();
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $helper->setServiceLocator($sm);
+
+        // mocks
+        $field      = m::mock();
+        $dateHelper = m::mock();
+        $today      = m::mock('\DateTime');
+
+        // expectations
+        $sm->shouldReceive('get')->with('Helper\Date')->andReturn($dateHelper);
+        $field->shouldReceive('getValue')->andReturn('--');
+        $dateHelper->shouldReceive('getDateObject')->andReturn($today);
+        $field->shouldReceive('setValue')->with($today);
+
+        $helper->setDefaultDate($field);
+    }
+
+    public function testSetDefaultDateFieldAlreadyHasValue()
+    {
+        $helper = new FormHelperService();
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $helper->setServiceLocator($sm);
+
+        // mocks
+        $field      = m::mock();
+
+        // expectations
+        $sm->shouldReceive('get')->with('Helper\Date')->never();
+        $field->shouldReceive('getValue')->andReturn('2015-04-09');
+        $field->shouldReceive('setValue')->never();
+
+        $helper->setDefaultDate($field);
+    }
 }

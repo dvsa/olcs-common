@@ -30,17 +30,6 @@ class VariationTransportManagerAdapterTest extends MockeryTestCase
         $this->sut->setController($this->controller);
     }
 
-    public function testGetTable()
-    {
-        $mockTable = m::mock('StdClass');
-        $this->sm->shouldReceive('get->prepareTable')
-            ->once()
-            ->with('lva-variation-transport-manangers')
-            ->andReturn($mockTable);
-
-        $this->assertEquals($mockTable, $this->sut->getTable());
-    }
-
     public function dataProviderTableData()
     {
         return [

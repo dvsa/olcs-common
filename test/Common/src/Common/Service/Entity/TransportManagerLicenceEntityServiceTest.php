@@ -172,7 +172,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
     public function testGetByLicenceWithHomeContactDetails()
     {
         $licenceId = 443;
-        $query = ['licence' => $licenceId, 'limit' => 'all'];
+        $query = ['licence' => $licenceId, 'sort' => 'id', 'order' => 'DESC', 'limit' => 'all'];
 
         $this->expectOneRestCall('TransportManagerLicence', 'GET', $query)
             ->will($this->returnValue('RESPONSE'));

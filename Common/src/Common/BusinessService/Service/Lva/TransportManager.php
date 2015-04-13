@@ -22,7 +22,7 @@ class TransportManager implements BusinessServiceInterface, ServiceLocatorAwareI
     use ServiceLocatorAwareTrait;
 
     /**
-     * Processes the data by passing it through a number of business rules and then persisting it
+     * Format and save the transport manager data
      *
      * @param array $params
      * @return ResponseInterface
@@ -39,9 +39,6 @@ class TransportManager implements BusinessServiceInterface, ServiceLocatorAwareI
             $id = $saved['id'];
         }
 
-        $response = new Response();
-        $response->setType(Response::TYPE_SUCCESS);
-        $response->setData(['id' => $id]);
-        return $response;
+        return new Response(Response::TYPE_SUCCESS, ['id' => $id]);
     }
 }

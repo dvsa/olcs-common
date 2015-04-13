@@ -612,10 +612,14 @@ return array(
             'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
             'ApplicationGoodsVehiclesLicenceVehicle'
                 => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
+            'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
+            'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
+            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate'
         ]
     ],
     'business_service_manager' => [
         'invokables' => [
+            'Task' => 'Common\BusinessService\Service\Task',
             // Some of these LVA services may be re-usable outside of LVA, if so please move them from the LVA namespace
             'Lva\BusinessDetails' => 'Common\BusinessService\Service\Lva\BusinessDetails',
             'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames',
@@ -623,7 +627,6 @@ return array(
             'Lva\ContactDetails' => 'Common\BusinessService\Service\Lva\ContactDetails',
             'Lva\BusinessDetailsChangeTask' => 'Common\BusinessService\Service\Lva\BusinessDetailsChangeTask',
             'Lva\CompanySubsidiaryChangeTask' => 'Common\BusinessService\Service\Lva\CompanySubsidiaryChangeTask',
-            'Lva\Task' => 'Common\BusinessService\Service\Lva\Task',
             'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
             'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
             'Lva\LicenceAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
@@ -664,6 +667,18 @@ return array(
                 'Common\BusinessService\Service\Lva\TransportManager',
             'Lva\DeltaDeleteTransportManagerLicence' =>
                 'Common\BusinessService\Service\Lva\DeltaDeleteTransportManagerLicence',
+            'Lva\TransportManagerDetails' =>
+                'Common\BusinessService\Service\Lva\TransportManagerDetails',
+            'Lva\Person' =>
+                'Common\BusinessService\Service\Lva\Person',
+            // User administration
+            'Admin\User' =>
+                'Common\BusinessService\Service\Admin\User',
+            // Cases business services
+            'Cases\Submission\Decision' => 'Common\BusinessService\Service\Cases\Submission\Decision',
+            'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
+            'Cases\Submission\SubmissionActionTask'
+                => 'Common\BusinessService\Service\Cases\Submission\SubmissionActionTask',
         ]
     ],
 );

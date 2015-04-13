@@ -2,7 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => 'Transport managers',
+        'title' => '',
         'within_form' => true,
     ),
     'settings' => array(
@@ -22,8 +22,9 @@ return array(
     'columns' => array(
         array(
             'title' => 'Name',
-            'formatter' => 'TransportManagerNameVariation',
-            'name' => 'name',
+            'formatter' => 'TransportManagerName',
+            'internal' => true,
+            'lva' => 'variation'
         ),
         array(
             'title' => 'Email',

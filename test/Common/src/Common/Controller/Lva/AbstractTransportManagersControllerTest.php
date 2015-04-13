@@ -41,9 +41,14 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
         $mockForm->shouldReceive('get->get')->once()->with('table')->andReturn($mockTableElement);
         $mockForm->shouldReceive('get->get')->once()->with('rows')->andReturn($mockRowElement);
 
+        $mockFormService = m::mock();
+        $this->sm->shouldReceive('get')->once()->with('FormServiceManager')->andReturn($mockFormService);
+        $mockFormService->shouldReceive('get->alterForm')->once()->with($mockForm);
+
         $this->adapter->shouldReceive('getForm')->once()->andReturn($mockForm);
         $this->adapter->shouldReceive('getTable')->once()->andReturn($mockTable);
         $this->adapter->shouldReceive('getTableData')->once()->with(121, 765)->andReturn(['row1', 'row2']);
+        $this->adapter->shouldReceive('addMessages')->once()->with(765);
 
         $this->mockForm = $mockForm;
         $this->mockTable = $mockTable;
@@ -55,7 +60,9 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
         $this->mockRender();
 
-        $this->sm->shouldReceive('get->loadFile')->once()->with('lva-crud-delta');
+        $mockScript = m::mock();
+        $this->sm->shouldReceive('get')->once()->with('Script')->andReturn($mockScript);
+        $mockScript->shouldReceive('loadFile')->once()->with('lva-crud-delta');
 
         $this->sut->indexAction();
 
@@ -119,7 +126,9 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
         $this->adapter->shouldReceive('mustHaveAtLeastOneTm')->once()->andReturn(true);
         $this->mockForm->shouldReceive('isValid')->once()->andReturn(false);
 
-        $this->sm->shouldReceive('get->loadFile')->once()->with('lva-crud-delta');
+        $mockScript = m::mock();
+        $this->sm->shouldReceive('get')->once()->with('Script')->andReturn($mockScript);
+        $mockScript->shouldReceive('loadFile')->once()->with('lva-crud-delta');
 
         $this->mockRender();
 
@@ -551,5 +560,38 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
             ->with('lva-tm-sent-success');
 
         $this->assertEquals('RESPONSE', $this->sut->addTmAction());
+    }
+
+    public function testRestoreAction()
+    {
+        $mockTmlEntityService = m::mock();
+        $this->sm->setService('Entity\TransportManagerLicence', $mockTmlEntityService);
+
+        $mockTmaEntityService = m::mock();
+        $this->sm->setService('Entity\TransportManagerApplication', $mockTmaEntityService);
+
+        $this->sut->shouldReceive('params')->once()->with('child_id')->andReturn('4,L7');
+        $this->sut->shouldReceive('getIdentifier')->once()->andReturn(121);
+
+        $mockTmlEntityService->shouldReceive('getTransportManagerLicence')
+            ->once()
+            ->with(7)
+            ->andReturn(['transportManager' => ['id' => 55]]);
+
+        $mockTmaEntityService->shouldReceive('getByApplicationTransportManager')
+            ->once()
+            ->with(121, 55)
+            ->andReturn(['Results' => [['id' => 185], ['id' => 444]]]);
+
+        $mockBusServ = m::mock();
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $bsm->shouldReceive('get')->once()->with('Lva\DeleteTransportManagerApplication')->andReturn($mockBusServ);
+
+        $mockBusServ->shouldReceive('process')->once()->with(['ids' => [4, 185, 444]]);
+
+        $this->sut->shouldReceive('redirect->toRouteAjax')->once()->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->restoreAction());
     }
 }

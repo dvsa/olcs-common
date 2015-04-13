@@ -17,8 +17,6 @@ use Zend\Form\Form;
  */
 abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 {
-    use Traits\CrudTableTrait;
-
     protected $section = 'vehicles_psv';
     protected $rawTableData;
     protected $type;
@@ -138,6 +136,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function smallDeleteAction()
     {
+        $this->type = 'small';
+
         return $this->deleteAction();
     }
 
@@ -162,6 +162,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function mediumDeleteAction()
     {
+        $this->type = 'medium';
+
         return $this->deleteAction();
     }
 
@@ -186,6 +188,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function largeDeleteAction()
     {
+        $this->type = 'large';
+
         return $this->deleteAction();
     }
 
