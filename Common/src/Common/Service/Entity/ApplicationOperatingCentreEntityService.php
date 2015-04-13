@@ -7,6 +7,7 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Service\Entity;
+
 use Common\Service\Table\Formatter\Address;
 
 /**
@@ -128,7 +129,7 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
 
             $id = $result['operatingCentre']['id'];
 
-            if (in_array($id, $deleted)) {
+            if (!in_array($id, $deleted)) {
                 $list[$id] = Address::format($result['operatingCentre'], $options);
             }
         }
