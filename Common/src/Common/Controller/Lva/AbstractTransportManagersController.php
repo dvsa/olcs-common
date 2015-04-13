@@ -28,12 +28,16 @@ abstract class AbstractTransportManagersController extends AbstractController im
      */
     public function indexAction()
     {
+        $this->getAdapter()->addMessages($this->getLicenceId());
+
         /* @var $form \Zend\Form\Form */
         $form = $this->getAdapter()->getForm();
         $table = $this->getAdapter()->getTable('lva-transport-managers-'. $this->location .'-'. $this->lva);
         $table->loadData($this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId()));
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
+
+        $this->getServiceLocator()->get('FormServiceManager')->get('Lva\\'. ucfirst($this->lva))->alterForm($form);
 
         $request = $this->getRequest();
         if ($request->isPost()) {

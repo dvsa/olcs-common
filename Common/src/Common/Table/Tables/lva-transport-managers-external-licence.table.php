@@ -6,11 +6,6 @@ return array(
         'within_form' => true,
     ),
     'settings' => array(
-        'crud' => array(
-            'actions' => array(
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
-            )
-        ),
     ),
     'attributes' => array(
     ),
@@ -18,8 +13,8 @@ return array(
         array(
             'title' => 'Name',
             'formatter' => 'TransportManagerName',
-            'internal' => true,
-            'lva' => 'application',
+            'internal' => false,
+            'lva' => 'licence',
         ),
         array(
             'title' => 'Email',
@@ -30,9 +25,5 @@ return array(
             'name' => 'dob',
             'formatter' => 'Date',
         ),
-        array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
     )
 );

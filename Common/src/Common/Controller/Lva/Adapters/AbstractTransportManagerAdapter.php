@@ -49,4 +49,11 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     {
         return false;
     }
+
+    /**
+     * Add any messages to the page
+     */
+    public function addMessages($licenceId)
+    {
+    }
 }
