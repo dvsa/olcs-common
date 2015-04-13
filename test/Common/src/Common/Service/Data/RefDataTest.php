@@ -43,7 +43,7 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
 
         $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', 0);
         $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/' . $key))->willReturn(
-            ['id' => $key, 'description' => $description]
+            [['id' => $key, 'description' => $description]]
         );
 
         $sut = new RefData();
@@ -57,7 +57,7 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
     public function testfetchListData()
     {
         $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', 0);
-        $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/test'))->willReturn([]);
+        $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/category/test'))->willReturn([]);
 
         $sut = new RefData();
         $sut->setRestClient($mockRestClient);
