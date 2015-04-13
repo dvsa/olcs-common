@@ -189,28 +189,17 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
                 'version' => $params['transportManagerApplication']['version'],
                 'tmType' => $responsibilities['tmType'],
                 'additionalInformation' => $responsibilities['additionalInformation'],
+                'hoursMon' => is_numeric($hours['hoursMon']) ? $hours['hoursMon'] : null,
+                'hoursTue' => is_numeric($hours['hoursTue']) ? $hours['hoursTue'] : null,
+                'hoursWed' => is_numeric($hours['hoursWed']) ? $hours['hoursWed'] : null,
+                'hoursThu' => is_numeric($hours['hoursThu']) ? $hours['hoursThu'] : null,
+                'hoursFri' => is_numeric($hours['hoursFri']) ? $hours['hoursFri'] : null,
+                'hoursSat' => is_numeric($hours['hoursSat']) ? $hours['hoursSat'] : null,
+                'hoursSun' => is_numeric($hours['hoursSun']) ? $hours['hoursSun'] : null,
                 'isOwner' => $responsibilities['isOwner'],
                 'operatingCentres' => $responsibilities['operatingCentres']
             ]
         ];
-
-        $hoursOfWeekFields = [
-            'hoursMon',
-            'hoursTue',
-            'hoursWed',
-            'hoursThu',
-            'hoursFri',
-            'hoursSat',
-            'hoursSun',
-        ];
-
-        foreach ($hoursOfWeekFields as $field) {
-            if (is_numeric($hours[$field])) {
-                $tmApplicationParams['data'][$field] = $hours[$field];
-            } else {
-                $tmApplicationParams['data'][$field] = null;
-            }
-        }
 
         if ($params['submit']) {
             $submitStatus = TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE;
