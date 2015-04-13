@@ -189,17 +189,28 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
                 'version' => $params['transportManagerApplication']['version'],
                 'tmType' => $responsibilities['tmType'],
                 'additionalInformation' => $responsibilities['additionalInformation'],
-                'hoursMon' => $hours['hoursMon'],
-                'hoursTue' => $hours['hoursTue'],
-                'hoursWed' => $hours['hoursWed'],
-                'hoursThu' => $hours['hoursThu'],
-                'hoursFri' => $hours['hoursFri'],
-                'hoursSat' => $hours['hoursSat'],
-                'hoursSun' => $hours['hoursSun'],
                 'isOwner' => $responsibilities['isOwner'],
                 'operatingCentres' => $responsibilities['operatingCentres']
             ]
         ];
+
+        $hoursOfWeekFields = [
+            'hoursMon',
+            'hoursTue',
+            'hoursWed',
+            'hoursThu',
+            'hoursFri',
+            'hoursSat',
+            'hoursSun',
+        ];
+
+        foreach ($hoursOfWeekFields as $field) {
+            if (is_numeric($hours[$field])) {
+                $tmApplicationParams['data'][$field] = $hours[$field];
+            } else {
+                $tmApplicationParams['data'][$field] = null;
+            }
+        }
 
         if ($params['submit']) {
             $submitStatus = TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE;
