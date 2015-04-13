@@ -148,9 +148,6 @@ class LicenceEntityService extends AbstractLvaEntityService
     protected $vehiclePsvDataBundle = array(
         'children' => array(
             'licenceVehicles' => array(
-                'criteria' => array(
-                    'removalDate' => 'NULL'
-                ),
                 'children' => array(
                     'vehicle' => array(
                         'children' => array(
