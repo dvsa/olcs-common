@@ -1906,7 +1906,7 @@ return array(
     'section.link.update.financial_history' => 'W Update financial history',
     'section.link.update.licence_history' => 'W Update licence history',
     'section.link.update.operating_centres' => 'W Update operating centre',
-    'section.link.update.people' => 'W Update directors',
+    'section.link.update.people' => 'W Update people',
     'section.link.update.safety' => 'W Update safety',
     'section.link.update.taxi_phv' => 'W Update taxi/PHV licences',
     'section.link.update.trailers' => 'W Update trailers',
