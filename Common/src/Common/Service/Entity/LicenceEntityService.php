@@ -148,6 +148,9 @@ class LicenceEntityService extends AbstractLvaEntityService
     protected $vehiclePsvDataBundle = array(
         'children' => array(
             'licenceVehicles' => array(
+                'criteria' => array(
+                    'removalDate' => 'NULL'
+                ),
                 'children' => array(
                     'vehicle' => array(
                         'children' => array(
@@ -575,6 +578,7 @@ class LicenceEntityService extends AbstractLvaEntityService
 
         // So to grab the relevant licence vehicles...
         $bundle['children']['licenceVehicles']['criteria'] = [
+            'removalDate' => 'NULL',
             [
                 // ...either the application id needs to match
                 'application' => $applicationId,
