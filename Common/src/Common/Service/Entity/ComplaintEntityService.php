@@ -16,4 +16,11 @@ class ComplaintEntityService extends AbstractEntityService
 {
     const COMPLAIN_STATUS_CLOSED = 'ecst_closed';
     const COMPLAIN_STATUS_OPEN = 'ecst_open';
+
+    /**
+     * Define entity for default behaviour
+     *
+     * @var string
+     */
+    protected $entity = 'Complaint';
 }

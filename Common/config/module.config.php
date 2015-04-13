@@ -614,7 +614,8 @@ return array(
                 => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
             'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
             'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
-            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate'
+            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
+            'EnvironmentalComplaint' => 'Common\BusinessRule\Rule\EnvironmentalComplaint',
         ]
     ],
     'business_service_manager' => [
