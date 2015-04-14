@@ -19,6 +19,7 @@ use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\InputFilters\NoRender;
 use Common\Form\Elements\InputFilters\ActionButton;
 use Common\Form\Elements\InputFilters\ActionLink;
+use Common\Form\Elements\Types\Readonly;
 
 /**
  * Render form row
@@ -28,13 +29,13 @@ use Common\Form\Elements\InputFilters\ActionLink;
  */
 class FormRow extends ZendFormRow
 {
-
     /**
      * The form row output format.
      *
      * @var string
      */
     private static $format = '<div class="field %s">%s</div>';
+    private static $readonlyFormat = '<div class="field read-only %s"><p>%s<br><b>%s</b></p></div>';
     private static $errorClass = '<div class="validation-wrapper">%s</div>';
     protected $fieldsetWrapper = '<fieldset%4$s>%2$s%1$s%3$s</fieldset>';
     protected $fieldsetLabelWrapper = '<legend>%s</legend>';
@@ -49,6 +50,14 @@ class FormRow extends ZendFormRow
      */
     public function render(ZendElementInterface $element)
     {
+        if ($element instanceof Readonly) {
+            $class = $element->getAttribute('data-container-class');
+            $label = $this->getView()->translate($element->getLabel());
+            $value = $element->getValue();
+
+            return sprintf(self::$readonlyFormat, $class, $label, $value);
+        }
+
         //$oldRenderErrors = $this->getRenderErrors();
         $oldRenderErrors = true;
         if ($oldRenderErrors) {

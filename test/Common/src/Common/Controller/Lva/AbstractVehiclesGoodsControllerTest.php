@@ -1050,4 +1050,72 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         // Assertions
         $this->assertEquals('RESPONSE', $this->sut->reprintAction());
     }
+
+    /**
+     * @dataProvider getDeleteMessageProvider
+     */
+    public function testGetDeleteMessage($params, $totalVehicles, $licence, $expected)
+    {
+        $licenceId = 1;
+
+        // Set by Provider.
+
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn($params);
+
+        $this->sut->shouldReceive('getLicenceId')
+            ->andReturn($licenceId);
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+                ->shouldReceive('getOverview')
+                ->with($licenceId)
+                ->andReturn($licence)
+                ->getMock()
+        );
+
+        $this->sut->shouldReceive('getTotalNumberOfVehicles')
+            ->andReturn($totalVehicles);
+
+        $this->assertEquals($expected, $this->sut->getDeleteMessage());
+    }
+
+    public function getDeleteMessageProvider()
+    {
+        return array(
+            array(
+                '1',
+                1,
+                array(
+                    'licenceType' => array(
+                        'id' => 'ltyp_sn'
+                    )
+                ),
+                'deleting.all.vehicles.message'
+            ),
+            array(
+                '1,2',
+                1,
+                array(
+                    'licenceType' => array(
+                        'id' => 'ltyp_sn'
+                    )
+                ),
+                'delete.confirmation.text'
+            ),
+
+            array(
+                '1,2',
+                1,
+                array(
+                    'licenceType' => array(
+                        'id' => 'NotInAcceptedArray'
+                    )
+                ),
+                'delete.confirmation.text'
+            )
+        );
+    }
 }

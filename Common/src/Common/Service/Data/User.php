@@ -112,25 +112,13 @@ class User extends Generic implements ServiceLocatorAwareInterface
     /**
      * Saves a user and role form
      *
+     * @to-do remove once MyDetails save method has been moved to business service
      * @param array $data
      * @return mixed
-     * @throws \Common\Exception\BadRequestException
-     * @throws \Common\Exception\ResourceNotFoundException
      */
     public function saveUserRole($data)
     {
-        $existingData = [];
-        if (isset($data['id']) && !empty($data['id'])) {
-            $existingData = $this->fetchOne($data['id'], $this->getBundle());
-
-            //check user exists exists
-            if (!isset($existingData['id'])) {
-                throw new ResourceNotFoundException('User not found');
-            }
-        }
-
-        $mapped = $this->getDataMapper()->formatSave($data, $existingData);
-        return parent::save($mapped);
+        return parent::save($data);
     }
 
     public function formatDataForUserRoleForm($data)
@@ -138,6 +126,10 @@ class User extends Generic implements ServiceLocatorAwareInterface
         return $this->getDataMapper()->formatLoad($data);
     }
 
+    public function getAllUserDetails($id)
+    {
+        return $this->fetchOne($id, $this->getBundle());
+    }
     /**
      * Gets the contact details service
      *

@@ -2,14 +2,13 @@
 
 return array(
     'variables' => array(
-        'title' => 'Transport managers',
+        'title' => '',
         'within_form' => true,
     ),
     'settings' => array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'edit' => array('requireRows' => true),
                 'delete' => array('class' => 'secondary', 'requireRows' => true)
             )
         ),

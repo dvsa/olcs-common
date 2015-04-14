@@ -5,11 +5,11 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace CommonTest\BusinessService\Service\Lva;
+namespace CommonTest\BusinessService\Service;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\BusinessService\Service\Lva\Task;
+use Common\BusinessService\Service\Task;
 use Common\BusinessService\Response;
 use CommonTest\Bootstrap;
 

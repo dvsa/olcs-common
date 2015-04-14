@@ -767,6 +767,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                         )
                     ),
                     'criteria' => array(
+                        'removalDate' => 'NULL',
                         array(
                             'application' => $applicationId,
                             'specifiedDate' => 'NOT NULL'
@@ -1014,5 +1015,21 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getConditionsAndUndertakings(111));
+    }
+
+    /**
+     * @group licenceEntityService
+     */
+    public function testGetEnforcementArea()
+    {
+        $bundle = [
+            'children' => [
+                'enforcementArea'
+            ]
+        ];
+        $this->expectOneRestCall('Licence', 'GET', 111, $bundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getEnforcementArea(111));
     }
 }

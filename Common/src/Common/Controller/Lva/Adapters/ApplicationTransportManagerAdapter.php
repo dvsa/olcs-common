@@ -19,7 +19,7 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
     /**
      * Load data into the table
      */
-    public function getTableData($applicationId)
+    public function getTableData($applicationId, $licenceId)
     {
         /* @var $service \Common\Service\Entity\TransportManagerApplicationEntityService */
         $service = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
@@ -59,5 +59,19 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
         ];
 
         return in_array($application['licenceType']['id'], $mustHaveTypes);
+    }
+
+    /**
+     * Delete Transport Managers
+     *
+     * @param array $ids Transport Manager Application IDs
+     */
+    public function delete(array $ids, $applicationId)
+    {
+        /* @var $service \Common\BusinessService\Service\TransportManagerApplication\Delete */
+        $service = $this->getServiceLocator()
+            ->get('BusinessServiceManager')
+            ->get('Lva\DeleteTransportManagerApplication');
+        $service->process(['ids' => $ids]);
     }
 }

@@ -9,6 +9,7 @@ namespace Common\Controller\Lva;
 
 use Zend\Form\Element\Checkbox;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Shared logic for Goods *AND* PSV controllers
@@ -17,7 +18,8 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
  */
 abstract class AbstractVehiclesController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\AdapterAwareTrait;
+    use Traits\AdapterAwareTrait,
+        Traits\CrudTableTrait;
 
     protected $totalAuthorisedVehicles = array();
     protected $totalVehicles = array();
@@ -178,6 +180,10 @@ abstract class AbstractVehiclesController extends AbstractController implements 
             $licenceVehicle['licence'] = $this->getLicenceId();
         } else {
             $licenceVehicle['vehicle'] = $data['id'];
+        }
+
+        if (in_array($this->lva, ['application', 'variation'])) {
+            $licenceVehicle['application'] = $this->getIdentifier();
         }
 
         $saved = $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
@@ -351,5 +357,33 @@ abstract class AbstractVehiclesController extends AbstractController implements 
             }
         }
         return $form;
+    }
+
+    /**
+     * Get the delete message.
+     *
+     * @return string
+     */
+    public function getDeleteMessage()
+    {
+        $toDelete = count(explode(',', $this->params('child_id')));
+        $total = $this->getTotalNumberOfVehicles();
+
+        $licence = $this->getServiceLocator()->get('Entity\Licence')->getOverview($this->getLicenceId());
+
+        $acceptedLicenceTypes = array(
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        );
+
+        if (!in_array($licence['licenceType']['id'], $acceptedLicenceTypes)) {
+            return 'delete.confirmation.text';
+        }
+
+        if ($total !== $toDelete) {
+            return 'delete.confirmation.text';
+        }
+
+        return 'deleting.all.vehicles.message';
     }
 }
