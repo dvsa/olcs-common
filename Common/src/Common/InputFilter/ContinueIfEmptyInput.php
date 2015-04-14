@@ -2,13 +2,13 @@
 
 namespace Common\InputFilter;
 
-use Zend\InputFilter\Input;
+use Zend\InputFilter\Input as ZendInput;
 
 /**
  * Class ContinueIfEmptyInput
  * @package Common\InputFilter
  */
-class ContinueIfEmptyInput extends Input
+class ContinueIfEmptyInput extends ZendInput
 {
     /**
      * @var bool
