@@ -14,7 +14,8 @@ class MultipleFileUpload
     /**
      * @Form\Name("file-controls")
      * @Form\Attributes({
-     *   "class": "js-visually-hidden"
+     *   "class": "js-visually-hidden",
+     *   "multiple": false
      * })
      * @Form\Options({
      *     "value": "Attach file",
@@ -25,7 +26,9 @@ class MultipleFileUpload
     public $controls = null;
 
     /**
-     * @Form\Attributes({})
+     * @Form\Attributes({
+     *   "class": "js-upload-list"
+     * })
      * @Form\Options({})
      * @Form\Type("\Common\Form\Elements\Types\FileUploadList")
      */

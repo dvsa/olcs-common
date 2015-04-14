@@ -144,7 +144,7 @@ class FinancialHistoryData
 
     /**
      * @Form\Attributes({"id":"file"})
-     * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
+     * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      */
     public $file = null;
 

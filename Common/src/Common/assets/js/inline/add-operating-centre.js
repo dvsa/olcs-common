@@ -60,86 +60,9 @@ $(function() {
         },
         "label:adPlacedIn": hasAdvertisements,
         "label:adPlacedDate": hasAdvertisements,
-        "selector:#file": hasAdvertisements
+        "selector:.file-uploader": hasAdvertisements
       }
     }
   });
 
-  /**
-   * Horrible POC async file upload
-   */
-  var handleResponse = OLCS.normaliseResponse(function(response) {
-    var position;
-    if ($(".modal__wrapper").is(":visible")) {
-      position = $(".modal__wrapper").scrollTop();
-      F.render(".modal__content", response.body);
-      $(".modal__wrapper").scrollTop(position);
-    } else {
-      F.render(".js-body", response.body);
-    }
-  });
-
-  $(".file-uploader .attach-action__input").on("change", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    // @TODO bail early if not supported
-
-    var form = $(this).parents("form");
-    var container = $(this).parents(".file-uploader");
-
-    // @TODO multiple?
-    var file = e.target.files[0];
-
-    var xhr = new XMLHttpRequest();
-
-    /*
-    var elem = $("[value=Upload]");
-    elem.val("Uploading…");
-
-    xhr.upload.addEventListener("progress", function(e) {
-      var pc = Math.round((e.loaded * 100) / e.total);
-      if (pc !== 100) {
-        elem.val(pc);
-      } else {
-        elem.val("Processing…");
-      }
-    });
-    */
-
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) {
-        OLCS.preloader.hide();
-        handleResponse(xhr.responseText);
-      }
-    };
-
-    // make sure we take the form data as it stands
-    var fd = new FormData(form.get(0));
-
-    var prefix = container.data("group");
-    fd.append(prefix + "[file-controls][file]", file);
-    fd.append(prefix + "[upload]", "Upload");
-
-    xhr.open("POST", $("form").attr("action"), true);  // @TODO confirm third param
-    xhr.setRequestHeader("X-Inline-Upload", true);
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    xhr.send(fd);
-
-    OLCS.preloader.show();
-  });
-
-  $(".file__remove").on("click", function(e) {
-    e.preventDefault();
-
-    var button = $(this);
-    var form   = $(this).parents("form");
-
-    F.pressButton(form, button);
-
-    OLCS.submitForm({
-      form: form,
-      success: handleResponse
-    });
-  });
 });
