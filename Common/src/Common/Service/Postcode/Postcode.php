@@ -37,6 +37,7 @@ class Postcode implements ServiceLocatorAwareInterface
             $response = $this->sendGet('postcode\address', array('postcode' => $postcode), true);
 
             if (is_array($response) && count($response)) {
+                // yes, 'administritive_area' really is mis-spelled in API response :(
                 $adminArea = $response[0]['administritive_area'];
                 if ($adminArea) {
                     $bundle = array(
@@ -66,6 +67,34 @@ class Postcode implements ServiceLocatorAwareInterface
             }
         }
         return $retv;
+    }
+
+    /**
+     * @param string $postcode expected format is 'LS9 6NF' (we rely on the space)
+     * @return array|null
+     */
+    public function getEnforcementAreaByPostcode($postcode)
+    {
+        $matches = [];
+        $ea = null;
+
+        preg_match('/^([^\s]+)\s(\d).+$/', $postcode, $matches);
+
+        if (!empty($matches)) {
+            $prefix = $matches[1];
+            $suffixDigit = $matches[2];
+            $entityService = $this->getServiceLocator()->get('Entity\PostcodeEnforcementArea');
+
+            // first try lookup by prefix + first digit of suffix
+            $ea = $entityService->getEnforcementAreaByPostcodePrefix($prefix . ' ' . $suffixDigit);
+
+            if (is_null($ea)) {
+                // if not found, try by just the prefix
+                $ea = $entityService->getEnforcementAreaByPostcodePrefix($prefix);
+            }
+        }
+
+        return $ea;
     }
 
     /**
