@@ -1,6 +1,7 @@
 <?php
 
 namespace Common\Service\Validation\Result;
+
 use Common\Service\Validation\CommandInterface;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
 namespace Common\Service\Validation\Result;
-use Common\Service\Validation\CommandInterface;
 
+use Common\Service\Validation\CommandInterface;
 
 /**
  * Class ValidationFailed
