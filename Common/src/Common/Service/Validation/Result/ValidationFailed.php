@@ -6,7 +6,7 @@ use Common\Service\Validation\CommandInterface;
 
 /**
  * Class ValidationFailed
- * @package Olcs\Ebsr\Data\Object\Result
+ * @package Common\Service\Validation\Result
  */
 class ValidationFailed extends Validation
 {

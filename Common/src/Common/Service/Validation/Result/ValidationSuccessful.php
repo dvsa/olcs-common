@@ -5,7 +5,7 @@ use Common\Service\Validation\CommandInterface;
 
 /**
  * Class ValidationSuccessful
- * @package Olcs\Ebsr\Data\Object\Result
+ * @package Common\Service\Validation\Result
  */
 class ValidationSuccessful extends Validation
 {

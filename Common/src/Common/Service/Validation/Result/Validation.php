@@ -5,7 +5,7 @@ use Common\Service\Validation\CommandInterface;
 
 /**
  * Class Validation
- * @package Olcs\Ebsr\Data\Object\Result
+ * @package Common\Service\Validation\Result
  */
 abstract class Validation
 {
