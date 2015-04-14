@@ -65,14 +65,6 @@ class User implements
         }
         $dataToSave['loginId'] = $params['userLoginSecurity']['loginId'];
         $dataToSave['memorableWord'] = $params['userLoginSecurity']['memorableWord'];
-        $dataToSave['hintQuestion1'] = isset($params['userLoginSecurity']['hintQuestion1']) ?
-            $params['userLoginSecurity']['hintQuestion1'] : null;
-        $dataToSave['hintAnswer1'] = isset($params['userLoginSecurity']['hintAnswer1']) ?
-            $params['userLoginSecurity']['hintAnswer1'] : null;
-        $dataToSave['hintQuestion2'] = isset($params['userLoginSecurity']['hintQuestion2']) ?
-            $params['userLoginSecurity']['hintQuestion2'] : null;
-        $dataToSave['hintAnswer2'] = isset($params['userLoginSecurity']['hintAnswer2']) ?
-            $params['userLoginSecurity']['hintAnswer2'] : null;
         $dataToSave['mustResetPassword'] = $params['userLoginSecurity']['mustResetPassword'];
         $dataToSave['accountDisabled'] = $params['userLoginSecurity']['accountDisabled'];
 
@@ -80,7 +72,7 @@ class User implements
             ->get('LockedDate')
             ->validate($dataToSave['accountDisabled']);
 
-        $dataToSave['team'] = $params['userType']['team'];
+        $dataToSave['team'] = isset($params['userType']['team']) ? $params['userType']['team'] : null;
 
         foreach ($params['userType']['roles'] as $role) {
             $dataToSave['userRoles'][] = [
@@ -147,6 +139,7 @@ class User implements
         }
 
         $dataToSave['transportManager'] = $params['userType']['transportManager'];
+        $dataToSave['localAuthority'] = $params['userType']['localAuthority'];
 
         // set up cascading entities
         $dataToSave['_OPTIONS_'] = array(
@@ -200,7 +193,9 @@ class User implements
      */
     public function determineUserType($existingData)
     {
-        if (isset($existingData['localAuthority'])) {
+        if (isset($existingData['team'])) {
+            return 'internal';
+        } elseif (isset($existingData['localAuthority'])) {
             return 'local-authority';
         } elseif (isset($existingData['transportManager'])) {
             return 'transport-manager';
