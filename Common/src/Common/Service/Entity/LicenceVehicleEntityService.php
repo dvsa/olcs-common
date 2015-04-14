@@ -244,6 +244,30 @@ class LicenceVehicleEntityService extends AbstractEntityService
         return $this->get($query, $bundle);
     }
 
+    public function getVehiclesDataForVariation($applicationId, array $filters = array())
+    {
+        // then our query needs to be where...
+        $query = [
+            // either ...
+            [
+                // application id matches...
+                'application' => $applicationId,
+                // OR licence id matches...
+                'licence' => $this->getServiceLocator()->get('Entity\Application')
+                    ->getLicenceIdForApplication($applicationId),
+            ]
+        ];
+
+        $query = $this->buildVehiclesDataQuery($query, $filters);
+        $bundle = $this->buildVehiclesDataBundle($filters);
+
+        if (isset($filters['specifiedDate'])) {
+            $query['specifiedDate'] = $filters['specifiedDate'];
+        }
+
+        return $this->get($query, $bundle);
+    }
+
     public function getVehiclesDataForLicence($licenceId, array $filters = array())
     {
         $query = ['licence' => $licenceId, 'specifiedDate' => 'NOT NULL'];
