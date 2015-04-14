@@ -66,7 +66,7 @@ class SendTransportManagerApplicationTest extends MockeryTestCase
 
         $this->sm->setService('Entity\User', $mockUser);
         $this->sm->setService('Entity\Person', $mockPerson);
-        $this->bsm->setService('Lva\TransportManagerApplication', $mockTma);
+        $this->bsm->setService('Lva\TransportManagerApplicationForUser', $mockTma);
 
         // Expectations
         $mockUser->shouldReceive('getUserDetails')

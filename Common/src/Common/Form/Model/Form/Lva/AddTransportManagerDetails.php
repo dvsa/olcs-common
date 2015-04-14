@@ -20,7 +20,7 @@ class AddTransportManagerDetails
 
     /**
      * @Form\Name("form-actions")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TmDetailsFormActions")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SendTmFormActions")
      */
     public $formActions = null;
 }

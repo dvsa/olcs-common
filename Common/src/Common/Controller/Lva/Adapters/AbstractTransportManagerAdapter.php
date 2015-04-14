@@ -39,18 +39,6 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     }
 
     /**
-     * Get data for the table
-     *
-     * @param int $lvaId The Licence, Variation or Application ID
-     *
-     * @return array
-     */
-    public function getTableData($lvaId)
-    {
-        return [];
-    }
-
-    /**
      * Is this licence required to have at least one Transport Manager
      *
      * @param int $lvaId The Licence, Variation or Application ID
@@ -60,5 +48,12 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     public function mustHaveAtLeastOneTm($lvaId)
     {
         return false;
+    }
+
+    /**
+     * Add any messages to the page
+     */
+    public function addMessages($licenceId)
+    {
     }
 }

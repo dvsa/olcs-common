@@ -17,7 +17,6 @@ use Common\BusinessService\Response;
  */
 class GoodsVehicles implements BusinessServiceInterface
 {
-
     /**
      * Processes the data by passing it through a number of business rules and then persisting it
      *

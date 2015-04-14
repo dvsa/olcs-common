@@ -14,8 +14,6 @@ namespace Common\Controller\Lva;
  */
 abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController
 {
-    use Traits\CrudTableTrait;
-
     protected $section = 'vehicles';
 
     public function indexAction()
@@ -130,6 +128,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         // *always* check if the user has exceeded their authority
         // as a nice little addition; they may have changed their OC totals
+
         if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-vehicles-than-authorisation');
         }

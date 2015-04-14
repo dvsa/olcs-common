@@ -7,9 +7,6 @@
  */
 namespace Common\Controller\Lva\Interfaces;
 
-use Zend\Form\Form;
-use Zend\Http\Request;
-
 /**
  * Transport Manager Adapter Interface
  *
@@ -19,9 +16,13 @@ interface TransportManagerAdapterInterface extends AdapterInterface
 {
     public function getTable();
 
-    public function getTableData($lvaId);
+    public function getTableData($applicationId, $licenceId);
 
     public function getForm();
 
     public function mustHaveAtLeastOneTm($lvaId);
+
+    public function delete(array $ids, $applicationId);
+
+    public function addMessages($licenceId);
 }

@@ -311,6 +311,12 @@ class LicenceEntityService extends AbstractLvaEntityService
         ]
     ];
 
+    protected $enforcementAreaDataBundle = array(
+        'children' => array(
+            'enforcementArea'
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -569,6 +575,7 @@ class LicenceEntityService extends AbstractLvaEntityService
 
         // So to grab the relevant licence vehicles...
         $bundle['children']['licenceVehicles']['criteria'] = [
+            'removalDate' => 'NULL',
             [
                 // ...either the application id needs to match
                 'application' => $applicationId,
@@ -712,5 +719,16 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function getConditionsAndUndertakings($id)
     {
         return $this->get($id, $this->conditionsUndertakingsBundle);
+    }
+
+    /**
+     * Get enforcement area
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getEnforcementArea($id)
+    {
+        return $this->get($id, $this->enforcementAreaDataBundle);
     }
 }

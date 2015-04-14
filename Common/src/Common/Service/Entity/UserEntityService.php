@@ -29,7 +29,8 @@ class UserEntityService extends AbstractEntityService
                     'person'
                 ]
             ],
-            'transportManager'
+            'transportManager',
+            'team'
         ]
     ];
 
