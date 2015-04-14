@@ -37,12 +37,12 @@ class DeleteOtherLicence implements
     {
         $ids = $params['ids'];
 
+        $service = $this->getServiceLocator()->get('Entity\OtherLicence');
+
         foreach ($ids as $id) {
-            $this->getServiceLocator()->get('Entity\OtherLicence')->delete($id);
+            $service->delete($id);
         }
 
-        $response = new Response();
-        $response->setType(Response::TYPE_SUCCESS);
-        return $response;
+        return new Response(Response::TYPE_SUCCESS);
     }
 }
