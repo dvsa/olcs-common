@@ -604,6 +604,7 @@ return array(
     'business_rule_manager' => [
         'invokables' => [
             'Task' => 'Common\BusinessRule\Rule\Task',
+            'Fee' => 'Common\BusinessRule\Rule\Fee',
             'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
             'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
@@ -621,6 +622,7 @@ return array(
     'business_service_manager' => [
         'invokables' => [
             'Task' => 'Common\BusinessService\Service\Task',
+            'Fee' => 'Common\BusinessService\Service\Fee',
             // Some of these LVA services may be re-usable outside of LVA, if so please move them from the LVA namespace
             'Lva\BusinessDetails' => 'Common\BusinessService\Service\Lva\BusinessDetails',
             'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames',
