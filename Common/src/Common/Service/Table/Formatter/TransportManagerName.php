@@ -16,14 +16,6 @@ use Common\Service\Entity\TransportManagerApplicationEntityService;
  */
 class TransportManagerName extends Name
 {
-    protected static $linkActions = [
-        TransportManagerApplicationEntityService::STATUS_INCOMPLETE => 'details',
-        TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE => 'awaiting-signature',
-        TransportManagerApplicationEntityService::STATUS_TM_SIGNED => 'tm-signed',
-        TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED => 'operator-signed',
-        TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION => 'postal-application',
-    ];
-
     protected static $statusColors = [
         TransportManagerApplicationEntityService::STATUS_INCOMPLETE => 'red',
         TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE => 'orange',
