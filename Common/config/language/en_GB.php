@@ -1279,6 +1279,7 @@ return array(
     'internal.transport-manager.responsibilities.save' => 'Save',
     'internal.transport-manager.responsibilities.table.applications' => 'Applications',
     'internal.transport-manager.responsibilities.table.licences' => 'Licences',
+    'internal.transport-manager.responsibilities.tm-app-status' => 'Transport manager application status',
     'internal.transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be
         responsible for?',
     'internal.transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
