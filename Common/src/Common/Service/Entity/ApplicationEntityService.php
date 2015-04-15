@@ -709,6 +709,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'vehicle',
                     'interimApplication',
                     'goodsDiscs'
+                ),
+                'criteria' => array(
+                    array(
+                        'removalDate' => 'NULL'
+                    )
                 )
             ),
             'interimStatus',
