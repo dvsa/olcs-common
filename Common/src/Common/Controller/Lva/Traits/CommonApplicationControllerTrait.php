@@ -154,7 +154,7 @@ trait CommonApplicationControllerTrait
 
         $sectionStatus = $this->setEnabledAndCompleteFlagOnSections(
             $this->getAccessibleSections(false),
-            $data['applicationCompletions'][0]
+            $data['applicationCompletion']
         );
 
         $sections = array_keys($sectionStatus);
