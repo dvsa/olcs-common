@@ -1200,6 +1200,59 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
     }
 
     /**
+     * @dataProvider enforcementAreaIsValidProvider
+     * @param array $licenceData
+     * @param boolean $expected
+     */
+    public function testEnforcementAreaIsValid($licenceData, $expected)
+    {
+        $applicationId = 123;
+        $licenceId = 456;
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getLicenceIdForApplication')
+                ->once()
+                ->with($applicationId)
+                ->andReturn($licenceId)
+                ->getMock()
+        );
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+                ->shouldReceive('getOverview')
+                ->once()
+                ->with($licenceId)
+                ->andReturn($licenceData)
+                ->getMock()
+        );
+
+        $this->assertEquals(
+            $expected,
+            $this->sut->enforcementAreaIsValid($applicationId)
+        );
+    }
+
+    public function enforcementAreaIsValidProvider()
+    {
+        return [
+            [
+                ['enforcementArea' => 'FOO'],
+                true,
+            ],
+            [
+                ['enforcementArea' => ''],
+                false,
+            ],
+            [
+                ['enforcementArea' => null],
+                false,
+            ],
+        ];
+    }
+
+    /**
      * @dataProvider trackingIsValidProvider
      * @param array $requiredSections
      * @param array $completions

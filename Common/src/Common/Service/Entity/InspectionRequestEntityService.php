@@ -18,6 +18,8 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
 
     const RESULT_TYPE_NEW = 'insp_res_t_new';
 
+    const REQUEST_TYPE_NEW_OP = 'insp_req_t_new_op';
+
     /**
      * Define entity for default behaviour
      *

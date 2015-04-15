@@ -26,6 +26,7 @@ class RefData extends AbstractData implements ListData
         if (is_null($this->getData($key))) {
 
             $data = $this->getRestClient()->get(sprintf('/%s', $key));
+            $data = reset($data);
 
             $this->setData($key, $data['description']);
         }
@@ -42,7 +43,7 @@ class RefData extends AbstractData implements ListData
     public function fetchListData($category)
     {
         if (is_null($this->getData($category))) {
-            $data = $this->getRestClient()->get(sprintf('/%s', $category));
+            $data = $this->getRestClient()->get(sprintf('/category/%s', $category));
             $this->setData($category, $data);
         }
 
