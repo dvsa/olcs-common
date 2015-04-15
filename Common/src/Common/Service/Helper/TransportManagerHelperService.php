@@ -111,7 +111,15 @@ class TransportManagerHelperService extends AbstractHelperService
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $formHelper->populateFormTable($fieldset->get('convictions'), $convictionsAndPenaltiesTable);
-        $formHelper->populateFormTable($fieldset->get('previousLicences'), $previousLicencesTable);
+        $formHelper->populateFormTable(
+            $fieldset->get('convictions'),
+            $convictionsAndPenaltiesTable,
+            'convictions'
+        );
+        $formHelper->populateFormTable(
+            $fieldset->get('previousLicences'),
+            $previousLicencesTable,
+            'previousLicences'
+        );
     }
 }
