@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'section.name.transport_managers.details' => 'Details',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -283,6 +282,8 @@ return array(
     'application-update-sole-trader' => 'Edit sole trader',
     'application-withdrawn-successfully' => 'Application %s has been withdrawn',
     'application.cancel' => 'Cancel application',
+    'application.change-of-entity.create.success' => 'Change of entity details updated',
+    'application.change-of-entity.delete.success' => 'Change of entity details removed',
     'application.community_licence.form.total_community_licences' => 'How many additional licences are required?',
     'application.delete' => 'Delete application',
     'application.new.button' => 'Apply for a new licence',
@@ -1930,6 +1931,7 @@ return array(
     'section.name.taxi_phv' => 'Taxi/PHV',
     'section.name.trailers' => 'Trailers',
     'section.name.transport_managers' => 'Transport managers',
+    'section.name.transport_managers.details' => 'Details',
     'section.name.type_of_licence' => 'Type of licence',
     'section.name.undertakings' => 'Declarations',
     'section.name.vehicles' => 'Vehicles',
