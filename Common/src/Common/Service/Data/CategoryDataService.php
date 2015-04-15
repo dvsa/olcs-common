@@ -46,6 +46,7 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
     const TASK_SUB_CATEGORY_HEARINGS_APPEALS = 49;
     const TASK_SUB_CATEGORY_DECISION = 96;
     const TASK_SUB_CATEGORY_RECOMMENDATION = 97;
+    const TASK_SUB_CATEGORY_REVIEW_COMPLAINT = 61;
 
     const SCAN_SUB_CATEGORY_CHANGE_OF_ENTITY = 85;
 

@@ -25,8 +25,8 @@ class BusRegistrationTest extends TestCase
         $this->assertEquals(BusRegistration::STATUS_NEW, $result['status']);
         $this->assertEquals(BusRegistration::STATUS_NEW, $result['revertStatus']);
 
-        $this->assertArrayHasKey('shortNotices', $result);
-        $this->assertNotEmpty($result['shortNotices']);
+        $this->assertArrayHasKey('shortNotice', $result);
+        $this->assertNotEmpty($result['shortNotice']);
 
         return $result;
     }

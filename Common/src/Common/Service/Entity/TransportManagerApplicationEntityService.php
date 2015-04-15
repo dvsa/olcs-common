@@ -74,6 +74,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
 
     protected $tmDetailsBundle = [
         'children' => [
+            'application',
             'transportManager' => [
                 'children' => [
                     'homeCd' => [
@@ -88,7 +89,9 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
                         ]
                     ]
                 ]
-            ]
+            ],
+            'tmType',
+            'operatingCentres'
         ]
     ];
 

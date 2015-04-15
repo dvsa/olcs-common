@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'section.name.transport_managers.details' => 'Details',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -21,6 +22,8 @@ return array(
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'The total number of authorised trailers must be equal or
         greater than the largest number of trailers authorised at any individual operating centre',
+    'OperatingCentreVehicleAuthorisationValidator.too-high-psv-r' => '2 is the maximum number of vehicles on a PSV
+        Restricted licence',
     'OperatingCentreVehicleAuthorisationValidator.too-low' => 'You must enter at least 1 vehicle or trailer',
     'OperatingCentreVehicleAuthorisationValidator.too-low-psv' => 'You must enter at least 1 vehicle',
     'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre' => 'If you are only applying for one operating
@@ -87,6 +90,7 @@ return array(
     'application-form-owners-header-directors' => 'Directors',
     'application-form-owners-header-partners' => 'Partners',
     'application-form-owners-header-persons' => 'Persons responsible for your organisation',
+    'application-grant-error-enforcement-area' => 'You must set the enforcement area before granting the application',
     'application-grant-error-fees' => 'You must process the application fees before granting this application',
     'application-grant-error-sections' => 'You must complete these sections before granting this application: %s',
     'application-grant-error-tracking' => 'You must complete the tracking section before granting the application',
@@ -375,8 +379,10 @@ return array(
     'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => '<p class="hint">Your traffic
         area has been determined from your address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
+    'application_operating-centres_authorisation.enforcementArea.label' => 'Enforcement area',
     'application_operating-centres_authorisation.table.address' => 'Address',
     'application_operating-centres_authorisation.table.advertised' => 'Advertised',
+    'application_operating-centres_authorisation.table.complaints' => 'Complaints',
     'application_operating-centres_authorisation.table.footer.total' => 'Totals',
     'application_operating-centres_authorisation.table.footer.total-psv' => 'Total vehicles',
     'application_operating-centres_authorisation.table.permission' => 'Permission',
@@ -1250,12 +1256,6 @@ return array(
     'internal.transport-manager.other-licence.form.operating-centres' => 'Operating centres',
     'internal.transport-manager.other-licence.form.role' => 'Role',
     'internal.transport-manager.other-licence.form.total-auth-vehicles' => 'Vehicles',
-    'internal.transport-manager.otherlicences.table' => 'Other Licences',
-    'internal.transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
-    'internal.transport-manager.otherlicences.table.lic_no' => 'Licence Number',
-    'internal.transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
-    'internal.transport-manager.otherlicences.table.role' => 'Role',
-    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
     'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete the
         selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'Deleted successfully',
@@ -1456,6 +1456,7 @@ return array(
     'lva-tm-details-details-email' => 'Email address',
     'lva-tm-details-details-homeAddress' => 'Home address',
     'lva-tm-details-details-name' => 'Name',
+    'lva-tm-details-details-responsibilities' => 'Responsibilities',
     'lva-tm-details-details-workAddress' => 'Work address',
     'lva-tm-details-dob' => 'Date of birth',
     'lva-tm-details-email' => 'Email address',
@@ -1519,6 +1520,9 @@ return array(
     'lva.section.title.trailer' => 'Trailers',
     'lva.section.title.transport_managers' => 'Transport managers',
     'lva.section.title.transport_managers-details' => 'Transport manager details',
+    'lva.section.title.transport_managers-details-add-other-licences' => 'Add other licence',
+    'lva.section.title.transport_managers-details-edit-other-licences' => 'Edit other licence',
+    'lva.section.title.transport_managers-details-other-licences-success' => 'Other licence saved successfully',
     'lva.section.title.type_of_licence' => 'Type of licence',
     'lva.section.title.undertakings' => 'Review & declarations',
     'lva.section.title.vehicles' => 'Vehicles',
@@ -2167,7 +2171,31 @@ return array(
     'transport-manager-details-title-value-ms' => 'Ms',
     'transport-manager-details-type' => 'Type',
     'transport-manager-details-work-address' => 'Work Address',
+    'transport-manager.otherlicences.table' => 'Other Licences',
+    'transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
+    'transport-manager.otherlicences.table.lic_no' => 'Licence Number',
+    'transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
+    'transport-manager.otherlicences.table.role' => 'Role',
+    'transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
+    'transport-manager.responsibilities.additional-information' => 'Additional information',
+    'transport-manager.responsibilities.application-id' => 'Application ID',
+    'transport-manager.responsibilities.cancel' => 'Cancel',
+    'transport-manager.responsibilities.continue' => 'Continue',
+    'transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the selected
+        record(s)?',
+    'transport-manager.responsibilities.hours-per-week' => 'Hours per week',
+    'transport-manager.responsibilities.hours-per-week-subtitle' => 'How many hours will you spend on your Transport
+        Manager duties?',
+    'transport-manager.responsibilities.is-owner' => 'Are you the owner/director of the organisation applying for the
+        Vehicle Operator Licence?',
+    'transport-manager.responsibilities.print' => 'Print',
+    'transport-manager.responsibilities.save' => 'Save',
+    'transport-manager.responsibilities.table.applications' => 'Applications',
+    'transport-manager.responsibilities.table.licences' => 'Licences',
+    'transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be responsible for?',
+    'transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
     'transport-managers' => 'Transport Managers',
+    'transport_managers-details-OtherLicences-delete-success' => 'Other licence successfully removed',
     'type-of-licence' => 'Type of licence',
     'undertakings' => 'Undertakings',
     'united-kingdom' => 'United Kingdom',
@@ -2248,5 +2276,11 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'internal.transport-manager.otherlicences.table' => 'Other Licences',
+    'internal.transport-manager.otherlicences.table.lic_no' => 'Licence Number',
+    'internal.transport-manager.otherlicences.table.role' => 'Role',
+    'internal.transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
+    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
+    'internal.transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week'
     // Potentially unused (Not found with grep)
 );

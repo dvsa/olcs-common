@@ -614,7 +614,8 @@ return array(
                 => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
             'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
             'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
-            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate'
+            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
+            'EnvironmentalComplaint' => 'Common\BusinessRule\Rule\EnvironmentalComplaint',
         ]
     ],
     'business_service_manager' => [
@@ -671,10 +672,18 @@ return array(
                 'Common\BusinessService\Service\Lva\TransportManagerDetails',
             'Lva\Person' =>
                 'Common\BusinessService\Service\Lva\Person',
+            'Lva\OtherLicence' =>
+                'Common\BusinessService\Service\Lva\OtherLicence',
+            'Lva\DeleteOtherLicence' =>
+                'Common\BusinessService\Service\Lva\DeleteOtherLicence',
             // User administration
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
             // Cases business services
+            'Cases\Complaint\EnvironmentalComplaint'
+                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaint',
+            'Cases\Complaint\EnvironmentalComplaintTask'
+                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaintTask',
             'Cases\Submission\Decision' => 'Common\BusinessService\Service\Cases\Submission\Decision',
             'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
             'Cases\Submission\SubmissionActionTask'
