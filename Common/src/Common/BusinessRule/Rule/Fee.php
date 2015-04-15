@@ -21,20 +21,22 @@ class Fee implements BusinessRuleInterface, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function validate($formData, $description, $now)
+    public function validate($data, $description)
     {
-        $data = [];
+        $now = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
 
-        $data['amount']         = $formData['fee-details']['amount'];
-        $data['invoicedDate']   = $formData['fee-details']['createdDate'];
-        $data['feeType']        = $formData['fee-details']['feeType'];
-        $data['description']    = $description;
-        $data['feeStatus']      = FeeEntityService::STATUS_OUTSTANDING;
-        $data['createdBy']      = $formData['createdBy'];
-        $data['lastModifiedBy'] = $formData['lastModifiedBy'];
-        $data['createdOn']      = $now;
-        $data['lastModifiedOn'] = $now;
+        $validated = [];
 
-        return $data;
+        $validated['amount']         = $data['fee-details']['amount'];
+        $validated['invoicedDate']   = $data['fee-details']['createdDate'];
+        $validated['feeType']        = $data['fee-details']['feeType'];
+        $validated['description']    = $description;
+        $validated['feeStatus']      = FeeEntityService::STATUS_OUTSTANDING;
+        $validated['createdBy']      = $data['user'];
+        $validated['lastModifiedBy'] = $data['user'];
+        $validated['createdOn']      = $now;
+        $validated['lastModifiedOn'] = $now;
+
+        return $validated;
     }
 }

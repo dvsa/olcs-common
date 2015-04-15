@@ -39,12 +39,11 @@ class Fee implements
      */
     public function process(array $params)
     {
-        $now = $this->getServiceLocator()->get('Helper\Date')->getDate();
         $description = $this->getServiceLocator()->get('Entity\FeeType')
             ->getById($params['fee-details']['feeType'])['description'];
 
         $data = $this->getBusinessRuleManager()->get('Fee')
-            ->validate($params, $description, $now);
+            ->validate($params, $description);
 
         $saved = $this->getServiceLocator()->get('Entity\Fee')->save($data);
 
