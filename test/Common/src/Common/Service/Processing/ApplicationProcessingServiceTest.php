@@ -1866,4 +1866,165 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
         $this->sut->processUndoNotTakenUpApplication($applicationId);
     }
+
+    /**
+     * @group processing_services
+     * @dataProvider submitProvider
+     * @param boolean $isVariation
+     * @param boolean $isUpgrade
+     * @param string $goodsOrPsv
+     * @param string $licenceType
+     * @param string $expectedDescription
+     */
+    public function testSubmitApplication($isVariation, $isUpgrade, $goodsOrPsv, $licenceType, $expectedDescription)
+    {
+        $applicationId = 69;
+        $licenceId = 77;
+        $userId = 101;
+
+        // mocks
+        $dateHelper = m::mock();
+        $this->sm->setService('Helper\Date', $dateHelper);
+        $mockApplicationEntityService = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationEntityService);
+        $mockTaskProcessingService = m::mock();
+        $this->sm->setService('Processing\Task', $mockTaskProcessingService);
+        $mockTaskEntityService = m::mock();
+        $this->sm->setService('Entity\Task', $mockTaskEntityService);
+        $mockVariationSectionProcessingService = m::mock();
+        $this->sm->setService('Processing\VariationSection', $mockVariationSectionProcessingService);
+        $mockUserEntityService = m::mock();
+        $this->sm->setService('Entity\User', $mockUserEntityService);
+
+        // expectations
+        $mockApplicationEntityService
+            ->shouldReceive('getLicenceIdForApplication')
+            ->with($applicationId)
+            ->andReturn($licenceId);
+        $dateHelper
+            ->shouldReceive('getDate')
+            ->andReturn('2015-04-13')
+            ->shouldReceive('getDateObject')
+            ->andReturn(new \DateTime('2015-04-13 10:10:10'));
+
+        $mockApplicationEntityService
+            ->shouldReceive('forceUpdate')
+            ->with(
+                $applicationId,
+                [
+                    'status' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
+                    'receivedDate' => '2015-04-13 10:10:10',
+                    'targetCompletionDate' => '2015-06-15 10:10:10'
+                ]
+            )
+            ->once();
+
+        $mockApplicationEntityService
+            ->shouldReceive('getDataForValidating')
+            ->once()
+            ->with($applicationId)
+            ->andReturn(
+                [
+                    'isVariation' => $isVariation,
+                    'goodsOrPsv' => $goodsOrPsv,
+                    'licenceType' => $licenceType,
+                ]
+            );
+
+        if ($isVariation) {
+            $mockVariationSectionProcessingService
+                ->shouldReceive('isLicenceUpgrade')
+                ->with($applicationId)
+                ->andReturn($isUpgrade);
+        }
+
+        $mockUserEntityService
+            ->shouldReceive('getCurrentUser')
+            ->andReturn(['id' => $userId, 'team' => ['id' => 2]]);
+
+        $mockTaskProcessingService
+            ->shouldReceive('getAssignment')
+            ->with(['category' => CategoryDataService::CATEGORY_APPLICATION])
+            ->andReturn(
+                [
+                    'assignedToUser' => 456,
+                    'assignedToTeam' => 789
+                ]
+            );
+
+        $expectedTaskData = [
+            'category' => CategoryDataService::CATEGORY_APPLICATION,
+            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL,
+            'description' => $expectedDescription,
+            'actionDate' => '2015-06-15',
+            'assignedByUser' => $userId,
+            'assignedToUser' => 456,
+            'assignedToTeam' => 789,
+            'isClosed' => 0,
+            'application' => $applicationId,
+            'licence' => $licenceId,
+        ];
+
+        $mockTaskEntityService
+            ->shouldReceive('save')
+            ->with($expectedTaskData)
+            ->once();
+
+        $this->sut->submitApplication($applicationId);
+    }
+
+    public function submitProvider()
+    {
+        return [
+            'gv new app' => [
+                false,
+                null,
+                LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                'GV79 Application'
+            ],
+            'psv new app' => [
+                false,
+                null,
+                LicenceEntityService::LICENCE_CATEGORY_PSV,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                'PSV421 Application'
+            ],
+            'psv sr new app' => [
+                false,
+                null,
+                LicenceEntityService::LICENCE_CATEGORY_PSV,
+                LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED,
+                'PSV356 Application'
+            ],
+            'gv variation upgrade' => [
+                true,
+                true,
+                LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                'GV80A Application'
+            ],
+            'gv variation no upgrade' => [
+                true,
+                false,
+                LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                'GV81 Application'
+            ],
+            'psv variation upgrade' => [
+                true,
+                true,
+                LicenceEntityService::LICENCE_CATEGORY_PSV,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                'PSV431A Application'
+            ],
+            'psv variation no upgrade' => [
+                true,
+                false,
+                LicenceEntityService::LICENCE_CATEGORY_PSV,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                'PSV431 Application'
+            ],
+        ];
+    }
 }
