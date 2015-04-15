@@ -8,17 +8,9 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'previous-licence-add' => array('label' => 'Add', 'class' => 'primary'),
-                'edit-previous-licence' => array(
-                    'label' => 'Edit',
-                    'class' => 'secondary js-require--one',
-                    'requireRows' => true
-                ),
-                'delete-previous-licence' => array(
-                    'label' => 'Remove',
-                    'class' => 'secondary js-require--multiple',
-                    'requireRows' => true
-                )
+                'add-previous-licence' => array('label' => 'Add', 'class' => 'primary'),
+                'edit-previous-licence' => array('label' => 'Edit', 'class' => 'secondary', 'requireRows' => true),
+                'delete-previous-licence' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
     ),

@@ -674,8 +674,12 @@ return array(
                 'Common\BusinessService\Service\Lva\Person',
             'Lva\OtherLicence' =>
                 'Common\BusinessService\Service\Lva\OtherLicence',
+            'Lva\PreviousConviction' =>
+                'Common\BusinessService\Service\Lva\PreviousConviction',
             'Lva\DeleteOtherLicence' =>
                 'Common\BusinessService\Service\Lva\DeleteOtherLicence',
+            'Lva\DeletePreviousConviction' =>
+                'Common\BusinessService\Service\Lva\DeletePreviousConviction',
             // User administration
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
