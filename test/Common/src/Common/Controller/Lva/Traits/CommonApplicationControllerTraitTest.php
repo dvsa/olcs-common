@@ -316,7 +316,7 @@ class CommonApplicationControllerTraitTest extends MockeryTestCase
         $section = 'type_of_licence';
 
         $stubbedOverviewData = array(
-            'applicationCompletions' => array(
+            'applicationCompletion' => array(
                 array(
                     'foo' => 'bar'
                 )
@@ -373,7 +373,7 @@ class CommonApplicationControllerTraitTest extends MockeryTestCase
         $section = 'type_of_licence';
 
         $stubbedOverviewData = array(
-            'applicationCompletions' => array(
+            'applicationCompletion' => array(
                 array(
                     'foo' => 'bar'
                 )
@@ -426,7 +426,7 @@ class CommonApplicationControllerTraitTest extends MockeryTestCase
         $section = 'type_of_licence';
 
         $stubbedOverviewData = array(
-            'applicationCompletions' => array(
+            'applicationCompletion' => array(
                 array(
                     'foo' => 'bar'
                 )

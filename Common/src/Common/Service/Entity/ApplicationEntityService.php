@@ -73,7 +73,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     private $overviewBundle = array(
         'children' => array(
-            'applicationCompletions',
+            'applicationCompletion',
             'status',
             'interimStatus',
             'licenceType',
