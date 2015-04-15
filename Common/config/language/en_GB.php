@@ -21,9 +21,10 @@ return array(
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'The total number of authorised trailers must be equal or
         greater than the largest number of trailers authorised at any individual operating centre',
+    'OperatingCentreVehicleAuthorisationValidator.too-high-psv-r' => '2 is the maximum number of vehicles on a PSV
+        Restricted licence',
     'OperatingCentreVehicleAuthorisationValidator.too-low' => 'You must enter at least 1 vehicle or trailer',
     'OperatingCentreVehicleAuthorisationValidator.too-low-psv' => 'You must enter at least 1 vehicle',
-    'OperatingCentreVehicleAuthorisationValidator.too-high-psv-r' => '2 is the maximum number of vehicles on a PSV Restricted licence',
     'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre' => 'If you are only applying for one operating
         centre, the total number of authorised vehicles must be the same as at your operating centre',
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
@@ -380,6 +381,7 @@ return array(
     'application_operating-centres_authorisation.enforcementArea.label' => 'Enforcement area',
     'application_operating-centres_authorisation.table.address' => 'Address',
     'application_operating-centres_authorisation.table.advertised' => 'Advertised',
+    'application_operating-centres_authorisation.table.complaints' => 'Complaints',
     'application_operating-centres_authorisation.table.footer.total' => 'Totals',
     'application_operating-centres_authorisation.table.footer.total-psv' => 'Total vehicles',
     'application_operating-centres_authorisation.table.permission' => 'Permission',

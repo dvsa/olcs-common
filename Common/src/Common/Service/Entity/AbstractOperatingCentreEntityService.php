@@ -29,7 +29,8 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
                             'countryCode'
                         )
                     ),
-                    'adDocuments'
+                    'adDocuments',
+                    'ocComplaints'
                 )
             )
         )
