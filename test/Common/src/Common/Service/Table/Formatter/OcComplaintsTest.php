@@ -20,18 +20,7 @@ class OcComplaintsTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormat($data, $complaints)
     {
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Entity\OcComplaints')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('getCountComplaintsForOpCentre')
-                    ->with(1)
-                    ->andReturn($complaints)
-                    ->getMock()
-            )->getMock();
-
-        $this->assertEquals(OcComplaints::format($data, array(), $sm), $complaints);
+        $this->assertEquals(OcComplaints::format($data), $complaints);
     }
 
     public function testFormatDataProvider()
@@ -40,7 +29,12 @@ class OcComplaintsTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     'operatingCentre' => array(
-                        'id' => 1
+                        'ocComplaints' => array(
+                            array(),
+                            array(),
+                            array(),
+                            array(),
+                        )
                     )
                 ),
                 4
