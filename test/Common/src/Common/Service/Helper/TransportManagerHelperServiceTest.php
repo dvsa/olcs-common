@@ -72,4 +72,108 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         $this->assertEquals($expected, $response);
     }
+
+    public function testAlterResponsibilitiesFieldset()
+    {
+        // Params
+        $fieldset = m::mock();
+        $ocOptions = [
+            111 => ['foo'],
+            222 => ['bar']
+        ];
+        $otherLicencesTable = m::mock();
+
+        // Mocks
+        $mockFormHelper = m::mock();
+        $mockTmTypeField = m::mock();
+        $mockOtherLicenceField = m::mock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $fieldset->shouldReceive('get')
+            ->once()
+            ->with('operatingCentres')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('setValueOptions')
+                ->once()
+                ->with($ocOptions)
+                ->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('tmType')
+            ->andReturn($mockTmTypeField)
+            ->shouldReceive('get')
+            ->with('otherLicences')
+            ->andReturn($mockOtherLicenceField);
+
+        $mockFormHelper->shouldReceive('removeOption')
+            ->once()
+            ->with($mockTmTypeField, 'tm_t_B')
+            ->shouldReceive('populateFormTable')
+            ->with($mockOtherLicenceField, $otherLicencesTable);
+
+        $this->sut->alterResponsibilitiesFieldset($fieldset, $ocOptions, $otherLicencesTable);
+    }
+
+    public function testGetResponsibilityFileData()
+    {
+        $tmId = 111;
+
+        $expected = [
+            'transportManager' => 111,
+            'issuedDate' => '2014-01-20 10:10:10',
+            'description' => 'Additional information',
+            'category' => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
+            'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
+        ];
+
+        // Mocks
+        $mockDateHelper = m::mock();
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        // Expectations
+        $mockDateHelper->shouldReceive('getDate')
+            ->with(\DateTime::W3C)
+            ->andReturn('2014-01-20 10:10:10');
+
+        // Assertions
+        $data = $this->sut->getResponsibilityFileData($tmId);
+
+        $this->assertEquals($expected, $data);
+    }
+
+    public function testGetResponsibilityFiles()
+    {
+        $tmId = 111;
+        $tmaId = 222;
+        $stubbedTmaData = [
+            'application' => [
+                'id' => 333
+            ]
+        ];
+
+        // Mocks
+        $mockTma = m::mock();
+        $mockTm = m::mock();
+        $this->sm->setService('Entity\TransportManagerApplication', $mockTma);
+        $this->sm->setService('Entity\TransportManager', $mockTm);
+
+        // Expectations
+        $mockTma->shouldReceive('getTransportManagerApplication')
+            ->with($tmaId)
+            ->andReturn($stubbedTmaData);
+
+        $mockTm->shouldReceive('getDocuments')
+            ->with(
+                111,
+                333,
+                'application',
+                CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
+                CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
+            )
+            ->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->getResponsibilityFiles($tmId, $tmaId));
+    }
 }

@@ -672,6 +672,10 @@ return array(
                 'Common\BusinessService\Service\Lva\TransportManagerDetails',
             'Lva\Person' =>
                 'Common\BusinessService\Service\Lva\Person',
+            'Lva\OtherLicence' =>
+                'Common\BusinessService\Service\Lva\OtherLicence',
+            'Lva\DeleteOtherLicence' =>
+                'Common\BusinessService\Service\Lva\DeleteOtherLicence',
             // User administration
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
