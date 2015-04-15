@@ -24,10 +24,11 @@ class ApplicationIdValidatorTest extends PHPUnit_Framework_TestCase
      * @group applicationIdValidator
      * @dataProvider providerIsValid
      */
-    public function testIsValid($appData, $expected)
+    public function testIsValid($appData, $tmAppData, $expected)
     {
         $validator = new ApplicationIdValidator();
         $validator->setAppData($appData);
+        $validator->setTmAppData($tmAppData);
         $this->assertEquals($expected, $validator->isValid(1));
     }
 
@@ -41,24 +42,35 @@ class ApplicationIdValidatorTest extends PHPUnit_Framework_TestCase
         return [
             [
                 [],
+                [],
                 false
             ],
             [
                 [
                     'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL]
                 ],
+                [],
                 true
             ],
             [
                 [
                     'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED]
                 ],
+                [],
                 false
             ],
             [
                 [
                     'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED]
                 ],
+                [],
+                false
+            ],
+            [
+                [
+                    'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL]
+                ],
+                ['something is here'],
                 false
             ],
         ];
