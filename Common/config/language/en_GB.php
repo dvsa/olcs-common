@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'section.name.transport_managers.details' => 'Details',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1256,6 +1255,12 @@ return array(
     'internal.transport-manager.other-licence.form.operating-centres' => 'Operating centres',
     'internal.transport-manager.other-licence.form.role' => 'Role',
     'internal.transport-manager.other-licence.form.total-auth-vehicles' => 'Vehicles',
+    'internal.transport-manager.otherlicences.table' => 'Other Licences',
+    'internal.transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
+    'internal.transport-manager.otherlicences.table.lic_no' => 'Licence Number',
+    'internal.transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
+    'internal.transport-manager.otherlicences.table.role' => 'Role',
+    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
     'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete the
         selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'Deleted successfully',
@@ -1947,6 +1952,7 @@ return array(
     'section.name.taxi_phv' => 'Taxi/PHV',
     'section.name.trailers' => 'Trailers',
     'section.name.transport_managers' => 'Transport managers',
+    'section.name.transport_managers.details' => 'Details',
     'section.name.type_of_licence' => 'Type of licence',
     'section.name.undertakings' => 'Declarations',
     'section.name.vehicles' => 'Vehicles',
@@ -2276,11 +2282,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'internal.transport-manager.otherlicences.table' => 'Other Licences',
-    'internal.transport-manager.otherlicences.table.lic_no' => 'Licence Number',
-    'internal.transport-manager.otherlicences.table.role' => 'Role',
-    'internal.transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
-    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
-    'internal.transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week'
     // Potentially unused (Not found with grep)
 );
