@@ -850,6 +850,11 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'vehicle',
                         'interimApplication',
                         'goodsDiscs'
+                    ),
+                    'criteria' => array(
+                        array(
+                            'removalDate' => 'NULL'
+                        )
                     )
                 ),
                 'interimStatus',
@@ -872,7 +877,6 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 ['action' => '', 'operatingCentre' => ['address' => 'address3']],
             ],
             'licenceVehicles' => [
-                ['id' => 1, 'removalDate' => '2015-01-01'],
                 ['id' => 2, 'removalDate' => null]
             ]
         ];
@@ -917,6 +921,11 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'vehicle',
                         'interimApplication',
                         'goodsDiscs'
+                    ),
+                    'criteria' => array(
+                        array(
+                            'removalDate' => 'NULL'
+                        )
                     )
                 ),
                 'interimStatus',

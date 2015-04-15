@@ -709,6 +709,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'vehicle',
                     'interimApplication',
                     'goodsDiscs'
+                ),
+                'criteria' => array(
+                    array(
+                        'removalDate' => 'NULL'
+                    )
                 )
             ),
             'interimStatus',
@@ -1158,14 +1163,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 }
             }
             $results['operatingCentres'] = $selected;
-
-            $activeLicenceVehicles = [];
-            foreach ($results['licenceVehicles'] as $lv) {
-                if (!$lv['removalDate']) {
-                    $activeLicenceVehicles[] = $lv;
-                }
-            }
-            $results['licenceVehicles'] = $activeLicenceVehicles;
             $this->interimData = $results;
         }
         return $this->interimData;
