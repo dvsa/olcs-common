@@ -1880,6 +1880,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
     {
         $applicationId = 69;
         $licenceId = 77;
+        $userId = 101;
 
         // mocks
         $dateHelper = m::mock();
@@ -1892,6 +1893,8 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Entity\Task', $mockTaskEntityService);
         $mockVariationSectionProcessingService = m::mock();
         $this->sm->setService('Processing\VariationSection', $mockVariationSectionProcessingService);
+        $mockUserEntityService = m::mock();
+        $this->sm->setService('Entity\User', $mockUserEntityService);
 
         // expectations
         $mockApplicationEntityService
@@ -1935,6 +1938,10 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 ->andReturn($isUpgrade);
         }
 
+        $mockUserEntityService
+            ->shouldReceive('getCurrentUser')
+            ->andReturn(['id' => $userId, 'team' => ['id' => 2]]);
+
         $mockTaskProcessingService
             ->shouldReceive('getAssignment')
             ->with(['category' => CategoryDataService::CATEGORY_APPLICATION])
@@ -1950,7 +1957,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL,
             'description' => $expectedDescription,
             'actionDate' => '2015-06-15',
-            'assignedByUser' => 1,
+            'assignedByUser' => $userId,
             'assignedToUser' => 456,
             'assignedToTeam' => 789,
             'isClosed' => 0,

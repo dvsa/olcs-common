@@ -847,8 +847,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     {
         $dateHelper = $this->getServiceLocator()->get('Helper\Date');
         $licenceId = $this->getLicenceId($applicationId);
-
+        $user = $this->getServiceLocator()->get('Entity\User')->getCurrentUser();
         $now = $dateHelper->getDateObject();
+
         $update = array(
             'status' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
             'receivedDate' => $now->format('Y-m-d H:i:s'),
@@ -858,8 +859,6 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()
             ->get('Entity\Application')
             ->forceUpdate($applicationId, $update);
-
-        // @TODO licence status on new apps
 
         $assignment = $this->getServiceLocator()
             ->get('Processing\Task')
@@ -871,7 +870,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
                 'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL,
                 'description' => $this->getTaskDescription($applicationId),
                 'actionDate' => $now->format('Y-m-d'),
-                'assignedByUser' => 1,
+                'assignedByUser' => $user['id'],
                 'isClosed' => 0,
                 'application' => $applicationId,
                 'licence' => $licenceId,
