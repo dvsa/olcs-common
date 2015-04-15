@@ -98,7 +98,6 @@ class FeeEntityService extends AbstractLvaEntityService
         )
     );
 
-
     protected $latestFeeByTypeStatusesAndApplicationBundle = array(
         'children' => array(
             'feeType' => array(
