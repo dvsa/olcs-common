@@ -232,4 +232,17 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getDataForVariation($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetDataForGrantable()
+    {
+        $id = 4;
+
+        $this->expectOneRestCall('BusReg', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForGrantable($id));
+    }
 }

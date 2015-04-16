@@ -51,6 +51,18 @@ class Responsibilities
 
     /**
      * @Form\Options({
+     *     "label": "transport-manager.responsibilities.tm-app-status",
+     *     "disable_inarray_validator": false,
+     *     "category": "tmap_status"
+     * })
+     * @Form\Required(true)
+     * @Form\Attributes({"id":"","placeholder":"", "required":false})
+     * @Form\Type("DynamicSelect")
+     */
+    public $tmApplicationStatus = null;
+
+    /**
+     * @Form\Options({
      *     "label": "transport-manager.responsibilities.is-owner",
      *     "value_options":{
      *         "Y":"Yes",

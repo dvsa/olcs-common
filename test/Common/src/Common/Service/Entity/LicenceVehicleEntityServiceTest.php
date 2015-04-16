@@ -331,6 +331,26 @@ class LicenceVehicleEntityServiceTest extends AbstractEntityServiceTestCase
     }
 
     /**
+     * @dataProvider providerGetVehiclesDataForVariation
+     */
+    public function testGetVehiclesDataForVariation($filters, $expectedQuery, $expectedBundle)
+    {
+        $applicationId = 111;
+
+        // Mocks
+        $mockApplication = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplication);
+        $mockApplication->shouldReceive('getLicenceIdForApplication')
+            ->with(111)
+            ->andReturn(222);
+
+        $this->expectOneRestCall('LicenceVehicle', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sut->getVehiclesDataForVariation($applicationId, $filters);
+    }
+
+    /**
      * @dataProvider providerGetVehiclesDataForLicence
      */
     public function testGetVehiclesDataForLicence($filters, $expectedQuery, $expectedBundle)
@@ -704,6 +724,217 @@ class LicenceVehicleEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'licence' => 222,
                     'specifiedDate' => 'NOT NULL',
+                    'page' => 1,
+                    'limit' => 10
+                ],
+                [
+                    'children' => [
+                        'goodsDiscs' => [
+                            'requireNone' => true,
+                            'criteria' => [
+                                'ceasedDate' => 'NULL',
+                                'issuedDate' => 'NOT NULL'
+                            ]
+                        ],
+                        'interimApplication',
+                        'vehicle' => [
+
+                        ]
+                    ]
+                ]
+            ],
+        ];
+    }
+
+    public function providerGetVehiclesDataForVariation()
+    {
+        return [
+            'no filters' => [
+                [],
+                [
+                    [
+                        'application' => 111,
+                        'licence' => 222
+                    ],
+                    'page' => 1,
+                    'limit' => 10
+                ],
+                [
+                    'children' => [
+                        'goodsDiscs' => [
+
+                        ],
+                        'interimApplication',
+                        'vehicle' => [
+
+                        ]
+                    ]
+                ]
+            ],
+            'no filters, pagination' => [
+                [
+                    'page' => 2,
+                    'limit' => 25
+                ],
+                [
+                    [
+                        'application' => 111,
+                        'licence' => 222
+                    ],
+                    'page' => 2,
+                    'limit' => 25
+                ],
+                [
+                    'children' => [
+                        'goodsDiscs' => [
+
+                        ],
+                        'interimApplication',
+                        'vehicle' => [
+
+                        ]
+                    ]
+                ]
+            ],
+            'with null specified date' => [
+                [
+                    'specifiedDate' => 'NULL'
+                ],
+                [
+                    [
+                        'application' => 111,
+                        'licence' => 222
+                    ],
+                    'specifiedDate' => 'NULL',
+                    'page' => 1,
+                    'limit' => 10
+                ],
+                [
+                    'children' => [
+                        'goodsDiscs' => [
+
+                        ],
+                        'interimApplication',
+                        'vehicle' => [
+
+                        ]
+                    ]
+                ]
+            ],
+            'with not null specified date' => [
+                [
+                    'specifiedDate' => 'NOT NULL'
+                ],
+                [
+                    [
+                        'application' => 111,
+                        'licence' => 222
+                    ],
+                    'specifiedDate' => 'NOT NULL',
+                    'page' => 1,
+                    'limit' => 10
+                ],
+                [
+                    'children' => [
+                        'goodsDiscs' => [
+
+                        ],
+                        'interimApplication',
+                        'vehicle' => [
+
+                        ]
+                    ]
+                ]
+            ],
+            'with removal date' => [
+                [
+                    'removalDate' => 'NOT NULL'
+                ],
+                [
+                    [
+                        'application' => 111,
+                        'licence' => 222
+                    ],
+                    'removalDate' => 'NOT NULL',
+                    'page' => 1,
+                    'limit' => 10
+                ],
+                [
+                    'children' => [
+                        'goodsDiscs' => [
+
+                        ],
+                        'interimApplication',
+                        'vehicle' => [
+
+                        ]
+                    ]
+                ]
+            ],
+            'with vrm' => [
+                [
+                    'vrm' => '~A%'
+                ],
+                [
+                    [
+                        'application' => 111,
+                        'licence' => 222
+                    ],
+                    'page' => 1,
+                    'limit' => 10
+                ],
+                [
+                    'children' => [
+                        'goodsDiscs' => [
+
+                        ],
+                        'interimApplication',
+                        'vehicle' => [
+                            'criteria' => [
+                                'vrm' => '~A%',
+                            ],
+                            'required' => true,
+                        ]
+                    ]
+                ]
+            ],
+            'with disc Y' => [
+                [
+                    'disc' => 'Y'
+                ],
+                [
+                    [
+                        'application' => 111,
+                        'licence' => 222
+                    ],
+                    'page' => 1,
+                    'limit' => 10
+                ],
+                [
+                    'children' => [
+                        'goodsDiscs' => [
+                            'required' => true,
+                            'criteria' => [
+                                'ceasedDate' => 'NULL',
+                                'issuedDate' => 'NOT NULL'
+                            ]
+                        ],
+                        'interimApplication',
+                        'vehicle' => [
+
+                        ]
+                    ]
+                ]
+            ],
+            'with disc N' => [
+                [
+                    'disc' => 'N'
+                ],
+                [
+                    [
+                        'application' => 111,
+                        'licence' => 222
+                    ],
                     'page' => 1,
                     'limit' => 10
                 ],
