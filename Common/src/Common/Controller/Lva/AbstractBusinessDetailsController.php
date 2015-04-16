@@ -61,7 +61,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         // If we are performing a company number lookup
         if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
-            $this->getServiceLocator()->get('Helper\Form')->processCompanyNumberLookupForm($form, $data, 'data');
+            $this->getServiceLocator()->get('Helper\Form')
+                ->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
             return $this->renderForm($form);
         }
 
