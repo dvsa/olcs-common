@@ -18,9 +18,9 @@ class VariationVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGo
 {
     public function getFilteredVehiclesData($id, $query)
     {
-        $query['specified'] = 'Y';
+        $filters = $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->formatFilters($query);
 
-        return $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getFilteredVehiclesData($id, $query);
+        return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehiclesDataForVariation($id, $filters);
     }
 
     public function getFormData($id)

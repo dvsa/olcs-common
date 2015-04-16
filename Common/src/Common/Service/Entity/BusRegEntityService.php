@@ -67,6 +67,21 @@ class BusRegEntityService extends AbstractEntityService
     );
 
     /**
+     * Grantable data bundle
+     *
+     * @var array
+     */
+    private $grantableDataBundle = array(
+        'children' => array(
+            'busNoticePeriod',
+            'busServiceTypes',
+            'trafficAreas',
+            'localAuthoritys',
+            'shortNotice',
+        )
+    );
+
+    /**
      * Get data for task processing
      *
      * @param int $id
@@ -97,6 +112,17 @@ class BusRegEntityService extends AbstractEntityService
     public function getDataForVariation($id)
     {
         return $this->get($id, $this->variationDataBundle);
+    }
+
+    /**
+     * Get data for grantable
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getDataForGrantable($id)
+    {
+        return $this->get($id, $this->grantableDataBundle);
     }
 
     /**

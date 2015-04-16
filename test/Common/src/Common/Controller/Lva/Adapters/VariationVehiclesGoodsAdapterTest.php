@@ -43,16 +43,21 @@ class VariationVehiclesGoodsAdapterTest extends MockeryTestCase
         $query = [
             'foo' => 'bar'
         ];
-        $expectedQuery = [
-            'specified' => 'Y',
-            'foo' => 'bar'
+        $filters = [
+            'bar' => 'foo'
         ];
 
         $mockAppAdapter = m::mock();
+        $mockLicenceVehicle = m::mock();
         $this->sm->setService('ApplicationVehiclesGoodsAdapter', $mockAppAdapter);
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicle);
 
-        $mockAppAdapter->shouldReceive('getFilteredVehiclesData')
-            ->with(111, $expectedQuery)
+        $mockAppAdapter->shouldReceive('formatFilters')
+            ->with($query)
+            ->andReturn($filters);
+
+        $mockLicenceVehicle->shouldReceive('getVehiclesDataForVariation')
+            ->with(111, $filters)
             ->andReturn('RESPONSE');
 
         $this->assertEquals('RESPONSE', $this->sut->getFilteredVehiclesData($id, $query));

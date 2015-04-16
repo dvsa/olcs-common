@@ -30,7 +30,8 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
             ],
             'transportManager',
             'tmType',
-            'operatingCentres'
+            'operatingCentres',
+            'tmApplicationStatus'
         ]
     ];
 
@@ -60,6 +61,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                     'operatingCentres' => [
                         'one',
                         'two'
+                    ],
+                    'tmApplicationStatus' => [
+                        'id' => 'foo'
                     ]
                 ],
                 [
@@ -72,6 +76,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                         'one',
                         'two',
                         'three'
+                    ],
+                    'tmApplicationStatus' => [
+                        'id' => 'bar'
                     ]
                 ],
             ]
@@ -92,6 +99,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                 'operatingCentres' => [
                     'one',
                     'two'
+                ],
+                'tmApplicationStatus' => [
+                    'id' => 'foo'
                 ],
                 'ocCount' => 2
             ]
@@ -202,5 +212,19 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getTransportManagerDetails(111));
+    }
+
+    public function testGetTransportManagerId()
+    {
+        $data = [
+            'transportManager' => [
+                'id' => 222
+            ]
+        ];
+
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', 111)
+            ->will($this->returnValue($data));
+
+        $this->assertEquals(222, $this->sut->getTransportManagerId(111));
     }
 }

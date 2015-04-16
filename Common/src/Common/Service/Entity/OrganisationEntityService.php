@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Service\Entity\LicenceEntityService as Licence;
+
 /**
  * Organisation Entity Service
  *
@@ -316,6 +318,18 @@ class OrganisationEntityService extends AbstractEntityService
             'status' => 'IN ' . json_encode($licenceStatuses)
         ];
         return $this->get($id, $bundle)['licences'];
+    }
+
+    /**
+     * Determine is an organisation isMlh (has at least one valid licence)
+     *
+     * @param $id
+     * @return bool
+     */
+    public function isMlh($id)
+    {
+        $licences = $this->getLicencesByStatus($id, [Licence::LICENCE_STATUS_VALID]);
+        return (bool) count($licences);
     }
 
     public function getNatureOfBusinesses($id)
