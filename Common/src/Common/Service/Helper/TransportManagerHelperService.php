@@ -79,4 +79,47 @@ class TransportManagerHelperService extends AbstractHelperService
                 CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
             );
     }
+
+    public function getConvictionsAndPenaltiesTable($transportManagerId)
+    {
+        $results = $this->getServiceLocator()
+            ->get('Entity\PreviousConviction')
+            ->getDataForTransportManager($transportManagerId);
+
+        return $this->getServiceLocator()->get('Table')->prepareTable(
+            'tm.convictionsandpenalties',
+            $results
+        );
+    }
+
+    public function getPreviousLicencesTable($transportManagerId)
+    {
+        $results = $this->getServiceLocator()
+            ->get('Entity\OtherLicence')
+            ->getDataForTransportManager($transportManagerId);
+
+        return $this->getServiceLocator()->get('Table')->prepareTable(
+            'tm.previouslicences',
+            $results
+        );
+    }
+
+    public function alterPreviousHistoryFieldset($fieldset, $tmId)
+    {
+        $convictionsAndPenaltiesTable = $this->getConvictionsAndPenaltiesTable($tmId);
+        $previousLicencesTable = $this->getPreviousLicencesTable($tmId);
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper->populateFormTable(
+            $fieldset->get('convictions'),
+            $convictionsAndPenaltiesTable,
+            'convictions'
+        );
+        $formHelper->populateFormTable(
+            $fieldset->get('previousLicences'),
+            $previousLicencesTable,
+            'previousLicences'
+        );
+    }
 }

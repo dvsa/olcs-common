@@ -95,6 +95,12 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
+    protected $tmBundle = [
+        'children' => [
+            'transportManager'
+        ]
+    ];
+
     public function getGrantDataForApplication($applicationId)
     {
         return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
@@ -195,5 +201,12 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     public function getTransportManagerDetails($id)
     {
         return $this->get($id, $this->tmDetailsBundle);
+    }
+
+    public function getTransportManagerId($id)
+    {
+        $data = $this->get($id, $this->tmBundle);
+
+        return $data['transportManager']['id'];
     }
 }

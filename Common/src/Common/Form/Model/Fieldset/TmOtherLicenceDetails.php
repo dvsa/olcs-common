@@ -36,7 +36,7 @@ class TmOtherLicenceDetails
 
     /**
      * @Form\Attributes({"class":"long","id":"licNo"})
-     * @Form\Options({"label":"internal.transport-manager.other-licence.form.lic-no"})
+     * @Form\Options({"label":"transport-manager.other-licence.form.lic-no"})
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      * @Form\Type("Text")
      */
@@ -46,7 +46,7 @@ class TmOtherLicenceDetails
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Required(false)
      * @Form\Options({
-     *     "label": "internal.transport-manager.other-licence.form.role",
+     *     "label": "transport-manager.other-licence.form.role",
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      *     "category": "other_lic_role"
@@ -57,7 +57,7 @@ class TmOtherLicenceDetails
 
     /**
      * @Form\Attributes({"class":"long","id":"operatingCentres"})
-     * @Form\Options({"label":"internal.transport-manager.other-licence.form.operating-centres"})
+     * @Form\Options({"label":"transport-manager.other-licence.form.operating-centres"})
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      * @Form\Type("Text")
      */
@@ -65,7 +65,7 @@ class TmOtherLicenceDetails
 
     /**
      * @Form\Attributes({"class":"long","id":"totalAuthVehicles"})
-     * @Form\Options({"label":"internal.transport-manager.other-licence.form.total-auth-vehicles"})
+     * @Form\Options({"label":"transport-manager.other-licence.form.total-auth-vehicles"})
      * @Form\Required(false)
      * @Form\Validator({"name":"Digits"})
      * @Form\Type("Text")
@@ -74,7 +74,7 @@ class TmOtherLicenceDetails
 
     /**
      * @Form\Attributes({"class":"long","id":"hoursPerWeek"})
-     * @Form\Options({"label":"internal.transport-manager.other-licence.form.hours-per-week"})
+     * @Form\Options({"label":"transport-manager.other-licence.form.hours-per-week"})
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      * @Form\Type("Text")
      */

@@ -176,4 +176,114 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getResponsibilityFiles($tmId, $tmaId));
     }
+
+    public function testGetConvictionsAndPenaltiesTable()
+    {
+        $tmId = 111;
+
+        $mockTableBuilder = m::mock();
+        $this->sm->setService('Table', $mockTableBuilder);
+
+        $mockTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder);
+
+        $this->assertSame($mockTable, $this->sut->getConvictionsAndPenaltiesTable($tmId));
+    }
+
+    public function testGetPreviousLicencesTable()
+    {
+        $tmId = 111;
+
+        $mockTableBuilder = m::mock();
+        $this->sm->setService('Table', $mockTableBuilder);
+
+        $mockTable = $this->expectGetPreviousLicencesTable($mockTableBuilder);
+
+        $this->assertSame($mockTable, $this->sut->getPreviousLicencesTable($tmId));
+    }
+
+    public function testAlterPreviousHistoryFieldset()
+    {
+        $convictionElement = m::mock();
+        $licenceElement = m::mock();
+        $fieldset = m::mock();
+        $tmId = 111;
+
+        $mockTableBuilder = m::mock();
+        $this->sm->setService('Table', $mockTableBuilder);
+
+        $fieldset->shouldReceive('get')
+            ->with('convictions')
+            ->andReturn($convictionElement)
+            ->shouldReceive('get')
+            ->with('previousLicences')
+            ->andReturn($licenceElement);
+
+        $convictionTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder);
+        $licenceTable = $this->expectGetPreviousLicencesTable($mockTableBuilder);
+
+        $mockFormHelper = m::mock();
+
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        $mockFormHelper->shouldReceive('populateFormTable')
+            ->once()
+            ->with($convictionElement, $convictionTable, 'convictions')
+            ->shouldReceive('populateFormTable')
+            ->once()
+            ->with($licenceElement, $licenceTable, 'previousLicences');
+
+        $this->sut->alterPreviousHistoryFieldset($fieldset, $tmId);
+    }
+
+    protected function expectedGetConvictionsAndPenaltiesTable($mockTableBuilder)
+    {
+        $tableData = [
+            'foo' => 'bar'
+        ];
+
+        // Mocks
+        $mockTable = m::mock();
+        $mockPrevConviction = m::mock();
+
+        $this->sm->setService('Entity\PreviousConviction', $mockPrevConviction);
+
+        // Expectations
+        $mockPrevConviction->shouldReceive('getDataForTransportManager')
+            ->once()
+            ->with(111)
+            ->andReturn($tableData);
+
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('tm.convictionsandpenalties', $tableData)
+            ->andReturn($mockTable);
+
+        return $mockTable;
+    }
+
+    protected function expectGetPreviousLicencesTable($mockTableBuilder)
+    {
+        $tableData = [
+            'foo' => 'bar'
+        ];
+
+        // Mocks
+        $mockTable = m::mock();
+        $mockOtherLicence = m::mock();
+
+        $this->sm->setService('Entity\OtherLicence', $mockOtherLicence);
+
+        // Expectations
+        $mockOtherLicence->shouldReceive('getDataForTransportManager')
+            ->once()
+            ->with(111)
+            ->andReturn($tableData);
+
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('tm.previouslicences', $tableData)
+            ->andReturn($mockTable);
+
+        return $mockTable;
+    }
 }
