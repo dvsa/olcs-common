@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'section.name.transport_managers.details' => 'Details',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -897,8 +896,12 @@ return array(
     'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'Cheque Number',
     'fees.cheque_date' => 'Cheque date',
+    'fees.create.error' => 'The fee could not be created',
+    'fees.create.success' => 'Fee successfully created',
+    'fees.create.title' => 'Create New Miscellaneous fee',
     'fees.created_date' => 'Created',
     'fees.max_amount' => 'Fee amount',
+    'fees.pay.error.please-select' => 'Please select at least one item',
     'fees.payer' => 'Payer name',
     'fees.payment_method' => 'Payment method',
     'fees.po' => 'PO Number',
@@ -1933,6 +1936,7 @@ return array(
     'section.name.taxi_phv' => 'Taxi/PHV',
     'section.name.trailers' => 'Trailers',
     'section.name.transport_managers' => 'Transport managers',
+    'section.name.transport_managers.details' => 'Details',
     'section.name.type_of_licence' => 'Type of licence',
     'section.name.undertakings' => 'Declarations',
     'section.name.vehicles' => 'Vehicles',
