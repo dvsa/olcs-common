@@ -19,6 +19,7 @@ use Zend\Form\Element;
 use Zend\Form\Element\DateSelect;
 use Zend\InputFilter\Input;
 use Zend\View\Model\ViewModel;
+use Zend\I18n\Validator\Postcode as PostcodeValidator;
 
 /**
  * Form Helper Service
@@ -540,20 +541,29 @@ class FormHelperService extends AbstractHelperService
      *
      * @param Form $form
      * @param array $data
-     * @param string $fieldset
+     * @param string $detailsFieldset
+     * @param string $addressFieldset
      * @return boolean
      */
-    public function processCompanyNumberLookupForm(Form $form, $data, $fieldset)
+    public function processCompanyNumberLookupForm(Form $form, $data, $detailsFieldset, $addressFieldset = null)
     {
-        if (strlen(trim($data[$fieldset]['companyNumber']['company_number'])) === 8) {
+        if (strlen(trim($data[$detailsFieldset]['companyNumber']['company_number'])) === 8) {
 
             $result = $this->getServiceLocator()
                 ->get('Data\CompaniesHouse')
-                ->search('numberSearch', $data[$fieldset]['companyNumber']['company_number']);
+                ->search('companyDetails', $data[$detailsFieldset]['companyNumber']['company_number']);
 
             if ($result['Count'] === 1) {
 
-                $form->get($fieldset)->get('name')->setValue($result['Results'][0]['CompanyName']);
+                $form->get($detailsFieldset)->get('name')->setValue($result['Results'][0]['CompanyName']);
+
+                if ($addressFieldset && isset($result['Results'][0]['RegAddress']['AddressLine'])) {
+                    $this->populateRegisteredAddressFieldset(
+                        $form->get($addressFieldset),
+                        $result['Results'][0]['RegAddress']['AddressLine']
+                    );
+                }
+
                 return;
             }
 
@@ -657,5 +667,38 @@ class FormHelperService extends AbstractHelperService
         }
 
         return $field;
+    }
+
+    /**
+     * Populate an address fieldset using Companies House address data
+     *
+     * @param Zend\Form\Fieldset $fieldset address fieldset
+     * @param array $data Companies House 'AddressLine' data
+     * @return Zend\Form\Fieldset
+     */
+    public function populateRegisteredAddressFieldset($fieldset, $data)
+    {
+        // parse out postcode from address data
+        $postcode = '';
+        $postcodeValidator = new PostcodeValidator(['locale' => 'en-GB']);
+        foreach($data as $key => $datum) {
+            if ($postcodeValidator->isValid($datum)) {
+                $postcode =  $datum;
+                unset($data[$key]);
+            }
+        }
+
+        // populate remaining fields in order
+        $fields = ['addressLine1', 'addressLine2', 'addressLine3', 'addressLine4', 'town'];
+        $data = array_pad($data, count($fields), '');
+        $addressData = array_combine($fields, $data);
+
+        $addressData['postcode'] = $postcode;
+
+        foreach ($addressData as $field => $value) {
+            $fieldset->get($field)->setValue($value);
+        }
+
+        return $fieldset;
     }
 }
