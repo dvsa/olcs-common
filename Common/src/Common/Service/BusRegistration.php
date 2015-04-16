@@ -107,7 +107,7 @@ class BusRegistration
         $data['status'] = self::STATUS_NEW;
         $data['revertStatus'] = self::STATUS_NEW;
 
-        $data['shortNotices'] = [$this->defaultShortNotice];
+        $data['shortNotice'] = $this->defaultShortNotice;
 
         $data['licence']['id'] = $licence['id'];
 
@@ -141,7 +141,7 @@ class BusRegistration
         $data['revertStatus'] = self::STATUS_VAR;
 
         //This is defined manyToOne in backend...
-        $data['shortNotices'] = [$this->defaultShortNotice];
+        $data['shortNotice'] = $this->defaultShortNotice;
         $data['parent']['id'] = $previous['id'];
 
         //optimise backend call
@@ -195,11 +195,13 @@ class BusRegistration
     {
         return [
             'cascade' => [
-                'list' => [
-                    'shortNotices' => [
+                'single' => [
+                    'shortNotice' => [
                         'entity' => 'BusShortNotice',
                         'parent' => 'busReg'
-                    ],
+                    ]
+                ],
+                'list' => [
                     'otherServices' => [
                         'entity' => 'BusRegOtherService',
                         'parent' => 'busReg'

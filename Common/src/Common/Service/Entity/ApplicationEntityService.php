@@ -73,7 +73,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     private $overviewBundle = array(
         'children' => array(
-            'applicationCompletions',
+            'applicationCompletion',
             'status',
             'interimStatus',
             'licenceType',
@@ -709,6 +709,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'vehicle',
                     'interimApplication',
                     'goodsDiscs'
+                ),
+                'criteria' => array(
+                    array(
+                        'removalDate' => 'NULL'
+                    )
                 )
             ),
             'interimStatus',
@@ -729,6 +734,17 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'goodsOrPsv',
             'licence'
         ]
+    );
+
+    protected $operatingCentresDataBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'trafficArea',
+                    'enforcementArea',
+                ),
+            ),
+        ),
     );
 
     protected $interimData = null;

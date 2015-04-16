@@ -1050,4 +1050,26 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
 
         $this->sut->delete();
     }
+
+    public function testFormatDataForFormSetsEnforcementArea()
+    {
+        $sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $form = m::mock();
+
+        $data = [
+            'licence' => [
+                'enforcementArea' => ['id' => 'V048'],
+            ],
+        ];
+        $tableData = [];
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        ];
+
+        $result = $sut->formatDataForForm($data, $tableData, $licenceData);
+        $this->assertEquals('V048', $result['dataTrafficArea']['enforcementArea']);
+    }
 }

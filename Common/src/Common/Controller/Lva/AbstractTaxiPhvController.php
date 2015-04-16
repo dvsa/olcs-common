@@ -97,8 +97,12 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return $this->render('taxi_phv', $form);
     }
 
-    protected function handleCrudAction($data)
-    {
+    protected function handleCrudAction(
+        $data,
+        $rowsNotRequired = ['add'],
+        $childIdParamName = 'child_id',
+        $route = null
+    ) {
         $action = $this->getActionFromCrudAction($data);
 
         $trafficArea = $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($this->getLicenceId());

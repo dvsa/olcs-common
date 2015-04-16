@@ -16,14 +16,6 @@ use Common\Service\Entity\TransportManagerApplicationEntityService;
  */
 class TransportManagerName extends Name
 {
-    protected static $linkActions = [
-        TransportManagerApplicationEntityService::STATUS_INCOMPLETE => 'details',
-        TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE => 'awaiting-signature',
-        TransportManagerApplicationEntityService::STATUS_TM_SIGNED => 'tm-signed',
-        TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED => 'operator-signed',
-        TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION => 'postal-application',
-    ];
-
     protected static $statusColors = [
         TransportManagerApplicationEntityService::STATUS_INCOMPLETE => 'red',
         TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE => 'orange',
@@ -81,7 +73,7 @@ class TransportManagerName extends Name
                         $html = sprintf(
                             '%s <b><a href="%s">%s</a></b> %s',
                             static::getActionName($data, $sm),
-                            static::getExternalUrl($data, $sm),
+                            static::getExternalUrl($data, $sm, $column['lva']),
                             $name,
                             static::getStatusHtml($data)
                         );
@@ -97,7 +89,7 @@ class TransportManagerName extends Name
                 case 'application':
                     $html = sprintf(
                         '<b><a href="%s">%s</a></b> %s',
-                        static::getExternalUrl($data, $sm),
+                        static::getExternalUrl($data, $sm, $column['lva']),
                         $name,
                         static::getStatusHtml($data)
                     );
@@ -112,17 +104,16 @@ class TransportManagerName extends Name
      * Get URL for the Transport managers name
      *
      * @param array $data
-     *
+     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param string $lva
      * @return string
      */
-    protected static function getExternalUrl($data, $sm)
+    protected static function getExternalUrl($data, $sm, $lva)
     {
-        $action = isset(static::$linkActions[$data['status']['id']]) ?
-            static::$linkActions[$data['status']['id']] :
-            'details';
+        $route = 'lva-' . $lva . '/transport_manager_details';
 
         $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute(null, ['action' => $action, 'child_id' => $data['id']], [], true);
+        $url = $urlHelper->fromRoute($route, ['action' => null, 'child_id' => $data['id']], [], true);
 
         return $url;
     }
@@ -131,7 +122,7 @@ class TransportManagerName extends Name
      * Get URL for the Transport managers name
      *
      * @param array $data
-     *
+     * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
     protected static function getInternalUrl($data, $sm)
@@ -146,10 +137,9 @@ class TransportManagerName extends Name
     /**
      * Convert action eg "U" into its description
      *
-     * @param string  $action 'U', 'A', etc
+     * @param string $data
      * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string Description
-     * @throws \InvalidArgumentException
      */
     protected static function getActionName($data, $sm)
     {
