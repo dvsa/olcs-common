@@ -15,6 +15,7 @@ return array(
                 'print-vehicles' => array('label' => 'Print vehicle list', 'requireRows' => true),
                 'reprint' => array('label' => 'Reprint Disc', 'requireRows' => true),
                 'edit' => array('requireRows' => true),
+                'export' => array('requireRows' => true),
                 'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
