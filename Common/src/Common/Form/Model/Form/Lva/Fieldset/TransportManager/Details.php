@@ -46,6 +46,7 @@ class Details
     public $birthPlace = null;
 
     /**
+     * @Form\Attributes({"id":"certificate", "class": "file-upload"})
      * @Form\Options({"label":"lva-tm-details-details-certificate"})
      * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
      */

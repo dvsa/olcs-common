@@ -32,6 +32,11 @@ return array(
             'name' => 'noOfTrailersRequired'
         ),
         array(
+            'title' => 'application_operating-centres_authorisation.table.complaints',
+            'name' => 'noOfComplaints',
+            'formatter' => 'OcComplaints'
+        ),
+        array(
             'width' => 'checkbox',
             'type' => 'Checkbox'
         )

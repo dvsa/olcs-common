@@ -41,7 +41,8 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             ],
             'transportManager',
             'tmType',
-            'operatingCentres'
+            'operatingCentres',
+            'tmApplicationStatus'
         ]
     ];
 
@@ -73,6 +74,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
 
     protected $tmDetailsBundle = [
         'children' => [
+            'application',
             'transportManager' => [
                 'children' => [
                     'homeCd' => [
@@ -87,7 +89,15 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
                         ]
                     ]
                 ]
-            ]
+            ],
+            'tmType',
+            'operatingCentres'
+        ]
+    ];
+
+    protected $tmBundle = [
+        'children' => [
+            'transportManager'
         ]
     ];
 
@@ -191,5 +201,12 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     public function getTransportManagerDetails($id)
     {
         return $this->get($id, $this->tmDetailsBundle);
+    }
+
+    public function getTransportManagerId($id)
+    {
+        $data = $this->get($id, $this->tmBundle);
+
+        return $data['transportManager']['id'];
     }
 }

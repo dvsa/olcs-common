@@ -604,6 +604,7 @@ return array(
     'business_rule_manager' => [
         'invokables' => [
             'Task' => 'Common\BusinessRule\Rule\Task',
+            'Fee' => 'Common\BusinessRule\Rule\Fee',
             'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
             'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
@@ -614,11 +615,14 @@ return array(
                 => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
             'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
             'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
-            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate'
+            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
+            'EnvironmentalComplaint' => 'Common\BusinessRule\Rule\EnvironmentalComplaint',
         ]
     ],
     'business_service_manager' => [
         'invokables' => [
+            'Task' => 'Common\BusinessService\Service\Task',
+            'Fee' => 'Common\BusinessService\Service\Fee',
             // Some of these LVA services may be re-usable outside of LVA, if so please move them from the LVA namespace
             'Lva\BusinessDetails' => 'Common\BusinessService\Service\Lva\BusinessDetails',
             'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames',
@@ -626,7 +630,6 @@ return array(
             'Lva\ContactDetails' => 'Common\BusinessService\Service\Lva\ContactDetails',
             'Lva\BusinessDetailsChangeTask' => 'Common\BusinessService\Service\Lva\BusinessDetailsChangeTask',
             'Lva\CompanySubsidiaryChangeTask' => 'Common\BusinessService\Service\Lva\CompanySubsidiaryChangeTask',
-            'Lva\Task' => 'Common\BusinessService\Service\Lva\Task',
             'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
             'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
             'Lva\LicenceAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
@@ -671,9 +674,29 @@ return array(
                 'Common\BusinessService\Service\Lva\TransportManagerDetails',
             'Lva\Person' =>
                 'Common\BusinessService\Service\Lva\Person',
+            'Lva\OtherLicence' =>
+                'Common\BusinessService\Service\Lva\OtherLicence',
+            'Lva\PreviousConviction' =>
+                'Common\BusinessService\Service\Lva\PreviousConviction',
+            'Lva\DeleteOtherLicence' =>
+                'Common\BusinessService\Service\Lva\DeleteOtherLicence',
+            'Lva\DeletePreviousConviction' =>
+                'Common\BusinessService\Service\Lva\DeletePreviousConviction',
             // User administration
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
+            // Cases business services
+            'Cases\Complaint\EnvironmentalComplaint'
+                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaint',
+            'Cases\Complaint\EnvironmentalComplaintTask'
+                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaintTask',
+            'Cases\Submission\Decision' => 'Common\BusinessService\Service\Cases\Submission\Decision',
+            'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
+            'Cases\Submission\SubmissionActionTask'
+                => 'Common\BusinessService\Service\Cases\Submission\SubmissionActionTask',
+            // Bus business services
+            'Bus\BusReg'
+                => 'Common\BusinessService\Service\Bus\BusReg',
         ]
     ],
 );

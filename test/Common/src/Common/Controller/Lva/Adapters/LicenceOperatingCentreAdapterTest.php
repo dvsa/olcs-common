@@ -936,4 +936,24 @@ class LicenceOperatingCentreAdapterTest extends TestCase
 
         $this->sut->saveMainFormData($data);
     }
+
+    public function testFormatDataForFormSetsEnforcementArea()
+    {
+        $sut = m::mock('Common\Controller\Lva\Adapters\LicenceOperatingCentreAdapter')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $form = m::mock();
+
+        $data = [
+            'enforcementArea' => ['id' => 'V048']
+        ];
+        $tableData = [];
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        ];
+
+        $result = $sut->formatDataForForm($data, $tableData, $licenceData);
+        $this->assertEquals('V048', $result['dataTrafficArea']['enforcementArea']);
+    }
 }

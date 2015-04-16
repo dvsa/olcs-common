@@ -4,13 +4,17 @@
  * Application Operating Centre Entity Service
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Service\Entity;
+
+use Common\Service\Table\Formatter\Address;
 
 /**
  * Application Operating Centre Entity Service
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEntityService
 {
@@ -18,15 +22,26 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
 
     protected $type = 'application';
 
-    protected $dataBundle = array(
-        'children' => array(
+    protected $dataBundle = [
+        'children' => [
             'operatingCentre'
-        )
-    );
+        ]
+    ];
+
+    protected $selectBundle = [
+        'children' => [
+            'application',
+            'operatingCentre' => [
+                'children' => [
+                    'address'
+                ]
+            ]
+        ]
+    ];
 
     public function getForApplication($id)
     {
-        $query = array('application' => $id);
+        $query = ['application' => $id];
 
         $results = $this->getAll($query, $this->dataBundle);
 
@@ -35,7 +50,7 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
 
     public function getByApplicationAndOperatingCentre($applicationId, $operatingCentreId)
     {
-        return $this->get(array('application' => $applicationId, 'operatingCentre' => $operatingCentreId))['Results'];
+        return $this->get(['application' => $applicationId, 'operatingCentre' => $operatingCentreId])['Results'];
     }
 
     /**
@@ -43,15 +58,15 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
      */
     public function clearInterims(array $ids = [])
     {
-        $data = array();
+        $data = [];
 
         foreach ($ids as $id) {
 
-            $data[] = array(
+            $data[] = [
                 'id' => $id,
                 'isInterim' => false,
                 '_OPTIONS_' => ['force' => true]
-            );
+            ];
         }
 
         $data['_OPTIONS_']['multiple'] = true;
@@ -61,7 +76,7 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
 
     /**
      * Get all OC for given application for inspection request listbox
-     * 
+     *
      * @param int $applicationId
      * @return array
      */
@@ -82,5 +97,43 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
             ]
         ];
         return $this->getAll($query, $bundle);
+    }
+
+    public function getForSelect($applicationId)
+    {
+        $data = $this->getAll(['application' => $applicationId], $this->selectBundle);
+
+        $list = [];
+        $deleted = [];
+
+        $addressFields = ['addressLine1', 'addressLine2', 'town'];
+        $options = ['name' => 'address', 'addressFields' => $addressFields];
+
+        foreach ($data['Results'] as $result) {
+
+            $id = $result['operatingCentre']['id'];
+
+            if ($result['action'] !== 'D') {
+                $list[$id] = Address::format($result['operatingCentre'], $options);
+            } else {
+                $deleted[] = $id;
+            }
+        }
+
+        $licenceId = $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($applicationId);
+
+        $licenceOcData = $this->getServiceLocator()->get('Entity\LicenceOperatingCentre')
+            ->getOperatingCentresForLicence($licenceId);
+
+        foreach ($licenceOcData['Results'] as $result) {
+
+            $id = $result['operatingCentre']['id'];
+
+            if (!in_array($id, $deleted)) {
+                $list[$id] = Address::format($result['operatingCentre'], $options);
+            }
+        }
+
+        return $list;
     }
 }

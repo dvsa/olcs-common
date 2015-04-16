@@ -37,6 +37,6 @@ class CompanySubsidiaryChangeTask implements BusinessServiceInterface, BusinessS
 
         ];
 
-        return $this->getBusinessServiceManager()->get('Lva\Task')->process($taskParams);
+        return $this->getBusinessServiceManager()->get('Task')->process($taskParams);
     }
 }

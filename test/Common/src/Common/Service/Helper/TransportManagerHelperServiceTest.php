@@ -72,4 +72,218 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         $this->assertEquals($expected, $response);
     }
+
+    public function testAlterResponsibilitiesFieldset()
+    {
+        // Params
+        $fieldset = m::mock();
+        $ocOptions = [
+            111 => ['foo'],
+            222 => ['bar']
+        ];
+        $otherLicencesTable = m::mock();
+
+        // Mocks
+        $mockFormHelper = m::mock();
+        $mockTmTypeField = m::mock();
+        $mockOtherLicenceField = m::mock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $fieldset->shouldReceive('get')
+            ->once()
+            ->with('operatingCentres')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('setValueOptions')
+                ->once()
+                ->with($ocOptions)
+                ->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('tmType')
+            ->andReturn($mockTmTypeField)
+            ->shouldReceive('get')
+            ->with('otherLicences')
+            ->andReturn($mockOtherLicenceField);
+
+        $mockFormHelper->shouldReceive('removeOption')
+            ->once()
+            ->with($mockTmTypeField, 'tm_t_B')
+            ->shouldReceive('populateFormTable')
+            ->with($mockOtherLicenceField, $otherLicencesTable);
+
+        $this->sut->alterResponsibilitiesFieldset($fieldset, $ocOptions, $otherLicencesTable);
+    }
+
+    public function testGetResponsibilityFileData()
+    {
+        $tmId = 111;
+
+        $expected = [
+            'transportManager' => 111,
+            'issuedDate' => '2014-01-20 10:10:10',
+            'description' => 'Additional information',
+            'category' => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
+            'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
+        ];
+
+        // Mocks
+        $mockDateHelper = m::mock();
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        // Expectations
+        $mockDateHelper->shouldReceive('getDate')
+            ->with(\DateTime::W3C)
+            ->andReturn('2014-01-20 10:10:10');
+
+        // Assertions
+        $data = $this->sut->getResponsibilityFileData($tmId);
+
+        $this->assertEquals($expected, $data);
+    }
+
+    public function testGetResponsibilityFiles()
+    {
+        $tmId = 111;
+        $tmaId = 222;
+        $stubbedTmaData = [
+            'application' => [
+                'id' => 333
+            ]
+        ];
+
+        // Mocks
+        $mockTma = m::mock();
+        $mockTm = m::mock();
+        $this->sm->setService('Entity\TransportManagerApplication', $mockTma);
+        $this->sm->setService('Entity\TransportManager', $mockTm);
+
+        // Expectations
+        $mockTma->shouldReceive('getTransportManagerApplication')
+            ->with($tmaId)
+            ->andReturn($stubbedTmaData);
+
+        $mockTm->shouldReceive('getDocuments')
+            ->with(
+                111,
+                333,
+                'application',
+                CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
+                CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
+            )
+            ->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->getResponsibilityFiles($tmId, $tmaId));
+    }
+
+    public function testGetConvictionsAndPenaltiesTable()
+    {
+        $tmId = 111;
+
+        $mockTableBuilder = m::mock();
+        $this->sm->setService('Table', $mockTableBuilder);
+
+        $mockTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder);
+
+        $this->assertSame($mockTable, $this->sut->getConvictionsAndPenaltiesTable($tmId));
+    }
+
+    public function testGetPreviousLicencesTable()
+    {
+        $tmId = 111;
+
+        $mockTableBuilder = m::mock();
+        $this->sm->setService('Table', $mockTableBuilder);
+
+        $mockTable = $this->expectGetPreviousLicencesTable($mockTableBuilder);
+
+        $this->assertSame($mockTable, $this->sut->getPreviousLicencesTable($tmId));
+    }
+
+    public function testAlterPreviousHistoryFieldset()
+    {
+        $convictionElement = m::mock();
+        $licenceElement = m::mock();
+        $fieldset = m::mock();
+        $tmId = 111;
+
+        $mockTableBuilder = m::mock();
+        $this->sm->setService('Table', $mockTableBuilder);
+
+        $fieldset->shouldReceive('get')
+            ->with('convictions')
+            ->andReturn($convictionElement)
+            ->shouldReceive('get')
+            ->with('previousLicences')
+            ->andReturn($licenceElement);
+
+        $convictionTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder);
+        $licenceTable = $this->expectGetPreviousLicencesTable($mockTableBuilder);
+
+        $mockFormHelper = m::mock();
+
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        $mockFormHelper->shouldReceive('populateFormTable')
+            ->once()
+            ->with($convictionElement, $convictionTable, 'convictions')
+            ->shouldReceive('populateFormTable')
+            ->once()
+            ->with($licenceElement, $licenceTable, 'previousLicences');
+
+        $this->sut->alterPreviousHistoryFieldset($fieldset, $tmId);
+    }
+
+    protected function expectedGetConvictionsAndPenaltiesTable($mockTableBuilder)
+    {
+        $tableData = [
+            'foo' => 'bar'
+        ];
+
+        // Mocks
+        $mockTable = m::mock();
+        $mockPrevConviction = m::mock();
+
+        $this->sm->setService('Entity\PreviousConviction', $mockPrevConviction);
+
+        // Expectations
+        $mockPrevConviction->shouldReceive('getDataForTransportManager')
+            ->once()
+            ->with(111)
+            ->andReturn($tableData);
+
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('tm.convictionsandpenalties', $tableData)
+            ->andReturn($mockTable);
+
+        return $mockTable;
+    }
+
+    protected function expectGetPreviousLicencesTable($mockTableBuilder)
+    {
+        $tableData = [
+            'foo' => 'bar'
+        ];
+
+        // Mocks
+        $mockTable = m::mock();
+        $mockOtherLicence = m::mock();
+
+        $this->sm->setService('Entity\OtherLicence', $mockOtherLicence);
+
+        // Expectations
+        $mockOtherLicence->shouldReceive('getDataForTransportManager')
+            ->once()
+            ->with(111)
+            ->andReturn($tableData);
+
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('tm.previouslicences', $tableData)
+            ->andReturn($mockTable);
+
+        return $mockTable;
+    }
 }

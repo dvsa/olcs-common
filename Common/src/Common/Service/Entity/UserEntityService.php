@@ -29,7 +29,30 @@ class UserEntityService extends AbstractEntityService
                     'person'
                 ]
             ],
-            'transportManager'
+            'transportManager',
+            'team'
+        ]
+    ];
+
+    /**
+     * Bundle for standard list
+     *
+     * @var array
+     */
+    protected $listBundle = [
+        'children' => [
+            'contactDetails' => [
+                'children' => [
+                    'person'
+                ]
+            ],
+            'transportManager',
+            'team',
+            'userRoles' => [
+                'children' => [
+                    'role'
+                ]
+            ]
         ]
     ];
 

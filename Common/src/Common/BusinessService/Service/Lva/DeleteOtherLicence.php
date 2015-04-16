@@ -1,34 +1,30 @@
 <?php
 
 /**
- * Task
+ * Delete Other Licence
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\BusinessService\Service\Lva;
 
 use Common\BusinessService\BusinessServiceInterface;
+use Common\BusinessService\Response;
 use Common\BusinessService\BusinessServiceAwareInterface;
 use Common\BusinessService\BusinessServiceAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Common\BusinessService\Response;
-use Common\BusinessRule\BusinessRuleAwareInterface;
-use Common\BusinessRule\BusinessRuleAwareTrait;
 
 /**
- * Task
+ * Delete Other Licence
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Task implements
+class DeleteOtherLicence implements
     BusinessServiceInterface,
-    BusinessRuleAwareInterface,
     BusinessServiceAwareInterface,
     ServiceLocatorAwareInterface
 {
     use BusinessServiceAwareTrait,
-        BusinessRuleAwareTrait,
         ServiceLocatorAwareTrait;
 
     /**
@@ -39,22 +35,14 @@ class Task implements
      */
     public function process(array $params)
     {
-        $assignmentData = [
-            'category' => $params['category']
-        ];
+        $ids = $params['ids'];
 
-        $data = $this->getBusinessRuleManager()->get('Task')->validate($params);
+        $service = $this->getServiceLocator()->get('Entity\OtherLicence');
 
-        $assignment = $this->getServiceLocator()->get('Processing\Task')->getAssignment($assignmentData);
+        foreach ($ids as $id) {
+            $service->delete($id);
+        }
 
-        $saveData = array_merge($data, $assignment);
-
-        $saved = $this->getServiceLocator()->get('Entity\Task')->save($saveData);
-
-        $response = new Response();
-        $response->setType(Response::TYPE_SUCCESS);
-        $response->setData(['id' => $saved['id']]);
-
-        return $response;
+        return new Response(Response::TYPE_SUCCESS);
     }
 }

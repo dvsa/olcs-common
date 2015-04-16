@@ -305,6 +305,17 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         return empty($fees);
     }
 
+    /**
+     * @param int $applicationId
+     * @param boolean if there are any outstanding fees
+     */
+    public function enforcementAreaIsValid($applicationId)
+    {
+        $licenceId = $this->getLicenceId($applicationId);
+        $licenceData = $this->getServiceLocator()->get('\Entity\Licence')->getOverview($licenceId);
+        return !empty($licenceData['enforcementArea']);
+    }
+
     public function getInterimFee($applicationId)
     {
         return $this->getFeeForApplicationByType($applicationId, FeeTypeDataService::FEE_TYPE_GRANTINT);
@@ -830,5 +841,76 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             $licenceId,
             LicenceEntityService::LICENCE_STATUS_GRANTED
         );
+    }
+
+    public function submitApplication($applicationId)
+    {
+        $dateHelper = $this->getServiceLocator()->get('Helper\Date');
+        $licenceId = $this->getLicenceId($applicationId);
+        $user = $this->getServiceLocator()->get('Entity\User')->getCurrentUser();
+        $now = $dateHelper->getDateObject();
+
+        $update = array(
+            'status' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
+            'receivedDate' => $now->format('Y-m-d H:i:s'),
+            'targetCompletionDate' => $now->modify('+9 week')->format('Y-m-d H:i:s')
+        );
+
+        $this->getServiceLocator()
+            ->get('Entity\Application')
+            ->forceUpdate($applicationId, $update);
+
+        $assignment = $this->getServiceLocator()
+            ->get('Processing\Task')
+            ->getAssignment(['category' => CategoryDataService::CATEGORY_APPLICATION]);
+
+        $task = array_merge(
+            [
+                'category' => CategoryDataService::CATEGORY_APPLICATION,
+                'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL,
+                'description' => $this->getTaskDescription($applicationId),
+                'actionDate' => $now->format('Y-m-d'),
+                'assignedByUser' => $user['id'],
+                'isClosed' => 0,
+                'application' => $applicationId,
+                'licence' => $licenceId,
+            ],
+            $assignment
+        );
+
+        $this->getServiceLocator()->get('Entity\Task')->save($task);
+    }
+
+    protected function getTaskDescription($applicationId)
+    {
+        $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
+        $applicationData = $applicationEntityService->getDataForValidating($applicationId);
+
+        if ($applicationData['isVariation'] === true) {
+            $isUpgrade = $this->getServiceLocator()->get('Processing\VariationSection')
+                ->isLicenceUpgrade($applicationId);
+            if ($applicationData['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+                $code = $isUpgrade
+                    ? ApplicationEntityService::CODE_GV_VAR_UPGRADE
+                    : ApplicationEntityService::CODE_GV_VAR_NO_UPGRADE;
+            } else {
+                $code = $isUpgrade
+                    ? ApplicationEntityService::CODE_PSV_VAR_UPGRADE
+                    : ApplicationEntityService::CODE_PSV_VAR_NO_UPGRADE;
+            }
+        } else {
+            // new app.
+            if ($applicationData['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+                $code = ApplicationEntityService::CODE_GV_APP;
+            } else {
+                if ($applicationData['licenceType'] === LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+                    $code = ApplicationEntityService::CODE_PSV_APP_SR;
+                } else {
+                    $code = ApplicationEntityService::CODE_PSV_APP;
+                }
+            }
+        }
+
+        return $code . ' Application';
     }
 }
