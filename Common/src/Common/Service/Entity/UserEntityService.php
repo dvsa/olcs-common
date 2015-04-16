@@ -50,15 +50,7 @@ class UserEntityService extends AbstractEntityService
             'team',
             'userRoles' => [
                 'children' => [
-                    'role' => [
-                        /*'children' => [
-                            'rolePermissions' => [
-                                'children' => [
-                                    'permission'
-                                ]
-                            ]
-                        ]*/
-                    ]
+                    'role'
                 ]
             ]
         ]
