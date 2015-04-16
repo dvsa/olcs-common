@@ -95,5 +95,4 @@ class DateSelect extends ZendElement\DateSelect
             $this->setMaxYear($maxYear);
         }
     }
-
 }
