@@ -420,4 +420,27 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
             $markup
         );
     }
+
+    public function testRenderForAttachFilesButtonWithNoClass()
+    {
+        $this->prepareElement('\\Common\Form\Elements\Types\AttachFilesButton');
+
+        $this->element->setValue('My Button');
+        $this->element->setAttribute('class', null);
+
+        $viewHelper = $this->prepareViewHelper();
+
+        $markup = $viewHelper($this->element, 'formCollection', '/');
+
+        $expected = '<ul class="attach-action__list"><li class="attach-action">'
+            . '<label class="attach-action__label"> '
+            . '<input type="file" name="test" class="&#x20;attach-action__input" id="test">'
+            . '</label>'
+            . '<p class="attach-action__hint">Hint</p></li></ul>';
+
+        $this->assertEquals(
+            $expected,
+            $markup
+        );
+    }
 }
