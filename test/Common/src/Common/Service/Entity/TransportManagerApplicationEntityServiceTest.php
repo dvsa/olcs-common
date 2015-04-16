@@ -30,7 +30,8 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
             ],
             'transportManager',
             'tmType',
-            'operatingCentres'
+            'operatingCentres',
+            'tmApplicationStatus'
         ]
     ];
 
@@ -60,6 +61,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                     'operatingCentres' => [
                         'one',
                         'two'
+                    ],
+                    'tmApplicationStatus' => [
+                        'id' => 'foo'
                     ]
                 ],
                 [
@@ -72,6 +76,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                         'one',
                         'two',
                         'three'
+                    ],
+                    'tmApplicationStatus' => [
+                        'id' => 'bar'
                     ]
                 ],
             ]
@@ -92,6 +99,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                 'operatingCentres' => [
                     'one',
                     'two'
+                ],
+                'tmApplicationStatus' => [
+                    'id' => 'foo'
                 ],
                 'ocCount' => 2
             ]

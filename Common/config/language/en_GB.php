@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'section.name.transport_managers.details' => 'Details',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1256,6 +1255,12 @@ return array(
     'internal.transport-manager.other-licence.form.operating-centres' => 'Operating centres',
     'internal.transport-manager.other-licence.form.role' => 'Role',
     'internal.transport-manager.other-licence.form.total-auth-vehicles' => 'Vehicles',
+    'internal.transport-manager.otherlicences.table' => 'Other Licences',
+    'internal.transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
+    'internal.transport-manager.otherlicences.table.lic_no' => 'Licence Number',
+    'internal.transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
+    'internal.transport-manager.otherlicences.table.role' => 'Role',
+    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
     'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete the
         selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'Deleted successfully',
@@ -1266,6 +1271,23 @@ return array(
     'internal.transport-manager.previouslicences.table.lic-no' => 'Licence no.',
     'internal.transport-manager.processing.notes.add.title' => 'Add note',
     'internal.transport-manager.processing.notes.modify.title' => 'Edit note',
+    'internal.transport-manager.responsibilities.additional-information' => 'Additional information',
+    'internal.transport-manager.responsibilities.application-id' => 'Application ID',
+    'internal.transport-manager.responsibilities.cancel' => 'Cancel',
+    'internal.transport-manager.responsibilities.continue' => 'Continue',
+    'internal.transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the
+        selected record(s)?',
+    'internal.transport-manager.responsibilities.hours-per-week' => 'Hours per week',
+    'internal.transport-manager.responsibilities.hours-per-week-subtitle' => 'How many hours will you spend on your
+        Transport Manager duties?',
+    'internal.transport-manager.responsibilities.print' => 'Print',
+    'internal.transport-manager.responsibilities.save' => 'Save',
+    'internal.transport-manager.responsibilities.table.applications' => 'Applications',
+    'internal.transport-manager.responsibilities.table.licences' => 'Licences',
+    'internal.transport-manager.responsibilities.tm-app-status' => 'Transport manager application status',
+    'internal.transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be
+        responsible for?',
+    'internal.transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
@@ -1930,6 +1952,7 @@ return array(
     'section.name.taxi_phv' => 'Taxi/PHV',
     'section.name.trailers' => 'Trailers',
     'section.name.transport_managers' => 'Transport managers',
+    'section.name.transport_managers.details' => 'Details',
     'section.name.type_of_licence' => 'Type of licence',
     'section.name.undertakings' => 'Declarations',
     'section.name.vehicles' => 'Vehicles',
