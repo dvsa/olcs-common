@@ -67,7 +67,9 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'application',
             'internal' => true,
         ];
-        $expected = '<b><a href="a-url">Arthur Smith</a></b> <span class="status green">status description</span>';
+        $expected = '<b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -75,6 +77,27 @@ class TransportManagerNameTest extends MockeryTestCase
             ->andReturn('a-url');
 
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+    }
+
+    protected function mockGetStatusHtml($expectedStatusId, $expectedStatusDescription, $statusHtml = '<STATUS HTML>')
+    {
+        $mockViewHelperManager = m::mock();
+        $mockViewHelper = m::mock();
+
+        $this->sm->shouldReceive('get')
+            ->with('ViewHelperManager')
+            ->once()
+            ->andReturn($mockViewHelperManager);
+
+        $mockViewHelperManager->shouldReceive('get')
+            ->with('transportManagerApplicationStatus')
+            ->once()
+            ->andReturn($mockViewHelper);
+
+        $mockViewHelper->shouldReceive('render')
+            ->with($expectedStatusId, $expectedStatusDescription)
+            ->once()
+            ->andReturn($statusHtml);
     }
 
     public function testFormatApplicationExternal()
@@ -97,7 +120,9 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'application',
             'internal' => false,
         ];
-        $expected = '<b><a href="a-url">Arthur Smith</a></b> <span class="status green">status description</span>';
+        $expected = '<b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -127,8 +152,9 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'variation',
             'internal' => true,
         ];
-        $expected = 'translated <b><a href="a-url">Arthur Smith</a></b> '
-            . '<span class="status green">status description</span>';
+        $expected = 'translated <b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -164,8 +190,9 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'variation',
             'internal' => true,
         ];
-        $expected = ' <b><a href="a-url">Arthur Smith</a></b> '
-            . '<span class="status green">status description</span>';
+        $expected = ' <b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -196,8 +223,9 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'variation',
             'internal' => false,
         ];
-        $expected = 'translated <b><a href="a-url">Arthur Smith</a></b> '
-            . '<span class="status green">status description</span>';
+        $expected = 'translated <b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -235,8 +263,9 @@ class TransportManagerNameTest extends MockeryTestCase
             'lva' => 'variation',
             'internal' => false,
         ];
-        $expected = 'translated <b>Arthur Smith</b> '
-            . '<span class="status green">status description</span>';
+        $expected = 'translated <b>Arthur Smith</b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $mockTranslator = m::mock();
         $mockTranslator->shouldReceive('translate')

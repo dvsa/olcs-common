@@ -252,6 +252,7 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationTransportManagerAdapter',
             'ApplicationTransportManagerAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter',
+            'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
@@ -423,7 +424,9 @@ return array(
             'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
             'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
             'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
-            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable'
+            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
+            'currentUser' => 'Common\View\Helper\CurrentUser',
+            'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
         )
     ),
     'view_manager' => array(
@@ -676,8 +679,12 @@ return array(
                 'Common\BusinessService\Service\Lva\Person',
             'Lva\OtherLicence' =>
                 'Common\BusinessService\Service\Lva\OtherLicence',
+            'Lva\PreviousConviction' =>
+                'Common\BusinessService\Service\Lva\PreviousConviction',
             'Lva\DeleteOtherLicence' =>
                 'Common\BusinessService\Service\Lva\DeleteOtherLicence',
+            'Lva\DeletePreviousConviction' =>
+                'Common\BusinessService\Service\Lva\DeletePreviousConviction',
             // User administration
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
