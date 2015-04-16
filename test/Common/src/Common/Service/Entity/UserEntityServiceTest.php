@@ -47,4 +47,12 @@ class UserEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getUserDetails(111));
     }
+
+    public function testGetTransportManagerApplications()
+    {
+        $this->expectOneRestCall('User', 'GET', ['id' => 54, 'limit' => 'all'])
+            ->will($this->returnValue(['transportManager' => ['tmApplications' => ['data']]]));
+
+        $this->assertEquals(['data'], $this->sut->getTransportManagerApplications(54));
+    }
 }

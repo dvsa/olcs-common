@@ -14,6 +14,9 @@ namespace Common\Service\Entity;
  */
 class UserEntityService extends AbstractEntityService
 {
+    const PERMISSION_SELFSERVE_LVA = 'selfserve-lva';
+    const PERMISSION_SELFSERVE_TM_DASHBOARD = 'selfserve-tm-dashboard';
+
     protected $entity = 'User';
 
     protected $currentUserBundle = [
@@ -34,6 +37,25 @@ class UserEntityService extends AbstractEntityService
         ]
     ];
 
+    protected $tmaBundle = [
+        'children' => [
+            'transportManager' => [
+                'children' => [
+                    'tmApplications' => [
+                        'children' => [
+                            'tmApplicationStatus',
+                            'application' => [
+                                'children' => [
+                                    'licence'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     /**
      * Get the current user
      *
@@ -49,5 +71,24 @@ class UserEntityService extends AbstractEntityService
     public function getUserDetails($id)
     {
         return $this->get($id, $this->userDetailsBundle);
+    }
+
+    /**
+     * Get Transport Manager Applications for a User
+     *
+     * @param int $userId User ID
+     * @return array Entity data tmApplications
+     */
+    public function getTransportManagerApplications($userId)
+    {
+        $query = [
+            'id' => $userId,
+        ];
+
+        $results = $this->getAll($query, $this->tmaBundle);
+
+        return (isset($results['transportManager']['tmApplications'])) ?
+            $results['transportManager']['tmApplications'] :
+            [];
     }
 }
