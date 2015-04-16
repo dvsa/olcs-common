@@ -35,6 +35,36 @@ class UserEntityService extends AbstractEntityService
     ];
 
     /**
+     * Bundle for standard list
+     *
+     * @var array
+     */
+    protected $listBundle = [
+        'children' => [
+            'contactDetails' => [
+                'children' => [
+                    'person'
+                ]
+            ],
+            'transportManager',
+            'team',
+            'userRoles' => [
+                'children' => [
+                    'role' => [
+                        /*'children' => [
+                            'rolePermissions' => [
+                                'children' => [
+                                    'permission'
+                                ]
+                            ]
+                        ]*/
+                    ]
+                ]
+            ]
+        ]
+    ];
+
+    /**
      * Get the current user
      *
      * @todo when we have implemented auth, we need to amend this
