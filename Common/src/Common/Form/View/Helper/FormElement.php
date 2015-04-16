@@ -19,7 +19,7 @@ use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\Types\TrafficAreaSet;
-use Common\Form\Elements\Types\FileUploadButton;
+use Common\Form\Elements\Types\AttachFilesButton;
 
 /**
  * Render form
@@ -154,7 +154,7 @@ class FormElement extends ZendFormElement
             return $element->render();
         }
 
-        if ($element instanceof FileUploadButton) {
+        if ($element instanceof AttachFilesButton) {
 
             $attributes = $element->getAttributes();
             if (!isset($attributes['class'])) {

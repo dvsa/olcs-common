@@ -12,16 +12,16 @@ use Zend\Form\Annotation as Form;
 class MultipleFileUpload
 {
     /**
-     * @Form\Name("file-controls")
+     * @Form\Name("file")
      * @Form\Attributes({
      *   "class": "js-visually-hidden",
      *   "multiple": false
      * })
      * @Form\Options({
-     *     "value": "Attach file",
+     *     "value": "Attach file(s)",
      *     "hint": "20MB maximum file size. PDF, DOC, JPG, PNG or GIF"
      * })
-     * @Form\Type("\Common\Form\Elements\Types\FileUploadButton")
+     * @Form\Type("\Common\Form\Elements\Types\AttachFilesButton")
      */
     public $controls = null;
 
@@ -43,7 +43,7 @@ class MultipleFileUpload
     public $messages = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"inline-upload js-visually-hidden"})
+     * @Form\Attributes({"type":"submit","class":"inline-upload js-upload", "value": "Upload"})
      * @Form\Options({
      *     "label": "Upload"
      * })

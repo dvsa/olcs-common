@@ -33,7 +33,7 @@ class FinancialEvidenceEvidence
      * @Form\Options({
      *     "hint": "lva-financial-evidence-upload.files.hint"
      * })
-     * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
+     * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      */
     public $files = null;
 

@@ -220,11 +220,17 @@ class FileUploadHelperService extends AbstractHelperService
         $postData = $this->findSelectorData((array)$this->getRequest()->getPost(), $this->getSelector());
         $fileData = $this->findSelectorData((array)$this->getRequest()->getFiles(), $this->getSelector());
 
-        $uploadButtonPressed = (!empty($postData['file-controls']['upload']) || !empty($postData['upload']));
+        if (isset($postData) && !isset($postData['file-controls'])) {
+            $postData['file-controls'] = $postData;
+        }
+        if (isset($fileData) && !isset($fileData['file-controls'])) {
+            $fileData['file-controls'] = $fileData;
+        }
 
         if ($postData === null
             || $fileData === null
-            || !$uploadButtonPressed
+            || !isset($postData['file-controls']['upload'])
+            || empty($postData['file-controls']['upload'])
             || !isset($fileData['file-controls']['file'])
         ) {
             return false;

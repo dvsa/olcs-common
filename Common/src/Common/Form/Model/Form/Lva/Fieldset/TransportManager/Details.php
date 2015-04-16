@@ -48,7 +48,7 @@ class Details
     /**
      * @Form\Attributes({"id":"certificate", "class": "file-upload"})
      * @Form\Options({"label":"lva-tm-details-details-certificate"})
-     * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
+     * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      */
     public $certificate = null;
 }
