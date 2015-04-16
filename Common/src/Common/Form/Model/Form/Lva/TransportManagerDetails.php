@@ -40,6 +40,12 @@ class TransportManagerDetails
     public $responsibilities = null;
 
     /**
+     * @Form\Name("otherEmployment")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     */
+    public $otherEmployment = null;
+
+    /**
      * @Form\Name("previousHistory")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\PreviousHistory")
      * @Form\Options({"label":"lva-tm-details-details-previousHistory"})

@@ -122,4 +122,42 @@ class TransportManagerHelperService extends AbstractHelperService
             'previousLicences'
         );
     }
+
+    public function prepareOtherEmploymentTable($element, $tmId)
+    {
+        $table = $this->getOtherEmploymentTable($tmId);
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper->populateFormTable($element, $table, 'employment');
+    }
+
+    public function getOtherEmploymentTable($tmId)
+    {
+        $results = $this->getServiceLocator()->get('Entity\TmEmployment')->getAllEmploymentsForTm($tmId);
+
+        return $this->getServiceLocator()->get('Table')->prepareTable('tm.employments', $results);
+    }
+
+    public function getOtherEmploymentData($id)
+    {
+        $employment = $this->getServiceLocator()->get('Entity\TmEmployment')->getEmployment($id);
+        $data = [
+            'tm-employment-details' => [
+                'id' => $employment['id'],
+                'version' => $employment['version'],
+                'position' => $employment['position'],
+                'hoursPerWeek' => $employment['hoursPerWeek'],
+            ],
+            'tm-employer-name-details' => [
+                'employerName' => $employment['employerName']
+            ]
+        ];
+
+        if (isset($employment['contactDetails']['address'])) {
+            $data['address'] = $employment['contactDetails']['address'];
+        }
+
+        return $data;
+    }
 }
