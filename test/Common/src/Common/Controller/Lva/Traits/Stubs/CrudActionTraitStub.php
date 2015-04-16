@@ -29,11 +29,12 @@ class CrudActionTraitStub extends AbstractActionController
         return $this->getActionFromCrudAction($data);
     }
 
-    public function callHandleCrudAction($data,
+    public function callHandleCrudAction(
+        $data,
         $rowsNotRequired = ['add'],
         $childIdParamName = 'child_id',
-        $route = null)
-    {
+        $route = null
+    ) {
         return $this->handleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
     }
 }
