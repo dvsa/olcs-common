@@ -1,0 +1,80 @@
+Result_Type=
+When replying to this sender, append to the subject line with:
+'S' (if Inspection is Satisfactory)
+'U' (if Inspection is Unsatisfactory)
+
+INSPECTION DETAILS for request ID <?php echo $inspectionRequestId ?>...
+Requested By:                   <?php echo $currentUserName ?>        (E-Mail - <?php echo $currentUserEmail ?>)
+Date Requested:                 <?php echo $inspectionRequestDateRequested ?>
+<?php if (!empty($inspectionRequestNotes)): ?>
+Caseworker Notes...
+<?php echo $inspectionRequestNotes;
+endif; ?>
+
+Date Required:                  <?php echo $inspectionRequestDueDate ?>
+Op Centre:                      <?php echo $ocAddress['addressLine1'] ?>
+                                <?php echo $ocAddress['town'] ?>
+                                <?php echo $ocAddress['postcode'] ?>
+Request Type:                   <?php echo $inspectionRequestType ?>
+Licence No:                     <?php echo $licenceNumber ?>
+Licence Type:                   <?php echo $this->translate($licenceType) ?>
+Authorised Vehicles:            <?php echo $totAuthVehicles) ?>
+Authorised Trailers:            <?php echo $totAuthTrailers) ?>
+
+#Centres on:                    <?php echo $numberOfOperatingCentres) ?>
+Licence
+Expiry Date:                    <?php echo $expiryDate) ?>
+Operator ID:                    <?php echo $operatorId) ?>
+Operator Name                   <?php echo $operatorName) ?>
+Operator Email Address          <?php echo $operatorEmail) ?>
+Address:                        <?php echo $operatorAddress['addressLine1'] ?>
+                                <?php echo $operatorAddress['town'] ?>
+                                <?php echo $operatorAddress['postcode'] ?>
+
+Contact Phone No(s)...
+<?php foreach ($contactPhoneNumbers as $contactPhone):
+    echo sprintf("%s (%s)\n", $contactPhone['number'], $contactPhone['type']);
+endforeach; ?>
+
+Trading Name(s)...
+<?php
+if(!empty($tradingNames)):
+    echo implode("\n", $tradingNames);
+else: ?>
+        No Trading Names specified.
+<?php endif; ?>
+
+Maintenance...
+Maintained:                     <? php echo $workshopIsExternal ? 'Contracted Out' : 'In-House' ?>
+Inspection Periods...
+Vehicles:                       <?php echo $safetyInspectionVehicles ?>
+Trailers:                       <?php echo $safetyInspectionTrailers ?>
+
+Workshops/Garage Address(es)...
+Address:                        Hillcrest house
+                                leeds
+                                ls9 6nf
+                                GB
+
+Partners/Directors...
+<?php
+foreach ($people as $person):
+    echo sprintf("%s %s\n", $person['forename'], $person['familyName']);STEPHEN test
+endforeach;
+?>
+
+Associated Licences...
+<?php
+if(!empty($otherLicences)):
+    echo implode("\n", $otherLicences);
+else: ?>
+        This Operator has no other associated licences.
+<?php endif; ?>
+<?php if (!empty($applicationOperatingCentres)): ?>
+Application Details...
+<?php foreach ($applicationOperatingCentres as $aoc) : ?>
+<?php echo $aoc['address']['addressLine1']?>, <?php echo $aoc['address']['town']?>...
+#Vehicles                       <?php echo $aoc['vehicles'] ?>
+#Trailers                       <?php echo $aoc['trailers'] ?>
+<?php echo $aoc['action'] ?>
+<?php endforeach; ?>
