@@ -1,7 +1,6 @@
 OLCS.ready(function() {
   "use strict";
 
-
   // We have multiple tables on this form, so need to handle these differently
   var tableSelector = "form [data-group*='convictions']";
 

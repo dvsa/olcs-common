@@ -3,6 +3,7 @@
 return array(
     'variables' => array(
         'title' => 'transport-manager.previouslicences.table',
+        'empty_message' => 'transport-manager.previouslicences.table.empty',
         'within_form' => true
     ),
     'settings' => array(
@@ -17,12 +18,9 @@ return array(
     'columns' => array(
         array(
             'title' => 'transport-manager.previouslicences.table.lic-no',
-            'name' => 'licNO',
-            'formatter' => function ($row) {
-                $routeParams = ['id' => $row['id'], 'action' => 'edit-previous-licence'];
-                $url = $this->generateUrl($routeParams);
-                return '<a href="' . $url . '" class=js-modal-ajax>' . $row['licNo'] . '</a>';
-            },
+            'name' => 'licNo',
+            'type' => 'Action',
+            'action' => 'edit-previous-licence'
         ),
         array(
             'title' => 'transport-manager.previouslicences.table.holderName',

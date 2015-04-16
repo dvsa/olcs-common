@@ -3,6 +3,7 @@
 return array(
     'variables' => array(
         'title' => 'transport-manager.convictionsandpenalties.table',
+        'empty_message' => 'transport-manager.convictionsandpenalties.table.empty',
         'within_form' => true
     ),
     'settings' => array(
@@ -19,11 +20,8 @@ return array(
         array(
             'title' => 'transport-manager.convictionsandpenalties.table.offence',
             'name' => 'categoryText',
-            'formatter' => function ($row) {
-                $routeParams = ['id' => $row['id'], 'action' => 'edit-previous-conviction'];
-                $url = $this->generateUrl($routeParams);
-                return '<a href="' . $url . '" class=js-modal-ajax>' . $row['categoryText'] . '</a>';
-            },
+            'type' => 'Action',
+            'action' => 'edit-previous-conviction'
         ),
         array(
             'title' => 'transport-manager.convictionsandpenalties.table.conviction-date',
