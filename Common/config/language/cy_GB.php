@@ -286,6 +286,8 @@ return array(
     'application.cancel' => 'W Cancel application',
     'application.change-of-entity.create.success' => 'W Change of entity details updated',
     'application.change-of-entity.delete.success' => 'W Change of entity details removed',
+    'application.change-of-entity.details.old-licence-no' => 'W Previous licence No.',
+    'application.change-of-entity.details.previous-operator-name' => 'W Previous operator name',
     'application.community_licence.form.total_community_licences' => 'W How many additional licences are required?',
     'application.delete' => 'W Delete application',
     'application.new.button' => 'W Apply for a new licence',
