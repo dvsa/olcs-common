@@ -574,7 +574,7 @@ class FormHelperService extends AbstractHelperService
 
         $translator = $this->getServiceLocator()->get('translator');
 
-        $form->get($fieldset)->get('companyNumber')->setMessages(
+        $form->get($detailsFieldset)->get('companyNumber')->setMessages(
             array(
                 'company_number' => array($translator->translate($message))
             )
