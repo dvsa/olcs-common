@@ -688,6 +688,9 @@ return array(
             'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
             'Cases\Submission\SubmissionActionTask'
                 => 'Common\BusinessService\Service\Cases\Submission\SubmissionActionTask',
+            // Bus business services
+            'Bus\BusReg'
+                => 'Common\BusinessService\Service\Bus\BusReg',
         ]
     ],
 );
