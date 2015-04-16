@@ -173,7 +173,7 @@ class FormCollection extends ZendFormCollection
 
                 $markup = sprintf('<ul%s>%s%s</ul>', $attributesString, $hint, $markup);
 
-            } else if ($element instanceof FileUploadListItem) {
+            } elseif ($element instanceof FileUploadListItem) {
 
                 $markup = sprintf('<li%s>%s%s</li>', $attributesString, $hint, $markup);
             } else {

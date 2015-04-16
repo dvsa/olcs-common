@@ -31,7 +31,8 @@ class FormElement extends ZendFormElement
 {
     const GUIDANCE_WRAPPER = '<div class="guidance">%s</div>';
     const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
-    const FILE_CHOOSE_WRAPPER = '<ul class="%s"><li class="%s"><label class="%s">%s %s</label><p class="%s">%s</p></li></ul>';
+    const FILE_CHOOSE_WRAPPER
+        = '<ul class="%s"><li class="%s"><label class="%s">%s %s</label><p class="%s">%s</p></li></ul>';
 
     /**
      * The form row output format.
