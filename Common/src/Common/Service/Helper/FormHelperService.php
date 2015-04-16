@@ -681,7 +681,7 @@ class FormHelperService extends AbstractHelperService
         // parse out postcode from address data
         $postcode = '';
         $postcodeValidator = new PostcodeValidator(['locale' => 'en-GB']);
-        foreach($data as $key => $datum) {
+        foreach ($data as $key => $datum) {
             if ($postcodeValidator->isValid($datum)) {
                 $postcode =  $datum;
                 unset($data[$key]);
