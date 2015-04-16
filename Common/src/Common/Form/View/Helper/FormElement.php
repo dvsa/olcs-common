@@ -13,6 +13,7 @@ use Zend\Form\View\Helper\FormElement as ZendFormElement;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
+use Common\Form\Elements\Types\GuidanceTranslated;
 use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\PlainText;
@@ -27,7 +28,8 @@ use Common\Form\Elements\Types\TrafficAreaSet;
  */
 class FormElement extends ZendFormElement
 {
-    const TERMS_BOX_WRAPPER = '<div class="terms--box">%s</div>';
+    const GUIDANCE_WRAPPER = '<div class="guidance">%s</div>';
+    const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
 
     /**
      * The form row output format.
@@ -99,13 +101,23 @@ class FormElement extends ZendFormElement
         }
 
         if ($element instanceof HtmlTranslated) {
+
+            if ($element instanceof GuidanceTranslated) {
+                $wrapper = self::GUIDANCE_WRAPPER;
+            } else {
+                $wrapper = '%s';
+            }
+
             $tokens = $element->getTokens();
-            $translated = [];
+
             if (is_array($tokens) && count($tokens)) {
+
+                $translated = [];
+
                 foreach ($tokens as $token) {
                     $translated[] = $this->getView()->translate($token);
                 }
-                return vsprintf($element->getValue(), $translated);
+                return sprintf($wrapper, vsprintf($this->getView()->translate($element->getValue()), $translated));
             }
 
             $value = $element->getValue();
@@ -114,11 +126,22 @@ class FormElement extends ZendFormElement
                 return '';
             }
 
-            return $this->getView()->translate($element->getValue());
+            return sprintf($wrapper, $this->getView()->translate($element->getValue()));
         }
 
         if ($element instanceof TermsBox) {
-            return sprintf(self::TERMS_BOX_WRAPPER, $this->getView()->translate($element->getValue()));
+
+            $attributes = $element->getAttributes();
+
+            if (!isset($attributes['class'])) {
+                $attributes['class'] = '';
+            }
+
+            $attributes['class'] .= ' terms--box';
+
+            $attr = $renderer->form()->createAttributesString($attributes);
+
+            return sprintf(self::TERMS_BOX_WRAPPER, $attr, $this->getView()->translate($element->getValue()));
         }
 
         if ($element instanceof Html) {

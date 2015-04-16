@@ -65,7 +65,9 @@ class ApplicationConvictionsPenaltiesReviewServiceTest extends MockeryTestCase
                         [
                             'forename' => 'Bob',
                             'familyName' => 'Smith',
-                            'title' => 'Mr',
+                            'title' => [
+                                'description' => 'Mr'
+                            ],
                             'convictionDate' => '1989-08-23',
                             'categoryText' => 'Some crime',
                             'notes' => 'Details about crime',

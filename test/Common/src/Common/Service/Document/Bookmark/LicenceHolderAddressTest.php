@@ -30,14 +30,12 @@ class LicenceHolderAddressTest extends \PHPUnit_Framework_TestCase
         $bookmark = new LicenceHolderAddress();
         $bookmark->setData(
             [
-                'organisation' => [
-                    'contactDetails' => null
-                ]
+                'correspondenceCd' => null
             ]
         );
 
         $this->assertEquals(
-            null,
+            '',
             $bookmark->render()
         );
     }
@@ -47,11 +45,9 @@ class LicenceHolderAddressTest extends \PHPUnit_Framework_TestCase
         $bookmark = new LicenceHolderAddress();
         $bookmark->setData(
             [
-                'organisation' => [
-                    'contactDetails' => [
-                        'address' => [
-                            'addressLine1' => 'Line 1'
-                        ]
+                'correspondenceCd' => [
+                    'address' => [
+                        'addressLine1' => 'Line 1'
                     ]
                 ]
             ]

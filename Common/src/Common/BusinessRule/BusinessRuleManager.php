@@ -33,6 +33,10 @@ class BusinessRuleManager extends AbstractPluginManager
         if ($instance instanceof ServiceLocatorAwareInterface) {
             $instance->setServiceLocator($this->getServiceLocator());
         }
+
+        if ($instance instanceof BusinessRuleAwareInterface) {
+            $instance->setBusinessRuleManager($this);
+        }
     }
 
     public function validatePlugin($plugin)

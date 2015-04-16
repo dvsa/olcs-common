@@ -18,18 +18,11 @@ class PreviousConvictionData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formTitle",
-     *     "value_options": {
-     *         "Mr": "selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMr",
-     *         "Mrs": "selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMrs",
-     *         "Miss": "selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMiss",
-     *         "Ms": "selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMs"
-     *     },
      *     "empty_option": "Please Select",
-     *     "disable_inarray_validator": false,
-     *     "help-block": "Please select a category"
+     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formTitle",
+     *     "category":"person_title",
      * })
-     * @Form\Type("\Zend\Form\Element\Select")
+     * @Form\Type("DynamicSelect")
      */
     public $title = null;
 

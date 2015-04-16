@@ -73,6 +73,7 @@ trait GenericUpload
             ),
             $data
         );
+
         return $this->getServiceLocator()->get('Entity\Document')->save($docData);
     }
 

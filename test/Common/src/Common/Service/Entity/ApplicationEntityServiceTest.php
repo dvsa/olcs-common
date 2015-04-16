@@ -850,6 +850,11 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'vehicle',
                         'interimApplication',
                         'goodsDiscs'
+                    ),
+                    'criteria' => array(
+                        array(
+                            'removalDate' => 'NULL'
+                        )
                     )
                 ),
                 'interimStatus',
@@ -870,6 +875,9 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 ['action' => 'A', 'operatingCentre' => ['address' => 'address1']],
                 ['action' => 'U', 'operatingCentre' => ['address' => 'address2']],
                 ['action' => '', 'operatingCentre' => ['address' => 'address3']],
+            ],
+            'licenceVehicles' => [
+                ['id' => 2, 'removalDate' => null]
             ]
         ];
         $processed = [
@@ -877,6 +885,9 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             'operatingCentres' => [
                 ['action' => 'A', 'address' => 'address1', 'operatingCentre' => ['address' => 'address1']],
                 ['action' => 'U', 'address' => 'address2', 'operatingCentre' => ['address' => 'address2']],
+            ],
+            'licenceVehicles' => [
+                ['id' => 2, 'removalDate' => null]
             ]
         ];
 
@@ -910,6 +921,11 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'vehicle',
                         'interimApplication',
                         'goodsDiscs'
+                    ),
+                    'criteria' => array(
+                        array(
+                            'removalDate' => 'NULL'
+                        )
                     )
                 ),
                 'interimStatus',
@@ -961,22 +977,36 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 array(
                     'interimApplication' => null,
                     'id' => 1,
-                    'version' => 2
+                    'version' => 2,
+                    'goodsDiscs' => [],
+                    'removalDate' => null
                 ),
                 array(
                     'interimApplication' => null,
                     'id' => 2,
-                    'version' => 2
+                    'version' => 2,
+                    'goodsDiscs' => [],
+                    'removalDate' => null
                 ),
                 array(
                     'interimApplication' => 1,
                     'id' => 3,
-                    'version' => 2
+                    'version' => 2,
+                    'goodsDiscs' => [
+                        [
+                            'id' => 1,
+                            'version' => 1,
+                            'ceasedDate' => null
+                        ]
+                    ],
+                    'removalDate' => null
                 ),
                 array(
                     'interimApplication' => 1,
                     'id' => 4,
-                    'version' => 2
+                    'version' => 2,
+                    'goodsDiscs' => [],
+                    'removalDate' => null
                 )
             )
         );
@@ -1011,8 +1041,15 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             $this->sm->setService(
                 'Helper\Interim',
                 m::mock()
-                ->shouldReceive('voidDiscsForApplication')
-                ->with(1)
+                ->shouldReceive('processActiveDiscsVoiding')
+                ->with(
+                    [
+                        [
+                            'id' => 1,
+                            'version' => 1
+                        ],
+                    ]
+                )
                 ->once()
                 ->shouldReceive('processNewDiscsAdding')
                 ->with(
@@ -1027,6 +1064,34 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         }
 
         $this->sut->saveInterimData($formData, $type);
+    }
+
+    public function testGetApplicationsForLicence()
+    {
+        $licenceId = 69;
+
+        $this->expectOneRestCall(
+            'Application',
+            'GET',
+            ['licence' => $licenceId],
+            [
+                'children' => [
+                    'status',
+                    'interimStatus',
+                ]
+            ]
+        )
+        ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getApplicationsForLicence($licenceId));
+    }
+
+    public function testGetTmHeaderData()
+    {
+        $this->expectOneRestCall('Application', 'GET', 111)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getTmHeaderData(111));
     }
 
     /**
@@ -1239,13 +1304,13 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'id' => 3,
                         'version' => 2,
                         'interimApplication' => 'NULL',
-                        'specifiedDate' => '2015-01-01'
+                        'specifiedDate' => null
                     ],
                     [
                         'id' => 4,
                         'version' => 2,
                         'interimApplication' => 'NULL',
-                        'specifiedDate' => '2015-01-01'
+                        'specifiedDate' => null
                     ]
                 ],
                 // type

@@ -22,7 +22,7 @@ class ContactDetails implements BusinessServiceInterface, ServiceLocatorAwareInt
     use ServiceLocatorAwareTrait;
 
     /**
-     * Processes the data by passing it through a number of business rules and then persisting it
+     * Format and save the contact details data
      *
      * @param array $params
      * @return Common\BusinessService\ResponseInterface
@@ -31,20 +31,14 @@ class ContactDetails implements BusinessServiceInterface, ServiceLocatorAwareInt
     {
         $data = $params['data'];
 
-        $responseData = [];
-
         $saved = $this->getServiceLocator()->get('Entity\ContactDetails')->save($data);
 
-        if (isset($data['id'])) {
-            $responseData['id'] = $data['id'];
+        if (!empty($data['id'])) {
+            $id = $data['id'];
         } else {
-            $responseData['id'] = $saved['id'];
+            $id = $saved['id'];
         }
 
-        $response = new Response();
-        $response->setType(Response::TYPE_SUCCESS);
-        $response->setData($responseData);
-
-        return $response;
+        return new Response(Response::TYPE_SUCCESS, ['id' => $id]);
     }
 }

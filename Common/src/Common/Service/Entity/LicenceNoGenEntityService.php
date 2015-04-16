@@ -19,5 +19,5 @@ class LicenceNoGenEntityService extends AbstractEntityService
      *
      * @var string
      */
-    protected $entity = 'licenceNoGen';
+    protected $entity = 'LicenceNoGen';
 }

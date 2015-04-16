@@ -34,10 +34,9 @@ class LicenceProcessingServiceTest extends MockeryTestCase
     /**
      * @dataProvider generateDocumentProvider
      */
-    public function testGenerateDocument($niFlag, $goodsOrPsv, $licenceType, $template, $description, $filename)
+    public function testGenerateDocument($goodsOrPsv, $licenceType, $template, $description, $filename)
     {
         $entityData = [
-            'niFlag' => $niFlag,
             'goodsOrPsv' => [
                 'id' => $goodsOrPsv
             ],
@@ -61,11 +60,8 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         $this->setService(
             'Helper\DocumentGeneration',
             m::mock()
-            ->shouldReceive('generateFromTemplate')
-            ->with($template, ['licence' => 1])
-            ->andReturn($content)
-            ->shouldReceive('uploadGeneratedContent')
-            ->with($content, 'documents', $description)
+            ->shouldReceive('generateAndStore')
+            ->with($template, $description, ['licence' => 1])
             ->andReturn($file)
             ->getMock()
         );
@@ -103,10 +99,9 @@ class LicenceProcessingServiceTest extends MockeryTestCase
     /**
      * @dataProvider generateInterimDocumentProvider
      */
-    public function testGenerateInterimDocument($niFlag, $isVariation, $template, $description, $filename)
+    public function testGenerateInterimDocument($isVariation, $template, $description, $filename)
     {
         $entityData = [
-            'niFlag' => $niFlag,
             'isVariation' => $isVariation,
             'licence' => [
                 'id' => 10
@@ -128,11 +123,8 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         $this->setService(
             'Helper\DocumentGeneration',
             m::mock()
-                ->shouldReceive('generateFromTemplate')
-                ->with($template, ['application' => 1, 'licence' => 10])
-                ->andReturn($content)
-                ->shouldReceive('uploadGeneratedContent')
-                ->with($content, 'documents', $description)
+                ->shouldReceive('generateAndStore')
+                ->with($template, $description, ['application' => 1, 'licence' => 10])
                 ->andReturn($file)
                 ->getMock()
         );
@@ -173,33 +165,23 @@ class LicenceProcessingServiceTest extends MockeryTestCase
     {
         return [
             [
-                'N',
                 LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
                 LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                'GB/GV_LICENCE_V1',
+                'GV_LICENCE_V1',
                 'GV Licence',
                 'GV_Licence.rtf'
             ], [
-                'N',
                 LicenceEntityService::LICENCE_CATEGORY_PSV,
                 LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                'GB/PSV_LICENCE_V1',
+                'PSV_LICENCE_V1',
                 'PSV Licence',
                 'PSV_Licence.rtf'
             ], [
-                'N',
                 LicenceEntityService::LICENCE_CATEGORY_PSV,
                 LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED,
-                'GB/PSVSRLicence',
+                'PSVSRLicence',
                 'PSV-SR Licence',
                 'PSV-SR_Licence.rtf'
-            ], [
-                'Y',
-                LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
-                'NI/GV_LICENCE_V1',
-                'GV Licence',
-                'GV_Licence.rtf'
             ]
 
         ];
@@ -209,27 +191,23 @@ class LicenceProcessingServiceTest extends MockeryTestCase
     {
         return [
             [
-                'N',
                 true,
-                'GB/GV_INT_DIRECTION_V1',
+                'GV_INT_DIRECTION_V1',
                 'GV Interim Direction',
                 'GV_Interim_Direction.rtf'
             ], [
-                'N',
                 false,
-                'GB/GV_INT_LICENCE_V1',
+                'GV_INT_LICENCE_V1',
                 'GV Interim Licence',
                 'GV_Interim_Licence.rtf'
             ], [
-                'Y',
                 true,
-                'NI/GV_INT_DIRECTION_V1',
+                'GV_INT_DIRECTION_V1',
                 'GV Interim Direction',
                 'GV_Interim_Direction.rtf'
             ], [
-                'Y',
                 false,
-                'NI/GV_INT_LICENCE_V1',
+                'GV_INT_LICENCE_V1',
                 'GV Interim Licence',
                 'GV_Interim_Licence.rtf'
             ]

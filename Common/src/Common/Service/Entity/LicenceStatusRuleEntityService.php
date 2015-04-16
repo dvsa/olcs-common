@@ -75,21 +75,46 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     /**
      * Get all licence statuses by a set of criteria.
      *
-     * @param null $licenceId The licence id.
      * @param array $args The arguments
      *
      * @return array
      */
-    public function getStatusesForLicence($licenceId = null, array $args = array())
+    public function getStatusesForLicence(array $args = array())
     {
-        $args = $this->normaliseQueryArguments($licenceId, $args);
+        $args = $this->normaliseQueryArguments($args);
 
         return $this->getList($args);
     }
 
-    public function updateStatusesForLicence($licenceId = null, array $args = array())
+    /**
+     * Get a licence status change by its identifier.
+     *
+     * @param int $id The status id.
+     *
+     * @return array
+     */
+    public function getStatusForLicence($id)
     {
-        $args = $this->normaliseArguments($args);
+        return $this->getStatusesForLicence(
+            array(
+                'query' => array(
+                    'id' => $id
+                )
+            )
+        );
+    }
+
+    /**
+     * Update a specific status with new data.
+     *
+     * @param null $statusId The status id.
+     * @param array $args The data to update the status with.
+     *
+     * @return mixed
+     */
+    public function updateStatusForLicence($statusId = null, array $args = array())
+    {
+        return $this->update($statusId, $args['data']);
     }
 
     /**
@@ -120,35 +145,68 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     /**
      * Normalise query arguments specifically.
      *
-     * @param $licenceId The licence id.
      * @param array $args The query arguments.
      *
      * @return array
      */
-    private function normaliseQueryArguments($licenceId, array $args = array())
+    private function normaliseQueryArguments(array $args = array())
     {
-        $args['query']['licence'] = $licenceId;
-
         return array_merge($this->argumentDefaults['query'], $args['query']);
     }
 
     /**
-     * @param int $licenceId
-     * @return array|null
+     * Get Licence rules to be actioned for revocation, curtailment and suspension
+     *
+     * @return array
      */
-    public function getPendingChangesForLicence($licenceId)
+    public function getLicencesToRevokeCurtailSuspend()
     {
-        // defer to generic method
-        $data = $this->getStatusesForLicence(
-            $licenceId,
-            array(
-                'query' => array(
-                    'deletedDate' => 'NULL',
-                    'endProcessedDate' => 'NULL',
-                ),
-            )
-        );
+        $query = [
+            'startProcessedDate' => 'NULL',
+            'deletedDate' => 'NULL',
+            'startDate' => '<='. $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
+        ];
+        $bundle = [
+            'children' => [
+                'licenceStatus',
+                'licence' => [
+                    'children' => ['status']
+                ],
 
-        return $data['Count']>0 ? $data['Results'] : null;
+            ],
+        ];
+
+        return $this->getAll($query, $bundle)['Results'];
+    }
+
+    /**
+     * Get Licence rules to reset licence status back to vaild
+     *
+     * @return array
+     */
+    public function getLicencesToValid()
+    {
+        $query = [
+            'endProcessedDate' => 'NULL',
+            'endDate' => 'NOT NULL',
+            'deletedDate' => 'NULL',
+            'endDate' => '<='. $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
+        ];
+        $bundle = [
+            'children' => [
+                'licenceStatus',
+                'licence' => [
+                    'children' => [
+                        'status',
+                        'licenceVehicles' => [
+                            'children' => ['vehicle']
+                        ]
+                    ]
+                ],
+
+            ],
+        ];
+
+        return $this->getAll($query, $bundle)['Results'];
     }
 }

@@ -143,6 +143,10 @@ class CrudTableTraitTest extends MockeryTestCase
 
     public function testDeleteActionWithPost()
     {
+        $mockFlashMessenger = m::mock();
+        $mockFlashMessenger->shouldReceive('addSuccessMessage');
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
         $redirectMock = m::mock()
             ->shouldReceive('toRouteAjax')
             ->with(
@@ -165,6 +169,9 @@ class CrudTableTraitTest extends MockeryTestCase
             ->andReturn('application')
             ->shouldReceive('getIdentifier')
             ->andReturn(123)
+            ->shouldReceive('params')
+            ->with('action')
+            ->andReturn('delete')
             ->shouldReceive('delete')
             ->shouldReceive('postSave')
             ->shouldReceive('redirect')

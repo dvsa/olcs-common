@@ -21,14 +21,16 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "2.3.*",
-        "doctrine/doctrine-orm-module": "0.*",
-        "doctrine/annotations": "1.2.1",
-        "symfony/Filesystem": "~2.6.0-dev",
-        "cpms/client": "0.1.x-dev",
+        "php": ">=5.4",
+
+        "zendframework/zendframework": "~2.3.5",
+        "doctrine/doctrine-orm-module": "~0.8.0",
+        "doctrine/annotations": "^1.2.3",
+        "symfony/Filesystem": "~2.6.0",
         "zf-commons/zfc-rbac": "~2.4.0",
-        "zf-commons/zfc-user": "~1.2.2"
+        "zf-commons/zfc-user": "~1.2.2",
+
+        "cpms/client": "0.1.x-dev"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",

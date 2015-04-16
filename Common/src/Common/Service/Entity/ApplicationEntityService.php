@@ -73,11 +73,20 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     private $overviewBundle = array(
         'children' => array(
-            'applicationCompletions',
+            'applicationCompletion',
             'status',
             'interimStatus',
             'licenceType',
-            'goodsOrPsv'
+            'goodsOrPsv',
+            'licence' => array(
+                'children' => array(
+                    'organisation' => array(
+                        'children' => array(
+                            'leadTcArea',
+                        ),
+                    ),
+                ),
+            ),
         )
     );
 
@@ -164,7 +173,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'goodsOrPsv',
             'licenceType',
             'operatingCentres',
-            'previousConvictions',
+            'previousConvictions' => array(
+                'children' => array('title')
+            ),
             'otherLicences' => array(
                 'children' => array(
                     'previousLicenceType'
@@ -208,6 +219,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'trafficArea'
                 )
             ),
+            'transportManagers',
         )
     );
 
@@ -462,7 +474,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
             ],
             'convictions_penalties' => [
                 'children' => [
-                    'previousConvictions'
+                    'previousConvictions' => [
+                        'children' => ['title']
+                    ]
                 ]
             ],
             'licence_history' => [
@@ -603,7 +617,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                                     'type',
                                     'organisationPersons' => [
                                         'children' => [
-                                            'person'
+                                            'person' => [
+                                                'children' => ['title']
+                                            ]
                                         ]
                                     ]
                                 ]
@@ -613,7 +629,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'applicationOrganisationPersons' => [
                         'children' => [
                             'originalPerson',
-                            'person'
+                            'person' => [
+                                'children' => ['title']
+                            ]
                         ]
                     ]
                 ]
@@ -651,7 +669,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ],
                     'applicationOrganisationPersons' => [
                         'children' => [
-                            'person'
+                            'person' => [
+                                'children' => ['title']
+                            ]
                         ]
                     ]
                 ]
@@ -689,6 +709,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'vehicle',
                     'interimApplication',
                     'goodsDiscs'
+                ),
+                'criteria' => array(
+                    array(
+                        'removalDate' => 'NULL'
+                    )
                 )
             ),
             'interimStatus',
@@ -702,6 +727,24 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 )
             )
         )
+    );
+
+    protected $tmHeaderBundle = array(
+        'children' => [
+            'goodsOrPsv',
+            'licence'
+        ]
+    );
+
+    protected $operatingCentresDataBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'trafficArea',
+                    'enforcementArea',
+                ),
+            ),
+        ),
     );
 
     protected $interimData = null;
@@ -873,7 +916,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getApplicationsForLicence($licenceId)
     {
-        return $this->get(['licenceId' => $licenceId]);
+        return $this->get(['licence' => $licenceId], $this->statusBundle);
     }
 
     /**
@@ -1280,14 +1323,38 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'interimApplication' => 'NULL'
             ];
             if ($processInForce) {
-                $record['specifiedDate'] = $specifiedDate;
+                $record['specifiedDate'] = null;
             }
             $data[] = $record;
         }
         if ($processInForce) {
-            $this->getServiceLocator()->get('Helper\Interim')->voidDiscsForApplication($id);
+            $discsToVoid = $this->getActiveDiscsForVehicles($interimData, $recordsToUnset);
+            $this->getServiceLocator()->get('Helper\Interim')->processActiveDiscsVoiding($discsToVoid);
             $this->getServiceLocator()->get('Helper\Interim')->processNewDiscsAdding($newDiscs);
         }
         $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($data);
+    }
+
+    protected function getActiveDiscsForVehicles($interimData, $ids)
+    {
+        $activeDiscs = [];
+        foreach ($interimData['licenceVehicles'] as $lv) {
+            if (in_array($lv['id'], $ids)) {
+                foreach ($lv['goodsDiscs'] as $disc) {
+                    if (!$disc['ceasedDate']) {
+                        $activeDiscs[] = [
+                            'id' => $disc['id'],
+                            'version' => $disc['version']
+                        ];
+                    }
+                }
+            }
+        }
+        return $activeDiscs;
+    }
+
+    public function getTmHeaderData($id)
+    {
+        return $this->get($id, $this->tmHeaderBundle);
     }
 }

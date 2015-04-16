@@ -30,37 +30,6 @@ class ApplicationVehiclesGoodsAdapterTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
     }
 
-    public function testGetVehiclesData()
-    {
-        $mockLicenceEntity = m::mock();
-        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
-
-        $mockLicenceEntity->shouldReceive('getVehiclesDataForApplication')
-            ->with(3)
-            ->andReturn('RESPONSE');
-
-        $this->assertEquals('RESPONSE', $this->sut->getVehiclesData(3));
-    }
-
-    public function testSave()
-    {
-        $data = [
-            'data' => [
-                'foo' => 'bar'
-            ]
-        ];
-        $id = 3;
-
-        $mockApplicationEntity = m::mock();
-        $this->sm->setService('Entity\Application', $mockApplicationEntity);
-
-        $mockApplicationEntity->shouldReceive('save')
-            ->with(['foo' => 'bar', 'id' => 3])
-            ->andReturn('RESPONSE');
-
-        $this->assertEquals('RESPONSE', $this->sut->save($data, $id));
-    }
-
     public function testGetFormData()
     {
         $id = 3;
@@ -111,129 +80,150 @@ class ApplicationVehiclesGoodsAdapterTest extends MockeryTestCase
         $this->assertEquals($expectedData, $this->sut->getFormData($id));
     }
 
-    public function testShowFilters()
+    /**
+     * @dataProvider providerFormatFilters
+     */
+    public function testFormatFilters($query, $expected)
     {
-        $this->assertTrue($this->sut->showFilters());
+        $this->assertEquals($expected, $this->sut->formatFilters($query));
     }
 
-    public function testGetFilterForm()
+    public function testGetFilteredVehiclesData()
     {
-        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
-        $filterForm = m::mock()
-            ->shouldReceive('get')
-            ->with('vrm')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('setValueOptions')
-                ->with($vrmOptions)
-                ->getMock()
-            )
-            ->getMock();
-
-        $this->sm->setService(
-            'Helper\Form',
-            m::mock()
-            ->shouldReceive('createForm')
-            ->with('Lva\VehicleFilter')
-            ->andReturn($filterForm)
-            ->getMock()
-        );
-
-        $this->assertEquals($filterForm, $this->sut->getFilterForm());
-    }
-
-    public function testGetFilters()
-    {
-        $input = [
-            'vrm' => 'foo',
-            'specified' => 'bar',
-            'includeRemoved' => 'baz',
-            'disc' => 'test'
+        $id = 111;
+        $query = [];
+        $filters = [
+            'page' => 1,
+            'limit' => 10,
+            'removalDate' => 'NULL'
         ];
 
-        $expected = [
-            'vrm' => 'foo',
-            'specified' => 'bar',
-            'includeRemoved' => 'baz',
-            'disc' => 'test'
+        $mockLicenceVehicle = m::mock();
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicle);
+
+        $mockLicenceVehicle->shouldReceive('getVehiclesDataForApplication')
+            ->with(111, $filters)
+            ->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->getFilteredVehiclesData($id, $query));
+    }
+
+    public function providerFormatFilters()
+    {
+        return [
+            'Defaults' => [
+                [],
+                [
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Pagination' => [
+                [
+                    'page' => 2,
+                    'limit' => 25
+                ],
+                [
+                    'page' => 2,
+                    'limit' => 25,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Vrm all' => [
+                [
+                    'vrm' => 'All'
+                ],
+                [
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Vrm' => [
+                [
+                    'vrm' => 'A'
+                ],
+                [
+                    'vrm' => '~A%',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Specified all' => [
+                [
+                    'specified' => 'All'
+                ],
+                [
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Specified Y' => [
+                [
+                    'specified' => 'Y'
+                ],
+                [
+                    'specifiedDate' => 'NOT NULL',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Specified N' => [
+                [
+                    'specified' => 'N'
+                ],
+                [
+                    'specifiedDate' => 'NULL',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Include removed' => [
+                [
+                    'includeRemoved' => '1'
+                ],
+                [
+                    'page' => 1,
+                    'limit' => 10
+                ]
+            ],
+            'Disc all' => [
+                [
+                    'disc' => 'All',
+                ],
+                [
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Disc Y' => [
+                [
+                    'disc' => 'Y',
+                ],
+                [
+                    'disc' => 'Y',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
+            'Disc N' => [
+                [
+                    'disc' => 'N',
+                ],
+                [
+                    'disc' => 'N',
+                    'page' => 1,
+                    'limit' => 10,
+                    'removalDate' => 'NULL'
+                ]
+            ],
         ];
-
-        $this->assertEquals($expected, $this->sut->getFilters($input));
-    }
-
-    public function testGetFiltersWithDefaults()
-    {
-        $input = [];
-
-        $expected = [
-            'vrm' => 'All',
-            'specified' => 'A',
-            'includeRemoved' => 0,
-            'disc' => 'A'
-        ];
-
-        $this->assertEquals($expected, $this->sut->getFilters($input));
-    }
-
-    /**
-     * Test maybeDisableRemovedAndSpecifiedDates method
-     */
-    public function testMaybeDisableRemovedAndSpecifiedDates()
-    {
-        $mockForm = m::mock()
-            ->shouldReceive('get')
-            ->with('licence-vehicle')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('get')
-                ->with('specifiedDate')
-                ->andReturn('specifiedDate')
-                ->once()
-                ->shouldReceive('get')
-                ->with('removalDate')
-                ->andReturn('removedDate')
-                ->once()
-                ->getMock()
-            )
-            ->once()
-            ->getMock();
-
-        $mockFormHelper = m::mock()
-            ->shouldReceive('disableDateElement')
-            ->with('specifiedDate')
-            ->once()
-            ->shouldReceive('disableDateElement')
-            ->with('removedDate')
-            ->once()
-            ->getMock();
-
-        $this->assertEquals(null, $this->sut->maybeDisableRemovedAndSpecifiedDates($mockForm, $mockFormHelper));
-    }
-
-    /**
-     * Test maybeFormatRemovedAndSpecifiedDates method
-     */
-    public function testMaybeFormatRemovedAndSpecifiedDates()
-    {
-        $this->assertEquals('data', $this->sut->maybeFormatRemovedAndSpecifiedDates('data'));
-    }
-
-    /**
-     * Test maybeUnsetSpecifiedDate method
-     */
-    public function testMaybeUnsetSpecifiedDate()
-    {
-        $this->assertEquals(
-            ['licence-vehicle' => []],
-            $this->sut->maybeUnsetSpecifiedDate(['licence-vehicle' => ['specifiedDate' => 'date']])
-        );
-    }
-
-    /**
-     * Test maybeRemoveSpecifiedDateEmptyOption method
-     */
-    public function testMaybeRemoveSpecifiedDateEmptyOption()
-    {
-        $this->assertEquals('form', $this->sut->maybeRemoveSpecifiedDateEmptyOption('form', 'edit'));
     }
 }

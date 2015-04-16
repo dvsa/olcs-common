@@ -30,7 +30,8 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
             ],
             'transportManager',
             'tmType',
-            'operatingCentres'
+            'operatingCentres',
+            'tmApplicationStatus'
         ]
     ];
 
@@ -60,6 +61,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                     'operatingCentres' => [
                         'one',
                         'two'
+                    ],
+                    'tmApplicationStatus' => [
+                        'id' => 'foo'
                     ]
                 ],
                 [
@@ -72,6 +76,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                         'one',
                         'two',
                         'three'
+                    ],
+                    'tmApplicationStatus' => [
+                        'id' => 'bar'
                     ]
                 ],
             ]
@@ -92,6 +99,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                 'operatingCentres' => [
                     'one',
                     'two'
+                ],
+                'tmApplicationStatus' => [
+                    'id' => 'foo'
                 ],
                 'ocCount' => 2
             ]
@@ -154,5 +164,53 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->deleteForApplication($applicationId));
+    }
+
+    public function testDeleteWithOneId()
+    {
+        $this->expectOneRestCall('TransportManagerApplication', 'DELETE', ['id' => 412])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sut->delete(412);
+
+    }
+
+    public function testDeleteWithMultipleIds()
+    {
+        $this->expectedRestCallInOrder('TransportManagerApplication', 'DELETE', ['id' => 12])
+            ->will($this->returnValue('RESPONSE'));
+        $this->expectedRestCallInOrder('TransportManagerApplication', 'DELETE', ['id' => 64])
+            ->will($this->returnValue('RESPONSE'));
+        $this->expectedRestCallInOrder('TransportManagerApplication', 'DELETE', ['id' => 345])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sut->delete([12,64,345]);
+    }
+
+    public function testGetByApplicationWithHomeContactDetails()
+    {
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', ['application' => 821, 'limit' => 'all'])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByApplicationWithHomeContactDetails(821));
+    }
+
+    public function testGetByApplicationTransportManager()
+    {
+        $this->expectOneRestCall(
+            'TransportManagerApplication',
+            'GET',
+            ['application' => 821, 'transportManager' => 55, 'limit' => 'all']
+        )->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByApplicationTransportManager(821, 55));
+    }
+
+    public function testGetTransportManagerDetails()
+    {
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', 111)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getTransportManagerDetails(111));
     }
 }

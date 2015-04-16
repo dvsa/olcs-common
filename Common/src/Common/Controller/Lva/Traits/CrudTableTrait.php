@@ -48,8 +48,12 @@ trait CrudTableTrait
      * @param array $data
      * @return \Zend\Http\Response
      */
-    protected function handleCrudAction($data, $rowsNotRequired = array('add'))
-    {
+    protected function handleCrudAction(
+        $data,
+        $rowsNotRequired = ['add'],
+        $childIdParamName = 'child_id',
+        $route = null
+    ) {
         $action = $this->getActionFromCrudAction($data);
 
         if (is_array($data['action'])) {
@@ -70,10 +74,10 @@ trait CrudTableTrait
                 $data['id'] = implode(',', $data['id']);
             }
 
-            $routeParams['child_id'] = $data['id'];
+            $routeParams[$childIdParamName] = $data['id'];
         }
 
-        return $this->redirect()->toRoute(null, $routeParams, array(), true);
+        return $this->redirect()->toRoute($route, $routeParams, array(), true);
     }
 
     /**
@@ -123,6 +127,10 @@ trait CrudTableTrait
             if ($response instanceof Response) {
                 return $response;
             }
+
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
+                'section.' . $this->params('action') . '.' . $this->section
+            );
 
             return $this->redirect()->toRouteAjax(
                 null,

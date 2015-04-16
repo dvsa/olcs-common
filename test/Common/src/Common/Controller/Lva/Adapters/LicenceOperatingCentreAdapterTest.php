@@ -59,24 +59,6 @@ class LicenceOperatingCentreAdapterTest extends TestCase
         );
     }
 
-    public function testAddMessages()
-    {
-        $this->setUpTest();
-
-        // Stubbed data
-        $licenceId = 4;
-
-        // Mocks
-        $mockVariation = m::mock();
-        $this->sm->setService('Lva\Variation', $mockVariation);
-
-        // Expectations
-        $mockVariation->shouldReceive('addVariationMessage')
-            ->with($licenceId);
-
-        $this->sut->addMessages($licenceId);
-    }
-
     public function testAlterActionFormForGoodsWithoutVehicleOrTrailerElement()
     {
         $this->setUpTest();
@@ -627,15 +609,18 @@ class LicenceOperatingCentreAdapterTest extends TestCase
 
                 $scope->mockDataElement->shouldReceive('has')
                     ->with('totCommunityLicences')
-                    ->andReturn(true);
+                    ->andReturn(true)
+                    ->shouldReceive('get')
+                    ->with('totCommunityLicences')
+                    ->andReturn('community-licences');
 
                 $scope->mockFormHelper->shouldReceive('disableElement')
-                    ->with($scope->mockForm, 'data->totCommunityLicences');
-
-                $scope->mockFormHelper->shouldReceive('disableValidation')
-                    ->with($scope->mockCommunityFilter);
-
-                $scope->mockFormHelper->shouldReceive('getValidator')
+                    ->with($scope->mockForm, 'data->totCommunityLicences')
+                    ->shouldReceive('disableValidation')
+                    ->with($scope->mockCommunityFilter)
+                    ->shouldReceive('lockElement')
+                    ->with('community-licences', 'community-licence-changes-contact-office')
+                    ->shouldReceive('getValidator')
                     ->with($scope->mockForm, 'table->table', 'Common\Form\Elements\Validators\TableRequiredValidator')
                     ->andReturn(
                         m::mock()->shouldReceive('setMessage')->getMock()
@@ -950,5 +935,25 @@ class LicenceOperatingCentreAdapterTest extends TestCase
             ->with(['foo' => 'bar']);
 
         $this->sut->saveMainFormData($data);
+    }
+
+    public function testFormatDataForFormSetsEnforcementArea()
+    {
+        $sut = m::mock('Common\Controller\Lva\Adapters\LicenceOperatingCentreAdapter')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $form = m::mock();
+
+        $data = [
+            'enforcementArea' => ['id' => 'V048']
+        ];
+        $tableData = [];
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        ];
+
+        $result = $sut->formatDataForForm($data, $tableData, $licenceData);
+        $this->assertEquals('V048', $result['dataTrafficArea']['enforcementArea']);
     }
 }

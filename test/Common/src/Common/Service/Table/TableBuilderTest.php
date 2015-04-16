@@ -62,7 +62,6 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testGetContentHelper()
     {
-
         $table = new TableBuilder($this->getMockServiceLocator());
 
         $contentHelper = $table->getContentHelper();
@@ -876,13 +875,15 @@ class TableBuilderTest extends MockeryTestCase
             ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
             ->will($this->returnValue($expectedTotal));
 
-        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'shouldPaginate'));
 
         $table->expects($this->once())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $table->setType(TableBuilder::TYPE_PAGINATE);
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(true));
 
         $table->setTotal($total);
 
@@ -905,13 +906,15 @@ class TableBuilderTest extends MockeryTestCase
             ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
             ->will($this->returnValue($expectedTotal));
 
-        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'shouldPaginate'));
 
         $table->expects($this->once())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $table->setType(TableBuilder::TYPE_PAGINATE);
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(true));
 
         $table->setTotal($total);
 
@@ -1028,7 +1031,8 @@ class TableBuilderTest extends MockeryTestCase
                     'edit' => array(),
                     'foo' => array(),
                     'bar' => array(),
-                    'cake' => array()
+                    'cake' => array(),
+                    'baz' => array()
                 )
             )
         );
@@ -1286,58 +1290,6 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * Test renderFooter without enough results
-     */
-    public function testRenderFooterWithoutEnoughResults()
-    {
-        $settings = array(
-            'paginate' => array(
-                'limit' => array(
-                    'options' => array(10, 20, 30)
-                )
-            )
-        );
-
-        $table = new TableBuilder($this->getMockServiceLocator());
-
-        $table->setSettings($settings);
-
-        $table->setType(TableBuilder::TYPE_PAGINATE);
-
-        $table->setLimit(10);
-
-        $table->setTotal(1);
-
-        $this->assertEquals('', $table->renderFooter());
-    }
-
-    /**
-     * Test renderFooter With a custom limit
-     */
-    public function testRenderFooterWithCustomLimit()
-    {
-        $settings = array(
-            'paginate' => array(
-                'limit' => array(
-                    'options' => array(10, 20, 30)
-                )
-            )
-        );
-
-        $table = new TableBuilder($this->getMockServiceLocator());
-
-        $table->setSettings($settings);
-
-        $table->setType(TableBuilder::TYPE_PAGINATE);
-
-        $table->setLimit(7);
-
-        $table->setTotal(1);
-
-        $this->assertEquals('', $table->renderFooter());
-    }
-
-    /**
      * Test renderFooter
      */
     public function testRenderFooter()
@@ -1484,13 +1436,17 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
 
-        $mockQuery = $this->getMock('\stdClass', array('toArray'));
-
-        $mockQuery->expects($this->any())
-            ->method('toArray')
-            ->will($this->returnValue(array('foo' => 'bar')));
+        //$mockQuery = $this->getMock('\stdClass', array('toArray'));
+        $mockQuery = [
+            'foo' => 'bar',
+            'page' => '1',
+            'limit' => '30'
+        ];
 
         $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl->expects($this->any())
+            ->method('fromRoute')
+            ->will($this->returnValue('?' . http_build_query($mockQuery)));
 
         $table = $this->getMockTableBuilder(array('getContentHelper', 'getQuery', 'getUrl'));
 

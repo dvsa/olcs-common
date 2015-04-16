@@ -40,6 +40,19 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testGetRevocationDataForLicence()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getRevocationDataForLicence($id));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testGetTypeOfLicenceData()
     {
         $id = 7;
@@ -628,6 +641,27 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testSetEnforcementArea()
+    {
+        $licenceId = 69;
+        $enforcementAreaId = 'V048';
+
+        $data = [
+            'id' => $licenceId,
+            'enforcementArea' => $enforcementAreaId,
+            '_OPTIONS_' => [
+                'force' => true
+            ],
+        ];
+
+        $this->expectOneRestCall('Licence', 'PUT', $data);
+
+        $this->sut->setEnforcementArea($licenceId, $enforcementAreaId);
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testFindByIdentifierWithResult()
     {
         $response = [
@@ -738,76 +772,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals('foo', $this->sut->getOrganisation($id));
     }
 
-    public function testGetVehiclesDataForApplication()
-    {
-        // Params
-        $applicationId = 2;
-        $licenceId = 4;
-        $expectedBundle = array(
-            'children' => array(
-                'licenceVehicles' => array(
-                    'children' => array(
-                        'goodsDiscs',
-                        'interimApplication',
-                        'vehicle'
-                    ),
-                    'criteria' => array(
-                        array(
-                            'application' => $applicationId,
-                            'specifiedDate' => 'NOT NULL'
-                        )
-                    )
-                )
-            )
-        );
-
-        $stubbedResponse = array(
-            'licenceVehicles' => array(
-                array(
-                    'foo' => 'bar',
-                    'specifiedDate' => '2014-01-01'
-                ),
-                array(
-                    'foo' => 'bar',
-                    'specifiedDate' => null
-                ),
-                array(
-                    'foo' => 'bar',
-                    'specifiedDate' => '2014-01-01'
-                )
-            )
-        );
-
-        $expectedResponse = array(
-            array(
-                'foo' => 'bar',
-                'specifiedDate' => null
-            ),
-            array(
-                'foo' => 'bar',
-                'specifiedDate' => '2014-01-01'
-            ),
-            array(
-                'foo' => 'bar',
-                'specifiedDate' => '2014-01-01'
-            )
-        );
-
-        // Mocks
-        $mockApplicationEntity = m::mock();
-        $this->sm->setService('Entity\Application', $mockApplicationEntity);
-
-        // Expectations
-        $mockApplicationEntity->shouldReceive('getLicenceIdForApplication')
-            ->with($applicationId)
-            ->andReturn($licenceId);
-
-        $this->expectOneRestCall('Licence', 'GET', ['id' => $licenceId, 'limit' => 'all'], $expectedBundle)
-            ->will($this->returnValue($stubbedResponse));
-
-        $this->assertEquals($expectedResponse, $this->sut->getVehiclesDataForApplication($applicationId));
-    }
-
     public function testGetVehiclesPsvDataForApplication()
     {
         // Params
@@ -824,6 +788,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                         )
                     ),
                     'criteria' => array(
+                        'removalDate' => 'NULL',
                         array(
                             'application' => $applicationId,
                             'specifiedDate' => 'NOT NULL'
@@ -1001,6 +966,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                     ],
                 ],
                 'operatingCentres',
+                'changeOfEntitys'
             ],
         ];
 
@@ -1046,5 +1012,45 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Licence', 'PUT', $data);
 
         $this->sut->setLicenceStatus($id, $status);
+    }
+
+    public function testHasApprovedUnfulfilledConditionsFalse()
+    {
+        $this->expectOneRestCall('Licence', 'GET', 111)
+            ->will($this->returnValue(['conditionUndertakings' => []]));
+
+        $this->assertFalse($this->sut->hasApprovedUnfulfilledConditions(111));
+    }
+
+    public function testHasApprovedUnfulfilledConditionsTrue()
+    {
+        $this->expectOneRestCall('Licence', 'GET', 111)
+            ->will($this->returnValue(['conditionUndertakings' => ['foo']]));
+
+        $this->assertTrue($this->sut->hasApprovedUnfulfilledConditions(111));
+    }
+
+    public function testGetConditionsAndUndertakings()
+    {
+        $this->expectOneRestCall('Licence', 'GET', 111)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getConditionsAndUndertakings(111));
+    }
+
+    /**
+     * @group licenceEntityService
+     */
+    public function testGetEnforcementArea()
+    {
+        $bundle = [
+            'children' => [
+                'enforcementArea'
+            ]
+        ];
+        $this->expectOneRestCall('Licence', 'GET', 111, $bundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getEnforcementArea(111));
     }
 }

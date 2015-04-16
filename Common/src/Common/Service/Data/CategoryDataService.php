@@ -38,11 +38,15 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
 
     // @NOTE create constants for all sub categories as required. Only a subset
     // will ever be needed programatically so this list should be manageable
+    const TASK_SUB_CATEGORY_APPLICATION_ADDRESS_CHANGE_DIGITAL = 3;
     const TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE = 11;
     const TASK_SUB_CATEGORY_APPLICATION_FORMS_ASSISTED_DIGITAL = 14;
     const TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL = 15;
     const TASK_SUB_CATEGORY_APPLICATION_SUBSIDIARY_DIGITAL = 25;
     const TASK_SUB_CATEGORY_HEARINGS_APPEALS = 49;
+    const TASK_SUB_CATEGORY_DECISION = 96;
+    const TASK_SUB_CATEGORY_RECOMMENDATION = 97;
+    const TASK_SUB_CATEGORY_REVIEW_COMPLAINT = 61;
 
     const SCAN_SUB_CATEGORY_CHANGE_OF_ENTITY = 85;
 
@@ -53,6 +57,7 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
     const DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL = 100;
     const DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL = 13;
     const DOC_SUB_CATEGORY_OTHER_DOCUMENTS = 79;
+    const DOC_SUB_CATEGORY_FEE_REQUEST = 110;
 
     /**
      * Cache the categories

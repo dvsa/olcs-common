@@ -7,9 +7,9 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Form\Elements\Validators\NewVrm;
 use Zend\Form\Element\Checkbox;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Shared logic for Goods *AND* PSV controllers
@@ -18,24 +18,11 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
  */
 abstract class AbstractVehiclesController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\AdapterAwareTrait;
+    use Traits\AdapterAwareTrait,
+        Traits\CrudTableTrait;
 
     protected $totalAuthorisedVehicles = array();
     protected $totalVehicles = array();
-
-    /**
-     * Get the total vehicle authorisations
-     *
-     * @return int
-     */
-    abstract protected function getTotalNumberOfAuthorisedVehicles();
-
-    /**
-     * Get total number of vehicles
-     *
-     * @return int
-     */
-    abstract protected function getTotalNumberOfVehicles();
 
     /**
      * Action data map
@@ -58,18 +45,18 @@ abstract class AbstractVehiclesController extends AbstractController implements 
     );
 
     /**
-     * We need to know which vehicles to show
+     * Get the total vehicle authorisations
      *
-     * @param array $licenceVehicle
-     * @param array $filters
-     * @return boolean
+     * @return int
      */
-    abstract protected function showVehicle(array $licenceVehicle, array $filters = []);
+    abstract protected function getTotalNumberOfAuthorisedVehicles();
 
-    protected function alterVehicleFormForLocation($form, $mode)
-    {
-        return $form;
-    }
+    /**
+     * Get total number of vehicles
+     *
+     * @return int
+     */
+    abstract protected function getTotalNumberOfVehicles();
 
     /**
      * Hijack the crud action check so we can validate the add button
@@ -195,6 +182,10 @@ abstract class AbstractVehiclesController extends AbstractController implements 
             $licenceVehicle['vehicle'] = $data['id'];
         }
 
+        if (in_array($this->lva, ['application', 'variation'])) {
+            $licenceVehicle['application'] = $this->getIdentifier();
+        }
+
         $saved = $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
 
         if (isset($saved['id'])) {
@@ -206,53 +197,6 @@ abstract class AbstractVehiclesController extends AbstractController implements 
         $this->postSaveVehicle($licenceVehicleId, $mode);
 
         return $licenceVehicleId;
-    }
-
-    /**
-     * Generic form alterations
-     *
-     * @param \Zend\Form\Form $form
-     * @param string $mode
-     * @return \Zend\Form\Form
-     */
-    protected function alterVehicleForm($form, $mode)
-    {
-        $this->alterVehicleFormForLocation($form, $mode);
-
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        $dataFieldset = $form->get('licence-vehicle');
-
-        $this->getAdapter()->maybeDisableRemovedAndSpecifiedDates($form, $formHelper);
-        $this->getAdapter()->maybeRemoveSpecifiedDateEmptyOption($form, $mode);
-
-        $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
-
-        // disable the vrm field on edit
-        if ($mode === 'edit') {
-            $formHelper->disableElement($form, 'data->vrm');
-        }
-
-        // Attach a validator to check the VRM doesn't already exist
-        // We only really need to do this when posting
-        if ($mode === 'add' && $this->getRequest()->isPost()) {
-
-            $filter = $form->getInputFilter();
-            $validators = $filter->get('data')->get('vrm')->getValidatorChain();
-
-            $validator = new NewVrm();
-
-            $validator->setType(ucwords($this->lva));
-            $validator->setVrms($this->getVrmsForCurrentLicence());
-
-            $validators->attach($validator);
-        }
-
-        if ($mode === 'edit' || !$this->canAddAnother()) {
-            $form->get('form-actions')->remove('addAnother');
-        }
-
-        return $form;
     }
 
     protected function canAddAnother()
@@ -416,23 +360,30 @@ abstract class AbstractVehiclesController extends AbstractController implements 
     }
 
     /**
-     * Save data
+     * Get the delete message.
      *
-     * @param array $data
-     * @return mixed
+     * @return string
      */
-    protected function save($data)
+    public function getDeleteMessage()
     {
-        $data = $this->formatDataForSave($data);
-        $data['id'] = $this->getIdentifier();
-        return $this->getLvaEntityService()->save($data);
-    }
+        $toDelete = count(explode(',', $this->params('child_id')));
+        $total = $this->getTotalNumberOfVehicles();
 
-    /**
-     * Format data for save on the main form
-     */
-    protected function formatDataForSave($data)
-    {
-        return $data['data'];
+        $licence = $this->getServiceLocator()->get('Entity\Licence')->getOverview($this->getLicenceId());
+
+        $acceptedLicenceTypes = array(
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        );
+
+        if (!in_array($licence['licenceType']['id'], $acceptedLicenceTypes)) {
+            return 'delete.confirmation.text';
+        }
+
+        if ($total !== $toDelete) {
+            return 'delete.confirmation.text';
+        }
+
+        return 'deleting.all.vehicles.message';
     }
 }

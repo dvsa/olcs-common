@@ -116,6 +116,24 @@ class OrganisationEntityService extends AbstractEntityService
         )
     );
 
+    protected $registeredUsersBundle = array(
+        'children' => array(
+            'organisationUsers' => array(
+                'children' => array(
+                    'user' => array(
+                        'children' => array(
+                            'contactDetails' => array(
+                                'children' => array(
+                                    'person'
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     public function getApplications($id)
     {
         return $this->get($id, $this->applicationsBundle);
@@ -282,11 +300,7 @@ class OrganisationEntityService extends AbstractEntityService
 
     private function compareKeys($from, $to, $keys = [])
     {
-        $keys = array_flip($keys);
-        $from = array_intersect_key($from, $keys);
-        $to   = array_intersect_key($to, $keys);
-
-        return array_diff_assoc($to, $from);
+        return $this->getServiceLocator()->get('Helper\Data')->compareKeys($from, $to, $keys);
     }
 
     /**
@@ -320,5 +334,24 @@ class OrganisationEntityService extends AbstractEntityService
         }
 
         return $normalized;
+    }
+
+    public function getRegisteredUsersForSelect($id)
+    {
+        $organisation = $this->get($id, $this->registeredUsersBundle);
+
+        $people = [];
+
+        foreach ($organisation['organisationUsers'] as $orgUser) {
+
+            $user = $orgUser['user'];
+            $person = $user['contactDetails']['person'];
+
+            $people[$user['id']] = trim($person['forename'] . ' ' . $person['familyName']);
+        }
+
+        asort($people);
+
+        return $people;
     }
 }

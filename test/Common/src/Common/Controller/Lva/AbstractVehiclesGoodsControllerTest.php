@@ -1,817 +1,1121 @@
 <?php
 
+/**
+ * Test Abstract Vehicles Goods Controller
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 namespace CommonTest\Controller\Lva;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
-use CommonTest\Traits\MockDateTrait;
 
 /**
  * Test Abstract Vehicles Goods Controller
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
+class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
 {
-    use MockDateTrait;
+    protected $sut;
+
+    protected $sm;
 
     protected $adapter;
 
     public function setUp()
     {
-        parent::setUp();
+        $this->sut = m::mock('\Common\Controller\Lva\AbstractVehiclesGoodsController')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
 
-        $this->mockController('\Common\Controller\Lva\AbstractVehiclesGoodsController');
-
+        $this->sm = Bootstrap::getServiceManager();
         $this->adapter = m::mock('\Common\Controller\Lva\Interfaces\AdapterInterface');
-        $this->adapter
-            ->shouldReceive('showFilters')
-            ->andReturn(true)
-            ->shouldReceive('getFilterForm')
-            ->andReturn(m::mock())
-            ->getMock();
 
+        $this->sut->setServiceLocator($this->sm);
         $this->sut->setAdapter($this->adapter);
-
-        $this->sm->setService(
-            'Script',
-            m::mock()->shouldReceive('loadFiles')->getMock()
-        );
-        $this->mockDate('2015-01-30');
     }
 
-    protected function getServiceManager()
+    public function testIndexAction()
     {
-        return Bootstrap::getServiceManager();
-    }
+        $id = 111;
+        $licenceId = 111;
+        $stubbedFormData = [
+            'foo' => 'bar'
+        ];
+        $stubbedQuery = [
+            'page' => 1
+        ];
+        $licenceVehicle = [
+            'bar' => 'foo',
+            'goodsDiscs' => 'cake',
+            'vehicle' => [
+                'id' => 222,
+                'foo' => 'bar'
+            ]
+        ];
+        $stubbedTableData = [
+            'Results' => [
+                $licenceVehicle
+            ]
+        ];
 
-    /**
-     * Get index
-     *
-     * @group abstractVehicleGoodsController
-     */
-    public function testGetIndexAction()
-    {
-        $this->adapter
-            ->shouldReceive('getFilters')
-            ->andReturn(m::mock())
-            ->getMock();
-
-        $this->sut
-            ->shouldReceive('params')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('fromQuery')
-                ->getMock()
-            );
-
-        $mockValidator = $this->mockService('oneRowInTablesRequired', 'setRows')
-            ->with([0])
-            ->shouldReceive('setCrud')
-            ->with(false)
-            ->getMock();
-
-        $form = $this->createMockForm('Lva\GoodsVehicles');
-
-        $this->adapter->shouldReceive('getFormData')
-            ->with(321)
-            ->andReturn([]);
-
-        $form->shouldReceive('setData')
-            ->with(
-                []
-            )
-            ->andReturn($form)
-            ->shouldReceive('get')
-            ->with('table')
-            ->andReturn(
-                m::mock('\Zend\Form\Fieldset')
-                ->shouldReceive('get')
-                ->with('rows')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('getValue')
-                    ->andReturn(0)
-                    ->getMock()
-                )
-                ->getMock()
-            )
-            ->shouldReceive('getInputFilter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('get')
-                ->with('data')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('get')
-                    ->with('hasEnteredReg')
-                    ->andReturn(
-                        m::mock()
-                        ->shouldReceive('getValidatorChain')
-                        ->andReturn(
-                            m::mock()
-                            ->shouldReceive('attach')
-                            ->with($mockValidator)
-                            ->getMock()
-                        )
-                        ->getMock()
-                    )
-                    ->getMock()
-                )
-                ->getMock()
-            );
-
-        $this->getMockFormHelper()
-            ->shouldReceive('populateFormTable');
-
-        $this->mockService('Table', 'prepareTable')
-            ->with('lva-vehicles', [])
-            ->andReturn(m::mock('\Common\Service\Table\TableBuilder'));
-
-        $this->sut->shouldReceive('getLicenceId')
-            ->andReturn(123)
-            ->shouldReceive('getIdentifier')
-            ->andReturn(321)
-            ->shouldReceive('getLvaEntityService')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('getTotalVehicleAuthorisation')
-                ->with(321)
-                ->getMock()
-            );
-
-        $this->adapter->shouldReceive('getVehiclesData')
-            ->with(321)
-            ->andReturn([]);
-
-        $this->mockEntity('Licence', 'getVehiclesTotal')
-            ->with(123)
-            ->andReturn(0);
-
-        $this->mockRender();
-
-        $this->sut->indexAction();
-
-        $this->assertEquals('vehicles', $this->view);
-    }
-
-    /**
-     * Get index with filters
-     *
-     * @group abstractVehicleGoodsController
-     * @dataProvider filtersForIndexDataProvider
-     */
-    public function testIndexActionWithFilters($filters, $licenceVehicle, $rows)
-    {
-        $this->adapter
-            ->shouldReceive('getFilters')
-            ->andReturn($filters);
-
-        $this->sut
-            ->shouldReceive('params')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('fromQuery')
-                ->getMock()
-            );
-
-        $mockValidator = $this->mockService('oneRowInTablesRequired', 'setRows')
-            ->with([0])
-            ->shouldReceive('setCrud')
-            ->with(false)
-            ->getMock();
-
-        $form = $this->createMockForm('Lva\GoodsVehicles');
-
-        $this->adapter->shouldReceive('getFormData')
-            ->with(321)
-            ->andReturn([]);
-
-        $form->shouldReceive('setData')
-            ->with(
-                []
-            )
-            ->andReturn($form)
-            ->shouldReceive('get')
-            ->with('table')
-            ->andReturn(
-                m::mock('\Zend\Form\Fieldset')
-                ->shouldReceive('get')
-                ->with('rows')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('getValue')
-                    ->andReturn(0)
-                    ->getMock()
-                )
-                ->getMock()
-            )
-            ->shouldReceive('getInputFilter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('get')
-                ->with('data')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('get')
-                    ->with('hasEnteredReg')
-                    ->andReturn(
-                        m::mock()
-                        ->shouldReceive('getValidatorChain')
-                        ->andReturn(
-                            m::mock()
-                            ->shouldReceive('attach')
-                            ->with($mockValidator)
-                            ->getMock()
-                        )
-                        ->getMock()
-                    )
-                    ->getMock()
-                )
-                ->getMock()
-            );
-
-        $this->getMockFormHelper()
-            ->shouldReceive('populateFormTable');
-
-        $this->mockService('Table', 'prepareTable')
-            ->with('lva-vehicles', $rows)
-            ->andReturn(m::mock('\Common\Service\Table\TableBuilder'));
-
-        $this->sut->shouldReceive('getLicenceId')
-            ->andReturn(123)
-            ->shouldReceive('getIdentifier')
-            ->andReturn(321)
-            ->shouldReceive('getLvaEntityService')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('getTotalVehicleAuthorisation')
-                ->with(321)
-                ->getMock()
-            );
-
-        $this->adapter->shouldReceive('getVehiclesData')
-            ->with(321)
-            ->andReturn([$licenceVehicle]);
-
-        $this->mockEntity('Licence', 'getVehiclesTotal')
-            ->with(123)
-            ->andReturn(0);
-
-        $this->mockRender();
-
-        $this->sut->indexAction();
-
-        $this->assertEquals('vehicles', $this->view);
-
-    }
-
-    /**
-     * Data provider for testIndexActionWithFilters
-     */
-    public function filtersForIndexDataProvider()
-    {
-        $result = [[
-            'id' => 1,
-            'specifiedDate' => '2014-01-01',
-            'removalDate' => '',
-            'vrm' => 'VRM123',
-            'discNo' => '1234'
-        ]];
-        return
-            [
+        $preparedTableData = [
+            'Results' => [
                 [
-                    ['vrm' => 'All', 'specified' => 'A', 'includeRemoved' => 0, 'disc' => 'All'],
-                    [
-                        'id' => 1,
-                        'specifiedDate' => '2014-01-01',
-                        'removalDate' => null,
-                        'goodsDiscs' => [[
-                            'discNo' => '1234'
-                        ]],
-                        'vehicle' => [
-                            'vrm' => 'VRM123'
-                        ]
-                    ],
-                    $result
-                ],
-                [
-                    ['vrm' => 'X', 'specified' => 'A', 'includeRemoved' => 0, 'disc' => 'All'],
-                    [
-                        'id' => 1,
-                        'specifiedDate' => '2014-01-01',
-                        'removalDate' => null,
-                        'goodsDiscs' => [[
-                            'discNo' => '1234'
-                        ]],
-                        'vehicle' => [
-                            'vrm' => 'VRM123'
-                        ]
-                    ],
-                    []
-                ],
-                [
-                    ['vrm' => 'All', 'specified' => 'Y', 'includeRemoved' => 0, 'disc' => 'All'],
-                    [
-                        'id' => 1,
-                        'specifiedDate' => null,
-                        'removalDate' => null,
-                        'goodsDiscs' => [[
-                            'discNo' => '1234'
-                        ]],
-                        'vehicle' => [
-                            'vrm' => 'VRM123'
-                        ]
-                    ],
-                    []
-                ],
-                [
-                    ['vrm' => 'All', 'specified' => 'N', 'includeRemoved' => 0, 'disc' => 'All'],
-                    [
-                        'id' => 1,
-                        'specifiedDate' => '2014-01-01',
-                        'removalDate' => null,
-                        'goodsDiscs' => [[
-                            'discNo' => '1234'
-                        ]],
-                        'vehicle' => [
-                            'vrm' => 'VRM123'
-                        ]
-                    ],
-                    null
-                ],
-                [
-                    ['vrm' => 'All', 'specified' => 'A', 'includeRemoved' => '', 'disc' => 'All'],
-                    [
-                        'id' => 1,
-                        'specifiedDate' => '2014-01-01',
-                        'removalDate' => '2014-01-01',
-                        'goodsDiscs' => [[
-                            'discNo' => '1234'
-                        ]],
-                        'vehicle' => [
-                            'vrm' => 'VRM123'
-                        ]
-                    ],
-                    []
-                ],
-                [
-                    ['vrm' => 'All', 'specified' => 'A', 'includeRemoved' => 0, 'disc' => 'Y'],
-                    [
-                        'id' => 1,
-                        'specifiedDate' => '2014-01-01',
-                        'removalDate' => null,
-                        'goodsDiscs' => [],
-                        'vehicle' => [
-                            'vrm' => 'VRM123'
-                        ]
-                    ],
-                    []
-                ],
-                [
-                    ['vrm' => 'All', 'specified' => 'A', 'includeRemoved' => 0, 'disc' => 'N'],
-                    [
-                        'id' => 1,
-                        'specifiedDate' => '2014-01-01',
-                        'removalDate' => null,
-                        'goodsDiscs' => [[
-                            'discNo' => '1234'
-                        ]],
-                        'vehicle' => [
-                            'vrm' => 'VRM123'
-                        ]
-                    ],
-                    []
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'Pending'
                 ]
-            ];
+            ]
+        ];
+
+        // Mocks
+        $mockTable = m::mock();
+        $mockForm = m::mock();
+        $mockFilterForm = m::mock();
+        $mockRequest = m::mock();
+        $mockTableBuilder = m::mock();
+        $formServiceManager = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $mockFormService = m::mock('\Common\FormService\FormServiceInterface');
+        $mockFilterFormService = m::mock('\Common\FormService\FormServiceInterface');
+        $mockLicence = m::mock();
+        $mockGuidance = m::mock();
+        $mockScript = m::mock();
+
+        $this->sm->setService('Script', $mockScript);
+        $this->sm->setService('Helper\Guidance', $mockGuidance);
+        $this->sm->setService('Entity\Licence', $mockLicence);
+        $this->sm->setService('Table', $mockTableBuilder);
+        $this->sm->setService('FormServiceManager', $formServiceManager);
+        $formServiceManager->setService('lva--goods-vehicles', $mockFormService);
+        $formServiceManager->setService('lva--goods-vehicles-filters', $mockFilterFormService);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle)
+            ->andReturn(true)
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($mockLicence)
+            ->shouldReceive('render')
+            ->once()
+            ->with('vehicles', $mockForm, ['filterForm' => $mockFilterForm])
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(false)
+            ->shouldReceive('getQuery')
+            ->andReturn($stubbedQuery);
+
+        $this->adapter->shouldReceive('getFormData')
+            ->once()
+            ->with(111)
+            ->andReturn($stubbedFormData)
+            ->shouldReceive('getFilteredVehiclesData')
+            ->once()
+            ->with(111, $stubbedQuery)
+            ->andReturn($stubbedTableData);
+
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with($mockTable, false)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedFormData)
+            ->andReturnSelf();
+
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('lva-vehicles', $preparedTableData, ['page' => 1, 'query' => ['page' => 1]])
+            ->andReturn($mockTable);
+
+        $mockLicence->shouldReceive('getVehiclesTotal')
+            ->once()
+            ->with(111)
+            ->andReturn(10)
+            ->shouldReceive('getTotalVehicleAuthorisation')
+            ->once()
+            ->with(111)
+            ->andReturn(9);
+
+        $mockGuidance->shouldReceive('append')
+            ->once()
+            ->with('more-vehicles-than-authorisation');
+
+        $mockFilterFormService->shouldReceive('getForm')
+            ->andReturn($mockFilterForm);
+
+        $mockFilterForm->shouldReceive('setData')
+            ->once()
+            ->with(['page' => 1, 'limit' => 10]);
+
+        $mockScript->shouldReceive('loadFiles')
+            ->once()
+            ->with(['lva-crud', 'vehicle-goods', 'forms/filter']);
+
+        // Assertions
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
     }
 
-    /**
-     * Test index action with post
-     *
-     * @group abstractVehicleGoodsController1
-     */
-    public function testIndexActionWithPost()
+    public function testIndexActionPostInvalid()
     {
-        $this->adapter
-            ->shouldReceive('getFilters')
-            ->andReturn([]);
+        $id = 111;
+        $licenceId = 111;
+        $stubbedFormData = [
+            'table' => 'foo',
+            'foo' => 'bar'
+        ];
+        $stubbedQuery = [
+            'page' => 1
+        ];
+        $licenceVehicle = [
+            'bar' => 'foo',
+            'goodsDiscs' => 'cake',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle2 = [
+            'bar' => 'foo',
+            'goodsDiscs' => [
+                [
+                    'discNo' => 'foo'
+                ]
+            ],
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle3 = [
+            'bar' => 'foo',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $stubbedTableData = [
+            'Results' => [
+                $licenceVehicle,
+                $licenceVehicle2,
+                $licenceVehicle3
+            ]
+        ];
 
-        $formData = ['data' => ['hasEnteredReg' => 'Y', 'version' => 1], 'table' => ['rows' => 1]];
+        $preparedTableData = [
+            'Results' => [
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'Pending'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'foo'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => ''
+                ]
+            ]
+        ];
 
-        $this->request
-            ->shouldReceive('isPost')
+        // Mocks
+        $mockTable = m::mock();
+        $mockForm = m::mock();
+        $mockFilterForm = m::mock();
+        $mockRequest = m::mock();
+        $mockTableBuilder = m::mock();
+        $formServiceManager = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $mockFormService = m::mock('\Common\FormService\FormServiceInterface');
+        $mockFilterFormService = m::mock('\Common\FormService\FormServiceInterface');
+        $mockLicence = m::mock();
+        $mockGuidance = m::mock();
+        $mockScript = m::mock();
+
+        $this->sm->setService('Script', $mockScript);
+        $this->sm->setService('Helper\Guidance', $mockGuidance);
+        $this->sm->setService('Entity\Licence', $mockLicence);
+        $this->sm->setService('Table', $mockTableBuilder);
+        $this->sm->setService('FormServiceManager', $formServiceManager);
+        $formServiceManager->setService('lva--goods-vehicles', $mockFormService);
+        $formServiceManager->setService('lva--goods-vehicles-filters', $mockFilterFormService);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCrudAction')
+            ->andReturn(null)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle)
+            ->andReturn(true)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle2)
+            ->andReturn(false)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle3)
+            ->andReturn(false)
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($mockLicence)
+            ->shouldReceive('render')
+            ->once()
+            ->with('vehicles', $mockForm, ['filterForm' => $mockFilterForm])
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
             ->andReturn(true)
             ->shouldReceive('getPost')
-            ->andReturn(
-                $formData
-            )
-            ->getMock();
+            ->andReturn($stubbedFormData)
+            ->shouldReceive('getQuery')
+            ->andReturn($stubbedQuery);
 
-        $mockValidator = $this->mockService('oneRowInTablesRequired', 'setRows')
-            ->with([1])
-            ->shouldReceive('setCrud')
-            ->with(false)
-            ->getMock();
+        $this->adapter
+            ->shouldReceive('getFilteredVehiclesData')
+            ->once()
+            ->with(111, $stubbedQuery)
+            ->andReturn($stubbedTableData);
 
-        $form = $this->createMockForm('Lva\GoodsVehicles');
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with($mockTable, false)
+            ->andReturn($mockForm);
 
-        $form->shouldReceive('setData')
-            ->with(
-                $formData
-            )
-            ->andReturn($form)
-            ->shouldReceive('get')
-            ->with('table')
-            ->andReturn(
-                m::mock('\Zend\Form\Fieldset')
-                ->shouldReceive('get')
-                ->with('rows')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('getValue')
-                    ->andReturn(1)
-                    ->getMock()
-                )
-                ->getMock()
-            )
-            ->shouldReceive('getInputFilter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('get')
-                ->with('data')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('get')
-                    ->with('hasEnteredReg')
-                    ->andReturn(
-                        m::mock()
-                        ->shouldReceive('getValidatorChain')
-                        ->andReturn(
-                            m::mock()
-                            ->shouldReceive('attach')
-                            ->with($mockValidator)
-                            ->getMock()
-                        )
-                        ->getMock()
-                    )
-                    ->getMock()
-                )
-                ->getMock()
-            )
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedFormData)
+            ->andReturnSelf()
+            ->shouldReceive('isValid')
+            ->andReturn(false);
+
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('lva-vehicles', $preparedTableData, ['page' => 1, 'query' => ['page' => 1]])
+            ->andReturn($mockTable);
+
+        $mockLicence->shouldReceive('getVehiclesTotal')
+            ->once()
+            ->with(111)
+            ->andReturn(10)
+            ->shouldReceive('getTotalVehicleAuthorisation')
+            ->once()
+            ->with(111)
+            ->andReturn(9);
+
+        $mockGuidance->shouldReceive('append')
+            ->once()
+            ->with('more-vehicles-than-authorisation');
+
+        $mockFilterFormService->shouldReceive('getForm')
+            ->andReturn($mockFilterForm);
+
+        $mockFilterForm->shouldReceive('setData')
+            ->once()
+            ->with(['page' => 1, 'limit' => 10]);
+
+        $mockScript->shouldReceive('loadFiles')
+            ->once()
+            ->with(['lva-crud', 'vehicle-goods', 'forms/filter']);
+
+        // Assertions
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testIndexActionPostFail()
+    {
+        $id = 111;
+        $licenceId = 111;
+        $stubbedFormData = [
+            'table' => 'foo',
+            'foo' => 'bar'
+        ];
+        $stubbedQuery = [
+            'page' => 1
+        ];
+        $licenceVehicle = [
+            'bar' => 'foo',
+            'goodsDiscs' => 'cake',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle2 = [
+            'bar' => 'foo',
+            'goodsDiscs' => [
+                [
+                    'discNo' => 'foo'
+                ]
+            ],
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle3 = [
+            'bar' => 'foo',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $stubbedTableData = [
+            'Results' => [
+                $licenceVehicle,
+                $licenceVehicle2,
+                $licenceVehicle3
+            ]
+        ];
+
+        $preparedTableData = [
+            'Results' => [
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'Pending'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'foo'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => ''
+                ]
+            ]
+        ];
+
+        // Mocks
+        $mockTable = m::mock();
+        $mockForm = m::mock();
+        $mockFilterForm = m::mock();
+        $mockRequest = m::mock();
+        $mockTableBuilder = m::mock();
+        $mockFormService = m::mock('\Common\FormService\FormServiceInterface');
+        $mockFilterFormService = m::mock('\Common\FormService\FormServiceInterface');
+        $mockLicence = m::mock();
+        $mockGuidance = m::mock();
+        $mockScript = m::mock();
+        $mockResponse = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockFashMessenger = m::mock();
+
+        $formServiceManager = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $businessServiceManager = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+
+        $this->sm->setService('Helper\FlashMessenger', $mockFashMessenger);
+        $this->sm->setService('Script', $mockScript);
+        $this->sm->setService('Helper\Guidance', $mockGuidance);
+        $this->sm->setService('Entity\Licence', $mockLicence);
+        $this->sm->setService('Table', $mockTableBuilder);
+        $this->sm->setService('FormServiceManager', $formServiceManager);
+        $this->sm->setService('BusinessServiceManager', $businessServiceManager);
+        $formServiceManager->setService('lva--goods-vehicles', $mockFormService);
+        $formServiceManager->setService('lva--goods-vehicles-filters', $mockFilterFormService);
+        $businessServiceManager->setService('Lva\GoodsVehicles', $mockBusinessService);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCrudAction')
+            ->andReturn(null)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle)
+            ->andReturn(true)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle2)
+            ->andReturn(false)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle3)
+            ->andReturn(false)
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($mockLicence)
+            ->shouldReceive('render')
+            ->once()
+            ->with('vehicles', $mockForm, ['filterForm' => $mockFilterForm])
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedFormData)
+            ->shouldReceive('getQuery')
+            ->andReturn($stubbedQuery);
+
+        $this->adapter
+            ->shouldReceive('getFilteredVehiclesData')
+            ->once()
+            ->with(111, $stubbedQuery)
+            ->andReturn($stubbedTableData);
+
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with($mockTable, false)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedFormData)
+            ->andReturnSelf()
             ->shouldReceive('isValid')
             ->andReturn(true)
             ->shouldReceive('getData')
-            ->andReturn($formData);
+            ->andReturn(['form' => 'data']);
 
-        $this->sut->shouldReceive('getIdentifier')
-            ->andReturn(321)
-            ->shouldReceive('getLvaEntityService')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('getHeaderData')
-                ->with(321)
-                ->andReturn(['hasEnteredReg' => 'Y', 'version' => 1])
-                ->getMock()
-            )
-            ->shouldReceive('params')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('fromQuery')
-                ->getMock()
-            )
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('lva-vehicles', $preparedTableData, ['page' => 1, 'query' => ['page' => 1]])
+            ->andReturn($mockTable);
+
+        $mockLicence->shouldReceive('getVehiclesTotal')
+            ->once()
+            ->with(111)
+            ->andReturn(10)
+            ->shouldReceive('getTotalVehicleAuthorisation')
+            ->once()
+            ->with(111)
+            ->andReturn(9);
+
+        $mockGuidance->shouldReceive('append')
+            ->once()
+            ->with('more-vehicles-than-authorisation');
+
+        $mockFilterFormService->shouldReceive('getForm')
+            ->andReturn($mockFilterForm);
+
+        $mockFilterForm->shouldReceive('setData')
+            ->once()
+            ->with(['page' => 1, 'limit' => 10]);
+
+        $mockScript->shouldReceive('loadFiles')
+            ->once()
+            ->with(['lva-crud', 'vehicle-goods', 'forms/filter']);
+
+        $mockBusinessService->shouldReceive('process')
+            ->with(['id' => 111, 'data' => ['form' => 'data']])
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false)
+            ->shouldReceive('getMessage')
+            ->andReturn('msg');
+
+        $mockFashMessenger->shouldReceive('addErrorMessage')
+            ->with('msg');
+
+        // Assertions
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testIndexActionPostSuccess()
+    {
+        $id = 111;
+        $licenceId = 111;
+        $stubbedFormData = [
+            'table' => 'foo',
+            'foo' => 'bar'
+        ];
+        $stubbedQuery = [
+            'page' => 1
+        ];
+        $licenceVehicle = [
+            'bar' => 'foo',
+            'goodsDiscs' => 'cake',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle2 = [
+            'bar' => 'foo',
+            'goodsDiscs' => [
+                [
+                    'discNo' => 'foo'
+                ]
+            ],
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle3 = [
+            'bar' => 'foo',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $stubbedTableData = [
+            'Results' => [
+                $licenceVehicle,
+                $licenceVehicle2,
+                $licenceVehicle3
+            ]
+        ];
+
+        $preparedTableData = [
+            'Results' => [
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'Pending'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'foo'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => ''
+                ]
+            ]
+        ];
+
+        // Mocks
+        $mockTable = m::mock();
+        $mockForm = m::mock();
+        $mockRequest = m::mock();
+        $mockTableBuilder = m::mock();
+        $mockFormService = m::mock('\Common\FormService\FormServiceInterface');
+        $mockResponse = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+
+        $formServiceManager = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $businessServiceManager = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+
+        $this->sm->setService('Table', $mockTableBuilder);
+        $this->sm->setService('FormServiceManager', $formServiceManager);
+        $this->sm->setService('BusinessServiceManager', $businessServiceManager);
+        $formServiceManager->setService('lva--goods-vehicles', $mockFormService);
+        $businessServiceManager->setService('Lva\GoodsVehicles', $mockBusinessService);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCrudAction')
+            ->andReturn(null)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle)
+            ->andReturn(true)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle2)
+            ->andReturn(false)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle3)
+            ->andReturn(false)
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
             ->shouldReceive('completeSection')
+            ->with('vehicles')
+            ->andReturn('RESPONSE')
+            ->shouldReceive('postSave')
             ->with('vehicles');
 
-        $this->getMockFormHelper()
-            ->shouldReceive('populateFormTable');
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedFormData)
+            ->shouldReceive('getQuery')
+            ->andReturn($stubbedQuery);
 
-        $this->mockService('Table', 'prepareTable')
-            ->with('lva-vehicles', [])
-            ->andReturn(m::mock('\Common\Service\Table\TableBuilder'));
+        $this->adapter
+            ->shouldReceive('getFilteredVehiclesData')
+            ->once()
+            ->with(111, $stubbedQuery)
+            ->andReturn($stubbedTableData);
 
-        $this->sut->shouldReceive('getLicenceId')
-            ->andReturn(123)
-            ->shouldReceive('getLvaEntityService')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('getTotalVehicleAuthorisation')
-                ->with(321)
-                ->getMock()
-            );
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with($mockTable, false)
+            ->andReturn($mockForm);
 
-        $this->adapter->shouldReceive('getVehiclesData')
-            ->with(321)
-            ->andReturn([])
-            ->shouldReceive('save')
-            ->with($formData, 321);
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedFormData)
+            ->andReturnSelf()
+            ->shouldReceive('isValid')
+            ->andReturn(true)
+            ->shouldReceive('getData')
+            ->andReturn(['form' => 'data']);
 
-        $this->mockEntity('Licence', 'getVehiclesTotal')
-            ->with(123)
-            ->andReturn(0);
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('lva-vehicles', $preparedTableData, ['page' => 1, 'query' => ['page' => 1]])
+            ->andReturn($mockTable);
 
-        $this->sut->indexAction();
-    }
+        $mockBusinessService->shouldReceive('process')
+            ->with(['id' => 111, 'data' => ['form' => 'data']])
+            ->andReturn($mockResponse);
 
-    public function testBasicAddAction()
-    {
-        $form = $this->createMockForm('Lva\GoodsVehiclesVehicle');
-
-        $specifiedDate = m::mock();
-        $removalDate = m::mock();
-        $mockEntityService = m::mock();
-        $mockLicenceEntity = m::mock();
-        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
-
-        $form->shouldReceive('setData')
-            ->andReturn($form)
-            ->shouldReceive('get')
-            ->with('licence-vehicle')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('get')
-                ->with('discNo')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('setAttribute')
-                    ->with('disabled', 'disabled')
-                    ->getMock()
-                )
-                ->shouldReceive('get')
-                ->with('specifiedDate')
-                ->andReturn($specifiedDate)
-                ->shouldReceive('get')
-                ->with('removalDate')
-                ->andReturn($removalDate)
-                ->shouldReceive('has')
-                ->with('receivedDate')
-                ->andReturn(false)
-                ->getMock()
-            );
-
-        $this->getMockFormHelper()
-            ->shouldReceive('disableDateElement')
-            ->with($specifiedDate)
-            ->shouldReceive('disableDateElement')
-            ->with($removalDate);
-
-        $this->mockRender();
-
-        $this->sut->shouldReceive('params')
-            ->with('child_id')
-            ->andReturn(50)
-            ->shouldReceive('getLvaEntityService')
-            ->andReturn($mockEntityService)
-            ->shouldReceive('getIdentifier')
-            ->andReturn(123)
-            ->shouldReceive('getLicenceId')
-            ->andReturn(321)
-            ->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('maybeDisableRemovedAndSpecifiedDates')
-                ->with($form, $this->getMockFormHelper())
-                ->shouldReceive('maybeRemoveSpecifiedDateEmptyOption')
-                ->with($form, 'add')
-                ->andReturn($form)
-                ->getMock()
-            );
-
-        $mockEntityService->shouldReceive('getTotalVehicleAuthorisation')
-            ->with(123)
-            ->andReturn(10);
-
-        $mockLicenceEntity->shouldReceive('getVehiclesTotal')
-            ->with(321)
-            ->andReturn(8);
-
-        $this->sut->addAction();
-
-        $this->assertEquals('add_vehicles', $this->view);
-    }
-
-    public function testBasicEditActionWithPostToRemovedVehicle()
-    {
-        // Params
-        $id = 1;
-
-        // Stubbed data
-        $stubbedVehicleFormData = [
-            'removalDate' => '2014-01-01'
-        ];
-
-        // Mocks
-        $mockLicenceVehicle = m::mock();
-        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicle);
-        $mockFlashMessenger = m::mock();
-        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
-
-        // Expectations
-        $mockLicenceVehicle->shouldReceive('getVehicle')
-            ->with($id)
-            ->andReturn($stubbedVehicleFormData);
-
-        $mockFlashMessenger->shouldReceive('addErrorMessage')
-            ->with('cant-edit-removed-vehicle');
-
-        $this->request->shouldReceive('isPost')
+        $mockResponse->shouldReceive('isOk')
             ->andReturn(true);
 
-        $this->sut
-            ->shouldReceive('params')
-            ->with('child_id')
-            ->andReturn($id);
+        // Assertions
+        $response = $this->sut->indexAction();
 
-        $this->sut->shouldReceive('redirect->toRoute')
-            ->with(null, [], [], true)
-            ->andReturn('REDIRECT');
-
-        $this->assertEquals('REDIRECT', $this->sut->editAction());
+        $this->assertEquals('RESPONSE', $response);
     }
 
-    public function testBasicEditAction()
+    public function testIndexActionPostSuccessCrud()
     {
-        // Params
-        $id = 1;
-
-        // Stubbed data
-        $stubbedVehicleFormData = [
-            'removalDate' => '2014-01-01',
-            'vehicle' => 'ABC',
-            'goodsDiscs' => 'Foo'
+        $id = 111;
+        $licenceId = 111;
+        $stubbedFormData = [
+            'table' => 'foo',
+            'foo' => 'bar'
+        ];
+        $stubbedQuery = [
+            'page' => 1
+        ];
+        $licenceVehicle = [
+            'bar' => 'foo',
+            'goodsDiscs' => 'cake',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle2 = [
+            'bar' => 'foo',
+            'goodsDiscs' => [
+                [
+                    'discNo' => 'foo'
+                ]
+            ],
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle3 = [
+            'bar' => 'foo',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $stubbedTableData = [
+            'Results' => [
+                $licenceVehicle,
+                $licenceVehicle2,
+                $licenceVehicle3
+            ]
         ];
 
-        $expectedDiscParam = [
-            'removalDate' => '2014-01-01',
-            'goodsDiscs' => 'Foo'
+        $preparedTableData = [
+            'Results' => [
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'Pending'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'foo'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => ''
+                ]
+            ]
         ];
 
         // Mocks
-        $form = $this->createMockForm('Lva\GoodsVehiclesVehicle');
-        $mockLicenceVehicle = m::mock();
-        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicle);
-        $mockDateHelper = m::mock();
-        $this->sm->setService('Helper\Date', $mockDateHelper);
-        $dateObject = m::mock();
+        $mockTable = m::mock();
+        $mockForm = m::mock();
+        $mockRequest = m::mock();
+        $mockTableBuilder = m::mock();
+        $mockFormService = m::mock('\Common\FormService\FormServiceInterface');
+        $mockResponse = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+
+        $formServiceManager = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $businessServiceManager = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+
+        $this->sm->setService('Table', $mockTableBuilder);
+        $this->sm->setService('FormServiceManager', $formServiceManager);
+        $this->sm->setService('BusinessServiceManager', $businessServiceManager);
+        $formServiceManager->setService('lva--goods-vehicles', $mockFormService);
+        $businessServiceManager->setService('Lva\GoodsVehicles', $mockBusinessService);
 
         // Expectations
-        $mockDateHelper->shouldReceive('getDateObject')
-            ->andReturn($dateObject);
-
-        $mockLicenceVehicle->shouldReceive('getVehicle')
-            ->with($id)
-            ->andReturn($stubbedVehicleFormData);
-
-        $this->request->shouldReceive('isPost')
-            ->andReturn(false);
-
-        $this->sut
-            ->shouldReceive('params')
-            ->with('child_id')
-            ->andReturn($id);
-
-        $form->shouldReceive('setData')
-            ->andReturn($form)
-            ->shouldReceive('get')
-            ->with('form-actions')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('remove')
-                ->with('submit')
-                ->shouldReceive('get')
-                ->with('cancel')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('setAttribute')
-                    ->with('disabled', false)
-                    ->getMock()
-                )
-                ->getMock()
-            );
-
-        $this->getMockFormHelper()
-            ->shouldReceive('disableElements')
-            ->with($form);
-
-        $this->sut->shouldReceive('isDiscPending')
-            ->with($expectedDiscParam)
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCrudAction')
+            ->andReturn('add')
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle)
             ->andReturn(true)
-            ->shouldReceive('alterVehicleForm')
-            ->with($form, 'edit')
-            ->andReturn($form)
-            ->shouldReceive('setDefaultDates')
-            ->with($form, $dateObject)
-            ->andReturn($form);
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle2)
+            ->andReturn(false)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle3)
+            ->andReturn(false)
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('postSave')
+            ->with('vehicles')
+            ->shouldReceive('getActionFromCrudAction')
+            ->with('add')
+            ->andReturn('add')
+            ->shouldReceive('checkForAlternativeCrudAction')
+            ->with('add')
+            ->andReturn(null)
+            ->shouldReceive('handleCrudAction')
+            ->with('add', ['add', 'print-vehicles'])
+            ->andReturn('RESPONSE');
 
-        $this->mockRender();
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedFormData)
+            ->shouldReceive('getQuery')
+            ->andReturn($stubbedQuery);
 
-        $this->sut->editAction();
+        $this->adapter
+            ->shouldReceive('getFilteredVehiclesData')
+            ->once()
+            ->with(111, $stubbedQuery)
+            ->andReturn($stubbedTableData);
 
-        $this->assertEquals('edit_vehicles', $this->view);
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with($mockTable, true)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedFormData)
+            ->andReturnSelf()
+            ->shouldReceive('isValid')
+            ->andReturn(true)
+            ->shouldReceive('getData')
+            ->andReturn(['form' => 'data']);
+
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('lva-vehicles', $preparedTableData, ['page' => 1, 'query' => ['page' => 1]])
+            ->andReturn($mockTable);
+
+        $mockBusinessService->shouldReceive('process')
+            ->with(['id' => 111, 'data' => ['form' => 'data']])
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+
+        // Assertions
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testIndexActionPostSuccessAlternativeCrud()
+    {
+        $id = 111;
+        $licenceId = 111;
+        $stubbedFormData = [
+            'table' => 'foo',
+            'foo' => 'bar'
+        ];
+        $stubbedQuery = [
+            'page' => 1
+        ];
+        $licenceVehicle = [
+            'bar' => 'foo',
+            'goodsDiscs' => 'cake',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle2 = [
+            'bar' => 'foo',
+            'goodsDiscs' => [
+                [
+                    'discNo' => 'foo'
+                ]
+            ],
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $licenceVehicle3 = [
+            'bar' => 'foo',
+            'vehicle' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $stubbedTableData = [
+            'Results' => [
+                $licenceVehicle,
+                $licenceVehicle2,
+                $licenceVehicle3
+            ]
+        ];
+
+        $preparedTableData = [
+            'Results' => [
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'Pending'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => 'foo'
+                ],
+                [
+                    'bar' => 'foo',
+                    'foo' => 'bar',
+                    'discNo' => ''
+                ]
+            ]
+        ];
+
+        // Mocks
+        $mockTable = m::mock();
+        $mockForm = m::mock();
+        $mockRequest = m::mock();
+        $mockTableBuilder = m::mock();
+        $mockFormService = m::mock('\Common\FormService\FormServiceInterface');
+        $mockResponse = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+
+        $formServiceManager = m::mock('\Common\FormService\FormServiceManager')->makePartial();
+        $businessServiceManager = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+
+        $this->sm->setService('Table', $mockTableBuilder);
+        $this->sm->setService('FormServiceManager', $formServiceManager);
+        $this->sm->setService('BusinessServiceManager', $businessServiceManager);
+        $formServiceManager->setService('lva--goods-vehicles', $mockFormService);
+        $businessServiceManager->setService('Lva\GoodsVehicles', $mockBusinessService);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCrudAction')
+            ->andReturn('add')
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle)
+            ->andReturn(true)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle2)
+            ->andReturn(false)
+            ->shouldReceive('isDiscPending')
+            ->with($licenceVehicle3)
+            ->andReturn(false)
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('postSave')
+            ->with('vehicles')
+            ->shouldReceive('getActionFromCrudAction')
+            ->with('add')
+            ->andReturn('add')
+            ->shouldReceive('checkForAlternativeCrudAction')
+            ->with('add')
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedFormData)
+            ->shouldReceive('getQuery')
+            ->andReturn($stubbedQuery);
+
+        $this->adapter
+            ->shouldReceive('getFilteredVehiclesData')
+            ->once()
+            ->with(111, $stubbedQuery)
+            ->andReturn($stubbedTableData);
+
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with($mockTable, true)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedFormData)
+            ->andReturnSelf()
+            ->shouldReceive('isValid')
+            ->andReturn(true)
+            ->shouldReceive('getData')
+            ->andReturn(['form' => 'data']);
+
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('lva-vehicles', $preparedTableData, ['page' => 1, 'query' => ['page' => 1]])
+            ->andReturn($mockTable);
+
+        $mockBusinessService->shouldReceive('process')
+            ->with(['id' => 111, 'data' => ['form' => 'data']])
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+
+        // Assertions
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
     }
 
     public function testReprintActionGet()
     {
-        $this->request->shouldReceive('isPost')
+        // Mocks
+        $mockRequest = m::mock();
+        $mockForm = m::mock();
+
+        $mockFormHelper = m::mock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('render')
+            ->with('reprint_vehicles', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
             ->andReturn(false);
 
-        $this->sm->setService(
-            'Helper\Form',
-            m::mock()
-                ->shouldReceive('createFormWithRequest')
-                ->with('GenericConfirmation', $this->request)
-                ->getMock()
-        );
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->with('GenericConfirmation', $mockRequest)
+            ->andReturn($mockForm);
 
-        $this->mockRender();
-
-        $this->sut->reprintAction();
-
-        $this->assertEquals('reprint_vehicles', $this->view);
-
+        // Assertions
+        $this->assertEquals('RESPONSE', $this->sut->reprintAction());
     }
 
-    public function testReprintActionConfirmed()
+    public function testReprintActionPost()
     {
-        $this->request->shouldReceive('isPost')
+        // Mocks
+        $mockRequest = m::mock();
+
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\ReprintDisc', $mockBusinessService);
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('11,22')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('licence')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(111);
+
+        $mockRequest->shouldReceive('isPost')
             ->andReturn(true);
 
-        $this->sut
-            ->shouldReceive('params')->with('child_id')->andReturn('16,17')
-            ->shouldReceive('params')->with('licence')->andReturn(123)
-            ->shouldReceive('getIdentifierIndex')->andReturn('licence');
-
-        $this->sm->setService(
-            'Entity\LicenceVehicle',
-            m::mock()
-                ->shouldReceive('ceaseActiveDisc')->once()->with('16')
-                    ->andReturn(['goodsDiscs' => []])
-                ->shouldReceive('ceaseActiveDisc')->once()->with('17')
-                    ->andReturn(['goodsDiscs' => []])
-                ->getMock()
-        );
-        $this->sm->setService(
-            'Entity\GoodsDisc',
-            m::mock()
-                ->shouldReceive('save')->once()->with(
-                    ['licenceVehicle' => '16', 'isCopy' => 'Y']
-                )
-                ->shouldReceive('save')->once()->with(
-                    ['licenceVehicle' => '17', 'isCopy' => 'Y']
-                )
-                ->getMock()
-        );
+        $mockBusinessService->shouldReceive('process')
+            ->with(['ids' => [11, 22]]);
 
         $this->sut->shouldReceive('redirect->toRouteAjax')
-            ->with(null, ['licence' => 123])
-            ->andReturn('REDIRECT');
+            ->with(null, ['licence' => 111])
+            ->andReturn('RESPONSE');
 
-        $this->assertEquals('REDIRECT', $this->sut->reprintAction());
+        // Assertions
+        $this->assertEquals('RESPONSE', $this->sut->reprintAction());
     }
 
     /**
-     * Test remove vehicle fields
-     *
-     * @group vehcileFormAdapterGoods
+     * @dataProvider getDeleteMessageProvider
      */
-    public function testRemoveVehicleFields()
+    public function testGetDeleteMessage($params, $totalVehicles, $licence, $expected)
     {
-        $mockForm = m::mock()
-            ->shouldReceive('setData')
-            ->with([])
-            ->andReturnSelf()
-            ->getMock();
+        $licenceId = 1;
 
-        $mockVehicleFormAdapter = m::mock()
-            ->shouldReceive('alterForm')
-            ->with($mockForm)
-            ->andReturn($mockForm)
-            ->getMock();
+        // Set by Provider.
 
-        $this->sm->setService('VehicleFormAdapter', $mockVehicleFormAdapter);
-
-        $this->sut
-            ->shouldReceive('getRequest')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('isPost')
-                ->andReturn(false)
-                ->getMock()
-            )
-            ->shouldReceive('params')
+        $this->sut->shouldReceive('params')
             ->with('child_id')
-            ->andReturn(1)
-            ->shouldReceive('getVehicleForm')
-            ->andReturn($mockForm)
-            ->shouldReceive('alterVehicleForm')
-            ->with($mockForm, 'add')
-            ->andReturn($mockForm)
-            ->shouldReceive('render')
-            ->with('add_vehicles', $mockForm)
-            ->andReturn('view');
+            ->andReturn($params);
 
-        $this->assertEquals('view', $this->sut->addAction());
+        $this->sut->shouldReceive('getLicenceId')
+            ->andReturn($licenceId);
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+                ->shouldReceive('getOverview')
+                ->with($licenceId)
+                ->andReturn($licence)
+                ->getMock()
+        );
+
+        $this->sut->shouldReceive('getTotalNumberOfVehicles')
+            ->andReturn($totalVehicles);
+
+        $this->assertEquals($expected, $this->sut->getDeleteMessage());
+    }
+
+    public function getDeleteMessageProvider()
+    {
+        return array(
+            array(
+                '1',
+                1,
+                array(
+                    'licenceType' => array(
+                        'id' => 'ltyp_sn'
+                    )
+                ),
+                'deleting.all.vehicles.message'
+            ),
+            array(
+                '1,2',
+                1,
+                array(
+                    'licenceType' => array(
+                        'id' => 'ltyp_sn'
+                    )
+                ),
+                'delete.confirmation.text'
+            ),
+
+            array(
+                '1,2',
+                1,
+                array(
+                    'licenceType' => array(
+                        'id' => 'NotInAcceptedArray'
+                    )
+                ),
+                'delete.confirmation.text'
+            )
+        );
     }
 }

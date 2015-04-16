@@ -39,6 +39,43 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals('RESPONSE', $this->sut->createStatusForLicence($licenceId));
     }
 
+    public function testUpdateStatusForLicence()
+    {
+        $licenceStatusId = 99;
+
+        $this->expectOneRestCall(
+            'LicenceStatusRule',
+            'PUT',
+            array(
+                'licence' => $licenceStatusId,
+                'licenceStatus' => null,
+                'startDate' => null,
+                'endDate' => null,
+                'startProcessedDate' => null,
+                'endProcessedDate' => null,
+                'id' => 99
+
+            )
+        )->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals(
+            'RESPONSE',
+            $this->sut->updateStatusForLicence(
+                $licenceStatusId,
+                array(
+                    'data' => array(
+                        'licence' => $licenceStatusId,
+                        'licenceStatus' => null,
+                        'startDate' => null,
+                        'endDate' => null,
+                        'startProcessedDate' => null,
+                        'endProcessedDate' => null,
+                    )
+                )
+            )
+        );
+    }
+
     public function testGetStatusesForLicence()
     {
         $licenceId = 99;
@@ -52,8 +89,37 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
             )
         )->will($this->returnValue('RESPONSE'));
 
-        $this->assertEquals('RESPONSE', $this->sut->getStatusesForLicence($licenceId));
+        $this->assertEquals(
+            'RESPONSE',
+            $this->sut->getStatusesForLicence(
+                array(
+                    'query' => array(
+                        'licence' => $licenceId
+                    )
+                )
+            )
+        );
     }
+
+    public function testGetStatusForLicence()
+    {
+        $licenceId = 99;
+
+        $this->expectOneRestCall(
+            'LicenceStatusRule',
+            'GET',
+            array(
+                'id' => $licenceId,
+                'licenceStatus' => array()
+            )
+        )->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals(
+            'RESPONSE',
+            $this->sut->getStatusForLicence($licenceId)
+        );
+    }
+
 
     public function testRemoveStatusesForLicence()
     {
@@ -70,21 +136,31 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals(null, $this->sut->removeStatusesForLicence($licenceStatusId));
     }
 
-    public function testGetPendingChangesForLicence()
+    public function testGetLicencesToRevokeCurtailSuspend()
     {
-        $licenceId = 99;
+        $mockDate = \Mockery::mock('StdClass');
+        $mockDate->shouldReceive('getDate')->andReturn('2015-03-25');
+        $this->sm->setService('Helper\Date', $mockDate);
 
-        $this->expectOneRestCall(
-            'LicenceStatusRule',
-            'GET',
-            array(
-                'licence' => $licenceId,
-                'deletedDate' => 'NULL',
-                'endProcessedDate' => 'NULL',
-                'licenceStatus' => array(), // this gets added as default arg
-            )
-        )->will($this->returnValue(['Count' => 1, 'Results' => 'RESPONSE']));
+        $this->restHelper->expects($this->once())
+            ->method('makeRestCall')
+            ->will($this->returnValue(['Results' => [1,2,3]]));
 
-        $this->assertEquals('RESPONSE', $this->sut->getPendingChangesForLicence($licenceId));
+        $results = $this->sut->getLicencesToRevokeCurtailSuspend();
+        $this->assertEquals([1,2,3], $results);
+    }
+
+    public function testGetLicencesToValid()
+    {
+        $mockDate = \Mockery::mock('StdClass');
+        $mockDate->shouldReceive('getDate')->andReturn('2015-03-25');
+        $this->sm->setService('Helper\Date', $mockDate);
+
+        $this->restHelper->expects($this->once())
+            ->method('makeRestCall')
+            ->will($this->returnValue(['Results' => [1,2,3]]));
+
+        $results = $this->sut->getLicencesToValid();
+        $this->assertEquals([1,2,3], $results);
     }
 }

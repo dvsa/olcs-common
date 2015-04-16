@@ -14,6 +14,12 @@ namespace Common\Service\Entity;
  */
 class TransportManagerApplicationEntityService extends AbstractEntityService
 {
+    const STATUS_INCOMPLETE = 'tmap_st_incomplete';
+    const STATUS_AWAITING_SIGNATURE = 'tmap_st_awaiting_signature';
+    const STATUS_TM_SIGNED = 'tmap_st_tm_signed';
+    const STATUS_OPERATOR_SIGNED = 'tmap_st_operator_signed';
+    const STATUS_POSTAL_APPLICATION = 'tmap_st_postal_application';
+
     /**
      * Define entity for default behaviour
      *
@@ -35,7 +41,8 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             ],
             'transportManager',
             'tmType',
-            'operatingCentres'
+            'operatingCentres',
+            'tmApplicationStatus'
         ]
     ];
 
@@ -46,6 +53,45 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             'tmType',
             'operatingCentres',
             'otherLicences'
+        ]
+    ];
+
+    protected $homeContactDetailsBundle = [
+        'children' => [
+            'application',
+            'tmApplicationStatus',
+            'transportManager' => [
+                'children' => [
+                    'homeCd' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ],
+                ]
+            ]
+        ],
+    ];
+
+    protected $tmDetailsBundle = [
+        'children' => [
+            'application',
+            'transportManager' => [
+                'children' => [
+                    'homeCd' => [
+                        'children' => [
+                            'person',
+                            'address'
+                        ]
+                    ],
+                    'workCd' => [
+                        'children' => [
+                            'address'
+                        ]
+                    ]
+                ]
+            ],
+            'tmType',
+            'operatingCentres'
         ]
     ];
 
@@ -98,5 +144,56 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     {
         $query = ['application' => $applicationId];
         return $this->deleteList($query);
+    }
+
+    /**
+     * Delete transport manager application(s)
+     *
+     * @param mixed $transportManagerApplicationId either one int ID or an array of int D's
+     *
+     * @return void
+     */
+    public function delete($transportManagerApplicationId)
+    {
+        if (!is_array($transportManagerApplicationId)) {
+            $transportManagerApplicationId = array($transportManagerApplicationId);
+        }
+
+        $this->deleteListByIds(['id' => $transportManagerApplicationId]);
+    }
+
+    /**
+     * Get TM applications for an application
+     *
+     * @param int $applicationId Application ID
+     *
+     * @return array ['Count' => n. 'Results' => array(...)]
+     */
+    public function getByApplicationWithHomeContactDetails($applicationId)
+    {
+        $query = ['application' => $applicationId];
+
+        return $this->getAll($query, $this->homeContactDetailsBundle);
+    }
+
+    /**
+     * Get transport manager applications linked to an application and a transport manager
+     *
+     * @param int $applicationId      Application ID
+     * @param int $transportManagerId Transport Manager ID
+     * @return array
+     */
+    public function getByApplicationTransportManager($applicationId, $transportManagerId)
+    {
+        $query = [
+            'application' => $applicationId,
+            'transportManager' => $transportManagerId,
+        ];
+        return $this->getAll($query);
+    }
+
+    public function getTransportManagerDetails($id)
+    {
+        return $this->get($id, $this->tmDetailsBundle);
     }
 }

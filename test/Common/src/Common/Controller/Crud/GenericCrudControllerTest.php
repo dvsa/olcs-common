@@ -87,7 +87,7 @@ class GenericCrudControllerTest extends MockeryTestCase
         $this->crudService->shouldReceive('getList')->with($this->sut->getParams())->andReturn($data);
 
         $tableBuilder = m::mock('\Common\Service\Table\TableBuilder');
-        $tableBuilder->shouldReceive('buildTable')->with($this->sut->getOption('table'), $data)
+        $tableBuilder->shouldReceive('buildTable')->with($this->sut->getOption('table'), $data, [], false)
             ->andReturn($renderedTable);
         $this->sut->setTableBuilder($tableBuilder);
 

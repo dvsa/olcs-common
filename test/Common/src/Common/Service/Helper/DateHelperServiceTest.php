@@ -7,7 +7,8 @@
  */
 namespace CommonTest\Service\Helper;
 
-use PHPUnit_Framework_TestCase;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\DateHelperService;
 
 /**
@@ -15,38 +16,35 @@ use Common\Service\Helper\DateHelperService;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class DateHelperServiceTest extends PHPUnit_Framework_TestCase
+class DateHelperServiceTest extends MockeryTestCase
 {
+    public function setUp()
+    {
+        $this->sut = new DateHelperService();
+    }
+
     public function testGetDateWithNoParams()
     {
-        $helper = new DateHelperService();
-
         // as much as I don't like computed expectations in tests,
         // there's no real way round it here...
-        $this->assertEquals(date('Y-m-d'), $helper->getDate());
+        $this->assertEquals(date('Y-m-d'), $this->sut->getDate());
     }
 
     public function testGetDateWithParams()
     {
-        $helper = new DateHelperService();
-
         // as much as I don't like computed expectations in tests,
         // there's no real way round it here...
-        $this->assertEquals(date('m-d'), $helper->getDate('m-d'));
+        $this->assertEquals(date('m-d'), $this->sut->getDate('m-d'));
     }
 
     public function testGetDateObject()
     {
-        $helper = new DateHelperService();
-
-        $this->assertInstanceOf('DateTime', $helper->getDateObject());
+        $this->assertInstanceOf('DateTime', $this->sut->getDateObject());
     }
 
     public function testGetDateObjectFromArray()
     {
-        $helper = new DateHelperService();
-
-        $obj = $helper->getDateObjectFromArray(
+        $obj = $this->sut->getDateObjectFromArray(
             [
                 'day' => '07',
                 'month' => '01',
@@ -56,5 +54,27 @@ class DateHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('DateTime', $obj);
         $this->assertEquals('2015-01-07', $obj->format('Y-m-d'));
+    }
+
+    public function testCalculateDate()
+    {
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Common\Util\DateTimeProcessor')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('calculateDate')
+                ->with('2015-01-01', 10, true, false)
+                ->andReturn('result')
+                ->getMock()
+            )
+            ->getMock();
+
+        $this->sut->setServiceLocator($sm);
+
+        $this->assertEquals(
+            'result',
+            $this->sut->calculateDate('2015-01-01', 10, true, false)
+        );
     }
 }

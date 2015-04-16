@@ -255,6 +255,7 @@ class LicenceEntityService extends AbstractLvaEntityService
                 ],
             ],
             'operatingCentres',
+            'changeOfEntitys'
             /*
             'cases' =>   [ // DON'T do this, it's horribly slow for some reason!
                 'criteria' => [
@@ -264,6 +265,63 @@ class LicenceEntityService extends AbstractLvaEntityService
             ],
             */
         )
+    );
+
+    protected $revocationDataBundle = [
+        'children' => [
+            'goodsOrPsv',
+            'licenceVehicles' => [
+                'children' => [
+                    'goodsDiscs'
+                ]
+            ],
+            'psvDiscs',
+            'tmLicences'
+        ]
+    ];
+
+    protected $hasApprovedUnfulfilledConditionsBundle = [
+        'children' => [
+            'conditionUndertakings' => [
+                'criteria' => [
+                    'isDraft' => '0',
+                    'isFulfilled' => '0'
+                ]
+            ]
+        ]
+    ];
+
+    protected $conditionsUndertakingsBundle = [
+        'children' => [
+            'conditionUndertakings' => [
+                'criteria' => [
+                    'isDraft' => '0',
+                    'isFulfilled' => '0'
+                ],
+                'children' => [
+                    'conditionType',
+                    'attachedTo',
+                    'operatingCentre' => [
+                        'children' => [
+                            'address'
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
+    protected $enforcementAreaDataBundle = array(
+        'children' => array(
+            'enforcementArea'
+        )
+    );
+
+    protected $operatingCentresDataBundle = array(
+        'children' => array(
+            'trafficArea',
+            'enforcementArea',
+        ),
     );
 
     /**
@@ -276,6 +334,13 @@ class LicenceEntityService extends AbstractLvaEntityService
     {
         return $this->get($id, $this->overviewBundle);
     }
+
+
+    public function getRevocationDataForLicence($id)
+    {
+        return $this->get($id, $this->revocationDataBundle);
+    }
+
 
     /**
      * Check whether the licence belongs to the organisation
@@ -408,6 +473,20 @@ class LicenceEntityService extends AbstractLvaEntityService
         if ($trafficAreaId) {
             $this->generateLicence($licenceId);
         }
+
+        return $this;
+    }
+
+    /**
+     * Set enforcement area
+     *
+     * @param int $licenceId
+     * @param int $enforcementAreaId
+     */
+    public function setEnforcementArea($licenceId, $enforcementAreaId)
+    {
+        $this->forceUpdate($licenceId, array('enforcementArea' => $enforcementAreaId));
+        return $this;
     }
 
     /**
@@ -508,23 +587,16 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $response['organisation'];
     }
 
-    public function getVehiclesDataForApplication($applicationId)
-    {
-        return $this->getGenericVehicleDataForApplication($applicationId, $this->vehicleDataBundle);
-    }
-
     public function getVehiclesPsvDataForApplication($applicationId)
     {
-        return $this->getGenericVehicleDataForApplication($applicationId, $this->vehiclePsvDataBundle);
-    }
+        $bundle = $this->vehiclePsvDataBundle;
 
-    protected function getGenericVehicleDataForApplication($applicationId, $bundle)
-    {
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
             ->getLicenceIdForApplication($applicationId);
 
         // So to grab the relevant licence vehicles...
         $bundle['children']['licenceVehicles']['criteria'] = [
+            'removalDate' => 'NULL',
             [
                 // ...either the application id needs to match
                 'application' => $applicationId,
@@ -656,5 +728,28 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function setLicenceStatus($id, $status)
     {
         return $this->forceUpdate($id, ['status' => $status]);
+    }
+
+    public function hasApprovedUnfulfilledConditions($id)
+    {
+        $data = $this->get($id, $this->hasApprovedUnfulfilledConditionsBundle);
+
+        return !empty($data['conditionUndertakings']);
+    }
+
+    public function getConditionsAndUndertakings($id)
+    {
+        return $this->get($id, $this->conditionsUndertakingsBundle);
+    }
+
+    /**
+     * Get enforcement area
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getEnforcementArea($id)
+    {
+        return $this->get($id, $this->enforcementAreaDataBundle);
     }
 }

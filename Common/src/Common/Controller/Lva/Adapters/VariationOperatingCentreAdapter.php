@@ -87,7 +87,7 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     /**
      * Set traffic area after action save
      */
-    protected function setDefaultTrafficAreaAfterActionSave($data)
+    protected function setDefaultTrafficAndEnforcementAreasAfterActionSave($data)
     {
         // Do nothing for variations
     }
@@ -591,6 +591,10 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         if (isset($oldData['licence']['trafficArea']['id'])) {
             $data['dataTrafficArea']['hiddenId'] = $oldData['licence']['trafficArea']['id'];
+        }
+
+        if (isset($oldData['licence']['enforcementArea']['id'])) {
+            $data['dataTrafficArea']['enforcementArea'] = $oldData['licence']['enforcementArea']['id'];
         }
 
         return $data;

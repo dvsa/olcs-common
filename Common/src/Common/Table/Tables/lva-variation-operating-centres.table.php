@@ -35,11 +35,35 @@ return array(
             'name' => 'noOfTrailersRequired'
         ),
         array(
+            'title' => 'application_operating-centres_authorisation.table.complaints',
+            'name' => 'noOfComplaints',
+            'formatter' => 'OcComplaints'
+        ),
+        array(
             'width' => 'checkbox',
             'type' => 'Selector',
             'data-attributes' => array(
                 'action'
             )
+        )
+    ),
+    'footer' => array(
+        'total' => array(
+            'type' => 'th',
+            'content' => 'application_operating-centres_authorisation.table.footer.total',
+            'formatter' => 'Translate',
+            'colspan' => 1
+        ),
+        array(
+            'formatter' => 'OpCentreDeltaSum',
+            'name' => 'noOfVehiclesRequired'
+        ),
+        'trailersCol' => array(
+            'formatter' => 'OpCentreDeltaSum',
+            'name' => 'noOfTrailersRequired'
+        ),
+        'remainingColspan' => array(
+            'colspan' => 3
         )
     )
 );

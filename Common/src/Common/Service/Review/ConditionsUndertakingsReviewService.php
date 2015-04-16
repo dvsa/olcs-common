@@ -87,26 +87,34 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
      *  - Operating centre undertakings
      *
      * @param array $data
+     * @param bool $filterByAction
      * @return array
      */
-    public function splitUpConditionsAndUndertakings($data)
+    public function splitUpConditionsAndUndertakings($data, $filterByAction = true)
     {
         $licConds = $licUnds = $ocConds = $ocUnds = [];
 
         foreach ($data['conditionUndertakings'] as $condition) {
+
+            if ($filterByAction) {
+                $index = $condition['action'];
+            } else {
+                $index = 'list';
+            }
+
             // Decide which list to push onto
             switch (true) {
                 case $this->isLicenceCondition($condition):
-                    $licConds[$condition['action']][] = $condition;
+                    $licConds[$index][] = $condition;
                     break;
                 case $this->isLicenceUndertaking($condition):
-                    $licUnds[$condition['action']][] = $condition;
+                    $licUnds[$index][] = $condition;
                     break;
                 case $this->isOcCondition($condition):
-                    $ocConds[$condition['action']][$condition['operatingCentre']['id']][] = $condition;
+                    $ocConds[$index][$condition['operatingCentre']['id']][] = $condition;
                     break;
                 case $this->isOcUndertaking($condition):
-                    $ocUnds[$condition['action']][$condition['operatingCentre']['id']][] = $condition;
+                    $ocUnds[$index][$condition['operatingCentre']['id']][] = $condition;
             }
         }
 

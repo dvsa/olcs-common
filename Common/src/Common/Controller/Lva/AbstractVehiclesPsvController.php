@@ -8,7 +8,6 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Entity\VehicleEntityService;
 use Zend\Form\Form;
 
 /**
@@ -18,24 +17,9 @@ use Zend\Form\Form;
  */
 abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 {
-    use Traits\CrudTableTrait;
-
     protected $section = 'vehicles_psv';
     protected $rawTableData;
     protected $type;
-
-    /**
-     * Simple helper method to extract tables based on available types
-     */
-    private function getTables()
-    {
-        return array_keys($this->getPsvTypes());
-    }
-
-    private function getPsvTypes()
-    {
-        return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
-    }
 
     /**
      * Index action
@@ -90,7 +74,21 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         if ($request->isPost() && $form->isValid()) {
 
-            $this->save($form->getData());
+            $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                ->get('Lva\\' . ucfirst($this->lva) . 'PsvVehicles')
+                ->process(
+                    [
+                        'id' => $this->getIdentifier(),
+                        'data' => $form->getData()
+                    ]
+                );
+
+            if (!$response->isOk()) {
+
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+                return $this->renderForm($form);
+            }
+
             $this->postSave('vehicles_psv');
 
             $crudAction = $this->getCrudAction($data);
@@ -115,6 +113,84 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         $this->getAdapter()->warnIfAuthorityExceeded($lvaId, $this->getPsvTypes(), false);
         return $this->render('vehicles_psv', $form);
+    }
+
+    /**
+     * Add a small vehicle
+     */
+    public function smallAddAction()
+    {
+        return $this->addOrEdit('add', 'small');
+    }
+
+    /**
+     * Edit a small vehicle
+     */
+    public function smallEditAction()
+    {
+        return $this->addOrEdit('edit', 'small');
+    }
+
+    /**
+     * Delete a small vehicle
+     */
+    public function smallDeleteAction()
+    {
+        $this->type = 'small';
+
+        return $this->deleteAction();
+    }
+
+    /**
+     * Add a medium vehicle
+     */
+    public function mediumAddAction()
+    {
+        return $this->addOrEdit('add', 'medium');
+    }
+
+    /**
+     * Edit a medium vehicle
+     */
+    public function mediumEditAction()
+    {
+        return $this->addOrEdit('edit', 'medium');
+    }
+
+    /**
+     * Delete a medium vehicle
+     */
+    public function mediumDeleteAction()
+    {
+        $this->type = 'medium';
+
+        return $this->deleteAction();
+    }
+
+    /**
+     * Add a large vehicle
+     */
+    public function largeAddAction()
+    {
+        return $this->addOrEdit('add', 'large');
+    }
+
+    /**
+     * Edit a large vehicle
+     */
+    public function largeEditAction()
+    {
+        return $this->addOrEdit('edit', 'large');
+    }
+
+    /**
+     * Delete a large vehicle
+     */
+    public function largeDeleteAction()
+    {
+        $this->type = 'large';
+
+        return $this->deleteAction();
     }
 
     /**
@@ -158,88 +234,14 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     }
 
     /**
-     * Add a small vehicle
-     */
-    public function smallAddAction()
-    {
-        return $this->addOrEdit('add', 'small');
-    }
-
-    /**
-     * Edit a small vehicle
-     */
-    public function smallEditAction()
-    {
-        return $this->addOrEdit('edit', 'small');
-    }
-
-    /**
-     * Delete a small vehicle
-     */
-    public function smallDeleteAction()
-    {
-        return $this->deleteAction();
-    }
-
-    /**
-     * Add a medium vehicle
-     */
-    public function mediumAddAction()
-    {
-        return $this->addOrEdit('add', 'medium');
-    }
-
-    /**
-     * Edit a medium vehicle
-     */
-    public function mediumEditAction()
-    {
-        return $this->addOrEdit('edit', 'medium');
-    }
-
-    /**
-     * Delete a medium vehicle
-     */
-    public function mediumDeleteAction()
-    {
-        return $this->deleteAction();
-    }
-
-    /**
-     * Add a large vehicle
-     */
-    public function largeAddAction()
-    {
-        return $this->addOrEdit('add', 'large');
-    }
-
-    /**
-     * Edit a large vehicle
-     */
-    public function largeEditAction()
-    {
-        return $this->addOrEdit('edit', 'large');
-    }
-
-    /**
-     * Delete a large vehicle
-     */
-    public function largeDeleteAction()
-    {
-        return $this->deleteAction();
-    }
-
-    /**
      * Helper method to add or edit a vehicle
      * of any size
      */
     protected function addOrEdit($mode, $type)
     {
         $this->type = $type;
-
         $request = $this->getRequest();
 
-        $data = array();
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
@@ -251,16 +253,20 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             );
         }
 
+        $params = [
+            'mode' => $mode,
+            'canAddAnother' => $this->canAddAnother(),
+            'currentVrms' => $this->getVrmsForCurrentLicence(),
+            'isPost' => $request->isPost(),
+            'action' => $this->params('action'),
+            'lva' => $this->lva
+        ];
+
         $form = $this->getServiceLocator()
-            ->get('Helper\Form')
-            ->createFormWithRequest('Lva\PsvVehiclesVehicle', $request);
-
-        $form = $this->alterVehicleForm($form, $mode)
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section . '-vehicle')
+            ->getForm($this->getRequest(), $params)
             ->setData($data);
-
-        if ($this->getServiceLocator()->has('VehicleFormAdapter')) {
-            $form = $this->getServiceLocator()->get('VehicleFormAdapter')->alterForm($form);
-        }
 
         if ($request->isPost() && $form->isValid()) {
 
@@ -296,7 +302,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function alterForm($form, $data)
     {
-        $post   = $this->getRequest()->getPost();
+        $post = $this->getRequest()->getPost();
 
         $isCrudPressed = (isset($post['large']['action']) && !empty($post['large']['action']))
             || (isset($post['medium']['action']) && !empty($post['medium']['action']))
@@ -344,27 +350,10 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             $formHelper->remove($form, 'large');
         }
 
-        return $form;
-    }
-
-    /**
-     * Alter action form
-     *
-     * @param \Zend\Form\Form $form
-     * @return Form
-     */
-    protected function alterVehicleForm($form, $mode)
-    {
-        $form = parent::alterVehicleForm($form, $mode);
-
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        if (!in_array($this->params('action'), array('small-add', 'small-edit'))) {
-            $formHelper->remove($form, 'data->isNovelty');
-            $formHelper->remove($form, 'data->makeModel');
+        if (in_array($this->lva, ['licence', 'variation'])) {
+            $this->getServiceLocator()->get('FormServiceManager')
+                ->get('lva-licence-variation-vehicles')->alterForm($form);
         }
-
-        $formHelper->remove($form, 'licence-vehicle->discNo');
 
         return $form;
     }
@@ -523,5 +512,18 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 return $type;
             }
         }
+    }
+
+    /**
+     * Simple helper method to extract tables based on available types
+     */
+    private function getTables()
+    {
+        return array_keys($this->getPsvTypes());
+    }
+
+    private function getPsvTypes()
+    {
+        return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
     }
 }

@@ -39,6 +39,19 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
         ]
     ];
 
+    protected $homeContactDetailsBundle = [
+        'children' => [
+            'transportManager' => [
+                'children' => [
+                    'homeCd' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ],
+                ]
+            ]
+        ],
+    ];
     /**
      * Get transport manager licences
      *
@@ -83,5 +96,29 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
         ];
 
         return $this->get($query)['Results'];
+    }
+
+    public function deleteForLicence($licenceId)
+    {
+        $query = ['licence' => $licenceId];
+        return $this->deleteList($query);
+    }
+
+    /**
+     * Get Transport Managers and their contact details for a licence
+     *
+     * @param int $licenceId Licence ID
+     *
+     * @return array
+     */
+    public function getByLicenceWithHomeContactDetails($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'sort'  => 'id',
+            'order' => 'DESC',
+        ];
+
+        return $this->getAll($query, $this->homeContactDetailsBundle);
     }
 }
