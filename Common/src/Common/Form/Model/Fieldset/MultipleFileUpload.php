@@ -14,8 +14,7 @@ class MultipleFileUpload
     /**
      * @Form\Name("file")
      * @Form\Attributes({
-     *   "class": "js-visually-hidden",
-     *   "multiple": false
+     *   "class": "js-visually-hidden"
      * })
      * @Form\Options({
      *     "value": "Attach file(s)",
