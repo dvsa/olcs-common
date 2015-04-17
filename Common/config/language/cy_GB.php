@@ -1409,6 +1409,11 @@ return array(
     'lva-tm-details-details-birthDate' => 'W Date of birth',
     'lva-tm-details-details-birthPlace' => 'W Place of birth',
     'lva-tm-details-details-certificate' => 'W Certificate of professional competence',
+    'lva-tm-details-details-declarations' => 'W Declarations',
+    'lva-tm-details-details-declarations-by-submitting' => 'W By submitting this form you are confirming your status as
+        an internal transport manager, an external transport manager or both.',
+    'lva-tm-details-details-declarations-external-header' => 'W External transport manager’s declaration:',
+    'lva-tm-details-details-declarations-internal-header' => 'W Internal transport manager’s declaration:',
     'lva-tm-details-details-email' => 'W Email address',
     'lva-tm-details-details-homeAddress' => 'W Home address',
     'lva-tm-details-details-name' => 'W Name',
@@ -1498,6 +1503,11 @@ return array(
     'lva.section.title.void_discs' => 'W Are you sure you would like to void these discs?',
     'maint' => 'W Maint',
     'mark-urgent' => 'W Mark as urgent',
+    'markup-tm-declaration-gb-confirmation' => 'W Should I fail to meet any of the above requirements I understand that
+        the traffic commissioner has the power to disqualify me from being a transport manager in any European Union
+        country.',
+    'markup-tm-declaration-ni-confirmation' => 'W Should I fail to meet any of the above requirements I understand that
+        the Department has the power to disqualify me from being a transport manager in any European Union country.',
     'mlh' => 'W MLH',
     'money-element-invalid' => 'W Please enter a valid amount (max 2 decimal places)',
     'month' => 'W Month',
