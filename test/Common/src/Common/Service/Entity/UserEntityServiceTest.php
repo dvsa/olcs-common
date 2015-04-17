@@ -23,6 +23,11 @@ class UserEntityServiceTest extends AbstractEntityServiceTestCase
         parent::setUp();
     }
 
+    public function testGetCurrentUserId()
+    {
+        $this->assertEquals(1, $this->sut->getCurrentUserId());
+    }
+
     /**
      * @group entity_services
      *

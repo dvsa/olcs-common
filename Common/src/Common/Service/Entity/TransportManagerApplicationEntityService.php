@@ -210,4 +210,20 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
 
         return $data['transportManager']['id'];
     }
+
+    /**
+     * Update the status of a Transport Manager Application
+     *
+     * @param int    $tmaId  Transport Manager Application ID
+     * @param string $status New status, once of the constants self::STATUS_*
+     * @return void
+     */
+    public function updateStatus($tmaId, $status)
+    {
+        $data = [
+            'tmApplicationStatus' => $status
+        ];
+
+        $this->forceUpdate($tmaId, $data);
+    }
 }
