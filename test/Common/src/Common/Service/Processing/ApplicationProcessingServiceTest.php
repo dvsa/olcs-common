@@ -1450,7 +1450,9 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                     [
                         [
                             'feeType' => [
-                                'feeType' => FeeTypeDataService::FEE_TYPE_GRANTINT
+                                'feeType' => [
+                                    'id' => FeeTypeDataService::FEE_TYPE_GRANTINT,
+                                ],
                             ]
                         ]
                     ]
@@ -1472,7 +1474,9 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                     [
                         [
                             'feeType' => [
-                                'feeType' => FeeTypeDataService::FEE_TYPE_GRANT
+                                'feeType' => [
+                                    'id' => FeeTypeDataService::FEE_TYPE_GRANT,
+                                ],
                             ]
                         ]
                     ]

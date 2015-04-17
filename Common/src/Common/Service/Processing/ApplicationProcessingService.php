@@ -172,15 +172,21 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $result = $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
 
-        $this->getServiceLocator()->get('Processing\Fee')
-            ->generateDocument(
-                $feeTypeName,
+        $params = [
+            'fee' => $result['id'],
+            'application' => $applicationId,
+            'licence' => $licenceId
+        ];
+        try {
+            $this->getServiceLocator()->get('Processing\Fee')->generateDocument($feeTypeName, $params);
+        } catch (\Exception $e) {
+            $this->getServiceLocator()->get('Zend\Log')->err(
+                'Failed to generate document',
                 [
-                    'fee' => $result['id'],
-                    'application' => $applicationId,
-                    'licence' => $licenceId
+                    'data' => compact('feeTypeName', 'params'),
                 ]
             );
+        }
     }
 
     /**
@@ -299,7 +305,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $fees = array_filter(
             $this->getServiceLocator()->get('Entity\Fee')->getOutstandingFeesForApplication($applicationId),
             function ($fee) {
-                return $fee['feeType']['feeType'] !== FeeTypeDataService::FEE_TYPE_GRANTINT;
+                return $fee['feeType']['feeType']['id'] !== FeeTypeDataService::FEE_TYPE_GRANTINT;
             }
         );
         return empty($fees);
