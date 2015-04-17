@@ -66,7 +66,8 @@ class LicenceEntityService extends AbstractLvaEntityService
         'children' => array(
             'licenceType',
             'status',
-            'goodsOrPsv'
+            'goodsOrPsv',
+            'enforcementArea'
         )
     );
 
