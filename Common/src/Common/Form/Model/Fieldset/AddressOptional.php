@@ -34,7 +34,10 @@ class AddressOptional
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Address lines"})
+     * @Form\Options({
+     *     "label":"Address lines",
+     *     "short-label":"Address line 1"
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
