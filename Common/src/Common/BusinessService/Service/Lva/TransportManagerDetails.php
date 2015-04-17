@@ -197,7 +197,8 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
                 'hoursSat' => is_numeric($hours['hoursSat']) ? $hours['hoursSat'] : null,
                 'hoursSun' => is_numeric($hours['hoursSun']) ? $hours['hoursSun'] : null,
                 'isOwner' => $responsibilities['isOwner'],
-                'operatingCentres' => $responsibilities['operatingCentres']
+                'operatingCentres' => $responsibilities['operatingCentres'],
+                'declarationConfirmation' => $params['data']['declarations']['confirmation']
             ]
         ];
 
