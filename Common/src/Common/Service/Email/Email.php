@@ -23,6 +23,7 @@ class Email implements ServiceLocatorAwareInterface
     public function sendEmail($to, $subject, $body)
     {
         //@todo
+        var_dump(func_get_args()); exit;
     }
 
     /**
@@ -32,13 +33,12 @@ class Email implements ServiceLocatorAwareInterface
      */
     public function sendInspectionRequestEmail($inspectionRequestId)
     {
+        // retrieve Inspection Request, User, People and Workshop data
         $inspectionRequest = $this->getServiceLocator()->get('Entity\InspectionRequest')
             ->getInspectionRequest($inspectionRequestId);
 
         $user = $this->getServiceLocator()->get('Entity\User')
             ->getCurrentUser();
-
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
 
         $peopleData = $this->getServiceLocator()->get('Entity\Person')
             ->getAllForOrganisation($inspectionRequest['licence']['organisation']['id']);
@@ -46,11 +46,21 @@ class Email implements ServiceLocatorAwareInterface
         $workshop = $this->getServiceLocator()->get('Entity\Workshop')
             ->getForLicence($inspectionRequest['licence']['id']);
 
+        // Use view rendering to build email body
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
         $view = new InspectionRequestEmailViewModel();
         $view->populate($inspectionRequest, $user, $peopleData, $workshop, $translator);
-
         $emailBody = $this->getServiceLocator()->get('ViewRenderer')->render($view);
 
-        var_dump($emailBody); exit;
+        // build subject line
+        $subject = sprintf(
+            "[ Maintenance Inspection ] REQUEST=%s,STATUS=",
+            $inspectionRequest['id']
+        );
+
+        // look up destination email address from relevant enforcement area
+        $toEmailAddress = $inspectionRequest['licence']['enforcementArea']['emailAddress'];
+
+        return $this->sendEmail($toEmailAddress, $subject, $emailBody);
     }
 }

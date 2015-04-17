@@ -56,7 +56,7 @@ class InspectionRequestEmailViewModel extends ViewModel
         $expiryDate = new \DateTime($inspectionRequest['licence']['expiryDate']);
 
         $data = [
-            'inspectionRequestId' => '189781',
+            'inspectionRequestId' => $inspectionRequest['id'],
             'currentUserName' => $user['loginId'],
             'currentUserEmail' => $user['emailAddress'],
             'inspectionRequestDateRequested' => $requestDate->format('d/m/Y H:i:s'),

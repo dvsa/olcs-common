@@ -68,6 +68,7 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
                 'application',
                 'licence' => [
                     'children' => [
+                        'enforcementArea',
                         'licenceType',
                         'organisation' => [
                             'children' => [
