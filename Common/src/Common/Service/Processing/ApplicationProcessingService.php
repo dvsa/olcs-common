@@ -299,7 +299,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $fees = array_filter(
             $this->getServiceLocator()->get('Entity\Fee')->getOutstandingFeesForApplication($applicationId),
             function ($fee) {
-                return $fee['feeType']['feeType'] !== FeeTypeDataService::FEE_TYPE_GRANTINT;
+                return $fee['feeType']['feeType']['id'] !== FeeTypeDataService::FEE_TYPE_GRANTINT;
             }
         );
         return empty($fees);
