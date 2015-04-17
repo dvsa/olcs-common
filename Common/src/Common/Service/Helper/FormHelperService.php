@@ -549,11 +549,15 @@ class FormHelperService extends AbstractHelperService
     {
         if (strlen(trim($data[$detailsFieldset]['companyNumber']['company_number'])) === 8) {
 
-            $result = $this->getServiceLocator()
-                ->get('Data\CompaniesHouse')
-                ->search('companyDetails', $data[$detailsFieldset]['companyNumber']['company_number']);
+            try {
+                $result = $this->getServiceLocator()
+                    ->get('Data\CompaniesHouse')
+                    ->search('companyDetails', $data[$detailsFieldset]['companyNumber']['company_number']);
+            } catch (\Exception $e) { // ResponseHelper throws root-level exceptions so can't be more specific here :(
+                $message = 'company_number.search_error.error';
+            }
 
-            if ($result['Count'] === 1) {
+            if (isset($result) && $result['Count'] === 1) {
 
                 $form->get($detailsFieldset)->get('name')->setValue($result['Results'][0]['CompanyName']);
 
@@ -567,7 +571,9 @@ class FormHelperService extends AbstractHelperService
                 return;
             }
 
-            $message = 'company_number.search_no_results.error';
+            if (!isset($message)) {
+                $message = 'company_number.search_no_results.error';
+            }
         } else {
             $message = 'company_number.length.validation.error';
         }
