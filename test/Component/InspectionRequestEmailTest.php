@@ -38,8 +38,7 @@ class InspectionRequestEmailTest extends PHPUnit_Framework_TestCase
         );
         $renderer->setResolver($resolver);
 
-        $model = new ViewModel();
-        $model->setTemplate('email/inspection-request');
+        $model = new InspectionRequestEmailViewModel();
 
         $model->setVariables($this->getViewData());
 
