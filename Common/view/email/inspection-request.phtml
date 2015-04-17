@@ -4,32 +4,32 @@ When replying to this sender, append to the subject line with:
 'U' (if Inspection is Unsatisfactory)
 
 INSPECTION DETAILS for request ID <?php echo $inspectionRequestId ?>...
-Requested By:                   <?php echo $currentUserName ?>        (E-Mail - <?php echo $currentUserEmail ?>)
-Date Requested:                 <?php echo $inspectionRequestDateRequested ?>
+Requested By:                   <?php echo $currentUserName ?>        (E-Mail - <?php echo $currentUserEmail ?>) 
+Date Requested:                 <?php echo $inspectionRequestDateRequested ?> 
 <?php if (!empty($inspectionRequestNotes)): ?>
 Caseworker Notes...
-<?php echo $inspectionRequestNotes;
-endif; ?>
+<?php echo $inspectionRequestNotes;?> 
+<?php endif; ?>
 
-Date Required:                  <?php echo $inspectionRequestDueDate ?>
-Op Centre:                      <?php echo $ocAddress['addressLine1'] ?>
-                                <?php echo $ocAddress['town'] ?>
-                                <?php echo $ocAddress['postcode'] ?>
-Request Type:                   <?php echo $inspectionRequestType ?>
-Licence No:                     <?php echo $licenceNumber ?>
-Licence Type:                   <?php echo $this->translate($licenceType) ?>
-Authorised Vehicles:            <?php echo $totAuthVehicles) ?>
-Authorised Trailers:            <?php echo $totAuthTrailers) ?>
+Date Required:                  <?php echo $inspectionRequestDueDate ?> 
+Op Centre:                      <?php echo $ocAddress['addressLine1'] ?> 
+                                <?php echo $ocAddress['town'] ?> 
+                                <?php echo $ocAddress['postcode'] ?> 
+Request Type:                   <?php echo $inspectionRequestType ?> 
+Licence No:                     <?php echo $licenceNumber ?> 
+Licence Type:                   <?php echo $licenceType ?> 
+Authorised Vehicles:            <?php echo $totAuthVehicles ?> 
+Authorised Trailers:            <?php echo $totAuthTrailers ?> 
 
-#Centres on:                    <?php echo $numberOfOperatingCentres) ?>
+#Centres on:                    <?php echo $numberOfOperatingCentres ?> 
 Licence
-Expiry Date:                    <?php echo $expiryDate) ?>
-Operator ID:                    <?php echo $operatorId) ?>
-Operator Name                   <?php echo $operatorName) ?>
-Operator Email Address          <?php echo $operatorEmail) ?>
-Address:                        <?php echo $operatorAddress['addressLine1'] ?>
-                                <?php echo $operatorAddress['town'] ?>
-                                <?php echo $operatorAddress['postcode'] ?>
+Expiry Date:                    <?php echo $expiryDate ?> 
+Operator ID:                    <?php echo $operatorId ?> 
+Operator Name                   <?php echo $operatorName ?> 
+Operator Email Address          <?php echo $operatorEmail ?> 
+Address:                        <?php echo $operatorAddress['addressLine1'] ?> 
+                                <?php echo $operatorAddress['town'] ?> 
+                                <?php echo $operatorAddress['postcode'] ?> 
 
 Contact Phone No(s)...
 <?php foreach ($contactPhoneNumbers as $contactPhone):
@@ -39,42 +39,46 @@ endforeach; ?>
 Trading Name(s)...
 <?php
 if(!empty($tradingNames)):
-    echo implode("\n", $tradingNames);
-else: ?>
-        No Trading Names specified.
-<?php endif; ?>
+    echo implode("\n", $tradingNames)."\n";
+else:
+    echo "        No Trading Names specified.\n";
+endif;
+?>
 
 Maintenance...
-Maintained:                     <? php echo $workshopIsExternal ? 'Contracted Out' : 'In-House' ?>
+Maintained:                     <?php echo $workshopIsExternal ? 'Contracted Out' : 'In-House' ?> 
 Inspection Periods...
-Vehicles:                       <?php echo $safetyInspectionVehicles ?>
-Trailers:                       <?php echo $safetyInspectionTrailers ?>
+Vehicles:                       <?php echo $safetyInspectionVehicles ?> 
+Trailers:                       <?php echo $safetyInspectionTrailers ?> 
 
 Workshops/Garage Address(es)...
-Address:                        Hillcrest house
-                                leeds
-                                ls9 6nf
-                                GB
+Address:                        <?php echo $inspectionProvider['address']['addressLine1'] ?> 
+                                <?php echo $inspectionProvider['address']['town'] ?> 
+                                <?php echo $inspectionProvider['address']['postcode'] ?> 
 
 Partners/Directors...
 <?php
 foreach ($people as $person):
-    echo sprintf("%s %s\n", $person['forename'], $person['familyName']);STEPHEN test
+    echo sprintf("%s %s\n", $person['forename'], $person['familyName']);
 endforeach;
 ?>
 
 Associated Licences...
 <?php
 if(!empty($otherLicences)):
-    echo implode("\n", $otherLicences);
-else: ?>
-        This Operator has no other associated licences.
-<?php endif; ?>
+    echo implode("\n", $otherLicences),"\n";
+else:
+    echo "        This Operator has no other associated licences.\n";
+endif;
+?>
+
 <?php if (!empty($applicationOperatingCentres)): ?>
 Application Details...
 <?php foreach ($applicationOperatingCentres as $aoc) : ?>
 <?php echo $aoc['address']['addressLine1']?>, <?php echo $aoc['address']['town']?>...
-#Vehicles                       <?php echo $aoc['vehicles'] ?>
-#Trailers                       <?php echo $aoc['trailers'] ?>
-<?php echo $aoc['action'] ?>
-<?php endforeach; ?>
+#Vehicles                       <?php echo $aoc['vehicles'] ?> 
+#Trailers                       <?php echo $aoc['trailers'] ?> 
+<?php echo $aoc['action']."\n";
+endforeach;
+endif;
+?>
