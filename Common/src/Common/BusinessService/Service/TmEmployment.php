@@ -43,10 +43,9 @@ class TmEmployment implements BusinessServiceInterface, ServiceLocatorAwareInter
         }
 
         if (!isset($address['id']) || empty($address['id'])) {
-            $addressId = $response->getData()['id'];
             $contactDetails = [
                 'data' => [
-                    'address' => $addressId,
+                    'address' => $response->getData()['id'],
                     'contactType' => ContactDetailsEntityService::CONTACT_TYPE_TRANSPORT_MANAGER
                 ]
             ];
