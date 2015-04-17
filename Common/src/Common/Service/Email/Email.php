@@ -23,7 +23,8 @@ class Email implements ServiceLocatorAwareInterface
     public function sendEmail($to, $subject, $body)
     {
         //@todo
-        var_dump(func_get_args()); exit;
+        var_dump(func_get_args());
+        exit;
     }
 
     /**

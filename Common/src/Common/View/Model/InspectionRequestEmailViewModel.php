@@ -34,7 +34,7 @@ class InspectionRequestEmailViewModel extends ViewModel
         $people = [];
         if (isset($peopleData['Results']) && !empty($peopleData['Results'])) {
             $people =  array_map(
-                function($peopleResult) {
+                function ($peopleResult) {
                     return $peopleResult['person'];
                 },
                 $peopleData['Results']
@@ -44,7 +44,7 @@ class InspectionRequestEmailViewModel extends ViewModel
         $tradingNames = [];
         if (!empty($inspectionRequest['licence']['organisation']['tradingNames'])) {
             $tradingNames = array_map(
-                function($tradingName) {
+                function ($tradingName) {
                     return $tradingName['name'];
                 },
                 $inspectionRequest['licence']['organisation']['tradingNames']
