@@ -643,6 +643,7 @@ return array(
             'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
             // Lva
             'Lva\Application' => 'Common\BusinessService\Service\Lva\Application',
+            'Lva\ApplicationRevive' => 'Common\BusinessService\Service\Lva\ApplicationRevive',
             'Lva\Licence' => 'Common\BusinessService\Service\Lva\Licence',
             // Goods Vehicles business services
             'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',

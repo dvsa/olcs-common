@@ -1838,37 +1838,37 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
     /**
      * @group processing_services
      */
-    public function testProcessUndoNotTakenUpApplication()
+    public function testProcessReviveApplication()
     {
         $applicationId = 69;
-        $licenceId     = 100;
 
-        // mock service dependencies
-        $mockApplicationEntityService    = m::mock();
-        $mockLicenceEntityService        = m::mock();
-        $this->sm->setService('Entity\Application', $mockApplicationEntityService);
-        $this->sm->setService('Entity\Licence', $mockLicenceEntityService);
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getDataForProcessing')
+                ->with($applicationId)
+                ->getMock()
+        );
 
-        // Expectations...
+        $this->sm->setService(
+            'BusinessServiceManager',
+            m::mock()
+                ->shouldReceive('get')
+                ->with('Lva\ApplicationRevive')
+                ->andReturn(
+                    m::mock()
+                        ->shouldReceive('process')
+                        ->with(
+                            array(
+                                'application' => null
+                            )
+                        )
+                        ->getMock()
+                )
+                ->getMock()
+        );
 
-        // application status should be updated
-        $mockApplicationEntityService->shouldReceive('forceUpdate')
-            ->once()
-            ->with(
-                $applicationId,
-                ['status' => ApplicationEntityService::APPLICATION_STATUS_GRANTED]
-            );
-
-        // licence status should be updated
-        $mockApplicationEntityService->shouldReceive('getLicenceIdForApplication')
-            ->once()
-            ->with($applicationId)
-            ->andReturn($licenceId);
-        $mockLicenceEntityService->shouldReceive('setLicenceStatus')
-            ->once()
-            ->with($licenceId, LicenceEntityService::LICENCE_STATUS_GRANTED);
-
-        $this->sut->processUndoNotTakenUpApplication($applicationId);
+        $this->sut->processReviveApplication($applicationId);
     }
 
     /**
