@@ -172,21 +172,15 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $result = $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
 
-        $params = [
-            'fee' => $result['id'],
-            'application' => $applicationId,
-            'licence' => $licenceId
-        ];
-        try {
-            $this->getServiceLocator()->get('Processing\Fee')->generateDocument($feeTypeName, $params);
-        } catch (\Exception $e) {
-            $this->getServiceLocator()->get('Zend\Log')->err(
-                'Failed to generate document',
+        $this->getServiceLocator()->get('Processing\Fee')
+            ->generateDocument(
+                $feeTypeName,
                 [
-                    'data' => compact('feeTypeName', 'params'),
+                    'fee' => $result['id'],
+                    'application' => $applicationId,
+                    'licence' => $licenceId
                 ]
             );
-        }
     }
 
     /**
