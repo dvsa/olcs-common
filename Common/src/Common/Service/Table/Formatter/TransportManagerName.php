@@ -49,7 +49,7 @@ class TransportManagerName extends Name
                         static::getActionName($data, $sm),
                         static::getInternalUrl($data, $sm),
                         $name,
-                        static::getStatusHtml($data)
+                        static::getStatusHtml($data, $sm)
                     );
                     break;
                 case 'application':
@@ -57,7 +57,7 @@ class TransportManagerName extends Name
                         '<b><a href="%s">%s</a></b> %s',
                         static::getInternalUrl($data, $sm),
                         $name,
-                        static::getStatusHtml($data)
+                        static::getStatusHtml($data, $sm)
                     );
                     break;
             }
@@ -75,14 +75,14 @@ class TransportManagerName extends Name
                             static::getActionName($data, $sm),
                             static::getExternalUrl($data, $sm, $column['lva']),
                             $name,
-                            static::getStatusHtml($data)
+                            static::getStatusHtml($data, $sm)
                         );
                     } else {
                         $html = sprintf(
                             '%s <b>%s</b> %s',
                             static::getActionName($data, $sm),
                             $name,
-                            static::getStatusHtml($data)
+                            static::getStatusHtml($data, $sm)
                         );
                     }
                     break;
@@ -91,7 +91,7 @@ class TransportManagerName extends Name
                         '<b><a href="%s">%s</a></b> %s',
                         static::getExternalUrl($data, $sm, $column['lva']),
                         $name,
-                        static::getStatusHtml($data)
+                        static::getStatusHtml($data, $sm)
                     );
                     break;
             }
@@ -165,12 +165,13 @@ class TransportManagerName extends Name
      * @param array $data
      * @return string HTML
      */
-    protected static function getStatusHtml($data)
+    protected static function getStatusHtml($data, $sm)
     {
-        $statusClass = (isset($data['status']['id']) && isset(static::$statusColors[$data['status']['id']])) ?
-            static::$statusColors[$data['status']['id']] :
-            '';
+        $viewHelper = $sm->get('ViewHelperManager')->get('transportManagerApplicationStatus');
 
-        return sprintf('<span class="status %s">%s</span>', $statusClass, $data['status']['description']);
+        $id = (isset($data['status']['id'])) ? $data['status']['id'] : '';
+        $description = (isset($data['status']['description'])) ? $data['status']['description'] : '';
+
+        return $viewHelper->render($id, $description);
     }
 }
