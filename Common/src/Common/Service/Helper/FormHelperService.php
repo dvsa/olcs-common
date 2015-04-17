@@ -553,7 +553,8 @@ class FormHelperService extends AbstractHelperService
                 $result = $this->getServiceLocator()
                     ->get('Data\CompaniesHouse')
                     ->search('companyDetails', $data[$detailsFieldset]['companyNumber']['company_number']);
-            } catch (\Exception $e) { // ResponseHelper throws root-level exceptions so can't be more specific here :(
+            } catch (\Exception $e) {
+                // ResponseHelper throws root-level exceptions so can't be more specific here :(
                 $message = 'company_number.search_error.error';
             }
 

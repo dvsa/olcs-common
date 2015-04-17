@@ -1022,6 +1022,63 @@ class FormHelperServiceTest extends MockeryTestCase
         $helper->processCompanyNumberLookupForm($form, $data, 'data');
     }
 
+    public function testProcessCompanyLookupError()
+    {
+        $helper = new FormHelperService();
+
+        $service = m::mock()
+            ->shouldReceive('search')
+            ->with('companyDetails', '12345678')
+            ->andThrow(new \Exception('xml gateway error'))
+            ->getMock();
+
+        $translator = m::mock()
+            ->shouldReceive('translate')
+            ->with('company_number.search_error.error')
+            ->andReturn('API error')
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Data\CompaniesHouse')
+            ->andReturn($service)
+            ->shouldReceive('get')
+            ->with('translator')
+            ->andReturn($translator)
+            ->getMock();
+
+        $helper->setServiceLocator($sm);
+
+        $form = m::mock('Zend\Form\Form');
+
+        $data = [
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ]
+            ]
+        ];
+
+        $numberElement = m::mock()->shouldReceive('setMessages')
+            ->with(
+                [
+                    'company_number' => ['API error']
+                ]
+            )
+            ->getMock();
+
+        $fieldset = m::mock()->shouldReceive('get')
+            ->with('companyNumber')
+            ->andReturn($numberElement)
+            ->getMock();
+
+        $form->shouldReceive('get')
+            ->with('data')
+            ->andReturn($fieldset);
+
+        $helper->processCompanyNumberLookupForm($form, $data, 'data');
+    }
+
     public function testSetFormActionFromRequestWhenFormHasAction()
     {
         $helper = new FormHelperService();
