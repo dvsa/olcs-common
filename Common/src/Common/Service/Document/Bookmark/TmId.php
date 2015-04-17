@@ -2,7 +2,7 @@
 namespace Common\Service\Document\Bookmark;
 
 /**
- * Transpoert manager id bookmark
+ * Transport manager id bookmark
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
