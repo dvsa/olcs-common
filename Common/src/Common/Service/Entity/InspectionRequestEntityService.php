@@ -29,7 +29,7 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
 
     /**
      * Get inspection request list
-     * 
+     *
      * @param array $query
      * @param int $licenceId
      * @return array
@@ -54,7 +54,7 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
 
     /**
      * Get inspection request
-     * 
+     *
      * @param int $id
      * @return array
      */
@@ -66,8 +66,27 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
                 'requestType',
                 'resultType',
                 'application',
-                'licence',
-                'operatingCentre'
+                'licence' => [
+                    'children' => [
+                        'licenceType',
+                        'organisation' => [
+                            'children' => [
+                                'contactDetails' => [
+                                    'children' => [
+                                        'address',
+                                        'contactType',
+                                    ],
+                                ],
+                                'tradingNames',
+                            ],
+                        ],
+                    ],
+                ],
+                'operatingCentre' => [
+                    'children' => [
+                        'address'
+                    ],
+                ],
             ]
         ];
         return $this->get($id, $bundle);

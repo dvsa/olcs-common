@@ -52,9 +52,11 @@ Vehicles:                       <?php echo $safetyInspectionVehicles ?>
 Trailers:                       <?php echo $safetyInspectionTrailers ?> 
 
 Workshops/Garage Address(es)...
+<?php if (!empty($inspectionProvider)): ?>
 Address:                        <?php echo $inspectionProvider['address']['addressLine1'] ?> 
                                 <?php echo $inspectionProvider['address']['town'] ?> 
                                 <?php echo $inspectionProvider['address']['postcode'] ?> 
+<?php endif; ?>
 
 Partners/Directors...
 <?php
