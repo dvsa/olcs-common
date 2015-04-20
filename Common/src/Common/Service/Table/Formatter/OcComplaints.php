@@ -27,6 +27,14 @@ class OcComplaints implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        return count($data['operatingCentre']['ocComplaints']);
+        $count = 0;
+
+        foreach ($data['operatingCentre']['ocComplaints'] as $complaint) {
+            if (!is_null($complaint['complaint'])) {
+                $count++;
+            }
+        }
+
+        return $count;
     }
 }
