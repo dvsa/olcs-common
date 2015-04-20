@@ -1768,6 +1768,11 @@ return array(
     'review-people' => 'W People',
     'review-safety' => 'W Safety',
     'review-taxi_phv' => 'W Taxi PHV',
+    'review-transport-manager-added-title' => 'W Transport managers added',
+    'review-transport-manager-deleted-title' => 'W Transport managers removed',
+    'review-transport-manager-dob' => 'W Date of birth',
+    'review-transport-manager-email' => 'W Email address',
+    'review-transport-manager-updated-title' => 'W Transport managers updated',
     'review-transport_managers' => 'W Transport managers',
     'review-transport_managers_delete' => 'W Are you sure you want to remove the selected transport manager(s) from the
         application?',
