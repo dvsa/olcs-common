@@ -9,10 +9,10 @@ use PHPUnit_Framework_TestCase as TestCase;
 use Mockery as m;
 
 /**
- * Class PackValidationFailedTest
- * @package OlcsTest\Ebsr\Data\Object\Result
+ * Class ValidationFailedTest
+ * @package CommonTest\Validation\Result
  */
-class PackValidationFailedTest extends TestCase
+class ValidationFailedTest extends TestCase
 {
     public function testObject()
     {
