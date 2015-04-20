@@ -819,6 +819,8 @@ return array(
     'dashboard-table-variations-licNo' => 'W Licence No.',
     'dashboard-table-variations-status' => 'W Status',
     'dashboard-table-variations-submittedDate' => 'W Submitted',
+    'dashboard-tm-applications.table.EmptyMessage' => 'W There are no open applications right now that you have been
+        named as Transport Manager',
     'dashboard.link' => 'W Home',
     'dashboard.subtitle' => 'W Operator Licensing Ltd.',
     'dashboard.title' => 'W Home',

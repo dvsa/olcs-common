@@ -30,6 +30,7 @@ class DashboardTmApplications implements DataMapperInterface
                 'transportManagerApplicationStatus' => $tmApplication['tmApplicationStatus'],
                 'licNo' => $tmApplication['application']['licence']['licNo'],
                 'applicationId' => $tmApplication['application']['id'],
+                'isVariation' => $tmApplication['application']['isVariation'],
             ];
         };
 

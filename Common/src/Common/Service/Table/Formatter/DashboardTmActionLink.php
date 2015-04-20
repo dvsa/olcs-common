@@ -39,7 +39,12 @@ class DashboardTmActionLink implements FormatterInterface
 
         return sprintf(
             '<b><a href="%s">%s</a></b>',
-            static::getApplicationUrl($sm, $data['applicationId'], $data['transportManagerApplicationId']),
+            static::getApplicationUrl(
+                $sm,
+                $data['applicationId'],
+                $data['transportManagerApplicationId'],
+                $data['isVariation']
+            ),
             $linkText
         );
 
@@ -49,13 +54,14 @@ class DashboardTmActionLink implements FormatterInterface
      * Get the hyperlink for the application number
      *
      * @param \Zend\ServiceManager\ServiceManager $sm
-     * @param int $applicationId
-     * @param int $transportManagerApplicationId
+     * @param int  $applicationId
+     * @param int  $transportManagerApplicationId
+     * @param bool $isVariation Is this application a variation
      * @return string URL
      */
-    protected static function getApplicationUrl($sm, $applicationId, $transportManagerApplicationId)
+    protected static function getApplicationUrl($sm, $applicationId, $transportManagerApplicationId, $isVariation)
     {
-        $lva = 'application';
+        $lva = ($isVariation) ? 'variation' : 'application';
         $route = 'lva-' . $lva . '/transport_manager_details';
 
         $urlHelper = $sm->get('Helper\Url');

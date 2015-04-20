@@ -35,7 +35,8 @@ class DashboardTmApplicationsTest extends \Mockery\Adapter\Phpunit\MockeryTestCa
                     'id' => 34,
                     'licence' => [
                         'licNo' => 'LIC001'
-                    ]
+                    ],
+                    'isVariation' => 1
                 ]
             ]
         ];
@@ -47,6 +48,7 @@ class DashboardTmApplicationsTest extends \Mockery\Adapter\Phpunit\MockeryTestCa
                     $data[0]['tmApplicationStatus'],
                 'licNo' => $data[0]['application']['licence']['licNo'],
                 'applicationId' => $data[0]['application']['id'],
+                'isVariation' => $data[0]['application']['isVariation'],
             ]
         ];
 
