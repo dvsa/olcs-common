@@ -22,4 +22,22 @@ OLCS.ready(function() {
       }
     }
   });
+
+  var tableSelector = "form [data-group*='otherLicences']";
+
+  OLCS.conditionalButton({
+    container: tableSelector,
+    label: "Edit-other-licence-applications",
+    predicate: function (length, callback) {
+      callback(length === 1);
+    }
+  });
+
+  OLCS.conditionalButton({
+    container: tableSelector,
+    label: "Delete-other-licence-applications",
+    predicate: function (length, callback) {
+      callback(length >= 1);
+    }
+  });
 });

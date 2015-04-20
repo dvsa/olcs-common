@@ -2149,6 +2149,8 @@ return array(
     'transport-manager-details-title-value-ms' => 'W Ms',
     'transport-manager-details-type' => 'W Type',
     'transport-manager-details-work-address' => 'W Work Address',
+    'transport-manager-hours-per-week-validation-message' => 'W You must enter the hours per week you will spend on your
+        duties',
     'transport-manager.competences.form.country' => 'W Country',
     'transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
     'transport-manager.competences.form.qualification-type' => 'W Qualification type',
