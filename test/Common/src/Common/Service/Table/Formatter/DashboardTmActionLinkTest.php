@@ -56,7 +56,8 @@ class DashboardTmActionLinkTest extends MockeryTestCase
                 'id' => $status,
                 'description' => 'FooBar',
             ],
-            'transportManagerApplicationId' => 12
+            'transportManagerApplicationId' => 12,
+            'isVariation' => 1,
         ];
         $column = [];
         $expected = '<b><a href="http://url.com">'. $expectedLinkText .'</a></b>';
