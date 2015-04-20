@@ -79,15 +79,22 @@ class UserEntityService extends AbstractEntityService
     ];
 
     /**
-     * Get the current user
+     * Get the current logged in user ID
      *
      * @todo when we have implemented auth, we need to amend this
+     * @return int
+     */
+    public function getCurrentUserId()
+    {
+        return 1;
+    }
+
+    /**
+     * Get the current user
      */
     public function getCurrentUser()
     {
-        $id = 1;
-
-        return $this->get($id, $this->currentUserBundle);
+        return $this->get($this->getCurrentUserId(), $this->currentUserBundle);
     }
 
     public function getUserDetails($id)

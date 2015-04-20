@@ -19,6 +19,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     const STATUS_TM_SIGNED = 'tmap_st_tm_signed';
     const STATUS_OPERATOR_SIGNED = 'tmap_st_operator_signed';
     const STATUS_POSTAL_APPLICATION = 'tmap_st_postal_application';
+    const STATUS_RECEIVED = 'tmap_st_received';
 
     /**
      * Define entity for default behaviour
@@ -208,5 +209,21 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         $data = $this->get($id, $this->tmBundle);
 
         return $data['transportManager']['id'];
+    }
+
+    /**
+     * Update the status of a Transport Manager Application
+     *
+     * @param int    $tmaId  Transport Manager Application ID
+     * @param string $status New status, once of the constants self::STATUS_*
+     * @return void
+     */
+    public function updateStatus($tmaId, $status)
+    {
+        $data = [
+            'tmApplicationStatus' => $status
+        ];
+
+        $this->forceUpdate($tmaId, $data);
     }
 }
