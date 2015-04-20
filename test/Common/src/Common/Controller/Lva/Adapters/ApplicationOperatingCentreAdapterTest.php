@@ -294,8 +294,6 @@ class ApplicationOperatingCentreAdapterTest extends MockeryTestCase
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
 
-        $form = m::mock();
-
         $data = [
             'licence' => [
                 'enforcementArea' => ['id' => 'V048'],
@@ -308,5 +306,57 @@ class ApplicationOperatingCentreAdapterTest extends MockeryTestCase
 
         $result = $sut->formatDataForForm($data, $tableData, $licenceData);
         $this->assertEquals('V048', $result['dataTrafficArea']['enforcementArea']);
+    }
+
+    public function testAlterActionFormForPsvRestricted()
+    {
+        $sut = m::mock('Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $mockForm = m::mock('\Zend\Form\Form');
+        $mockFormHelper = m::mock();
+
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+        ];
+
+        $mockForm->shouldReceive('get->get');
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'data->noOfTrailersRequired')->once();
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'advertisements')->once();
+        $mockFormHelper->shouldReceive('alterElementLabel')->times(3);
+
+        $sut->shouldReceive('getTypeOfLicenceData')->once()->andReturn($licenceData);
+        $sut->shouldReceive('getServiceLocator->get')->twice()->with('Helper\Form')->andReturn($mockFormHelper);
+        $mockFormHelper->shouldReceive('attachValidator')
+            ->once()
+            ->with($mockForm, 'data->noOfVehiclesRequired', m::type('\Zend\Validator\LessThan'));
+
+        $sut->alterActionFormForPsv($mockForm);
+
+    }
+
+    public function testAlterActionFormForPsvNotRestricted()
+    {
+        $sut = m::mock('Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $mockForm = m::mock('\Zend\Form\Form');
+        $mockFormHelper = m::mock();
+        $sut->shouldReceive('getServiceLocator->get')->once()->with('Helper\Form')->andReturn($mockFormHelper);
+
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        ];
+
+        $mockForm->shouldReceive('get->get');
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'data->noOfTrailersRequired')->once();
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'advertisements')->once();
+        $mockFormHelper->shouldReceive('alterElementLabel')->times(3);
+
+        $sut->shouldReceive('getTypeOfLicenceData')->once()->andReturn($licenceData);
+
+        $sut->alterActionFormForPsv($mockForm);
     }
 }
