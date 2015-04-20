@@ -76,12 +76,16 @@ class InspectionRequestEmailTest extends PHPUnit_Framework_TestCase
             ],
             'contactPhoneNumbers' => [
                 0 => [
-                    'number' => '0113 2345678',
-                    'type' => 'Business',
+                    'phoneNumber' => '0113 2345678',
+                    'phoneContactType' => [
+                        'description' => 'Business',
+                    ],
                 ],
                 1 => [
-                    'number' => '07878 123456',
-                    'type' => 'Mobile',
+                    'phoneNumber' => '07878 123456',
+                    'phoneContactType' => [
+                        'description' => 'Mobile',
+                    ],
                 ]
             ],
             'tradingNames' => [
@@ -114,21 +118,25 @@ class InspectionRequestEmailTest extends PHPUnit_Framework_TestCase
             ],
             'applicationOperatingCentres' => [
                 0 => [
-                    'address' => [
-                        'addressLine1' => 'Centre One',
-                        'town' => 'Leeds',
+                    'operatingCentre' => [
+                        'address' => [
+                            'addressLine1' => 'Centre One',
+                            'town' => 'Leeds',
+                        ],
                     ],
-                    'vehicles' => 2,
-                    'trailers' => 4,
+                    'noOfVehiclesRequired' => 2,
+                    'noOfTrailersRequired' => 4,
                     'action' => 'Added',
                 ],
                 1 => [
-                    'address' => [
-                        'addressLine1' => 'Centre Two',
-                        'town' => 'Bradford',
+                    'operatingCentre' => [
+                        'address' => [
+                            'addressLine1' => 'Centre Two',
+                            'town' => 'Bradford',
+                        ],
                     ],
-                    'vehicles' => 3,
-                    'trailers' => 2,
+                    'noOfVehiclesRequired' => 3,
+                    'noOfTrailersRequired' => 2,
                     'action' => 'Added',
                 ],
             ],
@@ -202,11 +210,11 @@ Application Details...
 Centre One, Leeds...
 #Vehicles                       2 
 #Trailers                       4 
-Added
+Action                          Added
 Centre Two, Bradford...
 #Vehicles                       3 
 #Trailers                       2 
-Added
+Action                          Added
 
 STR;
         return $expected;
