@@ -307,7 +307,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
                 );
         }
 
-        if (isset($appData['enforcementArea']) && $appData['enforcementArea']) {
+        if (isset($appData['enforcementArea'])) {
             $this->getServiceLocator()->get('Entity\Licence')
                 ->setEnforcementArea(
                     $this->getLicenceAdapter()->getIdentifier(),
