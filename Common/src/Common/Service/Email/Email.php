@@ -44,13 +44,13 @@ class Email implements ServiceLocatorAwareInterface
         $peopleData = $this->getServiceLocator()->get('Entity\Person')
             ->getAllForOrganisation($inspectionRequest['licence']['organisation']['id']);
 
-        $workshop = $this->getServiceLocator()->get('Entity\Workshop')
+        $workshops = $this->getServiceLocator()->get('Entity\Workshop')
             ->getForLicence($inspectionRequest['licence']['id']);
 
         // Use view rendering to build email body
         $translator = $this->getServiceLocator()->get('Helper\Translation');
         $view = new InspectionRequestEmailViewModel();
-        $view->populate($inspectionRequest, $user, $peopleData, $workshop, $translator);
+        $view->populate($inspectionRequest, $user, $peopleData, $workshops, $translator);
         $emailBody = $this->getServiceLocator()->get('ViewRenderer')->render($view);
 
         // build subject line

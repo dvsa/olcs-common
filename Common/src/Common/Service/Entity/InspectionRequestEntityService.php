@@ -65,20 +65,39 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
                 'reportType',
                 'requestType',
                 'resultType',
-                'application',
+                'application' => [
+                    'children' => [
+                        'licenceType',
+                        'operatingCentres' => [
+                            'children' => [
+                                'operatingCentre' => [
+                                    'children' => [
+                                        'address'
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
                 'licence' => [
                     'children' => [
                         'enforcementArea',
                         'licenceType',
                         'organisation' => [
                             'children' => [
-                                'contactDetails' => [
+                                'tradingNames',
+                                'licences',
+                            ],
+                        ],
+                        'operatingCentres',
+                        'correspondenceCd' => [
+                            'children' => [
+                                'address' => [],
+                                'phoneContacts' => [
                                     'children' => [
-                                        'address',
-                                        'contactType',
+                                        'phoneContactType',
                                     ],
                                 ],
-                                'tradingNames',
                             ],
                         ],
                     ],

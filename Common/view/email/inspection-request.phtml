@@ -1,3 +1,4 @@
+<?php // NOTE: TRAILING WHITESPACE IN THIS FILE IS INTENTIONAL/IMPORTANT ?>
 Result_Type=
 When replying to this sender, append to the subject line with:
 'S' (if Inspection is Satisfactory)
@@ -33,7 +34,7 @@ Address:                        <?php echo $operatorAddress['addressLine1'] ?>
 
 Contact Phone No(s)...
 <?php foreach ($contactPhoneNumbers as $contactPhone):
-    echo sprintf("%s (%s)\n", $contactPhone['number'], $contactPhone['type']);
+    echo sprintf("%s (%s)\n", $contactPhone['phoneNumber'], $contactPhone['phoneContactType']['description']);
 endforeach; ?>
 
 Trading Name(s)...
@@ -77,10 +78,15 @@ endif;
 <?php if (!empty($applicationOperatingCentres)): ?>
 Application Details...
 <?php foreach ($applicationOperatingCentres as $aoc) : ?>
-<?php echo $aoc['address']['addressLine1']?>, <?php echo $aoc['address']['town']?>...
-#Vehicles                       <?php echo $aoc['vehicles'] ?> 
-#Trailers                       <?php echo $aoc['trailers'] ?> 
-<?php echo $aoc['action']."\n";
+<?php
+echo sprintf(
+	"%s, %s...\n",
+	$aoc['operatingCentre']['address']['addressLine1'],
+	$aoc['operatingCentre']['address']['town']
+);?>
+#Vehicles                       <?php echo $aoc['noOfVehiclesRequired'] ?> 
+#Trailers                       <?php echo $aoc['noOfTrailersRequired'] ?> 
+Action                          <?php echo $aoc['action']."\n";
 endforeach;
 endif;
 ?>

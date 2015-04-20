@@ -8,6 +8,7 @@
 namespace Common\View\Model;
 
 use Zend\View\Model\ViewModel;
+use Common\Controller\Lva\Adapters\AbstractOperatingCentreAdapter as OperatingCentre;
 
 /**
  * Inspect Request Email View Model
@@ -29,7 +30,7 @@ class InspectionRequestEmailViewModel extends ViewModel
      * @param \Zend\I18n\Translator\TranslatorInterface $translator
      * @return this
      */
-    public function populate($inspectionRequest, $user, $peopleData, $workshop, $translator)
+    public function populate($inspectionRequest, $user, $peopleData, $workshops, $translator)
     {
         $people = [];
         if (isset($peopleData['Results']) && !empty($peopleData['Results'])) {
@@ -51,6 +52,9 @@ class InspectionRequestEmailViewModel extends ViewModel
             );
         }
 
+        // use first workshop only
+        $workshop = array_shift($workshops);
+
         $requestDate = new \DateTime($inspectionRequest['requestDate']);
         $dueDate =  new \DateTime($inspectionRequest['dueDate']);
         $expiryDate = new \DateTime($inspectionRequest['licence']['expiryDate']);
@@ -65,24 +69,24 @@ class InspectionRequestEmailViewModel extends ViewModel
             'ocAddress' => $inspectionRequest['operatingCentre']['address'],
             'inspectionRequestType' => $inspectionRequest['requestType']['description'],
             'licenceNumber' => $inspectionRequest['licence']['licNo'],
-            'licenceType' => $translator->translate($inspectionRequest['licence']['licenceType']['id']),
+            'licenceType' => $this->getLicenceType($inspectionRequest, $translator),
             'totAuthVehicles' => $this->getTotAuthVehicles($inspectionRequest),
             'totAuthTrailers' => $this->getTotAuthTrailers($inspectionRequest),
-            'numberOfOperatingCentres' => 2, // @TODO!
+            'numberOfOperatingCentres' => count($inspectionRequest['licence']['operatingCentres']),
             'expiryDate' => $expiryDate->format('d/m/Y'),
             'operatorId' => $inspectionRequest['licence']['organisation']['id'],
             'operatorName' => $inspectionRequest['licence']['organisation']['name'],
-            'operatorEmail' => $inspectionRequest['licence']['organisation']['contactDetails']['emailAddress'],
-            'operatorAddress' => $inspectionRequest['licence']['organisation']['contactDetails']['address'],
-            'contactPhoneNumbers' => [], // @TODO!
+            'operatorEmail' => $inspectionRequest['licence']['correspondenceCd']['emailAddress'],
+            'operatorAddress' => $inspectionRequest['licence']['correspondenceCd']['address'],
+            'contactPhoneNumbers' => $inspectionRequest['licence']['correspondenceCd']['phoneContacts'],
             'tradingNames' => $tradingNames,
-            'workshopIsExternal' => true, // @TODO!
-            'safetyInspectionVehicles' => 7, // @TODO!
-            'safetyInspectionTrailers' => 14, // @TODO!
+            'workshopIsExternal' => (isset($workshop['isExternal']) && $workshop['isExternal'] === 'Y'),
+            'safetyInspectionVehicles' => $inspectionRequest['licence']['safetyInsVehicles'],
+            'safetyInspectionTrailers' => $inspectionRequest['licence']['safetyInsTrailers'],
             'inspectionProvider' => isset($workshop['contactDetails']) ? $workshop['contactDetails'] : [],
             'people' => $people,
-            'otherLicences' => [], // @TODO!
-            'applicationOperatingCentres' => [], // @TODO!
+            'otherLicences' => $this->getOtherLicences($inspectionRequest),
+            'applicationOperatingCentres' => $this->getApplicationOperatingCentres($inspectionRequest),
         ];
 
         $this->setVariables($data);
@@ -104,5 +108,62 @@ class InspectionRequestEmailViewModel extends ViewModel
             return $inspectionRequest['application']['totAuthTrailers'];
         }
         return $inspectionRequest['licence']['totAuthTrailers'];
+    }
+
+    protected function getLicenceType($inspectionRequest, $translator)
+    {
+        if (!empty($inspectionRequest['application'])) {
+            return $translator->translate($inspectionRequest['application']['licenceType']['id']);
+        }
+        return $translator->translate($inspectionRequest['licence']['licenceType']['id']);
+    }
+
+    protected function getOtherLicences($inspectionRequest)
+    {
+        $licenceNos = array_map(
+            function ($licence) {
+                return $licence['licNo'];
+            },
+            $inspectionRequest['licence']['organisation']['licences']
+        );
+
+        $currentLicNo = $inspectionRequest['licence']['licNo'];
+        return array_filter(
+            $licenceNos,
+            function ($licNo) use ($currentLicNo) {
+                return ($licNo !== $currentLicNo) && !empty($licNo);
+            }
+        );
+    }
+
+    protected function getApplicationOperatingCentres($inspectionRequest)
+    {
+        if (isset($inspectionRequest['application']['operatingCentres'])) {
+            $aocs = array_map(
+                function ($aoc) {
+                    switch ($aoc['action']) {
+                        case OperatingCentre::ACTION_ADDED:
+                            $aoc['action'] = 'Added';
+                            break;
+                        case OperatingCentre::ACTION_EXISTING:
+                            $aoc['action'] = 'Existing';
+                            break;
+                        case OperatingCentre::ACTION_CURRENT:
+                            $aoc['action'] = 'Current';
+                            break;
+                        case OperatingCentre::ACTION_UPDATED:
+                            $aoc['action'] = 'Updated';
+                            break;
+                        case OperatingCentre::ACTION_DELETED:
+                            $aoc['action'] = 'Deleted';
+                            break;
+                    }
+                    return $aoc;
+                },
+                $inspectionRequest['application']['operatingCentres']
+            );
+            return $aocs;
+        }
+        return [];
     }
 }
