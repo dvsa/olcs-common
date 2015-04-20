@@ -20,11 +20,22 @@ class Email implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
+    /**
+     * Dump email to a file while we decide how the email architecture will work
+     */
     public function sendEmail($to, $subject, $body)
     {
-        //@todo
-        var_dump(func_get_args());
-        exit;
+        //@todo swap out this for configurable adapter
+        $filename = tempnam(sys_get_temp_dir(), 'email');
+
+        $content = <<<EMAIL
+To: $to
+Subject: $subject
+
+$body
+EMAIL;
+        file_put_contents($filename, $content);
+        $this->getServiceLocator()->get('Zend\Log')->info("Email logged to ".$filename);
     }
 
     /**
