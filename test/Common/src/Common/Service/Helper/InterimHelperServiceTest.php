@@ -433,6 +433,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             [true, 'VAR_APP_INT_GRANTED']
         ];
     }
+
     /**
      * @group interimHelper
      * @dataProvider interimGrantingProvider
