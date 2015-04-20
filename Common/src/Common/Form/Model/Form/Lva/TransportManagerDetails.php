@@ -52,6 +52,13 @@ class TransportManagerDetails
     public $previousHistory = null;
 
     /**
+     * @Form\Name("declarations")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\Declarations")
+     * @Form\Options({"label":"lva-tm-details-details-declarations"})
+     */
+    public $declarations = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TmDetailsFormActions")
      * @Form\Attributes({"class":"actions-container"})
