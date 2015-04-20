@@ -10,7 +10,7 @@ namespace Common\Form\Elements\Validators;
 use Zend\Validator\AbstractValidator;
 
 /**
- * Sum Context
+ * Sum Context - Checks that the sum of all context values is within a configured range
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -45,6 +45,8 @@ class SumContext extends AbstractValidator
 
     public function isValid($value, $context = null)
     {
+        unset($value); // Removes CS violation
+
         $sum = array_sum($context);
 
         $valid = true;

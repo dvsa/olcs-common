@@ -221,4 +221,30 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectOutputRegex('/^<li data-group="files"><\/li>$/');
     }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForHoursWithMessages()
+    {
+        $this->element = new \Common\Form\Elements\Types\HoursPerWeek('hpw');
+        $this->element->setMessages(
+            [
+                'hoursPerWeekContent' => [
+                    'field' => [
+                        'MESSAGE'
+                    ]
+                ]
+            ]
+        );
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex(
+            '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
+            . '<fieldset data-group="hpw"><\/fieldset><\/div>$/'
+        );
+    }
 }
