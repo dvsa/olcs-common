@@ -182,12 +182,27 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
     public function testCurtailNowWithStatuses()
     {
         $licenceId = 1;
+        $date = '2015-1-1 00:00';
+
+        $this->sm
+            ->shouldReceive('get')
+            ->with('Helper\Date')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('getDate')
+                    ->with('Y-m-d H:i:s')
+                    ->andReturn($date)
+                    ->getMock()
+            );
 
         $licenceService = m::mock()
-            ->shouldReceive('setLicenceStatus')
+            ->shouldReceive('forceUpdate')
             ->with(
                 $licenceId,
-                'lsts_curtailed'
+                array(
+                    'status' => 'lsts_curtailed',
+                    'curtailedDate' => $date
+                )
             )
             ->andReturnNull()
             ->getMock();
@@ -236,6 +251,18 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
     public function testRevokeNowWithStatuses($revocationData)
     {
         $licenceId = 1;
+        $date = '2015-1-1 00:00';
+
+        $this->sm
+            ->shouldReceive('get')
+            ->with('Helper\Date')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('getDate')
+                    ->with('Y-m-d H:i:s')
+                    ->andReturn($date)
+                    ->getMock()
+            );
 
         $statusRuleService = m::mock()
             ->shouldReceive('getStatusesForLicence')
@@ -248,10 +275,13 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getRevocationDataForLicence')
             ->with($licenceId)
             ->andReturn($revocationData)
-            ->shouldReceive('setLicenceStatus')
+            ->shouldReceive('forceUpdate')
             ->with(
                 $licenceId,
-                'lsts_revoked'
+                array(
+                    'status' => 'lsts_revoked',
+                    'revokedDate' => $date
+                )
             )
             ->andReturnNull()
             ->getMock();
@@ -294,12 +324,27 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
     public function testSuspendNowWithStatuses()
     {
         $licenceId = 1;
+        $date = '2015-1-1 00:00';
+
+        $this->sm
+            ->shouldReceive('get')
+            ->with('Helper\Date')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('getDate')
+                    ->with('Y-m-d H:i:s')
+                    ->andReturn($date)
+                    ->getMock()
+            );
 
         $licenceService = m::mock()
-            ->shouldReceive('setLicenceStatus')
+            ->shouldReceive('forceUpdate')
             ->with(
                 $licenceId,
-                'lsts_suspended'
+                array(
+                    'status' => 'lsts_suspended',
+                    'suspendedDate' => $date
+                )
             )
             ->andReturnNull()
             ->getMock();
@@ -363,6 +408,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 [
                     'status' => LicenceEntityService::LICENCE_STATUS_VALID,
                     'surrenderedDate' => null,
+                    'curtailedDate' => null,
+                    'revokedDate' => null,
+                    'suspendedDate' => null
                 ]
             )
             ->andReturnNull()
