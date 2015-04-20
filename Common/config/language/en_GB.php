@@ -1406,7 +1406,6 @@ return array(
     'lva-tm-details-details-email' => 'Email address',
     'lva-tm-details-details-homeAddress' => 'Home address',
     'lva-tm-details-details-name' => 'Name',
-    'lva-tm-details-details-previousHistory' => 'Previous history',
     'lva-tm-details-details-responsibilities' => 'Responsibilities',
     'lva-tm-details-details-workAddress' => 'Work address',
     'lva-tm-details-dob' => 'Date of birth',

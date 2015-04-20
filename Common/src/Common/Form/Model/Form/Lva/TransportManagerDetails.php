@@ -48,7 +48,6 @@ class TransportManagerDetails
     /**
      * @Form\Name("previousHistory")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\PreviousHistory")
-     * @Form\Options({"label":"lva-tm-details-details-previousHistory"})
      */
     public $previousHistory = null;
 
