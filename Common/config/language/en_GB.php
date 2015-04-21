@@ -1763,6 +1763,11 @@ return array(
     'review-people' => 'People',
     'review-safety' => 'Safety',
     'review-taxi_phv' => 'Taxi PHV',
+    'review-transport-manager-added-title' => 'Transport managers added',
+    'review-transport-manager-deleted-title' => 'Transport managers removed',
+    'review-transport-manager-dob' => 'Date of birth',
+    'review-transport-manager-email' => 'Email address',
+    'review-transport-manager-updated-title' => 'Transport managers updated',
     'review-transport_managers' => 'Transport managers',
     'review-transport_managers_delete' => 'Are you sure you want to remove the selected transport manager(s) from the
         application?',
@@ -2152,6 +2157,8 @@ return array(
     'transport-manager-details-title-value-ms' => 'Ms',
     'transport-manager-details-type' => 'Type',
     'transport-manager-details-work-address' => 'Work Address',
+    'transport-manager-hours-per-week-validation-message' => 'You must enter the hours per week you will spend on your
+        duties',
     'transport-manager.competences.form.country' => 'Country',
     'transport-manager.competences.form.date-of-issue' => 'Date of Issue',
     'transport-manager.competences.form.qualification-type' => 'Qualification type',
@@ -2169,6 +2176,8 @@ return array(
     'transport-manager.convictionsandpenalties.table.conviction-date' => 'Conviction Date',
     'transport-manager.convictionsandpenalties.table.empty' => 'Has any person named in this application been convicted
         of any relevant offence which must be declared to the Traffic Commissioner?',
+    'transport-manager.convictionsandpenalties.table.empty.ni' => 'Has any person named in this application been
+        convicted of any relevant offence which must be declared to the Department?',
     'transport-manager.convictionsandpenalties.table.name-of-court' => 'Name of Court',
     'transport-manager.convictionsandpenalties.table.offence' => 'Offence',
     'transport-manager.convictionsandpenalties.table.penalty' => 'Penalty',

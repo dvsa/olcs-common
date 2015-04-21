@@ -16,6 +16,7 @@ use Common\Form\Elements\Types\CompanyNumber;
 use Common\Form\Elements\Types\FileUploadList;
 use Common\Form\Elements\Types\FileUploadListItem;
 use Zend\Form\LabelAwareInterface;
+use Common\Form\Elements\Types\HoursPerWeek;
 
 /**
  * Form Collection wrapper
@@ -64,6 +65,22 @@ class FormCollection extends ZendFormCollection
     public function render(ElementInterface $element)
     {
         $messages = $element->getMessages();
+
+        if ($element instanceof HoursPerWeek) {
+
+            if (isset($messages['hoursPerWeekContent'])) {
+
+                $tmpMessages = [];
+                foreach ($messages['hoursPerWeekContent'] as $field => $fieldMessages) {
+                    foreach ($fieldMessages as $fieldMessage) {
+                        $tmpMessages[] = $fieldMessage;
+                    }
+                }
+                unset($messages['hoursPerWeekContent']);
+
+                $messages = array_merge($messages, $tmpMessages);
+            }
+        }
 
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {
@@ -186,12 +203,13 @@ class FormCollection extends ZendFormCollection
             }
         }
 
-        if (! ($element instanceof PostcodeSearch) && ! ($element instanceof CompanyNumber)) {
-
+        if (empty($messages)) {
             return $markup;
         }
 
-        if (empty($messages)) {
+        if (!($element instanceof PostcodeSearch)
+            && !($element instanceof CompanyNumber)
+            && !($element instanceof HoursPerWeek)) {
             return $markup;
         }
 

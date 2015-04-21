@@ -1769,6 +1769,11 @@ return array(
     'review-people' => 'W People',
     'review-safety' => 'W Safety',
     'review-taxi_phv' => 'W Taxi PHV',
+    'review-transport-manager-added-title' => 'W Transport managers added',
+    'review-transport-manager-deleted-title' => 'W Transport managers removed',
+    'review-transport-manager-dob' => 'W Date of birth',
+    'review-transport-manager-email' => 'W Email address',
+    'review-transport-manager-updated-title' => 'W Transport managers updated',
     'review-transport_managers' => 'W Transport managers',
     'review-transport_managers_delete' => 'W Are you sure you want to remove the selected transport manager(s) from the
         application?',
@@ -2159,6 +2164,8 @@ return array(
     'transport-manager-details-title-value-ms' => 'W Ms',
     'transport-manager-details-type' => 'W Type',
     'transport-manager-details-work-address' => 'W Work Address',
+    'transport-manager-hours-per-week-validation-message' => 'W You must enter the hours per week you will spend on your
+        duties',
     'transport-manager.competences.form.country' => 'W Country',
     'transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
     'transport-manager.competences.form.qualification-type' => 'W Qualification type',
@@ -2176,6 +2183,8 @@ return array(
     'transport-manager.convictionsandpenalties.table.conviction-date' => 'W Conviction Date',
     'transport-manager.convictionsandpenalties.table.empty' => 'W Has any person named in this application been
         convicted of any relevant offence which must be declared to the Traffic Commissioner?',
+    'transport-manager.convictionsandpenalties.table.empty.ni' => 'W Has any person named in this application been
+        convicted of any relevant offence which must be declared to the Department?',
     'transport-manager.convictionsandpenalties.table.name-of-court' => 'W Name of Court',
     'transport-manager.convictionsandpenalties.table.offence' => 'W Offence',
     'transport-manager.convictionsandpenalties.table.penalty' => 'W Penalty',
