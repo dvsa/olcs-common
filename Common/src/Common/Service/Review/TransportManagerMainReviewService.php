@@ -49,6 +49,7 @@ class TransportManagerMainReviewService extends AbstractReviewService
                     ],
                     [
                         'label' => 'tm-review-main-certificate',
+                        'noEscape' => true,
                         'value' => $this->formatCertificateFiles($data)
                     ],
                     [

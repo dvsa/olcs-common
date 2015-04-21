@@ -104,6 +104,17 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
 
     protected $reviewBundle = [
         'children' => [
+            'otherLicences' => [
+                'children' => [
+                    'role'
+                ]
+            ],
+            'tmType',
+            'operatingCentres' => [
+                'children' => [
+                    'address'
+                ]
+            ],
             'application' => [
                 'children' => [
                     'licence' => [
