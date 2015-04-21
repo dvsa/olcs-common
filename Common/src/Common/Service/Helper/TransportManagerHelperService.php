@@ -177,6 +177,7 @@ class TransportManagerHelperService extends AbstractHelperService
 
         $sections[] = $this->getMainDetailsReviewSection($data);
         $sections[] = $this->getResponsibilityDetailsReviewSection($data);
+        $sections[] = $this->getOtherEmploymentDetailsReviewSection($data);
 
         return [
             'reviewTitle' => 'tm-review-title',
@@ -201,6 +202,15 @@ class TransportManagerHelperService extends AbstractHelperService
         return [
             'header' => 'tm-review-responsibility',
             'config' => $this->getServiceLocator()->get('Review\TransportManagerResponsibility')
+                ->getConfigFromData($data)
+        ];
+    }
+
+    protected function getOtherEmploymentDetailsReviewSection($data)
+    {
+        return [
+            'header' => 'tm-review-other-employment',
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerOtherEmployment')
                 ->getConfigFromData($data)
         ];
     }

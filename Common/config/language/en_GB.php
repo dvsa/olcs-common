@@ -1,6 +1,11 @@
 <?php
 
 return array(
+    'tm-review-other-employment-address' => 'Address',
+    'tm-review-other-employment-position' => 'Position held',
+    'tm-review-other-employment-hours-per-week' => 'Hours and days of work',
+    'tm-review-other-employment' => 'Other employment',
+    'tm-review-other-employment-none' => 'None added',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
