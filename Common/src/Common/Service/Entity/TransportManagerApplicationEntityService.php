@@ -104,6 +104,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
 
     protected $contactApplicationBundle = [
         'children' => [
+            'tmApplicationStatus',
             'application' => [
                 'children' => [
                     'status',
