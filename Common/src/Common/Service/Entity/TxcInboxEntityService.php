@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Entity\User;
+
 /**
  * TxcInbox Service
  *
@@ -46,14 +48,22 @@ class TxcInboxEntityService extends AbstractEntityService
         ]
     ];
 
-    public function fetchBusRegDocuments($id)
+    public function fetchBusRegDocuments($id, $localAuthority = null, $organisation = null)
     {
         $documents = [];
 
         $params = [
             'busReg' => $id,
-            'localAuthority' => 'NULL'
+            'sort'  => 'createdOn',
+            'order' => 'DESC'
         ];
+
+        if (!empty($localAuthority)) {
+            $params['localAuthority'] = isset($localAuthority['id']) ? $localAuthority['id'] : 'NULL';
+            $params['fileRead'] = 0;
+        } elseif (isset($organisation['id'])) {
+            $params['organisation'] = $organisation['id'];
+        }
 
         $txcInboxEntries =  $this->getList($params, $this->listBundle);
 
