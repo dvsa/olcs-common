@@ -9,6 +9,7 @@ namespace Common\Service\Email;
 
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Common\Util\RestCallTrait;
 use Common\View\Model\InspectionRequestEmailViewModel;
 
 /**
@@ -18,17 +19,32 @@ use Common\View\Model\InspectionRequestEmailViewModel;
  */
 class Email implements ServiceLocatorAwareInterface
 {
+    use RestCallTrait;
     use ServiceLocatorAwareTrait;
 
-    /**
-     * Dump email to a file while we decide how the email architecture will work
-     */
-    public function sendEmail($to, $subject, $body)
+    public function sendEmail($from, $to, $subject, $body)
     {
-        //@todo swap out this for configurable adapter
-        $filename = tempnam(sys_get_temp_dir(), 'email');
+        return $this->sendEmailViaRestService($from, $to, $subject, $body);
+    }
+
+    /**
+     * Send email via REST email service
+     */
+    protected function sendEmailViaRestService($from, $to, $subject, $body)
+    {
+        $data = compact('from', 'to', 'subject', 'body');
+        return $this->sendPost('email\\', $data);
+    }
+
+    /**
+     * Dump email to a temporary file and log its location, useful for dev
+     */
+    protected function sendEmailToTmpFile($from, $to, $subject, $body)
+    {
+        $filename = tempnam(sys_get_temp_dir(), 'email_');
 
         $content = <<<EMAIL
+From: $from
 To: $to
 Subject: $subject
 
@@ -36,43 +52,5 @@ $body
 EMAIL;
         file_put_contents($filename, $content);
         $this->getServiceLocator()->get('Zend\Log')->info("Email logged to ".$filename);
-    }
-
-    /**
-     * Send an inspection request email
-     *
-     * @param int $inspectionRequestId
-     */
-    public function sendInspectionRequestEmail($inspectionRequestId)
-    {
-        // retrieve Inspection Request, User, People and Workshop data
-        $inspectionRequest = $this->getServiceLocator()->get('Entity\InspectionRequest')
-            ->getInspectionRequest($inspectionRequestId);
-
-        $user = $this->getServiceLocator()->get('Entity\User')
-            ->getCurrentUser();
-
-        $peopleData = $this->getServiceLocator()->get('Entity\Person')
-            ->getAllForOrganisation($inspectionRequest['licence']['organisation']['id']);
-
-        $workshops = $this->getServiceLocator()->get('Entity\Workshop')
-            ->getForLicence($inspectionRequest['licence']['id']);
-
-        // Use view rendering to build email body
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-        $view = new InspectionRequestEmailViewModel();
-        $view->populate($inspectionRequest, $user, $peopleData, $workshops, $translator);
-        $emailBody = $this->getServiceLocator()->get('ViewRenderer')->render($view);
-
-        // build subject line
-        $subject = sprintf(
-            "[ Maintenance Inspection ] REQUEST=%s,STATUS=",
-            $inspectionRequest['id']
-        );
-
-        // look up destination email address from relevant enforcement area
-        $toEmailAddress = $inspectionRequest['licence']['enforcementArea']['emailAddress'];
-
-        return $this->sendEmail($toEmailAddress, $subject, $emailBody);
     }
 }

@@ -537,7 +537,8 @@ return array(
         'endpoints' => array(
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
-            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
+            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/',
+            'email' => 'http://olcs-email/',
         )
     ),
     'caches'=> array(
