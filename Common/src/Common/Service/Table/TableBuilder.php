@@ -360,6 +360,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
     }
 
+    public function addAction($key, $settings = [])
+    {
+        $this->settings['crud']['actions'][$key] = $settings;
+    }
+
     /**
      * Get the content helper
      *

@@ -275,14 +275,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         );
     }
 
-    /**
-     * Alter table. No-op but is extended in certain sections
-     */
-    protected function alterTable($table)
-    {
-        return $table;
-    }
-
     protected function getTableData()
     {
         $licenceVehicles = $this->getAdapter()->getFilteredVehiclesData(
