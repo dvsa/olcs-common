@@ -36,6 +36,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     const ACTION_FORMAT_BUTTONS = 'buttons';
     const ACTION_FORMAT_DROPDOWN = 'dropdown';
 
+    const CONTENT_TYPE_HTML = 'html';
+    const CONTENT_TYPE_CSV = 'csv';
+
     /**
      * Hold the pagination helper
      *
@@ -49,6 +52,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @var object
      */
     private $contentHelper;
+
+    /**
+     * Hold the contentType
+     *
+     * @var object
+     */
+    private $contentType = self::CONTENT_TYPE_HTML;
 
     /**
      * Inject the application config from Zend
@@ -374,15 +384,23 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function getContentHelper()
     {
         if (empty($this->contentHelper)) {
-            if (!isset($this->applicationConfig['tables']['partials'])) {
+            if (!isset($this->applicationConfig['tables']['partials'][$this->contentType])) {
 
                 throw new \Exception('Table partial location not defined in config');
             }
 
-            $this->contentHelper = new ContentHelper($this->applicationConfig['tables']['partials'], $this);
+            $this->contentHelper = new ContentHelper(
+                $this->applicationConfig['tables']['partials'][$this->contentType],
+                $this
+            );
         }
 
         return $this->contentHelper;
+    }
+
+    public function setContentType($type)
+    {
+        $this->contentType = $type;
     }
 
     /**
@@ -1277,7 +1295,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             }
         }
 
-        if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
+        if (
+            $this->contentType === self::CONTENT_TYPE_HTML
+            && isset($column['type'])
+            && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])
+        ) {
             $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
             $type = new $typeClass($this);
 

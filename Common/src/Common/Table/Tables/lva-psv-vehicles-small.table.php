@@ -47,6 +47,7 @@ return array(
             'name' => 'deletedDate'
         ),
         array(
+            'name' => 'action',
             'width' => 'checkbox',
             'type' => 'Checkbox'
         )

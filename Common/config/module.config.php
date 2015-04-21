@@ -519,7 +519,10 @@ return array(
         'config' => array(
             __DIR__ . '/../src/Common/Table/Tables/'
         ),
-        'partials' => __DIR__ . '/../view/table/'
+        'partials' => array(
+            'html' => __DIR__ . '/../view/table/',
+            'csv' => __DIR__ . '/../view/table/csv'
+        )
     ),
     'sic_codes_path' => __DIR__ . '/../../Common/config/sic-codes',
     'fieldsets_path' => __DIR__ . '/../../Common/src/Common/Form/Fieldsets/',
