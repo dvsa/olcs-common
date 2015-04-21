@@ -309,4 +309,47 @@ class AbstractOperatingCentreAdapterTest extends MockeryTestCase
 
         $this->sut->setDefaultEnforcementArea($data);
     }
+
+    public function testAlterActionFormForPsvRestricted()
+    {
+        $mockForm = m::mock('\Zend\Form\Form');
+        $mockFormHelper = m::mock();
+
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+        ];
+
+        $mockForm->shouldReceive('get->get');
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'data->noOfTrailersRequired')->once();
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'advertisements')->once();
+        $mockFormHelper->shouldReceive('alterElementLabel')->times(3);
+
+        $this->sut->shouldReceive('getTypeOfLicenceData')->once()->andReturn($licenceData);
+        $this->sut->shouldReceive('getServiceLocator->get')->once()->with('Helper\Form')->andReturn($mockFormHelper);
+        $mockFormHelper->shouldReceive('attachValidator')
+            ->once()
+            ->with($mockForm, 'data->noOfVehiclesRequired', m::type('\Zend\Validator\LessThan'));
+
+        $this->sut->alterActionFormForPsv($mockForm);
+    }
+
+    public function testAlterActionFormForPsvNotRestricted()
+    {
+        $mockForm = m::mock('\Zend\Form\Form');
+        $mockFormHelper = m::mock();
+        $this->sut->shouldReceive('getServiceLocator->get')->once()->with('Helper\Form')->andReturn($mockFormHelper);
+
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        ];
+
+        $mockForm->shouldReceive('get->get');
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'data->noOfTrailersRequired')->once();
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'advertisements')->once();
+        $mockFormHelper->shouldReceive('alterElementLabel')->times(3);
+
+        $this->sut->shouldReceive('getTypeOfLicenceData')->once()->andReturn($licenceData);
+
+        $this->sut->alterActionFormForPsv($mockForm);
+    }
 }
