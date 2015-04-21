@@ -8,14 +8,14 @@
 namespace Common\Controller;
 
 use Common\View\Model\ReviewViewModel;
-use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 
 /**
  * Transport Manager Review Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TransportManagerReviewController extends AbstractActionController
+class TransportManagerReviewController extends ZendAbstractActionController
 {
     public function indexAction()
     {

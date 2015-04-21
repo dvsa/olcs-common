@@ -414,4 +414,37 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         return $mockTable;
     }
+
+    public function testGetReviewConfig()
+    {
+        $id = 111;
+        $stubbedData = [
+            'application' => [
+                'licence' => [
+                    'organisation' => [
+                        'name' => 'Foo ltd'
+                    ],
+                    'licNo' => 'FO12345678'
+                ],
+                'id' => 222
+            ]
+        ];
+
+        $expected = [
+            'reviewTitle' => 'tm-review-title',
+            'subTitle' => 'Foo ltd FO12345678/222',
+            'sections' => []
+        ];
+
+        // Mocks
+        $mockTma = m::mock();
+        $this->sm->setService('Entity\TransportManagerApplication', $mockTma);
+
+        // Expectations
+        $mockTma->shouldReceive('getReviewData')
+            ->with(111)
+            ->andReturn($stubbedData);
+
+        $this->assertEquals($expected, $this->sut->getReviewConfig($id));
+    }
 }
