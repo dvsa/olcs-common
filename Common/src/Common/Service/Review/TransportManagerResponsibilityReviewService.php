@@ -43,35 +43,49 @@ class TransportManagerResponsibilityReviewService extends AbstractReviewService
                                     [
                                         'label' => 'tm-review-responsibility-isOwner',
                                         'value' => $this->formatYesNo($data['isOwner'])
-                                    ],
+                                    ]
+                                ],
+                            ]
+                        ],
+                        [
+                            'header' => 'tm-review-responsibility-hours-per-week-header',
+                            'multiItems' => [
+                                [
                                     [
                                         'label' => 'tm-review-responsibility-mon',
-                                        'value' => $data['hoursMon']
+                                        'value' => $data['hoursMon'] . ' hours'
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-tue',
-                                        'value' => $data['hoursTue']
+                                        'value' => $data['hoursTue'] . ' hours'
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-wed',
-                                        'value' => $data['hoursWed']
+                                        'value' => $data['hoursWed'] . ' hours'
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-thu',
-                                        'value' => $data['hoursThu']
+                                        'value' => $data['hoursThu'] . ' hours'
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-fri',
-                                        'value' => $data['hoursFri']
+                                        'value' => $data['hoursFri'] . ' hours'
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-sat',
-                                        'value' => $data['hoursSat']
+                                        'value' => $data['hoursSat'] . ' hours'
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-sun',
-                                        'value' => $data['hoursSun']
-                                    ],
+                                        'value' => $data['hoursSun'] . ' hours'
+                                    ]
+                                ],
+                            ]
+                        ],
+                        [
+                            'header' => 'tm-review-responsibility-additional-info-header',
+                            'multiItems' => [
+                                [
                                     [
                                         'label' => 'tm-review-responsibility-additional-info',
                                         'value' => $data['additionalInformation']

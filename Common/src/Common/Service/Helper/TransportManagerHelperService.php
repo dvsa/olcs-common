@@ -178,6 +178,8 @@ class TransportManagerHelperService extends AbstractHelperService
         $sections[] = $this->getMainDetailsReviewSection($data);
         $sections[] = $this->getResponsibilityDetailsReviewSection($data);
         $sections[] = $this->getOtherEmploymentDetailsReviewSection($data);
+        $sections[] = $this->getPreviousConvictionDetailsReviewSection($data);
+        $sections[] = $this->getPreviousLicenceDetailsReviewSection($data);
 
         return [
             'reviewTitle' => 'tm-review-title',
@@ -211,6 +213,24 @@ class TransportManagerHelperService extends AbstractHelperService
         return [
             'header' => 'tm-review-other-employment',
             'config' => $this->getServiceLocator()->get('Review\TransportManagerOtherEmployment')
+                ->getConfigFromData($data)
+        ];
+    }
+
+    protected function getPreviousConvictionDetailsReviewSection($data)
+    {
+        return [
+            'header' => 'tm-review-previous-conviction',
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerPreviousConviction')
+                ->getConfigFromData($data)
+        ];
+    }
+
+    protected function getPreviousLicenceDetailsReviewSection($data)
+    {
+        return [
+            'header' => 'tm-review-previous-licence',
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerPreviousLicence')
                 ->getConfigFromData($data)
         ];
     }
