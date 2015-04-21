@@ -67,7 +67,12 @@ class BusReg extends Generic
     {
         $variationBundle = [
             'children' => [
-                'status'
+                'status',
+                'licence' => [
+                    'children' => [
+                        'organisation'
+                    ]
+                ]
             ]
         ];
 
