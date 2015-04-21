@@ -128,6 +128,7 @@ class TransportManagerMainReviewServiceTest extends MockeryTestCase
                             ],
                             [
                                 'label' => 'tm-review-main-certificate',
+                                'noEscape' => true,
                                 'value' => 'File1<br>File3'
                             ],
                             [
@@ -189,6 +190,7 @@ class TransportManagerMainReviewServiceTest extends MockeryTestCase
                             ],
                             [
                                 'label' => 'tm-review-main-certificate',
+                                'noEscape' => true,
                                 'value' => 'tm-review-main-no-files-translated'
                             ],
                             [
