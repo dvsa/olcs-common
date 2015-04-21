@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'tm-quick-action-print-form' => 'Print form',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
