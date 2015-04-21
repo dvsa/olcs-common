@@ -34,6 +34,7 @@ class TableBuilderTest extends MockeryTestCase
         $mockTranslator = $this->getMock('\stdClass', array('translate'));
         $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
         $mockControllerPluginManager = $this->getMock('\Zend\Mvc\Controller\PluginManager', array('get'));
+        $mockAuthService = $this->getMock('\stdClass', array('isGranted'));
 
         $servicesMap = [
             ['Config', true, ($config
@@ -47,6 +48,7 @@ class TableBuilderTest extends MockeryTestCase
             ],
             ['translator', true, $mockTranslator],
             ['ControllerPluginManager', true, $mockControllerPluginManager],
+            ['ZfcRbac\Service\AuthorizationService', true, $mockAuthService],
         ];
 
         $mockSm
@@ -1815,6 +1817,38 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
+     * Test renderHeaderColumn when disabled
+     */
+    public function testRenderHeaderColumnWhenPermissionWontAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['correctPermission']
+        );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $response = $table->renderHeaderColumn($column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderBodyColumn when disabled
+     */
+    public function testRenderBodyColumnWhenPermissionWontAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['correctPermission']
+        );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $response = $table->renderBodyColumn([], $column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
      * Test renderBodyColumn With Empty Row With Empty Column
      */
     public function testRenderBodyColumnEmptyRowEmptyColumn()
@@ -2428,10 +2462,17 @@ class TableBuilderTest extends MockeryTestCase
         $settings = [];
         $row = [];
 
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with(m::type('string'))
+            ->andReturn(true);
+
         // Setup
         $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
         $sut = new TableBuilder($sm);
 
         $sut->setSettings($settings);
@@ -2454,10 +2495,17 @@ class TableBuilderTest extends MockeryTestCase
             'disabled' => $disabled
         ];
 
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with(m::type('string'))
+            ->andReturn(true);
+
         // Setup
         $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
         $sut = new TableBuilder($sm);
 
         $sut->setSettings($settings);
@@ -2515,6 +2563,10 @@ class TableBuilderTest extends MockeryTestCase
                 'partials' => ''
             ]
         ];
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with(m::type('string'))
+            ->andReturn(true);
 
         $mockTranslator = m::mock();
         $mockTranslator->shouldReceive('translate')
@@ -2524,6 +2576,7 @@ class TableBuilderTest extends MockeryTestCase
         $sm = Bootstrap::getServiceManager();
         $sm->setService('Config', $config);
         $sm->setService('translator', $mockTranslator);
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
 
         $sut = new TableBuilder($sm);
 
