@@ -160,4 +160,28 @@ class TransportManagerHelperService extends AbstractHelperService
 
         return $data;
     }
+
+    public function getReviewConfig($id)
+    {
+        $data = $this->getServiceLocator()->get('Entity\TransportManagerApplication')
+            ->getReviewData($id);
+
+        $subTitle = sprintf(
+            '%s %s/%s',
+            $data['application']['licence']['organisation']['name'],
+            $data['application']['licence']['licNo'],
+            $data['application']['id']
+        );
+
+        return [
+            'reviewTitle' => 'tm-review-title',
+            'subTitle' => $subTitle,
+            'sections' => [
+                /*[
+                    'header' => 'tm-review-',
+                    'config' => $config
+                ]*/
+            ]
+        ];
+    }
 }

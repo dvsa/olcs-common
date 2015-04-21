@@ -102,6 +102,20 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
+    protected $reviewBundle = [
+        'children' => [
+            'application' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation'
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     public function getGrantDataForApplication($applicationId)
     {
         return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
@@ -225,5 +239,10 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ];
 
         $this->forceUpdate($tmaId, $data);
+    }
+
+    public function getReviewData($id)
+    {
+        return $this->get($id, $this->reviewBundle);
     }
 }

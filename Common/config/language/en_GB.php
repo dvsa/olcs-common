@@ -2118,6 +2118,7 @@ return array(
     'tm-previous-history-revoked-curtailed-suspended-licences' => 'Revoked, Curtailed or Suspended Licences',
     'tm-responsibilities-applications' => 'Applications',
     'tm-responsibilities-licences' => 'Licences',
+    'tm-review-title' => 'Transport manager form',
     'tm_application.table.status.current' => ' (Current)',
     'tm_application.table.status.new' => ' (New)',
     'tm_application.table.status.removed' => ' (Removed)',

@@ -20,6 +20,16 @@ return array(
                         'action' => 'download'
                     )
                 )
+            ),
+            'transport_manager_review' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/transport-manager-application/review/:id[/]',
+                    'defaults' => array(
+                        'controller' => 'TransportManagerReview',
+                        'action' => 'index'
+                    )
+                )
             )
         )
     ),
@@ -124,6 +134,7 @@ return array(
             'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
+            'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
         )
     ),
     'controller_plugins' => array(
