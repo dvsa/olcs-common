@@ -252,6 +252,7 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationTransportManagerAdapter',
             'ApplicationTransportManagerAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter',
+            'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
@@ -423,7 +424,9 @@ return array(
             'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
             'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
             'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
-            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable'
+            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
+            'currentUser' => 'Common\View\Helper\CurrentUser',
+            'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
         )
     ),
     'view_manager' => array(
@@ -640,6 +643,7 @@ return array(
             'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
             // Lva
             'Lva\Application' => 'Common\BusinessService\Service\Lva\Application',
+            'Lva\ApplicationRevive' => 'Common\BusinessService\Service\Lva\ApplicationRevive',
             'Lva\Licence' => 'Common\BusinessService\Service\Lva\Licence',
             // Goods Vehicles business services
             'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
@@ -682,6 +686,12 @@ return array(
                 'Common\BusinessService\Service\Lva\DeleteOtherLicence',
             'Lva\DeletePreviousConviction' =>
                 'Common\BusinessService\Service\Lva\DeletePreviousConviction',
+            'Lva\DeleteOtherEmployment' =>
+                'Common\BusinessService\Service\Lva\DeleteOtherEmployment',
+            'Lva\Address' =>
+                'Common\BusinessService\Service\Lva\Address',
+            'TmEmployment' =>
+                'Common\BusinessService\Service\TmEmployment',
             // User administration
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',

@@ -299,7 +299,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $fees = array_filter(
             $this->getServiceLocator()->get('Entity\Fee')->getOutstandingFeesForApplication($applicationId),
             function ($fee) {
-                return $fee['feeType']['feeType'] !== FeeTypeDataService::FEE_TYPE_GRANTINT;
+                return $fee['feeType']['feeType']['id'] !== FeeTypeDataService::FEE_TYPE_GRANTINT;
             }
         );
         return empty($fees);
@@ -831,16 +831,19 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      *
      * @param int $id
      */
-    public function processUndoNotTakenUpApplication($id)
+    public function processReviveApplication($id)
     {
-        $licenceId = $this->getLicenceId($id);
+        $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
+        $application = $applicationEntityService->getDataForProcessing($id);
 
-        // Update the licence and application statuses to Granted
-        $this->setApplicationStatus($id, ApplicationEntityService::APPLICATION_STATUS_GRANTED);
-        $this->getServiceLocator()->get('Entity\Licence')->setLicenceStatus(
-            $licenceId,
-            LicenceEntityService::LICENCE_STATUS_GRANTED
-        );
+        $this->getServiceLocator()
+            ->get('BusinessServiceManager')
+            ->get('Lva\ApplicationRevive')
+            ->process(
+                array(
+                    'application' => $application
+                )
+            );
     }
 
     public function submitApplication($applicationId)

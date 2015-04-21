@@ -48,8 +48,7 @@ class BusReg extends Generic
                 'trafficAreas',
                 'busNoticePeriod',
                 'status',
-                'busServiceTypes',
-                'documents'
+                'busServiceTypes'
             ]
         ];
 

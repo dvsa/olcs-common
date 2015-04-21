@@ -193,4 +193,32 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
         $markup = $sut->__invoke($mockFieldset);
         $this->assertEquals('<ul class="definition-list">element</ul>', $markup);
     }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForFileUploadListElement()
+    {
+        $this->element = new \Common\Form\Elements\Types\FileUploadList('files');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<ul data-group="files"><\/ul>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForFileUploadListItemElement()
+    {
+        $this->element = new \Common\Form\Elements\Types\FileUploadListItem('files');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<li data-group="files"><\/li>$/');
+    }
 }

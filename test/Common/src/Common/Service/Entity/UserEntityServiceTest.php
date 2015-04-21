@@ -23,6 +23,11 @@ class UserEntityServiceTest extends AbstractEntityServiceTestCase
         parent::setUp();
     }
 
+    public function testGetCurrentUserId()
+    {
+        $this->assertEquals(1, $this->sut->getCurrentUserId());
+    }
+
     /**
      * @group entity_services
      *
@@ -46,5 +51,13 @@ class UserEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getUserDetails(111));
+    }
+
+    public function testGetTransportManagerApplications()
+    {
+        $this->expectOneRestCall('User', 'GET', ['id' => 54, 'limit' => 'all'])
+            ->will($this->returnValue(['transportManager' => ['tmApplications' => ['data']]]));
+
+        $this->assertEquals(['data'], $this->sut->getTransportManagerApplications(54));
     }
 }

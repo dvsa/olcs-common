@@ -95,4 +95,25 @@ class ApplicationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         return $formData;
     }
+
+    /**
+     * Alter action form for PSV licences
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForPsv(\Zend\Form\Form $form)
+    {
+        parent::alterActionFormForPsv($form);
+
+        // if PSV restricted licence, then add validtor max vehicles is two
+        $typeOfLicence = $this->getTypeOfLicenceData();
+        if ($typeOfLicence['licenceType'] === \Common\Service\Entity\LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $newValidator = new \Zend\Validator\LessThan(
+                ['max' => 3, 'message' => 'OperatingCentreVehicleAuthorisationValidator.too-high-psv-r']
+            );
+
+            $formHelper->attachValidator($form, 'data->noOfVehiclesRequired', $newValidator);
+        }
+    }
 }

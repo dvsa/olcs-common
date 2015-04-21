@@ -14,6 +14,7 @@ use Zend\Form\View\Helper\FormCollection as ZendFormCollection;
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\CompanyNumber;
 use Common\Form\Elements\Types\FileUploadList;
+use Common\Form\Elements\Types\FileUploadListItem;
 use Zend\Form\LabelAwareInterface;
 
 /**
@@ -170,8 +171,11 @@ class FormCollection extends ZendFormCollection
 
             if ($element instanceof FileUploadList) {
 
-                $markup = sprintf('<div%s>%s%s</div>', $attributesString, $hint, $markup);
+                $markup = sprintf('<ul%s>%s%s</ul>', $attributesString, $hint, $markup);
 
+            } elseif ($element instanceof FileUploadListItem) {
+
+                $markup = sprintf('<li%s>%s%s</li>', $attributesString, $hint, $markup);
             } else {
 
                 if ($element->getOption('hint_at_bottom') === true) {

@@ -50,7 +50,10 @@ class FeeTypeDataService implements ServiceLocatorAwareInterface
             'fixedValue',
             'fiveYearValue',
             'description'
-        )
+        ),
+        'children' => array(
+            'feeType',
+        ),
     );
 
     public function getLatest($feeType, $goodsOrPsv, $licenceType, $date, $trafficArea = null)
