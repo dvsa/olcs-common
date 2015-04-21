@@ -42,7 +42,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $id = 111;
         $licenceId = 111;
         $stubbedFormData = [
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'query' => [
+                'page' => 1
+            ]
         ];
         $stubbedQuery = [
             'page' => 1
@@ -174,7 +177,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $licenceId = 111;
         $stubbedFormData = [
             'table' => 'foo',
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'query' => [
+                'page' => 1
+            ]
         ];
         $stubbedQuery = [
             'page' => 1
@@ -280,6 +286,9 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $mockRequest->shouldReceive('isPost')
             ->andReturn(true)
             ->shouldReceive('getPost')
+            ->with('query')
+            ->andReturn($stubbedQuery)
+            ->shouldReceive('getPost')
             ->andReturn($stubbedFormData)
             ->shouldReceive('getQuery')
             ->andReturn($stubbedQuery);
@@ -343,7 +352,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $licenceId = 111;
         $stubbedFormData = [
             'table' => 'foo',
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'query' => [
+                'page' => 1
+            ]
         ];
         $stubbedQuery = [
             'page' => 1
@@ -457,6 +469,9 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $mockRequest->shouldReceive('isPost')
             ->andReturn(true)
             ->shouldReceive('getPost')
+            ->with('query')
+            ->andReturn($stubbedQuery)
+            ->shouldReceive('getPost')
             ->andReturn($stubbedFormData)
             ->shouldReceive('getQuery')
             ->andReturn($stubbedQuery);
@@ -534,7 +549,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $licenceId = 111;
         $stubbedFormData = [
             'table' => 'foo',
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'query' => [
+                'page' => 1
+            ]
         ];
         $stubbedQuery = [
             'page' => 1
@@ -636,6 +654,9 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $mockRequest->shouldReceive('isPost')
             ->andReturn(true)
             ->shouldReceive('getPost')
+            ->with('query')
+            ->andReturn($stubbedQuery)
+            ->shouldReceive('getPost')
             ->andReturn($stubbedFormData)
             ->shouldReceive('getQuery')
             ->andReturn($stubbedQuery);
@@ -684,7 +705,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $licenceId = 111;
         $stubbedFormData = [
             'table' => 'foo',
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'query' => [
+                'page' => 1
+            ]
         ];
         $stubbedQuery = [
             'page' => 1
@@ -792,6 +816,9 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $mockRequest->shouldReceive('isPost')
             ->andReturn(true)
             ->shouldReceive('getPost')
+            ->with('query')
+            ->andReturn($stubbedQuery)
+            ->shouldReceive('getPost')
             ->andReturn($stubbedFormData)
             ->shouldReceive('getQuery')
             ->andReturn($stubbedQuery);
@@ -840,7 +867,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
         $licenceId = 111;
         $stubbedFormData = [
             'table' => 'foo',
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'query' => [
+                'page' => 1
+            ]
         ];
         $stubbedQuery = [
             'page' => 1
@@ -944,6 +974,9 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
 
         $mockRequest->shouldReceive('isPost')
             ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->with('query')
+            ->andReturn($stubbedQuery)
             ->shouldReceive('getPost')
             ->andReturn($stubbedFormData)
             ->shouldReceive('getQuery')

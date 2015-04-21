@@ -40,7 +40,10 @@ class TableBuilderTest extends MockeryTestCase
                 ? array(
                     'tables' => array(
                         'config' => array(__DIR__ . '/TestResources/'),
-                        'partials' => ''
+                        'partials' => array(
+                            'html' => '',
+                            'csv' => ''
+                        )
                     ),
                 )
                 : array())
@@ -2512,7 +2515,10 @@ class TableBuilderTest extends MockeryTestCase
         $config = [
             'tables' => [
                 'config' => [__DIR__ . '/TestResources/'],
-                'partials' => ''
+                'partials' => [
+                    'html' => '',
+                    'csv' => ''
+                ]
             ]
         ];
 
