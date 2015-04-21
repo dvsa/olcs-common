@@ -11,6 +11,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
+use CommonTest\Bootstrap;
 
 /**
  * Table Builder Test
@@ -30,7 +31,6 @@ class TableBuilderTest extends MockeryTestCase
 
     private function getMockServiceLocator($config = true)
     {
-
         $mockTranslator = $this->getMock('\stdClass', array('translate'));
         $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
         $mockControllerPluginManager = $this->getMock('\Zend\Mvc\Controller\PluginManager', array('get'));
@@ -2504,5 +2504,30 @@ class TableBuilderTest extends MockeryTestCase
             ->with('bar');
 
         $table->removeActions();
+    }
+
+    public function testGetEmptyMessage()
+    {
+        $message = 'foo';
+        $config = [
+            'tables' => [
+                'config' => [__DIR__ . '/TestResources/'],
+                'partials' => ''
+            ]
+        ];
+
+        $mockTranslator = m::mock();
+        $mockTranslator->shouldReceive('translate')
+            ->with($message)
+            ->andReturn($message);
+
+        $sm = Bootstrap::getServiceManager();
+        $sm->setService('Config', $config);
+        $sm->setService('translator', $mockTranslator);
+
+        $sut = new TableBuilder($sm);
+
+        $sut->setEmptyMessage($message);
+        $this->assertEquals($message, $sut->getEmptyMessage());
     }
 }

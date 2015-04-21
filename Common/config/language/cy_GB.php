@@ -2183,6 +2183,8 @@ return array(
     'transport-manager.convictionsandpenalties.table.conviction-date' => 'W Conviction Date',
     'transport-manager.convictionsandpenalties.table.empty' => 'W Has any person named in this application been
         convicted of any relevant offence which must be declared to the Traffic Commissioner?',
+    'transport-manager.convictionsandpenalties.table.empty.ni' => 'W Has any person named in this application been
+        convicted of any relevant offence which must be declared to the Department?',
     'transport-manager.convictionsandpenalties.table.name-of-court' => 'W Name of Court',
     'transport-manager.convictionsandpenalties.table.offence' => 'W Offence',
     'transport-manager.convictionsandpenalties.table.penalty' => 'W Penalty',

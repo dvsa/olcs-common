@@ -1316,6 +1316,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         return $content;
     }
 
+    public function setEmptyMessage($message)
+    {
+        $this->variables['empty_message'] = $message;
+    }
+
     public function getEmptyMessage()
     {
         $message = isset($this->variables['empty_message'])
