@@ -886,8 +886,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     protected function getTaskDescription($applicationId)
     {
-        $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
-        $applicationData = $applicationEntityService->getDataForValidating($applicationId);
+        $applicationData = $this->getApplicationDataForValidating($applicationId);
 
         if ($applicationData['isVariation'] === true) {
             $isUpgrade = $this->getServiceLocator()->get('Processing\VariationSection')
