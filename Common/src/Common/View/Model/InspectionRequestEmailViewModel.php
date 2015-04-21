@@ -32,59 +32,101 @@ class InspectionRequestEmailViewModel extends ViewModel
      */
     public function populate($inspectionRequest, $user, $peopleData, $workshops, $translator)
     {
-        $people = [];
-        if (isset($peopleData['Results']) && !empty($peopleData['Results'])) {
-            $people =  array_map(
-                function ($peopleResult) {
-                    return $peopleResult['person'];
-                },
-                $peopleData['Results']
-            );
-        }
-
-        $tradingNames = [];
-        if (!empty($inspectionRequest['licence']['organisation']['tradingNames'])) {
-            $tradingNames = array_map(
-                function ($tradingName) {
-                    return $tradingName['name'];
-                },
-                $inspectionRequest['licence']['organisation']['tradingNames']
-            );
-        }
-
         // use first workshop only
         $workshop = array_shift($workshops);
 
-        $requestDate = new \DateTime($inspectionRequest['requestDate']);
-        $dueDate =  new \DateTime($inspectionRequest['dueDate']);
-        $expiryDate = new \DateTime($inspectionRequest['licence']['expiryDate']);
+        if(isset($inspectionRequest['requestDate'])) {
+            $requestDate = new \DateTime($inspectionRequest['requestDate']);
+            $requestDate = $requestDate->format('d/m/Y H:i:s');
+        } else {
+            $requestDate = '';
+        }
+
+        if(isset($inspectionRequest['dueDate'])) {
+            $dueDate = new \DateTime($inspectionRequest['dueDate']);
+            $dueDate = $dueDate->format('d/m/Y H:i:s');
+        } else {
+            $dueDate = '';
+        }
+
+        if(isset($inspectionRequest['licence']['expiryDate'])) {
+            $expiryDate = new \DateTime($inspectionRequest['licence']['expiryDate']);
+            $expiryDate = $expiryDate->format('d/m/Y H:i:s');
+        } else {
+            $expiryDate = '';
+        }
 
         $data = [
-            'inspectionRequestId' => $inspectionRequest['id'],
-            'currentUserName' => $user['loginId'],
-            'currentUserEmail' => $user['emailAddress'],
-            'inspectionRequestDateRequested' => $requestDate->format('d/m/Y H:i:s'),
-            'inspectionRequestNotes' => $inspectionRequest['requestorNotes'],
-            'inspectionRequestDueDate' => $dueDate->format('d/m/Y H:i:s'),
-            'ocAddress' => $inspectionRequest['operatingCentre']['address'],
-            'inspectionRequestType' => $inspectionRequest['requestType']['description'],
-            'licenceNumber' => $inspectionRequest['licence']['licNo'],
+            'inspectionRequestId' => isset($inspectionRequest['id']) ? $inspectionRequest['id'] : '',
+
+            'currentUserName' => isset($user['loginId']) ? $user['loginId'] : '',
+
+            'currentUserEmail' => isset($user['emailAddress']) ? $user['emailAddress'] : '',
+
+            'inspectionRequestDateRequested' => $requestDate,
+
+            'inspectionRequestNotes' => isset($inspectionRequest['requestorNotes'])
+                ? $inspectionRequest['requestorNotes'] : '',
+
+            'inspectionRequestDueDate' => $dueDate,
+
+            'ocAddress' => isset($inspectionRequest['operatingCentre']['address'])
+                ? $inspectionRequest['operatingCentre']['address'] : null,
+
+            'inspectionRequestType' => isset($inspectionRequest['requestType']['description'])
+                ? $inspectionRequest['requestType']['description'] : '',
+
+            'licenceNumber' => isset($inspectionRequest['licence']['licNo'])
+                ? $inspectionRequest['licence']['licNo'] : '',
+
             'licenceType' => $this->getLicenceType($inspectionRequest, $translator),
+
             'totAuthVehicles' => $this->getTotAuthVehicles($inspectionRequest),
+
             'totAuthTrailers' => $this->getTotAuthTrailers($inspectionRequest),
-            'numberOfOperatingCentres' => count($inspectionRequest['licence']['operatingCentres']),
-            'expiryDate' => $expiryDate->format('d/m/Y'),
-            'operatorId' => $inspectionRequest['licence']['organisation']['id'],
-            'operatorName' => $inspectionRequest['licence']['organisation']['name'],
-            'operatorEmail' => $inspectionRequest['licence']['correspondenceCd']['emailAddress'],
-            'operatorAddress' => $inspectionRequest['licence']['correspondenceCd']['address'],
-            'contactPhoneNumbers' => $inspectionRequest['licence']['correspondenceCd']['phoneContacts'],
-            'tradingNames' => $tradingNames,
+
+            'numberOfOperatingCentres' => isset($inspectionRequest['licence']['operatingCentres'])
+                ? count($inspectionRequest['licence']['operatingCentres'])
+                : '',
+
+            'expiryDate' => $expiryDate,
+
+            'operatorId' => isset($inspectionRequest['licence']['organisation']['id'])
+                ? $inspectionRequest['licence']['organisation']['id']
+                : '',
+
+            'operatorName' => isset($inspectionRequest['licence']['organisation']['name'])
+                ? $inspectionRequest['licence']['organisation']['name']
+                : '',
+
+            'operatorEmail' => isset($inspectionRequest['licence']['correspondenceCd']['emailAddress'])
+                ? $inspectionRequest['licence']['correspondenceCd']['emailAddress']
+                : '',
+
+            'operatorAddress' => isset($inspectionRequest['licence']['correspondenceCd']['address'])
+                ? $inspectionRequest['licence']['correspondenceCd']['address']
+                : null,
+
+            'contactPhoneNumbers' => isset($inspectionRequest['licence']['correspondenceCd']['phoneContacts'])
+                ? $inspectionRequest['licence']['correspondenceCd']['phoneContacts']
+                : null,
+
+            'tradingNames' => $this->getTradingNames($inspectionRequest),
+
             'workshopIsExternal' => (isset($workshop['isExternal']) && $workshop['isExternal'] === 'Y'),
-            'safetyInspectionVehicles' => $inspectionRequest['licence']['safetyInsVehicles'],
-            'safetyInspectionTrailers' => $inspectionRequest['licence']['safetyInsTrailers'],
+
+            'safetyInspectionVehicles' => isset($inspectionRequest['licence']['safetyInsVehicles'])
+                ? $inspectionRequest['licence']['safetyInsVehicles']
+                : '',
+
+            'safetyInspectionTrailers' => isset($inspectionRequest['licence']['safetyInsTrailers'])
+                ? $inspectionRequest['licence']['safetyInsTrailers']
+                : '',
+
             'inspectionProvider' => isset($workshop['contactDetails']) ? $workshop['contactDetails'] : [],
-            'people' => $people,
+
+            'people' => $this->getPeopleFromPeopleData($peopleData),
+
             'otherLicences' => $this->getOtherLicences($inspectionRequest),
             'applicationOperatingCentres' => $this->getApplicationOperatingCentres($inspectionRequest),
         ];
@@ -96,26 +138,35 @@ class InspectionRequestEmailViewModel extends ViewModel
 
     protected function getTotAuthVehicles($inspectionRequest)
     {
+        $totAuthVehicles = '';
         if (!empty($inspectionRequest['application'])) {
-            return $inspectionRequest['application']['totAuthVehicles'];
+            $totAuthVehicles = $inspectionRequest['application']['totAuthVehicles'];
+        } elseif (isset($inspectionRequest['licence']['totAuthVehicles'])) {
+            $totAuthVehicles = $inspectionRequest['licence']['totAuthVehicles'];
         }
-        return $inspectionRequest['licence']['totAuthVehicles'];
+        return $totAuthVehicles;
     }
 
     protected function getTotAuthTrailers($inspectionRequest)
     {
+        $totAuthTrailers = '';
         if (!empty($inspectionRequest['application'])) {
-            return $inspectionRequest['application']['totAuthTrailers'];
+           $totAuthTrailers = $inspectionRequest['application']['totAuthTrailers'];
+        } elseif (isset($inspectionRequest['licence']['totAuthTrailers'])) {
+            $totAuthTrailers = $inspectionRequest['licence']['totAuthTrailers'];
         }
-        return $inspectionRequest['licence']['totAuthTrailers'];
+        return $totAuthTrailers;
     }
 
     protected function getLicenceType($inspectionRequest, $translator)
     {
+        $licenceType = '';
         if (!empty($inspectionRequest['application'])) {
-            return $translator->translate($inspectionRequest['application']['licenceType']['id']);
+            $licenceType =  $translator->translate($inspectionRequest['application']['licenceType']['id']);
+        } elseif (isset($inspectionRequest['licence']['licenceType']['id'])) {
+            $licenceType = $translator->translate($inspectionRequest['licence']['licenceType']['id']);
         }
-        return $translator->translate($inspectionRequest['licence']['licenceType']['id']);
+        return $licenceType;
     }
 
     protected function getOtherLicences($inspectionRequest)
@@ -165,5 +216,33 @@ class InspectionRequestEmailViewModel extends ViewModel
             return $aocs;
         }
         return [];
+    }
+
+    protected function getTradingNames($inspectionRequest)
+    {
+        $tradingNames = [];
+        if (!empty($inspectionRequest['licence']['organisation']['tradingNames'])) {
+            $tradingNames = array_map(
+                function ($tradingName) {
+                    return $tradingName['name'];
+                },
+                $inspectionRequest['licence']['organisation']['tradingNames']
+            );
+        }
+        return $tradingNames;
+    }
+
+    protected function getPeopleFromPeopleData($peopleData)
+    {
+        $people = [];
+        if (isset($peopleData['Results']) && !empty($peopleData['Results'])) {
+            $people =  array_map(
+                function ($peopleResult) {
+                    return $peopleResult['person'];
+                },
+                $peopleData['Results']
+            );
+        }
+        return $people;
     }
 }
