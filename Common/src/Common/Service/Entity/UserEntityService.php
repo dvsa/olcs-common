@@ -29,11 +29,17 @@ class UserEntityService extends AbstractEntityService
         'children' => [
             'contactDetails' => [
                 'children' => [
-                    'person'
+                    'person',
+                    'contactType'
                 ]
             ],
             'transportManager',
-            'team'
+            'team',
+            'userRoles' => [
+                'children' => [
+                    'role'
+                ]
+            ]
         ]
     ];
 
