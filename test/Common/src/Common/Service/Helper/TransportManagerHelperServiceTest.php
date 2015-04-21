@@ -438,6 +438,10 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
             'bar' => 'foo'
         ];
 
+        $otherConfig = [
+            'cake' => 'foo'
+        ];
+
         $expected = [
             'reviewTitle' => 'tm-review-title',
             'subTitle' => 'Foo ltd FO12345678/222',
@@ -452,6 +456,10 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
                 [
                     'header' => 'tm-review-responsibility',
                     'config' => $resConfig
+                ],
+                [
+                    'header' => 'tm-review-other-employment',
+                    'config' => $otherConfig
                 ]
             ]
         ];
@@ -460,9 +468,11 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $mockTma = m::mock();
         $mockTmMain = m::mock();
         $mockTmRes = m::mock();
+        $mockTmOther = m::mock();
         $this->sm->setService('Entity\TransportManagerApplication', $mockTma);
         $this->sm->setService('Review\TransportManagerMain', $mockTmMain);
         $this->sm->setService('Review\TransportManagerResponsibility', $mockTmRes);
+        $this->sm->setService('Review\TransportManagerOtherEmployment', $mockTmOther);
 
         // Expectations
         $mockTma->shouldReceive('getReviewData')
@@ -476,6 +486,10 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $mockTmRes->shouldReceive('getConfigFromData')
             ->with($stubbedData)
             ->andReturn($resConfig);
+
+        $mockTmOther->shouldReceive('getConfigFromData')
+            ->with($stubbedData)
+            ->andReturn($otherConfig);
 
         $this->assertEquals($expected, $this->sut->getReviewConfig($id));
     }
