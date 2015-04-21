@@ -98,8 +98,7 @@ class TransportManagerResponsibilityReviewService extends AbstractReviewService
     {
         $addresses = [];
 
-        foreach ($data['operatingCentres'] as $oc)
-        {
+        foreach ($data['operatingCentres'] as $oc) {
             $addresses[] = $this->formatShortAddress($oc['address']);
         }
 

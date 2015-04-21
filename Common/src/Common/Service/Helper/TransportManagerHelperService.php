@@ -200,7 +200,8 @@ class TransportManagerHelperService extends AbstractHelperService
     {
         return [
             'header' => 'tm-review-responsibility',
-            'config' => $this->getServiceLocator()->get('Review\TransportManagerResponsibility')->getConfigFromData($data)
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerResponsibility')
+                ->getConfigFromData($data)
         ];
     }
 }
