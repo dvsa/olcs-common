@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'tm-quick-action-print-form' => 'Print form',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -2122,8 +2121,18 @@ return array(
     'tm-details-view-form-link-text' => 'View form',
     'tm-previous-history-convictions-and-penalties' => 'Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => 'Revoked, Curtailed or Suspended Licences',
+    'tm-quick-action-print-form' => 'Print form',
     'tm-responsibilities-applications' => 'Applications',
     'tm-responsibilities-licences' => 'Licences',
+    'tm-review-main' => 'Main details',
+    'tm-review-main-birthDate' => 'Date of birth',
+    'tm-review-main-birthPlace' => 'Place of birth',
+    'tm-review-main-certificate' => 'Certificate of professional competence',
+    'tm-review-main-email' => 'Email address',
+    'tm-review-main-home-address' => 'Home address',
+    'tm-review-main-name' => 'Name',
+    'tm-review-main-no-files' => 'No certificates uploaded',
+    'tm-review-main-work-address' => 'Work address',
     'tm-review-title' => 'Transport manager form',
     'tm_application.table.status.current' => ' (Current)',
     'tm_application.table.status.new' => ' (New)',

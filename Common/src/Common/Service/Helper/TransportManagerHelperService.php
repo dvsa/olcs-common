@@ -173,15 +173,25 @@ class TransportManagerHelperService extends AbstractHelperService
             $data['application']['id']
         );
 
+        $sections = [];
+
+        $sections[] = $this->getMainDetailsReviewSection($data);
+
         return [
             'reviewTitle' => 'tm-review-title',
             'subTitle' => $subTitle,
-            'sections' => [
-                /*[
-                    'header' => 'tm-review-',
-                    'config' => $config
-                ]*/
-            ]
+            'settings' => [
+                'hide-count' => true
+            ],
+            'sections' => $sections
+        ];
+    }
+
+    protected function getMainDetailsReviewSection($data)
+    {
+        return [
+            'header' => 'tm-review-main',
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerMain')->getConfigFromData($data)
         ];
     }
 }

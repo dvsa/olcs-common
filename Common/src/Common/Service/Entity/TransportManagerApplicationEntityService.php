@@ -112,6 +112,31 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
                         ]
                     ]
                 ]
+            ],
+            'transportManager' => [
+                'children' => [
+                    'documents' => [
+                        'children' => [
+                            'category',
+                            'subCategory'
+                        ],
+                    ],
+                    'workCd' => [
+                        'children' => [
+                            'address'
+                        ]
+                    ],
+                    'homeCd' => [
+                        'children' => [
+                            'address',
+                            'person' => [
+                                'children' => [
+                                    'title'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ]
     ];
