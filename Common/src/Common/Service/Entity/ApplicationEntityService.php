@@ -420,6 +420,27 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ]
                 ]
             ],
+            'transport_managers' => [
+                'children' => [
+                    'transportManagers' => [
+                        'children' => [
+                            'transportManager' => [
+                                'children' => [
+                                    'homeCd' => [
+                                        'children' => [
+                                            'person' => [
+                                                'children' => [
+                                                    'title'
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
             'operating_centres' => [
                 'children' => [
                     'licence' => [
