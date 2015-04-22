@@ -84,14 +84,14 @@ class Advertisements
     public $adPlacedDate = null;
 
     /**
-     * @Form\Attributes({"id":"file", "class": "file-upload"})
+     * @Form\Name("file")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Options({
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements.file",
      *     "hint":
      * "application_operating-centres_authorisation-sub-action.advertisements.file.hint"
      * })
-     * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
      */
     public $file = null;
 }

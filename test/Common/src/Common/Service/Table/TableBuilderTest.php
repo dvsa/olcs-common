@@ -11,6 +11,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
+use CommonTest\Bootstrap;
 
 /**
  * Table Builder Test
@@ -30,10 +31,10 @@ class TableBuilderTest extends MockeryTestCase
 
     private function getMockServiceLocator($config = true)
     {
-
         $mockTranslator = $this->getMock('\stdClass', array('translate'));
         $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
         $mockControllerPluginManager = $this->getMock('\Zend\Mvc\Controller\PluginManager', array('get'));
+        $mockAuthService = $this->getMock('\stdClass', array('isGranted'));
 
         $servicesMap = [
             ['Config', true, ($config
@@ -47,6 +48,7 @@ class TableBuilderTest extends MockeryTestCase
             ],
             ['translator', true, $mockTranslator],
             ['ControllerPluginManager', true, $mockControllerPluginManager],
+            ['ZfcRbac\Service\AuthorizationService', true, $mockAuthService],
         ];
 
         $mockSm
@@ -1815,6 +1817,98 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
+     * Test renderHeaderColumn when incorrect permission set
+     */
+    public function testRenderHeaderColumnWhenPermissionWontAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['incorrectPermission']
+        );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $response = $table->renderHeaderColumn($column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderBodyColumn when incorrect permission set
+     */
+    public function testRenderBodyColumnWhenPermissionWontAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['incorrectPermission']
+        );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $response = $table->renderBodyColumn([], $column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderHeaderColumn when correct permission set
+     */
+    public function testRenderHeaderColumnWhenPermissionWillAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['correctPermission']
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent');
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $mockAuthService = $this->getMock('\StdClass', array('isGranted'));
+        $mockAuthService->expects($this->once())
+            ->method('isGranted')
+            ->willReturn(true);
+
+        $table->setAuthService($mockAuthService);
+
+        $response = $table->renderHeaderColumn($column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderBodyColumn when correct permission set
+     */
+    public function testRenderBodyColumnWhenPermissionWillAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['correctPermission']
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent');
+
+        $mockAuthService = $this->getMock('\StdClass', array('isGranted'));
+        $mockAuthService->expects($this->once())
+            ->method('isGranted')
+            ->willReturn(true);
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table->setAuthService($mockAuthService);
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $response = $table->renderBodyColumn([], $column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
      * Test renderBodyColumn With Empty Row With Empty Column
      */
     public function testRenderBodyColumnEmptyRowEmptyColumn()
@@ -2428,10 +2522,17 @@ class TableBuilderTest extends MockeryTestCase
         $settings = [];
         $row = [];
 
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with(m::type('string'))
+            ->andReturn(true);
+
         // Setup
         $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
         $sut = new TableBuilder($sm);
 
         $sut->setSettings($settings);
@@ -2454,10 +2555,17 @@ class TableBuilderTest extends MockeryTestCase
             'disabled' => $disabled
         ];
 
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with(m::type('string'))
+            ->andReturn(true);
+
         // Setup
         $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
         $sut = new TableBuilder($sm);
 
         $sut->setSettings($settings);
@@ -2504,5 +2612,35 @@ class TableBuilderTest extends MockeryTestCase
             ->with('bar');
 
         $table->removeActions();
+    }
+
+    public function testGetEmptyMessage()
+    {
+        $message = 'foo';
+        $config = [
+            'tables' => [
+                'config' => [__DIR__ . '/TestResources/'],
+                'partials' => ''
+            ]
+        ];
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with(m::type('string'))
+            ->andReturn(true);
+
+        $mockTranslator = m::mock();
+        $mockTranslator->shouldReceive('translate')
+            ->with($message)
+            ->andReturn($message);
+
+        $sm = Bootstrap::getServiceManager();
+        $sm->setService('Config', $config);
+        $sm->setService('translator', $mockTranslator);
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
+        $sut = new TableBuilder($sm);
+
+        $sut->setEmptyMessage($message);
+        $this->assertEquals($message, $sut->getEmptyMessage());
     }
 }

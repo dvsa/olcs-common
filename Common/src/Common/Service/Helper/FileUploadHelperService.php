@@ -220,6 +220,22 @@ class FileUploadHelperService extends AbstractHelperService
         $postData = $this->findSelectorData((array)$this->getRequest()->getPost(), $this->getSelector());
         $fileData = $this->findSelectorData((array)$this->getRequest()->getFiles(), $this->getSelector());
 
+        /**
+         * @TODO: these next two statements *are* temporary; the old MultipleFileUpload element groups
+         * all its inputs (including the file itself) under a nested 'file-controls' fieldset. The updated
+         * mechanism using form annotations and the MultipleFileUpload fieldset can't do that. However, to
+         * preserve BC we simply copy the top-level file data onto the expected 'file-controls' key to avoid
+         * disruption and to maintain both
+         *
+         * At some point we should nuke the MultipleFileUpload _element_ altogether and remove this
+         */
+        if (isset($postData) && !isset($postData['file-controls'])) {
+            $postData['file-controls'] = $postData;
+        }
+        if (isset($fileData) && !isset($fileData['file-controls'])) {
+            $fileData['file-controls'] = $fileData;
+        }
+
         if ($postData === null
             || $fileData === null
             || !isset($postData['file-controls']['upload'])
