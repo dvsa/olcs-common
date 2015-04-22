@@ -24,6 +24,8 @@ class TransportManagerResponsibilityReviewService extends AbstractReviewService
      */
     public function getConfigFromData(array $data = [])
     {
+        $hours = $this->translate('hours');
+
         return [
             'subSections' => [
                 [
@@ -53,31 +55,31 @@ class TransportManagerResponsibilityReviewService extends AbstractReviewService
                                 [
                                     [
                                         'label' => 'tm-review-responsibility-mon',
-                                        'value' => $data['hoursMon'] . ' hours'
+                                        'value' => $data['hoursMon'] . ' ' . $hours
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-tue',
-                                        'value' => $data['hoursTue'] . ' hours'
+                                        'value' => $data['hoursTue'] . ' ' . $hours
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-wed',
-                                        'value' => $data['hoursWed'] . ' hours'
+                                        'value' => $data['hoursWed'] . ' ' . $hours
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-thu',
-                                        'value' => $data['hoursThu'] . ' hours'
+                                        'value' => $data['hoursThu'] . ' ' . $hours
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-fri',
-                                        'value' => $data['hoursFri'] . ' hours'
+                                        'value' => $data['hoursFri'] . ' ' . $hours
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-sat',
-                                        'value' => $data['hoursSat'] . ' hours'
+                                        'value' => $data['hoursSat'] . ' ' . $hours
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-sun',
-                                        'value' => $data['hoursSun'] . ' hours'
+                                        'value' => $data['hoursSun'] . ' ' . $hours
                                     ]
                                 ],
                             ]

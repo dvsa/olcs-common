@@ -105,35 +105,49 @@ class TransportManagerResponsibilityReviewServiceTest extends MockeryTestCase
                                             [
                                                 'label' => 'tm-review-responsibility-isOwner',
                                                 'value' => 'Yes'
-                                            ],
+                                            ]
+                                        ],
+                                    ]
+                                ],
+                                [
+                                    'header' => 'tm-review-responsibility-hours-per-week-header',
+                                    'multiItems' => [
+                                        [
                                             [
                                                 'label' => 'tm-review-responsibility-mon',
-                                                'value' => 2
+                                                'value' => '2 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-tue',
-                                                'value' => 3
+                                                'value' => '3 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-wed',
-                                                'value' => 4
+                                                'value' => '4 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-thu',
-                                                'value' => 5
+                                                'value' => '5 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-fri',
-                                                'value' => 6
+                                                'value' => '6 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-sat',
-                                                'value' => 7
+                                                'value' => '7 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-sun',
-                                                'value' => 8
-                                            ],
+                                                'value' => '8 hours-translated'
+                                            ]
+                                        ],
+                                    ]
+                                ],
+                                [
+                                    'header' => 'tm-review-responsibility-additional-info-header',
+                                    'multiItems' => [
+                                        [
                                             [
                                                 'label' => 'tm-review-responsibility-additional-info',
                                                 'value' => 'Foo bar cake'
@@ -239,35 +253,49 @@ class TransportManagerResponsibilityReviewServiceTest extends MockeryTestCase
                                             [
                                                 'label' => 'tm-review-responsibility-isOwner',
                                                 'value' => 'Yes'
-                                            ],
+                                            ]
+                                        ],
+                                    ]
+                                ],
+                                [
+                                    'header' => 'tm-review-responsibility-hours-per-week-header',
+                                    'multiItems' => [
+                                        [
                                             [
                                                 'label' => 'tm-review-responsibility-mon',
-                                                'value' => 2
+                                                'value' => '2 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-tue',
-                                                'value' => 3
+                                                'value' => '3 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-wed',
-                                                'value' => 4
+                                                'value' => '4 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-thu',
-                                                'value' => 5
+                                                'value' => '5 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-fri',
-                                                'value' => 6
+                                                'value' => '6 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-sat',
-                                                'value' => 7
+                                                'value' => '7 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-sun',
-                                                'value' => 8
-                                            ],
+                                                'value' => '8 hours-translated'
+                                            ]
+                                        ],
+                                    ]
+                                ],
+                                [
+                                    'header' => 'tm-review-responsibility-additional-info-header',
+                                    'multiItems' => [
+                                        [
                                             [
                                                 'label' => 'tm-review-responsibility-additional-info',
                                                 'value' => 'Foo bar cake'
@@ -390,35 +418,49 @@ class TransportManagerResponsibilityReviewServiceTest extends MockeryTestCase
                                             [
                                                 'label' => 'tm-review-responsibility-isOwner',
                                                 'value' => 'Yes'
-                                            ],
+                                            ]
+                                        ],
+                                    ]
+                                ],
+                                [
+                                    'header' => 'tm-review-responsibility-hours-per-week-header',
+                                    'multiItems' => [
+                                        [
                                             [
                                                 'label' => 'tm-review-responsibility-mon',
-                                                'value' => 2
+                                                'value' => '2 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-tue',
-                                                'value' => 3
+                                                'value' => '3 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-wed',
-                                                'value' => 4
+                                                'value' => '4 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-thu',
-                                                'value' => 5
+                                                'value' => '5 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-fri',
-                                                'value' => 6
+                                                'value' => '6 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-sat',
-                                                'value' => 7
+                                                'value' => '7 hours-translated'
                                             ],
                                             [
                                                 'label' => 'tm-review-responsibility-sun',
-                                                'value' => 8
-                                            ],
+                                                'value' => '8 hours-translated'
+                                            ]
+                                        ],
+                                    ]
+                                ],
+                                [
+                                    'header' => 'tm-review-responsibility-additional-info-header',
+                                    'multiItems' => [
+                                        [
                                             [
                                                 'label' => 'tm-review-responsibility-additional-info',
                                                 'value' => 'Foo bar cake'

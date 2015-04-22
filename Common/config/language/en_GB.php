@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'hours' => 'hours',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
