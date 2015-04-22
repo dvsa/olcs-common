@@ -59,6 +59,7 @@ class EmailTest extends MockeryTestCase
                     'to'      => $to,
                     'subject' => $subject,
                     'body'    => $body,
+                    'html'    => false,
                 ]
             )
             ->once()
@@ -66,5 +67,38 @@ class EmailTest extends MockeryTestCase
 
         // assertions
         $this->assertTrue($this->sut->sendEmail($from, $to, $subject, $body));
+    }
+
+    public function testSendHtmlEmail()
+    {
+        // stub data
+        $from    = 'from@example.com';
+        $to      = 'to@example.com';
+        $subject = 'test';
+        $body    = 'foo';
+        $html    = '1';
+
+        // mocks
+        $restHelperMock = m::mock();
+        $this->sm->setService('Helper\Rest', $restHelperMock);
+
+        // expectations
+        $restHelperMock
+            ->shouldReceive('sendPost')
+            ->with(
+                "email\\",
+                [
+                    'from'    => $from,
+                    'to'      => $to,
+                    'subject' => $subject,
+                    'body'    => $body,
+                    'html'    => $html,
+                ]
+            )
+            ->once()
+            ->andReturn(true);
+
+        // assertions
+        $this->assertTrue($this->sut->sendEmail($from, $to, $subject, $body, $html));
     }
 }
