@@ -254,7 +254,6 @@ return array(
             'ApplicationTransportManagerAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter',
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
-            'Email' => 'Common\Service\Email\EmailToTmpFile',
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
