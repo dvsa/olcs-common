@@ -1072,7 +1072,8 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'children' => [
                 'licenceType',
                 'status',
-                'goodsOrPsv'
+                'goodsOrPsv',
+                'enforcementArea'
             ]
         ];
         $valid = [
