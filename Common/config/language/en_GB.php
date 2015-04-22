@@ -983,7 +983,7 @@ return array(
     'internal-application-refuse-confirm' => 'Are you sure you want to refuse this application?',
     'internal-application-refuse-title' => 'Refuse application',
     'internal-application-revive-application-confirm' => 'Are you sure you want to revive this application?',
-    'internal-application-revive-application-title' => 'Reset to granted ',
+    'internal-application-revive-application-title' => 'Revive Application',
     'internal-application-withdraw-title' => 'Withdraw application',
     'internal-crud-event-history' => 'History',
     'internal-external' => 'Internal/External',

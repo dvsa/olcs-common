@@ -987,7 +987,7 @@ return array(
     'internal-application-refuse-confirm' => 'W Are you sure you want to refuse this application?',
     'internal-application-refuse-title' => 'W Refuse application',
     'internal-application-revive-application-confirm' => 'W Are you sure you want to revive this application?',
-    'internal-application-revive-application-title' => 'W Reset to granted ',
+    'internal-application-revive-application-title' => 'W Revive Application',
     'internal-application-withdraw-title' => 'W Withdraw application',
     'internal-crud-event-history' => 'W History',
     'internal-external' => 'W Internal/External',
