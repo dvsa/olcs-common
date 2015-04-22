@@ -768,6 +768,16 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
             '-psv',
             FormHelperService::ALTER_LABEL_APPEND
         );
+
+        // if PSV restricted licence, then add validtor max vehicles is two
+        $typeOfLicence = $this->getTypeOfLicenceData();
+        if ($typeOfLicence['licenceType'] === \Common\Service\Entity\LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+            $newValidator = new \Zend\Validator\LessThan(
+                ['max' => 3, 'message' => 'OperatingCentreVehicleAuthorisationValidator.too-high-psv-r']
+            );
+
+            $formHelper->attachValidator($form, 'data->noOfVehiclesRequired', $newValidator);
+        }
     }
 
     /**
