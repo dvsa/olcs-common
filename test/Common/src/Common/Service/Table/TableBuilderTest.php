@@ -1817,12 +1817,12 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * Test renderHeaderColumn when disabled
+     * Test renderHeaderColumn when incorrect permission set
      */
     public function testRenderHeaderColumnWhenPermissionWontAllow()
     {
         $column = array(
-            'permissionRequisites' => ['correctPermission']
+            'permissionRequisites' => ['incorrectPermission']
         );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -1833,15 +1833,75 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
-     * Test renderBodyColumn when disabled
+     * Test renderBodyColumn when incorrect permission set
      */
     public function testRenderBodyColumnWhenPermissionWontAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['incorrectPermission']
+        );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $response = $table->renderBodyColumn([], $column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderHeaderColumn when correct permission set
+     */
+    public function testRenderHeaderColumnWhenPermissionWillAllow()
     {
         $column = array(
             'permissionRequisites' => ['correctPermission']
         );
 
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent');
+
         $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $mockAuthService = $this->getMock('\StdClass', array('isGranted'));
+        $mockAuthService->expects($this->once())
+            ->method('isGranted')
+            ->willReturn(true);
+
+        $table->setAuthService($mockAuthService);
+
+        $response = $table->renderHeaderColumn($column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderBodyColumn when correct permission set
+     */
+    public function testRenderBodyColumnWhenPermissionWillAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['correctPermission']
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent');
+
+        $mockAuthService = $this->getMock('\StdClass', array('isGranted'));
+        $mockAuthService->expects($this->once())
+            ->method('isGranted')
+            ->willReturn(true);
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table->setAuthService($mockAuthService);
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
 
         $response = $table->renderBodyColumn([], $column);
 
