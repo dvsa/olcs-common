@@ -18,7 +18,7 @@ class MultipleFileUpload
      * })
      * @Form\Options({
      *     "value": "Attach file(s)",
-     *     "hint": "20MB maximum file size. PDF, DOC, JPG, PNG or GIF"
+     *     "hint": "PDF, DOC, JPG, PNG or GIF"
      * })
      * @Form\Type("\Common\Form\Elements\Types\AttachFilesButton")
      */

@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Entity\User;
+
 /**
  * TxcInbox Service
  *
@@ -46,14 +48,33 @@ class TxcInboxEntityService extends AbstractEntityService
         ]
     ];
 
-    public function fetchBusRegDocuments($id)
+    /**
+     * Fetch Bus reg documents. If localAuthority is set, filter by local authority and file_read = 0.
+     * If not set, add WHERE local authority IS NULL to retrieve the organisation record (?!)
+     *
+     * @note Each busReg set of documents will have a record for all 3 documents stored against each local authority.
+     * PLUS one record where local authority IS NULL.
+     *
+     * @param $id
+     * @param null $localAuthority
+     * @return array
+     */
+    public function fetchBusRegDocuments($id, $localAuthority = null)
     {
         $documents = [];
 
         $params = [
             'busReg' => $id,
-            'localAuthority' => 'NULL'
+            'sort'  => 'id',
+            'order' => 'DESC'
         ];
+
+        if (empty($localAuthority)) {
+            $params['localAuthority'] = 'NULL';
+        } else {
+            $params['localAuthority'] = $localAuthority['id'];
+            $params['fileRead'] = 0;
+        }
 
         $txcInboxEntries =  $this->getList($params, $this->listBundle);
 

@@ -746,6 +746,8 @@ return array(
     'company-registration-form-label-trade-business' => 'W Trade/business',
     'company-registration-form-label-trading-name' => 'W Trading name',
     'company_number.length.validation.error' => 'W The input must be 8 characters long',
+    'company_number.search_error.error' => 'W Sorry, company data could not be retrieved at this time, please try again
+        or enter your details manually below',
     'company_number.search_no_results.error' => 'W Sorry, we couldn\'t find any matching companies, please try again or
         enter your details manually below',
     'companyname' => 'W Company Name',
@@ -888,6 +890,7 @@ return array(
     'edit-condition' => 'W Edit condition',
     'edit-conviction' => 'W Edit Conviction',
     'edit-undertaking' => 'W Edit undertaking',
+    'email.transport-manager-complete-digital-form.subject' => 'W Request for transport manager details',
     'end-date' => 'W End date',
     'entity-details' => 'W Entity details',
     'entity-type' => 'W Entity type',
@@ -984,7 +987,7 @@ return array(
     'internal-application-refuse-confirm' => 'W Are you sure you want to refuse this application?',
     'internal-application-refuse-title' => 'W Refuse application',
     'internal-application-revive-application-confirm' => 'W Are you sure you want to revive this application?',
-    'internal-application-revive-application-title' => 'W Reset to granted ',
+    'internal-application-revive-application-title' => 'W Revive Application',
     'internal-application-withdraw-title' => 'W Withdraw application',
     'internal-crud-event-history' => 'W History',
     'internal-external' => 'W Internal/External',
@@ -1769,6 +1772,11 @@ return array(
     'review-people' => 'W People',
     'review-safety' => 'W Safety',
     'review-taxi_phv' => 'W Taxi PHV',
+    'review-transport-manager-added-title' => 'W Transport managers added',
+    'review-transport-manager-deleted-title' => 'W Transport managers removed',
+    'review-transport-manager-dob' => 'W Date of birth',
+    'review-transport-manager-email' => 'W Email address',
+    'review-transport-manager-updated-title' => 'W Transport managers updated',
     'review-transport_managers' => 'W Transport managers',
     'review-transport_managers_delete' => 'W Are you sure you want to remove the selected transport manager(s) from the
         application?',
@@ -2159,6 +2167,8 @@ return array(
     'transport-manager-details-title-value-ms' => 'W Ms',
     'transport-manager-details-type' => 'W Type',
     'transport-manager-details-work-address' => 'W Work Address',
+    'transport-manager-hours-per-week-validation-message' => 'W You must enter the hours per week you will spend on your
+        duties',
     'transport-manager.competences.form.country' => 'W Country',
     'transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
     'transport-manager.competences.form.qualification-type' => 'W Qualification type',
@@ -2176,6 +2186,8 @@ return array(
     'transport-manager.convictionsandpenalties.table.conviction-date' => 'W Conviction Date',
     'transport-manager.convictionsandpenalties.table.empty' => 'W Has any person named in this application been
         convicted of any relevant offence which must be declared to the Traffic Commissioner?',
+    'transport-manager.convictionsandpenalties.table.empty.ni' => 'W Has any person named in this application been
+        convicted of any relevant offence which must be declared to the Department?',
     'transport-manager.convictionsandpenalties.table.name-of-court' => 'W Name of Court',
     'transport-manager.convictionsandpenalties.table.offence' => 'W Offence',
     'transport-manager.convictionsandpenalties.table.penalty' => 'W Penalty',

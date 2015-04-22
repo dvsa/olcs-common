@@ -102,6 +102,31 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
+    protected $contactApplicationBundle = [
+        'children' => [
+            'tmApplicationStatus',
+            'application' => [
+                'children' => [
+                    'status',
+                    'licence' => [
+                        'children' => [
+                            'organisation'
+                        ]
+                    ]
+                ]
+            ],
+            'transportManager' => [
+                'children' => [
+                    'homeCd' => [
+                        'children' => [
+                            'person',
+                        ]
+                    ],
+                ]
+            ],
+        ]
+    ];
+
     public function getGrantDataForApplication($applicationId)
     {
         return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
@@ -225,5 +250,16 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ];
 
         $this->forceUpdate($tmaId, $data);
+    }
+
+    /**
+     * Get contact details and application details for a Transport Manager Application
+     *
+     * @param int $tmaId Transport Manager Application Id
+     * @return array
+     */
+    public function getContactApplicationDetails($tmaId)
+    {
+        return $this->get($tmaId, $this->contactApplicationBundle);
     }
 }

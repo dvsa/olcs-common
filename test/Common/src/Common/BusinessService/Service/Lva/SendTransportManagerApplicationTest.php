@@ -63,10 +63,13 @@ class SendTransportManagerApplicationTest extends MockeryTestCase
         $mockUser = m::mock();
         $mockPerson = m::mock();
         $mockTma = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockTmCompleteForm = m::mock();
+        $mockResponse = m::mock();
 
         $this->sm->setService('Entity\User', $mockUser);
         $this->sm->setService('Entity\Person', $mockPerson);
         $this->bsm->setService('Lva\TransportManagerApplicationForUser', $mockTma);
+        $this->sm->setService('Email\TransportManagerCompleteDigitalForm', $mockTmCompleteForm);
 
         // Expectations
         $mockUser->shouldReceive('getUserDetails')
@@ -81,8 +84,16 @@ class SendTransportManagerApplicationTest extends MockeryTestCase
         $mockTma->shouldReceive('process')
             ->once()
             ->with(['userId' => 111, 'applicationId' => 222])
-            ->andReturn('RESPONSE');
+            ->andReturn($mockResponse);
+        $mockResponse->shouldReceive('getData')
+            ->with()
+            ->once()
+            ->andReturn(['linkId' => 765]);
 
-        $this->assertEquals('RESPONSE', $this->sut->process($params));
+        $mockTmCompleteForm->shouldReceive('send')
+            ->with(765)
+            ->once();
+
+        $this->assertEquals($mockResponse, $this->sut->process($params));
     }
 }
