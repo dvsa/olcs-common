@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'admin-continuations-title' => 'Continuations',
+    'admin-generate-continuations-title' => 'Generate continuations',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
