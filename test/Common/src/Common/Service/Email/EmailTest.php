@@ -3,7 +3,7 @@
 /**
  * Email service test
  *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Dan Eggleston <dan@stolenegg.com>
  */
 namespace CommonTest\Service\Email;
 
@@ -15,7 +15,7 @@ use CommonTest\Bootstrap;
 /**
  * Email service test
  *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Dan Eggleston <dan@stolenegg.com>
  */
 class EmailTest extends MockeryTestCase
 {
