@@ -19,7 +19,7 @@ use Zend\Form\Element;
 use Zend\Form\Element\DateSelect;
 use Zend\InputFilter\Input;
 use Zend\View\Model\ViewModel;
-use Zend\I18n\Validator\Postcode as PostcodeValidator;
+use Zend\I18n\Validator\PostCode as PostcodeValidator;
 
 /**
  * Form Helper Service
