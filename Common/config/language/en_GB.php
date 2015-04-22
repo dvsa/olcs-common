@@ -884,6 +884,7 @@ return array(
     'edit-condition' => 'Edit condition',
     'edit-conviction' => 'Edit Conviction',
     'edit-undertaking' => 'Edit undertaking',
+    'email.transport-manager-complete-digital-form.subject' => 'Request for transport manager details',
     'end-date' => 'End date',
     'entity-details' => 'Entity details',
     'entity-type' => 'Entity type',

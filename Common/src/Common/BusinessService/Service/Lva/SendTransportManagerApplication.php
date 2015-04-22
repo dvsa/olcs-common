@@ -2,6 +2,8 @@
 
 /**
  * Send Transport Manager Application
+ * NB This service should only be called by selfserve as it uses a selfservce Email sending service
+ * @todo Move this service into selfserve
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -50,7 +52,13 @@ class SendTransportManagerApplication implements
 
         unset($params['dob']);
 
-        return $this->getBusinessServiceManager()->get('Lva\TransportManagerApplicationForUser')
+        $response = $this->getBusinessServiceManager()->get('Lva\TransportManagerApplicationForUser')
             ->process($params);
+
+        // send an email to the Transport Manager
+        $tmApplicationId = $response->getData()['linkId'];
+        $this->getServiceLocator()->get('Email\TransportManagerCompleteDigitalForm')->send($tmApplicationId);
+
+        return $response;
     }
 }
