@@ -746,6 +746,8 @@ return array(
     'company-registration-form-label-trade-business' => 'W Trade/business',
     'company-registration-form-label-trading-name' => 'W Trading name',
     'company_number.length.validation.error' => 'W The input must be 8 characters long',
+    'company_number.search_error.error' => 'W Sorry, company data could not be retrieved at this time, please try again
+        or enter your details manually below',
     'company_number.search_no_results.error' => 'W Sorry, we couldn\'t find any matching companies, please try again or
         enter your details manually below',
     'companyname' => 'W Company Name',
