@@ -35,22 +35,4 @@ class Email implements ServiceLocatorAwareInterface
         $data = compact('from', 'to', 'subject', 'body');
         return $this->sendPost('email\\', $data);
     }
-
-    /**
-     * Dump email to a temporary file and log its location, useful for dev
-     */
-    protected function sendEmailToTmpFile($from, $to, $subject, $body)
-    {
-        $filename = tempnam(sys_get_temp_dir(), 'email_');
-
-        $content = <<<EMAIL
-From: $from
-To: $to
-Subject: $subject
-
-$body
-EMAIL;
-        file_put_contents($filename, $content);
-        $this->getServiceLocator()->get('Zend\Log')->info("Email logged to ".$filename);
-    }
 }
