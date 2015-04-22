@@ -1079,7 +1079,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'totAuthLargeVehicles' => null,
                 'licenceType' => null,
                 'goodsOrPsv' => null,
-                'niFlag' => null
+                'niFlag' => null,
+                'isVariation' => null,
             ]
         );
     }
