@@ -2236,10 +2236,12 @@ return array(
     'transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be responsible for?',
     'transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
     'transport-managers' => 'Transport Managers',
-    'transport-managers.progress.1' => 'The Transport Manager has completed their application',
-    'transport-managers.progress.2' => 'The Transport Manager has verified thier identity',
-    'transport-managers.progress.3' => 'An owner or Director of the business has approved the application and submitted
-        it to the Central Licensing office.',
+    'transport-managers.progress.1' => 'The Transport Manager has completed the form',
+    'transport-managers.progress.1.isTm' => 'You have completed the form',
+    'transport-managers.progress.2' => 'The Transport Manager has submitted the form for the licenced operator to
+        review',
+    'transport-managers.progress.2.isTm' => 'You have submitted the form for the licenced operator to review',
+    'transport-managers.progress.3' => 'The licence operator has approved and submitted the form online',
     'transport_manager.responsibilities.other_licence' => 'other licence',
     'transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
