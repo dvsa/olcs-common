@@ -24,16 +24,16 @@ class TxcInboxEntityServiceTest extends AbstractEntityServiceTestCase
     }
 
     /**
-     * Test fetchDocuments for no localAuthority or organisation
+     * Test fetchDocuments for no localAuthority (same as testing for organisation)
      * @group entity_services
      */
     public function testFetchBusRegDocumentsNoLocalAuthority()
     {
-        $params = [
+        $restParams = [
             'busReg' => 123,
-            'sort' => 'createdOn',
-            'order' => 'DESC'
-
+            'sort' => 'id',
+            'order' => 'DESC',
+            'localAuthority' => 'NULL',
         ];
 
         $mockDocs = [
@@ -47,10 +47,10 @@ class TxcInboxEntityServiceTest extends AbstractEntityServiceTestCase
             ]
         ];
 
-        $this->expectOneRestCall('TxcInbox', 'GET', $params)
+        $this->expectOneRestCall('TxcInbox', 'GET', $restParams)
             ->will($this->returnValue($mockDocs));
 
-        $result = $this->sut->fetchBusRegDocuments($params['busReg']);
+        $result = $this->sut->fetchBusRegDocuments($restParams['busReg'], null);
 
         $this->assertCount(3, $result);
         $this->assertTrue(in_array('RD', $result));
@@ -68,11 +68,10 @@ class TxcInboxEntityServiceTest extends AbstractEntityServiceTestCase
         $params = [
             'busReg' => 123,
             'localAuthority' => 4,
-            'sort' => 'createdOn',
+            'sort' => 'id',
             'order' => 'DESC',
             'fileRead' => 0
         ];
-
         $mockDocs = [
             'Count' => 3,
             'Results' => [
@@ -104,8 +103,8 @@ class TxcInboxEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $params = [
             'busReg' => 123,
-            'organisation' => 6,
-            'sort' => 'createdOn',
+            'sort' => 'id',
+            'localAuthority' => 'NULL',
             'order' => 'DESC'
         ];
 
@@ -123,7 +122,7 @@ class TxcInboxEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('TxcInbox', 'GET', $params)
             ->will($this->returnValue($mockDocs));
 
-        $result = $this->sut->fetchBusRegDocuments($params['busReg'], null, ['id' => $params['organisation']]);
+        $result = $this->sut->fetchBusRegDocuments($params['busReg'], null);
 
         $this->assertCount(3, $result);
         $this->assertTrue(in_array('RD', $result));
