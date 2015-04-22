@@ -1053,4 +1053,134 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getEnforcementArea(111));
     }
+
+    /**
+     * @group licenceEntityService
+     */
+    public function testGetOtherActiveLicences()
+    {
+        $licenceId = 1;
+        $organisationId = 2;
+        $headerBundle = [
+            'children' => [
+                'organisation',
+                'status',
+                'goodsOrPsv'
+            ]
+        ];
+        $overviewBundle = [
+            'children' => [
+                'licenceType',
+                'status',
+                'goodsOrPsv'
+            ]
+        ];
+        $valid = [
+            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+            LicenceEntityService::LICENCE_STATUS_VALID,
+            LicenceEntityService::LICENCE_STATUS_CURTAILED
+        ];
+        $licenceHeader = [
+            'organisation' => ['id' => $organisationId],
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_PSV]
+        ];
+        $query = [
+            'organisation' => $organisationId,
+            'status' => 'IN ["' . implode('","', $valid) . '"]',
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+            'licenceType' => '!= ' . LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED,
+            'limit' => 'all'
+        ];
+        $results = [
+            2 => '123',
+            3 => '456'
+        ];
+        $response = [
+            'Results' => [
+                ['id' => 2, 'licNo' => '123'],
+                ['id' => 3, 'licNo' => '456']
+            ]
+        ];
+        $this->expectedRestCallInOrder('Licence', 'GET', $licenceId, $headerBundle)
+            ->will($this->returnValue($licenceHeader));
+
+        $this->expectedRestCallInOrder('Licence', 'GET', $query, $overviewBundle)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($results, $this->sut->getOtherActiveLicences($licenceId));
+    }
+
+    /**
+     * @group licenceEntityService
+     */
+    public function testGetLicenceWithVehicles()
+    {
+        $licenceId = 1;
+        $bundle = [
+            'children' => [
+                'licenceVehicles' => [
+                    'children' => [
+                        'vehicle',
+                        'goodsDiscs'
+                    ],
+                    'criteria' => [
+                        'removalDate' => 'NULL'
+                    ]
+                ],
+                'goodsOrPsv'
+            ]
+        ];
+        $query = [
+            'id' => $licenceId,
+            'limit' => 'all'
+        ];
+        $this->expectOneRestCall('Licence', 'GET', $query, $bundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getLicenceWithVehicles($licenceId));
+    }
+
+    /**
+     * @group licenceEntityService1
+     */
+    public function testGetVehiclesIdsByLicenceVehiclesIds()
+    {
+        $licenceId = 1;
+        $bundle = [
+            'children' => [
+                'licenceVehicles' => [
+                    'children' => [
+                        'vehicle',
+                        'goodsDiscs'
+                    ],
+                    'criteria' => [
+                        'removalDate' => 'NULL'
+                    ]
+                ],
+                'goodsOrPsv'
+            ]
+        ];
+        $query = [
+            'id' => $licenceId,
+            'limit' => 'all'
+        ];
+        $ids = [
+            1, 2, 3
+        ];
+        $response = [
+            'licenceVehicles' => [
+                ['id' => 1, 'vehicle' => ['id' => 11]],
+                ['id' => 2, 'vehicle' => ['id' => 12]],
+                ['id' => 4, 'vehicle' => ['id' => 14]]
+            ]
+        ];
+        $vehicles = [
+            11 => 11,
+            12 => 12
+        ];
+        $this->expectOneRestCall('Licence', 'GET', $query, $bundle)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($vehicles, $this->sut->getVehiclesIdsByLicenceVehiclesIds($licenceId, $ids));
+    }
 }

@@ -286,4 +286,45 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             )
         );
     }
+
+    public function testSmallTransferAction()
+    {
+        $this->sut
+            ->shouldReceive('transferVehicles')
+            ->once()
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->smallTransferAction());
+    }
+
+    public function testMediumlTransferAction()
+    {
+        $this->sut
+            ->shouldReceive('transferVehicles')
+            ->once()
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->mediumTransferAction());
+    }
+
+    public function testLargelTransferAction()
+    {
+        $this->sut
+            ->shouldReceive('transferVehicles')
+            ->once()
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->largeTransferAction());
+    }
+
+    public function testRenderForm()
+    {
+        $this->sut
+            ->shouldReceive('render')
+            ->with('vehicles_psv', 'form')
+            ->once()
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->renderForm('form'));
+    }
 }

@@ -87,4 +87,17 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
             )
         );
     }
+
+    /**
+     * Remove transfer button
+     *
+     * @param $table Common\Service\Table\TableBuilde
+     * @param int $licenceId
+     * @return Common\Service\Table\TableBuilde
+     */
+    public function alterVehcileTable($table, $licenceId)
+    {
+        $table->removeAction('transfer');
+        return $table;
+    }
 }

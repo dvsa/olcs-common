@@ -1292,6 +1292,14 @@ return array(
     'licence.surrender' => 'Surrender licence',
     'licence.variation' => 'Create variation',
     'licence.variation.confirmation.text' => 'Are you sure you want to create a variation application?',
+    'licence.vehicles_transfer.form.licence' => 'To which licence would you like to transfer the selected vehicle(s)?',
+    'licence.vehicles_transfer.form.message_already_on_licence' => 'These vehicles: %s are already on licence %s',
+    'licence.vehicles_transfer.form.message_already_on_licence_singular' => 'This vehicle: %s is already on licence %s',
+    'licence.vehicles_transfer.form.message_empty' => 'You must select a licence to which to transfer the vehicle(s)',
+    'licence.vehicles_transfer.form.message_exceed' => 'Transferring these vehicles would exceed the vehicle authority
+        on licence %s',
+    'licence.vehicles_transfer.form.transfer_vehicles' => 'Transfer vehicless',
+    'licence.vehicles_transfer.form.vehicles_transfered' => 'The selected vehicle(s) have been transferred',
     'licence_goods-trailers_trailer.form.add.trailernumber' => 'Trailer Number',
     'licence_goods-trailers_trailer.table.guidance' => 'I undertake that the trailers specified are in operation and
         that the list is regularly reviewed.',
@@ -2106,6 +2114,7 @@ return array(
     'trafficAreaSet.trafficArea' => 'Traffic area',
     'trailer' => 'Trailer',
     'trailer-count' => '%s trailers',
+    'transfer.button' => 'Transfer',
     'transport-manager' => 'Transport Manager',
     'transport-manager-details-cancel' => 'Cancel',
     'transport-manager-details-dob' => 'Date of Birth',
