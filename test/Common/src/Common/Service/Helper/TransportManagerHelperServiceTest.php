@@ -442,6 +442,14 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
             'cake' => 'foo'
         ];
 
+        $convictionConfig = [
+            'cake' => 'bar'
+        ];
+
+        $licenceConfig = [
+            'foo' => 'cake'
+        ];
+
         $expected = [
             'reviewTitle' => 'tm-review-title',
             'subTitle' => 'Foo ltd FO12345678/222',
@@ -460,6 +468,14 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
                 [
                     'header' => 'tm-review-other-employment',
                     'config' => $otherConfig
+                ],
+                [
+                    'header' => 'tm-review-previous-conviction',
+                    'config' => $convictionConfig
+                ],
+                [
+                    'header' => 'tm-review-previous-licence',
+                    'config' => $licenceConfig
                 ]
             ]
         ];
@@ -469,10 +485,14 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $mockTmMain = m::mock();
         $mockTmRes = m::mock();
         $mockTmOther = m::mock();
+        $mockTmConviction = m::mock();
+        $mockTmLicences = m::mock();
         $this->sm->setService('Entity\TransportManagerApplication', $mockTma);
         $this->sm->setService('Review\TransportManagerMain', $mockTmMain);
         $this->sm->setService('Review\TransportManagerResponsibility', $mockTmRes);
         $this->sm->setService('Review\TransportManagerOtherEmployment', $mockTmOther);
+        $this->sm->setService('Review\TransportManagerPreviousConviction', $mockTmConviction);
+        $this->sm->setService('Review\TransportManagerPreviousLicence', $mockTmLicences);
 
         // Expectations
         $mockTma->shouldReceive('getReviewData')
@@ -490,6 +510,14 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $mockTmOther->shouldReceive('getConfigFromData')
             ->with($stubbedData)
             ->andReturn($otherConfig);
+
+        $mockTmConviction->shouldReceive('getConfigFromData')
+            ->with($stubbedData)
+            ->andReturn($convictionConfig);
+
+        $mockTmLicences->shouldReceive('getConfigFromData')
+            ->with($stubbedData)
+            ->andReturn($licenceConfig);
 
         $this->assertEquals($expected, $this->sut->getReviewConfig($id));
     }
