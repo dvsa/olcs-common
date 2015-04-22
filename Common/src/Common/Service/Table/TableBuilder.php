@@ -184,7 +184,29 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $isDisabled = false;
 
     /**
-     * Inject the service locator
+     * Authorisation service to allow columns/rows to be hidden depending on permission model
+     * @var \ZfcRbac\Service\AuthorizationService
+     */
+    private $authService;
+
+    /**
+     * @param \ZfcRbac\Service\AuthorizationService $authorisationService
+     */
+    public function setAuthService($authService)
+    {
+        $this->authService = $authService;
+    }
+
+    /**
+     * @return \ZfcRbac\Service\AuthorizationService
+     */
+    public function getAuthService()
+    {
+        return $this->authService;
+    }
+
+    /**
+     * Inject the service locator and auth service
      *
      * @param $sm
      */
@@ -192,6 +214,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $this->setServiceLocator($sm);
         $this->applicationConfig = $sm->get('Config');
+        $this->setAuthService($sm->get('ZfcRbac\Service\AuthorizationService'));
     }
 
     /**
@@ -1549,9 +1572,25 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
     }
 
+    private function authorisedToView($column)
+    {
+        if (isset($column['permissionRequisites'])) {
+            foreach ((array) $column['permissionRequisites'] as $permission) {
+                if ($this->getAuthService()->isGranted($permission)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // if option not set then default to visible
+        return true;
+    }
+
     private function shouldHide($column)
     {
-        return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
+        return !($this->authorisedToView($column)) ||
+        ($this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled']);
     }
 
     public function isRowDisabled($row)
