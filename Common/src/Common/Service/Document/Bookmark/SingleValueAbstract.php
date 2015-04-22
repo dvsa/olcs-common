@@ -29,7 +29,7 @@ abstract class SingleValueAbstract extends DynamicBookmark
         return [
             'service' => static::SERVICE,
             'data' => [
-                static::SRCH_FLD_KEY => $data[static::SRCH_VAL_KEY]
+                static::SRCH_FLD_KEY => isset($data[static::SRCH_VAL_KEY]) ? $data[static::SRCH_VAL_KEY] : null
             ],
             'bundle' => [],
         ];
@@ -37,11 +37,11 @@ abstract class SingleValueAbstract extends DynamicBookmark
 
     public function render()
     {
-        $value = $this->data[static::FIELD];
+        $value = isset($this->data[static::FIELD]) ? $this->data[static::FIELD] : null;
 
         $formatter = static::FORMATTER;
 
-        if (!is_null($formatter)) {
+        if (!is_null($value) && !is_null($formatter)) {
 
             /**
              * @var \Common\Service\Document\Bookmark\Formatter\Date $class

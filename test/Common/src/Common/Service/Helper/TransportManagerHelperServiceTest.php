@@ -235,6 +235,134 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->sut->alterPreviousHistoryFieldset($fieldset, $tmId);
     }
 
+    public function testPrepareOtherEmploymentTable()
+    {
+        $element = m::mock();
+        $tmId = 111;
+
+        // Mocks
+        $mockFormHelper = m::mock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        $mockTable = $this->expectGetOtherEmploymentTable();
+
+        // Expectations
+        $mockFormHelper->shouldReceive('populateFormTable')
+            ->with($element, $mockTable, 'employment');
+
+        $this->sut->prepareOtherEmploymentTable($element, $tmId);
+    }
+
+    public function testGetOtherEmploymentTable()
+    {
+        $tmId = 111;
+
+        $mockTable = $this->expectGetOtherEmploymentTable();
+
+        $this->assertSame($mockTable, $this->sut->getOtherEmploymentTable($tmId));
+    }
+
+    /**
+     * @dataProvider providerGetOtherEmploymentData
+     */
+    public function testGetOtherEmploymentData($stubbedData, $expectedData)
+    {
+        $id = 111;
+
+        // Mocks
+        $mockTmEmployment = m::mock();
+        $this->sm->setService('Entity\TmEmployment', $mockTmEmployment);
+
+        // Expectations
+        $mockTmEmployment->shouldReceive('getEmployment')
+            ->with($id)
+            ->andReturn($stubbedData);
+
+        $this->assertEquals($expectedData, $this->sut->getOtherEmploymentData($id));
+    }
+
+    public function providerGetOtherEmploymentData()
+    {
+        return [
+            [
+                [
+                    'id' => 111,
+                    'version' => 1,
+                    'position' => 'All of them',
+                    'hoursPerWeek' => '24/7',
+                    'employerName' => 'Foo ltd',
+                    'contactDetails' => [
+                        'address' => [
+                            'addressLine1' => 'Foo street'
+                        ]
+                    ]
+                ],
+                [
+                    'tm-employment-details' => [
+                        'id' => 111,
+                        'version' => 1,
+                        'position' => 'All of them',
+                        'hoursPerWeek' => '24/7'
+                    ],
+                    'tm-employer-name-details' => [
+                        'employerName' => 'Foo ltd'
+                    ],
+                    'address' => [
+                        'addressLine1' => 'Foo street'
+                    ]
+                ]
+            ],
+            [
+                [
+                    'id' => 111,
+                    'version' => 1,
+                    'position' => 'All of them',
+                    'hoursPerWeek' => '24/7',
+                    'employerName' => 'Foo ltd'
+                ],
+                [
+                    'tm-employment-details' => [
+                        'id' => 111,
+                        'version' => 1,
+                        'position' => 'All of them',
+                        'hoursPerWeek' => '24/7'
+                    ],
+                    'tm-employer-name-details' => [
+                        'employerName' => 'Foo ltd'
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    protected function expectGetOtherEmploymentTable()
+    {
+        $tableData = [
+            'foo' => 'bar'
+        ];
+
+        // Mocks
+        $mockTableBuilder = m::mock();
+        $mockTable = m::mock();
+        $mockTmEmployment = m::mock();
+
+        $this->sm->setService('Table', $mockTableBuilder);
+        $this->sm->setService('Entity\TmEmployment', $mockTmEmployment);
+
+        // Expectations
+        $mockTmEmployment->shouldReceive('getAllEmploymentsForTm')
+            ->once()
+            ->with(111)
+            ->andReturn($tableData);
+
+        $mockTableBuilder->shouldReceive('prepareTable')
+            ->once()
+            ->with('tm.employments', $tableData)
+            ->andReturn($mockTable);
+
+        return $mockTable;
+    }
+
     protected function expectedGetConvictionsAndPenaltiesTable($mockTableBuilder)
     {
         $tableData = [

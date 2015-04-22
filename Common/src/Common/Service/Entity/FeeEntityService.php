@@ -57,7 +57,11 @@ class FeeEntityService extends AbstractLvaEntityService
                 )
             ),
             'paymentMethod',
-            'feeType'
+            'feeType' => array(
+                'children' => array(
+                    'feeType', // need this now that fee_type.fee_type is ref_data!
+                ),
+            ),
         )
     );
 

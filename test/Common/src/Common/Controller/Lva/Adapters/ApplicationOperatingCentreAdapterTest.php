@@ -294,8 +294,6 @@ class ApplicationOperatingCentreAdapterTest extends MockeryTestCase
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
 
-        $form = m::mock();
-
         $data = [
             'licence' => [
                 'enforcementArea' => ['id' => 'V048'],

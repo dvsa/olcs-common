@@ -227,4 +227,23 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
 
         $this->assertEquals(222, $this->sut->getTransportManagerId(111));
     }
+
+    public function testUpdateStatus()
+    {
+        $this->expectOneRestCall(
+            'TransportManagerApplication',
+            'PUT',
+            ['id' => 34324, 'tmApplicationStatus' => 'STATUS', '_OPTIONS_' => ['force' => true]]
+        );
+
+        $this->sut->updateStatus(34324, 'STATUS');
+    }
+
+    public function testGetContactApplicationDetails()
+    {
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', 23)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getContactApplicationDetails(23));
+    }
 }

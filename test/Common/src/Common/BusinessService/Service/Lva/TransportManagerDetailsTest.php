@@ -330,6 +330,9 @@ class TransportManagerDetailsTest extends MockeryTestCase
                             'hoursSun' => 6,
                         ]
                     ]
+                ],
+                'declarations' => [
+                    'confirmation' => 'Y'
                 ]
             ]
         ];
@@ -428,6 +431,9 @@ class TransportManagerDetailsTest extends MockeryTestCase
                             'hoursSun' => 6,
                         ]
                     ]
+                ],
+                'declarations' => [
+                    'confirmation' => 'Y'
                 ]
             ]
         ];
@@ -534,6 +540,9 @@ class TransportManagerDetailsTest extends MockeryTestCase
                             'hoursSun' => 6,
                         ]
                     ]
+                ],
+                'declarations' => [
+                    'confirmation' => 'Y'
                 ]
             ]
         ];
@@ -629,6 +638,9 @@ class TransportManagerDetailsTest extends MockeryTestCase
                             'hoursSun' => 6,
                         ]
                     ]
+                ],
+                'declarations' => [
+                    'confirmation' => 'Y'
                 ]
             ]
         ];
@@ -701,8 +713,8 @@ class TransportManagerDetailsTest extends MockeryTestCase
                 'hoursSat' => 5,
                 'hoursSun' => 6,
                 'isOwner' => 'Y',
-                'operatingCentres' => [123, 321]
-
+                'operatingCentres' => [123, 321],
+                'declarationConfirmation' => 'Y'
             ]
         ];
     }
@@ -723,8 +735,8 @@ class TransportManagerDetailsTest extends MockeryTestCase
                 'hoursSat' => 5,
                 'hoursSun' => 6,
                 'isOwner' => 'Y',
-                'operatingCentres' => [123, 321]
-
+                'operatingCentres' => [123, 321],
+                'declarationConfirmation' => 'Y'
             ]
         ];
     }

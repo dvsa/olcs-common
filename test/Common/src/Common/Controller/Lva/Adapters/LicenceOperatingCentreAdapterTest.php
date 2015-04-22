@@ -262,7 +262,8 @@ class LicenceOperatingCentreAdapterTest extends TestCase
         // Stubbed data
         $stubbedTolData = [
             'niFlag' => 'N',
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+            'licenceType' => 'DUMMY',
         ];
         $licenceId = 5;
         $stubbedTrafficArea = [
@@ -365,7 +366,8 @@ class LicenceOperatingCentreAdapterTest extends TestCase
         // Stubbed data
         $stubbedTolData = [
             'niFlag' => 'N',
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+            'licenceType' => 'DUMMY'
         ];
         $licenceId = 5;
         $stubbedTrafficArea = [
@@ -942,8 +944,6 @@ class LicenceOperatingCentreAdapterTest extends TestCase
         $sut = m::mock('Common\Controller\Lva\Adapters\LicenceOperatingCentreAdapter')
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
-
-        $form = m::mock();
 
         $data = [
             'enforcementArea' => ['id' => 'V048']

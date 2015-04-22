@@ -5,8 +5,6 @@ namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 use Zend\Form\Annotation as Form;
 
 /**
- * NOTE: This is shared between the internal tm form, and the lva tm form
- *
  * @Form\Attributes({"class":"table__form"})
  * @Form\Name("details")
  */
@@ -25,7 +23,6 @@ class Responsibilities
     public $version = null;
 
     /**
-     * @Form\Required(false)
      * @Form\Attributes({"id":"","placeholder":"","class":"chosen-select-medium",  "multiple" : true})
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.tm-application-oc"
@@ -77,11 +74,10 @@ class Responsibilities
     public $isOwner = null;
 
     /**
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekRequired")
      * @Form\Options({
-     *     "label": "transport-manager.responsibilities.hours-per-week",
-     *     "subtitle": "transport-manager.responsibilities.hours-per-week-subtitle"
+     *     "label": "transport-manager.responsibilities.hours-per-week"
      * })
-     * @Form\Type("Common\Form\Elements\Types\HoursPerWeek")
      */
     public $hoursOfWeek = null;
 
@@ -119,7 +115,7 @@ class Responsibilities
 
     /**
      * @Form\Attributes({"id":"file", "class": "file-upload"})
-     * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
+     * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      */
     public $file = null;
 }
