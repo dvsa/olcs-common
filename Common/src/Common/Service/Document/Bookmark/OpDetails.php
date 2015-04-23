@@ -1,7 +1,7 @@
 <?php
 
 /**
- * OpName.php
+ * OpDetails.php
  */
 
 namespace Common\Service\Document\Bookmark;
@@ -9,16 +9,15 @@ namespace Common\Service\Document\Bookmark;
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 
 /**
- * Class OpName
+ * Class OpDetails
  *
  * Returns the operator's name and address and associated contact information.
  *
  * @package Common\Service\Document\Bookmark
  *
- * @author Josh Curtis <josh.curtis@valtech.co.uk>
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Josh Curtis <josh.curtis@valtech.com>
  */
-class OpName extends DynamicBookmark
+class OpDetails extends DynamicBookmark
 {
     /**
      * Get the query, this query returns the operator's details.
@@ -36,6 +35,11 @@ class OpName extends DynamicBookmark
             ],
             'bundle' => [
                 'children' => [
+                    'correspondenceCd' => [
+                        'children' => [
+                            'address'
+                        ]
+                    ],
                     'organisation' => [
                         'children' => [
                             'tradingNames'
@@ -57,6 +61,8 @@ class OpName extends DynamicBookmark
     {
         $organisation = $this->data['organisation'];
 
+        $operator = $this->data['correspondenceCd'];
+
         $tradingNames = '';
         array_map(
             function ($tradingName) use (&$tradingNames) {
@@ -66,7 +72,6 @@ class OpName extends DynamicBookmark
         );
 
         if (strlen($tradingNames) > 0) {
-            $tradingNames = substr($tradingNames, 0, -1);
             $tradingNames = 'T/A: ' . substr($tradingNames, 0, 40);
         }
 
@@ -74,8 +79,10 @@ class OpName extends DynamicBookmark
             "\n",
             array_filter(
                 [
+                    $operator['fao'],
                     $organisation['name'],
-                    $tradingNames
+                    $tradingNames,
+                    Formatter\Address::format($operator['address'])
                 ]
             )
         );
