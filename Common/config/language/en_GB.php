@@ -1,9 +1,6 @@
 <?php
 
 return array(
-    'admin-continuations-title' => 'Continuations',
-    'admin-generate-continuations-title' => 'Generate continuations',
-    'hours' => 'hours',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -64,6 +61,9 @@ return array(
     'add-undertaking' => 'Add undertaking',
     'additional-psv-discs-validator-too-many' => 'The number of discs exceeds the total vehicle authority',
     'address' => 'Address',
+    'admin-continuations-no-licences-found' => 'No licences were found',
+    'admin-continuations-title' => 'Continuations',
+    'admin-generate-continuations-title' => 'Generate continuations',
     'admin_disc-printing.discNumbering' => 'Discs numbering',
     'admin_disc-printing.discPrefix' => 'Disc prefix',
     'admin_disc-printing.endNumber' => 'End number',

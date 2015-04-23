@@ -833,4 +833,20 @@ class LicenceEntityService extends AbstractLvaEntityService
         }
         return $vehicles;
     }
+
+    public function findForContinuationCriteria($criteria)
+    {
+        $startDate = $criteria['year'] . '-' . $criteria['month'] . '-01';
+        $endDate = date('Y-m-t', strtotime($startDate));
+
+        // TA
+        $query = [
+            'expiryDate' => [
+                ['>=' . $startDate, '<=' . $endDate]
+            ],
+            'trafficArea' => $criteria['trafficArea']
+        ];
+
+        return $this->getAll($query)['Results'];
+    }
 }

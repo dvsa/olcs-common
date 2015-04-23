@@ -10,15 +10,13 @@ use Zend\Form\Annotation as Form;
 class GenerateContinuationDetails
 {
     /**
-     * @Form\Attributes({"id":"generate-continuation-type","placeholder":""})
+     * @Form\Attributes({"id":"generate-continuation-type","placeholder":"","value":"con_typ_operator"})
      * @Form\Options({
      *     "label": "Type",
-     *     "value_options": {
-     *         "operator": "Operator licences",
-     *         "irfo": "IRFO licences"
-     *     }
+     *     "value_options": {},
+     *     "category": "cont_type"
      * })
-     * @Form\Type("\Zend\Form\Element\Select")
+     * @Form\Type("DynamicSelect")
      */
     public $type = null;
 
