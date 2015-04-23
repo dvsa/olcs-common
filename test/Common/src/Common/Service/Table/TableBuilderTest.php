@@ -42,8 +42,7 @@ class TableBuilderTest extends MockeryTestCase
                     'tables' => array(
                         'config' => array(__DIR__ . '/TestResources/'),
                         'partials' => array(
-                            'html' => '',
-                            'csv' => ''
+                            'html' => ''
                         )
                     ),
                 )
@@ -86,6 +85,19 @@ class TableBuilderTest extends MockeryTestCase
     public function testGetContentHelperWithoutConfig()
     {
         $table = new TableBuilder($this->getMockServiceLocator(false));
+
+        $table->getContentHelper();
+    }
+    /**
+     * Test getContentHelper without configured partials for current content type
+     *
+     * @expectedException \Exception
+     */
+    public function testGetContentHelperWithoutConfigForType()
+    {
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $table->setContentType('csv');
 
         $table->getContentHelper();
     }
