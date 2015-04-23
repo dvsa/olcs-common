@@ -42,10 +42,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         $form = $formHelper->createForm('Lva\PsvVehicles')->setData($data);
 
-        // we want to alter based on the *original* entity data, not how
-        // it's been manipulated to suit the form (if relevant)
-        $form = $this->alterForm($form, $entityData);
-
         foreach ($this->getTables() as $tableName) {
 
             // no point wasting time fetching data for a table
@@ -63,6 +59,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 $tableName
             );
         }
+
+        $form = $this->alterForm($form, $entityData);
 
         $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'vehicle-psv']);
 

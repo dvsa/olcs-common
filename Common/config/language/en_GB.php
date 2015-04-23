@@ -742,6 +742,8 @@ return array(
     'company-registration-form-label-trade-business' => 'Trade/business',
     'company-registration-form-label-trading-name' => 'Trading name',
     'company_number.length.validation.error' => 'The input must be 8 characters long',
+    'company_number.search_error.error' => 'Sorry, company data could not be retrieved at this time, please try again or
+        enter your details manually below',
     'company_number.search_no_results.error' => 'Sorry, we couldn\'t find any matching companies, please try again or
         enter your details manually below',
     'companyname' => 'Company Name',
@@ -884,6 +886,7 @@ return array(
     'edit-condition' => 'Edit condition',
     'edit-conviction' => 'Edit Conviction',
     'edit-undertaking' => 'Edit undertaking',
+    'email.transport-manager-complete-digital-form.subject' => 'Request for transport manager details',
     'end-date' => 'End date',
     'entity-details' => 'Entity details',
     'entity-type' => 'Entity type',
@@ -980,7 +983,7 @@ return array(
     'internal-application-refuse-confirm' => 'Are you sure you want to refuse this application?',
     'internal-application-refuse-title' => 'Refuse application',
     'internal-application-revive-application-confirm' => 'Are you sure you want to revive this application?',
-    'internal-application-revive-application-title' => 'Reset to granted ',
+    'internal-application-revive-application-title' => 'Revive Application',
     'internal-application-withdraw-title' => 'Withdraw application',
     'internal-crud-event-history' => 'History',
     'internal-external' => 'Internal/External',

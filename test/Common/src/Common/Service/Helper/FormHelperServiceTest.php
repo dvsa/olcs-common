@@ -819,13 +819,23 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $service = m::mock()
             ->shouldReceive('search')
-            ->with('numberSearch', '12345678')
+            ->with('companyDetails', '12345678')
             ->andReturn(
                 [
                     'Count' => 1,
                     'Results' => [
-                        ['CompanyName' => 'Looked Up Company']
-                    ]
+                        [
+                            'CompanyName' => 'Looked Up Company',
+                            'RegAddress' => [
+                                'AddressLine' => [
+                                    'MILLENNIUM STADIUM',
+                                    'WESTGATE STREET',
+                                    'CARDIFF',
+                                    'CF10 1NS',
+                                ],
+                            ],
+                        ],
+                    ],
                 ]
             )
             ->getMock();
@@ -862,7 +872,44 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('data')
             ->andReturn($fieldset);
 
-        $helper->processCompanyNumberLookupForm($form, $data, 'data');
+        $addressFieldset = m::mock()
+            ->shouldReceive('get')
+            ->with('postcode')
+            ->andReturn(
+                m::mock()->shouldReceive('setValue')->with('CF10 1NS')->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('addressLine1')
+            ->andReturn(
+                m::mock()->shouldReceive('setValue')->with('MILLENNIUM STADIUM')->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('addressLine2')
+            ->andReturn(
+                m::mock()->shouldReceive('setValue')->with('WESTGATE STREET')->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('addressLine3')
+            ->andReturn(
+                m::mock()->shouldReceive('setValue')->with('CARDIFF')->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('addressLine4')
+            ->andReturn(
+                m::mock()->shouldReceive('setValue')->with('')->getMock()
+            )
+            ->shouldReceive('get')
+            ->with('town')
+            ->andReturn(
+                m::mock()->shouldReceive('setValue')->with('')->getMock()
+            )
+            ->getMock();
+
+        $form->shouldReceive('get')
+            ->with('registeredAddress')
+            ->andReturn($addressFieldset);
+
+        $helper->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
     }
 
     public function testProcessCompanyLookupWithNoResults()
@@ -871,7 +918,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $service = m::mock()
             ->shouldReceive('search')
-            ->with('numberSearch', '12345678')
+            ->with('companyDetails', '12345678')
             ->andReturn(
                 [
                     'Count' => 0,
@@ -959,6 +1006,63 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with(
                 [
                     'company_number' => ['Bad length']
+                ]
+            )
+            ->getMock();
+
+        $fieldset = m::mock()->shouldReceive('get')
+            ->with('companyNumber')
+            ->andReturn($numberElement)
+            ->getMock();
+
+        $form->shouldReceive('get')
+            ->with('data')
+            ->andReturn($fieldset);
+
+        $helper->processCompanyNumberLookupForm($form, $data, 'data');
+    }
+
+    public function testProcessCompanyLookupError()
+    {
+        $helper = new FormHelperService();
+
+        $service = m::mock()
+            ->shouldReceive('search')
+            ->with('companyDetails', '12345678')
+            ->andThrow(new \Exception('xml gateway error'))
+            ->getMock();
+
+        $translator = m::mock()
+            ->shouldReceive('translate')
+            ->with('company_number.search_error.error')
+            ->andReturn('API error')
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Data\CompaniesHouse')
+            ->andReturn($service)
+            ->shouldReceive('get')
+            ->with('translator')
+            ->andReturn($translator)
+            ->getMock();
+
+        $helper->setServiceLocator($sm);
+
+        $form = m::mock('Zend\Form\Form');
+
+        $data = [
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ]
+            ]
+        ];
+
+        $numberElement = m::mock()->shouldReceive('setMessages')
+            ->with(
+                [
+                    'company_number' => ['API error']
                 ]
             )
             ->getMock();

@@ -37,42 +37,19 @@ class CompanyTradingName extends DynamicBookmark
 
     public function render()
     {
-        $organisation = $this->data['organisation'];
         $address = isset($this->data['correspondenceCd']['address']) ? $this->data['correspondenceCd']['address'] : [];
 
-        if (count($organisation['tradingNames'])) {
-            $tradingAs = 'T/A ' . $this->getFirstTradingName($organisation['tradingNames']);
-        } else {
-            $tradingAs = '';
-        }
+        $formatter = new Formatter\OrganisationName();
+        $formatter->setSeparator("\n");
 
         return implode(
             "\n",
             array_filter(
                 [
-                    $organisation['name'],
-                    $tradingAs,
+                    $formatter->format($this->data['organisation']),
                     Formatter\Address::format($address)
                 ]
             )
         );
-    }
-
-    private function getFirstTradingName($tradingNames)
-    {
-        // we could use usort here, but we don't actually want to sort
-        // the whole array; we just want the earliest created so a simple
-        // loop is (probably) quicker
-        $first = null;
-        $name = null;
-        foreach ($tradingNames as $tradingName) {
-            $current = strtotime($tradingName['createdOn']);
-            if ($name === null || $current < $first) {
-                $first = $current;
-                $name = $tradingName['name'];
-            }
-        }
-
-        return $name;
     }
 }
