@@ -161,6 +161,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $helpers = new HelperPluginManager();
         $helpers->setService('formRow', new Helper\FormRow());
+        $helpers->setService('form_element_errors', new Helper\FormElementErrors());
         $helpers->setService('translate', $translateHelper);
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);

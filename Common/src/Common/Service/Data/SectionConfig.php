@@ -372,7 +372,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 $sectionController = $camelFilter($section);
 
                 $childRoutes[$section] = array(
-                    'type' => 'segment',
+                    'type' => 'Common\Util\LvaRoute',
                     'options' => array(
                         'route' => $routeKey . '[/:action[/:child_id]][/]',
                         'defaults' => array(

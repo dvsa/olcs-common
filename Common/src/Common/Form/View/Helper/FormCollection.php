@@ -213,8 +213,8 @@ class FormCollection extends ZendFormCollection
             return $markup;
         }
 
-        $errorMessages = '<ul><li>' . implode('</li><li>', $messages) . '</li></ul>';
+        $elementErrors = $this->view->plugin('form_element_errors')->render($element);
 
-        return sprintf('<div class="validation-wrapper">%s%s</div>', $errorMessages, $markup);
+        return sprintf('<div class="validation-wrapper">%s%s</div>', $elementErrors, $markup);
     }
 }
