@@ -13,6 +13,12 @@ use Zend\Form\Annotation as Form;
 class GoodsVehicles
 {
     /**
+     * @Form\Name("query")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesQuery")
+     */
+    public $query = null;
+
+    /**
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesData")
      */

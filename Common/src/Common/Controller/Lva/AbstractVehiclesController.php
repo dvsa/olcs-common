@@ -447,4 +447,12 @@ abstract class AbstractVehiclesController extends AbstractController implements 
         $formHelper->setFormActionFromRequest($form, $this->getRequest());
         return $form;
     }
+
+    /**
+     * Alter table. No-op but is extended in certain sections
+     */
+    protected function alterTable($table)
+    {
+        return $table;
+    }
 }

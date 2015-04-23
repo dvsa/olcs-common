@@ -102,6 +102,67 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
+    protected $reviewBundle = [
+        'children' => [
+            'otherLicences' => [
+                'children' => [
+                    'role'
+                ]
+            ],
+            'tmType',
+            'operatingCentres' => [
+                'children' => [
+                    'address'
+                ]
+            ],
+            'application' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation'
+                        ]
+                    ]
+                ]
+            ],
+            'transportManager' => [
+                'children' => [
+                    'previousConvictions',
+                    'otherLicences',
+                    'employments' => [
+                        'children' => [
+                            'contactDetails' => [
+                                'children' => [
+                                    'address'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'documents' => [
+                        'children' => [
+                            'category',
+                            'subCategory'
+                        ],
+                    ],
+                    'workCd' => [
+                        'children' => [
+                            'address'
+                        ]
+                    ],
+                    'homeCd' => [
+                        'children' => [
+                            'address',
+                            'person' => [
+                                'children' => [
+                                    'title'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     protected $contactApplicationBundle = [
         'children' => [
             'tmApplicationStatus',
@@ -250,6 +311,11 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ];
 
         $this->forceUpdate($tmaId, $data);
+    }
+
+    public function getReviewData($id)
+    {
+        return $this->get($id, $this->reviewBundle);
     }
 
     /**

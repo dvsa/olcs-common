@@ -53,6 +53,7 @@ return array(
             'name' => 'discNo'
         ),
         array(
+            'name' => 'action',
             'width' => 'checkbox',
             'type' => 'Checkbox'
         )
