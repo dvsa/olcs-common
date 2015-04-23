@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'hours' => 'hours',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -829,6 +828,7 @@ return array(
     'date-of-conviction' => 'Date of conviction',
     'date-of-offence' => 'Date of offence',
     'date-prepared' => 'Date prepared',
+    'datetime.compare.validation.message.invalid' => 'The input does not appear to be a valid date and time',
     'day' => 'Day',
     'days-of-week-short-fri' => 'Fri',
     'days-of-week-short-mon' => 'Mon',
@@ -944,6 +944,7 @@ return array(
     'header-correspondence-details' => 'Correspondence details',
     'header-establishment-address' => 'Establishment address',
     'helpdesk' => 'Helpdesk',
+    'hours' => 'hours',
     'impo_not' => 'Vehicle Not Returned',
     'impo_returned' => 'Vehicle Returned',
     'impo_wd' => 'Application Withdrawn',
