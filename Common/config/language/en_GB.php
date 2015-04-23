@@ -992,6 +992,7 @@ return array(
     'internal-inspection-request-form.area-not-set' => 'Not set',
     'internal-inspection-request-form.id' => 'ID',
     'internal-inspection-request-inspection-request-added' => 'Inspection request added',
+    'internal-inspection-request-inspection-request-failed' => 'Failed to generate and send the inspection request',
     'internal-inspection-request-inspection-request-updated' => 'Inspection request updated',
     'internal-inspection-request-table-remove' => 'Remove',
     'internal-inspection-request-table-title' => 'Inspection requests',

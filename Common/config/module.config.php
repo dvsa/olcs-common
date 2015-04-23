@@ -248,6 +248,7 @@ return array(
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
             'postcode' => 'Common\Service\Postcode\Postcode',
+            'email' => 'Common\Service\Email\Email',
             'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
@@ -264,7 +265,6 @@ return array(
             'ApplicationTransportManagerAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter',
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
-            'Email' => 'Common\Service\Email\EmailToTmpFile',
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
@@ -550,7 +550,8 @@ return array(
         'endpoints' => array(
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
-            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
+            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/',
+            'email' => 'http://olcs-email/',
         )
     ),
     'caches'=> array(
