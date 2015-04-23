@@ -159,7 +159,7 @@ class ContentHelper
 
             if (file_exists($this->location . $partial . '.phtml')) {
 
-                $this->partials[$partial] = file_get_contents($filename);
+                $this->partials[$partial] = trim(file_get_contents($filename));
             }
         }
 

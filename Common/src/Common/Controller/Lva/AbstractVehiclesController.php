@@ -386,4 +386,73 @@ abstract class AbstractVehiclesController extends AbstractController implements 
 
         return 'deleting.all.vehicles.message';
     }
+
+    /**
+     * Transfer vehicles action
+     */
+    public function transferAction()
+    {
+        return $this->transferVehicles();
+    }
+
+    /**
+     * Transfer vehicles
+     */
+    protected function transferVehicles()
+    {
+        $form = $this->getVehicleTransferForm();
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData((array) $request->getPost());
+            if ($form->isValid()) {
+                $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                    ->get('Lva\TransferVehicles')
+                    ->process(
+                        [
+                            'data' => $form->getData(),
+                            'sourceLicenceId' => $this->getLicenceId(),
+                            'targetLicenceId' => $form->get('data')->get('licence')->getValue(),
+                            'id' => $this->params()->fromRoute('child_id')
+                        ]
+                    );
+
+                if ($response->isOk()) {
+                    $this->getServiceLocator()
+                        ->get('Helper\FlashMessenger')
+                        ->addSuccessMessage('licence.vehicles_transfer.form.vehicles_transfered');
+                    return $this->redirect()->toRouteAjax(
+                        null,
+                        array($this->getIdentifierIndex() => $this->getIdentifier())
+                    );
+                }
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+            }
+        }
+        return $this->renderForm($form);
+    }
+
+    /**
+     * Get vehicles transfer form
+     * 
+     * @return Common\Form\Form
+     */
+    protected function getVehicleTransferForm()
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('Lva\VehiclesTransfer');
+        $licences = $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getOtherActiveLicences($this->params()->fromRoute('licence'));
+        $form->get('data')->get('licence')->setValueOptions($licences);
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        return $form;
+    }
+
+    /**
+     * Alter table. No-op but is extended in certain sections
+     */
+    protected function alterTable($table)
+    {
+        return $table;
+    }
 }

@@ -34,6 +34,7 @@ class TransportManagerApplicationStatusTest extends \Mockery\Adapter\Phpunit\Moc
             [' green', TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED],
             [' green', TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION],
             [' orange', TransportManagerApplicationEntityService::STATUS_TM_SIGNED],
+            [' green', TransportManagerApplicationEntityService::STATUS_RECEIVED],
             'invalidStatus' => ['', 'foo'],
         ];
     }

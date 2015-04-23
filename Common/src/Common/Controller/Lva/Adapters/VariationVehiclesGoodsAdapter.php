@@ -27,4 +27,17 @@ class VariationVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGo
     {
         return [];
     }
+
+    /**
+     * Remove transfer button
+     *
+     * @param $table Common\Service\Table\TableBuilde
+     * @param int $licenceId
+     * @return Common\Service\Table\TableBuilde
+     */
+    public function alterVehcileTable($table, $licenceId)
+    {
+        $table->removeAction('transfer');
+        return $table;
+    }
 }

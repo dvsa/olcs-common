@@ -414,4 +414,111 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         return $mockTable;
     }
+
+    public function testGetReviewConfig()
+    {
+        $id = 111;
+        $stubbedData = [
+            'application' => [
+                'licence' => [
+                    'organisation' => [
+                        'name' => 'Foo ltd'
+                    ],
+                    'licNo' => 'FO12345678'
+                ],
+                'id' => 222
+            ]
+        ];
+
+        $mainConfig = [
+            'foo' => 'bar'
+        ];
+
+        $resConfig = [
+            'bar' => 'foo'
+        ];
+
+        $otherConfig = [
+            'cake' => 'foo'
+        ];
+
+        $convictionConfig = [
+            'cake' => 'bar'
+        ];
+
+        $licenceConfig = [
+            'foo' => 'cake'
+        ];
+
+        $expected = [
+            'reviewTitle' => 'tm-review-title',
+            'subTitle' => 'Foo ltd FO12345678/222',
+            'settings'=> [
+                'hide-count' => true
+            ],
+            'sections' => [
+                [
+                    'header' => 'tm-review-main',
+                    'config' => $mainConfig
+                ],
+                [
+                    'header' => 'tm-review-responsibility',
+                    'config' => $resConfig
+                ],
+                [
+                    'header' => 'tm-review-other-employment',
+                    'config' => $otherConfig
+                ],
+                [
+                    'header' => 'tm-review-previous-conviction',
+                    'config' => $convictionConfig
+                ],
+                [
+                    'header' => 'tm-review-previous-licence',
+                    'config' => $licenceConfig
+                ]
+            ]
+        ];
+
+        // Mocks
+        $mockTma = m::mock();
+        $mockTmMain = m::mock();
+        $mockTmRes = m::mock();
+        $mockTmOther = m::mock();
+        $mockTmConviction = m::mock();
+        $mockTmLicences = m::mock();
+        $this->sm->setService('Entity\TransportManagerApplication', $mockTma);
+        $this->sm->setService('Review\TransportManagerMain', $mockTmMain);
+        $this->sm->setService('Review\TransportManagerResponsibility', $mockTmRes);
+        $this->sm->setService('Review\TransportManagerOtherEmployment', $mockTmOther);
+        $this->sm->setService('Review\TransportManagerPreviousConviction', $mockTmConviction);
+        $this->sm->setService('Review\TransportManagerPreviousLicence', $mockTmLicences);
+
+        // Expectations
+        $mockTma->shouldReceive('getReviewData')
+            ->with(111)
+            ->andReturn($stubbedData);
+
+        $mockTmMain->shouldReceive('getConfigFromData')
+            ->with($stubbedData)
+            ->andReturn($mainConfig);
+
+        $mockTmRes->shouldReceive('getConfigFromData')
+            ->with($stubbedData)
+            ->andReturn($resConfig);
+
+        $mockTmOther->shouldReceive('getConfigFromData')
+            ->with($stubbedData)
+            ->andReturn($otherConfig);
+
+        $mockTmConviction->shouldReceive('getConfigFromData')
+            ->with($stubbedData)
+            ->andReturn($convictionConfig);
+
+        $mockTmLicences->shouldReceive('getConfigFromData')
+            ->with($stubbedData)
+            ->andReturn($licenceConfig);
+
+        $this->assertEquals($expected, $this->sut->getReviewConfig($id));
+    }
 }

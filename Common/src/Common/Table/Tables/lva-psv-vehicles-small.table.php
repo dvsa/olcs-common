@@ -14,7 +14,10 @@ return array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
+                'delete' => array('class' => 'secondary', 'requireRows' => true),
+                'transfer' => array(
+                    'label' => 'Transfer', 'class' => 'secondary js-require--multiple', 'requireRows' => true
+                )
             )
         )
     ),
@@ -47,6 +50,7 @@ return array(
             'name' => 'deletedDate'
         ),
         array(
+            'name' => 'action',
             'width' => 'checkbox',
             'type' => 'Checkbox'
         )
