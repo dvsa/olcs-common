@@ -15,8 +15,8 @@ use Common\Service\Document\Bookmark\Base\DynamicBookmark;
  *
  * @package Common\Service\Document\Bookmark
  *
- * @author Josh Curtis <josh.curtis@valtech.co.k>
- * @author Nick Payne <nick.payne@valtech.co.k>
+ * @author Josh Curtis <josh.curtis@valtech.co.uk>
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 class OpName extends DynamicBookmark
 {
