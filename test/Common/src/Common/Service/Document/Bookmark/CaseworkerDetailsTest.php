@@ -35,11 +35,13 @@ class CaseworkerDetailsTest extends \PHPUnit_Framework_TestCase
                 'divisionGroup' => 'Group',
                 'departmentName' => 'Department',
                 'contactDetails' => [
-                    'forename' => 'A',
-                    'familyName' => 'User',
                     'emailAddress' => 'a@user.com',
                     'address' => [
                         'addressLine1' => 'Line 1'
+                    ],
+                    'person' => [
+                        'forename' => 'A',
+                        'familyName' => 'User',
                     ]
                 ]
             ]
@@ -59,8 +61,6 @@ class CaseworkerDetailsTest extends \PHPUnit_Framework_TestCase
                 'divisionGroup' => 'Group',
                 'departmentName' => 'Department',
                 'contactDetails' => [
-                    'forename' => 'A',
-                    'familyName' => 'User',
                     'emailAddress' => 'a@user.com',
                     'address' => [
                         'addressLine1' => 'Line 1'
@@ -70,6 +70,10 @@ class CaseworkerDetailsTest extends \PHPUnit_Framework_TestCase
                             'phoneContactType' => ['id' => 'phone_t_tel'],
                             'phoneNumber' => '0113 123 1234'
                         ]
+                    ],
+                    'person' => [
+                        'forename' => 'A',
+                        'familyName' => 'User',
                     ]
                 ]
             ]
@@ -89,10 +93,12 @@ class CaseworkerDetailsTest extends \PHPUnit_Framework_TestCase
                 'divisionGroup' => 'Group',
                 'departmentName' => 'Department',
                 'contactDetails' => [
-                    'forename' => 'A',
-                    'familyName' => 'User',
                     'emailAddress' => 'a@user.com',
-                    'address' => []
+                    'address' => [],
+                    'person' => [
+                        'forename' => 'A',
+                        'familyName' => 'User',
+                    ]
                 ],
                 'team' => [
                     'trafficArea' => [
