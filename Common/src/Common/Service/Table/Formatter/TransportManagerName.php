@@ -16,14 +16,6 @@ use Common\Service\Entity\TransportManagerApplicationEntityService;
  */
 class TransportManagerName extends Name
 {
-    protected static $statusColors = [
-        TransportManagerApplicationEntityService::STATUS_INCOMPLETE => 'red',
-        TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE => 'orange',
-        TransportManagerApplicationEntityService::STATUS_TM_SIGNED => 'orange',
-        TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED => 'green',
-        TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION => 'green',
-    ];
-
     public static function format($data, $column = array(), $sm = null)
     {
         $name = parent::format($data['name'], $column, $sm);

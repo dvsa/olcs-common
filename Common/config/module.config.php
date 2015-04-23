@@ -20,6 +20,16 @@ return array(
                         'action' => 'download'
                     )
                 )
+            ),
+            'transport_manager_review' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/transport-manager-application/review/:id[/]',
+                    'defaults' => array(
+                        'controller' => 'TransportManagerReview',
+                        'action' => 'index'
+                    )
+                )
             )
         )
     ),
@@ -124,6 +134,7 @@ return array(
             'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
+            'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
         )
     ),
     'controller_plugins' => array(
@@ -520,7 +531,10 @@ return array(
         'config' => array(
             __DIR__ . '/../src/Common/Table/Tables/'
         ),
-        'partials' => __DIR__ . '/../view/table/'
+        'partials' => array(
+            'html' => __DIR__ . '/../view/table/',
+            'csv' => __DIR__ . '/../view/table/csv'
+        )
     ),
     'sic_codes_path' => __DIR__ . '/../../Common/config/sic-codes',
     'fieldsets_path' => __DIR__ . '/../../Common/src/Common/Form/Fieldsets/',
@@ -687,6 +701,8 @@ return array(
                 'Common\BusinessService\Service\Lva\DeleteOtherLicence',
             'Lva\DeletePreviousConviction' =>
                 'Common\BusinessService\Service\Lva\DeletePreviousConviction',
+            'Lva\TransferVehicles' =>
+                'Common\BusinessService\Service\Lva\TransferVehicles',
             'Lva\DeleteOtherEmployment' =>
                 'Common\BusinessService\Service\Lva\DeleteOtherEmployment',
             'Lva\Address' =>

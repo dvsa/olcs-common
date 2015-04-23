@@ -286,4 +286,118 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             )
         );
     }
+
+    public function testSmallTransferAction()
+    {
+        $this->sut
+            ->shouldReceive('transferVehicles')
+            ->once()
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->smallTransferAction());
+    }
+
+    public function testMediumlTransferAction()
+    {
+        $this->sut
+            ->shouldReceive('transferVehicles')
+            ->once()
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->mediumTransferAction());
+    }
+
+    public function testLargelTransferAction()
+    {
+        $this->sut
+            ->shouldReceive('transferVehicles')
+            ->once()
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->largeTransferAction());
+    }
+
+    public function testRenderForm()
+    {
+        $this->sut
+            ->shouldReceive('render')
+            ->with('vehicles_psv', 'form')
+            ->once()
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->renderForm('form'));
+    }
+
+    /**
+     * @group avt1
+     */
+    public function testGetIndexActionWithSmallVehicles()
+    {
+        $this->mockRender();
+
+        $entityData = [
+            'version' => 1,
+            'hasEnteredReg' => 'Y'
+        ];
+
+        $form = $this->createMockForm('Lva\PsvVehicles');
+
+        $formTable = m::mock('Zend\Form\Fieldset');
+        $table = m::mock('Common\Service\Table\TableBuilder');
+
+        $form->shouldReceive('setData')
+            ->with(
+                [
+                    'data' => $entityData
+                ]
+            )
+            ->andReturnSelf()
+            ->shouldReceive('has')
+            ->with('small')
+            ->andReturn(true)
+            ->shouldReceive('has')
+            ->andReturn(false)
+            ->shouldReceive('get')
+            ->with('small')
+            ->andReturn($formTable);
+
+        $this->adapter->shouldReceive('getVehiclesData')
+            ->with(1)
+            ->andReturn([])
+            ->shouldReceive('warnIfAuthorityExceeded')
+            ->shouldReceive('alterVehcileTable')
+            ->once();
+
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(1)
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getDataForVehiclesPsv')
+                ->with(1)
+                ->andReturn($entityData)
+                ->getMock()
+            )
+            // alterForm shouldn't really be mocked, but a) it's public already (!)
+            // and b) it's heavily tested standalone earlier in this file
+            ->shouldReceive('alterForm')
+            ->andReturn($form);
+
+        $this->setService(
+            'Table',
+            m::mock()
+            ->shouldReceive('prepareTable')
+            ->with('lva-psv-vehicles-small', [])
+            ->andReturn($table)
+            ->getMock()
+        );
+
+        $this->getMockFormHelper()
+            ->shouldReceive('populateFormTable')
+            ->with($formTable, $table, 'small');
+
+        $this->sut->indexAction();
+
+        $this->assertEquals('vehicles_psv', $this->view);
+    }
 }

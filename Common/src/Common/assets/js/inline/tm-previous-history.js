@@ -20,7 +20,7 @@ OLCS.ready(function() {
     }
   });
 
-  var tableSelector = "form [data-group*='previousLicences']";
+  tableSelector = "form [data-group*='previousLicences']";
 
   OLCS.conditionalButton({
     container: tableSelector,

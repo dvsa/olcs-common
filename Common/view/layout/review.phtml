@@ -20,7 +20,16 @@
             $count++;
             ?>
         <div class="review-section">
-            <h2><?php echo $count . '. ' . $this->translate($section['header']); ?></h2>
+            <h2>
+                <?php
+
+                if (!isset($settings['hide-count'])) {
+                    echo $count . '. ';
+                }
+
+                echo $this->translate($section['header']);
+                ?>
+            </h2>
             <?php
 
             if (isset($section['config']['subSections'])) {

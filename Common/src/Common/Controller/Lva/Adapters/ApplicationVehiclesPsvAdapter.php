@@ -120,4 +120,17 @@ class ApplicationVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
         unset($data['licence-vehicle']['specifiedDate']);
         return $data;
     }
+
+    /**
+     * Remove transfer button
+     *
+     * @param $table Common\Service\Table\TableBuilde
+     * @param int $licenceId
+     * @return Common\Service\Table\TableBuilde
+     */
+    public function alterVehcileTable($table, $licenceId)
+    {
+        $table->removeAction('transfer');
+        return $table;
+    }
 }
