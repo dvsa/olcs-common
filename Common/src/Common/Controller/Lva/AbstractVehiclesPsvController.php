@@ -50,14 +50,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 continue;
             }
 
-            $rawTableData = $this->getRawTableData();
-
-            $table = $this->getServiceLocator()
-                ->get('Table')
-                ->prepareTable(
-                    'lva-psv-vehicles-' . $tableName,
-                    $this->getTableData($rawTableData, $tableName)
-                );
+            $table = $this->getTable($tableName);
 
             $formHelper->populateFormTable(
                 $form->get($tableName),
@@ -523,5 +516,19 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     private function getPsvTypes()
     {
         return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
+    }
+
+    protected function getTable($tableName)
+    {
+        $rawTableData = $this->getRawTableData();
+
+        $table = $this->getServiceLocator()
+            ->get('Table')
+            ->prepareTable(
+                'lva-psv-vehicles-' . $tableName,
+                $this->getTableData($rawTableData, $tableName)
+            );
+
+        return $this->alterTable($table);
     }
 }

@@ -29,6 +29,13 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             $haveCrudAction = false;
         }
 
+        $formData = array_merge(
+            $formData,
+            [
+                'query' => (array)$this->getRequest()->getQuery()
+            ]
+        );
+
         // Get preconfigured form
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
@@ -275,19 +282,17 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         );
     }
 
-    /**
-     * Alter table. No-op but is extended in certain sections
-     */
-    protected function alterTable($table)
-    {
-        return $table;
-    }
-
     protected function getTableData()
     {
+        if ($this->getRequest()->isPost()) {
+            $query = $this->getRequest()->getPost('query');
+        } else {
+            $query = $this->getRequest()->getQuery();
+        }
+
         $licenceVehicles = $this->getAdapter()->getFilteredVehiclesData(
             $this->getIdentifier(),
-            (array)$this->getRequest()->getQuery()
+            (array)$query
         );
 
         $results = array();

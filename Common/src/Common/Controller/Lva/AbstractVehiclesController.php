@@ -386,4 +386,12 @@ abstract class AbstractVehiclesController extends AbstractController implements 
 
         return 'deleting.all.vehicles.message';
     }
+
+    /**
+     * Alter table. No-op but is extended in certain sections
+     */
+    protected function alterTable($table)
+    {
+        return $table;
+    }
 }
