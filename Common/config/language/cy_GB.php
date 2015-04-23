@@ -2293,10 +2293,12 @@ return array(
         for?',
     'transport-manager.responsibilities.tm-type' => 'W What type of manager will you be for this licence?',
     'transport-managers' => 'W Transport Managers',
-    'transport-managers.progress.1' => 'W The Transport Manager has completed their application',
-    'transport-managers.progress.2' => 'W The Transport Manager has verified thier identity',
-    'transport-managers.progress.3' => 'W An owner or Director of the business has approved the application and
-        submitted it to the Central Licensing office.',
+    'transport-managers.progress.1' => 'W The Transport Manager has completed the form',
+    'transport-managers.progress.1.isTm' => 'W You have completed the form',
+    'transport-managers.progress.2' => 'W The Transport Manager has submitted the form for the licenced operator to
+        review',
+    'transport-managers.progress.2.isTm' => 'W You have submitted the form for the licenced operator to review',
+    'transport-managers.progress.3' => 'W The licence operator has approved and submitted the form online',
     'transport_manager.responsibilities.other_licence' => 'W other licence',
     'transport_manager.responsibilities.other_licence_add' => 'W Add other licence',
     'transport_manager.responsibilities.other_licence_edit' => 'W Edit other licence',
