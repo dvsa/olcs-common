@@ -31,8 +31,6 @@ class CaseworkerDetails extends DynamicBookmark
                 'children' => [
                     'contactDetails' => [
                         'properties' => [
-                            'forename',
-                            'familyName',
                             'emailAddress',
                             'address',
                             'phoneContacts'
@@ -61,7 +59,8 @@ class CaseworkerDetails extends DynamicBookmark
                                         'properties' => ['id']
                                     ]
                                 ]
-                            ]
+                            ],
+                            'person'
                         ]
                     ],
                     'team' => [
@@ -113,7 +112,7 @@ class CaseworkerDetails extends DynamicBookmark
             "\n",
             array_filter(
                 [
-                    Formatter\Name::format($details),
+                    Formatter\Name::format($details['person']),
                     $this->data['jobTitle'],
                     $this->data['divisionGroup'],
                     $this->data['departmentName'],
