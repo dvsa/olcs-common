@@ -2649,4 +2649,42 @@ class TableBuilderTest extends MockeryTestCase
         $sut->setEmptyMessage($message);
         $this->assertEquals($message, $sut->getEmptyMessage());
     }
+
+    public function testAddAction()
+    {
+        $tableConfig = array(
+            'settings' => array(
+                'paginate' => array(),
+                'crud' => array(
+                    'actions' => array(
+                        'foo' => array(),
+                        'bar' => array()
+                    )
+                )
+            )
+        );
+
+        $table = $this->getMockTableBuilder(array('getConfigFromFile'));
+
+        $table->expects($this->once())
+            ->method('getConfigFromFile')
+            ->will($this->returnValue($tableConfig));
+
+        $table->loadConfig('test');
+
+        $table->addAction('new', ['key' => 'value']);
+
+        $settings = $table->getSetting('crud');
+
+        $this->assertEquals(
+            array(
+                'actions' => array(
+                    'foo' => array(),
+                    'bar' => array(),
+                    'new' => array('key' => 'value')
+                )
+            ),
+            $settings
+        );
+    }
 }

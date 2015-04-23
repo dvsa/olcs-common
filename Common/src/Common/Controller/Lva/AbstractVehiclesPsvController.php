@@ -50,7 +50,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 continue;
             }
 
-
             $table = $this->getTable($tableName);
 
             $formHelper->populateFormTable(
