@@ -124,7 +124,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->shouldReceive('getFilteredVehiclesData')
             ->once()
             ->with(111, $stubbedQuery)
-            ->andReturn($stubbedTableData);
+            ->andReturn($stubbedTableData)
+            ->shouldReceive('alterVehcileTable')
+            ->with($mockTable, $id)
+            ->andReturn($mockTable);
 
         $mockFormService->shouldReceive('getForm')
             ->once()
@@ -297,7 +300,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->shouldReceive('getFilteredVehiclesData')
             ->once()
             ->with(111, $stubbedQuery)
-            ->andReturn($stubbedTableData);
+            ->andReturn($stubbedTableData)
+            ->shouldReceive('alterVehcileTable')
+            ->with($mockTable, $id)
+            ->andReturn($mockTable);
 
         $mockFormService->shouldReceive('getForm')
             ->once()
@@ -480,7 +486,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->shouldReceive('getFilteredVehiclesData')
             ->once()
             ->with(111, $stubbedQuery)
-            ->andReturn($stubbedTableData);
+            ->andReturn($stubbedTableData)
+            ->shouldReceive('alterVehcileTable')
+            ->with($mockTable, $id)
+            ->andReturn($mockTable);
 
         $mockFormService->shouldReceive('getForm')
             ->once()
@@ -665,7 +674,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->shouldReceive('getFilteredVehiclesData')
             ->once()
             ->with(111, $stubbedQuery)
-            ->andReturn($stubbedTableData);
+            ->andReturn($stubbedTableData)
+            ->shouldReceive('alterVehcileTable')
+            ->with($mockTable, $id)
+            ->andReturn($mockTable);
 
         $mockFormService->shouldReceive('getForm')
             ->once()
@@ -827,7 +839,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->shouldReceive('getFilteredVehiclesData')
             ->once()
             ->with(111, $stubbedQuery)
-            ->andReturn($stubbedTableData);
+            ->andReturn($stubbedTableData)
+            ->shouldReceive('alterVehcileTable')
+            ->with($mockTable, $id)
+            ->andReturn($mockTable);
 
         $mockFormService->shouldReceive('getForm')
             ->once()
@@ -986,7 +1001,10 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->shouldReceive('getFilteredVehiclesData')
             ->once()
             ->with(111, $stubbedQuery)
-            ->andReturn($stubbedTableData);
+            ->andReturn($stubbedTableData)
+            ->shouldReceive('alterVehcileTable')
+            ->with($mockTable, $id)
+            ->andReturn($mockTable);
 
         $mockFormService->shouldReceive('getForm')
             ->once()

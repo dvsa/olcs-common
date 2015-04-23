@@ -282,6 +282,14 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         );
     }
 
+    /**
+     * Alter table.
+     */
+    protected function alterTable($table)
+    {
+        return $this->getAdapter()->alterVehcileTable($table, $this->getIdentifier());
+    }
+
     protected function getTableData()
     {
         if ($this->getRequest()->isPost()) {

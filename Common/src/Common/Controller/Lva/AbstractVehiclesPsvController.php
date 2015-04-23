@@ -57,6 +57,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 $table,
                 $tableName
             );
+
+            $this->getAdapter()->alterVehcileTable($table, $this->getIdentifier());
         }
 
         $form = $this->alterForm($form, $entityData);
@@ -518,6 +520,36 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
     }
 
+
+    /**
+     * Transfer vehicles
+     */
+    public function smallTransferAction()
+    {
+        return $this->transferVehicles();
+    }
+
+    /**
+     * Transfer vehicles
+     */
+    public function mediumTransferAction()
+    {
+        return $this->transferVehicles();
+    }
+
+    /**
+     * Transfer vehicles
+     */
+    public function largeTransferAction()
+    {
+        return $this->transferVehicles();
+    }
+
+    public function renderForm($form)
+    {
+        return $this->render('vehicles_psv', $form);
+    }
+
     protected function getTable($tableName)
     {
         $rawTableData = $this->getRawTableData();
@@ -530,5 +562,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             );
 
         return $this->alterTable($table);
+
     }
 }
