@@ -441,6 +441,7 @@ return array(
     'form_elements' => [
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
+            'MonthSelect' => 'Common\Form\Elements\Custom\MonthSelect',
             'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
             'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ],

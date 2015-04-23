@@ -7,12 +7,16 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Service\Data\ListDataInterface;
+
 /**
  * Traffic Area Entity Service
  *
+ * @NOTE I implement ListDataInterface here so I can use this service for DynamicSelect
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TrafficAreaEntityService extends AbstractEntityService
+class TrafficAreaEntityService extends AbstractEntityService implements ListDataInterface
 {
     const NORTH_EASTERN_TRAFFIC_AREA_CODE    = 'B';
     const NORTH_WESTERN_TRAFFIC_AREA_CODE    = 'C';
@@ -54,5 +58,10 @@ class TrafficAreaEntityService extends AbstractEntityService
         asort($valueOptions);
 
         return $valueOptions;
+    }
+
+    public function fetchListOptions($context, $useGroups = false)
+    {
+        return $this->getValueOptions();
     }
 }
