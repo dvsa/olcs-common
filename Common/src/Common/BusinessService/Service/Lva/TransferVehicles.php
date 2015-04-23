@@ -132,13 +132,14 @@ class TransferVehicles implements
     protected function createVehicles($sourceVehiclesIds, $targetLicenceId)
     {
         $data = [];
+        $currentUserId = $this->getServiceLocator()->get('Entity\User')->getCurrentUser()['id'];
         foreach ($sourceVehiclesIds as $id) {
             $data[] = [
                 'vehicle' => $id,
                 'licence' => $targetLicenceId,
                 'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
-                'createdBy' => $this->getServiceLocator()->get('Entity\User')->getCurrentUser()['id'],
-                'lastModifiedBy' => $this->getServiceLocator()->get('Entity\User')->getCurrentUser()['id']
+                'createdBy' => $currentUserId,
+                'lastModifiedBy' => $currentUserId
             ];
         }
         return $this->getServiceLocator()
