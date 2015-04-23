@@ -52,6 +52,7 @@ class OperatingCentres
     public $totAuthLargeVehicles = null;
 
     /**
+     * @Form\Type("Text")
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
@@ -70,6 +71,7 @@ class OperatingCentres
     public $totAuthVehicles = null;
 
     /**
+     * @Form\Type("Text")
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
