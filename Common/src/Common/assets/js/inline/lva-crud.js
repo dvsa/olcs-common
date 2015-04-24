@@ -30,5 +30,13 @@ OLCS.ready(function() {
     }
   });
 
+  OLCS.conditionalButton({
+    container: tableSelector,
+    label: "Transfer",
+    predicate: function (length, callback) {
+      callback(length >= 1);
+    }
+  });
+
   OLCS.crudTableHandler();
 });

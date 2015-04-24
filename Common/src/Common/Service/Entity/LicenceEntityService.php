@@ -170,6 +170,21 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $vehiclesForTransfer = array(
+        'children' => array(
+            'licenceVehicles' => array(
+                'children' => array(
+                    'vehicle',
+                    'goodsDiscs'
+                ),
+                'criteria' => array(
+                    'removalDate' => 'NULL'
+                )
+            ),
+            'goodsOrPsv'
+        )
+    );
+
     /**
      * Application traffic area bundle
      *
@@ -752,5 +767,70 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function getEnforcementArea($id)
     {
         return $this->get($id, $this->enforcementAreaDataBundle);
+    }
+
+    /**
+     * Get all other active statuses
+     *
+     * @param int $licenceId
+     * @return array
+     */
+    public function getOtherActiveLicences($licenceId)
+    {
+        $valid = [
+            self::LICENCE_STATUS_SUSPENDED,
+            self::LICENCE_STATUS_VALID,
+            self::LICENCE_STATUS_CURTAILED
+        ];
+        $licence = $this->getHeaderParams($licenceId);
+        $query = [
+            'organisation' => $licence['organisation']['id'],
+            'status' => 'IN ["' . implode('","', $valid) . '"]',
+            'goodsOrPsv' => $licence['goodsOrPsv']['id']
+        ];
+        if ($licence['goodsOrPsv']['id'] == self::LICENCE_CATEGORY_PSV) {
+            $query['licenceType'] = "!= " . self::LICENCE_TYPE_SPECIAL_RESTRICTED;
+        }
+
+        $results = $this->getAll($query, $this->overviewBundle);
+        // we can't filter by id, Zend AbstractRestController will
+        // return only one value if we pass id as a parameter
+        $filtered = [];
+        foreach ($results['Results'] as $result) {
+            if ($result['id'] != $licenceId) {
+                $filtered[$result['id']] = $result['licNo'];
+            }
+        }
+        return $filtered;
+    }
+
+    /**
+     * Get licence with vehicles
+     *
+     * @param int $licenceId
+     * @return array
+     */
+    public function getLicenceWithVehicles($licenceId)
+    {
+        return $this->getAll($licenceId, $this->vehiclesForTransfer);
+    }
+
+    /**
+     * Get vehicle ids by licence vehicle ids
+     *
+     * @param int $sourceLicenceId
+     * @param array $ids
+     * @return array
+     */
+    public function getVehiclesIdsByLicenceVehiclesIds($sourceLicenceId, $ids)
+    {
+        $licence = $this->getLicenceWithVehicles($sourceLicenceId);
+        $vehicles = [];
+        foreach ($licence['licenceVehicles'] as $lv) {
+            if (array_search($lv['id'], $ids) !== false) {
+                $vehicles[$lv['vehicle']['id']] = $lv['vehicle']['id'];
+            }
+        }
+        return $vehicles;
     }
 }

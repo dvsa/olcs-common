@@ -24,6 +24,7 @@ class TransportManagerApplicationStatus extends AbstractHelper
         TransportManagerApplicationEntityService::STATUS_TM_SIGNED => 'orange',
         TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED => 'green',
         TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION => 'green',
+        TransportManagerApplicationEntityService::STATUS_RECEIVED => 'green',
     ];
 
     /**

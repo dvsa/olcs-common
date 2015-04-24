@@ -11,7 +11,7 @@ use Zend\Form\Annotation as Form;
 class HoursOfWeekContentRequired
 {
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Type("Text")
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -19,6 +19,12 @@ class HoursOfWeekContentRequired
      * @Form\Options({
      *     "label": "days-of-week-short-mon"
      * })
+     * @Form\Validator({"name": "Common\Form\Elements\Validators\SumContext", "options": {
+     *     "min": 1,
+     *     "messages": {
+     *         "belowMin": "transport-manager-hours-per-week-validation-message"
+     *     }
+     * }})
      * @Form\Validator({"name":"Digits", "options": {
      *     "messages": {
      *         "notDigits": "Mon must be a whole number"
@@ -29,12 +35,6 @@ class HoursOfWeekContentRequired
      *     "max": 24,
      *     "messages": {
      *         "notBetween": "Mon must be between '%min%' and '%max%', inclusively"
-     *     }
-     * }})
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\SumContext", "options": {
-     *     "min": 1,
-     *     "messages": {
-     *         "belowMin": "transport-manager-hours-per-week-validation-message"
      *     }
      * }})
      */

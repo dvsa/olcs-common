@@ -41,7 +41,9 @@ class TableBuilderTest extends MockeryTestCase
                 ? array(
                     'tables' => array(
                         'config' => array(__DIR__ . '/TestResources/'),
-                        'partials' => ''
+                        'partials' => array(
+                            'html' => ''
+                        )
                     ),
                 )
                 : array())
@@ -83,6 +85,19 @@ class TableBuilderTest extends MockeryTestCase
     public function testGetContentHelperWithoutConfig()
     {
         $table = new TableBuilder($this->getMockServiceLocator(false));
+
+        $table->getContentHelper();
+    }
+    /**
+     * Test getContentHelper without configured partials for current content type
+     *
+     * @expectedException \Exception
+     */
+    public function testGetContentHelperWithoutConfigForType()
+    {
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $table->setContentType('csv');
 
         $table->getContentHelper();
     }
@@ -2620,7 +2635,10 @@ class TableBuilderTest extends MockeryTestCase
         $config = [
             'tables' => [
                 'config' => [__DIR__ . '/TestResources/'],
-                'partials' => ''
+                'partials' => [
+                    'html' => '',
+                    'csv' => ''
+                ]
             ]
         ];
         $mockAuthService = m::mock();
@@ -2642,5 +2660,43 @@ class TableBuilderTest extends MockeryTestCase
 
         $sut->setEmptyMessage($message);
         $this->assertEquals($message, $sut->getEmptyMessage());
+    }
+
+    public function testAddAction()
+    {
+        $tableConfig = array(
+            'settings' => array(
+                'paginate' => array(),
+                'crud' => array(
+                    'actions' => array(
+                        'foo' => array(),
+                        'bar' => array()
+                    )
+                )
+            )
+        );
+
+        $table = $this->getMockTableBuilder(array('getConfigFromFile'));
+
+        $table->expects($this->once())
+            ->method('getConfigFromFile')
+            ->will($this->returnValue($tableConfig));
+
+        $table->loadConfig('test');
+
+        $table->addAction('new', ['key' => 'value']);
+
+        $settings = $table->getSetting('crud');
+
+        $this->assertEquals(
+            array(
+                'actions' => array(
+                    'foo' => array(),
+                    'bar' => array(),
+                    'new' => array('key' => 'value')
+                )
+            ),
+            $settings
+        );
     }
 }

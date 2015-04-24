@@ -53,11 +53,17 @@ class AbstractFactory implements AbstractFactoryInterface
             throw new InvalidServiceNameException('No endpoint defined for: ' . $endpoint);
         }
 
+        /** @var \Zend\Mvc\I18n\Translator $translator */
+        $translator = $serviceLocator->getServiceLocator()->get('translator');
+
         $filter = new CamelCaseToDash();
         $uri = strtolower($filter->filter($uri));
         $url = new Http($uri);
         $url->resolve($config['service_api_mapping']['endpoints'][$endpoint]);
 
-        return new RestClient($url);
+        $rest = new RestClient($url);
+        $rest->setLanguage($translator->getLocale());
+
+        return $rest;
     }
 }
