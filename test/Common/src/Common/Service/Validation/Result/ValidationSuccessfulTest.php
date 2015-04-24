@@ -9,9 +9,9 @@ use Mockery as m;
 
 /**
  * Class PackValidationSuccessfulTest
- * @package OlcsTest\Ebsr\Data\Object\Result
+ * @package CommonTest\Validation\Result
  */
-class PackValidationSuccessfulTest extends TestCase
+class ValidationSuccessfulTest extends TestCase
 {
     public function testObject()
     {
