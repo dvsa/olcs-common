@@ -25,8 +25,31 @@ class ContinuationDetailEntityService extends AbstractEntityService
      */
     protected $entity = 'ContinuationDetail';
 
+    protected $listBundle = [
+        'children' => [
+            'status',
+            'licence' => [
+                'children' => [
+                    'status',
+                    'organisation',
+                    'licenceType',
+                    'goodsOrPsv',
+                ]
+            ]
+        ]
+    ];
+
     public function createRecords($records)
     {
         $this->multiCreate($records);
+    }
+
+    public function getListData($continuationId)
+    {
+        $query = [
+            'continuation' => $continuationId
+        ];
+
+        return $this->getAll($query, $this->listBundle);
     }
 }

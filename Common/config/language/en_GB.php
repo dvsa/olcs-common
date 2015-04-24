@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'admin-continuations-list-title' => 'Time period: %s Traffic area: %s',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

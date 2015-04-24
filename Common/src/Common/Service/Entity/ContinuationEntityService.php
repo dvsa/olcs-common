@@ -24,6 +24,12 @@ class ContinuationEntityService extends AbstractEntityService
      */
     protected $entity = 'Continuation';
 
+    protected $headerBundle = [
+        'children' => [
+            'trafficArea'
+        ]
+    ];
+
     public function find($criteria)
     {
         $criteria['limit'] = 1;
@@ -35,5 +41,10 @@ class ContinuationEntityService extends AbstractEntityService
         }
 
         return $results['Results'][0];
+    }
+
+    public function getHeaderData($id)
+    {
+        return $this->get($id, $this->headerBundle);
     }
 }
