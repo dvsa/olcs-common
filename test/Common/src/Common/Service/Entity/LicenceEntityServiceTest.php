@@ -1184,4 +1184,74 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals($vehicles, $this->sut->getVehiclesIdsByLicenceVehiclesIds($licenceId, $ids));
     }
+
+    /**
+     * @dataProvider monthProvider
+     */
+    public function testFindForContinuationCriteria($year, $month, $expectedStartDate, $expectedEndDate)
+    {
+        $criteria = [
+            'year' => $year,
+            'month' => $month,
+            'trafficArea' => 'A'
+        ];
+
+        $query = [
+            'expiryDate' => [
+                [
+                    '>=' . $expectedStartDate,
+                    '<=' . $expectedEndDate
+                ]
+            ],
+            'trafficArea' => 'A',
+            'limit' => 'all'
+        ];
+
+        $this->expectOneRestCall('Licence', 'GET', $query)
+            ->will($this->returnValue(['Results' => 'RESPONSE']));
+
+        $this->assertEquals('RESPONSE', $this->sut->findForContinuationCriteria($criteria));
+    }
+
+    public function monthProvider()
+    {
+        return [
+            [
+                '2015',
+                '01',
+                '2015-01-01',
+                '2015-01-31'
+            ],
+            [
+                '2015',
+                '02',
+                '2015-02-01',
+                '2015-02-28'
+            ],
+            [
+                '2015',
+                '03',
+                '2015-03-01',
+                '2015-03-31'
+            ],
+            [
+                '2015',
+                '04',
+                '2015-04-01',
+                '2015-04-30'
+            ],
+            [
+                '2015',
+                '05',
+                '2015-05-01',
+                '2015-05-31'
+            ],
+            'leap year' => [
+                '2012',
+                '02',
+                '2012-02-01',
+                '2012-02-29'
+            ]
+        ];
+    }
 }

@@ -18,21 +18,26 @@ trait YearDelta
     {
         parent::setOptions($options);
 
+        $setMaxYear = false;
         if ($this->getOption('max_year_delta')) {
+            $setMaxYear = true;
             $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
-
-            $minYear = $this->getOption('min_year_delta');
-
-            if (isset($minYear)) {
-                $minYear = date('Y', strtotime($minYear . ' years'));
-            } else {
-                // if there's no delta specified, initially set the minimum year
-                // to the current year
-                $minYear = date('Y');
-            }
-
-            $this->setMinYear($minYear);
             $this->setMaxYear($maxYear);
+        }
+
+        $setMinYear = false;
+        if ($this->getOption('min_year_delta')) {
+            $setMinYear = true;
+            $minYear = date('Y', strtotime($this->getOption('min_year_delta') . ' years'));
+            $this->setMinYear($minYear);
+        }
+
+        if ($setMaxYear && !$setMinYear) {
+            $this->setMinYear(date('Y'));
+        }
+
+        if ($setMinYear && !$setMaxYear) {
+            $this->setMaxYear(date('Y'));
         }
 
         // This option allows us to default the date

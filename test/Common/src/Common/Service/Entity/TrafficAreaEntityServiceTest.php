@@ -78,4 +78,39 @@ class TrafficAreaEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals($expected, $this->sut->getValueOptions());
     }
+
+    public function testFetchListOptions()
+    {
+        $response = array(
+            'Results' => array(
+                array(
+                    'id' => 'A',
+                    'name' => 'c'
+                ),
+                array(
+                    'id' => 'B',
+                    'name' => 'a'
+                ),
+                array(
+                    'id' => 'C',
+                    'name' => 'b'
+                ),
+                array(
+                    'id' => 'N',
+                    'name' => 'a'
+                )
+            )
+        );
+
+        $expected = array(
+            'B' => 'a',
+            'C' => 'b',
+            'A' => 'c'
+        );
+
+        $this->expectOneRestCall('TrafficArea', 'GET', array())
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($expected, $this->sut->fetchListOptions([], false));
+    }
 }
