@@ -95,8 +95,8 @@ class LicenceOperatingCentreTest extends MockeryTestCase
 
         $this->assertCount(1, $result);
         $this->assertContains('a1', $result[1]);
-        $this->assertContains('a2', $result[1]);
         if ($outputType == LicenceOperatingCentre::OUTPUT_TYPE_FULL) {
+            $this->assertContains('a2', $result[1]);
             $this->assertContains('a3', $result[1]);
             $this->assertContains('pc', $result[1]);
         } else {
@@ -108,8 +108,8 @@ class LicenceOperatingCentreTest extends MockeryTestCase
 
         $this->assertCount(1, $result);
         $this->assertContains('a1', $result[1]);
-        $this->assertContains('a2', $result[1]);
         if ($outputType == LicenceOperatingCentre::OUTPUT_TYPE_FULL) {
+            $this->assertContains('a2', $result[1]);
             $this->assertContains('a3', $result[1]);
             $this->assertContains('pc', $result[1]);
         } else {
