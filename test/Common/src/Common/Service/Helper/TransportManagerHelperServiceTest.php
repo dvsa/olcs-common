@@ -64,10 +64,19 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $expected = [
             'transportManager' => 111,
             'description' => 'foo.txt',
+            'issuedDate' => '2015-01-01 10:10:10',
             'category' => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
         ];
 
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+            ->shouldReceive('getDate')
+            ->andReturn('2015-01-01 10:10:10')
+            ->once()
+            ->getMock()
+        );
         $response = $this->sut->getCertificateFileData($tmId, $file);
 
         $this->assertEquals($expected, $response);
