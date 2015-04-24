@@ -37,7 +37,7 @@ class OperatingCentreTrailerAuthorisationsValidator extends AbstractValidator
      */
     public function isValid($value, $context = null)
     {
-        if (!is_null($value) && !is_numeric($value)) {
+        if (is_null($value) || !is_numeric($value)) {
             $this->error('non-numeric');
             return false;
         }

@@ -14,7 +14,7 @@ class StatementNameBodyAddress extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
-        $query = [
+        return isset($data['statement']) ? [
             'service' => 'Statement',
             'data' => [
                 'id' => $data['statement']
@@ -29,9 +29,7 @@ class StatementNameBodyAddress extends DynamicBookmark
                     ]
                 ]
             ]
-        ];
-
-        return $query;
+        ] : null;
     }
 
     public function render()

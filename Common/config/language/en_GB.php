@@ -274,7 +274,7 @@ return array(
     'application-review-vehicles-psv-small-title' => 'Small vehicles',
     'application-review-vehicles-vrm' => 'VRM',
     'application-review-vehicles-weight' => 'Gross plated weight (Kg)',
-    'application-revive-application-successfully' => 'The application status has been set to Granted',
+    'application-revive-application-successfully' => 'The application has been revived',
     'application-search-person-header-partner' => 'Add new partner',
     'application-search-person-header-person' => 'Add new responsible person',
     'application-search-subsidiary-header' => 'Subsidiary Company',

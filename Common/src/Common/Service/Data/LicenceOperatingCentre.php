@@ -48,7 +48,6 @@ class LicenceOperatingCentre extends AbstractData implements FactoryInterface, L
                     if ($outputType == self::OUTPUT_TYPE_PARTIAL) {
                         $data[$licenceOperatingCentre['operatingCentre']['id']] =
                             $licenceOperatingCentre['operatingCentre']['address']['addressLine1'] . ', ' .
-                            $licenceOperatingCentre['operatingCentre']['address']['addressLine2'] . ', ' .
                             $licenceOperatingCentre['operatingCentre']['address']['town'];
                     } else {
                         $data[$licenceOperatingCentre['operatingCentre']['id']] =

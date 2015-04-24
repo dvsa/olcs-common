@@ -17,7 +17,7 @@ class StatementContactType extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
-        return [
+        return isset($data['statement']) ? [
             'service' => 'Statement',
             'data' => [
                 'id' => $data['statement']
@@ -36,11 +36,11 @@ class StatementContactType extends DynamicBookmark
                     ],
                 ],
             ],
-        ];
+        ] : null;
     }
 
     public function render()
     {
-        return $this->data['contactType']['description'];
+        return isset($this->data['contactType']['description']) ? $this->data['contactType']['description'] : '';
     }
 }
