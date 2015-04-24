@@ -722,8 +722,6 @@ return array(
             'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
             'Cases\Submission\SubmissionActionTask'
                 => 'Common\BusinessService\Service\Cases\Submission\SubmissionActionTask',
-            'Cases\Penalty\ErruAppliedPenaltyResponse'
-            => 'Common\BusinessService\Service\Cases\Penalty\ErruAppliedPenaltyResponse',
             // Bus business services
             'Bus\BusReg'
                 => 'Common\BusinessService\Service\Bus\BusReg',
