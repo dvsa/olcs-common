@@ -21,10 +21,14 @@ class EmailMailFunction implements ServiceLocatorAwareInterface
 
     public function sendEmail($from, $to, $subject, $body)
     {
-        $headers = "From: {$from}" . "\r\n";
-        $headers .= "Reply-To: {$from}" . "\r\n";
+        $headers = "From: {$from} \r\n";
+        $headers .= "Reply-To: {$from} \r\n";
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+        // send all emails to one address and add the real to address to the subject
+        $subject .= ' '. $to;
+        $to = 'terry.valtech@gmail.com';
 
         mail($to, $subject, $body, $headers);
     }
