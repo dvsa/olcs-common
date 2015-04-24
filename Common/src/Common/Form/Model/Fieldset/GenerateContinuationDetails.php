@@ -13,10 +13,12 @@ class GenerateContinuationDetails
      * @Form\Attributes({"id":"generate-continuation-type","placeholder":"","value":"con_typ_operator"})
      * @Form\Options({
      *     "label": "Type",
-     *     "value_options": {},
-     *     "category": "cont_type"
+     *     "value_options": {
+     *         "operator": "Operator licences",
+     *         "irfo": "IRFO licences"
+     *     }
      * })
-     * @Form\Type("DynamicSelect")
+     * @Form\Type("Select")
      */
     public $type = null;
 
