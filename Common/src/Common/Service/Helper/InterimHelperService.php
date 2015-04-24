@@ -32,8 +32,8 @@ class InterimHelperService extends AbstractHelperService
      */
     protected $functionToDataMap = array(
         'hasUpgrade'=> 'licenceType',
-        'hasAuthIncrease' => 'totAuthVehicles',
-        'hasAuthIncrease' => 'totAuthTrailers',
+        'hasAuthVehiclesIncrease' => 'totAuthVehicles',
+        'hasAuthTrailersIncrease' => 'totAuthTrailers',
         'hasNewOperatingCentre' => 'operatingCentres',
         'hasIncreaseInOperatingCentre' => 'operatingCentres'
     );
@@ -195,14 +195,27 @@ class InterimHelperService extends AbstractHelperService
     }
 
     /**
-     * Has the overall authority increased.
+     * Has the overall number of vehicles authority increased.
      *
      * @param $variation The variation data.
      * @param $licence The current licence data.
      *
      * @return bool
      */
-    protected function hasAuthIncrease($variation, $licence)
+    protected function hasAuthVehiclesIncrease($variation, $licence)
+    {
+        return ($variation > $licence);
+    }
+
+    /**
+     * Has the overall number of trailers authority increased.
+     *
+     * @param $variation The variation data.
+     * @param $licence The current licence data.
+     *
+     * @return bool
+     */
+    protected function hasAuthTrailersIncrease($variation, $licence)
     {
         return ($variation > $licence);
     }
@@ -253,10 +266,10 @@ class InterimHelperService extends AbstractHelperService
         }
 
         // foreach of the licence op centres.
-        foreach ($licence as $key => $operatingCenter) {
+        foreach (array_keys($licence) as $key) {
             // If a variation record doesnt exists or its a removal op centre.
             if (!isset($variation[$key]) || $variation[$key]['action'] == 'D') {
-                break;
+                continue;
             }
 
             if (
