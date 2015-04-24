@@ -2175,6 +2175,7 @@ return array(
     'tm-review-responsibility-hours-per-week-header' => 'Hours per week',
     'tm-review-responsibility-isOwner' => 'Are you the person who is or will be the licensed operator?',
     'tm-review-responsibility-mon' => 'Monday',
+    'tm-review-responsibility-no-files' => 'No files uploaded',
     'tm-review-responsibility-operating-centres' => 'Which operating centres are you responsible for?',
     'tm-review-responsibility-other-licences' => 'Other licences',
     'tm-review-responsibility-other-licences-hours-per-week' => 'Hours per week',
