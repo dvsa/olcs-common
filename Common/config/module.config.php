@@ -278,8 +278,10 @@ return array(
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
+            'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
+            'Common\Service\Data\ApplicationOperatingCentre' => 'Common\Service\Data\ApplicationOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
             'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
             'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
@@ -526,6 +528,10 @@ return array(
             'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>
                 'Common\Service\Data\LicenceOperatingCentre',
+            'Common\Service\Data\ApplicationOperatingCentre' =>
+                'Common\Service\Data\ApplicationOperatingCentre',
+            'Common\Service\Data\OcContextListDataService' => 'Common\Service\Data\OcContextListDataService'
+
         ]
     ],
     'tables' => array(
