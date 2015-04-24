@@ -143,9 +143,21 @@ class TransportManagerResponsibilityReviewServiceTest extends MockeryTestCase
                                             ]
                                         ],
                                     ]
-                                ],
+                                ]
+                            ]
+                        ],
+                        [
+                            'title' => 'tm-review-responsibility-other-licences',
+                            'mainItems' => [
                                 [
-                                    'header' => 'tm-review-responsibility-additional-info-header',
+                                    'freetext' => 'tm-review-responsibility-other-licences-none-added-translated'
+                                ]
+                            ]
+                        ],
+                        [
+                            'title' => 'tm-review-responsibility-additional-info-header',
+                            'mainItems' => [
+                                [
                                     'multiItems' => [
                                         [
                                             [
@@ -159,14 +171,6 @@ class TransportManagerResponsibilityReviewServiceTest extends MockeryTestCase
                                             ]
                                         ]
                                     ]
-                                ]
-                            ]
-                        ],
-                        [
-                            'title' => 'tm-review-responsibility-other-licences',
-                            'mainItems' => [
-                                [
-                                    'freetext' => 'tm-review-responsibility-other-licences-none-added-translated'
                                 ]
                             ]
                         ]
@@ -291,9 +295,21 @@ class TransportManagerResponsibilityReviewServiceTest extends MockeryTestCase
                                             ]
                                         ],
                                     ]
-                                ],
+                                ]
+                            ]
+                        ],
+                        [
+                            'title' => 'tm-review-responsibility-other-licences',
+                            'mainItems' => [
                                 [
-                                    'header' => 'tm-review-responsibility-additional-info-header',
+                                    'freetext' => 'tm-review-responsibility-other-licences-none-added-translated'
+                                ]
+                            ]
+                        ],
+                        [
+                            'title' => 'tm-review-responsibility-additional-info-header',
+                            'mainItems' => [
+                                [
                                     'multiItems' => [
                                         [
                                             [
@@ -307,14 +323,6 @@ class TransportManagerResponsibilityReviewServiceTest extends MockeryTestCase
                                             ]
                                         ]
                                     ]
-                                ]
-                            ]
-                        ],
-                        [
-                            'title' => 'tm-review-responsibility-other-licences',
-                            'mainItems' => [
-                                [
-                                    'freetext' => 'tm-review-responsibility-other-licences-none-added-translated'
                                 ]
                             ]
                         ]
@@ -456,22 +464,6 @@ class TransportManagerResponsibilityReviewServiceTest extends MockeryTestCase
                                             ]
                                         ],
                                     ]
-                                ],
-                                [
-                                    'header' => 'tm-review-responsibility-additional-info-header',
-                                    'multiItems' => [
-                                        [
-                                            [
-                                                'label' => 'tm-review-responsibility-additional-info',
-                                                'value' => 'Foo bar cake'
-                                            ],
-                                            [
-                                                'label' => 'tm-review-responsibility-additional-info-files',
-                                                'noEscape' => true,
-                                                'value' => 'File1<br>File3'
-                                            ]
-                                        ]
-                                    ]
                                 ]
                             ]
                         ],
@@ -520,6 +512,26 @@ class TransportManagerResponsibilityReviewServiceTest extends MockeryTestCase
                                             [
                                                 'label' => 'tm-review-responsibility-other-licences-hours-per-week',
                                                 'value' => 15
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ],
+                        [
+                            'title' => 'tm-review-responsibility-additional-info-header',
+                            'mainItems' => [
+                                [
+                                    'multiItems' => [
+                                        [
+                                            [
+                                                'label' => 'tm-review-responsibility-additional-info',
+                                                'value' => 'Foo bar cake'
+                                            ],
+                                            [
+                                                'label' => 'tm-review-responsibility-additional-info-files',
+                                                'noEscape' => true,
+                                                'value' => 'File1<br>File3'
                                             ]
                                         ]
                                     ]

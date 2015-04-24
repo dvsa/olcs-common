@@ -84,8 +84,16 @@ class TransportManagerResponsibilityReviewService extends AbstractReviewService
                                 ],
                             ]
                         ],
+                    ]
+                ],
+                [
+                    'title' => 'tm-review-responsibility-other-licences',
+                    'mainItems' => $this->formatOtherLicences($data)
+                ],
+                [
+                    'title' => 'tm-review-responsibility-additional-info-header',
+                    'mainItems' => [
                         [
-                            'header' => 'tm-review-responsibility-additional-info-header',
                             'multiItems' => [
                                 [
                                     [
@@ -101,10 +109,6 @@ class TransportManagerResponsibilityReviewService extends AbstractReviewService
                             ]
                         ]
                     ]
-                ],
-                [
-                    'title' => 'tm-review-responsibility-other-licences',
-                    'mainItems' => $this->formatOtherLicences($data)
                 ]
             ]
         ];
