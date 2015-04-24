@@ -46,4 +46,10 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
     {
         $this->assertFalse($this->sut->mustHaveAtLeastOneTm(99));
     }
+
+    public function testAddMessages()
+    {
+        // no assertion as its a no op
+        $this->sut->addMessages(99);
+    }
 }

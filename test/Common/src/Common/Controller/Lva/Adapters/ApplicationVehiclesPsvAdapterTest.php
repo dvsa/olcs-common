@@ -128,4 +128,16 @@ class ApplicationVehiclesPsvAdapterTest extends MockeryTestCase
         ];
         $this->sut->warnIfAuthorityExceeded($id, $psvTypes, false);
     }
+
+    public function testAlterVehcileTable()
+    {
+        $mockTable = m::mock('Common\Service\Table\TableBuilder')
+            ->shouldReceive('removeAction')
+            ->with('transfer')
+            ->once()
+            ->andReturnSelf()
+            ->getMock();
+
+        $this->assertInstanceOf('Common\Service\Table\TableBuilder', $this->sut->alterVehcileTable($mockTable, null));
+    }
 }

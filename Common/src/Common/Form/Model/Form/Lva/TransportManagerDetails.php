@@ -33,6 +33,32 @@ class TransportManagerDetails
     public $workAddress = null;
 
     /**
+     * @Form\Name("responsibilities")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\Responsibilities")
+     * @Form\Options({"label":"lva-tm-details-details-responsibilities"})
+     */
+    public $responsibilities = null;
+
+    /**
+     * @Form\Name("otherEmployment")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     */
+    public $otherEmployment = null;
+
+    /**
+     * @Form\Name("previousHistory")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\PreviousHistory")
+     */
+    public $previousHistory = null;
+
+    /**
+     * @Form\Name("declarations")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\Declarations")
+     * @Form\Options({"label":"lva-tm-details-details-declarations"})
+     */
+    public $declarations = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TmDetailsFormActions")
      * @Form\Attributes({"class":"actions-container"})

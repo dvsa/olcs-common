@@ -63,16 +63,36 @@ class ApplicationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
     /**
      * Check traffic area (We call this after deleting an OC)
+     *
+     * Resets the traffic area AND enforcement area on the licence
      */
     protected function checkTrafficArea()
     {
         if ($this->getOperatingCentresCount() === 0) {
+            $licenceId = $this->getLicenceAdapter()->getIdentifier();
             $this->getServiceLocator()
                 ->get('Entity\Licence')
-                ->setTrafficArea(
-                    $this->getLicenceAdapter()->getIdentifier(),
-                    null
-                );
+                ->setEnforcementArea($licenceId, null)
+                ->setTrafficArea($licenceId, null);
         }
+    }
+
+    /**
+     * Format data for form
+     *
+     * @param array $data
+     * @param array $tableData
+     * @param array $licenceData
+     * @return array
+     */
+    protected function formatDataForForm(array $data, array $tableData, array $licenceData)
+    {
+        $formData = parent::formatDataForForm($data, $tableData, $licenceData);
+
+        if (isset($data['licence']['enforcementArea']['id'])) {
+            $formData['dataTrafficArea']['enforcementArea'] = $data['licence']['enforcementArea']['id'];
+        }
+
+        return $formData;
     }
 }

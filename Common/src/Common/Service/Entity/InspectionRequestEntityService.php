@@ -18,6 +18,8 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
 
     const RESULT_TYPE_NEW = 'insp_res_t_new';
 
+    const REQUEST_TYPE_NEW_OP = 'insp_req_t_new_op';
+
     /**
      * Define entity for default behaviour
      *
@@ -27,7 +29,7 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
 
     /**
      * Get inspection request list
-     * 
+     *
      * @param array $query
      * @param int $licenceId
      * @return array
@@ -52,7 +54,7 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
 
     /**
      * Get inspection request
-     * 
+     *
      * @param int $id
      * @return array
      */
@@ -63,9 +65,48 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
                 'reportType',
                 'requestType',
                 'resultType',
-                'application',
-                'licence',
-                'operatingCentre'
+                'application' => [
+                    'children' => [
+                        'licenceType',
+                        'operatingCentres' => [
+                            'children' => [
+                                'operatingCentre' => [
+                                    'children' => [
+                                        'address'
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'licence' => [
+                    'children' => [
+                        'enforcementArea',
+                        'licenceType',
+                        'organisation' => [
+                            'children' => [
+                                'tradingNames',
+                                'licences',
+                            ],
+                        ],
+                        'operatingCentres',
+                        'correspondenceCd' => [
+                            'children' => [
+                                'address' => [],
+                                'phoneContacts' => [
+                                    'children' => [
+                                        'phoneContactType',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'operatingCentre' => [
+                    'children' => [
+                        'address'
+                    ],
+                ],
             ]
         ];
         return $this->get($id, $bundle);

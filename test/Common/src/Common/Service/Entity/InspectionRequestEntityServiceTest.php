@@ -58,18 +58,57 @@ class InspectionRequestEntityServiceTest extends AbstractEntityServiceTestCase
      */
     public function testGetInspectionRequest()
     {
-        $bundle = [
+        $expectedBundle = [
             'children' => [
                 'reportType',
                 'requestType',
                 'resultType',
-                'application',
-                'licence',
-                'operatingCentre'
-            ]
+                'application' => [
+                    'children' => [
+                        'licenceType',
+                        'operatingCentres' => [
+                            'children' => [
+                                'operatingCentre' => [
+                                    'children' => [
+                                        'address'
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'licence' => [
+                    'children' => [
+                        'enforcementArea',
+                        'licenceType',
+                        'organisation' => [
+                            'children' => [
+                                'tradingNames',
+                                'licences',
+                            ],
+                        ],
+                        'operatingCentres',
+                        'correspondenceCd' => [
+                            'children' => [
+                                'address' => [],
+                                'phoneContacts' => [
+                                    'children' => [
+                                        'phoneContactType',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'operatingCentre' => [
+                    'children' => [
+                        'address'
+                    ],
+                ],
+            ],
         ];
 
-        $this->expectOneRestCall('InspectionRequest', 'GET', 1, $bundle)
+        $this->expectOneRestCall('InspectionRequest', 'GET', 1, $expectedBundle)
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getInspectionRequest(1));

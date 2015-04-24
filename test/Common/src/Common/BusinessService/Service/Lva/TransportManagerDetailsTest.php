@@ -299,6 +299,10 @@ class TransportManagerDetailsTest extends MockeryTestCase
                 'id' => 333,
                 'version' => 1
             ],
+            'transportManagerApplication' => [
+                'id' => 555,
+                'version' => 1
+            ],
             'data' => [
                 'details' => [
                     'birthPlace' => 'Hometown',
@@ -309,6 +313,26 @@ class TransportManagerDetailsTest extends MockeryTestCase
                 ],
                 'workAddress' => [
                     'addressLine1' => '123 work street'
+                ],
+                'responsibilities' => [
+                    'tmType' => 'footype',
+                    'additionalInformation' => 'Additional Info',
+                    'isOwner' => 'Y',
+                    'operatingCentres' => [123, 321],
+                    'hoursOfWeek' => [
+                        'hoursPerWeekContent' => [
+                            'hoursMon' => '',
+                            'hoursTue' => 1,
+                            'hoursWed' => 2,
+                            'hoursThu' => 3,
+                            'hoursFri' => 4,
+                            'hoursSat' => 5,
+                            'hoursSun' => 6,
+                        ]
+                    ]
+                ],
+                'declarations' => [
+                    'confirmation' => 'Y'
                 ]
             ]
         ];
@@ -316,18 +340,22 @@ class TransportManagerDetailsTest extends MockeryTestCase
         $expectedResponseData = [
             'contactDetailsId' => 111,
             'personId' => 222,
-            'workContactDetailsId' => 333
+            'workContactDetailsId' => 333,
+            'transportManagerApplicationId' => 555
         ];
 
         // Mocks
         $mockHomeCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 111]);
         $mockPersonResponse = new Response(Response::TYPE_SUCCESS, ['id' => 222]);
         $mockWorkCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 333]);
+        $mockTmaResponse = new Response(Response::TYPE_SUCCESS, ['id' => 555]);
         $mockContactDetails = m::mock('\Common\BusinessService\BusinessServiceInterface');
         $mockPerson = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockTma = m::mock('\Common\BusinessService\BusinessServiceInterface');
 
         $this->bsm->setService('Lva\ContactDetails', $mockContactDetails);
         $this->bsm->setService('Lva\Person', $mockPerson);
+        $this->bsm->setService('Lva\TransportManagerApplication', $mockTma);
 
         // Expecations
         $mockContactDetails->shouldReceive('process')
@@ -341,6 +369,10 @@ class TransportManagerDetailsTest extends MockeryTestCase
         $mockContactDetails->shouldReceive('process')
             ->with($this->getExpectedWorkCdUpdateData())
             ->andReturn($mockWorkCdResponse);
+
+        $mockTma->shouldReceive('process')
+            ->with($this->getExpectedTmaDataSaved())
+            ->andReturn($mockTmaResponse);
 
         $response = $this->sut->process($params);
 
@@ -368,83 +400,6 @@ class TransportManagerDetailsTest extends MockeryTestCase
                 'id' => 444,
                 'version' => 1
             ],
-            'data' => [
-                'details' => [
-                    'birthPlace' => 'Hometown',
-                    'emailAddress' => 'foo@bar.com'
-                ],
-                'homeAddress' => [
-                    'addressLine1' => '123 street'
-                ],
-                'workAddress' => [
-                    'addressLine1' => '123 work street'
-                ]
-            ]
-        ];
-
-        $expectedResponseData = [
-            'contactDetailsId' => 111,
-            'personId' => 222,
-            'workContactDetailsId' => 333,
-            'transportManagerId' => 444
-        ];
-
-        // Mocks
-        $mockHomeCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 111]);
-        $mockPersonResponse = new Response(Response::TYPE_SUCCESS, ['id' => 222]);
-        $mockWorkCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 333]);
-        $mockTmResponse = new Response(Response::TYPE_SUCCESS, ['id' => 444]);
-        $mockContactDetails = m::mock('\Common\BusinessService\BusinessServiceInterface');
-        $mockPerson = m::mock('\Common\BusinessService\BusinessServiceInterface');
-        $mockTm = m::mock('\Common\BusinessService\BusinessServiceInterface');
-
-        $this->bsm->setService('Lva\ContactDetails', $mockContactDetails);
-        $this->bsm->setService('Lva\Person', $mockPerson);
-        $this->bsm->setService('Lva\TransportManager', $mockTm);
-
-        // Expecations
-        $mockContactDetails->shouldReceive('process')
-            ->with($this->getExpectedHomeCdData())
-            ->andReturn($mockHomeCdResponse);
-
-        $mockPerson->shouldReceive('process')
-            ->with($this->getExpectedPersonData())
-            ->andReturn($mockPersonResponse);
-
-        $mockContactDetails->shouldReceive('process')
-            ->with($this->getExpectedWorkCdCreateData())
-            ->andReturn($mockWorkCdResponse);
-
-        $mockTm->shouldReceive('process')
-            ->with($this->getExpectedTmData())
-            ->andReturn($mockTmResponse);
-
-        $response = $this->sut->process($params);
-
-        $this->assertTrue($response->isOK());
-        $this->assertEquals($expectedResponseData, $response->getData());
-    }
-
-    public function testProcessSubmitFail()
-    {
-        $params = [
-            'submit' => true,
-            'contactDetails' => [
-                'id' => 111,
-                'version' => 1
-            ],
-            'person' => [
-                'id' => 222,
-                'version' => 1
-            ],
-            'workContactDetails' => [
-                'id' => null,
-                'version' => null
-            ],
-            'transportManager' => [
-                'id' => 444,
-                'version' => 1
-            ],
             'transportManagerApplication' => [
                 'id' => 555,
                 'version' => 1
@@ -459,84 +414,26 @@ class TransportManagerDetailsTest extends MockeryTestCase
                 ],
                 'workAddress' => [
                     'addressLine1' => '123 work street'
-                ]
-            ]
-        ];
-
-        // Mocks
-        $mockHomeCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 111]);
-        $mockPersonResponse = new Response(Response::TYPE_SUCCESS, ['id' => 222]);
-        $mockWorkCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 333]);
-        $mockTmResponse = new Response(Response::TYPE_SUCCESS, ['id' => 444]);
-        $mockTmaResponse = new Response(Response::TYPE_FAILED);
-        $mockContactDetails = m::mock('\Common\BusinessService\BusinessServiceInterface');
-        $mockPerson = m::mock('\Common\BusinessService\BusinessServiceInterface');
-        $mockTm = m::mock('\Common\BusinessService\BusinessServiceInterface');
-        $mockTma = m::mock('\Common\BusinessService\BusinessServiceInterface');
-
-        $this->bsm->setService('Lva\ContactDetails', $mockContactDetails);
-        $this->bsm->setService('Lva\Person', $mockPerson);
-        $this->bsm->setService('Lva\TransportManager', $mockTm);
-        $this->bsm->setService('Lva\TransportManagerApplication', $mockTma);
-
-        // Expecations
-        $mockContactDetails->shouldReceive('process')
-            ->with($this->getExpectedHomeCdData())
-            ->andReturn($mockHomeCdResponse);
-
-        $mockPerson->shouldReceive('process')
-            ->with($this->getExpectedPersonData())
-            ->andReturn($mockPersonResponse);
-
-        $mockContactDetails->shouldReceive('process')
-            ->with($this->getExpectedWorkCdCreateData())
-            ->andReturn($mockWorkCdResponse);
-
-        $mockTm->shouldReceive('process')
-            ->with($this->getExpectedTmData())
-            ->andReturn($mockTmResponse);
-
-        $mockTma->shouldReceive('process')
-            ->with($this->getExpectedTmaData())
-            ->andReturn($mockTmaResponse);
-
-        $this->assertSame($mockTmaResponse, $this->sut->process($params));
-    }
-
-    public function testProcessSubmitSuccess()
-    {
-        $params = [
-            'submit' => true,
-            'contactDetails' => [
-                'id' => 111,
-                'version' => 1
-            ],
-            'person' => [
-                'id' => 222,
-                'version' => 1
-            ],
-            'workContactDetails' => [
-                'id' => null,
-                'version' => null
-            ],
-            'transportManager' => [
-                'id' => 444,
-                'version' => 1
-            ],
-            'transportManagerApplication' => [
-                'id' => 555,
-                'version' => 1
-            ],
-            'data' => [
-                'details' => [
-                    'birthPlace' => 'Hometown',
-                    'emailAddress' => 'foo@bar.com'
                 ],
-                'homeAddress' => [
-                    'addressLine1' => '123 street'
+                'responsibilities' => [
+                    'tmType' => 'footype',
+                    'additionalInformation' => 'Additional Info',
+                    'isOwner' => 'Y',
+                    'operatingCentres' => [123, 321],
+                    'hoursOfWeek' => [
+                        'hoursPerWeekContent' => [
+                            'hoursMon' => '',
+                            'hoursTue' => 1,
+                            'hoursWed' => 2,
+                            'hoursThu' => 3,
+                            'hoursFri' => 4,
+                            'hoursSat' => 5,
+                            'hoursSun' => 6,
+                        ]
+                    ]
                 ],
-                'workAddress' => [
-                    'addressLine1' => '123 work street'
+                'declarations' => [
+                    'confirmation' => 'Y'
                 ]
             ]
         ];
@@ -583,7 +480,7 @@ class TransportManagerDetailsTest extends MockeryTestCase
             ->andReturn($mockTmResponse);
 
         $mockTma->shouldReceive('process')
-            ->with($this->getExpectedTmaData())
+            ->with($this->getExpectedTmaDataSaved())
             ->andReturn($mockTmaResponse);
 
         $response = $this->sut->process($params);
@@ -592,13 +489,254 @@ class TransportManagerDetailsTest extends MockeryTestCase
         $this->assertEquals($expectedResponseData, $response->getData());
     }
 
-    protected function getExpectedTmaData()
+    public function testProcessSubmitFail()
+    {
+        $params = [
+            'submit' => true,
+            'contactDetails' => [
+                'id' => 111,
+                'version' => 1
+            ],
+            'person' => [
+                'id' => 222,
+                'version' => 1
+            ],
+            'workContactDetails' => [
+                'id' => null,
+                'version' => null
+            ],
+            'transportManager' => [
+                'id' => 444,
+                'version' => 1
+            ],
+            'transportManagerApplication' => [
+                'id' => 555,
+                'version' => 1
+            ],
+            'data' => [
+                'details' => [
+                    'birthPlace' => 'Hometown',
+                    'emailAddress' => 'foo@bar.com'
+                ],
+                'homeAddress' => [
+                    'addressLine1' => '123 street'
+                ],
+                'workAddress' => [
+                    'addressLine1' => '123 work street'
+                ],
+                'responsibilities' => [
+                    'tmType' => 'footype',
+                    'additionalInformation' => 'Additional Info',
+                    'isOwner' => 'Y',
+                    'operatingCentres' => [123, 321],
+                    'hoursOfWeek' => [
+                        'hoursPerWeekContent' => [
+                            'hoursMon' => '',
+                            'hoursTue' => 1,
+                            'hoursWed' => 2,
+                            'hoursThu' => 3,
+                            'hoursFri' => 4,
+                            'hoursSat' => 5,
+                            'hoursSun' => 6,
+                        ]
+                    ]
+                ],
+                'declarations' => [
+                    'confirmation' => 'Y'
+                ]
+            ]
+        ];
+
+        // Mocks
+        $mockHomeCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 111]);
+        $mockPersonResponse = new Response(Response::TYPE_SUCCESS, ['id' => 222]);
+        $mockWorkCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 333]);
+        $mockTmResponse = new Response(Response::TYPE_SUCCESS, ['id' => 444]);
+        $mockTmaResponse = new Response(Response::TYPE_FAILED);
+        $mockContactDetails = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockPerson = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockTm = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockTma = m::mock('\Common\BusinessService\BusinessServiceInterface');
+
+        $this->bsm->setService('Lva\ContactDetails', $mockContactDetails);
+        $this->bsm->setService('Lva\Person', $mockPerson);
+        $this->bsm->setService('Lva\TransportManager', $mockTm);
+        $this->bsm->setService('Lva\TransportManagerApplication', $mockTma);
+
+        // Expecations
+        $mockContactDetails->shouldReceive('process')
+            ->with($this->getExpectedHomeCdData())
+            ->andReturn($mockHomeCdResponse);
+
+        $mockPerson->shouldReceive('process')
+            ->with($this->getExpectedPersonData())
+            ->andReturn($mockPersonResponse);
+
+        $mockContactDetails->shouldReceive('process')
+            ->with($this->getExpectedWorkCdCreateData())
+            ->andReturn($mockWorkCdResponse);
+
+        $mockTm->shouldReceive('process')
+            ->with($this->getExpectedTmData())
+            ->andReturn($mockTmResponse);
+
+        $mockTma->shouldReceive('process')
+            ->with($this->getExpectedTmaDataSubmitted())
+            ->andReturn($mockTmaResponse);
+
+        $this->assertSame($mockTmaResponse, $this->sut->process($params));
+    }
+
+    public function testProcessSubmitSuccess()
+    {
+        $params = [
+            'submit' => true,
+            'contactDetails' => [
+                'id' => 111,
+                'version' => 1
+            ],
+            'person' => [
+                'id' => 222,
+                'version' => 1
+            ],
+            'workContactDetails' => [
+                'id' => null,
+                'version' => null
+            ],
+            'transportManager' => [
+                'id' => 444,
+                'version' => 1
+            ],
+            'transportManagerApplication' => [
+                'id' => 555,
+                'version' => 1
+            ],
+            'data' => [
+                'details' => [
+                    'birthPlace' => 'Hometown',
+                    'emailAddress' => 'foo@bar.com'
+                ],
+                'homeAddress' => [
+                    'addressLine1' => '123 street'
+                ],
+                'workAddress' => [
+                    'addressLine1' => '123 work street'
+                ],
+                'responsibilities' => [
+                    'tmType' => 'footype',
+                    'additionalInformation' => 'Additional Info',
+                    'isOwner' => 'Y',
+                    'operatingCentres' => [123, 321],
+                    'hoursOfWeek' => [
+                        'hoursPerWeekContent' => [
+                            'hoursMon' => '',
+                            'hoursTue' => 1,
+                            'hoursWed' => 2,
+                            'hoursThu' => 3,
+                            'hoursFri' => 4,
+                            'hoursSat' => 5,
+                            'hoursSun' => 6,
+                        ]
+                    ]
+                ],
+                'declarations' => [
+                    'confirmation' => 'Y'
+                ]
+            ]
+        ];
+
+        $expectedResponseData = [
+            'contactDetailsId' => 111,
+            'personId' => 222,
+            'workContactDetailsId' => 333,
+            'transportManagerId' => 444,
+            'transportManagerApplicationId' => 555
+        ];
+
+        // Mocks
+        $mockHomeCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 111]);
+        $mockPersonResponse = new Response(Response::TYPE_SUCCESS, ['id' => 222]);
+        $mockWorkCdResponse = new Response(Response::TYPE_SUCCESS, ['id' => 333]);
+        $mockTmResponse = new Response(Response::TYPE_SUCCESS, ['id' => 444]);
+        $mockTmaResponse = new Response(Response::TYPE_SUCCESS, ['id' => 555]);
+        $mockContactDetails = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockPerson = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockTm = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockTma = m::mock('\Common\BusinessService\BusinessServiceInterface');
+
+        $this->bsm->setService('Lva\ContactDetails', $mockContactDetails);
+        $this->bsm->setService('Lva\Person', $mockPerson);
+        $this->bsm->setService('Lva\TransportManager', $mockTm);
+        $this->bsm->setService('Lva\TransportManagerApplication', $mockTma);
+
+        // Expecations
+        $mockContactDetails->shouldReceive('process')
+            ->with($this->getExpectedHomeCdData())
+            ->andReturn($mockHomeCdResponse);
+
+        $mockPerson->shouldReceive('process')
+            ->with($this->getExpectedPersonData())
+            ->andReturn($mockPersonResponse);
+
+        $mockContactDetails->shouldReceive('process')
+            ->with($this->getExpectedWorkCdCreateData())
+            ->andReturn($mockWorkCdResponse);
+
+        $mockTm->shouldReceive('process')
+            ->with($this->getExpectedTmData())
+            ->andReturn($mockTmResponse);
+
+        $mockTma->shouldReceive('process')
+            ->with($this->getExpectedTmaDataSubmitted())
+            ->andReturn($mockTmaResponse);
+
+        $response = $this->sut->process($params);
+
+        $this->assertTrue($response->isOK());
+        $this->assertEquals($expectedResponseData, $response->getData());
+    }
+
+    protected function getExpectedTmaDataSubmitted()
     {
         return [
             'data' => [
                 'id' => 555,
                 'version' => 1,
-                'tmApplicationStatus' => TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE
+                'tmApplicationStatus' => TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE,
+                'tmType' => 'footype',
+                'additionalInformation' => 'Additional Info',
+                'hoursMon' => null,
+                'hoursTue' => 1,
+                'hoursWed' => 2,
+                'hoursThu' => 3,
+                'hoursFri' => 4,
+                'hoursSat' => 5,
+                'hoursSun' => 6,
+                'isOwner' => 'Y',
+                'operatingCentres' => [123, 321],
+                'declarationConfirmation' => 'Y'
+            ]
+        ];
+    }
+
+    protected function getExpectedTmaDataSaved()
+    {
+        return [
+            'data' => [
+                'id' => 555,
+                'version' => 1,
+                'tmType' => 'footype',
+                'additionalInformation' => 'Additional Info',
+                'hoursMon' => null,
+                'hoursTue' => 1,
+                'hoursWed' => 2,
+                'hoursThu' => 3,
+                'hoursFri' => 4,
+                'hoursSat' => 5,
+                'hoursSun' => 6,
+                'isOwner' => 'Y',
+                'operatingCentres' => [123, 321],
+                'declarationConfirmation' => 'Y'
             ]
         ];
     }

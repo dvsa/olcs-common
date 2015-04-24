@@ -29,7 +29,16 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
                             'countryCode'
                         )
                     ),
-                    'adDocuments'
+                    'adDocuments',
+                    'ocComplaints' => array(
+                        'children' => array(
+                            'complaint' => array(
+                                'criteria' => array(
+                                    'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
+                                )
+                            )
+                        )
+                    )
                 )
             )
         )

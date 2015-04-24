@@ -41,9 +41,14 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
         $mockForm->shouldReceive('get->get')->once()->with('table')->andReturn($mockTableElement);
         $mockForm->shouldReceive('get->get')->once()->with('rows')->andReturn($mockRowElement);
 
+        $mockFormService = m::mock();
+        $this->sm->shouldReceive('get')->once()->with('FormServiceManager')->andReturn($mockFormService);
+        $mockFormService->shouldReceive('get->alterForm')->once()->with($mockForm);
+
         $this->adapter->shouldReceive('getForm')->once()->andReturn($mockForm);
         $this->adapter->shouldReceive('getTable')->once()->andReturn($mockTable);
         $this->adapter->shouldReceive('getTableData')->once()->with(121, 765)->andReturn(['row1', 'row2']);
+        $this->adapter->shouldReceive('addMessages')->once()->with(765);
 
         $this->mockForm = $mockForm;
         $this->mockTable = $mockTable;
@@ -55,7 +60,9 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
         $this->mockRender();
 
-        $this->sm->shouldReceive('get->loadFile')->once()->with('lva-crud-delta');
+        $mockScript = m::mock();
+        $this->sm->shouldReceive('get')->once()->with('Script')->andReturn($mockScript);
+        $mockScript->shouldReceive('loadFile')->once()->with('lva-crud-delta');
 
         $this->sut->indexAction();
 
@@ -119,7 +126,9 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
         $this->adapter->shouldReceive('mustHaveAtLeastOneTm')->once()->andReturn(true);
         $this->mockForm->shouldReceive('isValid')->once()->andReturn(false);
 
-        $this->sm->shouldReceive('get->loadFile')->once()->with('lva-crud-delta');
+        $mockScript = m::mock();
+        $this->sm->shouldReceive('get')->once()->with('Script')->andReturn($mockScript);
+        $mockScript->shouldReceive('loadFile')->once()->with('lva-crud-delta');
 
         $this->mockRender();
 

@@ -850,6 +850,11 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'vehicle',
                         'interimApplication',
                         'goodsDiscs'
+                    ),
+                    'criteria' => array(
+                        array(
+                            'removalDate' => 'NULL'
+                        )
                     )
                 ),
                 'interimStatus',
@@ -870,6 +875,9 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 ['action' => 'A', 'operatingCentre' => ['address' => 'address1']],
                 ['action' => 'U', 'operatingCentre' => ['address' => 'address2']],
                 ['action' => '', 'operatingCentre' => ['address' => 'address3']],
+            ],
+            'licenceVehicles' => [
+                ['id' => 2, 'removalDate' => null]
             ]
         ];
         $processed = [
@@ -877,6 +885,9 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             'operatingCentres' => [
                 ['action' => 'A', 'address' => 'address1', 'operatingCentre' => ['address' => 'address1']],
                 ['action' => 'U', 'address' => 'address2', 'operatingCentre' => ['address' => 'address2']],
+            ],
+            'licenceVehicles' => [
+                ['id' => 2, 'removalDate' => null]
             ]
         ];
 
@@ -910,6 +921,11 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'vehicle',
                         'interimApplication',
                         'goodsDiscs'
+                    ),
+                    'criteria' => array(
+                        array(
+                            'removalDate' => 'NULL'
+                        )
                     )
                 ),
                 'interimStatus',
@@ -962,13 +978,15 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                     'interimApplication' => null,
                     'id' => 1,
                     'version' => 2,
-                    'goodsDiscs' => []
+                    'goodsDiscs' => [],
+                    'removalDate' => null
                 ),
                 array(
                     'interimApplication' => null,
                     'id' => 2,
                     'version' => 2,
-                    'goodsDiscs' => []
+                    'goodsDiscs' => [],
+                    'removalDate' => null
                 ),
                 array(
                     'interimApplication' => 1,
@@ -980,13 +998,15 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                             'version' => 1,
                             'ceasedDate' => null
                         ]
-                    ]
+                    ],
+                    'removalDate' => null
                 ),
                 array(
                     'interimApplication' => 1,
                     'id' => 4,
                     'version' => 2,
-                    'goodsDiscs' => []
+                    'goodsDiscs' => [],
+                    'removalDate' => null
                 )
             )
         );

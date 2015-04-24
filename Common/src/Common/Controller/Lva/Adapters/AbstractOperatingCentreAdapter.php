@@ -11,6 +11,7 @@ use Zend\Form\Form;
 use Zend\Http\Request;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\TrafficAreaEntityService;
+use Common\Service\Entity\EnforcementAreaEntityService;
 use Common\Service\Data\CategoryDataService;
 use Common\Controller\Lva\Adapters\AbstractControllerAwareAdapter;
 use Common\Controller\Lva\Interfaces\OperatingCentreAdapterInterface;
@@ -295,6 +296,8 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     {
         $appData = $this->formatDataForSave($data);
 
+        $this->getLvaEntityService()->save($appData);
+
         if (isset($appData['trafficArea']) && $appData['trafficArea']) {
 
             $this->getServiceLocator()->get('Entity\Licence')
@@ -304,7 +307,13 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
                 );
         }
 
-        $this->getLvaEntityService()->save($appData);
+        if (isset($appData['enforcementArea'])) {
+            $this->getServiceLocator()->get('Entity\Licence')
+                ->setEnforcementArea(
+                    $this->getLicenceAdapter()->getIdentifier(),
+                    $appData['enforcementArea']
+                );
+        }
     }
 
     /**
@@ -369,16 +378,19 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
             throw new \Exception('Unable to save operating centre');
         }
 
-        $this->setDefaultTrafficAreaAfterActionSave($data);
+        $this->setDefaultTrafficAndEnforcementAreasAfterActionSave($data);
     }
 
     /**
      * Set traffic area after action save
      */
-    protected function setDefaultTrafficAreaAfterActionSave($data)
+    protected function setDefaultTrafficAndEnforcementAreasAfterActionSave($data)
     {
         if (!isset($data['trafficArea']) || empty($data['trafficArea']['id'])) {
             $this->setDefaultTrafficArea($data);
+        }
+        if (!isset($data['enforcementArea']) || empty($data['enforcementArea']['id'])) {
+            $this->setDefaultEnforcementArea($data);
         }
     }
 
@@ -515,6 +527,11 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
 
         if ($trafficAreaId) {
 
+            $enforcementAreas = $this->getServiceLocator()->get('Entity\TrafficAreaEnforcementArea')
+                ->getValueOptions($trafficAreaId);
+            $dataTrafficAreaFieldset->get('enforcementArea')
+                ->setValueOptions($enforcementAreas);
+
             $formHelper->remove($form, 'dataTrafficArea->trafficArea');
             $dataTrafficAreaFieldset->get('trafficAreaSet')
                 ->setValue($trafficArea['name'])
@@ -526,6 +543,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $options = $this->getServiceLocator()->get('Entity\TrafficArea')->getValueOptions();
 
         $dataTrafficAreaFieldset->remove('trafficAreaSet')
+            ->remove('enforcementArea')
             ->get('trafficArea')
             ->setValueOptions($options);
 
@@ -750,6 +768,16 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
             '-psv',
             FormHelperService::ALTER_LABEL_APPEND
         );
+
+        // if PSV restricted licence, then add validtor max vehicles is two
+        $typeOfLicence = $this->getTypeOfLicenceData();
+        if ($typeOfLicence['licenceType'] === \Common\Service\Entity\LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+            $newValidator = new \Zend\Validator\LessThan(
+                ['max' => 3, 'message' => 'OperatingCentreVehicleAuthorisationValidator.too-high-psv-r']
+            );
+
+            $formHelper->attachValidator($form, 'data->noOfVehiclesRequired', $newValidator);
+        }
     }
 
     /**
@@ -855,6 +883,46 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
                     ->setTrafficArea(
                         $this->getLicenceAdapter()->getIdentifier(),
                         array_shift($trafficAreaParts)
+                    );
+            }
+        }
+    }
+
+    /**
+     * Set the default enforcement area
+     *
+     * @param array $data
+     */
+    protected function setDefaultEnforcementArea($data)
+    {
+        $licenceData = $this->getTypeOfLicenceData();
+
+        if ($licenceData['niFlag'] === 'Y') {
+            $this->getServiceLocator()
+                ->get('Entity\Licence')
+                ->setEnforcementArea(
+                    $this->getLicenceAdapter()->getIdentifier(),
+                    EnforcementAreaEntityService::NORTHERN_IRELAND_ENFORCEMENT_AREA_CODE
+                );
+            return;
+        }
+
+        if (isset($data['operatingCentre']['addresses']['address'])) {
+            $postcode = $data['operatingCentre']['addresses']['address']['postcode'];
+        }
+
+        if (!empty($postcode) && $this->getOperatingCentresCount() === 1) {
+
+            $postcodeService = $this->getServiceLocator()->get('Postcode');
+
+            $enforcementArea = $postcodeService->getEnforcementAreaByPostcode($postcode);
+
+            if (!empty($enforcementArea)) {
+                $this->getServiceLocator()
+                    ->get('Entity\Licence')
+                    ->setEnforcementArea(
+                        $this->getLicenceAdapter()->getIdentifier(),
+                        $enforcementArea['id']
                     );
             }
         }

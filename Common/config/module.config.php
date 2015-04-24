@@ -20,6 +20,16 @@ return array(
                         'action' => 'download'
                     )
                 )
+            ),
+            'transport_manager_review' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/transport-manager-application/review/:id[/]',
+                    'defaults' => array(
+                        'controller' => 'TransportManagerReview',
+                        'action' => 'index'
+                    )
+                )
             )
         )
     ),
@@ -124,6 +134,7 @@ return array(
             'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
+            'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
         )
     ),
     'controller_plugins' => array(
@@ -237,6 +248,7 @@ return array(
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
             'postcode' => 'Common\Service\Postcode\Postcode',
+            'email' => 'Common\Service\Email\Email',
             'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
@@ -252,6 +264,7 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationTransportManagerAdapter',
             'ApplicationTransportManagerAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter',
+            'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
@@ -423,7 +436,9 @@ return array(
             'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
             'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
             'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
-            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable'
+            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
+            'currentUser' => 'Common\View\Helper\CurrentUser',
+            'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
         )
     ),
     'view_manager' => array(
@@ -516,7 +531,10 @@ return array(
         'config' => array(
             __DIR__ . '/../src/Common/Table/Tables/'
         ),
-        'partials' => __DIR__ . '/../view/table/'
+        'partials' => array(
+            'html' => __DIR__ . '/../view/table/',
+            'csv' => __DIR__ . '/../view/table/csv'
+        )
     ),
     'sic_codes_path' => __DIR__ . '/../../Common/config/sic-codes',
     'fieldsets_path' => __DIR__ . '/../../Common/src/Common/Form/Fieldsets/',
@@ -532,7 +550,8 @@ return array(
         'endpoints' => array(
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
-            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
+            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/',
+            'email' => 'http://olcs-email/',
         )
     ),
     'caches'=> array(
@@ -604,6 +623,7 @@ return array(
     'business_rule_manager' => [
         'invokables' => [
             'Task' => 'Common\BusinessRule\Rule\Task',
+            'Fee' => 'Common\BusinessRule\Rule\Fee',
             'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
             'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
@@ -614,11 +634,14 @@ return array(
                 => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
             'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
             'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
-            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate'
+            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
+            'EnvironmentalComplaint' => 'Common\BusinessRule\Rule\EnvironmentalComplaint',
         ]
     ],
     'business_service_manager' => [
         'invokables' => [
+            'Task' => 'Common\BusinessService\Service\Task',
+            'Fee' => 'Common\BusinessService\Service\Fee',
             // Some of these LVA services may be re-usable outside of LVA, if so please move them from the LVA namespace
             'Lva\BusinessDetails' => 'Common\BusinessService\Service\Lva\BusinessDetails',
             'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames',
@@ -626,7 +649,6 @@ return array(
             'Lva\ContactDetails' => 'Common\BusinessService\Service\Lva\ContactDetails',
             'Lva\BusinessDetailsChangeTask' => 'Common\BusinessService\Service\Lva\BusinessDetailsChangeTask',
             'Lva\CompanySubsidiaryChangeTask' => 'Common\BusinessService\Service\Lva\CompanySubsidiaryChangeTask',
-            'Lva\Task' => 'Common\BusinessService\Service\Lva\Task',
             'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
             'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
             'Lva\LicenceAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
@@ -637,6 +659,7 @@ return array(
             'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
             // Lva
             'Lva\Application' => 'Common\BusinessService\Service\Lva\Application',
+            'Lva\ApplicationRevive' => 'Common\BusinessService\Service\Lva\ApplicationRevive',
             'Lva\Licence' => 'Common\BusinessService\Service\Lva\Licence',
             // Goods Vehicles business services
             'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
@@ -671,9 +694,37 @@ return array(
                 'Common\BusinessService\Service\Lva\TransportManagerDetails',
             'Lva\Person' =>
                 'Common\BusinessService\Service\Lva\Person',
+            'Lva\OtherLicence' =>
+                'Common\BusinessService\Service\Lva\OtherLicence',
+            'Lva\PreviousConviction' =>
+                'Common\BusinessService\Service\Lva\PreviousConviction',
+            'Lva\DeleteOtherLicence' =>
+                'Common\BusinessService\Service\Lva\DeleteOtherLicence',
+            'Lva\DeletePreviousConviction' =>
+                'Common\BusinessService\Service\Lva\DeletePreviousConviction',
+            'Lva\TransferVehicles' =>
+                'Common\BusinessService\Service\Lva\TransferVehicles',
+            'Lva\DeleteOtherEmployment' =>
+                'Common\BusinessService\Service\Lva\DeleteOtherEmployment',
+            'Lva\Address' =>
+                'Common\BusinessService\Service\Lva\Address',
+            'TmEmployment' =>
+                'Common\BusinessService\Service\TmEmployment',
             // User administration
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
+            // Cases business services
+            'Cases\Complaint\EnvironmentalComplaint'
+                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaint',
+            'Cases\Complaint\EnvironmentalComplaintTask'
+                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaintTask',
+            'Cases\Submission\Decision' => 'Common\BusinessService\Service\Cases\Submission\Decision',
+            'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
+            'Cases\Submission\SubmissionActionTask'
+                => 'Common\BusinessService\Service\Cases\Submission\SubmissionActionTask',
+            // Bus business services
+            'Bus\BusReg'
+                => 'Common\BusinessService\Service\Bus\BusReg',
         ]
     ],
 );

@@ -3,24 +3,28 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\Service\Table\Formatter\TransportManagerName;
 
 /**
  * Class TransportManagerNameTest
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
+class TransportManagerNameTest extends MockeryTestCase
 {
     private $sut;
+
     /* @var \Mockery\MockInterface */
     private $sm;
+
     /* @var \Mockery\MockInterface */
     private $mockUrlHelper;
 
     public function setUp()
     {
-        $this->sut = new \Common\Service\Table\Formatter\TransportManagerName();
+        $this->sut = new TransportManagerName();
 
         $this->mockUrlHelper = m::mock();
 
@@ -63,7 +67,9 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
             'lva' => 'application',
             'internal' => true,
         ];
-        $expected = '<b><a href="a-url">Arthur Smith</a></b> <span class="status green">status description</span>';
+        $expected = '<b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -71,6 +77,27 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
             ->andReturn('a-url');
 
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+    }
+
+    protected function mockGetStatusHtml($expectedStatusId, $expectedStatusDescription, $statusHtml = '<STATUS HTML>')
+    {
+        $mockViewHelperManager = m::mock();
+        $mockViewHelper = m::mock();
+
+        $this->sm->shouldReceive('get')
+            ->with('ViewHelperManager')
+            ->once()
+            ->andReturn($mockViewHelperManager);
+
+        $mockViewHelperManager->shouldReceive('get')
+            ->with('transportManagerApplicationStatus')
+            ->once()
+            ->andReturn($mockViewHelper);
+
+        $mockViewHelper->shouldReceive('render')
+            ->with($expectedStatusId, $expectedStatusDescription)
+            ->once()
+            ->andReturn($statusHtml);
     }
 
     public function testFormatApplicationExternal()
@@ -93,11 +120,13 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
             'lva' => 'application',
             'internal' => false,
         ];
-        $expected = '<b><a href="a-url">Arthur Smith</a></b> <span class="status green">status description</span>';
+        $expected = '<b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->with(null, ['action' => 'postal-application', 'child_id' => 333], [], true)
+            ->with('lva-application/transport_manager_details', ['action' => null, 'child_id' => 333], [], true)
             ->andReturn('a-url');
 
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
@@ -123,8 +152,9 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
             'lva' => 'variation',
             'internal' => true,
         ];
-        $expected = 'translated <b><a href="a-url">Arthur Smith</a></b> '
-            . '<span class="status green">status description</span>';
+        $expected = 'translated <b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -160,8 +190,9 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
             'lva' => 'variation',
             'internal' => true,
         ];
-        $expected = ' <b><a href="a-url">Arthur Smith</a></b> '
-            . '<span class="status green">status description</span>';
+        $expected = ' <b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
@@ -192,12 +223,13 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
             'lva' => 'variation',
             'internal' => false,
         ];
-        $expected = 'translated <b><a href="a-url">Arthur Smith</a></b> '
-            . '<span class="status green">status description</span>';
+        $expected = 'translated <b><a href="a-url">Arthur Smith</a></b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->with(null, ['action' => 'postal-application', 'child_id' => 333], [], true)
+            ->with('lva-variation/transport_manager_details', ['action' => null, 'child_id' => 333], [], true)
             ->andReturn('a-url');
 
         $mockTranslator = m::mock();
@@ -231,8 +263,9 @@ class TransportManagerNameTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
             'lva' => 'variation',
             'internal' => false,
         ];
-        $expected = 'translated <b>Arthur Smith</b> '
-            . '<span class="status green">status description</span>';
+        $expected = 'translated <b>Arthur Smith</b> <STATUS HTML>';
+
+        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
 
         $mockTranslator = m::mock();
         $mockTranslator->shouldReceive('translate')

@@ -25,35 +25,6 @@ class BusReg extends Generic
     ];
 
     /**
-     * Returns whether a bus reg may be granted
-     *
-     * @param $id
-     *
-     * @return Bool
-     */
-    public function isGrantable($id)
-    {
-        $busReg = $this->fetchOne($id);
-
-        $fields = [
-            'timetableAcceptable',
-            'mapSupplied',
-            'trcConditionChecked',
-            'copiedToLaPte',
-            'laShortNote',
-            'applicationSigned'
-        ];
-
-        foreach ($fields as $field) {
-            if ($busReg[$field] != 'Y') {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * Fetches details for a busRegId
      *
      * @param null $id
@@ -77,8 +48,7 @@ class BusReg extends Generic
                 'trafficAreas',
                 'busNoticePeriod',
                 'status',
-                'busServiceTypes',
-                'documents'
+                'busServiceTypes'
             ]
         ];
 
@@ -97,7 +67,12 @@ class BusReg extends Generic
     {
         $variationBundle = [
             'children' => [
-                'status'
+                'status',
+                'licence' => [
+                    'children' => [
+                        'organisation'
+                    ]
+                ]
             ]
         ];
 

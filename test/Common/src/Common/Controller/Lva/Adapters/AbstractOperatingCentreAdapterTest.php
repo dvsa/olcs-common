@@ -9,6 +9,8 @@ namespace CommonTest\Controller\Lva\Adapters;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
+use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\EnforcementAreaEntityService;
 
 /**
  * Abstract Operating Centre Adapter Test
@@ -26,6 +28,7 @@ class AbstractOperatingCentreAdapterTest extends MockeryTestCase
         $this->sm->setAllowOverride(true);
 
         $this->sut = m::mock('\Common\Controller\Lva\Adapters\AbstractOperatingCentreAdapter')
+            ->shouldAllowMockingProtectedMethods()
             ->makePartial();
 
         $this->sut->setServiceLocator($this->sm);
@@ -120,5 +123,233 @@ class AbstractOperatingCentreAdapterTest extends MockeryTestCase
         $this->sut->shouldReceive('alterForm')->with($mockForm);
 
         $this->assertSame($mockForm, $this->sut->getMainForm());
+    }
+
+    public function testSaveMainFormData()
+    {
+        $id = 99;
+        $licenceId = 101;
+
+        // stub data
+        $formData = [
+            'dataTrafficArea' => [
+                'enforcementArea' => 'V048',
+            ],
+            'data' => [
+                'id' => $id,
+                'version' => 1,
+                'totAuthVehicles' => '3',
+                'totAuthTrailers' => '4',
+            ],
+        ];
+
+        $saveData = [
+            'enforcementArea' => 'V048',
+            'id' => $id,
+            'version' => 1,
+            'totAuthVehicles' => '3',
+            'totAuthTrailers' => '4',
+        ];
+
+        // mocks
+        $mockLvaEntityService = m::mock();
+        $mockLicenceEntityService = m::mock();
+        $mockLicenceAdapter = m::mock('\Common\Controller\Lva\Interfaces\LvaAdapterInterface');
+
+        $this->sm->setService('Entity\Licence', $mockLicenceEntityService);
+        $this->sm->setService('LicenceLvaAdapter', $mockLicenceAdapter);
+
+        // use a real data helper
+        $this->sm->setService('Helper\Data', new \Common\Service\Helper\DataHelperService());
+
+        // expectations
+        $this->sut
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($mockLvaEntityService);
+
+        $mockLvaEntityService
+            ->shouldReceive('save')
+            ->once()
+            ->with($saveData);
+
+        $mockLicenceAdapter
+            ->shouldReceive('setController')
+            ->andReturnSelf()
+            ->shouldReceive('getIdentifier')
+            ->andReturn($licenceId);
+
+        $mockLicenceEntityService
+            ->shouldReceive('setEnforcementArea')
+            ->once()
+            ->with($licenceId, 'V048');
+
+        $this->sut->saveMainFormData($formData);
+    }
+
+    public function testSetDefaultEnforcementAreaGb()
+    {
+        $id = 69;
+        $licenceId = 77;
+
+        $data = [
+            'operatingCentre' => [
+                'addresses' => [
+                    'address' => [
+                        'postcode' => 'LS9 6NF',
+                    ],
+                ],
+            ],
+        ];
+
+        $mockTypeOfLicenceData = [
+            'niFlag' => 'N',
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        ];
+
+        $mockLicenceEntityService = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntityService);
+        $mockPostcodeService = m::mock();
+        $this->sm->setService('Postcode', $mockPostcodeService);
+        $mockLvaEntityService = m::mock();
+        $mockEntityService = m::mock();
+        $mockLicenceAdapter = m::mock('\Common\Controller\Lva\Interfaces\LvaAdapterInterface');
+        $this->sm->setService('LicenceLvaAdapter', $mockLicenceAdapter);
+
+        $mockLicenceAdapter
+            ->shouldReceive('setController')
+            ->andReturnSelf()
+            ->shouldReceive('getIdentifier')
+            ->andReturn($licenceId);
+
+        $mockEntityService
+            ->shouldReceive('getOperatingCentresCount')
+            ->andReturn(
+                [
+                    'Count' => 1,
+                    'Results' => ['oc'],
+                ]
+            );
+
+        $this->sut
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($mockLvaEntityService)
+            ->shouldReceive('getEntityService')
+            ->andReturn($mockEntityService)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id);
+
+        $mockLvaEntityService->shouldReceive('getTypeOfLicenceData')
+            ->with($id)
+            ->andReturn($mockTypeOfLicenceData);
+
+        $mockPostcodeService
+            ->shouldReceive('getEnforcementAreaByPostcode')
+            ->with('LS9 6NF')
+            ->andReturn(
+                [
+                    'id' => 'V048',
+                    'name' => 'Leeds',
+                ]
+            );
+
+        $mockLicenceEntityService
+            ->shouldReceive('setEnforcementArea')
+            ->with($licenceId, 'V048');
+
+        $this->sut->setDefaultEnforcementArea($data);
+    }
+
+    public function testSetDefaultEnforcementAreaNi()
+    {
+        $id = 69;
+        $licenceId = 77;
+
+        $data = [
+            'operatingCentre' => [
+                'addresses' => [
+                    'address' => [
+                        'postcode' => 'BT2 8ED',
+                    ],
+                ],
+            ],
+        ];
+
+        $mockTypeOfLicenceData = [
+            'niFlag' => 'Y',
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        ];
+
+        $mockLicenceEntityService = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntityService);
+        $mockLvaEntityService = m::mock();
+        $mockLicenceAdapter = m::mock('\Common\Controller\Lva\Interfaces\LvaAdapterInterface');
+        $this->sm->setService('LicenceLvaAdapter', $mockLicenceAdapter);
+
+        $mockLicenceAdapter
+            ->shouldReceive('setController')
+            ->andReturnSelf()
+            ->shouldReceive('getIdentifier')
+            ->andReturn($licenceId);
+
+        $this->sut
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($mockLvaEntityService)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id);
+
+        $mockLvaEntityService->shouldReceive('getTypeOfLicenceData')
+            ->with($id)
+            ->andReturn($mockTypeOfLicenceData);
+
+        $mockLicenceEntityService
+            ->shouldReceive('setEnforcementArea')
+            ->with($licenceId, EnforcementAreaEntityService::NORTHERN_IRELAND_ENFORCEMENT_AREA_CODE);
+
+        $this->sut->setDefaultEnforcementArea($data);
+    }
+
+    public function testAlterActionFormForPsvRestricted()
+    {
+        $mockForm = m::mock('\Zend\Form\Form');
+        $mockFormHelper = m::mock();
+
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+        ];
+
+        $mockForm->shouldReceive('get->get');
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'data->noOfTrailersRequired')->once();
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'advertisements')->once();
+        $mockFormHelper->shouldReceive('alterElementLabel')->times(3);
+
+        $this->sut->shouldReceive('getTypeOfLicenceData')->once()->andReturn($licenceData);
+        $this->sut->shouldReceive('getServiceLocator->get')->once()->with('Helper\Form')->andReturn($mockFormHelper);
+        $mockFormHelper->shouldReceive('attachValidator')
+            ->once()
+            ->with($mockForm, 'data->noOfVehiclesRequired', m::type('\Zend\Validator\LessThan'));
+
+        $this->sut->alterActionFormForPsv($mockForm);
+    }
+
+    public function testAlterActionFormForPsvNotRestricted()
+    {
+        $mockForm = m::mock('\Zend\Form\Form');
+        $mockFormHelper = m::mock();
+        $this->sut->shouldReceive('getServiceLocator->get')->once()->with('Helper\Form')->andReturn($mockFormHelper);
+
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        ];
+
+        $mockForm->shouldReceive('get->get');
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'data->noOfTrailersRequired')->once();
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'advertisements')->once();
+        $mockFormHelper->shouldReceive('alterElementLabel')->times(3);
+
+        $this->sut->shouldReceive('getTypeOfLicenceData')->once()->andReturn($licenceData);
+
+        $this->sut->alterActionFormForPsv($mockForm);
     }
 }

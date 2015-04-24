@@ -57,7 +57,11 @@ class FeeEntityService extends AbstractLvaEntityService
                 )
             ),
             'paymentMethod',
-            'feeType'
+            'feeType' => array(
+                'children' => array(
+                    'feeType', // need this now that fee_type.fee_type is ref_data!
+                ),
+            ),
         )
     );
 
@@ -95,6 +99,25 @@ class FeeEntityService extends AbstractLvaEntityService
                     'organisation'
                 )
             )
+        )
+    );
+
+    protected $latestFeeByTypeStatusesAndApplicationBundle = array(
+        'children' => array(
+            'feeType' => array(
+                'properties' => 'id',
+                'children' => array('accrualRule' => array())
+            ),
+            'feePayments' => array(
+                'children' => array(
+                    'payment' => array(
+                        'children' => array(
+                            'status'
+                        )
+                    )
+                )
+            ),
+            'paymentMethod',
         )
     );
 
@@ -293,7 +316,7 @@ class FeeEntityService extends AbstractLvaEntityService
             'order' => 'DESC',
             'limit' => 1,
         );
-        $data = $this->get($query);
+        $data = $this->get($query, $this->latestFeeByTypeStatusesAndApplicationBundle);
         return !empty($data['Results']) ? $data['Results'][0] : null;
     }
 

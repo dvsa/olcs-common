@@ -47,4 +47,24 @@ class LicenceVehiclesPsvAdapterTest extends MockeryTestCase
         // this is a no-op on the licence adapter
         $this->assertNull($this->sut->warnIfAuthorityExceeded(1, [], true));
     }
+
+    public function testAlterVehcileTable()
+    {
+        $mockTable = m::mock('Common\Service\Table\TableBuilder')
+            ->shouldReceive('removeAction')
+            ->with('transfer')
+            ->once()
+            ->andReturnSelf()
+            ->getMock();
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+            ->shouldReceive('getOtherActiveLicences')
+            ->andReturn([])
+            ->getMock()
+        );
+
+        $this->assertInstanceOf('Common\Service\Table\TableBuilder', $this->sut->alterVehcileTable($mockTable, null));
+    }
 }

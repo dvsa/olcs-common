@@ -74,16 +74,13 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
             $responseData['transportManagerId'] = $tmResponse->getData()['id'];
         }
 
-        // If we are submitting, then we need to update the TMA status to awaiting signature
-        if ($params['submit']) {
-            $tmaResponse = $this->persistTransportManagerApplication($params);
+        $tmaResponse = $this->persistTransportManagerApplication($params);
 
-            if (!$tmaResponse->isOk()) {
-                return $tmaResponse;
-            }
-
-            $responseData['transportManagerApplicationId'] = $tmaResponse->getData()['id'];
+        if (!$tmaResponse->isOk()) {
+            return $tmaResponse;
         }
+
+        $responseData['transportManagerApplicationId'] = $tmaResponse->getData()['id'];
 
         return new Response(Response::TYPE_SUCCESS, $responseData);
     }
@@ -183,13 +180,32 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
      */
     protected function persistTransportManagerApplication($params)
     {
+        $responsibilities = $params['data']['responsibilities'];
+        $hours = $responsibilities['hoursOfWeek']['hoursPerWeekContent'];
+
         $tmApplicationParams = [
             'data' => [
                 'id' => $params['transportManagerApplication']['id'],
                 'version' => $params['transportManagerApplication']['version'],
-                'tmApplicationStatus' => TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE
+                'tmType' => $responsibilities['tmType'],
+                'additionalInformation' => $responsibilities['additionalInformation'],
+                'hoursMon' => is_numeric($hours['hoursMon']) ? $hours['hoursMon'] : null,
+                'hoursTue' => is_numeric($hours['hoursTue']) ? $hours['hoursTue'] : null,
+                'hoursWed' => is_numeric($hours['hoursWed']) ? $hours['hoursWed'] : null,
+                'hoursThu' => is_numeric($hours['hoursThu']) ? $hours['hoursThu'] : null,
+                'hoursFri' => is_numeric($hours['hoursFri']) ? $hours['hoursFri'] : null,
+                'hoursSat' => is_numeric($hours['hoursSat']) ? $hours['hoursSat'] : null,
+                'hoursSun' => is_numeric($hours['hoursSun']) ? $hours['hoursSun'] : null,
+                'isOwner' => $responsibilities['isOwner'],
+                'operatingCentres' => $responsibilities['operatingCentres'],
+                'declarationConfirmation' => $params['data']['declarations']['confirmation']
             ]
         ];
+
+        if ($params['submit']) {
+            $submitStatus = TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE;
+            $tmApplicationParams['data']['tmApplicationStatus'] = $submitStatus;
+        }
 
         return $this->getBusinessServiceManager()->get('Lva\TransportManagerApplication')
             ->process($tmApplicationParams);

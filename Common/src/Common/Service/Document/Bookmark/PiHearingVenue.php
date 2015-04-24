@@ -12,7 +12,7 @@ class PiHearingVenue extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
-        return [
+        return isset($data['hearing']) ? [
             'service' => 'PiHearing',
             'data' => [
                 'id' => $data['hearing']
@@ -31,7 +31,7 @@ class PiHearingVenue extends DynamicBookmark
                     ],
                 ],
             ],
-        ];
+        ] :  null;
     }
 
     public function render()

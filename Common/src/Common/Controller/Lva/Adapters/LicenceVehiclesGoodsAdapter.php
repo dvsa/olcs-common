@@ -27,4 +27,22 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
     {
         return [];
     }
+
+    /**
+     * Remove transfer button
+     *
+     * @param $table Common\Service\Table\TableBuilde
+     * @param int $licenceId
+     * @return Common\Service\Table\TableBuilde
+     */
+    public function alterVehcileTable($table, $licenceId)
+    {
+        $otherLicences = $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getOtherActiveLicences($licenceId);
+        if (!count($otherLicences)) {
+            $table->removeAction('transfer');
+        }
+        return $table;
+    }
 }

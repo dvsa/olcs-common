@@ -25,7 +25,8 @@ class ApplicationIdValidator extends AbstractValidator
     protected $messageTemplates = array(
         'required' => 'Value is required and can\'t be empty',
         'appIdNotValid' => 'The application ID is not valid',
-        'appRestricted' => 'A transport manager cannot be added to a restricted licence'
+        'appRestricted' => 'A transport manager cannot be added to a restricted licence',
+        'tmAlreadyLinked' => 'The transport manager is already linked to this application'
     );
 
     /**
@@ -34,6 +35,13 @@ class ApplicationIdValidator extends AbstractValidator
      * @var array
      */
     private $appData;
+
+    /**
+     * Transort manager applications data
+     *
+     * @var array
+     */
+    private $tmAppData;
 
     /**
      * Custom validation for application id
@@ -48,11 +56,16 @@ class ApplicationIdValidator extends AbstractValidator
         if (!$appData) {
             $this->error('appIdNotValid');
             return false;
-        } elseif (
-                    $appData['licenceType']['id'] == LicenceEntityService::LICENCE_TYPE_RESTRICTED ||
-                    $appData['licenceType']['id'] == LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
-                ) {
+        }
+        if (
+                $appData['licenceType']['id'] == LicenceEntityService::LICENCE_TYPE_RESTRICTED ||
+                $appData['licenceType']['id'] == LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+            ) {
             $this->error('appRestricted');
+            return false;
+        }
+        if (count($this->getTmAppData())) {
+            $this->error('tmAlreadyLinked');
             return false;
         }
         return true;
@@ -76,5 +89,25 @@ class ApplicationIdValidator extends AbstractValidator
     public function getAppData()
     {
         return $this->appData;
+    }
+
+    /**
+     * Sets transport manager applications data
+     *
+     * @param array $tmAppData
+     */
+    public function setTmAppData($tmAppData)
+    {
+        $this->tmAppData = $tmAppData;
+    }
+
+    /**
+     * Gets transport manager applications data
+     *
+     * @return array
+     */
+    public function getTmAppData()
+    {
+        return $this->tmAppData;
     }
 }

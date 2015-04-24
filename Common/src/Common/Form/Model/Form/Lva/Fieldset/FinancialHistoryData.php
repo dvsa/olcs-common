@@ -143,8 +143,8 @@ class FinancialHistoryData
     public $insolvencyDetails = null;
 
     /**
+     * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Attributes({"id":"file"})
-     * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
      */
     public $file = null;
 

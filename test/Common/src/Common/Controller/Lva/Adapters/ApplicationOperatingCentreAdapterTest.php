@@ -10,6 +10,7 @@ namespace CommonTest\Controller\Lva\Adapters;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Application Operating Centre Adapter Test
@@ -106,7 +107,12 @@ class ApplicationOperatingCentreAdapterTest extends MockeryTestCase
             ->andReturn($licenceId);
 
         $mockLicenceEntity->shouldReceive('setTrafficArea')
-            ->with($licenceId, null);
+            ->with($licenceId, null)
+            ->andReturnSelf();
+
+        $mockLicenceEntity->shouldReceive('setEnforcementArea')
+            ->with($licenceId, null)
+            ->andReturnSelf();
 
         $this->sut->delete();
     }
@@ -280,5 +286,25 @@ class ApplicationOperatingCentreAdapterTest extends MockeryTestCase
             ->andReturn('REDIRECT');
 
         $this->assertEquals('REDIRECT', $this->sut->checkTrafficAreaAfterCrudAction($data));
+    }
+
+    public function testFormatDataForFormSetsEnforcementArea()
+    {
+        $sut = m::mock('Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $data = [
+            'licence' => [
+                'enforcementArea' => ['id' => 'V048'],
+            ],
+        ];
+        $tableData = [];
+        $licenceData = [
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        ];
+
+        $result = $sut->formatDataForForm($data, $tableData, $licenceData);
+        $this->assertEquals('V048', $result['dataTrafficArea']['enforcementArea']);
     }
 }
