@@ -1,20 +1,20 @@
 <?php
 
 /**
- * DateSelect
+ * Month Select
  *
- * @author Someone <someone@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Form\Elements\Custom;
 
 use Zend\Form\Element as ZendElement;
 
 /**
- * DateSelect
+ * Month Select
  *
- * @author Someone <someone@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DateSelect extends ZendElement\DateSelect
+class MonthSelect extends ZendElement\MonthSelect
 {
     use Traits\YearDelta;
 
@@ -29,12 +29,11 @@ class DateSelect extends ZendElement\DateSelect
                     'options' => array(
                         'callback' => function ($date) {
                             // Convert the date to a specific format
-                            if (!is_array($date) || empty($date['year']) ||
-                                empty($date['month']) || empty($date['day'])) {
+                            if (!is_array($date) || empty($date['year']) || empty($date['month'])) {
                                 return null;
                             }
 
-                            return $date['year'] . '-' . $date['month'] . '-' . $date['day'];
+                            return $date['year'] . '-' . $date['month'];
                         }
                     )
                 )
