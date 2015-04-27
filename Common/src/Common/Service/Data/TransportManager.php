@@ -90,7 +90,11 @@ class TransportManager extends AbstractData implements ListData
             'children' => array(
                 'homeCd' => array(
                     'children' => array(
-                        'person',
+                        'person' => [
+                            'children' => [
+                                'title'
+                            ]
+                        ],
                         'address'
                     )
                 )
