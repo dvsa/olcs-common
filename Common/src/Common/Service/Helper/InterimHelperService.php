@@ -388,9 +388,13 @@ class InterimHelperService extends AbstractHelperService
         foreach ($interimData['licenceVehicles'] as $licenceVehicle) {
             $lv = [
                 'id' => $licenceVehicle['id'],
-                'version' => $licenceVehicle['version'],
-                'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s')
+                'version' => $licenceVehicle['version']
             ];
+
+            if (!is_null($licenceVehicle['interimApplication'])) {
+                $lv['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
+            }
+
             $licenceVehicles[] = $lv;
 
             // saving all active discs to void it later
