@@ -1,6 +1,7 @@
 <?php
 
 namespace Common\Service\Data;
+
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -10,7 +11,10 @@ use Zend\ServiceManager\FactoryInterface;
  * Class OcContextListDataService
  * @package Olcs\Service
  */
-class OcContextListDataService extends AbstractData implements FactoryInterface, ListDataInterface, ServiceLocatorAwareInterface
+class OcContextListDataService extends AbstractData implements
+    FactoryInterface,
+    ListDataInterface,
+    ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
@@ -40,7 +44,7 @@ class OcContextListDataService extends AbstractData implements FactoryInterface,
         if ($context == 'licence') {
             return $this->getServiceLocator('DataServiceManager')
                 ->get('Common\Service\Data\LicenceOperatingCentre')->fetchListOptions($context, $useGroups);
-        } elseif ($context == 'application')  {
+        } elseif ($context == 'application') {
             return $this->getServiceLocator('DataServiceManager')
                 ->get('Common\Service\Data\ApplicationOperatingCentre')->fetchListOptions($context, $useGroups);
         }

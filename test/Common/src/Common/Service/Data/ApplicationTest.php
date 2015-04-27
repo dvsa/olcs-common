@@ -81,6 +81,25 @@ class ApplicationTest extends MockeryTestCase
         $this->assertEquals($expectedResult, $this->sut->canHaveCases($application['id']));
     }
 
+    public function testFetchOperatingCentreData()
+    {
+        $id = 1;
+        $mockRestClient = m::mock('Common\Util\RestClient');
+        $mockData = ['id' => 99];
+
+        $mockRestClient
+            ->shouldReceive('get')
+            ->once()
+            ->with('/' . $id, m::type('array'))
+            ->andReturn($mockData);
+
+        $this->sut->setRestClient($mockRestClient);
+
+        $result = $this->sut->fetchOperatingCentreData($id);
+
+        $this->assertEquals($mockData, $result);
+    }
+
     /**
      * Data provider for canHaveCases.
      *

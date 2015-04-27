@@ -115,7 +115,6 @@ class Application extends CrudAbstract
         $id = is_null($id) ? $this->getId() : $id;
 
         if (is_null($this->getData('oc_' .$id))) {
-            $data = array();
 
             $bundle = is_null($bundle) ? $this->getOperatingCentreBundle() : $bundle;
             $data =  $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
