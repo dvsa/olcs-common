@@ -729,4 +729,37 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
             ]
         ];
     }
+
+    /**
+     * @group entity_services
+     * @dataProvider provideIsIrfoTestData
+     */
+    public function testIsIrfo($data, $expected)
+    {
+        $this->expectOneRestCall('Organisation', 'GET', 123, null)
+            ->will($this->returnValue($data));
+
+        $this->assertEquals(
+            $expected,
+            $this->sut->isIrfo(123)
+        );
+    }
+
+    public function provideIsIrfoTestData()
+    {
+        return [
+            [
+                [],
+                false,
+            ],
+            [
+                ['isIrfo' => 'N'],
+                false
+            ],
+            [
+                ['isIrfo' => 'Y'],
+                true
+            ]
+        ];
+    }
 }
