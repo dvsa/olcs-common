@@ -35,7 +35,7 @@ class EmailTest extends MockeryTestCase
     }
 
     /**
-     * Test send inspection request email method
+     * Test send plain text email
      */
     public function testSendEmail()
     {
@@ -66,7 +66,7 @@ class EmailTest extends MockeryTestCase
             ->andReturn(true);
 
         // assertions
-        $this->assertTrue($this->sut->sendEmail($from, $to, $subject, $body));
+        $this->assertTrue($this->sut->sendEmail($from, $to, $subject, $body, false));
     }
 
     public function testSendHtmlEmail()
@@ -76,7 +76,6 @@ class EmailTest extends MockeryTestCase
         $to      = 'to@example.com';
         $subject = 'test';
         $body    = 'foo';
-        $html    = '1';
 
         // mocks
         $restHelperMock = m::mock();
@@ -92,13 +91,13 @@ class EmailTest extends MockeryTestCase
                     'to'      => $to,
                     'subject' => $subject,
                     'body'    => $body,
-                    'html'    => $html,
+                    'html'    => true,
                 ]
             )
             ->once()
             ->andReturn(true);
 
         // assertions
-        $this->assertTrue($this->sut->sendEmail($from, $to, $subject, $body, $html));
+        $this->assertTrue($this->sut->sendEmail($from, $to, $subject, $body));
     }
 }
