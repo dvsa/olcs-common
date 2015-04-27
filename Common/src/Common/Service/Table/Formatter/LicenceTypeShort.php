@@ -16,6 +16,18 @@ use Common\Service\Entity\LicenceEntityService;
  */
 class LicenceTypeShort implements FormatterInterface
 {
+    protected static $prefixMap = [
+        LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE => 'GV',
+        LicenceEntityService::LICENCE_CATEGORY_PSV => 'PSV'
+    ];
+
+    protected static $suffixMap = [
+        LicenceEntityService::LICENCE_TYPE_RESTRICTED => 'R',
+        LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED => 'SR',
+        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL => 'SN',
+        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI'
+    ];
+
     /**
      * Retrieve a nested value
      *
@@ -28,28 +40,12 @@ class LicenceTypeShort implements FormatterInterface
 
         $gvOrPsv = $data['licence']['goodsOrPsv']['id'];
 
-        $gv = LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE;
-        $psv = LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE;
-
-        if ($gvOrPsv === $gv) {
-            $ref[] = 'GV';
-        } elseif ($gvOrPsv === $psv) {
-            $ref[] = 'PSV';
+        if (isset(self::$prefixMap[$gvOrPsv])) {
+            $ref[] = self::$prefixMap[$gvOrPsv];
         }
 
-        switch ($data['licence']['licenceType']['id']) {
-            case LicenceEntityService::LICENCE_TYPE_RESTRICTED:
-                $ref[] = 'R';
-                break;
-            case LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED:
-                $ref[] = 'SR';
-                break;
-            case LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL:
-                $ref[] = 'SN';
-                break;
-            case LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL:
-                $ref[] = 'SI';
-                break;
+        if (isset(self::$suffixMap[$data['licence']['licenceType']['id']])) {
+            $ref[] = self::$suffixMap[$data['licence']['licenceType']['id']];
         }
 
         return implode('-', $ref);
