@@ -20,11 +20,9 @@ class LicenceTypeShort implements FormatterInterface
      * Retrieve a nested value
      *
      * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public static function format($data)
     {
         $ref = [];
 
@@ -40,16 +38,16 @@ class LicenceTypeShort implements FormatterInterface
         }
 
         switch ($data['licence']['licenceType']['id']) {
-            case LicenceEntityService::LICENCE_TYPE_RESTRICTED;
+            case LicenceEntityService::LICENCE_TYPE_RESTRICTED:
                 $ref[] = 'R';
                 break;
-            case LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED;
+            case LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED:
                 $ref[] = 'SR';
                 break;
-            case LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL;
+            case LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL:
                 $ref[] = 'SN';
                 break;
-            case LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL;
+            case LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL:
                 $ref[] = 'SI';
                 break;
         }

@@ -64,20 +64,16 @@ class ContinuationDetailEntityService extends AbstractEntityService
 
         $bundle = $this->listBundle;
 
-        if (isset($filters['licenceNo']) && !empty($filters['licenceNo'])) {
-            $bundle['children']['licence']['criteria']['licNo'] = $filters['licenceNo'];
+        $licenceCriteria = $this->getLicenceCriteria($filters);
+
+        if ($licenceCriteria !== null) {
+            $bundle['children']['licence']['criteria'] = $licenceCriteria;
         }
 
-        if (isset($filters['licenceStatus']) && is_array($filters['licenceStatus'])) {
-            $bundle['children']['licence']['criteria']['status'] = $filters['licenceStatus'];
-        }
+        $organisationCriteria = $this->getOrgCriteria($filters);
 
-        if (isset($filters['method']) && in_array($filters['method'], ['post', 'email'])) {
-            if ($filters['method'] === 'post') {
-                $bundle['children']['licence']['children']['organisation']['criteria']['allowEmail'] = 0;
-            } else {
-                $bundle['children']['licence']['children']['organisation']['criteria']['allowEmail'] = 1;
-            }
+        if ($organisationCriteria !== null) {
+            $bundle['children']['licence']['children']['organisation']['criteria'] = $organisationCriteria;
         }
 
         if (isset($filters['status']) && !empty($filters['status'])) {
@@ -85,5 +81,36 @@ class ContinuationDetailEntityService extends AbstractEntityService
         }
 
         return $this->getAll($query, $bundle);
+    }
+
+    protected function getOrgCriteria($filters)
+    {
+        if (isset($filters['method']) && in_array($filters['method'], ['post', 'email'])) {
+            if ($filters['method'] === 'post') {
+                return ['allowEmail' => 0];
+            }
+            return ['allowEmail' => 1];
+        }
+
+        return null;
+    }
+
+    protected function getLicenceCriteria($filters)
+    {
+        $criteria = [];
+
+        if (isset($filters['licenceNo']) && !empty($filters['licenceNo'])) {
+            $criteria['licNo'] = $filters['licenceNo'];
+        }
+
+        if (isset($filters['licenceStatus']) && is_array($filters['licenceStatus'])) {
+            $criteria['status'] = $filters['licenceStatus'];
+        }
+
+        if (empty($criteria)) {
+            return null;
+        }
+
+        return $criteria;
     }
 }

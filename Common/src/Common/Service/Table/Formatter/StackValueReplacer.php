@@ -27,7 +27,7 @@ class StackValueReplacer implements FormatterInterface
         $stringFormat = $column['stringFormat'];
 
         if (preg_match_all('/(\{([a-zA-Z0-9\-\>]+)\})+/', $stringFormat, $matches)) {
-            foreach ($matches[0] as $key => $match) {
+            foreach (array_keys($matches[0]) as $key) {
                 $stringFormat = str_replace(
                     $matches[1][$key],
                     StackValue::format($data, ['stack' => $matches[2][$key]], $sm),
