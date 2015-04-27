@@ -19,7 +19,7 @@ class EmailMailFunction implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function sendEmail($from, $to, $subject, $body, $html = false)
+    public function sendEmail($from, $to, $subject, $body, $html = true)
     {
         $headers = "From: {$from}\r\n";
         $headers .= "Reply-To: {$from}\r\n";
