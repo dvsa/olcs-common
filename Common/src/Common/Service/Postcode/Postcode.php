@@ -38,7 +38,11 @@ class Postcode implements ServiceLocatorAwareInterface
 
             if (is_array($response) && count($response)) {
                 // yes, 'administritive_area' really is mis-spelled in API response :(
-                $adminArea = $response[0]['administritive_area'];
+                if (isset($response[0]['administritive_area'])) {
+                    $adminArea = $response[0]['administritive_area'];
+                } elseif (isset($response['administritive_area'])) {
+                    $adminArea = $response['administritive_area'];
+                }
                 if ($adminArea) {
                     $bundle = array(
                         'properties' => null,
@@ -54,7 +58,6 @@ class Postcode implements ServiceLocatorAwareInterface
                     $adminAreaTrafficArea = $this->makeRestCall(
                         'AdminAreaTrafficArea', 'GET', array('id' => $adminArea), $bundle
                     );
-
                     if (is_array($adminAreaTrafficArea)
                         && array_key_exists('trafficArea', $adminAreaTrafficArea) && count($adminAreaTrafficArea)
                     ) {
