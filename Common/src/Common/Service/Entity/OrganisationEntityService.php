@@ -332,6 +332,18 @@ class OrganisationEntityService extends AbstractEntityService
         return (bool) count($licences);
     }
 
+    /**
+     * Determine is an organisation is IRFO
+     *
+     * @param $id
+     * @return bool
+     */
+    public function isIrfo($id)
+    {
+        $data = $this->get($id);
+        return (!empty($data['isIrfo']) && ('Y' === $data['isIrfo'])) ? true : false;
+    }
+
     public function getNatureOfBusinesses($id)
     {
         return $this->getAll($id, $this->natureOfBusinessDataBundle)['natureOfBusinesses'];
