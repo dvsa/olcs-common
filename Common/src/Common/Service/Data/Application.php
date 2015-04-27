@@ -69,6 +69,23 @@ class Application extends CrudAbstract
     }
 
     /**
+     * Bundle to fetch all operating centres for a application
+     * @return array
+     */
+    public function getOperatingCentreBundle()
+    {
+        return array(
+            'children' => array(
+                'operatingCentres' => array(
+                    'children' => array(
+                        'operatingCentre'
+                    )
+                )
+            )
+        );
+    }
+
+    /**
      * Can this entity have cases
      * @param $id
      * @return bool
@@ -85,6 +102,27 @@ class Application extends CrudAbstract
         }
 
         return true;
+    }
+
+    /**
+     * Fetches an array of OperatingCentres for the application.
+     * @param null $id
+     * @param null $bundle
+     * @return array
+     */
+    public function fetchOperatingCentreData($id = null, $bundle = null)
+    {
+        $id = is_null($id) ? $this->getId() : $id;
+
+        if (is_null($this->getData('oc_' .$id))) {
+
+            $bundle = is_null($bundle) ? $this->getOperatingCentreBundle() : $bundle;
+            $data =  $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
+
+            $this->setData('oc_' .$id, $data);
+        }
+
+        return $this->getData('oc_' . $id);
     }
 
     /**

@@ -94,7 +94,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthVehicles' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthVehicles')
+                array('hasAuthVehiclesIncrease' => 'totAuthVehicles')
             ),
             array(
                 array(
@@ -103,7 +103,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthTrailers' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthTrailers')
+                array('hasAuthTrailersIncrease' => 'totAuthTrailers')
             ),
             array(
                 array(
@@ -222,7 +222,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthVehicles' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthVehicles')
+                array('hasAuthVehiclesIncrease' => 'totAuthVehicles')
             ),
             array(
                 array(
@@ -231,7 +231,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthTrailers' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthTrailers')
+                array('hasAuthTrailersIncrease' => 'totAuthTrailers')
             ),
             array(
                 array(
