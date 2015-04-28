@@ -28,6 +28,13 @@ trait DynamicTrait
     protected $otherOption = false;
 
     /**
+     * List of options to exclude
+     *
+     * @var array
+     */
+    protected $exclude = [];
+
+    /**
      * @var \Common\Service\Data\Interfaces\ListData
      */
     protected $dataService;
@@ -166,6 +173,24 @@ trait DynamicTrait
     }
 
     /**
+     * @param array $exclude
+     * @return $this
+     */
+    public function setExclude(array $exclude)
+    {
+        $this->exclude = $exclude;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExclude()
+    {
+        return $this->exclude;
+    }
+
+    /**
      * @param array|\Traversable $options
      * @return $this
      */
@@ -191,6 +216,10 @@ trait DynamicTrait
         if (isset($this->options['other_option'])) {
             $this->setOtherOption($this->options['other_option']);
         }
+
+        if (isset($this->options['exclude'])) {
+            $this->setExclude($this->options['exclude']);
+        }
         return $this;
     }
 
@@ -204,6 +233,11 @@ trait DynamicTrait
         if (empty($this->valueOptions)) {
             $refDataService = $this->getDataService();
             $this->valueOptions = $refDataService->fetchListOptions($this->getContext(), $this->useGroups());
+        }
+
+        if (!empty($this->getExclude())) {
+            // exclude unwanted options
+            $this->valueOptions = array_diff_key($this->valueOptions, array_flip($this->getExclude()));
         }
 
         if ($this->otherOption()) {
