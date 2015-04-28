@@ -40,10 +40,11 @@ class EmailTest extends MockeryTestCase
     public function testSendEmail()
     {
         // stub data
-        $from    = 'from@example.com';
-        $to      = 'to@example.com';
-        $subject = 'test';
-        $body    = 'foo';
+        $fromEmail = 'from@example.com';
+        $fromName  = 'Fred Smith';
+        $to        = 'to@example.com';
+        $subject   = 'test';
+        $body      = 'foo';
 
         // mocks
         $restHelperMock = m::mock();
@@ -55,27 +56,30 @@ class EmailTest extends MockeryTestCase
             ->with(
                 "email\\",
                 [
-                    'from'    => $from,
-                    'to'      => $to,
-                    'subject' => $subject,
-                    'body'    => $body,
-                    'html'    => false,
+                    'fromEmail' => $fromEmail,
+                    'fromName'  => $fromName,
+                    'to'        => $to,
+                    'subject'   => $subject,
+                    'body'      => $body,
+                    'html'      => false,
                 ]
             )
             ->once()
             ->andReturn(true);
 
         // assertions
-        $this->assertTrue($this->sut->sendEmail($from, $to, $subject, $body, false));
+        $this->assertTrue($this->sut->sendEmail($fromEmail, $fromName, $to, $subject, $body, false));
     }
 
     public function testSendHtmlEmail()
     {
         // stub data
-        $from    = 'from@example.com';
-        $to      = 'to@example.com';
-        $subject = 'test';
-        $body    = 'foo';
+        $fromEmail = 'from@example.com';
+        $fromName  = 'Fred Smith';
+        $to        = 'to@example.com';
+        $subject   = 'test';
+        $body      = 'foo';
+        $html    = '1';
 
         // mocks
         $restHelperMock = m::mock();
@@ -87,17 +91,17 @@ class EmailTest extends MockeryTestCase
             ->with(
                 "email\\",
                 [
-                    'from'    => $from,
-                    'to'      => $to,
-                    'subject' => $subject,
-                    'body'    => $body,
-                    'html'    => true,
+                    'fromEmail' => $fromEmail,
+                    'fromName'  => $fromName,
+                    'to'        => $to,
+                    'subject'   => $subject,
+                    'body'      => $body,
+                    'html'      => true,
                 ]
             )
             ->once()
             ->andReturn(true);
 
-        // assertions
-        $this->assertTrue($this->sut->sendEmail($from, $to, $subject, $body));
+        $this->assertTrue($this->sut->sendEmail($fromEmail, $fromName, $to, $subject, $body, $html));
     }
 }
