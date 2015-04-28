@@ -1436,7 +1436,6 @@ return array(
     'lva-tm-details-email' => 'Email address',
     'lva-tm-details-familyName' => 'Last name',
     'lva-tm-details-forename' => 'First name',
-    'lva-tm-details-save-success' => 'The transport manager application has been saved successfully',
     'lva-tm-details-submit-success' => 'The transport manager application has been submitted successfully',
     'lva-tm-sent-success' => 'The form has been emailed to the transport manager',
     'lva.section.title.add-transport_managers' => 'Add transport manager',
