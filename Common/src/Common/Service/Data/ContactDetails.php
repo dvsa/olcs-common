@@ -3,13 +3,12 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
-use Common\Service\Entity\ContactDetailsEntityService;
 
 /**
- * Class Partner
+ * Class ContactDetails
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class Partner extends AbstractData implements ListData
+class ContactDetails extends AbstractData implements ListData
 {
     protected $serviceName = 'ContactDetails';
 
@@ -39,7 +38,7 @@ class Partner extends AbstractData implements ListData
      */
     public function fetchListOptions($category, $useGroups = false)
     {
-        $data = $this->fetchListData();
+        $data = $this->fetchListData($category);
 
         if (!$data) {
             return [];
@@ -51,28 +50,28 @@ class Partner extends AbstractData implements ListData
     /**
      * Ensures only a single call is made to the backend
      *
-     * @internal param $category
+     * @param param $category
      * @return array
      */
-    public function fetchListData()
+    public function fetchListData($category)
     {
-        if (is_null($this->getData('Partner'))) {
+        if (is_null($this->getData('ContactDetails'))) {
 
             $params = [
                 'limit' => 1000,
                 'bundle' => $this->bundle,
-                'contactType' => ContactDetailsEntityService::CONTACT_TYPE_PARTNER
+                'contactType' => $category
             ];
 
             $data = $this->getRestClient()->get('', $params);
 
-            $this->setData('Partner', false);
+            $this->setData('ContactDetails', false);
 
             if (isset($data['Results'])) {
-                $this->setData('Partner', $data['Results']);
+                $this->setData('ContactDetails', $data['Results']);
             }
         }
 
-        return $this->getData('Partner');
+        return $this->getData('ContactDetails');
     }
 }
