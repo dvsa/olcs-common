@@ -22,17 +22,17 @@ class Email implements ServiceLocatorAwareInterface
     use RestCallTrait;
     use ServiceLocatorAwareTrait;
 
-    public function sendEmail($from, $to, $subject, $body, $html = true)
+    public function sendEmail($fromEmail, $fromName, $to, $subject, $body, $html = true)
     {
-        return $this->sendEmailViaRestService($from, $to, $subject, $body, $html);
+        return $this->sendEmailViaRestService($fromEmail, $fromName, $to, $subject, $body, $html);
     }
 
     /**
      * Send email via REST email service
      */
-    protected function sendEmailViaRestService($from, $to, $subject, $body, $html)
+    protected function sendEmailViaRestService($fromEmail, $fromName, $to, $subject, $body, $html)
     {
-        $data = compact('from', 'to', 'subject', 'body', 'html');
+        $data = compact('fromEmail', 'fromName', 'to', 'subject', 'body', 'html');
         return $this->sendPost('email\\', $data);
     }
 }

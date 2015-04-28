@@ -19,9 +19,10 @@ class EmailToTmpFile implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function sendEmail($from, $to, $subject, $body)
+    public function sendEmail($fromEmail, $fromName, $to, $subject, $body, $html = true)
     {
         $txt = "To : {$to}\n"
+        . "From : {$fromName} <{$fromEmail}>\n"
         . "Subject : {$subject}\n"
         . "Body : {$body}";
 
