@@ -106,7 +106,7 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
         $list = [];
         $deleted = [];
 
-        $addressFields = ['addressLine1', 'addressLine2', 'town'];
+        $addressFields = ['addressLine1', 'town'];
         $options = ['name' => 'address', 'addressFields' => $addressFields];
 
         foreach ($data['Results'] as $result) {
