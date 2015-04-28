@@ -45,14 +45,8 @@ class Postcode implements ServiceLocatorAwareInterface
                 }
                 if ($adminArea) {
                     $bundle = array(
-                        'properties' => null,
                         'children' => array(
-                            'trafficArea' => array(
-                                'properties' => array(
-                                    'id',
-                                    'name'
-                                )
-                            )
+                            'trafficArea' => array()
                         )
                     );
                     $adminAreaTrafficArea = $this->makeRestCall(

@@ -19,7 +19,6 @@ class CaseworkerName extends DynamicBookmark
                 'id' => $data['user']
             ],
             'bundle' => [
-                'properties' => ['contactDetails'],
                 'children' => [
                     'contactDetails' => [
                         'children' => ['person']

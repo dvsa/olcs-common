@@ -23,17 +23,8 @@ class StatementContactType extends DynamicBookmark
                 'id' => $data['statement']
             ],
             'bundle' => [
-                'properties' => [
-                    'id'
-                ],
                 'children' => [
-                    'contactType' => [
-                        'bundle' => [
-                            'properties' => [
-                                'description'
-                            ]
-                        ],
-                    ],
+                    'contactType',
                 ],
             ],
         ] : null;
