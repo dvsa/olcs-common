@@ -23,17 +23,8 @@ class BrReasonForVar extends DynamicBookmark
                 'id' => $data['busRegId']
             ],
             'bundle' => [
-                'properties' => [
-                    'id'
-                ],
                 'children' => [
-                    'variationReasons' => [
-                        'bundle' => [
-                            'properties' => [
-                                'description'
-                            ]
-                        ],
-                    ],
+                    'variationReasons',
                 ],
             ],
         ];

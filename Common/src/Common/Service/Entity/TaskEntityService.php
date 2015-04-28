@@ -31,7 +31,7 @@ class TaskEntityService extends AbstractEntityService
     {
         $query['isClosed'] = 'N';
 
-        $results = $this->getAll($query, array('properties' => array('id')));
+        $results = $this->getAll($query);
 
         if (empty($results['Results'])) {
             return;

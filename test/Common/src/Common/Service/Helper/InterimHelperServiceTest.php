@@ -456,7 +456,8 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'id' => 40,
                             'version' => 400
                         ]
-                    ]
+                    ],
+                    'interimApplication' => array()
                 ]
             ],
             'licence' => [
@@ -658,7 +659,8 @@ class InterimHelperServiceTest extends MockeryTestCase
                 [
                     'id' => 20,
                     'version' => 200,
-                    'goodsDiscs' => []
+                    'goodsDiscs' => [],
+                    'interimApplication' => null
                 ]
             ],
             'licence' => [
@@ -735,7 +737,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                     [
                         'id' => 20,
                         'version' => 200,
-                        'specifiedDate' => '2014-01-01 00:00:00'
                     ]
                 ]
             )
@@ -800,7 +801,8 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'id' => 40,
                             'version' => 400
                         ]
-                    ]
+                    ],
+                    'interimApplication' => null
                 ]
             ],
             'licence' => [
@@ -850,7 +852,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                     [
                         'id' => 20,
                         'version' => 200,
-                        'specifiedDate' => '2014-01-01 00:00:00'
                     ]
                 ]
             )
