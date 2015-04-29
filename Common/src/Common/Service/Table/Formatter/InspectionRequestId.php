@@ -25,6 +25,8 @@ class InspectionRequestId implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
+        unset($column); // parameter not used
+
         $urlHelper = $sm->get('Helper\Url');
 
         if (empty($data['application'])) {
