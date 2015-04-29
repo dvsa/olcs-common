@@ -25,7 +25,7 @@ class Link extends AbstractType
      */
     public function render($data, $column, $formattedContent = null)
     {
-        $params = $column['params'];
+        $params = isset($column['params']) ? $column['params'] : [];
 
         // Not ideal, but we don't have it injected at the moment
         $sm = $this->getTable()->getServiceLocator();
@@ -36,8 +36,6 @@ class Link extends AbstractType
 
         $url = $sm->get('Helper\Url')->fromRoute($column['route'], $params);
 
-        if (strstr($formattedContent, '[LINK]')) {
-            return str_replace('[LINK]', $url, $formattedContent);
-        }
+        return str_replace('[LINK]', $url, $formattedContent);
     }
 }
