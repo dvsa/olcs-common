@@ -46,4 +46,14 @@ class ContinuationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(['foo' => 'bar'], $this->sut->find($criteria));
     }
+
+    public function testGetHeaderData()
+    {
+        $id = 111;
+
+        $this->expectOneRestCall('Continuation', 'GET', 111)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getHeaderData($id));
+    }
 }
