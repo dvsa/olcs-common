@@ -30,9 +30,9 @@ if (array_key_exists('numeric', $item)) {
 if (isset($item['value'])) {
     //convert values into yes or no
     if ($item['value'] == 'Y') {
-        $item['value'] == 'Yes';
+        $item['value'] = 'Yes';
     } elseif ($item['value'] == 'N') {
-        $item['value'] == 'No';
+        $item['value'] = 'No';
     }
 }
 
