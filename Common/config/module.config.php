@@ -140,6 +140,7 @@ return array(
     'controller_plugins' => array(
         'invokables' => array(
             'redirect' => 'Common\Controller\Plugin\Redirect',
+            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearch'
         )
     ),
     'console' => array(
