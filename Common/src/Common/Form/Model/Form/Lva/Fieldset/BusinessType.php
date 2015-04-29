@@ -19,8 +19,8 @@ class BusinessType
      *      },
      *     "label": "application_your-business_business-type.data.type",
      *     "disable_inarray_validator": false,
-     *     "service_name": "staticList",
-     *     "category": "business_types"
+     *     "category": "org_type",
+     *     "exclude": {"org_t_ir"}
      * })
      * @Form\Type("DynamicRadio")
      */

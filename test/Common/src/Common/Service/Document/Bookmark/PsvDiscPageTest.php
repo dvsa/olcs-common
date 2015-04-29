@@ -16,10 +16,10 @@ class PsvDiscPageTest extends \PHPUnit_Framework_TestCase
         $bookmark = new PsvDiscPage();
         $query = $bookmark->getQuery([123, 456]);
 
-        $this->assertEquals(2, count($query));
+        $this->assertEquals(2, count($query['data']));
 
-        $this->assertEquals(123, $query[0]['data']['id']);
-        $this->assertEquals(456, $query[1]['data']['id']);
+        $this->assertEquals(123, $query['data'][0]['id']);
+        $this->assertEquals(456, $query['data'][1]['id']);
     }
 
     public function testRenderWithNoData()
