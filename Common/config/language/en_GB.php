@@ -1629,6 +1629,7 @@ return array(
     'other-licences-or-apps' => 'Other licences / apps',
     'other-please-specify' => 'Other - please specify',
     'outstanding-applications' => 'Outstanding applications',
+    'overview.fieldset.check.welsh' => 'Welsh language',
     'owner' => 'Owner',
     'partially-agree' => 'Partially agree',
     'partner' => 'Partner',
