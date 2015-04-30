@@ -48,9 +48,14 @@ class TranslationHelperServiceTest extends PHPUnit_Framework_TestCase
     /**
      * Mock translate method
      */
-    public function translate($message)
+    public function translate($message, $domain, $locale)
     {
-        return '*' . $message . '*';
+        $translation = '';
+        if ($locale === 'cy_GB') {
+            $translation .= 'WELSH';
+        }
+        $translation .= '*' . $message . '*';
+        return $translation;
     }
 
     /**
@@ -122,5 +127,20 @@ class TranslationHelperServiceTest extends PHPUnit_Framework_TestCase
         $response = $this->sut->translateReplace($index, $arguments);
 
         $this->assertEquals('*this foo is baring awesome*', $response);
+    }
+
+    public function testTranslateWelsh()
+    {
+        $this->assertEquals('WELSH*foo*', $this->sut->translate('foo', 'Y'));
+    }
+
+    public function testFormatReplaceWelsh()
+    {
+        $index = 'this %s is %sing %ssome';
+        $arguments = ['foo', 'bar', 'awe'];
+
+        $response = $this->sut->translateReplace($index, $arguments, 'Y');
+
+        $this->assertEquals('WELSH*this foo is baring awesome*', $response);
     }
 }
