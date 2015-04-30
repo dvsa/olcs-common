@@ -53,6 +53,12 @@ class DocumentDispatchHelperService extends AbstractHelperService
         }
 
         foreach ($users as $user) {
+            // @TODO: generate the HTML from a view. We have to do this
+            // inside the loop because its contents depends on user (Hi <x>).
+            // It's probably worth thinking about a wrapper service which
+            // we can invoke like $emailService->sendTemplate('path/to/tpl', ['params' => 'here'])
+            // $params['licence'] = $licence['licNo']
+            // $params['forename'] = ??? // this needs to come from contact details
             $this->emailDocument($documentId, $licenceId);
         }
 
@@ -65,11 +71,13 @@ class DocumentDispatchHelperService extends AbstractHelperService
     {
         $this->getServiceLocator()
             ->get('Email')
+            // @TODO
             ->sendEmail($fromName, $fromEmail, $to, $subject, $body);
 
+        // @TODO create this entity and wrapper method
         $this->getServiceLocator()
             ->get('Entity\CorrespondenceInbox')
-            ->create(
+            ->save(
                 [
                     'document' => $documentId,
                     'licence'  => $licenceId
