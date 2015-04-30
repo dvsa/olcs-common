@@ -52,10 +52,9 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
             'category' => CategoryDataService::CATEGORY_APPLICATION,
             'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_ASSISTED_DIGITAL,
             'filename' => $code . ' Application Snapshot Grant.html',
-            'fileExtension' => 'doc_html',
             'issuedDate' => '2015-01-01 10:10:10',
             'description' => $code . ' Application Snapshot (at grant/valid)',
-            'isDigital' => false,
+            'isExternal' => false,
             'isScan' => false
         ];
 
@@ -160,10 +159,9 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
             'category' => CategoryDataService::CATEGORY_APPLICATION,
             'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL,
             'filename' => $code . ' Application Snapshot Submit.html',
-            'fileExtension' => 'doc_html',
             'issuedDate' => '2015-01-01 10:10:10',
             'description' => $code . ' Application Snapshot (at submission)',
-            'isDigital' => true,
+            'isExternal' => true,
             'isScan' => false
         ];
 
@@ -271,10 +269,9 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
             'category' => CategoryDataService::CATEGORY_APPLICATION,
             'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_ASSISTED_DIGITAL,
             'filename' => $code . ' Application Snapshot Grant.html',
-            'fileExtension' => 'doc_html',
             'issuedDate' => '2015-01-01 10:10:10',
             'description' => $code . ' Application Snapshot (at grant/valid)',
-            'isDigital' => false,
+            'isExternal' => false,
             'isScan' => false
         ];
 

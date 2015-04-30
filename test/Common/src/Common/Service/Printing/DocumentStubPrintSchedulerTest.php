@@ -32,11 +32,10 @@ class DocumentStubPrintSchedulerTest extends MockeryTestCase
             'identifier'    => 'f123',
             'description'   => 'A Test Job',
             'filename'      => 'A_Test_Job.rtf',
-            'fileExtension' => 'doc_rtf',
             'licence'       => 7,
             'category'      => 1,
             'subCategory'   => 91,
-            'isDigital'     => true,
+            'isExternal'    => false,
             'isReadOnly'    => true,
             'issuedDate'    => '2014-01-01 01:23:45',
             'size'          => 12345

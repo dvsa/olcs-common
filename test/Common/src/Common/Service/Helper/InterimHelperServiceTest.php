@@ -635,10 +635,9 @@ class InterimHelperServiceTest extends MockeryTestCase
                     'filename'      => str_replace(" ", "_", $templateName) . '.rtf',
                     'application'   => $applicationId,
                     'licence'       => $licenceId,
-                    'fileExtension' => 'doc_rtf',
                     'category'      => Category::CATEGORY_LICENSING,
                     'subCategory'   => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                    'isDigital'     => false,
+                    'isExternal'     => false,
                     'isScan'        => false
                 ]
             )
@@ -1145,9 +1144,8 @@ class InterimHelperServiceTest extends MockeryTestCase
             'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
             'description' => 'GV Refused Interim Licence',
             'filename' => 'GV Refused Interim Licence.rtf',
-            'fileExtension' => 'doc_rtf',
             'issuedDate' => '2015-01-01 10:10:10',
-            'isDigital' => false,
+            'isExternal' => false,
             'isScan' => false,
             'licence' => 99,
             'application' => $applicationId

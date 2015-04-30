@@ -79,7 +79,14 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     {
         $id = $this->getIdentifier();
 
-        $this->uploadFile($file, $this->getAdapter()->getUploadMetaData($file, $id));
+        $data = array_merge(
+            $this->getAdapter()->getUploadMetaData($file, $id),
+            [
+                'isExternal' => $this->isExternal()
+            ]
+        );
+
+        $this->uploadFile($file, $data);
     }
 
     /**
