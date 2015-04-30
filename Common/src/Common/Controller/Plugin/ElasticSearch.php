@@ -320,6 +320,7 @@ class ElasticSearch extends AbstractPlugin
     public function setContainerName($containerName)
     {
         $this->containerName = $containerName;
+        return $this;
     }
 
     /**
@@ -336,6 +337,7 @@ class ElasticSearch extends AbstractPlugin
     public function setSearchData($searchData)
     {
         $this->searchData = $searchData;
+        return $this;
     }
 
     /**
@@ -352,6 +354,7 @@ class ElasticSearch extends AbstractPlugin
     public function setLayoutTemplate($layoutTemplate)
     {
         $this->layoutTemplate = $layoutTemplate;
+        return $this;
     }
 
     /**
@@ -368,6 +371,7 @@ class ElasticSearch extends AbstractPlugin
     public function setPageRoute($pageRoute)
     {
         $this->pageRoute = $pageRoute;
+        return $this;
     }
 
     /**
