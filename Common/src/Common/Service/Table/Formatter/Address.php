@@ -26,7 +26,7 @@ class Address implements FormatterInterface
     ];
 
     /**
-     * Format a address
+     * Format an address
      *
      * @param array $data
      * @param array $column

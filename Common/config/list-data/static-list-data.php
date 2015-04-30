@@ -96,8 +96,8 @@ return array(
     ],
     'document_types' => [
         'all' => 'All',
-        'digital' => 'Digital only',
-        'nondigital' => 'Non-digital'
+        'external' => 'External',
+        'internal' => 'Internal'
     ],
     'vehicle_body_types' =>
     [

@@ -636,6 +636,7 @@ return array(
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
             'GoodsVehiclesVehicle' => 'Common\BusinessRule\Rule\GoodsVehiclesVehicle',
             'LicenceGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesLicenceVehicle',
+            'LicenceGoodsVehiclesRemovedVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesRemovedVehicle',
             'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
             'ApplicationGoodsVehiclesLicenceVehicle'
                 => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
@@ -678,6 +679,8 @@ return array(
             'Lva\ApplicationPsvVehicles' => 'Common\BusinessService\Service\Lva\ApplicationPsvVehicles',
             // Goods vehicles vehicle business service
             'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
+            'Lva\LicenceGoodsVehiclesRemovedVehicle' =>
+                'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesRemovedVehicle',
             'Lva\VariationGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\VariationGoodsVehiclesVehicle',
             'Lva\ApplicationGoodsVehiclesVehicle'
                 => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehiclesVehicle',

@@ -4,6 +4,7 @@ return array(
     'variables' => array(
         'title' => '',
         'within_form' => true,
+        'empty_message' => 'lva-transport-manager-table-empty-message'
     ),
     'settings' => array(
     ),

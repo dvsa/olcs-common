@@ -63,11 +63,10 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
                     : CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_ASSISTED_DIGITAL
                 ),
                 'filename' => $fileName,
-                'fileExtension' => 'doc_html',
                 'issuedDate' => $date,
                 'description' => $description,
                 // At the moment we assume all submits are external, and granting is internal (This may change)
-                'isDigital' => $event == self::ON_SUBMIT,
+                'isExternal' => $event == self::ON_SUBMIT,
                 'isScan' => false
             ]
         );

@@ -736,6 +736,10 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
             $this->alterActionFormForGoods($form);
         }
 
+        // Set the postcode field as not required
+        $form->getInputFilter()->get('address')->get('postcode')
+            ->setRequired(false);
+
         $this->alterFormForTrafficArea($form);
 
         return $form;
@@ -807,7 +811,6 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
 
         // Set the postcode field as not required and attach a new validator
         $form->getInputFilter()->get('address')->get('postcode')
-            ->setRequired(false)
             ->getValidatorChain()->attach($trafficAreaValidator);
 
         if ($licenceData['niFlag'] == 'N' && !$trafficArea && $form->get('form-actions')->has('addAnother')) {
