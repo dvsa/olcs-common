@@ -18,11 +18,31 @@ class ElasticSearch extends AbstractPlugin
 
     private $searchData;
 
+    /**
+     * Layout template to use for the results page - defaults to main-search-results with index nav,
+     * filter form and results table
+     * @var
+     */
+    private $layoutTemplate;
+
+    private $pageRoute;
+
+    /**
+     * Invokes the plugin
+     *
+     * @param array $options
+     * @return $this
+     */
     public function __invoke($options = [])
     {
         $containerName = isset($options['container_name']) ? $options['container_name'] : 'global_search';
+        $layoutTemplate = isset($options['layout_template']) ? $options['layout_template'] : 'main-search-results';
+        $currentRouteMatch = $this->getController()->getEvent()->getRouteMatch()->getMatchedRouteName();
+        $pageRoute = isset($options['page_route']) ? $options['page_route'] : $currentRouteMatch;
 
         $this->setContainerName($containerName);
+        $this->setLayoutTemplate($layoutTemplate);
+        $this->setPageRoute($pageRoute);
 
         $this->setSearchData($this->extractSearchData());
 
@@ -44,7 +64,7 @@ class ElasticSearch extends AbstractPlugin
         unset($sd['index']);
 
         return $this->getController()->redirect()->toRoute(
-            'search',
+            $this->getPageRoute(),
             ['index' => $index, 'action' => 'search'],
             ['query' => $sd, 'code' => 303],
             true
@@ -150,7 +170,7 @@ class ElasticSearch extends AbstractPlugin
         $sd = $this->getSearchData();
 
         $url = $this->getController()->url()->fromRoute(
-            'search',
+            $this->getPageRoute(),
             ['index' => $sd['index'], 'action' => 'post'],
             ['query' => ['search' => $sd['search']]]
         );
@@ -199,7 +219,8 @@ class ElasticSearch extends AbstractPlugin
         $view->indexes = $searchTypeService->getNavigation('internal-search', ['search' => $sd['search']]);
         $view->results = $searchService->fetchResultsTable();
 
-        $view->setTemplate('layout/main-search-results');
+        $layout = 'layout/' . $this->getLayoutTemplate();
+        $view->setTemplate($layout);
 
         return $this->renderView($view, 'Search results');
     }
@@ -285,7 +306,8 @@ class ElasticSearch extends AbstractPlugin
 
         $view->results = $searchService->fetchResultsTable();
 
-        $view->setTemplate('layout/main-search-results');
+        $layout = 'layout/' . $this->getLayoutTemplate();
+        $view->setTemplate($layout);
 
         return $view;
     }
@@ -320,5 +342,37 @@ class ElasticSearch extends AbstractPlugin
     public function getSearchData()
     {
         return $this->searchData;
+    }
+
+    /**
+     * @param mixed $layoutTemplate
+     */
+    public function setLayoutTemplate($layoutTemplate)
+    {
+        $this->layoutTemplate = $layoutTemplate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLayoutTemplate()
+    {
+        return $this->layoutTemplate;
+    }
+
+    /**
+     * @param string $pageRoute
+     */
+    public function setPageRoute($pageRoute)
+    {
+        $this->pageRoute = $pageRoute;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPageRoute()
+    {
+        return $this->pageRoute;
     }
 }
