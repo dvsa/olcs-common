@@ -81,8 +81,6 @@ class FeeProcessingServiceTest extends MockeryTestCase
 
     public function testGenerateDocumentWithNonGrantFee()
     {
-        $mockFile = m::mock();
-
         $params = [];
 
         $this->setService(
