@@ -64,13 +64,13 @@ class FeeProcessingServiceTest extends MockeryTestCase
             ->with(
                 $mockFile,
                 [
-                    'description'   => 'Goods Grant Fee Request',
-                    'filename'      => 'Goods_Grant_Fee_Request.rtf',
-                    'application'   => $params['application'],
-                    'licence'       => $params['licence'],
-                    'fileExtension' => 'doc_rtf',
-                    'category'      => 1,
-                    'subCategory'   => 110
+                    'description' => 'Goods Grant Fee Request',
+                    'filename'    => 'Goods_Grant_Fee_Request.rtf',
+                    'application' => $params['application'],
+                    'licence'     => $params['licence'],
+                    'category'    => 1,
+                    'subCategory' => 110,
+                    'isExternal'  => false
                 ]
             )
             ->getMock()
