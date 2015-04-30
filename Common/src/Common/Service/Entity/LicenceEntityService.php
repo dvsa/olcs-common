@@ -596,9 +596,14 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $variationData;
     }
 
+    public function getWithOrganisation($licenceId)
+    {
+        return $this->get($licenceId, $this->organisationBundle);
+    }
+
     public function getOrganisation($licenceId)
     {
-        $response = $this->get($licenceId, $this->organisationBundle);
+        $response = $this->getWithOrganisation($licenceId);
 
         return $response['organisation'];
     }
