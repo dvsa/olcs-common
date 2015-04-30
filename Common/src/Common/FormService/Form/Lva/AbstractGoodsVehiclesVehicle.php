@@ -20,6 +20,8 @@ abstract class AbstractGoodsVehiclesVehicle extends AbstractFormService implemen
 {
     use ServiceLocatorAwareTrait;
 
+    protected $removeSubmitButton = true;
+
     protected $lva;
 
     public function getForm($request, $params)
@@ -40,7 +42,9 @@ abstract class AbstractGoodsVehiclesVehicle extends AbstractFormService implemen
 
         if ($params['isRemoved']) {
             $this->getFormHelper()->disableElements($form);
-            $this->getFormHelper()->remove($form, 'form-actions->submit');
+            if ($this->removeSubmitButton) {
+                $this->getFormHelper()->remove($form, 'form-actions->submit');
+            }
             $form->get('form-actions')->get('cancel')->setAttribute('disabled', false);
         }
 
