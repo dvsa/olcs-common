@@ -25,35 +25,32 @@ class InspectionRequestId implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        $router = $sm->get('router');
-        $request = $sm->get('request');
-        $routeMatch = $router->match($request);
-        $routeName = $routeMatch->getMatchedRouteName();
+        unset($column); // parameter not used
+
         $urlHelper = $sm->get('Helper\Url');
-        switch ($routeName) {
-            case 'licence/processing/inspection-request':
-                $url = $urlHelper->fromRoute(
-                    $routeName,
-                    [
-                        'action' => 'edit',
-                        'licence' => $data['licence']['id'],
-                        'id' => $data['id'],
-                    ]
-                );
-                break;
-            case 'lva-application/processing/inspection-request':
-            case 'lva-variation/processing/inspection-request':
-                $url = $urlHelper->fromRoute(
-                    $routeName,
-                    [
-                        'action' => 'edit',
-                        'application' => $data['application']['id'],
-                        'id' => $data['id'],
-                    ]
-                );
-                break;
-            default:
-                $url = '';
+
+        if (empty($data['application'])) {
+            // licence inspection request
+            $url = $urlHelper->fromRoute(
+                'licence/processing/inspection-request',
+                [
+                    'action' => 'edit',
+                    'licence' => $data['licence']['id'],
+                    'id' => $data['id'],
+                ]
+            );
+        } else {
+            $route = $data['application']['isVariation']
+                ? 'lva-variation/processing/inspection-request'
+                : 'lva-application/processing/inspection-request';
+            $url = $urlHelper->fromRoute(
+                $route,
+                [
+                    'action' => 'edit',
+                    'application' => $data['application']['id'],
+                    'id' => $data['id'],
+                ]
+            );
         }
         return '<a href="'
             . $url
