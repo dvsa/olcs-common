@@ -1462,6 +1462,7 @@ return array(
     'lva-tm-details-save-success' => 'W The transport details have been saved',
     'lva-tm-details-submit-success' => 'W The transport manager application has been submitted successfully',
     'lva-tm-sent-success' => 'W The form has been emailed to the transport manager',
+    'lva-transport-manager-table-empty-message' => 'W To be nominated',
     'lva.section.title.add-transport_managers' => 'W Add transport manager',
     'lva.section.title.addTm-transport_managers' => 'W Transport manager details',
     'lva.section.title.add_condition_undertaking' => 'W Add condition/undertaking',
