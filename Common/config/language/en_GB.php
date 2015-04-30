@@ -1190,6 +1190,7 @@ return array(
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
+    'internal-vehicle-licence-wrong-removal-date' => 'Removed date is invalid',
     'internal.community_licence.confirm_reprint_licences' => 'Are you sure you want to reprint these licences?',
     'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'Are you sure you want to void these licences?',
