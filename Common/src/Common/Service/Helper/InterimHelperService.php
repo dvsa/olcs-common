@@ -554,9 +554,8 @@ class InterimHelperService extends AbstractHelperService
                 'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
                 'description' => $fileName,
                 'filename' => $fileName . '.rtf',
-                'fileExtension' => 'doc_rtf',
                 'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
-                'isDigital' => false,
+                'isExternal' => false,
                 'isScan' => false,
                 'licence' => $interimData['licence']['id'],
                 'application' => $interimData['id']
@@ -617,15 +616,14 @@ class InterimHelperService extends AbstractHelperService
         $this->getServiceLocator()->get('Entity\Document')->createFromFile(
             $storedFile,
             [
-                'description'   => $description,
-                'filename'      => str_replace(" ", "_", $description) . '.rtf',
-                'application'   => $applicationId,
-                'licence'       => $licenceId,
-                'fileExtension' => 'doc_rtf',
-                'category'      => Category::CATEGORY_LICENSING,
-                'subCategory'   => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                'isDigital'     => false,
-                'isScan'        => false
+                'description'  => $description,
+                'filename'     => str_replace(" ", "_", $description) . '.rtf',
+                'application'  => $applicationId,
+                'licence'      => $licenceId,
+                'category'     => Category::CATEGORY_LICENSING,
+                'subCategory'  => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                'isExternal'   => false,
+                'isScan'       => false
             ]
         );
     }

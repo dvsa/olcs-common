@@ -68,8 +68,7 @@ trait GenericUpload
             array(
                 'filename'      => $file->getName(),
                 'identifier'    => $file->getIdentifier(),
-                'size'          => $file->getSize(),
-                'fileExtension' => 'doc_' . $file->getExtension()
+                'size'          => $file->getSize()
             ),
             $data
         );
