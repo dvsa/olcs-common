@@ -66,9 +66,9 @@ trait GenericUpload
 
         $docData = array_merge(
             array(
-                'filename'      => $file->getName(),
-                'identifier'    => $file->getIdentifier(),
-                'size'          => $file->getSize()
+                'filename'   => $file->getName(),
+                'identifier' => $file->getIdentifier(),
+                'size'       => $file->getSize()
             ),
             $data
         );

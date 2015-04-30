@@ -46,7 +46,6 @@ class FeeProcessingService implements ServiceLocatorAwareInterface
                 'licence'     => $params['licence'],
                 'category'    => CategoryDataService::CATEGORY_LICENSING,
                 'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_FEE_REQUEST,
-                // @TODO this can be called internally/externally
                 'isExternal'  => false
             ]
         );
