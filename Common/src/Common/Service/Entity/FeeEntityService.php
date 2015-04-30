@@ -73,7 +73,6 @@ class FeeEntityService extends AbstractLvaEntityService
             'application',
             'licence',
             'feeType' => array(
-                'properties' => 'id',
                 'children' => array('accrualRule' => array())
             ),
             'feePayments' => array(
@@ -105,7 +104,6 @@ class FeeEntityService extends AbstractLvaEntityService
     protected $latestFeeByTypeStatusesAndApplicationBundle = array(
         'children' => array(
             'feeType' => array(
-                'properties' => 'id',
                 'children' => array('accrualRule' => array())
             ),
             'feePayments' => array(
@@ -225,7 +223,7 @@ class FeeEntityService extends AbstractLvaEntityService
             )
         );
 
-        $results = $this->getAll($query, array('properties' => array('id')));
+        $results = $this->getAll($query);
 
         if (empty($results['Results'])) {
             return;
