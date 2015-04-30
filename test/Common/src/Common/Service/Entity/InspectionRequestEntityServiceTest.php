@@ -113,4 +113,28 @@ class InspectionRequestEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getInspectionRequest(1));
     }
+
+    public function testGetResultTypeById()
+    {
+        $id = 99;
+        $expectedBundle = [
+            'children' => [
+                'resultType',
+            ],
+        ];
+
+        $this->expectOneRestCall('InspectionRequest', 'GET', $id, $expectedBundle)
+            ->will(
+                $this->returnValue(
+                    [
+                        'id' => 99,
+                        'resultType' => [
+                            'id' => 'insp_res_t_new'
+                        ]
+                    ]
+                )
+            );
+
+        $this->assertEquals('insp_res_t_new', $this->sut->getResultTypeById($id));
+    }
 }
