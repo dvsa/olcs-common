@@ -283,7 +283,9 @@ class ElasticSearch extends AbstractPlugin
     public function generateNavigation($view)
     {
         /** @var SearchType $searchService **/
-        $searchTypeService = $this->getController()->getServiceLocator()->get('DataServiceManager')->get(SearchType::class);
+        $searchTypeService = $this->getController()->getServiceLocator()
+            ->get('DataServiceManager')
+            ->get(SearchType::class);
 
         $sd = $this->getSearchData();
         $view->indexes = $searchTypeService->getNavigation('internal-search', ['search' => $sd['search']]);
