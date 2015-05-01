@@ -15,7 +15,8 @@ use Common\Service\Document\Bookmark\Base\DynamicBookmark;
  *
  * @package Common\Service\Document\Bookmark
  *
- * @author Josh Curtis <josh.curtis@valtech.com>
+ * @author Josh Curtis <josh.curtis@valtech.co.uk>
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 class OpName extends DynamicBookmark
 {
@@ -35,11 +36,6 @@ class OpName extends DynamicBookmark
             ],
             'bundle' => [
                 'children' => [
-                    'correspondenceCd' => [
-                        'children' => [
-                            'address'
-                        ]
-                    ],
                     'organisation' => [
                         'children' => [
                             'tradingNames'
@@ -61,8 +57,6 @@ class OpName extends DynamicBookmark
     {
         $organisation = $this->data['organisation'];
 
-        $operator = $this->data['correspondenceCd'];
-
         $tradingNames = '';
         array_map(
             function ($tradingName) use (&$tradingNames) {
@@ -72,6 +66,7 @@ class OpName extends DynamicBookmark
         );
 
         if (strlen($tradingNames) > 0) {
+            $tradingNames = substr($tradingNames, 0, -1);
             $tradingNames = 'T/A: ' . substr($tradingNames, 0, 40);
         }
 
@@ -79,10 +74,8 @@ class OpName extends DynamicBookmark
             "\n",
             array_filter(
                 [
-                    $operator['fao'],
                     $organisation['name'],
-                    $tradingNames,
-                    Formatter\Address::format($operator['address'])
+                    $tradingNames
                 ]
             )
         );

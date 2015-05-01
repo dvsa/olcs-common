@@ -24,10 +24,17 @@ class TableFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $serviceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
 
-        $serviceLocator->expects($this->once())
+        $serviceLocator->expects($this->at(0))
             ->method('get')
             ->with('Config')
             ->will($this->returnValue(array()));
+
+        $mockAuthService = $this->getMock('stdClass');
+
+        $serviceLocator->expects($this->at(1))
+            ->method('get')
+            ->with('ZfcRbac\Service\AuthorizationService')
+            ->will($this->returnValue($mockAuthService));
 
         $tableFactory = new TableFactory();
 

@@ -33,8 +33,11 @@ class Licence extends Bundle
         $correspondenceCd = new Bundle();
         $correspondenceCd->addChild('address');
 
+        $organisationPersons = new Bundle();
+        $organisationPersons->addChild('person');
+
         $organisation = new Bundle();
-        $organisation->addChild('organisationPersons')
+        $organisation->addChild('organisationPersons', $organisationPersons)
                      ->addChild('tradingNames');
 
         $this->addChild('cases', $cases)

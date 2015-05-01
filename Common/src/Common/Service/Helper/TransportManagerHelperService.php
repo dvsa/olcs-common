@@ -33,6 +33,7 @@ class TransportManagerHelperService extends AbstractHelperService
         return [
             'transportManager' => $tmId,
             'description' => $file['name'],
+            'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
             'category'    => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
         ];
@@ -44,7 +45,7 @@ class TransportManagerHelperService extends AbstractHelperService
 
         $fieldset->get('operatingCentres')->setValueOptions($ocOptions);
 
-        $formHelper->removeOption($fieldset->get('tmType'), 'tm_t_B');
+        $formHelper->removeOption($fieldset->get('tmType'), 'tm_t_b');
 
         $formHelper->populateFormTable($fieldset->get('otherLicences'), $otherLicencesTable);
     }
@@ -159,5 +160,79 @@ class TransportManagerHelperService extends AbstractHelperService
         }
 
         return $data;
+    }
+
+    public function getReviewConfig($id)
+    {
+        $data = $this->getServiceLocator()->get('Entity\TransportManagerApplication')
+            ->getReviewData($id);
+
+        $subTitle = sprintf(
+            '%s %s/%s',
+            $data['application']['licence']['organisation']['name'],
+            $data['application']['licence']['licNo'],
+            $data['application']['id']
+        );
+
+        $sections = [];
+
+        $sections[] = $this->getMainDetailsReviewSection($data);
+        $sections[] = $this->getResponsibilityDetailsReviewSection($data);
+        $sections[] = $this->getOtherEmploymentDetailsReviewSection($data);
+        $sections[] = $this->getPreviousConvictionDetailsReviewSection($data);
+        $sections[] = $this->getPreviousLicenceDetailsReviewSection($data);
+
+        return [
+            'reviewTitle' => 'tm-review-title',
+            'subTitle' => $subTitle,
+            'settings' => [
+                'hide-count' => true
+            ],
+            'sections' => $sections
+        ];
+    }
+
+    protected function getMainDetailsReviewSection($data)
+    {
+        return [
+            'header' => 'tm-review-main',
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerMain')->getConfigFromData($data)
+        ];
+    }
+
+    protected function getResponsibilityDetailsReviewSection($data)
+    {
+        return [
+            'header' => 'tm-review-responsibility',
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerResponsibility')
+                ->getConfigFromData($data)
+        ];
+    }
+
+    protected function getOtherEmploymentDetailsReviewSection($data)
+    {
+        return [
+            'header' => 'tm-review-other-employment',
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerOtherEmployment')
+                ->getConfigFromData($data)
+        ];
+    }
+
+    protected function getPreviousConvictionDetailsReviewSection($data)
+    {
+        return [
+            'header' => 'tm-review-previous-conviction',
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerPreviousConviction')
+                ->getConfigFromData($data)
+        ];
+    }
+
+    protected function getPreviousLicenceDetailsReviewSection($data)
+    {
+        return [
+            'header' => 'tm-review-previous-licence',
+            'config' => $this->getServiceLocator()->get('Review\TransportManagerPreviousLicence')
+                ->getConfigFromData($data)
+        ];
     }
 }

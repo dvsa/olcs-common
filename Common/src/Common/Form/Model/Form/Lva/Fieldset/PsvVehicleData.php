@@ -50,6 +50,7 @@ class PsvVehicleData
      *     "help-block": "Up to 100 characters"
      * })
      * @Form\Type("Text")
+     * @Form\Required(false)
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":2,"max":100}})
      */

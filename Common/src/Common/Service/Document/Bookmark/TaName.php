@@ -18,11 +18,8 @@ class TaName extends DynamicBookmark
                 'id' => $data['licence']
             ],
             'bundle' => [
-                'properties' => ['trafficArea'],
                 'children' => [
-                    'trafficArea' => [
-                        'properties' => ['name']
-                    ]
+                    'trafficArea'
                 ]
             ]
         ];

@@ -94,7 +94,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthVehicles' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthVehicles')
+                array('hasAuthVehiclesIncrease' => 'totAuthVehicles')
             ),
             array(
                 array(
@@ -103,7 +103,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthTrailers' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthTrailers')
+                array('hasAuthTrailersIncrease' => 'totAuthTrailers')
             ),
             array(
                 array(
@@ -222,7 +222,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthVehicles' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthVehicles')
+                array('hasAuthVehiclesIncrease' => 'totAuthVehicles')
             ),
             array(
                 array(
@@ -231,7 +231,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthTrailers' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthTrailers')
+                array('hasAuthTrailersIncrease' => 'totAuthTrailers')
             ),
             array(
                 array(
@@ -456,7 +456,8 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'id' => 40,
                             'version' => 400
                         ]
-                    ]
+                    ],
+                    'interimApplication' => array()
                 ]
             ],
             'licence' => [
@@ -634,10 +635,9 @@ class InterimHelperServiceTest extends MockeryTestCase
                     'filename'      => str_replace(" ", "_", $templateName) . '.rtf',
                     'application'   => $applicationId,
                     'licence'       => $licenceId,
-                    'fileExtension' => 'doc_rtf',
                     'category'      => Category::CATEGORY_LICENSING,
                     'subCategory'   => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                    'isDigital'     => false,
+                    'isExternal'     => false,
                     'isScan'        => false
                 ]
             )
@@ -658,7 +658,8 @@ class InterimHelperServiceTest extends MockeryTestCase
                 [
                     'id' => 20,
                     'version' => 200,
-                    'goodsDiscs' => []
+                    'goodsDiscs' => [],
+                    'interimApplication' => null
                 ]
             ],
             'licence' => [
@@ -735,7 +736,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                     [
                         'id' => 20,
                         'version' => 200,
-                        'specifiedDate' => '2014-01-01 00:00:00'
                     ]
                 ]
             )
@@ -800,7 +800,8 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'id' => 40,
                             'version' => 400
                         ]
-                    ]
+                    ],
+                    'interimApplication' => null
                 ]
             ],
             'licence' => [
@@ -850,7 +851,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                     [
                         'id' => 20,
                         'version' => 200,
-                        'specifiedDate' => '2014-01-01 00:00:00'
                     ]
                 ]
             )
@@ -1144,9 +1144,8 @@ class InterimHelperServiceTest extends MockeryTestCase
             'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
             'description' => 'GV Refused Interim Licence',
             'filename' => 'GV Refused Interim Licence.rtf',
-            'fileExtension' => 'doc_rtf',
             'issuedDate' => '2015-01-01 10:10:10',
-            'isDigital' => false,
+            'isExternal' => false,
             'isScan' => false,
             'licence' => 99,
             'application' => $applicationId

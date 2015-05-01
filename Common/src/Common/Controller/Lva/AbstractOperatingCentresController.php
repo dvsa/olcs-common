@@ -147,6 +147,7 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
                     'description' => 'Advertisement',
                     'category'    => $category['id'],
                     'subCategory' => $subCategory['id'],
+                    'isExternal'  => $this->isExternal()
                 ),
                 $this->getAdapter()->getDocumentProperties()
             )

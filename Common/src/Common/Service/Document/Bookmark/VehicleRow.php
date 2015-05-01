@@ -18,22 +18,10 @@ class VehicleRow extends DynamicBookmark
     const PREFORMATTED = true;
 
     private $vehicleBundle = [
-        'properties' => [
-            'licenceVehicles'
-        ],
         'children' => [
             'licenceVehicles' => [
-                'properties' => [
-                    'specifiedDate',
-                    'removalDate'
-                ],
                 'children' => [
-                    'vehicle' => [
-                        'properties' => [
-                            'vrm',
-                            'platedWeight'
-                        ]
-                    ]
+                    'vehicle'
                 ]
             ]
         ]

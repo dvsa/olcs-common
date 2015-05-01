@@ -21,71 +21,31 @@ class CaseworkerDetails extends DynamicBookmark
                 'id' => $data['user']
             ],
             'bundle' => [
-                'properties' => [
-                    'team',
-                    'contactDetails',
-                    'jobTitle',
-                    'divisionGroup',
-                    'departmentName'
-                ],
                 'children' => [
                     'contactDetails' => [
-                        'properties' => [
-                            'forename',
-                            'familyName',
-                            'emailAddress',
-                            'address',
-                            'phoneContacts'
-                        ],
                         'children' => [
                             /**
                              * 1) Preferred address; directly linked against a user
                              */
-                            'address' => [
-                                'properties' => [
-                                    'addressLine1',
-                                    'addressLine2',
-                                    'addressLine3',
-                                    'addressLine4',
-                                    'town',
-                                    'postcode'
+                            'address' => [],
+                            'phoneContacts' => [
+                                'children' => [
+                                    'phoneContactType'
                                 ]
                             ],
-                            'phoneContacts' => [
-                                'properties' => [
-                                    'phoneContactType',
-                                    'phoneNumber'
-                                ],
-                                'children' => [
-                                    'phoneContactType' => [
-                                        'properties' => ['id']
-                                    ]
-                                ]
-                            ]
+                            'person'
                         ]
                     ],
                     'team' => [
-                        'properties' => ['trafficArea'],
                         'children' => [
                             'trafficArea' => [
-                                'properties' => ['name', 'contactDetails'],
                                 'children' => [
                                     'contactDetails' => [
-                                        'properties' => ['address'],
                                         'children' => [
                                             /**
                                              * 2) Fallback address; linked traffic area
                                              */
-                                            'address' => [
-                                                'properties' => [
-                                                    'addressLine1',
-                                                    'addressLine2',
-                                                    'addressLine3',
-                                                    'addressLine4',
-                                                    'town',
-                                                    'postcode'
-                                                ]
-                                            ]
+                                            'address'
                                         ]
                                     ]
                                 ]
@@ -113,7 +73,7 @@ class CaseworkerDetails extends DynamicBookmark
             "\n",
             array_filter(
                 [
-                    Formatter\Name::format($details),
+                    Formatter\Name::format($details['person']),
                     $this->data['jobTitle'],
                     $this->data['divisionGroup'],
                     $this->data['departmentName'],

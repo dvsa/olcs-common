@@ -36,6 +36,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     const ACTION_FORMAT_BUTTONS = 'buttons';
     const ACTION_FORMAT_DROPDOWN = 'dropdown';
 
+    const CONTENT_TYPE_HTML = 'html';
+    const CONTENT_TYPE_CSV = 'csv';
+
     /**
      * Hold the pagination helper
      *
@@ -49,6 +52,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @var object
      */
     private $contentHelper;
+
+    /**
+     * Hold the contentType
+     *
+     * @var object
+     */
+    private $contentType = self::CONTENT_TYPE_HTML;
 
     /**
      * Inject the application config from Zend
@@ -184,7 +194,29 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $isDisabled = false;
 
     /**
-     * Inject the service locator
+     * Authorisation service to allow columns/rows to be hidden depending on permission model
+     * @var \ZfcRbac\Service\AuthorizationService
+     */
+    private $authService;
+
+    /**
+     * @param \ZfcRbac\Service\AuthorizationService $authorisationService
+     */
+    public function setAuthService($authService)
+    {
+        $this->authService = $authService;
+    }
+
+    /**
+     * @return \ZfcRbac\Service\AuthorizationService
+     */
+    public function getAuthService()
+    {
+        return $this->authService;
+    }
+
+    /**
+     * Inject the service locator and auth service
      *
      * @param $sm
      */
@@ -192,6 +224,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $this->setServiceLocator($sm);
         $this->applicationConfig = $sm->get('Config');
+        $this->setAuthService($sm->get('ZfcRbac\Service\AuthorizationService'));
     }
 
     /**
@@ -360,6 +393,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
     }
 
+    public function addAction($key, $settings = [])
+    {
+        $this->settings['crud']['actions'][$key] = $settings;
+    }
+
     /**
      * Get the content helper
      *
@@ -369,15 +407,23 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function getContentHelper()
     {
         if (empty($this->contentHelper)) {
-            if (!isset($this->applicationConfig['tables']['partials'])) {
+            if (!isset($this->applicationConfig['tables']['partials'][$this->contentType])) {
 
                 throw new \Exception('Table partial location not defined in config');
             }
 
-            $this->contentHelper = new ContentHelper($this->applicationConfig['tables']['partials'], $this);
+            $this->contentHelper = new ContentHelper(
+                $this->applicationConfig['tables']['partials'][$this->contentType],
+                $this
+            );
         }
 
         return $this->contentHelper;
+    }
+
+    public function setContentType($type)
+    {
+        $this->contentType = $type;
     }
 
     /**
@@ -1272,7 +1318,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             }
         }
 
-        if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
+        if (
+            $this->contentType === self::CONTENT_TYPE_HTML
+            && isset($column['type'])
+            && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])
+        ) {
             $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
             $type = new $typeClass($this);
 
@@ -1549,9 +1599,25 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
     }
 
+    private function authorisedToView($column)
+    {
+        if (isset($column['permissionRequisites'])) {
+            foreach ((array) $column['permissionRequisites'] as $permission) {
+                if ($this->getAuthService()->isGranted($permission)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // if option not set then default to visible
+        return true;
+    }
+
     private function shouldHide($column)
     {
-        return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
+        return !($this->authorisedToView($column)) ||
+        ($this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled']);
     }
 
     public function isRowDisabled($row)

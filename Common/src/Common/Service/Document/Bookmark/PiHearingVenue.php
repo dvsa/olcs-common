@@ -18,17 +18,8 @@ class PiHearingVenue extends DynamicBookmark
                 'id' => $data['hearing']
             ],
             'bundle' => [
-                'properties' => [
-                    'id'
-                ],
                 'children' => [
-                    'piVenue' => [
-                        'bundle' => [
-                            'properties' => [
-                                'name'
-                            ]
-                        ],
-                    ],
+                    'piVenue',
                 ],
             ],
         ] :  null;

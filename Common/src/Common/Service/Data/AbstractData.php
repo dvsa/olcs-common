@@ -190,9 +190,7 @@ abstract class AbstractData implements FactoryInterface, RestClientAware
      */
     protected function getBundle()
     {
-        return [
-            'properties' => 'ALL',
-        ];
+        return [];
     }
 
     /**

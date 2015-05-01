@@ -226,4 +226,16 @@ class ApplicationVehiclesGoodsAdapterTest extends MockeryTestCase
             ],
         ];
     }
+
+    public function testAlterVehcileTable()
+    {
+        $mockTable = m::mock('Common\Service\Table\TableBuilder')
+            ->shouldReceive('removeAction')
+            ->with('transfer')
+            ->once()
+            ->andReturnSelf()
+            ->getMock();
+
+        $this->assertInstanceOf('Common\Service\Table\TableBuilder', $this->sut->alterVehcileTable($mockTable, null));
+    }
 }

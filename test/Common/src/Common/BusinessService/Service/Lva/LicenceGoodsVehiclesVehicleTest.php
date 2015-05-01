@@ -258,4 +258,30 @@ class LicenceGoodsVehiclesVehicleTest extends MockeryTestCase
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
         $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
     }
+
+    /**
+     * @group licenceGoodsVehiclesVehicle
+     */
+    public function testProcessWithEditAndRemovalDate()
+    {
+        $params = [
+            'mode' => 'edit',
+            'data' => [
+                'licence-vehicle' => [
+                    'removalDate' => 'date'
+                ]
+            ]
+        ];
+
+        $this->bsm->setService(
+            'Lva\LicenceGoodsVehiclesRemovedVehicle',
+            m::mock('\Common\BusinessService\BusinessServiceInterface')
+            ->shouldReceive('process')
+            ->with($params)
+            ->andReturn('response')
+            ->once()
+            ->getMock()
+        );
+        $this->assertEquals('response', $this->sut->process($params));
+    }
 }

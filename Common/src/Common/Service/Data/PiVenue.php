@@ -82,11 +82,8 @@ class PiVenue extends AbstractData implements ListData
     protected function getBundle()
     {
         return [
-            'properties' => 'ALL',
             'children' => array(
-                'address' => array(
-                    'properties' => 'ALL'
-                )
+                'address' => array()
             )
         ];
     }

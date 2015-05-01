@@ -17,30 +17,21 @@ class StatementContactType extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
-        return [
+        return isset($data['statement']) ? [
             'service' => 'Statement',
             'data' => [
                 'id' => $data['statement']
             ],
             'bundle' => [
-                'properties' => [
-                    'id'
-                ],
                 'children' => [
-                    'contactType' => [
-                        'bundle' => [
-                            'properties' => [
-                                'description'
-                            ]
-                        ],
-                    ],
+                    'contactType',
                 ],
             ],
-        ];
+        ] : null;
     }
 
     public function render()
     {
-        return $this->data['contactType']['description'];
+        return isset($this->data['contactType']['description']) ? $this->data['contactType']['description'] : '';
     }
 }

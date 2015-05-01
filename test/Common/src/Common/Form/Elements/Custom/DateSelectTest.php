@@ -1,108 +1,110 @@
 <?php
 
 /**
- * DateSelectTest
+ * Date Select Test
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace CommonTest\Form\Elements\Types;
+namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\DateSelect;
 
 /**
- * DateSelectTest
+ * Date Select Test
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class DateSelectTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Test the input specification
-     */
-    public function testGetInputSpecificationWithRequiredAndMaxYearDelta()
-    {
-        $element = new DateSelect();
-        $element->setOptions(
-            array(
-                'max_year_delta' => '+11',
-                'required' => true
-            )
-        );
-        $spec = $element->getInputSpecification();
+    protected $sut;
 
-        $baseYear = date('Y');
-        $targetYear = date('Y', strtotime('+11 years'));
-        $this->assertTrue($spec['required']);
-        $this->assertEquals($baseYear, $element->getMinYear());
-        $this->assertEquals($targetYear, $element->getMaxYear());
+    public function setUp()
+    {
+        $this->sut = new DateSelect('foo');
     }
 
-    /**
-     * Test the input specification
-     */
-    public function testGetInputSpecificationWithRequiredAndMaxYearDeltaAndMinYear()
+    public function testGetInputSpecification()
     {
-        $element = new DateSelect();
-        $element->setOptions(
-            array(
-                'max_year_delta' => '+11',
-                'min_year_delta' => '-1',
-                'required' => true
-            )
-        );
-        $spec = $element->getInputSpecification();
+        $spec = $this->sut->getInputSpecification();
 
-        $baseYear = date('Y', strtotime('-1 years'));
-        $targetYear = date('Y', strtotime('+11 years'));
-        $this->assertTrue($spec['required']);
-        $this->assertEquals($baseYear, $element->getMinYear());
-        $this->assertEquals($targetYear, $element->getMaxYear());
+        $this->assertEquals('foo', $spec['name']);
+        $this->assertEquals(null, $spec['required']);
+        $this->assertCount(1, $spec['validators']);
+        $this->assertCount(1, $spec['filters']);
+        $this->assertInstanceOf('Zend\Validator\Date', $spec['validators'][0]);
+
+        // Test the filter
+        $this->assertNull($spec['filters'][0]['options']['callback']('foo'));
+        $this->assertNull($spec['filters'][0]['options']['callback'](['year' => '2015']));
+        $this->assertNull($spec['filters'][0]['options']['callback'](['year' => '2015', 'month' => '02']));
+        $this->assertEquals(
+            '2015-02-01',
+            $spec['filters'][0]['options']['callback'](['year' => '2015', 'month' => '02', 'day' => '01'])
+        );
     }
 
-    public function testGetInputSpecificationWithRequiredAndMaxYearDeltaAndValue()
+    public function testSetOptionsMinAndMaxYear()
     {
-        $element = new DateSelect();
-        $element->setOptions(
-            array(
-                'max_year_delta' => '+11',
-                'required' => true
-            )
-        );
-        $element->setValue('1990-05-05');
-        $spec = $element->getInputSpecification();
+        $options = [
+            'max_year_delta' => '+5',
+            'min_year_delta' => '-5'
+        ];
 
-        $targetYear = date('Y', strtotime('+11 years'));
-        $this->assertTrue($spec['required']);
-        $this->assertEquals('1990', $element->getMinYear());
-        $this->assertEquals($targetYear, $element->getMaxYear());
+        $year = date('Y');
+
+        $this->sut->setOptions($options);
+
+        $this->assertEquals(($year + 5), $this->sut->getMaxYear());
+        $this->assertEquals(($year - 5), $this->sut->getMinYear());
     }
 
-    public function testGetInputSpecificationWithRequiredAndMaxYearDeltaAndValueGreaterThanCurrentYear()
+    public function testSetOptionsMaxYear()
     {
-        $element = new DateSelect();
-        $element->setOptions(
-            array(
-                'max_year_delta' => '+11',
-                'required' => true
-            )
-        );
-        $element->setValue('2055-05-05');
-        $spec = $element->getInputSpecification();
+        $options = [
+            'max_year_delta' => '+5'
+        ];
 
-        $baseYear = date('Y');
-        $targetYear = date('Y', strtotime('+11 years'));
-        $this->assertTrue($spec['required']);
-        $this->assertEquals($baseYear, $element->getMinYear());
-        $this->assertEquals($targetYear, $element->getMaxYear());
+        $year = date('Y');
+
+        $this->sut->setOptions($options);
+
+        $this->assertEquals(($year + 5), $this->sut->getMaxYear());
+        $this->assertEquals($year, $this->sut->getMinYear());
     }
 
-    public function testGetInputSpecificationNotRequiredStandardMaxYear()
+    public function testSetOptionsMinYear()
     {
-        $element = new DateSelect();
-        $spec = $element->getInputSpecification();
+        $options = [
+            'min_year_delta' => '-5'
+        ];
 
-        $targetYear = date('Y');
-        $this->assertNull($spec['required']);
-        $this->assertEquals($targetYear, $element->getMaxYear());
+        $year = date('Y');
+
+        $this->sut->setOptions($options);
+
+        $this->assertEquals($year, $this->sut->getMaxYear());
+        $this->assertEquals(($year - 5), $this->sut->getMinYear());
+    }
+
+    public function testSetOptionsDefaultDateNow()
+    {
+        $options = [
+            'default_date' => 'now'
+        ];
+
+        $this->sut->setOptions($options);
+
+        $this->assertEquals(date('Y-m-d'), $this->sut->getValue());
+    }
+
+    public function testSetOptionsDefaultDate()
+    {
+        $options = [
+            'default_date' => '+3 months'
+        ];
+
+        $this->sut->setOptions($options);
+
+        $this->assertEquals(date('Y-m-d', strtotime('+3 months')), $this->sut->getValue());
     }
 }

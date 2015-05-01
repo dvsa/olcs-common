@@ -21,7 +21,7 @@ class TransportManagerTest extends \PHPUnit_Framework_TestCase
     {
         $pi = 1;
         $personData = [
-            'title' => 'Mr',
+            'title' => ['description' => 'Mr'],
             'forename' => 'John',
             'familyName' => 'Smith',
         ];
@@ -52,7 +52,8 @@ class TransportManagerTest extends \PHPUnit_Framework_TestCase
         $mockServiceManager->shouldReceive('get')
             ->with('\Common\Service\Data\TransportManager')->andReturn($mockTmService);
 
-        $expectedOutput = $personData['title'] . ' ' . $personData['forename'] . ' ' . $personData['familyName'];
+        $expectedOutput = $personData['title']['description'] . ' ' . $personData['forename'] . ' ' .
+        $personData['familyName'];
 
         $input = new Publication($publicationData);
         $sut = new TransportManager();

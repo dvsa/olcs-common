@@ -27,7 +27,7 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
     {
         $filters = [
             'page' => isset($query['page']) ? $query['page'] : 1,
-            'limit' => isset($query['limit']) && is_numeric($query['limit']) ? $query['limit'] : 10,
+            'limit' => isset($query['limit']) ? $query['limit'] : 10,
         ];
 
         if (isset($query['vrm']) && $query['vrm'] !== 'All') {
@@ -86,5 +86,18 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
                 'hasEnteredReg' => $data['hasEnteredReg'] === 'N' ? 'N' : 'Y'
             )
         );
+    }
+
+    /**
+     * Remove transfer button
+     *
+     * @param $table Common\Service\Table\TableBuilde
+     * @param int $licenceId
+     * @return Common\Service\Table\TableBuilde
+     */
+    public function alterVehcileTable($table, $licenceId)
+    {
+        $table->removeAction('transfer');
+        return $table;
     }
 }

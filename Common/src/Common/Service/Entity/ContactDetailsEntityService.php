@@ -19,6 +19,7 @@ class ContactDetailsEntityService extends AbstractEntityService
     const CONTACT_TYPE_REGISTERED = 'ct_reg';
     const CONTACT_TYPE_WORKSHOP = 'ct_work';
     const CONTACT_TYPE_TRANSPORT_MANAGER = 'ct_tm';
+    const CONTACT_TYPE_PARTNER = 'ct_partner';
 
     /**
      * Define entity for default behaviour

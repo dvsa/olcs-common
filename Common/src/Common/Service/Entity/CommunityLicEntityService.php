@@ -25,7 +25,7 @@ class CommunityLicEntityService extends AbstractEntityService
     const STATUS_EXPIRED = 'cl_sts_expired';
     const STATUS_WITHDRAWN = 'cl_sts_withdrawn';
     const STATUS_SUSPENDED = 'cl_sts_suspended';
-    const STATUS_VOID = 'cl_sts_void';
+    const STATUS_VOID = 'cl_sts_annulled';
     const STATUS_RETURNDED = 'cl_sts_returned';
     const PREFIX_GB = 'UKGB';
     const PREFIX_NI = 'UKNI';

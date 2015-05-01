@@ -32,8 +32,10 @@ class CaseworkerNameTest extends \PHPUnit_Framework_TestCase
         $bookmark->setData(
             [
                 'contactDetails' => [
-                    'forename' => 'Bob',
-                    'familyName' => 'Smith'
+                    'person' => [
+                        'forename' => 'Bob',
+                        'familyName' => 'Smith'
+                    ]
                 ]
             ]
         );
