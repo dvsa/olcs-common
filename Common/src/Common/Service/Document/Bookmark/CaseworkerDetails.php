@@ -21,70 +21,31 @@ class CaseworkerDetails extends DynamicBookmark
                 'id' => $data['user']
             ],
             'bundle' => [
-                'properties' => [
-                    'team',
-                    'contactDetails',
-                    'jobTitle',
-                    'divisionGroup',
-                    'departmentName'
-                ],
                 'children' => [
                     'contactDetails' => [
-                        'properties' => [
-                            'emailAddress',
-                            'address',
-                            'phoneContacts'
-                        ],
                         'children' => [
                             /**
                              * 1) Preferred address; directly linked against a user
                              */
-                            'address' => [
-                                'properties' => [
-                                    'addressLine1',
-                                    'addressLine2',
-                                    'addressLine3',
-                                    'addressLine4',
-                                    'town',
-                                    'postcode'
-                                ]
-                            ],
+                            'address' => [],
                             'phoneContacts' => [
-                                'properties' => [
-                                    'phoneContactType',
-                                    'phoneNumber'
-                                ],
                                 'children' => [
-                                    'phoneContactType' => [
-                                        'properties' => ['id']
-                                    ]
+                                    'phoneContactType'
                                 ]
                             ],
                             'person'
                         ]
                     ],
                     'team' => [
-                        'properties' => ['trafficArea'],
                         'children' => [
                             'trafficArea' => [
-                                'properties' => ['name', 'contactDetails'],
                                 'children' => [
                                     'contactDetails' => [
-                                        'properties' => ['address'],
                                         'children' => [
                                             /**
                                              * 2) Fallback address; linked traffic area
                                              */
-                                            'address' => [
-                                                'properties' => [
-                                                    'addressLine1',
-                                                    'addressLine2',
-                                                    'addressLine3',
-                                                    'addressLine4',
-                                                    'town',
-                                                    'postcode'
-                                                ]
-                                            ]
+                                            'address'
                                         ]
                                     ]
                                 ]

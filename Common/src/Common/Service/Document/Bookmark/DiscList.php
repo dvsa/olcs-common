@@ -34,37 +34,19 @@ class DiscList extends AbstractDiscList
     protected $service = 'GoodsDisc';
 
     protected $discBundle = [
-        'properties' => [
-            'id',
-            'isCopy'
-        ],
         'children' => [
             'licenceVehicle' => [
-                'properties' => ['licence', 'vehicle'],
                 'children' => [
                     'licence' => [
-                        'properties' => [
-                            'organisation',
-                            'licNo',
-                            'expiryDate'
-                        ],
                         'children' => [
                             'organisation' => [
-                                'properties' => [
-                                    'name',
-                                    'tradingNames'
-                                ],
                                 'children' => [
-                                    'tradingNames' => [
-                                        'properties' => ['name']
-                                    ]
+                                    'tradingNames'
                                 ]
                             ]
                         ]
                     ],
-                    'vehicle' => [
-                        'properties' => ['vrm']
-                    ],
+                    'vehicle',
                     'interimApplication'
                 ]
             ]

@@ -125,8 +125,8 @@ class ApplicationOperatingCentreEntityServiceTest extends AbstractEntityServiceT
     {
         $appId = 111;
         $expected = [
-            11 => '111 street, foobar, footown',
-            33 => '333 street, foobar, footown'
+            11 => '111 street, footown',
+            33 => '333 street, footown'
         ];
         $stubbedAocData = [
             'Results' => [

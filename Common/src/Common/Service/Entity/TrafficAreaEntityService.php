@@ -62,6 +62,17 @@ class TrafficAreaEntityService extends AbstractEntityService implements ListData
 
     public function fetchListOptions($context, $useGroups = false)
     {
-        return $this->getValueOptions();
+        $trafficArea = $this->get(array());
+
+        $valueOptions = array();
+        $results = $trafficArea['Results'];
+
+        foreach ($results as $value) {
+            $valueOptions[$value['id']] = $value['name'];
+        }
+
+        asort($valueOptions);
+
+        return $valueOptions;
     }
 }

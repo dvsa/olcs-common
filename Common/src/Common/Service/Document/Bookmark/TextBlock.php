@@ -29,9 +29,7 @@ class TextBlock extends DynamicBookmark
                 'data' => [
                     'id' => $paragraphId
                 ],
-                'bundle' => [
-                    'properties' => ['paraText']
-                ]
+                'bundle' => []
             ];
             $queries[] = $query;
         }

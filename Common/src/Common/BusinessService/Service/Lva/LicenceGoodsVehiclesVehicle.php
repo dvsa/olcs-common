@@ -31,6 +31,12 @@ class LicenceGoodsVehiclesVehicle extends ApplicationGoodsVehiclesVehicle implem
      */
     public function process(array $params)
     {
+        if ($params['mode'] == 'edit' && isset($params['data']['licence-vehicle']['removalDate'])) {
+            return $this->getBusinessServiceManager()
+                ->get('Lva\LicenceGoodsVehiclesRemovedVehicle')
+                ->process($params);
+        }
+
         $response = parent::process($params);
 
         $data = $response->getData();

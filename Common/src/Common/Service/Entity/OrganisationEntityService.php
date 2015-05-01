@@ -24,6 +24,7 @@ class OrganisationEntityService extends AbstractEntityService
     const ORG_TYPE_REGISTERED_COMPANY = 'org_t_rc';
     const ORG_TYPE_LLP = 'org_t_llp';
     const ORG_TYPE_SOLE_TRADER = 'org_t_st';
+    const ORG_TYPE_IRFO = 'org_t_ir';
 
     /**
      * Define entity for default behaviour

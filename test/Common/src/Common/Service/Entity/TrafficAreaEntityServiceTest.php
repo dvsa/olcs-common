@@ -105,7 +105,8 @@ class TrafficAreaEntityServiceTest extends AbstractEntityServiceTestCase
         $expected = array(
             'B' => 'a',
             'C' => 'b',
-            'A' => 'c'
+            'A' => 'c',
+            'N' => 'a'
         );
 
         $this->expectOneRestCall('TrafficArea', 'GET', array())

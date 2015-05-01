@@ -140,6 +140,7 @@ class User implements
 
         $dataToSave['transportManager'] = $params['userType']['transportManager'];
         $dataToSave['localAuthority'] = $params['userType']['localAuthority'];
+        $dataToSave['partnerContactDetails'] = $params['userType']['partnerContactDetails'];
 
         // set up cascading entities
         $dataToSave['_OPTIONS_'] = array(

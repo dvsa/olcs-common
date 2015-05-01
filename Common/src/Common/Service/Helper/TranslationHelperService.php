@@ -18,12 +18,13 @@ class TranslationHelperService extends AbstractHelperService
      * Allows you to replace variables after the string is translated
      *
      * @param string $translationKey
-     * @param array $arguments
+     * @param array  $arguments
+     * @param string $translateToWelsh 'Y' or 'N', Force the translation into welsh
      * @return string
      */
-    public function translateReplace($translationKey, array $arguments)
+    public function translateReplace($translationKey, array $arguments, $translateToWelsh = 'N')
     {
-        return vsprintf($this->translate($translationKey), $arguments);
+        return vsprintf($this->translate($translationKey, $translateToWelsh), $arguments);
     }
 
     /**
@@ -67,9 +68,10 @@ class TranslationHelperService extends AbstractHelperService
      * @param string $message
      * @return string
      */
-    public function translate($message)
+    public function translate($message, $translateToWelsh = 'N')
     {
-        return $this->getTranslator()->translate($message);
+        $locale = ($translateToWelsh === 'Y') ? 'cy_GB' : null;
+        return $this->getTranslator()->translate($message, 'default', $locale);
     }
 
     /**

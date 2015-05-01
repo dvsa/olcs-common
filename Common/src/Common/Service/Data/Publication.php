@@ -190,10 +190,9 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
             'identifier'    => $storedFile->getIdentifier(),
             'description'   => $currentPublication['docTemplate']['description'],
             'filename'      => $fileName,
-            'fileExtension' => 'doc_rtf',
             'category'      => $currentPublication['docTemplate']['category']['id'],
             'subCategory'   => $currentPublication['docTemplate']['subCategory']['id'],
-            'isDigital'     => true,
+            'isExternal'    => true,
             'isReadOnly'    => true,
             'issuedDate'    => date('Y-m-d H:i:s'),
             'size'          => $storedFile->getSize()

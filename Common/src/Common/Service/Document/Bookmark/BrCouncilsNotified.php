@@ -23,17 +23,8 @@ class BrCouncilsNotified extends DynamicBookmark
                 'id' => $data['busRegId']
             ],
             'bundle' => [
-                'properties' => [
-                    'id'
-                ],
                 'children' => [
-                    'localAuthoritys' => [
-                        'bundle' => [
-                            'properties' => [
-                                'description'
-                            ]
-                        ],
-                    ],
+                    'localAuthoritys',
                 ],
             ],
         ];

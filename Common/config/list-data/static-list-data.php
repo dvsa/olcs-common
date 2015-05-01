@@ -78,6 +78,7 @@ return array(
         'org_t_p' => 'Partnership',
         'org_t_llp' => 'Limited Liability Partnership',
         'org_t_pa' => 'Other (e.g. public authority, charity, trust, university)',
+        'org_t_ir' => 'IRFO',
     ],
     'defendant_types' =>
     [
@@ -95,8 +96,8 @@ return array(
     ],
     'document_types' => [
         'all' => 'All',
-        'digital' => 'Digital only',
-        'nondigital' => 'Non-digital'
+        'external' => 'External',
+        'internal' => 'Internal'
     ],
     'vehicle_body_types' =>
     [
