@@ -121,6 +121,28 @@ class FeeEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $outstandingForOrganisationBundle = array(
+        'children' => array(
+            'feeStatus',
+            'feePayments' => array(
+                'children' => array(
+                    'payment' => array(
+                        'children' => array(
+                            'status'
+                        )
+                    )
+                )
+            ),
+            'paymentMethod',
+            'feeType' => array(
+                'children' => array(
+                    'feeType',
+                ),
+            ),
+            'licence',
+        )
+    );
+
     public function getApplication($id)
     {
         $data = $this->get($id, $this->applicationIdBundle);
@@ -195,13 +217,6 @@ class FeeEntityService extends AbstractLvaEntityService
             ]
         );
 
-
-        /**
-         * @todo remove when backend shizzle is fixed
-         */
-        $applications = array_filter($applications);
-
-
         $licenceIds = array_map(
             function ($licence) {
                 return $licence['id'];
@@ -222,10 +237,10 @@ class FeeEntityService extends AbstractLvaEntityService
                 'licence' => "IN ".json_encode($licenceIds),
             ],
             'sort'  => 'invoicedDate',
-            'order' => 'DESC',
+            'order' => 'ASC',
         ];
 
-        return $this->getAll($query, $this->overviewBundle);
+        return $this->getAll($query, $this->outstandingForOrganisationBundle);
     }
 
     public function cancelForLicence($licenceId)
