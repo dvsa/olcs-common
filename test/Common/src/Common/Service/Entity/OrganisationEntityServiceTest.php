@@ -165,7 +165,7 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Organisation', 'GET', $id)
             ->will($this->returnValue($existing));
 
-        $this->assertFalse($this->sut->hasChangedTradingNames($id, $updated));
+        $this->assertFalse($this->sut->hasChangedTradingNames($id, $updated, 2));
     }
 
     public function testChangedTradingNamesWithAdded()
@@ -192,7 +192,7 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Organisation', 'GET', $id)
             ->will($this->returnValue($existing));
 
-        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated));
+        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated, 2));
     }
 
     public function testChangedTradingNamesWithRemoved()
@@ -219,7 +219,7 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Organisation', 'GET', $id)
             ->will($this->returnValue($existing));
 
-        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated));
+        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated, 2));
     }
 
     public function testChangedTradingNamesWithDifferentValues()
@@ -251,7 +251,7 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Organisation', 'GET', $id)
             ->will($this->returnValue($existing));
 
-        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated));
+        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated, 2));
     }
 
     public function testHasChangedRegisteredAddressWithNoDiffs()

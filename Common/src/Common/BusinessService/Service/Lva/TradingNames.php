@@ -42,9 +42,7 @@ class TradingNames implements BusinessServiceInterface, BusinessRuleAwareInterfa
 
         $hasChanged = $this->hasChangedTradingNames($orgId, $filtered, $licenceId);
         $tradingNamesData = $tradingNamesRule->validate($filtered, $orgId, $licenceId);
-//        echo '<pre>';
-//print_r($tradingNamesData);
-//die();
+
         $this->getServiceLocator()->get('Entity\TradingNames')->save($tradingNamesData);
 
         $response = new Response();
@@ -56,6 +54,8 @@ class TradingNames implements BusinessServiceInterface, BusinessRuleAwareInterfa
 
     protected function hasChangedTradingNames($orgId, $tradingNames, $licenceId)
     {
-        return $this->getServiceLocator()->get('Entity\Organisation')->hasChangedTradingNames($orgId, $tradingNames, $licenceId);
+        return $this->getServiceLocator()
+            ->get('Entity\Organisation')
+            ->hasChangedTradingNames($orgId, $tradingNames, $licenceId);
     }
 }

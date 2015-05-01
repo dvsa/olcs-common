@@ -77,7 +77,7 @@ class TradingNamesTest extends MockeryTestCase
             ->andReturn($saveData);
 
         $mockOrganisation->shouldReceive('hasChangedTradingNames')
-            ->with(111, ['foo', 'bar'])
+            ->with(111, ['foo', 'bar'], 222)
             ->andReturn(true);
 
         $mockTradingNames->shouldReceive('save')

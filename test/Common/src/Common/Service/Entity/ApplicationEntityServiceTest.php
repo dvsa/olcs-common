@@ -1401,7 +1401,6 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                 'organisation' => [
                                     'children' => [
                                         'type',
-                                        'tradingNames',
                                         'natureOfBusinesses',
                                         'contactDetails' => [
                                             'children' => [
@@ -1410,7 +1409,8 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                         ]
                                     ]
                                 ],
-                                'companySubsidiaries'
+                                'companySubsidiaries',
+                                'tradingNames'
                             ]
                         ]
                     ]
