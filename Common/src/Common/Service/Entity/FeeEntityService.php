@@ -8,6 +8,8 @@
 namespace Common\Service\Entity;
 
 use Common\Service\Data\FeeTypeDataService;
+use Common\Service\Entity\LicenceEntityService as Licence;
+use Common\Service\Entity\ApplicationEntityService as Application;
 
 /**
  * Fee Entity Service
@@ -173,6 +175,59 @@ class FeeEntityService extends AbstractLvaEntityService
         return !empty($data['Results']) ? $data['Results'][0] : null;
     }
 
+    public function getOutstandingFeesForOrganisation($organisationId)
+    {
+        $organisationEntityService = $this->getServiceLocator()->get('Entity\organisation');
+
+        $licences = $organisationEntityService->getLicencesByStatus(
+            $organisationId,
+            [
+                Licence::LICENCE_STATUS_VALID,
+                Licence::LICENCE_STATUS_CURTAILED,
+                Licence::LICENCE_STATUS_SUSPENDED,
+            ]
+        );
+        $applications = $organisationEntityService->getAllApplicationsByStatus(
+            $organisationId,
+            [
+                Application::APPLICATION_STATUS_UNDER_CONSIDERATION,
+                Application::APPLICATION_STATUS_GRANTED,
+            ]
+        );
+
+
+        /**
+         * @todo remove when backend shizzle is fixed
+         */
+        $applications = array_filter($applications);
+
+
+        $licenceIds = array_map(
+            function ($licence) {
+                return $licence['id'];
+            },
+            $licences
+        );
+        $applicationIds = array_map(
+            function ($application) {
+                return isset($application['id']) ? $application['id'] : null;
+            },
+            $applications
+        );
+
+        $query = [
+            'feeStatus' => self::STATUS_OUTSTANDING,
+            [
+                'application' => "IN ".json_encode($applicationIds),
+                'licence' => "IN ".json_encode($licenceIds),
+            ],
+            'sort'  => 'invoicedDate',
+            'order' => 'DESC',
+        ];
+
+        return $this->getAll($query, $this->overviewBundle);
+    }
+
     public function cancelForLicence($licenceId)
     {
         $query = array(
@@ -248,6 +303,7 @@ class FeeEntityService extends AbstractLvaEntityService
 
         $updates = [];
         foreach ($results as $fee) {
+            // @TODO should this check $fee['feeType']['feeType']['id'] now it's refdata?
             if ($fee['feeType']['feeType'] === FeeTypeDataService::FEE_TYPE_GRANTINT) {
                 $updates[] = [
                     'id' => $fee['id'],
