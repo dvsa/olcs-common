@@ -118,7 +118,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         $mockFormHelper->shouldReceive('removeOption')
             ->once()
-            ->with($mockTmTypeField, 'tm_t_B')
+            ->with($mockTmTypeField, 'tm_t_b')
             ->shouldReceive('populateFormTable')
             ->with($mockOtherLicenceField, $otherLicencesTable);
 
