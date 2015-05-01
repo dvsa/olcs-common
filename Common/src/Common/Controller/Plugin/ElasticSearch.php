@@ -37,8 +37,12 @@ class ElasticSearch extends AbstractPlugin
     {
         $containerName = isset($options['container_name']) ? $options['container_name'] : 'global_search';
         $layoutTemplate = isset($options['layout_template']) ? $options['layout_template'] : 'main-search-results';
-        $currentRouteMatch = $this->getController()->getEvent()->getRouteMatch()->getMatchedRouteName();
-        $pageRoute = isset($options['page_route']) ? $options['page_route'] : $currentRouteMatch;
+
+        if (isset($options['page_route'])) {
+            $pageRoute = isset($options['page_route']) ? $options['page_route'] : $currentRouteMatch;
+        } else {
+            $pageRoute = $this->getController()->getEvent()->getRouteMatch()->getMatchedRouteName();
+        }
 
         $this->setContainerName($containerName);
         $this->setLayoutTemplate($layoutTemplate);
