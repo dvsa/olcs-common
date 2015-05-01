@@ -35,7 +35,7 @@ class ElasticSearchTest extends MockeryTestCase
     {
         $this->request = m::mock('\Zend\Http\Request');
 
-        $this->routeMatch = new RouteMatch([]);
+        $this->routeMatch = new RouteMatch(['index' => 'SEARCHINDEX']);
         $this->event = new MvcEvent();
         $this->event->setRouteMatch($this->routeMatch);
         $this->sm = Bootstrap::getServiceManager();
@@ -141,10 +141,11 @@ class ElasticSearchTest extends MockeryTestCase
     private function getMockSearchObjectArray()
     {
         return [
-            'index' => 'foo'
+            'index' => 'foo',
+            'search' => 'SEARCH'
         ];
     }
-/*
+
     public function testGenerateResults()
     {
 
@@ -161,11 +162,33 @@ class ElasticSearchTest extends MockeryTestCase
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
 
         $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
 
-        $plugin = $this->sut->pluginGenerateResults();
+        $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
+        $mockSearchService = m::mock('Common\Service\Data\Search\Search');
+
+        $mockQuery = m::mock();
+        $mockRequest = m::mock();
+        $mockIndex = m::mock();
+
+        $mockQuery->shouldReceive('setRequest')->with(m::type('object'))->andReturn($mockRequest);
+        $mockRequest->shouldReceive('setIndex')->with('SEARCHINDEX')->andReturn($mockIndex);
+        $mockIndex->shouldReceive('setSearch')->with('SEARCH')->andReturnSelf();
 
 
-    }*/
+        $mockSearchService->shouldReceive('setQuery')->with(m::type('object'))->andReturn($mockQuery);
+        $mockSearchService->shouldReceive('fetchResultsTable')->andReturn('RESULTS');
+
+        $plugin = $this->sut->getPlugin();
+        $plugin->setSearchTypeService($mockSearchTypeService);
+        $plugin->setSearchService($mockSearchService);
+
+        $view = new ViewModel();
+        $result = $plugin->generateResults($view);
+
+        $this->assertEquals($result->results, 'RESULTS');
+
+    }
 
     public function testGetSetContainerName()
     {
@@ -210,11 +233,10 @@ class testController extends \Common\Controller\AbstractActionController
         return $plugin;
     }
 
-    public function pluginGenerateResults()
+    public function getPlugin()
     {
-        $view = new ViewModel();
         $plugin = $this->ElasticSearch();
 
-        return $plugin->generateResults($view);
+        return $plugin;
     }
 }
