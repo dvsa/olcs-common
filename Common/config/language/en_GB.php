@@ -959,6 +959,8 @@ return array(
     'impo_wd' => 'Application Withdrawn',
     'impt_hearing' => 'Hearing',
     'impt_paper' => 'Paperwork',
+    'inspection-request-task-description-satisfactory' => 'Satisfactory inspection request: ID %s',
+    'inspection-request-task-description-unsatisfactory' => 'Unsatisfactory inspection request: ID %s',
     'interim-start-date' => 'Interim start date',
     'interim-status' => 'Interim status',
     'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is
