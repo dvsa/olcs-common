@@ -14,6 +14,8 @@ namespace Common\Service\Entity;
  */
 class FeeTypeEntityService extends AbstractEntityService
 {
+    const FEE_TYPE_CONTINUATION = 'CONT';
+
     /**
      * Define entity for default behaviour
      *
