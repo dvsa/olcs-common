@@ -139,8 +139,10 @@ return array(
     ),
     'controller_plugins' => array(
         'invokables' => array(
-            'redirect' => 'Common\Controller\Plugin\Redirect',
-            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearch'
+            'redirect' => 'Common\Controller\Plugin\Redirect'
+        ),
+        'factories' => array(
+            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory'
         )
     ),
     'console' => array(

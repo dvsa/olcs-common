@@ -14,9 +14,29 @@ use Zend\Session\Container;
  */
 class ElasticSearch extends AbstractPlugin
 {
+    /**
+     * Session container name
+     * @var string
+     */
     private $containerName;
 
+    /**
+     * Search Data
+     * @var array
+     */
     private $searchData;
+
+    /**
+     * Search type service
+     * @var \Olcs\Service\Data\SearchType
+     */
+    protected $searchTypeService;
+
+    /**
+     * Search service
+     * @var \Common\Service\Data\Search
+     */
+    protected $searchService;
 
     /**
      * Layout template to use for the results page - defaults to main-search-results with index nav,
@@ -25,6 +45,10 @@ class ElasticSearch extends AbstractPlugin
      */
     private $layoutTemplate;
 
+    /**
+     * Page route to determine where forms should post and redirect to
+     * @var string
+     */
     private $pageRoute;
 
     /**
@@ -39,7 +63,7 @@ class ElasticSearch extends AbstractPlugin
         $layoutTemplate = isset($options['layout_template']) ? $options['layout_template'] : 'main-search-results';
 
         if (isset($options['page_route'])) {
-            $pageRoute = isset($options['page_route']) ? $options['page_route'] : $currentRouteMatch;
+            $pageRoute = $options['page_route'];
         } else {
             $pageRoute = $this->getController()->getEvent()->getRouteMatch()->getMatchedRouteName();
         }
@@ -95,10 +119,6 @@ class ElasticSearch extends AbstractPlugin
 
     public function processSearchData()
     {
-        // Crazy race condition means that we need to "build" the form here!
-        /** @var \Olcs\Service\Data\Search\Search $searchService **/
-        $searchService = $this->getController()->getServiceLocator()->get('DataServiceManager')->get(Search::class);
-
         $incomingParameters = [];
 
         if ($routeParams = $this->getController()->params()->fromRoute()) {
@@ -189,9 +209,6 @@ class ElasticSearch extends AbstractPlugin
     {
         $sd = $this->getSearchData();
 
-        /**
-         * This might
-         */
         $this->getFiltersForm();
         $data = $this->getSearchForm()->getObject();
         //override with get route index unless request is post
@@ -207,21 +224,15 @@ class ElasticSearch extends AbstractPlugin
             return $this->redirectToRoute('dashboard');
         }
 
-        /** @var Search $searchService **/
-        $searchService = $this->getServiceLocator()->get('DataServiceManager')->get(Search::class);
-
-        $searchService->setQuery($this->getRequest()->getQuery())
+        $this->getSearchService()->setQuery($this->getRequest()->getQuery())
             ->setRequest($this->getRequest())
             ->setIndex($data['index'])
             ->setSearch($data['search']);
 
         $view = new ViewModel();
 
-        /** @var SearchType $searchService **/
-        $searchTypeService = $this->getServiceLocator()->get('DataServiceManager')->get(SearchType::class);
-
-        $view->indexes = $searchTypeService->getNavigation('internal-search', ['search' => $sd['search']]);
-        $view->results = $searchService->fetchResultsTable();
+        $view->indexes = $this->getSearchTypeService()->getNavigation('internal-search', ['search' => $sd['search']]);
+        $view->results = $this->getSearchService()->fetchResultsTable();
 
         $layout = 'layout/' . $this->getLayoutTemplate();
         $view->setTemplate($layout);
@@ -286,13 +297,8 @@ class ElasticSearch extends AbstractPlugin
 
     public function generateNavigation($view)
     {
-        /** @var SearchType $searchService **/
-        $searchTypeService = $this->getController()->getServiceLocator()
-            ->get('DataServiceManager')
-            ->get(SearchType::class);
-
         $sd = $this->getSearchData();
-        $view->indexes = $searchTypeService->getNavigation('internal-search', ['search' => $sd['search']]);
+        $view->indexes = $this->getSearchTypeService()->getNavigation('internal-search', ['search' => $sd['search']]);
 
         return $view;
     }
@@ -302,15 +308,12 @@ class ElasticSearch extends AbstractPlugin
         $data = $this->getSearchForm()->getObject();
         $data['index'] = $this->getController()->params()->fromRoute('index');
 
-        /** @var Search $searchService **/
-        $searchService = $this->getController()->getServiceLocator()->get('DataServiceManager')->get(Search::class);
-
-        $searchService->setQuery($this->getController()->getRequest()->getQuery())
+        $this->getSearchService()->setQuery($this->getController()->getRequest()->getQuery())
             ->setRequest($this->getController()->getRequest())
             ->setIndex($data['index'])
             ->setSearch($data['search']);
 
-        $view->results = $searchService->fetchResultsTable();
+        $view->results = $this->getSearchService()->fetchResultsTable();
 
         $layout = 'layout/' . $this->getLayoutTemplate();
         $view->setTemplate($layout);
@@ -384,5 +387,41 @@ class ElasticSearch extends AbstractPlugin
     public function getPageRoute()
     {
         return $this->pageRoute;
+    }
+
+    /**
+     * @param \Common\Service\Data\Search $searchService
+     * @return ElasticSearch
+     */
+    public function setSearchService($searchService)
+    {
+        $this->searchService = $searchService;
+        return $this;
+    }
+
+    /**
+     * @return \Common\Service\Data\Search
+     */
+    public function getSearchService()
+    {
+        return $this->searchService;
+    }
+
+    /**
+     * @param \Olcs\Service\Data\SearchType $searchTypeService
+     * @return ElasticSearch
+     */
+    public function setSearchTypeService($searchTypeService)
+    {
+        $this->searchTypeService = $searchTypeService;
+        return $this;
+    }
+
+    /**
+     * @return \Olcs\Service\Data\SearchType
+     */
+    public function getSearchTypeService()
+    {
+        return $this->searchTypeService;
     }
 }
