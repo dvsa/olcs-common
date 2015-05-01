@@ -4,6 +4,13 @@
     "type": "library",
     "repositories": [
         {
+            "packagist": false
+        },
+        {
+            "url": "http://satis.inf.mgt.mtpdvsa",
+            "type": "composer"
+        },
+        {
             "type": "vcs",
             "url": "git@gitlab.inf.mgt.mtpdvsa:sc/jackrabbit.git"
         },
