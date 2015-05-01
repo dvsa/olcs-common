@@ -25,7 +25,7 @@ class ContinuationNotSought implements ServiceLocatorAwareInterface
      */
     public function send()
     {
-        $endDate = $specifiedDate = $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C);
+        $endDate = $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C);
         $time = strtotime($endDate);
         $startDate = date(\DateTime::W3C, strtotime("-1 month", $time));
 
