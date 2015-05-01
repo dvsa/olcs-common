@@ -9,10 +9,6 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/MajorCaiger/phpcov.git"
-        },
-        {
-            "type": "vcs",
             "url": "git@gitlab.clb.npm:olcs/olcs-testhelpers.git"
         },
         {
@@ -29,7 +25,6 @@
         "symfony/Filesystem": "~2.6.0",
         "zf-commons/zfc-rbac": "~2.4.0",
         "zf-commons/zfc-user": "~1.2.2",
-
         "cpms/client": "0.1.x-dev"
     },
     "require-dev": {
@@ -38,7 +33,6 @@
         "sebastian/diff": "dev-master",
         "mockery/mockery": "dev-master",
         "major-caiger/munit": "~0.1.0",
-        "phpunit/phpcov": "dev-master",
         "dvsa/jackrabbit": "v1.1.2",
         "mikey179/vfsStream": "~1.4.0",
         "olcs/olcs-testhelpers": "dev-develop"
