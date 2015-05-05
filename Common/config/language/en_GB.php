@@ -959,6 +959,8 @@ return array(
     'impo_wd' => 'Application Withdrawn',
     'impt_hearing' => 'Hearing',
     'impt_paper' => 'Paperwork',
+    'inspection-request-task-description-satisfactory' => 'Satisfactory inspection request: ID %s',
+    'inspection-request-task-description-unsatisfactory' => 'Unsatisfactory inspection request: ID %s',
     'interim-start-date' => 'Interim start date',
     'interim-status' => 'Interim status',
     'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is
@@ -1454,6 +1456,7 @@ return array(
     'lva-tm-details-save-success' => 'The transport details have been saved',
     'lva-tm-details-submit-success' => 'The transport manager application has been submitted successfully',
     'lva-tm-sent-success' => 'The form has been emailed to the transport manager',
+    'lva-transport-manager-table-empty-message' => 'To be nominated',
     'lva.section.title.add-transport_managers' => 'Add transport manager',
     'lva.section.title.addTm-transport_managers' => 'Transport manager details',
     'lva.section.title.add_condition_undertaking' => 'Add condition/undertaking',
