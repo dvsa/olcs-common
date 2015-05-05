@@ -27,14 +27,17 @@ class Email implements ServiceLocatorAwareInterface
         return $this->sendEmailViaRestService($fromEmail, $fromName, $to, $subject, $body, $html);
     }
 
-    public function sendTemplate($shouldTranslate, $fromEmail, $fromName, $to, $subject, $view, $vars, $html = true)
+    /**
+     * Send an email based on a template rather than a body of text. Makes some assumptions
+     * that both the content of the template and the email subject may need translatingo
+     */
+    public function sendTemplate($translateToWelsh, $fromEmail, $fromName, $to, $subject, $view, $vars, $html = true)
     {
         $translationHelper = $this->getServiceLocator()->get('Helper\Translation');
 
-        $content = $translationHelper->translateReplace($view, $vars, $shouldTranslate);
-        $subject = $translationHelper->translate($subject, $shouldTranslate);
+        $content = $translationHelper->translateReplace($view, $vars, $translateToWelsh);
+        $subject = $translationHelper->translate($subject, $translateToWelsh);
 
-        // Put content into the template
         $view = new ViewModel();
         $view->setTemplate('layout/email');
         $view->setVariable('content', $content);
