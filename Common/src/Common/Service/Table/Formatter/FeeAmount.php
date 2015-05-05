@@ -25,7 +25,7 @@ class FeeAmount implements FormatterInterface
      */
     public static function format($data, $column = array())
     {
-        if (isset($column['name']) && isset($data[$column['name']]) && !is_null($data[$column['name']])) {
+        if (isset($column['name']) && isset($data[$column['name']])) {
             $amount = $data[$column['name']];
             return '£'.number_format($amount, 2);
         }
