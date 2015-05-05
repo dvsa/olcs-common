@@ -130,7 +130,7 @@ class ContinuationDetailEntityService extends AbstractEntityService
 
         $dateTime->modify('+4 years');
         $yearFuture = $dateTime->format('Y');
-        $monthFuture = $dateTime->format('n');
+        $monthFuture = $month;
 
         $query = [
             // Must be licence...
