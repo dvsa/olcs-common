@@ -528,4 +528,36 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         // assertions
         $this->assertEquals('RESPONSE', $this->sut->getOutstandingFeesForOrganisation($organisationId));
     }
+
+    /**
+     * Test getOutstandingFeesForOrganisation method when there are no
+     * licences, variations or applications
+     */
+    public function testGetOutstandingFeesForOrganisationNoLva()
+    {
+        // stub data
+        $organisationId = 69;
+
+        $applications = [];
+
+        $licences = [];
+
+        // mocks
+        $mockOrganisationEntityService = m::mock();
+        $this->sm->setService('Entity\Organisation', $mockOrganisationEntityService);
+
+        // expectations
+        $mockOrganisationEntityService
+            ->shouldReceive('getLicencesByStatus')
+            ->once()
+            ->andReturn($licences);
+
+        $mockOrganisationEntityService
+            ->shouldReceive('getAllApplicationsByStatus')
+            ->once()
+            ->andReturn($applications);
+
+        // assertions
+        $this->assertNull($this->sut->getOutstandingFeesForOrganisation($organisationId));
+    }
 }
