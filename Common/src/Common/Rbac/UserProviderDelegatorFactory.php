@@ -5,6 +5,10 @@ namespace Common\Rbac;
 use Zend\ServiceManager\DelegatorFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class UserProviderDelegatorFactory
+ * @package Common\Rbac
+ */
 class UserProviderDelegatorFactory implements DelegatorFactoryInterface
 {
     /**
@@ -24,5 +28,4 @@ class UserProviderDelegatorFactory implements DelegatorFactoryInterface
 
         return $service;
     }
-
 }
