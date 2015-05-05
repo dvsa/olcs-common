@@ -23,10 +23,10 @@ class QueueEntityService extends AbstractEntityService
      */
     protected $entity = 'Queue';
 
+    // Message statuses
     const STATUS_QUEUED = 'que_sts_queued';
     const STATUS_PROCESSING = 'que_sts_processing';
-
-    const TYPE_SLEEP = 'que_typ_sleep';
+    const STATUS_COMPLETE = 'que_sts_complete';
 
     protected $itemBundle = [
         'children' => [
@@ -34,7 +34,7 @@ class QueueEntityService extends AbstractEntityService
         ]
     ];
 
-    public function getNextItem($type)
+    public function getNextItem($type = null)
     {
         $now = $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C);
 
@@ -43,12 +43,15 @@ class QueueEntityService extends AbstractEntityService
             'limit' => 1,
             'sort' => 'createdOn',
             'order' => 'ASC',
-            'type' => $type,
             'processAfterDate' => [
                 'NULL',
                 '<=' . $now
             ]
         ];
+
+        if ($type !== null) {
+            $query['type'] = $type;
+        }
 
         $results = $this->get($query, $this->itemBundle);
 
