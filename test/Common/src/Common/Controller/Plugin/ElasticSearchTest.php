@@ -8,7 +8,9 @@ use \Common\Controller\Plugin\ElasticSearch;
 use Olcs\TestHelpers\ControllerPluginManagerHelper;
 use CommonTest\Bootstrap;
 use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Router\Http\Segment;
 use Zend\Mvc\Router\RouteMatch;
+use Zend\Mvc\Router\SimpleRouteStack;
 use Zend\View\Helper\Placeholder;
 use Zend\View\Model\ViewModel;
 
@@ -35,9 +37,17 @@ class ElasticSearchTest extends MockeryTestCase
     {
         $this->request = m::mock('\Zend\Http\Request');
 
-        $this->routeMatch = new RouteMatch(['index' => 'SEARCHINDEX']);
+        $this->routeMatch = new RouteMatch(['controller' => 'index', 'action' => 'index', 'index' => 'SEARCHINDEX']);
+        $this->routeMatch->setMatchedRouteName('testindex');
         $this->event = new MvcEvent();
+
+        $routeStack = new SimpleRouteStack();
+        $route = new Segment('/testindex/[:controller/[:action/]]');
+        $routeStack->addRoute('testindex', $route);
+        $this->event->setRouter($routeStack);
+
         $this->event->setRouteMatch($this->routeMatch);
+        $this->event->setRequest($this->request);
         $this->sm = Bootstrap::getServiceManager();
 
         $this->pm = m::mock('\Zend\Mvc\Controller\PluginManager[setInvokableClass]')->makePartial();
@@ -72,7 +82,7 @@ class ElasticSearchTest extends MockeryTestCase
 
         $this->assertEquals($result->getContainerName(), 'global_search');
         $this->assertEquals($result->getLayoutTemplate(), 'main-search-results');
-        $this->assertEquals($result->getPageRoute(), NULL);
+        $this->assertEquals($result->getPageRoute(), 'testindex');
     }
 
     /*
@@ -110,33 +120,105 @@ class ElasticSearchTest extends MockeryTestCase
     }
     */
 
-    /*
+
     public function testSearchAction()
     {
-        $this->sut->searchAction();
-    }
-    */
+        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm->shouldReceive('getObject')->andReturn($this->getMockSearchObjectArray());
+        $mockForm->shouldReceive('setAttribute')->with('action',
+            m::type('string'));
+        $mockForm->shouldReceive('setData');
+        $mockForm->shouldReceive('isValid')->andReturn(true);
+        $mockForm->shouldReceive('getData')->andReturn(['index' => 'SEARCHINDEX']);
 
-    /*
+        $indexes = ['searchindex1', 'searchindex2'];
+        $results = ['search-results'];
+
+        $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
+        $mockSearchTypeService->shouldReceive('getNavigation')->with(m::type('string'),
+            m::type('array'))->andReturn($indexes);
+
+
+        $mockQuery = m::mock();
+        $mockRequest = m::mock();
+        $mockIndex = m::mock();
+
+        $mockQuery->shouldReceive('setRequest')->with(m::type('object'))->andReturn($mockRequest);
+        $mockRequest->shouldReceive('setIndex')->with('SEARCHINDEX')->andReturn($mockIndex);
+        $mockIndex->shouldReceive('setSearch')->with('SEARCH')->andReturnSelf();
+
+        $mockSearchService = m::mock('Common\Service\Data\Search\Search');
+        $mockSearchService->shouldReceive('setQuery')->with(m::type('object'))->andReturn($mockQuery);
+        $mockSearchService->shouldReceive('fetchResultsTable')->andReturn($results);
+
+
+        $mockContainer = m::mock('Zend\View\Helper\Placeholder\Container');
+        $mockContainer->shouldReceive('getValue')->andReturn($mockForm);
+
+        $mockPlaceholder = m::mock('Zend\View\Helper\Placeholder');
+        $mockPlaceholder->shouldReceive('getContainer')->with(m::type('string'))->andReturn($mockContainer);
+
+        $mockViewHelperManager = m::mock('Zend\Mvc\Service\ViewHelperManagerFactory');
+        $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
+
+        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+
+        $plugin = $this->sut->getPlugin();
+        $plugin->setSearchData(['index' => 'SEARCHINDEX', 'search' => 'foo']);
+        $plugin->setSearchTypeService($mockSearchTypeService);
+        $plugin->setSearchService($mockSearchService);
+
+        $resultView = $plugin->searchAction();
+
+        $this->assertEquals($resultView->indexes, $indexes);
+        $this->assertEquals($resultView->results, $results);
+    }
+
+
     public function testSetNavigationCurrentLocation()
     {
-        $this->sut->setNavigationCurrentLocation();
-    }
-    */
+        $plugin = $this->sut->getPlugin();
+        $plugin->navigationId = 'home';
 
-    /*
+        $mockNavigationService = m::mock('Common\Service\Data\Search\Search');
+        $mockNavigationService->shouldReceive('findOneBy')->with('id', 'home')->andReturnSelf();
+        $mockNavigationService->shouldReceive('setActive');
+        $plugin->setNavigationService($mockNavigationService);
+
+        $this->assertTrue($plugin->setNavigationCurrentLocation());
+    }
+
     public function testExtractSearchData()
     {
-        $this->sut->extractSearchData();
-    }
-    */
+        $plugin = $this->sut->getPlugin();
 
-    /*
+        $result = $plugin->extractSearchData();
+
+        $this->assertArrayHasKey('index', $result);
+        $this->assertEquals($result['index'], 'SEARCHINDEX');
+    }
+
     public function testGenerateNavigation()
     {
-        $this->sut->generateResults();
+        $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
+        $mockSearchService = m::mock('Common\Service\Data\Search\Search');
+
+        $mockSearchTypeService->shouldReceive('getNavigation')->with('internal-search',
+            ['search' => 'foo'])->andReturn('MOCKINDEXES');
+
+        $plugin = $this->sut->getPlugin();
+        $plugin->setSearchTypeService($mockSearchTypeService);
+        $plugin->setSearchService($mockSearchService);
+        $plugin->setSearchData(['search' => 'foo']);
+
+        $view = new ViewModel();
+        $result = $plugin->generateNavigation($view);
+
+        $this->assertSame($result, $view);
+        $this->assertEquals($result->indexes, 'MOCKINDEXES');
+
     }
-    */
+
 
     private function getMockSearchObjectArray()
     {
@@ -148,7 +230,6 @@ class ElasticSearchTest extends MockeryTestCase
 
     public function testGenerateResults()
     {
-
         $mockForm = m::mock('Zend\Form\Form');
         $mockForm->shouldReceive('getObject')->andReturn($this->getMockSearchObjectArray());
 
@@ -162,7 +243,6 @@ class ElasticSearchTest extends MockeryTestCase
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
 
         $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
-        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
 
         $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
         $mockSearchService = m::mock('Common\Service\Data\Search\Search');
@@ -174,7 +254,6 @@ class ElasticSearchTest extends MockeryTestCase
         $mockQuery->shouldReceive('setRequest')->with(m::type('object'))->andReturn($mockRequest);
         $mockRequest->shouldReceive('setIndex')->with('SEARCHINDEX')->andReturn($mockIndex);
         $mockIndex->shouldReceive('setSearch')->with('SEARCH')->andReturnSelf();
-
 
         $mockSearchService->shouldReceive('setQuery')->with(m::type('object'))->andReturn($mockQuery);
         $mockSearchService->shouldReceive('fetchResultsTable')->andReturn('RESULTS');
@@ -238,5 +317,13 @@ class testController extends \Common\Controller\AbstractActionController
         $plugin = $this->ElasticSearch();
 
         return $plugin;
+    }
+
+    public function renderView($view, $pageTitle = null, $pageSubTitle = null)
+    {
+        $view->pageTitle = $pageTitle;
+        $view->pageSubTitle = $pageSubTitle;
+
+        return $view;
     }
 }

@@ -32,9 +32,11 @@ class ElasticSearchFactory implements FactoryInterface
 
         $searchService = $serviceLocator->getServiceLocator()->get('DataServiceManager')->get(Search::class);
         $searchTypeService = $serviceLocator->getServiceLocator()->get('DataServiceManager')->get(SearchType::class);
+        $navigation = $serviceLocator->getServiceLocator()->get('Navigation');
 
         $plugin->setSearchService($searchService);
         $plugin->setSearchTypeService($searchTypeService);
+        $plugin->setNavigationService($navigation);
 
         return $plugin;
     }

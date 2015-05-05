@@ -39,6 +39,12 @@ class ElasticSearch extends AbstractPlugin
     protected $searchService;
 
     /**
+     * Navigation service
+     * @var \Zend\Navigation\Navigation
+     */
+    protected $navigationService;
+
+    /**
      * Layout template to use for the results page - defaults to main-search-results with index nav,
      * filter form and results table
      * @var
@@ -216,7 +222,7 @@ class ElasticSearch extends AbstractPlugin
         $this->processSearchData();
 
         //update data with information from route, and rebind to form so that form data is correct
-        $data['index'] = $this->params()->fromRoute('index');
+        $data['index'] = $this->getController()->params()->fromRoute('index');
         $this->getSearchForm()->setData($data);
 
         if (empty($data['search'])) {
@@ -224,8 +230,8 @@ class ElasticSearch extends AbstractPlugin
             return $this->redirectToRoute('dashboard');
         }
 
-        $this->getSearchService()->setQuery($this->getRequest()->getQuery())
-            ->setRequest($this->getRequest())
+        $this->getSearchService()->setQuery($this->getController()->getRequest()->getQuery())
+            ->setRequest($this->getController()->getRequest())
             ->setIndex($data['index'])
             ->setSearch($data['search']);
 
@@ -237,7 +243,7 @@ class ElasticSearch extends AbstractPlugin
         $layout = 'layout/' . $this->getLayoutTemplate();
         $view->setTemplate($layout);
 
-        return $this->renderView($view, 'Search results');
+        return $this->getController()->renderView($view, 'Search results');
     }
 
     /**
@@ -250,9 +256,8 @@ class ElasticSearch extends AbstractPlugin
      */
     public function setNavigationCurrentLocation()
     {
-        $navigation = $this->getServiceLocator()->get('Navigation');
         if (!empty($this->navigationId)) {
-            $navigation->findOneBy('id', $this->navigationId)->setActive();
+            $this->getNavigationService()->findOneBy('id', $this->navigationId)->setActive();
         }
 
         return true;
@@ -423,5 +428,21 @@ class ElasticSearch extends AbstractPlugin
     public function getSearchTypeService()
     {
         return $this->searchTypeService;
+    }
+
+    /**
+     * @param \Zend\Navigation\Navigation $navigationService
+     */
+    public function setNavigationService($navigationService)
+    {
+        $this->navigationService = $navigationService;
+    }
+
+    /**
+     * @return \Zend\Navigation\Navigation
+     */
+    public function getNavigationService()
+    {
+        return $this->navigationService;
     }
 }
