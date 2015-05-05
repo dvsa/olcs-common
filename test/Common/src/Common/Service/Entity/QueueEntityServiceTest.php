@@ -8,7 +8,6 @@
 namespace CommonTest\Service\Entity;
 
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Entity\QueueEntityService;
 
 /**
