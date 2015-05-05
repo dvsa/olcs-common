@@ -217,25 +217,35 @@ class FeeEntityService extends AbstractLvaEntityService
             ]
         );
 
-        $licenceIds = array_map(
-            function ($licence) {
-                return $licence['id'];
-            },
-            $licences
-        );
-        $applicationIds = array_map(
-            function ($application) {
-                return isset($application['id']) ? $application['id'] : null;
-            },
-            $applications
-        );
+        $queryParams = [];
+
+        if (!empty($licences)) {
+            $licenceIds = array_map(
+                function ($licence) {
+                    return $licence['id'];
+                },
+                $licences
+            );
+            $queryParams['licence'] =  "IN ".json_encode($licenceIds);
+        }
+
+        if (!empty($applications)) {
+            $applicationIds = array_map(
+                function ($application) {
+                    return isset($application['id']) ? $application['id'] : null;
+                },
+                $applications
+            );
+            $queryParams['application'] =  "IN ".json_encode($applicationIds);
+        }
+
+        if (empty($queryParams)) {
+            return;
+        }
 
         $query = [
             'feeStatus' => self::STATUS_OUTSTANDING,
-            [
-                'application' => "IN ".json_encode($applicationIds),
-                'licence' => "IN ".json_encode($licenceIds),
-            ],
+            $queryParams,
             'sort'  => 'invoicedDate',
             'order' => 'ASC',
         ];
