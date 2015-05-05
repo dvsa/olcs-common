@@ -904,6 +904,7 @@ return array(
     'edit-condition' => 'W Edit condition',
     'edit-conviction' => 'W Edit Conviction',
     'edit-undertaking' => 'W Edit undertaking',
+    'email.licensing-information.subject' => 'W Operator licensing information',
     'email.transport-manager-complete-digital-form.subject' => 'W Request for transport manager details',
     'end-date' => 'W End date',
     'entity-details' => 'W Entity details',

@@ -900,6 +900,7 @@ return array(
     'edit-condition' => 'Edit condition',
     'edit-conviction' => 'Edit Conviction',
     'edit-undertaking' => 'Edit undertaking',
+    'email.licensing-information.subject' => 'Operator licensing information',
     'email.transport-manager-complete-digital-form.subject' => 'Request for transport manager details',
     'end-date' => 'End date',
     'entity-details' => 'Entity details',
@@ -2418,6 +2419,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'email.licensing-information.subject' => 'Operator licensing information'
     // Potentially unused (Not found with grep)
 );
