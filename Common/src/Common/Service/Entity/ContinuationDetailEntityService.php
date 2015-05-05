@@ -113,4 +113,84 @@ class ContinuationDetailEntityService extends AbstractEntityService
 
         return $criteria;
     }
+
+    /**
+     * Get continuation details for a licence. This will only return continuation details if it matches the criteria
+     *
+     * @param int $licenceId
+     *
+     * @return array
+     */
+    public function getContinuationMarker($licenceId)
+    {
+        /* @var $dateTime \DateTime */
+        $dateTime = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
+        $year = $dateTime->format('Y');
+        $month = $dateTime->format('n');
+
+        $dateTime->modify('+4 years');
+        $yearFuture = $dateTime->format('Y');
+        $monthFuture = $dateTime->format('n');
+
+        $query = [
+            // Must be licence...
+            'licence' => $licenceId,
+            // AND...
+            [
+                // Either...
+                [
+                    // One of these
+                    'status' => [self::STATUS_PRINTED, self::STATUS_ACCEPTABLE, self::STATUS_UNACCEPTABLE],
+                ],
+                // OR...
+                [
+                    // This...
+                    'status' => self::STATUS_COMPLETE,
+                    'received' => 0
+                ]
+            ]
+        ];
+
+        $bundle = [
+            'children' => [
+                'licence' => [
+                    'criteria' => [
+                        'status' => [
+                            LicenceEntityService::LICENCE_STATUS_VALID,
+                            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                        ]
+                    ],
+                    'required' => true,
+                ],
+                'continuation' => [
+                    'criteria' => [
+                        [
+                            [
+                                'year' => "{$year}",
+                                'month' => ">= {$month}"
+                            ],
+                            // or
+                            [
+                                'year' => [
+                                    [
+                                        "> {$year}",
+                                        "< {$yearFuture}"
+                                    ]
+                                ]
+                            ],
+                            // or
+                            [
+                                'year' => "{$yearFuture}",
+                                'month' => "< {$monthFuture}"
+                            ]
+                        ]
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+
+        return $this->getAll($query, $bundle);
+    }
 }
