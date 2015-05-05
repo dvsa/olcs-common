@@ -744,7 +744,6 @@ return array(
                 => 'Common\BusinessService\Service\Bus\BusReg',
         ]
     ],
-    // @TODO discuss with DE
     'email' => [
         'default' => [
             'from_address' => 'donotreply@otc.gsi.gov.uk',
