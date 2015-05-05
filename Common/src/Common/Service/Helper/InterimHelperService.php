@@ -545,8 +545,8 @@ class InterimHelperService extends AbstractHelperService
         return $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')
             ->generateAndStore(
-                $template,
-                $description,
+                $templateName,
+                $fileName,
                 $queryData
             );
 
