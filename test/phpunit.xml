@@ -10,7 +10,6 @@
         <whitelist>
             <directory suffix=".php">../Common/src</directory>
             <exclude>
-                <directory>../Common/src/Common/Form/Forms/</directory>
                 <directory>../Common/src/Common/Table/Tables/</directory>
                 <directory suffix=".fieldset.php">../Common/src/Common/Form/Fieldsets/</directory>
                 <directory suffix=".element.php">../Common/src/Common/Form/Elements/</directory>
