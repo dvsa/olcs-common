@@ -1814,6 +1814,83 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals(null, $response);
     }
 
+
+    /**
+     * Test renderHeaderColumn with alignment
+     */
+    public function testRenderHeaderColumnWithAlign()
+    {
+        $column = array(
+            'align' => 'right',
+        );
+
+        $expectedColumn = array(
+            'class' => 'right',
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with('{{[elements/th]}}', $expectedColumn);
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderHeaderColumn($column);
+    }
+
+
+    /**
+     * Test renderHeaderColumn with sort and alignment
+     */
+    public function testRenderHeaderColumnWithSortAndAlign()
+    {
+        $column = [
+            'sort' => 'foo',
+            'align' => 'right',
+        ];
+
+        $expectedColumn = [
+            'class' => 'right sortable',
+            'sort' => 'foo',
+            'order' => 'ASC',
+            'link' => 'LINK',
+        ];
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->at(0))
+            ->method('replaceContent')
+            ->with('{{[elements/sortColumn]}}', $expectedColumn);
+
+        $mockContentHelper->expects($this->at(1))
+            ->method('replaceContent')
+            ->with('{{[elements/th]}}');
+
+
+        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+
+        $mockUrl->expects($this->once())
+            ->method('fromRoute')
+            ->will($this->returnValue('LINK'));
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'getUrl'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->expects($this->once())
+            ->method('getUrl')
+            ->will($this->returnValue($mockUrl));
+
+        $table->renderHeaderColumn($column);
+    }
+
     /**
      * Test renderBodyColumn when disabled
      */
@@ -1965,6 +2042,35 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
             ->with('{{[elements/td]}}', array('content' => 'bar'));
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderBodyColumn($row, $column);
+    }
+
+    /**
+     * Test renderBodyColumn With Align
+     */
+    public function testRenderBodyColumnWithAlign()
+    {
+        $row = array(
+            'foo' => 'bar'
+        );
+
+        $column = array(
+            'name' => 'foo',
+            'align' => 'right',
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' class="right"'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
