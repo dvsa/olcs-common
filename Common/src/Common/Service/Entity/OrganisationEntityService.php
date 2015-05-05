@@ -201,8 +201,11 @@ class OrganisationEntityService extends AbstractEntityService
         ];
 
         $data = $this->get($id, $bundle);
-        foreach ($data['licences'] as $licence) {
-            $applications = array_merge($applications, $licence['applications']);
+
+        if (isset($data['licences'])) {
+            foreach ($data['licences'] as $licence) {
+                $applications = array_merge($applications, $licence['applications']);
+            }
         }
 
         return $applications;

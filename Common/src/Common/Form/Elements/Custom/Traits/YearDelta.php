@@ -18,27 +18,8 @@ trait YearDelta
     {
         parent::setOptions($options);
 
-        $setMaxYear = false;
-        if ($this->getOption('max_year_delta')) {
-            $setMaxYear = true;
-            $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
-            $this->setMaxYear($maxYear);
-        }
-
-        $setMinYear = false;
-        if ($this->getOption('min_year_delta')) {
-            $setMinYear = true;
-            $minYear = date('Y', strtotime($this->getOption('min_year_delta') . ' years'));
-            $this->setMinYear($minYear);
-        }
-
-        if ($setMaxYear && !$setMinYear) {
-            $this->setMinYear(date('Y'));
-        }
-
-        if ($setMinYear && !$setMaxYear) {
-            $this->setMaxYear(date('Y'));
-        }
+        // set Min/Max Year based on element's options
+        $this->setMinMaxYear($this->getOption('min_year_delta'), $this->getOption('max_year_delta'));
 
         // This option allows us to default the date
         $defaultDate = $this->getOption('default_date');
@@ -52,6 +33,38 @@ trait YearDelta
             }
 
             $this->setValue($dateTime);
+        }
+    }
+
+    /**
+     * Sets Min/Max Year from Delta
+     *
+     * @param string $minYearDelta
+     * @param string $maxYearDelta
+     * @return void
+     */
+    public function setMinMaxYear($minYearDelta, $maxYearDelta)
+    {
+        $setMaxYear = false;
+        if ($maxYearDelta) {
+            $setMaxYear = true;
+            $maxYear = date('Y', strtotime($maxYearDelta . ' years'));
+            $this->setMaxYear($maxYear);
+        }
+
+        $setMinYear = false;
+        if ($minYearDelta) {
+            $setMinYear = true;
+            $minYear = date('Y', strtotime($minYearDelta . ' years'));
+            $this->setMinYear($minYear);
+        }
+
+        if ($setMaxYear && !$setMinYear) {
+            $this->setMinYear(date('Y'));
+        }
+
+        if ($setMinYear && !$setMaxYear) {
+            $this->setMaxYear(date('Y'));
         }
     }
 }

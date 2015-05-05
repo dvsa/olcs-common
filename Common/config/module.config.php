@@ -145,7 +145,10 @@ return array(
     ),
     'controller_plugins' => array(
         'invokables' => array(
-            'redirect' => 'Common\Controller\Plugin\Redirect',
+            'redirect' => 'Common\Controller\Plugin\Redirect'
+        ),
+        'factories' => array(
+            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory'
         )
     ),
     'console' => array(
@@ -461,6 +464,7 @@ return array(
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
             'MonthSelect' => 'Common\Form\Elements\Custom\MonthSelect',
+            'YearSelect' => 'Common\Form\Elements\Custom\YearSelect',
             'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
             'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ],
