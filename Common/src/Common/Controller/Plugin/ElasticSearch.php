@@ -166,7 +166,6 @@ class ElasticSearch extends AbstractPlugin
             $this->getController()->flashMessenger()->addErrorMessage('Please provide a search term');
             return $this->getController()->redirectToRoute('dashboard');
         }
-
     }
 
     /**
