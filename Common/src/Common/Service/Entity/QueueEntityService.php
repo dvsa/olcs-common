@@ -30,20 +30,20 @@ class QueueEntityService extends AbstractEntityService
 
     protected $itemBundle = [
         'children' => [
-            'status',
-            'type'
+            'status'
         ]
     ];
 
-    public function getNextItem()
+    public function getNextItem($type)
     {
         $now = $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C);
 
         $query = [
             'status' => self::STATUS_QUEUED,
             'limit' => 1,
-            'sort' => 'priority DESC, m.createdOn',
+            'sort' => 'createdOn',
             'order' => 'ASC',
+            'type' => $type,
             'processAfterDate' => [
                 'NULL',
                 '<=' . $now
