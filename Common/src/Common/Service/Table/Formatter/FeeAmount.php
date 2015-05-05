@@ -23,10 +23,8 @@ class FeeAmount implements FormatterInterface
      * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public static function format($data, $column = array())
     {
-        unset($sm); // unused param
-
         if (isset($column['name']) && isset($data[$column['name']]) && !is_null($data[$column['name']])) {
             $amount = $data[$column['name']];
             return '£'.number_format($amount, 2);
