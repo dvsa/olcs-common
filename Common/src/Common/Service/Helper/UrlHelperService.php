@@ -38,8 +38,13 @@ class UrlHelperService extends AbstractHelperService
         return $url($route, $params, $options, $reuseMatchedParams);
     }
 
-    public function fromRouteWithHost($hostKey, $route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
-    {
+    public function fromRouteWithHost(
+        $hostKey,
+        $route = null,
+        $params = array(),
+        $options = array(),
+        $reuseMatchedParams = false
+    ) {
         $hostname = $this->getHostname($hostKey);
         // this method isn't compatible with the canonical option
         $options['use_canonical'] = false;

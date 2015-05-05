@@ -496,7 +496,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration($variationFlag, $templateName, $applicationId, $licenceId);
+        $this->mockInterimLetterGeneration($templateName, $applicationId, $licenceId);
 
         $this->sm->setService(
             'Helper\Date',
@@ -589,7 +589,7 @@ class InterimHelperServiceTest extends MockeryTestCase
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
     }
 
-    protected function mockInterimLetterGeneration($isVariationFlag, $templateName, $applicationId, $licenceId)
+    protected function mockInterimLetterGeneration($templateName, $applicationId, $licenceId)
     {
         $this->sm->setService(
             'Entity\User',
@@ -690,7 +690,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
+        $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Entity\GoodsDisc',
@@ -824,7 +824,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
+        $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Helper\Date',
@@ -937,7 +937,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
+        $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Helper\Date',

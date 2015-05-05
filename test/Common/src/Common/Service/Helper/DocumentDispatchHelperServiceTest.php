@@ -19,29 +19,6 @@ use Mockery as m;
  */
 class DocumentDispatchHelperServiceTest extends MockeryTestCase
 {
-    /*
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('ContentStore')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('read')
-                ->with('/templates/x.rtf')
-                ->andReturn('file')
-                ->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('Document')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('getBookmarkQueries')
-                ->with('file', [])
-                ->shouldReceive('populateBookmarks')
-                ->with('file', [])
-                ->getMock()
-            )
-            ->getMock();
-     */
     public function setUp()
     {
         $this->sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
@@ -241,7 +218,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
         $this->sut->process($file, $params);
     }
 
-    public function testWithEnglishOrgEmailAndUsers()
+    public function testWithEnglishOrgEmailWithUsers()
     {
         $file = m::mock();
         $params = [
@@ -326,10 +303,11 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             m::mock()
             ->shouldReceive('sendTemplate')
             ->with(
+                false,
                 null,
                 null,
                 ['Test User <test@user.com>'],
-                'NEED TO ADD',
+                'email.licensing-information.subject',
                 'markup-email-dispatch-document',
                 [
                     'L12345',
@@ -428,10 +406,11 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             m::mock()
             ->shouldReceive('sendTemplate')
             ->with(
+                true,
                 null,
                 null,
                 ['Test User <test@user.com>'],
-                'NEED TO ADD',
+                'email.licensing-information.subject',
                 'markup-email-dispatch-document',
                 [
                     'L12345',

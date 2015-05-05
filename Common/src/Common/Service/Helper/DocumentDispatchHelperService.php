@@ -91,11 +91,11 @@ class DocumentDispatchHelperService extends AbstractHelperService
         $this->getServiceLocator()
             ->get('Email')
             ->sendTemplate(
+                $licence['translateToWelsh'],
                 null,
                 null,
                 $users,
-                // @TODO: get from Steve
-                'NEED TO ADD',
+                'email.licensing-information.subject',
                 'markup-email-dispatch-document',
                 $params
             );
@@ -131,7 +131,7 @@ class DocumentDispatchHelperService extends AbstractHelperService
                     'actionDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
                     'urgent' => 'Y',
                     'licence' => $licence['id'],
-                    // @TODO
+                    // @TODO: need proper auth solution here
                     'assignedToUser' => null,
                     'assignedToTeam' => null
                 ]

@@ -27,11 +27,12 @@ class Email implements ServiceLocatorAwareInterface
         return $this->sendEmailViaRestService($fromEmail, $fromName, $to, $subject, $body, $html);
     }
 
-    public function sendTemplate($fromEmail, $fromName, $to, $subject, $view, $vars, $html = true)
+    public function sendTemplate($shouldTranslate, $fromEmail, $fromName, $to, $subject, $view, $vars, $html = true)
     {
-        $content = $this->getServiceLocator()
-            ->get('Helper\Translation')
-            ->translateReplace($view, $vars);
+        $translationHelper = $this->getServiceLocator()->get('Helper\Translation');
+
+        $content = $translationHelper->translateReplace($view, $vars, $shouldTranslate);
+        $subject = $translationHelper->translate($subject, $shouldTranslate);
 
         // Put content into the template
         $view = new ViewModel();

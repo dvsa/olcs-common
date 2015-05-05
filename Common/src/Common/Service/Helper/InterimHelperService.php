@@ -224,11 +224,10 @@ class InterimHelperService extends AbstractHelperService
      * Does this variation specify an additional operating centre.
      *
      * @param $variationOpCentres The variation data.
-     * @param $licenceOpCentres The current licence data.
      *
      * @return bool
      */
-    protected function hasNewOperatingCentre($variationOpCentres, $licenceOpCentres)
+    protected function hasNewOperatingCentre($variationOpCentres)
     {
         if (empty($variationOpCentres)) {
             return false;
