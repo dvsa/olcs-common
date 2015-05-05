@@ -356,4 +356,9 @@ abstract class AbstractController extends AbstractActionController
     {
         return $this->getIdentifier();
     }
+
+    protected function isExternal()
+    {
+        return $this->location === 'external';
+    }
 }

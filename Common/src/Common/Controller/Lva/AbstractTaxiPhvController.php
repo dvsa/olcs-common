@@ -381,7 +381,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
      */
     protected function saveLicence($data)
     {
-        $data['contactDetails']['contactType'] = 'ct_council';
+        $data['contactDetails']['contactType'] = 'ct_hackney';
 
         $results = $this->getServiceLocator()->get('Entity\ContactDetails')->save($data['contactDetails']);
 

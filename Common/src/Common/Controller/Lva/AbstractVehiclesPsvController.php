@@ -42,10 +42,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         $form = $formHelper->createForm('Lva\PsvVehicles')->setData($data);
 
-        // we want to alter based on the *original* entity data, not how
-        // it's been manipulated to suit the form (if relevant)
-        $form = $this->alterForm($form, $entityData);
-
         foreach ($this->getTables() as $tableName) {
 
             // no point wasting time fetching data for a table
@@ -54,21 +50,18 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 continue;
             }
 
-            $rawTableData = $this->getRawTableData();
-
-            $table = $this->getServiceLocator()
-                ->get('Table')
-                ->prepareTable(
-                    'lva-psv-vehicles-' . $tableName,
-                    $this->getTableData($rawTableData, $tableName)
-                );
+            $table = $this->getTable($tableName);
 
             $formHelper->populateFormTable(
                 $form->get($tableName),
                 $table,
                 $tableName
             );
+
+            $this->getAdapter()->alterVehcileTable($table, $this->getIdentifier());
         }
+
+        $form = $this->alterForm($form, $entityData);
 
         $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'vehicle-psv']);
 
@@ -525,5 +518,50 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     private function getPsvTypes()
     {
         return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
+    }
+
+
+    /**
+     * Transfer vehicles
+     */
+    public function smallTransferAction()
+    {
+        return $this->transferVehicles();
+    }
+
+    /**
+     * Transfer vehicles
+     */
+    public function mediumTransferAction()
+    {
+        return $this->transferVehicles();
+    }
+
+    /**
+     * Transfer vehicles
+     */
+    public function largeTransferAction()
+    {
+        return $this->transferVehicles();
+    }
+
+    public function renderForm($form)
+    {
+        return $this->render('vehicles_psv', $form);
+    }
+
+    protected function getTable($tableName)
+    {
+        $rawTableData = $this->getRawTableData();
+
+        $table = $this->getServiceLocator()
+            ->get('Table')
+            ->prepareTable(
+                'lva-psv-vehicles-' . $tableName,
+                $this->getTableData($rawTableData, $tableName)
+            );
+
+        return $this->alterTable($table);
+
     }
 }

@@ -112,7 +112,6 @@ class UserTest extends MockeryTestCase
     {
         // Params
         $params = $this->getMockParams();
-        $userDetails = null;
 
         // setup mocks for business rules
         $mockLockedDateRule = m::mock('\Common\BusinessRule\BusinessRuleInterface');
@@ -153,6 +152,7 @@ class UserTest extends MockeryTestCase
                 'transportManager' => '',
                 'localAuthority' => '',
                 'licenceNumber' => '',
+                'partnerContactDetails' => '',
                 'roles' => [
                     0 => '2',
                 ],

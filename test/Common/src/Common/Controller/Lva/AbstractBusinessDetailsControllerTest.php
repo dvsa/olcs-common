@@ -469,7 +469,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
 
         $mockFormHelper->shouldReceive('processCompanyNumberLookupForm')
             ->once()
-            ->with($mockForm, $expectedFormData, 'data');
+            ->with($mockForm, $expectedFormData, 'data', 'registeredAddress');
 
         $mockScript->shouldReceive('loadFile')
             ->once()

@@ -19,6 +19,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     const STATUS_TM_SIGNED = 'tmap_st_tm_signed';
     const STATUS_OPERATOR_SIGNED = 'tmap_st_operator_signed';
     const STATUS_POSTAL_APPLICATION = 'tmap_st_postal_application';
+    const STATUS_RECEIVED = 'tmap_st_received';
 
     /**
      * Define entity for default behaviour
@@ -92,6 +93,98 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             ],
             'tmType',
             'operatingCentres'
+        ]
+    ];
+
+    protected $tmBundle = [
+        'children' => [
+            'transportManager'
+        ]
+    ];
+
+    protected $reviewBundle = [
+        'children' => [
+            'otherLicences' => [
+                'children' => [
+                    'role'
+                ]
+            ],
+            'tmType',
+            'operatingCentres' => [
+                'children' => [
+                    'address'
+                ]
+            ],
+            'application' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation'
+                        ]
+                    ]
+                ]
+            ],
+            'transportManager' => [
+                'children' => [
+                    'previousConvictions',
+                    'otherLicences',
+                    'employments' => [
+                        'children' => [
+                            'contactDetails' => [
+                                'children' => [
+                                    'address'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'documents' => [
+                        'children' => [
+                            'category',
+                            'subCategory'
+                        ],
+                    ],
+                    'workCd' => [
+                        'children' => [
+                            'address'
+                        ]
+                    ],
+                    'homeCd' => [
+                        'children' => [
+                            'address',
+                            'person' => [
+                                'children' => [
+                                    'title'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
+    protected $contactApplicationBundle = [
+        'children' => [
+            'tmApplicationStatus',
+            'application' => [
+                'children' => [
+                    'status',
+                    'licence' => [
+                        'children' => [
+                            'organisation'
+                        ]
+                    ]
+                ]
+            ],
+            'transportManager' => [
+                'children' => [
+                    'homeCd' => [
+                        'children' => [
+                            'person',
+                        ]
+                    ],
+                ]
+            ],
         ]
     ];
 
@@ -195,5 +288,44 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     public function getTransportManagerDetails($id)
     {
         return $this->get($id, $this->tmDetailsBundle);
+    }
+
+    public function getTransportManagerId($id)
+    {
+        $data = $this->get($id, $this->tmBundle);
+
+        return $data['transportManager']['id'];
+    }
+
+    /**
+     * Update the status of a Transport Manager Application
+     *
+     * @param int    $tmaId  Transport Manager Application ID
+     * @param string $status New status, once of the constants self::STATUS_*
+     * @return void
+     */
+    public function updateStatus($tmaId, $status)
+    {
+        $data = [
+            'tmApplicationStatus' => $status
+        ];
+
+        $this->forceUpdate($tmaId, $data);
+    }
+
+    public function getReviewData($id)
+    {
+        return $this->get($id, $this->reviewBundle);
+    }
+
+    /**
+     * Get contact details and application details for a Transport Manager Application
+     *
+     * @param int $tmaId Transport Manager Application Id
+     * @return array
+     */
+    public function getContactApplicationDetails($tmaId)
+    {
+        return $this->get($tmaId, $this->contactApplicationBundle);
     }
 }

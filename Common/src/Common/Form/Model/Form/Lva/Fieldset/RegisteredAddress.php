@@ -70,6 +70,7 @@ class RegisteredAddress
      * @Form\Attributes({"id":""})
      * @Form\Options({"label":"Postcode"})
      * @Form\Type("Text")
+     * @Form\Required(false)
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
     public $postcode = null;

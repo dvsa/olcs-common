@@ -30,7 +30,15 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
                         )
                     ),
                     'adDocuments',
-                    'ocComplaints'
+                    'ocComplaints' => array(
+                        'children' => array(
+                            'complaint' => array(
+                                'criteria' => array(
+                                    'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
+                                )
+                            )
+                        )
+                    )
                 )
             )
         )

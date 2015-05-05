@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Service\Entity\LicenceEntityService as Licence;
+
 /**
  * Organisation Entity Service
  *
@@ -22,6 +24,7 @@ class OrganisationEntityService extends AbstractEntityService
     const ORG_TYPE_REGISTERED_COMPANY = 'org_t_rc';
     const ORG_TYPE_LLP = 'org_t_llp';
     const ORG_TYPE_SOLE_TRADER = 'org_t_st';
+    const ORG_TYPE_IRFO = 'org_t_ir';
 
     /**
      * Define entity for default behaviour
@@ -316,6 +319,30 @@ class OrganisationEntityService extends AbstractEntityService
             'status' => 'IN ' . json_encode($licenceStatuses)
         ];
         return $this->get($id, $bundle)['licences'];
+    }
+
+    /**
+     * Determine is an organisation isMlh (has at least one valid licence)
+     *
+     * @param $id
+     * @return bool
+     */
+    public function isMlh($id)
+    {
+        $licences = $this->getLicencesByStatus($id, [Licence::LICENCE_STATUS_VALID]);
+        return (bool) count($licences);
+    }
+
+    /**
+     * Determine is an organisation is IRFO
+     *
+     * @param $id
+     * @return bool
+     */
+    public function isIrfo($id)
+    {
+        $data = $this->get($id);
+        return (!empty($data['isIrfo']) && ('Y' === $data['isIrfo'])) ? true : false;
     }
 
     public function getNatureOfBusinesses($id)

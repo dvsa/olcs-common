@@ -60,8 +60,9 @@ $(function() {
         },
         "label:adPlacedIn": hasAdvertisements,
         "label:adPlacedDate": hasAdvertisements,
-        "selector:#file": hasAdvertisements
+        "selector:.file-uploader": hasAdvertisements
       }
     }
   });
+
 });

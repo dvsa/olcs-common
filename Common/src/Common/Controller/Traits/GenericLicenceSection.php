@@ -48,30 +48,12 @@ trait GenericLicenceSection
      * @var array
      */
     protected $licenceDataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'niFlag',
-            'licNo'
-        ),
         'children' => array(
-            'goodsOrPsv' => array(
-                'properties' => array(
-                    'id'
-                )
-            ),
-            'licenceType' => array(
-                'properties' => array(
-                    'id'
-                )
-            ),
+            'goodsOrPsv' => array(),
+            'licenceType' => array(),
             'organisation' => array(
                 'children' => array(
-                    'type' => array(
-                        'properties' => array(
-                            'id'
-                        )
-                    )
+                    'type' => array()
                 )
             )
         )

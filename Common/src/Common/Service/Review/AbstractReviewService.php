@@ -82,6 +82,20 @@ abstract class AbstractReviewService implements ReviewServiceInterface, ServiceL
         return $value === 'Y' ? 'Yes' : 'No';
     }
 
+    protected function formatPersonFullName($person)
+    {
+        $parts = [];
+
+        if (isset($person['title'])) {
+            $parts[] = $person['title']['description'];
+        }
+
+        $parts[] = $person['forename'];
+        $parts[] = $person['familyName'];
+
+        return implode(' ', $parts);
+    }
+
     protected function isPsv($data)
     {
         return $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV;

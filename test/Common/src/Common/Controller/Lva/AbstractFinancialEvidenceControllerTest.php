@@ -158,12 +158,22 @@ class AbstractFinancialEvidenceControllerTest extends AbstractLvaControllerTestC
                 ->shouldReceive('getUploadMetaData')
                     ->once()
                     ->with($file, $id)
-                    ->andReturn(['some-meta-data'])
+                    ->andReturn(['some' => 'meta-data'])
                 ->getMock()
         );
 
-        // (we're only asserting that the trait method is called, it's tested elsewhere)
-        $this->sut->shouldReceive('uploadFile')->once()->with($file, ['some-meta-data']);
+        $this->sut->shouldReceive('isExternal')
+            ->andReturn(true)
+            // (we're only asserting that the trait method is called, it's tested elsewhere)
+            ->shouldReceive('uploadFile')
+            ->once()
+            ->with(
+                $file,
+                [
+                    'some' => 'meta-data',
+                    'isExternal' => true
+                ]
+            );
 
         $this->sut->processFinancialEvidenceFileUpload($file);
     }

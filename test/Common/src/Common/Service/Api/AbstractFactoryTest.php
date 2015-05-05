@@ -26,13 +26,19 @@ class AbstractFactoryTest extends MockeryTestCase
     {
         $config['service_api_mapping']['endpoints']['backend'] = 'http://olcs-backend';
 
+        $translator = m::mock('stdClass');
+        $translator->shouldReceive('getLocale')->withNoArgs()->andReturn('en-ts');
+
         $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
+        $mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($translator);
 
         $sut = new AbstractFactory();
         $client = $sut->createServiceWithName($mockSl, '', 'Olcs\RestService\TaskType');
         $this->assertEquals('olcs-backend', $client->url->getHost());
         $this->assertEquals('/task-type', $client->url->getPath());
+
+        $this->assertEquals('en-ts', $client->getLanguage());
 
     }
 

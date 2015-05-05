@@ -48,8 +48,7 @@ class BusReg extends Generic
                 'trafficAreas',
                 'busNoticePeriod',
                 'status',
-                'busServiceTypes',
-                'documents'
+                'busServiceTypes'
             ]
         ];
 
@@ -68,7 +67,12 @@ class BusReg extends Generic
     {
         $variationBundle = [
             'children' => [
-                'status'
+                'status',
+                'licence' => [
+                    'children' => [
+                        'organisation'
+                    ]
+                ]
             ]
         ];
 

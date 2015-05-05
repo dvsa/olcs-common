@@ -94,7 +94,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthVehicles' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthVehicles')
+                array('hasAuthVehiclesIncrease' => 'totAuthVehicles')
             ),
             array(
                 array(
@@ -103,7 +103,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthTrailers' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthTrailers')
+                array('hasAuthTrailersIncrease' => 'totAuthTrailers')
             ),
             array(
                 array(
@@ -222,7 +222,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthVehicles' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthVehicles')
+                array('hasAuthVehiclesIncrease' => 'totAuthVehicles')
             ),
             array(
                 array(
@@ -231,7 +231,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthTrailers' => 10
                     )
                 ),
-                array('hasAuthIncrease' => 'totAuthTrailers')
+                array('hasAuthTrailersIncrease' => 'totAuthTrailers')
             ),
             array(
                 array(
@@ -426,12 +426,22 @@ class InterimHelperServiceTest extends MockeryTestCase
         $this->sut->canVariationInterim($applicationId);
     }
 
+    public function interimGrantingProvider()
+    {
+        return [
+            [false, 'NEW_APP_INT_GRANTED'],
+            [true, 'VAR_APP_INT_GRANTED']
+        ];
+    }
+
     /**
      * @group interimHelper
+     * @dataProvider interimGrantingProvider
      */
-    public function testInterimGranting()
+    public function testInterimGranting($variationFlag, $templateName)
     {
         $applicationId = 10;
+        $licenceId = 2;
 
         $interimData = [
             'id' => 10,
@@ -446,7 +456,8 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'id' => 40,
                             'version' => 400
                         ]
-                    ]
+                    ],
+                    'interimApplication' => array()
                 ]
             ],
             'licence' => [
@@ -478,8 +489,14 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
+            ->shouldReceive('getDataForProcessing')
+            ->with($applicationId)
+            ->andReturn(['licence' => ['id' => $licenceId], 'isVariation' => $variationFlag])
+            ->once()
             ->getMock()
         );
+
+        $this->mockInterimLetterGeneration($variationFlag, $templateName, $applicationId, $licenceId);
 
         $this->sm->setService(
             'Helper\Date',
@@ -572,6 +589,61 @@ class InterimHelperServiceTest extends MockeryTestCase
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
     }
 
+    protected function mockInterimLetterGeneration($isVariationFlag, $templateName, $applicationId, $licenceId)
+    {
+        $this->sm->setService(
+            'Entity\User',
+            m::mock()
+            ->shouldReceive('getCurrentUser')
+            ->andReturn(['id' => 2])
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\DocumentGeneration',
+            m::mock()
+            ->shouldReceive('generateAndStore')
+            ->with(
+                $templateName,
+                $templateName,
+                [
+                    'application' => $applicationId,
+                    'licence' => $licenceId,
+                    'user' => 2
+                ]
+            )
+            ->andReturn('storedFile')
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'PrintScheduler',
+            m::mock()
+            ->shouldReceive('enqueueFile')
+            ->with('storedFile', $templateName)
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'EntityDocument',
+            m::mock()
+            ->shouldReceive('createFromFile')
+            ->with(
+                'storedFile',
+                [
+                    'description'   => $templateName,
+                    'filename'      => str_replace(" ", "_", $templateName) . '.rtf',
+                    'application'   => $applicationId,
+                    'licence'       => $licenceId,
+                    'category'      => Category::CATEGORY_LICENSING,
+                    'subCategory'   => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                    'isExternal'     => false,
+                    'isScan'        => false
+                ]
+            )
+            ->getMock()
+        );
+    }
     /**
      * @group interimHelper
      */
@@ -586,7 +658,8 @@ class InterimHelperServiceTest extends MockeryTestCase
                 [
                     'id' => 20,
                     'version' => 200,
-                    'goodsDiscs' => []
+                    'goodsDiscs' => [],
+                    'interimApplication' => null
                 ]
             ],
             'licence' => [
@@ -618,8 +691,14 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
+            ->shouldReceive('getDataForProcessing')
+            ->with($applicationId)
+            ->andReturn(['licence' => ['id' => 99], 'isVariation' => false])
+            ->once()
             ->getMock()
         );
+
+        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Entity\GoodsDisc',
@@ -657,7 +736,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                     [
                         'id' => 20,
                         'version' => 200,
-                        'specifiedDate' => '2014-01-01 00:00:00'
                     ]
                 ]
             )
@@ -722,7 +800,8 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'id' => 40,
                             'version' => 400
                         ]
-                    ]
+                    ],
+                    'interimApplication' => null
                 ]
             ],
             'licence' => [
@@ -746,8 +825,14 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
+            ->shouldReceive('getDataForProcessing')
+            ->with($applicationId)
+            ->andReturn(['licence' => ['id' => 99], 'isVariation' => false])
+            ->once()
             ->getMock()
         );
+
+        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Helper\Date',
@@ -766,7 +851,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                     [
                         'id' => 20,
                         'version' => 200,
-                        'specifiedDate' => '2014-01-01 00:00:00'
                     ]
                 ]
             )
@@ -854,8 +938,14 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
+            ->shouldReceive('getDataForProcessing')
+            ->with($applicationId)
+            ->andReturn(['licence' => ['id' => 99], 'isVariation' => false])
+            ->once()
             ->getMock()
         );
+
+        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Helper\Date',
@@ -1054,9 +1144,8 @@ class InterimHelperServiceTest extends MockeryTestCase
             'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
             'description' => 'GV Refused Interim Licence',
             'filename' => 'GV Refused Interim Licence.rtf',
-            'fileExtension' => 'doc_rtf',
             'issuedDate' => '2015-01-01 10:10:10',
-            'isDigital' => false,
+            'isExternal' => false,
             'isScan' => false,
             'licence' => 99,
             'application' => $applicationId

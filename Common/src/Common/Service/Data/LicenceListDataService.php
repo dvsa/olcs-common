@@ -67,23 +67,15 @@ class LicenceListDataService implements FactoryInterface, ListDataInterface, Ser
         $bundle = array();
         if ($context == 'operatingCentre') {
             $bundle = array(
-                'properties' => 'ALL',
                 'children' => array(
                     'operatingCentres' => array(
-                        'properties' => 'ALL',
-                        'children' => array(
-
-                        )
+                        // @NOTE Not sure if this is needed, please remove if not
+                        'children' => array()
                     ),
                     'organisation' => array(
-                        'properties' => 'ALL',
                         'children' => array(
-                            'organisationPersons' => array(
-                                'properties' => 'ALL'
-                            ),
-                            'tradingNames' => array(
-                                'properties' => 'ALL'
-                            )
+                            'organisationPersons' => array(),
+                            'tradingNames' => array()
                         )
                     )
                 )

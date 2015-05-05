@@ -32,8 +32,8 @@ class InterimHelperService extends AbstractHelperService
      */
     protected $functionToDataMap = array(
         'hasUpgrade'=> 'licenceType',
-        'hasAuthIncrease' => 'totAuthVehicles',
-        'hasAuthIncrease' => 'totAuthTrailers',
+        'hasAuthVehiclesIncrease' => 'totAuthVehicles',
+        'hasAuthTrailersIncrease' => 'totAuthTrailers',
         'hasNewOperatingCentre' => 'operatingCentres',
         'hasIncreaseInOperatingCentre' => 'operatingCentres'
     );
@@ -195,14 +195,27 @@ class InterimHelperService extends AbstractHelperService
     }
 
     /**
-     * Has the overall authority increased.
+     * Has the overall number of vehicles authority increased.
      *
      * @param $variation The variation data.
      * @param $licence The current licence data.
      *
      * @return bool
      */
-    protected function hasAuthIncrease($variation, $licence)
+    protected function hasAuthVehiclesIncrease($variation, $licence)
+    {
+        return ($variation > $licence);
+    }
+
+    /**
+     * Has the overall number of trailers authority increased.
+     *
+     * @param $variation The variation data.
+     * @param $licence The current licence data.
+     *
+     * @return bool
+     */
+    protected function hasAuthTrailersIncrease($variation, $licence)
     {
         return ($variation > $licence);
     }
@@ -253,10 +266,10 @@ class InterimHelperService extends AbstractHelperService
         }
 
         // foreach of the licence op centres.
-        foreach ($licence as $key => $operatingCenter) {
+        foreach (array_keys($licence) as $key) {
             // If a variation record doesnt exists or its a removal op centre.
             if (!isset($variation[$key]) || $variation[$key]['action'] == 'D') {
-                break;
+                continue;
             }
 
             if (
@@ -320,6 +333,9 @@ class InterimHelperService extends AbstractHelperService
 
         // Print the interim document
         $this->printInterimDocument($interimData);
+
+        // Generate and print grant interim letter
+        $this->generateGrantInterimLetter($applicationId);
     }
 
     /**
@@ -372,9 +388,13 @@ class InterimHelperService extends AbstractHelperService
         foreach ($interimData['licenceVehicles'] as $licenceVehicle) {
             $lv = [
                 'id' => $licenceVehicle['id'],
-                'version' => $licenceVehicle['version'],
-                'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s')
+                'version' => $licenceVehicle['version']
             ];
+
+            if (!is_null($licenceVehicle['interimApplication'])) {
+                $lv['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
+            }
+
             $licenceVehicles[] = $lv;
 
             // saving all active discs to void it later
@@ -534,9 +554,8 @@ class InterimHelperService extends AbstractHelperService
                 'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
                 'description' => $fileName,
                 'filename' => $fileName . '.rtf',
-                'fileExtension' => 'doc_rtf',
                 'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
-                'isDigital' => false,
+                'isExternal' => false,
                 'isScan' => false,
                 'licence' => $interimData['licence']['id'],
                 'application' => $interimData['id']
@@ -555,5 +574,57 @@ class InterimHelperService extends AbstractHelperService
     {
         $this->getServiceLocator()->get('PrintScheduler')
             ->enqueueFile($file, $fileName, [PrintSchedulerInterface::OPTION_DOUBLE_SIDED]);
+    }
+
+    /**
+     * Generate grant interim letter
+     *
+     * @param int $applicationId
+     */
+    protected function generateGrantInterimLetter($applicationId)
+    {
+        $application = $this->getServiceLocator()
+            ->get('Entity\Application')
+            ->getDataForProcessing($applicationId);
+
+        $licenceId = $application['licence']['id'];
+
+        if ($application['isVariation']) {
+            $template = 'VAR_APP_INT_GRANTED';
+            $description = "VAR_APP_INT_GRANTED";
+        } else {
+            $template = 'NEW_APP_INT_GRANTED';
+            $description = "NEW_APP_INT_GRANTED";
+        }
+
+        $storedFile = $this->getServiceLocator()
+            ->get('Helper\DocumentGeneration')
+            ->generateAndStore(
+                $template,
+                $description,
+                [
+                    'application' => $applicationId,
+                    'licence'     => $licenceId,
+                    'user'        => $this->getServiceLocator()->get('Entity\User')->getCurrentUser()['id']
+                ]
+            );
+
+        $this->getServiceLocator()
+            ->get('PrintScheduler')
+            ->enqueueFile($storedFile, $description);
+
+        $this->getServiceLocator()->get('Entity\Document')->createFromFile(
+            $storedFile,
+            [
+                'description'  => $description,
+                'filename'     => str_replace(" ", "_", $description) . '.rtf',
+                'application'  => $applicationId,
+                'licence'      => $licenceId,
+                'category'     => Category::CATEGORY_LICENSING,
+                'subCategory'  => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                'isExternal'   => false,
+                'isScan'       => false
+            ]
+        );
     }
 }

@@ -68,6 +68,26 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $sut->getValueOptions();
     }
 
+    public function testGetValueOptionsWithExclude()
+    {
+        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService
+            ->expects($this->once())
+            ->method('fetchListOptions')
+            ->with($this->equalTo('category'), $this->equalTo(false))
+            ->willReturn(['key' => 'value', 'exclude' => 'me', 'one_more' => 'one more value']);
+
+        $sut = new DynamicSelect();
+        $sut->setExclude(['exclude']);
+        $sut->setDataService($mockRefDataService);
+        $sut->setContext('category');
+
+        $this->assertEquals(['key'=>'value', 'one_more' => 'one more value'], $sut->getValueOptions());
+
+        //check that the values are only fetched once
+        $sut->getValueOptions();
+    }
+
     public function testGetValueOptionsWithEmptyOption()
     {
         $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');

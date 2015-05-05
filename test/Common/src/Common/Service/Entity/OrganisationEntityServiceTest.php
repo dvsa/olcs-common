@@ -682,4 +682,84 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals($expected, $this->sut->getRegisteredUsersForSelect($id));
     }
+
+    /**
+     * @group entity_services
+     * @dataProvider provideIsMlhTestData
+     */
+    public function testIsMlh($validLicences, $expected)
+    {
+        $orgData = [
+            'licences' => $validLicences
+        ];
+
+        $expectedBundle = [
+            'children' => [
+                'licences' => [
+                    'children' => [
+                        'licenceType',
+                        'status',
+                        'goodsOrPsv',
+                    ],
+                    'criteria' => [
+                        'status' => 'IN ["lsts_valid"]'
+                    ],
+                ],
+            ],
+        ];
+        $this->expectOneRestCall('Organisation', 'GET', 123, $expectedBundle)
+            ->will($this->returnValue($orgData));
+
+        $this->assertEquals(
+            $expected,
+            $this->sut->isMlh(123)
+        );
+    }
+
+    public function provideIsMlhTestData()
+    {
+        return [
+            [
+                [],
+                false,
+            ],
+            [
+                ['valid_licence'],
+                true
+            ]
+        ];
+    }
+
+    /**
+     * @group entity_services
+     * @dataProvider provideIsIrfoTestData
+     */
+    public function testIsIrfo($data, $expected)
+    {
+        $this->expectOneRestCall('Organisation', 'GET', 123, null)
+            ->will($this->returnValue($data));
+
+        $this->assertEquals(
+            $expected,
+            $this->sut->isIrfo(123)
+        );
+    }
+
+    public function provideIsIrfoTestData()
+    {
+        return [
+            [
+                [],
+                false,
+            ],
+            [
+                ['isIrfo' => 'N'],
+                false
+            ],
+            [
+                ['isIrfo' => 'Y'],
+                true
+            ]
+        ];
+    }
 }

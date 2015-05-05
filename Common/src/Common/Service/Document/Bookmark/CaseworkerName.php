@@ -19,10 +19,9 @@ class CaseworkerName extends DynamicBookmark
                 'id' => $data['user']
             ],
             'bundle' => [
-                'properties' => ['contactDetails'],
                 'children' => [
                     'contactDetails' => [
-                        'properties' => ['forename', 'familyName']
+                        'children' => ['person']
                     ]
                 ]
             ]
@@ -31,6 +30,6 @@ class CaseworkerName extends DynamicBookmark
 
     public function render()
     {
-        return Formatter\Name::format($this->data['contactDetails']);
+        return Formatter\Name::format($this->data['contactDetails']['person']);
     }
 }

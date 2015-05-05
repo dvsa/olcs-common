@@ -20,6 +20,16 @@ return array(
                         'action' => 'download'
                     )
                 )
+            ),
+            'transport_manager_review' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/transport-manager-application/review/:id[/]',
+                    'defaults' => array(
+                        'controller' => 'TransportManagerReview',
+                        'action' => 'index'
+                    )
+                )
             )
         )
     ),
@@ -124,6 +134,7 @@ return array(
             'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
+            'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
         )
     ),
     'controller_plugins' => array(
@@ -237,6 +248,7 @@ return array(
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
             'postcode' => 'Common\Service\Postcode\Postcode',
+            'email' => 'Common\Service\Email\Email',
             'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
@@ -252,6 +264,7 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationTransportManagerAdapter',
             'ApplicationTransportManagerAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter',
+            'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
@@ -265,8 +278,10 @@ return array(
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
+            'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
+            'Common\Service\Data\ApplicationOperatingCentre' => 'Common\Service\Data\ApplicationOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
             'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
             'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
@@ -423,7 +438,9 @@ return array(
             'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
             'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
             'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
-            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable'
+            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
+            'currentUser' => 'Common\View\Helper\CurrentUser',
+            'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
         )
     ),
     'view_manager' => array(
@@ -437,6 +454,7 @@ return array(
     'form_elements' => [
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
+            'MonthSelect' => 'Common\Form\Elements\Custom\MonthSelect',
             'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
             'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ],
@@ -510,13 +528,20 @@ return array(
             'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>
                 'Common\Service\Data\LicenceOperatingCentre',
+            'Common\Service\Data\ApplicationOperatingCentre' =>
+                'Common\Service\Data\ApplicationOperatingCentre',
+            'Common\Service\Data\OcContextListDataService' => 'Common\Service\Data\OcContextListDataService'
+
         ]
     ],
     'tables' => array(
         'config' => array(
             __DIR__ . '/../src/Common/Table/Tables/'
         ),
-        'partials' => __DIR__ . '/../view/table/'
+        'partials' => array(
+            'html' => __DIR__ . '/../view/table/',
+            'csv' => __DIR__ . '/../view/table/csv'
+        )
     ),
     'sic_codes_path' => __DIR__ . '/../../Common/config/sic-codes',
     'fieldsets_path' => __DIR__ . '/../../Common/src/Common/Form/Fieldsets/',
@@ -532,7 +557,8 @@ return array(
         'endpoints' => array(
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
-            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
+            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/',
+            'email' => 'http://olcs-email/',
         )
     ),
     'caches'=> array(
@@ -610,6 +636,7 @@ return array(
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
             'GoodsVehiclesVehicle' => 'Common\BusinessRule\Rule\GoodsVehiclesVehicle',
             'LicenceGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesLicenceVehicle',
+            'LicenceGoodsVehiclesRemovedVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesRemovedVehicle',
             'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
             'ApplicationGoodsVehiclesLicenceVehicle'
                 => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
@@ -640,6 +667,7 @@ return array(
             'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
             // Lva
             'Lva\Application' => 'Common\BusinessService\Service\Lva\Application',
+            'Lva\ApplicationRevive' => 'Common\BusinessService\Service\Lva\ApplicationRevive',
             'Lva\Licence' => 'Common\BusinessService\Service\Lva\Licence',
             // Goods Vehicles business services
             'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
@@ -651,6 +679,8 @@ return array(
             'Lva\ApplicationPsvVehicles' => 'Common\BusinessService\Service\Lva\ApplicationPsvVehicles',
             // Goods vehicles vehicle business service
             'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
+            'Lva\LicenceGoodsVehiclesRemovedVehicle' =>
+                'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesRemovedVehicle',
             'Lva\VariationGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\VariationGoodsVehiclesVehicle',
             'Lva\ApplicationGoodsVehiclesVehicle'
                 => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehiclesVehicle',
@@ -676,8 +706,20 @@ return array(
                 'Common\BusinessService\Service\Lva\Person',
             'Lva\OtherLicence' =>
                 'Common\BusinessService\Service\Lva\OtherLicence',
+            'Lva\PreviousConviction' =>
+                'Common\BusinessService\Service\Lva\PreviousConviction',
             'Lva\DeleteOtherLicence' =>
                 'Common\BusinessService\Service\Lva\DeleteOtherLicence',
+            'Lva\DeletePreviousConviction' =>
+                'Common\BusinessService\Service\Lva\DeletePreviousConviction',
+            'Lva\TransferVehicles' =>
+                'Common\BusinessService\Service\Lva\TransferVehicles',
+            'Lva\DeleteOtherEmployment' =>
+                'Common\BusinessService\Service\Lva\DeleteOtherEmployment',
+            'Lva\Address' =>
+                'Common\BusinessService\Service\Lva\Address',
+            'TmEmployment' =>
+                'Common\BusinessService\Service\TmEmployment',
             // User administration
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',

@@ -19,11 +19,8 @@ class LicenceHolderName extends DynamicBookmark
                 'id' => $data['licence']
             ],
             'bundle' => [
-                'properties' => ['organisation'],
                 'children' => [
-                    'organisation' => [
-                        'properties' => ['name']
-                    ]
+                    'organisation'
                 ]
             ]
         ];

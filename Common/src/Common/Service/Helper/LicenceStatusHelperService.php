@@ -172,7 +172,12 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
 
-        $licenceEntityService->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_CURTAILED);
+        $saveData = array(
+            'status' => LicenceEntityService::LICENCE_STATUS_CURTAILED,
+            'curtailedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
+        );
+
+        return $licenceEntityService->forceUpdate($licenceId, $saveData);
     }
 
     /**
@@ -196,10 +201,36 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeLicenceVehicles($revocationData['licenceVehicles']);
         $this->removeTransportManagers($revocationData['tmLicences']);
 
-        $licenceEntityService->setLicenceStatus(
-            $licenceId,
-            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED
+        $saveData = array(
+            'status' => LicenceEntityService::LICENCE_STATUS_REVOKED,
+            'revokedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
         );
+
+        return $licenceEntityService->forceUpdate($licenceId, $saveData);
+    }
+
+    /**
+     * Enables the abstraction of suspending a licence with immediate effect.
+     *
+     * @param $licenceId The licence id.
+     *
+     * @return void
+     */
+    public function suspendNow($licenceId)
+    {
+        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
+
+        $this->removeStatusRulesByLicenceAndType(
+            $licenceId,
+            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED
+        );
+
+        $saveData = array(
+            'status' => LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+            'suspendedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
+        );
+
+        return $licenceEntityService->forceUpdate($licenceId, $saveData);
     }
 
     /**
@@ -318,25 +349,6 @@ class LicenceStatusHelperService extends AbstractHelperService
     }
 
     /**
-     * Enables the abstraction of suspending a licence with immediate effect.
-     *
-     * @param $licenceId The licence id.
-     *
-     * @return void
-     */
-    public function suspendNow($licenceId)
-    {
-        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
-
-        $this->removeStatusRulesByLicenceAndType(
-            $licenceId,
-            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED
-        );
-
-        $licenceEntityService->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_SUSPENDED);
-    }
-
-    /**
      * Set the licence status to be valid and remove any licence status changes that would
      * regress it.
      *
@@ -358,6 +370,9 @@ class LicenceStatusHelperService extends AbstractHelperService
         $saveData = [
             'status'          => LicenceEntityService::LICENCE_STATUS_VALID,
             'surrenderedDate' => null,
+            'curtailedDate' => null,
+            'revokedDate' => null,
+            'suspendedDate' => null,
         ];
 
         return $licenceEntityService->forceUpdate($licenceId, $saveData);

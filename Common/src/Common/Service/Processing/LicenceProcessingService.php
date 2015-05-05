@@ -42,13 +42,13 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Entity\Document')->createFromFile(
             $storedFile,
             [
-                'description'   => $description,
-                'filename'      => str_replace(" ", "_", $description) . '.rtf',
-                'fileExtension' => 'doc_rtf',
-                'licence'       => $licenceId,
-                'category'      => CategoryDataService::CATEGORY_LICENSING,
-                'subCategory'   => CategoryDataService::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                'isReadOnly'    => true
+                'description' => $description,
+                'filename'    => str_replace(" ", "_", $description) . '.rtf',
+                'licence'     => $licenceId,
+                'category'    => CategoryDataService::CATEGORY_LICENSING,
+                'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                'isReadOnly'  => true,
+                'isExternal'  => false
             ]
         );
     }
@@ -87,15 +87,14 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Entity\Document')->createFromFile(
             $storedFile,
             [
-                'description'   => $description,
-                'filename'      => str_replace(" ", "_", $description) . '.rtf',
-                'application'   => $applicationId,
-                'licence'       => $licenceId,
-                'fileExtension' => 'doc_rtf',
-                'category'      => CategoryDataService::CATEGORY_LICENSING,
-                'subCategory'   => CategoryDataService::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                'isDigital'     => false,
-                'isScan'        => false
+                'description' => $description,
+                'filename'    => str_replace(" ", "_", $description) . '.rtf',
+                'application' => $applicationId,
+                'licence'     => $licenceId,
+                'category'    => CategoryDataService::CATEGORY_LICENSING,
+                'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                'isExternal'  => false,
+                'isScan'      => false
             ]
         );
     }
