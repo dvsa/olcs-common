@@ -145,11 +145,12 @@ return array(
     ),
     'controller_plugins' => array(
         'invokables' => array(
-            'redirect' => 'Common\Controller\Plugin\Redirect'
+            'redirect' => 'Common\Controller\Plugin\Redirect',
         ),
-        'factories' => array(
-            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory'
-        )
+        'factories' => [
+            'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
+			'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+        ]
     ),
     'console' => array(
         'router' => array(
@@ -179,10 +180,7 @@ return array(
     'service_manager' => array(
         'delegators' => [
             'zfcuser_user_mapper' => [
-                function () {
-                    //replace me with something proper in future.
-                    return new \Common\Rbac\UserProvider();
-                }
+                \Common\Rbac\UserProviderDelegatorFactory::class
             ]
         ],
         'shared' => array(
@@ -464,7 +462,6 @@ return array(
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
             'MonthSelect' => 'Common\Form\Elements\Custom\MonthSelect',
-            'YearSelect' => 'Common\Form\Elements\Custom\YearSelect',
             'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
             'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ],

@@ -207,4 +207,76 @@ class ContinuationDetailEntityServiceTest extends AbstractEntityServiceTestCase
             ]
         ];
     }
+
+    public function testGetContinuationMarker()
+    {
+        $mockDateHelper = \Mockery::mock();
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        $mockDateHelper->shouldReceive('getDateObject')->with()->once()->andReturn(new \DateTime('2015-05-01'));
+
+        $query = [
+            'licence' => 1966,
+            [
+                [
+                    'status' => [
+                        ContinuationDetailEntityService::STATUS_PRINTED,
+                        ContinuationDetailEntityService::STATUS_ACCEPTABLE,
+                        ContinuationDetailEntityService::STATUS_UNACCEPTABLE
+                    ],
+                ],
+                [
+                    'status' => ContinuationDetailEntityService::STATUS_COMPLETE,
+                    'received' => 0
+                ]
+            ],
+           'limit' => 'all'
+        ];
+
+        $bundle = [
+            'children' => [
+                'licence' => [
+                    'criteria' => [
+                        'status' => [
+                            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_VALID,
+                            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                        ]
+                    ],
+                    'required' => true,
+                ],
+                'continuation' => [
+                    'criteria' => [
+                        [
+                            [
+                                'year' => "2015",
+                                'month' => ">= 5"
+                            ],
+                            // or
+                            [
+                                'year' => [
+                                    [
+                                        "> 2015",
+                                        "< 2019"
+                                    ]
+                                ]
+                            ],
+                            // or
+                            [
+                                'year' => "2019",
+                                'month' => "< 5"
+                            ]
+                        ]
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+
+        $this->expectOneRestCall('ContinuationDetail', 'GET', $query, $bundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getContinuationMarker(1966));
+
+    }
 }
