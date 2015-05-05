@@ -144,7 +144,13 @@ class OrganisationEntityService extends AbstractEntityService
                     'isAdministrator' => true
                 ],
                 'children' => [
-                    'user'
+                    'user' => [
+                        'children' => [
+                            'contactDetails' => [
+                                'children' => ['person']
+                            ]
+                        ]
+                    ]
                 ]
             ]
         ]

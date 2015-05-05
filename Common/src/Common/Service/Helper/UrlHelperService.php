@@ -18,6 +18,9 @@ namespace Common\Service\Helper;
  */
 class UrlHelperService extends AbstractHelperService
 {
+    const EXTERNAL_HOST = 'selfserve';
+    const INTERNAL_HOST = 'internal';
+
     /**
      * Generates a URL based on a route
      *
@@ -33,5 +36,24 @@ class UrlHelperService extends AbstractHelperService
         $url = $this->getServiceLocator()->get('viewhelpermanager')->get('url');
 
         return $url($route, $params, $options, $reuseMatchedParams);
+    }
+
+    public function fromRouteWithHost($hostKey, $route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
+    {
+        $hostname = $this->getHostname($hostKey);
+        $options['use_canonical'] = false;
+
+        $url = $this->getServiceLocator()->get('viewhelpermanager')->get('url');
+
+        return $hostname . $url($route, $params, $options, $reuseMatchedParams);
+    }
+
+    private function getHostname($key)
+    {
+        $config = $this->getServiceLocator()->get('config')['hostnames'];
+        if (!isset($config[$key])) {
+            throw new \RuntimeException('Hostname for \'' . $key . '\' not found');
+        }
+        return $config[$key];
     }
 }

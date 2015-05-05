@@ -7,6 +7,9 @@
  */
 namespace Common\Service\Helper;
 
+use Common\Service\Helper\UrlHelperService;
+use Common\Service\Data\CategoryDataService;
+
 /**
  * Document Dispatch Helper Service
  *
@@ -18,7 +21,7 @@ class DocumentDispatchHelperService extends AbstractHelperService
     {
         if (!isset($params['licence'])) {
             throw new \RuntimeException('Please provide a licence parameter');
-        } 
+        }
 
         $licenceId = $params['licence'];
 
@@ -28,10 +31,12 @@ class DocumentDispatchHelperService extends AbstractHelperService
 
         $organisation = $licence['organisation'];
 
+        // we have to create the document early doors because we need its ID
+        // if we're going to go on to email it
         $documentId = $this->getServiceLocator()->get('Entity\Document')->createFromFile($file, $params);
 
         if (!$organisation['allowEmail']) {
-            return $this->printDocument($file, $params);
+            return $this->attemptPrint($licence, $file, $params);
         }
 
         // all good; but we need to check we have >= 1 admin
@@ -43,38 +48,21 @@ class DocumentDispatchHelperService extends AbstractHelperService
         $users = [];
         foreach ($orgUsers as $user) {
             if (isset($user['user']['emailAddress'])) {
-                $users[] = $user['user'];
+                $details = $user['user']['contactDetails']['person'];
+                $users[] = sprintf(
+                    '%s %s <%s>',
+                    $details['forename'],
+                    $details['familyName'],
+                    $user['user']['emailAddress']
+                );
             }
         }
 
         if (empty($users)) {
             // oh well, fallback to a printout
-            return $this->printDocument($file, $params);
+            return $this->attemptPrint($licence, $file, $params);
         }
 
-        foreach ($users as $user) {
-            // @TODO: generate the HTML from a view. We have to do this
-            // inside the loop because its contents depends on user (Hi <x>).
-            // It's probably worth thinking about a wrapper service which
-            // we can invoke like $emailService->sendTemplate('path/to/tpl', ['params' => 'here'])
-            // $params['licence'] = $licence['licNo']
-            // $params['forename'] = ??? // this needs to come from contact details
-            $this->emailDocument($documentId, $licenceId);
-        }
-
-        if ($licence['translateToWelsh']) {
-            return $this->printDocument($file, $params);
-        }
-    }
-
-    private function emailDocument($documentId, $params)
-    {
-        $this->getServiceLocator()
-            ->get('Email')
-            // @TODO
-            ->sendEmail($fromName, $fromEmail, $to, $subject, $body);
-
-        // @TODO create this entity and wrapper method
         $this->getServiceLocator()
             ->get('Entity\CorrespondenceInbox')
             ->save(
@@ -83,12 +71,62 @@ class DocumentDispatchHelperService extends AbstractHelperService
                     'licence'  => $licenceId
                 ]
             );
+
+        $url = $this->getServiceLocator()->get('Helper\Url')->fromRouteWithHost(
+            UrlHelperService::EXTERNAL_HOST,
+            'correspondence_inbox'
+        );
+
+        $params = [
+            $licence['licNo'],
+            $url
+        ];
+
+        $this->getServiceLocator()
+            ->get('Email')
+            ->sendTemplate(
+                null,
+                null,
+                $users,
+                // @TODO: get from Steve
+                'NEED TO ADD',
+                'markup-email-dispatch-document',
+                $params
+            );
+
+        if ($licence['translateToWelsh']) {
+            return $this->generateTranslationTask();
+        }
     }
 
-    private function printDocument($file, $description)
+    private function attemptPrint($licence, $file, $description)
     {
+        if ($licence['translateToWelsh']) {
+            return $this->generateTranslationTask();
+        }
+
+        // okay; go ahead and print
+
         return $this->getServiceLocator()
             ->get('PrintScheduler')
             ->enqueueFile($file, $description);
+    }
+
+    private function generateTranslationTask()
+    {
+        $this->getServiceLocator()
+            ->get('Entity\Task')
+            ->save(
+                [
+                    'category' => CategoryDataService::CATEGORY_LICENSING,
+                    'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_LICENSING_GENERAL_TASK,
+                    'description' => 'Welsh translation required: <x>',
+                    'actionDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
+                    'urgent' => true,
+                    // @TODO
+                    'assignedToUser' => null,
+                    'assignedToTeam' => null
+                ]
+            );
     }
 }
