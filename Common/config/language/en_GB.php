@@ -1087,6 +1087,7 @@ return array(
     'internal-licence-details-address-label' => 'Addresses',
     'internal-licence-details-address-title' => 'Addresses',
     'internal-licence-details-breadcrumb' => 'Licence details',
+    'internal-licence-grace-periods-breadcrumb' => 'Grace periods',
     'internal-licence-details-business_details' => 'Business details',
     'internal-licence-details-business_details-label' => 'Business details',
     'internal-licence-details-business_details-title' => 'Business details',
