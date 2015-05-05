@@ -199,7 +199,7 @@ class FeeEntityService extends AbstractLvaEntityService
 
     public function getOutstandingFeesForOrganisation($organisationId)
     {
-        $organisationEntityService = $this->getServiceLocator()->get('Entity\organisation');
+        $organisationEntityService = $this->getServiceLocator()->get('Entity\Organisation');
 
         $licences = $organisationEntityService->getLicencesByStatus(
             $organisationId,
