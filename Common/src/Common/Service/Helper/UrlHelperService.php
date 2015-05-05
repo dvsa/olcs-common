@@ -41,6 +41,7 @@ class UrlHelperService extends AbstractHelperService
     public function fromRouteWithHost($hostKey, $route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
     {
         $hostname = $this->getHostname($hostKey);
+        // this method isn't compatible with the canonical option
         $options['use_canonical'] = false;
 
         $url = $this->getServiceLocator()->get('viewhelpermanager')->get('url');

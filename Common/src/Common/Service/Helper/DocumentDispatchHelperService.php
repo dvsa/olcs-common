@@ -23,7 +23,13 @@ class DocumentDispatchHelperService extends AbstractHelperService
             throw new \RuntimeException('Please provide a licence parameter');
         }
 
+        if (!isset($params['description'])) {
+            throw new \RuntimeException('Please provide a document description parameter');
+        }
+
         $licenceId = $params['licence'];
+
+        $description = $params['description'];
 
         $licence = $this->getServiceLocator()
             ->get('Entity\Licence')
@@ -36,7 +42,7 @@ class DocumentDispatchHelperService extends AbstractHelperService
         $documentId = $this->getServiceLocator()->get('Entity\Document')->createFromFile($file, $params);
 
         if (!$organisation['allowEmail']) {
-            return $this->attemptPrint($licence, $file, $params);
+            return $this->attemptPrint($licence, $file, $description);
         }
 
         // all good; but we need to check we have >= 1 admin
@@ -60,7 +66,7 @@ class DocumentDispatchHelperService extends AbstractHelperService
 
         if (empty($users)) {
             // oh well, fallback to a printout
-            return $this->attemptPrint($licence, $file, $params);
+            return $this->attemptPrint($licence, $file, $description);
         }
 
         $this->getServiceLocator()
@@ -94,15 +100,16 @@ class DocumentDispatchHelperService extends AbstractHelperService
                 $params
             );
 
+        // even if we've successfully emailed we always create a translation task for Welsh licences
         if ($licence['translateToWelsh']) {
-            return $this->generateTranslationTask();
+            return $this->generateTranslationTask($licence, $description);
         }
     }
 
     private function attemptPrint($licence, $file, $description)
     {
         if ($licence['translateToWelsh']) {
-            return $this->generateTranslationTask();
+            return $this->generateTranslationTask($licence, $description);
         }
 
         // okay; go ahead and print
@@ -112,7 +119,7 @@ class DocumentDispatchHelperService extends AbstractHelperService
             ->enqueueFile($file, $description);
     }
 
-    private function generateTranslationTask()
+    private function generateTranslationTask($licence, $description)
     {
         $this->getServiceLocator()
             ->get('Entity\Task')
@@ -120,9 +127,10 @@ class DocumentDispatchHelperService extends AbstractHelperService
                 [
                     'category' => CategoryDataService::CATEGORY_LICENSING,
                     'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_LICENSING_GENERAL_TASK,
-                    'description' => 'Welsh translation required: <x>',
+                    'description' => 'Welsh translation required: ' . $description,
                     'actionDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
-                    'urgent' => true,
+                    'urgent' => 'Y',
+                    'licence' => $licence['id'],
                     // @TODO
                     'assignedToUser' => null,
                     'assignedToTeam' => null
