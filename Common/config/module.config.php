@@ -173,10 +173,7 @@ return array(
     'service_manager' => array(
         'delegators' => [
             'zfcuser_user_mapper' => [
-                function () {
-                    //replace me with something proper in future.
-                    return new \Common\Rbac\UserProvider();
-                }
+                \Common\Rbac\UserProviderDelegatorFactory::class
             ]
         ],
         'shared' => array(
