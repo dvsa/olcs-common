@@ -34,7 +34,7 @@ return array(
             'correspondence_inbox' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/inbox'
+                    'route' => '/correspondence'
                 )
             )
         )
