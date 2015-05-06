@@ -939,7 +939,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $column = array_merge(
             array(
                 'type' => 'td',
-                'colspan' => ''
+                'colspan' => '',
+                'align' => '',
             ),
             $column
         );
@@ -953,6 +954,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $details['type'] = $column['type'];
 
         $details['colspan'] = $column['colspan'];
+
+        if ($column['align']) {
+            $details['class'] = $column['align'];
+        }
 
         if (isset($column['formatter'])) {
             $column['format'] = $this->callFormatter($column, $this->getRows());
@@ -1246,9 +1251,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return;
         }
 
+        if (isset($column['align'])) {
+            $column['class'] = $column['align'];
+            unset($column['align']);
+        }
+
         if (isset($column['sort'])) {
 
-            $column['class'] = 'sortable';
+            if (isset($column['class'])) {
+                $column['class'] .= ' sortable';
+            } else {
+                $column['class'] = 'sortable';
+            }
 
             $column['order'] = 'ASC';
 
@@ -1341,7 +1355,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 $row[$column['name']] : '';
         }
 
-        return $this->replaceContent($wrapper, array('content' => $content));
+        $replacements = array('content' => $content);
+
+        if (isset($column['align'])) {
+            $replacements['attrs'] = ' class="'.$column['align'].'"';
+        }
+
+        return $this->replaceContent($wrapper, $replacements);
     }
 
     /**
