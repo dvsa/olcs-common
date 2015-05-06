@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'admin-generate-continuation-details-title' => 'Continuation list',
+    'continuaton-generate-confirm' => 'Are you sure you want to generate (or regenerate) checklists for the selected licence(s)?',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

@@ -193,4 +193,15 @@ class ContinuationDetailEntityService extends AbstractEntityService
 
         return $this->getAll($query, $bundle);
     }
+
+    /**
+     * @NOTE this method has a custom endpoint, as it must be wrapped within a transaction
+     *
+     * @param array $ids
+     */
+    public function generateChecklists($ids)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall('ContinuationDetail/Checklists', 'POST', ['ids' => $ids]);
+    }
 }
