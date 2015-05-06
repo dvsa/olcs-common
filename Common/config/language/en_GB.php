@@ -813,7 +813,7 @@ return array(
     'currently-with' => 'Currently with',
     'dangerous-goods-hazchem-carriers' => 'Dangerous Goods / Hazchem Carriers',
     'dashboard-fees-empty-message' => 'There are currently no outstanding fees to pay',
-    'dashboard-fees-total' => 'Totals',
+    'dashboard-fees-total' => 'Total',
     'dashboard-nav-correspondence' => 'Correspondence',
     'dashboard-nav-fees' => 'Fees',
     'dashboard-nav-licences' => 'Licences',
