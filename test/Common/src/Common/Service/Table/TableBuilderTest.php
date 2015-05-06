@@ -657,7 +657,8 @@ class TableBuilderTest extends MockeryTestCase
                 'content' => 'foo',
                 'formatter' => function () {
                     return 'ABC';
-                }
+                },
+                'align' => 'right',
             ),
             array(
                 'format' => 'HTML'
@@ -1870,7 +1871,6 @@ class TableBuilderTest extends MockeryTestCase
         $mockContentHelper->expects($this->at(1))
             ->method('replaceContent')
             ->with('{{[elements/th]}}');
-
 
         $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
 
