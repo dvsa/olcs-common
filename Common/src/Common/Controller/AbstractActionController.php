@@ -1351,7 +1351,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @param array $data
      * @return array
      */
-    protected function processSave($data)
+    protected function processSave($data, $form = null, $additionalParams = null)
     {
         $data = $this->processDataMapForSave($data, $this->getDataMap());
 
