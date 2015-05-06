@@ -2139,6 +2139,8 @@ return array(
     'tachograph_analyser.tach_na' => 'W Not applicable',
     'target-completion-date' => 'W Target completion date',
     'tasks.assignment' => 'W Assigned to',
+    'tasks.assignedBy' => 'W Assigned by',
+    'tasks.assignedBy.user' => 'W User',
     'tasks.close.multiple' => 'W Are you sure you want to close these tasks?',
     'tasks.close.single' => 'W Are you sure you want to close this task?',
     'tasks.data.actionDate' => 'W Action date',
