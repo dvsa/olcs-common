@@ -1661,6 +1661,7 @@ return array(
     'pay-fees.title' => 'Pay fees',
     'pay-now' => 'Pay now',
     'payment-declined' => 'Payment declined',
+    'payment-failed' => 'Payment failed. Please try again',
     'payment-for' => 'Payment for',
     'payment-submission' => 'Payment & submission',
     'payment-successful' => 'Payment successful',
