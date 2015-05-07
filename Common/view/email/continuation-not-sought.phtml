@@ -1,0 +1,13 @@
+<p>
+    The following licences with fees due between <?php echo $this->startDate ?> and
+        <?php echo $this->endDate ?> have been set to CNS:
+</p>
+
+<table>
+    <?php foreach ($this->licences as $licence): ?>
+        <tr>
+            <td width="125"><?php echo $licence['licNo'] ?></td>
+            <td><?php echo $licence['trafficArea']['name'] ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>

@@ -335,6 +335,7 @@ class LicenceStatusHelperService extends AbstractHelperService
                 },
                 $licenceData['psvDiscs']
             );
+            return $this->getServiceLocator()->get('Entity\PsvDisc')->ceaseDiscs($discs);
         } else {
             foreach ($licenceData['licenceVehicles'] as $licenceVehicle) {
                 array_map(
@@ -344,8 +345,8 @@ class LicenceStatusHelperService extends AbstractHelperService
                     $licenceVehicle['goodsDiscs']
                 );
             }
+            return $this->getServiceLocator()->get('Entity\GoodsDisc')->ceaseDiscs($discs);
         }
-        return $this->getServiceLocator()->get('Entity\GoodsDisc')->ceaseDiscs($discs);
     }
 
     /**

@@ -27,10 +27,12 @@ class QueueEntityService extends AbstractEntityService
     const STATUS_QUEUED = 'que_sts_queued';
     const STATUS_PROCESSING = 'que_sts_processing';
     const STATUS_COMPLETE = 'que_sts_complete';
+    const STATUS_FAILED = 'que_sts_failed';
 
     protected $itemBundle = [
         'children' => [
-            'status'
+            'status',
+            'type'
         ]
     ];
 
@@ -60,19 +62,43 @@ class QueueEntityService extends AbstractEntityService
         }
 
         $result = $results['Results'][0];
+        $result['attempts']++;
 
         $data = [
             'id' => $result['id'],
             'version' => $result['version'],
-            'status' => self::STATUS_PROCESSING
+            'status' => self::STATUS_PROCESSING,
+            'attempts' => $result['attempts']
         ];
 
         try {
             $this->save($data);
+            $result['version']++;
         } catch (ResourceConflictException $ex) {
             return null;
         }
 
         return $result;
+    }
+
+    public function retry($item)
+    {
+        $item['status'] = self::STATUS_QUEUED;
+
+        $this->save($item);
+    }
+
+    public function complete($item)
+    {
+        $item['status'] = self::STATUS_COMPLETE;
+
+        $this->save($item);
+    }
+
+    public function failed($item)
+    {
+        $item['status'] = self::STATUS_FAILED;
+
+        $this->save($item);
     }
 }

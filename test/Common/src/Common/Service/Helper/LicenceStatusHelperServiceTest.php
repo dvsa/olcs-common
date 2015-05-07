@@ -309,14 +309,21 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with('Entity\Licence')
             ->andReturn($licenceService)
             ->shouldReceive('get')
-            ->with('Entity\GoodsDisc')
-            ->andReturn($discService)
-            ->shouldReceive('get')
             ->with('Entity\LicenceVehicle')
             ->andReturn($licenceVehicleService)
             ->shouldReceive('get')
             ->with('Entity\TransportManagerLicence')
             ->andReturn($tmService);
+
+        if ($revocationData['goodsOrPsv']['id'] === 'lcat_gv') {
+            $this->sm->shouldReceive('get')
+               ->with('Entity\GoodsDisc')
+               ->andReturn($discService);
+        } else {
+            $this->sm->shouldReceive('get')
+               ->with('Entity\PsvDisc')
+               ->andReturn($discService);
+        }
 
         $this->sut->revokeNow(1);
     }
@@ -624,14 +631,21 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with('Entity\Licence')
             ->andReturn($licenceService)
             ->shouldReceive('get')
-            ->with('Entity\GoodsDisc')
-            ->andReturn($discService)
-            ->shouldReceive('get')
             ->with('Entity\LicenceVehicle')
             ->andReturn($licenceVehicleService)
             ->shouldReceive('get')
             ->with('Entity\TransportManagerLicence')
             ->andReturn($tmService);
+
+        if ($revocationData['goodsOrPsv']['id'] === 'lcat_gv') {
+            $this->sm->shouldReceive('get')
+               ->with('Entity\GoodsDisc')
+               ->andReturn($discService);
+        } else {
+            $this->sm->shouldReceive('get')
+               ->with('Entity\PsvDisc')
+               ->andReturn($discService);
+        }
 
         $this->sut->surrenderNow(1, '2015-03-30');
     }
@@ -682,14 +696,21 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with('Entity\Licence')
             ->andReturn($licenceService)
             ->shouldReceive('get')
-            ->with('Entity\GoodsDisc')
-            ->andReturn($discService)
-            ->shouldReceive('get')
             ->with('Entity\LicenceVehicle')
             ->andReturn($licenceVehicleService)
             ->shouldReceive('get')
             ->with('Entity\TransportManagerLicence')
             ->andReturn($tmService);
+
+        if ($revocationData['goodsOrPsv']['id'] === 'lcat_gv') {
+            $this->sm->shouldReceive('get')
+               ->with('Entity\GoodsDisc')
+               ->andReturn($discService);
+        } else {
+            $this->sm->shouldReceive('get')
+               ->with('Entity\PsvDisc')
+               ->andReturn($discService);
+        }
 
         $this->sut->terminateNow(1, '2015-03-30');
     }
