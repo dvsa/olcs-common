@@ -160,7 +160,9 @@ class ContinuationDetailEntityService extends AbstractEntityService
 
         $bundle = [
             'children' => [
+                'status',
                 'licence' => [
+                    'children' => ['status'],
                     'criteria' => [
                         'status' => [
                             LicenceEntityService::LICENCE_STATUS_VALID,

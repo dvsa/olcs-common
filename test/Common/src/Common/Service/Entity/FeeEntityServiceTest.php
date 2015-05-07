@@ -560,4 +560,28 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         // assertions
         $this->assertNull($this->sut->getOutstandingFeesForOrganisation($organisationId));
     }
+
+    public function testGetOutstandingContinuationFee()
+    {
+        $expectedQuery = [
+            'licence' => 1966,
+            'status' => [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+            'limit' => 'all',
+        ];
+        $expectedBundle = [
+            'children' => [
+                'feeType' => [
+                    'criteria' => [
+                        'feeType' => FeeTypeDataService::FEE_TYPE_CONT,
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+
+        $this->expectOneRestCall('Fee', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sut->getOutstandingContinuationFee(1966);
+    }
 }
