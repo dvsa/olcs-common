@@ -148,7 +148,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
                     'urgent' => 'Y',
                     'licence' => 123,
                     'assignedToUser' => null,
-                    'assignedToTeam' => null
+                    'assignedToTeam' => 2
                 ]
             )
             ->getMock()
@@ -441,7 +441,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
                     'urgent' => 'Y',
                     'licence' => 123,
                     'assignedToUser' => null,
-                    'assignedToTeam' => null
+                    'assignedToTeam' => 2
                 ]
             )
             ->getMock()

@@ -131,9 +131,13 @@ class DocumentDispatchHelperService extends AbstractHelperService
                     'actionDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
                     'urgent' => 'Y',
                     'licence' => $licence['id'],
-                    // @TODO: need proper auth solution here
+                    // @TODO: need proper auth solution here to assign this task to current user
+                    // and current team. Steve Liversedge is going to create a followup story to
+                    // address this (and other tasks needing to follow the same rules) later.
+                    // No point creating a stubbed service / method since this is probably going
+                    // to be handled at quite a low level (e.g. rest client itself)
                     'assignedToUser' => null,
-                    'assignedToTeam' => null
+                    'assignedToTeam' => 2
                 ]
             );
     }
