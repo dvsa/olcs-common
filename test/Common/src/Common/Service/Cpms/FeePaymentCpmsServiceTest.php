@@ -1115,7 +1115,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
      */
     public function testFormatAmountInvalidAmounts($amount)
     {
-        $result = $this->sut->formatAmount($amount);
+        $this->sut->formatAmount($amount);
     }
 
     public function formatAmountInvalidAmountProvider()

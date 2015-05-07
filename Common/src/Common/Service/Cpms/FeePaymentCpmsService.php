@@ -565,14 +565,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
          * 3) Now actually look up the status of the transaction and
          * update our payment record & fee(s) accordingly
          */
-        $params = [
-            'required_fields' => [
-                'payment' => [
-                    'payment_status'
-                ]
-            ]
-        ];
-
         return $this->resolvePayment($reference, $payment['id'], $paymentMethod);
     }
 
