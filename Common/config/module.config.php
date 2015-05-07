@@ -149,7 +149,7 @@ return array(
         ),
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
-			'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
         ]
     ),
     'console' => array(
@@ -744,6 +744,7 @@ return array(
             // Bus business services
             'Bus\BusReg'
                 => 'Common\BusinessService\Service\Bus\BusReg',
+            'Lva\AccessCorrespondence' => 'Common\BusinessService\Service\Lva\AccessCorrespondence',
         ]
     ],
     'email' => [
