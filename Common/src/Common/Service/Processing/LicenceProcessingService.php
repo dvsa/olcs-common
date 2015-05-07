@@ -35,11 +35,7 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
             ->get('Helper\DocumentGeneration')
             ->generateAndStore($template, $description, ['licence' => $licenceId]);
 
-        $this->getServiceLocator()
-            ->get('PrintScheduler')
-            ->enqueueFile($storedFile, $description);
-
-        $this->getServiceLocator()->get('Entity\Document')->createFromFile(
+        $this->getServiceLocator()->get('Helper\DocumentDispatch')->process(
             $storedFile,
             [
                 'description' => $description,
@@ -80,11 +76,7 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
                 ]
             );
 
-        $this->getServiceLocator()
-            ->get('PrintScheduler')
-            ->enqueueFile($storedFile, $description);
-
-        $this->getServiceLocator()->get('Entity\Document')->createFromFile(
+        $this->getServiceLocator()->get('Helper\DocumentDispatch')->process(
             $storedFile,
             [
                 'description' => $description,

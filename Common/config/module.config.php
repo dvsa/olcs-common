@@ -30,6 +30,12 @@ return array(
                         'action' => 'index'
                     )
                 )
+            ),
+            'correspondence_inbox' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/correspondence'
+                )
             )
         )
     ),
@@ -740,4 +746,10 @@ return array(
                 => 'Common\BusinessService\Service\Bus\BusReg',
         ]
     ],
+    'email' => [
+        'default' => [
+            'from_address' => 'donotreply@otc.gsi.gov.uk',
+            'from_name'  => 'OLCS do not reply'
+        ]
+    ]
 );

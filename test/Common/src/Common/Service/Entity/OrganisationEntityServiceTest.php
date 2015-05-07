@@ -685,6 +685,25 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * @group entity_services
+     */
+    public function testGetAdminUsers()
+    {
+        $id = 3;
+
+        $data = [
+            'organisationUsers' => [
+                1, 2, 3
+            ]
+        ];
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($data));
+
+        $this->assertEquals([1, 2, 3], $this->sut->getAdminUsers($id));
+    }
+
+    /**
+     * @group entity_services
      * @dataProvider provideIsMlhTestData
      */
     public function testIsMlh($validLicences, $expected)

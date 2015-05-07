@@ -496,7 +496,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration($variationFlag, $templateName, $applicationId, $licenceId);
+        $this->mockInterimLetterGeneration($templateName, $applicationId, $licenceId);
 
         $this->sm->setService(
             'Helper\Date',
@@ -589,7 +589,7 @@ class InterimHelperServiceTest extends MockeryTestCase
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
     }
 
-    protected function mockInterimLetterGeneration($isVariationFlag, $templateName, $applicationId, $licenceId)
+    protected function mockInterimLetterGeneration($templateName, $applicationId, $licenceId)
     {
         $this->sm->setService(
             'Entity\User',
@@ -617,17 +617,9 @@ class InterimHelperServiceTest extends MockeryTestCase
         );
 
         $this->sm->setService(
-            'PrintScheduler',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('enqueueFile')
-            ->with('storedFile', $templateName)
-            ->getMock()
-        );
-
-        $this->sm->setService(
-            'EntityDocument',
-            m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->with(
                 'storedFile',
                 [
@@ -698,7 +690,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
+        $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Entity\GoodsDisc',
@@ -832,7 +824,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
+        $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Helper\Date',
@@ -945,7 +937,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
+        $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Helper\Date',
@@ -1122,11 +1114,8 @@ class InterimHelperServiceTest extends MockeryTestCase
         $this->sm->setService(
             'Helper\DocumentGeneration',
             m::mock()
-            ->shouldReceive('generateFromTemplate')
-            ->with('GB/NEW_APP_INT_REFUSED', ['user' => 1, 'licence' => 99])
-            ->andReturn('document')
-            ->shouldReceive('uploadGeneratedContent')
-            ->with('document', 'documents', 'GV Refused Interim Licence')
+            ->shouldReceive('generateAndStore')
+            ->with('GB/NEW_APP_INT_REFUSED', 'GV Refused Interim Licence', ['user' => 1, 'licence' => 99])
             ->andReturn('file')
             ->getMock()
         );
@@ -1152,26 +1141,14 @@ class InterimHelperServiceTest extends MockeryTestCase
         ];
 
         $this->sm->setService(
-            'Entity\Document',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->with('file', $dataToSave)
             ->andReturn('file')
             ->getMock()
         );
 
-        $this->sm->setService(
-            'PrintScheduler',
-            m::mock()
-            ->shouldReceive('enqueueFile')
-            ->with(
-                'file',
-                'GV Refused Interim Licence',
-                [PrintSchedulerInterface::OPTION_DOUBLE_SIDED]
-            )
-            ->getMock()
-        );
-
-        $this->assertEquals(null, $this->sut->refuseInterim($applicationId));
+        $this->assertEquals('file', $this->sut->refuseInterim($applicationId));
     }
 }
