@@ -14,17 +14,17 @@ namespace Common\Service\Entity;
  */
 class TmQualificationEntityService extends AbstractEntityService
 {
-    const QUALIFICATION_TYPE_AR = 'tm_qt_AR';
+    const QUALIFICATION_TYPE_AR = 'tm_qt_ar';
 
-    const QUALIFICATION_TYPE_CPCSI = 'tm_qt_CPCSI';
+    const QUALIFICATION_TYPE_CPCSI = 'tm_qt_cpcsi';
 
-    const QUALIFICATION_TYPE_EXSI = 'tm_qt_EXSI';
+    const QUALIFICATION_TYPE_EXSI = 'tm_qt_exsi';
 
-    const QUALIFICATION_TYPE_NIAR = 'tm_qt_NIAR';
+    const QUALIFICATION_TYPE_NIAR = 'tm_qt_niar';
 
-    const QUALIFICATION_TYPE_NICPCSI = 'tm_qt_NICPCSI';
+    const QUALIFICATION_TYPE_NICPCSI = 'tm_qt_nicpcsi';
 
-    const QUALIFICATION_TYPE_NIEXSI = 'tm_qt_NIEXSI';
+    const QUALIFICATION_TYPE_NIEXSI = 'tm_qt_niexsi';
 
     /**
      * Define entity for default behaviour
