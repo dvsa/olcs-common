@@ -21,17 +21,26 @@ use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
  */
 class FormErrors extends AbstractHelper
 {
+
+    /**
+     * If set to true, then render formErrors regardless of whether the form is valid.
+     * Required for EBSR upload where the form is valid but we still display errors.
+     * @var bool
+     */
+    protected $ignoreValidation = false;
+
     /**
      * Invoke as function
      *
      * @param  ZendFormFormInterface $form The form object
      * @return Form
      */
-    public function __invoke(FormInterface $form = null)
+    public function __invoke(FormInterface $form = null, $ignoreValidation = false)
     {
         if (!$form) {
             return $this;
         }
+        $this->ignoreValidation = (bool) $ignoreValidation;
 
         return $this->render($form);
     }
@@ -45,8 +54,10 @@ class FormErrors extends AbstractHelper
      */
     public function render(FormInterface $form)
     {
-        if (!$form->hasValidated() || $form->isValid()) {
-            return '';
+        if (!$this->ignoreValidation) {
+            if (!$form->hasValidated() || $form->isValid()) {
+                return '';
+            }
         }
 
         $messages = $form->getMessages();

@@ -243,10 +243,31 @@ class OrganisationEntityService extends AbstractEntityService
      * Get business details data
      *
      * @param type $id
+     * @param int $licenceId
      */
-    public function getBusinessDetailsData($id)
+    public function getBusinessDetailsData($id, $licenceId = null)
     {
-        return $this->get($id, $this->businessDetailsBundle);
+        if ($licenceId) {
+            $bundle = [
+                'children' => [
+                    'contactDetails' => [
+                        'children' => [
+                            'address',
+                            'contactType'
+                        ]
+                    ],
+                    'tradingNames' => [
+                        'criteria' => [
+                            'licence' => $licenceId
+                        ]
+                    ],
+                    'type'
+                ]
+            ];
+        } else {
+            $bundle = $this->businessDetailsBundle;
+        }
+        return $this->get($id, $bundle);
     }
 
     public function findByIdentifier($identifier)
@@ -263,9 +284,9 @@ class OrganisationEntityService extends AbstractEntityService
         return $licences['Count'] > 0;
     }
 
-    public function hasChangedTradingNames($id, $tradingNames)
+    public function hasChangedTradingNames($id, $tradingNames, $licenceId)
     {
-        $data = $this->getBusinessDetailsData($id);
+        $data = $this->getBusinessDetailsData($id, $licenceId);
 
         $map = function ($v) {
             return $v['name'];

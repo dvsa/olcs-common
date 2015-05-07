@@ -40,7 +40,7 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
             [
                 'multiItems' => [
                     $this->getCompanyNamePartial($organisation),
-                    $this->getTradingNamePartial($organisation),
+                    $this->getTradingNamePartial($organisation, $data['licence']),
                     $this->getNatureOfBusinessPartial($organisation)
                 ]
             ]
@@ -88,13 +88,13 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
         }
     }
 
-    protected function getTradingNamePartial($data)
+    protected function getTradingNamePartial($data, $licence)
     {
         if ($data['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
             return;
         }
 
-        if (empty($data['tradingNames'])) {
+        if (empty($licence['tradingNames'])) {
             return [
                 [
                     'label' => 'application-review-business-details-trading-names',
@@ -107,7 +107,7 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
 
         $first = true;
 
-        foreach ($data['tradingNames'] as $tradingName) {
+        foreach ($licence['tradingNames'] as $tradingName) {
             $label = '';
             if ($first) {
                 $label = 'application-review-business-details-trading-names';
