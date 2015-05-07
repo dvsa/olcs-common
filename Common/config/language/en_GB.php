@@ -900,6 +900,7 @@ return array(
     'edit-condition' => 'Edit condition',
     'edit-conviction' => 'Edit Conviction',
     'edit-undertaking' => 'Edit undertaking',
+    'email.cns.subject' => 'Licences set to CNS between %s and %s',
     'email.transport-manager-complete-digital-form.subject' => 'Request for transport manager details',
     'end-date' => 'End date',
     'entity-details' => 'Entity details',

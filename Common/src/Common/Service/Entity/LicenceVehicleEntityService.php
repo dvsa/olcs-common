@@ -186,7 +186,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
 
     public function removeVehicles(array $ids = array())
     {
-        $removalDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
+        $removalDate = $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C);
         $data = [];
 
         foreach ($ids as $id) {

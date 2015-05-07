@@ -34,7 +34,7 @@ class PsvDiscEntityService extends AbstractEntityService
      */
     public function ceaseDiscs(array $ids = array())
     {
-        $ceasedDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
+        $ceasedDate = $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C);
         $postData = array();
 
         foreach ($ids as $id) {

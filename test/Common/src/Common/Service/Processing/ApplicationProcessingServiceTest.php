@@ -2031,4 +2031,44 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ],
         ];
     }
+
+    public function testExpireCommunityLicencesForLicence()
+    {
+        $mockLicenceEntityService = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntityService);
+
+        $mockCommunityLicEntityService = m::mock();
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicEntityService);
+
+        $mockDateHelper = m::mock();
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        $communityLicences = [
+            ['id' => 1, 'status' => ['id' => CommunityLic::STATUS_PENDING]],
+            ['id' => 2, 'status' => ['id' => CommunityLic::STATUS_EXPIRED]],
+            ['id' => 3, 'status' => ['id' => CommunityLic::STATUS_VOID]],
+            ['id' => 4, 'status' => ['id' => CommunityLic::STATUS_ACTIVE]],
+            ['id' => 5, 'status' => ['id' => CommunityLic::STATUS_WITHDRAWN]],
+            ['id' => 6, 'status' => ['id' => CommunityLic::STATUS_SUSPENDED]],
+        ];
+
+        $mockLicenceEntityService->shouldReceive('getCommunityLicencesByLicenceId')->with(1966)->once()
+            ->andReturn($communityLicences);
+
+        $mockDateHelper->shouldReceive('getDate')->with(\DateTime::W3C)->once()->andReturn('DATETIME');
+
+        $mockCommunityLicEntityService->shouldReceive('multiUpdate')
+            ->with(
+                [
+                    ['id' => 1, 'status' => CommunityLic::STATUS_EXPIRED, 'expiredDate' => 'DATETIME'],
+                    ['id' => 4, 'status' => CommunityLic::STATUS_EXPIRED, 'expiredDate' => 'DATETIME'],
+                    ['id' => 6, 'status' => CommunityLic::STATUS_EXPIRED, 'expiredDate' => 'DATETIME'],
+                ]
+            )
+            ->once();
+
+        $mockLicenceEntityService->shouldReceive('updateCommunityLicencesCount')->with(1966)->once();
+
+        $this->sut->expireCommunityLicencesForLicence(1966);
+    }
 }
