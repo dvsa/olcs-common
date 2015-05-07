@@ -35,7 +35,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         // we *always* want to get org data because we rely on it in
         // alterForm which is called irrespective of whether we're doing
         // a GET or a POST
-        $orgData = $organisationEntity->getBusinessDetailsData($orgId);
+        $orgData = $organisationEntity->getBusinessDetailsData($orgId, $this->getLicenceId());
 
         if ($request->isPost()) {
             $data = $this->getFormPostData($orgData);
