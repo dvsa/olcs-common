@@ -819,6 +819,7 @@ return array(
     'dashboard-fees-empty-message' => 'W There are currently no outstanding fees to pay',
     'dashboard-fees-total' => 'W Total',
     'dashboard-fees.table.title' => 'W Outstanding fees',
+    'dashboard-lic-no-not-allocated' => 'W Not yet allocated',
     'dashboard-nav-correspondence' => 'W Correspondence',
     'dashboard-nav-fees' => 'W Fees',
     'dashboard-nav-licences' => 'W Licensing',
