@@ -35,7 +35,7 @@ class LicenceGracePeriodHelperService extends AbstractHelperService
         $startDate = $dateHelper->getDateObject($gracePeriod['startDate']);
         $endDate = $dateHelper->getDateObject($gracePeriod['endDate']);
 
-        if ($startDate < $today && $endDate > $today) {
+        if ($startDate <= $today && $endDate >= $today) {
             return true;
         }
 
