@@ -30,6 +30,12 @@ return array(
                         'action' => 'index'
                     )
                 )
+            ),
+            'correspondence_inbox' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/correspondence'
+                )
             )
         )
     ),
@@ -140,7 +146,11 @@ return array(
     'controller_plugins' => array(
         'invokables' => array(
             'redirect' => 'Common\Controller\Plugin\Redirect',
-        )
+        ),
+        'factories' => [
+            'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
+            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+        ]
     ),
     'console' => array(
         'router' => array(
@@ -170,10 +180,7 @@ return array(
     'service_manager' => array(
         'delegators' => [
             'zfcuser_user_mapper' => [
-                function () {
-                    //replace me with something proper in future.
-                    return new \Common\Rbac\UserProvider();
-                }
+                \Common\Rbac\UserProviderDelegatorFactory::class
             ]
         ],
         'shared' => array(
@@ -249,6 +256,7 @@ return array(
             'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
             'postcode' => 'Common\Service\Postcode\Postcode',
             'email' => 'Common\Service\Email\Email',
+            'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
             'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
@@ -455,6 +463,7 @@ return array(
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
             'MonthSelect' => 'Common\Form\Elements\Custom\MonthSelect',
+            'YearSelect' => 'Common\Form\Elements\Custom\YearSelect',
             'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
             'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ],
@@ -735,6 +744,15 @@ return array(
             // Bus business services
             'Bus\BusReg'
                 => 'Common\BusinessService\Service\Bus\BusReg',
+            // Operator services
+            'Operator\IrfoDetails'
+                => 'Common\BusinessService\Service\Operator\IrfoDetails',
         ]
     ],
+    'email' => [
+        'default' => [
+            'from_address' => 'donotreply@otc.gsi.gov.uk',
+            'from_name'  => 'OLCS do not reply'
+        ]
+    ]
 );

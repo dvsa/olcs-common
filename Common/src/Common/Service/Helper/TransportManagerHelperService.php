@@ -45,7 +45,7 @@ class TransportManagerHelperService extends AbstractHelperService
 
         $fieldset->get('operatingCentres')->setValueOptions($ocOptions);
 
-        $formHelper->removeOption($fieldset->get('tmType'), 'tm_t_B');
+        $formHelper->removeOption($fieldset->get('tmType'), 'tm_t_b');
 
         $formHelper->populateFormTable($fieldset->get('otherLicences'), $otherLicencesTable);
     }

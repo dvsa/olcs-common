@@ -55,7 +55,6 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         );
 
         $file = m::mock();
-        $content = m::mock();
 
         $this->setService(
             'Helper\DocumentGeneration',
@@ -67,17 +66,9 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         );
 
         $this->setService(
-            'PrintScheduler',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('enqueueFile')
-            ->with($file, $description)
-            ->getMock()
-        );
-
-        $this->setService(
-            'Entity\Document',
-            m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->with(
                 $file,
                 [
@@ -118,7 +109,6 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         );
 
         $file = m::mock();
-        $content = m::mock();
 
         $this->setService(
             'Helper\DocumentGeneration',
@@ -138,9 +128,9 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         );
 
         $this->setService(
-            'Entity\Document',
+            'Helper\DocumentDispatch',
             m::mock()
-                ->shouldReceive('createFromFile')
+                ->shouldReceive('process')
                 ->with(
                     $file,
                     [

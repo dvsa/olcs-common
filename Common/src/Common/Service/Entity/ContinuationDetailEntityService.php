@@ -21,6 +21,7 @@ class ContinuationDetailEntityService extends AbstractEntityService
     const STATUS_UNACCEPTABLE = 'con_det_sts_unacceptable';
     const STATUS_ACCEPTABLE = 'con_det_sts_acceptable';
     const STATUS_COMPLETE = 'con_det_sts_complete';
+    const STATUS_ERROR = 'con_det_sts_error';
 
     /**
      * Define entity for default behaviour
@@ -43,6 +44,18 @@ class ContinuationDetailEntityService extends AbstractEntityService
                     ],
                     'licenceType',
                     'goodsOrPsv',
+                ]
+            ]
+        ]
+    ];
+
+    protected $detailsBundle = [
+        'children' => [
+            'status',
+            'licence' => [
+                'children' => [
+                    'licenceType',
+                    'goodsOrPsv'
                 ]
             ]
         ]
@@ -112,5 +125,111 @@ class ContinuationDetailEntityService extends AbstractEntityService
         }
 
         return $criteria;
+    }
+
+    /**
+     * Get continuation details for a licence. This will only return continuation details if it matches the criteria
+     *
+     * @param int $licenceId
+     *
+     * @return array
+     */
+    public function getContinuationMarker($licenceId)
+    {
+        /* @var $dateTime \DateTime */
+        $dateTime = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
+        $year = $dateTime->format('Y');
+        $month = $dateTime->format('n');
+
+        $dateTime->modify('+4 years');
+        $yearFuture = $dateTime->format('Y');
+        $monthFuture = $month;
+
+        $query = [
+            'licence' => $licenceId,
+            [
+                [
+                    'status' => [self::STATUS_PRINTED, self::STATUS_ACCEPTABLE, self::STATUS_UNACCEPTABLE],
+                ],
+                [
+                    'status' => self::STATUS_COMPLETE,
+                    'received' => 0
+                ]
+            ]
+        ];
+
+        $bundle = [
+            'children' => [
+                'licence' => [
+                    'criteria' => [
+                        'status' => [
+                            LicenceEntityService::LICENCE_STATUS_VALID,
+                            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                        ]
+                    ],
+                    'required' => true,
+                ],
+                'continuation' => [
+                    'criteria' => [
+                        [
+                            [
+                                'year' => $year,
+                                'month' => '>= ' . $month
+                            ],
+                            [
+                                'year' => [
+                                    [
+                                        '> ' . $year,
+                                        '< ' . $yearFuture
+                                    ]
+                                ]
+                            ],
+                            [
+                                'year' => $yearFuture,
+                                'month' => '< ' . $monthFuture
+                            ]
+                        ]
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+
+        return $this->getAll($query, $bundle);
+    }
+
+    public function checklistFailed($id)
+    {
+        $data = ['status' => self::STATUS_ERROR];
+
+        $this->forceUpdate($id, $data);
+    }
+
+    public function getDetailsForProcessing($id)
+    {
+        return $this->get($id, $this->detailsBundle);
+    }
+
+    /**
+     * @NOTE this method has a custom endpoint, as it must be wrapped within a transaction
+     *
+     * @param array $ids
+     */
+    public function generateChecklists($ids)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall('ContinuationDetail/Checklists', 'POST', ['ids' => $ids]);
+    }
+
+    /**
+     * @NOTE this method has a custom endpoint, as it must be wrapped within a transaction
+     */
+    public function processContinuationDetail($id, $docId, $template)
+    {
+        $data = ['id' => $id, 'docId' => $docId, 'template' => $template];
+
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall('ContinuationDetail/Checklists', 'PUT', $data);
     }
 }

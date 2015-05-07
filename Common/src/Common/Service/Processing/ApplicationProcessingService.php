@@ -827,6 +827,34 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Expire Community Licences on a Licence
+     *
+     * @param int $licenceId Licence ID
+     */
+    public function expireCommunityLicencesForLicence($licenceId)
+    {
+        $communityLicences = $this->getServiceLocator()->get('Entity\Licence')
+            ->getCommunityLicencesByLicenceId($licenceId);
+
+        $data = [
+            'status' => CommunityLic::STATUS_EXPIRED,
+            'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
+        ];
+
+        // only expire community licences that have these statuses
+        $statusesToExpire = [CommunityLic::STATUS_PENDING, CommunityLic::STATUS_ACTIVE, CommunityLic::STATUS_SUSPENDED];
+        $dataToExpire = [];
+        foreach ($communityLicences as $communityLicence) {
+            if (in_array($communityLicence['status']['id'], $statusesToExpire)) {
+                $dataToExpire[] = array_merge($communityLicence, $data);
+            }
+        }
+
+        $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToExpire);
+        $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
+    }
+
+    /**
      * Called when resetting an application from Not Taken Up to Granted
      *
      * @param int $id
