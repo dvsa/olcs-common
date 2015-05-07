@@ -41,7 +41,7 @@ class DocumentDispatchHelperService extends AbstractHelperService
         // if we're going to go on to email it
         $documentId = $this->getServiceLocator()->get('Entity\Document')->createFromFile($file, $params);
 
-        if (!$organisation['allowEmail']) {
+        if ($organisation['allowEmail'] === 'N') {
             return $this->attemptPrint($licence, $file, $description);
         }
 
@@ -101,18 +101,17 @@ class DocumentDispatchHelperService extends AbstractHelperService
             );
 
         // even if we've successfully emailed we always create a translation task for Welsh licences
-        if ($licence['translateToWelsh']) {
+        if ($licence['translateToWelsh'] === 'Y') {
             return $this->generateTranslationTask($licence, $description);
         }
     }
 
     private function attemptPrint($licence, $file, $description)
     {
-        if ($licence['translateToWelsh']) {
+        if ($licence['translateToWelsh'] === 'Y') {
             return $this->generateTranslationTask($licence, $description);
         }
 
-        // okay; go ahead and print
 
         return $this->getServiceLocator()
             ->get('PrintScheduler')

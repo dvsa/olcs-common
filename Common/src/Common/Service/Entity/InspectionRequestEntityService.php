@@ -102,6 +102,19 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
                                 ],
                             ],
                         ],
+                        'tmLicences' => [
+                            'children' => [
+                                'transportManager' => [
+                                    'children' => [
+                                        'homeCd' => [
+                                            'children' => [
+                                                'person',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
                     ],
                 ],
                 'operatingCentre' => [
