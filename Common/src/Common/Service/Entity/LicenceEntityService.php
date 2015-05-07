@@ -271,7 +271,8 @@ class LicenceEntityService extends AbstractLvaEntityService
                 ],
             ],
             'operatingCentres',
-            'changeOfEntitys'
+            'changeOfEntitys',
+            'trafficArea'
             /*
             'cases' =>   [ // DON'T do this, it's horribly slow for some reason!
                 'criteria' => [
