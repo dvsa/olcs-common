@@ -33,6 +33,11 @@ class FeePaymentEntityService extends AbstractEntityService
             'fee' => [
                 'children' => [
                     'feeStatus',
+                    'licence' => [
+                        'children' => [
+                            'organisation',
+                        ],
+                    ],
                 ],
             ],
         ]

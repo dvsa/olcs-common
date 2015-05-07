@@ -313,8 +313,15 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         ]
                     ]
                 )
-                ->shouldReceive('setStatus')
-                ->with(123, PaymentEntityService::STATUS_PAID)
+                ->shouldReceive('forceUpdate')
+                ->with(
+                    123,
+                    [
+                        'status' => PaymentEntityService::STATUS_PAID,
+                        'completedDate' => '2014-12-30 01:20:30',
+                    ]
+                )
+                ->once()
                 ->getMock()
         );
 
@@ -1301,8 +1308,14 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $this->sm->setService(
             'Entity\Payment',
             m::mock()
-                ->shouldReceive('setStatus')
-                ->with(11, PaymentEntityService::STATUS_PAID)
+                ->shouldReceive('forceUpdate')
+                ->with(
+                    11,
+                    [
+                        'status' => PaymentEntityService::STATUS_PAID,
+                        'completedDate' => '2015-03-09',
+                    ]
+                )
                 ->getMock()
         );
 
