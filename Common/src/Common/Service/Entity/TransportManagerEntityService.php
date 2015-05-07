@@ -43,7 +43,12 @@ class TransportManagerEntityService extends AbstractEntityService
                 ]
             ],
             'tmType',
-            'tmStatus'
+            'tmStatus',
+            'qualifications' => [
+                'children' => [
+                    'countryCode'
+                ]
+            ]
         ]
     ];
 
