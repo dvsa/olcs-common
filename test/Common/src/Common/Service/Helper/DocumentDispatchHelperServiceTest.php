@@ -61,9 +61,9 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
 
         $licence = [
             'organisation' => [
-                'allowEmail' => false
+                'allowEmail' => 'N'
             ],
-            'translateToWelsh' => false
+            'translateToWelsh' => 'N'
         ];
 
         $this->setService(
@@ -104,9 +104,9 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
 
         $licence = [
             'organisation' => [
-                'allowEmail' => false
+                'allowEmail' => 'N'
             ],
-            'translateToWelsh' => true,
+            'translateToWelsh' => 'Y',
             'id' => 123
         ];
 
@@ -167,10 +167,10 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
 
         $licence = [
             'organisation' => [
-                'allowEmail' => true,
+                'allowEmail' => 'Y',
                 'id' => 100
             ],
-            'translateToWelsh' => false
+            'translateToWelsh' => 'N'
         ];
 
         $orgUsers = [
@@ -228,10 +228,10 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
 
         $licence = [
             'organisation' => [
-                'allowEmail' => true,
+                'allowEmail' => 'Y',
                 'id' => 100
             ],
-            'translateToWelsh' => false,
+            'translateToWelsh' => 'N',
             'licNo' => 'L12345'
         ];
 
@@ -303,7 +303,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             m::mock()
             ->shouldReceive('sendTemplate')
             ->with(
-                false,
+                'N',
                 null,
                 null,
                 ['Test User <test@user.com>'],
@@ -331,10 +331,10 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
         $licence = [
             'id' => 123,
             'organisation' => [
-                'allowEmail' => true,
+                'allowEmail' => 'Y',
                 'id' => 100
             ],
-            'translateToWelsh' => true,
+            'translateToWelsh' => 'Y',
             'licNo' => 'L12345'
         ];
 
@@ -406,7 +406,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             m::mock()
             ->shouldReceive('sendTemplate')
             ->with(
-                true,
+                'Y',
                 null,
                 null,
                 ['Test User <test@user.com>'],
