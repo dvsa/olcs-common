@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'unknown-error' => 'An error occurred processing your request, please try again',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

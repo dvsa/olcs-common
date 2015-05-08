@@ -262,14 +262,6 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * No-op but extended
-     */
-    protected function alterFormForLocation(Form $form)
-    {
-
-    }
-
-    /**
      * A method to be called post save, this can be hi-jacked to do things like update completion status
      */
     protected function postSave($section)
