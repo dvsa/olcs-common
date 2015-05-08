@@ -126,17 +126,4 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
         ];
         return $this->get($id, $bundle);
     }
-
-    public function getResultTypeById($id)
-    {
-        $bundle = [
-            'children' => [
-                'resultType',
-            ],
-        ];
-
-        $data = $this->get($id, $bundle);
-
-        return isset($data['resultType']['id']) ? $data['resultType']['id'] : null;
-    }
 }
