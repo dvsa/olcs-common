@@ -18,6 +18,9 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
+     *     },
+     *     "fieldset-attributes": {
+     *         "class": "checkbox inline"
      *     }
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
