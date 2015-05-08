@@ -5,6 +5,8 @@
  */
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Entity\LicenceEntityService;
+
 /**
  * Class LicenceNumberLink
  *
@@ -27,9 +29,19 @@ class LicenceNumberLink implements FormatterInterface
     {
         unset($column);
 
-        $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
+        $permittedLicenceStatuses = array(
+            LicenceEntityService::LICENCE_STATUS_VALID,
+            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+            LicenceEntityService::LICENCE_STATUS_SUSPENDED
+        );
 
-        return '<a href="' . $url . '">' . $data['licence']['licNo'] . '</a>';
+        if (in_array($data['licence']['status'], $permittedLicenceStatuses)) {
+            $urlHelper = $sm->get('Helper\Url');
+            $url = $urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
+
+            return '<a href="' . $url . '">' . $data['licence']['licNo'] . '</a>';
+        }
+
+        return $data['licence']['licNo'];
     }
 }

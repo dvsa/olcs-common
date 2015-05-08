@@ -16,17 +16,11 @@ use Common\Service\Table\Formatter\LicenceNumberLink;
  */
 class LicenceNumberLinkTest extends \PHPUnit_Framework_TestCase
 {
-    public function testFormat()
+    /**
+     * @dataProvider formatProvider
+     */
+    public function testFormat($data, $expected)
     {
-        $data = array(
-            'licence' => array(
-                'id' => 1,
-                'licNo' => 0001
-            )
-        );
-
-        $expected = '<a href="LICENCE_URL">1</a>';
-
         $sm = m::mock()
             ->shouldReceive('get')
             ->with('Helper\Url')
@@ -44,5 +38,31 @@ class LicenceNumberLinkTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->assertEquals($expected, LicenceNumberLink::format($data, array(), $sm->getMock()));
+    }
+
+    public function formatProvider()
+    {
+        return array(
+            array(
+                array(
+                    'licence' => array(
+                        'id' => 1,
+                        'licNo' => 0001,
+                        'status' => 'lsts_valid'
+                    )
+                ),
+                '<a href="LICENCE_URL">1</a>'
+            ),
+            array(
+                array(
+                    'licence' => array(
+                        'id' => 1,
+                        'licNo' => 0001,
+                        'status' => 'not-valid'
+                    )
+                ),
+                '1'
+            )
+        );
     }
 }
