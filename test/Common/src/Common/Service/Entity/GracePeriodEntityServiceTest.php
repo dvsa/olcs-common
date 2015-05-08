@@ -35,7 +35,7 @@ class GracePeriodEntityServiceTest extends AbstractEntityServiceTestCase
             array(
                 'licence' => $licenceId,
                 'sort' => 'startDate',
-                'order' => 'ASC'
+                'order' => 'DESC'
             )
         );
 
