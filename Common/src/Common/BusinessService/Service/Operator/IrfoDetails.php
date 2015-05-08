@@ -83,12 +83,31 @@ class IrfoDetails implements
         $data = array_merge(
             // existing data
             $params['data'],
-            // new IRFO Contact Details
-            ['irfoContactDetails' => $irfoContactDetailsId]
+            [
+                // new IRFO Contact Details
+                'irfoContactDetails' => $irfoContactDetailsId,
+                // remove trading names, they will be saved separately due to form fields format
+                'tradingNames' => null
+            ]
         );
 
         // save IRFO Details
         $this->getServiceLocator()->get('Entity\Organisation')->save($data);
+
+        // save Trading Names
+        if (!empty($params['data']['tradingNames'])) {
+            $response = $this->getBusinessServiceManager()->get('Lva\TradingNames')->process(
+                [
+                    'orgId' => $params['id'],
+                    'tradingNames' => array_column($params['data']['tradingNames'], 'name')
+                ]
+            );
+
+            // If there was a failure in the sub-process forward the response straight away
+            if (!$response->isOk()) {
+                return $response;
+            }
+        }
 
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
