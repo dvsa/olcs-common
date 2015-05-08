@@ -52,6 +52,60 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
             ]
         ],
     ];
+
+    protected $markersBundle = [
+        'children' => [
+            'licence' => [
+                'children' => [
+                    'status',
+                    'licenceType',
+                    'organisation'
+                ]
+            ],
+            'transportManager' => [
+                'children' => [
+                    'qualifications' => [
+                        'children' => [
+                            'qualificationType'
+                        ]
+                    ],
+                    'tmType',
+                    'homeCd' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ],
+                    'tmApplications' => [
+                        'children' => [
+                            'application' => [
+                                'children' => [
+                                    'status',
+                                    'licenceType',
+                                    'licence' => [
+                                        'children' => [
+                                            'organisation'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'tmLicences' => [
+                        'children' => [
+                            'licence' => [
+                                'children' => [
+                                    'status',
+                                    'licenceType',
+                                    'organisation'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     /**
      * Get transport manager licences
      *
@@ -120,5 +174,16 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
         ];
 
         return $this->getAll($query, $this->homeContactDetailsBundle);
+    }
+
+    /**
+     * Get Transport Managers for particular licence
+     *
+     * @param int $licenceId
+     * @return array
+     */
+    public function getTmForLicence($licenceId)
+    {
+        return $this->getAll(['licence' => $licenceId], $this->markersBundle);
     }
 }

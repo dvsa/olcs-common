@@ -24,6 +24,8 @@ class TransportManagerEntityService extends AbstractEntityService
     const TRANSPORT_MANAGER_STATUS_CURRENT = 'tm_s_cur';
     const TRANSPORT_MANAGER_STATUS_ACTIVE = 'tm_st_act';
     const TRANSPORT_MANAGER_STATUS_DISABLED = 'tm_st_disa';
+    const TRANSPORT_MANAGER_TYPE_EXTERNAL = 'tm_t_e';
+    const TRANSPORT_MANAGER_TYPE_BOTH = 'tm_t_b';
 
     protected $tmDetailsBundle = [
         'children' => [
@@ -67,6 +69,53 @@ class TransportManagerEntityService extends AbstractEntityService
             )
         )
     );
+
+    /**
+     * Markers Bundle
+     *
+     * @var array
+     */
+    protected $markersBundle = [
+        'children' => [
+            'qualifications' => [
+                'children' => [
+                    'qualificationType'
+                ]
+            ],
+            'tmApplications' => [
+                'children' => [
+                    'application' => [
+                        'children' => [
+                            'status',
+                            'licenceType',
+                            'licence' => [
+                                'children' => [
+                                    'organisation'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'tmLicences' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'status',
+                            'licenceType',
+                            'organisation'
+                        ]
+                    ]
+                ]
+            ],
+            'tmType',
+            'homeCd' => [
+                'children' => [
+                    'person'
+                ]
+            ]
+        ]
+    ];
 
     /**
      * Get transport manager details
@@ -114,5 +163,15 @@ class TransportManagerEntityService extends AbstractEntityService
         $data = $this->get($id, $documentBundle);
 
         return $data['documents'];
+    }
+
+    /**
+     * Get transport manager details for markers
+     *
+     * @param int $id
+     */
+    public function getTmForMarkers($id)
+    {
+        return $this->get($id, $this->markersBundle);
     }
 }
