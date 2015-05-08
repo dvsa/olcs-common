@@ -816,6 +816,7 @@ return array(
     'current.option.suffix' => 'W (current)',
     'currently-with' => 'W Currently with',
     'dangerous-goods-hazchem-carriers' => 'W Dangerous Goods / Hazchem Carriers',
+    'dashboard-correspondence-empty-message' => 'W You do not have any correspondence',
     'dashboard-fees-empty-message' => 'W There are currently no outstanding fees to pay',
     'dashboard-fees-total' => 'W Total',
     'dashboard-fees.table.title' => 'W Outstanding fees',
