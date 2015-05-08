@@ -34,7 +34,7 @@ class TransportManager extends AbstractPublicationFilter
 
         $newData = [
             'transportManager' =>
-                $tmData['homeCd']['person']['title'] . ' '
+                $tmData['homeCd']['person']['title']['description'] . ' '
                 . $tmData['homeCd']['person']['forename'] . ' '
                 . $tmData['homeCd']['person']['familyName'],
         ];

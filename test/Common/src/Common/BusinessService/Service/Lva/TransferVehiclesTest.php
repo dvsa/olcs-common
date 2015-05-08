@@ -141,7 +141,7 @@ class TransferVehiclesTest extends MockeryTestCase
     }
 
     /**
-     * @group transferVehiclesBusinessService1
+     * @group transferVehiclesBusinessService
      */
     public function testProcessGoods()
     {
@@ -356,7 +356,7 @@ class TransferVehiclesTest extends MockeryTestCase
         ];
         $sourceLicence = [];
         $ids = [1, 2];
-        $sourceVehiclesIds = [3,4];
+        $sourceVehiclesIds = ['vrm1' => 3, 'vrm2' => 4];
 
         $this->sm->setService(
             'Entity\Licence',

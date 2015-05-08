@@ -34,14 +34,17 @@ class UserProvider implements UserInterface
      * @var array
      */
     protected $userObjectsByUsername = [];
+
     /**
      * @var array
      */
     protected $userObjectsById = [];
 
     /**
-     *
+     * @var \Common\Service\Entity\UserEntityService
      */
+    protected $userEntityService;
+
     public function __construct()
     {
         foreach ($this->users as $user) {
@@ -54,6 +57,15 @@ class UserProvider implements UserInterface
             $this->userObjectsById[$userObject->getId()] = $userObject;
             $this->userObjectsByUsername[$userObject->getUsername()] = $userObject;
         }
+    }
+
+    /**
+     * @param User $user
+     */
+    protected function populateUserData(User $user)
+    {
+        $userDetails = $this->getUserEntityService()->getUserDetails($user->getId());
+        $user->setUserData($userDetails);
     }
 
     /**
@@ -71,7 +83,10 @@ class UserProvider implements UserInterface
      */
     public function findByUsername($username)
     {
-        return (isset($this->userObjectsByUsername[$username]) ? $this->userObjectsByUsername[$username] : null);
+        $user = (isset($this->userObjectsByUsername[$username]) ? $this->userObjectsByUsername[$username] : null);
+        $this->populateUserData($user);
+
+        return $user;
     }
 
     /**
@@ -80,7 +95,10 @@ class UserProvider implements UserInterface
      */
     public function findById($id)
     {
-        return (isset($this->userObjectsById[$id]) ? $this->userObjectsById[$id] : null);
+        $user = (isset($this->userObjectsById[$id]) ? $this->userObjectsById[$id] : null);
+        $this->populateUserData($user);
+
+        return $user;
     }
 
     /**
@@ -97,5 +115,21 @@ class UserProvider implements UserInterface
     public function update($user)
     {
 
+    }
+
+    /**
+     * @return \Common\Service\Entity\UserEntityService
+     */
+    public function getUserEntityService()
+    {
+        return $this->userEntityService;
+    }
+
+    /**
+     * @param \Common\Service\Entity\UserEntityService $userEntityService
+     */
+    public function setUserEntityService($userEntityService)
+    {
+        $this->userEntityService = $userEntityService;
     }
 }

@@ -45,12 +45,6 @@ class FeeTypeDataService implements ServiceLocatorAwareInterface
     const ACCRUAL_RULE_IMMEDIATE     = 'acr_immediate';
 
     protected $dataBundle = array(
-        'properties' => array(
-            'id',
-            'fixedValue',
-            'fiveYearValue',
-            'description'
-        ),
         'children' => array(
             'feeType',
         ),

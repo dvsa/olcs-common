@@ -173,12 +173,17 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         $request = $this->getRequest();
         $id = $this->params('child_id');
 
+        $editRemovedVehicleForLicence = false;
+
         // Check if the user is attempting to edit a removed vehicle, and bail early if so
         if ($mode === 'edit' && $request->isPost()) {
 
             $vehicleData = $this->getVehicleFormData($id);
 
-            if (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
+            if ($this->lva === 'licence' && $this->location === 'internal' &&
+                isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
+                $editRemovedVehicleForLicence = true;
+            } elseif (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')
                     ->addErrorMessage('cant-edit-removed-vehicle');
 
@@ -188,11 +193,20 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         $data = array();
 
-        if ($request->isPost()) {
+        if ($request->isPost() && !$editRemovedVehicleForLicence) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
             $vehicleData = $this->getVehicleFormData($id);
             $data = $this->formatVehicleDataForForm($vehicleData);
+
+            // if we are in edit removed vehicle mode - we need to merge
+            // fetched data with some POST data, because almost all fields are
+            // disabled so there is no data in POST
+            if ($request->isPost() && $editRemovedVehicleForLicence) {
+                $post = (array)$request->getPost();
+                $data['licence-vehicle']['removalDate'] = $post['licence-vehicle']['removalDate'];
+                $data['security'] = $post['security'];
+            }
         }
 
         $params = [

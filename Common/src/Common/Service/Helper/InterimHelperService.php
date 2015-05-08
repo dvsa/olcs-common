@@ -32,8 +32,8 @@ class InterimHelperService extends AbstractHelperService
      */
     protected $functionToDataMap = array(
         'hasUpgrade'=> 'licenceType',
-        'hasAuthIncrease' => 'totAuthVehicles',
-        'hasAuthIncrease' => 'totAuthTrailers',
+        'hasAuthVehiclesIncrease' => 'totAuthVehicles',
+        'hasAuthTrailersIncrease' => 'totAuthTrailers',
         'hasNewOperatingCentre' => 'operatingCentres',
         'hasIncreaseInOperatingCentre' => 'operatingCentres'
     );
@@ -195,14 +195,27 @@ class InterimHelperService extends AbstractHelperService
     }
 
     /**
-     * Has the overall authority increased.
+     * Has the overall number of vehicles authority increased.
      *
      * @param $variation The variation data.
      * @param $licence The current licence data.
      *
      * @return bool
      */
-    protected function hasAuthIncrease($variation, $licence)
+    protected function hasAuthVehiclesIncrease($variation, $licence)
+    {
+        return ($variation > $licence);
+    }
+
+    /**
+     * Has the overall number of trailers authority increased.
+     *
+     * @param $variation The variation data.
+     * @param $licence The current licence data.
+     *
+     * @return bool
+     */
+    protected function hasAuthTrailersIncrease($variation, $licence)
     {
         return ($variation > $licence);
     }
@@ -211,11 +224,10 @@ class InterimHelperService extends AbstractHelperService
      * Does this variation specify an additional operating centre.
      *
      * @param $variationOpCentres The variation data.
-     * @param $licenceOpCentres The current licence data.
      *
      * @return bool
      */
-    protected function hasNewOperatingCentre($variationOpCentres, $licenceOpCentres)
+    protected function hasNewOperatingCentre($variationOpCentres)
     {
         if (empty($variationOpCentres)) {
             return false;
@@ -253,10 +265,10 @@ class InterimHelperService extends AbstractHelperService
         }
 
         // foreach of the licence op centres.
-        foreach ($licence as $key => $operatingCenter) {
+        foreach (array_keys($licence) as $key) {
             // If a variation record doesnt exists or its a removal op centre.
             if (!isset($variation[$key]) || $variation[$key]['action'] == 'D') {
-                break;
+                continue;
             }
 
             if (
@@ -375,9 +387,13 @@ class InterimHelperService extends AbstractHelperService
         foreach ($interimData['licenceVehicles'] as $licenceVehicle) {
             $lv = [
                 'id' => $licenceVehicle['id'],
-                'version' => $licenceVehicle['version'],
-                'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s')
+                'version' => $licenceVehicle['version']
             ];
+
+            if (!is_null($licenceVehicle['interimApplication'])) {
+                $lv['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
+            }
+
             $licenceVehicles[] = $lv;
 
             // saving all active discs to void it later
@@ -489,20 +505,33 @@ class InterimHelperService extends AbstractHelperService
 
         $fileName = $interimData['isVariation'] ? 'GV Refused Interim Direction' : 'GV Refused Interim Licence';
 
-        $document = $this->generateDocument($interimData);
+        $file = $this->generateDocument($fileName, $interimData);
 
-        $file = $this->uploadAndSaveRefuseDocument($document, $interimData, $fileName);
-
-        $this->printRefuseDocument($file, $fileName);
+        $this->getServiceLocator()->get('Helper\DocumentDispatch')->process(
+            $file,
+            [
+                'category'    => Category::CATEGORY_LICENSING,
+                'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                'description' => $fileName,
+                'filename'    => $fileName . '.rtf',
+                'issuedDate'  => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
+                'isExternal'  => false,
+                'isScan'      => false,
+                'licence'     => $interimData['licence']['id'],
+                'application' => $interimData['id']
+            ]
+        );
+        return $file;
     }
 
     /**
      * Generate document
      *
+     * @param string $fileName
      * @param array $interimData
      * @return string
      */
-    protected function generateDocument($interimData)
+    protected function generateDocument($fileName, $interimData)
     {
         $prefix = $interimData['niFlag'] === 'Y' ? 'NI/' : 'GB/';
         $type = $interimData['isVariation'] ? 'VAR' : 'NEW';
@@ -511,53 +540,15 @@ class InterimHelperService extends AbstractHelperService
             'user' => $this->getServiceLocator()->get('Entity\User')->getCurrentUser()['id'],
             'licence' => $interimData['licence']['id']
         ];
+
         return $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')
-            ->generateFromTemplate($templateName, $queryData);
-    }
+            ->generateAndStore(
+                $templateName,
+                $fileName,
+                $queryData
+            );
 
-    /**
-     * Upload and save refuse document
-     *
-     * @param string $document
-     * @param array $interimData
-     * @param string $fileName
-     * @return string
-     */
-    protected function uploadAndSaveRefuseDocument($document, $interimData, $fileName)
-    {
-        $file = $this->getServiceLocator()
-            ->get('Helper\DocumentGeneration')
-            ->uploadGeneratedContent($document, 'documents', $fileName);
-
-        $this->getServiceLocator()->get('Entity\Document')->createFromFile(
-            $file,
-            [
-                'category' => Category::CATEGORY_LICENSING,
-                'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                'description' => $fileName,
-                'filename' => $fileName . '.rtf',
-                'fileExtension' => 'doc_rtf',
-                'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
-                'isDigital' => false,
-                'isScan' => false,
-                'licence' => $interimData['licence']['id'],
-                'application' => $interimData['id']
-            ]
-        );
-        return $file;
-    }
-
-    /**
-     * Print refuse document
-     *
-     * @param string $file
-     * @param string $fileName
-     */
-    protected function printRefuseDocument($file, $fileName)
-    {
-        $this->getServiceLocator()->get('PrintScheduler')
-            ->enqueueFile($file, $fileName, [PrintSchedulerInterface::OPTION_DOUBLE_SIDED]);
     }
 
     /**
@@ -593,22 +584,17 @@ class InterimHelperService extends AbstractHelperService
                 ]
             );
 
-        $this->getServiceLocator()
-            ->get('PrintScheduler')
-            ->enqueueFile($storedFile, $description);
-
-        $this->getServiceLocator()->get('Entity\Document')->createFromFile(
+        $this->getServiceLocator()->get('Helper\DocumentDispatch')->process(
             $storedFile,
             [
-                'description'   => $description,
-                'filename'      => str_replace(" ", "_", $description) . '.rtf',
-                'application'   => $applicationId,
-                'licence'       => $licenceId,
-                'fileExtension' => 'doc_rtf',
-                'category'      => Category::CATEGORY_LICENSING,
-                'subCategory'   => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                'isDigital'     => false,
-                'isScan'        => false
+                'description'  => $description,
+                'filename'     => str_replace(" ", "_", $description) . '.rtf',
+                'application'  => $applicationId,
+                'licence'      => $licenceId,
+                'category'     => Category::CATEGORY_LICENSING,
+                'subCategory'  => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                'isExternal'   => false,
+                'isScan'       => false
             ]
         );
     }

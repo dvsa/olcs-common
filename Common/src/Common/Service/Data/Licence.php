@@ -113,26 +113,23 @@ class Licence extends AbstractData implements AddressProviderInterface
         $bundle = array(
             'children' => array(
                 'correspondenceCd' => array(
-                    'properties' => 'ALL',
                     'children' => array(
                         'address' => array(
-                            'properties' => 'ALL'
+
                         )
                     )
                 ),
                 'establishmentCd' => array(
-                    'properties' => 'ALL',
                     'children' => array(
                         'address' => array(
-                            'properties' => 'ALL'
+
                         )
                     )
                 ),
                 'transportConsultantCd' => array(
-                    'properties' => 'ALL',
                     'children' => array(
                         'address' => array(
-                            'properties' => 'ALL'
+
                         )
                     )
                 )
@@ -148,76 +145,36 @@ class Licence extends AbstractData implements AddressProviderInterface
     public function getBundle()
     {
         $bundle = array(
-            'properties' => 'ALL',
             'children' => array(
                 'cases' => array(
-                    'properties' => 'ALL',
                     'children' => array(
                         'appeals' => array(
-                            'properties' => 'ALL',
                             'children' => array(
-                                'outcome' => array(
-                                    'properties' => array(
-                                        'id',
-                                        'description'
-                                    )
-                                ),
-                                'reason' => array(
-                                    'properties' => array(
-                                        'id',
-                                        'description'
-                                    )
-                                ),
+                                'outcome' => array(),
+                                'reason' => array(),
                             )
                         ),
                         'stays' => array(
-                            'properties' => 'ALL',
                             'children' => array(
-                                'stayType' => array(
-                                    'properties' => array(
-                                        'id',
-                                        'description'
-                                    )
-                                ),
-                                'outcome' => array(
-                                    'properties' => array(
-                                        'id',
-                                        'description'
-                                    )
-                                )
+                                'stayType' => array(),
+                                'outcome' => array()
                             )
                         )
                     )
                 ),
                 'correspondenceCd' => array(
-                    'properties' => 'ALL',
                     'children' => array(
-                        'address' => array(
-                            'properties' => 'ALL'
-                        )
+                        'address' => array()
                     )
                 ),
-                'status' => array(
-                    'properties' => array('id', 'description')
-                ),
-                'goodsOrPsv' => array(
-                    'properties' => array('id', 'description')
-                ),
-                'licenceType' => array(
-                    'properties' => 'ALL'
-                ),
-                'trafficArea' => array(
-                    'properties' => 'ALL'
-                ),
+                'status' => array(),
+                'goodsOrPsv' => array(),
+                'licenceType' => array(),
+                'trafficArea' => array(),
                 'organisation' => array(
-                    'properties' => 'ALL',
                     'children' => array(
-                        'organisationPersons' => array(
-                            'properties' => 'ALL'
-                        ),
-                        'tradingNames' => array(
-                            'properties' => 'ALL'
-                        )
+                        'organisationPersons' => array(),
+                        'tradingNames' => array()
                     )
                 )
             )

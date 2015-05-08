@@ -24,6 +24,7 @@ class OrganisationEntityService extends AbstractEntityService
     const ORG_TYPE_REGISTERED_COMPANY = 'org_t_rc';
     const ORG_TYPE_LLP = 'org_t_llp';
     const ORG_TYPE_SOLE_TRADER = 'org_t_st';
+    const ORG_TYPE_IRFO = 'org_t_ir';
 
     /**
      * Define entity for default behaviour
@@ -136,6 +137,25 @@ class OrganisationEntityService extends AbstractEntityService
         )
     );
 
+    protected $adminUsersBundle = [
+        'children' => [
+            'organisationUsers' => [
+                'criteria' => [
+                    'isAdministrator' => true
+                ],
+                'children' => [
+                    'user' => [
+                        'children' => [
+                            'contactDetails' => [
+                                'children' => ['person']
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     public function getApplications($id)
     {
         return $this->get($id, $this->applicationsBundle);
@@ -181,8 +201,11 @@ class OrganisationEntityService extends AbstractEntityService
         ];
 
         $data = $this->get($id, $bundle);
-        foreach ($data['licences'] as $licence) {
-            $applications = array_merge($applications, $licence['applications']);
+
+        if (isset($data['licences'])) {
+            foreach ($data['licences'] as $licence) {
+                $applications = array_merge($applications, $licence['applications']);
+            }
         }
 
         return $applications;
@@ -220,10 +243,31 @@ class OrganisationEntityService extends AbstractEntityService
      * Get business details data
      *
      * @param type $id
+     * @param int $licenceId
      */
-    public function getBusinessDetailsData($id)
+    public function getBusinessDetailsData($id, $licenceId = null)
     {
-        return $this->get($id, $this->businessDetailsBundle);
+        if ($licenceId) {
+            $bundle = [
+                'children' => [
+                    'contactDetails' => [
+                        'children' => [
+                            'address',
+                            'contactType'
+                        ]
+                    ],
+                    'tradingNames' => [
+                        'criteria' => [
+                            'licence' => $licenceId
+                        ]
+                    ],
+                    'type'
+                ]
+            ];
+        } else {
+            $bundle = $this->businessDetailsBundle;
+        }
+        return $this->get($id, $bundle);
     }
 
     public function findByIdentifier($identifier)
@@ -240,9 +284,9 @@ class OrganisationEntityService extends AbstractEntityService
         return $licences['Count'] > 0;
     }
 
-    public function hasChangedTradingNames($id, $tradingNames)
+    public function hasChangedTradingNames($id, $tradingNames, $licenceId = null)
     {
-        $data = $this->getBusinessDetailsData($id);
+        $data = $this->getBusinessDetailsData($id, $licenceId);
 
         $map = function ($v) {
             return $v['name'];
@@ -332,6 +376,18 @@ class OrganisationEntityService extends AbstractEntityService
         return (bool) count($licences);
     }
 
+    /**
+     * Determine is an organisation is IRFO
+     *
+     * @param $id
+     * @return bool
+     */
+    public function isIrfo($id)
+    {
+        $data = $this->get($id);
+        return (!empty($data['isIrfo']) && ('Y' === $data['isIrfo'])) ? true : false;
+    }
+
     public function getNatureOfBusinesses($id)
     {
         return $this->getAll($id, $this->natureOfBusinessDataBundle)['natureOfBusinesses'];
@@ -367,5 +423,10 @@ class OrganisationEntityService extends AbstractEntityService
         asort($people);
 
         return $people;
+    }
+
+    public function getAdminUsers($id)
+    {
+        return $this->get($id, $this->adminUsersBundle)['organisationUsers'];
     }
 }

@@ -30,6 +30,12 @@ return array(
                         'action' => 'index'
                     )
                 )
+            ),
+            'correspondence_inbox' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/correspondence'
+                )
             )
         )
     ),
@@ -140,7 +146,11 @@ return array(
     'controller_plugins' => array(
         'invokables' => array(
             'redirect' => 'Common\Controller\Plugin\Redirect',
-        )
+        ),
+        'factories' => [
+            'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
+            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+        ]
     ),
     'console' => array(
         'router' => array(
@@ -170,10 +180,7 @@ return array(
     'service_manager' => array(
         'delegators' => [
             'zfcuser_user_mapper' => [
-                function () {
-                    //replace me with something proper in future.
-                    return new \Common\Rbac\UserProvider();
-                }
+                \Common\Rbac\UserProviderDelegatorFactory::class
             ]
         ],
         'shared' => array(
@@ -249,6 +256,7 @@ return array(
             'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
             'postcode' => 'Common\Service\Postcode\Postcode',
             'email' => 'Common\Service\Email\Email',
+            'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
             'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
@@ -278,8 +286,10 @@ return array(
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
+            'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
+            'Common\Service\Data\ApplicationOperatingCentre' => 'Common\Service\Data\ApplicationOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
             'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
             'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
@@ -453,6 +463,7 @@ return array(
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
             'MonthSelect' => 'Common\Form\Elements\Custom\MonthSelect',
+            'YearSelect' => 'Common\Form\Elements\Custom\YearSelect',
             'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
             'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ],
@@ -526,6 +537,10 @@ return array(
             'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>
                 'Common\Service\Data\LicenceOperatingCentre',
+            'Common\Service\Data\ApplicationOperatingCentre' =>
+                'Common\Service\Data\ApplicationOperatingCentre',
+            'Common\Service\Data\OcContextListDataService' => 'Common\Service\Data\OcContextListDataService'
+
         ]
     ],
     'tables' => array(
@@ -630,6 +645,7 @@ return array(
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
             'GoodsVehiclesVehicle' => 'Common\BusinessRule\Rule\GoodsVehiclesVehicle',
             'LicenceGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesLicenceVehicle',
+            'LicenceGoodsVehiclesRemovedVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesRemovedVehicle',
             'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
             'ApplicationGoodsVehiclesLicenceVehicle'
                 => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
@@ -672,6 +688,8 @@ return array(
             'Lva\ApplicationPsvVehicles' => 'Common\BusinessService\Service\Lva\ApplicationPsvVehicles',
             // Goods vehicles vehicle business service
             'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
+            'Lva\LicenceGoodsVehiclesRemovedVehicle' =>
+                'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesRemovedVehicle',
             'Lva\VariationGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\VariationGoodsVehiclesVehicle',
             'Lva\ApplicationGoodsVehiclesVehicle'
                 => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehiclesVehicle',
@@ -726,6 +744,16 @@ return array(
             // Bus business services
             'Bus\BusReg'
                 => 'Common\BusinessService\Service\Bus\BusReg',
+            'Lva\AccessCorrespondence' => 'Common\BusinessService\Service\Lva\AccessCorrespondence',
+            // Operator services
+            'Operator\IrfoDetails'
+                => 'Common\BusinessService\Service\Operator\IrfoDetails',
         ]
     ],
+    'email' => [
+        'default' => [
+            'from_address' => 'donotreply@otc.gsi.gov.uk',
+            'from_name'  => 'OLCS do not reply'
+        ]
+    ]
 );

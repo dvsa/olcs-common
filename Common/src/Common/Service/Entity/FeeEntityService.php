@@ -8,6 +8,8 @@
 namespace Common\Service\Entity;
 
 use Common\Service\Data\FeeTypeDataService;
+use Common\Service\Entity\LicenceEntityService as Licence;
+use Common\Service\Entity\ApplicationEntityService as Application;
 
 /**
  * Fee Entity Service
@@ -73,7 +75,6 @@ class FeeEntityService extends AbstractLvaEntityService
             'application',
             'licence',
             'feeType' => array(
-                'properties' => 'id',
                 'children' => array('accrualRule' => array())
             ),
             'feePayments' => array(
@@ -105,7 +106,6 @@ class FeeEntityService extends AbstractLvaEntityService
     protected $latestFeeByTypeStatusesAndApplicationBundle = array(
         'children' => array(
             'feeType' => array(
-                'properties' => 'id',
                 'children' => array('accrualRule' => array())
             ),
             'feePayments' => array(
@@ -118,6 +118,28 @@ class FeeEntityService extends AbstractLvaEntityService
                 )
             ),
             'paymentMethod',
+        )
+    );
+
+    protected $outstandingForOrganisationBundle = array(
+        'children' => array(
+            'feeStatus',
+            'feePayments' => array(
+                'children' => array(
+                    'payment' => array(
+                        'children' => array(
+                            'status'
+                        )
+                    )
+                )
+            ),
+            'paymentMethod',
+            'feeType' => array(
+                'children' => array(
+                    'feeType',
+                ),
+            ),
+            'licence',
         )
     );
 
@@ -175,6 +197,62 @@ class FeeEntityService extends AbstractLvaEntityService
         return !empty($data['Results']) ? $data['Results'][0] : null;
     }
 
+    public function getOutstandingFeesForOrganisation($organisationId)
+    {
+        $organisationEntityService = $this->getServiceLocator()->get('Entity\Organisation');
+
+        $licences = $organisationEntityService->getLicencesByStatus(
+            $organisationId,
+            [
+                Licence::LICENCE_STATUS_VALID,
+                Licence::LICENCE_STATUS_CURTAILED,
+                Licence::LICENCE_STATUS_SUSPENDED,
+            ]
+        );
+        $applications = $organisationEntityService->getAllApplicationsByStatus(
+            $organisationId,
+            [
+                Application::APPLICATION_STATUS_UNDER_CONSIDERATION,
+                Application::APPLICATION_STATUS_GRANTED,
+            ]
+        );
+
+        $queryParams = [];
+
+        if (!empty($licences)) {
+            $licenceIds = array_map(
+                function ($licence) {
+                    return $licence['id'];
+                },
+                $licences
+            );
+            $queryParams['licence'] =  "IN ".json_encode($licenceIds);
+        }
+
+        if (!empty($applications)) {
+            $applicationIds = array_map(
+                function ($application) {
+                    return isset($application['id']) ? $application['id'] : null;
+                },
+                $applications
+            );
+            $queryParams['application'] =  "IN ".json_encode($applicationIds);
+        }
+
+        if (empty($queryParams)) {
+            return;
+        }
+
+        $query = [
+            'feeStatus' => self::STATUS_OUTSTANDING,
+            $queryParams,
+            'sort'  => 'invoicedDate',
+            'order' => 'ASC',
+        ];
+
+        return $this->getAll($query, $this->outstandingForOrganisationBundle);
+    }
+
     public function cancelForLicence($licenceId)
     {
         $query = array(
@@ -225,7 +303,7 @@ class FeeEntityService extends AbstractLvaEntityService
             )
         );
 
-        $results = $this->getAll($query, array('properties' => array('id')));
+        $results = $this->getAll($query);
 
         if (empty($results['Results'])) {
             return;
@@ -250,6 +328,7 @@ class FeeEntityService extends AbstractLvaEntityService
 
         $updates = [];
         foreach ($results as $fee) {
+            // @TODO should this check $fee['feeType']['feeType']['id'] now it's refdata?
             if ($fee['feeType']['feeType'] === FeeTypeDataService::FEE_TYPE_GRANTINT) {
                 $updates[] = [
                     'id' => $fee['id'],

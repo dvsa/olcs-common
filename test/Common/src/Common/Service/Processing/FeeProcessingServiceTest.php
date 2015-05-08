@@ -50,27 +50,19 @@ class FeeProcessingServiceTest extends MockeryTestCase
         );
 
         $this->setService(
-            'PrintScheduler',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('enqueueFile')
-            ->with($mockFile, 'Goods Grant Fee Request')
-            ->getMock()
-        );
-
-        $this->setService(
-            'Entity\Document',
-            m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->with(
                 $mockFile,
                 [
-                    'description'   => 'Goods Grant Fee Request',
-                    'filename'      => 'Goods_Grant_Fee_Request.rtf',
-                    'application'   => $params['application'],
-                    'licence'       => $params['licence'],
-                    'fileExtension' => 'doc_rtf',
-                    'category'      => 1,
-                    'subCategory'   => 110
+                    'description' => 'Goods Grant Fee Request',
+                    'filename'    => 'Goods_Grant_Fee_Request.rtf',
+                    'application' => $params['application'],
+                    'licence'     => $params['licence'],
+                    'category'    => 1,
+                    'subCategory' => 110,
+                    'isExternal'  => false
                 ]
             )
             ->getMock()
@@ -81,8 +73,6 @@ class FeeProcessingServiceTest extends MockeryTestCase
 
     public function testGenerateDocumentWithNonGrantFee()
     {
-        $mockFile = m::mock();
-
         $params = [];
 
         $this->setService(
@@ -94,17 +84,9 @@ class FeeProcessingServiceTest extends MockeryTestCase
         );
 
         $this->setService(
-            'PrintScheduler',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('enqueueFile')
-            ->never()
-            ->getMock()
-        );
-
-        $this->setService(
-            'Entity\Document',
-            m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->never()
             ->getMock()
         );

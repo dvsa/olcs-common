@@ -16,6 +16,11 @@ class User extends ZfcUser implements IdentityInterface
     protected $roles = [];
 
     /**
+     * @var array
+     */
+    protected $userData = [];
+
+    /**
      * @return array
      */
     public function getRoles()
@@ -29,5 +34,21 @@ class User extends ZfcUser implements IdentityInterface
     public function setRoles($roles)
     {
         $this->roles = $roles;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUserData()
+    {
+        return $this->userData;
+    }
+
+    /**
+     * @param array $userData
+     */
+    public function setUserData($userData)
+    {
+        $this->userData = $userData;
     }
 }

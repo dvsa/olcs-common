@@ -165,7 +165,7 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Organisation', 'GET', $id)
             ->will($this->returnValue($existing));
 
-        $this->assertFalse($this->sut->hasChangedTradingNames($id, $updated));
+        $this->assertFalse($this->sut->hasChangedTradingNames($id, $updated, 2));
     }
 
     public function testChangedTradingNamesWithAdded()
@@ -192,7 +192,7 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Organisation', 'GET', $id)
             ->will($this->returnValue($existing));
 
-        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated));
+        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated, 2));
     }
 
     public function testChangedTradingNamesWithRemoved()
@@ -219,7 +219,7 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Organisation', 'GET', $id)
             ->will($this->returnValue($existing));
 
-        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated));
+        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated, 2));
     }
 
     public function testChangedTradingNamesWithDifferentValues()
@@ -251,7 +251,7 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Organisation', 'GET', $id)
             ->will($this->returnValue($existing));
 
-        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated));
+        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated, 2));
     }
 
     public function testHasChangedRegisteredAddressWithNoDiffs()
@@ -685,6 +685,25 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * @group entity_services
+     */
+    public function testGetAdminUsers()
+    {
+        $id = 3;
+
+        $data = [
+            'organisationUsers' => [
+                1, 2, 3
+            ]
+        ];
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($data));
+
+        $this->assertEquals([1, 2, 3], $this->sut->getAdminUsers($id));
+    }
+
+    /**
+     * @group entity_services
      * @dataProvider provideIsMlhTestData
      */
     public function testIsMlh($validLicences, $expected)
@@ -725,6 +744,39 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
             ],
             [
                 ['valid_licence'],
+                true
+            ]
+        ];
+    }
+
+    /**
+     * @group entity_services
+     * @dataProvider provideIsIrfoTestData
+     */
+    public function testIsIrfo($data, $expected)
+    {
+        $this->expectOneRestCall('Organisation', 'GET', 123, null)
+            ->will($this->returnValue($data));
+
+        $this->assertEquals(
+            $expected,
+            $this->sut->isIrfo(123)
+        );
+    }
+
+    public function provideIsIrfoTestData()
+    {
+        return [
+            [
+                [],
+                false,
+            ],
+            [
+                ['isIrfo' => 'N'],
+                false
+            ],
+            [
+                ['isIrfo' => 'Y'],
                 true
             ]
         ];

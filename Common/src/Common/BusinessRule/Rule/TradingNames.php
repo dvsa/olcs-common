@@ -33,7 +33,7 @@ class TradingNames implements BusinessRuleInterface
         return $filtered;
     }
 
-    public function validate(array $tradingNames, $orgId, $licenceId)
+    public function validate(array $tradingNames, $orgId, $licenceId = null)
     {
         return [
             'organisation' => $orgId,

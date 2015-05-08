@@ -98,6 +98,19 @@ class InspectionRequestEntityServiceTest extends AbstractEntityServiceTestCase
                                 ],
                             ],
                         ],
+                        'tmLicences' => [
+                            'children' => [
+                                'transportManager' => [
+                                    'children' => [
+                                        'homeCd' => [
+                                            'children' => [
+                                                'person',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
                     ],
                 ],
                 'operatingCentre' => [

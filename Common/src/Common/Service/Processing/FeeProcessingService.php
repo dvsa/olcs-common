@@ -33,20 +33,16 @@ class FeeProcessingService implements ServiceLocatorAwareInterface
             ->get('Helper\DocumentGeneration')
             ->generateAndStore('FEE_REQ_GRANT_GV', $description, $params);
 
-        $this->getServiceLocator()
-            ->get('PrintScheduler')
-            ->enqueueFile($storedFile, $description);
-
-        $this->getServiceLocator()->get('Entity\Document')->createFromFile(
+        $this->getServiceLocator()->get('Helper\DocumentDispatch')->process(
             $storedFile,
             [
-                'description'   => $description,
-                'filename'      => str_replace(" ", "_", $description) . '.rtf',
-                'application'   => $params['application'],
-                'licence'       => $params['licence'],
-                'fileExtension' => 'doc_rtf',
-                'category'      => CategoryDataService::CATEGORY_LICENSING,
-                'subCategory'   => CategoryDataService::DOC_SUB_CATEGORY_FEE_REQUEST
+                'description' => $description,
+                'filename'    => str_replace(' ', '_', $description) . '.rtf',
+                'application' => $params['application'],
+                'licence'     => $params['licence'],
+                'category'    => CategoryDataService::CATEGORY_LICENSING,
+                'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_FEE_REQUEST,
+                'isExternal'  => false
             ]
         );
     }

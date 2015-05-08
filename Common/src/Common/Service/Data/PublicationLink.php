@@ -161,22 +161,14 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
     protected function getBundle()
     {
         return [
-            'properties' => 'ALL',
             'children' => [
                 'publication' => [
-                    'properties' => 'ALL',
                     'children' => [
-                        'pubStatus' => [
-                            'properties' => 'ALL'
-                        ],
-                        'trafficArea' => [
-                            'properties' => 'ALL'
-                        ]
+                        'pubStatus' => [],
+                        'trafficArea' => []
                     ]
                 ],
-                'publicationSection' => [
-                    'properties' => 'ALL'
-                ]
+                'publicationSection' => []
             ]
         ];
     }

@@ -55,7 +55,6 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         );
 
         $file = m::mock();
-        $content = m::mock();
 
         $this->setService(
             'Helper\DocumentGeneration',
@@ -67,27 +66,19 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         );
 
         $this->setService(
-            'PrintScheduler',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('enqueueFile')
-            ->with($file, $description)
-            ->getMock()
-        );
-
-        $this->setService(
-            'Entity\Document',
-            m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->with(
                 $file,
                 [
                     'description' => $description,
                     'filename' => $filename,
-                    'fileExtension' => 'doc_rtf',
                     'licence' => 1,
                     'category' => 1,
                     'subCategory' => 79,
-                    'isReadOnly' => true
+                    'isReadOnly' => true,
+                    'isExternal' => false
                 ]
             )
             ->getMock()
@@ -118,7 +109,6 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         );
 
         $file = m::mock();
-        $content = m::mock();
 
         $this->setService(
             'Helper\DocumentGeneration',
@@ -138,20 +128,19 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         );
 
         $this->setService(
-            'Entity\Document',
+            'Helper\DocumentDispatch',
             m::mock()
-                ->shouldReceive('createFromFile')
+                ->shouldReceive('process')
                 ->with(
                     $file,
                     [
                         'description' => $description,
                         'filename' => $filename,
-                        'fileExtension' => 'doc_rtf',
                         'application' => 1,
                         'licence' => 10,
                         'category' => 1,
                         'subCategory' => 79,
-                        'isDigital' => false,
+                        'isExternal' => false,
                         'isScan' => false
                     ]
                 )

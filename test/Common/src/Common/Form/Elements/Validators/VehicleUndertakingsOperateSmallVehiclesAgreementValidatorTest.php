@@ -35,12 +35,15 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends PHPU
     public function providerIsValid()
     {
         return [
-            ['N', [], true],
-            ['N', ['psvOperateSmallVhl' => 'Y'], true],
-            ['N', ['psvOperateSmallVhl' => 'N'], false],
+            // no context means scotland, therefore required
+            ['N', [], false],
             ['Y', [], true],
+            // not scottish but agreed to the operate small vhl terms, not required
+            ['N', ['psvOperateSmallVhl' => 'Y'], true],
             ['Y', ['psvOperateSmallVhl' => 'Y'], true],
-            ['Y', ['psvOperateSmallVhl' => 'N'], true]
+            // not scottish, not agreed to the operate small vhl terms, required
+            ['Y', ['psvOperateSmallVhl' => 'N'], true],
+            ['N', ['psvOperateSmallVhl' => 'N'], false]
         ];
     }
 }

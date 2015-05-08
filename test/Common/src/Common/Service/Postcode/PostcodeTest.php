@@ -39,21 +39,16 @@ class PostcodeTest extends MockeryTestCase
 
     /**
      * Test postcode with correct postcode
+     * 
+     * @dataProvider postcodeProvider
+     * @group postcodeService
      */
-    public function testPostcodeWithCorrectPostcode()
+    public function testPostcodeWithCorrectPostcode($response)
     {
 
         $this->postcode->expects($this->any())
             ->method('sendGet')
-            ->will(
-                $this->returnValue(
-                    array(
-                        array(
-                            'administritive_area' => 'LEEDS'
-                        )
-                    )
-                )
-            );
+            ->will($this->returnValue($response));
 
         $result = $this->postcode->getTrafficAreaByPostcode('LS1 4ES');
 
@@ -61,6 +56,28 @@ class PostcodeTest extends MockeryTestCase
         $this->assertEquals(count($result), 2);
         $this->assertEquals($result[0], 'B');
         $this->assertEquals($result[1], 'North East of England');
+    }
+
+    /**
+     * Postcode provider
+     * 
+     */
+    public function postcodeProvider()
+    {
+        return [
+            [
+                [
+                    'administritive_area' => 'LEEDS'
+                ]
+            ],
+            [
+                [
+                    [
+                        'administritive_area' => 'LEEDS'
+                    ]
+                ]
+            ]
+        ];
     }
 
     /**

@@ -38,16 +38,17 @@ abstract class AbstractDiscList extends DynamicBookmark
 
     public function getQuery(array $data)
     {
-        $query = [];
+        $query = [
+            'service' => $this->service,
+            'options' => [
+                'loop' => true
+            ],
+            'data' => [],
+            'bundle' => $this->discBundle
+        ];
 
         foreach ($data as $id) {
-            $query[] = [
-                'service' => $this->service,
-                'data' => [
-                    'id' => $id
-                ],
-                'bundle' => $this->discBundle
-            ];
+            $query['data'][] = ['id' => $id];
         }
 
         return $query;
