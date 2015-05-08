@@ -284,7 +284,7 @@ class OrganisationEntityService extends AbstractEntityService
         return $licences['Count'] > 0;
     }
 
-    public function hasChangedTradingNames($id, $tradingNames, $licenceId)
+    public function hasChangedTradingNames($id, $tradingNames, $licenceId = null)
     {
         $data = $this->getBusinessDetailsData($id, $licenceId);
 
