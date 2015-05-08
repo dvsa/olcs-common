@@ -34,7 +34,7 @@ class GracePeriodEntityService extends AbstractEntityService
         $query = array(
             'licence' => $licenceId,
             'sort' => 'startDate',
-            'order' => 'ASC'
+            'order' => 'DESC'
         );
 
         return $this->getList($query);
