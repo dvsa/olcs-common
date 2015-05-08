@@ -2394,6 +2394,11 @@ return array(
     'type-of-licence' => 'W Type of licence',
     'undertakings' => 'W Undertakings',
     'united-kingdom' => 'W United Kingdom',
+    'update-continuation.saved' => 'W The continuation details have been updated',
+    'update-continuation.separator-sheet' => 'W The separator sheet has been generated',
+    'update-continuation.success' => 'W The licence has been continued',
+    'update-continuation.validation.total-auth-vehicles' => 'W Cannot be more than %max%, the total number of authorised
+        vehicles.',
     'urgent' => 'W Urgent',
     'user-name' => 'W Username',
     'utilities' => 'W Utilities',
