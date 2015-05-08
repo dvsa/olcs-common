@@ -30,6 +30,12 @@ return array(
                         'action' => 'index'
                     )
                 )
+            ),
+            'correspondence_inbox' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/correspondence'
+                )
             )
         )
     ),
@@ -740,6 +746,16 @@ return array(
                 => 'Common\BusinessService\Service\Bus\BusReg',
             'Lva\UpdateContinuationDetail' => 'Common\BusinessService\Service\Lva\UpdateContinuationDetail',
             'CreateSeparatorSheet' => 'Common\BusinessService\Service\CreateSeparatorSheet',
+            'Lva\AccessCorrespondence' => 'Common\BusinessService\Service\Lva\AccessCorrespondence',
+            // Operator services
+            'Operator\IrfoDetails'
+                => 'Common\BusinessService\Service\Operator\IrfoDetails',
         ]
     ],
+    'email' => [
+        'default' => [
+            'from_address' => 'donotreply@otc.gsi.gov.uk',
+            'from_name'  => 'OLCS do not reply'
+        ]
+    ]
 );

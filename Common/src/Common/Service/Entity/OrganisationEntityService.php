@@ -137,6 +137,25 @@ class OrganisationEntityService extends AbstractEntityService
         )
     );
 
+    protected $adminUsersBundle = [
+        'children' => [
+            'organisationUsers' => [
+                'criteria' => [
+                    'isAdministrator' => true
+                ],
+                'children' => [
+                    'user' => [
+                        'children' => [
+                            'contactDetails' => [
+                                'children' => ['person']
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     public function getApplications($id)
     {
         return $this->get($id, $this->applicationsBundle);
@@ -404,5 +423,10 @@ class OrganisationEntityService extends AbstractEntityService
         asort($people);
 
         return $people;
+    }
+
+    public function getAdminUsers($id)
+    {
+        return $this->get($id, $this->adminUsersBundle)['organisationUsers'];
     }
 }

@@ -85,4 +85,112 @@ class PhoneContactTest extends MockeryTestCase
         $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
+
+    /**
+     * @dataProvider mapPhoneFieldsFromDbDataProvider
+     */
+    public function testMapPhoneFieldsFromDb($data, $expected)
+    {
+        $this->assertEquals($expected, $this->sut->mapPhoneFieldsFromDb($data));
+    }
+
+    public function mapPhoneFieldsFromDbDataProvider()
+    {
+        return [
+            // empty array
+            [
+                [],
+                []
+            ],
+            // phone business
+            [
+                [
+                    [
+                        'id' => 1,
+                        'phoneNumber' => '111111',
+                        'phoneContactType' => ['id' => 'phone_t_tel'],
+                        'version' => 1,
+                    ]
+                ],
+                [
+                    'phone_business' => '111111',
+                    'phone_business_id' => 1,
+                    'phone_business_version' => 1,
+                ]
+            ],
+            // phone home
+            [
+                [
+                    [
+                        'id' => 2,
+                        'phoneNumber' => '222222',
+                        'phoneContactType' => ['id' => 'phone_t_home'],
+                        'version' => 2,
+                    ]
+                ],
+                [
+                    'phone_home' => '222222',
+                    'phone_home_id' => 2,
+                    'phone_home_version' => 2,
+                ]
+            ],
+            // phone mobile
+            [
+                [
+                    [
+                        'id' => 3,
+                        'phoneNumber' => '333333',
+                        'phoneContactType' => ['id' => 'phone_t_mobile'],
+                        'version' => 3,
+                    ]
+                ],
+                [
+                    'phone_mobile' => '333333',
+                    'phone_mobile_id' => 3,
+                    'phone_mobile_version' => 3,
+                ]
+            ],
+            // phone fax
+            [
+                [
+                    [
+                        'id' => 4,
+                        'phoneNumber' => '444444',
+                        'phoneContactType' => ['id' => 'phone_t_fax'],
+                        'version' => 4,
+                    ]
+                ],
+                [
+                    'phone_fax' => '444444',
+                    'phone_fax_id' => 4,
+                    'phone_fax_version' => 4,
+                ]
+            ],
+            // multiple phone records
+            [
+                [
+                    [
+                        'id' => 1,
+                        'phoneNumber' => '111111',
+                        'phoneContactType' => ['id' => 'phone_t_tel'],
+                        'version' => 1,
+                    ],
+                    [
+                        'id' => 4,
+                        'phoneNumber' => '444444',
+                        'phoneContactType' => ['id' => 'phone_t_fax'],
+                        'version' => 4,
+                    ]
+                ],
+                [
+                    'phone_business' => '111111',
+                    'phone_business_id' => 1,
+                    'phone_business_version' => 1,
+                    'phone_fax' => '444444',
+                    'phone_fax_id' => 4,
+                    'phone_fax_version' => 4,
+                ]
+            ],
+        ];
+    }
 }

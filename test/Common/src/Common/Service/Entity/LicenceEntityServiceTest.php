@@ -970,7 +970,8 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                     ],
                 ],
                 'operatingCentres',
-                'changeOfEntitys'
+                'changeOfEntitys',
+                'trafficArea'
             ],
         ];
 
