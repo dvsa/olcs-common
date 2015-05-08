@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'XXXXX' => 'YYYYYYYYYYY %max% X',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -2388,8 +2387,8 @@ return array(
     'update-continuation.saved' => 'The continuation details have been updated',
     'update-continuation.separator-sheet' => 'The separator sheet has been generated',
     'update-continuation.success' => 'The licence has been continued',
-    'update-continuation.validation.total-auth-vehicles' =>
-        'Cannot be more than %max%, the total number of authorised vehicles.',
+    'update-continuation.validation.total-auth-vehicles' => 'Cannot be more than %max%, the total number of authorised
+        vehicles.',
     'urgent' => 'Urgent',
     'user-name' => 'Username',
     'utilities' => 'Utilities',
