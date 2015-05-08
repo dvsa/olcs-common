@@ -34,9 +34,12 @@ class CreateSeparatorSheetTest extends MockeryTestCase
     public function dataProviderMissingParams()
     {
         return [
-            [['XX' => 1, 'subCategoryId' => 1, 'entityIdentifier' => 1, 'description' => 1]],
-            [['categoryId' => 1, 'XX' => 1, 'entityIdentifier' => 1, 'description' => 1]],
-            [['categoryId' => 1, 'subCategoryId' => 1, 'XX' => 1, 'description' => 1]],
+            [['XX' => 1, 'subCategoryId' => 1, 'entityIdentifier' => 1, 'description' => 'XXX']],
+            [['categoryId' => 1, 'XX' => 1, 'entityIdentifier' => 1, 'description' => 'XXX']],
+            [['categoryId' => 1, 'subCategoryId' => 1, 'XX' => 1, 'description' => 'XXX']],
+            [['XX' => 1, 'subCategoryId' => 1, 'entityIdentifier' => 1, 'descriptionId' => 1]],
+            [['categoryId' => 1, 'XX' => 1, 'entityIdentifier' => 1, 'descriptionId' => 1]],
+            [['categoryId' => 1, 'subCategoryId' => 1, 'XX' => 1, 'descriptionId' => 1]],
             [['categoryId' => 1, 'subCategoryId' => 1, 'entityIdentifier' => 1, 'XX' => 1]],
         ];
     }
@@ -49,7 +52,6 @@ class CreateSeparatorSheetTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertFalse($response->isOk());
-        $this->assertContains('parameter is missing from the params array', $response->getMessage());
     }
 
     public function testProcessCannotFindEntity()
@@ -71,7 +73,7 @@ class CreateSeparatorSheetTest extends MockeryTestCase
     public function testProcessWithLicNo()
     {
         // Data
-        $params = ['categoryId' => 1, 'subCategoryId' => 2, 'entityIdentifier' => 3, 'description' => 4];
+        $params = ['categoryId' => 1, 'subCategoryId' => 2, 'entityIdentifier' => 3, 'descriptionId' => 4];
 
         $entity = [
             'licNo' => 'L0001',
@@ -110,7 +112,7 @@ class CreateSeparatorSheetTest extends MockeryTestCase
     public function testProcessUnknownLicNo()
     {
         // Data
-        $params = ['categoryId' => 1, 'subCategoryId' => 2, 'entityIdentifier' => 3, 'description' => 4];
+        $params = ['categoryId' => 1, 'subCategoryId' => 2, 'entityIdentifier' => 3, 'descriptionId' => 4];
 
         $entity = [
             'id' => 1966,

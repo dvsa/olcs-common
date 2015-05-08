@@ -30,29 +30,27 @@ class CreateSeparatorSheet implements BusinessServiceInterface, ServiceLocatorAw
     /**
      * Create and print a scan separator sheet
      *
-     * @param int        $params['categoryId']      Category ID
-     * @param int        $params['subCategoryId']   Sub category ID
-     * @param int        $params['entityIdentifier] Entity identifier, for a licence it is the licNo
-     * @param int|string $params['description']     Description, if numeric lookup the description
+     * @param int    $params['categoryId']      Category ID
+     * @param int    $params['subCategoryId']   Sub category ID
+     * @param int    $params['entityIdentifier] Entity identifier, for a licence it is the licNo
+     * @param int    $params['descriptionId']   Description ID (either descriptionId or description must be specified)
+     * @param string $params['description']     Description (either descriptionId or description must be specified)
      *
      * @return Common\BusinessService\ResponseInterface
      */
     public function process(array $params)
     {
-        // Validate $params
-        $requiredParams = ['categoryId', 'subCategoryId', 'entityIdentifier', 'description'];
-        foreach ($requiredParams as $paramName) {
-            if (!isset($params[$paramName])) {
-                $response = new Response(Response::TYPE_FAILED);
-                $response->setMessage("'{$paramName}' parameter is missing from the params array.");
-                return $response;
-            }
+        if ($message = $this->validateRequiredParams($params) !== null) {
+            $response = new Response(Response::TYPE_FAILED);
+            $response->setMessage($message);
+            return $response;
         }
 
-        $categoryId = $params['categoryId'];
-        $subCategoryId = $params['subCategoryId'];
+        $categoryId = (int) $params['categoryId'];
+        $subCategoryId = (int) $params['subCategoryId'];
         $entityIdentifier = $params['entityIdentifier'];
-        $description = $params['description'];
+        $description = (isset($params['description'])) ? $params['description'] : null;
+        $descriptionId = (isset($params['descriptionId'])) ? (int) $params['descriptionId'] : null;
 
         $processingService = $this->getServiceLocator()->get('Processing\ScanEntity');
         $entity = $processingService->findEntityForCategory($categoryId, $entityIdentifier);
@@ -68,12 +66,12 @@ class CreateSeparatorSheet implements BusinessServiceInterface, ServiceLocatorAw
         $subCategoryName = $this->getServiceLocator()->get('DataServiceManager')->get('Olcs\Service\Data\SubCategory')
             ->setCategory($categoryId)
             ->getDescriptionFromId($subCategoryId);
-        // if description is a number, then assume its an id and lookup what the name is
-        if (is_numeric($description)) {
+        // if description ID exists, lookup the description name
+        if ($descriptionId !== null) {
             $description = $this->getServiceLocator()->get('DataServiceManager')
                 ->get('Olcs\Service\Data\SubCategoryDescription')
                 ->setSubCategory($subCategoryId)
-                ->getDescriptionFromId($description);
+                ->getDescriptionFromId($descriptionId);
         }
 
         $entityType = $processingService->findEntityNameForCategory($categoryId);
@@ -115,5 +113,29 @@ class CreateSeparatorSheet implements BusinessServiceInterface, ServiceLocatorAw
         $this->getServiceLocator()->get('PrintScheduler')->enqueueFile($storedFile, 'Scanning Separator Sheet');
 
         return new Response(Response::TYPE_SUCCESS);
+    }
+
+    /**
+     * Validate the parameters
+     *
+     * @param array $params
+     *
+     * @return string Error message
+     */
+    protected function validateRequiredParams($params)
+    {
+        // Validate $params
+        $requiredParams = ['categoryId', 'subCategoryId', 'entityIdentifier'];
+        foreach ($requiredParams as $paramName) {
+            if (!isset($params[$paramName])) {
+                return "'{$paramName}' parameter is missing from the params array.";
+            }
+        }
+
+        if (!isset($params['description']) && !isset($params['descriptionId'])) {
+            return "'description' or 'descriptionId' parameter must be specified.";
+        }
+
+        return null;
     }
 }
