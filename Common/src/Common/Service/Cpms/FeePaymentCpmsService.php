@@ -565,14 +565,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
          * 3) Now actually look up the status of the transaction and
          * update our payment record & fee(s) accordingly
          */
-        $params = [
-            'required_fields' => [
-                'payment' => [
-                    'payment_status'
-                ]
-            ]
-        ];
-
         return $this->resolvePayment($reference, $payment['id'], $paymentMethod);
     }
 
@@ -587,24 +579,35 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $paymentService = $this->getServiceLocator()->get('Entity\Payment');
         $paymentStatus  = $this->getPaymentStatus($reference);
 
-        switch ($paymentStatus) {
-            case self::PAYMENT_SUCCESS:
-                $fees = $this->getServiceLocator()->get('Entity\FeePayment')
-                    ->getFeesByPaymentId($paymentId);
-                foreach ($fees as $fee) {
-                    $data = [
-                        'feeStatus'      => FeeEntityService::STATUS_PAID,
-                        'receivedDate'   => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
-                        'receiptNo'      => $reference,
-                        'paymentMethod'  => $paymentMethod,
-                        'receivedAmount' => $fee['amount']
-                    ];
+        $now = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
 
-                    $this->updateFeeRecordAsPaid($fee['id'], $data);
-                }
-                $paymentService->setStatus($paymentId, PaymentEntityService::STATUS_PAID);
-                $status = PaymentEntityService::STATUS_PAID;
-                break;
+        if ($paymentStatus == self::PAYMENT_SUCCESS) {
+            $fees = $this->getServiceLocator()->get('Entity\FeePayment')
+                ->getFeesByPaymentId($paymentId);
+            foreach ($fees as $fee) {
+                $data = [
+                    'feeStatus'      => FeeEntityService::STATUS_PAID,
+                    'receivedDate'   => $now,
+                    'receiptNo'      => $reference,
+                    'paymentMethod'  => $paymentMethod,
+                    'receivedAmount' => $fee['amount']
+                ];
+
+                $this->updateFeeRecordAsPaid($fee['id'], $data);
+            }
+            $status = PaymentEntityService::STATUS_PAID;
+            $paymentService->forceUpdate(
+                $paymentId,
+                [
+                    'status' => $status,
+                    'completedDate' => $now,
+                ]
+            );
+            return $status;
+        }
+
+        // handle non-paid statuses
+        switch ($paymentStatus) {
             case self::PAYMENT_FAILURE:
                 $status = PaymentEntityService::STATUS_FAILED;
                 break;
