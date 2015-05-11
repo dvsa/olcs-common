@@ -58,7 +58,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 $tableName
             );
 
-            $this->getAdapter()->alterVehcileTable($table, $this->getIdentifier());
+            $this->getAdapter()->alterVehicleTable($table, $this->getIdentifier());
         }
 
         $form = $this->alterForm($form, $entityData);
