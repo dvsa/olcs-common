@@ -32,7 +32,7 @@ class Cases
      *
      * @return array
      */
-    private function getNrCascadeOptions()
+    public function getNrCascadeOptions()
     {
         return [
             'cascade' => [
