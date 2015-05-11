@@ -276,6 +276,7 @@ return array(
         ),
         'factories' => array(
             'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
+            'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
