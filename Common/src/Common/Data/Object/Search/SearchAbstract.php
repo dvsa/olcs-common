@@ -81,6 +81,17 @@ abstract class SearchAbstract
         return [];
     }
 
+    /**
+     * @return array
+     */
+    public function getDateRanges()
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
     public function getFilters()
     {
         return [];

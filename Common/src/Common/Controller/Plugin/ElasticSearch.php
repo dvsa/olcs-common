@@ -264,7 +264,7 @@ class ElasticSearch extends AbstractPlugin
 
     public function extractSearchData()
     {
-        $container = new Container($this->getContainerName());
+
 
         $remove = [
             'controller',
@@ -286,6 +286,8 @@ class ElasticSearch extends AbstractPlugin
         if ($postParams = (array) $this->getController()->params()->fromPost()) {
             $incomingParameters = array_merge($incomingParameters, $postParams);
         }
+
+        $container = new Container($this->getContainerName() . '_' . $incomingParameters['search']);
 
         /**
          * Now remove all the data we don't want in the query string.
