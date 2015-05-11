@@ -264,8 +264,6 @@ class ElasticSearch extends AbstractPlugin
 
     public function extractSearchData()
     {
-
-
         $remove = [
             'controller',
             'action',
@@ -286,6 +284,9 @@ class ElasticSearch extends AbstractPlugin
         if ($postParams = (array) $this->getController()->params()->fromPost()) {
             $incomingParameters = array_merge($incomingParameters, $postParams);
         }
+
+        // added this line as a quick fix for broken UT
+        $incomingParameters['search'] = isset($incomingParameters['search']) ? $incomingParameters['search'] : '';
 
         $container = new Container($this->getContainerName() . '_' . $incomingParameters['search']);
 

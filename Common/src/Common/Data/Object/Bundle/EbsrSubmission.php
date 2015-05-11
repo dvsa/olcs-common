@@ -19,9 +19,13 @@ class EbsrSubmission extends Bundle
         $this->addChild('ebsrSubmissionStatus');
         $this->addChild('ebsrSubmissionType');
 
+        $licence = new Bundle();
+        $licence->addChild('organisation');
+
         $busReg = new Bundle();
         $busReg->addChild('status');
         $busReg->addChild('otherServices');
+        $busReg->addChild('licence', $licence);
 
         $this->addChild('busReg', $busReg);
     }
