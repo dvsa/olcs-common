@@ -1213,7 +1213,7 @@ return array(
     'internal-vehicle-licence-wrong-removal-date' => 'Removed date is invalid',
     'internal.community_licence.confirm_reprint_licences' => 'Are you sure you want to reprint these licences?',
     'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
-    'internal.community_licence.confirm_void_licences' => 'Are you sure you want to void these licences?',
+    'internal.community_licence.confirm_void_licences' => 'Are you sure you want to annul these licences?',
     'internal.community_licence.form.change_status_to' => 'Change status to',
     'internal.community_licence.form.end_date' => 'End date',
     'internal.community_licence.form.licences_validation' => 'Please select at least one reason',
@@ -1227,15 +1227,16 @@ return array(
     'internal.community_licence.licences_reprinted' => 'The selected licences have been generated',
     'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'The licences have been suspended',
-    'internal.community_licence.licences_voided' => 'The selected licences have been voided',
+    'internal.community_licence.licences_voided' => 'The selected licences have been annulled',
     'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
     'internal.community_licence.reprint_not_allowed' => 'You can only reprint \'Active\' community licences',
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
         copy',
-    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
-        before the office copy',
-    'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
+    'internal.community_licence.stop_not_allowed' => 'Please annul, withdraw or suspend the other pending/active
+        licences before the office copy',
+    'internal.community_licence.void_not_allowed' => 'You cannot annul the office copy without annulling all the
+        licences',
     'internal.delete-action-trait.title' => 'Remove',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
