@@ -328,8 +328,7 @@ class FeeEntityService extends AbstractLvaEntityService
 
         $updates = [];
         foreach ($results as $fee) {
-            // @TODO should this check $fee['feeType']['feeType']['id'] now it's refdata?
-            if ($fee['feeType']['feeType'] === FeeTypeDataService::FEE_TYPE_GRANTINT) {
+            if ($fee['feeType']['feeType']['id'] === FeeTypeDataService::FEE_TYPE_GRANTINT) {
                 $updates[] = [
                     'id' => $fee['id'],
                     'feeStatus' => self::STATUS_CANCELLED,
@@ -442,5 +441,33 @@ class FeeEntityService extends AbstractLvaEntityService
             ]
         ];
         return $this->getAll($query, $bundle);
+    }
+
+    /**
+     * Get any outstanding/wave recommended GRANT fees for an application
+     *
+     * @param int $applicationId Application ID
+     * 
+     * @return array Fee Entity data
+     */
+    public function getOustandingGrantFeesForApplicaiton($applicationId)
+    {
+        $query = array(
+            'application' => $applicationId,
+            'feeStatus' => array(
+                self::STATUS_OUTSTANDING,
+                self::STATUS_WAIVE_RECOMMENDED
+            )
+        );
+
+        $bundle = $this->overviewBundle;
+        $bundle['children']['feeType']['criteria'] = [
+            'feeType' => FeeTypeDataService::FEE_TYPE_GRANT,
+        ];
+        $bundle['children']['feeType']['required'] = true;
+
+        $data = $this->getAll($query, $bundle);
+
+        return $data['Results'];
     }
 }
