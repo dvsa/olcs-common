@@ -119,12 +119,12 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
             'foo'
         );
 
-        $mockFeeService = $this->getMock('\stdClass', ['getApplication', 'getOutstandingFeesForApplication']);
+        $mockFeeService = $this->getMock('\stdClass', ['getApplication', 'getOutstandingGrantFeesForApplication']);
         $mockFeeService->expects($this->once())
             ->method('getApplication')
             ->will($this->returnValue($application));
         $mockFeeService->expects($this->once())
-            ->method('getOutstandingFeesForApplication')
+            ->method('getOutstandingGrantFeesForApplication')
             ->with(7)
             ->will($this->returnValue($fees));
 
@@ -149,12 +149,12 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 
         $fees = array();
 
-        $mockFeeService = $this->getMock('\stdClass', ['getApplication', 'getOutstandingFeesForApplication']);
+        $mockFeeService = $this->getMock('\stdClass', ['getApplication', 'getOutstandingGrantFeesForApplication']);
         $mockFeeService->expects($this->once())
             ->method('getApplication')
             ->will($this->returnValue($application));
         $mockFeeService->expects($this->once())
-            ->method('getOutstandingFeesForApplication')
+            ->method('getOutstandingGrantFeesForApplication')
             ->with(7)
             ->will($this->returnValue($fees));
 
