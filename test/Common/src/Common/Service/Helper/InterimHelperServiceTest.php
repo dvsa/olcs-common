@@ -457,7 +457,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'version' => 400
                         ]
                     ],
-                    'interimApplication' => array()
+                    'interimApplication' => ['foo' => 'bar']
                 ]
             ],
             'licence' => [
@@ -693,25 +693,6 @@ class InterimHelperServiceTest extends MockeryTestCase
         $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
-            'Entity\GoodsDisc',
-            m::mock()
-            ->shouldReceive('save')
-            ->with(
-                [
-                    [
-                        'licenceVehicle' => 20,
-                        'isInterim' => 'Y'
-                    ],
-                    '_OPTIONS_' => [
-                        'multiple' => true
-                    ]
-                ]
-            )
-            ->once()
-            ->getMock()
-        );
-
-        $this->sm->setService(
             'Helper\Date',
             m::mock()
             ->shouldReceive('getDate')
@@ -793,7 +774,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'version' => 400
                         ]
                     ],
-                    'interimApplication' => null
+                    'interimApplication' => ['foo' => 'bar']
                 ]
             ],
             'licence' => [
@@ -843,6 +824,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                     [
                         'id' => 20,
                         'version' => 200,
+                        'specifiedDate' => '2014-01-01 00:00:00'
                     ]
                 ]
             )
