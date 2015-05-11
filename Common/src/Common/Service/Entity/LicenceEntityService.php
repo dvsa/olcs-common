@@ -871,7 +871,7 @@ class LicenceEntityService extends AbstractLvaEntityService
         $vehicles = [];
         foreach ($licence['licenceVehicles'] as $lv) {
             if (array_search($lv['id'], $ids) !== false) {
-                $vehicles[$lv['vehicle']['id']] = $lv['vehicle']['id'];
+                $vehicles[$lv['vehicle']['vrm']] = $lv['vehicle']['id'];
             }
         }
         return $vehicles;

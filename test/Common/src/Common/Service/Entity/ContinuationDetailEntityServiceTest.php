@@ -235,7 +235,9 @@ class ContinuationDetailEntityServiceTest extends AbstractEntityServiceTestCase
 
         $bundle = [
             'children' => [
+                'status',
                 'licence' => [
+                    'children' => ['status'],
                     'criteria' => [
                         'status' => [
                             \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_VALID,

@@ -188,6 +188,63 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
+    protected $markersBundle = [
+        'children' => [
+            'application' => [
+                'children' => [
+                    'status',
+                    'licenceType',
+                    'licence' => [
+                        'children' => [
+                            'organisation'
+                        ]
+                    ]
+                ]
+            ],
+            'transportManager' => [
+                'children' => [
+                    'qualifications' => [
+                        'children' => [
+                            'qualificationType'
+                        ]
+                    ],
+                    'tmType',
+                    'homeCd' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ],
+                    'tmApplications' => [
+                        'children' => [
+                            'application' => [
+                                'children' => [
+                                    'status',
+                                    'licenceType',
+                                    'licence' => [
+                                        'children' => [
+                                            'organisation'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'tmLicences' => [
+                        'children' => [
+                            'licence' => [
+                                'children' => [
+                                    'status',
+                                    'licenceType',
+                                    'organisation'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     public function getGrantDataForApplication($applicationId)
     {
         return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
@@ -327,5 +384,16 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     public function getContactApplicationDetails($tmaId)
     {
         return $this->get($tmaId, $this->contactApplicationBundle);
+    }
+
+    /**
+     * Get Transport Managers for particular application
+     *
+     * @param int $applicationId
+     * @return array
+     */
+    public function getTmForApplication($applicationId)
+    {
+        return $this->getAll(['application' => $applicationId], $this->markersBundle);
     }
 }

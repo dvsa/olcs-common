@@ -55,8 +55,6 @@ class VehiclesDeclarationsSmallVehiclesIntention
 
     /**
      * @Form\Attributes({
-     *     "id":"",
-     *     "class":"long",
      *     "value": "markup-application_vehicle-safety_undertakings-smallVehiclesUndertakings"
      * })
      * @Form\Options({

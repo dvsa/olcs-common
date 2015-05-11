@@ -417,4 +417,30 @@ class FeeEntityService extends AbstractLvaEntityService
         }
         $this->multiUpdate($updates);
     }
+
+    /**
+     * Get any outstanding continuation fees for a licence
+     *
+     * @param int $licenceId
+     *
+     * @return array
+     */
+    public function getOutstandingContinuationFee($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'status' => [self::STATUS_OUTSTANDING, self::STATUS_WAIVE_RECOMMENDED]
+        ];
+        $bundle = [
+            'children' => [
+                'feeType' => [
+                    'criteria' => [
+                        'feeType' => FeeTypeDataService::FEE_TYPE_CONT,
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+        return $this->getAll($query, $bundle);
+    }
 }

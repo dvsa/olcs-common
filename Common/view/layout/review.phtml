@@ -1,16 +1,6 @@
 <?php echo $this->doctype(); ?>
 <html lang="en" class="review">
-    <head>
-        <meta charset="utf-8">
-        <?php
-        echo $this->headTitle($this->translate(''));
-        echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge');
-        echo $this->headLink()->appendStylesheet($this->assetPath('/styles/' . $this->applicationName() . '.css'));
-        echo $this->headScript();
-        ?>
-    </head>
+    <?php echo $this->partial('partials/review-header'); ?>
     <body>
         <h1><?php echo $this->translate($reviewTitle); ?></h1>
         <h2><?php echo $subTitle; ?></h2>

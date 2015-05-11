@@ -254,4 +254,19 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
 
         $this->assertEquals('RESPONSE', $this->sut->getContactApplicationDetails(23));
     }
+
+    /**
+     * @group transportManagerApplicationEntity
+     */
+    public function testGetTmForApplication()
+    {
+        $query = [
+            'application' => 1,
+            'limit' => 'all'
+        ];
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', $query)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getTmForApplication(1));
+    }
 }

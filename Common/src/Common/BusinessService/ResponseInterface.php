@@ -19,6 +19,7 @@ interface ResponseInterface
     const TYPE_FAILED = 2;
     const TYPE_RULE_FAILED = 3;
     const TYPE_NO_OP = 4;
+    const TYPE_NOT_FOUND = 5;
 
     public function setType($type);
 

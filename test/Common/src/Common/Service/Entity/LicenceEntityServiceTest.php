@@ -1175,14 +1175,14 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         ];
         $response = [
             'licenceVehicles' => [
-                ['id' => 1, 'vehicle' => ['id' => 11]],
-                ['id' => 2, 'vehicle' => ['id' => 12]],
-                ['id' => 4, 'vehicle' => ['id' => 14]]
+                ['id' => 1, 'vehicle' => ['id' => 11, 'vrm' => 'VRM1']],
+                ['id' => 2, 'vehicle' => ['id' => 12, 'vrm' => 'VRM2']],
+                ['id' => 4, 'vehicle' => ['id' => 14, 'vrm' => 'VRM4']]
             ]
         ];
         $vehicles = [
-            11 => 11,
-            12 => 12
+            'VRM1' => 11,
+            'VRM2' => 12
         ];
         $this->expectOneRestCall('Licence', 'GET', $query, $bundle)
             ->will($this->returnValue($response));
