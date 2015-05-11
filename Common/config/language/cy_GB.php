@@ -1778,6 +1778,8 @@ return array(
     'points' => 'W Points',
     'position' => 'W Position',
     'postcode.address.manual_entry' => 'W Enter address manually',
+    'postcode.error.no-addresses-found' => 'W No addresses found for postcode',
+    'postcode.error.not-available' => 'W Address search unavailable. Please enter your address manually',
     'previous-history' => 'W Previous history',
     'priority' => 'W Priority',
     'privacy-and-cookies' => 'W Privacy &amp; Cookies',
