@@ -142,11 +142,15 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
 
             // Update selected values of filters FIRST.
             $this->updateFilterValuesFromForm();
+            $this->updateDateRangeValuesFromPost();
+
+            //die('<pre>' . print_r($this->getDateRangeKvp(), 1));
 
             $query = [
                 'limit' => $this->getLimit(),
                 'page' => $this->getPage(),
-                'filters' => $this->getFilterNames()
+                'filters' => $this->getFilterNames(),
+                'dateRanges' => $this->getDateRangeKvp()
             ];
 
             $uri = sprintf(
@@ -201,7 +205,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
         /** @var \Common\Form\Form $form */
         $form = $this->fetchFiltersFormObject();
 
-        /** @var \Olcs\Data\Object\Search\Filter\FilterAbstract $filterClass */
+        /** @var \Olcs\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
         foreach ($this->getFilters() as $filterClass) {
 
             $options = array_combine(
@@ -214,16 +218,61 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
             $select->setValue($filterClass->getValue());
         }
 
+        /** @var \Olcs\Data\Object\Search\Aggregations\DateRange\DateRangeAbstract $dateRangeClass */
+        foreach ($this->getDateRanges() as $dateRangeClass) {
+
+            $field = $form->get('dateRanges')->get($dateRangeClass->getKey());
+            $field->setValue($dateRangeClass->getValue());
+        }
+
         return $form;
     }
 
     /**
-     * @return \Olcs\Data\Object\Search\SearchAbstract
+     * @return \Olcs\Data\Object\Search\InternalSearchAbstract
      */
     protected function getDataClass()
     {
         $manager = $this->getServiceLocator()->get(SearchTypeManager::class);
         return $manager->get($this->getIndex());
+    }
+
+    /**
+     * Updates selected values of the selected filters.
+     *
+     * @return null
+     */
+    public function updateDateRangeValuesFromPost()
+    {
+        $post = array_merge(
+            (array)$this->getRequest()->getPost(),
+            (array)$this->getRequest()->getQuery()
+        );
+
+        foreach ($this->getDateRanges() as $filterClass) {
+
+            /** @var \Olcs\Data\Object\Search\Aggregations\DateRange\DateRangeAbstract $filterClass */
+            if (isset($post['dateRanges'][$filterClass->getKey()]) &&
+                !empty($post['dateRanges'][$filterClass->getKey()])) {
+
+                $filterClass->setValue($post['dateRanges'][$filterClass->getKey()]);
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getDateRangeKvp()
+    {
+        $output = [];
+
+        foreach ($this->getDateRanges() as $filterClass) {
+
+            $output[$filterClass->getKey()] = $filterClass->getValue();
+        }
+
+        return $output;
     }
 
     /**
@@ -240,7 +289,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
 
         foreach ($this->getFilters() as $filterClass) {
 
-            /** @var \Olcs\Data\Object\Search\Filter\FilterAbstract $filterClass */
+            /** @var \Olcs\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
             if (isset($post['filter'][$filterClass->getKey()]) && !empty($post['filter'][$filterClass->getKey()])) {
 
                 $filterClass->setValue($post['filter'][$filterClass->getKey()]);
@@ -271,6 +320,16 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     public function getFilters()
     {
         return $this->getDataClass()->getFilters();
+    }
+
+    /**
+     * Returns an array of getDateRanges relevant to this index.
+     *
+     * @return mixed
+     */
+    public function getDateRanges()
+    {
+        return $this->getDataClass()->getDateRanges();
     }
 
     /**

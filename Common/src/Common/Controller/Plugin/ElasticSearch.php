@@ -139,6 +139,8 @@ class ElasticSearch extends AbstractPlugin
             $incomingParameters = array_merge($incomingParameters, $queryParams);
         }
 
+        //die('<pre>' . print_r($incomingParameters, 1));
+
         //there are multiple places search data can come from:
         //route, query, post and session
 
@@ -197,6 +199,8 @@ class ElasticSearch extends AbstractPlugin
             ->getValue();
 
         $sd = $this->getSearchData();
+
+        //die('<pre>' . print_r($sd, 1));
 
         $url = $this->getController()->url()->fromRoute(
             $this->getPageRoute(),
@@ -264,7 +268,7 @@ class ElasticSearch extends AbstractPlugin
 
     public function extractSearchData()
     {
-        $container = new Container($this->getContainerName());
+
 
         $remove = [
             'controller',
@@ -286,6 +290,8 @@ class ElasticSearch extends AbstractPlugin
         if ($postParams = (array) $this->getController()->params()->fromPost()) {
             $incomingParameters = array_merge($incomingParameters, $postParams);
         }
+
+        $container = new Container($this->getContainerName() . '_' . $incomingParameters['search']);
 
         /**
          * Now remove all the data we don't want in the query string.
