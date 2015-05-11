@@ -75,10 +75,11 @@ class QueryService
 
     protected function invalidResponse(array $messages = [], $statusCode = HttpResponse::STATUS_CODE_500)
     {
-        $response = new HttpResponse();
-        $response->setStatusCode($statusCode);
+        $httpResponse = new HttpResponse();
+        $httpResponse->setStatusCode($statusCode);
+        $response = new Response($httpResponse);
         $response->setResult($messages);
 
-        return new Response($response);
+        return $response;
     }
 }

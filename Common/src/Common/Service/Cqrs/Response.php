@@ -56,12 +56,7 @@ class Response
     public function getResult()
     {
         if ($this->result === null) {
-            $this->result = [
-                'version' => 1,
-                'niFlag' => 'Y',
-                'goodsOrPsv' => ['id' => 'lcat_gv'],
-                'licenceType' => ['id' => 'ltyp_sn'],
-            ];
+            $this->result = json_decode($this->httpResponse->getContent(), true);
         }
 
         return $this->result;
