@@ -139,8 +139,6 @@ class ElasticSearch extends AbstractPlugin
             $incomingParameters = array_merge($incomingParameters, $queryParams);
         }
 
-        //die('<pre>' . print_r($incomingParameters, 1));
-
         //there are multiple places search data can come from:
         //route, query, post and session
 
@@ -199,8 +197,6 @@ class ElasticSearch extends AbstractPlugin
             ->getValue();
 
         $sd = $this->getSearchData();
-
-        //die('<pre>' . print_r($sd, 1));
 
         $url = $this->getController()->url()->fromRoute(
             $this->getPageRoute(),

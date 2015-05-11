@@ -144,8 +144,6 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
             $this->updateFilterValuesFromForm();
             $this->updateDateRangeValuesFromPost();
 
-            //die('<pre>' . print_r($this->getDateRangeKvp(), 1));
-
             $query = [
                 'limit' => $this->getLimit(),
                 'page' => $this->getPage(),
