@@ -55,6 +55,8 @@ class QueryService
         $data = $query->getDto()->getArrayCopy();
 
         try {
+            // @todo Tmp replace route name to prefix with api while we migrate all services
+            $routeName = str_replace('backend/', 'backend/api/', $routeName);
             $uri = $this->router->assemble($data, ['name' => 'api/' . $routeName . '/GET']);
         } catch (ExceptionInterface $ex) {
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
