@@ -1771,6 +1771,8 @@ return array(
     'points' => 'Points',
     'position' => 'Position',
     'postcode.address.manual_entry' => 'Enter address manually',
+    'postcode.error.no-addresses-found' => 'No addresses found for postcode',
+    'postcode.error.not-available' => 'Address search unavailable. Please enter your address manually',
     'previous-history' => 'Previous history',
     'priority' => 'Priority',
     'privacy-and-cookies' => 'Privacy &amp; Cookies',
