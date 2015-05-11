@@ -450,7 +450,7 @@ class FeeEntityService extends AbstractLvaEntityService
      * 
      * @return array Fee Entity data
      */
-    public function getOustandingGrantFeesForApplicaiton($applicationId)
+    public function getOutstandingGrantFeesForApplication($applicationId)
     {
         $query = array(
             'application' => $applicationId,

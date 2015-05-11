@@ -589,7 +589,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $this->sut->getOutstandingContinuationFee(1966);
     }
 
-    public function testGetOustandingGrantFeesForApplicaiton()
+    public function testGetOutstandingGrantFeesForApplication()
     {
         $expectedQuery = array(
             'application' => 1966,
@@ -627,6 +627,6 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Fee', 'GET', $expectedQuery, $expectedBundle)
             ->will($this->returnValue(['Results' => ['RESULTS']]));
 
-        $this->assertEquals(['RESULTS'], $this->sut->getOustandingGrantFeesForApplicaiton(1966));
+        $this->assertEquals(['RESULTS'], $this->sut->getOutstandingGrantFeesForApplication(1966));
     }
 }

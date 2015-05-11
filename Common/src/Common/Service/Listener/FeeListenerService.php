@@ -63,7 +63,7 @@ class FeeListenerService implements ServiceLocatorAwareInterface
         }
 
         // if there are any outstanding GRANT fees then don't continue
-        $outstandingGrantFees = $feeService->getOustandingGrantFeesForApplicaiton($application['id']);
+        $outstandingGrantFees = $feeService->getOutstandingGrantFeesForApplication($application['id']);
         if (!empty($outstandingGrantFees)) {
             return;
         }
