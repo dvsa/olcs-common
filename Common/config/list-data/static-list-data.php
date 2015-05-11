@@ -96,7 +96,7 @@ return array(
     ],
     'document_types' => [
         'all' => 'All',
-        'external' => 'External',
+        'external' => 'Selfserve',
         'internal' => 'Internal'
     ],
     'vehicle_body_types' =>

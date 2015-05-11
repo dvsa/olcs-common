@@ -50,17 +50,9 @@ class FeeProcessingServiceTest extends MockeryTestCase
         );
 
         $this->setService(
-            'PrintScheduler',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('enqueueFile')
-            ->with($mockFile, 'Goods Grant Fee Request')
-            ->getMock()
-        );
-
-        $this->setService(
-            'Entity\Document',
-            m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->with(
                 $mockFile,
                 [
@@ -92,17 +84,9 @@ class FeeProcessingServiceTest extends MockeryTestCase
         );
 
         $this->setService(
-            'PrintScheduler',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('enqueueFile')
-            ->never()
-            ->getMock()
-        );
-
-        $this->setService(
-            'Entity\Document',
-            m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->never()
             ->getMock()
         );

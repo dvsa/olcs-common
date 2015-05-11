@@ -30,6 +30,12 @@ return array(
                         'action' => 'index'
                     )
                 )
+            ),
+            'correspondence_inbox' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/correspondence'
+                )
             )
         )
     ),
@@ -143,7 +149,7 @@ return array(
         ),
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
-			'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+            'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
         ]
     ),
     'console' => array(
@@ -250,6 +256,7 @@ return array(
             'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
             'postcode' => 'Common\Service\Postcode\Postcode',
             'email' => 'Common\Service\Email\Email',
+            'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
             'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
@@ -456,6 +463,7 @@ return array(
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
             'MonthSelect' => 'Common\Form\Elements\Custom\MonthSelect',
+            'YearSelect' => 'Common\Form\Elements\Custom\YearSelect',
             'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
             'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ],
@@ -736,6 +744,18 @@ return array(
             // Bus business services
             'Bus\BusReg'
                 => 'Common\BusinessService\Service\Bus\BusReg',
+            'Lva\UpdateContinuationDetail' => 'Common\BusinessService\Service\Lva\UpdateContinuationDetail',
+            'CreateSeparatorSheet' => 'Common\BusinessService\Service\CreateSeparatorSheet',
+            'Lva\AccessCorrespondence' => 'Common\BusinessService\Service\Lva\AccessCorrespondence',
+            // Operator services
+            'Operator\IrfoDetails'
+                => 'Common\BusinessService\Service\Operator\IrfoDetails',
         ]
     ],
+    'email' => [
+        'default' => [
+            'from_address' => 'donotreply@otc.gsi.gov.uk',
+            'from_name'  => 'OLCS do not reply'
+        ]
+    ]
 );

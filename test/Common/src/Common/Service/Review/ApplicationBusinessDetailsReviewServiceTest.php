@@ -56,11 +56,11 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                 [
                     'licence' => [
                         'companySubsidiaries' => [],
+                        'tradingNames' => [],
                         'organisation' => [
                             'type' => [
                                 'id' => OrganisationEntityService::ORG_TYPE_SOLE_TRADER
                             ],
-                            'tradingNames' => [],
                             'natureOfBusinesses' => [
                                 [
                                     'description' => 'Foobar'
@@ -107,17 +107,17 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                 [
                     'licence' => [
                         'companySubsidiaries' => [],
+                        'tradingNames' => [
+                            [
+                                'name' => 'My foo'
+                            ],
+                            [
+                                'name' => 'My bar'
+                            ]
+                        ],
                         'organisation' => [
                             'type' => [
                                 'id' => OrganisationEntityService::ORG_TYPE_SOLE_TRADER
-                            ],
-                            'tradingNames' => [
-                                [
-                                    'name' => 'My foo'
-                                ],
-                                [
-                                    'name' => 'My bar'
-                                ]
                             ],
                             'natureOfBusinesses' => [
                                 [
@@ -170,12 +170,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                 [
                     'licence' => [
                         'companySubsidiaries' => [],
+                        'tradingNames' => [],
                         'organisation' => [
                             'type' => [
                                 'id' => OrganisationEntityService::ORG_TYPE_PARTNERSHIP
                             ],
                             'name' => 'Our company',
-                            'tradingNames' => [],
                             'natureOfBusinesses' => [
                                 [
                                     'description' => 'Foobar'
@@ -227,19 +227,19 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                 [
                     'licence' => [
                         'companySubsidiaries' => [],
+                        'tradingNames' => [
+                            [
+                                'name' => 'Our foo'
+                            ],
+                            [
+                                'name' => 'Our bar'
+                            ]
+                        ],
                         'organisation' => [
                             'type' => [
                                 'id' => OrganisationEntityService::ORG_TYPE_PARTNERSHIP
                             ],
                             'name' => 'Our company',
-                            'tradingNames' => [
-                                [
-                                    'name' => 'Our foo'
-                                ],
-                                [
-                                    'name' => 'Our bar'
-                                ]
-                            ],
                             'natureOfBusinesses' => [
                                 [
                                     'description' => 'Foobar'
@@ -296,13 +296,13 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                 [
                     'licence' => [
                         'companySubsidiaries' => [],
+                        'tradingNames' => [],
                         'organisation' => [
                             'type' => [
                                 'id' => OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY
                             ],
                             'companyOrLlpNo' => '12345678',
                             'name' => 'Foo Ltd',
-                            'tradingNames' => [],
                             'natureOfBusinesses' => [
                                 [
                                     'description' => 'Foobar'
@@ -384,20 +384,20 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                                 'companyNo' => '34567891'
                             ]
                         ],
+                        'tradingNames' => [
+                            [
+                                'name' => 'Foobar Ltd'
+                            ],
+                            [
+                                'name' => 'Barfoo Ltd'
+                            ]
+                        ],
                         'organisation' => [
                             'type' => [
                                 'id' => OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY
                             ],
                             'companyOrLlpNo' => '12345678',
                             'name' => 'Foo Ltd',
-                            'tradingNames' => [
-                                [
-                                    'name' => 'Foobar Ltd'
-                                ],
-                                [
-                                    'name' => 'Barfoo Ltd'
-                                ]
-                            ],
                             'natureOfBusinesses' => [
                                 [
                                     'description' => 'Foobar'
@@ -499,13 +499,13 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                 [
                     'licence' => [
                         'companySubsidiaries' => [],
+                        'tradingNames' => [],
                         'organisation' => [
                             'type' => [
                                 'id' => OrganisationEntityService::ORG_TYPE_LLP
                             ],
                             'companyOrLlpNo' => '12345678',
                             'name' => 'Foo Ltd',
-                            'tradingNames' => [],
                             'natureOfBusinesses' => [
                                 [
                                     'description' => 'Foobar'
@@ -587,20 +587,20 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                                 'companyNo' => '34567891'
                             ]
                         ],
+                        'tradingNames' => [
+                            [
+                                'name' => 'Foobar Ltd'
+                            ],
+                            [
+                                'name' => 'Barfoo Ltd'
+                            ]
+                        ],
                         'organisation' => [
                             'type' => [
                                 'id' => OrganisationEntityService::ORG_TYPE_LLP
                             ],
                             'companyOrLlpNo' => '12345678',
                             'name' => 'Foo Ltd',
-                            'tradingNames' => [
-                                [
-                                    'name' => 'Foobar Ltd'
-                                ],
-                                [
-                                    'name' => 'Barfoo Ltd'
-                                ]
-                            ],
                             'natureOfBusinesses' => [
                                 [
                                     'description' => 'Foobar'
@@ -701,12 +701,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                 [
                     'licence' => [
                         'companySubsidiaries' => [],
+                        'tradingNames' => [],
                         'organisation' => [
                             'type' => [
                                 'id' => OrganisationEntityService::ORG_TYPE_OTHER
                             ],
                             'name' => 'My other business',
-                            'tradingNames' => [],
                             'natureOfBusinesses' => [
                                 [
                                     'description' => 'Foobar'

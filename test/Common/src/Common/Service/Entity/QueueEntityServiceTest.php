@@ -107,13 +107,15 @@ class QueueEntityServiceTest extends AbstractEntityServiceTestCase
         $expectedSave = [
             'id' => 111,
             'version' => 1,
-            'status' => QueueEntityService::STATUS_PROCESSING
+            'status' => QueueEntityService::STATUS_PROCESSING,
+            'attempts' => 1
         ];
         $results = [
             'Results' => [
                 [
                     'id' => 111,
-                    'version' => 1
+                    'version' => 1,
+                    'attempts' => 0
                 ]
             ]
         ];
@@ -153,15 +155,21 @@ class QueueEntityServiceTest extends AbstractEntityServiceTestCase
         $expectedSave = [
             'id' => 111,
             'version' => 1,
-            'status' => QueueEntityService::STATUS_PROCESSING
+            'status' => QueueEntityService::STATUS_PROCESSING,
+            'attempts' => 1
         ];
-        $result = [
+        $expected = [
             'id' => 111,
-            'version' => 1
+            'version' => 2,
+            'attempts' => 1
         ];
         $results = [
             'Results' => [
-                $result
+                [
+                    'id' => 111,
+                    'version' => 1,
+                    'attempts' => 0
+                ]
             ]
         ];
 
@@ -180,6 +188,6 @@ class QueueEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectedRestCallInOrder('Queue', 'PUT', $expectedSave);
 
         // Assertions
-        $this->assertEquals($result, $this->sut->getNextItem($type));
+        $this->assertEquals($expected, $this->sut->getNextItem($type));
     }
 }

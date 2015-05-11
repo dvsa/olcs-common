@@ -557,7 +557,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
                             'organisation' => [
                                 'children' => [
                                     'type',
-                                    'tradingNames',
                                     'natureOfBusinesses',
                                     'contactDetails' => [
                                         'children' => [
@@ -565,7 +564,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
                                         ]
                                     ]
                                 ]
-                            ]
+                            ],
+                            'tradingNames'
                         ]
                     ]
                 ]

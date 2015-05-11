@@ -46,7 +46,7 @@ class PhoneContact implements
         $data = $params['data'];
         $correspondenceId = $params['correspondenceId'];
 
-        $hasChanged = $this->savePhoneNumbers($data, $correspondenceId);
+        $this->savePhoneNumbers($data, $correspondenceId);
 
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
@@ -81,5 +81,41 @@ class PhoneContact implements
                 $this->getServiceLocator()->get('Entity\PhoneContact')->delete($phone['id']);
             }
         }
+    }
+
+    /**
+     * Map form type from db type
+     *
+     * @param string $type
+     */
+    private function mapPhoneTypeFromDbType($type)
+    {
+        $typeMap = array_flip($this->phoneTypes);
+
+        return (isset($typeMap[$type]) ? $typeMap[$type] : '');
+    }
+
+    /**
+     * Get fields
+     *
+     * @param array $phoneContacts
+     * @return array
+     */
+    public function mapPhoneFieldsFromDb($phoneContacts)
+    {
+        $fields = [];
+
+        foreach ($phoneContacts as $phoneContact) {
+            // map form type
+            $phoneType = $this->mapPhoneTypeFromDbType($phoneContact['phoneContactType']['id']);
+
+            if (!empty($phoneType)) {
+                $fields['phone_'.$phoneType] = $phoneContact['phoneNumber'];
+                $fields['phone_'.$phoneType . '_id'] = $phoneContact['id'];
+                $fields['phone_'.$phoneType . '_version'] = $phoneContact['version'];
+            }
+        }
+
+        return $fields;
     }
 }
