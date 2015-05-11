@@ -1144,6 +1144,7 @@ return array(
     'internal-licence-grace-periods-period-details-endDate' => 'W End date',
     'internal-licence-grace-periods-period-details-startDate' => 'W Start date',
     'internal-licence-processing' => 'W Processing',
+    'internal-licence-processing-inspection-request' => 'W Inspection request',
     'internal-licence-processing-inspection-request-label' => 'W Inspection request',
     'internal-licence-processing-notes' => 'W Notes',
     'internal-licence-processing-notes-add' => 'W Add note',
