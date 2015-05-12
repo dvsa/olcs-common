@@ -234,4 +234,36 @@ class ContinuationDetailEntityService extends AbstractEntityService
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('ContinuationDetail/Checklists', 'PUT', $data);
     }
+
+    /**
+     * Get ongoing continuation detail for a licence
+     *
+     * @param int $licenceId Licence ID
+     *
+     * @return array Entity data ['Count' => x, 'Results' => [y]]
+     */
+    public function getOngoingForLicence($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'status' => self::STATUS_ACCEPTABLE,
+        ];
+        $bundle = [
+            'children' => [
+                'licence' => [
+                    'children' => [
+                        'status',
+                    ]
+                ],
+            ]
+        ];
+
+        $results = $this->getAll($query, $bundle);
+
+        // there should only every be one ongoing continuation
+        if ($results['Count'] === 0) {
+            return false;
+        }
+        return $results['Results'][0];
+    }
 }

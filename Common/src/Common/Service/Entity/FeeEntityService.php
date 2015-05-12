@@ -422,13 +422,13 @@ class FeeEntityService extends AbstractLvaEntityService
      *
      * @param int $licenceId
      *
-     * @return array
+     * @return array Entity data ['Count' => x, 'Results' => [y]]
      */
     public function getOutstandingContinuationFee($licenceId)
     {
         $query = [
             'licence' => $licenceId,
-            'status' => [self::STATUS_OUTSTANDING, self::STATUS_WAIVE_RECOMMENDED]
+            'feeStatus' => [self::STATUS_OUTSTANDING, self::STATUS_WAIVE_RECOMMENDED]
         ];
         $bundle = [
             'children' => [

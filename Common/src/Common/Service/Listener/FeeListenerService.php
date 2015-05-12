@@ -36,11 +36,63 @@ class FeeListenerService implements ServiceLocatorAwareInterface
     protected function triggerPay($id)
     {
         $this->maybeProcessApplicationFee($id);
+        $this->maybeContinueLicence($id);
     }
 
     protected function triggerWaive($id)
     {
         $this->maybeProcessApplicationFee($id);
+        $this->maybeContinueLicence($id);
+    }
+
+    /**
+     * If the fee type is a continuation fee then check whether to continue licence
+     *
+     * @param int $feeId Fee ID
+     *
+     * @return bool Whether the licence was continued
+     */
+    protected function maybeContinueLicence($feeId)
+    {
+        $feeService = $this->getServiceLocator()->get('Entity\Fee');
+        $fee = $feeService->getOverview($feeId);
+
+        // Fee type is continuation fee
+        if ($fee['feeType']['feeType']['id'] !== \Common\Service\Data\FeeTypeDataService::FEE_TYPE_CONT) {
+            return false;
+        }
+
+        // there is an ongoing continuation associated to a particular licence and the status is 'Checklist accepted'
+        $continuationDetailService = $this->getServiceLocator()->get('Entity\ContinuationDetail');
+        $continuationDetail = $continuationDetailService->getOngoingForLicence($fee['licenceId']);
+        if ($continuationDetail === false) {
+            return false;
+        }
+
+        // the licence status is Valid, Curtailed or Suspended
+        $validLicenceStatuses = [
+            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_VALID,
+            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_CURTAILED,
+            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+        ];
+        if (!in_array($continuationDetail['licence']['status']['id'], $validLicenceStatuses)) {
+            return false;
+        }
+
+        // there are no other outstanding or (waive recommended) continuation fees associated to the licence
+        $outstandingFees = $feeService->getOutstandingContinuationFee($fee['licenceId']);
+        if ($outstandingFees['Count'] !== 0) {
+            return false;
+        }
+
+        // @todo Continue the Licence story OLCS-7310
+
+        // add success message
+        // @note not ideal to be using the FlashMessenger from a service, but in this circumstance it would be
+        // difficult to get the return the status all the way to the colntroller
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('licence.continued.message');
+
+        return true;
     }
 
     /**

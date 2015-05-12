@@ -1332,6 +1332,7 @@ return array(
     'licence-type' => 'Licence type',
     'licence-type-lock-message' => 'You cannot change the licence type',
     'licence-valid-confirmation' => 'The licence is now valid',
+    'licence.continued.message' => 'The licence has been continued',
     'licence.grace-period.saved.failure' => 'Failed to update licence grace periods.',
     'licence.grace-period.saved.success' => 'Licence grace periods updated.',
     'licence.grace-periods.table.description' => 'Description',
