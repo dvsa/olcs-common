@@ -74,4 +74,27 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
 
         return $this->getAll(array('licence' => $ids), $this->completeBundle);
     }
+
+    public function getAllRequiringReminder($minDate, $maxDate)
+    {
+        return $this->getAll(
+            [
+                ['createdOn' => '>= ' . $minDate],
+                ['createdOn' => '<= ' . $maxDate],
+                'emailReminderSent' => 'NULL'
+            ]
+        );
+    }
+
+    public function getAllRequiringPrint($minDate, $maxDate)
+    {
+        return $this->getAll(
+            [
+                ['createdOn' => '>= ' . $minDate],
+                ['createdOn' => '<= ' . $maxDate],
+                'emailReminderSent' => 'NOT NULL',
+                'printed' => 'NULL'
+            ]
+        );
+    }
 }
