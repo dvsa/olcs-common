@@ -31,7 +31,7 @@ class BusinessDetailsChangeTask implements BusinessServiceInterface, BusinessSer
     {
         $taskParams = [
             'category' => CategoryDataService::CATEGORY_APPLICATION,
-            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_HEARINGS_APPEALS,
+            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_SUBSIDIARY_DIGITAL,
             'description' => 'Change to business details',
             'licence' => $params['licenceId']
         ];

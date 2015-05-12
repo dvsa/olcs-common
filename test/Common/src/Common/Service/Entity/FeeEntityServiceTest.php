@@ -436,12 +436,16 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'id' => 10,
                     'feeType' => [
-                        'feeType' => FeeTypeDataService::FEE_TYPE_GRANTINT
+                        'feeType' => [
+                            'id' => FeeTypeDataService::FEE_TYPE_GRANTINT,
+                        ]
                     ]
                 ], [
                     'id' => 20,
                     'feeType' => [
-                        'feeType' => FeeTypeDataService::FEE_TYPE_APP
+                        'feeType' => [
+                            'id' => FeeTypeDataService::FEE_TYPE_APP,
+                        ]
                     ]
                 ]
             ]
@@ -565,7 +569,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $expectedQuery = [
             'licence' => 1966,
-            'status' => [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+            'feeStatus' => [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
             'limit' => 'all',
         ];
         $expectedBundle = [
@@ -583,5 +587,46 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->sut->getOutstandingContinuationFee(1966);
+    }
+
+    public function testGetOutstandingGrantFeesForApplication()
+    {
+        $expectedQuery = array(
+            'application' => 1966,
+            'feeStatus' => array(
+                FeeEntityService::STATUS_OUTSTANDING,
+                FeeEntityService::STATUS_WAIVE_RECOMMENDED,
+            ),
+           'limit' => 'all',
+        );
+        $expectedBundle = array(
+            'children' => array(
+                'feeStatus',
+                'feePayments' => array(
+                    'children' => array(
+                        'payment' => array(
+                            'children' => array(
+                                'status'
+                            )
+                        )
+                    )
+                ),
+                'paymentMethod',
+                'feeType' => array(
+                    'children' => array(
+                        'feeType',
+                    ),
+                    'criteria' => array(
+                        'feeType' => FeeTypeDataService::FEE_TYPE_GRANT
+                    ),
+                    'required' => true
+                ),
+            )
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue(['Results' => ['RESULTS']]));
+
+        $this->assertEquals(['RESULTS'], $this->sut->getOutstandingGrantFeesForApplication(1966));
     }
 }

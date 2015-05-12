@@ -63,7 +63,7 @@ class VariationVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
      * @param int $licenceId
      * @return Common\Service\Table\TableBuilde
      */
-    public function alterVehcileTable($table, $licenceId)
+    public function alterVehicleTable($table, $licenceId)
     {
         $table->removeAction('transfer');
         return $table;

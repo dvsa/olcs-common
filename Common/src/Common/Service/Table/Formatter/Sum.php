@@ -23,14 +23,14 @@ class Sum implements FormatterInterface
      * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public static function format($data, $column = array())
     {
         $sum = 0;
 
         if (isset($column['name'])) {
             foreach ($data as $row) {
                 if (isset($row[$column['name']]) && is_numeric($row[$column['name']])) {
-                    $sum += (int)$row[$column['name']];
+                    $sum += (float)$row[$column['name']];
                 }
             }
         }

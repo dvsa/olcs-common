@@ -404,10 +404,12 @@ class InterimHelperService extends AbstractHelperService
             }
 
             // preparing to create new pending disc
-            $newDiscs[] = [
-                'licenceVehicle' => $licenceVehicle['id'],
-                'isInterim' => 'Y'
-            ];
+            if ($licenceVehicle['interimApplication']) {
+                $newDiscs[] = [
+                    'licenceVehicle' => $licenceVehicle['id'],
+                    'isInterim' => 'Y'
+                ];
+            }
         }
         if ($licenceVehicles) {
             $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($licenceVehicles);

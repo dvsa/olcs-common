@@ -230,14 +230,20 @@ class FormHelperService extends AbstractHelperService
             return false;
         }
 
-        $addressList = $this->getServiceLocator()->get('Data\Address')->getAddressesForPostcode($postcode);
+        try {
+            $addressList = $this->getServiceLocator()->get('Data\Address')->getAddressesForPostcode($postcode);
+        } catch (\Exception $e) {
+            // RestClient / ResponseHelper throw root exceptions :(
+            $fieldset->get('searchPostcode')->setMessages(array('postcode.error.not-available'));
+            return false;
+        }
 
         // If we haven't found any addresses
         if (empty($addressList)) {
 
             $this->removeAddressSelectFields($fieldset);
 
-            $fieldset->get('searchPostcode')->setMessages(array('No addresses found for postcode'));
+            $fieldset->get('searchPostcode')->setMessages(array('postcode.error.no-addresses-found'));
 
             return false;
         }

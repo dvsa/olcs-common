@@ -59,7 +59,16 @@ class FeeAmountSumTest extends \PHPUnit_Framework_TestCase
                 ),
                 array('name' => 'subTotal'),
                 '£107.00'
-            )
+            ),
+            array(
+                array(
+                    array('subTotal' => '5.11'),
+                    array('subTotal' => 7),
+                    array('subTotal' => '95.341')
+                ),
+                array('name' => 'subTotal'),
+                '£107.45'
+            ),
         );
     }
 }
