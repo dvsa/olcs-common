@@ -51,7 +51,7 @@ class SubmissionActionTask implements
         // set task description
         switch ($params['subCategory']) {
             case CategoryDataService::TASK_SUB_CATEGORY_DECISION:
-                $subCategoryDescription = 'Decision: ';
+                $subCategoryDescription = 'Decision:';
                 break;
             case CategoryDataService::TASK_SUB_CATEGORY_RECOMMENDATION:
             default:
