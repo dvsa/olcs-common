@@ -89,7 +89,7 @@ class FeeListenerService implements ServiceLocatorAwareInterface
 
         // add success message
         // @note not ideal to be using the FlashMessenger from a service, but in this circumstance it would be
-        // difficult to get the return the status all the way to the colntroller
+        // difficult to get the return status all the way to the controller
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('licence.continued.message');
 
         return true;
@@ -110,6 +110,7 @@ class FeeListenerService implements ServiceLocatorAwareInterface
         if ($application === null
             || $application['isVariation']
             || $application['status']['id'] !== ApplicationEntityService::APPLICATION_STATUS_GRANTED
+            // @todo - check this, I think 'status' should actually be 'feeStatus'?
         ) {
             return;
         }
