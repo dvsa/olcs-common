@@ -240,7 +240,7 @@ class ContinuationDetailEntityService extends AbstractEntityService
      *
      * @param int $licenceId Licence ID
      *
-     * @return array Entity data ['Count' => x, 'Results' => [y]]
+     * @return array|false
      */
     public function getOngoingForLicence($licenceId)
     {
