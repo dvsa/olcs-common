@@ -49,7 +49,7 @@ class SubmissionActionTask implements
         // translate submission action status
         $translatedActionStatus
             = $this->getServiceLocator()->get('DataServiceManager')->get('\Common\Service\Data\RefData')
-                ->getDescription($params['submissionActionStatus']);
+                ->getDescription($params['actionTypes']);
 
         // set task description
         switch ($params['subCategory']) {
