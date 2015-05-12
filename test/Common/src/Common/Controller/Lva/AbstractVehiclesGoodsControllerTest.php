@@ -125,7 +125,7 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->once()
             ->with(111, $stubbedQuery)
             ->andReturn($stubbedTableData)
-            ->shouldReceive('alterVehcileTable')
+            ->shouldReceive('alterVehicleTable')
             ->with($mockTable, $id)
             ->andReturn($mockTable);
 
@@ -301,7 +301,7 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->once()
             ->with(111, $stubbedQuery)
             ->andReturn($stubbedTableData)
-            ->shouldReceive('alterVehcileTable')
+            ->shouldReceive('alterVehicleTable')
             ->with($mockTable, $id)
             ->andReturn($mockTable);
 
@@ -487,7 +487,7 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->once()
             ->with(111, $stubbedQuery)
             ->andReturn($stubbedTableData)
-            ->shouldReceive('alterVehcileTable')
+            ->shouldReceive('alterVehicleTable')
             ->with($mockTable, $id)
             ->andReturn($mockTable);
 
@@ -675,7 +675,7 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->once()
             ->with(111, $stubbedQuery)
             ->andReturn($stubbedTableData)
-            ->shouldReceive('alterVehcileTable')
+            ->shouldReceive('alterVehicleTable')
             ->with($mockTable, $id)
             ->andReturn($mockTable);
 
@@ -840,7 +840,7 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->once()
             ->with(111, $stubbedQuery)
             ->andReturn($stubbedTableData)
-            ->shouldReceive('alterVehcileTable')
+            ->shouldReceive('alterVehicleTable')
             ->with($mockTable, $id)
             ->andReturn($mockTable);
 
@@ -1002,7 +1002,7 @@ class AbstractVehiclesGoodsControllerTest extends MockeryTestCase
             ->once()
             ->with(111, $stubbedQuery)
             ->andReturn($stubbedTableData)
-            ->shouldReceive('alterVehcileTable')
+            ->shouldReceive('alterVehicleTable')
             ->with($mockTable, $id)
             ->andReturn($mockTable);
 
