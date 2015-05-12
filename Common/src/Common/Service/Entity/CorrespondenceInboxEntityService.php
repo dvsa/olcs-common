@@ -82,7 +82,8 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
             [
                 ['createdOn' => '>= ' . $minDate],
                 ['createdOn' => '<= ' . $maxDate],
-                'emailReminderSent' => 'NULL'
+                'emailReminderSent' => 'NULL',
+                'accessed' => 'NULL'
             ]
         );
     }
@@ -95,7 +96,8 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
                 ['createdOn' => '>= ' . $minDate],
                 ['createdOn' => '<= ' . $maxDate],
                 'emailReminderSent' => 'NOT NULL',
-                'printed' => 'NULL'
+                'printed' => 'NULL',
+                'accessed' => 'NULL'
             ]
         );
     }
