@@ -75,6 +75,7 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
         return $this->getAll(array('licence' => $ids), $this->completeBundle);
     }
 
+    // @TODO filter on licence.translate_to_welsh = false
     public function getAllRequiringReminder($minDate, $maxDate)
     {
         return $this->getAll(
@@ -86,6 +87,7 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
         );
     }
 
+    // @TODO filter on licence.translate_to_welsh = false
     public function getAllRequiringPrint($minDate, $maxDate)
     {
         return $this->getAll(
