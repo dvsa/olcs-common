@@ -76,7 +76,7 @@ class RecommendationTest extends MockeryTestCase
                     'caseId' => 111,
                     'data' => [
                         'urgent' => 'N',
-                        'submissionActionStatus' => 'action-status',
+                        'actionTypes' => 'action-status',
                         'recipientUser' => 333,
                     ],
                 ],
@@ -85,7 +85,7 @@ class RecommendationTest extends MockeryTestCase
                     'caseId' => 111,
                     'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_RECOMMENDATION,
                     'urgent' => 'N',
-                    'submissionActionStatus' => 'action-status',
+                    'actionTypes' => 'action-status',
                     'recipientUser' => 333,
                 ]
             ],
@@ -98,7 +98,7 @@ class RecommendationTest extends MockeryTestCase
                     'data' => [
                         'id' => 1,
                         'urgent' => 'N',
-                        'submissionActionStatus' => 'action-status',
+                        'actionTypes' => ['action-status','action-status2'],
                         'recipientUser' => 333,
                     ],
                 ],
@@ -107,7 +107,7 @@ class RecommendationTest extends MockeryTestCase
                     'caseId' => 111,
                     'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_RECOMMENDATION,
                     'urgent' => 'N',
-                    'submissionActionStatus' => 'action-status',
+                    'submissionActionStatus' => 'action-status, action-status2',
                     'recipientUser' => 333,
                 ]
             ],
