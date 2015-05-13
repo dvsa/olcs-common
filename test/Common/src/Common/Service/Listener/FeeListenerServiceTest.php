@@ -186,7 +186,7 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 
     /**
      * Stub out the maybeContinueLicenceStub method
-     * 
+     *
      * @param int $feeId Fee ID
      */
     protected function setupMaybeContinueLicenceStub($feeId)
@@ -361,6 +361,13 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
         $mockFlashMessenger = $this->getMock('\stdClass', ['addSuccessMessage']);
         $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
 
+        $mockBsm = $this->getMock('\stdClass', ['get']);
+        $this->sm->setService('BusinessServiceManager', $mockBsm);
+
+        $mockContinueLicenceService = $this->getMock('\stdClass', ['process']);
+        $mockBsm->expects($this->once())->method('get')->with('Lva\ContinueLicence')
+            ->will($this->returnValue($mockContinueLicenceService));
+
         $feeEntity = [
             'licenceId' => 1966,
             'feeType' => [
@@ -371,6 +378,7 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
         ];
 
         $continuationDetailEntity = [
+            'id' => 32,
             'licence' => [
                 'status' => [
                     'id' => 'lsts_valid',
@@ -389,6 +397,10 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
         $this->mockFeeService->expects($this->once())
             ->method('getOutstandingContinuationFee')->with(1966)
             ->will($this->returnValue(['Count' => 0]));
+
+        $mockContinueLicenceService->expects($this->once())
+            ->method('process')
+            ->with(['continuationDetailId' => 32]);
 
         $mockFlashMessenger->expects($this->once())
             ->method('addSuccessMessage')->with('licence.continued.message');
