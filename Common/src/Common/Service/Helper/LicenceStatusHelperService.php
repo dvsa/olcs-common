@@ -130,7 +130,7 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         $variantApplications = $applicationEntityService->getApplicationsForLicence($licenceId);
 
-        foreach ($variantApplications['Results'] as $key => $application) {
+        foreach ($variantApplications['Results'] as $application) {
             if ($application['isVariation']
                 && $application['status']['id'] == ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION
             ) {
