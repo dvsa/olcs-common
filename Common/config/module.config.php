@@ -539,7 +539,8 @@ return array(
                 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\Data\ApplicationOperatingCentre' =>
                 'Common\Service\Data\ApplicationOperatingCentre',
-            'Common\Service\Data\OcContextListDataService' => 'Common\Service\Data\OcContextListDataService'
+            'Common\Service\Data\OcContextListDataService' => 'Common\Service\Data\OcContextListDataService',
+            \Common\Service\Data\Search\SearchType::class => \Common\Service\Data\Search\SearchType::class
 
         ]
     ],

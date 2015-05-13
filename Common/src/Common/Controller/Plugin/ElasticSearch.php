@@ -4,7 +4,7 @@ namespace Common\Controller\Plugin;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\View\Model\ViewModel;
 use Common\Service\Data\Search\Search;
-use Olcs\Service\Data\Search\SearchType;
+use Common\Service\Data\Search\SearchType;
 use Zend\Session\Container;
 
 /**
@@ -28,7 +28,7 @@ class ElasticSearch extends AbstractPlugin
 
     /**
      * Search type service
-     * @var \Olcs\Service\Data\SearchType
+     * @var \Common\Service\Data\Search\SearchType
      */
     protected $searchTypeService;
 
