@@ -39,7 +39,7 @@ class SubmissionAction implements BusinessServiceInterface, BusinessServiceAware
                         'caseId' => $params['caseId'],
                         'subCategory' => $params['subCategory'],
                         'urgent' => $params['data']['urgent'],
-                        'submissionActionStatus' => $params['data']['submissionActionStatus'],
+                        'actionTypes' => $params['data']['actionTypes'],
                         'recipientUser' => $params['data']['recipientUser'],
                     ]
                 );

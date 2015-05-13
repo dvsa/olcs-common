@@ -29,6 +29,7 @@ class FeeUrl implements FormatterInterface
         $request    = $serviceLocator->get('request');
         $urlHelper  = $serviceLocator->get('Helper\Url');
         $routeMatch = $router->match($request);
+        $modal      = true;
 
         switch ($routeMatch->getMatchedRouteName()) {
             case 'licence/bus-fees':
@@ -55,6 +56,11 @@ class FeeUrl implements FormatterInterface
                     true
                 );
                 break;
+            case 'fees':
+                // selfserve
+                $modal = false;
+                $url = $urlHelper->fromRoute('fees/pay', ['fee' => $row['id']], [], true);
+                break;
             default:
                 $url = $urlHelper->fromRoute(
                     'admin-dashboard/admin-payment-processing/misc-fees/fee_action',
@@ -66,7 +72,9 @@ class FeeUrl implements FormatterInterface
         }
         return '<a href="'
             . $url
-            . '" class=js-modal-ajax>'
+            . '"'
+            . ($modal ? ' class="js-modal-ajax"' : '')
+            . '>'
             . $row['description']
             . '</a>';
     }

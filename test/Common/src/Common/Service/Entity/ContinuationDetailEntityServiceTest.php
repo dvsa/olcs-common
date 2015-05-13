@@ -279,6 +279,53 @@ class ContinuationDetailEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getContinuationMarker(1966));
+    }
 
+    public function testGetOngoingForLicence()
+    {
+        $expectedQuery = [
+            'licence' => 1966,
+            'status' => ContinuationDetailEntityService::STATUS_ACCEPTABLE,
+            'limit' => 'all',
+
+        ];
+        $expectedBundle = [
+            'children' => [
+                'licence' => [
+                    'children' => [
+                        'status',
+                    ]
+                ],
+            ]
+        ];
+
+        $this->expectOneRestCall('ContinuationDetail', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue(['Count' => 1, 'Results' => ['STUFF']]));
+
+        $this->assertEquals('STUFF', $this->sut->getOngoingForLicence(1966));
+    }
+
+    public function testGetOngoingForLicenceNoResults()
+    {
+        $expectedQuery = [
+            'licence' => 1966,
+            'status' => ContinuationDetailEntityService::STATUS_ACCEPTABLE,
+            'limit' => 'all',
+
+        ];
+        $expectedBundle = [
+            'children' => [
+                'licence' => [
+                    'children' => [
+                        'status',
+                    ]
+                ],
+            ]
+        ];
+
+        $this->expectOneRestCall('ContinuationDetail', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue(['Count' => 0, 'Results' => []]));
+
+        $this->assertFalse($this->sut->getOngoingForLicence(1966));
     }
 }

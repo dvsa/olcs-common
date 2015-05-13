@@ -30,6 +30,6 @@ trait ApplicationGoodsVehiclesControllerTrait
             $table->removeAction('reprint');
         }
 
-        return $this->getAdapter()->alterVehcileTable($table, $this->params()->fromRoute('licence'));
+        return $this->getAdapter()->alterVehicleTable($table, $this->params()->fromRoute('licence'));
     }
 }

@@ -35,7 +35,7 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
      * @param int $licenceId
      * @return Common\Service\Table\TableBuilde
      */
-    public function alterVehcileTable($table, $licenceId)
+    public function alterVehicleTable($table, $licenceId)
     {
         $otherLicences = $this->getServiceLocator()
             ->get('Entity\Licence')

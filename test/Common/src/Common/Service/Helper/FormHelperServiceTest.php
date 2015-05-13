@@ -388,7 +388,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('select')
             ->getMock()
             ->shouldReceive('setMessages')
-            ->with(array('No addresses found for postcode'));
+            ->with(array('postcode.error.no-addresses-found'));
 
         $fieldset = m::mock('Common\Form\Elements\Types\Address');
         $fieldset->shouldReceive('getName')
@@ -434,6 +434,64 @@ class FormHelperServiceTest extends MockeryTestCase
             ->getMock()
             ->shouldReceive('setMessages')
             ->with(array('Please enter a postcode'));
+
+        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset->shouldReceive('getName')
+            ->andReturn('address')
+            ->shouldReceive('get')
+            ->with('searchPostcode')
+            ->andReturn($element);
+
+        $form->shouldReceive('getFieldsets')
+            ->once()
+            ->andReturn([$fieldset]);
+
+        $this->assertTrue(
+            $helper->processAddressLookupForm($form, $request)
+        );
+    }
+
+    public function testProcessAddressLookupServiceUnavailable()
+    {
+        $helper = new FormHelperService();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+
+        $address = m::mock('\stdClass');
+        $address->shouldReceive('getAddressesForPostcode')
+            ->andReturn([]);
+
+        $sm->shouldReceive('get')
+            ->with('Data\Address')
+            ->andThrow(new \Exception('fail'));
+
+        $helper->setServiceLocator($sm);
+
+        $form = m::mock('Zend\Form\Form');
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('getPost')
+            ->andReturn(
+                [
+                    'address' => [
+                        'searchPostcode' => [
+                            'search' => true,
+                            'postcode' => 'LSX XXX'
+                        ]
+                    ]
+                ]
+            );
+
+        $element = m::mock('\stdClass');
+        $element->shouldReceive('remove')
+            ->with('addresses')
+            ->getMock()
+            ->shouldReceive('remove')
+            ->with('select')
+            ->getMock()
+            ->shouldReceive('setMessages')
+            ->once()
+            ->with(array('postcode.error.not-available'));
 
         $fieldset = m::mock('Common\Form\Elements\Types\Address');
         $fieldset->shouldReceive('getName')

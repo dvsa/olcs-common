@@ -53,7 +53,7 @@ class FeeUrlTest extends MockeryTestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $routeMatch, $expectedRoute, $expectedRouteParams)
+    public function testFormat($data, $routeMatch, $expectedRoute, $expectedRouteParams, $expectedLink)
     {
         $this->mockRouteMatch
             ->shouldReceive('getMatchedRouteName')
@@ -64,9 +64,7 @@ class FeeUrlTest extends MockeryTestCase
             ->with($expectedRoute, $expectedRouteParams, [], true)
             ->andReturn('the_url');
 
-        $expectedUrl = sprintf('<a href="the_url" class=js-modal-ajax>%s</a>', $data['description']);
-
-        $this->assertEquals($expectedUrl, FeeUrl::format($data, [], $this->sm));
+        $this->assertEquals($expectedLink, FeeUrl::format($data, [], $this->sm));
     }
 
     /**
@@ -85,6 +83,7 @@ class FeeUrlTest extends MockeryTestCase
                 'licence/fees',
                 'licence/fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee', 'controller' => 'LicenceController'],
+                '<a href="the_url" class="js-modal-ajax">licence fee</a>',
             ],
             'application fee' => [
                 [
@@ -94,6 +93,7 @@ class FeeUrlTest extends MockeryTestCase
                 'lva-application/fees',
                 'lva-application/fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee', 'controller' => 'ApplicationController'],
+                '<a href="the_url" class="js-modal-ajax">app fee</a>',
             ],
             'bus reg fee' => [
                 [
@@ -103,6 +103,7 @@ class FeeUrlTest extends MockeryTestCase
                 'licence/bus-fees',
                 'licence/bus-fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee', 'controller' => 'BusFeesController'],
+                '<a href="the_url" class="js-modal-ajax">bus reg fee</a>',
             ],
             'misc fee' => [
                 [
@@ -112,6 +113,17 @@ class FeeUrlTest extends MockeryTestCase
                 'admin-dashboard/admin-payment-processing/misc-fees',
                 'admin-dashboard/admin-payment-processing/misc-fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee', 'controller' => 'Admin\PaymentProcessingController'],
+                '<a href="the_url" class="js-modal-ajax">misc fee</a>',
+            ],
+            'dashboard fee link' => [
+                [
+                    'id' => '99',
+                    'description' => 'my fee',
+                ],
+                'fees',
+                'fees/pay',
+                ['fee' => '99'],
+                '<a href="the_url">my fee</a>',
             ],
         ];
     }
