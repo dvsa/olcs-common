@@ -397,7 +397,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @param \Common\Service\Data\Search $searchService
+     * @param \Common\Service\Data\Search\Search $searchService
      * @return ElasticSearch
      */
     public function setSearchService($searchService)
@@ -407,7 +407,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @return \Common\Service\Data\Search
+     * @return \Common\Service\Data\Search\Search
      */
     public function getSearchService()
     {
@@ -415,7 +415,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @param \Olcs\Service\Data\SearchType $searchTypeService
+     * @param \Common\Service\Data\Search\SearchType $searchTypeService
      * @return ElasticSearch
      */
     public function setSearchTypeService($searchTypeService)
@@ -425,7 +425,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @return \Olcs\Service\Data\SearchType
+     * @return \Common\Service\Data\Search\SearchType
      */
     public function getSearchTypeService()
     {

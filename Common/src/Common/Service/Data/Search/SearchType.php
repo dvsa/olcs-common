@@ -71,7 +71,7 @@ class SearchType implements ListDataInterface, FactoryInterface
         $options = [];
 
         foreach ($this->getSearchTypes() as $searchIndex) {
-            /** @var $searchIndex \Olcs\Data\Object\Search\SearchAbstract  */
+            /** @var $searchIndex \Common\Data\Object\Search\SearchAbstract  */
             if ($context === null || $searchIndex->getDisplayGroup() === $context) {
                 $options[$searchIndex->getKey()] = $searchIndex->getTitle();
             }
@@ -103,7 +103,7 @@ class SearchType implements ListDataInterface, FactoryInterface
     {
         $nav = [];
         foreach ($this->getSearchTypes() as $searchIndex) {
-            /** @var \Olcs\Data\Object\Search\SearchAbstract $searchIndex */
+            /** @var \Common\Data\Object\Search\SearchAbstract $searchIndex */
             if ($context === null || $searchIndex->getDisplayGroup() === $context) {
                 $nav[] = $searchIndex->getNavigation($queryParams);
             }
