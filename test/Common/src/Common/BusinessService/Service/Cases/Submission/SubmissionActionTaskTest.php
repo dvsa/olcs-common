@@ -61,7 +61,7 @@ class SubmissionActionTaskTest extends MockeryTestCase
         $this->sm->setService('Helper\Date', $mockDate);
 
         $mockRefData = m::mock();
-        $mockRefData->shouldReceive('getDescription')->once()->andReturn('translated description');
+        $mockRefData->shouldReceive('getDescription')->andReturn('translated description');
         $mockDataServiceManager->shouldReceive('get')->with('\Common\Service\Data\RefData')->andReturn($mockRefData);
 
         $mockTaskService = m::mock('\Common\BusinessService\BusinessServiceInterface');
@@ -111,21 +111,22 @@ class SubmissionActionTaskTest extends MockeryTestCase
                     'caseId' => 112,
                     'submissionId' => 223,
                     'recipientUser' => 333,
-                    'actionTypes' => 'action-status',
+                    'actionTypes' => ['action-status', 'action-status2'],
                     'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_RECOMMENDATION,
                     'urgent' => 'Y',
                 ],
                 [
                     'category' => CategoryDataService::CATEGORY_SUBMISSION,
                     'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_RECOMMENDATION,
-                    'description' => 'Licence 10 Case 112 Submission 223 Recommendations: translated description',
+                    'description' => 'Licence 10 Case 112 Submission 223 Recommendations: translated description, ' .
+                        'translated description',
                     'actionDate' => '2015-04-10',
                     'assignedToUser' => 987,
                     'assignedToTeam' => 876,
                     'isClosed' => 'N',
                     'urgent' => 'Y',
                     'assignedByUser' => 456,
-                    'case' => 112,
+                    'case' => 112
                 ]
             ],
         ];

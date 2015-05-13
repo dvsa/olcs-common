@@ -78,7 +78,6 @@ class SubmissionActionTask implements
             'assignedByUser' => $currentUser['id'],
             'case' => $params['caseId'],
         ];
-
         return $this->getBusinessServiceManager()->get('Task')->process($taskParams);
     }
 
@@ -102,9 +101,9 @@ class SubmissionActionTask implements
             }
             $translatedActionTypeString = substr($translatedActionTypeString, 0, -2);
         } else {
-            $translatedActionTypeString = $this->getServiceLocator()->get('DataServiceManager')->get
-                ('\Common\Service\Data\RefData')
-                ->getDescription($actionTypes);
+            $translatedActionTypeString = $this->getServiceLocator()->get('DataServiceManager')->get(
+                '\Common\Service\Data\RefData'
+            )->getDescription($actionTypes);
         }
 
         return $translatedActionTypeString;
