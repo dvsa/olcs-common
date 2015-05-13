@@ -24,6 +24,6 @@ class Api implements ServiceLocatorAwareInterface
 
     public function getCompanyProfile($companyNumber)
     {
-        return $this->sendGet('companies_house\\company', [$companyNumber], true);
+        return $this->sendGet('companies_house_rest\\company', [$companyNumber], true);
     }
 }
