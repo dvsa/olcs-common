@@ -331,7 +331,9 @@ class LicenceStatusHelperService extends AbstractHelperService
         if ($licenceData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
             array_map(
                 function ($disc) use (&$discs) {
-                    $discs[] = $disc['id'];
+                    if ($disc['ceasedDate'] === null) {
+                        $discs[] = $disc['id'];
+                    }
                 },
                 $licenceData['psvDiscs']
             );
@@ -340,7 +342,9 @@ class LicenceStatusHelperService extends AbstractHelperService
             foreach ($licenceData['licenceVehicles'] as $licenceVehicle) {
                 array_map(
                     function ($disc) use (&$discs) {
-                        $discs[] = $disc['id'];
+                        if ($disc['ceasedDate'] === null) {
+                            $discs[] = $disc['id'];
+                        }
                     },
                     $licenceVehicle['goodsDiscs']
                 );
