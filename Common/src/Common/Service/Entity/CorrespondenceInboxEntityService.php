@@ -94,10 +94,17 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
         return $this->filterEmptyLicences(
             $this->getAll(
                 [
+                    'accessed' => 'N',
                     ['createdOn' => '>= ' . $minDate],
                     ['createdOn' => '<= ' . $maxDate],
+                    // don't fetch ones we've already sent...
                     'emailReminderSent' => 'NULL',
-                    'accessed' => 'N'
+                    // ... but also ignore ones we may have printed but
+                    // *not* sent reminders for - e.g. if org has no email
+                    // addresses (somehow) - without this check we'd continually
+                    // try and email the reminder long after the print threshold
+                    // had been reached
+                    'printed' => 'NULL'
                 ],
                 $this->reminderBundle
             )
@@ -109,10 +116,14 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
         return $this->filterEmptyLicences(
             $this->getAll(
                 [
+                    'accessed' => 'N',
                     ['createdOn' => '>= ' . $minDate],
                     ['createdOn' => '<= ' . $maxDate],
-                    'printed' => 'NULL',
-                    'accessed' => 'N'
+                    // unlike the previous method, print queries don't
+                    // care about the emailReminderSent flag; whether a reminder
+                    // has or hasn't been sent doesn't affect whether it needs
+                    // printing or not
+                    'printed' => 'NULL'
                 ],
                 $this->reminderBundle
             )
