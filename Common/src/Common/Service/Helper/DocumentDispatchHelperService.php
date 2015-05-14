@@ -51,7 +51,6 @@ class DocumentDispatchHelperService extends AbstractHelperService
             ->get('Entity\Organisation')
             ->getAdminEmailAddresses($organisation['id']);
 
-
         if (empty($users)) {
             // oh well, fallback to a printout
             return $this->attemptPrint($licence, $file, $description);
@@ -99,7 +98,6 @@ class DocumentDispatchHelperService extends AbstractHelperService
         if ($licence['translateToWelsh'] === 'Y') {
             return $this->generateTranslationTask($licence, $description);
         }
-
 
         return $this->getServiceLocator()
             ->get('PrintScheduler')
