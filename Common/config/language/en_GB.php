@@ -908,6 +908,7 @@ return array(
     'edit-conviction' => 'Edit Conviction',
     'edit-undertaking' => 'Edit undertaking',
     'email.cns.subject' => 'Licences set to CNS between %s and %s',
+    'email.inbox-reminder' => 'Operator licensing information - Reminder',
     'email.licensing-information.subject' => 'Operator licensing information',
     'email.transport-manager-complete-digital-form.subject' => 'Request for transport manager details',
     'end-date' => 'End date',
@@ -2472,6 +2473,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'email.inbox-reminder' => 'Operator licensing information - Reminder',
     // Potentially unused (Not found with grep)
 );
