@@ -61,6 +61,7 @@ return array(
     'add-undertaking' => 'W Add undertaking',
     'additional-psv-discs-validator-too-many' => 'W The number of discs exceeds the total vehicle authority',
     'address' => 'W Address',
+    'admin-continuations-checklist-reminders-title' => 'W Checklist reminders',
     'admin-continuations-list-title' => 'W Time period: %s Traffic area: %s',
     'admin-continuations-no-licences-found' => 'W No licences were found',
     'admin-continuations-title' => 'W Continuations',
