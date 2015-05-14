@@ -227,9 +227,9 @@ class ContinuationDetailEntityService extends AbstractEntityService
     /**
      * @NOTE this method has a custom endpoint, as it must be wrapped within a transaction
      */
-    public function processContinuationDetail($id, $docId, $template)
+    public function processContinuationDetail($id, $docId)
     {
-        $data = ['id' => $id, 'docId' => $docId, 'template' => $template];
+        $data = ['id' => $id, 'docId' => $docId];
 
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('ContinuationDetail/Checklists', 'PUT', $data);
