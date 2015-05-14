@@ -135,7 +135,7 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
         return array_filter(
             $data['Results'],
             function ($v) {
-                return isset($data['licence']);
+                return isset($v['licence']);
             }
         );
     }

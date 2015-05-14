@@ -2472,5 +2472,6 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'email.inbox-reminder' => 'Operator licensing information - Reminder',
     // Potentially unused (Not found with grep)
 );
