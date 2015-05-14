@@ -92,6 +92,25 @@ class Addresses implements
             }
         }
 
+        if (!empty($data['consultant'])) {
+            $response = $this->getBusinessServiceManager()
+                ->get('Lva\TransportConsultant')
+                ->process(
+                    $data['consultant']
+                );
+
+            $this->getServiceLocator()->get('Entity\Licence')->forceUpdate(
+                $licenceId,
+                array(
+                    'transportConsultantCd' => $response->getData()['id']
+                )
+            );
+
+            if (!$response->isOk()) {
+                return $response;
+            }
+        }
+
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
         $response->setData(
@@ -122,6 +141,7 @@ class Addresses implements
             ]
         );
     }
+
 
     protected function saveAddressToLicence($licenceId, $data, $contactType, $type, $additionalData = array())
     {
