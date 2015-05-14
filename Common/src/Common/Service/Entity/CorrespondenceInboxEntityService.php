@@ -27,12 +27,26 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
      *
      * @var array
      */
-    protected $completeBundle = array(
-        'children' => array(
+    protected $completeBundle = [
+        'children' => [
             'document',
             'licence'
-        )
-    );
+        ]
+    ];
+
+    protected $reminderBundle = [
+        'children' => [
+            'licence' => [
+                'criteria' => [
+                    'translateToWelsh' => false
+                ],
+                'children' => [
+                    'organisation'
+                ]
+            ],
+            'document'
+        ]
+    ];
 
     /**
      * Get the full correspondence record by its primary identifier.
@@ -75,30 +89,43 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
         return $this->getAll(array('licence' => $ids), $this->completeBundle);
     }
 
-    // @TODO filter on licence.translate_to_welsh = false
     public function getAllRequiringReminder($minDate, $maxDate)
     {
-        return $this->getAll(
-            [
-                ['createdOn' => '>= ' . $minDate],
-                ['createdOn' => '<= ' . $maxDate],
-                'emailReminderSent' => 'NULL',
-                'accessed' => 'NULL'
-            ]
+        return $this->filterEmptyLicences(
+            $this->getAll(
+                [
+                    ['createdOn' => '>= ' . $minDate],
+                    ['createdOn' => '<= ' . $maxDate],
+                    'emailReminderSent' => 'NULL',
+                    'accessed' => 'N'
+                ],
+                $this->reminderBundle
+            )
         );
     }
 
-    // @TODO filter on licence.translate_to_welsh = false
     public function getAllRequiringPrint($minDate, $maxDate)
     {
-        return $this->getAll(
-            [
-                ['createdOn' => '>= ' . $minDate],
-                ['createdOn' => '<= ' . $maxDate],
-                'emailReminderSent' => 'NOT NULL',
-                'printed' => 'NULL',
-                'accessed' => 'NULL'
-            ]
+        return $this->filterEmptyLicences(
+            $this->getAll(
+                [
+                    ['createdOn' => '>= ' . $minDate],
+                    ['createdOn' => '<= ' . $maxDate],
+                    'printed' => 'NULL',
+                    'accessed' => 'N'
+                ],
+                $this->reminderBundle
+            )
+        );
+    }
+
+    private function filterEmptyLicences($data)
+    {
+        return array_filter(
+            $data['Results'],
+            function ($v) {
+                return isset($data['licence']);
+            }
         );
     }
 }

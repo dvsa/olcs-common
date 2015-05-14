@@ -232,12 +232,13 @@ class File
     public function fromData($data)
     {
         $propertyMap = array(
-            'name' => array('name'),
+            'name' => array('name', 'filename'),
             'type' => array('type'),
             'path' => array('tmp_name'),
             'size' => array('size'),
             'content' => array('content'),
-            'meta' => array('meta')
+            'meta' => array('meta'),
+            'identifier' => array('identifier')
         );
 
         foreach ($data as $key => $value) {

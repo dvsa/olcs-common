@@ -47,22 +47,10 @@ class DocumentDispatchHelperService extends AbstractHelperService
 
         // all good; but we need to check we have >= 1 admin
         // user to send the email to
-        $orgUsers = $this->getServiceLocator()
+        $users = $this->getServiceLocator()
             ->get('Entity\Organisation')
-            ->getAdminUsers($organisation['id']);
+            ->getAdminEmailAddresses($organisation['id']);
 
-        $users = [];
-        foreach ($orgUsers as $user) {
-            if (isset($user['user']['emailAddress'])) {
-                $details = $user['user']['contactDetails']['person'];
-                $users[] = sprintf(
-                    '%s %s <%s>',
-                    $details['forename'],
-                    $details['familyName'],
-                    $user['user']['emailAddress']
-                );
-            }
-        }
 
         if (empty($users)) {
             // oh well, fallback to a printout
