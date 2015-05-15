@@ -35,7 +35,23 @@ class CompaniesHouseCompanyEntityService extends AbstractEntityService
 
     public function getByCompanyNumber($number)
     {
-        return $this->get(['companyNumber' => $number], $this->bundle);
+        $result = $this->get(['companyNumber' => $number], $bundle);
+        return (isset($result['Results']) ? $result['Results'][0] : false);
+    }
+
+    public function getByCompanyNumberForCompare($number)
+    {
+        $data = $this->getByCompanyNumber($number);
+
+        if ($data !== false) {
+            // flatten refdata children
+            $data['companyStatus'] = $data['companyStatus']['id'];
+            $data['country'] = $data['country']['id'];
+
+            // @TODO flatten officer refdata children with array_map/walk
+        }
+
+        return $data;
     }
 
     public function saveNew($data)
