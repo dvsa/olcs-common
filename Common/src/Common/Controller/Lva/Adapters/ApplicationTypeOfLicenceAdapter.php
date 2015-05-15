@@ -85,9 +85,13 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
     {
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
             ->getLicenceIdForApplication($applicationId);
+
         $this->getServiceLocator()->get('Entity\Licence')->generateLicence($licenceId);
     }
 
+    /**
+     * @NOTE This functionality has been replicated in the API [Application/CreateApplicationFee]
+     */
     public function createFee($applicationId)
     {
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
@@ -97,7 +101,6 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
         $this->getServiceLocator()->get('Processing\Application')
             ->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_APP, $taskId);
-
     }
 
     public function confirmationAction()
@@ -141,6 +144,9 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         return $form;
     }
 
+    /**
+     * @NOTE This functionality is being removed when migrating to the API
+     */
     protected function resetSectionStatuses($applicationId)
     {
         $applicationCompletionService = $this->getServiceLocator()->get('Entity\ApplicationCompletion');
@@ -184,6 +190,9 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         return $applicationId;
     }
 
+    /**
+     * @NOTE This functionality has been replicated in the API [Licence/CancelLicenceFees]
+     */
     protected function cancelFees($applicationId)
     {
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
@@ -193,6 +202,8 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
     }
 
     /**
+     * @NOTE This functionality has been replicated in the API [Application/CreateApplicationFee || Task\CreateTask]
+     *
      * Create a task for the new fee
      * 
      * @param int $applicationId
