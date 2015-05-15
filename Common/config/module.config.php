@@ -1,5 +1,7 @@
 <?php
 
+use \Common\Service\Data\Search\SearchType;
+
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
 return array(
@@ -199,8 +201,10 @@ return array(
             'Zend\Log' => 'Logger',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
+            'NavigationFactory' => 'Common\Service\NavigationFactory',
         ),
         'invokables' => array(
+            'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
             'CrudListener' => 'Common\Controller\Crud\Listener',
             'SectionConfig' => 'Common\Service\Data\SectionConfig',
             'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
@@ -420,6 +424,20 @@ return array(
             'Common\Filter\Publication\Clean'
         ),
     ),
+    'search' => [
+        'invokables' => [
+            'licence'     => 'Common\Data\Object\Search\Licence',
+            'application' => 'Common\Data\Object\Search\Application',
+            'case'        => 'Common\Data\Object\Search\Cases',
+            'psv_disc'    => 'Common\Data\Object\Search\PsvDisc',
+            'vehicle'     => 'Common\Data\Object\Search\Vehicle',
+            'address'     => 'Common\Data\Object\Search\Address',
+            'bus_reg'     => 'Common\Data\Object\Search\BusReg',
+            'people'      => 'Common\Data\Object\Search\People',
+            'user'        => 'Common\Data\Object\Search\User',
+            'publication' => 'Common\Data\Object\Search\Publication',
+        ]
+    ],
     'file_uploader' => array(
         'default' => 'ContentStore',
         'config' => array(
@@ -539,7 +557,8 @@ return array(
                 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\Data\ApplicationOperatingCentre' =>
                 'Common\Service\Data\ApplicationOperatingCentre',
-            'Common\Service\Data\OcContextListDataService' => 'Common\Service\Data\OcContextListDataService'
+            'Common\Service\Data\OcContextListDataService' => 'Common\Service\Data\OcContextListDataService',
+            SearchType::class => SearchType::class
 
         ]
     ],
