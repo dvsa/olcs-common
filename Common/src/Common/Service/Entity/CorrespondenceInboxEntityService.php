@@ -59,7 +59,7 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
     {
         $licences = $this->getServiceLocator()
             ->get('Entity\Licence')
-            ->getList(
+            ->getAll(
                 array(
                     'organisation' => $organisationId
                 )

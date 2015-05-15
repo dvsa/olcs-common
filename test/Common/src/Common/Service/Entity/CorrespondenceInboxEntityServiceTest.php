@@ -37,7 +37,7 @@ class CorrespondenceInboxEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetCorrespondenceByOrganisation()
     {
         $mockLicenceService = m::mock()
-            ->shouldReceive('getList')
+            ->shouldReceive('getAll')
             ->andReturn(
                 array(
                     'Results' => array(
