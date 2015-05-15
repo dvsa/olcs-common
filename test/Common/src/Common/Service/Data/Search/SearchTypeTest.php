@@ -8,7 +8,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Common\Data\Object\Search\Application;
 use Common\Data\Object\Search\Licence;
 use Common\Service\Data\Search\SearchType;
-use Olcs\Service\NavigationFactory;
+use Common\Service\NavigationFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**

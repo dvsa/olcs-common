@@ -201,8 +201,10 @@ return array(
             'Zend\Log' => 'Logger',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
+            'NavigationFactory' => 'Common\Service\NavigationFactory',
         ),
         'invokables' => array(
+            'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
             'CrudListener' => 'Common\Controller\Crud\Listener',
             'SectionConfig' => 'Common\Service\Data\SectionConfig',
             'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
