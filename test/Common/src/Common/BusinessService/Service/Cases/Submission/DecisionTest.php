@@ -37,7 +37,7 @@ class DecisionTest extends MockeryTestCase
     /**
      * @dataProvider processDataProvider
      */
-    public function testProcess($params, $expectedTaskData)
+    public function testProcess($params)
     {
         // Mocks
         $mockSubmissionAction = m::mock();
@@ -64,14 +64,6 @@ class DecisionTest extends MockeryTestCase
                         'actionTypes' => 'action-status',
                         'recipientUser' => 333,
                     ],
-                ],
-                [
-                    'submissionId' => 222,
-                    'caseId' => 111,
-                    'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_DECISION,
-                    'urgent' => 'N',
-                    'actionTypes' => 'action-status',
-                    'recipientUser' => 333,
                 ]
             ],
             // edit
@@ -86,14 +78,6 @@ class DecisionTest extends MockeryTestCase
                         'actionTypes' => ['action-status', 'action-status2'],
                         'recipientUser' => 333,
                     ],
-                ],
-                [
-                    'submissionId' => 222,
-                    'caseId' => 111,
-                    'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_DECISION,
-                    'urgent' => 'N',
-                    'actionTypes' => 'action-status, action-status2',
-                    'recipientUser' => 333,
                 ]
             ],
         ];
