@@ -13,7 +13,6 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Service\Data\CategoryDataService;
 
-
 /**
  * SubmissionAction
  */
@@ -41,12 +40,13 @@ class Submission implements BusinessServiceInterface, BusinessServiceAwareInterf
             $taskParams = [
                 'caseId' => $submission['caseId'],
                 'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_ASSIGNMENT,
-                'submissionId' => $submission['id'],
+                'submissionId' => $submissionId,
                 'recipientUser' => $params['data']['recipientUser'],
                 'urgent' => $params['data']['urgent'],
             ];
-            $response = $this->getBusinessServiceManager()->get('Cases\Submission\SubmissionAssignmentTask')->process
-                ($taskParams);
+            $response = $this->getBusinessServiceManager()
+                ->get('Cases\Submission\SubmissionAssignmentTask')
+                ->process($taskParams);
 
             if (!$response->isOk()) {
                 return $response;

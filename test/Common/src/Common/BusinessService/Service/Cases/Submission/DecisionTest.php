@@ -46,21 +46,6 @@ class DecisionTest extends MockeryTestCase
             ->with($params['data']);
         $this->sm->setService('Entity\SubmissionAction', $mockSubmissionAction);
 
-        $mockTaskService = m::mock('\Common\BusinessService\BusinessServiceInterface');
-
-        $this->bsm->setService('Cases\Submission\SubmissionActionTask', $mockTaskService);
-
-        $mockBusinessResponse = m::mock('\Common\BusinessService\Response');
-        $mockBusinessResponse->shouldReceive('isOk')
-            ->times(empty($params['id']) ? 1 : 0)
-            ->andReturn(true);
-
-        // Expectations
-        $mockTaskService->shouldReceive('process')
-            ->times(empty($params['id']) ? 1 : 0)
-            ->with($expectedTaskData)
-            ->andReturn($mockBusinessResponse);
-
         $response = $this->sut->process($params);
 
         $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
