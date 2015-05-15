@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Cqrs\Query;
 
-use Dvsa\Olcs\Transfer\Query\Query as DvsaQuery;
+use Dvsa\Olcs\Transfer\Query\QueryContainer as DvsaQuery;
 use Common\Service\Cqrs\Response;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
@@ -78,7 +78,7 @@ class QueryService
         $httpResponse = new HttpResponse();
         $httpResponse->setStatusCode($statusCode);
         $response = new Response($httpResponse);
-        $response->setResult($messages);
+        $response->setResult(['messages' => $messages]);
 
         return $response;
     }

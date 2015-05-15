@@ -40,7 +40,7 @@ class Response
 
     public function isOk()
     {
-        return $this->httpResponse->isOk();
+        return $this->httpResponse->isSuccess();
     }
 
     public function isServerError()

@@ -165,12 +165,23 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         $applicationCompletionService->save($applicationCompletion);
     }
 
+    /**
+     * @NOTE This functionality has been replicated in the API [Application/ResetApplication]
+     */
     protected function removeApplication($applicationId)
     {
         $this->getServiceLocator()->get('Entity\Task')->closeByQuery(['application' => $applicationId]);
         $this->getServiceLocator()->get('Entity\Application')->delete($applicationId);
     }
 
+    /**
+     * @NOTE This functionality has been replicated in the API
+     * [Application/CreateApplication || Application/ResetApplication]
+     *
+     * @param $organisationId
+     * @param $typeOfLicence
+     * @return mixed
+     */
     protected function createApplication($organisationId, $typeOfLicence)
     {
         $newApplicationData = array(

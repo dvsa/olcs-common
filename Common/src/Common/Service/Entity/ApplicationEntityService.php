@@ -804,6 +804,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
     /**
      * Create a new application for a given organisation
      *
+     * @NOTE This functionality has been replicated in the API [Application/CreateApplication]
+     *
      * @param int $organisationId
      * @param array $applicationData
      * @param string $trafficArea

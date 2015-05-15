@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'unknown-error' => 'An error occurred processing your request, please try again',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
@@ -1285,8 +1287,8 @@ return array(
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
-    'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
-    'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'invalid-licence-type' => '*DUPLICATE TRANSLATION* If you are a goods vehicle operator, you can not apply for a special restricted licence',
+    'invalid-operator-type' => '*DUPLICATE TRANSLATION* If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',
     'last-name' => 'Last name',
     'layout-footer' => 'All rights Reserved.',

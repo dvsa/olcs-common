@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Cqrs\Command;
 
-use Dvsa\Olcs\Transfer\Command\Command as DvsaCommand;
+use Dvsa\Olcs\Transfer\Command\CommandContainer as DvsaCommand;
 use Common\Service\Cqrs\Response;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
@@ -93,7 +93,7 @@ class CommandService
         $httpResponse = new HttpResponse();
         $httpResponse->setStatusCode($statusCode);
         $response = new Response($httpResponse);
-        $response->setResult($messages);
+        $response->setResult(['messages' => $messages]);
 
         return $response;
     }
