@@ -46,26 +46,23 @@ class SubmissionActionTask implements
         // get current date
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
-        // translate submission action status
-        $translatedActionStatus
-            = $this->getServiceLocator()->get('DataServiceManager')->get('\Common\Service\Data\RefData')
-                ->getDescription($params['submissionActionStatus']);
+        $translatedActionTypeString = $this->generateActionTypeString($params['actionTypes']);
 
         // set task description
         switch ($params['subCategory']) {
             case CategoryDataService::TASK_SUB_CATEGORY_DECISION:
-                $subCategoryDescription = 'Decision';
+                $subCategoryDescription = 'Decision:';
                 break;
             case CategoryDataService::TASK_SUB_CATEGORY_RECOMMENDATION:
             default:
-                $subCategoryDescription = 'Recommendation';
+                $subCategoryDescription = 'Recommendations:';
                 break;
         }
 
         $description = sprintf(
             'Licence %s Case %s Submission %s %s %s',
             $case['licence']['id'], $params['caseId'], $params['submissionId'],
-            $subCategoryDescription, $translatedActionStatus
+            $subCategoryDescription, $translatedActionTypeString
         );
 
         // set the task details
@@ -81,7 +78,34 @@ class SubmissionActionTask implements
             'assignedByUser' => $currentUser['id'],
             'case' => $params['caseId'],
         ];
-
         return $this->getBusinessServiceManager()->get('Task')->process($taskParams);
+    }
+
+    /**
+     * Generate the action type string (either a list of recommendations or a single decision).
+     *
+     * @param array|string $actionTypes
+     * @return string
+     */
+    private function generateActionTypeString($actionTypes)
+    {
+        $translatedActionTypeString = '';
+
+        // process supports both arrays and single values for recommendations (1:n) and decisions (1:1) respectively
+        if (is_array($actionTypes)) {
+            // translate submission action types
+            foreach ($actionTypes as $actionType) {
+                $translatedActionTypeString
+                    .= $this->getServiceLocator()->get('DataServiceManager')->get('\Common\Service\Data\RefData')
+                        ->getDescription($actionType) . ', ';
+            }
+            $translatedActionTypeString = substr($translatedActionTypeString, 0, -2);
+        } else {
+            $translatedActionTypeString = $this->getServiceLocator()->get('DataServiceManager')->get(
+                '\Common\Service\Data\RefData'
+            )->getDescription($actionTypes);
+        }
+
+        return $translatedActionTypeString;
     }
 }
