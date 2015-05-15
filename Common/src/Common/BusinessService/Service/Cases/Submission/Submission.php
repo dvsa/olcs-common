@@ -11,6 +11,8 @@ use Common\BusinessService\BusinessServiceAwareTrait;
 use Common\BusinessService\Response;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Common\Service\Data\CategoryDataService;
+
 
 /**
  * SubmissionAction
@@ -28,7 +30,28 @@ class Submission implements BusinessServiceInterface, BusinessServiceAwareInterf
      */
     public function process(array $params)
     {
-        $this->getServiceLocator()->get('Entity\Submission')->save($params['data']);
+        $returnData = $this->getServiceLocator()->get('Entity\Submission')->save($params['data']);
+
+        $submissionId = isset($params['data']['id']) ? $params['data']['id'] : $returnData['id'];
+
+        $submissionService = $this->getServiceLocator()->get('Olcs\Service\Data\Submission');
+        $submission = $submissionService->fetchData($submissionId);
+
+        if (!empty($params['data']['recipientUser'])) {
+            $taskParams = [
+                'caseId' => $submission['caseId'],
+                'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_ASSIGNMENT,
+                'submissionId' => $submission['id'],
+                'recipientUser' => $params['data']['recipientUser'],
+                'urgent' => $params['data']['urgent'],
+            ];
+            $response = $this->getBusinessServiceManager()->get('Cases\Submission\SubmissionAssignmentTask')->process
+                ($taskParams);
+
+            if (!$response->isOk()) {
+                return $response;
+            }
+        }
 
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
