@@ -62,6 +62,7 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
      */
     public function isValid($value, $context = null)
     {
+        unset($context); // unused param
         $postcodeService = $this->getServiceLocator()->get('postcode');
         if ($value) {
 
