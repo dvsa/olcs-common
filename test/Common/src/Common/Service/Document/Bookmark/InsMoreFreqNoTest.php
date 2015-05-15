@@ -43,7 +43,7 @@ class InsMoreFreqNoTest extends \PHPUnit_Framework_TestCase
             $bookmark->render()
         );
     }
-    
+
     public function safetyInsProvider()
     {
         return [

@@ -43,6 +43,10 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
     // 'lsts_unlicenced', 'Unlicenced' is in rollout data but not used
 
+    const LICENCE_TACH_EXTERNAL = 'tach_external';
+    const LICENCE_TACH_INTERNAL = 'tach_internal';
+    const LICENCE_TACH_NA = 'tach_na';
+
     private $typeShortCodeMap =[
         self::LICENCE_TYPE_RESTRICTED             => 'R',
         self::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI',
