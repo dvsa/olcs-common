@@ -7,7 +7,6 @@
  */
 namespace Common\Controller\Lva\Application;
 
-use Common\Controller\Lva\AbstractController;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateTypeOfLicence;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Common\Controller\Lva;
@@ -20,7 +19,7 @@ use Zend\Form\Form;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractTypeOfLicenceController extends AbstractController
+abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicenceController
 {
     /**
      * Application type of licence section
