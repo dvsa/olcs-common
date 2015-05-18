@@ -29,7 +29,7 @@ class Email implements ServiceLocatorAwareInterface
 
     /**
      * Send an email based on a template rather than a body of text. Makes some assumptions
-     * that both the content of the template and the email subject may need translatingo
+     * that both the content of the template and the email subject may need translating
      */
     public function sendTemplate($translateToWelsh, $fromEmail, $fromName, $to, $subject, $view, $vars, $html = true)
     {

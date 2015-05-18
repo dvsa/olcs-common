@@ -477,7 +477,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                         array(
                             'id' => 1,
                             'goodsDiscs' => array(
-                                array('id' => 1)
+                                array('id' => 1, 'ceasedDate' => null)
                             )
                         )
                     ),
@@ -496,7 +496,8 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                     ),
                     'psvDiscs' => array(
                         array(
-                            'id' => 1
+                            'id' => 1,
+                            'ceasedDate' => null
                         )
                     ),
                     'licenceVehicles' => array(
@@ -713,5 +714,54 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         }
 
         $this->sut->terminateNow(1, '2015-03-30');
+    }
+
+    public function testCeaseDiscsGoods()
+    {
+        $mockGoodsService = m::mock();
+        $this->sm->setService('Entity\GoodsDisc', $mockGoodsService);
+
+        $licenceData = [
+            'goodsOrPsv' => ['id' => 'lcat_gv'],
+            'licenceVehicles' => [
+                [
+                    'goodsDiscs' => [
+                        ['id' => 1, 'ceasedDate' => '2015-05-13'],
+                        ['id' => 2, 'ceasedDate' => null],
+                    ]
+                ],
+                [
+                    'goodsDiscs' => [
+                        ['id' => 3, 'ceasedDate' => null],
+                        ['id' => 4, 'ceasedDate' => '2015-05-12'],
+                    ]
+                ],
+            ]
+        ];
+
+        $mockGoodsService->shouldReceive('ceaseDiscs')->with([2, 3])->once()->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->ceaseDiscs($licenceData));
+    }
+
+    public function testCeaseDiscsPsv()
+    {
+        $mockPsvService = m::mock();
+        $this->sm->setService('Entity\PsvDisc', $mockPsvService);
+
+        $licenceData = [
+            'goodsOrPsv' => ['id' => 'lcat_psv'],
+            'psvDiscs' => [
+                ['id' => 1, 'ceasedDate' => '2015-05-13'],
+                ['id' => 2, 'ceasedDate' => null],
+                ['id' => 3, 'ceasedDate' => '2013-02-12'],
+                ['id' => 4, 'ceasedDate' => null],
+                ['id' => 5, 'ceasedDate' => null],
+            ]
+        ];
+
+        $mockPsvService->shouldReceive('ceaseDiscs')->with([2, 4, 5])->once()->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->ceaseDiscs($licenceData));
     }
 }

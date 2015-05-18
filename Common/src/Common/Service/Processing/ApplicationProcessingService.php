@@ -820,18 +820,20 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     }
 
-    protected function voidCommunityLicencesForLicence($licenceId)
+    public function voidCommunityLicencesForLicence($licenceId)
     {
         $licences = $this->getServiceLocator()->get('Entity\Licence')
             ->getCommunityLicencesByLicenceId($licenceId);
 
         $data = [
             'status' => CommunityLic::STATUS_VOID,
-            'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
+            'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
         ];
         $dataToVoid = [];
         foreach ($licences as $licence) {
-            $dataToVoid[] = array_merge($licence, $data);
+            if ($licence['expiredDate'] === null) {
+                $dataToVoid[] = array_merge($licence, $data);
+            }
         }
 
         $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToVoid);
