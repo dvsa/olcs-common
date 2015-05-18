@@ -25,7 +25,7 @@ class ContinueLicence implements BusinessServiceInterface, ServiceLocatorAwareIn
     /**
      * Continue a Licence
      *
-     * @param int $params['continuationDetailId] ContinuationDetail ID
+     * @param int $params['continuationDetailId'] ContinuationDetail ID
      *
      * @return Response
      */
@@ -54,7 +54,7 @@ class ContinueLicence implements BusinessServiceInterface, ServiceLocatorAwareIn
         /* @var $licenceProcessingService \Common\Service\Processing\LicenceProcessingService */
         $licenceProcessingService = $this->getServiceLocator()->get('Processing\Licence');
 
-            // If PSV (excluding PSV Special restricted):
+        // If PSV (excluding PSV Special restricted):
         if ($licence['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV
             && $licence['licenceType']['id'] !== LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
         ) {
