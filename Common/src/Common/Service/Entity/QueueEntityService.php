@@ -29,6 +29,10 @@ class QueueEntityService extends AbstractEntityService
     const STATUS_COMPLETE = 'que_sts_complete';
     const STATUS_FAILED = 'que_sts_failed';
 
+    // Message types
+    const TYPE_COMPANIES_HOUSE_INITIAL = 'que_typ_ch_initial';
+    const TYPE_COMPANIES_HOUSE_COMPARE = 'que_typ_ch_compare';
+
     protected $itemBundle = [
         'children' => [
             'status',
