@@ -39,31 +39,6 @@ class CompaniesHouseCompanyEntityService extends AbstractEntityService
         return (isset($result['Results']) ? $result['Results'][0] : false);
     }
 
-    public function getByCompanyNumberForCompare($number)
-    {
-        $data = $this->getByCompanyNumber($number);
-
-        if ($data !== false) {
-            // flatten refdata children
-            $data['companyStatus'] = $data['companyStatus']['id'];
-            $data['country'] = $data['country']['id'];
-
-            // @TODO flatten officer refdata children with array_map/walk
-            $data['officers'] = array_map(
-                function($officer) {
-                    return [
-                        'name' => $officer['name'],
-                        'dateOfBirth' => $officer['dateOfBirth'],
-                        'role' => $officer['role']['id'],
-                    ];
-                },
-                $data['officers']
-            );
-        }
-
-        return $data;
-    }
-
     public function saveNew($data)
     {
         $meta = [
