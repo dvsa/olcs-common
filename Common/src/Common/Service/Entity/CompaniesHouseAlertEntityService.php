@@ -18,6 +18,7 @@ class CompaniesHouseAlertEntityService extends AbstractEntityService
     const REASON_NAME_CHANGE    = 'company_name_change';
     const REASON_ADDRESS_CHANGE = 'company_address_change';
     const REASON_PEOPLE_CHANGE  = 'company_people_change';
+    const REASON_INVALID_COMPANY_NUMBER = 'invalid_company_number';
 
     protected $entity = 'CompaniesHouseAlert';
 

@@ -35,7 +35,7 @@ class CompaniesHouseCompanyEntityService extends AbstractEntityService
 
     public function getByCompanyNumber($number)
     {
-        $result = $this->get(['companyNumber' => $number], $bundle);
+        $result = $this->get(['companyNumber' => $number], $this->bundle);
         return (isset($result['Results']) ? $result['Results'][0] : false);
     }
 
@@ -49,6 +49,16 @@ class CompaniesHouseCompanyEntityService extends AbstractEntityService
             $data['country'] = $data['country']['id'];
 
             // @TODO flatten officer refdata children with array_map/walk
+            $data['officers'] = array_map(
+                function($officer) {
+                    return [
+                        'name' => $officer['name'],
+                        'dateOfBirth' => $officer['dateOfBirth'],
+                        'role' => $officer['role']['id'],
+                    ];
+                },
+                $data['officers']
+            );
         }
 
         return $data;
