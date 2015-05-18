@@ -235,6 +235,7 @@ class FormHelperService extends AbstractHelperService
         } catch (\Exception $e) {
             // RestClient / ResponseHelper throw root exceptions :(
             $fieldset->get('searchPostcode')->setMessages(array('postcode.error.not-available'));
+            $this->removeAddressSelectFields($fieldset);
             return false;
         }
 
