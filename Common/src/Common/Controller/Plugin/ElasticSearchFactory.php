@@ -8,7 +8,7 @@
 namespace Common\Controller\Plugin;
 
 use Common\Service\Data\Search\Search;
-use Olcs\Service\Data\Search\SearchType;
+use Common\Service\Data\Search\SearchType;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Mvc\Controller\Plugin\PluginInterface;

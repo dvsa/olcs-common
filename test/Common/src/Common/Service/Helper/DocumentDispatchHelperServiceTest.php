@@ -173,13 +173,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             'translateToWelsh' => 'N'
         ];
 
-        $orgUsers = [
-            [
-                'user' => [
-                    'emailAddress' => null
-                ]
-            ]
-        ];
+        $orgUsers = [];
 
         $this->setService(
             'Entity\Licence',
@@ -201,7 +195,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
         $this->setService(
             'Entity\Organisation',
             m::mock()
-            ->shouldReceive('getAdminUsers')
+            ->shouldReceive('getAdminEmailAddresses')
             ->with(100)
             ->andReturn($orgUsers)
             ->getMock()
@@ -235,19 +229,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             'licNo' => 'L12345'
         ];
 
-        $orgUsers = [
-            [
-                'user' => [
-                    'emailAddress' => 'test@user.com',
-                    'contactDetails' => [
-                        'person' => [
-                            'forename' => 'Test',
-                            'familyName' => 'User'
-                        ]
-                    ]
-                ]
-            ]
-        ];
+        $orgUsers = ['Test User <test@user.com>'];
 
         $this->setService(
             'Entity\Licence',
@@ -270,7 +252,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
         $this->setService(
             'Entity\Organisation',
             m::mock()
-            ->shouldReceive('getAdminUsers')
+            ->shouldReceive('getAdminEmailAddresses')
             ->with(100)
             ->andReturn($orgUsers)
             ->getMock()
@@ -338,19 +320,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             'licNo' => 'L12345'
         ];
 
-        $orgUsers = [
-            [
-                'user' => [
-                    'emailAddress' => 'test@user.com',
-                    'contactDetails' => [
-                        'person' => [
-                            'forename' => 'Test',
-                            'familyName' => 'User'
-                        ]
-                    ]
-                ]
-            ]
-        ];
+        $orgUsers = ['Test User <test@user.com>'];
 
         $this->setService(
             'Entity\Licence',
@@ -373,7 +343,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
         $this->setService(
             'Entity\Organisation',
             m::mock()
-            ->shouldReceive('getAdminUsers')
+            ->shouldReceive('getAdminEmailAddresses')
             ->with(100)
             ->andReturn($orgUsers)
             ->getMock()

@@ -30,25 +30,6 @@ class SubmissionAction implements BusinessServiceInterface, BusinessServiceAware
     {
         $this->getServiceLocator()->get('Entity\SubmissionAction')->save($params['data']);
 
-        if (empty($params['id'])) {
-            // create a submission task
-            $response = $this->getBusinessServiceManager()->get('Cases\Submission\SubmissionActionTask')
-                ->process(
-                    [
-                        'submissionId' => $params['submissionId'],
-                        'caseId' => $params['caseId'],
-                        'subCategory' => $params['subCategory'],
-                        'urgent' => $params['data']['urgent'],
-                        'actionTypes' => $params['data']['actionTypes'],
-                        'recipientUser' => $params['data']['recipientUser'],
-                    ]
-                );
-
-            if (!$response->isOk()) {
-                return $response;
-            }
-        }
-
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
         return $response;

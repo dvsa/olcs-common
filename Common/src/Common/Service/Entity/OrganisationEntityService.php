@@ -425,8 +425,23 @@ class OrganisationEntityService extends AbstractEntityService
         return $people;
     }
 
-    public function getAdminUsers($id)
+    public function getAdminEmailAddresses($id)
     {
-        return $this->get($id, $this->adminUsersBundle)['organisationUsers'];
+        $users = [];
+        $orgUsers = $this->get($id, $this->adminUsersBundle)['organisationUsers'];
+
+        foreach ($orgUsers as $user) {
+            if (isset($user['user']['emailAddress'])) {
+                $details = $user['user']['contactDetails']['person'];
+                $users[] = sprintf(
+                    '%s %s <%s>',
+                    $details['forename'],
+                    $details['familyName'],
+                    $user['user']['emailAddress']
+                );
+            }
+        }
+
+        return $users;
     }
 }

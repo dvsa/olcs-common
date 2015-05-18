@@ -913,6 +913,7 @@ return array(
     'edit-conviction' => 'W Edit Conviction',
     'edit-undertaking' => 'W Edit undertaking',
     'email.cns.subject' => 'W Licences set to CNS between %s and %s',
+    'email.inbox-reminder' => 'W Operator licensing information - Reminder',
     'email.licensing-information.subject' => 'W Operator licensing information',
     'email.transport-manager-complete-digital-form.subject' => 'W Request for transport manager details',
     'end-date' => 'W End date',

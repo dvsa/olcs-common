@@ -4,7 +4,7 @@ namespace Common\Data\Object\Search;
 
 /**
  * Class SearchAbstract
- * @package Olcs\Data\Object\Search
+ * @package Common\Data\Object\Search
  */
 abstract class SearchAbstract
 {
