@@ -52,9 +52,6 @@ return array(
             'LvaVariation/Review' => array(
                 'Common\Controller\Lva\Delegators\VariationReviewDelegator'
             ),
-            'LvaApplication/TypeOfLicence' => array(
-                'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
-            ),
             'LvaLicence/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
             ),
@@ -214,8 +211,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter',
             'LicenceConditionsUndertakingsAdapter'
                 => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
-            'ApplicationTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'ApplicationVehicleGoodsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
             'LicenceTypeOfLicenceAdapter'

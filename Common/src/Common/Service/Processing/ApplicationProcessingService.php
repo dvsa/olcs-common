@@ -178,6 +178,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $result = $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
 
+        /**
+         * @todo migrate this [Only happens during granting]
+         */
         $this->getServiceLocator()->get('Processing\Fee')
             ->generateDocument(
                 $feeTypeName,

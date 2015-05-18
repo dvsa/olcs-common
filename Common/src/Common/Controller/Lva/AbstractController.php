@@ -103,15 +103,13 @@ abstract class AbstractController extends AbstractActionController
      * @param string $button
      * @return boolean
      */
-    protected function isButtonPressed($button)
+    protected function isButtonPressed($button, $data = [])
     {
         $request = $this->getRequest();
 
-        if (!$request->isPost()) {
-            return false;
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
         }
-
-        $data = (array)$request->getPost();
 
         return isset($data['form-actions'][$button]);
     }

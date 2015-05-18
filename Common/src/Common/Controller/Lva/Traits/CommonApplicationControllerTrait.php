@@ -126,11 +126,11 @@ trait CommonApplicationControllerTrait
      *
      * @return \Zend\Http\Response
      */
-    protected function completeSection($section)
+    protected function completeSection($section, $prg = [])
     {
         $this->addSectionUpdatedMessage($section);
 
-        if ($this->isButtonPressed('saveAndContinue')) {
+        if ($this->isButtonPressed('saveAndContinue', $prg)) {
             return $this->goToNextSection($section);
         }
 
