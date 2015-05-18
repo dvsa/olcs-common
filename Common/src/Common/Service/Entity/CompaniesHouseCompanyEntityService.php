@@ -30,7 +30,7 @@ class CompaniesHouseCompanyEntityService extends AbstractEntityService
     public function getByCompanyNumber($number)
     {
         $result = $this->get(['companyNumber' => $number], $this->bundle);
-        return (isset($result['Results']) ? $result['Results'][0] : false);
+        return (isset($result['Results'][0]) ? $result['Results'][0] : false);
     }
 
     public function saveNew($data)
