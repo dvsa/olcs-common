@@ -44,12 +44,20 @@ class CompaniesHouseCompanyEntityServiceTest extends AbstractEntityServiceTestCa
             ],
         ];
 
+        $results = [
+            'Count' => 2,
+            'Results' => [
+                ['COMPANY1'],
+                ['COMPANY2']
+            ],
+        ];
+
         // expectations
         $this->expectOneRestCall('CompaniesHouseCompany', 'GET', $expectedQuery, $expectedBundle)
-            ->will($this->returnValue('RESPONSE'));
+            ->will($this->returnValue($results));
 
         // assertions
-        $this->assertEquals('RESPONSE', $this->sut->getByCompanyNumber($companyNumber));
+        $this->assertEquals(['COMPANY1'], $this->sut->getByCompanyNumber($companyNumber));
     }
 
     public function testSaveNew()
