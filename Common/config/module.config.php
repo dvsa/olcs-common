@@ -750,6 +750,10 @@ return array(
             // Operator services
             'Operator\IrfoDetails'
                 => 'Common\BusinessService\Service\Operator\IrfoDetails',
+            'ContinuationChecklistReminderQueueLetters' =>
+                'Common\BusinessService\Service\ContinuationChecklistReminderQueueLetters',
+            'ContinuationChecklistReminderGenerateLetter' =>
+                'Common\BusinessService\Service\ContinuationChecklistReminderGenerateLetter',
         ]
     ],
     'email' => [

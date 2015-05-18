@@ -714,4 +714,29 @@ class FormHelperService extends AbstractHelperService
 
         return $fieldset;
     }
+
+    /**
+     * Save form state data
+     *
+     * @param Form  $form
+     * @param array $data The form data to save
+     */
+    public function saveFormState(Form $form, $data)
+    {
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        $sessionContainer->offsetSet($form->getName(), $data);
+    }
+
+    /**
+     * Restore form state
+     *
+     * @param Form $form
+     */
+    public function restoreFormState(Form $form)
+    {
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        if ($sessionContainer->offsetExists($form->getName())) {
+            $form->setData($sessionContainer->offsetGet($form->getName()));
+        }
+    }
 }

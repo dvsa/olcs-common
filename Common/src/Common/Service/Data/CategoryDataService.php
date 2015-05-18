@@ -60,6 +60,7 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
     const DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL = 13;
     const DOC_SUB_CATEGORY_OTHER_DOCUMENTS = 79;
     const DOC_SUB_CATEGORY_FEE_REQUEST = 110;
+    const DOC_SUB_CATEGORY_CONTINUATIONS_AND_RENEWALS_LICENCE = 74;
 
     /**
      * Cache the categories

@@ -29,7 +29,7 @@ class QueueEntityService extends AbstractEntityService
     const STATUS_COMPLETE = 'que_sts_complete';
     const STATUS_FAILED = 'que_sts_failed';
 
-    const TYPE_CONT_CHECKLIST_GENERATE_LETTERS = 'que_typ_cont_checklist_gen_let';
+    const TYPE_CONT_CHECKLIST_REMINDER_GENERATE_LETTER = 'que_typ_cont_check_rem_gen_let';
 
     protected $itemBundle = [
         'children' => [
