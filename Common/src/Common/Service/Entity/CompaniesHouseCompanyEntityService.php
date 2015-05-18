@@ -23,13 +23,7 @@ class CompaniesHouseCompanyEntityService extends AbstractEntityService
 
     protected $bundle = [
         'children' => [
-            'companyStatus',
-            'country',
-            'officers' => [
-                'children' => [
-                    'role',
-                ],
-            ],
+            'officers',
         ],
     ];
 
