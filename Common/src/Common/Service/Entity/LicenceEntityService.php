@@ -119,6 +119,20 @@ class LicenceEntityService extends AbstractLvaEntityService
                         )
                     )
                 )
+            ),
+            'transportConsultantCd' => array(
+                'children' => array(
+                    'address' => array(
+                        'children' => array(
+                            'countryCode'
+                        )
+                    ),
+                    'phoneContacts' => array(
+                        'children' => array(
+                            'phoneContactType'
+                        )
+                    )
+                )
             )
         )
     );

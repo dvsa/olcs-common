@@ -44,7 +44,11 @@ class CorrespondenceInboxEntityService extends AbstractLvaEntityService
                     'organisation'
                 ]
             ],
-            'document'
+            'document' => [
+                'children' => [
+                    'continuationDetails'
+                ]
+            ]
         ]
     ];
 

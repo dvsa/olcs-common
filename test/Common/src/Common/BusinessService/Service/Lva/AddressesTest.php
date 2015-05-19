@@ -409,6 +409,9 @@ class AddressesTest extends MockeryTestCase
             'establishment_address' => [
                 'baz' => 'test'
             ],
+            'consultant' => [
+                'foo' => 'bar'
+            ]
         ];
 
         $processData = [
@@ -484,6 +487,11 @@ class AddressesTest extends MockeryTestCase
             'correspondenceId' => 321
         ];
 
+        $consultantData = ['foo' => 'bar'];
+        $consultantResponse = new Response();
+        $consultantResponse->setType(Response::TYPE_SUCCESS);
+        $consultantResponse->setData(['id' => 1]);
+
         $this->bsm->shouldReceive('get')
             ->with('Lva\DirtyAddresses')
             ->andReturn(
@@ -502,7 +510,27 @@ class AddressesTest extends MockeryTestCase
                 ->with($phoneData)
                 ->andReturn($phoneResponse)
                 ->getMock()
+            )
+            ->shouldReceive('get')
+            ->once()
+            ->with('Lva\TransportConsultant')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('process')
+                    ->once()
+                    ->with($consultantData)
+                    ->andReturn($consultantResponse)
+                    ->getMock()
             );
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+                ->shouldReceive('forceUpdate')
+                ->once()
+                ->with(123, ['transportConsultantCd' => 1])
+                ->getMock()
+        );
 
         $response = $this->sut->process(
             [

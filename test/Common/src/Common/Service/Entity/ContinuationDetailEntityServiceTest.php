@@ -416,4 +416,13 @@ class ContinuationDetailEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(2, $results['Count']);
     }
+
+    public function testProcessContinuationDetail()
+    {
+        $query = ['id' => 1, 'docId' => 2];
+        $this->expectOneRestCall('ContinuationDetail/Checklists', 'PUT', $query)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->processContinuationDetail(1, 2));
+    }
 }
