@@ -569,7 +569,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $expectedQuery = [
             'licence' => 1966,
-            'status' => [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+            'feeStatus' => [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
             'limit' => 'all',
         ];
         $expectedBundle = [

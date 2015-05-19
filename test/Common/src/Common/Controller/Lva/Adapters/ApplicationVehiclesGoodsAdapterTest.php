@@ -236,6 +236,6 @@ class ApplicationVehiclesGoodsAdapterTest extends MockeryTestCase
             ->andReturnSelf()
             ->getMock();
 
-        $this->assertInstanceOf('Common\Service\Table\TableBuilder', $this->sut->alterVehcileTable($mockTable, null));
+        $this->assertInstanceOf('Common\Service\Table\TableBuilder', $this->sut->alterVehicleTable($mockTable, null));
     }
 }

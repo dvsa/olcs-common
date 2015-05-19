@@ -687,22 +687,30 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                         );
                     } else {
 
-                        $addressList = $this->getAddressesForPostcode($postcode);
+                        try {
+                            $addressList = $this->getAddressesForPostcode($postcode);
 
-                        if (empty($addressList)) {
+                            if (empty($addressList)) {
 
-                            $removeSelectFields = true;
+                                $removeSelectFields = true;
 
+                                $fieldset->get('searchPostcode')->setMessages(
+                                    array('No addresses found for postcode')
+                                );
+
+                            } else {
+
+                                $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
+                                    $this->getAddressService()->formatAddressesForSelect($addressList)
+                                );
+                            }
+                        } catch (\Exception $e) {
                             $fieldset->get('searchPostcode')->setMessages(
-                                array('No addresses found for postcode')
+                                array('postcode.error.not-available')
                             );
-
-                        } else {
-
-                            $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
-                                $this->getAddressService()->formatAddressesForSelect($addressList)
-                            );
+                            $removeSelectFields = true;
                         }
+
                     }
                 } elseif (isset($post[$name]['searchPostcode']['select'])
                     && !empty($post[$name]['searchPostcode']['select'])) {

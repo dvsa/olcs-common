@@ -234,4 +234,117 @@ class ContinuationDetailEntityService extends AbstractEntityService
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('ContinuationDetail/Checklists', 'PUT', $data);
     }
+
+    /**
+     * Get ongoing continuation detail for a licence
+     *
+     * @param int $licenceId Licence ID
+     *
+     * @return array|false
+     */
+    public function getOngoingForLicence($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'status' => self::STATUS_ACCEPTABLE,
+        ];
+        $bundle = [
+            'children' => [
+                'licence' => [
+                    'children' => [
+                        'status',
+                    ]
+                ],
+            ]
+        ];
+
+        $results = $this->getAll($query, $bundle);
+
+        // there should only every be one ongoing continuation
+        if ($results['Count'] === 0) {
+            return false;
+        }
+        return $results['Results'][0];
+    }
+
+    /**
+     * Get a list of Continuation checklist reminders
+     *
+     * @param int $month Month
+     * @param int $year  Year
+     *
+     * @return array ['Count' => x, 'Results' => [y]]
+     */
+    public function getChecklistReminderList($month, $year)
+    {
+
+        $query = [
+            // where the checklist has not yet been received
+            'received' => 0,
+        ];
+        $bundle = [
+            'children' => [
+                // the year/month of the continuation matches the month/year selected
+                'continuation' => [
+                    'criteria' => [
+                        'month' => $month,
+                        'year' => $year,
+                    ],
+                    'required' => true
+                ],
+                'licence' => [
+                    'children' => [
+                        'status',
+                        'organisation',
+                        'goodsOrPsv',
+                        'licenceType',
+                        'fees' => [
+                            'children' => [
+                                'feeType' => [
+                                    'criteria' => [
+                                        'feeType' => \Common\Service\Data\FeeTypeDataService::FEE_TYPE_CONT
+                                    ],
+                                ],
+                            ],
+                            'criteria' => [
+                                'feeStatus' => [
+                                    FeeEntityService::STATUS_OUTSTANDING,
+                                    FeeEntityService::STATUS_WAIVE_RECOMMENDED
+                                ]
+                            ],
+                        ]
+                    ],
+                    // the licence status is Valid, Curtailed or Suspended
+                    'criteria' => [
+                        'status' => [
+                            LicenceEntityService::LICENCE_STATUS_VALID,
+                            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                        ]
+                    ],
+                    'required' => true,
+                ],
+            ]
+        ];
+
+        $results = $this->getAll($query, $bundle);
+
+        // there is no outstanding (or waive recommended) continuation fee
+        // @note Its proving difficult to get the bundle to perform the correct query, so as this will be
+        // rewritten soon in new API. We have this array iteration to remove rows we don't want
+        $rows = [];
+        foreach ($results['Results'] as $row) {
+            foreach ($row['licence']['fees'] as $fee) {
+                if (!empty($fee['feeType'])) {
+                    continue 2;
+                }
+            }
+            $rows[] = $row;
+        }
+
+        $results['Count'] = count($rows);
+        $results['Results'] = $rows;
+
+        return $results;
+    }
 }

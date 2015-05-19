@@ -365,7 +365,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             ->with(1)
             ->andReturn([])
             ->shouldReceive('warnIfAuthorityExceeded')
-            ->shouldReceive('alterVehcileTable')
+            ->shouldReceive('alterVehicleTable')
             ->once();
 
         $this->sut->shouldReceive('getIdentifier')
