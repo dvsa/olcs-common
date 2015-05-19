@@ -663,84 +663,81 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $fieldsets = $form->getFieldsets();
 
         foreach ($fieldsets as $fieldset) {
+
             if ($fieldset instanceof Address) {
-                $this->processPostcodeLookupFieldset($fieldset);
-            }
-        }
 
-        return $form;
-    }
+                $removeSelectFields = false;
 
-    protected function processPostcodeLookupFieldset($fieldset)
-    {
-        $removeSelectFields = false;
+                $name = $fieldset->getName();
 
-        $name = $fieldset->getName();
+                // If we haven't posted a form, or we haven't clicked find address
+                if (isset($post[$name]['searchPostcode']['search'])
+                    && !empty($post[$name]['searchPostcode']['search'])) {
 
-        // If we haven't posted a form, or we haven't clicked find address
-        if (isset($post[$name]['searchPostcode']['search'])
-            && !empty($post[$name]['searchPostcode']['search'])) {
+                    $this->persist = false;
 
-            $this->persist = false;
+                    $postcode = trim($post[$name]['searchPostcode']['postcode']);
 
-            $postcode = trim($post[$name]['searchPostcode']['postcode']);
-
-            if (empty($postcode)) {
-
-                $removeSelectFields = true;
-
-                $fieldset->get('searchPostcode')->setMessages(
-                    array('Please enter a postcode')
-                );
-            } else {
-
-                try {
-                    $addressList = $this->getAddressesForPostcode($postcode);
-
-                    if (empty($addressList)) {
+                    if (empty($postcode)) {
 
                         $removeSelectFields = true;
 
                         $fieldset->get('searchPostcode')->setMessages(
-                            array('No addresses found for postcode')
+                            array('Please enter a postcode')
                         );
-
                     } else {
 
-                        $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
-                            $this->getAddressService()->formatAddressesForSelect($addressList)
-                        );
+                        try {
+                            $addressList = $this->getAddressesForPostcode($postcode);
+
+                            if (empty($addressList)) {
+
+                                $removeSelectFields = true;
+
+                                $fieldset->get('searchPostcode')->setMessages(
+                                    array('No addresses found for postcode')
+                                );
+
+                            } else {
+
+                                $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
+                                    $this->getAddressService()->formatAddressesForSelect($addressList)
+                                );
+                            }
+                        } catch (\Exception $e) {
+                            $fieldset->get('searchPostcode')->setMessages(
+                                array('postcode.error.not-available')
+                            );
+                            $removeSelectFields = true;
+                        }
+
                     }
-                } catch (\Exception $e) {
-                    $fieldset->get('searchPostcode')->setMessages(
-                        array('postcode.error.not-available')
-                    );
+                } elseif (isset($post[$name]['searchPostcode']['select'])
+                    && !empty($post[$name]['searchPostcode']['select'])) {
+
+                    $this->persist = false;
+
+                    $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
+
+                    $removeSelectFields = true;
+
+                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
+
+                    $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
+
+                } else {
+
                     $removeSelectFields = true;
                 }
 
+                if ($removeSelectFields) {
+                    $fieldset->get('searchPostcode')->remove('addresses');
+                    $fieldset->get('searchPostcode')->remove('select');
+                }
             }
-        } elseif (isset($post[$name]['searchPostcode']['select'])
-            && !empty($post[$name]['searchPostcode']['select'])) {
-
-            $this->persist = false;
-
-            $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
-
-            $removeSelectFields = true;
-
-            $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
-
-            $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
-
-        } else {
-
-            $removeSelectFields = true;
         }
 
-        if ($removeSelectFields) {
-            $fieldset->get('searchPostcode')->remove('addresses');
-            $fieldset->get('searchPostcode')->remove('select');
-        }
+        return $form;
     }
 
     protected function getAddressService()

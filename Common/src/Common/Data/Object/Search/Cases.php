@@ -76,10 +76,19 @@ class Cases extends InternalSearchAbstract
             ['title' => 'Application Id', 'name'=> 'appId'],
             ['title' => 'Application Status', 'name'=> 'appStatusDesc'],
             [
-                'title' => 'Operator name',
-                'name'=> 'orgName',
+                'title' => 'Name',
                 'formatter' => function ($data) {
-                    return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
+                    if (!empty($data['tm_id'])) {
+                        return '<a href="/transport-manager/' . $data['tmId'] . '">'
+                               . $data['tmForename'] . ' '
+                               . $data['tmFamilyName']
+                               . '</a>';
+
+                    } else {
+
+                        return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
+
+                    }
                 }
             ],
             ['title' => 'Case status', 'name'=> 'caseStatusDesc'],
