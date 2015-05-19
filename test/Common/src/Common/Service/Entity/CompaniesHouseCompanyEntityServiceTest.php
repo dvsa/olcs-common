@@ -34,13 +34,7 @@ class CompaniesHouseCompanyEntityServiceTest extends AbstractEntityServiceTestCa
 
         $expectedBundle = [
             'children' => [
-                'companyStatus',
-                'country',
-                'officers' => [
-                    'children' => [
-                        'role',
-                    ],
-                ],
+                'officers'
             ],
         ];
 
