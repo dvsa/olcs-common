@@ -642,6 +642,9 @@ return array(
     'application_your-business_business-details.data.company_number' => 'Registered company number',
     'application_your-business_business-details.data.registered_address' => 'Registered address',
     'application_your-business_business-details.data.trading_names_optional' => 'Trading names (optional)',
+    'application_your-business_business-type.add-transport-consultant.label' => 'Do you wish to add details of a
+        Transport Consultant?',
+    'application_your-business_business-type.consultant-name.label' => 'Transport consultant name',
     'application_your-business_business-type.contact-details.business-phone' => 'Business telephone No. (optional)',
     'application_your-business_business-type.contact-details.email' => 'E-mail address',
     'application_your-business_business-type.contact-details.fax-phone' => 'Fax telephone No. (optional)',
@@ -654,6 +657,8 @@ return array(
     'application_your-business_business-type.data.type' => 'What type of business are you?',
     'application_your-business_business-type.establishment.label' => 'Establishment address',
     'application_your-business_business-type.registered-office.label' => 'Registered office address',
+    'application_your-business_business-type.transport-consultant.label' => 'Transport Consultant',
+    'application_your-business_business-type.written-perm-engage.label' => 'Written permission to engage',
     'application_your-business_business_details-subsidiaries-columnCompanyNo' => 'Company number',
     'application_your-business_business_details-subsidiaries-columnName' => 'Company name',
     'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'If you have any subsidiary
