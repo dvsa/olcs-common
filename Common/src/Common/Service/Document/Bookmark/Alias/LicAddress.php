@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Service\Document\Bookmark;
+namespace Common\Service\Document\Bookmark\Alias;
 
 use Common\Service\Document\Bookmark\LicenceHolderAddress;
 

@@ -4,7 +4,6 @@ namespace CommonTest\Service\Document\Bookmark;
 use Common\Service\Document\Bookmark\FstandingFirstVeh;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use CommonTest\Bootstrap;
 use Common\Service\Entity\LicenceEntityService;
 
 /**
@@ -16,26 +15,21 @@ class FstandingFirstVehTest extends MockeryTestCase
 {
     protected $sut;
 
-    protected $sm;
-
     public function setUp()
     {
         $this->sut = new FstandingFirstVeh();
-        $this->sm = Bootstrap::getServiceManager();
-        $this->sut->setServiceLocator($this->sm);
     }
 
     public function testGetQueryContainsExpectedKeys()
     {
-        $this->sm->setService(
-            'Helper\Date',
-            m::mock()
+        $mockDateHelper = m::mock('Common\Service\Helper\DateHelperService')
             ->shouldReceive('getDate')
-            ->with(\DateTime::W3C)
+            ->with('Y-m-d')
             ->andReturn('2015-05-01')
             ->once()
-            ->getMock()
-        );
+            ->getMock();
+        $this->sut->setDateHelper($mockDateHelper);
+
         $data = [
             'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
             'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
@@ -69,11 +63,11 @@ class FstandingFirstVehTest extends MockeryTestCase
                 'Count' => 2,
                 'Results' => [
                     [
-                        'firstVehicleFee' => '123456',
+                        'firstVehicleRate' => '123456',
                         'effectiveFrom' => '2015-01-01'
                     ],
                     [
-                        'firstVehicleFee' => '023444',
+                        'firstVehicleRate' => '023444',
                         'effectiveFrom' => '2013-01-01'
                     ]
                 ]

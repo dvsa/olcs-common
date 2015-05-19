@@ -3,8 +3,8 @@
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Common\Service\Document\Bookmark\Interfaces\DateHelperAwareInterface;
+use Common\Service\Helper\DateHelperService;
 use Common\Service\Entity\FeeTypeEntityService;
 use Common\Service\Entity\TrafficAreaEntityService;
 
@@ -13,9 +13,9 @@ use Common\Service\Entity\TrafficAreaEntityService;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class TotalContFee extends DynamicBookmark implements ServiceLocatorAwareInterface
+class TotalContFee extends DynamicBookmark implements DateHelperAwareInterface
 {
-    use ServiceLocatorAwareTrait;
+    private $helper;
 
     public function getQuery(array $data)
     {
@@ -31,7 +31,7 @@ class TotalContFee extends DynamicBookmark implements ServiceLocatorAwareInterfa
                 'trafficAreaId' => ($data['niFlag'] === 'Y') ?
                     TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE :
                     '!= ' . TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE,
-                'effectiveFrom' => '<= ' . $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
+                'effectiveFrom' => '<= ' . $this->helper->getDate('Y-m-d'),
                 'sort' => 'effectiveFrom',
                 'order' => 'DESC',
                 'limit' => 1
@@ -44,10 +44,15 @@ class TotalContFee extends DynamicBookmark implements ServiceLocatorAwareInterfa
     public function render()
     {
         if (isset($this->data['Results'][0])) {
-            $value = $this->data['Results'][0]['fixedValue'] ? $this->data['Results'][0]['fixedValue'] :
+            $value = (int) $this->data['Results'][0]['fixedValue'] ? $this->data['Results'][0]['fixedValue'] :
                 $this->data['Results'][0]['fiveYearValue'];
             return number_format($value);
         }
         return '';
+    }
+
+    public function setDateHelper(DateHelperService $helper)
+    {
+        $this->helper = $helper;
     }
 }

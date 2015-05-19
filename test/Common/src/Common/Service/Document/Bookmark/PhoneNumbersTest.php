@@ -51,38 +51,36 @@ class PhoneNumbersTest extends MockeryTestCase
 
         $bookmark->setData(
             [
-                'organisation' => [
-                    'correspondenceCd' => [
-                        'phoneContacts' => [
-                            [
-                                'phoneNumber' => '123',
-                                'phoneContactType' => [
-                                    'id' => 'phone_t_mobile',
-                                    'description' => 'mobile'
-                                ]
-                            ],
-                            [
-                                'phoneNumber' => '456',
-                                'phoneContactType' => [
-                                    'id' => 'phone_t_home',
-                                    'description' => 'home'
-                                ]
-                            ],
-                            [
-                                'phoneNumber' => '012',
-                                'phoneContactType' => [
-                                    'id' => 'phone_t_fax',
-                                    'description' => 'fax'
-                                ]
-                            ],
-                            [
-                                'phoneNumber' => '789',
-                                'phoneContactType' => [
-                                    'id' => 'phone_t_fax',
-                                    'description' => 'fax'
-                                ]
-                            ],
-                        ]
+                'correspondenceCd' => [
+                    'phoneContacts' => [
+                        [
+                            'phoneNumber' => '123',
+                            'phoneContactType' => [
+                                'id' => 'phone_t_mobile',
+                                'description' => 'mobile'
+                            ]
+                        ],
+                        [
+                            'phoneNumber' => '456',
+                            'phoneContactType' => [
+                                'id' => 'phone_t_home',
+                                'description' => 'home'
+                            ]
+                        ],
+                        [
+                            'phoneNumber' => '012',
+                            'phoneContactType' => [
+                                'id' => 'phone_t_fax',
+                                'description' => 'fax'
+                            ]
+                        ],
+                        [
+                            'phoneNumber' => '789',
+                            'phoneContactType' => [
+                                'id' => 'phone_t_fax',
+                                'description' => 'fax'
+                            ]
+                        ],
                     ]
                 ]
             ]

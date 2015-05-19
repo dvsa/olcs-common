@@ -53,33 +53,35 @@ class PhoneNumbers extends DynamicBookmark
             ]
         ];
         $numbers = [];
-        foreach ($this->data['organisation']['correspondenceCd']['phoneContacts'] as $phoneContact) {
-            $numbers[] = [
-                'BOOKMARK1' => $phoneContact['phoneContactType']['description'],
-                'BOOKMARK2' => $phoneContact['phoneNumber'],
-                'type' => $phoneContact['phoneContactType']['id']
-            ];
-        }
-        usort(
-            $numbers,
-            function ($a, $b) {
-                $types = [
-                    'phone_t_tel' => 1,
-                    'phone_t_home' => 2,
-                    'phone_t_mobile' => 3,
-                    'phone_t_fax' => 4
+        if (isset($this->data['correspondenceCd']['phoneContacts'])) {
+            foreach ($this->data['correspondenceCd']['phoneContacts'] as $phoneContact) {
+                $numbers[] = [
+                    'BOOKMARK1' => $phoneContact['phoneContactType']['description'],
+                    'BOOKMARK2' => $phoneContact['phoneNumber'],
+                    'type' => $phoneContact['phoneContactType']['id']
                 ];
-                if ($types[$a['type']] == $types[$b['type']]) {
-                    return 0;
-                } elseif ($types[$a['type']] < $types[$b['type']]) {
-                    return -1;
-                } else {
-                    return 1;
-                }
             }
-        );
-        for ($i = 0; $i < count($numbers); $i++) {
-            unset($numbers[$i]['type']);
+            usort(
+                $numbers,
+                function ($a, $b) {
+                    $types = [
+                        'phone_t_tel' => 1,
+                        'phone_t_home' => 2,
+                        'phone_t_mobile' => 3,
+                        'phone_t_fax' => 4
+                    ];
+                    if ($types[$a['type']] == $types[$b['type']]) {
+                        return 0;
+                    } elseif ($types[$a['type']] < $types[$b['type']]) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                }
+            );
+            for ($i = 0; $i < count($numbers); $i++) {
+                unset($numbers[$i]['type']);
+            }
         }
         $numbers = array_pad($numbers, 5, ['BOOKMARK1' => '', 'BOOKMARK2' => '']);
         $rows = array_merge($header, $numbers);

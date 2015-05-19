@@ -55,10 +55,7 @@ class SafetyAddressesTest extends MockeryTestCase
                     [
                         'isExternal' => 'Y',
                         'contactDetails' => [
-                            'person' => [
-                                'forename' => 'C',
-                                'familyName' => 'Surname'
-                            ],
+                            'fao' => 'C Surname',
                             'address' => [
                                 'addressLine1' => 'al1',
                                 'addressLine2' => 'al2',
@@ -72,10 +69,7 @@ class SafetyAddressesTest extends MockeryTestCase
                     [
                         'isExternal' => 'N',
                         'contactDetails' => [
-                            'person' => [
-                                'forename' => 'C',
-                                'familyName' => 'Surname'
-                            ],
+                            'fao' => 'C Surname',
                             'address' => [
                                 'addressLine1' => 'al1',
                                 'addressLine2' => 'al2',
@@ -89,10 +83,7 @@ class SafetyAddressesTest extends MockeryTestCase
                     [
                         'isExternal' => 'Y',
                         'contactDetails' => [
-                            'person' => [
-                                'forename' => 'A',
-                                'familyName' => 'Surname'
-                            ],
+                            'fao' => 'A Surname',
                             'address' => [
                                 'addressLine1' => 'al1',
                                 'addressLine2' => 'al2',
@@ -106,10 +97,7 @@ class SafetyAddressesTest extends MockeryTestCase
                     [
                         'isExternal' => 'N',
                         'contactDetails' => [
-                            'person' => [
-                                'forename' => 'B',
-                                'familyName' => 'Surname'
-                            ],
+                            'fao' => 'B Surname',
                             'address' => [
                                 'addressLine1' => 'al1',
                                 'addressLine2' => 'al2',

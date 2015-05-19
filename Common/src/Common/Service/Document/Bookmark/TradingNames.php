@@ -35,7 +35,11 @@ class TradingNames extends DynamicBookmark
     public function render()
     {
         if (isset($this->data['organisation']['tradingNames'])) {
-            return implode(', ', $this->data['organisation']['tradingNames']);
+            $names = [];
+            foreach ($this->data['organisation']['tradingNames'] as $tn) {
+                $names[] = $tn['name'];
+            }
+            return implode(', ', $names);
         }
         return '';
     }

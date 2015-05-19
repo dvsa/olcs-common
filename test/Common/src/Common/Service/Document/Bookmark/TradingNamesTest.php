@@ -47,9 +47,9 @@ class TradingNamesTest extends \PHPUnit_Framework_TestCase
             [
                 'organisation' => [
                     'tradingNames' => [
-                        'tn1',
-                        'tn2',
-                        'tn3'
+                        ['name' => 'tn1'],
+                        ['name' => 'tn2'],
+                        ['name' => 'tn3']
                     ]
                 ]
             ]

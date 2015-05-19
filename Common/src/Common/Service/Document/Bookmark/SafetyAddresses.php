@@ -47,10 +47,9 @@ class SafetyAddresses extends DynamicBookmark
         $addressFormatter = new Formatter\Address();
         $addressFormatter->setSeparator(', ');
         foreach ($this->data['workshops'] as $workshop) {
-            $person = $workshop['contactDetails']['person'];
             $address = $workshop['contactDetails']['address'];
             $rows[] = [
-                'Address' => $person['forename'] . ' ' . $person['familyName'] . ', ' .
+                'Address' => $workshop['contactDetails']['fao'] . ', ' .
                     $addressFormatter->format($address, ', '),
                 'checkbox1' => $workshop['isExternal'] !== 'Y' ? 'X' : '',
                 'checkbox2' => $workshop['isExternal'] === 'Y' ? 'X' : ''

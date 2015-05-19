@@ -25,7 +25,9 @@ class VehiclesSpecified extends DynamicBookmark
                     'licenceVehicles' => [
                         'children' => [
                             'vehicle' => [
-                                'psvType'
+                                'children' => [
+                                    'psvType'
+                                ]
                             ]
                         ]
                     ],
