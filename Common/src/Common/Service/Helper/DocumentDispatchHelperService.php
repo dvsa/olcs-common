@@ -17,10 +17,11 @@ use Common\Service\Data\CategoryDataService;
  */
 class DocumentDispatchHelperService extends AbstractHelperService
 {
-    public function process($file, $params = [], $isContinuation = false)
-    {
-        // @TODO: adhere to continuation flag
+    const TYPE_STANDARD = 'standard';
+    const TYPE_CONTINUATION = 'continuation';
 
+    public function process($file, $params = [], $type = self::TYPE_STANDARD)
+    {
         if (!isset($params['licence'])) {
             throw new \RuntimeException('Please provide a licence parameter');
         }
@@ -42,6 +43,9 @@ class DocumentDispatchHelperService extends AbstractHelperService
         // we have to create the document early doors because we need its ID
         // if we're going to go on to email it
         $document = $this->getServiceLocator()->get('Entity\Document')->createFromFile($file, $params);
+
+        // external consumers may also want to know what document we've just
+        // created
         $documentId = $document['id'];
 
         if ($organisation['allowEmail'] === 'N') {
@@ -87,8 +91,8 @@ class DocumentDispatchHelperService extends AbstractHelperService
                 null,
                 null,
                 $users,
-                'email.licensing-information.subject',
-                'markup-email-dispatch-document',
+                'email.licensing-information.' . $type . '.subject',
+                'markup-email-licensing-information-' . $type,
                 $params
             );
 
