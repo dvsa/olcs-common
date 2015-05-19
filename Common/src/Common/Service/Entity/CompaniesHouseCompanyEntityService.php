@@ -27,9 +27,15 @@ class CompaniesHouseCompanyEntityService extends AbstractEntityService
         ],
     ];
 
-    public function getByCompanyNumber($number)
+    public function getLatestByCompanyNumber($number)
     {
-        $result = $this->get(['companyNumber' => $number], $this->bundle);
+        $query = [
+            'companyNumber' => $number,
+            'sort' => 'createdOn',
+            'order' => 'DESC',
+            'limit' => 1,
+        ];
+        $result = $this->get($query, $this->bundle);
         return (isset($result['Results'][0]) ? $result['Results'][0] : false);
     }
 

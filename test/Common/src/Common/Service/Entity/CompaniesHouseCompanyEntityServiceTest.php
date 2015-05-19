@@ -24,12 +24,15 @@ class CompaniesHouseCompanyEntityServiceTest extends AbstractEntityServiceTestCa
         parent::setUp();
     }
 
-    public function testGetByCompanyNumber()
+    public function testGetLatestByCompanyNumber()
     {
         $companyNumber = '01234567';
 
         $expectedQuery = [
             'companyNumber' => $companyNumber,
+            'sort' => 'createdOn',
+            'order' => 'DESC',
+            'limit' => 1,
         ];
 
         $expectedBundle = [
@@ -42,7 +45,6 @@ class CompaniesHouseCompanyEntityServiceTest extends AbstractEntityServiceTestCa
             'Count' => 2,
             'Results' => [
                 ['COMPANY1'],
-                ['COMPANY2']
             ],
         ];
 
@@ -51,7 +53,7 @@ class CompaniesHouseCompanyEntityServiceTest extends AbstractEntityServiceTestCa
             ->will($this->returnValue($results));
 
         // assertions
-        $this->assertEquals(['COMPANY1'], $this->sut->getByCompanyNumber($companyNumber));
+        $this->assertEquals(['COMPANY1'], $this->sut->getLatestByCompanyNumber($companyNumber));
     }
 
     public function testSaveNew()
