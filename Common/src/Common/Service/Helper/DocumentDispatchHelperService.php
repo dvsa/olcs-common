@@ -17,7 +17,10 @@ use Common\Service\Data\CategoryDataService;
  */
 class DocumentDispatchHelperService extends AbstractHelperService
 {
-    public function process($file, $params = [])
+    const TYPE_STANDARD = 'standard';
+    const TYPE_CONTINUATION = 'continuation';
+
+    public function process($file, $params = [], $type = self::TYPE_STANDARD)
     {
         if (!isset($params['licence'])) {
             throw new \RuntimeException('Please provide a licence parameter');
@@ -39,10 +42,15 @@ class DocumentDispatchHelperService extends AbstractHelperService
 
         // we have to create the document early doors because we need its ID
         // if we're going to go on to email it
-        $documentId = $this->getServiceLocator()->get('Entity\Document')->createFromFile($file, $params);
+        $document = $this->getServiceLocator()->get('Entity\Document')->createFromFile($file, $params);
+
+        // external consumers may also want to know what document we've just
+        // created
+        $documentId = $document['id'];
 
         if ($organisation['allowEmail'] === 'N') {
-            return $this->attemptPrint($licence, $file, $description);
+            $this->attemptPrint($licence, $file, $description);
+            return $documentId;
         }
 
         // all good; but we need to check we have >= 1 admin
@@ -53,7 +61,8 @@ class DocumentDispatchHelperService extends AbstractHelperService
 
         if (empty($users)) {
             // oh well, fallback to a printout
-            return $this->attemptPrint($licence, $file, $description);
+            $this->attemptPrint($licence, $file, $description);
+            return $documentId;
         }
 
         $this->getServiceLocator()
@@ -82,15 +91,17 @@ class DocumentDispatchHelperService extends AbstractHelperService
                 null,
                 null,
                 $users,
-                'email.licensing-information.subject',
-                'markup-email-dispatch-document',
+                'email.licensing-information.' . $type . '.subject',
+                'markup-email-licensing-information-' . $type,
                 $params
             );
 
         // even if we've successfully emailed we always create a translation task for Welsh licences
         if ($licence['translateToWelsh'] === 'Y') {
-            return $this->generateTranslationTask($licence, $description);
+            $this->generateTranslationTask($licence, $description);
         }
+
+        return $documentId;
     }
 
     private function attemptPrint($licence, $file, $description)

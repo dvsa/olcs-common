@@ -878,7 +878,12 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
 
             $postcodeService = $this->getServiceLocator()->get('Postcode');
 
-            $trafficAreaParts = $postcodeService->getTrafficAreaByPostcode($postcode);
+            try {
+                $trafficAreaParts = $postcodeService->getTrafficAreaByPostcode($postcode);
+            } catch (\Exception $e) {
+                // error from postcode service so can't set traffic area automatically
+                return;
+            }
 
             if (!empty($trafficAreaParts)) {
                 $this->getServiceLocator()
