@@ -46,12 +46,28 @@ class RestClient
 
     /**
      * @param \Zend\Uri\Http $url
+     * @param array $options options passed to HttpClient
+     * @param array $auth authentication username/password
      * @internal param \Common\Util\The $HttpUri URL of the resource that this client is meant to act on
      */
-    public function __construct(HttpUri $url)
+    public function __construct(HttpUri $url, $options = [], $auth = [])
     {
+        $defaultOptions = [
+            'keepalive' => true,
+            'timeout' => 30,
+        ];
+
+        $options = array_merge($defaultOptions, $options);
+
         $this->url = $url;
-        $this->client = new HttpClient(null, array('keepalive' => true, 'timeout' => 30));
+        $this->client = new HttpClient(null, $options);
+
+        if (!empty($auth)) {
+            $this->client->setAuth(
+                $auth['username'],
+                $auth['password']
+            );
+        }
     }
 
     /**
