@@ -512,10 +512,12 @@ class AddressesTest extends MockeryTestCase
                 ->getMock()
             )
             ->shouldReceive('get')
+            ->once()
             ->with('Lva\TransportConsultant')
             ->andReturn(
                 m::mock()
                     ->shouldReceive('process')
+                    ->once()
                     ->with($consultantData)
                     ->andReturn($consultantResponse)
                     ->getMock()
@@ -525,6 +527,7 @@ class AddressesTest extends MockeryTestCase
             'Entity\Licence',
             m::mock()
                 ->shouldReceive('forceUpdate')
+                ->once()
                 ->with(123, ['transportConsultantCd' => 1])
                 ->getMock()
         );

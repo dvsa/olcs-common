@@ -7,8 +7,6 @@
  */
 namespace Common\Controller\Lva;
 
-use Zend\Form\FormInterface;
-
 /**
  * Shared logic between Addresses controllers
  *

@@ -245,8 +245,6 @@ class AbstractAddressesControllerTest extends AbstractLvaControllerTestCase
             ->andReturn(
                 [
                     'version' => 1,
-                    'niFlag' => 'x',
-                    'goodsOrPsv' => 'y',
                     'licenceType' => 'ltyp_sn'
                 ]
             );

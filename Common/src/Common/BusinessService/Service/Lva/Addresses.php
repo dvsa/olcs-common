@@ -142,7 +142,6 @@ class Addresses implements
         );
     }
 
-
     protected function saveAddressToLicence($licenceId, $data, $contactType, $type, $additionalData = array())
     {
         $address = array(
