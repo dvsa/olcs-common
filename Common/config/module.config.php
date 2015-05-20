@@ -750,6 +750,7 @@ return array(
             // Operator services
             'Operator\IrfoDetails'
                 => 'Common\BusinessService\Service\Operator\IrfoDetails',
+            'Lva\TransportConsultant' => 'Common\BusinessService\Service\Lva\TransportConsultant',
         ]
     ],
     'email' => [
