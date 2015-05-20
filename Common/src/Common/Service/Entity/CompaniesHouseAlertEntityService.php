@@ -22,6 +22,17 @@ class CompaniesHouseAlertEntityService extends AbstractEntityService
 
     protected $entity = 'CompaniesHouseAlert';
 
+    protected $listBundle = [
+        'children' => [
+            'reasons' => [
+                'children' => [
+                    'reasonType',
+                ],
+            ],
+            'organisation',
+        ],
+    ];
+
     public function saveNew($data)
     {
         $meta = [
