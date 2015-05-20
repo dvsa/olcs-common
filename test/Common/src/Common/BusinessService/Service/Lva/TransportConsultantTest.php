@@ -3,17 +3,15 @@
 /**
  * TransportConsultant.php
  */
-namespace OlcsTest\BusinessService\Service\Lva;
+namespace CommonTest\BusinessService\Service\Lva;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 use Common\BusinessService\Response;
 
-use OlcsTest\Bootstrap;
-
-use Olcs\BusinessService\Service\Lva\TransportConsultant;
-
+use CommonTest\Bootstrap;
+use Common\BusinessService\Service\Lva\TransportConsultant;
 use Common\Service\Entity\ContactDetailsEntityService;
 
 /**
