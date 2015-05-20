@@ -138,6 +138,11 @@ final class GenericCrudController extends AbstractActionController implements
         $view = new ViewModel(['table' => $this->getTable()]);
         $view->setTemplate('partials/table');
 
+        $this->getServiceLocator()->get('viewHelperManager')
+            ->get('placeholder')
+            ->getContainer('navigationId')
+            ->set($this->getOption('navigationId'));
+
         return $this->renderView($view, $this->getTranslationPrefix() . '-title');
     }
 
