@@ -67,8 +67,6 @@ class BusReg extends InternalSearchAbstract
                 'title' => 'Name',
                 'name'=> 'orgName',
                 'formatter' => function ($data) {
-
-                    //die('<pre>' . print_r($data, 1));
                     $orgName = $data['organisationName'];
                     return $orgName;
                 }
