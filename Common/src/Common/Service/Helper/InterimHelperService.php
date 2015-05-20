@@ -600,4 +600,54 @@ class InterimHelperService extends AbstractHelperService
             ]
         );
     }
+
+    /**
+     * Generate interim fee request document
+     *
+     * @param int $applicationId
+     * @param int $feeId
+     */
+    protected function generateInterimFeeRequestDocument($applicationId, $feeId)
+    {
+        $application = $this->getServiceLocator()
+            ->get('Entity\Application')
+            ->getDataForProcessing($applicationId);
+
+        $licenceId = $application['licence']['id'];
+        $prefix = $application['niFlag'] === 'Y' ? 'NI/' : 'GB/';
+        if ($application['isVariation']) {
+            $description = $this->translator->translate('gv_interim_direction_fee_request');
+        } else {
+            $description = $this->translator->translate('gv_interim_licence_fee_request');
+        }
+        
+        $template = $prefix . 'FEE_REQ_INT_APP';
+
+        $storedFile = $this->getServiceLocator()
+            ->get('Helper\DocumentGeneration')
+            ->generateAndStore(
+                $template,
+                $description,
+                [
+                    'application' => $applicationId,
+                    'licence'     => $licenceId,
+                    'fee'         => $feeId,
+                    'user'        => $this->getServiceLocator()->get('Entity\User')->getCurrentUser()['id']
+                ]
+            );
+
+        $this->getServiceLocator()->get('Helper\DocumentDispatch')->process(
+            $storedFile,
+            [
+                'description'  => $description,
+                'filename'     => str_replace(" ", "_", $description) . '.rtf',
+                'application'  => $applicationId,
+                'licence'      => $licenceId,
+                'category'     => Category::CATEGORY_LICENSING,
+                'subCategory'  => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                'isDigital'    => false,
+                'isScan'       => false
+            ]
+        );
+    }
 }

@@ -2481,5 +2481,7 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'gv_interim_licence_fee_request' => 'GV Interim licence fee request',
+    'gv_interim_direction_fee_request' => 'GV Interim direction fee request'
     // Potentially unused (Not found with grep)
 );
