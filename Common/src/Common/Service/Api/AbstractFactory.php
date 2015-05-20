@@ -59,9 +59,20 @@ class AbstractFactory implements AbstractFactoryInterface
         $filter = new CamelCaseToDash();
         $uri = strtolower($filter->filter($uri));
         $url = new Http($uri);
-        $url->resolve($config['service_api_mapping']['endpoints'][$endpoint]);
 
-        $rest = new RestClient($url);
+        $endpointConfig = $config['service_api_mapping']['endpoints'][$endpoint];
+        $options = [];
+        $auth = [];
+        if (is_array($endpointConfig)) {
+            $url =  $url->resolve($endpointConfig['url']);
+            $options = $endpointConfig['options'];
+            $auth = isset($endpointConfig['auth']) ? $endpointConfig['auth'] : [];
+        } else {
+            $url =  $url->resolve($endpointConfig);
+        }
+
+        // options
+        $rest = new RestClient($url, $options, $auth);
         $rest->setLanguage($translator->getLocale());
 
         return $rest;

@@ -1809,8 +1809,9 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ->with($licenceId)
             ->andReturn(
                 [
-                    ['id' => 69],
-                    ['id' => 70],
+                    ['id' => 69, 'expiredDate' => null],
+                    ['id' => 70, 'expiredDate' => null],
+                    ['id' => 82, 'expiredDate' => '2015-10-12'],
                 ]
             );
         $expectedCommunityLicData = [

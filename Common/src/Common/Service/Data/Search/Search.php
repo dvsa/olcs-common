@@ -203,7 +203,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
         /** @var \Common\Form\Form $form */
         $form = $this->fetchFiltersFormObject();
 
-        /** @var \Olcs\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
+        /** @var \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
         foreach ($this->getFilters() as $filterClass) {
 
             $options = array_combine(
@@ -216,7 +216,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
             $select->setValue($filterClass->getValue());
         }
 
-        /** @var \Olcs\Data\Object\Search\Aggregations\DateRange\DateRangeAbstract $dateRangeClass */
+        /** @var \Common\Data\Object\Search\Aggregations\DateRange\DateRangeAbstract $dateRangeClass */
         foreach ($this->getDateRanges() as $dateRangeClass) {
 
             $field = $form->get('dateRanges')->get($dateRangeClass->getKey());
@@ -227,7 +227,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     }
 
     /**
-     * @return \Olcs\Data\Object\Search\InternalSearchAbstract
+     * @return \Common\Data\Object\Search\InternalSearchAbstract
      */
     protected function getDataClass()
     {
@@ -249,7 +249,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
 
         foreach ($this->getDateRanges() as $filterClass) {
 
-            /** @var \Olcs\Data\Object\Search\Aggregations\DateRange\DateRangeAbstract $filterClass */
+            /** @var \Common\Data\Object\Search\Aggregations\DateRange\DateRangeAbstract $filterClass */
             if (isset($post['dateRanges'][$filterClass->getKey()]) &&
                 !empty($post['dateRanges'][$filterClass->getKey()])) {
 
@@ -287,7 +287,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
 
         foreach ($this->getFilters() as $filterClass) {
 
-            /** @var \Olcs\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
+            /** @var \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract $filterClass */
             if (isset($post['filter'][$filterClass->getKey()]) && !empty($post['filter'][$filterClass->getKey()])) {
 
                 $filterClass->setValue($post['filter'][$filterClass->getKey()]);
@@ -339,7 +339,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     {
         foreach ($this->getFilters() as $filterClass) {
 
-            /** @var $filterClass \Olcs\Data\Object\Search\Filter\FilterAbstract */
+            /** @var $filterClass \Common\Data\Object\Search\Aggregations\Terms\TermsAbstract */
             if (isset($filterValues[$filterClass->getKey()])) {
 
                 $filterClass->setOptions($filterValues[$filterClass->getKey()]);

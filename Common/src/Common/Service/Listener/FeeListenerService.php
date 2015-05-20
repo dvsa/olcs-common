@@ -85,7 +85,8 @@ class FeeListenerService implements ServiceLocatorAwareInterface
             return false;
         }
 
-        // @todo Continue the Licence story OLCS-7310
+        $this->getServiceLocator()->get('BusinessServiceManager')->get('Lva\ContinueLicence')
+            ->process(['continuationDetailId' => $continuationDetail['id']]);
 
         // add success message
         // @note not ideal to be using the FlashMessenger from a service, but in this circumstance it would be

@@ -10,6 +10,7 @@ return array(
         'crud' => array(
             'actions' => array(
                 'delete' => array('class' => 'secondary', 'requireRows' => true),
+                'restore' => array('class' => 'secondary', 'requireRows' => true),
             )
         ),
         'row-disabled-callback' => function ($row) {

@@ -227,9 +227,9 @@ class ContinuationDetailEntityService extends AbstractEntityService
     /**
      * @NOTE this method has a custom endpoint, as it must be wrapped within a transaction
      */
-    public function processContinuationDetail($id, $docId, $template)
+    public function processContinuationDetail($id, $docId)
     {
-        $data = ['id' => $id, 'docId' => $docId, 'template' => $template];
+        $data = ['id' => $id, 'docId' => $docId];
 
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('ContinuationDetail/Checklists', 'PUT', $data);
@@ -265,5 +265,86 @@ class ContinuationDetailEntityService extends AbstractEntityService
             return false;
         }
         return $results['Results'][0];
+    }
+
+    /**
+     * Get a list of Continuation checklist reminders
+     *
+     * @param int $month Month
+     * @param int $year  Year
+     *
+     * @return array ['Count' => x, 'Results' => [y]]
+     */
+    public function getChecklistReminderList($month, $year)
+    {
+
+        $query = [
+            // where the checklist has not yet been received
+            'received' => 0,
+        ];
+        $bundle = [
+            'children' => [
+                // the year/month of the continuation matches the month/year selected
+                'continuation' => [
+                    'criteria' => [
+                        'month' => $month,
+                        'year' => $year,
+                    ],
+                    'required' => true
+                ],
+                'licence' => [
+                    'children' => [
+                        'status',
+                        'organisation',
+                        'goodsOrPsv',
+                        'licenceType',
+                        'fees' => [
+                            'children' => [
+                                'feeType' => [
+                                    'criteria' => [
+                                        'feeType' => \Common\Service\Data\FeeTypeDataService::FEE_TYPE_CONT
+                                    ],
+                                ],
+                            ],
+                            'criteria' => [
+                                'feeStatus' => [
+                                    FeeEntityService::STATUS_OUTSTANDING,
+                                    FeeEntityService::STATUS_WAIVE_RECOMMENDED
+                                ]
+                            ],
+                        ]
+                    ],
+                    // the licence status is Valid, Curtailed or Suspended
+                    'criteria' => [
+                        'status' => [
+                            LicenceEntityService::LICENCE_STATUS_VALID,
+                            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                        ]
+                    ],
+                    'required' => true,
+                ],
+            ]
+        ];
+
+        $results = $this->getAll($query, $bundle);
+
+        // there is no outstanding (or waive recommended) continuation fee
+        // @note Its proving difficult to get the bundle to perform the correct query, so as this will be
+        // rewritten soon in new API. We have this array iteration to remove rows we don't want
+        $rows = [];
+        foreach ($results['Results'] as $row) {
+            foreach ($row['licence']['fees'] as $fee) {
+                if (!empty($fee['feeType'])) {
+                    continue 2;
+                }
+            }
+            $rows[] = $row;
+        }
+
+        $results['Count'] = count($rows);
+        $results['Results'] = $rows;
+
+        return $results;
     }
 }
