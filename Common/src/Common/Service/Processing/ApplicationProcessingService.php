@@ -722,6 +722,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function processWithdrawApplication($id, $reason)
     {
+        $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
+            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_WITHDRAW);
+
         $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
 
         // Set the application status to 'Withdrawn'
@@ -754,6 +757,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function processRefuseApplication($id)
     {
+        $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
+            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_REFUSE);
+
         $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
 
         // Set the application status to 'Refused'
@@ -785,6 +791,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function processNotTakenUpApplication($id)
     {
+        $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
+            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_NTU);
+
         $licenceId = $this->getLicenceId($id);
 
         // Update the licence and application statuses to NTU
