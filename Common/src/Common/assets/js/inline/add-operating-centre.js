@@ -31,21 +31,6 @@ $(function() {
       OLCS.eventEmitter.off("show:advertisements:*", showAds);
       OLCS.eventEmitter.off("hide:advertisements:*", hideAds);
     });
-
-    /**
-     * On first showing the modal, explicitly select 'no' on the ads placed
-     * field. This won't fire if the edit/add was fullscreen but that's
-     * fine because the cascadeForm will trigger and hide it anyway
-     * due to the advertisements:* rule
-     *
-     * @NOTE: we get lucky here... this JS is only actually *loaded* via a
-     * modal in the situation described above. However, the JS is inlined
-     * before the show:modal event fires hence why this works, but that's
-     * flakey...
-     */
-    OLCS.eventEmitter.once("show:modal", function() {
-      F.selectRadio("advertisements", "adPlaced", "N");
-    });
   }
 
   OLCS.cascadeForm({
@@ -54,10 +39,13 @@ $(function() {
     rulesets: {
       "advertisements": {
         "*": function() {
+          // this data attribute will only be set if we're a variation application...
           if (vehicles.data("current")) {
+            // in which case we show the advertisements section if the OC's auth has increased at all
             return vehicles.val() > vehicles.data("current") || trailers.val() > trailers.data("current");
           }
 
+          // for non variations (i.e. licences and applications) we always show the ads block
           return true;
         },
         "label:adPlacedIn": hasAdvertisements,
