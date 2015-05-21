@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'AP-TOL-1' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'AP-TOL-2' => 'W If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'Authorisation' => 'W Authorisation',
     'Confirm' => 'W Confirm',
     'Continue' => 'W Continue',
@@ -1297,9 +1299,10 @@ return array(
     'internal.transport_manager.responsibilities.other_licence' => 'W other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'W Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'W Edit other licence',
-    'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
-        licence',
-    'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'invalid-licence-type' => 'W *DUPLICATE TRANSLATION* If you are a goods vehicle operator, you can not apply for a
+        special restricted licence',
+    'invalid-operator-type' => 'W *DUPLICATE TRANSLATION* If you operate in Northern Ireland, you can only apply for a
+        Goods licence',
     'isTrailer' => 'W Trailer?',
     'last-name' => 'W Last name',
     'layout-footer' => 'W All rights Reserved.',
@@ -1374,7 +1377,7 @@ return array(
     'licence.vehicles_transfer.form.message_empty' => 'W You must select a licence to which to transfer the vehicle(s)',
     'licence.vehicles_transfer.form.message_exceed' => 'W Transferring these vehicles would exceed the vehicle authority
         on licence %s',
-    'licence.vehicles_transfer.form.transfer_vehicles' => 'W src vehicless',
+    'licence.vehicles_transfer.form.transfer_vehicles' => 'W Transfer vehicles',
     'licence.vehicles_transfer.form.vehicles_transfered' => 'W The selected vehicle(s) have been transferred',
     'licence_goods-trailers_trailer.form.add.trailernumber' => 'W Trailer Number',
     'licence_goods-trailers_trailer.table.guidance' => 'W I undertake that the trailers specified are in operation and
@@ -2155,7 +2158,7 @@ return array(
     'short-label-tol-operator-type' => 'W Type of operator',
     'si' => 'W SI',
     'sidebar-applying-for-licence' => 'W Applying for a new licence',
-    'skip-hire-waste-transfer-refuse' => 'W Skip Hire / Waste src / Refuse',
+    'skip-hire-waste-transfer-refuse' => 'W Skip Hire / Waste Transfer / Refuse',
     'sole-trader' => 'W Sole Trader',
     'sole-trader-details-header' => 'W Sole trader details',
     'start-date' => 'W Start date',
@@ -2293,7 +2296,7 @@ return array(
     'trafficAreaSet.trafficArea' => 'W Traffic area',
     'trailer' => 'W Trailer',
     'trailer-count' => 'W %s trailers',
-    'transfer.button' => 'W src',
+    'transfer.button' => 'W Transfer',
     'transport-manager' => 'W Transport Manager',
     'transport-manager-application.edit-form.confirmation' => 'W Are you sure you want to edit this form?',
     'transport-manager-details-cancel' => 'W Cancel',
@@ -2408,6 +2411,7 @@ return array(
     'type-of-licence' => 'W Type of licence',
     'undertakings' => 'W Undertakings',
     'united-kingdom' => 'W United Kingdom',
+    'unknown-error' => 'W An error occurred processing your request, please try again',
     'update-continuation.saved' => 'W The continuation details have been updated',
     'update-continuation.separator-sheet' => 'W The separator sheet has been generated',
     'update-continuation.success' => 'W The licence has been continued',
