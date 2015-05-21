@@ -1367,7 +1367,7 @@ return array(
     'licence.vehicles_transfer.form.message_empty' => 'W You must select a licence to which to transfer the vehicle(s)',
     'licence.vehicles_transfer.form.message_exceed' => 'W Transferring these vehicles would exceed the vehicle authority
         on licence %s',
-    'licence.vehicles_transfer.form.transfer_vehicles' => 'W Transfer vehicless',
+    'licence.vehicles_transfer.form.transfer_vehicles' => 'W src vehicless',
     'licence.vehicles_transfer.form.vehicles_transfered' => 'W The selected vehicle(s) have been transferred',
     'licence_goods-trailers_trailer.form.add.trailernumber' => 'W Trailer Number',
     'licence_goods-trailers_trailer.table.guidance' => 'W I undertake that the trailers specified are in operation and
@@ -2148,7 +2148,7 @@ return array(
     'short-label-tol-operator-type' => 'W Type of operator',
     'si' => 'W SI',
     'sidebar-applying-for-licence' => 'W Applying for a new licence',
-    'skip-hire-waste-transfer-refuse' => 'W Skip Hire / Waste Transfer / Refuse',
+    'skip-hire-waste-transfer-refuse' => 'W Skip Hire / Waste src / Refuse',
     'sole-trader' => 'W Sole Trader',
     'sole-trader-details-header' => 'W Sole trader details',
     'start-date' => 'W Start date',
@@ -2286,7 +2286,7 @@ return array(
     'trafficAreaSet.trafficArea' => 'W Traffic area',
     'trailer' => 'W Trailer',
     'trailer-count' => 'W %s trailers',
-    'transfer.button' => 'W Transfer',
+    'transfer.button' => 'W src',
     'transport-manager' => 'W Transport Manager',
     'transport-manager-application.edit-form.confirmation' => 'W Are you sure you want to edit this form?',
     'transport-manager-details-cancel' => 'W Cancel',
