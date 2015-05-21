@@ -333,8 +333,6 @@ class InterimHelperService extends AbstractHelperService
         // Print the interim document
         $this->printInterimDocument($interimData);
 
-        // Generate and print grant interim letter
-        $this->generateGrantInterimLetter($applicationId);
     }
 
     /**
@@ -554,74 +552,26 @@ class InterimHelperService extends AbstractHelperService
     }
 
     /**
-     * Generate grant interim letter
-     *
-     * @param int $applicationId
-     */
-    protected function generateGrantInterimLetter($applicationId)
-    {
-        $application = $this->getServiceLocator()
-            ->get('Entity\Application')
-            ->getDataForProcessing($applicationId);
-
-        $licenceId = $application['licence']['id'];
-
-        if ($application['isVariation']) {
-            $template = 'VAR_APP_INT_GRANTED';
-            $description = "VAR_APP_INT_GRANTED";
-        } else {
-            $template = 'NEW_APP_INT_GRANTED';
-            $description = "NEW_APP_INT_GRANTED";
-        }
-
-        $storedFile = $this->getServiceLocator()
-            ->get('Helper\DocumentGeneration')
-            ->generateAndStore(
-                $template,
-                $description,
-                [
-                    'application' => $applicationId,
-                    'licence'     => $licenceId,
-                    'user'        => $this->getServiceLocator()->get('Entity\User')->getCurrentUser()['id']
-                ]
-            );
-
-        $this->getServiceLocator()->get('Helper\DocumentDispatch')->process(
-            $storedFile,
-            [
-                'description'  => $description,
-                'filename'     => str_replace(" ", "_", $description) . '.rtf',
-                'application'  => $applicationId,
-                'licence'      => $licenceId,
-                'category'     => Category::CATEGORY_LICENSING,
-                'subCategory'  => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                'isExternal'   => false,
-                'isScan'       => false
-            ]
-        );
-    }
-
-    /**
      * Generate interim fee request document
      *
      * @param int $applicationId
      * @param int $feeId
      */
-    protected function generateInterimFeeRequestDocument($applicationId, $feeId)
+    public function generateInterimFeeRequestDocument($applicationId, $feeId)
     {
         $application = $this->getServiceLocator()
             ->get('Entity\Application')
             ->getDataForProcessing($applicationId);
 
         $licenceId = $application['licence']['id'];
-        $prefix = $application['niFlag'] === 'Y' ? 'NI/' : 'GB/';
+        $translator = $this->getServiceLocator()->get('translator');
         if ($application['isVariation']) {
-            $description = $this->translator->translate('gv_interim_direction_fee_request');
+            $description = $translator->translate('gv_interim_direction_fee_request');
         } else {
-            $description = $this->translator->translate('gv_interim_licence_fee_request');
+            $description = $translator->translate('gv_interim_licence_fee_request');
         }
-        
-        $template = $prefix . 'FEE_REQ_INT_APP';
+
+        $template = 'FEE_REQ_INT_APP';
 
         $storedFile = $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')

@@ -40,6 +40,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const INTERIM_STATUS_INFORCE = 'int_sts_in_force';
     const INTERIM_STATUS_REFUSED = 'int_sts_refused';
     const INTERIM_STATUS_REVOKED = 'int_sts_revoked';
+    const INTERIM_STATUS_GRANTED = 'int_sts_granted';
 
     const WITHDRAWN_REASON_WITHDRAWN    = 'withdrawn';
     const WITHDRAWN_REASON_REG_IN_ERROR = 'reg_in_error';

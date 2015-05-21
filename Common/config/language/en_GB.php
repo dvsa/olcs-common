@@ -973,6 +973,8 @@ return array(
     'generic-delete-confirmation-label' => 'Are you sure you want to remove these?',
     'generic-nothing-updated' => 'Nothing to update',
     'generic-restore-success' => 'Record(s) restored successfully',
+    'gv_interim_direction_fee_request' => 'GV Interim direction fee request',
+    'gv_interim_licence_fee_request' => 'GV Interim licence fee request',
     'header-correspondence-details' => 'Correspondence details',
     'header-establishment-address' => 'Establishment address',
     'helpdesk' => 'Helpdesk',
@@ -1268,6 +1270,7 @@ return array(
     'internal.interim.form.interim_end' => 'Interim end date',
     'internal.interim.form.interim_grant' => 'Grant',
     'internal.interim.form.interim_granted' => 'Interim granted',
+    'internal.interim.form.interim_in_force' => 'The interim is now in-force',
     'internal.interim.form.interim_reason' => 'Interim reason',
     'internal.interim.form.interim_refuse' => 'Refuse',
     'internal.interim.form.interim_refused' => 'The interim has been refused',
@@ -1279,6 +1282,8 @@ return array(
     'internal.interim.form.refuse_confirm' => 'Are you sure you want to refuse this interim?',
     'internal.interim.generation_success' => 'The interim document has been generated',
     'internal.interim.interim_details_saved' => 'Interim details saved',
+    'internal.interim.interim_granted_fee_requested' => 'The interim has been granted and a fee request letter has been
+        generated',
     'internal.interim.interim_updated' => 'Interim updated',
     'internal.interim.operatingcentres.table.address' => 'Operating centre address',
     'internal.interim.operatingcentres.table.header' => 'Operating centres',
@@ -2481,7 +2486,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'gv_interim_licence_fee_request' => 'GV Interim licence fee request',
-    'gv_interim_direction_fee_request' => 'GV Interim direction fee request'
     // Potentially unused (Not found with grep)
 );
