@@ -560,6 +560,8 @@ class LicenceEntityService extends AbstractLvaEntityService
     /**
      * Generates new licences or updates existing one and saves it to licence entity
      *
+     * @NOTE This functionality has been replicated in the API [Licence/GenerateLicenceNumber]
+     *
      * @param string $licenceId
      */
     public function generateLicence($licenceId)

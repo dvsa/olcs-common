@@ -160,7 +160,6 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
     {
         $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\TypeOfLicence');
 
-        $this->alterFormForLocation($form);
         $this->alterFormForLva($form);
 
         return $form;

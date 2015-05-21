@@ -273,6 +273,9 @@ class FeeEntityService extends AbstractLvaEntityService
         return $this->getAll($query, $this->outstandingForOrganisationBundle);
     }
 
+    /**
+     * @NOTE This functionality has been replicated in the API [Licence/CancelLicenceFees]
+     */
     public function cancelForLicence($licenceId)
     {
         $query = array(

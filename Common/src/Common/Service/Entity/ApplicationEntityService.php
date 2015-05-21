@@ -803,57 +803,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
     }
 
     /**
-     * Create a new application for a given organisation
-     *
-     * @param int $organisationId
-     * @param array $applicationData
-     * @param string $trafficArea
-     */
-    public function createNew($organisationId, $applicationData = array(), $trafficArea = null)
-    {
-        $licenceData = array(
-            'status' => LicenceEntityService::LICENCE_STATUS_NOT_SUBMITTED,
-            'organisation' => $organisationId,
-        );
-
-        $licenceService = $this->getServiceLocator()->get('Entity\Licence');
-        $licence = $licenceService->save($licenceData);
-        if ($trafficArea) {
-            $licenceService->setTrafficArea($licence['id'], $trafficArea);
-        }
-
-        $applicationData = array_merge(
-            $applicationData,
-            array(
-                'licence' => $licence['id'],
-                'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,
-                'isVariation' => false
-            )
-        );
-
-        if ($this->getServiceLocator()->has('ApplicationUtility')) {
-            $applicationData = $this->getServiceLocator()->get('ApplicationUtility')
-                ->alterCreateApplicationData($applicationData);
-        }
-
-        $application = $this->save($applicationData);
-
-        // create blank records for Completions and Tracking
-        $applicationStatusData = ['application' => $application['id']];
-
-        $this->getServiceLocator()->get('Entity\ApplicationCompletion')
-            ->save($applicationStatusData);
-
-        $this->getServiceLocator()->get('Entity\ApplicationTracking')
-            ->save($applicationStatusData);
-
-        return array(
-            'application' => $application['id'],
-            'licence' => $licence['id']
-        );
-    }
-
-    /**
      * Create a variation application for a given organisation
      *
      * @param int $licenceId
