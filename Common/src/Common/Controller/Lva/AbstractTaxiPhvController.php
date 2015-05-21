@@ -424,9 +424,14 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
                 $postcodeService = $this->getServiceLocator()->get('postcode');
 
-                $trafficAreaId = $postcodeService->getTrafficAreaByPostcode(
-                    $data['contactDetails']['addresses']['address']['postcode']
-                )[0];
+                try {
+                    $trafficAreaId = $postcodeService->getTrafficAreaByPostcode(
+                        $data['contactDetails']['addresses']['address']['postcode']
+                    )[0];
+                } catch (\Exception $e) {
+                    // handle error from postcode service, just don't set traffic area
+                    $trafficAreaId = null;
+                }
 
                 if (!empty($trafficAreaId)) {
                     $this->getServiceLocator()->get('Entity\Licence')->setTrafficArea($licenceId, $trafficAreaId);
