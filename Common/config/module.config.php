@@ -60,6 +60,17 @@ return array(
             'LvaVariation/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
             ),
+            'LvaApplication/BusinessType' => array(
+                // @NOTE: we need an associative array when we need to override the
+                // delegator elsewhere, such as in selfserve or internal
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaLicence/BusinessType' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaVariation/BusinessType' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
             'LvaApplication/Vehicles' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
             ),
@@ -196,6 +207,8 @@ return array(
             'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
             'VariationReviewAdapter' => 'Common\Controller\Lva\Adapters\VariationReviewAdapter',
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
+            'GenericBusinessTypeAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter',
             'ApplicationConditionsUndertakingsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter',
             'VariationConditionsUndertakingsAdapter'
@@ -611,10 +624,6 @@ return array(
             'lva-licence' => 'Common\FormService\Form\Lva\Licence',
             'lva-variation' => 'Common\FormService\Form\Lva\Variation',
             'lva-application' => 'Common\FormService\Form\Lva\Application',
-            // Business type form services
-            'lva-licence-business_type' => 'Common\FormService\Form\Lva\BusinessType\LicenceBusinessType',
-            'lva-variation-business_type' => 'Common\FormService\Form\Lva\BusinessType\VariationBusinessType',
-            'lva-application-business_type' => 'Common\FormService\Form\Lva\BusinessType\ApplicationBusinessType',
             // Business details form services
             'lva-licence-business_details' => 'Common\FormService\Form\Lva\LicenceBusinessDetails',
             'lva-variation-business_details' => 'Common\FormService\Form\Lva\VariationBusinessDetails',
