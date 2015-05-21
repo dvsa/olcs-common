@@ -109,8 +109,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         if ($response->isServerError()) {
-            var_dump($response->getResult()['messages']);
-            exit;
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
 
