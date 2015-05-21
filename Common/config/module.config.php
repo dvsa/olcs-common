@@ -773,8 +773,13 @@ return array(
             // Operator services
             'Operator\IrfoDetails'
                 => 'Common\BusinessService\Service\Operator\IrfoDetails',
+            'Lva\TransportConsultant' => 'Common\BusinessService\Service\Lva\TransportConsultant',
             'Lva\ContinueLicence'
                 => 'Common\BusinessService\Service\Lva\ContinueLicence',
+            'ContinuationChecklistReminderQueueLetters' =>
+                'Common\BusinessService\Service\ContinuationChecklistReminderQueueLetters',
+            'ContinuationChecklistReminderGenerateLetter' =>
+                'Common\BusinessService\Service\ContinuationChecklistReminderGenerateLetter',
         ]
     ],
     'email' => [

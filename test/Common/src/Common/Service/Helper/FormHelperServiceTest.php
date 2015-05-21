@@ -1428,4 +1428,32 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $helper->setDefaultDate($field);
     }
+
+    public function testSaveFormState()
+    {
+        $helper = new FormHelperService();
+
+        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm->shouldReceive('getName')->with()->once()->andReturn('FORM_NAME');
+
+        $helper->saveFormState($mockForm, ['foo' => 'bar']);
+
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        $this->assertEquals(['foo' => 'bar'], $sessionContainer->offsetGet('FORM_NAME'));
+    }
+
+    public function testRestoreFormState()
+    {
+        $helper = new FormHelperService();
+
+        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm->shouldReceive('getName')->with()->twice()->andReturn('FORM_NAME');
+
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        $sessionContainer->offsetSet('FORM_NAME', ['an' => 'array']);
+        $mockForm->shouldReceive('setData')->with(['an' => 'array'])->once();
+
+        $helper->restoreFormState($mockForm);
+
+    }
 }

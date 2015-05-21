@@ -23,6 +23,8 @@ class BrCouncilsNotifiedTest extends \PHPUnit_Framework_TestCase
 
         $bookmark = new $sutClassName();
 
+        $this->assertTrue(is_null($bookmark->getQuery([])));
+
         $query = $bookmark->getQuery(['busRegId' => $busRegId]);
 
         $this->assertEquals('BusReg', $query['service']);
