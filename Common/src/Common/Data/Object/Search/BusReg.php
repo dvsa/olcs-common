@@ -64,11 +64,13 @@ class BusReg extends InternalSearchAbstract
                 }
             ],
             [
-                'title' => 'Name',
+                'title' => 'Operator name',
                 'name'=> 'orgName',
                 'formatter' => function ($data) {
-                    $orgName = $data['organisationName'];
-                    return $orgName;
+
+                    $orgName = $data['orgName'];
+
+                    return '<a href="/operator/' . $data['orgId'] . '">' .$orgName . '</a>';
                 }
             ],
             ['title' => 'Variation number', 'name'=> 'variationNo'],
