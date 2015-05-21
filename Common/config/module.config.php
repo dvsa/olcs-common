@@ -500,6 +500,7 @@ return array(
         'invokables' => [
             'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
+            'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
             'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'Common\Validator\OneOf' => 'Common\Validator\OneOf',
             'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date'
@@ -507,6 +508,7 @@ return array(
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
             'DateCompare' => 'Common\Validator\DateCompare',
+            'NumberCompare' => 'Common\Validator\NumberCompare',
             'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'OneOf' => 'Common\Validator\OneOf',
             'Date' => 'Common\Form\Elements\Validators\Date'
