@@ -68,7 +68,6 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
         $form = $this->getForm()->setData($data);
 
-        $this->alterFormForLocation($form);
         $this->alterFormForLva($form);
 
         if ($request->isPost()) {

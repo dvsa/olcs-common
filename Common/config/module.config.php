@@ -54,9 +54,6 @@ return array(
             'LvaVariation/Review' => array(
                 'Common\Controller\Lva\Delegators\VariationReviewDelegator'
             ),
-            'LvaApplication/TypeOfLicence' => array(
-                'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
-            ),
             'LvaLicence/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
             ),
@@ -218,8 +215,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter',
             'LicenceConditionsUndertakingsAdapter'
                 => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
-            'ApplicationTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'ApplicationVehicleGoodsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
             'LicenceTypeOfLicenceAdapter'
@@ -280,6 +275,8 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
+            'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
+            'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',

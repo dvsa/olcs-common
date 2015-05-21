@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1293,8 +1295,10 @@ return array(
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
-    'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
-    'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'invalid-licence-type' => '*DUPLICATE TRANSLATION* If you are a goods vehicle operator, you can not apply for a
+        special restricted licence',
+    'invalid-operator-type' => '*DUPLICATE TRANSLATION* If you operate in Northern Ireland, you can only apply for a
+        Goods licence',
     'isTrailer' => 'Trailer?',
     'last-name' => 'Last name',
     'layout-footer' => 'All rights Reserved.',
@@ -1367,7 +1371,7 @@ return array(
     'licence.vehicles_transfer.form.message_empty' => 'You must select a licence to which to transfer the vehicle(s)',
     'licence.vehicles_transfer.form.message_exceed' => 'Transferring these vehicles would exceed the vehicle authority
         on licence %s',
-    'licence.vehicles_transfer.form.transfer_vehicles' => 'Transfer vehicless',
+    'licence.vehicles_transfer.form.transfer_vehicles' => 'Transfer vehicles',
     'licence.vehicles_transfer.form.vehicles_transfered' => 'The selected vehicle(s) have been transferred',
     'licence_goods-trailers_trailer.form.add.trailernumber' => 'Trailer Number',
     'licence_goods-trailers_trailer.table.guidance' => 'I undertake that the trailers specified are in operation and
@@ -2399,6 +2403,7 @@ return array(
     'type-of-licence' => 'Type of licence',
     'undertakings' => 'Undertakings',
     'united-kingdom' => 'United Kingdom',
+    'unknown-error' => 'An error occurred processing your request, please try again',
     'update-continuation.saved' => 'The continuation details have been updated',
     'update-continuation.separator-sheet' => 'The separator sheet has been generated',
     'update-continuation.success' => 'The licence has been continued',
