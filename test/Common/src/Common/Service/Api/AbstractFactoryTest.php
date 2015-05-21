@@ -62,4 +62,33 @@ class AbstractFactoryTest extends MockeryTestCase
 
         $this->assertTrue($passed, 'Expected exception not thrown');
     }
+
+    public function testCreateServiceAdditionalEndpointConfig()
+    {
+        $config['service_api_mapping']['endpoints']['myapi'] = [
+            'url' => 'https://external-api',
+                'options' => [
+                    'sslcapath' => '/etc/ssl/certs',
+                    'sslverifypeer' => false,
+                ],
+                'auth' => [
+                    'username' => 'foo',
+                    'password' => 'bar',
+                ],
+        ];
+
+        $translator = m::mock('stdClass');
+        $translator->shouldReceive('getLocale')->withNoArgs()->andReturn('en-ts');
+
+        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
+        $mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($translator);
+
+        $sut = new AbstractFactory();
+        $client = $sut->createServiceWithName($mockSl, '', 'myapi\\some-resource');
+        $this->assertEquals('external-api', $client->url->getHost());
+        $this->assertEquals('/some-resource', $client->url->getPath());
+
+        $this->assertEquals('en-ts', $client->getLanguage());
+    }
 }

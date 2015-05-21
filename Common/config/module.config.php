@@ -255,6 +255,7 @@ return array(
             'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
             'postcode' => 'Common\Service\Postcode\Postcode',
             'email' => 'Common\Service\Email\Email',
+            'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
             'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
             'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
@@ -769,8 +770,13 @@ return array(
             // Operator services
             'Operator\IrfoDetails'
                 => 'Common\BusinessService\Service\Operator\IrfoDetails',
+            'Lva\TransportConsultant' => 'Common\BusinessService\Service\Lva\TransportConsultant',
             'Lva\ContinueLicence'
                 => 'Common\BusinessService\Service\Lva\ContinueLicence',
+            'ContinuationChecklistReminderQueueLetters' =>
+                'Common\BusinessService\Service\ContinuationChecklistReminderQueueLetters',
+            'ContinuationChecklistReminderGenerateLetter' =>
+                'Common\BusinessService\Service\ContinuationChecklistReminderGenerateLetter',
         ]
     ],
     'email' => [

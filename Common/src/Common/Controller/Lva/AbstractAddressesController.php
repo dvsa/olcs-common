@@ -57,27 +57,37 @@ abstract class AbstractAddressesController extends AbstractController
 
         $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
-        if (!$hasProcessed && $request->isPost() && $form->isValid()) {
-
-            $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                ->get('Lva\\' . ucfirst($this->lva) . 'Addresses')
-                ->process(
-                    [
-                        'licenceId'    => $this->getLicenceId(),
-                        'data'         => $data,
-                        'originalData' => $addressData
-                    ]
-                );
-
-            if (!$response->isOk()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
-                return $this->renderForm($form);
+        if (!$hasProcessed && $request->isPost()) {
+            if ($data['consultant']['add-transport-consultant'] === 'N') {
+                $this->getServiceLocator()->get('Helper\Form')
+                    ->disableValidation(
+                        $form->getInputFilter()->get('consultant')
+                    );
             }
 
-            $this->postChange($response->getData());
+            if ($form->isValid()) {
+                $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                    ->get('Lva\\' . ucfirst($this->lva) . 'Addresses')
+                    ->process(
+                        [
+                            'licenceId' => $this->getLicenceId(),
+                            'data' => $data,
+                            'originalData' => $addressData
+                        ]
+                    );
 
-            return $this->completeSection('addresses');
+                if (!$response->isOk()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+                    return $this->renderForm($form);
+                }
+
+                $this->postChange($response->getData());
+
+                return $this->completeSection('addresses');
+            }
         }
+
+        $this->getServiceLocator()->get('Script')->loadFiles(['forms/addresses']);
 
         return $this->renderForm($form);
     }
@@ -114,6 +124,10 @@ abstract class AbstractAddressesController extends AbstractController
             $returnData = $this->formatAddressDataForForm($returnData, $data, 'establishment');
         }
 
+        if (!empty($data['transportConsultantCd'])) {
+            $returnData = $this->formatConsultantDataForForm($data);
+        }
+
         return $returnData;
     }
 
@@ -134,6 +148,33 @@ abstract class AbstractAddressesController extends AbstractController
     }
 
     /**
+     * Format the consultant data for display within the form.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function formatConsultantDataForForm(array $data)
+    {
+        $data = $data['transportConsultantCd'];
+
+        $returnData['add-transport-consultant'] = 'Y';
+        $returnData['writtenPermissionToEngage'] = $data['writtenPermissionToEngage'];
+        $returnData['transportConsultantName'] = $data['fao'];
+        $returnData['address'] = $data['address'];
+
+        foreach ($data['phoneContacts'] as $phoneContact) {
+            $phoneType = $this->mapFormTypeFromDbType($phoneContact['phoneContactType']['id']);
+
+            $returnData['contact'][$phoneType] = $phoneContact['phoneNumber'];
+            $returnData['contact'][$phoneType . '_id'] = $phoneContact['id'];
+            $returnData['contact'][$phoneType . '_version'] = $phoneContact['version'];
+        }
+
+        return array('consultant' => $returnData);
+    }
+
+    /**
      * Map form type from db type
      *
      * @param string $type
@@ -150,6 +191,7 @@ abstract class AbstractAddressesController extends AbstractController
 
     protected function postChange(array $data)
     {
+        unset($data);
         $this->postSave('addresses');
     }
 }

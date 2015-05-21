@@ -62,8 +62,17 @@ class Address extends InternalSearchAbstract
             ],
             [
                 'title' => 'Address',
-                'formatter' => function ($row, $column, $sl) {
-                    return $row['postcode'];
+                'formatter' => function ($row) {
+
+                    $address = [
+
+                        $row['street'],
+                        $row['locality'],
+                        $row['town'],
+                        $row['postcode']
+                    ];
+
+                    return implode(', ', $address);
                 }
             ],
         ];

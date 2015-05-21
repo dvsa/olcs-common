@@ -138,7 +138,7 @@ class ResponseHelper
             }
 
             // TO-DO: Replace with a different exception
-            throw new \Exception('Unexpected status code: ' . $body);
+            throw new \Exception('Unexpected status code: ' . $this->response->getStatusCode());
         }
     }
 

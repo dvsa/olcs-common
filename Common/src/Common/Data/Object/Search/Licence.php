@@ -68,12 +68,19 @@ class Licence extends InternalSearchAbstract
                 'title' => 'Operator name',
                 'name'=> 'orgName',
                 'formatter' => function ($data) {
-                    return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
+
+                    $orgName = $data['orgName'];
+                    if ($data['noOfLicencesHeld'] > 1) {
+                        $orgName .= ' (MLH)';
+                    }
+
+                    return '<a href="/operator/' . $data['orgId'] . '">' .$orgName . '</a>';
                 }
             ],
             ['title' => 'Trading name', 'name'=> 'tradingName'],
             ['title' => 'Entity type', 'name'=> 'orgTypeDesc'],
             ['title' => 'Licence type', 'name'=> 'licTypeDesc'],
+            ['title' => 'FABS Reference', 'name'=> 'fabsReference'],
             [
                 'title' => 'Cases',
                 'name'=> 'caseCount',

@@ -69,6 +69,41 @@ class OperatingCentreTrafficAreaValidatorTest extends \PHPUnit_Framework_TestCas
     }
 
     /**
+     * Test isValid with error from postcode lookup
+     */
+    public function testIsValidPostcodeServiceError()
+    {
+        $value = 'LS9 6NF';
+        $niFlag = 'N';
+        $trafficArea = 'B';
+
+        $mockValidator = $this->getMock(
+            'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
+            ['getServiceLocator']
+        );
+        $mockValidator->setNiFlag($niFlag);
+        $mockValidator->setTrafficArea($trafficArea);
+
+        $postcode = $this->getMock('stdClass', ['getTrafficAreaByPostcode']);
+        $postcode->expects($this->any())
+            ->method('getTrafficAreaByPostcode')
+            ->will($this->throwException(new \Exception('fail')));
+
+        $serviceLocator = $this->getMock('stdClass', ['get']);
+        $serviceLocator->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue($postcode));
+
+        $mockValidator->expects($this->any())
+            ->method('getServiceLocator')
+            ->will($this->returnValue($serviceLocator));
+
+        // should return true when postcode lookup fails (OLCS-8753)
+        $this->assertEquals(true, $mockValidator->isValid($value));
+
+    }
+
+    /**
      * Provider for isValid
      *
      * @return array
