@@ -222,6 +222,9 @@ abstract class AbstractTaxiPhvController extends AbstractController
             );
         }
 
+        // remove enforcement area as not required
+        $formHelper->remove($form, 'dataTrafficArea->enforcementArea');
+
         return $form;
     }
 
