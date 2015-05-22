@@ -434,6 +434,7 @@ return array(
             'people'      => 'Common\Data\Object\Search\People',
             'user'        => 'Common\Data\Object\Search\User',
             'publication' => 'Common\Data\Object\Search\Publication',
+            'organisation'     => 'Common\Data\Object\Search\Organisation',
         ]
     ],
     'file_uploader' => array(
