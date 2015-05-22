@@ -489,10 +489,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
-            ->shouldReceive('getDataForProcessing')
-            ->with($applicationId)
-            ->andReturn(['licence' => ['id' => $licenceId], 'isVariation' => $variationFlag])
-            ->once()
             ->getMock()
         );
 
@@ -683,10 +679,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
-            ->shouldReceive('getDataForProcessing')
-            ->with($applicationId)
-            ->andReturn(['licence' => ['id' => 99], 'isVariation' => false])
-            ->once()
             ->getMock()
         );
 
@@ -798,10 +790,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
-            ->shouldReceive('getDataForProcessing')
-            ->with($applicationId)
-            ->andReturn(['licence' => ['id' => 99], 'isVariation' => false])
-            ->once()
             ->getMock()
         );
 
@@ -911,10 +899,6 @@ class InterimHelperServiceTest extends MockeryTestCase
                     'interimStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE
                 ]
             )
-            ->once()
-            ->shouldReceive('getDataForProcessing')
-            ->with($applicationId)
-            ->andReturn(['licence' => ['id' => 99], 'isVariation' => false])
             ->once()
             ->getMock()
         );
@@ -1132,5 +1116,106 @@ class InterimHelperServiceTest extends MockeryTestCase
         );
 
         $this->assertEquals('file', $this->sut->refuseInterim($applicationId));
+    }
+
+    /**
+     * Test generate interim fee request document
+     * 
+     * @group interimHelper
+     * @dataProvider messagesProvider
+     */
+    public function testGenerateInterimFeeRequestDocument($isVariation, $message, $translation)
+    {
+        $application = [
+            'id' => 1,
+            'licence' => [
+                'id' => 2
+            ],
+            'isVariation' => $isVariation
+        ];
+        $feeId = 3;
+        $userId =4;
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+            ->shouldReceive('getDataForProcessing')
+            ->with($application['id'])
+            ->andReturn($application)
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'translator',
+            m::mock()
+            ->shouldReceive('translate')
+            ->with($message)
+            ->andReturn($translation)
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\User',
+            m::mock()
+            ->shouldReceive('getCurrentUser')
+            ->andReturn(['id' => $userId])
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\DocumentGeneration',
+            m::mock()
+            ->shouldReceive('generateAndStore')
+            ->with(
+                'FEE_REQ_INT_APP',
+                $translation,
+                [
+                    'application' => $application['id'],
+                    'licence'     => $application['licence']['id'],
+                    'fee'         => $feeId,
+                    'user'        => $userId
+                ]
+            )
+            ->andReturn('storedFile')
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\DocumentDispatch',
+            m::mock()
+            ->shouldReceive('process')
+            ->with(
+                'storedFile',
+                [
+                    'description'  => $translation,
+                    'filename'     => $translation . '.rtf',
+                    'application'  => $application['id'],
+                    'licence'      => $application['licence']['id'],
+                    'category'     => Category::CATEGORY_LICENSING,
+                    'subCategory'  => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                    'isDigital'    => false,
+                    'isScan'       => false
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->assertNull($this->sut->generateInterimFeeRequestDocument($application['id'], $feeId));
+    }
+
+    /**
+     * Provider for testGenerateInterimFeeRequestDocument
+     */
+    public function messagesProvider()
+    {
+        return [
+            [true, 'gv_interim_direction_fee_request', 'translation1'],
+            [false, 'gv_interim_licence_fee_request', 'translation2'],
+        ];
     }
 }

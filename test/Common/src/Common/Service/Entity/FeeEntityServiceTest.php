@@ -348,7 +348,9 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
             'application' => $id,
             'feeStatus' => $statuses,
             'feeType' => 1,
-            'limit' => 'all'
+            'limit' => 'all',
+            'sort' => 'createdOn',
+            'order' => 'DESC'
         );
 
         $response = array(
@@ -628,5 +630,20 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue(['Results' => ['RESULTS']]));
 
         $this->assertEquals(['RESULTS'], $this->sut->getOutstandingGrantFeesForApplication(1966));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetFeeDetailsForInterim()
+    {
+        $id = 3;
+
+        $response = array();
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals([], $this->sut->getFeeDetailsForInterim($id));
     }
 }
