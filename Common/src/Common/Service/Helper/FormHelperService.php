@@ -179,8 +179,8 @@ class FormHelperService extends AbstractHelperService
 
         /**
          * A postcode -> address lookup will have modified the array of
-         * POST data, so we need to make one top-level call to re-populate
-         * the form data if so
+         * POST data at an unknown level of nesting, so we need to make
+         * one top-level call to re-populate the form data if so
          */
         if ($modified) {
             $form->setData($post);
@@ -235,7 +235,7 @@ class FormHelperService extends AbstractHelperService
 
             // manipulate the current level of post data, bearing in mind
             // we could be nested at this point...
-            $post[$name] = $this->processAddressSelect($fieldset, $post, $name);
+            $post[$name] = $this->processAddressSelect($post, $name);
 
             // ... meaning we have to return the current level of post data so
             // it can bubble all the way back up to the top
@@ -301,7 +301,7 @@ class FormHelperService extends AbstractHelperService
      * @param array $post
      * @param string $name
      */
-    private function processAddressSelect($fieldset, $post, $name)
+    private function processAddressSelect($post, $name)
     {
         $address = $this->getServiceLocator()->get('Data\Address')
             ->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
