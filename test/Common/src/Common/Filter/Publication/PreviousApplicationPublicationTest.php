@@ -7,7 +7,7 @@ use Common\Data\Object\Publication;
 use Mockery as m;
 
 /**
- * Class PreviousPublicationTest
+ * Class PreviousApplicationPublicationTest
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
 class PreviousApplicationPublicationTest extends \PHPUnit_Framework_TestCase
