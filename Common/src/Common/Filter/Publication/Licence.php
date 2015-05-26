@@ -16,8 +16,6 @@ use Common\Exception\ResourceNotFoundException;
  */
 class Licence extends AbstractPublicationFilter
 {
-    const GV_LIC_TYPE = 'lcat_gv';
-
     /**
      * @param \Common\Data\Object\Publication $publication
      * @return \Common\Data\Object\Publication
@@ -25,7 +23,9 @@ class Licence extends AbstractPublicationFilter
      */
     public function filter($publication)
     {
-        $licence = $this->getServiceLocator()->get('\Common\Service\Data\Licence')->fetchLicenceData();
+        $licenceService = $this->getServiceLocator()->get('\Common\Service\Data\Licence');
+        $licenceService->setData($licenceService->getId(), null);
+        $licence = $licenceService->fetchLicenceData();
 
         if (!isset($licence['id'])) {
             throw new ResourceNotFoundException('No licence found');
@@ -33,6 +33,7 @@ class Licence extends AbstractPublicationFilter
 
         $newData = [
             'pubType' => $licence['goodsOrPsv']['id'] == self::GV_LIC_TYPE ? 'A&D' : 'N&P',
+            'licType' => $licence['goodsOrPsv']['id'],
             'licence' => $licence['id'],
             'trafficArea' => $licence['trafficArea']['id'],
             'licenceData' => $licence
