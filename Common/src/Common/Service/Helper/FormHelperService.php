@@ -46,7 +46,11 @@ class FormHelperService extends AbstractHelperService
      */
     public function createForm($formName, $addCsrf = true, $addContinue = true)
     {
-        $class = $this->findForm($formName);
+        if (class_exists($formName)) {
+            $class = $formName;
+        } else {
+            $class = $this->findForm($formName);
+        }
 
         $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
 
