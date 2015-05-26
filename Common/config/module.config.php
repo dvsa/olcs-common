@@ -434,6 +434,7 @@ return array(
             'people'      => 'Common\Data\Object\Search\People',
             'user'        => 'Common\Data\Object\Search\User',
             'publication' => 'Common\Data\Object\Search\Publication',
+            'organisation'     => 'Common\Data\Object\Search\Organisation',
         ]
     ],
     'file_uploader' => array(
@@ -500,16 +501,20 @@ return array(
         'invokables' => [
             'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
+            'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
             'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'Common\Validator\OneOf' => 'Common\Validator\OneOf',
-            'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date'
+            'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date',
+            'Common\Validator\DateInFuture' => 'Common\Validator\DateInFuture',
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
             'DateCompare' => 'Common\Validator\DateCompare',
+            'NumberCompare' => 'Common\Validator\NumberCompare',
             'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'OneOf' => 'Common\Validator\OneOf',
-            'Date' => 'Common\Form\Elements\Validators\Date'
+            'Date' => 'Common\Form\Elements\Validators\Date',
+            'DateInFuture' => 'Common\Validator\DateInFuture',
         ]
     ],
     'filters' => [
