@@ -167,11 +167,18 @@ class FormHelperService extends AbstractHelperService
         $fieldsets = $form->getFieldsets();
 
         foreach ($fieldsets as $fieldset) {
-
-            if ($fieldset instanceof Address && $this->processAddressLookupFieldset($fieldset, $post, $form)) {
+            if ($result = $this->processAddressLookupFieldset($fieldset, $post, $form)) {
                 // @NOTE we can't just return true here, as any other address lookups need processing also
                 $return = true;
+
+                if (is_array($result)) {
+                    $post = $result;
+                }
             }
+        }
+
+        if ($request->isPost() && $return) {
+            $form->setData($post);
         }
 
         return $return;
@@ -188,6 +195,24 @@ class FormHelperService extends AbstractHelperService
     {
         $name = $fieldset->getName();
 
+        if (!($fieldset instanceof Address)) {
+            $data = isset($post[$name]) ? $post[$name] : [];
+            $return = false;
+            foreach ($fieldset->getFieldsets() as $fieldset) {
+                if ($result = $this->processAddressLookupFieldset($fieldset, $data, $form)) {
+                    $return = true;
+
+                    if (is_array($result)) {
+                        $post[$name] = $result;
+                    }
+                }
+            }
+            if ($return) {
+                return $post;
+            }
+            return false;
+        }
+
         // If we have clicked the find address button
         if (isset($post[$name]['searchPostcode']['search']) && !empty($post[$name]['searchPostcode']['search'])) {
 
@@ -198,10 +223,10 @@ class FormHelperService extends AbstractHelperService
         // If we have selected an address
         if (isset($post[$name]['searchPostcode']['select']) && !empty($post[$name]['searchPostcode']['select'])) {
 
-            $this->processAddressSelect($fieldset, $post, $name, $form);
             $this->removeAddressSelectFields($fieldset);
 
-            return true;
+            $post[$name] = $this->processAddressSelect($fieldset, $post, $name);
+            return $post;
         }
 
         $this->removeAddressSelectFields($fieldset);
@@ -263,16 +288,12 @@ class FormHelperService extends AbstractHelperService
      * @param array $post
      * @param string $name
      */
-    private function processAddressSelect($fieldset, $post, $name, $form)
+    private function processAddressSelect($fieldset, $post, $name)
     {
         $address = $this->getServiceLocator()->get('Data\Address')
             ->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
 
-        $addressDetails = $this->getServiceLocator()->get('Helper\Address')->formatPostalAddressFromBs7666($address);
-
-        $data = $post;
-        $data[$name] = $addressDetails;
-        $form->setData($data);
+        return $this->getServiceLocator()->get('Helper\Address')->formatPostalAddressFromBs7666($address);
     }
 
     /**
