@@ -54,9 +54,6 @@ return array(
             'LvaVariation/Review' => array(
                 'Common\Controller\Lva\Delegators\VariationReviewDelegator'
             ),
-            'LvaApplication/TypeOfLicence' => array(
-                'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
-            ),
             'LvaLicence/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
             ),
@@ -218,8 +215,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter',
             'LicenceConditionsUndertakingsAdapter'
                 => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
-            'ApplicationTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'ApplicationVehicleGoodsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
             'LicenceTypeOfLicenceAdapter'
@@ -280,6 +275,8 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
+            'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
+            'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
@@ -437,6 +434,7 @@ return array(
             'people'      => 'Common\Data\Object\Search\People',
             'user'        => 'Common\Data\Object\Search\User',
             'publication' => 'Common\Data\Object\Search\Publication',
+            'organisation'     => 'Common\Data\Object\Search\Organisation',
         ]
     ],
     'file_uploader' => array(
@@ -468,6 +466,7 @@ return array(
             'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
             'currentUser' => 'Common\View\Helper\CurrentUser',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
+            'licenceStatus' => 'Common\View\Helper\LicenceStatus',
         )
     ),
     'view_manager' => array(
@@ -502,6 +501,7 @@ return array(
         'invokables' => [
             'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
+            'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
             'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'Common\Validator\OneOf' => 'Common\Validator\OneOf',
             'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date'
@@ -509,6 +509,7 @@ return array(
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
             'DateCompare' => 'Common\Validator\DateCompare',
+            'NumberCompare' => 'Common\Validator\NumberCompare',
             'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'OneOf' => 'Common\Validator\OneOf',
             'Date' => 'Common\Form\Elements\Validators\Date'

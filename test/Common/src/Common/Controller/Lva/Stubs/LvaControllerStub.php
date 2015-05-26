@@ -53,11 +53,6 @@ class LvaControllerStub extends AbstractController
         return $this->postSave($section);
     }
 
-    public function callAlterFormForLocation($form)
-    {
-        return $this->alterFormForLocation($form);
-    }
-
     public function callAlterFormForLva($form)
     {
         return $this->alterFormForLva($form);

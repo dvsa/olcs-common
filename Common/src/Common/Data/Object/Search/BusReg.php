@@ -1,6 +1,7 @@
 <?php
 
 namespace Common\Data\Object\Search;
+use Common\Data\Object\Search\Aggregations\Terms\BusRegStatus;
 
 /**
  * Class BusReg
@@ -20,7 +21,7 @@ class BusReg extends InternalSearchAbstract
     /**
      * @var string
      */
-    protected $searchIndices = 'bus_reg';
+    protected $searchIndices = 'busreg';
 
     /**
      * Contains an array of the instantiated filters classes.
@@ -36,6 +37,13 @@ class BusReg extends InternalSearchAbstract
      */
     public function getFilters()
     {
+        if (empty($this->filters)) {
+
+            $this->filters = [
+                new BusRegStatus(),
+            ];
+        }
+
         return $this->filters;
     }
 
@@ -45,8 +53,33 @@ class BusReg extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Route number', 'name'=> 'routeNo'],
-            ['title' => 'Route description', 'name'=> 'routeDescription']
+            [
+                'title' => 'Registration no',
+                'name'=> 'regNo',
+                'formatter' => function ($data) {
+
+                    return '<a href="/licence/'
+                    . $data['licId'] . '/bus/' . $data['busregId']
+                    . '/details">' . $data['regNo'] . '</a>';
+                }
+            ],
+            [
+                'title' => 'Operator name',
+                'name'=> 'orgName',
+                'formatter' => function ($data) {
+
+                    $orgName = $data['orgName'];
+
+                    return '<a href="/operator/' . $data['orgId'] . '">' .$orgName . '</a>';
+                }
+            ],
+            ['title' => 'Variation number', 'name'=> 'variationNo'],
+            ['title' => 'Status', 'name'=> 'busRegStatus'],
+            ['title' => 'Date first registered / cancelled', 'name'=> 'date_1stReg'],
+            ['title' => 'Service no', 'name'=> 'serviceNo'],
+            ['title' => 'Start point', 'name'=> 'startPoint'],
+            ['title' => 'Finish point', 'name'=> 'finishPoint'],
+            ['title' => 'Conditions on licence', 'name'=> 'finishPoint']
         ];
     }
 }
