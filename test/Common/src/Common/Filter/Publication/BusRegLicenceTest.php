@@ -26,6 +26,8 @@ class BusRegLicenceTest extends \PHPUnit_Framework_TestCase
 
         $mockLicenceService = m::mock('Common\Service\Data\Licence');
         $mockLicenceService->shouldReceive('fetchLicenceData')->andReturn(false);
+        $mockLicenceService->shouldReceive('getId');
+        $mockLicenceService->shouldReceive('setData');
 
         $mockServiceManager = m::mock('\Zend\ServiceManager\ServiceManager');
         $mockServiceManager->shouldReceive('get')->with('\Common\Service\Data\Licence')->andReturn($mockLicenceService);
@@ -43,13 +45,19 @@ class BusRegLicenceTest extends \PHPUnit_Framework_TestCase
     public function testFilter()
     {
         $licenceId = 7;
+        $licType = 'lcat_psv';
+
 
         $licenceData = [
             'id' => $licenceId,
+            'goodsOrPsv' => [
+                'id' => $licType
+            ]
         ];
 
         $expectedOutput = [
             'licence' => $licenceId,
+            'licType' => $licType,
             'licenceData' => $licenceData
         ];
 
@@ -58,6 +66,8 @@ class BusRegLicenceTest extends \PHPUnit_Framework_TestCase
 
         $mockLicenceService = m::mock('Common\Service\Data\Licence');
         $mockLicenceService->shouldReceive('fetchLicenceData')->andReturn($licenceData);
+        $mockLicenceService->shouldReceive('getId')->andReturn($licenceId);
+        $mockLicenceService->shouldReceive('setData')->with($licenceId, null);
 
         $mockServiceManager = m::mock('\Zend\ServiceManager\ServiceManager');
         $mockServiceManager->shouldReceive('get')->with('\Common\Service\Data\Licence')->andReturn($mockLicenceService);
