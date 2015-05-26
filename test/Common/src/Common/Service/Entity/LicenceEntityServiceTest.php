@@ -1342,4 +1342,12 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getWhereContinuationNotSought('START_DATE', 'END_DATE'));
     }
+
+    public function testGetByLicenceNumberWithOperatingCentres()
+    {
+        $this->expectOneRestCall('Licence', 'GET', ['licNo' => 1, 'limit' => 'all'])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByLicenceNumberWithOperatingCentres(1));
+    }
 }

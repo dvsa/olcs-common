@@ -359,6 +359,41 @@ class LicenceEntityService extends AbstractLvaEntityService
         ),
     );
 
+    protected $getByLicenceNumberWithOperatingCentresBundle = array(
+        'children' => array(
+            'operatingCentres' => array(
+                'children' => array(
+                    'operatingCentre' => array(
+                        'children' => array(
+                            'address',
+                            'conditionUndertakings' => array(
+                                'criteria' => array(
+                                    'isFulfilled' => 'Y',
+                                    'isDraft' => 'Y'
+                                )
+                            ),
+                            'ocComplaints' => array(
+                                'children' => array(
+                                    'complaint' => array(
+                                        'criteria' => array(
+                                            'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
+                                        )
+                                    )
+                                )
+                            ),
+                            'conditionUndertakings' => array(
+                                'criteria' => array(
+                                    'isFulfilled' => 'Y',
+                                    'isDraft' => 'Y'
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     protected $continuationNotSoughtBundle = [
         'children' => [
             'goodsOrPsv',
@@ -993,5 +1028,22 @@ class LicenceEntityService extends AbstractLvaEntityService
         ];
 
         return $this->getAll($query, $bundle);
+    }
+
+    /**
+     * Get licence by licence number and return all operating centres and complaints.
+     *
+     * @param $licNo
+     *
+     * @return array
+     */
+    public function getByLicenceNumberWithOperatingCentres($licNo)
+    {
+        return $this->getAll(
+            array(
+                'licNo' => $licNo
+            ),
+            $this->getByLicenceNumberWithOperatingCentresBundle
+        );
     }
 }
