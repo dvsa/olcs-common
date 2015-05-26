@@ -7,14 +7,16 @@
  */
 namespace Common\Data\Mapper\Lva;
 
+use Common\Data\Mapper\MapperInterface;
+
 /**
  * Type Of Licence
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TypeOfLicence
+class TypeOfLicence implements MapperInterface
 {
-    public function mapFromResult(array $data)
+    public static function mapFromResult(array $data)
     {
         return [
             'version' => $data['version'],

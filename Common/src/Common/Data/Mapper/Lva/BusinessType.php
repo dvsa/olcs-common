@@ -7,12 +7,14 @@
  */
 namespace Common\Data\Mapper\Lva;
 
+use Common\Data\Mapper\MapperInterface;
+
 /**
  * Business Type
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class BusinessType
+class BusinessType implements MapperInterface
 {
     public static function mapFromResult(array $data)
     {
