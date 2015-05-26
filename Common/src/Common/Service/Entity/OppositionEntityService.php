@@ -20,7 +20,7 @@ class OppositionEntityService extends AbstractEntityService
 
     private $tableBundle = [
         'children' => [
-            'case',
+            'case' => [],
             'oppositionType',
             'opposer' => array(
                 'children' => array(
@@ -47,11 +47,19 @@ class OppositionEntityService extends AbstractEntityService
     public function getForApplication($applicationId)
     {
         $query = [
-            'application' => $applicationId,
             'sort' => 'createdOn',
             'order' => 'DESC',
         ];
-        return $this->getAll($query, $this->tableBundle)['Results'];
+
+        $bundle = $this->tableBundle;
+        $bundle['children']['case'] = [
+            'criteria' => [
+                'application' => $applicationId,
+            ],
+            'required' => true
+        ];
+
+        return $this->getAll($query, $bundle)['Results'];
     }
 
     /**
@@ -64,11 +72,18 @@ class OppositionEntityService extends AbstractEntityService
     public function getForLicence($licenceId)
     {
         $query = [
-            'licence' => $licenceId,
             'sort' => 'createdOn',
             'order' => 'DESC',
         ];
 
-        return $this->getAll($query, $this->tableBundle)['Results'];
+        $bundle = $this->tableBundle;
+        $bundle['children']['case'] = [
+            'criteria' => [
+                'licence' => $licenceId,
+            ],
+            'required' => true
+        ];
+
+        return $this->getAll($query, $bundle)['Results'];
     }
 }
