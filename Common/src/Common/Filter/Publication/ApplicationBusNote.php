@@ -7,8 +7,6 @@
  */
 namespace Common\Filter\Publication;
 
-use Common\Exception\ResourceNotFoundException;
-
 /**
  * Application bus note filter
  *
