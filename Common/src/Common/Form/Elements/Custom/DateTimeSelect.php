@@ -17,6 +17,8 @@ use Zend\Form\Exception\InvalidArgumentException;
  */
 class DateTimeSelect extends ZendElement\DateTimeSelect
 {
+    use Traits\YearDelta;
+
     /**
      * Should return an array specification compatible with
      * {@link Zend\InputFilter\Factory::createInput()}.
