@@ -39,8 +39,6 @@ class ApplicationText2Test extends MockeryTestCase
             'familyName' => 'Smith',
         ];
 
-        $licenceAddress = 'Licence address';
-
         $licenceData = [
             'licNo' => $licNo,
             'licenceType' => [
