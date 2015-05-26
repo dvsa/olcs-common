@@ -114,7 +114,7 @@ class Text1 extends AbstractPublicationFilter
         $personData = $organisationData['organisationPersons'];
         $persons = [];
 
-        switch ($organisationData['type']['id']) {
+        switch ($organisationData['type']) {
             case $this->orgTypeLtd:
                 $prefix = 'Director(s): ';
                 break;
