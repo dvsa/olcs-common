@@ -47,7 +47,6 @@ class BusRegLicenceTest extends \PHPUnit_Framework_TestCase
         $licenceId = 7;
         $licType = 'lcat_psv';
 
-
         $licenceData = [
             'id' => $licenceId,
             'goodsOrPsv' => [

@@ -25,12 +25,13 @@ class ApplicationText3 extends AbstractPublicationFilter
 
         $text = [];
 
-        if ($licType == self::GV_LIC_TYPE) { //GV
+        //GV
+        if ($licType == self::GV_LIC_TYPE) {
             if ($publication->offsetExists('licenceCancelled')) {
                 $text = $this->getPartialData($publication, $text);
             } else {
                 switch ($publicationSection) {
-                    case self::APP_GRANTED_SECTION :
+                    case self::APP_GRANTED_SECTION:
                         $text = $this->getPartialData($publication, $text);
                         break;
                     case self::APP_WITHDRAWN_SECTION:
@@ -42,7 +43,8 @@ class ApplicationText3 extends AbstractPublicationFilter
                         break;
                 }
             }
-        } else { //PSV
+        } else {
+            //PSV
             $text = $this->getAllData($publication, $text);
         }
 
@@ -83,7 +85,7 @@ class ApplicationText3 extends AbstractPublicationFilter
     {
         //operating centre address
         if ($publication->offsetExists('operatingCentres')) {
-            foreach($publication->offsetGet('operatingCentres') as $oc) {
+            foreach ($publication->offsetGet('operatingCentres') as $oc) {
                 $text[] = $oc;
             }
         }

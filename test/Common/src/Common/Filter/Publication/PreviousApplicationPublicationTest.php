@@ -110,5 +110,4 @@ class PreviousApplicationPublicationTest extends \PHPUnit_Framework_TestCase
             ['application', 'some_status']
         ];
     }
-
 }

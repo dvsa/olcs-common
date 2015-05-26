@@ -14,7 +14,8 @@ namespace Common\Filter\Publication;
  */
 class PreviousApplicationPublication extends PreviousPublication
 {
-    public function filter($publication) {
+    public function filter($publication)
+    {
         $applicationData = $publication->offsetGet('applicationData');
 
         //if status is new then we don't check for previous

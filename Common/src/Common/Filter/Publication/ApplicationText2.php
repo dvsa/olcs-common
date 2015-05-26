@@ -28,12 +28,14 @@ class ApplicationText2 extends Text1
 
         //licence cancellation
         if ($publication->offsetExists('licenceCancelled')) {
-            if ($licType == self::PSV_LIC_TYPE) { //PSV licence cancellation
+            //PSV licence cancellation
+            if ($licType == self::PSV_LIC_TYPE) {
                 $text = $this->getPsvCancelled($publication, $licenceData, $text);
             } else {
                 $text = $this->getGvCancelled($publication, $licenceData, $text);
             }
-        } elseif ($licType == self::GV_LIC_TYPE) { //non cancellation GV
+        } elseif ($licType == self::GV_LIC_TYPE) {
+            //non cancellation GV
             switch ($publicationSection) {
                 case self::APP_GRANTED_SECTION:
                     $text = $this->getAllData($licenceData, $text);
@@ -46,7 +48,8 @@ class ApplicationText2 extends Text1
                     $text = $this->getAllData($licenceData, $text);
                     break;
             }
-        } else { //non cancellation PSV
+        } else {
+            //non cancellation PSV
             $text = $this->getAllData($licenceData, $text);
         }
 
@@ -64,7 +67,8 @@ class ApplicationText2 extends Text1
      * @param $text
      * @return array
      */
-    public function getAllData($licenceData, $text) {
+    public function getAllData($licenceData, $text)
+    {
         $text[] = $this->getLicenceInfo($licenceData);
         $text[] = $this->getPersonInfo($licenceData['organisation']);
 
@@ -77,7 +81,8 @@ class ApplicationText2 extends Text1
      * @param $text
      * @return array
      */
-    public function getGvCancelled($publication, $licenceData, $text) {
+    public function getGvCancelled($publication, $licenceData, $text)
+    {
         $text[] = $publication->offsetGet('licenceCancelled');
         $text[] = $this->getLicenceInfo($licenceData) . "\n";
 
@@ -90,7 +95,8 @@ class ApplicationText2 extends Text1
      * @param $text
      * @return array
      */
-    public function getPsvCancelled($publication, $licenceData, $text) {
+    public function getPsvCancelled($publication, $licenceData, $text)
+    {
         $text = $this->getGvCancelled($publication, $licenceData, $text);
         $text[] = $this->getPersonInfo($licenceData['organisation']);
 
