@@ -173,13 +173,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             'translateToWelsh' => 'N'
         ];
 
-        $orgUsers = [
-            [
-                'user' => [
-                    'emailAddress' => null
-                ]
-            ]
-        ];
+        $orgUsers = [];
 
         $this->setService(
             'Entity\Licence',
@@ -201,7 +195,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
         $this->setService(
             'Entity\Organisation',
             m::mock()
-            ->shouldReceive('getAdminUsers')
+            ->shouldReceive('getAdminEmailAddresses')
             ->with(100)
             ->andReturn($orgUsers)
             ->getMock()
@@ -235,19 +229,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             'licNo' => 'L12345'
         ];
 
-        $orgUsers = [
-            [
-                'user' => [
-                    'emailAddress' => 'test@user.com',
-                    'contactDetails' => [
-                        'person' => [
-                            'forename' => 'Test',
-                            'familyName' => 'User'
-                        ]
-                    ]
-                ]
-            ]
-        ];
+        $orgUsers = ['Test User <test@user.com>'];
 
         $this->setService(
             'Entity\Licence',
@@ -263,14 +245,14 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             m::mock()
             ->shouldReceive('createFromFile')
             ->with($file, $params)
-            ->andReturn(500)
+            ->andReturn(['id' => 500])
             ->getMock()
         );
 
         $this->setService(
             'Entity\Organisation',
             m::mock()
-            ->shouldReceive('getAdminUsers')
+            ->shouldReceive('getAdminEmailAddresses')
             ->with(100)
             ->andReturn($orgUsers)
             ->getMock()
@@ -307,8 +289,8 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
                 null,
                 null,
                 ['Test User <test@user.com>'],
-                'email.licensing-information.subject',
-                'markup-email-dispatch-document',
+                'email.licensing-information.standard.subject',
+                'markup-email-licensing-information-standard',
                 [
                     'L12345',
                     'http://selfserve'
@@ -318,6 +300,96 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
         );
 
         $this->sut->process($file, $params);
+    }
+
+    public function testWithEnglishOrgEmailWithUsersAndContinuationEmail()
+    {
+        $file = m::mock();
+        $params = [
+            'licence' => 123,
+            'description' => 'foo'
+        ];
+
+        $licence = [
+            'organisation' => [
+                'allowEmail' => 'Y',
+                'id' => 100
+            ],
+            'translateToWelsh' => 'N',
+            'licNo' => 'L12345'
+        ];
+
+        $orgUsers = ['Test User <test@user.com>'];
+
+        $this->setService(
+            'Entity\Licence',
+            m::mock()
+            ->shouldReceive('getWithOrganisation')
+            ->with(123)
+            ->andReturn($licence)
+            ->getMock()
+        );
+
+        $this->setService(
+            'Entity\Document',
+            m::mock()
+            ->shouldReceive('createFromFile')
+            ->with($file, $params)
+            ->andReturn(['id' => 500])
+            ->getMock()
+        );
+
+        $this->setService(
+            'Entity\Organisation',
+            m::mock()
+            ->shouldReceive('getAdminEmailAddresses')
+            ->with(100)
+            ->andReturn($orgUsers)
+            ->getMock()
+        );
+
+        $this->setService(
+            'Entity\CorrespondenceInbox',
+            m::mock()
+            ->shouldReceive('save')
+            ->with(
+                [
+                    'document' => 500,
+                    'licence'  => 123
+                ]
+            )
+            ->getMock()
+        );
+
+        $this->setService(
+            'Helper\Url',
+            m::mock()
+            ->shouldReceive('fromRouteWithHost')
+            ->with('selfserve', 'correspondence_inbox')
+            ->andReturn('http://selfserve')
+            ->getMock()
+        );
+
+        $this->setService(
+            'Email',
+            m::mock()
+            ->shouldReceive('sendTemplate')
+            ->with(
+                'N',
+                null,
+                null,
+                ['Test User <test@user.com>'],
+                'email.licensing-information.continuation.subject',
+                'markup-email-licensing-information-continuation',
+                [
+                    'L12345',
+                    'http://selfserve'
+                ]
+            )
+            ->getMock()
+        );
+
+        $this->sut->process($file, $params, 'continuation');
     }
 
     public function testWithWelshOrgEmailAndUsers()
@@ -338,19 +410,7 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             'licNo' => 'L12345'
         ];
 
-        $orgUsers = [
-            [
-                'user' => [
-                    'emailAddress' => 'test@user.com',
-                    'contactDetails' => [
-                        'person' => [
-                            'forename' => 'Test',
-                            'familyName' => 'User'
-                        ]
-                    ]
-                ]
-            ]
-        ];
+        $orgUsers = ['Test User <test@user.com>'];
 
         $this->setService(
             'Entity\Licence',
@@ -366,14 +426,14 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
             m::mock()
             ->shouldReceive('createFromFile')
             ->with($file, $params)
-            ->andReturn(500)
+            ->andReturn(['id' => 500])
             ->getMock()
         );
 
         $this->setService(
             'Entity\Organisation',
             m::mock()
-            ->shouldReceive('getAdminUsers')
+            ->shouldReceive('getAdminEmailAddresses')
             ->with(100)
             ->andReturn($orgUsers)
             ->getMock()
@@ -410,8 +470,8 @@ class DocumentDispatchHelperServiceTest extends MockeryTestCase
                 null,
                 null,
                 ['Test User <test@user.com>'],
-                'email.licensing-information.subject',
-                'markup-email-dispatch-document',
+                'email.licensing-information.standard.subject',
+                'markup-email-licensing-information-standard',
                 [
                     'L12345',
                     'http://selfserve'

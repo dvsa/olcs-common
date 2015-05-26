@@ -28,15 +28,39 @@ class OppositionEntityServiceTest extends AbstractEntityServiceTestCase
      */
     public function testGetForApplication()
     {
+        $bundle = [
+            'children' => [
+                'case' => [
+                    'criteria' => [
+                        'application' => 1971,
+                    ],
+                    'required' => true
+                ],
+                'oppositionType',
+                'opposer' => array(
+                    'children' => array(
+                        'opposerType',
+                        'contactDetails' => array(
+                            'children' => array(
+                                'person',
+                            )
+                        )
+                    )
+                ),
+                'grounds',
+                'application',
+            ]
+        ];
+
         $this->expectOneRestCall(
             'Opposition',
             'GET',
             [
-                'application' => 1971,
                 'sort' => 'createdOn',
                 'order' => 'DESC',
                 'limit' => 'all'
-            ]
+            ],
+            $bundle
         )->will($this->returnValue(['Results' => ['CASES']]));
 
         $this->assertEquals(['CASES'], $this->sut->getForApplication(1971));
@@ -47,15 +71,39 @@ class OppositionEntityServiceTest extends AbstractEntityServiceTestCase
      */
     public function testGetForLicence()
     {
+        $bundle = [
+            'children' => [
+                'case' => [
+                    'criteria' => [
+                        'licence' => 1971,
+                    ],
+                    'required' => true
+                ],
+                'oppositionType',
+                'opposer' => array(
+                    'children' => array(
+                        'opposerType',
+                        'contactDetails' => array(
+                            'children' => array(
+                                'person',
+                            )
+                        )
+                    )
+                ),
+                'grounds',
+                'application',
+            ]
+        ];
+
         $this->expectOneRestCall(
             'Opposition',
             'GET',
             [
-                'licence' => 1971,
                 'sort' => 'createdOn',
                 'order' => 'DESC',
                 'limit' => 'all'
-            ]
+            ],
+            $bundle
         )->will($this->returnValue(['Results' => ['CASES']]));
 
         $this->assertEquals(['CASES'], $this->sut->getForLicence(1971));

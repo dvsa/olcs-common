@@ -686,20 +686,34 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetAdminUsers()
+    public function testGetAdminEmailAddresses()
     {
         $id = 3;
 
         $data = [
             'organisationUsers' => [
-                1, 2, 3
+                [
+                    'user' => [
+                        'emailAddress' => null
+                    ],
+                ], [
+                    'user' => [
+                        'emailAddress' => 'test@user.com',
+                        'contactDetails' => [
+                            'person' => [
+                                'forename' => 'Test',
+                                'familyName' => 'User'
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ];
 
         $this->expectOneRestCall('Organisation', 'GET', $id)
             ->will($this->returnValue($data));
 
-        $this->assertEquals([1, 2, 3], $this->sut->getAdminUsers($id));
+        $this->assertEquals(['Test User <test@user.com>'], $this->sut->getAdminEmailAddresses($id));
     }
 
     /**

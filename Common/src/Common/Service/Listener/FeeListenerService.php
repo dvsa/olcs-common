@@ -4,17 +4,20 @@
  * Fee Listener Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Service\Listener;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Service\Entity\ApplicationEntityService;
+use Common\Service\Data\FeeTypeDataService;
 
 /**
  * Fee Listener Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 class FeeListenerService implements ServiceLocatorAwareInterface
 {
@@ -37,12 +40,14 @@ class FeeListenerService implements ServiceLocatorAwareInterface
     {
         $this->maybeProcessApplicationFee($id);
         $this->maybeContinueLicence($id);
+        $this->maybeProcessGrantingFee($id);
     }
 
     protected function triggerWaive($id)
     {
         $this->maybeProcessApplicationFee($id);
         $this->maybeContinueLicence($id);
+        $this->maybeProcessGrantingFee($id);
     }
 
     /**
@@ -58,7 +63,7 @@ class FeeListenerService implements ServiceLocatorAwareInterface
         $fee = $feeService->getOverview($feeId);
 
         // Fee type is continuation fee
-        if ($fee['feeType']['feeType']['id'] !== \Common\Service\Data\FeeTypeDataService::FEE_TYPE_CONT) {
+        if ($fee['feeType']['feeType']['id'] !== FeeTypeDataService::FEE_TYPE_CONT) {
             return false;
         }
 
@@ -85,7 +90,8 @@ class FeeListenerService implements ServiceLocatorAwareInterface
             return false;
         }
 
-        // @todo Continue the Licence story OLCS-7310
+        $this->getServiceLocator()->get('BusinessServiceManager')->get('Lva\ContinueLicence')
+            ->process(['continuationDetailId' => $continuationDetail['id']]);
 
         // add success message
         // @note not ideal to be using the FlashMessenger from a service, but in this circumstance it would be
@@ -122,5 +128,28 @@ class FeeListenerService implements ServiceLocatorAwareInterface
         }
 
         $this->getServiceLocator()->get('Processing\Application')->validateApplication($application['id']);
+    }
+
+    /**
+     * If the fee type is a interim, then check if we do need in-force processing
+     *
+     * @param int $feeId Fee ID
+     *
+     * @return bool Whether the licence was continued
+     */
+    protected function maybeProcessGrantingFee($feeId)
+    {
+        $fee = $this->getServiceLocator()->get('Entity\Fee')->getFeeDetailsForInterim($feeId);
+
+        if ($fee['feeType']['feeType']['id'] !== FeeTypeDataService::FEE_TYPE_GRANTINT) {
+            return false;
+        }
+
+        if (!isset($fee['application']['interimStatus']['id']) ||
+            $fee['application']['interimStatus']['id'] !== ApplicationEntityService::INTERIM_STATUS_GRANTED) {
+            return false;
+        }
+
+        $this->getServiceLocator()->get('Helper\Interim')->grantInterim($fee['application']['id']);
     }
 }

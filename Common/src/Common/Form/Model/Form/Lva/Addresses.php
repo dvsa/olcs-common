@@ -48,6 +48,13 @@ class Addresses
     public $establishmentAddress = null;
 
     /**
+     * @Form\Name("consultant")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\TransportConsultant")
+     * @Form\Options({"label":"application_your-business_business-type.transport-consultant.label"})
+     */
+    public $transportConsultant = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})

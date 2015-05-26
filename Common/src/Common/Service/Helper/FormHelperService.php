@@ -160,21 +160,33 @@ class FormHelperService extends AbstractHelperService
      */
     public function processAddressLookupForm(Form $form, Request $request)
     {
-        $return = false;
-
-        $post = (array)$request->getPost();
-
+        $processed = false;
+        $modified  = false;
         $fieldsets = $form->getFieldsets();
+        $post      = (array)$request->getPost();
 
         foreach ($fieldsets as $fieldset) {
-
-            if ($fieldset instanceof Address && $this->processAddressLookupFieldset($fieldset, $post, $form)) {
+            if ($result = $this->processAddressLookupFieldset($fieldset, $post, $form)) {
                 // @NOTE we can't just return true here, as any other address lookups need processing also
-                $return = true;
+                $processed = true;
+
+                if (is_array($result)) {
+                    $modified = true;
+                    $post = $result;
+                }
             }
         }
 
-        return $return;
+        /**
+         * A postcode -> address lookup will have modified the array of
+         * POST data at an unknown level of nesting, so we need to make
+         * one top-level call to re-populate the form data if so
+         */
+        if ($modified) {
+            $form->setData($post);
+        }
+
+        return $processed;
     }
 
     /**
@@ -188,6 +200,27 @@ class FormHelperService extends AbstractHelperService
     {
         $name = $fieldset->getName();
 
+        if (!($fieldset instanceof Address)) {
+            $data = isset($post[$name]) ? $post[$name] : [];
+            $processed = false;
+            $modified  = false;
+
+            foreach ($fieldset->getFieldsets() as $fieldset) {
+                if ($result = $this->processAddressLookupFieldset($fieldset, $data, $form)) {
+                    $processed = true;
+
+                    if (is_array($result)) {
+                        $modified = true;
+                        $post[$name] = $result;
+                    }
+                }
+            }
+            if ($modified) {
+                return $post;
+            }
+            return $processed;
+        }
+
         // If we have clicked the find address button
         if (isset($post[$name]['searchPostcode']['search']) && !empty($post[$name]['searchPostcode']['search'])) {
 
@@ -198,10 +231,15 @@ class FormHelperService extends AbstractHelperService
         // If we have selected an address
         if (isset($post[$name]['searchPostcode']['select']) && !empty($post[$name]['searchPostcode']['select'])) {
 
-            $this->processAddressSelect($fieldset, $post, $name, $form);
             $this->removeAddressSelectFields($fieldset);
 
-            return true;
+            // manipulate the current level of post data, bearing in mind
+            // we could be nested at this point...
+            $post[$name] = $this->processAddressSelect($post, $name);
+
+            // ... meaning we have to return the current level of post data so
+            // it can bubble all the way back up to the top
+            return $post;
         }
 
         $this->removeAddressSelectFields($fieldset);
@@ -235,6 +273,7 @@ class FormHelperService extends AbstractHelperService
         } catch (\Exception $e) {
             // RestClient / ResponseHelper throw root exceptions :(
             $fieldset->get('searchPostcode')->setMessages(array('postcode.error.not-available'));
+            $this->removeAddressSelectFields($fieldset);
             return false;
         }
 
@@ -262,16 +301,12 @@ class FormHelperService extends AbstractHelperService
      * @param array $post
      * @param string $name
      */
-    private function processAddressSelect($fieldset, $post, $name, $form)
+    private function processAddressSelect($post, $name)
     {
         $address = $this->getServiceLocator()->get('Data\Address')
             ->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
 
-        $addressDetails = $this->getServiceLocator()->get('Helper\Address')->formatPostalAddressFromBs7666($address);
-
-        $data = $post;
-        $data[$name] = $addressDetails;
-        $form->setData($data);
+        return $this->getServiceLocator()->get('Helper\Address')->formatPostalAddressFromBs7666($address);
     }
 
     /**
@@ -713,5 +748,30 @@ class FormHelperService extends AbstractHelperService
         }
 
         return $fieldset;
+    }
+
+    /**
+     * Save form state data
+     *
+     * @param Form  $form
+     * @param array $data The form data to save
+     */
+    public function saveFormState(Form $form, $data)
+    {
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        $sessionContainer->offsetSet($form->getName(), $data);
+    }
+
+    /**
+     * Restore form state
+     *
+     * @param Form $form
+     */
+    public function restoreFormState(Form $form)
+    {
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        if ($sessionContainer->offsetExists($form->getName())) {
+            $form->setData($sessionContainer->offsetGet($form->getName()));
+        }
     }
 }

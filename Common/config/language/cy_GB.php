@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'AP-TOL-1' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'AP-TOL-2' => 'W If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'Authorisation' => 'W Authorisation',
     'Confirm' => 'W Confirm',
     'Continue' => 'W Continue',
@@ -61,6 +63,7 @@ return array(
     'add-undertaking' => 'W Add undertaking',
     'additional-psv-discs-validator-too-many' => 'W The number of discs exceeds the total vehicle authority',
     'address' => 'W Address',
+    'admin-continuations-checklist-reminders-title' => 'W Checklist reminders',
     'admin-continuations-list-title' => 'W Time period: %s Traffic area: %s',
     'admin-continuations-no-licences-found' => 'W No licences were found',
     'admin-continuations-title' => 'W Continuations',
@@ -645,6 +648,9 @@ return array(
     'application_your-business_business-details.data.company_number' => 'W Registered company number',
     'application_your-business_business-details.data.registered_address' => 'W Registered address',
     'application_your-business_business-details.data.trading_names_optional' => 'W Trading names (optional)',
+    'application_your-business_business-type.add-transport-consultant.label' => 'W Do you wish to add details of a
+        Transport Consultant?',
+    'application_your-business_business-type.consultant-name.label' => 'W Transport consultant name',
     'application_your-business_business-type.contact-details.business-phone' => 'W Business telephone No. (optional)',
     'application_your-business_business-type.contact-details.email' => 'W E-mail address',
     'application_your-business_business-type.contact-details.fax-phone' => 'W Fax telephone No. (optional)',
@@ -657,6 +663,8 @@ return array(
     'application_your-business_business-type.data.type' => 'W What type of business are you?',
     'application_your-business_business-type.establishment.label' => 'W Establishment address',
     'application_your-business_business-type.registered-office.label' => 'W Registered office address',
+    'application_your-business_business-type.transport-consultant.label' => 'W Transport Consultant',
+    'application_your-business_business-type.written-perm-engage.label' => 'W Written permission to engage',
     'application_your-business_business_details-subsidiaries-columnCompanyNo' => 'W Company number',
     'application_your-business_business_details-subsidiaries-columnName' => 'W Company name',
     'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'W If you have any subsidiary
@@ -912,7 +920,10 @@ return array(
     'edit-conviction' => 'W Edit Conviction',
     'edit-undertaking' => 'W Edit undertaking',
     'email.cns.subject' => 'W Licences set to CNS between %s and %s',
-    'email.licensing-information.subject' => 'W Operator licensing information',
+    'email.inbox-reminder.continuation.subject' => 'W Operator licence continuation/expiry - Reminder',
+    'email.inbox-reminder.standard.subject' => 'W Operator licensing information - Reminder',
+    'email.licensing-information.continuation.subject' => 'W Operator licence continuation/expiry',
+    'email.licensing-information.standard.subject' => 'W Operator licensing information',
     'email.transport-manager-complete-digital-form.subject' => 'W Request for transport manager details',
     'end-date' => 'W End date',
     'entity-details' => 'W Entity details',
@@ -968,6 +979,8 @@ return array(
     'generic-delete-confirmation-label' => 'W Are you sure you want to remove these?',
     'generic-nothing-updated' => 'W Nothing to update',
     'generic-restore-success' => 'W Record(s) restored successfully',
+    'gv_interim_direction_fee_request' => 'W GV Interim direction fee request',
+    'gv_interim_licence_fee_request' => 'W GV Interim licence fee request',
     'header-correspondence-details' => 'W Correspondence details',
     'header-establishment-address' => 'W Establishment address',
     'helpdesk' => 'W Helpdesk',
@@ -1263,6 +1276,7 @@ return array(
     'internal.interim.form.interim_end' => 'W Interim end date',
     'internal.interim.form.interim_grant' => 'W Grant',
     'internal.interim.form.interim_granted' => 'W Interim granted',
+    'internal.interim.form.interim_in_force' => 'W The interim is now in-force',
     'internal.interim.form.interim_reason' => 'W Interim reason',
     'internal.interim.form.interim_refuse' => 'W Refuse',
     'internal.interim.form.interim_refused' => 'W The interim has been refused',
@@ -1274,6 +1288,8 @@ return array(
     'internal.interim.form.refuse_confirm' => 'W Are you sure you want to refuse this interim?',
     'internal.interim.generation_success' => 'W The interim document has been generated',
     'internal.interim.interim_details_saved' => 'W Interim details saved',
+    'internal.interim.interim_granted_fee_requested' => 'W The interim has been granted and a fee request letter has
+        been generated',
     'internal.interim.interim_updated' => 'W Interim updated',
     'internal.interim.operatingcentres.table.address' => 'W Operating centre address',
     'internal.interim.operatingcentres.table.header' => 'W Operating centres',
@@ -1288,9 +1304,10 @@ return array(
     'internal.transport_manager.responsibilities.other_licence' => 'W other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'W Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'W Edit other licence',
-    'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
-        licence',
-    'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'invalid-licence-type' => 'W *DUPLICATE TRANSLATION* If you are a goods vehicle operator, you can not apply for a
+        special restricted licence',
+    'invalid-operator-type' => 'W *DUPLICATE TRANSLATION* If you operate in Northern Ireland, you can only apply for a
+        Goods licence',
     'isTrailer' => 'W Trailer?',
     'last-name' => 'W Last name',
     'layout-footer' => 'W All rights Reserved.',
@@ -1365,7 +1382,7 @@ return array(
     'licence.vehicles_transfer.form.message_empty' => 'W You must select a licence to which to transfer the vehicle(s)',
     'licence.vehicles_transfer.form.message_exceed' => 'W Transferring these vehicles would exceed the vehicle authority
         on licence %s',
-    'licence.vehicles_transfer.form.transfer_vehicles' => 'W Transfer vehicless',
+    'licence.vehicles_transfer.form.transfer_vehicles' => 'W Transfer vehicles',
     'licence.vehicles_transfer.form.vehicles_transfered' => 'W The selected vehicle(s) have been transferred',
     'licence_goods-trailers_trailer.form.add.trailernumber' => 'W Trailer Number',
     'licence_goods-trailers_trailer.table.guidance' => 'W I undertake that the trailers specified are in operation and
@@ -2399,6 +2416,7 @@ return array(
     'type-of-licence' => 'W Type of licence',
     'undertakings' => 'W Undertakings',
     'united-kingdom' => 'W United Kingdom',
+    'unknown-error' => 'W An error occurred processing your request, please try again',
     'update-continuation.saved' => 'W The continuation details have been updated',
     'update-continuation.separator-sheet' => 'W The separator sheet has been generated',
     'update-continuation.success' => 'W The licence has been continued',
