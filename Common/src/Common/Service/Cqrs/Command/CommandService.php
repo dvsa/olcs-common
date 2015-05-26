@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Cqrs\Command;
 
-use Dvsa\Olcs\Transfer\Command\CommandContainer as DvsaCommand;
+use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Common\Service\Cqrs\Response;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
@@ -48,7 +48,7 @@ class CommandService
      * @param DvsaCommand $command
      * @return Response
      */
-    public function send(DvsaCommand $command)
+    public function send(CommandContainerInterface $command)
     {
         if (!$command->isValid()) {
             return $this->invalidResponse($command->getMessages(), HttpResponse::STATUS_CODE_422);
