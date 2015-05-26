@@ -160,28 +160,33 @@ class FormHelperService extends AbstractHelperService
      */
     public function processAddressLookupForm(Form $form, Request $request)
     {
-        $return = false;
-
-        $post = (array)$request->getPost();
-
+        $processed = false;
+        $modified  = false;
         $fieldsets = $form->getFieldsets();
+        $post      = (array)$request->getPost();
 
         foreach ($fieldsets as $fieldset) {
             if ($result = $this->processAddressLookupFieldset($fieldset, $post, $form)) {
                 // @NOTE we can't just return true here, as any other address lookups need processing also
-                $return = true;
+                $processed = true;
 
                 if (is_array($result)) {
+                    $modified = true;
                     $post = $result;
                 }
             }
         }
 
-        if ($request->isPost() && $return) {
+        /**
+         * A postcode -> address lookup will have modified the array of
+         * POST data, so we need to make one top-level call to re-populate
+         * the form data if so
+         */
+        if ($modified) {
             $form->setData($post);
         }
 
-        return $return;
+        return $processed;
     }
 
     /**
@@ -197,20 +202,23 @@ class FormHelperService extends AbstractHelperService
 
         if (!($fieldset instanceof Address)) {
             $data = isset($post[$name]) ? $post[$name] : [];
-            $return = false;
+            $processed = false;
+            $modified  = false;
+
             foreach ($fieldset->getFieldsets() as $fieldset) {
                 if ($result = $this->processAddressLookupFieldset($fieldset, $data, $form)) {
-                    $return = true;
+                    $processed = true;
 
                     if (is_array($result)) {
+                        $modified = true;
                         $post[$name] = $result;
                     }
                 }
             }
-            if ($return) {
+            if ($modified) {
                 return $post;
             }
-            return false;
+            return $processed;
         }
 
         // If we have clicked the find address button
@@ -225,7 +233,12 @@ class FormHelperService extends AbstractHelperService
 
             $this->removeAddressSelectFields($fieldset);
 
+            // manipulate the current level of post data, bearing in mind
+            // we could be nested at this point...
             $post[$name] = $this->processAddressSelect($fieldset, $post, $name);
+
+            // ... meaning we have to return the current level of post data so
+            // it can bubble all the way back up to the top
             return $post;
         }
 
