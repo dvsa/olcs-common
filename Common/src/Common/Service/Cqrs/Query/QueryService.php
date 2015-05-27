@@ -33,10 +33,16 @@ class QueryService
      */
     protected $client;
 
-    public function __construct(RouteInterface $router, Client $client)
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    public function __construct(RouteInterface $router, Client $client, Request $request)
     {
         $this->router = $router;
         $this->client = $client;
+        $this->request = $request;
     }
 
     /**
@@ -62,12 +68,11 @@ class QueryService
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
         }
 
-        $request = new Request();
-        $request->setUri($uri);
-        $request->setMethod('GET');
+        $this->request->setUri($uri);
+        $this->request->setMethod('GET');
 
         try {
-            return new Response($this->client->send($request));
+            return new Response($this->client->send($this->request));
         } catch (HttpClientExceptionInterface $ex) {
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_500);
         }
