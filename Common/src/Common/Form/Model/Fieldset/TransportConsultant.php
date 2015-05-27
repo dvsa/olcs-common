@@ -37,7 +37,8 @@ class TransportConsultant
      * @Form\Attributes({"id":"written-permission-to-engage","placeholder":""})
      * @Form\Options({
      *     "label": "application_your-business_business-type.written-perm-engage.label",
-     *     "value_options": {"Y": "Yes", "N": "No"}
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
      * })
      */
     public $writtenPermissionToEngage = null;
