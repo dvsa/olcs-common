@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Type Of Licence
+ * Business Type
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -10,20 +10,18 @@ namespace Common\Data\Mapper\Lva;
 use Common\Data\Mapper\MapperInterface;
 
 /**
- * Type Of Licence
+ * Business Type
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TypeOfLicence implements MapperInterface
+class BusinessType implements MapperInterface
 {
     public static function mapFromResult(array $data)
     {
         return [
             'version' => $data['version'],
-            'type-of-licence' => [
-                'operator-location' => $data['niFlag'],
-                'operator-type' => $data['goodsOrPsv']['id'],
-                'licence-type' => $data['licenceType']['id']
+            'data' => [
+                'type' => $data['type']['id']
             ]
         ];
     }
