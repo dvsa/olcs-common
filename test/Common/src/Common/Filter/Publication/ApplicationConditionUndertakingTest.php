@@ -56,8 +56,7 @@ class ApplicationConditionUndertakingTest extends \PHPUnit_Framework_TestCase
 
         $params = [
             'application' => $applicationId,
-            'limit' => 'all',
-            'sort' => 'conditionType'
+            'limit' => 'all'
         ];
 
         $mockConditionUndertakingService = m::mock(GenericDataService::class);

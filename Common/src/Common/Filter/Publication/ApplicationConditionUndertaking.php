@@ -32,8 +32,7 @@ class ApplicationConditionUndertaking extends AbstractPublicationFilter
     {
         $params = [
             'application' => $publication->offsetGet('application'),
-            'limit' => 'all',
-            'sort' => 'conditionType'
+            'limit' => 'all'
         ];
 
         $conditionUndertaking = $this->getServiceLocator()
