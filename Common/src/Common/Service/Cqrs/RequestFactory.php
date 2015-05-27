@@ -10,6 +10,9 @@ use Zend\Http\Request;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Request Factory
+ */
 class RequestFactory implements FactoryInterface
 {
     /**
