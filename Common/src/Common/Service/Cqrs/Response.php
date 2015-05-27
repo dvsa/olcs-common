@@ -56,7 +56,7 @@ class Response
     public function getResult()
     {
         if ($this->result === null) {
-            $this->result = json_decode($this->httpResponse->getContent(), true);
+            $this->result = json_decode($this->httpResponse->getBody(), true);
         }
 
         return $this->result;

@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Cqrs\Query;
 
-use Dvsa\Olcs\Transfer\Query\QueryContainer as DvsaQuery;
+use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Common\Service\Cqrs\Response;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
@@ -45,7 +45,7 @@ class QueryService
      * @param DvsaQuery $query
      * @return Response
      */
-    public function send(DvsaQuery $query)
+    public function send(QueryContainerInterface $query)
     {
         if (!$query->isValid()) {
             return $this->invalidResponse($query->getMessages(), HttpResponse::STATUS_CODE_422);
