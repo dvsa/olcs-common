@@ -30,9 +30,9 @@ class ApplicationText2 extends Text1
         if ($publication->offsetExists('licenceCancelled')) {
             //PSV licence cancellation
             if ($licType == self::PSV_LIC_TYPE) {
-                $text = $this->getPsvCancelled($publication, $licenceData, $text);
+                $text = $this->getPsvCancelled($publication, $text);
             } else {
-                $text = $this->getGvCancelled($publication, $licenceData, $text);
+                $text = $this->getGvCancelled($publication, $text);
             }
         } elseif ($licType == self::GV_LIC_TYPE) {
             //non cancellation GV
@@ -77,12 +77,12 @@ class ApplicationText2 extends Text1
 
     /**
      * @param \Common\Data\Object\Publication $publication
-     * @param $licenceData
      * @param $text
      * @return array
      */
-    public function getGvCancelled($publication, $licenceData, $text)
+    public function getGvCancelled($publication, $text)
     {
+        $licenceData = $publication->offsetGet('licenceData');
         $text[] = $publication->offsetGet('licenceCancelled');
         $text[] = $this->getLicenceInfo($licenceData) . "\n";
 
@@ -91,13 +91,13 @@ class ApplicationText2 extends Text1
 
     /**
      * @param \Common\Data\Object\Publication $publication
-     * @param $licenceData
      * @param $text
      * @return array
      */
-    public function getPsvCancelled($publication, $licenceData, $text)
+    public function getPsvCancelled($publication, $text)
     {
-        $text = $this->getGvCancelled($publication, $licenceData, $text);
+        $licenceData = $publication->offsetGet('licenceData');
+        $text = $this->getGvCancelled($publication, $text);
         $text[] = $this->getPersonInfo($licenceData['organisation']);
 
         return $text;
