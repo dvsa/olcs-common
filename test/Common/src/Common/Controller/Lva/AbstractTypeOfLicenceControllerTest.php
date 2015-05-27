@@ -268,19 +268,6 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
                 $stubbedCurrentData
             )
             ->andReturn(false)
-            ->shouldReceive('processChange')
-            ->with(
-                [
-                    'operator-location' => 'N',
-                    'operator-type' => 'lcat_gv',
-                    'licence-type' => 'ltyp_sn'
-                ],
-                $stubbedCurrentData
-            )
-            ->andReturn(false)
-            ->shouldReceive('isCurrentDataSet')
-            ->with($stubbedCurrentData)
-            ->andReturn(true)
             ->shouldReceive('alterForm')
             ->with($form, 7, "")
             ->andReturn($form);
@@ -400,16 +387,6 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
                 $stubbedCurrentData
             )
             ->andReturn(false)
-            ->shouldReceive('processChange')
-            ->with(
-                [
-                    'operator-location' => 'N',
-                    'operator-type' => 'lcat_gv',
-                    'licence-type' => 'ltyp_si'
-                ],
-                $stubbedCurrentData
-            )
-            ->andReturn(true)
             ->shouldReceive('alterForm')
             ->with($form, 7, '')
             ->andReturn($form);
@@ -541,21 +518,6 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
                 $stubbedCurrentData
             )
             ->andReturn(false)
-            ->shouldReceive('processChange')
-            ->with(
-                [
-                    'operator-location' => 'N',
-                    'operator-type' => 'lcat_gv',
-                    'licence-type' => 'ltyp_sn'
-                ],
-                $stubbedCurrentData
-            )
-            ->andReturn(false)
-            ->shouldReceive('isCurrentDataSet')
-            ->with($stubbedCurrentData)
-            ->andReturn(false)
-            ->shouldReceive('processFirstSave')
-            ->with(7)
             ->shouldReceive('alterForm')
             ->with($form, 7, '')
             ->andReturn($form);

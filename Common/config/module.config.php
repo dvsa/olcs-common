@@ -54,12 +54,6 @@ return array(
             'LvaVariation/Review' => array(
                 'Common\Controller\Lva\Delegators\VariationReviewDelegator'
             ),
-            'LvaLicence/TypeOfLicence' => array(
-                'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
-            ),
-            'LvaVariation/TypeOfLicence' => array(
-                'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
-            ),
             'LvaApplication/BusinessType' => array(
                 // @NOTE: we need an associative array when we need to override the
                 // delegator elsewhere, such as in selfserve or internal
@@ -221,10 +215,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
             'ApplicationVehicleGoodsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
-            'LicenceTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
-            'VariationTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\VariationTypeOfLicenceAdapter',
             'LicenceOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\LicenceOperatingCentreAdapter',
             'VariationOperatingCentreAdapter'
@@ -680,6 +670,10 @@ return array(
             // Common vehicle services
             'lva-licence-variation-vehicles' => 'Common\FormService\Form\Lva\LicenceVariationVehicles',
             'lva-generic-vehicles-vehicle' => 'Common\FormService\Form\Lva\GenericVehiclesVehicle',
+            // Type of licence
+            'lva-licence-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\LicenceTypeOfLicence::class,
+            'lva-application-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\ApplicationTypeOfLicence::class,
+            'lva-variation-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\VariationTypeOfLicence::class
         ]
     ],
     'business_rule_manager' => [
