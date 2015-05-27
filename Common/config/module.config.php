@@ -421,6 +421,24 @@ return array(
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
         ),
+        'ApplicationPublicationFilter' => array(
+            'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
+            'Common\Filter\Publication\Application',
+            'Common\Filter\Publication\ApplicationPubType',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PreviousApplicationPublication',
+            'Common\Filter\Publication\PreviousUnpublishedApplication',
+            'Common\Filter\Publication\ApplicationOperatingCentre',
+            'Common\Filter\Publication\ApplicationLicenceCancelled',
+            'Common\Filter\Publication\ApplicationBusNote',
+            'Common\Filter\Publication\ApplicationConditionUndertaking',
+            'Common\Filter\Publication\ApplicationTransportManager',
+            'Common\Filter\Publication\ApplicationText1',
+            'Common\Filter\Publication\ApplicationText2',
+            'Common\Filter\Publication\ApplicationText3',
+            'Common\Filter\Publication\Clean'
+        ),
     ),
     'search' => [
         'invokables' => [

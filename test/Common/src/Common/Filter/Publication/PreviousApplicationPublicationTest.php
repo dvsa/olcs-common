@@ -2,42 +2,48 @@
 
 namespace CommonTest\Filter\Publication;
 
-use Common\Filter\Publication\PreviousPublication;
+use Common\Filter\Publication\PreviousApplicationPublication;
 use Common\Data\Object\Publication;
 use Mockery as m;
 
 /**
- * Class PreviousPublicationTest
+ * Class PreviousApplicationPublicationTest
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class PreviousPublicationTest extends \PHPUnit_Framework_TestCase
+class PreviousApplicationPublicationTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      * Tests the filter
      *
      * @group publicationFilter
+     * @dataProvider filterProvider
      */
-    public function testFilter()
+    public function testFilter($additionalParam, $status)
     {
         $pubType = 'A&D';
         $trafficArea = 'B';
-        $pi = 1;
         $publicationNo = 6831;
+        $id = 7;
 
         $params = [
             'pubType' => $pubType,
             'trafficArea' => $trafficArea,
-            'pi' => $pi,
-            'limit' => 'all'
+            'limit' => 'all',
+            $additionalParam => $id
         ];
 
         $data = [
             'pubType' => $pubType,
             'trafficArea' => $trafficArea,
-            'pi' => $pi,
             'publicationNo' => $publicationNo,
-            'hearingData' => []
+            'application' => $id,
+            'licence' => $id,
+            'applicationData' => [
+                'status' => [
+                    'id' => $status
+                ]
+            ]
         ];
 
         $restData = [
@@ -63,15 +69,19 @@ class PreviousPublicationTest extends \PHPUnit_Framework_TestCase
         $expectedOutput = [
             'pubType' => $pubType,
             'trafficArea' => $trafficArea,
-            'pi' => $pi,
             'publicationNo' => $publicationNo,
-            'hearingData' => [
-                'previousPublication' => 6830
-            ]
+            'application' => $id,
+            'licence' => $id,
+            'applicationData' => [
+                'status' => [
+                    'id' => $status
+                ]
+            ],
+            'previousPublication' => 6830
         ];
 
         $input = new Publication($data);
-        $sut = new PreviousPublication();
+        $sut = new PreviousApplicationPublication();
 
         $mockPublicationLinkService = m::mock('Common\Service\Data\PublicationLink');
         $mockPublicationLinkService->shouldReceive('fetchList')->with($params)->andReturn($restData);
@@ -86,5 +96,18 @@ class PreviousPublicationTest extends \PHPUnit_Framework_TestCase
         $output = $sut->filter($input);
 
         $this->assertEquals($expectedOutput, $output->getArrayCopy());
+    }
+
+    public function filterProvider()
+    {
+        $sut = new PreviousApplicationPublication();
+
+        return [
+            ['licence', $sut::APP_GRANTED_STATUS],
+            ['licence', $sut::APP_REFUSED_STATUS],
+            ['licence', $sut::APP_NTU_STATUS],
+            ['licence', $sut::APP_CURTAILED_STATUS],
+            ['application', 'some_status']
+        ];
     }
 }

@@ -48,9 +48,7 @@ class HearingText1Test extends \PHPUnit_Framework_TestCase
                 ],
                 'organisation' => [
                     'name' => $organisationName,
-                    'type' => [
-                        'id' => $organisationType
-                    ],
+                    'type' => $organisationType,
                     'tradingNames' => [
                         0 => [
                             'name' => $organisationTradingName

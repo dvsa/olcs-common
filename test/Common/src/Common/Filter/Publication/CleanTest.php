@@ -22,6 +22,9 @@ class CleanTest extends \PHPUnit_Framework_TestCase
         $data = [
             'hearingData' => true,
             'licenceData' => true,
+            'applicationData' => true,
+            'operatingCentreData' => true,
+            'transportManagerData' => true,
             'publicationSectionConst' => true,
             'case' => true,
             'busRegData' => true
