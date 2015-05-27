@@ -184,7 +184,9 @@ return array(
         ],
         'shared' => array(
             'Helper\FileUpload' => false,
-            'CantIncreaseValidator' => false
+            'CantIncreaseValidator' => false,
+            // Create a new request each time
+            'CqrsRequest' => false
         ),
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
@@ -275,6 +277,7 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
+            'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
             'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',

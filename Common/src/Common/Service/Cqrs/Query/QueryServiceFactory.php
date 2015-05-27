@@ -22,7 +22,8 @@ class QueryServiceFactory implements FactoryInterface
     {
         $router = $serviceLocator->get('ApiRouter');
         $client = new Client();
+        $request = $serviceLocator->get('CqrsRequest');
 
-        return new QueryService($router, $client);
+        return new QueryService($router, $client, $request);
     }
 }
