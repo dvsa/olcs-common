@@ -14,7 +14,7 @@ use Mockery as m;
 class ApplicationText2Test extends MockeryTestCase
 {
     /**
-     * @dataProvider filterProvider
+     * @dataProvider filterCallsCancelledProvider
      *
      * @param $licType
      * @param $publicationSection
@@ -25,10 +25,68 @@ class ApplicationText2Test extends MockeryTestCase
      *
      * Test the application bus note filter
      */
-    public function testFilter($licType, $publicationSection, $licenceCancelled, $calledFunction)
+    public function testFilterCallsCancelled($licType, $publicationSection, $licenceCancelled, $calledFunction)
     {
         $sut = new ApplicationText2();
 
+        $input = $this->getFilterInput($licType, $publicationSection, $licenceCancelled);
+        $output = $this->getFilterResult($input);
+
+        $this->assertEquals(implode("\n", $sut->$calledFunction($input, [])), $output->offsetGet('text2'));
+    }
+
+    /**
+     * @dataProvider filterCallsGetLicenceInfoProvider
+     *
+     * @param $licType
+     * @param $publicationSection
+     */
+    public function testFilterCallsGetLicenceInfo($licType, $publicationSection)
+    {
+        $sut = new ApplicationText2();
+
+        $input = $this->getFilterInput($licType, $publicationSection, []);
+        $output = $this->getFilterResult($input);
+        $this->assertEquals(
+            implode(
+                "\n",
+                $sut->getLicenceInfo($output->offsetGet('licenceData'))
+            ),
+            $output->offsetGet('text2')
+        );
+    }
+
+    /**
+     * @dataProvider filterCallsGetAllDataProvider
+     *
+     * @param $licType
+     * @param $publicationSection
+     */
+    public function testFilterCallsGetAllData($licType, $publicationSection)
+    {
+        $sut = new ApplicationText2();
+
+        $input = $this->getFilterInput($licType, $publicationSection, []);
+        $output = $this->getFilterResult($input);
+        $this->assertEquals(
+            implode(
+                "\n",
+                $sut->getAllData($output->offsetGet('licenceData'), [])
+            ),
+            $output->offsetGet('text2')
+        );
+    }
+
+    /**
+     * Gets the publication object
+     *
+     * @param $licType
+     * @param $publicationSection
+     * @param $licenceCancelled
+     * @return Publication
+     */
+    public function getFilterInput($licType, $publicationSection, $licenceCancelled)
+    {
         $licNo = 'OB1234567';
         $licenceType = 'SN';
         $organisationName = 'Organisation Name';
@@ -69,11 +127,19 @@ class ApplicationText2Test extends MockeryTestCase
         //there's an offset exists on licence cancelled in the code
         $inputData = array_merge($inputData, $licenceCancelled);
 
-        $input = new Publication($inputData);
+        return new Publication($inputData);
+    }
 
-        $output = $sut->filter($input)->offsetGet('text3');
-
-        //$this->assertEquals(implode("\n", $sut->$calledFunction($input, $licenceData, [])), $output);
+    /**
+     * Gets the result from a filter
+     *
+     * @param \Common\Data\Object\Publication $input
+     * @return \Common\Data\Object\Publication
+     */
+    public function getFilterResult($input)
+    {
+        $sut = new ApplicationText2();
+        return $sut->filter($input);
     }
 
     /**
@@ -81,18 +147,45 @@ class ApplicationText2Test extends MockeryTestCase
      *
      * @return array
      */
-    public function filterProvider()
+    public function filterCallsCancelledProvider()
     {
         $sut = new ApplicationText2();
 
         return [
-            [$sut::GV_LIC_TYPE, $sut::APP_GRANTED_SECTION, [], 'getAllData'],
-            [$sut::GV_LIC_TYPE, $sut::APP_WITHDRAWN_SECTION, [], 'getLicenceInfo'],
-            [$sut::GV_LIC_TYPE, $sut::APP_REFUSED_SECTION, [], 'getAllData'],
-            [$sut::GV_LIC_TYPE, 'some_status', [], 'getAllData'],
-            [$sut::GV_LIC_TYPE, 'some_status',['licenceCancelled' => 'licence cancelled'], 'getGvCancelled'],
-            [$sut::PSV_LIC_TYPE, 'some_status',['licenceCancelled' => 'licence cancelled'], 'getPsvCancelled'],
-            [$sut::PSV_LIC_TYPE, 'some_status', [], 'getAllData']
+            [$sut::GV_LIC_TYPE, 'some_status', ['licenceCancelled' => 'licence cancelled'], 'getGvCancelled'],
+            [$sut::PSV_LIC_TYPE, 'some_status', ['licenceCancelled' => 'licence cancelled'], 'getPsvCancelled']
         ];
     }
+
+    /**
+     * Provider for when filter is expected to call getAllData
+     *
+     * @return array
+     */
+    public function filterCallsGetAllDataProvider()
+    {
+        $sut = new ApplicationText2();
+
+        return [
+            [$sut::GV_LIC_TYPE, $sut::APP_GRANTED_SECTION],
+            [$sut::GV_LIC_TYPE, $sut::APP_REFUSED_SECTION],
+            [$sut::GV_LIC_TYPE, 'some_status'],
+            [$sut::PSV_LIC_TYPE, 'some_status']
+        ];
+    }
+
+    /**
+     * Provider for when filter is expected to call getLicenceInfo
+     *
+     * @return array
+     */
+    public function filterCallsGetLicenceInfoProvider()
+    {
+        $sut = new ApplicationText2();
+
+        return [
+            [$sut::GV_LIC_TYPE, $sut::APP_WITHDRAWN_SECTION]
+        ];
+    }
+
 }
