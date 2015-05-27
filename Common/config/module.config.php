@@ -149,6 +149,8 @@ return array(
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
             'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+            'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
+            'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
         ]
     ),
     'console' => array(
