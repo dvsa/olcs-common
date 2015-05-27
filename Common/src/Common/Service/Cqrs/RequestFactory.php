@@ -36,8 +36,7 @@ class RequestFactory implements FactoryInterface
     }
 
     /**
-     * @TODO replace this logic with actually implementation of auth and correct method of sending token to this is only
-     * temporary
+     * @TODO replace this logic with the actual implementation of auth header
      */
     protected function getAuthorizationHeader($serviceLocator)
     {
