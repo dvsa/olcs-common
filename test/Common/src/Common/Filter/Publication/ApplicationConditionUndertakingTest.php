@@ -88,7 +88,6 @@ class ApplicationConditionUndertakingTest extends \PHPUnit_Framework_TestCase
         return [
             ['A', $sut::COND_NEW],
             ['D', $sut::COND_REMOVE],
-            //['U', $sut::COND_UPDATE],
             ['ZZZ', $sut::COND_NEW]
         ];
     }
