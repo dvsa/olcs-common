@@ -38,6 +38,8 @@ class ApplicationText2Test extends MockeryTestCase
     /**
      * @dataProvider filterCallsGetLicenceInfoProvider
      *
+     * @group publicationFilter
+     *
      * @param $licType
      * @param $publicationSection
      */
@@ -47,17 +49,13 @@ class ApplicationText2Test extends MockeryTestCase
 
         $input = $this->getFilterInput($licType, $publicationSection, []);
         $output = $this->getFilterResult($input);
-        $this->assertEquals(
-            implode(
-                "\n",
-                $sut->getLicenceInfo($output->offsetGet('licenceData'))
-            ),
-            $output->offsetGet('text2')
-        );
+        $this->assertEquals($sut->getLicenceInfo($output->offsetGet('licenceData')), $output->offsetGet('text2'));
     }
 
     /**
      * @dataProvider filterCallsGetAllDataProvider
+     *
+     * @group publicationFilter
      *
      * @param $licType
      * @param $publicationSection
@@ -187,5 +185,4 @@ class ApplicationText2Test extends MockeryTestCase
             [$sut::GV_LIC_TYPE, $sut::APP_WITHDRAWN_SECTION]
         ];
     }
-
 }
