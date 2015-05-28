@@ -7,6 +7,18 @@
  */
 namespace Common\Controller\Lva;
 
+use Dvsa\Olcs\Transfer\Query\Application\PreviousConvictions;
+use Dvsa\Olcs\Transfer\Command\Application\UpdatePreviousConvictions;
+
+use Dvsa\Olcs\Transfer\Query\PreviousConviction\PreviousConviction;
+use Dvsa\Olcs\Transfer\Command\PreviousConviction\CreatePreviousConviction;
+use Dvsa\Olcs\Transfer\Command\PreviousConviction\UpdatePreviousConviction;
+
+#use Common\Controller\Lva;
+#use Zend\Http\Response;
+#use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
+#use Zend\Form\Form;
+
 /**
  * Shared logic between Convictions Penalties controllers
  *
@@ -22,13 +34,19 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     {
         $request = $this->getRequest();
 
+        $response = $this->handleQuery(
+            PreviousConvictions::create(['id' => $this->getIdentifier()])
+        );
+
+        $result = $response->getResult();
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->getFormData();
+            $data = $this->getFormData($result);
         }
 
-        $form = $this->getConvictionsPenaltiesForm()->setData($data);
+        $form = $this->getConvictionsPenaltiesForm($result)->setData($data);
 
         $this->alterFormForLva($form);
 
@@ -42,14 +60,31 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
             if ($form->isValid()) {
 
-                $this->save($data);
-                $this->postSave('convictions_penalties');
+                $formData = $form->getData();
 
-                if ($crudAction !== null) {
-                    return $this->handleCrudAction($crudAction);
+                $dto = UpdatePreviousConvictions::create(
+                    [
+                        'id' => $this->getIdentifier(),
+                        'version' => $formData['data']['version'],
+                        'prevConviction' => $formData['data']['question'],
+                        'convictionsConfirmation' => $formData['convictionsConfirmation']['convictionsConfirmation']
+                    ]
+                );
+
+                /** @var \Common\Service\Cqrs\Response $response */
+                $response = $this->handleCommand($dto);
+
+                if ($response->isOk()) {
+                    // @TODO?
+                    // $this->postSave('convictions_penalties');
+
+                    if ($crudAction !== null) {
+                        return $this->handleCrudAction($crudAction);
+                    }
+                    return $this->completeSection('convictions_penalties');
                 }
 
-                return $this->completeSection('convictions_penalties');
+                // @FIXME: handle non happy path
             }
         }
 
@@ -58,21 +93,8 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         return $this->render('convictions_penalties', $form);
     }
 
-    protected function save($data)
+    protected function getFormData($data)
     {
-        $saveData = array_merge($data['data'], $data['convictionsConfirmation']);
-        $saveData['id'] = $this->getApplicationId();
-        $saveData['prevConviction'] = $saveData['question'];
-        unset($saveData['question']);
-
-        $this->getServiceLocator()->get('Entity\Application')->save($saveData);
-    }
-
-    protected function getFormData()
-    {
-        $data = $this->getServiceLocator()->get('Entity\Application')
-            ->getConvictionsPenaltiesData($this->getApplicationId());
-
         return array(
             'data' => array(
                 'version' => $data['version'],
@@ -84,7 +106,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         );
     }
 
-    protected function getConvictionsPenaltiesForm()
+    protected function getConvictionsPenaltiesForm($data)
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
@@ -92,23 +114,17 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
         $formHelper->populateFormTable(
             $form->get('data')->get('table'),
-            $this->getConvictionsPenaltiesTable(),
+            $this->getConvictionsPenaltiesTable($data),
             'data[table]'
         );
 
         return $form;
     }
 
-    protected function getConvictionsPenaltiesTable()
+    protected function getConvictionsPenaltiesTable($data)
     {
         return $this->getServiceLocator()->get('Table')
-            ->prepareTable('lva-convictions-penalties', $this->getTableData());
-    }
-
-    protected function getTableData()
-    {
-        return $this->getServiceLocator()->get('Entity\PreviousConviction')
-            ->getDataForApplication($this->getApplicationId());
+            ->prepareTable('lva-convictions-penalties', $data['previousConvictions']);
     }
 
     public function addAction()
@@ -124,13 +140,19 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     protected function addOrEdit($mode)
     {
         $request = $this->getRequest();
-        $data = array();
+        $data = [];
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
             $id = $this->params('child_id');
-            $data = $this->getConvictionData($id);
+
+            $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+                ->createQuery(PreviousConviction::create(['id' => $id]));
+
+            $result = $this->getServiceLocator()->get('QueryService')->send($query)->getResult();
+
+            $data = ['data' => $result];
         }
 
         $form = $this->getPreviousConvictionForm()->setData($data);
@@ -141,9 +163,25 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
         if ($request->isPost() && $form->isValid()) {
 
-            $this->savePreviousConviction($mode, $form->getData());
+            $dtoData = $form->getData()['data'];
+            $dtoData['application'] = $this->getApplicationId();
 
-            return $this->handlePostSave();
+            if ($mode === 'edit') {
+                $dto = UpdatePreviousConviction::create(
+                    array_merge($dtoData, ['id' => $this->params('child_id')])
+                );
+            } else {
+                $dto = CreatePreviousConviction::create($dtoData);
+            }
+
+            /** @var \Common\Service\Cqrs\Response $response */
+            $response = $this->handleCommand($dto);
+
+            if ($response->isOk()) {
+                return $this->handlePostSave();
+            }
+
+            // @FIXME: handle bad state
         }
 
         return $this->render($mode . '_convictions_penalties', $form);
@@ -172,18 +210,5 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         return array(
             'data' => $this->getServiceLocator()->get('Entity\PreviousConviction')->getData($id)
         );
-    }
-
-    protected function savePreviousConviction($mode, $data)
-    {
-        $saveData = $data['data'];
-
-        $saveData['application'] = $this->getApplicationId();
-
-        if ($mode === 'edit') {
-            $saveData['id'] = $this->params('child_id');
-        }
-
-        $this->getServiceLocator()->get('Entity\PreviousConviction')->save($saveData);
     }
 }
