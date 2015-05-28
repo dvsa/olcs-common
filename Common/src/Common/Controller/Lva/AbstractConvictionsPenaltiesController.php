@@ -147,12 +147,8 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         } elseif ($mode === 'edit') {
             $id = $this->params('child_id');
 
-            $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-                ->createQuery(PreviousConviction::create(['id' => $id]));
-
-            $result = $this->getServiceLocator()->get('QueryService')->send($query)->getResult();
-
-            $data = ['data' => $result];
+            $response = $this->handleQuery(PreviousConviction::create(['id' => $id]));
+            $data = ['data' => $response->getResult()];
         }
 
         $form = $this->getPreviousConvictionForm()->setData($data);
