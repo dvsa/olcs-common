@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Cqrs\Query;
 
-use Dvsa\Olcs\Transfer\Query\QueryContainer as DvsaQuery;
+use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Common\Service\Cqrs\Response;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
@@ -33,10 +33,16 @@ class QueryService
      */
     protected $client;
 
-    public function __construct(RouteInterface $router, Client $client)
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    public function __construct(RouteInterface $router, Client $client, Request $request)
     {
         $this->router = $router;
         $this->client = $client;
+        $this->request = $request;
     }
 
     /**
@@ -45,7 +51,7 @@ class QueryService
      * @param DvsaQuery $query
      * @return Response
      */
-    public function send(DvsaQuery $query)
+    public function send(QueryContainerInterface $query)
     {
         if (!$query->isValid()) {
             return $this->invalidResponse($query->getMessages(), HttpResponse::STATUS_CODE_422);
@@ -62,12 +68,11 @@ class QueryService
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
         }
 
-        $request = new Request();
-        $request->setUri($uri);
-        $request->setMethod('GET');
+        $this->request->setUri($uri);
+        $this->request->setMethod('GET');
 
         try {
-            return new Response($this->client->send($request));
+            return new Response($this->client->send($this->request));
         } catch (HttpClientExceptionInterface $ex) {
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_500);
         }

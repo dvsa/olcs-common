@@ -53,8 +53,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             }
 
             if ($response->isOk()) {
-                $mapper = new TypeOfLicenceMapper();
-                $form->setData($mapper->mapFromResult($response->getResult()));
+                $form->setData(TypeOfLicenceMapper::mapFromResult($response->getResult()));
             }
 
             return $this->renderIndex($form);

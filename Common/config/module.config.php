@@ -149,6 +149,8 @@ return array(
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
             'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+            'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
+            'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
         ]
     ),
     'console' => array(
@@ -184,7 +186,9 @@ return array(
         ],
         'shared' => array(
             'Helper\FileUpload' => false,
-            'CantIncreaseValidator' => false
+            'CantIncreaseValidator' => false,
+            // Create a new request each time
+            'CqrsRequest' => false
         ),
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
@@ -275,6 +279,7 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
+            'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
             'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
@@ -419,6 +424,24 @@ return array(
             'Common\Filter\Publication\BusRegText2',
             'Common\Filter\Publication\BusRegGrantCancelText3',
             'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
+        'ApplicationPublicationFilter' => array(
+            'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
+            'Common\Filter\Publication\Application',
+            'Common\Filter\Publication\ApplicationPubType',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PreviousApplicationPublication',
+            'Common\Filter\Publication\PreviousUnpublishedApplication',
+            'Common\Filter\Publication\ApplicationOperatingCentre',
+            'Common\Filter\Publication\ApplicationLicenceCancelled',
+            'Common\Filter\Publication\ApplicationBusNote',
+            'Common\Filter\Publication\ApplicationConditionUndertaking',
+            'Common\Filter\Publication\ApplicationTransportManager',
+            'Common\Filter\Publication\ApplicationText1',
+            'Common\Filter\Publication\ApplicationText2',
+            'Common\Filter\Publication\ApplicationText3',
             'Common\Filter\Publication\Clean'
         ),
     ),

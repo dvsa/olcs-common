@@ -22,7 +22,8 @@ class CommandServiceFactory implements FactoryInterface
     {
         $router = $serviceLocator->get('ApiRouter');
         $client = new Client();
+        $request = $serviceLocator->get('CqrsRequest');
 
-        return new CommandService($router, $client);
+        return new CommandService($router, $client, $request);
     }
 }

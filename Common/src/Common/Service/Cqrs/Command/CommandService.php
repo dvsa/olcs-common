@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Cqrs\Command;
 
-use Dvsa\Olcs\Transfer\Command\CommandContainer as DvsaCommand;
+use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Common\Service\Cqrs\Response;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
@@ -15,9 +15,6 @@ use Zend\Http\Request;
 use Zend\Http\Client;
 use Zend\Mvc\Router\Exception\ExceptionInterface;
 use Zend\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
-use Zend\Http\Headers;
-use Zend\Http\Header\Accept;
-use Zend\Http\Header\ContentType;
 
 /**
  * Command
@@ -36,10 +33,16 @@ class CommandService
      */
     protected $client;
 
-    public function __construct(RouteInterface $router, Client $client)
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    public function __construct(RouteInterface $router, Client $client, Request $request)
     {
         $this->router = $router;
         $this->client = $client;
+        $this->request = $request;
     }
 
     /**
@@ -48,7 +51,7 @@ class CommandService
      * @param DvsaCommand $command
      * @return Response
      */
-    public function send(DvsaCommand $command)
+    public function send(CommandContainerInterface $command)
     {
         if (!$command->isValid()) {
             return $this->invalidResponse($command->getMessages(), HttpResponse::STATUS_CODE_422);
@@ -66,23 +69,12 @@ class CommandService
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
         }
 
-        $accept = new Accept();
-        $accept->addMediaType('application/json');
-
-        $contentType = new ContentType();
-        $contentType->setMediaType('application/json');
-
-        $headers = new Headers();
-        $headers->addHeaders([$accept, $contentType]);
-
-        $request = new Request();
-        $request->setUri($uri);
-        $request->setMethod($method);
-        $request->setContent(json_encode($data));
-        $request->setHeaders($headers);
+        $this->request->setUri($uri);
+        $this->request->setMethod($method);
+        $this->request->setContent(json_encode($data));
 
         try {
-            return new Response($this->client->send($request));
+            return new Response($this->client->send($this->request));
         } catch (HttpClientExceptionInterface $ex) {
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_500);
         }

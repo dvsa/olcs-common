@@ -29,7 +29,7 @@ class PreviousPublicationTest extends \PHPUnit_Framework_TestCase
             'pubType' => $pubType,
             'trafficArea' => $trafficArea,
             'pi' => $pi,
-            'limit' => 1000
+            'limit' => 'all'
         ];
 
         $data = [
