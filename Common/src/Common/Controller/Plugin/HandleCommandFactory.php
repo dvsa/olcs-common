@@ -15,6 +15,8 @@ class HandleCommandFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        $serviceLocator = $serviceLocator->getServiceLocator();
+
         $annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
         $commandService = $serviceLocator->get('CommandService');
 

@@ -15,6 +15,8 @@ class HandleQueryFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        $serviceLocator = $serviceLocator->getServiceLocator();
+        
         $annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
         $queryService = $serviceLocator->get('QueryService');
 
