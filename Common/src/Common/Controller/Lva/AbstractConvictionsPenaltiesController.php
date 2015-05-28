@@ -200,11 +200,4 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             ->get('Helper\Form')
             ->createFormWithRequest('Lva\PreviousConviction', $this->getRequest());
     }
-
-    protected function getConvictionData($id)
-    {
-        return array(
-            'data' => $this->getServiceLocator()->get('Entity\PreviousConviction')->getData($id)
-        );
-    }
 }
