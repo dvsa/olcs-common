@@ -1,12 +1,15 @@
 <?php
 
 /**
- * OcComplaints.php
+ * OcConditions.php
  */
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Document\Bookmark\Formatter\ConditionsUndertakings;
+use Common\Service\Entity\ConditionUndertakingEntityService;
+
 /**
- * Class OcComplaints
+ * Class OcConditions
  *
  * Format results for the table.
  *
@@ -14,10 +17,10 @@ namespace Common\Service\Table\Formatter;
  *
  * @author Joshua Curtis <josh.curtis@valtech.co.uk>
  */
-class OcComplaints implements FormatterInterface
+class OcConditions implements FormatterInterface
 {
     /**
-     * Get the complaints for the operating centre and return a count.
+     * Get the conditions for the operating centre and return a count.
      *
      * @param array $data The row data.
      * @param array $column The column data.
@@ -31,9 +34,9 @@ class OcComplaints implements FormatterInterface
 
         $count = 0;
 
-        if (!is_null($data['operatingCentre']['ocComplaints'])) {
-            foreach ($data['operatingCentre']['ocComplaints'] as $complaint) {
-                if (!is_null($complaint['complaint'])) {
+        if (!is_null($data['conditions'])) {
+            foreach ($data['conditions'] as $condition) {
+                if ($condition['condition_type'] === ConditionUndertakingEntityService::TYPE_CONDITION) {
                     $count++;
                 }
             }
