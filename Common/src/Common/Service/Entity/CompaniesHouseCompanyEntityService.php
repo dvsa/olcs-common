@@ -23,36 +23,41 @@ class CompaniesHouseCompanyEntityService extends AbstractEntityService
 
     protected $bundle = [
         'children' => [
-            'companyStatus',
-            'country',
-            'officers' => [
-                'children' => [
-                    'role',
-                ],
-            ],
+            'officers',
         ],
     ];
 
-    public function getByCompanyNumber($number)
+    public function getLatestByCompanyNumber($number)
     {
-        return $this->get(['companyNumber' => $number], $this->bundle);
+        $query = [
+            'companyNumber' => $number,
+            'sort' => 'createdOn',
+            'order' => 'DESC',
+            'limit' => 1,
+        ];
+        $result = $this->get($query, $this->bundle);
+        return (isset($result['Results'][0]) ? $result['Results'][0] : false);
     }
 
     public function saveNew($data)
     {
-        $meta = [
-            '_OPTIONS_' => array(
-                'cascade' => array(
-                    'list' => array(
-                        'officers' => array(
-                            'entity' => 'companiesHouseOfficer',
-                            'parent' => 'company',
-                        )
-                    )
-                )
-            )
-        ];
+        // cascade persist is broken following backend refactor, do it manually for now
+        $officers = isset($data['officers']) ? $data['officers'] : null;
+        unset($data['officers']);
 
-        return $this->save(array_merge($meta, $data));
+        $result = $this->save($data);
+
+        if (is_array($officers)) {
+            array_walk(
+                $officers,
+                function (&$item) use ($result) {
+                    $item['companiesHouseCompany'] = $result['id'];
+                }
+            );
+            $this->getServiceLocator()->get('Entity\CompaniesHouseOfficer')
+                ->multiCreate($officers);
+        }
+
+        return $result;
     }
 }

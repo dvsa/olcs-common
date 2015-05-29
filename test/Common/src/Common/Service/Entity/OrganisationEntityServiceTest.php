@@ -795,4 +795,20 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
             ]
         ];
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetByCompanyOrLlpNo()
+    {
+        $companyNo = '01234567';
+
+        $this->expectOneRestCall('Organisation', 'GET', ['companyOrLlpNo' => $companyNo])
+            ->will($this->returnValue(['RESPONSE']));
+
+        $this->assertEquals(
+            ['RESPONSE'],
+            $this->sut->getByCompanyOrLlpNo($companyNo)
+        );
+    }
 }
