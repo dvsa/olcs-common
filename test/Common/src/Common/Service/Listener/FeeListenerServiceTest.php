@@ -4,6 +4,7 @@
  * Fee Listener Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace CommonTest\Service\Listener;
 
@@ -11,11 +12,13 @@ use Common\Service\Entity\ApplicationEntityService;
 use CommonTest\Bootstrap;
 use Common\Service\Listener\FeeListenerService;
 use PHPUnit_Framework_TestCase;
+use Common\Service\Data\FeeTypeDataService;
 
 /**
  * Fee Listener Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 {
@@ -37,7 +40,8 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
                 'getApplication',
                 'getOverview',
                 'getOutstandingGrantFeesForApplication',
-                'getOutstandingContinuationFee'
+                'getOutstandingContinuationFee',
+                'getFeeDetailsForInterim'
             ]
         );
         $this->sm->setService('Entity\Fee', $this->mockFeeService);
@@ -65,6 +69,7 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue(null));
 
         $this->setupMaybeContinueLicenceStub(3);
+        $this->setupMaybeProcessGrantingFee(3);
 
         $this->assertNull($this->sut->trigger(3, $eventType));
     }
@@ -405,6 +410,84 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
         $mockFlashMessenger->expects($this->once())
             ->method('addSuccessMessage')->with('licence.continued.message');
 
+        $this->assertNull($this->sut->trigger(3, $eventType));
+    }
+
+    /**
+     * Stub out the maybeProcessGrantingFee method
+     *
+     * @param int $feeId Fee ID
+     * @param array $data
+     */
+    protected function setupMaybeProcessGrantingFee($feeId, $data = null)
+    {
+        $this->mockFeeService->expects($this->once())
+            ->method('getFeeDetailsForInterim')->with($feeId)
+            ->will($this->returnValue($data));
+    }
+
+    /**
+     * @group listener_services
+     * @dataProvider providerEventType
+     */
+    public function testTriggerPayOrWaiveWithNoInterimType($eventType)
+    {
+        $feeEntity = [
+            'licenceId' => 1966,
+            'feeType' => [
+                'feeType' => [
+                    'id' => FeeTypeDataService::FEE_TYPE_GRANTINT,
+                ]
+            ],
+        ];
+
+        $this->setupMaybeProcessApplicationFeeStub(3);
+        $this->setupMaybeProcessGrantingFee(3, $feeEntity);
+
+        $this->mockFeeService->expects($this->once())
+            ->method('getOverview')->with(3)
+            ->will($this->returnValue($feeEntity));
+
+        $this->assertNull($this->sut->trigger(3, $eventType));
+    }
+
+    /**
+     * @group listener_services
+     * @dataProvider providerEventType
+     */
+    public function testTriggerPayOrWaiveWithInterimTypeGranted($eventType)
+    {
+        $feeEntity = [
+            'licenceId' => 1966,
+            'feeType' => [
+                'feeType' => [
+                    'id' => FeeTypeDataService::FEE_TYPE_GRANTINT,
+                ]
+            ],
+            'application' => [
+                'interimStatus' => [
+                    'id' => ApplicationEntityService::INTERIM_STATUS_GRANTED
+                ],
+                'id' => 48
+            ]
+        ];
+
+        $this->setupMaybeProcessApplicationFeeStub(3);
+        $this->setupMaybeProcessGrantingFee(3, $feeEntity);
+
+        $this->mockFeeService->expects($this->once())
+            ->method('getOverview')->with(3)
+            ->will($this->returnValue($feeEntity));
+
+        $mockInterimHelper = $this->getMock('\stdClass', ['grantInterim']);
+        $mockInterimHelper->expects($this->once())
+            ->method('grantInterim')->with(48);
+
+        $this->sm->setService('Helper\Interim', $mockInterimHelper);
+
+        $this->mockFeeService->expects($this->once())
+            ->method('getOverview')->with(3)
+            ->will($this->returnValue($feeEntity));
         $this->assertNull($this->sut->trigger(3, $eventType));
     }
 }

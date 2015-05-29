@@ -68,26 +68,28 @@ class CompaniesHouseCompanyEntityServiceTest extends AbstractEntityServiceTestCa
 
         $expectedData = [
             'companyNumber' => '01234567',
-            'officers' => [
-                ['name' => 'Bob'],
-                ['name' => 'Dave'],
-            ],
-            '_OPTIONS_' => [
-                'cascade' => [
-                    'list' => [
-                        'officers' => [
-                            'entity' => 'companiesHouseOfficer',
-                            'parent' => 'company',
-                        ]
-                    ]
-                ]
-            ],
         ];
+
+        $saved = ['id' => '99'];
+
+        $this->sm->setService(
+            'Entity\CompaniesHouseOfficer',
+            m::mock()
+                ->shouldReceive('multiCreate')
+                ->once()
+                ->with(
+                    [
+                        ['companiesHouseCompany' => 99, 'name' => 'Bob'],
+                        ['companiesHouseCompany' => 99, 'name' => 'Dave']
+                    ]
+                )
+                ->getMock()
+        );
 
         // expectations
         $this->expectOneRestCall('CompaniesHouseCompany', 'POST', $expectedData)
-            ->will($this->returnValue('RESPONSE'));
+            ->will($this->returnValue($saved));
 
-        $this->assertEquals('RESPONSE', $this->sut->saveNew($data));
+        $this->assertEquals($saved, $this->sut->saveNew($data));
     }
 }

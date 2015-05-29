@@ -54,9 +54,6 @@ return array(
             'LvaVariation/Review' => array(
                 'Common\Controller\Lva\Delegators\VariationReviewDelegator'
             ),
-            'LvaApplication/TypeOfLicence' => array(
-                'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
-            ),
             'LvaLicence/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
             ),
@@ -152,6 +149,8 @@ return array(
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
             'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+            'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
+            'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
         ]
     ),
     'console' => array(
@@ -187,7 +186,9 @@ return array(
         ],
         'shared' => array(
             'Helper\FileUpload' => false,
-            'CantIncreaseValidator' => false
+            'CantIncreaseValidator' => false,
+            // Create a new request each time
+            'CqrsRequest' => false
         ),
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
@@ -218,8 +219,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter',
             'LicenceConditionsUndertakingsAdapter'
                 => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
-            'ApplicationTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'ApplicationVehicleGoodsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
             'LicenceTypeOfLicenceAdapter'
@@ -280,6 +279,9 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
+            'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
+            'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
+            'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
@@ -424,6 +426,24 @@ return array(
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
         ),
+        'ApplicationPublicationFilter' => array(
+            'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
+            'Common\Filter\Publication\Application',
+            'Common\Filter\Publication\ApplicationPubType',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PreviousApplicationPublication',
+            'Common\Filter\Publication\PreviousUnpublishedApplication',
+            'Common\Filter\Publication\ApplicationOperatingCentre',
+            'Common\Filter\Publication\ApplicationLicenceCancelled',
+            'Common\Filter\Publication\ApplicationBusNote',
+            'Common\Filter\Publication\ApplicationConditionUndertaking',
+            'Common\Filter\Publication\ApplicationTransportManager',
+            'Common\Filter\Publication\ApplicationText1',
+            'Common\Filter\Publication\ApplicationText2',
+            'Common\Filter\Publication\ApplicationText3',
+            'Common\Filter\Publication\Clean'
+        ),
     ),
     'search' => [
         'invokables' => [
@@ -437,6 +457,7 @@ return array(
             'people'      => 'Common\Data\Object\Search\People',
             'user'        => 'Common\Data\Object\Search\User',
             'publication' => 'Common\Data\Object\Search\Publication',
+            'organisation'     => 'Common\Data\Object\Search\Organisation',
         ]
     ],
     'file_uploader' => array(
@@ -468,6 +489,7 @@ return array(
             'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
             'currentUser' => 'Common\View\Helper\CurrentUser',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
+            'licenceStatus' => 'Common\View\Helper\LicenceStatus',
         )
     ),
     'view_manager' => array(
@@ -502,16 +524,20 @@ return array(
         'invokables' => [
             'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
+            'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
             'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'Common\Validator\OneOf' => 'Common\Validator\OneOf',
-            'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date'
+            'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date',
+            'Common\Validator\DateInFuture' => 'Common\Validator\DateInFuture',
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
             'DateCompare' => 'Common\Validator\DateCompare',
+            'NumberCompare' => 'Common\Validator\NumberCompare',
             'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'OneOf' => 'Common\Validator\OneOf',
-            'Date' => 'Common\Form\Elements\Validators\Date'
+            'Date' => 'Common\Form\Elements\Validators\Date',
+            'DateInFuture' => 'Common\Validator\DateInFuture',
         ]
     ],
     'filters' => [
@@ -773,6 +799,7 @@ return array(
             // Operator services
             'Operator\IrfoDetails'
                 => 'Common\BusinessService\Service\Operator\IrfoDetails',
+            'Lva\TransportConsultant' => 'Common\BusinessService\Service\Lva\TransportConsultant',
             'Lva\ContinueLicence'
                 => 'Common\BusinessService\Service\Lva\ContinueLicence',
             'ContinuationChecklistReminderQueueLetters' =>

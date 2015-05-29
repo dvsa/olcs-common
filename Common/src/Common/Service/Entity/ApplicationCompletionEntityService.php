@@ -54,6 +54,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     /**
      * Update completion statuses
      *
+     * @NOTE This functionality has been replicated in the API [Application/UpdateApplicationCompletion]
+     *
      * @param int $applicationId
      * @param string $currentSection
      */
@@ -124,6 +126,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * @todo Need to actually add some logic to this method
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateCommunityLicencesStatus]
      */
     protected function getCommunityLicencesStatus($applicationData)
     {
@@ -132,6 +135,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * Get type of licence status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateTypeOfLicenceStatus]
      *
      * @param array $applicationData
      * @return int
@@ -150,6 +155,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     /**
      * Get business type status
      *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateBusinessTypeStatus]
+     *
      * @param array $applicationData
      * @return int
      */
@@ -164,6 +171,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * Get business details status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateBusinessDetailsStatus]
      *
      * @param array $applicationData
      * @return int
@@ -208,6 +217,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * Get addresses status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateAddressesStatus]
      *
      * @param array $applicationData
      * @return int
@@ -255,6 +266,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     /**
      * Get people status
      *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdatePeopleStatus]
+     *
      * @param array $applicationData
      * @return int
      */
@@ -270,6 +283,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     /**
      * Get Taxi Phv status
      *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateTaxiPhvStatus]
+     *
      * @param array $applicationData
      * @return int
      */
@@ -283,7 +298,9 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     }
 
     /**
-     * Get operatings centres status
+     * Get operating centres status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateOperatingCentresStatus]
      *
      * @param array $applicationData
      * @return int
@@ -343,6 +360,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     /**
      * Get financial evidence status
      *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateFinancialEvidenceStatus]
+     *
      * @param array $applicationData
      * @return int
      */
@@ -353,6 +372,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * Get transport managers status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateTransportManagersStatus]
      *
      * @param array $applicationData
      * @return int
@@ -378,6 +399,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     /**
      * Get vehicles status
      *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateVehiclesStatus]
+     *
      * @param array $applicationData
      * @return int
      */
@@ -400,6 +423,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * Get vehicles psv status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateVehiclesPsvStatus]
      *
      * @param array $applicationData
      * @return int
@@ -458,6 +483,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * Get vehicle declarations status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateVehiclesDeclarationsStatus]
      *
      * @param array $applicationData
      * @return int
@@ -519,6 +546,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     /**
      * Get safety status
      *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateSafetyStatus]
+     *
      * @param array $applicationData
      * @return int
      */
@@ -546,6 +575,9 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     /**
      * Get conditions undertakings status
      *
+     * @NOTE This functionality has been replicated in the API
+     * [ApplicationCompletion/UpdateConditionsUndertakingsStatus]
+     *
      * @param array $applicationData
      * @return int
      */
@@ -556,6 +588,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * Get financial history status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateFinancialHistoryStatus]
      *
      * @param array $applicationData
      * @return int
@@ -591,6 +625,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * Get licence history status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateLicenceHistoryStatus]
      *
      * @param array $applicationData
      * @return int
@@ -640,6 +676,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     /**
      * Get conviction penalties status
      *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateConvictionsPenaltiesStatus]
+     *
      * @param array $applicationData
      * @return int
      */
@@ -659,6 +697,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
     /**
      * Get undertakings status
+     *
+     * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateUndertakingsStatus]
      *
      * @param array $applicationData
      * @return int

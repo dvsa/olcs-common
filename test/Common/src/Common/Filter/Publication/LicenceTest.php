@@ -26,6 +26,8 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
 
         $mockLicenceService = m::mock('Common\Service\Data\Licence');
         $mockLicenceService->shouldReceive('fetchLicenceData')->andReturn(false);
+        $mockLicenceService->shouldReceive('getId');
+        $mockLicenceService->shouldReceive('setData');
 
         $mockServiceManager = m::mock('\Zend\ServiceManager\ServiceManager');
         $mockServiceManager->shouldReceive('get')->with('\Common\Service\Data\Licence')->andReturn($mockLicenceService);
@@ -62,7 +64,8 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
             'pubType' => $expectedPubType,
             'licence' => $licenceId,
             'trafficArea' => $trafficArea,
-            'licenceData' => $licenceData
+            'licenceData' => $licenceData,
+            'licType' => $goodsOrPsv
         ];
 
         $input = new Publication();
@@ -70,6 +73,8 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
 
         $mockLicenceService = m::mock('Common\Service\Data\Licence');
         $mockLicenceService->shouldReceive('fetchLicenceData')->andReturn($licenceData);
+        $mockLicenceService->shouldReceive('getId')->andReturn($licenceId);
+        $mockLicenceService->shouldReceive('setData')->with($licenceId, null);
 
         $mockServiceManager = m::mock('\Zend\ServiceManager\ServiceManager');
         $mockServiceManager->shouldReceive('get')->with('\Common\Service\Data\Licence')->andReturn($mockLicenceService);

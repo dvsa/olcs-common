@@ -3,7 +3,6 @@
 namespace Common\Validator;
 
 use Common\Filter\DateSelectNullifier;
-use Zend\Validator\AbstractValidator;
 
 /**
  * Class DateCompare - used to validate two dates via a legal operator:
@@ -13,20 +12,8 @@ use Zend\Validator\AbstractValidator;
  * 'lte' -> less than or equal to
  * @package Common\Validator
  */
-class DateCompare extends AbstractValidator
+class DateCompare extends AbstractCompare
 {
-    /**
-     * Error codes
-     * @const string
-     */
-    const NOT_GTE = 'notGreaterThanOrEqual';
-    const NOT_GT = 'notGreaterThan';
-    const NOT_LTE = 'notLessThanOrEqual';
-    const NOT_LT = 'notLessThan';
-    const INVALID_OPERATOR = 'invalidOperator';
-    const INVALID_FIELD = 'invalidField';
-    const NO_COMPARE = 'noCompare';
-
     /**
      * Error messages
      * @var array
@@ -42,71 +29,10 @@ class DateCompare extends AbstractValidator
     );
 
     /**
-     * @var array
-     */
-    protected $messageVariables = array(
-        'compare_to_label' => 'compareToLabel'
-    );
-
-    /**
-     * context field against which to validate
-     * @var string
-     */
-    protected $compareTo;
-
-    /**
-     * Type of compare to do
-     * @var string
-     */
-    protected $operator;
-
-    /**
-     * Label of compare to field to use in error message
-     * @var string
-     */
-    protected $compareToLabel;
-
-    /**
      * Whether we're comparing the time also
      * @var bool
      */
     protected $hasTime;
-
-    /**
-     * @param string $compareTo
-     * @return $this
-     */
-    public function setCompareTo($compareTo)
-    {
-        $this->compareTo = $compareTo;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCompareTo()
-    {
-        return $this->compareTo;
-    }
-
-    /**
-     * @param string $compareToLabel
-     * @return $this
-     */
-    public function setCompareToLabel($compareToLabel)
-    {
-        $this->compareToLabel = $compareToLabel;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCompareToLabel()
-    {
-        return $this->compareToLabel;
-    }
 
     /**
      * @param bool $hasTime
@@ -127,37 +53,13 @@ class DateCompare extends AbstractValidator
     }
 
     /**
-     * @param string $operator
-     * @return $this
+     * Sets options
+     *
+     * @param  array $options
+     * @return DateCompare
      */
-    public function setOperator($operator)
-    {
-        $this->operator = $operator;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOperator()
-    {
-        return $this->operator;
-    }
-
     public function setOptions($options = array())
     {
-        if (isset($options['compare_to'])) {
-            $this->setCompareTo($options['compare_to']);
-        }
-
-        if (isset($options['operator'])) {
-            $this->setOperator($options['operator']);
-        }
-
-        if (isset($options['compare_to_label'])) {
-            $this->setCompareToLabel($options['compare_to_label']);
-        }
-
         if (isset($options['has_time'])) {
             $this->setHasTime($options['has_time']);
         }
@@ -206,38 +108,10 @@ class DateCompare extends AbstractValidator
         if (!$dateValue) {
             $this->error(self::NO_COMPARE); //@TO~DO~
             return false;
-        };
+        }
 
         $dateValue->setTime(0, 0, 0);
 
-        switch ($this->getOperator()) {
-            case 'gte':
-                if (!($dateValue >= $compareDateValue)) {
-                    $this->error(self::NOT_GTE);
-                    return false;
-                }
-                return true;
-            case 'lte':
-                if (!($dateValue <= $compareDateValue)) {
-                    $this->error(self::NOT_LTE);
-                    return false;
-                }
-                return true;
-            case 'gt':
-                if (!($dateValue > $compareDateValue)) {
-                    $this->error(self::NOT_GT);
-                    return false;
-                }
-                return true;
-            case 'lt':
-                if (!($dateValue < $compareDateValue)) {
-                    $this->error(self::NOT_LT);
-                    return false;
-                }
-                return true;
-            default:
-                $this->error(self::INVALID_OPERATOR);
-                return false;
-        }
+        return $this->isValidForOperator($dateValue, $compareDateValue);
     }
 }

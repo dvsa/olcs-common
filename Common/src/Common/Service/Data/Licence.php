@@ -173,7 +173,11 @@ class Licence extends AbstractData implements AddressProviderInterface
                 'trafficArea' => array(),
                 'organisation' => array(
                     'children' => array(
-                        'organisationPersons' => array(),
+                        'organisationPersons' => array(
+                            'children' => array(
+                                'person'
+                            )
+                        ),
                         'tradingNames' => array()
                     )
                 )
