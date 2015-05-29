@@ -23,6 +23,9 @@ class Clean extends AbstractPublicationFilter
         $keys = [
             'hearingData',
             'licenceData',
+            'applicationData',
+            'operatingCentreData',
+            'transportManagerData',
             'publicationSectionConst',
             'case',
             'busRegData'

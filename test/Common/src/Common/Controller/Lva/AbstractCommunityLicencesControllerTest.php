@@ -213,8 +213,6 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
             ->andReturn($id)
             ->shouldReceive('alterFormForLva')
             ->with($mockForm)
-            ->shouldReceive('alterFormForLocation')
-            ->with($mockForm)
             ->shouldReceive('render')
             ->with('community_licences', $mockForm, ['filterForm' => $mockFilterForm])
             ->andReturn('VIEW');
@@ -346,8 +344,6 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
             ->shouldReceive('getLicenceId')
             ->andReturn($id)
             ->shouldReceive('alterFormForLva')
-            ->with($mockForm)
-            ->shouldReceive('alterFormForLocation')
             ->with($mockForm)
             ->shouldReceive('render')
             ->with('community_licences', $mockForm, ['filterForm' => $mockFilterForm])
@@ -485,8 +481,6 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
             ->shouldReceive('getLicenceId')
             ->andReturn($id)
             ->shouldReceive('alterFormForLva')
-            ->with($mockForm)
-            ->shouldReceive('alterFormForLocation')
             ->with($mockForm)
             ->shouldReceive('render')
             ->with('community_licences', $mockForm, ['filterForm' => $mockFilterForm])
@@ -1679,7 +1673,6 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
     public function testReprintActionNotAllowed()
     {
         $licenceId = 1;
-        $licences = [1, 2];
 
         $mockCommunityLicService = m::mock()
             ->shouldReceive('getActiveLicences')
@@ -1715,7 +1708,6 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
     public function testReprintActionDisplayConfirmation()
     {
         $licenceId = 1;
-        $licences = [1, 2];
 
         $mockRequest = m::mock()
             ->shouldReceive('isPost')
@@ -1786,9 +1778,6 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
      */
     public function testReprintActionWithCancel()
     {
-        $licenceId = 1;
-        $licences = [1, 2];
-
         $mockRequest = m::mock()
             ->shouldReceive('isPost')
             ->andReturn(true)

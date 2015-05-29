@@ -8,6 +8,10 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Common\Data\Mapper\Lva\BusinessType;
+use Dvsa\Olcs\Transfer\Command\Organisation\UpdateBusinessType;
+use Dvsa\Olcs\Transfer\Query\Organisation\Organisation;
+use Zend\Http\Response;
 
 /**
  * Shared logic between Business type controllers
@@ -23,79 +27,87 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
      */
     public function indexAction()
     {
-        $request = $this->getRequest();
+        $prg = $this->prg();
 
-        $orgId = $this->getCurrentOrganisationId();
-
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } else {
-            $data = $this->formatDataForForm($this->getServiceLocator()->get('Entity\Organisation')->getType($orgId));
+        // If have posted, and need to redirect to get
+        if ($prg instanceof Response) {
+            return $prg;
         }
 
-        $form = $this->getBusinessTypeForm()->setData($data);
+        $orgId = $this->getCurrentOrganisationId();
+        $response = $this->getBusinessType($orgId);
 
-        $this->alterFormForLva($form);
+        if (!$response->isOk()) {
 
-        $this->getAdapter()->alterFormForOrganisation($form, $orgId);
+            if ($response->isClientError() || $response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            }
 
-        if ($request->isPost() && $form->isValid()) {
-            $this->getServiceLocator()->get('Entity\Organisation')->save($this->formatDataForSave($orgId, $data));
+            return $this->notFoundAction();
+        }
 
-            $this->postSave('business_type');
+        $result = $response->getResult();
 
-            return $this->completeSection('business_type');
+        $hasInForceLicences = $result['hasInforceLicences'];
+
+        /** @var \Zend\Form\Form $form */
+        $form = $this->getServiceLocator()->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-business_type')
+            ->getForm($hasInForceLicences);
+
+        // If we haven't posted
+        if ($prg === false) {
+            $data = BusinessType::mapFromResult($result);
+
+            $form->setData($data);
+
+            return $this->render('business_type', $form);
+        }
+
+        $form->setData($prg);
+
+        if (!$form->isValid()) {
+            return $this->render('business_type', $form);
+        }
+
+        $data = $form->getData();
+
+        $dto = UpdateBusinessType::create(
+            ['id' => $orgId, 'version' => $data['version'], $this->lva => $this->getIdentifier()]
+        );
+
+        if (isset($data['data']['type'])) {
+            $dto->exchangeArray(['businessType' => $data['data']['type']]);
+        }
+
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+
+        /** @var \Common\Service\Cqrs\Response $response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+
+        if ($response->isOk()) {
+            return $this->completeSection('business_type', $prg);
+        }
+
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+
+        // We may have a disabled business type element, so we need to fill in the values
+        if (empty($data['data']['type'])) {
+            $data['data']['type'] = $result['type']['id'];
+            $form->setData($data);
         }
 
         return $this->render('business_type', $form);
     }
 
     /**
-     * Format data for form
-     *
-     * @param array $data
-     * @return array
+     * @return \Common\Service\Cqrs\Response
      */
-    private function formatDataForForm($data)
+    private function getBusinessType($orgId)
     {
-        return array(
-            'version' => $data['version'],
-            'data' => array(
-                'type' => $data['type']['id']
-            )
-        );
-    }
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(Organisation::create(['id' => $orgId]));
 
-    /**
-     * Format data for save
-     *
-     * @param int $orgId
-     * @param array $data
-     * @return array
-     */
-    private function formatDataForSave($orgId, $data)
-    {
-        $persist = array(
-            'id' => $orgId,
-            'version' => $data['version']
-        );
-
-        // the business type input might be disabled; only update
-        // if we actually get it through
-        if (isset($data['data']['type'])) {
-            $persist['type'] = $data['data']['type'];
-        }
-
-        return $persist;
-    }
-
-    /**
-     * Get business type form
-     *
-     * @return \Zend\Form\Form
-     */
-    private function getBusinessTypeForm()
-    {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\BusinessType');
+        return $this->getServiceLocator()->get('QueryService')->send($query);
     }
 }

@@ -333,8 +333,6 @@ class InterimHelperService extends AbstractHelperService
         // Print the interim document
         $this->printInterimDocument($interimData);
 
-        // Generate and print grant interim letter
-        $this->generateGrantInterimLetter($applicationId);
     }
 
     /**
@@ -554,25 +552,26 @@ class InterimHelperService extends AbstractHelperService
     }
 
     /**
-     * Generate grant interim letter
+     * Generate interim fee request document
      *
      * @param int $applicationId
+     * @param int $feeId
      */
-    protected function generateGrantInterimLetter($applicationId)
+    public function generateInterimFeeRequestDocument($applicationId, $feeId)
     {
         $application = $this->getServiceLocator()
             ->get('Entity\Application')
             ->getDataForProcessing($applicationId);
 
         $licenceId = $application['licence']['id'];
-
+        $translator = $this->getServiceLocator()->get('translator');
         if ($application['isVariation']) {
-            $template = 'VAR_APP_INT_GRANTED';
-            $description = "VAR_APP_INT_GRANTED";
+            $description = $translator->translate('gv_interim_direction_fee_request');
         } else {
-            $template = 'NEW_APP_INT_GRANTED';
-            $description = "NEW_APP_INT_GRANTED";
+            $description = $translator->translate('gv_interim_licence_fee_request');
         }
+
+        $template = 'FEE_REQ_INT_APP';
 
         $storedFile = $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')
@@ -582,6 +581,7 @@ class InterimHelperService extends AbstractHelperService
                 [
                     'application' => $applicationId,
                     'licence'     => $licenceId,
+                    'fee'         => $feeId,
                     'user'        => $this->getServiceLocator()->get('Entity\User')->getCurrentUser()['id']
                 ]
             );
@@ -595,7 +595,7 @@ class InterimHelperService extends AbstractHelperService
                 'licence'      => $licenceId,
                 'category'     => Category::CATEGORY_LICENSING,
                 'subCategory'  => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                'isExternal'   => false,
+                'isDigital'    => false,
                 'isScan'       => false
             ]
         );

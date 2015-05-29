@@ -1632,6 +1632,10 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $applicationId = 69;
         $licenceId = 100;
 
+        $mockApplicationSnapshot = m::mock();
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockApplicationSnapshot);
+        $mockApplicationSnapshot->shouldReceive('storeSnapshot')->with(69, 3)->once();
+
         $this->sm->setService(
             'Helper\Date',
             m::mock()
@@ -1692,6 +1696,10 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
     {
         $applicationId = 69;
         $licenceId = 100;
+
+        $mockApplicationSnapshot = m::mock();
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockApplicationSnapshot);
+        $mockApplicationSnapshot->shouldReceive('storeSnapshot')->with(69, 2)->once();
 
         $this->sm->setService(
             'Helper\Date',
@@ -1768,6 +1776,10 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicleEntityService);
         $this->sm->setService('Entity\TransportManagerApplication', $mockTmApplicationEntityService);
         $this->sm->setService('Entity\CommunityLic', $mockCommunityLicEntityService);
+
+        $mockApplicationSnapshot = m::mock();
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockApplicationSnapshot);
+        $mockApplicationSnapshot->shouldReceive('storeSnapshot')->with(69, 4)->once();
 
         // Expectations...
 

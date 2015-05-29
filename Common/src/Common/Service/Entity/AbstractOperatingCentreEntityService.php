@@ -98,7 +98,8 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
     {
         $query = array($this->type => $lvaId);
 
-        $query['sort'] = 'operatingCentre';
+        // @todo Need to order by OC when we migrate to the backend
+        // $query['sort'] = 'operatingCentre';
 
         return $this->getAll($query, $this->addressSummaryBundle);
     }

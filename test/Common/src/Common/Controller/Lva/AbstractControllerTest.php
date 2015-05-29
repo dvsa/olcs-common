@@ -218,13 +218,6 @@ class AbstractControllerTest extends MockeryTestCase
         $this->assertNull($this->sut->callAlterFormForLva($form));
     }
 
-    public function testAlterFormForLocation()
-    {
-        $form = m::mock('\Zend\Form\Form');
-
-        $this->assertNull($this->sut->callAlterFormForLocation($form));
-    }
-
     public function testPostSave()
     {
         $this->assertNull($this->sut->callPostSave('foo'));

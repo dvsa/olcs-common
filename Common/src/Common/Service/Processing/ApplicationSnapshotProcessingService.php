@@ -24,6 +24,9 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
 
     const ON_SUBMIT = 0;
     const ON_GRANT = 1;
+    const ON_REFUSE = 2;
+    const ON_WITHDRAW = 3;
+    const ON_NTU = 4;
 
     public function storeSnapshot($applicationId, $event)
     {
@@ -45,33 +48,73 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
 
         $code = $this->getDocumentCode($applicationId, $applicationType);
 
-        $descriptionPrefix = $code . ' Application Snapshot ';
+        $defaults = [
+            'identifier' => $file->getIdentifier(),
+            'application' => $applicationId,
+            'licence' => $licenceId,
+            'category' => CategoryDataService::CATEGORY_APPLICATION,
+            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_ASSISTED_DIGITAL,
+            'issuedDate' => $date,
+            'isExternal' => false,
+            'isScan' => false
+        ];
 
-        $fileName = $descriptionPrefix . ($event == self::ON_SUBMIT ? 'Submit' : 'Grant') . '.html';
-        $description = $descriptionPrefix . ($event == self::ON_SUBMIT ? '(at submission)' : '(at grant/valid)');
-
-        $documentEntity->save(
-            [
-                'identifier' => $file->getIdentifier(),
-                'application' => $applicationId,
-                'licence' => $licenceId,
-                'category' => CategoryDataService::CATEGORY_APPLICATION,
-                // At the moment we assume all submits are external, and granting is internal (This may change)
-                'subCategory' => (
-                    $event == self::ON_SUBMIT
-                    ? CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL
-                    : CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_ASSISTED_DIGITAL
-                ),
-                'filename' => $fileName,
-                'issuedDate' => $date,
-                'description' => $description,
-                // At the moment we assume all submits are external, and granting is internal (This may change)
-                'isExternal' => $event == self::ON_SUBMIT,
-                'isScan' => false
-            ]
-        );
+        // merge defaults with event specific values
+        $data = array_merge($defaults, $this->getDocumentData($event, $code));
+        $documentEntity->save($data);
     }
 
+    /**
+     * Get Document entity data
+     *
+     * @param int    $event One the of the self::ON_* constants
+     * @param string $code  Application code eg GV79
+     *
+     * @return array Document entity data
+     */
+    protected function getDocumentData($event, $code)
+    {
+        $descriptionPrefix = $code . ' Application Snapshot ';
+
+        switch ($event) {
+            case self::ON_GRANT:
+                return [
+                    'filename' => $descriptionPrefix . 'Grant.html',
+                    'description' => $descriptionPrefix .'(at grant/valid)',
+                ];
+            case self::ON_SUBMIT:
+                return [
+                    'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL,
+                    'filename' => $descriptionPrefix . 'Submit.html',
+                    'description' => $descriptionPrefix .'(at submission)',
+                    'isExternal' => true,
+                ];
+            case self::ON_REFUSE:
+                return [
+                    'filename' => $descriptionPrefix . 'Refuse.html',
+                    'description' => $descriptionPrefix .'(at refuse)',
+                ];
+            case self::ON_WITHDRAW:
+                return [
+                    'filename' => $descriptionPrefix . 'Withdraw.html',
+                    'description' => $descriptionPrefix .'(at withdraw)',
+                ];
+            case self::ON_NTU:
+                return [
+                    'filename' => $descriptionPrefix . 'NTU.html',
+                    'description' => $descriptionPrefix .'(at NTU)',
+                ];
+        }
+    }
+
+    /**
+     * Get Application code
+     *
+     * @param int $applicationId   Application ID
+     * @param int $applicationType Application = 0 or Variation = 1, see ApplicationEntityService::APPLICATION_TYPE_*
+     *
+     * @return string Eg GV80A
+     */
     protected function getDocumentCode($applicationId, $applicationType)
     {
         $typeOfLicence = $this->getServiceLocator()->get('Entity\Application')->getTypeOfLicenceData($applicationId);

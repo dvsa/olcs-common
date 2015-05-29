@@ -83,6 +83,9 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
             ->with('lva-taxi-phv', [])
             ->andReturn(m::mock('\Common\Service\Table\TableBuilder'));
 
+        $this->getMockFormHelper()
+            ->shouldReceive('remove')->with($form, 'dataTrafficArea->enforcementArea')->once();
+
         $this->mockRender();
 
         $this->sut->indexAction();
@@ -191,6 +194,9 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
             ->with('lva-taxi-phv', $expectedTableData)
             ->andReturn(m::mock('\Common\Service\Table\TableBuilder'));
 
+        $this->getMockFormHelper()
+            ->shouldReceive('remove')->with($form, 'dataTrafficArea->enforcementArea')->once();
+
         $this->mockRender();
 
         $this->sut->indexAction();
@@ -292,6 +298,9 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
         $this->mockService('Table', 'prepareTable')
             ->with('lva-taxi-phv', $expectedTableData)
             ->andReturn(m::mock('\Common\Service\Table\TableBuilder'));
+
+        $this->getMockFormHelper()
+            ->shouldReceive('remove')->with($form, 'dataTrafficArea->enforcementArea')->once();
 
         $this->mockRender();
 
