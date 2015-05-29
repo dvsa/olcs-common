@@ -41,19 +41,23 @@ class CompaniesHouseCompanyEntityService extends AbstractEntityService
 
     public function saveNew($data)
     {
-        $meta = [
-            '_OPTIONS_' => array(
-                'cascade' => array(
-                    'list' => array(
-                        'officers' => array(
-                            'entity' => 'companiesHouseOfficer',
-                            'parent' => 'company',
-                        )
-                    )
-                )
-            )
-        ];
+        // cascade persist is broken following backend refactor, do it manually for now
+        $officers = isset($data['officers']) ? $data['officers'] : null;
+        unset($data['officers']);
 
-        return $this->save(array_merge($meta, $data));
+        $result = $this->save($data);
+
+        if (is_array($officers)) {
+            array_walk(
+                $officers,
+                function (&$item) use ($result) {
+                    $item['companiesHouseCompany'] = $result['id'];
+                }
+            );
+            $this->getServiceLocator()->get('Entity\CompaniesHouseOfficer')
+                ->multiCreate($officers);
+        }
+
+        return $result;
     }
 }

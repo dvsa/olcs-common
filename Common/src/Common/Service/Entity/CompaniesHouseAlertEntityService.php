@@ -24,19 +24,23 @@ class CompaniesHouseAlertEntityService extends AbstractEntityService
 
     public function saveNew($data)
     {
-        $meta = [
-            '_OPTIONS_' => array(
-                'cascade' => array(
-                    'list' => array(
-                        'reasons' => array(
-                            'entity' => 'companiesHouseAlertReason',
-                            'parent' => 'companiesHouseAlert',
-                        )
-                    )
-                )
-            )
-        ];
+        // cascade persist is broken following backend refactor, do it manually for now
+        $reasons = isset($data['reasons']) ? $data['reasons'] : null;
+        unset($data['reasons']);
 
-        return $this->save(array_merge($meta, $data));
+        $result = $this->save($data);
+
+        if (is_array($reasons)) {
+            array_walk(
+                $reasons,
+                function (&$item) use ($result) {
+                    $item['companiesHouseAlert'] = $result['id'];
+                }
+            );
+            $this->getServiceLocator()->get('Entity\CompaniesHouseAlertReason')
+                ->multiCreate($reasons);
+        }
+
+        return $result;
     }
 }
