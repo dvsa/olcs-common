@@ -14,7 +14,7 @@ namespace Common\Data\Mapper\Lva;
  */
 class FinancialHistory
 {
-    public function mapFromResult(array $data)
+    public static function mapFromResult(array $data)
     {
         return [
             'data' => $data
