@@ -3,6 +3,7 @@
 /**
  * Financial History Controller
  *
+ * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Controller\Lva;
@@ -15,6 +16,7 @@ use Dvsa\Olcs\Transfer\Query\Application\FinancialHistory;
 /**
  * Financial History Controller
  *
+ * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 abstract class AbstractFinancialHistoryController extends AbstractController
