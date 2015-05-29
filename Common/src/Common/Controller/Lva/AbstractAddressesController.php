@@ -35,11 +35,13 @@ abstract class AbstractAddressesController extends AbstractController
     {
         $request = $this->getRequest();
 
-        $addressData = $this->formatDataForForm(
-            $this->getServiceLocator()->get('Entity\Licence')->getAddressesData(
+        $rawAddressData = $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getAddressesData(
                 $this->getLicenceId()
-            )
-        );
+            );
+
+        $addressData = $this->formatDataForForm($rawAddressData);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -55,14 +57,18 @@ abstract class AbstractAddressesController extends AbstractController
             ->getForm($typeOfLicence['licenceType'])
             ->setData($data);
 
+        $this->alterFormForLva($form);
+
         $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
         if (!$hasProcessed && $request->isPost()) {
-            if ($data['consultant']['add-transport-consultant'] === 'N') {
-                $this->getServiceLocator()->get('Helper\Form')
-                    ->disableValidation(
-                        $form->getInputFilter()->get('consultant')
-                    );
+            if (isset($data['consultant'])) {
+                if ($data['consultant']['add-transport-consultant'] === 'N') {
+                    $this->getServiceLocator()->get('Helper\Form')
+                        ->disableValidation(
+                            $form->getInputFilter()->get('consultant')
+                        );
+                }
             }
 
             if ($form->isValid()) {
@@ -125,7 +131,7 @@ abstract class AbstractAddressesController extends AbstractController
         }
 
         if (!empty($data['transportConsultantCd'])) {
-            $returnData = $this->formatConsultantDataForForm($data);
+            $returnData['consultant'] = $this->formatConsultantDataForForm($data);
         }
 
         return $returnData;
@@ -171,7 +177,7 @@ abstract class AbstractAddressesController extends AbstractController
             $returnData['contact'][$phoneType . '_version'] = $phoneContact['version'];
         }
 
-        return array('consultant' => $returnData);
+        return $returnData;
     }
 
     /**
