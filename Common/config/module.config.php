@@ -672,7 +672,8 @@ return array(
             'lva-generic-vehicles-vehicle' => 'Common\FormService\Form\Lva\GenericVehiclesVehicle',
             // Type of licence
             'lva-licence-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\LicenceTypeOfLicence::class,
-            'lva-application-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\ApplicationTypeOfLicence::class,
+            'lva-application-type-of-licence'
+                => \Common\FormService\Form\Lva\TypeOfLicence\ApplicationTypeOfLicence::class,
             'lva-variation-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\VariationTypeOfLicence::class
         ]
     ],
