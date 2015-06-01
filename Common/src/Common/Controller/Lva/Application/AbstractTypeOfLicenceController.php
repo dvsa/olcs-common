@@ -12,7 +12,6 @@ use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Common\Controller\Lva;
 use Zend\Http\Response;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
-use Zend\Form\Form;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -42,7 +41,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         // If we have no data (not posted)
         if ($prg === false) {
 
-            $response = $this->getTypeOfLicence();
+            $response = $this->handleQuery(Application::create(['id' => $this->getIdentifier()]));
 
             if ($response->isNotFound()) {
                 return $this->notFoundAction();
@@ -112,57 +111,5 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         return $this->renderIndex($form);
-    }
-
-    /**
-     * @return \Common\Service\Cqrs\Response
-     */
-    protected function getTypeOfLicence()
-    {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(Application::create(['id' => $this->getIdentifier()]));
-
-        return $this->getServiceLocator()->get('QueryService')->send($query);
-    }
-
-    protected function renderIndex($form)
-    {
-        $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
-
-        return $this->render('type_of_licence', $form);
-    }
-
-    protected function mapErrors(Form $form, array $errors)
-    {
-        $formMessages = [];
-
-        if (isset($errors['licenceType'])) {
-
-            foreach ($errors['licenceType'][0] as $key => $message) {
-                $formMessages['type-of-licence']['licence-type'][] = $key;
-            }
-
-            unset($errors['licenceType']);
-        }
-
-        if (isset($errors['goodsOrPsv'])) {
-
-            foreach ($errors['goodsOrPsv'][0] as $key => $message) {
-                $formMessages['type-of-licence']['operator-type'][] = $key;
-            }
-
-            unset($errors['licenceType']);
-        }
-
-        // @todo might need tweaking
-        if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
-
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
-        }
-
-        $form->setMessages($formMessages);
     }
 }
