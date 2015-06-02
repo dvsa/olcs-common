@@ -91,10 +91,7 @@ abstract class AbstractTrailersController extends AbstractController
                     $data
                 );
 
-                $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
-
-                /** @var \Common\Service\Cqrs\Response $response */
-                $response = $this->getServiceLocator()->get('CommandService')->send($command);
+                $response = $this->handleCommand($dto);
 
                 if ($response->isOk()) {
                     return $this->handlePostSave();
@@ -131,10 +128,7 @@ abstract class AbstractTrailersController extends AbstractController
                     $data
                 );
 
-                $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
-
-                /** @var \Common\Service\Cqrs\Response $response */
-                $response = $this->getServiceLocator()->get('CommandService')->send($command);
+                $response = $this->handleCommand($dto);
 
                 if ($response->isOk()) {
                     return $this->handlePostSave();
@@ -212,19 +206,13 @@ abstract class AbstractTrailersController extends AbstractController
      */
     protected function getTableData()
     {
-        $query = $this->getServiceLocator()
-            ->get('TransferAnnotationBuilder')
-            ->createQuery(
-                Trailers::create(
-                    array(
-                        'licence' => $this->getLicenceId()
-                    )
-                )
-            );
+        $query = Trailers::create(
+            array(
+                'licence' => $this->getLicenceId()
+            )
+        );
 
-        $response = $this->getServiceLocator()
-            ->get('QueryService')
-            ->send($query);
+        $response = $this->handleQuery($query);
 
         if (!$response->isOk()) {
             if ($response->isClientError() || $response->isServerError()) {
@@ -237,7 +225,7 @@ abstract class AbstractTrailersController extends AbstractController
         $result = (array)$response->getResult();
 
         $tableData = [];
-        foreach ($result['results'] as $key => $trailer) {
+        foreach ($result['results'] as $trailer) {
             $tableData[] = [
                 'id' => $trailer['id'],
                 'trailerNo' => $trailer['trailerNo'],
