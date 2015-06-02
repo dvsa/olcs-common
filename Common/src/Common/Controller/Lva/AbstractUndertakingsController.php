@@ -34,9 +34,7 @@ abstract class AbstractUndertakingsController extends AbstractController
             $data = (array)$request->getPost();
             $form->setData($data);
             if ($form->isValid()) {
-                $this->save($this->formatDataForSave($data));
-                $this->postSave('undertakings');
-                $this->handleFees($data);
+                $this->save($form->getData());
                 return $this->completeSection('undertakings');
             } else {
                 // validation failed, we need to use the application data
@@ -54,26 +52,6 @@ abstract class AbstractUndertakingsController extends AbstractController
         }
 
         return $this->render('undertakings', $form);
-    }
-
-    /**
-     * Handle any fees that may need to bo applied upon completing this section.
-     *
-     * @param $data
-     */
-    public function handleFees($data)
-    {
-        if (!isset($data['interim'])) {
-            return; // interim not relevant on internal
-        }
-
-        $interimService = $this->getServiceLocator()->get('Helper\Interim');
-
-        if ($data['interim']['goodsApplicationInterim'] === 'Y') {
-            $interimService->createInterimFeeIfNotExist($data['declarationsAndUndertakings']['id']);
-        } elseif ($data['interim']['goodsApplicationInterim'] === 'N') {
-            $interimService->cancelInterimFees($data['declarationsAndUndertakings']['id']);
-        }
     }
 
     /**
@@ -109,46 +87,61 @@ abstract class AbstractUndertakingsController extends AbstractController
         $form->get('declarationsAndUndertakings')->get('summaryDownload')->setAttribute('value', $summaryDownload);
     }
 
-    protected function formatDataForSave($data)
-    {
-        $declarationsData = $data['declarationsAndUndertakings'];
-
-        if (isset($data['interim'])) {
-            switch ($data['interim']['goodsApplicationInterim']) {
-                case 'Y':
-                    $declarationsData['interimStatus'] = Application::INTERIM_STATUS_REQUESTED;
-                    $declarationsData['interimReason'] = $data['interim']['goodsApplicationInterimReason'];
-                    break;
-                default:
-                case 'N':
-                    $declarationsData['interimStatus'] = null;
-                    $declarationsData['interimReason'] = null;
-                    break;
-            }
-        }
-
-        return $declarationsData;
-    }
-
     /**
      * Get Application Data
      *
-     * @return array
+     * @return array|false
      */
     protected function getUndertakingsData()
     {
-        return $this->getServiceLocator()->get('Entity\Application')
-            ->getDataForUndertakings($this->getApplicationId());
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(\Dvsa\Olcs\Transfer\Query\Application\Declaration::create(['id' => $this->getIdentifier()]));
+
+        $response =  $this->getServiceLocator()->get('QueryService')->send($query);
+
+        if ($response->isOk()) {
+            return $response->getResult();
+        }
+
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+
+        return false;
     }
 
     /**
      * Save the form data
      *
-     * @param array $data
+     * @param array $formData
      */
-    protected function save($data)
+    protected function save($formData)
     {
-        return $this->getServiceLocator()->get('Entity\Application')->save($data);
+        $dto = $this->createUpdateDeclarationDto($formData);
+
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+
+        if (!$response->isOk()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        }
+    }
+
+    protected function createUpdateDeclarationDto($formData)
+    {
+        $dto = \Dvsa\Olcs\Transfer\Command\Application\UpdateDeclaration::create(
+            [
+                'id' => $this->getIdentifier(),
+                'version' => $formData['declarationsAndUndertakings']['version'],
+                'declarationConfirmation' => $formData['declarationsAndUndertakings']['declarationConfirmation'],
+                'interimRequested' => isset($formData['interim']) ?
+                    $formData['interim']['goodsApplicationInterim'] : null,
+                'interimReason' => isset($formData['interim']) ?
+                    $formData['interim']['goodsApplicationInterimReason'] : null,
+            ]
+        );
+
+        return $dto;
     }
 
     /**
