@@ -16,7 +16,7 @@ class TemplateWorker
 
         $http = new \Zend\Http\Client();
         $http->setRequest($request);
-        $http->getAdapter()->setOptions(['timeout', '120']);
+        $http->setOptions(['timeout' => 120]);
 
         $client->setHttpClient($http);
 

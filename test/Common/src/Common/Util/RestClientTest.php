@@ -338,4 +338,26 @@ class RestClientTest extends AbstractHttpControllerTestCase
 
         $this->assertInstanceOf('\Zend\Http\Header\AcceptLanguage', $acceptLanguage);
     }
+
+    public function testConstructorWithParams()
+    {
+        $options = [
+            'foo' => 'bar',
+        ];
+        $auth = [
+            'username' => 'test',
+            'password' => 'secret',
+        ];
+
+        $sut = new RestClient(new HttpUri(), $options, $auth);
+
+        $config = $sut->client->getAdapter()->getConfig();
+
+        // check our config is set
+        $this->assertEquals('bar', $config['foo']);
+
+        // check previous default options are still set
+        $this->assertTrue($config['keepalive']);
+        $this->assertEquals(30, $config['timeout']);
+    }
 }

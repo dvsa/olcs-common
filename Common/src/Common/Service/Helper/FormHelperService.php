@@ -230,14 +230,21 @@ class FormHelperService extends AbstractHelperService
             return false;
         }
 
-        $addressList = $this->getServiceLocator()->get('Data\Address')->getAddressesForPostcode($postcode);
+        try {
+            $addressList = $this->getServiceLocator()->get('Data\Address')->getAddressesForPostcode($postcode);
+        } catch (\Exception $e) {
+            // RestClient / ResponseHelper throw root exceptions :(
+            $fieldset->get('searchPostcode')->setMessages(array('postcode.error.not-available'));
+            $this->removeAddressSelectFields($fieldset);
+            return false;
+        }
 
         // If we haven't found any addresses
         if (empty($addressList)) {
 
             $this->removeAddressSelectFields($fieldset);
 
-            $fieldset->get('searchPostcode')->setMessages(array('No addresses found for postcode'));
+            $fieldset->get('searchPostcode')->setMessages(array('postcode.error.no-addresses-found'));
 
             return false;
         }
@@ -707,5 +714,30 @@ class FormHelperService extends AbstractHelperService
         }
 
         return $fieldset;
+    }
+
+    /**
+     * Save form state data
+     *
+     * @param Form  $form
+     * @param array $data The form data to save
+     */
+    public function saveFormState(Form $form, $data)
+    {
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        $sessionContainer->offsetSet($form->getName(), $data);
+    }
+
+    /**
+     * Restore form state
+     *
+     * @param Form $form
+     */
+    public function restoreFormState(Form $form)
+    {
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        if ($sessionContainer->offsetExists($form->getName())) {
+            $form->setData($sessionContainer->offsetGet($form->getName()));
+        }
     }
 }

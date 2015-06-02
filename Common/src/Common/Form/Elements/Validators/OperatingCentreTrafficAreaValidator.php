@@ -62,10 +62,17 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
      */
     public function isValid($value, $context = null)
     {
+        unset($context); // unused param
         $postcodeService = $this->getServiceLocator()->get('postcode');
         if ($value) {
 
-            list($trafficAreaId, $trafficAreaName) = $postcodeService->getTrafficAreaByPostcode($value);
+            try {
+                list($trafficAreaId, $trafficAreaName) = $postcodeService->getTrafficAreaByPostcode($value);
+            } catch (\Exception $e) {
+                // error from postcode service, don't validate and continue
+                // 'in the same way as when the postcode is not found', as per OLCS-8753
+                return true;
+            }
 
             $currentTrafficArea = $this->getTrafficArea();
             $currentTrafficAreaId = is_array($currentTrafficArea) && array_key_exists('id', $currentTrafficArea) ?

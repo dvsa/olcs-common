@@ -50,6 +50,9 @@ class FeeTypeDataService implements ServiceLocatorAwareInterface
         ),
     );
 
+    /**
+     * @NOTE This functionality has been replicated in the API [Repository/FeeType->getLatest()]
+     */
     public function getLatest($feeType, $goodsOrPsv, $licenceType, $date, $trafficArea = null)
     {
         $query = array(

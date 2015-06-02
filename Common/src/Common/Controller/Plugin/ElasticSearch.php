@@ -4,7 +4,7 @@ namespace Common\Controller\Plugin;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\View\Model\ViewModel;
 use Common\Service\Data\Search\Search;
-use Olcs\Service\Data\Search\SearchType;
+use Common\Service\Data\Search\SearchType;
 use Zend\Session\Container;
 
 /**
@@ -28,7 +28,7 @@ class ElasticSearch extends AbstractPlugin
 
     /**
      * Search type service
-     * @var \Olcs\Service\Data\SearchType
+     * @var \Common\Service\Data\Search\SearchType
      */
     protected $searchTypeService;
 
@@ -264,8 +264,6 @@ class ElasticSearch extends AbstractPlugin
 
     public function extractSearchData()
     {
-        $container = new Container($this->getContainerName());
-
         $remove = [
             'controller',
             'action',
@@ -286,6 +284,11 @@ class ElasticSearch extends AbstractPlugin
         if ($postParams = (array) $this->getController()->params()->fromPost()) {
             $incomingParameters = array_merge($incomingParameters, $postParams);
         }
+
+        // added this line as a quick fix for broken UT
+        $incomingParameters['search'] = isset($incomingParameters['search']) ? $incomingParameters['search'] : '';
+
+        $container = new Container($this->getContainerName() . '_' . $incomingParameters['search']);
 
         /**
          * Now remove all the data we don't want in the query string.
@@ -394,7 +397,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @param \Common\Service\Data\Search $searchService
+     * @param \Common\Service\Data\Search\Search $searchService
      * @return ElasticSearch
      */
     public function setSearchService($searchService)
@@ -404,7 +407,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @return \Common\Service\Data\Search
+     * @return \Common\Service\Data\Search\Search
      */
     public function getSearchService()
     {
@@ -412,7 +415,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @param \Olcs\Service\Data\SearchType $searchTypeService
+     * @param \Common\Service\Data\Search\SearchType $searchTypeService
      * @return ElasticSearch
      */
     public function setSearchTypeService($searchTypeService)
@@ -422,7 +425,7 @@ class ElasticSearch extends AbstractPlugin
     }
 
     /**
-     * @return \Olcs\Service\Data\SearchType
+     * @return \Common\Service\Data\Search\SearchType
      */
     public function getSearchTypeService()
     {

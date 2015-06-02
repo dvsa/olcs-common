@@ -37,7 +37,7 @@ class DecisionTest extends MockeryTestCase
     /**
      * @dataProvider processDataProvider
      */
-    public function testProcess($params, $expectedTaskData)
+    public function testProcess($params)
     {
         // Mocks
         $mockSubmissionAction = m::mock();
@@ -45,21 +45,6 @@ class DecisionTest extends MockeryTestCase
             ->once()
             ->with($params['data']);
         $this->sm->setService('Entity\SubmissionAction', $mockSubmissionAction);
-
-        $mockTaskService = m::mock('\Common\BusinessService\BusinessServiceInterface');
-
-        $this->bsm->setService('Cases\Submission\SubmissionActionTask', $mockTaskService);
-
-        $mockBusinessResponse = m::mock('\Common\BusinessService\Response');
-        $mockBusinessResponse->shouldReceive('isOk')
-            ->times(empty($params['id']) ? 1 : 0)
-            ->andReturn(true);
-
-        // Expectations
-        $mockTaskService->shouldReceive('process')
-            ->times(empty($params['id']) ? 1 : 0)
-            ->with($expectedTaskData)
-            ->andReturn($mockBusinessResponse);
 
         $response = $this->sut->process($params);
 
@@ -76,17 +61,9 @@ class DecisionTest extends MockeryTestCase
                     'caseId' => 111,
                     'data' => [
                         'urgent' => 'N',
-                        'submissionActionStatus' => 'action-status',
+                        'actionTypes' => 'action-status',
                         'recipientUser' => 333,
                     ],
-                ],
-                [
-                    'submissionId' => 222,
-                    'caseId' => 111,
-                    'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_DECISION,
-                    'urgent' => 'N',
-                    'submissionActionStatus' => 'action-status',
-                    'recipientUser' => 333,
                 ]
             ],
             // edit
@@ -98,17 +75,9 @@ class DecisionTest extends MockeryTestCase
                     'data' => [
                         'id' => 1,
                         'urgent' => 'N',
-                        'submissionActionStatus' => 'action-status',
+                        'actionTypes' => ['action-status', 'action-status2'],
                         'recipientUser' => 333,
                     ],
-                ],
-                [
-                    'submissionId' => 222,
-                    'caseId' => 111,
-                    'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_DECISION,
-                    'urgent' => 'N',
-                    'submissionActionStatus' => 'action-status',
-                    'recipientUser' => 333,
                 ]
             ],
         ];

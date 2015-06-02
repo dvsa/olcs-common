@@ -348,7 +348,9 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
             'application' => $id,
             'feeStatus' => $statuses,
             'feeType' => 1,
-            'limit' => 'all'
+            'limit' => 'all',
+            'sort' => 'createdOn',
+            'order' => 'DESC'
         );
 
         $response = array(
@@ -436,12 +438,16 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'id' => 10,
                     'feeType' => [
-                        'feeType' => FeeTypeDataService::FEE_TYPE_GRANTINT
+                        'feeType' => [
+                            'id' => FeeTypeDataService::FEE_TYPE_GRANTINT,
+                        ]
                     ]
                 ], [
                     'id' => 20,
                     'feeType' => [
-                        'feeType' => FeeTypeDataService::FEE_TYPE_APP
+                        'feeType' => [
+                            'id' => FeeTypeDataService::FEE_TYPE_APP,
+                        ]
                     ]
                 ]
             ]
@@ -559,5 +565,85 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
 
         // assertions
         $this->assertNull($this->sut->getOutstandingFeesForOrganisation($organisationId));
+    }
+
+    public function testGetOutstandingContinuationFee()
+    {
+        $expectedQuery = [
+            'licence' => 1966,
+            'feeStatus' => [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+            'limit' => 'all',
+        ];
+        $expectedBundle = [
+            'children' => [
+                'feeType' => [
+                    'criteria' => [
+                        'feeType' => FeeTypeDataService::FEE_TYPE_CONT,
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+
+        $this->expectOneRestCall('Fee', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sut->getOutstandingContinuationFee(1966);
+    }
+
+    public function testGetOutstandingGrantFeesForApplication()
+    {
+        $expectedQuery = array(
+            'application' => 1966,
+            'feeStatus' => array(
+                FeeEntityService::STATUS_OUTSTANDING,
+                FeeEntityService::STATUS_WAIVE_RECOMMENDED,
+            ),
+           'limit' => 'all',
+        );
+        $expectedBundle = array(
+            'children' => array(
+                'feeStatus',
+                'feePayments' => array(
+                    'children' => array(
+                        'payment' => array(
+                            'children' => array(
+                                'status'
+                            )
+                        )
+                    )
+                ),
+                'paymentMethod',
+                'feeType' => array(
+                    'children' => array(
+                        'feeType',
+                    ),
+                    'criteria' => array(
+                        'feeType' => FeeTypeDataService::FEE_TYPE_GRANT
+                    ),
+                    'required' => true
+                ),
+            )
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue(['Results' => ['RESULTS']]));
+
+        $this->assertEquals(['RESULTS'], $this->sut->getOutstandingGrantFeesForApplication(1966));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetFeeDetailsForInterim()
+    {
+        $id = 3;
+
+        $response = array();
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals([], $this->sut->getFeeDetailsForInterim($id));
     }
 }

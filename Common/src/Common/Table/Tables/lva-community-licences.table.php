@@ -14,7 +14,7 @@ return array(
                     'label' => 'Add office licence',
                     'class' => 'secondary'
                 ),
-                'void' => array('label' => 'Void', 'class' => 'secondary', 'requireRows' => true),
+                'void' => array('label' => 'Annul', 'class' => 'secondary', 'requireRows' => true),
                 'restore' => array('label' => 'Restore', 'class' => 'secondary', 'requireRows' => true),
                 'stop' => array('label' => 'Stop', 'class' => 'secondary', 'requireRows' => true),
                 'reprint' => array('label' => 'Reprint', 'class' => 'secondary', 'requireRows' => true)

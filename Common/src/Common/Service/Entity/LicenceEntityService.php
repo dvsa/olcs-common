@@ -43,6 +43,10 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
     // 'lsts_unlicenced', 'Unlicenced' is in rollout data but not used
 
+    const LICENCE_TACH_EXTERNAL = 'tach_external';
+    const LICENCE_TACH_INTERNAL = 'tach_internal';
+    const LICENCE_TACH_NA = 'tach_na';
+
     private $typeShortCodeMap =[
         self::LICENCE_TYPE_RESTRICTED             => 'R',
         self::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI',
@@ -116,6 +120,20 @@ class LicenceEntityService extends AbstractLvaEntityService
                     'address' => array(
                         'children' => array(
                             'countryCode'
+                        )
+                    )
+                )
+            ),
+            'transportConsultantCd' => array(
+                'children' => array(
+                    'address' => array(
+                        'children' => array(
+                            'countryCode'
+                        )
+                    ),
+                    'phoneContacts' => array(
+                        'children' => array(
+                            'phoneContactType'
                         )
                     )
                 )
@@ -541,6 +559,8 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     /**
      * Generates new licences or updates existing one and saves it to licence entity
+     *
+     * @NOTE This functionality has been replicated in the API [Licence/GenerateLicenceNumber]
      *
      * @param string $licenceId
      */

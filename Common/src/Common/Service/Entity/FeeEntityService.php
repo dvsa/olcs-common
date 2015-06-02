@@ -143,6 +143,26 @@ class FeeEntityService extends AbstractLvaEntityService
         )
     );
 
+    /**
+     * Holds the interim details bundle
+     *
+     * @var array
+     */
+    private $interimDetailsBundle = array(
+        'children' => array(
+            'feeType' => array(
+                'children' => array(
+                    'feeType'
+                ),
+            ),
+            'application' => array(
+                'children' => array(
+                    'interimStatus'
+                )
+            )
+        )
+    );
+
     public function getApplication($id)
     {
         $data = $this->get($id, $this->applicationIdBundle);
@@ -253,6 +273,9 @@ class FeeEntityService extends AbstractLvaEntityService
         return $this->getAll($query, $this->outstandingForOrganisationBundle);
     }
 
+    /**
+     * @NOTE This functionality has been replicated in the API [Licence/CancelLicenceFees]
+     */
     public function cancelForLicence($licenceId)
     {
         $query = array(
@@ -328,8 +351,7 @@ class FeeEntityService extends AbstractLvaEntityService
 
         $updates = [];
         foreach ($results as $fee) {
-            // @TODO should this check $fee['feeType']['feeType']['id'] now it's refdata?
-            if ($fee['feeType']['feeType'] === FeeTypeDataService::FEE_TYPE_GRANTINT) {
+            if ($fee['feeType']['feeType']['id'] === FeeTypeDataService::FEE_TYPE_GRANTINT) {
                 $updates[] = [
                     'id' => $fee['id'],
                     'feeStatus' => self::STATUS_CANCELLED,
@@ -372,7 +394,9 @@ class FeeEntityService extends AbstractLvaEntityService
         $query = array(
             'application' => $applicationId,
             'feeStatus' => $feeStatuses,
-            'feeType' => $feeType
+            'feeType' => $feeType,
+            'sort'  => 'createdOn',
+            'order' => 'DESC',
         );
         return $this->getAll($query)['Results'];
     }
@@ -416,5 +440,70 @@ class FeeEntityService extends AbstractLvaEntityService
             );
         }
         $this->multiUpdate($updates);
+    }
+
+    /**
+     * Get any outstanding continuation fees for a licence
+     *
+     * @param int $licenceId
+     *
+     * @return array Entity data ['Count' => x, 'Results' => [y]]
+     */
+    public function getOutstandingContinuationFee($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'feeStatus' => [self::STATUS_OUTSTANDING, self::STATUS_WAIVE_RECOMMENDED]
+        ];
+        $bundle = [
+            'children' => [
+                'feeType' => [
+                    'criteria' => [
+                        'feeType' => FeeTypeDataService::FEE_TYPE_CONT,
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+        return $this->getAll($query, $bundle);
+    }
+
+    /**
+     * Get any outstanding/wave recommended GRANT fees for an application
+     *
+     * @param int $applicationId Application ID
+     * 
+     * @return array Fee Entity data
+     */
+    public function getOutstandingGrantFeesForApplication($applicationId)
+    {
+        $query = array(
+            'application' => $applicationId,
+            'feeStatus' => array(
+                self::STATUS_OUTSTANDING,
+                self::STATUS_WAIVE_RECOMMENDED
+            )
+        );
+
+        $bundle = $this->overviewBundle;
+        $bundle['children']['feeType']['criteria'] = [
+            'feeType' => FeeTypeDataService::FEE_TYPE_GRANT,
+        ];
+        $bundle['children']['feeType']['required'] = true;
+
+        $data = $this->getAll($query, $bundle);
+
+        return $data['Results'];
+    }
+
+    /**
+     * Get fee details to check if we need grant interim
+     *
+     * @param int $feeId
+     * @return array
+     */
+    public function getFeeDetailsForInterim($feeId)
+    {
+        return $this->get($feeId, $this->interimDetailsBundle);
     }
 }

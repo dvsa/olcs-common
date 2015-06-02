@@ -4,7 +4,7 @@ namespace Common\Data\Object\Search;
 
 /**
  * Class SearchAbstract
- * @package Olcs\Data\Object\Search
+ * @package Common\Data\Object\Search
  */
 abstract class SearchAbstract
 {
@@ -81,6 +81,17 @@ abstract class SearchAbstract
         return [];
     }
 
+    /**
+     * @return array
+     */
+    public function getDateRanges()
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
     public function getFilters()
     {
         return [];
