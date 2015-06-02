@@ -39,6 +39,10 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             PreviousConvictions::create(['id' => $this->getIdentifier()])
         );
 
+        if ($response->isNotFound()) {
+            return $this->notFoundAction();
+        }
+
         $result = $response->getResult();
 
         if ($request->isPost()) {
@@ -83,7 +87,13 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
                     return $this->completeSection('convictions_penalties');
                 }
 
-                // @FIXME: handle non happy path
+                if ($response->isNotFound()) {
+                    return $this->notFoundAction();
+                }
+
+                if ($response->isClientError() || $response->isServerError()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                }
             }
         }
 
@@ -147,6 +157,11 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             $id = $this->params('child_id');
 
             $response = $this->handleQuery(PreviousConviction::create(['id' => $id]));
+
+            if ($response->isNotFound()) {
+                return $this->notFoundAction();
+            }
+
             $data = ['data' => $response->getResult()];
         }
 
@@ -176,7 +191,13 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
                 return $this->handlePostSave();
             }
 
-            // @FIXME: handle bad state
+            if ($response->isNotFound()) {
+                return $this->notFoundAction();
+            }
+
+            if ($response->isClientError() || $response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            }
         }
 
         return $this->render($mode . '_convictions_penalties', $form);
