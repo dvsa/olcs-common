@@ -775,8 +775,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function loadData($data = array())
     {
-        $this->setRows(isset($data['Results']) ? $data['Results'] : $data);
-        $this->setTotal(isset($data['Count']) ? $data['Count'] : count($this->rows));
+        if (isset($data['Results'])) {
+            $data['results'] = $data['Results'];
+            unset($data['Results']);
+        }
+
+        if (isset($data['Count'])) {
+            $data['count'] = $data['Count'];
+            unset($data['Count']);
+        }
+
+        $this->setRows(isset($data['results']) ? $data['results'] : $data);
+        $this->setTotal(isset($data['count']) ? $data['count'] : count($this->rows));
 
         // if there's only one row and we have a singular title, use it
         if ($this->getTotal() == 1) {

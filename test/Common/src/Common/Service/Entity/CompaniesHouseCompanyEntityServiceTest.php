@@ -24,32 +24,36 @@ class CompaniesHouseCompanyEntityServiceTest extends AbstractEntityServiceTestCa
         parent::setUp();
     }
 
-    public function testGetByCompanyNumber()
+    public function testGetLatestByCompanyNumber()
     {
         $companyNumber = '01234567';
 
         $expectedQuery = [
             'companyNumber' => $companyNumber,
+            'sort' => 'createdOn',
+            'order' => 'DESC',
+            'limit' => 1,
         ];
 
         $expectedBundle = [
             'children' => [
-                'companyStatus',
-                'country',
-                'officers' => [
-                    'children' => [
-                        'role',
-                    ],
-                ],
+                'officers'
+            ],
+        ];
+
+        $results = [
+            'Count' => 2,
+            'Results' => [
+                ['COMPANY1'],
             ],
         ];
 
         // expectations
         $this->expectOneRestCall('CompaniesHouseCompany', 'GET', $expectedQuery, $expectedBundle)
-            ->will($this->returnValue('RESPONSE'));
+            ->will($this->returnValue($results));
 
         // assertions
-        $this->assertEquals('RESPONSE', $this->sut->getByCompanyNumber($companyNumber));
+        $this->assertEquals(['COMPANY1'], $this->sut->getLatestByCompanyNumber($companyNumber));
     }
 
     public function testSaveNew()
@@ -64,26 +68,28 @@ class CompaniesHouseCompanyEntityServiceTest extends AbstractEntityServiceTestCa
 
         $expectedData = [
             'companyNumber' => '01234567',
-            'officers' => [
-                ['name' => 'Bob'],
-                ['name' => 'Dave'],
-            ],
-            '_OPTIONS_' => [
-                'cascade' => [
-                    'list' => [
-                        'officers' => [
-                            'entity' => 'companiesHouseOfficer',
-                            'parent' => 'company',
-                        ]
-                    ]
-                ]
-            ],
         ];
+
+        $saved = ['id' => '99'];
+
+        $this->sm->setService(
+            'Entity\CompaniesHouseOfficer',
+            m::mock()
+                ->shouldReceive('multiCreate')
+                ->once()
+                ->with(
+                    [
+                        ['companiesHouseCompany' => 99, 'name' => 'Bob'],
+                        ['companiesHouseCompany' => 99, 'name' => 'Dave']
+                    ]
+                )
+                ->getMock()
+        );
 
         // expectations
         $this->expectOneRestCall('CompaniesHouseCompany', 'POST', $expectedData)
-            ->will($this->returnValue('RESPONSE'));
+            ->will($this->returnValue($saved));
 
-        $this->assertEquals('RESPONSE', $this->sut->saveNew($data));
+        $this->assertEquals($saved, $this->sut->saveNew($data));
     }
 }

@@ -444,4 +444,13 @@ class OrganisationEntityService extends AbstractEntityService
 
         return $users;
     }
+
+    public function getByCompanyOrLlpNo($companyNumber)
+    {
+        $query = [
+            'companyOrLlpNo' => $companyNumber,
+        ];
+
+        return $this->get($query);
+    }
 }
