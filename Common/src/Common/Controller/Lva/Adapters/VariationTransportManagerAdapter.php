@@ -19,57 +19,14 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
      */
     public function getTableData($variationId, $licenceId)
     {
-        // Get TM's attached to licence
-        /* @var $service \Common\Service\Entity\TransportManagerApplicationEntityService */
-        $service = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
-        $licenceData = $service->getByLicenceWithHomeContactDetails($licenceId);
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(\Dvsa\Olcs\Transfer\Query\Application\TransportManagers::create(['id' => $variationId]));
 
-        $tableData = [];
-        foreach ($licenceData['Results'] as $row) {
-            $tableData[$row['transportManager']['id']] = [
-                // Transport Manager Licence ID
-                'id' => 'L'. $row['id'],
-                'name' => $row['transportManager']['homeCd']['person'],
-                'status' => null,
-                'email' => $row['transportManager']['homeCd']['emailAddress'],
-                'dob' => $row['transportManager']['homeCd']['person']['birthDate'],
-                'transportManager' => $row['transportManager'],
-                'action' => 'E',
-            ];
-        }
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('QueryService')->send($query);
+        $data = $response->getResult();
 
-        // Get TM's attached to variation and merge them
-        /* @var $service \Common\Service\Entity\TransportManagerLicenceEntityService */
-        $service = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
-        $variationData = $service->getByApplicationWithHomeContactDetails($variationId);
-
-        foreach ($variationData['Results'] as $row) {
-            $tableData[$row['transportManager']['id'].'a'] = [
-                // Transport Manager Application ID
-                'id' => $row['id'],
-                'name' => $row['transportManager']['homeCd']['person'],
-                'status' => $row['tmApplicationStatus'],
-                'email' => $row['transportManager']['homeCd']['emailAddress'],
-                'dob' => $row['transportManager']['homeCd']['person']['birthDate'],
-                'transportManager' => $row['transportManager'],
-                'action' => $row['action'],
-            ];
-            switch ($row['action']) {
-                case 'U':
-                    // Mark original was as the current
-                    $tableData[$row['transportManager']['id']]['action'] = 'C';
-                    break;
-                case 'D':
-                    // Remove the original so that just the Delete version appears
-                    unset($tableData[$row['transportManager']['id']]);
-                    break;
-            }
-        }
-
-        // sort them to make sure updated names are next to each other
-        ksort($tableData);
-
-        return $tableData;
+        return $this->mapResultForTable($data['transportManagers'], $data['licence']['tmLicences']);
     }
 
     /**

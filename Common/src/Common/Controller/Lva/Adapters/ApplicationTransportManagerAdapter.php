@@ -21,23 +21,14 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
      */
     public function getTableData($applicationId, $licenceId)
     {
-        /* @var $service \Common\Service\Entity\TransportManagerApplicationEntityService */
-        $service = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
-        $data = $service->getByApplicationWithHomeContactDetails($applicationId);
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(\Dvsa\Olcs\Transfer\Query\Application\TransportManagers::create(['id' => $applicationId]));
 
-        $tableData = [];
-        foreach ($data['Results'] as $row) {
-            $tableData[] = [
-                'id' => $row['id'],
-                'name' => $row['transportManager']['homeCd']['person'],
-                'status' => $row['tmApplicationStatus'],
-                'email' => $row['transportManager']['homeCd']['emailAddress'],
-                'dob' => $row['transportManager']['homeCd']['person']['birthDate'],
-                'transportManager' => $row['transportManager'],
-            ];
-        }
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('QueryService')->send($query);
+        $data = $response->getResult();
 
-        return $tableData;
+        return $this->mapResultForTable($data['transportManagers']);
     }
 
     /**
