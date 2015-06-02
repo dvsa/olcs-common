@@ -13,6 +13,7 @@ use Dvsa\Olcs\Transfer\Command\Application\UpdatePreviousConvictions;
 use Dvsa\Olcs\Transfer\Query\PreviousConviction\PreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\CreatePreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\UpdatePreviousConviction;
+use Dvsa\Olcs\Transfer\Command\PreviousConviction\DeletePreviousConviction;
 
 #use Common\Controller\Lva;
 #use Zend\Http\Response;
@@ -75,8 +76,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
                 $response = $this->handleCommand($dto);
 
                 if ($response->isOk()) {
-                    // @TODO?
-                    // $this->postSave('convictions_penalties');
 
                     if ($crudAction !== null) {
                         return $this->handleCrudAction($crudAction);
@@ -185,13 +184,13 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
     protected function delete()
     {
-        $ids = explode(',', $this->params('child_id'));
+        $dto = DeletePreviousConviction::create(
+            [
+                'ids' => explode(',', $this->params('child_id'))
+            ]
+        );
 
-        $service = $this->getServiceLocator()->get('Entity\PreviousConviction');
-
-        foreach ($ids as $id) {
-            $service->delete($id);
-        }
+        $this->handleCommand($dto);
     }
 
     protected function getPreviousConvictionForm()
