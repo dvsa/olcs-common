@@ -59,13 +59,8 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFiles(['financial-evidence']);
 
         // render view
-        $variables = array_merge(
-            [
-                'vehicles' => $adapter->getTotalNumberOfAuthorisedVehicles($id),
-                'requiredFinance' => $adapter->getRequiredFinance($id),
-            ],
-            $adapter->getRatesForView($id)
-        );
+        $financialEvidenceData = $adapter->getData($id);
+        $variables = $financialEvidenceData['financialEvidence'];
 
         return $this->render('financial_evidence', $form, $variables);
     }

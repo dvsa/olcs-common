@@ -10,6 +10,7 @@ namespace Common\Controller\Lva\Adapters;
 use Common\Service\Entity\LicenceEntityService as Licence;
 use Common\Service\Entity\ApplicationEntityService as Application;
 use Common\Service\Data\CategoryDataService as Category;
+use Dvsa\Olcs\Transfer\Query\Application\FinancialEvidence;
 
 /**
  * Application Financial Evidence Adapter
@@ -21,17 +22,13 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
     protected $applicationData   = null; // cache
 
-    protected $otherLicences     = null; // cache
-
-    protected $otherApplications = null; // cache
-
     /**
      * @param int $applicationId
      * @return array
      */
     public function getFormData($applicationId)
     {
-        $applicationData = $this->getApplicationData($applicationId);
+        $applicationData = $this->getData($applicationId);
 
         $uploaded = $applicationData['financialEvidenceUploaded'];
 
@@ -76,6 +73,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      */
     public function getUploadMetaData($file, $applicationId)
     {
+        $data = $this->getData($applicationId); var_dump($data); exit;
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
             ->getLicenceIdForApplication($applicationId);
 
@@ -88,17 +86,16 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         ];
     }
 
-
     /**
-     * @param int $applicationId
-     * @return array
+     * Get application data from the backend, included financial evidence data
      */
-    protected function getApplicationData($applicationId)
+    public function getData($applicationId)
     {
         if (is_null($this->applicationData)) {
-            $this->applicationData = $this->getServiceLocator()->get('Entity\Application')
-                ->getDataForFinancialEvidence($applicationId);
+            $response = $this->getController()->handleQuery(FinancialEvidence::create(['id' => $applicationId]));
+            $this->applicationData =  $response->getResult();
         }
         return $this->applicationData;
     }
+
 }
