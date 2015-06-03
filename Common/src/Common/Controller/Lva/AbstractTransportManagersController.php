@@ -8,6 +8,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Dvsa\Olcs\Transfer\Command;
 
 /**
  * Abstract Transport Managers Controller
@@ -236,44 +237,50 @@ abstract class AbstractTransportManagersController extends AbstractController im
     public function restoreAction()
     {
         $ids = explode(',', $this->params('child_id'));
+        $applicationId = $this->getIdentifier();
+
+        // get table data
+        $data = $this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId());
 
         $tmaIdsToDelete = [];
         foreach ($ids as $id) {
             if (strpos($id, 'L') === 0) {
-                // remove "L" prefix and get int ID
-                $transportManagerLicenceId = (int) trim($id, 'L');
-
-                // get the transport manager ID from TML
-                $tmlEntityService = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
-                $tmlData = $tmlEntityService->getTransportManagerLicence($transportManagerLicenceId);
-                $transportManagerId = $tmlData['transportManager']['id'];
-
-                // get the transport manager application ID using TM
-                $tmaEntityService = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
-                $tmaData = $tmaEntityService->getByApplicationTransportManager(
-                    $this->getIdentifier(),
-                    $transportManagerId
-                );
-                foreach ($tmaData['Results'] as $row) {
-                    $tmaIdsToDelete[] = $row['id'];
-                }
+                $tmaId = $this->findTmaId($data, $id, $applicationId);
+                $tmaIdsToDelete[] = $tmaId;
             } else {
                 // add TMA ID to delete array
                 $tmaIdsToDelete[] = $id;
             }
         }
 
-        // remove any duplicates, eg if restoring the current and updated versions
-        $tmaIdsToDelete = array_unique($tmaIdsToDelete);
-
-        // if any TMA ID added to array then delete them
-        if (count($tmaIdsToDelete) > 0) {
-            $tmaDeleteService = $this->getServiceLocator()
-                ->get('BusinessServiceManager')
-                    ->get('Lva\DeleteTransportManagerApplication');
-            $tmaDeleteService->process(['ids' => $tmaIdsToDelete]);
+        if (!empty($tmaIdsToDelete)) {
+            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+                ->createCommand(Command\TransportManagerApplication\Delete::create(
+                    ['ids' => array_unique($tmaIdsToDelete)])
+                );
+            $this->getServiceLocator()->get('CommandService')->send($command);
         }
 
         return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+    }
+
+    /**
+     * Find the Transport manager application ID that is linked to Transport manager application ID
+     *
+     * @param array  $data
+     * @param string $tmlId This is the TML ID prefixed with an "L"
+     * @param int    $applicationId
+     *
+     * @return int|false The TMA ID or false if not found
+     */
+    protected function findTmaId($data, $tmlId, $applicationId)
+    {
+        foreach ($data as $tmId => $row) {
+            if ($row['id'] === $tmlId) {
+                return $data[$tmId .'a']['id'];
+            }
+        }
+
+        return false;
     }
 }

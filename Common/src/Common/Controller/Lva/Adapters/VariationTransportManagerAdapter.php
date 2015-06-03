@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
+use Dvsa\Olcs\Transfer\Command;
+
 /**
  * Variation Transport Manager Adapter
  *
@@ -36,31 +38,31 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
      */
     public function delete(array $ids, $applicationId)
     {
-        $transportManagerApplicationIds = [];
+        $tmlIds = [];
+        $tmaIds = [];
         foreach ($ids as $id) {
             // if has "L" prefix then its a TM Licence ID, else it is a TM Application ID
             if (strpos($id, 'L') === 0) {
-                $transportManagerLicenceId = (int) trim($id, 'L');
-
-                $service = $this->getServiceLocator()
-                    ->get('BusinessServiceManager')
-                    ->get('Lva\DeltaDeleteTransportManagerLicence');
-                $service->process(
-                    ['transportManagerLicenceId' => $transportManagerLicenceId, 'applicationId' => $applicationId]
-                );
+                $tmlIds[] = (int) trim($id, 'L');
             } else {
-                // add TMA is onto list to delete
-                $transportManagerApplicationIds[] = $id;
+                $tmaIds[] = (int) $id;
             }
         }
 
-        // if any TMA IDs, then delete them all
-        if (count($transportManagerApplicationIds)> 0) {
-            /* @var $service \Common\BusinessService\Service\TransportManagerApplication\Delete */
-            $service = $this->getServiceLocator()
-                ->get('BusinessServiceManager')
-                ->get('Lva\DeleteTransportManagerApplication');
-            $service->process(['ids' => $transportManagerApplicationIds]);
+        if (!empty($tmaIds)) {
+            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+                ->createCommand(Command\TransportManagerApplication\Delete::create(['ids' => $tmaIds]));
+            /* @var $response \Common\Service\Cqrs\Response */
+            $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        }
+
+        if (!empty($tmlIds)) {
+            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+                ->createCommand(Command\Variation\TransportManagerDeleteDelta::create(
+                    ['id' => $applicationId, 'transportManagerLicenceIds' => $tmlIds])
+                );
+            /* @var $response \Common\Service\Cqrs\Response */
+            $response = $this->getServiceLocator()->get('CommandService')->send($command);
         }
     }
 }

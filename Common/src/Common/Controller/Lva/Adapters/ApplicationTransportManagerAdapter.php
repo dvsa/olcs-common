@@ -56,13 +56,17 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
      * Delete Transport Managers
      *
      * @param array $ids Transport Manager Application IDs
+     *
+     * @return bool whether successful
      */
     public function delete(array $ids, $applicationId)
     {
-        /* @var $service \Common\BusinessService\Service\TransportManagerApplication\Delete */
-        $service = $this->getServiceLocator()
-            ->get('BusinessServiceManager')
-            ->get('Lva\DeleteTransportManagerApplication');
-        $service->process(['ids' => $ids]);
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createCommand(\Dvsa\Olcs\Transfer\Command\TransportManagerApplication\Delete::create(['ids' => $ids]));
+
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+
+        return $response->isOk();
     }
 }
