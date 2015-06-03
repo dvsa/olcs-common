@@ -62,7 +62,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
      *
      * @param array $applicationTms array of Transport Manager Applications
      * @param array $licenceTms     array of Transport Manager Licences
-     * 
+     *
      * @return array
      */
     protected function mapResultForTable(array $applicationTms, array $licenceTms = [])
@@ -98,11 +98,11 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
             switch ($tma['action']) {
                 case 'U':
                     // Mark original as the current
-                    $tableData[$tma['transportManager']['id']]['action'] = 'C';
+                    $mappedData[$tma['transportManager']['id']]['action'] = 'C';
                     break;
                 case 'D':
                     // Remove the original so that just the Delete version appears
-                    unset($tableData[$tma['transportManager']['id']]);
+                    unset($mappedData[$tma['transportManager']['id']]);
                     break;
             }
         }
