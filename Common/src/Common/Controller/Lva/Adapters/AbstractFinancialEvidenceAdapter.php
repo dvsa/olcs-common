@@ -28,18 +28,6 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
 
     /**
      * @param int $id
-     * @return int
-     */
-    abstract public function getTotalNumberOfAuthorisedVehicles($id);
-
-    /**
-     * @param int $id
-     * @return int Required finance amount
-     */
-    abstract public function getRequiredFinance($id);
-
-    /**
-     * @param int $id
      * @return array
      */
     abstract public function getDocuments($id);
@@ -50,12 +38,6 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
      * @return array
      */
     abstract public function getUploadMetaData($file, $id);
-
-    /**
-     * @param int $id
-     * @return array
-     */
-    abstract public function getRatesForView($id);
 
     /**
      * @param Common\Form\Form

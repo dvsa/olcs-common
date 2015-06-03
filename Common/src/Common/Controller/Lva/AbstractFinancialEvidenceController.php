@@ -119,7 +119,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
      *
      * @return \Zend\Form\Form
      */
-    private function getFinancialEvidenceForm()
+    protected function getFinancialEvidenceForm()
     {
         return $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\FinancialEvidence');
