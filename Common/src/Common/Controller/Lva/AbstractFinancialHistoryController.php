@@ -151,6 +151,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
                 'administration' => $formData['administration'],
                 'disqualified' => $formData['disqualified'],
                 'insolvencyDetails' => $formData['insolvencyDetails'],
+                'insolvencyConfirmation' => $formData['insolvencyConfirmation']
             ]
         );
 
@@ -171,7 +172,8 @@ abstract class AbstractFinancialHistoryController extends AbstractController
                 'receivership' => 'receivership',
                 'administration' => 'administration',
                 'disqualified' => 'disqualified',
-                'insolvencyDetails' => 'insolvencyDetails'
+                'insolvencyDetails' => 'insolvencyDetails',
+                'insolvencyConfirmation' => 'insolvencyConfirmation'
             ];
             $this->mapErrors($form, $response->getResult()['messages'], $fields, 'data');
         }
