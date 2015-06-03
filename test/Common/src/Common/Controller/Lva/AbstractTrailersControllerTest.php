@@ -24,6 +24,8 @@ class AbstractTrailersControllerTest extends AbstractLvaControllerTestCase
      */
     public function setUp()
     {
+        $this->markTestSkipped();
+
         parent::setUp();
 
         $this->markTestSkipped(
