@@ -21,6 +21,10 @@
         {
             "type": "vcs",
             "url": "git@gitlab.inf.mgt.mtpdvsa:cpms/cpms-client.git"
+        },
+        {
+            "url": "git@gitlab.inf.mgt.mtpdvsa:olcs/olcs-transfer.git",
+            "type": "vcs"
         }
     ],
     "require": {
@@ -41,7 +45,8 @@
         "major-caiger/munit": "~0.1.0",
         "dvsa/jackrabbit": "~1.1.2",
         "mikey179/vfsStream": "~1.4.0",
-        "olcs/olcs-testhelpers": "dev-develop"
+        "olcs/olcs-testhelpers": "dev-develop",
+        "olcs/olcs-transfer": "dev-develop"
     },
     "autoload": {
         "psr-0": {
