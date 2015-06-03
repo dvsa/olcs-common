@@ -73,9 +73,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      */
     public function getUploadMetaData($file, $applicationId)
     {
-        $data = $this->getData($applicationId); var_dump($data); exit;
-        $licenceId = $this->getServiceLocator()->get('Entity\Application')
-            ->getLicenceIdForApplication($applicationId);
+        $data = $this->getData($applicationId)['licence']['id'];
 
         return [
             'application' => $applicationId,
