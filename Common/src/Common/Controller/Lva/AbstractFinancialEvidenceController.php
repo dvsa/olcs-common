@@ -51,9 +51,10 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
             // update application record and redirect
-            $this->saveFinancialEvidence($form, $data);
-            $this->postSave('financial_evidence');
-            return $this->completeSection('financial_evidence');
+            if ($this->saveFinancialEvidence($form, $data)) {
+                $this->postSave('financial_evidence');
+                return $this->completeSection('financial_evidence');
+            }
         }
 
         // load scripts
@@ -130,45 +131,9 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             return true;
         }
 
-        if ($response->isClientError()) {
-
-            $fields = [
-                'financialEvidenceUploaded' => 'uploadNow',
-            ];
-            $this->mapErrors($form, $response->getResult()['messages'], $fields, 'evidence');
-        }
-
-        if ($response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
-        }
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
         return false;
     }
-
-    protected function mapErrors($form, array $errors, array $fields, $fieldsetName)
-    {
-        $formMessages = [];
-
-        foreach ($fields as $errorKey => $fieldName) {
-            if (isset($errors[$errorKey])) {
-                foreach ($errors[$errorKey] as $key => $message) {
-                    $formMessages[$fieldsetName][$fieldName][] = $message;
-                }
-
-                unset($errors[$key]);
-            }
-        }
-
-        if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
-
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
-        }
-
-        $form->setMessages($formMessages);
-    }
-
 
     /**
      * Prepare the financial evidence form
