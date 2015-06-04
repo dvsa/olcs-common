@@ -93,5 +93,4 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         }
         return $this->applicationData;
     }
-
 }

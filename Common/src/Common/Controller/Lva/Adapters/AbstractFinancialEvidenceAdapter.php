@@ -41,8 +41,5 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
      * @param Common\Form\Form
      * @return void
      */
-    public function alterFormForLva($form)
-    {
-        // no-op by default, can be extended
-    }
+    abstract public function alterFormForLva($form);
 }

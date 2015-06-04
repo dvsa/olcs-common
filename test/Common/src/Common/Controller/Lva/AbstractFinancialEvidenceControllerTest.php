@@ -40,8 +40,6 @@ class AbstractFinancialEvidenceControllerTest extends AbstractLvaControllerTestC
             ],
         ];
 
-        $viewData = [];
-
         $this->sut->shouldReceive('getIdentifier')->andReturn($id);
 
         $mockAdapter = m::mock('Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter')
