@@ -20,7 +20,7 @@ use Dvsa\Olcs\Transfer\Query\Application\FinancialEvidence;
 class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapter
 {
 
-    protected $applicationData   = null; // cache
+    protected $applicationData = null; // cache
 
     /**
      * @param int $applicationId
@@ -89,7 +89,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     {
         if (is_null($this->applicationData)) {
             $response = $this->getController()->handleQuery(FinancialEvidence::create(['id' => $applicationId]));
-            $this->applicationData =  $response->getResult();
+            $this->applicationData = $response->getResult();
         }
         return $this->applicationData;
     }

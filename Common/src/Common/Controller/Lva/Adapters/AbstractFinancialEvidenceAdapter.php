@@ -18,8 +18,6 @@ use Common\Service\Entity\LicenceEntityService as Licence;
 abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareAdapter implements
     FinancialEvidenceAdapterInterface
 {
-    protected $rates; // cache
-
     /**
      * @param int $id
      * @return array
@@ -46,43 +44,5 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
     public function alterFormForLva($form)
     {
         // no-op by default, can be extended
-    }
-
-    /**
-     * @param string $licenceType
-     * @param string $goodsOrPsv
-     * @return float
-     */
-    public function getFirstVehicleRate($licenceType, $goodsOrPsv)
-    {
-        foreach ($this->getRates() as $rate) {
-            if ($rate['goodsOrPsv']['id'] == $goodsOrPsv && $rate['licenceType']['id'] == $licenceType) {
-                return (float) $rate['firstVehicleRate'];
-            }
-        }
-    }
-
-    /**
-     * @param string $licenceType
-     * @param string $goodsOrPsv
-     * @return float
-     */
-    public function getAdditionalVehicleRate($licenceType, $goodsOrPsv)
-    {
-        foreach ($this->getRates() as $rate) {
-            if ($rate['goodsOrPsv']['id'] == $goodsOrPsv && $rate['licenceType']['id'] == $licenceType) {
-                return (float) $rate['additionalVehicleRate'];
-            }
-        }
-    }
-
-    protected function getRates()
-    {
-        // we only make one call to look up standing rates
-        if (is_null($this->rates)) {
-            $this->rates = $this->getServiceLocator()->get('Entity\FinancialStandingRate')
-                ->getRatesInEffect();
-        }
-        return $this->rates;
     }
 }
