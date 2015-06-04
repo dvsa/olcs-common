@@ -97,21 +97,6 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         return $this->getAdapter()->getDocuments($id);
     }
 
-    /**
-     * @param int $id,
-     * @param array $data
-     */
-    protected function saveData($id, $data)
-    {
-        $saveData = [
-            'id' => $id,
-            'version' => $data['version'],
-            'financialEvidenceUploaded' => $data['evidence']['uploadNow'],
-        ];
-        $this->getServiceLocator()->get('Entity\Application')->save($saveData);
-    }
-
-
     protected function saveFinancialEvidence($form, $formData)
     {
         $dto = UpdateFinancialEvidence::create(
