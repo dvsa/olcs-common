@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva;
 
+use Dvsa\Olcs\Transfer\Query\Licence\Addresses;
+
 /**
  * Shared logic between Addresses controllers
  *
@@ -35,11 +37,15 @@ abstract class AbstractAddressesController extends AbstractController
     {
         $request = $this->getRequest();
 
-        $rawAddressData = $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getAddressesData(
-                $this->getLicenceId()
-            );
+        $response = $this->handleQuery(
+            Addresses::create(['id' => $this->getLicenceId()])
+        );
+
+        if ($response->isNotFound()) {
+            return $this->notFoundAction();
+        }
+
+        $rawAddressData = $response->getResult();
 
         $addressData = $this->formatDataForForm($rawAddressData);
 
