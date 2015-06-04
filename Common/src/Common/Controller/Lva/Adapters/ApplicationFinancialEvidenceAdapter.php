@@ -58,7 +58,9 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      */
     public function getDocuments($applicationId)
     {
-        return $this->getData($applicationId)['documents'];
+        $documents = $this->getData($applicationId)['documents'];
+
+        return is_array($documents) ? $documents : [];
     }
 
     /**
