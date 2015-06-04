@@ -9,16 +9,10 @@ namespace Common\Controller\Lva;
 
 use Dvsa\Olcs\Transfer\Query\Application\PreviousConvictions;
 use Dvsa\Olcs\Transfer\Command\Application\UpdatePreviousConvictions;
-
 use Dvsa\Olcs\Transfer\Query\PreviousConviction\PreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\CreatePreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\UpdatePreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\DeletePreviousConviction;
-
-#use Common\Controller\Lva;
-#use Zend\Http\Response;
-#use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
-#use Zend\Form\Form;
 
 /**
  * Shared logic between Convictions Penalties controllers
