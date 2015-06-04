@@ -2492,5 +2492,6 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'section.current-delete.licence_history' => 'Licence deleted'
     // Potentially unused (Not found with grep)
 );
