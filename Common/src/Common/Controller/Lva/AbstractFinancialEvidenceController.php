@@ -8,6 +8,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Entity\LicenceEntityService as Licence;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
 
 /**
  * Abstract Financial Evidence Controller
@@ -50,7 +51,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
             // update application record and redirect
-            $this->saveData($id, $data);
+            $this->saveFinancialEvidence($form, $data);
             $this->postSave('financial_evidence');
             return $this->completeSection('financial_evidence');
         }
@@ -108,6 +109,66 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         ];
         $this->getServiceLocator()->get('Entity\Application')->save($saveData);
     }
+
+
+    protected function saveFinancialEvidence($form, $formData)
+    {
+        $dto = UpdateFinancialEvidence::create(
+            [
+                'id' => $this->getIdentifier(),
+                'version' => $formData['version'],
+                'financialEvidenceUploaded' => $formData['evidence']['uploadNow'],
+            ]
+        );
+
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+
+        /** @var \Common\Service\Cqrs\Response $response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+
+        if ($response->isOk()) {
+            return true;
+        }
+
+        if ($response->isClientError()) {
+
+            $fields = [
+                'financialEvidenceUploaded' => 'uploadNow',
+            ];
+            $this->mapErrors($form, $response->getResult()['messages'], $fields, 'evidence');
+        }
+
+        if ($response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        }
+        return false;
+    }
+
+    protected function mapErrors($form, array $errors, array $fields, $fieldsetName)
+    {
+        $formMessages = [];
+
+        foreach ($fields as $errorKey => $fieldName) {
+            if (isset($errors[$errorKey])) {
+                foreach ($errors[$errorKey] as $key => $message) {
+                    $formMessages[$fieldsetName][$fieldName][] = $message;
+                }
+
+                unset($errors[$key]);
+            }
+        }
+
+        if (!empty($errors)) {
+            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+            foreach ($errors as $error) {
+                $fm->addCurrentErrorMessage($error);
+            }
+        }
+
+        $form->setMessages($formMessages);
+    }
+
 
     /**
      * Prepare the financial evidence form
