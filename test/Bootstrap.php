@@ -28,7 +28,7 @@ class Bootstrap
         // Grab the application config
         $config = array(
             'modules' => array(
-                'Common'
+                'Common',
             ),
             'module_listener_options' => array(
                 'module_paths' => array(
