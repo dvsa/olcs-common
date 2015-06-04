@@ -279,7 +279,7 @@ class CommonApplicationControllerTraitTest extends MockeryTestCase
 
         $this->sut->shouldReceive('addSectionUpdatedMessage')
             ->shouldReceive('isButtonPressed')
-            ->with('saveAndContinue')
+            ->with('saveAndContinue', [])
             ->andReturn(false)
             ->shouldReceive('goToOverviewAfterSave')
             ->andReturn('OVERVIEW');
@@ -335,7 +335,7 @@ class CommonApplicationControllerTraitTest extends MockeryTestCase
 
         $this->sut->shouldReceive('addSectionUpdatedMessage')
             ->shouldReceive('isButtonPressed')
-            ->with('saveAndContinue')
+            ->with('saveAndContinue', [])
             ->andReturn(true)
             ->shouldReceive('getIdentifier')
             ->andReturn($id)

@@ -189,7 +189,9 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $request = m::mock('Zend\Http\Request');
         $request->shouldReceive('getPost')
-            ->andReturn([]);
+            ->andReturn([])
+            ->shouldReceive('isPost')
+            ->andReturn(false);
 
         $element = m::mock('\stdClass');
         $element->shouldReceive('remove')
@@ -252,7 +254,9 @@ class FormHelperServiceTest extends MockeryTestCase
                         ]
                     ]
                 ]
-            );
+            )
+            ->shouldReceive('isPost')
+            ->andReturn(true);
 
         $element = m::mock('\stdClass');
         $element->shouldReceive('remove')
@@ -273,6 +277,89 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('setData')
             ->with(
                 ['address' => 'formatted1']
+            );
+
+        $this->assertTrue(
+            $helper->processAddressLookupForm($form, $request)
+        );
+    }
+
+    public function testProcessNestedAddressLookupWithAddressSelected()
+    {
+        $helper = new FormHelperService();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+
+        $addressData = m::mock('\stdClass');
+        $addressData->shouldReceive('getAddressForUprn')
+            ->with(['address1'])
+            ->andReturn('address_1234');
+
+        $addressHelper = m::mock('\stdClass');
+        $addressHelper->shouldReceive('formatPostalAddressFromBs7666')
+            ->with('address_1234')
+            ->andReturn('formatted1');
+
+        $sm->shouldReceive('get')
+            ->with('Data\Address')
+            ->andReturn($addressData)
+            ->getMock()
+            ->shouldReceive('get')
+            ->with('Helper\Address')
+            ->andReturn($addressHelper);
+
+        $helper->setServiceLocator($sm);
+
+        $form = m::mock('Zend\Form\Form');
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('getPost')
+            ->andReturn(
+                [
+                    'top-level' => [
+                        'address' => [
+                            'searchPostcode' => [
+                                'select' => true,
+                                'addresses' => ['address1']
+                            ]
+                        ],
+                        'foo' => 'bar'
+                    ]
+                ]
+            )
+            ->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $element = m::mock('\stdClass');
+        $element->shouldReceive('remove')
+            ->with('addresses')
+            ->shouldReceive('remove')
+            ->with('select');
+
+        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset->shouldReceive('getName')
+            ->andReturn('address')
+            ->shouldReceive('get')
+            ->with('searchPostcode')
+            ->andReturn($element);
+
+        $topFieldset = m::mock('Zend\Form\Fieldset');
+        $topFieldset->shouldReceive('getName')
+            ->andReturn('top-level')
+            ->shouldReceive('getFieldsets')
+            ->andReturn([$fieldset]);
+
+        $form->shouldReceive('getFieldsets')
+            ->once()
+            ->andReturn([$topFieldset])
+            ->shouldReceive('setData')
+            ->with(
+                [
+                    'top-level' => [
+                        'address' => 'formatted1',
+                        'foo' => 'bar'
+                    ]
+                ]
             );
 
         $this->assertTrue(
@@ -318,7 +405,9 @@ class FormHelperServiceTest extends MockeryTestCase
                         ]
                     ]
                 ]
-            );
+            )
+            ->shouldReceive('isPost')
+            ->andReturn(true);
 
         $addressElement = m::mock('\stdClass');
         $addressElement->shouldReceive('setValueOptions')
@@ -339,6 +428,95 @@ class FormHelperServiceTest extends MockeryTestCase
         $form->shouldReceive('getFieldsets')
             ->once()
             ->andReturn([$fieldset]);
+
+        $this->assertTrue(
+            $helper->processAddressLookupForm($form, $request)
+        );
+    }
+
+    public function testProcessNestedAddressLookupWithPostcodeSearch()
+    {
+        $helper = new FormHelperService();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+
+        $address = m::mock('\stdClass');
+        $address->shouldReceive('getAddressesForPostcode')
+            ->andReturn(['address1', 'address2']);
+
+        $addressHelper = m::mock('\stdClass');
+        $addressHelper->shouldReceive('formatAddressesForSelect')
+            ->with(['address1', 'address2'])
+            ->andReturn(['formatted1', 'formatted2']);
+
+        $sm->shouldReceive('get')
+            ->with('Data\Address')
+            ->andReturn($address)
+            ->getMock()
+            ->shouldReceive('get')
+            ->with('Helper\Address')
+            ->andReturn($addressHelper);
+
+        $helper->setServiceLocator($sm);
+
+        $form = m::mock('Zend\Form\Form');
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('getPost')
+            ->andReturn(
+                [
+                    'deeply' => [
+                        'nested' => [
+                            'address' => [
+                                'searchPostcode' => [
+                                    'search' => true,
+                                    'postcode' => 'LSX XXX'
+                                ]
+                            ],
+                            'foo' => 'bar'
+                        ],
+                        'baz' => true
+                    ],
+                    'test' => false
+                ]
+            )
+            ->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $addressElement = m::mock('\stdClass');
+        $addressElement->shouldReceive('setValueOptions')
+            ->with(['formatted1', 'formatted2']);
+
+        $element = m::mock('\stdClass');
+        $element->shouldReceive('get')
+            ->with('addresses')
+            ->andReturn($addressElement);
+
+        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset->shouldReceive('getName')
+            ->andReturn('address')
+            ->shouldReceive('get')
+            ->with('searchPostcode')
+            ->andReturn($element);
+
+        $topFieldset = m::mock('Zend\Form\Fieldset');
+        $topFieldset->shouldReceive('getName')
+            ->andReturn('deeply')
+            ->shouldReceive('getFieldsets')
+            ->andReturn(
+                [
+                    m::mock('Zend\Form\Fieldset')
+                    ->shouldReceive('getName')
+                    ->andReturn('nested')
+                    ->shouldReceive('getFieldsets')
+                    ->andReturn([$fieldset])
+                    ->getMock()
+                ]
+            );
+
+        $form->shouldReceive('getFieldsets')
+            ->once()
+            ->andReturn([$topFieldset]);
 
         $this->assertTrue(
             $helper->processAddressLookupForm($form, $request)
@@ -374,7 +552,9 @@ class FormHelperServiceTest extends MockeryTestCase
                         ]
                     ]
                 ]
-            );
+            )
+            ->shouldReceive('isPost')
+            ->andReturn(true);
 
         $addressElement = m::mock('\stdClass');
         $addressElement->shouldReceive('setValueOptions')
@@ -388,7 +568,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('select')
             ->getMock()
             ->shouldReceive('setMessages')
-            ->with(array('No addresses found for postcode'));
+            ->with(array('postcode.error.no-addresses-found'));
 
         $fieldset = m::mock('Common\Form\Elements\Types\Address');
         $fieldset->shouldReceive('getName')
@@ -423,7 +603,9 @@ class FormHelperServiceTest extends MockeryTestCase
                         ]
                     ]
                 ]
-            );
+            )
+            ->shouldReceive('isPost')
+            ->andReturn(true);
 
         $element = m::mock('\stdClass');
         $element->shouldReceive('remove')
@@ -434,6 +616,66 @@ class FormHelperServiceTest extends MockeryTestCase
             ->getMock()
             ->shouldReceive('setMessages')
             ->with(array('Please enter a postcode'));
+
+        $fieldset = m::mock('Common\Form\Elements\Types\Address');
+        $fieldset->shouldReceive('getName')
+            ->andReturn('address')
+            ->shouldReceive('get')
+            ->with('searchPostcode')
+            ->andReturn($element);
+
+        $form->shouldReceive('getFieldsets')
+            ->once()
+            ->andReturn([$fieldset]);
+
+        $this->assertTrue(
+            $helper->processAddressLookupForm($form, $request)
+        );
+    }
+
+    public function testProcessAddressLookupServiceUnavailable()
+    {
+        $helper = new FormHelperService();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+
+        $address = m::mock('\stdClass');
+        $address->shouldReceive('getAddressesForPostcode')
+            ->andReturn([]);
+
+        $sm->shouldReceive('get')
+            ->with('Data\Address')
+            ->andThrow(new \Exception('fail'));
+
+        $helper->setServiceLocator($sm);
+
+        $form = m::mock('Zend\Form\Form');
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('getPost')
+            ->andReturn(
+                [
+                    'address' => [
+                        'searchPostcode' => [
+                            'search' => true,
+                            'postcode' => 'LSX XXX'
+                        ]
+                    ]
+                ]
+            )
+            ->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $element = m::mock('\stdClass');
+        $element->shouldReceive('remove')
+            ->with('addresses')
+            ->getMock()
+            ->shouldReceive('remove')
+            ->with('select')
+            ->getMock()
+            ->shouldReceive('setMessages')
+            ->once()
+            ->with(array('postcode.error.not-available'));
 
         $fieldset = m::mock('Common\Form\Elements\Types\Address');
         $fieldset->shouldReceive('getName')
@@ -1369,5 +1611,33 @@ class FormHelperServiceTest extends MockeryTestCase
         $field->shouldReceive('setValue')->never();
 
         $helper->setDefaultDate($field);
+    }
+
+    public function testSaveFormState()
+    {
+        $helper = new FormHelperService();
+
+        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm->shouldReceive('getName')->with()->once()->andReturn('FORM_NAME');
+
+        $helper->saveFormState($mockForm, ['foo' => 'bar']);
+
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        $this->assertEquals(['foo' => 'bar'], $sessionContainer->offsetGet('FORM_NAME'));
+    }
+
+    public function testRestoreFormState()
+    {
+        $helper = new FormHelperService();
+
+        $mockForm = m::mock('Zend\Form\Form');
+        $mockForm->shouldReceive('getName')->with()->twice()->andReturn('FORM_NAME');
+
+        $sessionContainer = new \Zend\Session\Container('form_state');
+        $sessionContainer->offsetSet('FORM_NAME', ['an' => 'array']);
+        $mockForm->shouldReceive('setData')->with(['an' => 'array'])->once();
+
+        $helper->restoreFormState($mockForm);
+
     }
 }

@@ -74,6 +74,16 @@ class DocumentGenerationHelperService extends AbstractHelperService
         return $uploader->upload($folder);
     }
 
+    /**
+     * Generate and store a document
+     *
+     * @param string $template    Document template name
+     * @param string $description Not used
+     * @param array  $queryData
+     * @param array  $knownValues
+     *
+     * @return \Common\Service\File\File
+     */
     public function generateAndStore($template, $description, $queryData = [], $knownValues = [])
     {
         $template = $this->addTemplatePrefix($queryData, $template);

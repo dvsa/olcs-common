@@ -21,6 +21,7 @@ class ContinuationDetailEntityService extends AbstractEntityService
     const STATUS_UNACCEPTABLE = 'con_det_sts_unacceptable';
     const STATUS_ACCEPTABLE = 'con_det_sts_acceptable';
     const STATUS_COMPLETE = 'con_det_sts_complete';
+    const STATUS_ERROR = 'con_det_sts_error';
 
     /**
      * Define entity for default behaviour
@@ -43,6 +44,18 @@ class ContinuationDetailEntityService extends AbstractEntityService
                     ],
                     'licenceType',
                     'goodsOrPsv',
+                ]
+            ]
+        ]
+    ];
+
+    protected $detailsBundle = [
+        'children' => [
+            'status',
+            'licence' => [
+                'children' => [
+                    'licenceType',
+                    'goodsOrPsv'
                 ]
             ]
         ]
@@ -112,5 +125,226 @@ class ContinuationDetailEntityService extends AbstractEntityService
         }
 
         return $criteria;
+    }
+
+    /**
+     * Get continuation details for a licence. This will only return continuation details if it matches the criteria
+     *
+     * @param int $licenceId
+     *
+     * @return array
+     */
+    public function getContinuationMarker($licenceId)
+    {
+        /* @var $dateTime \DateTime */
+        $dateTime = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
+        $year = $dateTime->format('Y');
+        $month = $dateTime->format('n');
+
+        $dateTime->modify('+4 years');
+        $yearFuture = $dateTime->format('Y');
+        $monthFuture = $month;
+
+        $query = [
+            'licence' => $licenceId,
+            [
+                [
+                    'status' => [self::STATUS_PRINTED, self::STATUS_ACCEPTABLE, self::STATUS_UNACCEPTABLE],
+                ],
+                [
+                    'status' => self::STATUS_COMPLETE,
+                    'received' => 0
+                ]
+            ]
+        ];
+
+        $bundle = [
+            'children' => [
+                'status',
+                'licence' => [
+                    'children' => ['status'],
+                    'criteria' => [
+                        'status' => [
+                            LicenceEntityService::LICENCE_STATUS_VALID,
+                            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                        ]
+                    ],
+                    'required' => true,
+                ],
+                'continuation' => [
+                    'criteria' => [
+                        [
+                            [
+                                'year' => $year,
+                                'month' => '>= ' . $month
+                            ],
+                            [
+                                'year' => [
+                                    [
+                                        '> ' . $year,
+                                        '< ' . $yearFuture
+                                    ]
+                                ]
+                            ],
+                            [
+                                'year' => $yearFuture,
+                                'month' => '< ' . $monthFuture
+                            ]
+                        ]
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+
+        return $this->getAll($query, $bundle);
+    }
+
+    public function checklistFailed($id)
+    {
+        $data = ['status' => self::STATUS_ERROR];
+
+        $this->forceUpdate($id, $data);
+    }
+
+    public function getDetailsForProcessing($id)
+    {
+        return $this->get($id, $this->detailsBundle);
+    }
+
+    /**
+     * @NOTE this method has a custom endpoint, as it must be wrapped within a transaction
+     *
+     * @param array $ids
+     */
+    public function generateChecklists($ids)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall('ContinuationDetail/Checklists', 'POST', ['ids' => $ids]);
+    }
+
+    /**
+     * @NOTE this method has a custom endpoint, as it must be wrapped within a transaction
+     */
+    public function processContinuationDetail($id, $docId)
+    {
+        $data = ['id' => $id, 'docId' => $docId];
+
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall('ContinuationDetail/Checklists', 'PUT', $data);
+    }
+
+    /**
+     * Get ongoing continuation detail for a licence
+     *
+     * @param int $licenceId Licence ID
+     *
+     * @return array|false
+     */
+    public function getOngoingForLicence($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'status' => self::STATUS_ACCEPTABLE,
+        ];
+        $bundle = [
+            'children' => [
+                'licence' => [
+                    'children' => [
+                        'status',
+                    ]
+                ],
+            ]
+        ];
+
+        $results = $this->getAll($query, $bundle);
+
+        // there should only every be one ongoing continuation
+        if ($results['Count'] === 0) {
+            return false;
+        }
+        return $results['Results'][0];
+    }
+
+    /**
+     * Get a list of Continuation checklist reminders
+     *
+     * @param int $month Month
+     * @param int $year  Year
+     *
+     * @return array ['Count' => x, 'Results' => [y]]
+     */
+    public function getChecklistReminderList($month, $year)
+    {
+
+        $query = [
+            // where the checklist has not yet been received
+            'received' => 0,
+        ];
+        $bundle = [
+            'children' => [
+                // the year/month of the continuation matches the month/year selected
+                'continuation' => [
+                    'criteria' => [
+                        'month' => $month,
+                        'year' => $year,
+                    ],
+                    'required' => true
+                ],
+                'licence' => [
+                    'children' => [
+                        'status',
+                        'organisation',
+                        'goodsOrPsv',
+                        'licenceType',
+                        'fees' => [
+                            'children' => [
+                                'feeType' => [
+                                    'criteria' => [
+                                        'feeType' => \Common\Service\Data\FeeTypeDataService::FEE_TYPE_CONT
+                                    ],
+                                ],
+                            ],
+                            'criteria' => [
+                                'feeStatus' => [
+                                    FeeEntityService::STATUS_OUTSTANDING,
+                                    FeeEntityService::STATUS_WAIVE_RECOMMENDED
+                                ]
+                            ],
+                        ]
+                    ],
+                    // the licence status is Valid, Curtailed or Suspended
+                    'criteria' => [
+                        'status' => [
+                            LicenceEntityService::LICENCE_STATUS_VALID,
+                            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                        ]
+                    ],
+                    'required' => true,
+                ],
+            ]
+        ];
+
+        $results = $this->getAll($query, $bundle);
+
+        // there is no outstanding (or waive recommended) continuation fee
+        // @note Its proving difficult to get the bundle to perform the correct query, so as this will be
+        // rewritten soon in new API. We have this array iteration to remove rows we don't want
+        $rows = [];
+        foreach ($results['Results'] as $row) {
+            foreach ($row['licence']['fees'] as $fee) {
+                if (!empty($fee['feeType'])) {
+                    continue 2;
+                }
+            }
+            $rows[] = $row;
+        }
+
+        $results['Count'] = count($rows);
+        $results['Results'] = $rows;
+
+        return $results;
     }
 }

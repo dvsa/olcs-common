@@ -138,6 +138,11 @@ final class GenericCrudController extends AbstractActionController implements
         $view = new ViewModel(['table' => $this->getTable()]);
         $view->setTemplate('partials/table');
 
+        $this->getServiceLocator()->get('viewHelperManager')
+            ->get('placeholder')
+            ->getContainer('navigationId')
+            ->set($this->getOption('navigationId'));
+
         return $this->renderView($view, $this->getTranslationPrefix() . '-title');
     }
 
@@ -148,9 +153,10 @@ final class GenericCrudController extends AbstractActionController implements
      */
     public function getTable()
     {
-        $data = $this->getCrudService()->getList($this->getParams());
+        $params = array_merge($this->getRequest()->getQuery()->toArray(), $this->getParams() ? : []);
 
-        return $this->getTableBuilder()->buildTable($this->getOption('table'), $data, [], false);
+        $data = $this->getCrudService()->getList($params);
+        return $this->getTableBuilder()->buildTable($this->getOption('table'), $data, $params, false);
     }
 
     /**

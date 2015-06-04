@@ -9,6 +9,11 @@ namespace Common\Controller\Lva;
 use Zend\Form\FormInterface;
 use Zend\Stdlib\RequestInterface;
 
+use Dvsa\Olcs\Transfer\Query\Trailer\Trailers;
+use Dvsa\Olcs\Transfer\Command\Trailer\CreateTrailer;
+use Dvsa\Olcs\Transfer\Command\Trailer\UpdateTrailer;
+use Dvsa\Olcs\Transfer\Command\Trailer\DeleteTrailer;
+
 /**
  * Class AbstractTrailersController
  *
@@ -69,7 +74,34 @@ abstract class AbstractTrailersController extends AbstractController
      */
     public function addAction()
     {
-        return $this->addOrEdit('add');
+        $request = $this->getRequest();
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('Lva\Trailer', $request);
+
+        if ($request->isPost()) {
+            $form->setData((array)$request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData()['data'];
+                $data['id'] = $this->getLicenceId();
+                $data['licence'] = $this->getLicenceId();
+                $data['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate();
+
+                $dto = CreateTrailer::create(
+                    $data
+                );
+
+                $response = $this->handleCommand($dto);
+
+                if ($response->isOk()) {
+                    return $this->handlePostSave();
+                }
+
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            }
+        }
+
+        return $this->render('add_trailer', $form);
     }
 
     /**
@@ -79,7 +111,40 @@ abstract class AbstractTrailersController extends AbstractController
      */
     public function editAction()
     {
-        return $this->addOrEdit('edit');
+        $request = $this->getRequest();
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('Lva\Trailer', $request);
+
+        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'form-actions->addAnother');
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData()['data'];
+                $data['licence'] = $this->getLicenceId();
+
+                $dto = UpdateTrailer::create(
+                    $data
+                );
+
+                $response = $this->handleCommand($dto);
+
+                if ($response->isOk()) {
+                    return $this->handlePostSave();
+                }
+            }
+        }
+
+        $form->setData(
+            array(
+                'data' => $this->getServiceLocator()
+                    ->get('Entity\Trailer')
+                    ->getById($this->params('child_id'))
+            )
+        );
+
+        return $this->render('edit_trailer', $form);
     }
 
     /**
@@ -92,58 +157,20 @@ abstract class AbstractTrailersController extends AbstractController
         $id = $this->params('child_id');
 
         $ids = explode(',', $id);
-        foreach($ids as $id) {
-            $this->getServiceLocator()->get('Entity\Trailer')->delete($id);
-        }
-    }
 
-    /**
-     * Delegate methods to handle adding and editing trailers.
-     *
-     * @param null|string $method Add or edit.
-     *
-     * @return mixed
-     */
-    protected function addOrEdit($method = null)
-    {
-        if (!is_string($method) || !in_array($method, ["add", "edit"])) {
-            throw new \InvalidArgumentException(
-                __METHOD__ . " expects argument 'add' or 'edit'."
-            );
+        $dto = DeleteTrailer::create(
+            [
+                'ids' => $ids
+            ]
+        );
+
+        $response = $this->handleCommand($dto);
+
+        if ($response->isOk()) {
+            return true;
         }
 
-        $request = $this->getRequest();
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest('Lva\Trailer', $request);
-
-        $data = array();
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } elseif ($method === 'edit') {
-            $form->get('form-actions')->remove('addAnother');
-            $data = array(
-                'data' => $this->getServiceLocator()
-                    ->get('Entity\Trailer')
-                    ->getById($this->params('child_id'))
-            );
-        }
-
-        $form->setData($data);
-
-        if ($request->isPost() && $form->isValid()) {
-            $data = $form->getData()['data'];
-            $data['licence'] = $this->getLicenceId();
-
-            if ($method === 'add') {
-                $data['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate();
-            }
-
-            $this->getServiceLocator()->get('Entity\Trailer')->save($data);
-
-            return $this->handlePostSave();
-        }
-
-        return $this->render($method . '_trailer', $form);
+        return false;
     }
 
     /**
@@ -179,12 +206,26 @@ abstract class AbstractTrailersController extends AbstractController
      */
     protected function getTableData()
     {
-        $data = $this->getServiceLocator()
-                     ->get('Entity\Trailer')
-                     ->getTrailerDataForLicence($this->getLicenceId());
+        $query = Trailers::create(
+            array(
+                'licence' => $this->getLicenceId()
+            )
+        );
+
+        $response = $this->handleQuery($query);
+
+        if (!$response->isOk()) {
+            if ($response->isClientError() || $response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            }
+
+            return $this->notFoundAction();
+        }
+
+        $result = (array)$response->getResult();
 
         $tableData = [];
-        foreach ($data['Results'] as $key => $trailer) {
+        foreach ($result['results'] as $trailer) {
             $tableData[] = [
                 'id' => $trailer['id'],
                 'trailerNo' => $trailer['trailerNo'],

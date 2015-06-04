@@ -17,7 +17,7 @@ class BrCouncilsNotified extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
-        return [
+        return isset($data['busRegId']) ? [
             'service' => 'BusReg',
             'data' => [
                 'id' => $data['busRegId']
@@ -27,7 +27,7 @@ class BrCouncilsNotified extends DynamicBookmark
                     'localAuthoritys',
                 ],
             ],
-        ];
+        ] : null;
     }
 
     public function render()

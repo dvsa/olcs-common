@@ -115,7 +115,7 @@ class TransferVehicles implements
     {
         $existedVehicles = [];
         foreach ($targetLicence['licenceVehicles'] as $lv) {
-            if (array_search($lv['vehicle']['id'], $sourceVehiclesIds) !== false) {
+            if (isset($sourceVehiclesIds[$lv['vehicle']['vrm']])) {
                 $existedVehicles[$lv['vehicle']['id']] = $lv['vehicle']['vrm'];
             }
         }

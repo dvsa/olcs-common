@@ -10,6 +10,8 @@ namespace CommonTest\Service\Entity;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Data\FeeTypeDataService;
 use Mockery as m;
+use Common\Service\Entity\ApplicationEntityService;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Fee Entity Service Test
@@ -346,7 +348,9 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
             'application' => $id,
             'feeStatus' => $statuses,
             'feeType' => 1,
-            'limit' => 'all'
+            'limit' => 'all',
+            'sort' => 'createdOn',
+            'order' => 'DESC'
         );
 
         $response = array(
@@ -434,12 +438,16 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'id' => 10,
                     'feeType' => [
-                        'feeType' => FeeTypeDataService::FEE_TYPE_GRANTINT
+                        'feeType' => [
+                            'id' => FeeTypeDataService::FEE_TYPE_GRANTINT,
+                        ]
                     ]
                 ], [
                     'id' => 20,
                     'feeType' => [
-                        'feeType' => FeeTypeDataService::FEE_TYPE_APP
+                        'feeType' => [
+                            'id' => FeeTypeDataService::FEE_TYPE_APP,
+                        ]
                     ]
                 ]
             ]
@@ -460,5 +468,182 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectedRestCallInOrder('Fee', 'PUT', $data);
 
         $this->sut->cancelInterimForApplication(3);
+    }
+
+    public function testGetOutstandingFeesForOrganisation()
+    {
+        // stub data
+        $organisationId = 69;
+
+        $applications = [
+            ['id' => 2],
+            ['id' => 4],
+            ['id' => 6],
+        ];
+
+        $licences = [
+            ['id' => 3],
+            ['id' => 5],
+            ['id' => 7],
+        ];
+
+        // mocks
+        $mockOrganisationEntityService = m::mock();
+        $this->sm->setService('Entity\Organisation', $mockOrganisationEntityService);
+
+        // expectations
+        $mockOrganisationEntityService
+            ->shouldReceive('getLicencesByStatus')
+            ->with(
+                $organisationId,
+                [
+                    LicenceEntityService::LICENCE_STATUS_VALID,
+                    LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                    LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                ]
+            )
+            ->once()
+            ->andReturn($licences);
+
+        $mockOrganisationEntityService
+            ->shouldReceive('getAllApplicationsByStatus')
+            ->with(
+                $organisationId,
+                [
+                    ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
+                    ApplicationEntityService::APPLICATION_STATUS_GRANTED,
+                ]
+            )
+            ->once()
+            ->andReturn($applications);
+
+        $expectedQuery = array(
+            'feeStatus' => FeeEntityService::STATUS_OUTSTANDING,
+            [
+                'application' => "IN [2,4,6]",
+                'licence' => "IN [3,5,7]",
+            ],
+            'sort'  => 'invoicedDate',
+            'order' => 'ASC',
+            'limit' => 'all',
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $expectedQuery)
+            ->will($this->returnValue('RESPONSE'));
+
+        // assertions
+        $this->assertEquals('RESPONSE', $this->sut->getOutstandingFeesForOrganisation($organisationId));
+    }
+
+    /**
+     * Test getOutstandingFeesForOrganisation method when there are no
+     * licences, variations or applications
+     */
+    public function testGetOutstandingFeesForOrganisationNoLva()
+    {
+        // stub data
+        $organisationId = 69;
+
+        $applications = [];
+
+        $licences = [];
+
+        // mocks
+        $mockOrganisationEntityService = m::mock();
+        $this->sm->setService('Entity\Organisation', $mockOrganisationEntityService);
+
+        // expectations
+        $mockOrganisationEntityService
+            ->shouldReceive('getLicencesByStatus')
+            ->once()
+            ->andReturn($licences);
+
+        $mockOrganisationEntityService
+            ->shouldReceive('getAllApplicationsByStatus')
+            ->once()
+            ->andReturn($applications);
+
+        // assertions
+        $this->assertNull($this->sut->getOutstandingFeesForOrganisation($organisationId));
+    }
+
+    public function testGetOutstandingContinuationFee()
+    {
+        $expectedQuery = [
+            'licence' => 1966,
+            'feeStatus' => [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+            'limit' => 'all',
+        ];
+        $expectedBundle = [
+            'children' => [
+                'feeType' => [
+                    'criteria' => [
+                        'feeType' => FeeTypeDataService::FEE_TYPE_CONT,
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+
+        $this->expectOneRestCall('Fee', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sut->getOutstandingContinuationFee(1966);
+    }
+
+    public function testGetOutstandingGrantFeesForApplication()
+    {
+        $expectedQuery = array(
+            'application' => 1966,
+            'feeStatus' => array(
+                FeeEntityService::STATUS_OUTSTANDING,
+                FeeEntityService::STATUS_WAIVE_RECOMMENDED,
+            ),
+           'limit' => 'all',
+        );
+        $expectedBundle = array(
+            'children' => array(
+                'feeStatus',
+                'feePayments' => array(
+                    'children' => array(
+                        'payment' => array(
+                            'children' => array(
+                                'status'
+                            )
+                        )
+                    )
+                ),
+                'paymentMethod',
+                'feeType' => array(
+                    'children' => array(
+                        'feeType',
+                    ),
+                    'criteria' => array(
+                        'feeType' => FeeTypeDataService::FEE_TYPE_GRANT
+                    ),
+                    'required' => true
+                ),
+            )
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue(['Results' => ['RESULTS']]));
+
+        $this->assertEquals(['RESULTS'], $this->sut->getOutstandingGrantFeesForApplication(1966));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetFeeDetailsForInterim()
+    {
+        $id = 3;
+
+        $response = array();
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals([], $this->sut->getFeeDetailsForInterim($id));
     }
 }

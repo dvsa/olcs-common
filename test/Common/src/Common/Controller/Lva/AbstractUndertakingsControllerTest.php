@@ -20,9 +20,107 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $this->mockController('\Common\Controller\Lva\AbstractUndertakingsController');
     }
 
+
+    public function testGetUndertakingsDataError()
+    {
+        $mockTransferAnnotationBuilder = m::mock();
+        $this->setService('TransferAnnotationBuilder', $mockTransferAnnotationBuilder);
+
+        $mockQueryService = m::mock();
+        $this->setService('QueryService', $mockQueryService);
+
+        $mockFlashMessenger = m::mock();
+        $this->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        $mockResponse = m::mock();
+
+        $this->sut->shouldReceive('getIdentifier')->andReturn(12);
+
+        $mockTransferAnnotationBuilder->shouldReceive('createQuery')
+            ->with(m::type('Dvsa\Olcs\Transfer\Query\Application\Declaration'))->once()->andReturn('QUERY');
+
+        $mockQueryService->shouldReceive('send')->with('QUERY')->once()->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')->andReturn(false);
+
+        $mockFlashMessenger->shouldReceive('addErrorMessage')->with('unknown-error')->once();
+
+        $this->sut->getUndertakingsData();
+    }
+
+    public function testSave()
+    {
+        $mockTransferAnnotationBuilder = m::mock();
+        $this->setService('TransferAnnotationBuilder', $mockTransferAnnotationBuilder);
+
+        $mockCommandService = m::mock();
+        $this->setService('CommandService', $mockCommandService);
+
+        $this->sut->shouldReceive('createUpdateDeclarationDto')->with(['FORM_DATA'])->once()->andReturn('DTO');
+
+        $mockTransferAnnotationBuilder->shouldReceive('createCommand')
+            ->with('DTO')
+            ->once()
+            ->andReturn('COMMAND');
+
+        $mockResponse = m::mock();
+        $mockCommandService->shouldReceive('send')->with('COMMAND')->once()->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')->with()->once()->andReturn(false);
+
+        $mockFlashMessenger = m::mock();
+        $this->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        $mockFlashMessenger->shouldReceive('addErrorMessage')->with('unknown-error')->once();
+
+        $this->sut->save(['FORM_DATA']);
+    }
+
+    public function testCreateUpdateDeclarationDto()
+    {
+        $formData = [
+            'id' => 3242,
+            'declarationsAndUndertakings' => [
+                'version' => 4,
+                'declarationConfirmation' => 'Y',
+            ],
+            'interim' => [
+                'goodsApplicationInterim' => 'Y',
+                'goodsApplicationInterimReason' => 'SOME REASON',
+            ]
+        ];
+
+        $this->sut->shouldReceive('getIdentifier')->andReturn(545);
+
+        /* @var $dto \Dvsa\Olcs\Transfer\Command\Application\UpdateDeclaration */
+        $dto = $this->sut->createUpdateDeclarationDto($formData);
+
+        $expected = [
+            'id' => 545,
+            'version' => 4,
+            'declarationConfirmation' => 'Y',
+            'interimRequested' => 'Y',
+            'interimReason' => 'SOME REASON',
+        ];
+
+        $this->assertSame($expected, $dto->getArrayCopy());
+    }
+
+
     protected function mockGetUndertakingsData($applicationId)
     {
-        $this->sut->shouldReceive('getApplicationId')->andReturn($applicationId);
+        $mockTransferAnnotationBuilder = m::mock();
+        $this->setService('TransferAnnotationBuilder', $mockTransferAnnotationBuilder);
+
+        $mockQueryService = m::mock();
+        $this->setService('QueryService', $mockQueryService);
+
+        $mockResponse = m::mock();
+
+        $mockTransferAnnotationBuilder->shouldReceive('createQuery');
+        $mockQueryService->shouldReceive('send')->andReturn($mockResponse);
+
+        $this->sut->shouldReceive('getIdentifier')->andReturn($applicationId);
 
         $applicationData = [
             'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL],
@@ -33,10 +131,8 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
             'id' => $applicationId,
         ];
 
-        $this->mockEntity('Application', 'getDataForUndertakings')
-            ->once()
-            ->with($applicationId)
-            ->andReturn($applicationData);
+        $mockResponse->shouldReceive('isOk')->andReturn(true);
+        $mockResponse->shouldReceive('getResult')->andReturn($applicationData);
 
         return $applicationData;
     }
@@ -104,18 +200,15 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $this->sut->shouldReceive('getForm')->andReturn($form);
 
         $form->shouldReceive('setData')->with($data)->andReturnSelf();
+        $form->shouldReceive('getData')->with()->once()->andReturn(['FORM_DATA']);
         $form->shouldReceive('isValid')->andReturn(true);
 
         $form->shouldReceive('get->get->setAttribute')
             ->with('value', '<p><a href="URL" target="_blank">View full application</a></p>');
 
-        $this->mockEntity('Application', 'save')
-            ->once()
-            ->with(['declarationConfirmation' => 'Y']);
+        $this->sut->shouldReceive('save')->with(['FORM_DATA']);
 
-        $this->sut->shouldReceive('postSave')
-            ->with('undertakings')
-            ->shouldReceive('completeSection')
+        $this->sut->shouldReceive('completeSection')
             ->with('undertakings')
             ->andReturn('complete');
 
@@ -124,44 +217,6 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $this->assertEquals(
             'complete',
             $this->sut->indexAction()
-        );
-    }
-
-    public function handleFeesProvider()
-    {
-        return array(
-            array(
-                'createInterimFeeIfNotExist', 'Y'
-            ),
-            array(
-                'cancelInterimFees', 'N'
-            )
-        );
-    }
-
-    /**
-     * @dataProvider handleFeesProvider
-     */
-    public function testHandleFees($method, $isInterim)
-    {
-        $this->sm->shouldReceive('get')
-            ->with('Helper\Interim')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive($method)
-                    ->with(1)
-                    ->getMock()
-            );
-
-        $this->sut->handleFees(
-            array(
-                'interim' => array(
-                    'goodsApplicationInterim' => $isInterim,
-                ),
-                'declarationsAndUndertakings' => array(
-                    'id' => 1
-                )
-            )
         );
     }
 
@@ -233,59 +288,5 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
     {
         $this->assertEquals('gv', $this->sut->getPartialPrefix('lcat_gv'));
         $this->assertEquals('psv', $this->sut->getPartialPrefix('lcat_psv'));
-    }
-
-    public function formatDataForSaveProvider()
-    {
-        return array(
-            'yes with reason' => array(
-                array(
-                    'interim' => array(
-                        'goodsApplicationInterim' => 'Y',
-                        'goodsApplicationInterimReason' => 'reason'
-                    ),
-                    'declarationsAndUndertakings' => array(
-                    )
-                ),
-                array(
-                    'interimStatus' => 'int_sts_requested',
-                    'interimReason' => 'reason'
-                )
-            ),
-            'no' => array(
-                array(
-                    'interim' => array(
-                        'goodsApplicationInterim' => 'N',
-                    ),
-                    'declarationsAndUndertakings' => array(
-                    )
-                ),
-                array(
-                    'interimStatus' => null,
-                    'interimReason' => null
-                )
-            ),
-            'null' => array(
-                array(
-                    'interim' => array(
-                        'goodsApplicationInterim' => null,
-                    ),
-                    'declarationsAndUndertakings' => array(
-                    )
-                ),
-                array(
-                    'interimStatus' => null,
-                    'interimReason' => null
-                )
-            ),
-        );
-    }
-
-    /**
-     * @dataProvider formatDataForSaveProvider
-     */
-    public function testFormatDataForSave($data, $expectedResult)
-    {
-        $this->assertEquals($this->sut->formatDataForSave($data), $expectedResult);
     }
 }

@@ -69,4 +69,15 @@ class TransportManagerEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue(['documents' => ['documents']]));
         $this->assertEquals(['documents'], $this->sut->getDocuments(1, 2, 'application', 3, 4));
     }
+
+    /**
+     * @group transportManagerEntity
+     */
+    public function testGetTmForMarkers()
+    {
+        $this->expectOneRestCall('TransportManager', 'GET', 123)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getTmForMarkers(123));
+    }
 }

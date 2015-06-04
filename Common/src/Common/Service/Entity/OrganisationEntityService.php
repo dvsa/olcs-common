@@ -137,6 +137,25 @@ class OrganisationEntityService extends AbstractEntityService
         )
     );
 
+    protected $adminUsersBundle = [
+        'children' => [
+            'organisationUsers' => [
+                'criteria' => [
+                    'isAdministrator' => true
+                ],
+                'children' => [
+                    'user' => [
+                        'children' => [
+                            'contactDetails' => [
+                                'children' => ['person']
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     public function getApplications($id)
     {
         return $this->get($id, $this->applicationsBundle);
@@ -182,8 +201,11 @@ class OrganisationEntityService extends AbstractEntityService
         ];
 
         $data = $this->get($id, $bundle);
-        foreach ($data['licences'] as $licence) {
-            $applications = array_merge($applications, $licence['applications']);
+
+        if (isset($data['licences'])) {
+            foreach ($data['licences'] as $licence) {
+                $applications = array_merge($applications, $licence['applications']);
+            }
         }
 
         return $applications;
@@ -221,10 +243,31 @@ class OrganisationEntityService extends AbstractEntityService
      * Get business details data
      *
      * @param type $id
+     * @param int $licenceId
      */
-    public function getBusinessDetailsData($id)
+    public function getBusinessDetailsData($id, $licenceId = null)
     {
-        return $this->get($id, $this->businessDetailsBundle);
+        if ($licenceId) {
+            $bundle = [
+                'children' => [
+                    'contactDetails' => [
+                        'children' => [
+                            'address',
+                            'contactType'
+                        ]
+                    ],
+                    'tradingNames' => [
+                        'criteria' => [
+                            'licence' => $licenceId
+                        ]
+                    ],
+                    'type'
+                ]
+            ];
+        } else {
+            $bundle = $this->businessDetailsBundle;
+        }
+        return $this->get($id, $bundle);
     }
 
     public function findByIdentifier($identifier)
@@ -241,9 +284,9 @@ class OrganisationEntityService extends AbstractEntityService
         return $licences['Count'] > 0;
     }
 
-    public function hasChangedTradingNames($id, $tradingNames)
+    public function hasChangedTradingNames($id, $tradingNames, $licenceId = null)
     {
-        $data = $this->getBusinessDetailsData($id);
+        $data = $this->getBusinessDetailsData($id, $licenceId);
 
         $map = function ($v) {
             return $v['name'];
@@ -380,5 +423,34 @@ class OrganisationEntityService extends AbstractEntityService
         asort($people);
 
         return $people;
+    }
+
+    public function getAdminEmailAddresses($id)
+    {
+        $users = [];
+        $orgUsers = $this->get($id, $this->adminUsersBundle)['organisationUsers'];
+
+        foreach ($orgUsers as $user) {
+            if (isset($user['user']['emailAddress'])) {
+                $details = $user['user']['contactDetails']['person'];
+                $users[] = sprintf(
+                    '%s %s <%s>',
+                    $details['forename'],
+                    $details['familyName'],
+                    $user['user']['emailAddress']
+                );
+            }
+        }
+
+        return $users;
+    }
+
+    public function getByCompanyOrLlpNo($companyNumber)
+    {
+        $query = [
+            'companyOrLlpNo' => $companyNumber,
+        ];
+
+        return $this->get($query);
     }
 }

@@ -112,7 +112,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
 
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
             ->once()
-            ->with(111)
+            ->with(111, 222)
             ->andReturn($stubbedBusinessDetails)
             ->shouldReceive('getNatureOfBusinessesForSelect')
             ->once()
@@ -212,7 +212,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
 
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
             ->once()
-            ->with(111)
+            ->with(111, 222)
             ->andReturn($stubbedBusinessDetails);
 
         $mockRequest->shouldReceive('isPost')
@@ -311,7 +311,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             ->andReturn('RESPONSE');
 
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
-            ->with(111)
+            ->with(111, 222)
             ->andReturn($stubbedBusinessDetails);
 
         $mockRequest->shouldReceive('isPost')
@@ -440,7 +440,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             ->andReturn('RESPONSE');
 
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
-            ->with(111)
+            ->with(111, 222)
             ->andReturn($stubbedBusinessDetails);
 
         $mockRequest->shouldReceive('isPost')
@@ -561,7 +561,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             ->andReturn('RESPONSE');
 
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
-            ->with(111)
+            ->with(111, 222)
             ->andReturn($stubbedBusinessDetails);
 
         $mockRequest->shouldReceive('isPost')
@@ -688,7 +688,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             ->andReturn('RESPONSE');
 
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
-            ->with(111)
+            ->with(111, 222)
             ->andReturn($stubbedBusinessDetails);
 
         $mockRequest->shouldReceive('isPost')
@@ -836,7 +836,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             ->andReturn('RESPONSE');
 
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
-            ->with(111)
+            ->with(111, 222)
             ->andReturn($stubbedBusinessDetails);
 
         $mockRequest->shouldReceive('isPost')
@@ -980,7 +980,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             ->andReturn('RESPONSE');
 
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
-            ->with(111)
+            ->with(111, 222)
             ->andReturn($stubbedBusinessDetails);
 
         $mockRequest->shouldReceive('isPost')
@@ -1124,7 +1124,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             ->andReturn('RESPONSE');
 
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
-            ->with(111)
+            ->with(111, 222)
             ->andReturn($stubbedBusinessDetails);
 
         $mockRequest->shouldReceive('isPost')

@@ -92,7 +92,7 @@ class LicenceVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
      * @param int $licenceId
      * @return Common\Service\Table\TableBuilde
      */
-    public function alterVehcileTable($table, $licenceId)
+    public function alterVehicleTable($table, $licenceId)
     {
         $otherLicences = $this->getServiceLocator()
             ->get('Entity\Licence')

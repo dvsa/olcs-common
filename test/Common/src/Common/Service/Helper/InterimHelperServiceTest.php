@@ -457,7 +457,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'version' => 400
                         ]
                     ],
-                    'interimApplication' => array()
+                    'interimApplication' => ['foo' => 'bar']
                 ]
             ],
             'licence' => [
@@ -489,14 +489,10 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
-            ->shouldReceive('getDataForProcessing')
-            ->with($applicationId)
-            ->andReturn(['licence' => ['id' => $licenceId], 'isVariation' => $variationFlag])
-            ->once()
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration($variationFlag, $templateName, $applicationId, $licenceId);
+        $this->mockInterimLetterGeneration($templateName, $applicationId, $licenceId);
 
         $this->sm->setService(
             'Helper\Date',
@@ -589,7 +585,7 @@ class InterimHelperServiceTest extends MockeryTestCase
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
     }
 
-    protected function mockInterimLetterGeneration($isVariationFlag, $templateName, $applicationId, $licenceId)
+    protected function mockInterimLetterGeneration($templateName, $applicationId, $licenceId)
     {
         $this->sm->setService(
             'Entity\User',
@@ -617,17 +613,9 @@ class InterimHelperServiceTest extends MockeryTestCase
         );
 
         $this->sm->setService(
-            'PrintScheduler',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('enqueueFile')
-            ->with('storedFile', $templateName)
-            ->getMock()
-        );
-
-        $this->sm->setService(
-            'EntityDocument',
-            m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->with(
                 'storedFile',
                 [
@@ -691,33 +679,10 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
-            ->shouldReceive('getDataForProcessing')
-            ->with($applicationId)
-            ->andReturn(['licence' => ['id' => 99], 'isVariation' => false])
-            ->once()
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
-
-        $this->sm->setService(
-            'Entity\GoodsDisc',
-            m::mock()
-            ->shouldReceive('save')
-            ->with(
-                [
-                    [
-                        'licenceVehicle' => 20,
-                        'isInterim' => 'Y'
-                    ],
-                    '_OPTIONS_' => [
-                        'multiple' => true
-                    ]
-                ]
-            )
-            ->once()
-            ->getMock()
-        );
+        $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Helper\Date',
@@ -801,7 +766,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                             'version' => 400
                         ]
                     ],
-                    'interimApplication' => null
+                    'interimApplication' => ['foo' => 'bar']
                 ]
             ],
             'licence' => [
@@ -825,14 +790,10 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
-            ->shouldReceive('getDataForProcessing')
-            ->with($applicationId)
-            ->andReturn(['licence' => ['id' => 99], 'isVariation' => false])
-            ->once()
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
+        $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Helper\Date',
@@ -851,6 +812,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                     [
                         'id' => 20,
                         'version' => 200,
+                        'specifiedDate' => '2014-01-01 00:00:00'
                     ]
                 ]
             )
@@ -938,14 +900,10 @@ class InterimHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->once()
-            ->shouldReceive('getDataForProcessing')
-            ->with($applicationId)
-            ->andReturn(['licence' => ['id' => 99], 'isVariation' => false])
-            ->once()
             ->getMock()
         );
 
-        $this->mockInterimLetterGeneration(false, 'NEW_APP_INT_GRANTED', $applicationId, 99);
+        $this->mockInterimLetterGeneration('NEW_APP_INT_GRANTED', $applicationId, 99);
 
         $this->sm->setService(
             'Helper\Date',
@@ -1122,11 +1080,8 @@ class InterimHelperServiceTest extends MockeryTestCase
         $this->sm->setService(
             'Helper\DocumentGeneration',
             m::mock()
-            ->shouldReceive('generateFromTemplate')
-            ->with('GB/NEW_APP_INT_REFUSED', ['user' => 1, 'licence' => 99])
-            ->andReturn('document')
-            ->shouldReceive('uploadGeneratedContent')
-            ->with('document', 'documents', 'GV Refused Interim Licence')
+            ->shouldReceive('generateAndStore')
+            ->with('GB/NEW_APP_INT_REFUSED', 'GV Refused Interim Licence', ['user' => 1, 'licence' => 99])
             ->andReturn('file')
             ->getMock()
         );
@@ -1152,26 +1107,115 @@ class InterimHelperServiceTest extends MockeryTestCase
         ];
 
         $this->sm->setService(
-            'Entity\Document',
+            'Helper\DocumentDispatch',
             m::mock()
-            ->shouldReceive('createFromFile')
+            ->shouldReceive('process')
             ->with('file', $dataToSave)
             ->andReturn('file')
             ->getMock()
         );
 
+        $this->assertEquals('file', $this->sut->refuseInterim($applicationId));
+    }
+
+    /**
+     * Test generate interim fee request document
+     * 
+     * @group interimHelper
+     * @dataProvider messagesProvider
+     */
+    public function testGenerateInterimFeeRequestDocument($isVariation, $message, $translation)
+    {
+        $application = [
+            'id' => 1,
+            'licence' => [
+                'id' => 2
+            ],
+            'isVariation' => $isVariation
+        ];
+        $feeId = 3;
+        $userId =4;
+
         $this->sm->setService(
-            'PrintScheduler',
+            'Entity\Application',
             m::mock()
-            ->shouldReceive('enqueueFile')
-            ->with(
-                'file',
-                'GV Refused Interim Licence',
-                [PrintSchedulerInterface::OPTION_DOUBLE_SIDED]
-            )
+            ->shouldReceive('getDataForProcessing')
+            ->with($application['id'])
+            ->andReturn($application)
+            ->once()
             ->getMock()
         );
 
-        $this->assertEquals(null, $this->sut->refuseInterim($applicationId));
+        $this->sm->setService(
+            'translator',
+            m::mock()
+            ->shouldReceive('translate')
+            ->with($message)
+            ->andReturn($translation)
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\User',
+            m::mock()
+            ->shouldReceive('getCurrentUser')
+            ->andReturn(['id' => $userId])
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\DocumentGeneration',
+            m::mock()
+            ->shouldReceive('generateAndStore')
+            ->with(
+                'FEE_REQ_INT_APP',
+                $translation,
+                [
+                    'application' => $application['id'],
+                    'licence'     => $application['licence']['id'],
+                    'fee'         => $feeId,
+                    'user'        => $userId
+                ]
+            )
+            ->andReturn('storedFile')
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\DocumentDispatch',
+            m::mock()
+            ->shouldReceive('process')
+            ->with(
+                'storedFile',
+                [
+                    'description'  => $translation,
+                    'filename'     => $translation . '.rtf',
+                    'application'  => $application['id'],
+                    'licence'      => $application['licence']['id'],
+                    'category'     => Category::CATEGORY_LICENSING,
+                    'subCategory'  => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                    'isDigital'    => false,
+                    'isScan'       => false
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->assertNull($this->sut->generateInterimFeeRequestDocument($application['id'], $feeId));
+    }
+
+    /**
+     * Provider for testGenerateInterimFeeRequestDocument
+     */
+    public function messagesProvider()
+    {
+        return [
+            [true, 'gv_interim_direction_fee_request', 'translation1'],
+            [false, 'gv_interim_licence_fee_request', 'translation2'],
+        ];
     }
 }

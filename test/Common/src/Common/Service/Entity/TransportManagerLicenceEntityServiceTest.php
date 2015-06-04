@@ -179,4 +179,18 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
 
         $this->assertEquals('RESPONSE', $this->sut->getByLicenceWithHomeContactDetails($licenceId));
     }
+
+    /**
+     * @group transportManagerLicenceEntity
+     */
+    public function testGetTmForLicence()
+    {
+        $licenceId = 2;
+        $query = ['licence' => $licenceId, 'limit' => 'all'];
+
+        $this->expectOneRestCall('TransportManagerLicence', 'GET', $query)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getTmForLicence($licenceId));
+    }
 }

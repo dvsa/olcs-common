@@ -207,4 +207,222 @@ class ContinuationDetailEntityServiceTest extends AbstractEntityServiceTestCase
             ]
         ];
     }
+
+    public function testGetContinuationMarker()
+    {
+        $mockDateHelper = \Mockery::mock();
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        $mockDateHelper->shouldReceive('getDateObject')->with()->once()->andReturn(new \DateTime('2015-05-01'));
+
+        $query = [
+            'licence' => 1966,
+            [
+                [
+                    'status' => [
+                        ContinuationDetailEntityService::STATUS_PRINTED,
+                        ContinuationDetailEntityService::STATUS_ACCEPTABLE,
+                        ContinuationDetailEntityService::STATUS_UNACCEPTABLE
+                    ],
+                ],
+                [
+                    'status' => ContinuationDetailEntityService::STATUS_COMPLETE,
+                    'received' => 0
+                ]
+            ],
+           'limit' => 'all'
+        ];
+
+        $bundle = [
+            'children' => [
+                'status',
+                'licence' => [
+                    'children' => ['status'],
+                    'criteria' => [
+                        'status' => [
+                            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_VALID,
+                            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                        ]
+                    ],
+                    'required' => true,
+                ],
+                'continuation' => [
+                    'criteria' => [
+                        [
+                            [
+                                'year' => "2015",
+                                'month' => ">= 5"
+                            ],
+                            // or
+                            [
+                                'year' => [
+                                    [
+                                        "> 2015",
+                                        "< 2019"
+                                    ]
+                                ]
+                            ],
+                            // or
+                            [
+                                'year' => "2019",
+                                'month' => "< 5"
+                            ]
+                        ]
+                    ],
+                    'required' => true,
+                ]
+            ]
+        ];
+
+        $this->expectOneRestCall('ContinuationDetail', 'GET', $query, $bundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getContinuationMarker(1966));
+    }
+
+    public function testGetOngoingForLicence()
+    {
+        $expectedQuery = [
+            'licence' => 1966,
+            'status' => ContinuationDetailEntityService::STATUS_ACCEPTABLE,
+            'limit' => 'all',
+
+        ];
+        $expectedBundle = [
+            'children' => [
+                'licence' => [
+                    'children' => [
+                        'status',
+                    ]
+                ],
+            ]
+        ];
+
+        $this->expectOneRestCall('ContinuationDetail', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue(['Count' => 1, 'Results' => ['STUFF']]));
+
+        $this->assertEquals('STUFF', $this->sut->getOngoingForLicence(1966));
+    }
+
+    public function testGetOngoingForLicenceNoResults()
+    {
+        $expectedQuery = [
+            'licence' => 1966,
+            'status' => ContinuationDetailEntityService::STATUS_ACCEPTABLE,
+            'limit' => 'all',
+
+        ];
+        $expectedBundle = [
+            'children' => [
+                'licence' => [
+                    'children' => [
+                        'status',
+                    ]
+                ],
+            ]
+        ];
+
+        $this->expectOneRestCall('ContinuationDetail', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue(['Count' => 0, 'Results' => []]));
+
+        $this->assertFalse($this->sut->getOngoingForLicence(1966));
+    }
+
+    public function testGetChecklistReminderList()
+    {
+        $expectedQuery = [
+            // where the checklist has not yet been received
+            'received' => 0,
+            'limit' => 'all',
+        ];
+        $expectedBundle = [
+            'children' => [
+                // the year/month of the continuation matches the month/year selected
+                'continuation' => [
+                    'criteria' => [
+                        'month' => 2,
+                        'year' => 2012,
+                    ],
+                    'required' => true
+                ],
+                'licence' => [
+                    'children' => [
+                        'status',
+                        'organisation',
+                        'goodsOrPsv',
+                        'licenceType',
+                        'fees' => [
+                            'children' => [
+                                'feeType' => [
+                                    'criteria' => [
+                                        'feeType' => \Common\Service\Data\FeeTypeDataService::FEE_TYPE_CONT
+                                    ],
+                                ],
+                            ],
+                            'criteria' => [
+                                'feeStatus' => [
+                                    \Common\Service\Entity\FeeEntityService::STATUS_OUTSTANDING,
+                                    \Common\Service\Entity\FeeEntityService::STATUS_WAIVE_RECOMMENDED
+                                ]
+                            ],
+                        ]
+                    ],
+                    // the licence status is Valid, Curtailed or Suspended
+                    'criteria' => [
+                        'status' => [
+                            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_VALID,
+                            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            \Common\Service\Entity\LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                        ]
+                    ],
+                    'required' => true,
+                ],
+            ]
+        ];
+
+        $restResponse = [
+            'Count' => 4,
+            'Results' => [
+                [
+                    'licence' => [
+                        'fees' => [
+                            ['feeType' => []],
+                            ['feeType' => null],
+                            ['feeType' => 'XXXX'],
+                        ]
+                    ]
+                ],
+                [
+                    'licence' => [
+                        'fees' => [
+                            ['feeType' => []],
+                            ['feeType' => null],
+                        ]
+                    ]
+                ],
+                [
+                    'licence' => [
+                        'fees' => []
+                    ]
+                ],
+            ]
+        ];
+
+        $this->expectOneRestCall('ContinuationDetail', 'GET', $expectedQuery, $expectedBundle)
+            ->will($this->returnValue($restResponse));
+
+        $results = $this->sut->getChecklistReminderList(2, 2012);
+
+        $this->assertEquals(2, $results['Count']);
+    }
+
+    public function testProcessContinuationDetail()
+    {
+        $query = ['id' => 1, 'docId' => 2];
+        $this->expectOneRestCall('ContinuationDetail/Checklists', 'PUT', $query)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->processContinuationDetail(1, 2));
+    }
 }

@@ -35,11 +35,13 @@ abstract class AbstractAddressesController extends AbstractController
     {
         $request = $this->getRequest();
 
-        $addressData = $this->formatDataForForm(
-            $this->getServiceLocator()->get('Entity\Licence')->getAddressesData(
+        $rawAddressData = $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getAddressesData(
                 $this->getLicenceId()
-            )
-        );
+            );
+
+        $addressData = $this->formatDataForForm($rawAddressData);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -55,29 +57,43 @@ abstract class AbstractAddressesController extends AbstractController
             ->getForm($typeOfLicence['licenceType'])
             ->setData($data);
 
+        $this->alterFormForLva($form);
+
         $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
-        if (!$hasProcessed && $request->isPost() && $form->isValid()) {
-
-            $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                ->get('Lva\\' . ucfirst($this->lva) . 'Addresses')
-                ->process(
-                    [
-                        'licenceId'    => $this->getLicenceId(),
-                        'data'         => $data,
-                        'originalData' => $addressData
-                    ]
-                );
-
-            if (!$response->isOk()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
-                return $this->renderForm($form);
+        if (!$hasProcessed && $request->isPost()) {
+            if (isset($data['consultant'])) {
+                if ($data['consultant']['add-transport-consultant'] === 'N') {
+                    $this->getServiceLocator()->get('Helper\Form')
+                        ->disableValidation(
+                            $form->getInputFilter()->get('consultant')
+                        );
+                }
             }
 
-            $this->postChange($response->getData());
+            if ($form->isValid()) {
+                $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                    ->get('Lva\\' . ucfirst($this->lva) . 'Addresses')
+                    ->process(
+                        [
+                            'licenceId' => $this->getLicenceId(),
+                            'data' => $data,
+                            'originalData' => $addressData
+                        ]
+                    );
 
-            return $this->completeSection('addresses');
+                if (!$response->isOk()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+                    return $this->renderForm($form);
+                }
+
+                $this->postChange($response->getData());
+
+                return $this->completeSection('addresses');
+            }
         }
+
+        $this->getServiceLocator()->get('Script')->loadFiles(['forms/addresses']);
 
         return $this->renderForm($form);
     }
@@ -114,6 +130,10 @@ abstract class AbstractAddressesController extends AbstractController
             $returnData = $this->formatAddressDataForForm($returnData, $data, 'establishment');
         }
 
+        if (!empty($data['transportConsultantCd'])) {
+            $returnData['consultant'] = $this->formatConsultantDataForForm($data);
+        }
+
         return $returnData;
     }
 
@@ -129,6 +149,33 @@ abstract class AbstractAddressesController extends AbstractController
 
         $returnData[$type . '_address'] = $address['address'];
         $returnData[$type . '_address']['countryCode'] = $address['address']['countryCode']['id'];
+
+        return $returnData;
+    }
+
+    /**
+     * Format the consultant data for display within the form.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function formatConsultantDataForForm(array $data)
+    {
+        $data = $data['transportConsultantCd'];
+
+        $returnData['add-transport-consultant'] = 'Y';
+        $returnData['writtenPermissionToEngage'] = $data['writtenPermissionToEngage'];
+        $returnData['transportConsultantName'] = $data['fao'];
+        $returnData['address'] = $data['address'];
+
+        foreach ($data['phoneContacts'] as $phoneContact) {
+            $phoneType = $this->mapFormTypeFromDbType($phoneContact['phoneContactType']['id']);
+
+            $returnData['contact'][$phoneType] = $phoneContact['phoneNumber'];
+            $returnData['contact'][$phoneType . '_id'] = $phoneContact['id'];
+            $returnData['contact'][$phoneType . '_version'] = $phoneContact['version'];
+        }
 
         return $returnData;
     }
@@ -150,6 +197,7 @@ abstract class AbstractAddressesController extends AbstractController
 
     protected function postChange(array $data)
     {
+        unset($data);
         $this->postSave('addresses');
     }
 }

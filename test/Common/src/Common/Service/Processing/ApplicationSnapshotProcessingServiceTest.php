@@ -424,4 +424,232 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
             ]
         ];
     }
+
+    public function dataProviderTestStoreSnapshot()
+    {
+        return [
+            [
+                ApplicationSnapshotProcessingService::ON_REFUSE,
+                0,
+                false,
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                ],
+                'GV79 Application Snapshot Refuse.html',
+                'GV79 Application Snapshot (at refuse)',
+            ],
+            [
+                ApplicationSnapshotProcessingService::ON_REFUSE,
+                0,
+                false,
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                ],
+                'PSV421 Application Snapshot Refuse.html',
+                'PSV421 Application Snapshot (at refuse)',
+            ],
+            [
+                ApplicationSnapshotProcessingService::ON_REFUSE,
+                0,
+                false,
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                ],
+                'PSV356 Application Snapshot Refuse.html',
+                'PSV356 Application Snapshot (at refuse)',
+            ],
+            [
+                ApplicationSnapshotProcessingService::ON_REFUSE,
+                1,
+                false,
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                ],
+                'GV81 Application Snapshot Refuse.html',
+                'GV81 Application Snapshot (at refuse)',
+            ],
+            [
+                ApplicationSnapshotProcessingService::ON_REFUSE,
+                1,
+                true,
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                ],
+                'GV80A Application Snapshot Refuse.html',
+                'GV80A Application Snapshot (at refuse)',
+            ],
+            [
+                ApplicationSnapshotProcessingService::ON_REFUSE,
+                1,
+                false,
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                ],
+                'PSV431 Application Snapshot Refuse.html',
+                'PSV431 Application Snapshot (at refuse)',
+            ],
+            [
+                ApplicationSnapshotProcessingService::ON_REFUSE,
+                1,
+                true,
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                ],
+                'PSV431A Application Snapshot Refuse.html',
+                'PSV431A Application Snapshot (at refuse)',
+            ],
+            [
+                ApplicationSnapshotProcessingService::ON_WITHDRAW,
+                1,
+                true,
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                ],
+                'PSV431A Application Snapshot Withdraw.html',
+                'PSV431A Application Snapshot (at withdraw)',
+            ],
+            [
+                ApplicationSnapshotProcessingService::ON_NTU,
+                0,
+                false,
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                ],
+                'PSV356 Application Snapshot NTU.html',
+                'PSV356 Application Snapshot (at NTU)',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProviderTestStoreSnapshot
+     *
+     * @param int    $event
+     * @param int    $appType
+     * @param bool   $isUpgrade
+     * @param array  $licenceData
+     * @param string $filename
+     * @param string $description
+     */
+    public function testStoreSnapshot($event, $appType, $isUpgrade, $licenceData, $filename, $description)
+    {
+        // Params
+        $applicationId = 123;
+
+        // Expected data
+        $expectedDocumentData = [
+            'identifier' => 'ABCDEF',
+            'application' => 123,
+            'licence' => 321,
+            'category' => CategoryDataService::CATEGORY_APPLICATION,
+            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_FORMS_ASSISTED_DIGITAL,
+            'filename' => $filename,
+            'issuedDate' => '2015-01-01 10:10:10',
+            'description' => $description,
+            'isExternal' => false,
+            'isScan' => false
+        ];
+
+        // Mocks
+        $mockApplicationEntity = m::mock();
+        $mockControllerPluginManager = m::mock();
+        $mockApplication = m::mock();
+        $mockMvcEvent = m::mock();
+        $mockRouteMatch = m::mock();
+        $mockAdapter = m::mock();
+        $mockControllerManager = m::mock();
+        $mockController = m::mock();
+        $mockView = m::mock();
+        $mockViewRenderer = m::mock();
+        $mockFileUploader = m::mock();
+        $mockFile = m::mock();
+        $mockDocumentEntity = m::mock();
+        $mockDate = m::mock();
+        $mockVariationSection = m::mock();
+
+        $appTypeName = ($appType === 0) ? 'Application' : 'Variation';
+
+        $this->sm->setService('Entity\Application', $mockApplicationEntity);
+        $this->sm->setService('ControllerPluginManager', $mockControllerPluginManager);
+        $this->sm->setService('Application', $mockApplication);
+        $this->sm->setService($appTypeName .'ReviewAdapter', $mockAdapter);
+        $this->sm->setService('ControllerManager', $mockControllerManager);
+        $this->sm->setService('ViewRenderer', $mockViewRenderer);
+        $this->sm->setService('FileUploader', $mockFileUploader);
+        $this->sm->setService('Entity\Document', $mockDocumentEntity);
+        $this->sm->setService('Helper\Date', $mockDate);
+        $this->sm->setService('Processing\VariationSection', $mockVariationSection);
+
+        // Expectations
+        $mockApplicationEntity->shouldReceive('getApplicationType')
+            ->with(123)
+            ->andReturn($appType)
+            ->shouldReceive('getLicenceIdForApplication')
+            ->with(123)
+            ->andReturn(321)
+            ->shouldReceive('getTypeOfLicenceData')
+            ->with(123)
+            ->andReturn($licenceData);
+
+        $mockApplication->shouldReceive('getMvcEvent')
+            ->andReturn($mockMvcEvent);
+
+        $mockMvcEvent->shouldReceive('getRouteMatch')
+            ->andReturn($mockRouteMatch);
+
+        $mockRouteMatch->shouldReceive('getParam')
+            ->with('application')
+            ->andReturn($applicationId);
+
+        $mockControllerManager->shouldReceive('get')
+            ->with('Lva'. $appTypeName .'/Review')
+            ->andReturn($mockController);
+
+        $mockController->shouldReceive('setPluginManager')
+            ->with($mockControllerPluginManager)
+            ->shouldReceive('setEvent')
+            ->with($mockMvcEvent)
+            ->shouldReceive('setAdapter')
+            ->with($mockAdapter)
+            ->shouldReceive('indexAction')
+            ->andReturn($mockView);
+
+        $mockViewRenderer->shouldReceive('render')
+            ->with($mockView)
+            ->andReturn('HTML');
+
+        $mockFileUploader->shouldReceive('getUploader')
+            ->andReturnSelf()
+            ->shouldReceive('setFile')
+            ->with(['content' => 'HTML'])
+            ->shouldReceive('upload')
+            ->andReturn($mockFile);
+
+        $mockDate->shouldReceive('getDate')
+            ->with('Y-m-d H:i:s')
+            ->andReturn('2015-01-01 10:10:10');
+
+        $mockFile->shouldReceive('getIdentifier')
+            ->andReturn('ABCDEF');
+
+        $mockDocumentEntity->shouldReceive('save')
+            ->with($expectedDocumentData);
+
+        if ($appType == ApplicationEntityService::APPLICATION_TYPE_VARIATION) {
+            $mockVariationSection->shouldReceive('isRealUpgrade')
+                ->with(123)
+                ->andReturn($isUpgrade);
+        }
+
+        $this->sut->storeSnapshot($applicationId, $event);
+    }
 }

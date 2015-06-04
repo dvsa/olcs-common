@@ -63,6 +63,7 @@ class GenericCrudControllerTest extends MockeryTestCase
 
         // Set options
         $this->sut->setOption('pageLayout', 'custom-layout');
+        $this->sut->setOption('navigationId', 'my-nav-id');
 
         // Tests the params - required for every method so acceptable to assert here.
         $params = ['a' => uniqid(), 'b' => uniqid()];
@@ -74,6 +75,15 @@ class GenericCrudControllerTest extends MockeryTestCase
     public function testIndexAction()
     {
         $this->request->shouldReceive('isXmlHttpRequest')->andReturn(false);
+
+        $this->request
+            ->shouldReceive('getQuery')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('toArray')
+                    ->andReturn([])
+                    ->getMock()
+            );
 
         $data = [
             [
@@ -87,9 +97,28 @@ class GenericCrudControllerTest extends MockeryTestCase
         $this->crudService->shouldReceive('getList')->with($this->sut->getParams())->andReturn($data);
 
         $tableBuilder = m::mock('\Common\Service\Table\TableBuilder');
-        $tableBuilder->shouldReceive('buildTable')->with($this->sut->getOption('table'), $data, [], false)
+        $tableBuilder
+            ->shouldReceive('buildTable')
+            ->with($this->sut->getOption('table'), $data, $this->sut->getParams(), false)
             ->andReturn($renderedTable);
         $this->sut->setTableBuilder($tableBuilder);
+
+        // mock out navigation
+        $mockNavContainer = $this->getMock('\stdClass', ['set']);
+        $mockPlaceholder = $this->getMock('\stdClass', ['getContainer']);
+        $mockVhm = $this->getMock('\stdClass', ['get']);
+        $mockVhm->expects($this->once())
+            ->method('get')
+            ->with('placeholder')
+            ->will($this->returnValue($mockPlaceholder));
+        $mockPlaceholder->expects($this->once())
+            ->method('getContainer')
+            ->with('navigationId')
+            ->will($this->returnValue($mockNavContainer));
+        $mockNavContainer->expects($this->once())
+            ->method('set')
+            ->with('my-nav-id');
+        $this->sm->setService('viewHelperManager', $mockVhm);
 
         // Assertions
         $view = $this->sut->indexAction();

@@ -17,7 +17,7 @@ namespace Common\Service\Table\Formatter;
 class OcComplaints implements FormatterInterface
 {
     /**
-     * Get the complaints for the operating centre and return them.
+     * Get the complaints for the operating centre and return a count.
      *
      * @param array $data The row data.
      * @param array $column The column data.
@@ -27,11 +27,15 @@ class OcComplaints implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
+        unset($column, $sm);
+
         $count = 0;
 
-        foreach ($data['operatingCentre']['ocComplaints'] as $complaint) {
-            if (!is_null($complaint['complaint'])) {
-                $count++;
+        if (!is_null($data['operatingCentre']['ocComplaints'])) {
+            foreach ($data['operatingCentre']['ocComplaints'] as $complaint) {
+                if (!is_null($complaint['complaint'])) {
+                    $count++;
+                }
             }
         }
 

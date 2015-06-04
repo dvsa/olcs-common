@@ -130,7 +130,7 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         $variantApplications = $applicationEntityService->getApplicationsForLicence($licenceId);
 
-        foreach ($variantApplications['Results'] as $key => $application) {
+        foreach ($variantApplications['Results'] as $application) {
             if ($application['isVariation']
                 && $application['status']['id'] == ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION
             ) {
@@ -331,21 +331,26 @@ class LicenceStatusHelperService extends AbstractHelperService
         if ($licenceData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
             array_map(
                 function ($disc) use (&$discs) {
-                    $discs[] = $disc['id'];
+                    if ($disc['ceasedDate'] === null) {
+                        $discs[] = $disc['id'];
+                    }
                 },
                 $licenceData['psvDiscs']
             );
+            return $this->getServiceLocator()->get('Entity\PsvDisc')->ceaseDiscs($discs);
         } else {
             foreach ($licenceData['licenceVehicles'] as $licenceVehicle) {
                 array_map(
                     function ($disc) use (&$discs) {
-                        $discs[] = $disc['id'];
+                        if ($disc['ceasedDate'] === null) {
+                            $discs[] = $disc['id'];
+                        }
                     },
                     $licenceVehicle['goodsDiscs']
                 );
             }
+            return $this->getServiceLocator()->get('Entity\GoodsDisc')->ceaseDiscs($discs);
         }
-        return $this->getServiceLocator()->get('Entity\GoodsDisc')->ceaseDiscs($discs);
     }
 
     /**

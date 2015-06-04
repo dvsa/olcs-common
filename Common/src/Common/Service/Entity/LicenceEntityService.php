@@ -43,6 +43,10 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
     // 'lsts_unlicenced', 'Unlicenced' is in rollout data but not used
 
+    const LICENCE_TACH_EXTERNAL = 'tach_external';
+    const LICENCE_TACH_INTERNAL = 'tach_internal';
+    const LICENCE_TACH_NA = 'tach_na';
+
     private $typeShortCodeMap =[
         self::LICENCE_TYPE_RESTRICTED             => 'R',
         self::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI',
@@ -116,6 +120,20 @@ class LicenceEntityService extends AbstractLvaEntityService
                     'address' => array(
                         'children' => array(
                             'countryCode'
+                        )
+                    )
+                )
+            ),
+            'transportConsultantCd' => array(
+                'children' => array(
+                    'address' => array(
+                        'children' => array(
+                            'countryCode'
+                        )
+                    ),
+                    'phoneContacts' => array(
+                        'children' => array(
+                            'phoneContactType'
                         )
                     )
                 )
@@ -271,7 +289,8 @@ class LicenceEntityService extends AbstractLvaEntityService
                 ],
             ],
             'operatingCentres',
-            'changeOfEntitys'
+            'changeOfEntitys',
+            'trafficArea'
             /*
             'cases' =>   [ // DON'T do this, it's horribly slow for some reason!
                 'criteria' => [
@@ -339,6 +358,74 @@ class LicenceEntityService extends AbstractLvaEntityService
             'enforcementArea',
         ),
     );
+
+    protected $getByLicenceNumberWithOperatingCentresBundle = array(
+        'children' => array(
+            'operatingCentres' => array(
+                'children' => array(
+                    'operatingCentre' => array(
+                        'children' => array(
+                            'address',
+                            'conditionUndertakings' => array(
+                                'criteria' => array(
+                                    'isFulfilled' => 'Y',
+                                    'isDraft' => 'Y'
+                                )
+                            ),
+                            'ocComplaints' => array(
+                                'children' => array(
+                                    'complaint' => array(
+                                        'criteria' => array(
+                                            'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
+                                        )
+                                    )
+                                )
+                            ),
+                            'conditionUndertakings' => array(
+                                'criteria' => array(
+                                    'isFulfilled' => 'Y',
+                                    'isDraft' => 'Y'
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    protected $continuationNotSoughtBundle = [
+        'children' => [
+            'goodsOrPsv',
+            'licenceVehicles' => [
+                'children' => [
+                    'goodsDiscs'
+                ]
+            ],
+            'psvDiscs',
+            // there is an outstanding (or waive recommended) continuation fee;
+            'fees' => [
+                'criteria' => [
+                    'feeStatus' => [
+                        FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED
+                    ],
+                ],
+                'required' => true,
+                'children' => [
+                    'feeType' => [
+                        'children' => [
+                            'feeType' => [
+                                'criteria' => [
+                                    'id' => [FeeTypeEntityService::FEE_TYPE_CONTINUATION],
+                                ],
+                                'required' => true,
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ]
+    ];
 
     /**
      * Get data for overview
@@ -508,6 +595,8 @@ class LicenceEntityService extends AbstractLvaEntityService
     /**
      * Generates new licences or updates existing one and saves it to licence entity
      *
+     * @NOTE This functionality has been replicated in the API [Licence/GenerateLicenceNumber]
+     *
      * @param string $licenceId
      */
     public function generateLicence($licenceId)
@@ -596,9 +685,14 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $variationData;
     }
 
+    public function getWithOrganisation($licenceId)
+    {
+        return $this->get($licenceId, $this->organisationBundle);
+    }
+
     public function getOrganisation($licenceId)
     {
-        $response = $this->get($licenceId, $this->organisationBundle);
+        $response = $this->getWithOrganisation($licenceId);
 
         return $response['organisation'];
     }
@@ -720,7 +814,11 @@ class LicenceEntityService extends AbstractLvaEntityService
     {
         $bundle = [
             'children' => [
-                'communityLics'
+                'communityLics' => [
+                    'children' => [
+                        'status',
+                    ]
+                ]
             ]
         ];
         return $this->get($licenceId, $bundle)['communityLics'];
@@ -828,7 +926,7 @@ class LicenceEntityService extends AbstractLvaEntityService
         $vehicles = [];
         foreach ($licence['licenceVehicles'] as $lv) {
             if (array_search($lv['id'], $ids) !== false) {
-                $vehicles[$lv['vehicle']['id']] = $lv['vehicle']['id'];
+                $vehicles[$lv['vehicle']['vrm']] = $lv['vehicle']['id'];
             }
         }
         return $vehicles;
@@ -848,5 +946,104 @@ class LicenceEntityService extends AbstractLvaEntityService
         ];
 
         return $this->getAll($query)['Results'];
+    }
+
+    /**
+     * Get a list if licences where the status needs to change to Continuation Not Sought
+     *
+     * @return array ['Count' => ?, 'Results' => [...]]
+     */
+    public function getForContinuationNotSought()
+    {
+        $now = $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C);
+        $query = [
+            // the continuation date is in the past;
+            'expiryDate' => "< {$now}",
+            // there is an outstanding (or waive recommended) continuation fee;
+            // filtered in bundle
+            // the status of the licence is valid, valid curtailed or valid suspended;
+            'status' => [self::LICENCE_STATUS_VALID, self::LICENCE_STATUS_CURTAILED, self::LICENCE_STATUS_SUSPENDED],
+            // the licence is a goods licence or a PSV special restricted
+            // (i.e. it excludes restricted and standard PSV licences)
+            [
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                ],
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED,
+                ]
+            ]
+        ];
+
+        return $this->getAll($query, $this->continuationNotSoughtBundle);
+    }
+
+    /**
+     * Set the status of a licence to Continuation Not Sought
+     *
+     * @param array $licenceData Licence array
+     * @throws \InvalidArgumentException
+     */
+    public function setStatusToContinuationNotSought($licenceData)
+    {
+        if (!isset($licenceData['id']) || !isset($licenceData['version'])) {
+            throw new \InvalidArgumentException(
+                'licenceData parameter must be an array containing \'id\' and \'version\''
+            );
+        }
+
+        $now = $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C);
+        $data = [
+            'id' => $licenceData['id'],
+            'version' => $licenceData['version'],
+            'cnsDate' => $now,
+            'status' => self::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT,
+        ];
+        $this->save($data);
+    }
+
+    /**
+     * Get Licences which have been set to CNS between a date range
+     *
+     * @param string $startDate valid datetime eg YYYY-MM-DD
+     * @param string $endDate
+     *
+     * @return array ['Count' => ?, 'Results' => [...]]
+     */
+    public function getWhereContinuationNotSought($startDate, $endDate)
+    {
+        $query = [
+            'cnsDate' => [
+                [
+                    ">= {$startDate}",
+                    "<= {$endDate}"
+                ]
+            ],
+            'sort'  => 'trafficArea',
+        ];
+
+        $bundle = [
+            'children' => ['trafficArea']
+        ];
+
+        return $this->getAll($query, $bundle);
+    }
+
+    /**
+     * Get licence by licence number and return all operating centres and complaints.
+     *
+     * @param $licNo
+     *
+     * @return array
+     */
+    public function getByLicenceNumberWithOperatingCentres($licNo)
+    {
+        return $this->getAll(
+            array(
+                'licNo' => $licNo
+            ),
+            $this->getByLicenceNumberWithOperatingCentresBundle
+        );
     }
 }

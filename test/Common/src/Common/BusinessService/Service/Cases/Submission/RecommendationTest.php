@@ -46,21 +46,6 @@ class RecommendationTest extends MockeryTestCase
             ->with($params['data']);
         $this->sm->setService('Entity\SubmissionAction', $mockSubmissionAction);
 
-        $mockTaskService = m::mock('\Common\BusinessService\BusinessServiceInterface');
-
-        $this->bsm->setService('Cases\Submission\SubmissionActionTask', $mockTaskService);
-
-        $mockBusinessResponse = m::mock('\Common\BusinessService\Response');
-        $mockBusinessResponse->shouldReceive('isOk')
-            ->times(empty($params['id']) ? 1 : 0)
-            ->andReturn(true);
-
-        // Expectations
-        $mockTaskService->shouldReceive('process')
-            ->times(empty($params['id']) ? 1 : 0)
-            ->with($expectedTaskData)
-            ->andReturn($mockBusinessResponse);
-
         $response = $this->sut->process($params);
 
         $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
@@ -76,7 +61,7 @@ class RecommendationTest extends MockeryTestCase
                     'caseId' => 111,
                     'data' => [
                         'urgent' => 'N',
-                        'submissionActionStatus' => 'action-status',
+                        'actionTypes' => 'action-status',
                         'recipientUser' => 333,
                     ],
                 ],
@@ -85,7 +70,7 @@ class RecommendationTest extends MockeryTestCase
                     'caseId' => 111,
                     'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_RECOMMENDATION,
                     'urgent' => 'N',
-                    'submissionActionStatus' => 'action-status',
+                    'actionTypes' => 'action-status',
                     'recipientUser' => 333,
                 ]
             ],
@@ -98,7 +83,7 @@ class RecommendationTest extends MockeryTestCase
                     'data' => [
                         'id' => 1,
                         'urgent' => 'N',
-                        'submissionActionStatus' => 'action-status',
+                        'actionTypes' => ['action-status','action-status2'],
                         'recipientUser' => 333,
                     ],
                 ],
@@ -107,7 +92,7 @@ class RecommendationTest extends MockeryTestCase
                     'caseId' => 111,
                     'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_RECOMMENDATION,
                     'urgent' => 'N',
-                    'submissionActionStatus' => 'action-status',
+                    'submissionActionStatus' => 'action-status, action-status2',
                     'recipientUser' => 333,
                 ]
             ],

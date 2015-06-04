@@ -14,7 +14,7 @@ namespace Common\Service\Entity;
  */
 class InspectionRequestEntityService extends AbstractLvaEntityService
 {
-    const REPORT_TYPE_MAINTANANCE_REQUEST = 'insp_rep_t_maint';
+    const REPORT_TYPE_MAINTENANCE_REQUEST = 'insp_rep_t_maint';
 
     const RESULT_TYPE_NEW = 'insp_res_t_new';
     const RESULT_TYPE_SATISFACTORY = 'insp_res_t_new_sat';
@@ -102,6 +102,19 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
                                 ],
                             ],
                         ],
+                        'tmLicences' => [
+                            'children' => [
+                                'transportManager' => [
+                                    'children' => [
+                                        'homeCd' => [
+                                            'children' => [
+                                                'person',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
                     ],
                 ],
                 'operatingCentre' => [
@@ -112,18 +125,5 @@ class InspectionRequestEntityService extends AbstractLvaEntityService
             ]
         ];
         return $this->get($id, $bundle);
-    }
-
-    public function getResultTypeById($id)
-    {
-        $bundle = [
-            'children' => [
-                'resultType',
-            ],
-        ];
-
-        $data = $this->get($id, $bundle);
-
-        return isset($data['resultType']['id']) ? $data['resultType']['id'] : null;
     }
 }

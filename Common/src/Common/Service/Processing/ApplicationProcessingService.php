@@ -149,11 +149,17 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->closeGrantTask($id, $licenceId);
     }
 
+    /**
+     * @NOTE This functionality has been replicated in the API [Licence/CancelLicenceFees]
+     */
     public function cancelFees($licenceId)
     {
         $this->getServiceLocator()->get('Entity\Fee')->cancelForLicence($licenceId);
     }
 
+    /**
+     * @NOTE This functionality has been replicated in the API [Application/CreateApplicationFee || Fee/CreateFee]
+     */
     public function createFee($applicationId, $licenceId, $feeTypeName, $taskId = null)
     {
         $feeType = $this->getFeeTypeForApplication($applicationId, $feeTypeName);
@@ -172,6 +178,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $result = $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
 
+        /**
+         * @todo migrate this [Only happens during granting]
+         */
         $this->getServiceLocator()->get('Processing\Fee')
             ->generateDocument(
                 $feeTypeName,
@@ -428,6 +437,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * @NOTE This functionality has been replicated in the API
+     * [Application/CreateApplicationFee || Repository/FeeType->getLatest()]
+     *
      * Get the latest fee type for a application
      *
      * @param int $applicationId
@@ -722,6 +734,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function processWithdrawApplication($id, $reason)
     {
+        $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
+            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_WITHDRAW);
+
         $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
 
         // Set the application status to 'Withdrawn'
@@ -754,6 +769,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function processRefuseApplication($id)
     {
+        $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
+            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_REFUSE);
+
         $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
 
         // Set the application status to 'Refused'
@@ -785,6 +803,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function processNotTakenUpApplication($id)
     {
+        $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
+            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_NTU);
+
         $licenceId = $this->getLicenceId($id);
 
         // Update the licence and application statuses to NTU
@@ -808,21 +829,51 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     }
 
-    protected function voidCommunityLicencesForLicence($licenceId)
+    public function voidCommunityLicencesForLicence($licenceId)
     {
         $licences = $this->getServiceLocator()->get('Entity\Licence')
             ->getCommunityLicencesByLicenceId($licenceId);
 
         $data = [
             'status' => CommunityLic::STATUS_VOID,
-            'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
+            'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
         ];
         $dataToVoid = [];
         foreach ($licences as $licence) {
-            $dataToVoid[] = array_merge($licence, $data);
+            if ($licence['expiredDate'] === null) {
+                $dataToVoid[] = array_merge($licence, $data);
+            }
         }
 
         $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToVoid);
+        $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
+    }
+
+    /**
+     * Expire Community Licences on a Licence
+     *
+     * @param int $licenceId Licence ID
+     */
+    public function expireCommunityLicencesForLicence($licenceId)
+    {
+        $communityLicences = $this->getServiceLocator()->get('Entity\Licence')
+            ->getCommunityLicencesByLicenceId($licenceId);
+
+        $data = [
+            'status' => CommunityLic::STATUS_EXPIRED,
+            'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
+        ];
+
+        // only expire community licences that have these statuses
+        $statusesToExpire = [CommunityLic::STATUS_PENDING, CommunityLic::STATUS_ACTIVE, CommunityLic::STATUS_SUSPENDED];
+        $dataToExpire = [];
+        foreach ($communityLicences as $communityLicence) {
+            if (in_array($communityLicence['status']['id'], $statusesToExpire)) {
+                $dataToExpire[] = array_merge($communityLicence, $data);
+            }
+        }
+
+        $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToExpire);
         $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
     }
 

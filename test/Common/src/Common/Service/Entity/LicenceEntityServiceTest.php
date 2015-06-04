@@ -921,7 +921,11 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $licenceId = 1;
         $bundle = [
             'children' => [
-                'communityLics'
+                'communityLics' => [
+                    'children' => [
+                        'status',
+                    ]
+                ]
             ]
         ];
         $this->expectOneRestCall('Licence', 'GET', $licenceId, $bundle)
@@ -966,7 +970,8 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                     ],
                 ],
                 'operatingCentres',
-                'changeOfEntitys'
+                'changeOfEntitys',
+                'trafficArea'
             ],
         ];
 
@@ -1170,14 +1175,14 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         ];
         $response = [
             'licenceVehicles' => [
-                ['id' => 1, 'vehicle' => ['id' => 11]],
-                ['id' => 2, 'vehicle' => ['id' => 12]],
-                ['id' => 4, 'vehicle' => ['id' => 14]]
+                ['id' => 1, 'vehicle' => ['id' => 11, 'vrm' => 'VRM1']],
+                ['id' => 2, 'vehicle' => ['id' => 12, 'vrm' => 'VRM2']],
+                ['id' => 4, 'vehicle' => ['id' => 14, 'vrm' => 'VRM4']]
             ]
         ];
         $vehicles = [
-            11 => 11,
-            12 => 12
+            'VRM1' => 11,
+            'VRM2' => 12
         ];
         $this->expectOneRestCall('Licence', 'GET', $query, $bundle)
             ->will($this->returnValue($response));
@@ -1253,5 +1258,96 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                 '2012-02-29'
             ]
         ];
+    }
+
+    public function testGetForContinuationNotSought()
+    {
+        $mockDateHelper = m::mock();
+        $mockDateHelper->shouldReceive('getDate')
+            ->with(\DateTime::W3C)
+            ->once()
+            ->andReturn('Y-m-d\TH:i:sP');
+
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        $query = [
+            'expiryDate' => "< Y-m-d\TH:i:sP",
+            'status' => [
+                LicenceEntityService::LICENCE_STATUS_VALID,
+                LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                LicenceEntityService::LICENCE_STATUS_SUSPENDED
+            ],
+            [
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                ],
+                [
+                    'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    'licenceType' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED,
+                ]
+            ],
+            'limit' => 'all'
+        ];
+
+        $this->expectOneRestCall('Licence', 'GET', $query)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getForContinuationNotSought());
+    }
+
+    public function testSetStatusToContinuationNotSoughtMissingParams()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $this->sut->setStatusToContinuationNotSought([]);
+    }
+
+    public function testSetStatusToContinuationNotSought()
+    {
+        $mockDateHelper = m::mock();
+        $mockDateHelper->shouldReceive('getDate')
+            ->with(\DateTime::W3C)
+            ->once()
+            ->andReturn('Y-m-d\TH:i:sP');
+
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        $data = [
+            'id' => 1966,
+            'version' => 55,
+            'cnsDate' => 'Y-m-d\TH:i:sP',
+            'status' => LicenceEntityService::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT,
+        ];
+
+        $this->expectOneRestCall('Licence', 'PUT', $data)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sut->setStatusToContinuationNotSought(['id' => 1966, 'version' => 55]);
+    }
+
+    public function testGetWhereContinuationNotSought()
+    {
+        $query = [
+            'cnsDate' => [
+                [
+                    ">= START_DATE",
+                    "<= END_DATE"
+                ]
+            ],
+            'sort'  => 'trafficArea',
+            'limit' => 'all'
+        ];
+
+        $this->expectOneRestCall('Licence', 'GET', $query)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getWhereContinuationNotSought('START_DATE', 'END_DATE'));
+    }
+
+    public function testGetByLicenceNumberWithOperatingCentres()
+    {
+        $this->expectOneRestCall('Licence', 'GET', ['licNo' => 1, 'limit' => 'all'])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByLicenceNumberWithOperatingCentres(1));
     }
 }
