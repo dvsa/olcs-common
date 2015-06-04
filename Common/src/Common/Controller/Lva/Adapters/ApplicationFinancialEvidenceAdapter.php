@@ -58,12 +58,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      */
     public function getDocuments($applicationId)
     {
-        return $this->getServiceLocator()->get('Entity\Application')
-            ->getDocuments(
-                $applicationId,
-                Category::CATEGORY_APPLICATION,
-                Category::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL
-            );
+        return $this->getData($applicationId)['documents'];
     }
 
     /**
@@ -73,7 +68,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      */
     public function getUploadMetaData($file, $applicationId)
     {
-        $data = $this->getData($applicationId)['licence']['id'];
+        $licenceId = $this->getData($applicationId)['licence']['id'];
 
         return [
             'application' => $applicationId,
@@ -85,7 +80,8 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     }
 
     /**
-     * Get application data from the backend, included financial evidence data
+     * Single call to get all the application data from the backend, including
+     * financial evidence data and documents.
      */
     public function getData($applicationId)
     {
