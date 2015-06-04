@@ -17,7 +17,6 @@ use Common\Data\Mapper\Lva\OtherLicence as OtherLicenceMapper;
 use Common\Data\Mapper\Lva\LicenceHistory as LicenceHistoryMapper;
 use Dvsa\Olcs\Transfer\Query\Application\LicenceHistory;
 
-
 /**
  * Licence History Trait
  *
@@ -60,16 +59,20 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
             $crudAction = $this->getCrudAction($data);
 
+            $inProgress = false;
             if ($crudAction !== null) {
+                $inProgress = true;
                 $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
             }
 
             if ($form->isValid()) {
 
-                if ($this->saveLicenceHistory($form, $data)) {
+                if ($this->saveLicenceHistory($form, $data, $inProgress)) {
+
                     $this->postSave('licence_history');
 
                     if ($crudAction !== null) {
+
                         return $this->handleCrudAction($crudAction);
                     }
 
@@ -128,11 +131,12 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
     }
 
-    protected function saveLicenceHistory($form, $data)
+    protected function saveLicenceHistory($form, $data, $inProgress)
     {
         $data = $this->formatDataForSave($data);
 
         $data['id'] = $this->getApplicationId();
+        $data['inProgress'] = $inProgress;
 
         $dto = UpdateLicenceHistory::create($data);
 
