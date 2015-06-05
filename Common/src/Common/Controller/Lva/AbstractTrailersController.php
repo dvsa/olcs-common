@@ -9,6 +9,7 @@ namespace Common\Controller\Lva;
 use Zend\Form\FormInterface;
 use Zend\Stdlib\RequestInterface;
 
+use Dvsa\Olcs\Transfer\Query\Trailer\Trailer;
 use Dvsa\Olcs\Transfer\Query\Trailer\Trailers;
 use Dvsa\Olcs\Transfer\Command\Trailer\CreateTrailer;
 use Dvsa\Olcs\Transfer\Command\Trailer\UpdateTrailer;
@@ -136,11 +137,27 @@ abstract class AbstractTrailersController extends AbstractController
             }
         }
 
+        $query = Trailer::create(
+            [
+                'id' => $this->params()->fromRoute('child_id', null)
+            ]
+        );
+
+        $response = $this->handleQuery($query);
+
+        if (!$response->isOk()) {
+            if ($response->isClientError() || $response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            }
+
+            return $this->notFoundAction();
+        }
+
+        $gracePeriod = $response->getResult();
+
         $form->setData(
             array(
-                'data' => $this->getServiceLocator()
-                    ->get('Entity\Trailer')
-                    ->getById($this->params('child_id'))
+                'data' => $gracePeriod
             )
         );
 
