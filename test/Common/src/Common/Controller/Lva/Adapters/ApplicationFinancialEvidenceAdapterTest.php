@@ -23,8 +23,6 @@ use CommonTest\Traits\MockFinancialStandingRatesTrait;
  */
 class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
 {
-    use MockFinancialStandingRatesTrait;
-
     protected $sut;
     protected $sm;
 
