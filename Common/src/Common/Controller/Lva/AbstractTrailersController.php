@@ -155,7 +155,6 @@ abstract class AbstractTrailersController extends AbstractController
     public function delete()
     {
         $id = $this->params('child_id');
-
         $ids = explode(',', $id);
 
         $dto = DeleteTrailer::create(
