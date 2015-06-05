@@ -18,13 +18,13 @@ use Common\Service\Helper\FormHelperService;
  */
 abstract class AbstractBusinessDetails extends AbstractFormService
 {
-    public function getForm($orgType, $orgId)
+    public function getForm($orgType, $hasInforceLicences)
     {
         $form = $this->getFormHelper()->createForm('Lva\BusinessDetails');
 
         $params = [
             'orgType' => $orgType,
-            'orgId' => $orgId
+            'hasInforceLicences' => $hasInforceLicences
         ];
 
         $this->alterForm($form, $params);
