@@ -11,6 +11,8 @@ namespace Common\Controller\Lva;
 use Common\Service\Entity\CommunityLicEntityService;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Zend\View\Model\ViewModel;
+use Common\Data\Mapper\Lva\CommunityLic as CommunityLicMapper;
+use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLic;
 
 /**
  * Shared logic between Community Licences controllers
@@ -119,12 +121,31 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     {
         $query = [
             'licence' => $this->getLicenceId(),
-            'status' => $this->filters['status'],
+            'status' => implode(',', $this->filters['status']),
             'sort' => 'issueNo',
             'order' => 'DESC'
         ];
+        $queryToSend = $this->getServiceLocator()
+            ->get('TransferAnnotationBuilder')
+            ->createQuery(
+                CommunityLic::create($query)
+            );
 
-        return $this->getServiceLocator()->get('Entity\CommunityLic')->getList($query);
+        $response = $this->getServiceLocator()->get('QueryService')->send($queryToSend);
+        if ($response->isNotFound()) {
+            return $this->notFoundAction();
+        }
+
+        if ($response->isClientError() || $response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        }
+
+        $mappedResults = [];
+        if ($response->isOk()) {
+            $mapper = new CommunityLicMapper();
+            $mappedResults = $mapper->mapFromResult($response->getResult());
+        }
+        return $mappedResults;
     }
 
     /**
@@ -134,6 +155,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function getFormData()
     {
+        //echo '<pre>';
+        //print_r($this->getServiceLocator()->get('Entity\Licence')->getById($this->getLicenceId()));
+        //die();
         return $this->getServiceLocator()->get('Entity\Licence')->getById($this->getLicenceId());
     }
 
