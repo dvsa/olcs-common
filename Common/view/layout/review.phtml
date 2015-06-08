@@ -2,8 +2,10 @@
 <html lang="en" class="review">
     <?php echo $this->partial('partials/review-header'); ?>
     <body>
-        <h1><?php echo $this->translate($reviewTitle); ?></h1>
-        <h2><?php echo $subTitle; ?></h2>
+        <div class="review-header">
+            <h3><?php echo $this->translate($reviewTitle); ?></h3>
+            <h2><?php echo $subTitle; ?></h2>
+        </div>
         <?php
         $count = 0;
         foreach ($sections as $section):
