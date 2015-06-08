@@ -114,7 +114,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     protected function delete()
     {
         $saveData = [
-            'ids' => [$this->params('child_id')]
+            'ids' => explode(',', $this->params('child_id'))
         ];
         $dto = DeleteOtherLicence::create($saveData);
 
