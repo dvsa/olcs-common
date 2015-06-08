@@ -8,8 +8,15 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Helper\FormHelperService;
-use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\ContactDetailsEntityService;
+use Dvsa\Olcs\Transfer\Command\Workshop\CreateWorkshop as LicenceCreateWorkshop;
+use Dvsa\Olcs\Transfer\Command\Application\CreateWorkshop as ApplicationCreateWorkshop;
+use Dvsa\Olcs\Transfer\Command\Workshop\UpdateWorkshop as LicenceUpdateWorkshop;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateWorkshop as ApplicationUpdateWorkshop;
+use Dvsa\Olcs\Transfer\Query\Workshop\Workshop;
+use Zend\Form\Form;
+use Zend\Http\Response;
+use Zend\View\Model\ViewModel;
 
 /**
  * Safety Trait
@@ -59,7 +66,7 @@ abstract class AbstractSafetyController extends AbstractController
      *
      * @param array $data
      */
-    abstract protected function save($data);
+    abstract protected function save($data, $partial);
 
     /**
      * Get Safety Data
@@ -67,6 +74,22 @@ abstract class AbstractSafetyController extends AbstractController
      * @return array
      */
     abstract protected function getSafetyData();
+
+    protected $canHaveTrailers;
+
+    protected $workshops;
+
+    protected $createWorkshopCommandMap = [
+        'licence' => LicenceCreateWorkshop::class,
+        'application' => ApplicationCreateWorkshop::class,
+        'variation' => ApplicationCreateWorkshop::class,
+    ];
+
+    protected $updateWorkshopCommandMap = [
+        'licence' => LicenceUpdateWorkshop::class,
+        'application' => ApplicationUpdateWorkshop::class,
+        'variation' => ApplicationUpdateWorkshop::class,
+    ];
 
     /**
      * Redirect to the first section
@@ -77,40 +100,88 @@ abstract class AbstractSafetyController extends AbstractController
     {
         $request = $this->getRequest();
 
+        // We always want to get the result
+        $result = $this->getSafetyData();
+        if ($result instanceof ViewModel) {
+            return $result;
+        }
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->formatDataForForm($this->getSafetyData());
+
+            $data = $this->formatDataForForm($result);
         }
 
-        $typeOfLicence = $this->getTypeOfLicenceData();
-
-        $form = $this->alterForm($this->getSafetyForm(), $typeOfLicence['goodsOrPsv'])->setData($data);
+        $form = $this->alterForm($this->getSafetyForm())->setData($data);
 
         if ($request->isPost()) {
 
-            $crudAction = $this->getCrudAction(array($data['table']));
+            $crudAction = $this->getCrudAction([$data['table']]);
+
+            $partial = false;
 
             if ($crudAction !== null) {
+                $partial = true;
                 $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
             }
 
             if ($form->isValid()) {
 
-                $this->save($data);
-                $this->postSave('safety');
+                $response = $this->save($data, $partial);
 
-                if ($crudAction !== null) {
-                    return $this->handleCrudAction($crudAction);
+                if ($response->isOk()) {
+                    if ($crudAction !== null) {
+                        return $this->handleCrudAction($crudAction);
+                    }
+
+                    return $this->completeSection('safety');
                 }
 
-                return $this->completeSection('safety');
+                if ($response->isServerError()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                } else {
+                    $this->mapErrors($form, $response->getResult()['messages']);
+                }
             }
         }
 
         $this->getServiceLocator()->get('Script')->loadFiles(['vehicle-safety', 'lva-crud']);
 
         return $this->render('safety', $form);
+    }
+
+    protected function mapErrors(Form $form, array $errors)
+    {
+        $formMessages = [];
+
+        if (isset($errors['safetyConfirmation'])) {
+
+            foreach ($errors['safetyConfirmation'][0] as $key => $message) {
+                $formMessages['application']['safetyConfirmation'][] = $key;
+            }
+
+            unset($errors['safetyConfirmation']);
+        }
+
+        if (isset($errors['tachographInsName'])) {
+
+            foreach ($errors['tachographInsName'][0] as $key => $message) {
+                $formMessages['licence']['tachographInsName'][] = $key;
+            }
+
+            unset($errors['tachographInsName']);
+        }
+
+        if (!empty($errors)) {
+            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+            foreach ($errors as $error) {
+                $fm->addCurrentErrorMessage($error);
+            }
+        }
+
+        $form->setMessages($formMessages);
     }
 
     /**
@@ -136,10 +207,10 @@ abstract class AbstractSafetyController extends AbstractController
     {
         $ids = explode(',', $this->params('child_id'));
 
-        $service = $this->getServiceLocator()->get('Entity\Workshop');
+        $response = $this->deleteWorkshops($ids);
 
-        foreach ($ids as $id) {
-            $service->delete($id);
+        if (!$response->isOk()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
     }
 
@@ -157,7 +228,14 @@ abstract class AbstractSafetyController extends AbstractController
         $id = $this->params('child_id');
 
         if ($mode !== 'add') {
-            $safetyProviderData = $this->getSafetyProviderData($id, $mode);
+
+            $response = $this->handleQuery(Workshop::create(['id' => $id]));
+
+            if (!$response->isOK()) {
+                return $this->notFoundAction();
+            }
+
+            $safetyProviderData = $response->getResult();
         }
 
         if ($request->isPost()) {
@@ -176,70 +254,34 @@ abstract class AbstractSafetyController extends AbstractController
 
         if (!$addressLookup && $request->isPost() && $form->isValid()) {
 
-            list($contactDetails, $workshop) = $this->formatCrudDataForSave($data);
+            $dtoData = [
+                $this->getIdentifierIndex() => $this->getIdentifier(),
+                'isExternal' => $data['data']['isExternal'],
+                'contactDetails' => $data['contactDetails']
+            ];
 
-            if ($mode === 'edit') {
-                $workshop['id'] = $id;
+            $dtoData['contactDetails']['address'] = $data['address'];
+
+            if ($mode === 'add') {
+                $command = $this->createWorkshopCommandMap[$this->lva];
+            } else {
+                $dtoData['id'] = $id;
+                $dtoData['version'] = $data['data']['version'];
+                $command = $this->updateWorkshopCommandMap[$this->lva];
             }
 
-            $workshop['licence'] = $this->getLicenceId();
-            $workshop['contactDetails'] = $this->saveContactDetails($contactDetails, $safetyProviderData, $mode);
+            $dto = $command::create($dtoData);
 
-            $this->saveWorkshop($workshop);
+            $response = $this->handleCommand($dto);
 
-            return $this->handlePostSave();
+            if ($response->isOk()) {
+                return $this->handlePostSave();
+            }
+
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
         }
 
         return $this->render($mode . '_safety', $form);
-    }
-
-    /**
-     * Format crud data for saving
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function formatCrudDataForSave($data)
-    {
-        $processedData = $this->getServiceLocator()->get('Helper\Data')
-            ->processDataMap($data, $this->safetyProvidersActionDataMap);
-
-        $processedData['contactDetails']['contactType'] = ContactDetailsEntityService::CONTACT_TYPE_WORKSHOP;
-
-        return array($processedData['contactDetails'], $processedData['workshop']);
-    }
-
-    /**
-     * Save contact details
-     *
-     * @param array $data
-     * @param array $safetyProviderData
-     * @param string $mode
-     * @return int
-     */
-    protected function saveContactDetails($data, $safetyProviderData, $mode)
-    {
-        if ($mode === 'edit') {
-            $data['id'] = $safetyProviderData['contactDetails']['id'];
-        }
-
-        $result = $this->getServiceLocator()->get('Entity\ContactDetails')->save($data);
-
-        if ($mode === 'add') {
-            return $result['id'];
-        }
-
-        return $data['id'];
-    }
-
-    /**
-     * Save workshop
-     *
-     * @param array $data
-     */
-    protected function saveWorkshop($data)
-    {
-        $this->getServiceLocator()->get('Entity\Workshop')->save($data);
     }
 
     /**
@@ -275,49 +317,8 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function getSafetyProviderForm()
     {
-        return $this->getServiceLocator()
-            ->get('Helper\Form')
+        return $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\SafetyProviders', $this->getRequest());
-    }
-
-    /**
-     * Get safety provider data
-     *
-     * @return array
-     */
-    protected function getSafetyProviderData($id)
-    {
-        return $this->getServiceLocator()->get('Entity\Workshop')->getById($id);
-    }
-
-    /**
-     * Shared logic to save licence
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function formatSaveData($data)
-    {
-        $data['licence']['safetyInsVehicles'] = str_replace(
-            'inspection_interval_vehicle.',
-            '',
-            $data['licence']['safetyInsVehicles']
-        );
-
-        if (isset($data['licence']['safetyInsTrailers'])) {
-            $data['licence']['safetyInsTrailers'] = str_replace(
-                'inspection_interval_trailer.',
-                '',
-                $data['licence']['safetyInsTrailers']
-            );
-        }
-
-        // Need to explicitly set these to null, otherwise empty string gets converted to 0
-        if (array_key_exists('safetyInsVehicles', $data['licence']) && empty($data['licence']['safetyInsVehicles'])) {
-            $data['licence']['safetyInsVehicles'] = null;
-        }
-
-        return array($data['licence'], $data['application']);
     }
 
     /**
@@ -325,14 +326,14 @@ abstract class AbstractSafetyController extends AbstractController
      *
      * @param \Zend\Form\Form $form
      */
-    protected function alterForm($form, $goodsOrPsv)
+    protected function alterForm($form)
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         // This element needs to be visible internally
         $formHelper->remove($form, 'application->isMaintenanceSuitable');
 
-        if ($goodsOrPsv === LicenceEntityService::LICENCE_CATEGORY_PSV) {
+        if (!$this->canHaveTrailers) {
 
             $formHelper->remove($form, 'licence->safetyInsTrailers');
 
@@ -376,9 +377,6 @@ abstract class AbstractSafetyController extends AbstractController
         unset($data['safetyConfirmation']);
         unset($data['isMaintenanceSuitable']);
 
-        $data['licence']['safetyInsVehicles'] = 'inspection_interval_vehicle.' . $data['licence']['safetyInsVehicles'];
-        $data['licence']['safetyInsTrailers'] = 'inspection_interval_trailer.' . $data['licence']['safetyInsTrailers'];
-
         return $data;
     }
 
@@ -391,48 +389,13 @@ abstract class AbstractSafetyController extends AbstractController
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
+        /** @var \Zend\Form\Form $form */
         $form = $formHelper->createForm('Lva\Safety');
-        $formHelper->populateFormTable($form->get('table'), $this->getSafetyTable());
+        $formHelper->populateFormTable(
+            $form->get('table'),
+            $this->getServiceLocator()->get('Table')->prepareTable('lva-safety', $this->workshops)
+        );
 
         return $form;
-    }
-
-    /**
-     * Get safety table
-     */
-    protected function getSafetyTable()
-    {
-        return $this->getServiceLocator()->get('Table')->prepareTable('lva-safety', $this->getTableData());
-    }
-
-    /**
-     * Get table data
-     *
-     * @return array
-     */
-    protected function getTableData()
-    {
-        $data = $this->getServiceLocator()->get('Entity\Workshop')->getForLicence($this->getLicenceId());
-
-        $translatedData = array();
-
-        foreach ($data as $row) {
-            $translatedRow = array(
-                'isExternal' => $row['isExternal'],
-                'id' => $row['id'],
-                'fao' => $row['contactDetails']['fao'],
-                'addressLine1' => $row['contactDetails']['address']['addressLine1'],
-                'addressLine2' => $row['contactDetails']['address']['addressLine2'],
-                'addressLine3' => $row['contactDetails']['address']['addressLine3'],
-                'addressLine4' => $row['contactDetails']['address']['addressLine4'],
-                'town' => $row['contactDetails']['address']['town'],
-                'postcode' => $row['contactDetails']['address']['postcode'],
-                'countryCode' => array('id' => $row['contactDetails']['address']['countryCode']['id'])
-            );
-
-            $translatedData[] = $translatedRow;
-        }
-
-        return $translatedData;
     }
 }

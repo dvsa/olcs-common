@@ -7,6 +7,9 @@
  */
 namespace Common\Controller\Lva\Traits;
 
+use Dvsa\Olcs\Transfer\Command\Application\DeleteWorkshop;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateSafety;
+use Dvsa\Olcs\Transfer\Query\Application\Safety;
 use Zend\Form\Form;
 
 /**
@@ -16,20 +19,25 @@ use Zend\Form\Form;
  */
 trait ApplicationSafetyControllerTrait
 {
-    /**
-     * Save the form data
-     *
-     * @param array $data
-     */
-    protected function save($data)
+    protected function save($data, $partial)
     {
-        list($licence, $application) = $this->formatSaveData($data);
+        $dtoData = $data['application'];
+        $dtoData['id'] = $this->getApplicationId();
+        $dtoData['partial'] = $partial;
+        $dtoData['licence'] = $data['licence'];
+        $dtoData['licence']['id'] = $this->getLicenceId();
 
-        $licence['id'] = $this->getLicenceId();
-        $application['id'] = $this->getApplicationId();
+        return $this->handleCommand(UpdateSafety::create($dtoData));
+    }
 
-        $this->getServiceLocator()->get('Entity\Licence')->save($licence);
-        $this->getServiceLocator()->get('Entity\Application')->save($application);
+    protected function deleteWorkshops($ids)
+    {
+        $data = [
+            'application' => $this->getApplicationId(),
+            'ids' => $ids
+        ];
+
+        return $this->handleCommand(DeleteWorkshop::create($data));
     }
 
     /**
@@ -39,7 +47,18 @@ trait ApplicationSafetyControllerTrait
      */
     protected function getSafetyData()
     {
-        return $this->getServiceLocator()->get('Entity\Application')->getSafetyData($this->getApplicationId());
+        $response = $this->handleQuery(Safety::create(['id' => $this->getApplicationId()]));
+
+        if (!$response->isOk()) {
+            return $this->notFoundAction();
+        }
+
+        $application = $response->getResult();
+
+        $this->canHaveTrailers = $application['canHaveTrailers'];
+        $this->workshops = $application['licence']['workshops'];
+
+        return $application;
     }
 
     /**
