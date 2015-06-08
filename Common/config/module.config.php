@@ -639,6 +639,9 @@ return array(
     ],
     'form_service_manager' => [
         'invokables' => [
+            'lva-application-business_type' => 'Common\FormService\Form\Lva\BusinessType\ApplicationBusinessType',
+            'lva-licence-business_type' => 'Common\FormService\Form\Lva\BusinessType\LicenceBusinessType',
+            'lva-variation-business_type' => 'Common\FormService\Form\Lva\BusinessType\VariationBusinessType',
             // Lva form services
             'lva-licence' => 'Common\FormService\Form\Lva\Licence',
             'lva-variation' => 'Common\FormService\Form\Lva\Variation',
@@ -701,14 +704,8 @@ return array(
             'Task' => 'Common\BusinessService\Service\Task',
             'Fee' => 'Common\BusinessService\Service\Fee',
             // Some of these LVA services may be re-usable outside of LVA, if so please move them from the LVA namespace
-            'Lva\BusinessDetails' => 'Common\BusinessService\Service\Lva\BusinessDetails',
             'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames',
-            'Lva\RegisteredAddress' => 'Common\BusinessService\Service\Lva\RegisteredAddress',
             'Lva\ContactDetails' => 'Common\BusinessService\Service\Lva\ContactDetails',
-            'Lva\BusinessDetailsChangeTask' => 'Common\BusinessService\Service\Lva\BusinessDetailsChangeTask',
-            'Lva\CompanySubsidiaryChangeTask' => 'Common\BusinessService\Service\Lva\CompanySubsidiaryChangeTask',
-            'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
-            'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
             'Lva\LicenceAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
             'Lva\VariationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
             'Lva\ApplicationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
