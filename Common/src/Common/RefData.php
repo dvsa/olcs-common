@@ -8,4 +8,6 @@ namespace Common;
 class RefData
 {
     const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
+
+    const ORG_TYPE_LLP = 'org_t_llp';
 }
