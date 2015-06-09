@@ -39,7 +39,6 @@ class ApplicationBusinessDetailsTest extends MockeryTestCase
     {
         // Params
         $orgType = OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY;
-        $orgId = 111;
 
         // Mocks
         $mockForm = m::mock();
@@ -55,7 +54,7 @@ class ApplicationBusinessDetailsTest extends MockeryTestCase
             ->with('Lva\BusinessDetails')
             ->andReturn($mockForm);
 
-        $form = $this->sut->getForm($orgType, $orgId);
+        $form = $this->sut->getForm($orgType, true);
 
         $this->assertSame($mockForm, $form);
     }

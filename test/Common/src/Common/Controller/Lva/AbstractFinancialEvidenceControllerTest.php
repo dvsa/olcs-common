@@ -4,6 +4,8 @@ namespace CommonTest\Controller\Lva;
 
 use Mockery as m;
 
+use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
+
 /**
  * Abstract Financial Evidence Controller Test
  *
@@ -31,19 +33,24 @@ class AbstractFinancialEvidenceControllerTest extends AbstractLvaControllerTestC
             ],
         ];
 
-        $viewData = [];
+        $appData = [
+            'id' => $id,
+            'financialEvidence' => [
+                'requiredFinance' => '1000000',
+            ],
+        ];
 
         $this->sut->shouldReceive('getIdentifier')->andReturn($id);
 
         $mockAdapter = m::mock('Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter')
             ->shouldReceive('alterFormForLva')
             ->once()
-            ->shouldReceive('getFirstVehicleRate')
-            ->shouldReceive('getAdditionalVehicleRate')
-            ->shouldReceive('getTotalNumberOfAuthorisedVehicles')
-            ->shouldReceive('getRequiredFinance')
-            ->shouldReceive('getRatesForView')->andReturn($viewData)
-            ->shouldReceive('getFormData')->andReturn($formData)
+            ->shouldReceive('getFormData')
+            ->once()
+            ->andReturn($formData)
+            ->shouldReceive('getData')
+            ->once()
+            ->andReturn($appData)
             ->getMock();
 
         $this->sut->setAdapter($mockAdapter);
@@ -96,18 +103,26 @@ class AbstractFinancialEvidenceControllerTest extends AbstractLvaControllerTestC
             ->getMock();
         $this->sut->setAdapter($mockAdapter);
 
-        $expectedData = [
-            'id' => $id,
-            'version' => '1',
-            'financialEvidenceUploaded' => 'N',
-        ];
-        $this->setService(
-            'Entity\Application',
-            m::mock()
-                ->shouldReceive('save')
-                ->with($expectedData)
-                ->getMock()
-        );
+        $mockCommand = m::mock();
+        $mockResponse = m::mock();
+        $mockTab = m::mock();
+        $this->setService('TransferAnnotationBuilder', $mockTab);
+        $mockCommandService = m::mock();
+        $this->setService('CommandService', $mockCommandService);
+
+        $mockTab
+            ->shouldReceive('createCommand')
+            ->once()
+            ->andReturn($mockCommand);
+        $mockCommandService
+            ->shouldReceive('send')
+            ->once()
+            ->with($mockCommand)
+            ->andReturn($mockResponse);
+
+        $mockResponse
+            ->shouldReceive('isOk')
+            ->andReturn(true);
 
         $this->sut->shouldReceive('postSave')
             ->with('financial_evidence')
