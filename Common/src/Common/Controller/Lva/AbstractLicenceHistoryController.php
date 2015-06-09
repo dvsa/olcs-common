@@ -4,13 +4,24 @@
  * Licence History Trait
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Controller\Lva;
+
+use Dvsa\Olcs\Transfer\Command\Application\UpdateLicenceHistory;
+use Dvsa\Olcs\Transfer\Command\OtherLicence\UpdateOtherLicence;
+use Dvsa\Olcs\Transfer\Command\OtherLicence\CreateOtherLicence;
+use Dvsa\Olcs\Transfer\Command\OtherLicence\DeleteOtherLicence;
+use Dvsa\Olcs\Transfer\Query\OtherLicence\OtherLicence;
+use Common\Data\Mapper\Lva\OtherLicence as OtherLicenceMapper;
+use Common\Data\Mapper\Lva\LicenceHistory as LicenceHistoryMapper;
+use Dvsa\Olcs\Transfer\Query\Application\LicenceHistory;
 
 /**
  * Licence History Trait
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 abstract class AbstractLicenceHistoryController extends AbstractController
 {
@@ -27,6 +38,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     );
 
     protected $section = 'licence_history';
+
+    protected $otherLicences = [];
 
     public function indexAction()
     {
@@ -46,20 +59,25 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
             $crudAction = $this->getCrudAction($data);
 
+            $inProgress = false;
             if ($crudAction !== null) {
+                $inProgress = true;
                 $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
             }
 
             if ($form->isValid()) {
 
-                $this->save($data);
-                $this->postSave('licence_history');
+                if ($this->saveLicenceHistory($form, $data, $inProgress)) {
 
-                if ($crudAction !== null) {
-                    return $this->handleCrudAction($crudAction);
+                    $this->postSave('licence_history');
+
+                    if ($crudAction !== null) {
+
+                        return $this->handleCrudAction($crudAction);
+                    }
+
+                    return $this->completeSection('licence_history');
                 }
-
-                return $this->completeSection('licence_history');
             }
         }
 
@@ -95,22 +113,81 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function delete()
     {
-        $ids = explode(',', $this->params('child_id'));
+        $saveData = [
+            'ids' => explode(',', $this->params('child_id'))
+        ];
+        $dto = DeleteOtherLicence::create($saveData);
 
-        $service = $this->getServiceLocator()->get('Entity\OtherLicence');
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
 
-        foreach ($ids as $id) {
-            $service->delete($id);
+        /** @var \Common\Service\Cqrs\Response $response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        if ($response->isOk()) {
+            return true;
+        }
+
+        if ($response->isServerError() || $response->isClientError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
     }
 
-    protected function save($data)
+    protected function saveLicenceHistory($form, $data, $inProgress)
     {
         $data = $this->formatDataForSave($data);
 
         $data['id'] = $this->getApplicationId();
+        $data['inProgress'] = $inProgress;
 
-        $this->getServiceLocator()->get('Entity\Application')->save($data);
+        $dto = UpdateLicenceHistory::create($data);
+
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+
+        /** @var \Common\Service\Cqrs\Response $response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        if ($response->isOk()) {
+            return true;
+        }
+        if ($response->isClientError()) {
+            $fieldsets = [
+                'prevHasLicence' => 'current',
+                'prevHadLicence' => 'applied',
+                'prevBeenRefused' => 'refused',
+                'prevBeenRevoked' => 'revoked',
+                'prevBeenAtPi' => 'held',
+                'prevBeenDisqualifiedTc' => 'disqualified'
+            ];
+            $this->mapErrorsForLicenceHistory($form, $response->getResult()['messages'], $fieldsets);
+        }
+
+        if ($response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        }
+
+        return false;
+    }
+
+    protected function mapErrorsForLicenceHistory($form, array $errors, array $fieldsets = [])
+    {
+        $formMessages = [];
+
+        foreach ($fieldsets as $errorKey => $fieldsetName) {
+            if (isset($errors[$errorKey])) {
+                foreach ($errors[$errorKey] as $key => $message) {
+                    $formMessages[$fieldsetName]['question'][] = $message;
+                }
+
+                unset($errors[$key]);
+            }
+        }
+
+        $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        if (!empty($errors)) {
+            foreach ($errors as $error) {
+                $fm->addCurrentErrorMessage($error);
+            }
+        }
+
+        $form->setMessages($formMessages);
     }
 
     protected function formatDataForSave($data)
@@ -130,11 +207,39 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function getFormData()
     {
-        return $this->getServiceLocator()->get('Entity\Application')->getLicenceHistoryData($this->getApplicationId());
+        $response = $this->getLicenceHistory();
+
+        if ($response->isNotFound()) {
+            return $this->notFoundAction();
+        }
+
+        if ($response->isClientError() || $response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        }
+
+        $mappedResults = [];
+        if ($response->isOk()) {
+            $mapper = new LicenceHistoryMapper();
+            $mappedResults = $mapper->mapFromResult($response->getResult());
+            $this->otherLicences = $mappedResults['data']['otherLicences'];
+        }
+        return $mappedResults;
+    }
+
+    /**
+     * @return \Common\Service\Cqrs\Response
+     */
+    protected function getLicenceHistory()
+    {
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(LicenceHistory::create(['id' => $this->getIdentifier()]));
+
+        return $this->getServiceLocator()->get('QueryService')->send($query);
     }
 
     protected function formatDataForForm($data)
     {
+        $data = $data['data'];
         $formData = array();
 
         foreach ($this->sections as $reference => $actual) {
@@ -173,8 +278,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function getTableData($which)
     {
-        return $this->getServiceLocator()->get('Entity\OtherLicence')
-            ->getForApplicationAndType($this->getApplicationId(), $this->getLicenceTypeFromSection($which));
+        if (!count($this->otherLicences)) {
+            $this->getFormData();
+        }
+        return $this->otherLicences[$which];
     }
 
     protected function getLicenceTypeFromSection($section)
@@ -389,7 +496,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         if ($request->isPost() && $form->isValid()) {
 
-            $this->saveLicence($form->getData());
+            $this->saveLicence($form, $form->getData());
 
             return $this->handlePostSave($which);
         }
@@ -398,9 +505,42 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     }
 
     /**
+     * Get licence form data
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function getLicenceFormData($id)
+    {
+        $response = $this->getOtherLicenceData($id);
+
+        if ($response->isNotFound()) {
+            return $this->notFoundAction();
+        }
+
+        if ($response->isClientError() || $response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        }
+
+        $mappedResults = [];
+        if ($response->isOk()) {
+            $mapper = new OtherLicenceMapper();
+            $mappedResults = $mapper->mapFromResult($response->getResult());
+        }
+        return $mappedResults;
+    }
+
+    protected function getOtherLicenceData($id)
+    {
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(OtherLicence::create(['id' => $id]));
+
+        return $this->getServiceLocator()->get('QueryService')->send($query);
+    }
+
+    /**
      * Get the altered licence form
      *
-     * @param string $which
      * @return \Zend\Form\Form
      */
     protected function getLicenceForm()
@@ -437,11 +577,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return $form;
     }
 
-    protected function getLicenceFormData($id)
-    {
-        return $this->getServiceLocator()->get('Entity\OtherLicence')->getById($id);
-    }
-
     /**
      * Process action load
      *
@@ -457,24 +592,73 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     }
 
     /**
-     * Save licenceR
+     * Save licence
      *
-     * @param array $data
-     * @param string $service
+     * @param Olcs\Common\Form $form
+     * @param array $formData
      */
-    protected function saveLicence($data)
+    protected function saveLicence($form, $formData)
     {
-        $saveData = $data['data'];
-
+        $saveData = $formData['data'];
         $saveData['id'] = $this->params('child_id');
-
+        $saveData['application'] = $this->getApplicationId();
         if (empty($saveData['id'])) {
             unset($saveData['id']);
             unset($saveData['version']);
+            $dto = CreateOtherLicence::create($saveData);
+        } else {
+            $dto = UpdateOtherLicence::create($saveData);
         }
 
-        $saveData['application'] = $this->getApplicationId();
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
 
-        $this->getServiceLocator()->get('Entity\OtherLicence')->save($saveData);
+        /** @var \Common\Service\Cqrs\Response $response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        if ($response->isOk()) {
+            return true;
+        }
+
+        if ($response->isClientError()) {
+            $fields = [
+                'licNo' => 'licNo',
+                'holderName' => 'holderName',
+                'willSurrender' => 'willSurrender',
+                'disqualificationDate' => 'disqualificationDate',
+                'disqualificationLength' => 'disqualificationLength',
+                'purchaseDate' => 'purchaseDate',
+            ];
+            $this->mapErrors($form, $response->getResult()['messages'], $fields, 'data');
+        }
+
+        if ($response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        }
+        return false;
+    }
+
+    protected function mapErrors($form, array $errors, array $fields = [], $fieldsetName = '')
+    {
+        $formMessages = [];
+
+        foreach ($fields as $errorKey => $fieldName) {
+            if (isset($errors[$errorKey])) {
+                foreach ($errors[$errorKey] as $key => $message) {
+                    $formMessages[$fieldsetName][$fieldName][] = $message;
+                }
+
+                unset($errors[$key]);
+            }
+        }
+
+        $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        if (!empty($errors['application'])) {
+            $fm->addCurrentErrorMessage($errors['application']);
+        } elseif (!empty($errors)) {
+            foreach ($errors as $error) {
+                $fm->addCurrentErrorMessage($error);
+            }
+        }
+
+        $form->setMessages($formMessages);
     }
 }
