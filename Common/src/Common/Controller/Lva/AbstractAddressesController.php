@@ -7,8 +7,10 @@
  */
 namespace Common\Controller\Lva;
 
-use Dvsa\Olcs\Transfer\Command\Licence\UpdateAddresses;
-use Dvsa\Olcs\Transfer\Command\Application\UpdateAddresses as ApplicationAddresses;
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateAddresses as LicenceUpdateAddresses;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateAddresses as ApplicationUpdateAddresses;
+use Dvsa\Olcs\Transfer\Command\Variation\UpdateAddresses as VariationUpdateAddresses;
+
 use Dvsa\Olcs\Transfer\Query\Licence\Addresses;
 
 /**
@@ -89,7 +91,20 @@ abstract class AbstractAddressesController extends AbstractController
                     'consultant' => isset($data['consultant']) ? $data['consultant'] : null
                 ];
 
-                $response = $this->handleCommand(UpdateAddresses::create($dtoData));
+                // @TODO de-switch?
+                switch ($this->lva) {
+                    case "licence":
+                        $response = $this->handleCommand(LicenceUpdateAddresses::create($dtoData));
+                        break;
+
+                    case "application":
+                        $response = $this->handleCommand(ApplicationUpdateAddresses::create($dtoData));
+                        break;
+
+                    case "variation":
+                        $response = $this->handleCommand(VariationUpdateAddresses::create($dtoData));
+                        break;
+                }
 
                 if ($response->isOk()) {
                     return $this->handlePostSave();
