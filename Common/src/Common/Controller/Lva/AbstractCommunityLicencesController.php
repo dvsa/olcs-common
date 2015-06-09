@@ -25,6 +25,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         Traits\AdapterAwareTrait;
 
     protected $section = 'community_licences';
+    
+    protected $officeCopy = null;
+    
+    protected $totCommunityLicences = null;
 
     protected $defaultFilters = [
         'status' => [
@@ -144,6 +148,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if ($response->isOk()) {
             $mapper = new CommunityLicMapper();
             $mappedResults = $mapper->mapFromResult($response->getResult());
+            $this->officeCopy = $mappedResults['extra']['officeCopy'];
+            $this->totCommunityLicences = $mappedResults['extra']['totCommunityLicences'];
         }
         return $mappedResults;
     }
@@ -155,10 +161,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function getFormData()
     {
-        //echo '<pre>';
-        //print_r($this->getServiceLocator()->get('Entity\Licence')->getById($this->getLicenceId()));
-        //die();
-        return $this->getServiceLocator()->get('Entity\Licence')->getById($this->getLicenceId());
+        return ['totCommunityLicences' => $this->totCommunityLicences];
     }
 
     /**
@@ -184,7 +187,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     protected function alterTable($table)
     {
-        $officeCopy = $this->getServiceLocator()->get('Entity\CommunityLic')->getOfficeCopy($this->getLicenceId());
+        $officeCopy = $this->officeCopy;
         if ($officeCopy) {
             $table->removeAction('office-licence-add');
         }
