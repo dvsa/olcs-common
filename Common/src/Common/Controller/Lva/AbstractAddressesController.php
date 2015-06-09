@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva;
 
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateAddresses;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateAddresses as ApplicationAddresses;
 use Dvsa\Olcs\Transfer\Query\Licence\Addresses;
 
 /**
@@ -68,34 +70,37 @@ abstract class AbstractAddressesController extends AbstractController
         $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
         if (!$hasProcessed && $request->isPost()) {
-            if (isset($data['consultant'])) {
-                if ($data['consultant']['add-transport-consultant'] === 'N') {
-                    $this->getServiceLocator()->get('Helper\Form')
-                        ->disableValidation(
-                            $form->getInputFilter()->get('consultant')
-                        );
-                }
+            if (isset($data['consultant']) && $data['consultant']['add-transport-consultant'] === 'N') {
+                $this->getServiceLocator()->get('Helper\Form')
+                    ->disableValidation(
+                        $form->getInputFilter()->get('consultant')
+                    );
             }
 
             if ($form->isValid()) {
-                $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                    ->get('Lva\\' . ucfirst($this->lva) . 'Addresses')
-                    ->process(
-                        [
-                            'licenceId' => $this->getLicenceId(),
-                            'data' => $data,
-                            'originalData' => $addressData
-                        ]
-                    );
 
-                if (!$response->isOk()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
-                    return $this->renderForm($form);
+                $dtoData = [
+                    'id' => $this->getLicenceId(),
+                    'correspondence' => $data['correspondence'],
+                    'correspondenceAddress' => $data['correspondence_address'],
+                    'contact' => $data['contact'],
+                    'establishment' => $data['establishment'],
+                    'establishmentAddress' => $data['establishment_address'],
+                    'consultant' => $data['consultant']
+                ];
+
+                $response = $this->handleCommand(UpdateAddresses::create($dtoData));
+
+                if ($response->isOk()) {
+                    return $this->handlePostSave();
+                }
+                if ($response->isNotFound()) {
+                    return $this->notFoundAction();
                 }
 
-                $this->postChange($response->getData());
-
-                return $this->completeSection('addresses');
+                if ($response->isClientError() || $response->isServerError()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                }
             }
         }
 
