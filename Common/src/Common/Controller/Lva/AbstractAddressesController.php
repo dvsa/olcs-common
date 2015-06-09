@@ -188,6 +188,8 @@ abstract class AbstractAddressesController extends AbstractController
             $returnData['contact'][$phoneType . '_version'] = $phoneContact['version'];
         }
 
+        $returnData['contact']['email'] = $data['emailAddress'];
+
         return $returnData;
     }
 
