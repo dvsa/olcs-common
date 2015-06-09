@@ -86,7 +86,7 @@ abstract class AbstractAddressesController extends AbstractController
                     'contact' => $data['contact'],
                     'establishment' => $data['establishment'],
                     'establishmentAddress' => $data['establishment_address'],
-                    'consultant' => $data['consultant']
+                    'consultant' => isset($data['consultant']) ? $data['consultant'] : null
                 ];
 
                 $response = $this->handleCommand(UpdateAddresses::create($dtoData));
@@ -94,6 +94,7 @@ abstract class AbstractAddressesController extends AbstractController
                 if ($response->isOk()) {
                     return $this->handlePostSave();
                 }
+
                 if ($response->isNotFound()) {
                     return $this->notFoundAction();
                 }
