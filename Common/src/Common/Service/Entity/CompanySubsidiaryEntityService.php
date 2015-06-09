@@ -20,15 +20,4 @@ class CompanySubsidiaryEntityService extends AbstractEntityService
      * @var string
      */
     protected $entity = 'CompanySubsidiary';
-
-    /**
-     * Retrieve all company subs for a given licence
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getForLicence($id)
-    {
-        return $this->getAll(['licence' => $id]);
-    }
 }

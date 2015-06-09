@@ -112,4 +112,50 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
         return $this->renderIndex($form);
     }
+
+    public function confirmationAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $query = (array)$this->params()->fromQuery();
+
+            $dto = UpdateTypeOfLicence::create(
+                [
+                    'id' => $this->getIdentifier(),
+                    'version' => $query['version'],
+                    'operatorType' => $query['operator-type'],
+                    'licenceType' => $query['licence-type'],
+                    'niFlag' => $query['operator-location'],
+                    'confirm' => true
+                ]
+            );
+
+            /** @var \Common\Service\Cqrs\Response $response */
+            $response = $this->handleCommand($dto);
+
+            if ($response->isOk()) {
+                return $this->redirect()->toRouteAjax(
+                    'lva-application',
+                    ['application' => $response->getResult()['id']['application']]
+                );
+            }
+
+            $this->getServiceLocator()->get('Helper\FlashMessenger')
+                ->addErrorMessage('unknown-error');
+
+            return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+        }
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('GenericConfirmation');
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+
+        return $this->render(
+            'application_type_of_licence_confirmation',
+            $form,
+            ['sectionText' => 'application_type_of_licence_confirmation_subtitle']
+        );
+    }
 }
