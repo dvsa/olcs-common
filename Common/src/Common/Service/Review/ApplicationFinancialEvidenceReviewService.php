@@ -24,16 +24,17 @@ class ApplicationFinancialEvidenceReviewService extends AbstractReviewService
     {
         $financialEvidenceAdapter = $this->getServiceLocator()->get('ApplicationFinancialEvidenceAdapter');
 
+        $financialEvidenceData = $financialEvidenceAdapter->getData($data['id'])['financialEvidence'];
         return [
             'multiItems' => [
                 [
                     [
                         'label' => 'application-review-financial-evidence-no-of-vehicles',
-                        'value' => $financialEvidenceAdapter->getTotalNumberOfAuthorisedVehicles($data['id'])
+                        'value' => $financialEvidenceData['vehicles']
                     ],
                     [
                         'label' => 'application-review-financial-evidence-required-finance',
-                        'value' => $this->formatAmount($financialEvidenceAdapter->getRequiredFinance($data['id']))
+                        'value' => $this->formatAmount($financialEvidenceData['requiredFinance'])
                     ],
                     [
                         'label' => 'application-review-financial-evidence-evidence',
