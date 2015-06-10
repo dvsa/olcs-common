@@ -10,6 +10,8 @@ use Mockery as m;
 
 use CommonTest\Bootstrap;
 
+use Dvsa\Olcs\Transfer\Query\Trailer\Trailers;
+
 /**
  * Test Abstract People Controller
  *
@@ -25,6 +27,10 @@ class AbstractTrailersControllerTest extends AbstractLvaControllerTestCase
         $this->markTestSkipped();
 
         parent::setUp();
+
+        $this->markTestSkipped(
+            'Skipping due business logic movement.'
+        );
 
         $this->mockController('\Common\Controller\Lva\AbstractTrailersController');
         $this->mockService('Script', 'loadFile')->with('lva-crud');
@@ -48,9 +54,18 @@ class AbstractTrailersControllerTest extends AbstractLvaControllerTestCase
             array("id" => 3, "trailerNo" => "C", "specifiedDate" => "2014-03-03")
         );
 
-        $this->mockEntity('Trailer', 'getTrailerDataForLicence')
-             ->with(1)
-             ->andReturn(array('Count' => 3, 'Results' => $results));
+        $this->mockService(
+            'TransferAnnotationBuilder',
+            m::mock()
+                ->shouldReceive('createQuery')
+                ->with(Trailers::create(
+                    array(
+                        'licence' => 1
+                    )
+                ))
+                ->once()
+                ->andReturn()
+        );
 
         $this->mockService('Table', 'prepareTable')
              ->with('lva-trailers', $results);
