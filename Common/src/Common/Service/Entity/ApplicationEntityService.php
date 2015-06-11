@@ -278,21 +278,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
-    /**
-     * Safety Data bundle
-     *
-     * @var array
-     */
-    protected $safetyDataBundle = array(
-        'children' => array(
-            'licence' => array(
-                'children' => array(
-                    'tachographIns'
-                )
-            )
-        )
-    );
-
     protected $statusBundle = array(
         'children' => array(
             'status',
@@ -949,16 +934,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getHeaderData($id)
     {
         return $this->get($id, $this->headerDataBundle);
-    }
-
-    /**
-     * Get safety data
-     *
-     * @param int $id
-     */
-    public function getSafetyData($id)
-    {
-        return $this->get($id, $this->safetyDataBundle);
     }
 
     public function getFinancialHistoryData($id)
