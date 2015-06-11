@@ -13,6 +13,10 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Zend\View\Model\ViewModel;
 use Common\Data\Mapper\Lva\CommunityLic as CommunityLicMapper;
 use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLic;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\Create as ApplicationCreateCommunityLic;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\Create as LicenceCreateCommunityLic;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
 
 /**
  * Shared logic between Community Licences controllers
@@ -25,9 +29,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         Traits\AdapterAwareTrait;
 
     protected $section = 'community_licences';
-    
+
     protected $officeCopy = null;
-    
+
     protected $totCommunityLicences = null;
 
     protected $defaultFilters = [
@@ -248,9 +252,37 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     public function officeLicenceAddAction()
     {
-        $identifier = $this->getIdentifier();
-        $this->getAdapter()->addOfficeCopy($this->getLicenceId(), $identifier);
-        $this->addSuccessMessage('internal.community_licence.office_copy_created');
+        if ($this->lva === 'licence') {
+            $create = [
+                'licence' => $this->getLicenceId(),
+            ];
+            $dto = LicenceCreateOfficeCopy::create($create);
+        } else {
+            $create = [
+                'licence' =>  $this->getLicenceId(),
+                'identifier' => $this->getIdentifier()
+            ];
+            $dto = ApplicationCreateOfficeCopy::create($create);
+        }
+
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+
+        /** @var \Common\Service\Cqrs\Response $response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        if ($response->isOk()) {
+            $this->addSuccessMessage('internal.community_licence.office_copy_created');
+        }
+        if ($response->isClientError()) {
+            $errors = $response->getResult()['messages'];
+            foreach ($errors as $error) {
+                $this->addErrorMessage($error);
+            }
+        }
+
+        if ($response->isServerError()) {
+            $this->addErrorMessage('unknown-error');
+        }
+
         return $this->redirectToIndex();
     }
 
@@ -291,49 +323,46 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
             $identifier = $this->getIdentifier();
 
-            $this->attachVehicleAuthorityValidator($form);
-
             $data = (array)$request->getPost();
             $form->setData($data);
             if ($form->isValid()) {
 
-                $officeCopy = $this->getServiceLocator()->get('Entity\CommunityLic')->getOfficeCopy($licenceId);
-                if (!$officeCopy) {
-                    $this->getAdapter()->addOfficeCopy($licenceId, $identifier);
+                if ($this->lva === 'licence') {
+                    $create = [
+                        'licence' => $licenceId,
+                        'totalLicences' => $data['data']['total'],
+                    ];
+                    $dto = LicenceCreateCommunityLic::create($create);
+                } else {
+                    $create = [
+                        'licence' => $licenceId,
+                        'totalLicences' => $data['data']['total'],
+                        'identifier' => $identifier
+                    ];
+                    $dto = ApplicationCreateCommunityLic::create($create);
                 }
 
-                $this->getAdapter()->addCommunityLicences($licenceId, $data['data']['total'], $identifier);
-                $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
+                $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
 
-                $this->addSuccessMessage('internal.community_licence.licences_created');
+                /** @var \Common\Service\Cqrs\Response $response */
+                $response = $this->getServiceLocator()->get('CommandService')->send($command);
+                if ($response->isOk()) {
+                    $this->addSuccessMessage('internal.community_licence.licences_created');
+                    return $this->redirectToIndex();
+                }
+                if ($response->isClientError()) {
+                    $errors = $response->getResult()['messages'];
+                    foreach ($errors as $error) {
+                        $this->addErrorMessage($error);
+                    }
+                }
 
-                return $this->redirectToIndex();
+                if ($response->isServerError()) {
+                    $this->addErrorMessage('unknown-error');
+                }
             }
         }
         return $this->render($view);
-    }
-
-    /**
-     * Attach vehicle authority validator
-     *
-     * @param Zend\Form\Form $form
-     */
-    protected function attachVehicleAuthorityValidator($form)
-    {
-        $totalLicences = $this->getServiceLocator()
-            ->get('Entity\CommunityLic')
-            ->getValidLicences($this->getLicenceId())['Count'];
-
-        $totalVehicleAuthority = $this->getAdapter()->getTotalAuthority($this->getIdentifier());
-        $totalVehicleAuthorityValidator = $this->getServiceLocator()->get('totalVehicleAuthorityValidator');
-        $totalVehicleAuthorityValidator->setTotalLicences($totalLicences);
-        $totalVehicleAuthorityValidator->setTotalVehicleAuthority($totalVehicleAuthority);
-
-        $form->getInputFilter()
-            ->get('data')
-            ->get('total')
-            ->getValidatorChain()
-            ->attach($totalVehicleAuthorityValidator);
     }
 
     /**
