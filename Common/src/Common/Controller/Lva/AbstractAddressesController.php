@@ -82,7 +82,7 @@ abstract class AbstractAddressesController extends AbstractController
             if ($form->isValid()) {
 
                 $dtoData = [
-                    'id' => $this->getLicenceId(),
+                    'id' => $this->getIdentifier(),
                     'correspondence' => $data['correspondence'],
                     'correspondenceAddress' => $data['correspondence_address'],
                     'contact' => $data['contact'],
@@ -107,7 +107,7 @@ abstract class AbstractAddressesController extends AbstractController
                 }
 
                 if ($response->isOk()) {
-                    return $this->handlePostSave();
+                    return $this->completeSection('addresses');
                 }
 
                 if ($response->isNotFound()) {
@@ -222,11 +222,5 @@ abstract class AbstractAddressesController extends AbstractController
     protected function renderForm($form)
     {
         return $this->render('addresses', $form);
-    }
-
-    protected function postChange(array $data)
-    {
-        unset($data);
-        $this->postSave('addresses');
     }
 }
