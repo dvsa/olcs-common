@@ -16,6 +16,8 @@ use InvalidArgumentException;
 /**
  * Task Processing Service
  *
+ * @NOTE Task assignment has been migrated to the backend [CommandHandler\CreateTask]
+ *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 class TaskProcessingService implements ServiceLocatorAwareInterface
@@ -29,6 +31,7 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
      *
      * @param array $data
      * @return array
+     * @deprecated
      */
     public function getAssignment(array $data)
     {
@@ -83,6 +86,7 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
      * @param string $type
      * @param array $data
      * @return array
+     * @deprecated
      */
     private function getQueryForRuleType($type, $data)
     {
@@ -111,6 +115,7 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
      * @param string $type
      * @param array $rule
      * @return array
+     * @deprecated
      */
     private function getDataForRuleAndType($type, $rule)
     {
@@ -129,6 +134,7 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
      * Fall back on system configuration to populate user and team
      *
      * @return array
+     * @deprecated
      */
     private function getDefaultAllocation()
     {
@@ -148,6 +154,7 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
      * @param int $user
      *
      * @return array
+     * @deprecated
      */
     private function buildDetails($team, $user = null)
     {
@@ -161,6 +168,7 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
      * Validate an array of input data
      *
      * @param array $data
+     * @deprecated
      */
     private function validateData(array $data)
     {

@@ -72,18 +72,17 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
 
         $data = $form->getData();
 
-        $dto = UpdateBusinessType::create(
-            ['id' => $orgId, 'version' => $data['version'], $this->lva => $this->getIdentifier()]
-        );
+        $dtoData = [
+            'id' => $orgId,
+            'version' => $data['version'],
+            $this->lva => $this->getIdentifier()
+        ];
 
         if (isset($data['data']['type'])) {
-            $dto->exchangeArray(['businessType' => $data['data']['type']]);
+            $dtoData['businessType'] = $data['data']['type'];
         }
 
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
-
-        /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        $response = $this->handleCommand(UpdateBusinessType::create($dtoData));
 
         if ($response->isOk()) {
             return $this->completeSection('business_type', $prg);
