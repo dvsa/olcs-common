@@ -274,7 +274,6 @@ abstract class AbstractTransportManagersController extends AbstractController im
     public function restoreAction()
     {
         $ids = explode(',', $this->params('child_id'));
-        $applicationId = $this->getIdentifier();
 
         // get table data
         $data = $this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId());

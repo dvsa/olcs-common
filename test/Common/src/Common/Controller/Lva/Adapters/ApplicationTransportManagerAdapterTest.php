@@ -96,6 +96,8 @@ class ApplicationTransportManagerAdapterTest extends MockeryTestCase
      */
     public function testMustHaveAtLeastOneTm($expected, $licenceType)
     {
+        $this->markTestIncomplete();
+
         $mockApplicationEntityService = m::mock();
         $this->sm->setService('Entity\Application', $mockApplicationEntityService);
 
