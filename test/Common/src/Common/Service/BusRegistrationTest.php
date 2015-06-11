@@ -86,6 +86,19 @@ class BusRegistrationTest extends TestCase
 
         $this->assertInternalType('array', $options);
         $this->assertArrayHasKey('cascade', $options);
+        $this->assertArrayHasKey('single', $options['cascade']);
+        $this->assertNotEmpty($options['cascade']['single']);
+    }
+
+    public function testGetCascadeOptionsVariation()
+    {
+        $sut = new BusRegistration();
+        $options = $sut->getCascadeOptionsVariation();
+
+        $this->assertInternalType('array', $options);
+        $this->assertArrayHasKey('cascade', $options);
+        $this->assertArrayHasKey('single', $options['cascade']);
+        $this->assertNotEmpty($options['cascade']['single']);
         $this->assertArrayHasKey('list', $options['cascade']);
         $this->assertNotEmpty($options['cascade']['list']);
     }
