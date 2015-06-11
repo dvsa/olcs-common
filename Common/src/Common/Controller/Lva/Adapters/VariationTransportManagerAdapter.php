@@ -58,8 +58,10 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
 
         if (!empty($tmlIds)) {
             $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-                ->createCommand(Command\Variation\TransportManagerDeleteDelta::create(
-                    ['id' => $applicationId, 'transportManagerLicenceIds' => $tmlIds])
+                ->createCommand(
+                    Command\Variation\TransportManagerDeleteDelta::create(
+                        ['id' => $applicationId, 'transportManagerLicenceIds' => $tmlIds]
+                    )
                 );
             /* @var $response \Common\Service\Cqrs\Response */
             $response = $this->getServiceLocator()->get('CommandService')->send($command);

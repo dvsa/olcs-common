@@ -71,7 +71,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
 
         // add each TM from the licence
         foreach ($licenceTms as $tml) {
-           $mappedData[$tml['transportManager']['id']] = [
+            $mappedData[$tml['transportManager']['id']] = [
                 // Transport Manager Licence ID
                 'id' => 'L'. $tml['id'],
                 'name' => $tml['transportManager']['homeCd']['person'],
