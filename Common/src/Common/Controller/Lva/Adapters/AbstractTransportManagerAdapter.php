@@ -41,11 +41,9 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     /**
      * Is this licence required to have at least one Transport Manager
      *
-     * @param int $lvaId The Licence, Variation or Application ID
-     *
      * @return boolean
      */
-    public function mustHaveAtLeastOneTm($lvaId)
+    public function mustHaveAtLeastOneTm()
     {
         return false;
     }

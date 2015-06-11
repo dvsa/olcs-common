@@ -16,6 +16,8 @@ use Common\Service\Entity\LicenceEntityService;
  */
 class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
+    protected $applicationData;
+
     /**
      * Load data into the table
      */
@@ -27,6 +29,7 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
         /* @var $response \Common\Service\Cqrs\Response */
         $response = $this->getServiceLocator()->get('QueryService')->send($query);
         $data = $response->getResult();
+        $this->applicationData = $data;
 
         return $this->mapResultForTable($data['transportManagers']);
     }
@@ -38,18 +41,18 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @return bool
      */
-    public function mustHaveAtLeastOneTm($applicationId)
+    public function mustHaveAtLeastOneTm()
     {
-        /* @var $service \Common\Service\Entity\ApplicationEntityService */
-        $service = $this->getServiceLocator()->get('Entity\Application');
-        $application = $service->getLicenceType($applicationId);
+        if (!isset($this->applicationData['licenceType']['id'])) {
+            throw new \RuntimeException('Application data is not setup');
+        }
 
         $mustHaveTypes = [
             LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
             LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
         ];
 
-        return in_array($application['licenceType']['id'], $mustHaveTypes);
+        return in_array($this->applicationData['licenceType']['id'], $mustHaveTypes);
     }
 
     /**

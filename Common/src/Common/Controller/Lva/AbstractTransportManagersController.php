@@ -47,7 +47,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             $form->setData($data);
 
             // if is it not required to have at least one TM, then remove the validator
-            if (!$this->getAdapter()->mustHaveAtLeastOneTm($this->getIdentifier())) {
+            if (!$this->getAdapter()->mustHaveAtLeastOneTm()) {
                 $form->getInputFilter()->remove('table');
             }
 
