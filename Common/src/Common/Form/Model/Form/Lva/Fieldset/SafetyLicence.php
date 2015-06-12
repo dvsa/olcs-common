@@ -18,30 +18,53 @@ class SafetyLicence
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label":
-     * "application_vehicle-safety_safety.licence.vehicleInspectionInterval",
+     *     "label": "application_vehicle-safety_safety.licence.vehicleInspectionInterval",
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
-     *     "help-block": "Please select a category",
-     *     "category": "inspection_interval_vehicle",
-     *     "service_name": "StaticList"
+     *     "value_options": {
+     *         "1": "1 {Week}",
+     *         "2": "2 {Weeks}",
+     *         "3": "3 {Weeks}",
+     *         "4": "4 {Weeks}",
+     *         "5": "5 {Weeks}",
+     *         "6": "6 {Weeks}",
+     *         "7": "7 {Weeks}",
+     *         "8": "8 {Weeks}",
+     *         "9": "9 {Weeks}",
+     *         "10": "10 {Weeks}",
+     *         "11": "11 {Weeks}",
+     *         "12": "12 {Weeks}",
+     *         "13": "13 {Weeks}"
+     *     }
      * })
-     * @Form\Type("DynamicSelect")
+     * @Form\Type("Select")
      */
     public $safetyInsVehicles = null;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label":
-     * "application_vehicle-safety_safety.licence.trailerInspectionInterval",
+     *     "label": "application_vehicle-safety_safety.licence.trailerInspectionInterval",
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
-     *     "help-block": "Please select a category",
-     *     "category": "inspection_interval_trailer",
-     *     "service_name": "StaticList"
+     *     "value_options": {
+     *         "1": "1 {Week}",
+     *         "2": "2 {Weeks}",
+     *         "3": "3 {Weeks}",
+     *         "4": "4 {Weeks}",
+     *         "5": "5 {Weeks}",
+     *         "6": "6 {Weeks}",
+     *         "7": "7 {Weeks}",
+     *         "8": "8 {Weeks}",
+     *         "9": "9 {Weeks}",
+     *         "10": "10 {Weeks}",
+     *         "11": "11 {Weeks}",
+     *         "12": "12 {Weeks}",
+     *         "13": "13 {Weeks}",
+     *         "0": "N/A"
+     *     }
      * })
-     * @Form\Type("DynamicSelect")
+     * @Form\Type("Select")
      */
     public $safetyInsTrailers = null;
 
@@ -51,15 +74,13 @@ class SafetyLicence
      *      "fieldset-attributes": {
      *          "class": "checkbox inline"
      *      },
-     *     "label":
-     * "application_vehicle-safety_safety.licence.moreFrequentInspections",
+     *     "label": "application_vehicle-safety_safety.licence.moreFrequentInspections",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     },
-     *     "hint":
-     * "application_vehicle-safety_safety.licence.moreFrequentInspectionsHint"
+     *     "hint": "application_vehicle-safety_safety.licence.moreFrequentInspectionsHint"
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */

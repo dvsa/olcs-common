@@ -22,7 +22,8 @@ return array(
         array(
             'title' => $translationPrefix . '.providerName',
             'action' => 'edit',
-            'name' => 'fao',
+            'stack' => 'contactDetails->fao',
+            'formatter' => 'StackValue',
             'type' => 'Action'
         ),
         array(
@@ -32,7 +33,8 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.address',
-            'formatter' => 'Address'
+            'formatter' => 'Address',
+            'name' => 'contactDetails->address'
         ),
         array(
             'width' => 'checkbox',

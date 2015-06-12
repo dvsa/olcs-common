@@ -118,7 +118,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         if (!$response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
+                $response->getResult()['messages']
+            );
             return $this->renderForm($form);
         }
 

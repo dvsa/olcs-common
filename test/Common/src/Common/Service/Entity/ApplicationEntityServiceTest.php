@@ -231,19 +231,6 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetSafetyData()
-    {
-        $id = 4;
-
-        $this->expectOneRestCall('Application', 'GET', $id)
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getSafetyData($id));
-    }
-
-    /**
-     * @group entity_services
-     */
     public function testGetFinancialHistoryData()
     {
         $id = 4;
