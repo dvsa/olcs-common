@@ -6,6 +6,7 @@
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Controller\Traits;
+
 use Dvsa\Olcs\Transfer\Command\Document\CreateDocument;
 use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
 
