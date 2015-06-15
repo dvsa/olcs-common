@@ -63,6 +63,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             $data = $this->getServiceLocator()->get('Helper\Data')->processDataMap($data, $this->dataMap);
 
             if ($this->saveFinancialHistory($form, $data)) {
+                // @todo This needs to be removed and the update application completion should happen as a sideeffect
                 $this->postSave('financial_history');
                 return $this->completeSection('financial_history');
             }
@@ -104,10 +105,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
      */
     protected function getFinancialHistory()
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(FinancialHistory::create(['id' => $this->getIdentifier()]));
-
-        return $this->getServiceLocator()->get('QueryService')->send($query);
+        return $this->handleQuery(FinancialHistory::create(['id' => $this->getIdentifier()]));
     }
 
     public function getDocuments()
@@ -141,60 +139,55 @@ abstract class AbstractFinancialHistoryController extends AbstractController
 
     protected function saveFinancialHistory($form, $formData)
     {
-        $dto = UpdateFinancialHistory::create(
-            [
-                'id' => $this->getIdentifier(),
-                'version' => $formData['version'],
-                'bankrupt' => $formData['bankrupt'],
-                'liquidation' => $formData['liquidation'],
-                'receivership' => $formData['receivership'],
-                'administration' => $formData['administration'],
-                'disqualified' => $formData['disqualified'],
-                'insolvencyDetails' => $formData['insolvencyDetails'],
-                'insolvencyConfirmation' => $formData['insolvencyConfirmation']
-            ]
-        );
-
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+        $dtoData = [
+            'id' => $this->getIdentifier(),
+            'version' => $formData['version'],
+            'bankrupt' => $formData['bankrupt'],
+            'liquidation' => $formData['liquidation'],
+            'receivership' => $formData['receivership'],
+            'administration' => $formData['administration'],
+            'disqualified' => $formData['disqualified'],
+            'insolvencyDetails' => $formData['insolvencyDetails'],
+            'insolvencyConfirmation' => $formData['insolvencyConfirmation']
+        ];
 
         /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        $response = $this->handleCommand(UpdateFinancialHistory::create($dtoData));
 
         if ($response->isOk()) {
             return true;
         }
 
         if ($response->isClientError()) {
-
-            $fields = [
-                'bankrupt' => 'bankrupt',
-                'liquidation' => 'liquidation',
-                'receivership' => 'receivership',
-                'administration' => 'administration',
-                'disqualified' => 'disqualified',
-                'insolvencyDetails' => 'insolvencyDetails',
-                'insolvencyConfirmation' => 'insolvencyConfirmation'
-            ];
-            $this->mapErrors($form, $response->getResult()['messages'], $fields, 'data');
+            $this->mapErrors($form, $response->getResult()['messages']);
+            return false;
         }
 
-        if ($response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
-        }
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         return false;
     }
 
-    protected function mapErrors($form, array $errors, array $fields, $fieldsetName)
+    protected function mapErrors($form, array $errors)
     {
         $formMessages = [];
+
+        $fields = [
+            'bankrupt' => 'bankrupt',
+            'liquidation' => 'liquidation',
+            'receivership' => 'receivership',
+            'administration' => 'administration',
+            'disqualified' => 'disqualified',
+            'insolvencyDetails' => 'insolvencyDetails',
+            'insolvencyConfirmation' => 'insolvencyConfirmation'
+        ];
 
         foreach ($fields as $errorKey => $fieldName) {
             if (isset($errors[$errorKey])) {
                 foreach ($errors[$errorKey] as $key => $message) {
-                    $formMessages[$fieldsetName][$fieldName][] = $message;
+                    $formMessages['data'][$fieldName][] = $message;
                 }
 
-                unset($errors[$key]);
+                unset($errors[$errorKey]);
             }
         }
 

@@ -7,7 +7,6 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Service\Entity\LicenceEntityService as Licence;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
 
 /**
