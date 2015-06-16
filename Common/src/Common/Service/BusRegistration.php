@@ -65,7 +65,7 @@ class BusRegistration
         // Reg number is generated based upon the licence and route number. empty by default.
         'regNo' => '',
         'routeNo' => 0,
-        'useAllStops' => 'Y', //should probably default to yes
+        'useAllStops' => 'N', //some discussion over what value of this should be John Spellman has now confirmed it
         'isQualityContract' => 'N',
         'isQualityPartnership' => 'N',
         'qualityPartnershipFacilitiesUsed' => 'N'
