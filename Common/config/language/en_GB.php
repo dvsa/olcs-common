@@ -1554,7 +1554,7 @@ return array(
     'lva.section.title.overview' => 'Overview',
     'lva.section.title.people' => 'People',
     'lva.section.title.person' => 'Your details',
-    'lva.section.title.replace_discs' => 'Are you sure you would like to replace these discs?',
+    'lva.section.title.replaced_discs' => 'Are you sure you would like to replace these discs?',
     'lva.section.title.reprint_vehicles' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
     'lva.section.title.safety' => 'Safety',
@@ -1581,7 +1581,7 @@ return array(
     'lva.section.title.vehicles' => 'Vehicles',
     'lva.section.title.vehicles_declarations' => 'Vehicle declarations',
     'lva.section.title.vehicles_psv' => 'Vehicles',
-    'lva.section.title.void_discs' => 'Are you sure you would like to void these discs?',
+    'lva.section.title.voided_discs' => 'Are you sure you would like to void these discs?',
     'maint' => 'Maint',
     'mark-urgent' => 'Mark as urgent',
     'markup-tm-declaration-gb-confirmation' => 'Should I fail to meet any of the above requirements I understand that

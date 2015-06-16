@@ -7,6 +7,9 @@
  */
 namespace Common\Controller\Lva;
 
+use Dvsa\Olcs\Transfer\Query\Licence\PsvDiscs;
+use Zend\Form\Form;
+
 /**
  * Abstract Discs Controller
  *
@@ -23,24 +26,42 @@ abstract class AbstractDiscsController extends AbstractController
      */
     protected $section = 'discs';
 
+
     protected $formTableData;
+
+    // Command keys
+    const CMD_REQUEST_DISCS = 'requested';
+    const CMD_VOID_DISCS = 'voided';
+    const CMD_REPLACE_DISCS = 'replaced';
+
+    protected $commandMap = [
+        self::CMD_REQUEST_DISCS => [
+            'licence' => \Dvsa\Olcs\Transfer\Command\Licence\CreatePsvDiscs::class,
+            'variation' => \Dvsa\Olcs\Transfer\Command\Variation\CreatePsvDiscs::class
+        ],
+        self::CMD_VOID_DISCS => [
+            'licence' => \Dvsa\Olcs\Transfer\Command\Licence\VoidPsvDiscs::class,
+            'variation' => \Dvsa\Olcs\Transfer\Command\Variation\VoidPsvDiscs::class
+        ],
+        self::CMD_REPLACE_DISCS => [
+            'licence' => \Dvsa\Olcs\Transfer\Command\Licence\ReplacePsvDiscs::class,
+            'variation' => \Dvsa\Olcs\Transfer\Command\Variation\ReplacePsvDiscs::class
+        ]
+    ];
 
     public function indexAction()
     {
         $request = $this->getRequest();
 
-        $filterForm = $this->getDiscFilterForm();
+        $filterForm = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\DiscFilter');
 
         if ($request->isPost()) {
 
             $data = (array)$request->getPost();
 
-            $this->postSave('discs');
-
-            $crudAction = $this->getCrudAction(array($data['table']));
+            $crudAction = $this->getCrudAction([$data['table']]);
 
             if ($crudAction !== null) {
-
                 return $this->handleCrudAction($crudAction);
             }
 
@@ -56,166 +77,63 @@ abstract class AbstractDiscsController extends AbstractController
 
         $this->getServiceLocator()->get('Script')->loadFiles(['forms/filter']);
 
-        return $this->render('discs', $form, array('filterForm' => $filterForm));
+        return $this->render('discs', $form, ['filterForm' => $filterForm]);
     }
 
     public function addAction()
     {
         $request = $this->getRequest();
 
+        $form = $this->getRequestForm();
+
         if ($request->isPost()) {
-            $data = (array)$request->getPost();
-        } else {
-            $data = $this->getRequestFormData();
+            $form->setData((array)$request->getPost());
         }
 
-        $form = $this->getRequestForm()->setData($data);
-
         if ($request->isPost() && $form->isValid()) {
-            $this->processRequestDiscs($data);
+            $response = $this->processRequestDiscs($form->getData());
 
-            $this->postSave('discs');
+            if ($response->isOk()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    ->addSuccessMessage('psv-discs-' . self::CMD_REQUEST_DISCS . '-successfully');
 
-            return $this->redirect()->toRoute(null, array($this->getIdentifierIndex() => $this->getIdentifier()));
+                return $this->redirect()->toRoute(null, [$this->getIdentifierIndex() => $this->getIdentifier()]);
+            }
+
+            if ($response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    ->addCurrentErrorMessage('unknown-error');
+            } else {
+                $this->mapErrors($form, $response->getResult()['messages']);
+            }
         }
 
         return $this->render('add_discs', $form);
     }
 
-    /**
-     * Request discs
-     *
-     * @param type $data
-     */
-    public function processRequestDiscs($data)
+    protected function processRequestDiscs($data)
     {
-        $additionalDiscCount = $data['data']['additionalDiscs'];
+        $amount = $data['data']['additionalDiscs'];
 
-        $this->requestDiscs($additionalDiscCount, array('licence' => $this->getLicenceId()));
+        $dtoData = [
+            $this->getIdentifierIndex() => $this->getIdentifier(),
+            'amount' => $amount
+        ];
 
-        $this->getServiceLocator()->get('Helper\FlashMessenger')
-            ->addSuccessMessage('psv-discs-requested-successfully');
+        $commandClass = $this->commandMap[self::CMD_REQUEST_DISCS][$this->lva];
+        $response = $this->handleCommand($commandClass::create($dtoData));
+
+        return $response;
     }
 
     public function replaceAction()
     {
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-
-            $this->replaceSave();
-
-            return $this->redirect()->toRoute(null, array($this->getIdentifierIndex() => $this->getIdentifier()));
-        }
-
-        $form = $this->getGenericConfirmationForm();
-
-        return $this->render('replace_discs', $form);
+        return $this->commonConfirmCommand(self::CMD_REPLACE_DISCS);
     }
 
     public function voidAction()
     {
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-
-            $this->voidSave();
-
-            return $this->redirect()->toRoute(
-                null,
-                array($this->getIdentifierIndex() => $this->getIdentifier())
-            );
-        }
-
-        $form = $this->getGenericConfirmationForm();
-
-        return $this->render('void_discs', $form);
-    }
-
-    /**
-     * Replace the selected discs
-     *
-     * @param array $data
-     */
-    public function replaceSave()
-    {
-        $ids = explode(',', $this->params('child_id'));
-
-        $this->ceaseDiscs($ids);
-
-        $this->requestDiscs(count($ids), array('isCopy' => 'Y', 'licence' => $this->getLicenceId()));
-
-        $this->getServiceLocator()->get('Helper\FlashMessenger')
-            ->addSuccessMessage('psv-discs-replaced-successfully');
-    }
-
-    /**
-     * Void multiple discs
-     *
-     * @param array $data
-     */
-    public function voidSave()
-    {
-        $ids = explode(',', $this->params('child_id'));
-
-        $this->ceaseDiscs($ids);
-
-        $this->getServiceLocator()->get('Helper\FlashMessenger')
-            ->addSuccessMessage('psv-discs-voided-successfully');
-    }
-
-    /**
-     * Get discs filter form
-     *
-     * @return Zend\Form\Form
-     */
-    protected function getDiscFilterForm()
-    {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('Lva\DiscFilter');
-        return $form;
-    }
-
-    /**
-     * Request multiple discs
-     *
-     * @param int $count
-     * @param array $data
-     */
-    protected function requestDiscs($count, $data = array())
-    {
-        $this->getServiceLocator()->get('Entity\PsvDisc')->requestDiscs($count, $data);
-    }
-
-    /**
-     * Process action load
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function getRequestFormData()
-    {
-        $data = $this->getServiceLocator()->get('Entity\Licence')
-            ->getPsvDiscsRequestData($this->getLicenceId());
-
-        $data['totalAuth'] = (
-            $data['totAuthSmallVehicles'] + $data['totAuthMediumVehicles'] + $data['totAuthLargeVehicles']
-        );
-
-        $data['discCount'] = 0;
-
-        foreach ($data['psvDiscs'] as $disc) {
-            if (empty($disc['ceasedDate'])) {
-                $data['discCount']++;
-            }
-        }
-
-        unset($data['totAuthSmallVehicles']);
-        unset($data['totAuthMediumVehicles']);
-        unset($data['totAuthLargeVehicles']);
-        unset($data['psvDiscs']);
-
-        return array('data' => $data);
+        return $this->commonConfirmCommand(self::CMD_VOID_DISCS);
     }
 
     protected function getRequestForm()
@@ -232,22 +150,6 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
     }
 
-    /**
-     * Cease multiple discs
-     *
-     * @param array $ids
-     */
-    protected function ceaseDiscs($ids)
-    {
-        $this->getServiceLocator()->get('Entity\PsvDisc')->ceaseDiscs($ids);
-    }
-
-    /**
-     * Get form data
-     *
-     * @param array $data
-     * @return array
-     */
     protected function getFormData()
     {
         $discs = $this->getTableData();
@@ -290,18 +192,16 @@ abstract class AbstractDiscsController extends AbstractController
     {
         if ($this->formTableData === null) {
 
-            $includeCeased = $this->params()->fromQuery('includeCeased', 0);
+            $data = [
+                'id' => $this->getLicenceId(),
+                'includeCeased' => $this->params()->fromQuery('includeCeased', 0)
+            ];
 
-            $data = $this->getServiceLocator()->get('Entity\Licence')
-                ->getPsvDiscs($this->getLicenceId());
+            $data = $this->handleQuery(PsvDiscs::create($data))->getResult()['psvDiscs'];
 
             $this->formTableData = array();
 
             foreach ($data as $disc) {
-                if (!$includeCeased && !empty($disc['ceasedDate'])) {
-                    continue;
-                }
-
                 $disc['discNo'] = $this->getDiscNumberFromDisc($disc);
                 $this->formTableData[] = $disc;
             }
@@ -310,12 +210,6 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->formTableData;
     }
 
-    /**
-     * Get disc number from a disc array
-     *
-     * @param array $disc
-     * @return string
-     */
     protected function getDiscNumberFromDisc($disc)
     {
         if (isset($disc['discNo']) && !empty($disc['discNo'])) {
@@ -327,5 +221,67 @@ abstract class AbstractDiscsController extends AbstractController
         }
 
         return '';
+    }
+
+    protected function mapErrors(Form $form, array $errors)
+    {
+        if (isset($errors['amount']['LIC-PSVDISC-1'])) {
+            $form->setMessages(
+                [
+                    'data' => [
+                        'additionalDiscs' => [
+                            'additional-psv-discs-validator-too-many'
+                        ]
+                    ]
+                ]
+            );
+            unset($errors['amount']);
+        }
+
+        if (!empty($errors)) {
+            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+            foreach ($errors as $error) {
+                $fm->addCurrentErrorMessage($error);
+            }
+        }
+    }
+
+    protected function commonConfirmCommand($commandKey)
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $this->commonSave($commandKey);
+            return $this->redirect()->toRoute(null, [$this->getIdentifierIndex() => $this->getIdentifier()]);
+        }
+
+        $form = $this->getGenericConfirmationForm();
+
+        return $this->render($commandKey . '_discs', $form);
+    }
+
+    protected function commonSave($commandKey)
+    {
+        $dtoData = [
+            $this->getIdentifierIndex() => $this->getIdentifier(),
+            'ids' => explode(',', $this->params('child_id'))
+        ];
+
+        $this->commonCommand($commandKey, $dtoData);
+    }
+
+    protected function commonCommand($commandKey, $dtoData)
+    {
+        $commandClass = $this->commandMap[$commandKey][$this->lva];
+        $response = $this->handleCommand($commandClass::create($dtoData));
+
+        if ($response->isOk()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')
+                ->addSuccessMessage('psv-discs-' . $commandKey . '-successfully');
+        } else {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')
+                ->addErrorMessage('unknown-error');
+        }
     }
 }
