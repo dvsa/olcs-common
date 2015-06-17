@@ -59,12 +59,17 @@ class ApplicationFinancialEvidenceReviewServiceTest extends MockeryTestCase
 
         $mockFinancialEvidence = m::mock();
         $this->sm->setService('ApplicationFinancialEvidenceAdapter', $mockFinancialEvidence);
-        $mockFinancialEvidence->shouldReceive('getTotalNumberOfAuthorisedVehicles')
+        $mockFinancialEvidence
+            ->shouldReceive('getData')
             ->with(123)
-            ->andReturn(987)
-            ->shouldReceive('getRequiredFinance')
-            ->with(123)
-            ->andReturn(123456);
+            ->andReturn(
+                [
+                    'financialEvidence' => [
+                        'requiredFinance' => 123456,
+                        'vehicles' => 987,
+                    ],
+                ]
+            );
 
         $mockTranslator = m::mock();
         $this->sm->setService('Helper\Translation', $mockTranslator);
@@ -117,12 +122,17 @@ class ApplicationFinancialEvidenceReviewServiceTest extends MockeryTestCase
 
         $mockFinancialEvidence = m::mock();
         $this->sm->setService('ApplicationFinancialEvidenceAdapter', $mockFinancialEvidence);
-        $mockFinancialEvidence->shouldReceive('getTotalNumberOfAuthorisedVehicles')
+        $mockFinancialEvidence
+            ->shouldReceive('getData')
             ->with(123)
-            ->andReturn(987)
-            ->shouldReceive('getRequiredFinance')
-            ->with(123)
-            ->andReturn(123456)
+            ->andReturn(
+                [
+                    'financialEvidence' => [
+                        'requiredFinance' => 123456,
+                        'vehicles' => 987,
+                    ],
+                ]
+            )
             ->shouldReceive('getDocuments')
             ->with(123)
             ->andReturn($stubbedDocuments);

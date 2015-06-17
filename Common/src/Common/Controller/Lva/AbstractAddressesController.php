@@ -7,6 +7,12 @@
  */
 namespace Common\Controller\Lva;
 
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateAddresses as LicenceUpdateAddresses;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateAddresses as ApplicationUpdateAddresses;
+use Dvsa\Olcs\Transfer\Command\Variation\UpdateAddresses as VariationUpdateAddresses;
+
+use Dvsa\Olcs\Transfer\Query\Licence\Addresses;
+
 /**
  * Shared logic between Addresses controllers
  *
@@ -35,11 +41,15 @@ abstract class AbstractAddressesController extends AbstractController
     {
         $request = $this->getRequest();
 
-        $rawAddressData = $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getAddressesData(
-                $this->getLicenceId()
-            );
+        $response = $this->handleQuery(
+            Addresses::create(['id' => $this->getLicenceId()])
+        );
+
+        if ($response->isNotFound()) {
+            return $this->notFoundAction();
+        }
+
+        $rawAddressData = $response->getResult();
 
         $addressData = $this->formatDataForForm($rawAddressData);
 
@@ -62,34 +72,51 @@ abstract class AbstractAddressesController extends AbstractController
         $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
         if (!$hasProcessed && $request->isPost()) {
-            if (isset($data['consultant'])) {
-                if ($data['consultant']['add-transport-consultant'] === 'N') {
-                    $this->getServiceLocator()->get('Helper\Form')
-                        ->disableValidation(
-                            $form->getInputFilter()->get('consultant')
-                        );
-                }
+            if (isset($data['consultant']) && $data['consultant']['add-transport-consultant'] === 'N') {
+                $this->getServiceLocator()->get('Helper\Form')
+                    ->disableValidation(
+                        $form->getInputFilter()->get('consultant')
+                    );
             }
 
             if ($form->isValid()) {
-                $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                    ->get('Lva\\' . ucfirst($this->lva) . 'Addresses')
-                    ->process(
-                        [
-                            'licenceId' => $this->getLicenceId(),
-                            'data' => $data,
-                            'originalData' => $addressData
-                        ]
-                    );
 
-                if (!$response->isOk()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
-                    return $this->renderForm($form);
+                $dtoData = [
+                    'id' => $this->getIdentifier(),
+                    'correspondence' => $data['correspondence'],
+                    'correspondenceAddress' => $data['correspondence_address'],
+                    'contact' => $data['contact'],
+                    'establishment' => $data['establishment'],
+                    'establishmentAddress' => $data['establishment_address'],
+                    'consultant' => isset($data['consultant']) ? $data['consultant'] : null
+                ];
+
+                // @TODO de-switch?
+                switch ($this->lva) {
+                    case "licence":
+                        $response = $this->handleCommand(LicenceUpdateAddresses::create($dtoData));
+                        break;
+
+                    case "application":
+                        $response = $this->handleCommand(ApplicationUpdateAddresses::create($dtoData));
+                        break;
+
+                    case "variation":
+                        $response = $this->handleCommand(VariationUpdateAddresses::create($dtoData));
+                        break;
                 }
 
-                $this->postChange($response->getData());
+                if ($response->isOk()) {
+                    return $this->completeSection('addresses');
+                }
 
-                return $this->completeSection('addresses');
+                if ($response->isNotFound()) {
+                    return $this->notFoundAction();
+                }
+
+                if ($response->isClientError() || $response->isServerError()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                }
             }
         }
 
@@ -177,6 +204,8 @@ abstract class AbstractAddressesController extends AbstractController
             $returnData['contact'][$phoneType . '_version'] = $phoneContact['version'];
         }
 
+        $returnData['contact']['email'] = $data['emailAddress'];
+
         return $returnData;
     }
 
@@ -193,11 +222,5 @@ abstract class AbstractAddressesController extends AbstractController
     protected function renderForm($form)
     {
         return $this->render('addresses', $form);
-    }
-
-    protected function postChange(array $data)
-    {
-        unset($data);
-        $this->postSave('addresses');
     }
 }

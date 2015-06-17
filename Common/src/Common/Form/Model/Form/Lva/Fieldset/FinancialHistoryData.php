@@ -149,7 +149,10 @@ class FinancialHistoryData
     public $file = null;
 
     /**
-     * @Form\Annotations({"id":""})
+     * @Form\Attributes({
+     *     "id":"",
+     *     "data-container-class": "confirm"
+     * })
      * @Form\Options({
      *     "short-label": "short-label-financial-history-insolvency",
      *     "checked_value": "Y",

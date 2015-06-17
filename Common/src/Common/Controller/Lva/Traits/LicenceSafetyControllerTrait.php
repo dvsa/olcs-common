@@ -7,6 +7,9 @@
  */
 namespace Common\Controller\Lva\Traits;
 
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateSafety;
+use Dvsa\Olcs\Transfer\Command\Workshop\DeleteWorkshop;
+use Dvsa\Olcs\Transfer\Query\Licence\Safety;
 use Zend\Form\Form;
 
 /**
@@ -16,14 +19,21 @@ use Zend\Form\Form;
  */
 trait LicenceSafetyControllerTrait
 {
-    protected function save($data)
+    protected function save($data, $partial)
     {
-        // Get the (first/)licence part of the formatted data
-        $licence = $this->formatSaveData($data)[0];
+        $dtoData = $data['licence'];
+        $dtoData['id'] = $this->getLicenceId();
 
-        $licence['id'] = $this->getLicenceId();
+        return $this->handleCommand(UpdateSafety::create($dtoData));
+    }
 
-        $this->getServiceLocator()->get('Entity\Licence')->save($licence);
+    protected function deleteWorkshops($ids)
+    {
+        $data = [
+            'ids' => $ids
+        ];
+
+        return $this->handleCommand(DeleteWorkshop::create($data));
     }
 
     /**
@@ -33,7 +43,16 @@ trait LicenceSafetyControllerTrait
      */
     protected function getSafetyData()
     {
-        $licence = $this->getServiceLocator()->get('Entity\Licence')->getSafetyData($this->getLicenceId());
+        $response = $this->handleQuery(Safety::create(['id' => $this->getLicenceId()]));
+
+        if (!$response->isOk()) {
+            return $this->notFoundAction();
+        }
+
+        $licence = $response->getResult();
+
+        $this->canHaveTrailers = $licence['canHaveTrailers'];
+        $this->workshops = $licence['workshops'];
 
         return array(
             'version' => null,

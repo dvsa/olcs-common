@@ -141,17 +141,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
-    /**
-     * Safety data bundle
-     *
-     * @var array
-     */
-    protected $safetyDataBundle = array(
-        'children' => array(
-            'tachographIns'
-        )
-    );
-
     protected $vehicleDataBundle = array(
         'children' => array(
             'licenceVehicles' => array(
@@ -479,17 +468,6 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function getAddressesData($id)
     {
         return $this->get($id, $this->addressesDataBundle);
-    }
-
-    /**
-     * Get safety data
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getSafetyData($id)
-    {
-        return $this->get($id, $this->safetyDataBundle);
     }
 
     public function getVehiclesData($id)

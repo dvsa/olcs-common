@@ -61,10 +61,26 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         ];
 
         $mockResponse = m::mock();
-        $controller = m::mock('\Zend\Mvc\Controller\AbstractController');
-        $this->sut->setController($controller);
 
-        $controller->shouldReceive('handleQuery')->once()->andReturn($mockResponse);
+        $mockQuery = m::mock();
+        $this->sm->setService(
+            'TransferAnnotationBuilder',
+            m::mock()
+                ->shouldReceive('createQuery')
+                ->once()
+                ->andReturn($mockQuery)
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'QueryService',
+            m::mock()
+                ->shouldReceive('send')
+                ->with($mockQuery)
+                ->andReturn($mockResponse)
+                ->getMock()
+        );
+
         $mockResponse->shouldReceive('getResult')->andReturn($applicationData);
     }
 

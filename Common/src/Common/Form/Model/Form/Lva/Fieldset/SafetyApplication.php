@@ -31,7 +31,10 @@ class SafetyApplication
     public $isMaintenanceSuitable = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({
+     *     "id":"","placeholder":"",
+     *     "data-container-class":"confirm"
+     * })
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",

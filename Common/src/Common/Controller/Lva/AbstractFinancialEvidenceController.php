@@ -7,7 +7,6 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Service\Entity\LicenceEntityService as Licence;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
 
 /**
@@ -51,8 +50,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
             // update application record and redirect
-            if ($this->saveFinancialEvidence($form, $data)) {
-                $this->postSave('financial_evidence');
+            if ($this->saveFinancialEvidence($data)) {
                 return $this->completeSection('financial_evidence');
             }
         }
@@ -97,7 +95,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         return $this->getAdapter()->getDocuments($id);
     }
 
-    protected function saveFinancialEvidence($form, $formData)
+    protected function saveFinancialEvidence($formData)
     {
         $dto = UpdateFinancialEvidence::create(
             [

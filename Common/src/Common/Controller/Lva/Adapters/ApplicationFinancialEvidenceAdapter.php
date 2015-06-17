@@ -88,7 +88,12 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     public function getData($applicationId)
     {
         if (is_null($this->applicationData)) {
-            $response = $this->getController()->handleQuery(FinancialEvidence::create(['id' => $applicationId]));
+
+            $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+                ->createQuery(FinancialEvidence::create(['id' => $applicationId]));
+
+            $response = $this->getServiceLocator()->get('QueryService')->send($query);
+
             $this->applicationData = $response->getResult();
         }
         return $this->applicationData;
