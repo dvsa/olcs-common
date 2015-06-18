@@ -20,7 +20,7 @@ interface TransportManagerAdapterInterface extends AdapterInterface
 
     public function getForm();
 
-    public function mustHaveAtLeastOneTm($lvaId);
+    public function mustHaveAtLeastOneTm();
 
     public function delete(array $ids, $applicationId);
 

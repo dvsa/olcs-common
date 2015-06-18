@@ -10,14 +10,14 @@ OLCS.ready(function() {
       "declarations": {
         // Hide the whole declaration fieldset, until the tmType radio has been checked
         "*": function() {
-          return F.isChecked("responsibilities", "tmType", "tm_t_I")
-            || F.isChecked("responsibilities", "tmType", "tm_t_E");
+          return F.isChecked("responsibilities", "tmType", "tm_t_i")
+            || F.isChecked("responsibilities", "tmType", "tm_t_e");
         },
         "selector:.tm-details-declaration-internal": function() {
-          return F.isChecked("responsibilities", "tmType", "tm_t_I");
+          return F.isChecked("responsibilities", "tmType", "tm_t_i");
         },
         "selector:.tm-details-declaration-external": function() {
-          return F.isChecked("responsibilities", "tmType", "tm_t_E");
+          return F.isChecked("responsibilities", "tmType", "tm_t_e");
         }
       }
     }

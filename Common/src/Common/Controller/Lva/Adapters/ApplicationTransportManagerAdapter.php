@@ -16,28 +16,22 @@ use Common\Service\Entity\LicenceEntityService;
  */
 class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
+    protected $applicationData;
+
     /**
      * Load data into the table
      */
     public function getTableData($applicationId, $licenceId)
     {
-        /* @var $service \Common\Service\Entity\TransportManagerApplicationEntityService */
-        $service = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
-        $data = $service->getByApplicationWithHomeContactDetails($applicationId);
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(\Dvsa\Olcs\Transfer\Query\Application\TransportManagers::create(['id' => $applicationId]));
 
-        $tableData = [];
-        foreach ($data['Results'] as $row) {
-            $tableData[] = [
-                'id' => $row['id'],
-                'name' => $row['transportManager']['homeCd']['person'],
-                'status' => $row['tmApplicationStatus'],
-                'email' => $row['transportManager']['homeCd']['emailAddress'],
-                'dob' => $row['transportManager']['homeCd']['person']['birthDate'],
-                'transportManager' => $row['transportManager'],
-            ];
-        }
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('QueryService')->send($query);
+        $data = $response->getResult();
+        $this->applicationData = $data;
 
-        return $tableData;
+        return $this->mapResultForTable($data['transportManagers']);
     }
 
     /**
@@ -47,31 +41,35 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @return bool
      */
-    public function mustHaveAtLeastOneTm($applicationId)
+    public function mustHaveAtLeastOneTm()
     {
-        /* @var $service \Common\Service\Entity\ApplicationEntityService */
-        $service = $this->getServiceLocator()->get('Entity\Application');
-        $application = $service->getLicenceType($applicationId);
+        if (!isset($this->applicationData['licenceType']['id'])) {
+            throw new \RuntimeException('Application data is not setup');
+        }
 
         $mustHaveTypes = [
             LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
             LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
         ];
 
-        return in_array($application['licenceType']['id'], $mustHaveTypes);
+        return in_array($this->applicationData['licenceType']['id'], $mustHaveTypes);
     }
 
     /**
      * Delete Transport Managers
      *
      * @param array $ids Transport Manager Application IDs
+     *
+     * @return bool whether successful
      */
     public function delete(array $ids, $applicationId)
     {
-        /* @var $service \Common\BusinessService\Service\TransportManagerApplication\Delete */
-        $service = $this->getServiceLocator()
-            ->get('BusinessServiceManager')
-            ->get('Lva\DeleteTransportManagerApplication');
-        $service->process(['ids' => $ids]);
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createCommand(\Dvsa\Olcs\Transfer\Command\TransportManagerApplication\Delete::create(['ids' => $ids]));
+
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+
+        return $response->isOk();
     }
 }
