@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Controller\Traits;
 
+use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
@@ -32,38 +33,13 @@ class GenericUploadTest extends MockeryTestCase
 
     public function testDeleteFile()
     {
-        // Mocks
-        $mockDocumentEntity = m::mock();
-        $this->sm->setService('Entity\Document', $mockDocumentEntity);
-        $mockFileUploader = m::mock();
-        $this->sm->setService('FileUploader', $mockFileUploader);
-
-        // Expectations
-        $mockDocumentEntity->shouldReceive('getIdentifier')
-            ->with(123)
-            ->andReturn(987654321)
-            ->shouldReceive('delete')
-            ->with(123);
-
-        $mockFileUploader->shouldReceive('getUploader->remove')
-            ->with(987654321);
+        $this->sut->stubResponse = m::mock()->makePartial();
+        $this->sut->stubResponse->shouldReceive('isOk')
+            ->andReturn(true);
 
         $this->assertTrue($this->sut->callDeleteFile(123));
-    }
 
-    public function testDeleteFileWithoutIdentifier()
-    {
-        // Mocks
-        $mockDocumentEntity = m::mock();
-        $this->sm->setService('Entity\Document', $mockDocumentEntity);
-
-        // Expectations
-        $mockDocumentEntity->shouldReceive('getIdentifier')
-            ->with(123)
-            ->andReturn(null)
-            ->shouldReceive('delete')
-            ->with(123);
-
-        $this->assertTrue($this->sut->callDeleteFile(123));
+        $this->assertInstanceOf(DeleteDocument::class, $this->sut->stubResponse->dto);
+        $this->assertEquals(123, $this->sut->stubResponse->dto->getId());
     }
 }

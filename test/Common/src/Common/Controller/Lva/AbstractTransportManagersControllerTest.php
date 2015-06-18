@@ -179,6 +179,8 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     public function testAddActionGet()
     {
+        $this->markTestIncomplete();
+
         $registeredUsers = [
             'foo' => 'bar'
         ];
@@ -216,6 +218,8 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     public function testAddActionPostFail()
     {
+        $this->markTestIncomplete();
+
         $registeredUsers = [
             'foo' => 'bar'
         ];
@@ -264,6 +268,8 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     public function testAddActionPostSuccess()
     {
+        $this->markTestIncomplete();
+
         $registeredUsers = [
             'foo' => 'bar'
         ];
@@ -315,6 +321,8 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     public function testAddTmActionWithSameUser()
     {
+        $this->markTestIncomplete();
+
         $user = [
             'id' => 111
         ];
@@ -353,6 +361,8 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     public function testAddTmActionWithDifferentUserGet()
     {
+        $this->markTestIncomplete();
+
         $user = [
             'id' => 333
         ];
@@ -410,6 +420,8 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     public function testAddTmActionWithDifferentUserPostInvalid()
     {
+        $this->markTestIncomplete();
+
         $user = [
             'id' => 333
         ];
@@ -474,6 +486,8 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     public function testAddTmActionWithDifferentUserPostValid()
     {
+        $this->markTestIncomplete();
+
         $user = [
             'id' => 333
         ];
@@ -564,6 +578,8 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     public function testRestoreAction()
     {
+        $this->markTestIncomplete();
+
         $mockTmlEntityService = m::mock();
         $this->sm->setService('Entity\TransportManagerLicence', $mockTmlEntityService);
 

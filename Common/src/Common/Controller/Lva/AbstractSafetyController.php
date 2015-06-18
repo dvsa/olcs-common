@@ -8,7 +8,6 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Helper\FormHelperService;
-use Common\Service\Entity\ContactDetailsEntityService;
 use Dvsa\Olcs\Transfer\Command\Workshop\CreateWorkshop as LicenceCreateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\CreateWorkshop as ApplicationCreateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Workshop\UpdateWorkshop as LicenceUpdateWorkshop;
