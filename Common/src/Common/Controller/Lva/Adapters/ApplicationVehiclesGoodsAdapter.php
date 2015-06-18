@@ -62,12 +62,4 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter
 
         return $filters;
     }
-
-    /**
-     * Populate form with data
-     */
-    public function getFormData($id)
-    {
-        return $this->getServiceLocator()->get('Entity\Application')->getHeaderData($id);
-    }
 }

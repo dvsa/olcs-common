@@ -12,6 +12,8 @@ use Common\Data\Mapper\Lva\GoodsVehicles;
 use Zend\Form\Element\Checkbox;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Service\Entity\LicenceEntityService;
+use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
+use Dvsa\Olcs\Transfer\Query\Application\GoodsVehicles as ApplicationGoodsVehicles;
 
 /**
  * Goods Vehicles
@@ -49,9 +51,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
     );
 
     protected $loadDataMap = [
-        'licence' => '',
-        'variation' => '',
-        'application' => ''
+        'licence' => LicenceGoodsVehicles::class,
+        'variation' => ApplicationGoodsVehicles::class,
+        'application' => ApplicationGoodsVehicles::class
     ];
 
     public function indexAction()
@@ -71,7 +73,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         } else {
 
             if ($this->lva === 'application') {
-                $formData = GoodsVehicles::mapFromResult($formData);
+                $formData = GoodsVehicles::mapFromResult($headerData);
             }
 
             $haveCrudAction = false;
@@ -88,7 +90,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-goods-' . $this->section)
-            ->getForm($this->getTable(), $haveCrudAction)
+            ->getForm($this->getTable($headerData), $haveCrudAction)
             ->setData($formData);
 
         if ($request->isPost() && $form->isValid()) {
@@ -715,43 +717,42 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         );
     }
 
-    protected function getTable()
+    protected function getTable($headerData)
     {
         $query = $this->getRequest()->getQuery();
         $params = array_merge((array)$query, ['query' => $query]);
 
         $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-vehicles', $this->getTableData(), $params);
 
-        $this->makeTableAlterations($table);
+        $this->makeTableAlterations($table, $headerData);
 
         return $table;
     }
 
-    protected function makeTableAlterations($table)
+    protected function makeTableAlterations($table, $params)
     {
-        // If can't reprint, remove reprint button
-        if (/* Can Reprint */true) {
+        if ($params['canReprint']) {
             $table->addAction(
                 'reprint',
                 ['label' => 'Reprint Disc', 'requireRows' => true]
             );
         }
 
-        if (/* Can Transfer*/true) {
+        if ($params['canTransfer']) {
             $table->addAction(
                 'transfer',
                 ['label' => 'Transfer', 'class' => 'secondary js-require--multiple', 'requireRows' => true]
             );
         }
 
-        if (/* Can export */true) {
+        if ($params['canExport']) {
             $table->addAction(
                 'export',
                 ['requireRows' => true, 'class' => 'secondary js-disable-crud']
             );
         }
 
-        if (/* Can print-vehicles */true) {
+        if ($params['canPrintVehicle']) {
             $table->addAction(
                 'print-vehicles',
                 ['label' => 'Print vehicle list', 'requireRows' => true]
