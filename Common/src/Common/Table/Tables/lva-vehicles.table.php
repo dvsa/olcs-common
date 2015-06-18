@@ -12,13 +12,8 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'print-vehicles' => array('label' => 'Print vehicle list', 'requireRows' => true),
-                'reprint' => array('label' => 'Reprint Disc', 'requireRows' => true),
                 'edit' => array('requireRows' => true),
                 'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true),
-                'transfer' => array(
-                    'label' => 'Transfer', 'class' => 'secondary js-require--multiple', 'requireRows' => true
-                )
             )
         ),
         'paginate' => array(

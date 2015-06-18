@@ -8,6 +8,7 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Data\Mapper\Lva\GoodsVehicles;
 use Zend\Form\Element\Checkbox;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Service\Entity\LicenceEntityService;
@@ -47,16 +48,32 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         )
     );
 
+    protected $loadDataMap = [
+        'licence' => '',
+        'variation' => '',
+        'application' => ''
+    ];
+
     public function indexAction()
     {
         $request = $this->getRequest();
+
+        $dtoClass = $this->loadDataMap[$this->lva];
+        $response = $this->handleQuery($dtoClass::create(['id' => $this->getIdentifier()]));
+        $headerData = $response->getResult();
+
+        $formData = [];
 
         if ($request->isPost()) {
             $formData = (array)$request->getPost();
             $crudAction = $this->getCrudAction(array($formData['table']));
             $haveCrudAction = $crudAction !== null;
         } else {
-            $formData = $this->getAdapter()->getFormData($this->getIdentifier());
+
+            if ($this->lva === 'application') {
+                $formData = GoodsVehicles::mapFromResult($formData);
+            }
+
             $haveCrudAction = false;
         }
 
@@ -703,18 +720,43 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         $query = $this->getRequest()->getQuery();
         $params = array_merge((array)$query, ['query' => $query]);
 
-        return $this->alterTable(
-            $this->getServiceLocator()->get('Table')
-                ->prepareTable('lva-vehicles', $this->getTableData(), $params)
-        );
+        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-vehicles', $this->getTableData(), $params);
+
+        $this->makeTableAlterations($table);
+
+        return $table;
     }
 
-    /**
-     * Alter table.
-     */
-    protected function alterTable($table)
+    protected function makeTableAlterations($table)
     {
-        return $this->getAdapter()->alterVehicleTable($table, $this->getIdentifier());
+        // If can't reprint, remove reprint button
+        if (/* Can Reprint */true) {
+            $table->addAction(
+                'reprint',
+                ['label' => 'Reprint Disc', 'requireRows' => true]
+            );
+        }
+
+        if (/* Can Transfer*/true) {
+            $table->addAction(
+                'transfer',
+                ['label' => 'Transfer', 'class' => 'secondary js-require--multiple', 'requireRows' => true]
+            );
+        }
+
+        if (/* Can export */true) {
+            $table->addAction(
+                'export',
+                ['requireRows' => true, 'class' => 'secondary js-disable-crud']
+            );
+        }
+
+        if (/* Can print-vehicles */true) {
+            $table->addAction(
+                'print-vehicles',
+                ['label' => 'Print vehicle list', 'requireRows' => true]
+            );
+        }
     }
 
     protected function getTableData()

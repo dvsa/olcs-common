@@ -7,14 +7,12 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterInterface;
-
 /**
  * Application Vehicles Goods Adapter
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGoodsAdapterInterface
+class ApplicationVehiclesGoodsAdapter extends AbstractAdapter
 {
     public function getFilteredVehiclesData($id, $query)
     {
@@ -70,34 +68,6 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
      */
     public function getFormData($id)
     {
-        return $this->formatDataForForm(
-            $this->getServiceLocator()->get('Entity\Application')->getHeaderData($id)
-        );
-    }
-
-    /**
-     * Format data for the main form; not a lot to it
-     */
-    protected function formatDataForForm($data)
-    {
-        return array(
-            'data' => array(
-                'version' => $data['version'],
-                'hasEnteredReg' => $data['hasEnteredReg'] === 'N' ? 'N' : 'Y'
-            )
-        );
-    }
-
-    /**
-     * Remove transfer button
-     *
-     * @param $table Common\Service\Table\TableBuilde
-     * @param int $licenceId
-     * @return Common\Service\Table\TableBuilde
-     */
-    public function alterVehicleTable($table, $licenceId)
-    {
-        $table->removeAction('transfer');
-        return $table;
+        return $this->getServiceLocator()->get('Entity\Application')->getHeaderData($id);
     }
 }
