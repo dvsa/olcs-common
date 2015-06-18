@@ -514,11 +514,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $this->get($id);
     }
 
-    public function getPsvDiscsRequestData($id)
-    {
-        return $this->get($id, $this->psvDiscsBundle);
-    }
-
     public function getPsvDiscs($id)
     {
         return $this->get($id, $this->psvDiscsBundle)['psvDiscs'];
