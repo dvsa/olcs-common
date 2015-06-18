@@ -87,7 +87,7 @@ class User implements
         }
         $dataToSave['contactDetails']['address'] = $params['address'];
         $dataToSave['contactDetails']['emailAddress'] = $params['userContactDetails']['emailAddress'];
-        $dataToSave['contactDetails']['contactType'] = 'ct_team_user';
+        $dataToSave['contactDetails']['contactType'] = 'ct_user';
 
         // set up person
         if (isset($existingData['contactDetails']['person']['id']) &&
