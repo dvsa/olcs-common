@@ -14,12 +14,18 @@ class GoodsVehicles
 {
     /**
      * @Form\Name("query")
+     * @Form\Attributes({
+     *   "class": "visually-hidden"
+     * })
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesQuery")
      */
     public $query = null;
 
     /**
      * @Form\Name("data")
+     * @Form\Attributes({
+     *   "class": "visually-hidden"
+     * })
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesData")
      */
     public $data = null;
