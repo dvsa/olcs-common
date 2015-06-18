@@ -10,7 +10,6 @@ namespace Common\Controller\Lva;
 
 use Common\Data\Mapper\Lva\GoodsVehicles;
 use Zend\Form\Element\Checkbox;
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Service\Entity\LicenceEntityService;
 use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
 use Dvsa\Olcs\Transfer\Query\Application\GoodsVehicles as ApplicationGoodsVehicles;
@@ -21,34 +20,13 @@ use Dvsa\Olcs\Transfer\Query\Application\GoodsVehicles as ApplicationGoodsVehicl
  * @author Nick Payne <nick.payne@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractGoodsVehiclesController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractGoodsVehiclesController extends AbstractController
 {
-    use Traits\AdapterAwareTrait,
-        Traits\CrudTableTrait;
+    use Traits\CrudTableTrait;
 
     protected $section = 'vehicles';
-    protected $totalAuthorisedVehicles = array();
-    protected $totalVehicles = array();
-
-    /**
-     * Action data map
-     *
-     * @var array
-     */
-    protected $vehicleDataMap = array(
-        'main' => array(
-            'mapFrom' => array(
-                'data'
-            ),
-            'children' => array(
-                'licence-vehicle' => array(
-                    'mapFrom' => array(
-                        'licence-vehicle'
-                    )
-                )
-            )
-        )
-    );
+    protected $totalAuthorisedVehicles = [];
+    protected $totalVehicles = [];
 
     protected $loadDataMap = [
         'licence' => LicenceGoodsVehicles::class,
@@ -59,42 +37,30 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
     public function indexAction()
     {
         $request = $this->getRequest();
+        $query = (array)$request->getQuery();
 
         $dtoClass = $this->loadDataMap[$this->lva];
         $response = $this->handleQuery($dtoClass::create(['id' => $this->getIdentifier()]));
         $headerData = $response->getResult();
 
         $formData = [];
+        $haveCrudAction = false;
 
         if ($request->isPost()) {
             $formData = (array)$request->getPost();
-            $crudAction = $this->getCrudAction(array($formData['table']));
+            $crudAction = $this->getCrudAction([$formData['table']]);
             $haveCrudAction = $crudAction !== null;
-        } else {
-
-            if ($this->lva === 'application') {
-                $formData = GoodsVehicles::mapFromResult($headerData);
-            }
-
-            $haveCrudAction = false;
+        } elseif ($this->lva === 'application') {
+            $formData = GoodsVehicles::mapFromResult($headerData);
         }
 
-        $formData = array_merge(
-            $formData,
-            [
-                'query' => (array)$this->getRequest()->getQuery()
-            ]
-        );
+        $formData = array_merge($formData, ['query' => $query]);
 
-        // Get preconfigured form
-        $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
-            ->get('lva-' . $this->lva . '-goods-' . $this->section)
-            ->getForm($this->getTable($headerData), $haveCrudAction)
-            ->setData($formData);
+        $form = $this->getForm($headerData, $formData, $haveCrudAction);
 
         if ($request->isPost() && $form->isValid()) {
 
+            // @todo migrate this
             $response = $this->getServiceLocator()->get('BusinessServiceManager')
                 ->get('Lva\\' . ucfirst($this->lva) . 'GoodsVehicles')
                 ->process(
@@ -109,8 +75,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
                 return $this->renderForm($form);
             }
-
-            $this->postSave('vehicles');
 
             if ($haveCrudAction) {
 
@@ -129,6 +93,20 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         }
 
         return $this->renderForm($form);
+    }
+
+    /**
+     * Get pre-configured form
+     *
+     * @return \Zend\Form\Form
+     */
+    protected function getForm($headerData, $formData, $haveCrudAction)
+    {
+        return $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-goods-' . $this->section)
+            ->getForm($this->getTable($headerData), $haveCrudAction)
+            ->setData($formData);
     }
 
     public function addAction()
@@ -265,86 +243,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         return false;
     }
 
-    protected function preSaveVehicle($data, $mode)
-    {
-        return $data;
-    }
-
-    protected function postSaveVehicle($licenceVehicleId, $mode)
-    {
-        // No-op
-    }
-
-    /**
-     * Save the vehicle
-     *
-     * @param array $data
-     * @param string $mode
-     */
-    protected function saveVehicle($data, $mode)
-    {
-        $data = $this->preSaveVehicle($data, $mode);
-
-        if ($mode !== 'add') {
-            // We don't want these updating
-            $data = $this->getAdapter()->maybeUnsetSpecifiedDate($data);
-            unset($data['licence-vehicle']['deletedDate']);
-            unset($data['licence-vehicle']['discNo']);
-            unset($data['vrm']);
-        }
-
-        $data = $this->alterDataForLva($data);
-
-        $licenceVehicle = $data['licence-vehicle'];
-        unset($data['licence-vehicle']);
-
-        if (isset($licenceVehicle['receivedDate'])) {
-            if (checkdate(
-                (int)$licenceVehicle['receivedDate']['month'],
-                (int)$licenceVehicle['receivedDate']['day'],
-                (int)$licenceVehicle['receivedDate']['year']
-            )) {
-                $licenceVehicle['receivedDate'] = sprintf(
-                    '%s-%s-%s',
-                    $licenceVehicle['receivedDate']['year'],
-                    $licenceVehicle['receivedDate']['month'],
-                    $licenceVehicle['receivedDate']['day']
-                );
-            } else {
-                unset($licenceVehicle['receivedDate']);
-            }
-        }
-
-        $licenceVehicle = $this->getAdapter()->maybeFormatRemovedAndSpecifiedDates($licenceVehicle);
-
-        // persist the vehicle first...
-        $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
-
-        // then if this is a new record, store it ID against the licence vehicle
-        if ($mode === 'add') {
-            $licenceVehicle['vehicle'] = $saved['id'];
-            $licenceVehicle['licence'] = $this->getLicenceId();
-        } else {
-            $licenceVehicle['vehicle'] = $data['id'];
-        }
-
-        if (in_array($this->lva, ['application', 'variation'])) {
-            $licenceVehicle['application'] = $this->getIdentifier();
-        }
-
-        $saved = $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
-
-        if (isset($saved['id'])) {
-            $licenceVehicleId = $saved['id'];
-        } elseif (!empty($licenceVehicle['id'])) {
-            $licenceVehicleId = $licenceVehicle['id'];
-        }
-
-        $this->postSaveVehicle($licenceVehicleId, $mode);
-
-        return $licenceVehicleId;
-    }
-
     protected function canAddAnother()
     {
         $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
@@ -357,6 +255,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
      * Get vrms linked to licence
      *
      * @return array
+     * @todo migrate this
      */
     protected function getVrmsForCurrentLicence()
     {
@@ -369,6 +268,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
      * @param array $data
      * @param \Zend\Form\Form $form
      * @return boolean
+     * @todo migrate this
      */
     protected function checkIfVehicleExistsOnOtherLicences($data, $form)
     {
@@ -393,6 +293,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
      *
      * @param string $vrm
      * @param int $licenceId
+     * @todo migrate this
      */
     protected function getOthersLicencesFromVrm($vrm, $licenceId)
     {
@@ -403,8 +304,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         foreach ($licenceVehicles as $licenceVehicle) {
             if (isset($licenceVehicle['licence']['id'])
                 && $licenceVehicle['licence']['id'] != $licenceId) {
-
-                $licenceNumber = 'UNKNOWN';
 
                 if (empty($licenceVehicle['licence']['licNo'])
                     && isset($licenceVehicle['licence']['applications'][0])
@@ -427,6 +326,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
      *
      * @param array $licences
      * @return string
+     * @todo migrate this
      */
     protected function getErrorMessageForVehicleBelongingToOtherLicences($licences)
     {
@@ -445,17 +345,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         }
 
         return $translator->translate($translationKey);
-    }
-
-    /**
-     * No-op, overridden in different sections
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function alterDataForLva($data)
-    {
-        return $data;
     }
 
     /**
@@ -485,9 +374,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
     /**
      * Set appropriate default values on vehicle date fields
      *
-     * @param Form $form
-     * @param DateTime $currentDate
-     * @return Form
+     * @param \Zend\Form\Form $form
+     * @param \DateTime $currentDate
+     * @return \Zend\Form\Form
      */
     protected function setDefaultDates($form, $currentDate)
     {
@@ -509,6 +398,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
      * Get the delete message.
      *
      * @return string
+     * @todo migrate this
      */
     public function getDeleteMessage()
     {
@@ -535,8 +425,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
 
     /**
      * Get vehicles transfer form
-     * 
-     * @return Common\Form\Form
+     *
+     * @return \Zend\Form\Form
+     * @todo migrate this
      */
     protected function getVehicleTransferForm()
     {
@@ -550,6 +441,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         return $form;
     }
 
+    /**
+     * @todo migrate this
+     */
     protected function delete()
     {
         $ids = explode(',', $this->params('child_id'));
@@ -568,6 +462,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         // *always* check if the user has exceeded their authority
         // as a nice little addition; they may have changed their OC totals
 
+        // @todo migrate this
         if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-vehicles-than-authorisation');
         }
@@ -612,8 +507,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
 
             $vehicleData = $this->getVehicleFormData($id);
 
-            if ($this->lva === 'licence' && $this->location === 'internal' &&
-                isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
+            if ($this->lva === 'licence' && $this->location === 'internal'
+                && isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])
+            ) {
                 $editRemovedVehicleForLicence = true;
             } elseif (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')
@@ -722,7 +618,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         $query = $this->getRequest()->getQuery();
         $params = array_merge((array)$query, ['query' => $query]);
 
-        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-vehicles', $this->getTableData(), $params);
+        $tableName = 'lva-' . $this->location . '-vehicles';
+
+        $table = $this->getServiceLocator()->get('Table')->prepareTable($tableName, $this->getTableData(), $params);
 
         $this->makeTableAlterations($table, $headerData);
 
@@ -768,16 +666,16 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
             $query = $this->getRequest()->getQuery();
         }
 
-        $licenceVehicles = $this->getAdapter()->getFilteredVehiclesData(
-            $this->getIdentifier(),
-            (array)$query
-        );
+        $filters = $this->formatFilters((array)$query);
+
+        $licenceVehicles = $this->getServiceLocator()->get('Entity\LicenceVehicle')
+            ->{'getVehiclesDataFor' . ucfirst($this->lva)}($this->getIdentifier(), $filters);
 
         $results = array();
 
         foreach ($licenceVehicles['Results'] as $licenceVehicle) {
 
-            // watch out! Now we get *all* data back, this was overrriding
+            // watch out! Now we get *all* data back, this was overriding
             // the licence vehicle ID incorrectly
             unset($licenceVehicle['vehicle']['id']);
 
@@ -856,5 +754,47 @@ abstract class AbstractGoodsVehiclesController extends AbstractController implem
         }
 
         return $this->totalVehicles;
+    }
+
+    protected function formatFilters($query)
+    {
+        $filters = [
+            'page' => isset($query['page']) ? $query['page'] : 1,
+            'limit' => isset($query['limit']) ? $query['limit'] : 10,
+        ];
+
+        if (isset($query['vrm']) && $query['vrm'] !== 'All') {
+            // Where the VRM starts with the 'vrm' string
+            $filters['vrm'] = '~' . $query['vrm'] . '%';
+        }
+
+        if (isset($query['specified'])) {
+
+            if ($query['specified'] === 'Y') {
+                $filters['specifiedDate'] = 'NOT NULL';
+            }
+
+            if ($query['specified'] === 'N') {
+                $filters['specifiedDate'] = 'NULL';
+            }
+        }
+
+        if (!isset($query['includeRemoved']) || $query['includeRemoved'] != '1') {
+            $filters['removalDate'] = 'NULL';
+        }
+
+        if (isset($query['disc'])) {
+            // Has active discs
+            if ($query['disc'] === 'Y') {
+                $filters['disc'] = 'Y';
+            }
+
+            // Has no active discs
+            if ($query['disc'] === 'N') {
+                $filters['disc'] = 'N';
+            }
+        }
+
+        return $filters;
     }
 }

@@ -65,15 +65,6 @@ return array(
             'LvaVariation/BusinessType' => array(
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
             ),
-            'LvaApplication/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
-            ),
-            'LvaLicence/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\LicenceVehiclesGoodsDelegator'
-            ),
-            'LvaVariation/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\VariationVehiclesGoodsDelegator'
-            ),
             'LvaApplication/VehiclesPsv' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehiclesPsvDelegator'
             ),
@@ -216,9 +207,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
             'ApplicationFinancialEvidenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
-            'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
-            'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
-            'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',
             'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
             'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
             'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
