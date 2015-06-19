@@ -19,25 +19,14 @@ class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
 
     public function getTableData($applicationId, $licenceId)
     {
-        // Get TM's attached to licence
-        /* @var $service \Common\Service\Entity\TransportManagerLicenceEntityService */
-        $service = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
-        $licenceData = $service->getByLicenceWithHomeContactDetails($licenceId);
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(\Dvsa\Olcs\Transfer\Query\Licence\TransportManagers::create(['id' => $licenceId]));
 
-        $tableData = [];
-        foreach ($licenceData['Results'] as $row) {
-            $tableData[$row['transportManager']['id']] = [
-                // Transport Manager Licence ID
-                'id' => 'L'. $row['id'],
-                'name' => $row['transportManager']['homeCd']['person'],
-                'status' => null,
-                'email' => $row['transportManager']['homeCd']['emailAddress'],
-                'dob' => $row['transportManager']['homeCd']['person']['birthDate'],
-                'transportManager' => $row['transportManager'],
-            ];
-        }
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('QueryService')->send($query);
+        $data = $response->getResult();
 
-        return $tableData;
+        return $this->mapResultForTable([], $data['tmLicences']);
     }
 
     public function delete(array $ids, $applicationId)

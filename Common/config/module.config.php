@@ -485,6 +485,7 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             'partials/view' => __DIR__ . '/../view',
+            'zfcuser' => __DIR__ . '/../view',
             'translations' => __DIR__ . '/../config/language/partials'
         )
     ),

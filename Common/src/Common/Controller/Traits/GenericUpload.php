@@ -7,6 +7,9 @@
  */
 namespace Common\Controller\Traits;
 
+use Dvsa\Olcs\Transfer\Command\Document\CreateDocument;
+use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
+
 /**
  * Generic Upload
  *
@@ -60,6 +63,7 @@ trait GenericUpload
     protected function uploadFile($fileData, $data)
     {
         $uploader = $this->getServiceLocator()->get('FileUploader')->getUploader();
+
         $uploader->setFile($fileData);
 
         $file = $uploader->upload();
@@ -73,28 +77,20 @@ trait GenericUpload
             $data
         );
 
-        return $this->getServiceLocator()->get('Entity\Document')->save($docData);
+        $response = $this->handleCommand(CreateDocument::create($docData));
+
+        return $response->isOk();
     }
 
     /**
      * Delete file
      *
-     * @NOTE This is public so it can be called as a callback when processing files
-     *
      * @param int $id
      */
     public function deleteFile($id)
     {
-        $documentService = $this->getServiceLocator()->get('Entity\Document');
+        $response = $this->handleCommand(DeleteDocument::create(['id' => $id]));
 
-        $identifier = $documentService->getIdentifier($id);
-
-        if (!empty($identifier)) {
-            $this->getServiceLocator()->get('FileUploader')->getUploader()->remove($identifier);
-        }
-
-        $documentService->delete($id);
-
-        return true;
+        return $response->isOk();
     }
 }
