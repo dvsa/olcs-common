@@ -40,7 +40,7 @@ trait CrudTableTrait
         );
 
         if ($this->isButtonPressed('addAnother')) {
-            $action = $prefix !== null ? $prefix . '-' . 'add' : 'add';
+            $action = $prefix !== null ? $prefix . '-add' : 'add';
             $routeParams['action'] = $action;
             $method = 'toRoute';
         } else {

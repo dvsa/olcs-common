@@ -1646,6 +1646,7 @@ return array(
     'offenceType' => 'Type of offence',
     'offender-name' => 'Offender name',
     'offenderName' => 'Name of offender',
+    'AP-VEH-1' => 'Please add at least one vehicle',
     'oneConvictionRequiredError' => 'Please add at least one offence',
     'oneLicenceRequiredError' => 'Please add at least one licence',
     'open-date' => 'Open date',

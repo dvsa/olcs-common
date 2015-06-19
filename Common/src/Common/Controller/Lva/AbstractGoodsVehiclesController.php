@@ -9,7 +9,14 @@
 namespace Common\Controller\Lva;
 
 use Common\Data\Mapper\Lva\GoodsVehicles;
+use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Common\Service\Table\Formatter\VehicleDiscNo;
+use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Licence\CreateGoodsVehicle as LicenceCreateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateGoodsVehicle as ApplicationUpdateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicles;
+use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
 use Zend\Form\Element\Checkbox;
 use Common\Service\Entity\LicenceEntityService;
 use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
@@ -36,6 +43,18 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         'application' => ApplicationGoodsVehicles::class
     ];
 
+    protected $createVehicleMap = [
+        'licence' => LicenceCreateGoodsVehicle::class,
+        'variation' => ApplicationCreateGoodsVehicle::class,
+        'application' => ApplicationCreateGoodsVehicle::class
+    ];
+
+    protected $updateVehicleMap = [
+        'licence' => LicenceUpdateGoodsVehicle::class,
+        'variation' => ApplicationUpdateGoodsVehicle::class,
+        'application' => ApplicationUpdateGoodsVehicle::class
+    ];
+
     public function indexAction()
     {
         $request = $this->getRequest();
@@ -44,6 +63,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $dtoData['id'] = $this->getIdentifier();
 
         $dtoClass = $this->loadDataMap[$this->lva];
+
         $response = $this->handleQuery($dtoClass::create($dtoData));
         $headerData = $response->getResult();
 
@@ -60,24 +80,32 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         $formData = array_merge($formData, ['query' => (array)$request->getQuery()]);
 
-        $form = $this->getForm($headerData, $formData, $haveCrudAction);
+        $form = $this->getForm($headerData, $formData);
 
         if ($request->isPost() && $form->isValid()) {
 
-            // @todo migrate this
-            $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                ->get('Lva\\' . ucfirst($this->lva) . 'GoodsVehicles')
-                ->process(
-                    [
-                        'id' => $this->getIdentifier(),
-                        'data' => $form->getData()
-                    ]
-                );
+            if ($this->lva === 'application') {
 
-            if (!$response->isOk()) {
+                $data = $form->getData()['data'];
 
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
-                return $this->renderForm($form);
+                $dtoData = [
+                    'id' => $this->getIdentifier(),
+                    'version' => $data['version'],
+                    'hasEnteredReg' => $data['hasEnteredReg'],
+                    'partial' => $haveCrudAction
+                ];
+
+                $response = $this->handleCommand(UpdateVehicles::create($dtoData));
+
+                if ($response->isServerError()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                    return $this->renderForm($form, $headerData);
+                }
+
+                if ($response->isClientError()) {
+                    $this->mapErrors($form, $response->getResult()['messages']);
+                    return $this->renderForm($form, $headerData);
+                }
             }
 
             if ($haveCrudAction) {
@@ -96,66 +124,136 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             return $this->completeSection('vehicles');
         }
 
-        return $this->renderForm($form);
-    }
-
-    protected function getFilters()
-    {
-        if ($this->getRequest()->isPost()) {
-            $query = $this->getRequest()->getPost('query');
-        } else {
-            $query = $this->getRequest()->getQuery();
-        }
-
-        return $this->formatFilters((array)$query);
-    }
-
-    protected function formatFilters($query)
-    {
-        $filters = [
-            'page' => isset($query['page']) ? $query['page'] : 1,
-            'limit' => isset($query['limit']) ? $query['limit'] : 10,
-        ];
-
-        if (isset($query['vrm']) && $query['vrm'] !== 'All') {
-            $filters['vrm'] = $query['vrm'];
-        }
-
-        if (isset($query['specified'])) {
-            $filters['specified'] = $query['specified'];
-        }
-
-        $filters['includeRemoved'] = (isset($query['includeRemoved']) && $query['includeRemoved'] == '1');
-
-        if (isset($query['disc']) && in_array($query['disc'], ['Y', 'N'])) {
-            $filters['disc'] = $query['disc'];
-        }
-
-        return $filters;
-    }
-
-    /**
-     * Get pre-configured form
-     *
-     * @return \Zend\Form\Form
-     */
-    protected function getForm($headerData, $formData, $haveCrudAction)
-    {
-        return $this->getServiceLocator()
-            ->get('FormServiceManager')
-            ->get('lva-' . $this->lva . '-goods-' . $this->section)
-            ->getForm($this->getTable($headerData), $haveCrudAction)
-            ->setData($formData);
+        return $this->renderForm($form, $headerData);
     }
 
     public function addAction()
     {
-        return $this->addOrEdit('add');
+        $request = $this->getRequest();
+        $data = [];
+
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+        }
+
+        $dtoData = [
+            'id' => $this->getIdentifier(),
+            'page' => 1,
+            'limit' => 1
+        ];
+        $dtoClass = $this->loadDataMap[$this->lva];
+        $response = $this->handleQuery($dtoClass::create($dtoData));
+
+        $params = [];
+        $params['spacesRemaining'] = $response->getResult()['spacesRemaining'];
+
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-goods-vehicles-add-vehicle')
+            ->getForm($this->getRequest(), $params)
+            ->setData($data);
+
+        if ($request->isPost() && $form->isValid()) {
+
+            $formData = $form->getData();
+
+            $dtoData = [
+                'id' => $this->getIdentifier(),
+                'vrm' => $formData['data']['vrm'],
+                'platedWeight' => $formData['data']['platedWeight'],
+                'confirm' => isset($data['licence-vehicle']['confirm-add'])
+                    ? $data['licence-vehicle']['confirm-add'] : null
+            ];
+
+            $dtoClass = $this->createVehicleMap[$this->lva];
+
+            $response = $this->handleCommand($dtoClass::create($dtoData));
+
+            if ($response->isOk()) {
+                return $this->handlePostSave(null, false);
+            }
+
+            if ($response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+            } else {
+
+                $messages = $response->getResult()['messages'];
+
+                if (isset($messages['VE-VRM-2'])) {
+
+                    $confirm = new Checkbox('confirm-add', array('label' => 'vehicle-belongs-to-another-licence-confirmation'));
+
+                    $confirm->setMessages([$this->formatConfirmationMessage($messages['VE-VRM-2'])]);
+
+                    $form->get('licence-vehicle')->add($confirm);
+
+                } else {
+                    $this->mapVehicleErrors($form, $messages);
+                }
+            }
+        }
+
+        return $this->render('add_vehicles', $form);
     }
 
     public function editAction()
     {
-        return $this->addOrEdit('edit');
+        $request = $this->getRequest();
+        $id = $this->params('child_id');
+
+        $response = $this->handleQuery(LicenceVehicle::create(['id' => $id]));
+
+        $vehicleData = $response->getResult();
+
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+        } else {
+            $data = GoodsVehiclesVehicle::mapFromResult($vehicleData);
+        }
+
+        $params = [
+            'isRemoved' => !is_null($vehicleData['removalDate'])
+        ];
+
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-goods-vehicles-edit-vehicle')
+            ->getForm($this->getRequest(), $params)
+            ->setData($data);
+
+        if ($vehicleData['showHistory']) {
+            $this->getServiceLocator()->get('Helper\Form')->populateFormTable(
+                $form->get('vehicle-history-table'),
+                $this->getServiceLocator()->get('Table')->prepareTable('lva-vehicles-history', $vehicleData['history'])
+            );
+        }
+
+        if ($request->isPost() && $form->isValid()) {
+            $formData = $form->getData();
+
+            $dtoData = [
+                $this->getIdentifierIndex() => $this->getIdentifier(),
+                'id' => $id,
+                'version' => $formData['data']['version'],
+                'platedWeight' => $formData['data']['platedWeight']
+            ];
+
+            $dtoClass = $this->updateVehicleMap[$this->lva];
+
+            $response = $this->handleCommand($dtoClass::create($dtoData));
+
+            if ($response->isOk()) {
+                return $this->handlePostSave(null, false);
+            }
+
+            if ($response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+            } else {
+                $this->mapVehicleErrors($form, $response->getResult()['messages']);
+            }
+        }
+
+        return $this->render('edit_vehicles', $form);
     }
 
     public function reprintAction()
@@ -266,6 +364,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      *
      * @param int $id
      * @return boolean
+     * @todo migrate this
      */
     protected function isDiscPendingForLicenceVehicle($id)
     {
@@ -280,133 +379,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         return false;
-    }
-
-    protected function canAddAnother()
-    {
-        $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
-        $totalVehicles = $this->getTotalNumberOfVehicles();
-
-        return $totalVehicles < ($totalAuth - 1);
-    }
-
-    /**
-     * Get vrms linked to licence
-     *
-     * @return array
-     * @todo migrate this
-     */
-    protected function getVrmsForCurrentLicence()
-    {
-        return $this->getServiceLocator()->get('Entity\Licence')->getCurrentVrms($this->getLicenceId());
-    }
-
-    /**
-     * If vehicle exists on another licence, add a message and confirmation field to the form
-     *
-     * @param array $data
-     * @param \Zend\Form\Form $form
-     * @return boolean
-     * @todo migrate this
-     */
-    protected function checkIfVehicleExistsOnOtherLicences($data, $form)
-    {
-        $licences = $this->getOthersLicencesFromVrm($data['data']['vrm'], $this->getLicenceId());
-
-        if (!empty($licences)) {
-
-            $confirm = new Checkbox('confirm-add', array('label' => 'vehicle-belongs-to-another-licence-confirmation'));
-
-            $confirm->setMessages(array($this->getErrorMessageForVehicleBelongingToOtherLicences($licences)));
-
-            $form->get('licence-vehicle')->add($confirm);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Get a list of licences that have this vehicle (Except the current licence)
-     *
-     * @param string $vrm
-     * @param int $licenceId
-     * @todo migrate this
-     */
-    protected function getOthersLicencesFromVrm($vrm, $licenceId)
-    {
-        $licenceVehicles = $this->getServiceLocator()->get('Entity\Vehicle')->getLicencesForVrm($vrm);
-
-        $licences = array();
-
-        foreach ($licenceVehicles as $licenceVehicle) {
-            if (isset($licenceVehicle['licence']['id'])
-                && $licenceVehicle['licence']['id'] != $licenceId) {
-
-                if (empty($licenceVehicle['licence']['licNo'])
-                    && isset($licenceVehicle['licence']['applications'][0])
-                ) {
-                    $licenceNumber = 'APP-' . $licenceVehicle['licence']['applications'][0]['id'];
-                } else {
-                    $licenceNumber = $licenceVehicle['licence']['licNo'];
-                }
-
-                $licences[] = $licenceNumber;
-            }
-        }
-
-        return $licences;
-    }
-
-    /**
-     * We need to manually translate the message, as we need to optionally display a licence number
-     * Based on whether we are internal or external
-     *
-     * @param array $licences
-     * @return string
-     * @todo migrate this
-     */
-    protected function getErrorMessageForVehicleBelongingToOtherLicences($licences)
-    {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-
-        $translationKey = 'vehicle-belongs-to-another-licence-message-' . $this->location;
-
-        // Internally we can add the licence numbers
-        if ($this->location === 'internal') {
-
-            if (count($licences) > 1) {
-                $translationKey .= '-multiple';
-            }
-
-            return sprintf($translator->translate($translationKey), implode(', ', $licences));
-        }
-
-        return $translator->translate($translationKey);
-    }
-
-    /**
-     * Set appropriate default values on vehicle date fields
-     *
-     * @param \Zend\Form\Form $form
-     * @param \DateTime $currentDate
-     * @return \Zend\Form\Form
-     */
-    protected function setDefaultDates($form, $currentDate)
-    {
-        $fieldset = $form->get('licence-vehicle');
-
-        // receivedDate gets removed in some contexts
-        if ($fieldset->has('receivedDate')) {
-            // default 'Received date' to the current date if it is not set
-            $receivedDate = $fieldset->get('receivedDate')->getValue();
-            $receivedDate = trim($receivedDate, '-'); // date element returns '--' when empty!
-            if (empty($receivedDate)) {
-                $fieldset->get('receivedDate')->setValue($currentDate);
-            }
-        }
-        return $form;
     }
 
     /**
@@ -472,13 +444,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             );
     }
 
-    protected function renderForm($form)
+    protected function renderForm($form, $headerData)
     {
-        // *always* check if the user has exceeded their authority
-        // as a nice little addition; they may have changed their OC totals
-
-        // @todo migrate this
-        if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
+        if ($headerData['spacesRemaining'] < 0) {
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-vehicles-than-authorisation');
         }
 
@@ -505,127 +473,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFiles($files);
 
         return $this->render('vehicles', $form, $params);
-    }
-
-    /**
-     * Common add / edit logic
-     */
-    protected function addOrEdit($mode)
-    {
-        $request = $this->getRequest();
-        $id = $this->params('child_id');
-
-        $editRemovedVehicleForLicence = false;
-
-        // Check if the user is attempting to edit a removed vehicle, and bail early if so
-        if ($mode === 'edit' && $request->isPost()) {
-
-            $vehicleData = $this->getVehicleFormData($id);
-
-            if ($this->lva === 'licence' && $this->location === 'internal'
-                && isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])
-            ) {
-                $editRemovedVehicleForLicence = true;
-            } elseif (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addErrorMessage('cant-edit-removed-vehicle');
-
-                return $this->redirect()->toRoute(null, [], [], true);
-            }
-        }
-
-        $data = array();
-
-        if ($request->isPost() && !$editRemovedVehicleForLicence) {
-            $data = (array)$request->getPost();
-        } elseif ($mode === 'edit') {
-            $vehicleData = $this->getVehicleFormData($id);
-            $data = $this->formatVehicleDataForForm($vehicleData);
-
-            // if we are in edit removed vehicle mode - we need to merge
-            // fetched data with some POST data, because almost all fields are
-            // disabled so there is no data in POST
-            if ($request->isPost() && $editRemovedVehicleForLicence) {
-                $post = (array)$request->getPost();
-                $data['licence-vehicle']['removalDate'] = $post['licence-vehicle']['removalDate'];
-                $data['security'] = $post['security'];
-            }
-        }
-
-        $params = [
-            'mode' => $mode,
-            'isRemoved' => isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate']),
-            'id' => $id,
-            'canAddAnother' => $this->canAddAnother(),
-            'isPost' => $request->isPost(),
-            'currentVrms' => $this->getVrmsForCurrentLicence(),
-            'lva' => $this->lva
-        ];
-
-        $form = $this->getServiceLocator()
-            ->get('FormServiceManager')
-            ->get('lva-' . $this->lva . '-goods-' . $this->section . '-vehicle')
-            ->getForm($this->getRequest(), $params)
-            ->setData($data);
-
-        if ($request->isPost() && $form->isValid()) {
-
-            // We can save if we are in
-            // - edit mode
-            // - add mode, and we have confirmed add
-            // - add mode, and haven't confirmed add, but the VRM is new
-            if ($mode === 'edit'
-                || (isset($data['licence-vehicle']['confirm-add']) && !empty($data['licence-vehicle']['confirm-add']))
-                || !$this->checkIfVehicleExistsOnOtherLicences($data, $form)
-            ) {
-
-                $params = [
-                    'data' => $form->getData(),
-                    'mode' => $mode,
-                    'id' => $this->getIdentifier(),
-                    'licenceId' => $this->getLicenceId()
-                ];
-
-                $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                    ->get('Lva\\' . ucfirst($this->lva) . 'GoodsVehiclesVehicle')
-                    ->process($params);
-
-                if (!$response->isOk()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
-                    return $this->renderForm($form);
-                }
-
-                return $this->handlePostSave();
-            }
-        }
-
-        if ($this->location === 'internal') {
-            // set default date values prior to render
-            $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
-            $form = $this->setDefaultDates($form, $today);
-        }
-
-        return $this->render($mode . '_vehicles', $form);
-    }
-
-    /**
-     * Format the data for the form
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function formatVehicleDataForForm($data)
-    {
-        $licenceVehicle = $data;
-        unset($licenceVehicle['vehicle']);
-
-        $licenceVehicle['discNo'] = VehicleDiscNo::format($licenceVehicle);
-        unset($licenceVehicle['goodsDiscs']);
-
-        return array(
-            'licence-vehicle' => $licenceVehicle,
-            'data' => $data['vehicle']
-        );
     }
 
     protected function getTable($headerData)
@@ -680,11 +527,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             ->createFormWithRequest('GenericConfirmation', $request);
     }
 
-    protected function getVehicleFormData($id)
-    {
-        return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehicle($id);
-    }
-
     /**
      * Get the total vehicle authorisations
      *
@@ -713,5 +555,114 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         return $this->totalVehicles;
+    }
+
+    protected function getFilters()
+    {
+        if ($this->getRequest()->isPost()) {
+            $query = $this->getRequest()->getPost('query');
+        } else {
+            $query = $this->getRequest()->getQuery();
+        }
+
+        return $this->formatFilters((array)$query);
+    }
+
+    protected function formatFilters($query)
+    {
+        $filters = [
+            'page' => isset($query['page']) ? $query['page'] : 1,
+            'limit' => isset($query['limit']) ? $query['limit'] : 10,
+        ];
+
+        if (isset($query['vrm']) && $query['vrm'] !== 'All') {
+            $filters['vrm'] = $query['vrm'];
+        }
+
+        if (isset($query['specified']) && in_array($query['specified'], ['Y', 'N'])) {
+            $filters['specified'] = $query['specified'];
+        }
+
+        $filters['includeRemoved'] = (isset($query['includeRemoved']) && $query['includeRemoved'] == '1');
+
+        if (isset($query['disc']) && in_array($query['disc'], ['Y', 'N'])) {
+            $filters['disc'] = $query['disc'];
+        }
+
+        return $filters;
+    }
+
+    /**
+     * Get pre-configured form
+     *
+     * @return \Zend\Form\Form
+     */
+    protected function getForm($headerData, $formData)
+    {
+        return $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-goods-' . $this->section)
+            ->getForm($this->getTable($headerData))
+            ->setData($formData);
+    }
+
+    protected function mapErrors(\Zend\Form\Form $form, array $errors)
+    {
+        $formMessages = [];
+
+        if (isset($errors['vehicles'])) {
+
+            foreach ($errors['vehicles'] as $key => $message) {
+                $formMessages['table']['table'][] = $key;
+            }
+
+            unset($errors['vehicles']);
+        }
+
+        $form->setMessages($formMessages);
+
+        if (!empty($errors)) {
+            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+            foreach ($errors as $error) {
+                $fm->addCurrentErrorMessage($error);
+            }
+        }
+    }
+
+    protected function mapVehicleErrors(\Zend\Form\Form $form, array $errors)
+    {
+        $formMessages = [];
+
+        $form->setMessages($formMessages);
+
+        if (!empty($errors)) {
+            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+            foreach ($errors as $error) {
+                $fm->addCurrentErrorMessage($error);
+            }
+        }
+    }
+
+    /**
+     * Format the confirmation message
+     */
+    protected function formatConfirmationMessage($message)
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $decoded = json_decode($message);
+
+        if (is_array($decoded)) {
+            $message = 'vehicle-belongs-to-another-licence-message-internal';
+
+            if (count($decoded) > 1) {
+                $message .= '-multiple';
+            }
+
+            return $translator->translateReplace($message, [implode(', ', $decoded)]);
+        } else {
+            return $translator->translate('vehicle-belongs-to-another-licence-message-external');
+        }
     }
 }

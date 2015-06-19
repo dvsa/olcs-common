@@ -690,21 +690,19 @@ return array(
             'Lva\Application' => 'Common\BusinessService\Service\Lva\Application',
             'Lva\ApplicationRevive' => 'Common\BusinessService\Service\Lva\ApplicationRevive',
             'Lva\Licence' => 'Common\BusinessService\Service\Lva\Licence',
-            // Goods Vehicles business services
-            'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
-            'Lva\VariationGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
-            'Lva\ApplicationGoodsVehicles' => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehicles',
             // Psv Vehicles business services
             'Lva\LicencePsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
             'Lva\VariationPsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
             'Lva\ApplicationPsvVehicles' => 'Common\BusinessService\Service\Lva\ApplicationPsvVehicles',
             // Goods vehicles vehicle business service
-            'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
             'Lva\LicenceGoodsVehiclesRemovedVehicle' =>
                 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesRemovedVehicle',
+            // @todo remove these
+            'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
             'Lva\VariationGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\VariationGoodsVehiclesVehicle',
             'Lva\ApplicationGoodsVehiclesVehicle'
                 => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehiclesVehicle',
+
             'Lva\RequestDisc' => 'Common\BusinessService\Service\Lva\RequestDisc',
             'Lva\ReprintDisc' => 'Common\BusinessService\Service\Lva\ReprintDisc',
             'Lva\CeaseActiveDisc' => 'Common\BusinessService\Service\Lva\CeaseActiveDisc',

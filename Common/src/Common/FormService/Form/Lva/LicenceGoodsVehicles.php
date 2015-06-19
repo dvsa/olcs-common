@@ -14,10 +14,8 @@ namespace Common\FormService\Form\Lva;
  */
 class LicenceGoodsVehicles extends AbstractGoodsVehicles
 {
-    protected function alterForm($form, $isCrudPressed)
+    protected function alterForm($form)
     {
-        parent::alterForm($form, $isCrudPressed);
-
         $this->getFormServiceLocator()->get('lva-licence')->alterForm($form);
         $this->getFormServiceLocator()->get('lva-licence-variation-vehicles')->alterForm($form);
     }

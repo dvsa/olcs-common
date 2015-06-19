@@ -7,7 +7,7 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("licence-vehicle")
  */
-class LicenceVehicle
+class LicenceLicenceVehicle
 {
     /**
      * @Form\Attributes({"value":""})
@@ -38,11 +38,8 @@ class LicenceVehicle
      * @Form\Attributes({})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate",
-     *     "create_empty_option": true,
-     *     "render_delimiters": false,
-     *     "month_attributes": {"disabled":"disabled"},
-     *     "year_attributes": {"disabled":"disabled"},
-     *     "day_attributes": {"disabled":"disabled"}
+     *     "create_empty_option": false,
+     *     "render_delimiters": false
      * })
      * @Form\Required(false)
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
@@ -53,11 +50,9 @@ class LicenceVehicle
      * @Form\Attributes({})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.removalDate",
-     *     "create_empty_option": true,
+     *     "create_empty_option": false,
      *     "render_delimiters": false,
-     *     "month_attributes": {"disabled":"disabled"},
-     *     "year_attributes": {"disabled":"disabled"},
-     *     "day_attributes": {"disabled":"disabled"}
+     *     "default_date": "now"
      * })
      * @Form\Required(false)
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
