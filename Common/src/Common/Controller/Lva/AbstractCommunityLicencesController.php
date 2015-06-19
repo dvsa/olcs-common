@@ -129,7 +129,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     {
         $query = [
             'licence' => $this->getLicenceId(),
-            'status' => implode(',', $this->filters['status']),
+            'statuses' => implode(',', $this->filters['status']),
             'sort' => 'issueNo',
             'order' => 'DESC'
         ];
