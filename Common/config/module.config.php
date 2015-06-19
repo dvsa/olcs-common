@@ -92,15 +92,6 @@ return array(
             'LvaApplication/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
             ),
-            'LvaApplication/CommunityLicences' => array(
-                'Common\Controller\Lva\Delegators\ApplicationCommunityLicenceDelegator'
-            ),
-            'LvaVariation/CommunityLicences' => array(
-                'Common\Controller\Lva\Delegators\VariationCommunityLicenceDelegator'
-            ),
-            'LvaLicence/CommunityLicences' => array(
-                'Common\Controller\Lva\Delegators\LicenceCommunityLicenceDelegator'
-            ),
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
             ),
@@ -231,12 +222,6 @@ return array(
             'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
             'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
             'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
-            'ApplicationCommunityLicenceAdapter' =>
-                'Common\Controller\Lva\Adapters\ApplicationCommunityLicenceAdapter',
-            'VariationCommunityLicenceAdapter' =>
-                'Common\Controller\Lva\Adapters\VariationCommunityLicenceAdapter',
-            'LicenceCommunityLicenceAdapter' =>
-                'Common\Controller\Lva\Adapters\LicenceCommunityLicenceAdapter',
             'ApplicationPeopleAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationPeopleAdapter',
             'LicencePeopleAdapter'

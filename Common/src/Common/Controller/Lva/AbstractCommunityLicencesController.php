@@ -268,26 +268,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             ];
             $dto = ApplicationCreateOfficeCopy::create($create);
         }
-
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
-
-        /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
-        if ($response->isOk()) {
-            $this->addSuccessMessage('internal.community_licence.office_copy_created');
-        }
-        if ($response->isClientError()) {
-            $errors = $response->getResult()['messages'];
-            foreach ($errors as $error) {
-                $this->addErrorMessage($error);
-            }
-        }
-
-        if ($response->isServerError()) {
-            $this->addErrorMessage('unknown-error');
-        }
-
-        return $this->redirectToIndex();
+        return $this->processDto($dto, 'internal.community_licence.office_copy_created');
     }
 
     /**
@@ -345,25 +326,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                     ];
                     $dto = ApplicationCreateCommunityLic::create($create);
                 }
-
-                $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
-
-                /** @var \Common\Service\Cqrs\Response $response */
-                $response = $this->getServiceLocator()->get('CommandService')->send($command);
-                if ($response->isOk()) {
-                    $this->addSuccessMessage('internal.community_licence.licences_created');
-                    return $this->redirectToIndex();
-                }
-                if ($response->isClientError()) {
-                    $errors = $response->getResult()['messages'];
-                    foreach ($errors as $error) {
-                        $this->addErrorMessage($error);
-                    }
-                }
-
-                if ($response->isServerError()) {
-                    $this->addErrorMessage('unknown-error');
-                }
+                return $this->processDto($dto, 'internal.community_licence.licences_created');
             }
         }
         return $this->render($view);
@@ -391,47 +354,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                 'communityLicenceIds' => $ids,
                 'checkOfficeCopy' => true
             ];
-            $dto = VoidDto::create($void);
-            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
-            /** @var \Common\Service\Cqrs\Response $response */
-            $response = $this->getServiceLocator()->get('CommandService')->send($command);
-            if ($response->isOk()) {
-                $this->addSuccessMessage('internal.community_licence.licences_voided');
-                return $this->redirectToIndex();
-            }
-            if ($response->isClientError()) {
-                $errors = $response->getResult()['messages'];
-                foreach ($errors as $error) {
-                    $this->addErrorMessage($error);
-                }
-            }
-            if ($response->isServerError()) {
-                $this->addErrorMessage('unknown-error');
-            }
+            return $this->processDto(VoidDto::create($void), 'internal.community_licence.licences_voided');
         }
         return $this->redirectToIndex();
-    }
-
-    /**
-     * Check if selected licences allow to be restored
-     *
-     * @param string $ids
-     */
-    protected function allowToRestore($ids)
-    {
-        $licenceId = $this->getLicenceId();
-        if (!$this->hasOfficeCopy($licenceId, $ids)) {
-            $officeCopy = $this->getServiceLocator()
-                ->get('Entity\CommunityLic')
-                ->getOfficeCopy($licenceId);
-            if (
-                    $officeCopy['status']['id'] == CommunityLicEntityService::STATUS_WITHDRAWN ||
-                    $officeCopy['status']['id'] == CommunityLicEntityService::STATUS_SUSPENDED
-                ) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
@@ -442,11 +367,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     {
         $request = $this->getRequest();
 
-        $ids = explode(',', $this->params('child_id'));
-        if (!$this->allowToRestore($ids)) {
-            $this->addErrorMessage('internal.community_licence.restore_not_allowed');
-            return $this->redirectToIndex();
-        }
         if (!$request->isPost()) {
             $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicencesRestore');
             $view = new ViewModel(['form' => $form]);
@@ -454,42 +374,13 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             return $this->render($view);
         }
         if (!$this->isButtonPressed('cancel')) {
-            $this->restoreLicences($ids);
-            $this->addSuccessMessage('internal.community_licence.licences_restored');
+            $restore = [
+                'licence' => $this->getLicenceId(),
+                'communityLicenceIds' => explode(',', $this->params('child_id'))
+            ];
+            return $this->processDto(RestoreDto::create($restore), 'internal.community_licence.licences_restored');
         }
         return $this->redirectToIndex();
-    }
-
-    /**
-     * Restore licences
-     *
-     * @param array $ids
-     */
-    protected function restoreLicences($ids)
-    {
-        $licenceId = $this->getLicenceId();
-        $licences = $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getCommunityLicencesByLicenceIdAndIds($licenceId, $ids);
-
-        $dataToRestore = [];
-        foreach ($licences as $licence) {
-            if ($licence['specifiedDate']) {
-                $data = [
-                    'status' => CommunityLicEntityService::STATUS_ACTIVE,
-                    'expiredDate' => null
-                ];
-            } else {
-                $data = [
-                    'status' => CommunityLicEntityService::STATUS_PENDING,
-                    'expiredDate' => null
-                ];
-            }
-            $dataToRestore[] = array_merge($licence, $data);
-        }
-        $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToRestore);
-        $this->getServiceLocator()->get('Entity\CommunityLicSuspension')->deleteSuspensionsAndReasons($ids);
-        $this->getServiceLocator()->get('Entity\CommunityLicWithdrawal')->deleteWithdrawalsAndReasons($ids);
     }
 
     /**
@@ -503,12 +394,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         }
         $request = $this->getRequest();
 
-        $ids = explode(',', $this->params('child_id'));
-        if (!$this->allowToStop($ids)) {
-            $this->addErrorMessage('internal.community_licence.stop_not_allowed');
-            return $this->redirectToIndex();
-        }
-
         $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicencesStop');
         $view = new ViewModel(['form' => $form]);
         $view->setTemplate('partials/form');
@@ -518,8 +403,22 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             $data = (array)$request->getPost();
             $form->setData($data);
             if ($form->isValid()) {
-                $this->stopLicences($ids, $form->getData());
-                return $this->redirectToIndex();
+                $formattedData = $form->getData();
+                $type = $formattedData['data']['type'] === 'N' ? 'withdrawal' : 'suspension';
+                $message = ($type == 'withdrawal') ? 'internal.community_licence.licences_withdrawn' :
+                    'internal.community_licence.licences_suspended';
+
+                $stop = [
+                    'licence' => $this->getLicenceId(),
+                    'communityLicenceIds' => explode(',', $this->params('child_id')),
+                    'type' => $type,
+                    'startDate' =>
+                        isset($formattedData['dates']['startDate']) ? $formattedData['dates']['startDate'] : null,
+                    'endDate' =>
+                        isset($formattedData['dates']['endDate']) ? $formattedData['dates']['endDate'] : null,
+                    'reasons' => $formattedData['data']['reason']
+                ];
+                return $this->processDto(StopDto::create($stop), $message);
             }
         }
 
@@ -532,184 +431,15 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             return $this->redirectToIndex();
         }
 
-        $licenceId  = $this->getLicenceId();
-        $ids = explode(',', $this->params('child_id'));
-
-        if (!$this->allowToReprint($ids)) {
-            $this->addErrorMessage('internal.community_licence.reprint_not_allowed');
-            return $this->redirectToIndex();
-        }
-
         if ($this->getRequest()->isPost()) {
-             // 1. Void existing licences
-            $this->voidLicences($ids);
-
-            // 2. Create new licences with the same issue numbers
-            $issueNos = $this->getIssueNumbersForLicences($ids);
-            $this->getAdapter()->addCommunityLicencesWithIssueNos($licenceId, $issueNos);
-
-            $this->addSuccessMessage('internal.community_licence.licences_reprinted');
-            return $this->redirectToIndex();
+            $reprint = [
+                'licence' => $this->getLicenceId(),
+                'communityLicenceIds' => explode(',', $this->params('child_id'))
+            ];
+            return $this->processDto(ReprintDto::create($reprint), 'internal.community_licence.licences_reprinted');
         }
 
         return $this->renderConfirmation('internal.community_licence.confirm_reprint_licences');
-    }
-
-    /**
-     * Check if selected licences can be reprinted
-     *
-     * @param string $ids
-     * @return boolean true iff all are active
-     */
-    protected function allowToReprint($ids)
-    {
-        $licenceId = $this->getLicenceId();
-        $activeLicences = $this->getServiceLocator()->get('Entity\CommunityLic')
-            ->getActiveLicences($licenceId);
-
-        $activeIds = [];
-        foreach ($activeLicences['Results'] as $licence) {
-            $activeIds[] = $licence['id'];
-        }
-
-        $notActive = array_diff($ids, $activeIds);
-        return empty($notActive);
-    }
-
-    protected function getIssueNumbersForLicences($ids)
-    {
-        return array_map(
-            function ($licence) {
-                return $licence['issueNo'];
-            },
-            $this->getServiceLocator()->get('Entity\CommunityLic')->getByIds($ids)
-        );
-    }
-
-    /**
-     * Check if selected licences allow to be suspended / withdrawn
-     *
-     * @param string $ids
-     */
-    protected function allowToStop($ids)
-    {
-        $licenceId = $this->getLicenceId();
-        if ($this->hasOfficeCopy($licenceId, $ids)) {
-            $allValidLicences = $this->getServiceLocator()
-                ->get('Entity\CommunityLic')
-                ->getValidLicences($licenceId);
-            foreach ($allValidLicences['Results'] as $validLicence) {
-                if (
-
-                        ($validLicence['status']['id'] == CommunityLicEntityService::STATUS_PENDING) ||
-
-                        (
-                           $validLicence['status']['id'] == CommunityLicEntityService::STATUS_ACTIVE &&
-                           !in_array($validLicence['id'], $ids)
-                        )
-
-                    ) {
-
-                    return false;
-
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Check if office copy was selected
-     *
-     * @param int $licenceId
-     * @param array $ids
-     * @return bool
-     */
-    protected function hasOfficeCopy($licenceId, $ids)
-    {
-        $licences = $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getCommunityLicencesByLicenceIdAndIds($licenceId, $ids);
-        foreach ($licences as $licence) {
-            if ($licence['issueNo'] === 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Suspend or withdrawn licences
-     *
-     * @param array $ids
-     * @param array $formattedData
-     * @return bool
-     */
-    protected function stopLicences($ids, $formattedData)
-    {
-        $type = $formattedData['data']['type'] === 'N' ? 'withdrawal' : 'suspension';
-
-        // prepare common data for community licence depending of selected asction
-        if ($type == 'withdrawal') {
-            $comLicData = [
-              'status' => CommunityLicEntityService::STATUS_WITHDRAWN,
-              'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate()
-            ];
-            $message = 'internal.community_licence.licences_withdrawn';
-            $suspensionOrWithrawalService = 'Entity\CommunityLicWithdrawal';
-            $reasonService = 'Entity\CommunityLicWithdrawalReason';
-        } else {
-            $comLicData = [
-                'status' => CommunityLicEntityService::STATUS_SUSPENDED
-             ];
-            $message = 'internal.community_licence.licences_suspended';
-            $suspensionOrWithrawalService = 'Entity\CommunityLicSuspension';
-            $reasonService = 'Entity\CommunityLicSuspensionReason';
-        }
-
-        // fetch community licences by ids to get version field
-        $comLics = $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getCommunityLicencesByLicenceIdAndIds($this->getLicenceId(), $ids);
-
-        // prepare data to save all community licences and all suspension/withdrawal records at once
-        $comLicsToSave = [];
-        $comLicsWs = [];
-        foreach ($comLics as $comLic) {
-            $comLicsToSave[] = array_merge(
-                $comLicData, ['id' => $comLic['id'], 'version' => $comLic['version']]
-            );
-            $data = [
-                'communityLic' => $comLic['id']
-            ];
-            if ($type == 'suspension') {
-                $data['startDate'] = $formattedData['dates']['startDate'];
-                $data['endDate'] = $formattedData['dates']['endDate'];
-            }
-            $comLicsWs[] = $data;
-        }
-        $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($comLicsToSave);
-
-        $comLicsWs['_OPTIONS_'] = ['multiple' => true];
-        $result = $this->getServiceLocator()->get($suspensionOrWithrawalService)->save($comLicsWs);
-
-        if (!is_array($result['id'])) {
-            $result['id'] = [$result['id']];
-        }
-        // prepare to save all withdrawal/suspension reasons at once
-        $reasons = [];
-        foreach ($result['id'] as $id) {
-            foreach ($formattedData['data']['reason'] as $reason) {
-                $data = [
-                    'communityLic' . ucfirst($type) => $id,
-                    'type' => $reason
-                ];
-                $reasons[] = $data;
-            }
-        }
-        $reasons['_OPTIONS_'] = ['multiple' => true];
-        $this->getServiceLocator()->get($reasonService)->save($reasons);
-        $this->addSuccessMessage($message);
     }
 
     protected function renderConfirmation($message)
@@ -723,5 +453,26 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $view->setTemplate('partials/form');
 
         return $this->render($view);
+    }
+
+    protected function processDto($dto, $successMessage)
+    {
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+        /** @var \Common\Service\Cqrs\Response $response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        if ($response->isOk()) {
+            $this->addSuccessMessage($successMessage);
+            return $this->redirectToIndex();
+        }
+        if ($response->isClientError()) {
+            $errors = $response->getResult()['messages'];
+            foreach ($errors as $error) {
+                $this->addErrorMessage($error);
+            }
+        }
+        if ($response->isServerError()) {
+            $this->addErrorMessage('unknown-error');
+        }
+        return $this->redirectToIndex();
     }
 }
