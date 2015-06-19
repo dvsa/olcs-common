@@ -17,6 +17,10 @@ use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\Create as ApplicationCre
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\Create as LicenceCreateCommunityLic;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Reprint as ReprintDto;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Restore as RestoreDto;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Stop as StopDto;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Void as VoidDto;
 
 /**
  * Shared logic between Community Licences controllers
@@ -129,7 +133,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     {
         $query = [
             'licence' => $this->getLicenceId(),
-            'status' => implode(',', $this->filters['status']),
+            'statuses' => implode(',', $this->filters['status']),
             'sort' => 'issueNo',
             'order' => 'DESC'
         ];
@@ -374,10 +378,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $request = $this->getRequest();
 
         $ids = explode(',', $this->params('child_id'));
-        if (!$this->allowToProcess($ids)) {
-            $this->addErrorMessage('internal.community_licence.void_not_allowed');
-            return $this->redirectToIndex();
-        }
         if (!$request->isPost()) {
             $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicencesVoid');
             $view = new ViewModel(['form' => $form]);
@@ -386,58 +386,30 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         }
 
         if (!$this->isButtonPressed('cancel')) {
-            $this->voidLicences($ids);
-            $this->addSuccessMessage('internal.community_licence.licences_voided');
-        }
-        return $this->redirectToIndex();
-    }
-
-    /**
-     * Void licences
-     *
-     * @param array $ids
-     */
-    protected function voidLicences($ids)
-    {
-        $licenceId = $this->getLicenceId();
-        $licences = $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getCommunityLicencesByLicenceIdAndIds($licenceId, $ids);
-
-        $data = [
-            'status' => CommunityLicEntityService::STATUS_VOID,
-            'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
-            'licence' => $licenceId
-        ];
-        $dataToVoid = [];
-        foreach ($licences as $licence) {
-            $dataToVoid[] = array_merge($licence, $data);
-        }
-        $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToVoid);
-        $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
-    }
-
-    /**
-     * Check if selected licences allow to be voided
-     *
-     * @param string $ids
-     */
-    protected function allowToProcess($ids)
-    {
-        $allow = true;
-        $licenceId = $this->getLicenceId();
-        if ($this->hasOfficeCopy($licenceId, $ids)) {
-            $allValidLicences = $this->getServiceLocator()
-                ->get('Entity\CommunityLic')
-                ->getValidLicences($licenceId);
-            foreach ($allValidLicences['Results'] as $validLicence) {
-                if (!in_array($validLicence['id'], $ids)) {
-                    $allow = false;
-                    break;
+            $void = [
+                'licence' => $this->getLicenceId(),
+                'communityLicenceIds' => $ids,
+                'checkOfficeCopy' => true
+            ];
+            $dto = VoidDto::create($void);
+            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+            /** @var \Common\Service\Cqrs\Response $response */
+            $response = $this->getServiceLocator()->get('CommandService')->send($command);
+            if ($response->isOk()) {
+                $this->addSuccessMessage('internal.community_licence.licences_voided');
+                return $this->redirectToIndex();
+            }
+            if ($response->isClientError()) {
+                $errors = $response->getResult()['messages'];
+                foreach ($errors as $error) {
+                    $this->addErrorMessage($error);
                 }
             }
+            if ($response->isServerError()) {
+                $this->addErrorMessage('unknown-error');
+            }
         }
-        return $allow;
+        return $this->redirectToIndex();
     }
 
     /**
