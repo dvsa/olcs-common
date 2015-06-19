@@ -29,16 +29,17 @@ return array(
             'action' => 'edit',
             'formatter' => function ($data) {
                 if (!is_null($data['interimApplication'])) {
-                    return $data['vrm'] . ' (interim)';
+                    return $data['vehicle']['vrm'] . ' (interim)';
                 }
 
-                return $data['vrm'];
+                return $data['vehicle']['vrm'];
             },
             'type' => 'Action',
         ),
         array(
             'title' => $translationPrefix . '.weight',
-            'format' => '{{platedWeight}} Kg'
+            'stringFormat' => '{vehicle->platedWeight} Kg',
+            'formatter' => 'StackValueReplacer'
         ),
         array(
             'title' => $translationPrefix . '.specified',
@@ -52,7 +53,8 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.disc-no',
-            'name' => 'discNo'
+            'name' => 'discNo',
+            'formatter' => 'VehicleDiscNo'
         ),
         array(
             'name' => 'action',

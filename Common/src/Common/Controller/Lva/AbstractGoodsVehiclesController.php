@@ -9,10 +9,12 @@
 namespace Common\Controller\Lva;
 
 use Common\Data\Mapper\Lva\GoodsVehicles;
+use Common\Service\Table\Formatter\VehicleDiscNo;
 use Zend\Form\Element\Checkbox;
 use Common\Service\Entity\LicenceEntityService;
 use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
 use Dvsa\Olcs\Transfer\Query\Application\GoodsVehicles as ApplicationGoodsVehicles;
+use Dvsa\Olcs\Transfer\Query\Variation\GoodsVehicles as VariationGoodsVehicles;
 
 /**
  * Goods Vehicles
@@ -30,17 +32,19 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     protected $loadDataMap = [
         'licence' => LicenceGoodsVehicles::class,
-        'variation' => ApplicationGoodsVehicles::class,
+        'variation' => VariationGoodsVehicles::class,
         'application' => ApplicationGoodsVehicles::class
     ];
 
     public function indexAction()
     {
         $request = $this->getRequest();
-        $query = (array)$request->getQuery();
+
+        $dtoData = $this->getFilters();
+        $dtoData['id'] = $this->getIdentifier();
 
         $dtoClass = $this->loadDataMap[$this->lva];
-        $response = $this->handleQuery($dtoClass::create(['id' => $this->getIdentifier()]));
+        $response = $this->handleQuery($dtoClass::create($dtoData));
         $headerData = $response->getResult();
 
         $formData = [];
@@ -54,7 +58,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $formData = GoodsVehicles::mapFromResult($headerData);
         }
 
-        $formData = array_merge($formData, ['query' => $query]);
+        $formData = array_merge($formData, ['query' => (array)$request->getQuery()]);
 
         $form = $this->getForm($headerData, $formData, $haveCrudAction);
 
@@ -93,6 +97,41 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         return $this->renderForm($form);
+    }
+
+    protected function getFilters()
+    {
+        if ($this->getRequest()->isPost()) {
+            $query = $this->getRequest()->getPost('query');
+        } else {
+            $query = $this->getRequest()->getQuery();
+        }
+
+        return $this->formatFilters((array)$query);
+    }
+
+    protected function formatFilters($query)
+    {
+        $filters = [
+            'page' => isset($query['page']) ? $query['page'] : 1,
+            'limit' => isset($query['limit']) ? $query['limit'] : 10,
+        ];
+
+        if (isset($query['vrm']) && $query['vrm'] !== 'All') {
+            $filters['vrm'] = $query['vrm'];
+        }
+
+        if (isset($query['specified'])) {
+            $filters['specified'] = $query['specified'];
+        }
+
+        $filters['includeRemoved'] = (isset($query['includeRemoved']) && $query['includeRemoved'] == '1');
+
+        if (isset($query['disc']) && in_array($query['disc'], ['Y', 'N'])) {
+            $filters['disc'] = $query['disc'];
+        }
+
+        return $filters;
     }
 
     /**
@@ -235,7 +274,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         foreach ($ids as $id) {
             $results = $this->getServiceLocator()->get('Entity\LicenceVehicle')->getDiscPendingData($id);
 
-            if ($this->isDiscPending($results)) {
+            if (VehicleDiscNo::isDiscPending($results)) {
                 return true;
             }
         }
@@ -345,30 +384,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         return $translator->translate($translationKey);
-    }
-
-    /**
-     * Check if the disc is pending
-     *
-     * @param array $licenceVehicleData
-     * @return boolean
-     */
-    protected function isDiscPending($licenceVehicleData)
-    {
-        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['removalDate'])) {
-            return true;
-        }
-
-        if (isset($licenceVehicleData['goodsDiscs']) && !empty($licenceVehicleData['goodsDiscs'])) {
-            $currentDisc = $licenceVehicleData['goodsDiscs'][0];
-
-            if (empty($currentDisc['ceasedDate']) && empty($currentDisc['discNo'])) {
-
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -604,7 +619,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $licenceVehicle = $data;
         unset($licenceVehicle['vehicle']);
 
-        $licenceVehicle['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
+        $licenceVehicle['discNo'] = VehicleDiscNo::format($licenceVehicle);
         unset($licenceVehicle['goodsDiscs']);
 
         return array(
@@ -620,7 +635,8 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         $tableName = 'lva-' . $this->location . '-vehicles';
 
-        $table = $this->getServiceLocator()->get('Table')->prepareTable($tableName, $this->getTableData(), $params);
+        $table = $this->getServiceLocator()->get('Table')
+            ->prepareTable($tableName, $headerData['licenceVehicles'], $params);
 
         $this->makeTableAlterations($table, $headerData);
 
@@ -656,63 +672,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 ['label' => 'Print vehicle list', 'requireRows' => true]
             );
         }
-    }
-
-    protected function getTableData()
-    {
-        if ($this->getRequest()->isPost()) {
-            $query = $this->getRequest()->getPost('query');
-        } else {
-            $query = $this->getRequest()->getQuery();
-        }
-
-        $filters = $this->formatFilters((array)$query);
-
-        $licenceVehicles = $this->getServiceLocator()->get('Entity\LicenceVehicle')
-            ->{'getVehiclesDataFor' . ucfirst($this->lva)}($this->getIdentifier(), $filters);
-
-        $results = array();
-
-        foreach ($licenceVehicles['Results'] as $licenceVehicle) {
-
-            // watch out! Now we get *all* data back, this was overriding
-            // the licence vehicle ID incorrectly
-            unset($licenceVehicle['vehicle']['id']);
-
-            $row = array_merge($licenceVehicle, $licenceVehicle['vehicle']);
-
-            unset($row['vehicle']);
-            unset($row['goodsDiscs']);
-
-            $row['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
-
-            $results[] = $row;
-        }
-
-        $licenceVehicles['Results'] = $results;
-
-        return $licenceVehicles;
-    }
-
-    /**
-     * Get current disc number
-     *
-     * @param array $licenceVehicle
-     * @return string
-     */
-    protected function getCurrentDiscNo($licenceVehicle)
-    {
-        if ($this->isDiscPending($licenceVehicle)) {
-            return 'Pending';
-        }
-
-        if (isset($licenceVehicle['goodsDiscs']) && !empty($licenceVehicle['goodsDiscs'])) {
-            $currentDisc = $licenceVehicle['goodsDiscs'][0];
-
-            return $currentDisc['discNo'];
-        }
-
-        return '';
     }
 
     protected function getConfirmationForm($request)
@@ -754,47 +713,5 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         return $this->totalVehicles;
-    }
-
-    protected function formatFilters($query)
-    {
-        $filters = [
-            'page' => isset($query['page']) ? $query['page'] : 1,
-            'limit' => isset($query['limit']) ? $query['limit'] : 10,
-        ];
-
-        if (isset($query['vrm']) && $query['vrm'] !== 'All') {
-            // Where the VRM starts with the 'vrm' string
-            $filters['vrm'] = '~' . $query['vrm'] . '%';
-        }
-
-        if (isset($query['specified'])) {
-
-            if ($query['specified'] === 'Y') {
-                $filters['specifiedDate'] = 'NOT NULL';
-            }
-
-            if ($query['specified'] === 'N') {
-                $filters['specifiedDate'] = 'NULL';
-            }
-        }
-
-        if (!isset($query['includeRemoved']) || $query['includeRemoved'] != '1') {
-            $filters['removalDate'] = 'NULL';
-        }
-
-        if (isset($query['disc'])) {
-            // Has active discs
-            if ($query['disc'] === 'Y') {
-                $filters['disc'] = 'Y';
-            }
-
-            // Has no active discs
-            if ($query['disc'] === 'N') {
-                $filters['disc'] = 'N';
-            }
-        }
-
-        return $filters;
     }
 }
