@@ -86,8 +86,9 @@ abstract class AbstractAddressesController extends AbstractController
                     'correspondence' => $data['correspondence'],
                     'correspondenceAddress' => $data['correspondence_address'],
                     'contact' => $data['contact'],
-                    'establishment' => $data['establishment'],
-                    'establishmentAddress' => $data['establishment_address'],
+                    'establishment' => isset($data['establishment']) ? $data['establishment'] : null,
+                    'establishmentAddress' => isset($data['establishment_address']) ?
+                        $data['establishment_address'] : null,
                     'consultant' => isset($data['consultant']) ? $data['consultant'] : null
                 ];
 
