@@ -661,12 +661,6 @@ return array(
             'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
             'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
-            'GoodsVehiclesVehicle' => 'Common\BusinessRule\Rule\GoodsVehiclesVehicle',
-            'LicenceGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesLicenceVehicle',
-            'LicenceGoodsVehiclesRemovedVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesRemovedVehicle',
-            'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
-            'ApplicationGoodsVehiclesLicenceVehicle'
-                => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
             'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
             'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
             'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
@@ -694,18 +688,6 @@ return array(
             'Lva\LicencePsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
             'Lva\VariationPsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
             'Lva\ApplicationPsvVehicles' => 'Common\BusinessService\Service\Lva\ApplicationPsvVehicles',
-            // Goods vehicles vehicle business service
-            'Lva\LicenceGoodsVehiclesRemovedVehicle' =>
-                'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesRemovedVehicle',
-            // @todo remove these
-            'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
-            'Lva\VariationGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\VariationGoodsVehiclesVehicle',
-            'Lva\ApplicationGoodsVehiclesVehicle'
-                => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehiclesVehicle',
-
-            'Lva\RequestDisc' => 'Common\BusinessService\Service\Lva\RequestDisc',
-            'Lva\ReprintDisc' => 'Common\BusinessService\Service\Lva\ReprintDisc',
-            'Lva\CeaseActiveDisc' => 'Common\BusinessService\Service\Lva\CeaseActiveDisc',
             'Lva\DeleteTransportManagerApplication' =>
                 'Common\BusinessService\Service\Lva\DeleteTransportManagerApplication',
             'Lva\TransportManagerApplicationForUser' =>

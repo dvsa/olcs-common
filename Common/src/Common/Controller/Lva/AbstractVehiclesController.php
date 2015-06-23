@@ -106,17 +106,17 @@ abstract class AbstractVehiclesController extends AbstractController implements 
      */
     protected function isDiscPendingForLicenceVehicle($id)
     {
-        $ids = (array)$id;
-
-        foreach ($ids as $id) {
-            $results = $this->getServiceLocator()->get('Entity\LicenceVehicle')->getDiscPendingData($id);
-
-            if ($this->isDiscPending($results)) {
-                return true;
-            }
-        }
-
-        return false;
+//        $ids = (array)$id;
+//
+//        foreach ($ids as $id) {
+//            $results = $this->getServiceLocator()->get('Entity\LicenceVehicle')->getDiscPendingData($id);
+//
+//            if ($this->isDiscPending($results)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
     }
 
     protected function preSaveVehicle($data, $mode)

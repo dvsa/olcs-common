@@ -1583,6 +1583,7 @@ return array(
     'lva.section.title.vehicles' => 'Vehicles',
     'lva.section.title.vehicles_declarations' => 'Vehicle declarations',
     'lva.section.title.vehicles_psv' => 'Vehicles',
+    'lva.section.title.transfer_vehicles' => 'Transfer Vehicles',
     'lva.section.title.voided_discs' => 'Are you sure you would like to void these discs?',
     'maint' => 'Maint',
     'mark-urgent' => 'Mark as urgent',

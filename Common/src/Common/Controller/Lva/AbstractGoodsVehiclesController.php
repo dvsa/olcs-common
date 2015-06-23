@@ -15,6 +15,7 @@ use Common\Service\Table\Formatter\VehicleDiscNo;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Licence\CreateGoodsVehicle as LicenceCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateGoodsVehicle as ApplicationUpdateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Vehicle\ReprintDisc;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteGoodsVehicle as LicenceDeleteGoodsVehicle;
@@ -318,13 +319,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
             $ids = explode(',', $this->params('child_id'));
 
-            $this->getServiceLocator()->get('BusinessServiceManager')
-                ->get('Lva\\ReprintDisc')
-                ->process(
-                    [
-                        'ids' => $ids
-                    ]
-                );
+            $response = $this->handleCommand(ReprintDisc::create(['ids' => $ids]));
+
+            if (!$response->isOk()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            }
 
             return $this->redirect()->toRouteAjax(
                 null,
@@ -343,10 +342,15 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     public function transferAction()
     {
         $form = $this->getVehicleTransferForm();
+
         $request = $this->getRequest();
+
         if ($request->isPost()) {
+
             $form->setData((array) $request->getPost());
+
             if ($form->isValid()) {
+
                 $response = $this->getServiceLocator()->get('BusinessServiceManager')
                     ->get('Lva\TransferVehicles')
                     ->process(
@@ -359,18 +363,22 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                     );
 
                 if ($response->isOk()) {
+
                     $this->getServiceLocator()
                         ->get('Helper\FlashMessenger')
                         ->addSuccessMessage('licence.vehicles_transfer.form.vehicles_transfered');
+
                     return $this->redirect()->toRouteAjax(
                         null,
                         array($this->getIdentifierIndex() => $this->getIdentifier())
                     );
                 }
+
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
             }
         }
-        return $this->renderForm($form);
+
+        return $this->render('transfer_vehicles', $form);
     }
 
     /**
@@ -380,20 +388,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      */
     protected function checkForAlternativeCrudAction($action)
     {
-        if ($action === 'reprint') {
-            $post = (array)$this->getRequest()->getPost();
-
-            $id = $post['table']['id'];
-
-            if ($this->isDiscPendingForLicenceVehicle($id)) {
-
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addErrorMessage('reprint-pending-disc-error');
-
-                return $this->reload();
-            }
-        }
-
         if ($action === 'add') {
             $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
 
@@ -411,28 +405,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 return $this->reload();
             }
         }
-    }
-
-    /**
-     * Check if the licence vehicle has a pending active disc
-     *
-     * @param int $id
-     * @return boolean
-     * @todo migrate this
-     */
-    protected function isDiscPendingForLicenceVehicle($id)
-    {
-        $ids = (array)$id;
-
-        foreach ($ids as $id) {
-            $results = $this->getServiceLocator()->get('Entity\LicenceVehicle')->getDiscPendingData($id);
-
-            if (VehicleDiscNo::isDiscPending($results)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
