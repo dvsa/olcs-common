@@ -11,15 +11,16 @@ namespace Common\Controller\Lva;
 use Common\Data\Mapper\Lva\GoodsVehicles;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Common\RefData;
-use Common\Service\Table\Formatter\VehicleDiscNo;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Licence\CreateGoodsVehicle as LicenceCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateGoodsVehicle as ApplicationUpdateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Licence\TransferVehicles;
 use Dvsa\Olcs\Transfer\Command\Vehicle\ReprintDisc;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteGoodsVehicle as LicenceDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicles;
+use Dvsa\Olcs\Transfer\Query\Licence\OtherActiveLicences;
 use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
 use Zend\Form\Element\Checkbox;
 use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
@@ -119,15 +120,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
             if ($haveCrudAction) {
 
-                $action = $this->getActionFromCrudAction($crudAction);
-
-                $alternativeCrudAction = $this->checkForAlternativeCrudAction($action);
-
-                if ($alternativeCrudAction === null) {
-                    return $this->handleCrudAction($crudAction, array('add', 'print-vehicles'));
-                }
-
-                return $alternativeCrudAction;
+                return $this->handleCrudAction($crudAction, ['add', 'print-vehicles']);
             }
 
             return $this->completeSection('vehicles');
@@ -138,14 +131,21 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     public function addAction()
     {
+        $result = $this->getVehicleSectionData();
+
+        if ($result['spacesRemaining'] < 1) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')
+                ->addErrorMessage('more-vehicles-than-total-auth-error');
+
+            return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+        }
+
         $request = $this->getRequest();
         $data = [];
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         }
-
-        $result = $this->getVehicleSectionData();
 
         $params = [];
         $params['spacesRemaining'] = $result['spacesRemaining'];
@@ -304,7 +304,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         $total = $result['activeVehicleCount'];
 
-        if ($total < $toDelete) {
+        if ($total > $toDelete) {
             return 'delete.confirmation.text';
         }
 
@@ -341,7 +341,15 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      */
     public function transferAction()
     {
-        $form = $this->getVehicleTransferForm();
+        $response = $this->handleQuery(OtherActiveLicences::create(['id' => $this->getLicenceId()]));
+
+        $options = [];
+
+        foreach ($response->getResult()['otherActiveLicences'] as $licence) {
+            $options[$licence['id']] = $licence['licNo'];
+        }
+
+        $form = $this->getVehicleTransferForm($options);
 
         $request = $this->getRequest();
 
@@ -351,30 +359,87 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
             if ($form->isValid()) {
 
-                $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                    ->get('Lva\TransferVehicles')
-                    ->process(
-                        [
-                            'data' => $form->getData(),
-                            'sourceLicenceId' => $this->getLicenceId(),
-                            'targetLicenceId' => $form->get('data')->get('licence')->getValue(),
-                            'id' => $this->params()->fromRoute('child_id')
-                        ]
-                    );
+                $formData = $form->getData();
+
+                $ids = explode(',', $this->params()->fromRoute('child_id'));
+
+                $dtoData = [
+                    'id' => $this->getLicenceId(),
+                    'target' => $formData['data']['licence'],
+                    'licenceVehicles' => $ids
+                ];
+
+                $response = $this->handleCommand(TransferVehicles::create($dtoData));
+
+                $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
 
                 if ($response->isOk()) {
 
-                    $this->getServiceLocator()
-                        ->get('Helper\FlashMessenger')
-                        ->addSuccessMessage('licence.vehicles_transfer.form.vehicles_transfered');
+                    $fm->addSuccessMessage('licence.vehicles_transfer.form.vehicles_transfered');
 
                     return $this->redirect()->toRouteAjax(
                         null,
-                        array($this->getIdentifierIndex() => $this->getIdentifier())
+                        [$this->getIdentifierIndex() => $this->getIdentifier()]
                     );
                 }
 
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+                if ($response->isClientError()) {
+
+                    $messages = $response->getResult()['messages'];
+                    $th = $this->getServiceLocator()->get('Helper\Translation');
+                    $licNo = $options[$formData['data']['licence']];
+
+                    $knownError = false;
+
+                    if (isset($messages['LIC_TRAN_1'])) {
+                        $fm->addErrorMessage(
+                            $th->translateReplace('licence.vehicles_transfer.form.message_exceed', [$licNo])
+                        );
+
+                        $knownError = true;
+                    }
+
+                    if (isset($messages['LIC_TRAN_2'])) {
+                        $fm->addErrorMessage(
+                            $th->translateReplace(
+                                'licence.vehicles_transfer.form.message_already_on_licence_singular',
+                                [
+                                    implode(', ', json_decode($messages['LIC_TRAN_2'], true)),
+                                    $licNo
+                                ]
+                            )
+                        );
+
+                        $knownError = true;
+                    }
+
+                    if (isset($messages['LIC_TRAN_3'])) {
+                        $fm->addErrorMessage(
+                            $th->translateReplace(
+                                'licence.vehicles_transfer.form.message_already_on_licence',
+                                [
+                                    implode(', ', json_decode($messages['LIC_TRAN_3'], true)),
+                                    $licNo
+                                ]
+                            )
+                        );
+
+                        $knownError = true;
+                    }
+
+                    if ($knownError == false) {
+                        $fm->addCurrentErrorMessage('unknown-error');
+                    } else {
+                        return $this->redirect()->toRouteAjax(
+                            null,
+                            [$this->getIdentifierIndex() => $this->getIdentifier()]
+                        );
+                    }
+                }
+
+                if ($response->isServerError()) {
+                    $fm->addCurrentErrorMessage('unknown-error');
+                }
             }
         }
 
@@ -382,46 +447,17 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     }
 
     /**
-     * Hijack the crud action check so we can validate the add button
-     *
-     * @param string $action
-     */
-    protected function checkForAlternativeCrudAction($action)
-    {
-        if ($action === 'add') {
-            $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
-
-            if (!is_numeric($totalAuth)) {
-                return;
-            }
-
-            $vehicleCount = $this->getTotalNumberOfVehicles();
-
-            if ($vehicleCount >= $totalAuth) {
-
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addErrorMessage('more-vehicles-than-total-auth-error');
-
-                return $this->reload();
-            }
-        }
-    }
-
-    /**
      * Get vehicles transfer form
      *
      * @return \Zend\Form\Form
-     * @todo migrate this
      */
-    protected function getVehicleTransferForm()
+    protected function getVehicleTransferForm($options)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('Lva\VehiclesTransfer');
-        $licences = $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getOtherActiveLicences($this->params()->fromRoute('licence'));
-        $form->get('data')->get('licence')->setValueOptions($licences);
-        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('Lva\VehiclesTransfer', $this->getRequest());
+
+        $form->get('data')->get('licence')->setValueOptions($options);
+
         return $form;
     }
 
@@ -506,36 +542,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     {
         return $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('GenericConfirmation', $request);
-    }
-
-    /**
-     * Get the total vehicle authorisations
-     *
-     * @return int
-     */
-    protected function getTotalNumberOfAuthorisedVehicles()
-    {
-        if (empty($this->totalAuthorisedVehicles)) {
-            $this->totalAuthorisedVehicles = $this->getLvaEntityService()
-                ->getTotalVehicleAuthorisation($this->getIdentifier());
-        }
-
-        return $this->totalAuthorisedVehicles;
-    }
-
-    /**
-     * Get total number of vehicles
-     *
-     * @return int
-     */
-    protected function getTotalNumberOfVehicles()
-    {
-        if (empty($this->totalVehicles)) {
-            $this->totalVehicles = $this->getServiceLocator()->get('Entity\Licence')
-                ->getVehiclesTotal($this->getLicenceId());
-        }
-
-        return $this->totalVehicles;
     }
 
     protected function getFilters()

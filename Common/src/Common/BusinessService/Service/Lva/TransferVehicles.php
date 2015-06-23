@@ -19,6 +19,8 @@ use Common\Service\Entity\LicenceEntityService;
  * Transfer Goods Vehicles
  *
  * @author Alex Peshkov <alex.peshkov@valteh.co.uk>
+ *
+ * @todo migrated for Goods
  */
 class TransferVehicles implements
     BusinessServiceInterface,
@@ -93,13 +95,13 @@ class TransferVehicles implements
         // create vehicles on target licence
         $targetLicenceVehicles = $this->createVehicles($sourceVehiclesIds, $targetLicenceId);
 
-        if ($targetLicence['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-            // remove goods discs
-            $this->removeGoodsDiscs($sourceLicence, $ids);
-
-            // create goods discs
-            $this->createGoodsDiscs($targetLicenceVehicles);
-        }
+//        if ($targetLicence['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+//            // remove goods discs
+//            $this->removeGoodsDiscs($sourceLicence, $ids);
+//
+//            // create goods discs
+//            $this->createGoodsDiscs($targetLicenceVehicles);
+//        }
 
         return $response;
     }
@@ -147,40 +149,40 @@ class TransferVehicles implements
             ->multiCreate($data)['id'];
     }
 
-    /**
-     * Remove goods discs
-     *
-     * @param array $sourceLicence
-     * @param array $sourceLicenceVehicles
-     */
-    protected function removeGoodsDiscs($sourceLicence, $sourceLicenceVehicles)
-    {
-        $discsToCease = [];
-        foreach ($sourceLicence['licenceVehicles'] as $lv) {
-            if (array_search($lv['id'], $sourceLicenceVehicles) !== false) {
-                foreach ($lv['goodsDiscs'] as $gd) {
-                    $discsToCease[] = $gd['id'];
-                }
-            }
-        }
-        $this->getServiceLocator()
-            ->get('Entity\GoodsDisc')
-            ->ceaseDiscs($discsToCease);
-    }
-
-    /**
-     * Create goods discs
-     *
-     * @param array $targetLicenceVehicles
-     */
-    protected function createGoodsDiscs($targetLicenceVehicles)
-    {
-        $licenceVehicles = [];
-        foreach ($targetLicenceVehicles as $id) {
-            $licenceVehicles[] = ['id' => $id];
-        }
-        $this->getServiceLocator()
-            ->get('Entity\GoodsDisc')
-            ->createForVehicles($licenceVehicles);
-    }
+//    /**
+//     * Remove goods discs
+//     *
+//     * @param array $sourceLicence
+//     * @param array $sourceLicenceVehicles
+//     */
+//    protected function removeGoodsDiscs($sourceLicence, $sourceLicenceVehicles)
+//    {
+//        $discsToCease = [];
+//        foreach ($sourceLicence['licenceVehicles'] as $lv) {
+//            if (array_search($lv['id'], $sourceLicenceVehicles) !== false) {
+//                foreach ($lv['goodsDiscs'] as $gd) {
+//                    $discsToCease[] = $gd['id'];
+//                }
+//            }
+//        }
+//        $this->getServiceLocator()
+//            ->get('Entity\GoodsDisc')
+//            ->ceaseDiscs($discsToCease);
+//    }
+//
+//    /**
+//     * Create goods discs
+//     *
+//     * @param array $targetLicenceVehicles
+//     */
+//    protected function createGoodsDiscs($targetLicenceVehicles)
+//    {
+//        $licenceVehicles = [];
+//        foreach ($targetLicenceVehicles as $id) {
+//            $licenceVehicles[] = ['id' => $id];
+//        }
+//        $this->getServiceLocator()
+//            ->get('Entity\GoodsDisc')
+//            ->createForVehicles($licenceVehicles);
+//    }
 }
