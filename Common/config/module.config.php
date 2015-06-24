@@ -790,8 +790,6 @@ return array(
             'CreateSeparatorSheet' => 'Common\BusinessService\Service\CreateSeparatorSheet',
             'Lva\AccessCorrespondence' => 'Common\BusinessService\Service\Lva\AccessCorrespondence',
             // Operator services
-            'Operator\IrfoDetails'
-                => 'Common\BusinessService\Service\Operator\IrfoDetails',
             'Lva\TransportConsultant' => 'Common\BusinessService\Service\Lva\TransportConsultant',
             'Lva\ContinueLicence'
                 => 'Common\BusinessService\Service\Lva\ContinueLicence',
