@@ -141,7 +141,7 @@ class TransferVehiclesTest extends MockeryTestCase
     public function testProcessGoods()
     {
         $this->markTestSkipped();
-        
+
         $sourceLicenceId = 1;
         $targetLicenceId = 2;
         $params = [
