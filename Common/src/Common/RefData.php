@@ -7,8 +7,6 @@ namespace Common;
  */
 class RefData
 {
-    const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
-
     const ORG_TYPE_LLP = 'org_t_llp';
 
     const CASE_TYPE_LICENCE = 'case_t_lic';
@@ -34,4 +32,18 @@ class RefData
     const PAYMENT_STATUS_LEGACY      = 'pay_s_leg';
     const PAYMENT_STATUS_FAILED      = 'pay_s_fail';
     const PAYMENT_STATUS_PAID        = 'pay_s_pd';
+
+    /**
+     * Goods or PSV keys
+     */
+    const LICENCE_CATEGORY_GOODS_VEHICLE = 'lcat_gv';
+    const LICENCE_CATEGORY_PSV = 'lcat_psv';
+
+    /**
+     * Licence types keys
+     */
+    const LICENCE_TYPE_RESTRICTED = 'ltyp_r';
+    const LICENCE_TYPE_STANDARD_INTERNATIONAL = 'ltyp_si';
+    const LICENCE_TYPE_STANDARD_NATIONAL = 'ltyp_sn';
+    const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
 }
