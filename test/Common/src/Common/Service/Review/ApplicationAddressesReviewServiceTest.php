@@ -76,11 +76,14 @@ class ApplicationAddressesReviewServiceTest extends MockeryTestCase
                             ],
                             'phoneContacts' => [
                                 [
-                                    'phoneContactType' => ['id' => PhoneContactEntityService::TYPE_BUSINESS],
+                                    'phone_contact_type' => PhoneContactEntityService::TYPE_BUSINESS,
+                                    // changed due to refData bug
+                                    // 'phoneContactType' => ['id' => PhoneContactEntityService::TYPE_BUSINESS],
                                     'phoneNumber' => '0123456789'
                                 ],
                                 [
-                                    'phoneContactType' => ['id' => PhoneContactEntityService::TYPE_MOBILE],
+                                    'phone_contact_type' => PhoneContactEntityService::TYPE_MOBILE,
+                                    // 'phoneContactType' => ['id' => PhoneContactEntityService::TYPE_MOBILE],
                                     'phoneNumber' => '0765465465'
                                 ]
                             ]
@@ -174,11 +177,13 @@ class ApplicationAddressesReviewServiceTest extends MockeryTestCase
                             ],
                             'phoneContacts' => [
                                 [
-                                    'phoneContactType' => ['id' => PhoneContactEntityService::TYPE_BUSINESS],
+                                    'phone_contact_type' => PhoneContactEntityService::TYPE_BUSINESS,
+                                    // 'phoneContactType' => ['id' => PhoneContactEntityService::TYPE_BUSINESS],
                                     'phoneNumber' => '0123456789'
                                 ],
                                 [
-                                    'phoneContactType' => ['id' => PhoneContactEntityService::TYPE_MOBILE],
+                                    'phone_contact_type' => PhoneContactEntityService::TYPE_MOBILE,
+                                    // 'phoneContactType' => ['id' => PhoneContactEntityService::TYPE_MOBILE],
                                     'phoneNumber' => '0765465465'
                                 ]
                             ]
