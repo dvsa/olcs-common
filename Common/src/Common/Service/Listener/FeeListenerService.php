@@ -116,7 +116,6 @@ class FeeListenerService implements ServiceLocatorAwareInterface
         if ($application === null
             || $application['isVariation']
             || $application['status']['id'] !== ApplicationEntityService::APPLICATION_STATUS_GRANTED
-            // @todo - check this, I think 'status' should actually be 'feeStatus'?
         ) {
             return;
         }

@@ -72,6 +72,7 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
     /**
      * @param int $applicationId
      * @return float
+     * @todo OLCS-9592 can use Dvsa\Olcs\Api\Domain\QueryHandler\Application\OutstandingFees
      */
     protected function getFee($applicationId)
     {
