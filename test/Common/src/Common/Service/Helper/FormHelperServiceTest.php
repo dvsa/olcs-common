@@ -99,7 +99,8 @@ class FormHelperServiceTest extends MockeryTestCase
                     ),
                     'attributes' => array(
                         'type' => 'submit',
-                        'class' => 'visually-hidden'
+                        'class' => 'visually-hidden',
+                        'id' => 'hidden-continue'
                     )
                 )
             );
