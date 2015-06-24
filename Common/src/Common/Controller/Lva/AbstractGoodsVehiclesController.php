@@ -234,23 +234,44 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             );
         }
 
+        if (!is_null($vehicleData['removalDate'])) {
+            $this->getServiceLocator()->get('Helper\Form')
+                ->disableValidation($form->getInputFilter());
+        }
+
+        // If the vehicle is removed, ignore validation
         if ($request->isPost() && $form->isValid()) {
             $formData = $form->getData();
 
-            $dtoData = [
-                $this->getIdentifierIndex() => $this->getIdentifier(),
-                'id' => $id,
-                'version' => $formData['data']['version'],
-                'platedWeight' => $formData['data']['platedWeight'],
-                'receivedDate' => isset($formData['licence-vehicle']['receivedDate'])
-                    ? $formData['licence-vehicle']['receivedDate'] : null,
-                'specifiedDate' => isset($formData['licence-vehicle']['specifiedDate'])
-                    ? $formData['licence-vehicle']['specifiedDate'] : null,
-            ];
+            // Is removed
+            if (!is_null($vehicleData['removalDate'])) {
+                $dtoData = [
+                    $this->getIdentifierIndex() => $this->getIdentifier(),
+                    'id' => $id,
+                    'version' => $formData['data']['version'],
+                    'removalDate' => isset($formData['licence-vehicle']['removalDate'])
+                        ? $formData['licence-vehicle']['removalDate'] : null,
+                ];
 
-            $dtoClass = $this->updateVehicleMap[$this->lva];
+                $dtoClass = $this->updateVehicleMap[$this->lva];
 
-            $response = $this->handleCommand($dtoClass::create($dtoData));
+                $response = $this->handleCommand($dtoClass::create($dtoData));
+            } else {
+                $dtoData = [
+                    $this->getIdentifierIndex() => $this->getIdentifier(),
+                    'id' => $id,
+                    'version' => $formData['data']['version'],
+                    'platedWeight' => $formData['data']['platedWeight'],
+                    'receivedDate' => isset($formData['licence-vehicle']['receivedDate'])
+                        ? $formData['licence-vehicle']['receivedDate'] : null,
+                    'specifiedDate' => isset($formData['licence-vehicle']['specifiedDate'])
+                        ? $formData['licence-vehicle']['specifiedDate'] : null,
+                ];
+
+                $dtoClass = $this->updateVehicleMap[$this->lva];
+
+                $response = $this->handleCommand($dtoClass::create($dtoData));
+            }
 
             if ($response->isOk()) {
                 return $this->handlePostSave(null, false);
