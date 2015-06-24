@@ -5,7 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-namespace Common\Data\Mapper\Lva;
+namespace CommonTest\Data\Mapper\Lva;
 
 use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\OtherLicence;

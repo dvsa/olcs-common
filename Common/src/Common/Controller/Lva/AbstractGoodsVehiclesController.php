@@ -187,7 +187,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
                 if (isset($messages['VE-VRM-2'])) {
 
-                    $confirm = new Checkbox('confirm-add', array('label' => 'vehicle-belongs-to-another-licence-confirmation'));
+                    $confirm = new Checkbox(
+                        'confirm-add',
+                        ['label' => 'vehicle-belongs-to-another-licence-confirmation']
+                    );
 
                     $confirm->setMessages([$this->formatConfirmationMessage($messages['VE-VRM-2'])]);
 
