@@ -71,9 +71,15 @@ trait CrudTableTrait
                 return $response;
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
-                'section.' . $this->params('action') . '.' . $this->section
-            );
+            if ($response === false) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
+                    'section.' . $this->params('action') . '.' . $this->section . '-failed'
+                );
+            } else {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
+                    'section.' . $this->params('action') . '.' . $this->section
+                );
+            }
 
             return $this->redirect()->toRouteAjax(
                 null,

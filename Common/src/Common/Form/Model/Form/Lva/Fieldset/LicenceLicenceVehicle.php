@@ -30,6 +30,7 @@ class LicenceLicenceVehicle
      *     "default_date": "now"
      * })
      * @Form\Required(false)
+     * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
      */
     public $receivedDate = null;
@@ -39,9 +40,11 @@ class LicenceLicenceVehicle
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate",
      *     "create_empty_option": false,
-     *     "render_delimiters": false
+     *     "render_delimiters": false,
+     *     "default_date": "now"
      * })
      * @Form\Required(false)
+     * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
      */
     public $specifiedDate = null;
@@ -50,11 +53,14 @@ class LicenceLicenceVehicle
      * @Form\Attributes({})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.removalDate",
-     *     "create_empty_option": false,
+     *     "create_empty_option": true,
      *     "render_delimiters": false,
-     *     "default_date": "now"
+     *     "month_attributes": {"disabled":"disabled"},
+     *     "year_attributes": {"disabled":"disabled"},
+     *     "day_attributes": {"disabled":"disabled"}
      * })
      * @Form\Required(false)
+     * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
      */
     public $removalDate = null;

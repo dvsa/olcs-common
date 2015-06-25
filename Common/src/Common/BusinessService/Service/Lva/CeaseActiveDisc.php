@@ -16,6 +16,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * Cease Active Disc
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @todo maybe delete me
  */
 class CeaseActiveDisc implements BusinessServiceInterface, ServiceLocatorAwareInterface
 {

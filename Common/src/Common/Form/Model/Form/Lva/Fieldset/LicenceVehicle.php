@@ -30,6 +30,7 @@ class LicenceVehicle
      *     "default_date": "now"
      * })
      * @Form\Required(false)
+     * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
      */
     public $receivedDate = null;
@@ -45,6 +46,7 @@ class LicenceVehicle
      *     "day_attributes": {"disabled":"disabled"}
      * })
      * @Form\Required(false)
+     * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
      */
     public $specifiedDate = null;
@@ -60,6 +62,7 @@ class LicenceVehicle
      *     "day_attributes": {"disabled":"disabled"}
      * })
      * @Form\Required(false)
+     * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
      */
     public $removalDate = null;

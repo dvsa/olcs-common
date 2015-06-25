@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'vehicle-list-printed' => 'The vehicle list document has been sent to the printer',
+    'vehicle-list-print-failed' => 'The vehicle list document failed to print',
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'Authorisation' => 'Authorisation',
@@ -1938,6 +1940,7 @@ return array(
     'section.delete.trailers' => 'The trailer has been removed',
     'section.delete.transport_managers' => 'The transport manager(s) have been removed',
     'section.delete.vehicles' => 'The vehicle has been removed',
+    'section.delete.vehicles-failed' => 'The vehicles could not be removed',
     'section.disqualified-add.licence_history' => 'Licence history added',
     'section.disqualified-delete.licence_history' => 'Licence deleted',
     'section.disqualified-edit.licence_history' => 'Licence history updated',

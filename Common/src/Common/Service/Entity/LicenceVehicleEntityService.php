@@ -91,6 +91,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
      * Delete functionality just sets the removal date for licence vehicle
      *
      * @param int $id
+     * @NOTE this has been migrated
      */
     public function delete($id)
     {

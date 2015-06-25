@@ -10,15 +10,17 @@ namespace Common\Controller\Lva;
 
 use Common\Data\Mapper\Lva\GoodsVehicles;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
+use Common\RefData;
 use Common\Service\Table\Formatter\VehicleDiscNo;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Licence\CreateGoodsVehicle as LicenceCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateGoodsVehicle as ApplicationUpdateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteGoodsVehicle as LicenceDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicles;
 use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
 use Zend\Form\Element\Checkbox;
-use Common\Service\Entity\LicenceEntityService;
 use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
 use Dvsa\Olcs\Transfer\Query\Application\GoodsVehicles as ApplicationGoodsVehicles;
 use Dvsa\Olcs\Transfer\Query\Variation\GoodsVehicles as VariationGoodsVehicles;
@@ -53,6 +55,12 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         'licence' => LicenceUpdateGoodsVehicle::class,
         'variation' => ApplicationUpdateGoodsVehicle::class,
         'application' => ApplicationUpdateGoodsVehicle::class
+    ];
+
+    protected $deleteVehicleMap = [
+        'licence' => LicenceDeleteGoodsVehicle::class,
+        'variation' => ApplicationDeleteGoodsVehicle::class,
+        'application' => ApplicationDeleteGoodsVehicle::class
     ];
 
     public function indexAction()
@@ -136,16 +144,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $data = (array)$request->getPost();
         }
 
-        $dtoData = [
-            'id' => $this->getIdentifier(),
-            'page' => 1,
-            'limit' => 1
-        ];
-        $dtoClass = $this->loadDataMap[$this->lva];
-        $response = $this->handleQuery($dtoClass::create($dtoData));
+        $result = $this->getVehicleSectionData();
 
         $params = [];
-        $params['spacesRemaining'] = $response->getResult()['spacesRemaining'];
+        $params['spacesRemaining'] = $result['spacesRemaining'];
 
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
@@ -161,12 +163,15 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 'id' => $this->getIdentifier(),
                 'vrm' => $formData['data']['vrm'],
                 'platedWeight' => $formData['data']['platedWeight'],
+                'receivedDate' => isset($formData['licence-vehicle']['receivedDate'])
+                    ? $formData['licence-vehicle']['receivedDate'] : null,
+                'specifiedDate' => isset($formData['licence-vehicle']['specifiedDate'])
+                    ? $formData['licence-vehicle']['specifiedDate'] : null,
                 'confirm' => isset($data['licence-vehicle']['confirm-add'])
                     ? $data['licence-vehicle']['confirm-add'] : null
             ];
 
             $dtoClass = $this->createVehicleMap[$this->lva];
-
             $response = $this->handleCommand($dtoClass::create($dtoData));
 
             if ($response->isOk()) {
@@ -235,7 +240,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 $this->getIdentifierIndex() => $this->getIdentifier(),
                 'id' => $id,
                 'version' => $formData['data']['version'],
-                'platedWeight' => $formData['data']['platedWeight']
+                'platedWeight' => $formData['data']['platedWeight'],
+                'receivedDate' => isset($formData['licence-vehicle']['receivedDate'])
+                    ? $formData['licence-vehicle']['receivedDate'] : null,
+                'specifiedDate' => isset($formData['licence-vehicle']['specifiedDate'])
+                    ? $formData['licence-vehicle']['specifiedDate'] : null,
             ];
 
             $dtoClass = $this->updateVehicleMap[$this->lva];
@@ -254,6 +263,51 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         return $this->render('edit_vehicles', $form);
+    }
+
+    protected function delete()
+    {
+        $ids = explode(',', $this->params('child_id'));
+
+        $dtoData = [
+            $this->getIdentifierIndex() => $this->getIdentifier(),
+            'ids' => $ids
+        ];
+
+        $dtoClass = $this->deleteVehicleMap[$this->lva];
+
+        $response = $this->handleCommand($dtoClass::create($dtoData));
+
+        return $response->isOk();
+    }
+
+    /**
+     * Get the delete message.
+     *
+     * @return string
+     */
+    public function getDeleteMessage()
+    {
+        $toDelete = count(explode(',', $this->params('child_id')));
+
+        $result = $this->getVehicleSectionData();
+
+        $acceptedLicenceTypes = [
+            RefData::LICENCE_TYPE_STANDARD_NATIONAL,
+            RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        ];
+
+        if (!in_array($result['licenceType']['id'], $acceptedLicenceTypes)) {
+            return 'delete.confirmation.text';
+        }
+
+        $total = $result['activeVehicleCount'];
+
+        if ($total < $toDelete) {
+            return 'delete.confirmation.text';
+        }
+
+        return 'deleting.all.vehicles.message';
     }
 
     public function reprintAction()
@@ -382,35 +436,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     }
 
     /**
-     * Get the delete message.
-     *
-     * @return string
-     * @todo migrate this
-     */
-    public function getDeleteMessage()
-    {
-        $toDelete = count(explode(',', $this->params('child_id')));
-        $total = $this->getTotalNumberOfVehicles();
-
-        $licence = $this->getServiceLocator()->get('Entity\Licence')->getOverview($this->getLicenceId());
-
-        $acceptedLicenceTypes = array(
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
-        );
-
-        if (!in_array($licence['licenceType']['id'], $acceptedLicenceTypes)) {
-            return 'delete.confirmation.text';
-        }
-
-        if ($total !== $toDelete) {
-            return 'delete.confirmation.text';
-        }
-
-        return 'deleting.all.vehicles.message';
-    }
-
-    /**
      * Get vehicles transfer form
      *
      * @return \Zend\Form\Form
@@ -426,22 +451,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $form->get('data')->get('licence')->setValueOptions($licences);
         $formHelper->setFormActionFromRequest($form, $this->getRequest());
         return $form;
-    }
-
-    /**
-     * @todo migrate this
-     */
-    protected function delete()
-    {
-        $ids = explode(',', $this->params('child_id'));
-
-        $this->getServiceLocator()->get('BusinessServiceManager')
-            ->get('Lva\\DeleteGoodsVehicle')
-            ->process(
-                [
-                    'ids' => $ids
-                ]
-            );
     }
 
     protected function renderForm($form, $headerData)
@@ -664,5 +673,24 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         } else {
             return $translator->translate('vehicle-belongs-to-another-licence-message-external');
         }
+    }
+
+    protected function postSave($section)
+    {
+        // @NOTE Prevents postSave from doing anything as this section has been migrated
+        // @todo remove me once all sections have been migrated
+    }
+
+    protected function getVehicleSectionData()
+    {
+        $dtoData = [
+            'id' => $this->getIdentifier(),
+            'page' => 1,
+            'limit' => 1
+        ];
+        $dtoClass = $this->loadDataMap[$this->lva];
+        $response = $this->handleQuery($dtoClass::create($dtoData));
+
+        return $response->getResult();
     }
 }

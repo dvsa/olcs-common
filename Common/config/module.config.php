@@ -706,7 +706,6 @@ return array(
             'Lva\RequestDisc' => 'Common\BusinessService\Service\Lva\RequestDisc',
             'Lva\ReprintDisc' => 'Common\BusinessService\Service\Lva\ReprintDisc',
             'Lva\CeaseActiveDisc' => 'Common\BusinessService\Service\Lva\CeaseActiveDisc',
-            'Lva\DeleteGoodsVehicle' => 'Common\BusinessService\Service\Lva\DeleteGoodsVehicle',
             'Lva\DeleteTransportManagerApplication' =>
                 'Common\BusinessService\Service\Lva\DeleteTransportManagerApplication',
             'Lva\TransportManagerApplicationForUser' =>
