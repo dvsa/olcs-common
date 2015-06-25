@@ -1,10 +1,9 @@
 <?php
 
 return array(
-    'vehicle-list-printed' => 'The vehicle list document has been sent to the printer',
-    'vehicle-list-print-failed' => 'The vehicle list document failed to print',
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
+    'AP-VEH-1' => 'Please add at least one vehicle',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1562,6 +1561,7 @@ return array(
     'lva.section.title.safety' => 'Safety',
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
     'lva.section.title.trailer' => 'Trailers',
+    'lva.section.title.transfer_vehicles' => 'Transfer Vehicles',
     'lva.section.title.transport-manager-application.edit-form' => 'Edit Transport Manager application form',
     'lva.section.title.transport_managers' => 'Transport managers',
     'lva.section.title.transport_managers-details' => 'Transport manager details',
@@ -1583,7 +1583,6 @@ return array(
     'lva.section.title.vehicles' => 'Vehicles',
     'lva.section.title.vehicles_declarations' => 'Vehicle declarations',
     'lva.section.title.vehicles_psv' => 'Vehicles',
-    'lva.section.title.transfer_vehicles' => 'Transfer Vehicles',
     'lva.section.title.voided_discs' => 'Are you sure you would like to void these discs?',
     'maint' => 'Maint',
     'mark-urgent' => 'Mark as urgent',
@@ -1649,7 +1648,6 @@ return array(
     'offenceType' => 'Type of offence',
     'offender-name' => 'Offender name',
     'offenderName' => 'Name of offender',
-    'AP-VEH-1' => 'Please add at least one vehicle',
     'oneConvictionRequiredError' => 'Please add at least one offence',
     'oneLicenceRequiredError' => 'Please add at least one licence',
     'open-date' => 'Open date',
@@ -2493,6 +2491,8 @@ return array(
     'vehicle-count' => '%s vehicles',
     'vehicle-disc-reprint-confirm-label' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
+    'vehicle-list-print-failed' => 'The vehicle list document failed to print',
+    'vehicle-list-printed' => 'The vehicle list document has been sent to the printer',
     'vehicle-remove-confirm-label' => 'Are you sure you want to remove these vehicles?',
     'vehicles' => 'Vehicles',
     'vehicles-in-posession' => 'Vehicles in possession',
