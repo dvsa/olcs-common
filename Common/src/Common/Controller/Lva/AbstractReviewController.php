@@ -21,9 +21,6 @@ abstract class AbstractReviewController extends AbstractController implements In
 
     public function indexAction()
     {
-        // @todo Remove adapters
-        // @todo Remove delegators etc
-
         $response = $this->handleQuery(Review::create(['id' => $this->params('application')]));
         $reviewData = $response->getResult();
 

@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Processing;
 
+use Common\RefData;
+use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Service\Entity\ApplicationEntityService;
@@ -30,23 +32,30 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
 
     public function storeSnapshot($applicationId, $event)
     {
-        $applicationType = $this->getServiceLocator()->get('Entity\Application')
-            ->getApplicationType($applicationId);
+        $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
+        $query = $annotationBuilder->createQuery(Application::create(['id' => $applicationId]));
 
-        $html = $this->getHtml($applicationType, $applicationId);
+        $queryService = $this->getServiceLocator()->get('QueryService');
+        $response = $queryService->send($query);
+
+        $result = $response->getResult();
+
+        $html = $this->getHtml($result);
+
+        // @todo this will be migrated in a later story
         $file = $this->uploadFile($html);
-        $this->createDocumentRecord($applicationId, $event, $applicationType, $file);
+        $this->createDocumentRecord($applicationId, $event, $result, $file);
     }
 
-    protected function createDocumentRecord($applicationId, $event, $applicationType, $file)
+    protected function createDocumentRecord($applicationId, $event, $applicationData, $file)
     {
-        $licenceId = $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($applicationId);
+        $licenceId = $applicationData['licence']['id'];
 
         $documentEntity = $this->getServiceLocator()->get('Entity\Document');
 
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
 
-        $code = $this->getDocumentCode($applicationId, $applicationType);
+        $code = $this->getDocumentCode($applicationId, $applicationData);
 
         $defaults = [
             'identifier' => $file->getIdentifier(),
@@ -111,21 +120,19 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
      * Get Application code
      *
      * @param int $applicationId   Application ID
-     * @param int $applicationType Application = 0 or Variation = 1, see ApplicationEntityService::APPLICATION_TYPE_*
+     * @param array $applicationData
      *
      * @return string Eg GV80A
      */
-    protected function getDocumentCode($applicationId, $applicationType)
+    protected function getDocumentCode($applicationId, $applicationData)
     {
-        $typeOfLicence = $this->getServiceLocator()->get('Entity\Application')->getTypeOfLicenceData($applicationId);
-
         // All New application options
-        if ($applicationType == ApplicationEntityService::APPLICATION_TYPE_NEW) {
-            if ($typeOfLicence['goodsOrPsv'] == LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($applicationData['isVariation']) {
+            if ($applicationData['goodsOrPsv']['id'] == RefData::LICENCE_CATEGORY_GOODS_VEHICLE) {
                 return ApplicationEntityService::CODE_GV_APP;
             }
 
-            if ($typeOfLicence['licenceType'] == LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+            if ($applicationData['licenceType']['id'] == RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) {
                 return ApplicationEntityService::CODE_PSV_APP_SR;
             }
 
@@ -133,10 +140,9 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
         }
 
         // All Variation options
-        $isUpgrade = $this->getServiceLocator()->get('Processing\VariationSection')
-            ->isRealUpgrade($applicationId);
+        $isUpgrade = $this->getServiceLocator()->get('Processing\VariationSection')->isRealUpgrade($applicationId);
 
-        if ($typeOfLicence['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($applicationData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
 
             if ($isUpgrade) {
                 return ApplicationEntityService::CODE_GV_VAR_UPGRADE;
@@ -164,16 +170,16 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
     /**
      * Here we physically setup the review controller and catch the HTML so we can persist the snapshot
      *
-     * @param type $applicationType
-     * @param int $applicationId
+     * @param array $applicationData
+     * @return string
      */
-    protected function getHtml($applicationType, $applicationId)
+    protected function getHtml(array $applicationData)
     {
         // Applications and Variations use a different controller and adapter
-        if ($applicationType == ApplicationEntityService::APPLICATION_TYPE_NEW) {
-            $appType = 'Application';
-        } else {
+        if ($applicationData['isVariation']) {
             $appType = 'Variation';
+        } else {
+            $appType = 'Application';
         }
 
         // Setup the controller dependencies
@@ -184,21 +190,16 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
         // happen if we grant via a licence fee route, for example)
         $routeMatch = $event->getRouteMatch();
         if (empty($routeMatch->getParam('application'))) {
-            $routeMatch->setParam('application', $applicationId);
+            $routeMatch->setParam('application', $applicationData['id']);
         }
-
-        $adapter = $this->getServiceLocator()->get(sprintf('%sReviewAdapter', $appType));
 
         // Format the controller name
         $controllerName = sprintf('Lva%s/Review', $appType);
 
         // Setup the controller
-        $controllerManager = $this->getServiceLocator()->get('ControllerManager');
-        $controller = $controllerManager->get($controllerName);
-
+        $controller = $this->getServiceLocator()->get('ControllerManager')->get($controllerName);
         $controller->setPluginManager($controllerPluginManager);
         $controller->setEvent($event);
-        $controller->setAdapter($adapter);
 
         // Execute the controller method, to grab the view model
         $model = $controller->indexAction();
