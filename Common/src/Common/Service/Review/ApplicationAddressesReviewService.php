@@ -121,7 +121,7 @@ class ApplicationAddressesReviewService extends AbstractReviewService
     {
         if (is_array($phoneContacts)) {
             foreach ($phoneContacts as $phoneContact) {
-                if ($phoneContact['phone_contact_type'] === $which) {
+                if ($phoneContact['phoneContactType']['id'] === $which) {
                     return $phoneContact['phoneNumber'];
                 }
             }
