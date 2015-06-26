@@ -28,6 +28,12 @@ class Money extends AbstractValidator
             return false;
         }
 
+        // Disallow negative amounts
+        if ($value < 0) {
+            $this->error('invalid');
+            return false;
+        }
+
         // We can allow ints
         if (is_int($value)) {
             return true;
