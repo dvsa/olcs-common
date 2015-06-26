@@ -61,9 +61,8 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
         $this->sut->shouldReceive('getApplicationId')
             ->andReturn(13);
 
-        $this->mockEntity('Application', 'getDataForVehiclesDeclarations')
-            ->with(13)
-            ->andReturn(
+        $this->sut->shouldReceive('handleQuery')->once()->andReturn(
+            m::mock()->shouldReceive('isOk')->andReturn(true)->getMock()->shouldReceive('getResult')->andReturn(
                 [
                     'version' => 1,
                     'psvOperateSmallVhl' => 'x',
@@ -82,7 +81,8 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                         'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                     ]
                 ]
-            );
+            )->getMock()
+        );
 
         $this->shouldRemoveElements(
             $form,

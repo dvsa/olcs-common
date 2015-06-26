@@ -55,8 +55,6 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
 
             $this->save($data);
 
-            $this->postSave('vehicles_declarations');
-
             return $this->completeSection('vehicles_declarations');
         }
 
@@ -78,8 +76,14 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     protected function loadData()
     {
         if ($this->data === null) {
-            $this->data = $this->getServiceLocator()->get('Entity\Application')
-                ->getDataForVehiclesDeclarations($this->getApplicationId());
+
+            $response = $this->handleQuery(
+                \Dvsa\Olcs\Transfer\Query\Application\VehicleDeclaration::create(['id' => $this->getApplicationId()])
+            );
+            if (!$response->isOk()) {
+                throw new \RuntimeException('Error getting vehicle declaration');
+            }
+            $this->data = $response->getResult();
         }
 
         return $this->data;
@@ -184,6 +188,11 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         $saveData['version'] = $data['version'];
         $saveData['id'] = $this->getApplicationId();
 
-        $this->getServiceLocator()->get('Entity\Application')->save($saveData);
+        $response = $this->handleCommand(
+            \Dvsa\Olcs\Transfer\Command\Application\UpdateVehicleDeclaration::create($saveData)
+        );
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error updating vehicle declaration');
+        }
     }
 }
