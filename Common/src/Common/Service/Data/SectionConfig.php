@@ -17,6 +17,8 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * Section Config
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ *
+ * @NOTE The parts of this that are used for section accessibility have been migrated
  */
 class SectionConfig implements ServiceLocatorAwareInterface
 {

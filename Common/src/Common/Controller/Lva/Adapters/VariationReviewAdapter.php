@@ -36,6 +36,7 @@ class VariationReviewAdapter extends AbstractReviewAdapter
      */
     protected function filterSections($id, $sections)
     {
+        // @todo migrate this
         $completion = $this->getServiceLocator()->get('Entity\VariationCompletion')->getCompletionStatuses($id);
 
         $filteredSections = parent::filterSections($id, $sections);

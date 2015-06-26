@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva;
 
+use Dvsa\Olcs\Transfer\Query\Application\Application;
+use Dvsa\Olcs\Transfer\Query\Licence\Licence;
 use Zend\Form\Form;
 use Common\Util;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -44,15 +46,21 @@ abstract class AbstractController extends AbstractActionController
      *
      * @var array
      */
-    protected $currentMessages = array(
-        'default' => array(),
-        'error' => array(),
-        'info' => array(),
-        'warning' => array(),
-        'success' => array()
-    );
+    protected $currentMessages = [
+        'default' => [],
+        'error' => [],
+        'info' => [],
+        'warning' => [],
+        'success' => []
+    ];
 
     private $loggedInUser;
+
+    protected $defaultBundles = [
+        'licence' => Licence::class,
+        'variation' => Application::class,
+        'application' => Application::class
+    ];
 
     /**
      * Execute the request
@@ -119,27 +127,9 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function getAccessibleSections($keysOnly = true)
     {
-        $licenceType = $this->getTypeOfLicenceData();
+        $data = $this->fetchDataForLva();
 
-        $access = array(
-            $this->location,
-            $this->lva,
-            $licenceType['goodsOrPsv'],
-            $licenceType['licenceType'],
-            $this->hasConditions() ? 'hasConditions' : 'noConditions'
-        );
-
-        if ($this->lva === 'variation') {
-            $this->getServiceLocator()->get('Processing\VariationSection')
-                ->setApplicationId($this->getIdentifier());
-        }
-
-        $sectionConfig = $this->getServiceLocator()->get('SectionConfig');
-
-        $inputSections = $sectionConfig->getAll();
-
-        $sections = $this->getServiceLocator()->get('Helper\Access')
-            ->setSections($inputSections)->getAccessibleSections($access);
+        $sections = $data['sections'];
 
         if ($keysOnly) {
             $sections = array_keys($sections);
@@ -148,20 +138,35 @@ abstract class AbstractController extends AbstractActionController
         return $sections;
     }
 
-    protected function hasConditions()
+    /**
+     * @NOTE This is a new method to load the generic LVA bundle (which is cached)
+     */
+    protected function fetchDataForLva()
     {
-        return $this->getServiceLocator()->get('Entity\Licence')
-            ->hasApprovedUnfulfilledConditions($this->getLicenceId());
+        $dtoClass = $this->defaultBundles[$this->lva];
+
+        $response = $this->handleQuery($dtoClass::create(['id' => $this->getIdentifier()]));
+
+        return $response->getResult();
     }
 
     /**
      * Get licence type information
      *
+     * @NOTE migrated
+     *
      * @return array
      */
     protected function getTypeOfLicenceData()
     {
-        return $this->getLvaEntityService()->getTypeOfLicenceData($this->getIdentifier());
+        $data = $this->fetchDataForLva();
+
+        return [
+            'version' => $data['version'],
+            'niFlag' => $data['niFlag'],
+            'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
+            'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
+        ];
     }
 
     /**
@@ -186,7 +191,7 @@ abstract class AbstractController extends AbstractActionController
             $lvaId = $this->getIdentifier();
         }
 
-        return $this->redirect()->toRouteAjax('lva-' . $this->lva, array($this->getIdentifierIndex() => $lvaId));
+        return $this->redirect()->toRouteAjax('lva-' . $this->lva, [$this->getIdentifierIndex() => $lvaId]);
     }
 
     /**
@@ -196,21 +201,16 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function addSectionUpdatedMessage($section)
     {
-        $message = $this->getServiceLocator()->get('Helper\Translation')->formatTranslation(
-            '%s %s',
-            array(
-                'section.name.' . $section,
-                'section-updated-successfully-message-suffix'
+        $this->addSuccessMessage(
+            $this->getServiceLocator()->get('Helper\Translation')->formatTranslation(
+                '%s %s',
+                ['section.name.' . $section, 'section-updated-successfully-message-suffix']
             )
         );
-
-        $this->addSuccessMessage($message);
     }
 
     /**
      * Redirect to the next section
-     *
-     * @param string $currentSection
      */
     protected function goToNextSection($currentSection)
     {
@@ -225,7 +225,7 @@ abstract class AbstractController extends AbstractActionController
             return $this->redirect()
                 ->toRoute(
                     'lva-' . $this->lva . '/' . $sections[$index + 1],
-                    array($this->getIdentifierIndex() => $this->getApplicationId())
+                    [$this->getIdentifierIndex() => $this->getApplicationId()]
                 );
         }
     }
@@ -238,17 +238,16 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function checkForRedirect($lvaId)
     {
-        if ($this->isButtonPressed('cancel')) {
-            // If we are on a sub-section, we need to go back to the section
-            if ($this->params('action') !== 'index') {
-                return $this->redirect()->toRoute(
-                    null,
-                    array($this->getIdentifierIndex() => $lvaId)
-                );
-            }
-
-            return $this->handleCancelRedirect($lvaId);
+        if (!$this->isButtonPressed('cancel')) {
+            return;
         }
+
+        // If we are on a sub-section, we need to go back to the section
+        if ($this->params('action') !== 'index') {
+            return $this->redirect()->toRoute(null, [$this->getIdentifierIndex() => $lvaId]);
+        }
+
+        return $this->handleCancelRedirect($lvaId);
     }
 
     /**
