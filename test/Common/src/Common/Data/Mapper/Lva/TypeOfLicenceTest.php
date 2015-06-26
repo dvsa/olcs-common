@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Data\Mapper\Lva;
+namespace CommonTest\Data\Mapper\Lva;
 
 use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\TypeOfLicence;

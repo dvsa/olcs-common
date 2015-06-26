@@ -12,13 +12,8 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'print-vehicles' => array('label' => 'Print vehicle list', 'requireRows' => true),
-                'reprint' => array('label' => 'Reprint Disc', 'requireRows' => true),
                 'edit' => array('requireRows' => true),
                 'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true),
-                'transfer' => array(
-                    'label' => 'Transfer', 'class' => 'secondary js-require--multiple', 'requireRows' => true
-                )
             )
         ),
         'paginate' => array(
@@ -30,13 +25,15 @@ return array(
     'columns' => array(
         array(
             'title' => $translationPrefix . '.vrm',
-            'name' => 'vrm',
+            'stack' => 'vehicle->vrm',
+            'formatter' => 'StackValue',
             'action' => 'edit',
             'type' => 'Action',
         ),
         array(
             'title' => $translationPrefix . '.weight',
-            'format' => '{{platedWeight}} Kg'
+            'stringFormat' => '{vehicle->platedWeight} Kg',
+            'formatter' => 'StackValueReplacer'
         ),
         array(
             'title' => $translationPrefix . '.specified',
@@ -50,7 +47,8 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.disc-no',
-            'name' => 'discNo'
+            'name' => 'discNo',
+            'formatter' => 'VehicleDiscNo'
         ),
         array(
             'name' => 'action',

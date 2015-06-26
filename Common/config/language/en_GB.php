@@ -3,6 +3,7 @@
 return array(
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
+    'AP-VEH-1' => 'Please add at least one vehicle',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1560,6 +1561,7 @@ return array(
     'lva.section.title.safety' => 'Safety',
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
     'lva.section.title.trailer' => 'Trailers',
+    'lva.section.title.transfer_vehicles' => 'Transfer Vehicles',
     'lva.section.title.transport-manager-application.edit-form' => 'Edit Transport Manager application form',
     'lva.section.title.transport_managers' => 'Transport managers',
     'lva.section.title.transport_managers-details' => 'Transport manager details',
@@ -1937,6 +1939,7 @@ return array(
     'section.delete.trailers' => 'The trailer has been removed',
     'section.delete.transport_managers' => 'The transport manager(s) have been removed',
     'section.delete.vehicles' => 'The vehicle has been removed',
+    'section.delete.vehicles-failed' => 'The vehicles could not be removed',
     'section.disqualified-add.licence_history' => 'Licence history added',
     'section.disqualified-delete.licence_history' => 'Licence deleted',
     'section.disqualified-edit.licence_history' => 'Licence history updated',
@@ -2488,6 +2491,8 @@ return array(
     'vehicle-count' => '%s vehicles',
     'vehicle-disc-reprint-confirm-label' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
+    'vehicle-list-print-failed' => 'The vehicle list document failed to print',
+    'vehicle-list-printed' => 'The vehicle list document has been sent to the printer',
     'vehicle-remove-confirm-label' => 'Are you sure you want to remove these vehicles?',
     'vehicles' => 'Vehicles',
     'vehicles-in-posession' => 'Vehicles in possession',

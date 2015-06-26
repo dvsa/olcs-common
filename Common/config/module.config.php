@@ -65,15 +65,6 @@ return array(
             'LvaVariation/BusinessType' => array(
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
             ),
-            'LvaApplication/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
-            ),
-            'LvaLicence/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\LicenceVehiclesGoodsDelegator'
-            ),
-            'LvaVariation/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\VariationVehiclesGoodsDelegator'
-            ),
             'LvaApplication/VehiclesPsv' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehiclesPsvDelegator'
             ),
@@ -216,9 +207,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
             'ApplicationFinancialEvidenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
-            'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
-            'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
-            'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',
             'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
             'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
             'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
@@ -644,10 +632,6 @@ return array(
             'lva-licence-goods-vehicles' => 'Common\FormService\Form\Lva\LicenceGoodsVehicles',
             'lva-variation-goods-vehicles' => 'Common\FormService\Form\Lva\VariationGoodsVehicles',
             'lva-application-goods-vehicles' => 'Common\FormService\Form\Lva\ApplicationGoodsVehicles',
-            // Goods vehicles vehicle form services
-            'lva-licence-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\LicenceGoodsVehiclesVehicle',
-            'lva-variation-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\VariationGoodsVehiclesVehicle',
-            'lva-application-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\ApplicationGoodsVehiclesVehicle',
             // Psv vehicles vehicle form services
             'lva-licence-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\LicencePsvVehiclesVehicle',
             'lva-variation-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\VariationPsvVehiclesVehicle',
@@ -673,12 +657,6 @@ return array(
             'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
             'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
-            'GoodsVehiclesVehicle' => 'Common\BusinessRule\Rule\GoodsVehiclesVehicle',
-            'LicenceGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesLicenceVehicle',
-            'LicenceGoodsVehiclesRemovedVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesRemovedVehicle',
-            'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
-            'ApplicationGoodsVehiclesLicenceVehicle'
-                => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
             'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
             'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
             'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
@@ -702,25 +680,10 @@ return array(
             'Lva\Application' => 'Common\BusinessService\Service\Lva\Application',
             'Lva\ApplicationRevive' => 'Common\BusinessService\Service\Lva\ApplicationRevive',
             'Lva\Licence' => 'Common\BusinessService\Service\Lva\Licence',
-            // Goods Vehicles business services
-            'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
-            'Lva\VariationGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
-            'Lva\ApplicationGoodsVehicles' => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehicles',
             // Psv Vehicles business services
             'Lva\LicencePsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
             'Lva\VariationPsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
             'Lva\ApplicationPsvVehicles' => 'Common\BusinessService\Service\Lva\ApplicationPsvVehicles',
-            // Goods vehicles vehicle business service
-            'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
-            'Lva\LicenceGoodsVehiclesRemovedVehicle' =>
-                'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesRemovedVehicle',
-            'Lva\VariationGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\VariationGoodsVehiclesVehicle',
-            'Lva\ApplicationGoodsVehiclesVehicle'
-                => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehiclesVehicle',
-            'Lva\RequestDisc' => 'Common\BusinessService\Service\Lva\RequestDisc',
-            'Lva\ReprintDisc' => 'Common\BusinessService\Service\Lva\ReprintDisc',
-            'Lva\CeaseActiveDisc' => 'Common\BusinessService\Service\Lva\CeaseActiveDisc',
-            'Lva\DeleteGoodsVehicle' => 'Common\BusinessService\Service\Lva\DeleteGoodsVehicle',
             'Lva\DeleteTransportManagerApplication' =>
                 'Common\BusinessService\Service\Lva\DeleteTransportManagerApplication',
             'Lva\TransportManagerApplicationForUser' =>

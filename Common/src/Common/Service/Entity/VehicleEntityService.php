@@ -64,6 +64,9 @@ class VehicleEntityService extends AbstractEntityService
         return isset($map[$psvType]) ? $map[$psvType] : null;
     }
 
+    /**
+     * @NOTE this has been migrated
+     */
     public function getLicencesForVrm($vrm)
     {
         $results = $this->get(array('vrm' => $vrm), $this->licencesForVehicleBundle);

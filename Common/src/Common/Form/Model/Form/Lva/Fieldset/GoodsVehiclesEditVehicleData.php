@@ -7,7 +7,7 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("data")
  */
-class GoodsVehiclesVehicleData
+class GoodsVehiclesEditVehicleData
 {
     /**
      * @Form\Attributes({"value":""})
@@ -22,13 +22,11 @@ class GoodsVehiclesVehicleData
     public $version = null;
 
     /**
-     * @Form\Attributes({"class":"medium","id":"vrm","placeholder":""})
+     * @Form\Attributes({"class":"medium","id":"vrm","placeholder":"","disabled":"disabled"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Common\Filter\Vrm"})
-     * @Form\Validator({"name":"Common\Form\Elements\Validators\Vrm"})
      */
     public $vrm = null;
 
