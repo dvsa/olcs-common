@@ -48,12 +48,6 @@ return array(
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter
         'delegators' => array(
-            'LvaApplication/Review' => array(
-                'Common\Controller\Lva\Delegators\ApplicationReviewDelegator'
-            ),
-            'LvaVariation/Review' => array(
-                'Common\Controller\Lva\Delegators\VariationReviewDelegator'
-            ),
             'LvaApplication/BusinessType' => array(
                 // @NOTE: we need an associative array when we need to override the
                 // delegator elsewhere, such as in selfserve or internal
@@ -184,8 +178,6 @@ return array(
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
             'CrudListener' => 'Common\Controller\Crud\Listener',
             'SectionConfig' => 'Common\Service\Data\SectionConfig',
-            'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
-            'VariationReviewAdapter' => 'Common\Controller\Lva\Adapters\VariationReviewAdapter',
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
             'GenericBusinessTypeAdapter'
                 => 'Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter',
@@ -576,7 +568,7 @@ return array(
         'endpoints' => array(
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
-            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/',
+            'postcode' => 'http://postcode.cit.olcs.mgt.mtpdvsa/',
             'email' => 'http://olcs-email/',
         )
     ),

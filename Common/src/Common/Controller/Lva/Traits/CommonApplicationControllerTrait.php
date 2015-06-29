@@ -8,6 +8,7 @@
 namespace Common\Controller\Lva\Traits;
 
 use Common\Service\Entity\ApplicationEntityService;
+use Dvsa\Olcs\Transfer\Query\Application\Application;
 
 /**
  * Application Controller Trait
@@ -26,13 +27,11 @@ trait CommonApplicationControllerTrait
      */
     protected function preDispatch()
     {
-        $applicationId = $this->getApplicationId();
-
-        if (!$this->isApplicationNew($applicationId)) {
+        if ($this->isApplicationVariation()) {
             return $this->notFoundAction();
         }
 
-        return $this->checkForRedirect($applicationId);
+        return $this->checkForRedirect($this->getApplicationId());
     }
 
     /**
@@ -68,9 +67,9 @@ trait CommonApplicationControllerTrait
      * @param int $applicationId
      * @return boolean
      */
-    protected function isApplicationNew($applicationId)
+    protected function isApplicationNew()
     {
-        return $this->getApplicationType($applicationId) === ApplicationEntityService::APPLICATION_TYPE_NEW;
+        return !$this->isApplicationVariation();
     }
 
     /**
@@ -79,20 +78,11 @@ trait CommonApplicationControllerTrait
      * @param int $applicationId
      * @return boolean
      */
-    protected function isApplicationVariation($applicationId)
+    protected function isApplicationVariation()
     {
-        return $this->getApplicationType($applicationId) === ApplicationEntityService::APPLICATION_TYPE_VARIATION;
-    }
+        $data = $this->fetchDataForLva();
 
-    /**
-     * Get application type
-     *
-     * @param int $applicationId
-     * @return int
-     */
-    protected function getApplicationType($applicationId)
-    {
-        return $this->getServiceLocator()->get('Entity\Application')->getApplicationType($applicationId);
+        return $data['isVariation'];
     }
 
     /**
@@ -117,7 +107,11 @@ trait CommonApplicationControllerTrait
             $applicationId = $this->getApplicationId();
         }
 
-        return $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($applicationId);
+        $response = $this->handleQuery(Application::create(['id' => $applicationId]));
+
+        $data = $response->getResult();
+
+        return $data['licence']['id'];
     }
 
     /**
