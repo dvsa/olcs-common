@@ -410,6 +410,10 @@ class OrganisationEntityService extends AbstractEntityService
         return $people;
     }
 
+    /**
+     * @todo maybe remove this
+     * @NOTE migrated
+     */
     public function getAdminEmailAddresses($id)
     {
         $users = [];
