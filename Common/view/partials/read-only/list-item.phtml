@@ -29,6 +29,7 @@ if (array_key_exists('numeric', $item)) {
 
 if (isset($item['value'])) {
     //convert values into yes or no
+    // caution: == will convert integers to Yes/No if they're not flagged as numeric :-/
     if ($item['value'] == 'Y') {
         $item['value'] = 'Yes';
     } elseif ($item['value'] == 'N') {
