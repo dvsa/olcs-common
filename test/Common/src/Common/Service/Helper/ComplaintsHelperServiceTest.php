@@ -32,47 +32,31 @@ class ComplaintsHelperServiceTest extends PHPUnit_Framework_TestCase
     {
         $cases = [
             [
-                'id' => 545,
-                'complaints' => [
-                    [
-                        'complaintDate' => 'complaintDate',
-                        'complainantContactDetails' => 'complainantContactDetails',
-                        'ocComplaints' => 'ocComplaints',
-                        'description' => 'description',
-                        'status' => ['id' => 'ecst_closed'],
-                    ]
-                ]
+                'complaintDate' => 'complaintDate',
+                'complainantContactDetails' => 'complainantContactDetails',
+                'ocComplaints' => 'ocComplaints',
+                'description' => 'description',
+                'status' => ['id' => 'ecst_closed'],
             ],
             [
-                'id' => 123,
-                'complaints' => [
-                    [
-                        'complaintDate' => 'complaintDate',
-                        'complainantContactDetails' => 'complainantContactDetails',
-                        'ocComplaints' => 'ocComplaints',
-                        'description' => 'description',
-                        'status' => ['id' => 'ecst_open'],
-                    ]
-                ]
+                'complaintDate' => 'complaintDate',
+                'complainantContactDetails' => 'complainantContactDetails',
+                'ocComplaints' => 'ocComplaints',
+                'description' => 'description',
+                'status' => ['id' => 'ecst_closed'],
             ],
-        ];
-        $expected = [
             [
-                'caseId' => 123,
                 'complaintDate' => 'complaintDate',
                 'complainantContactDetails' => 'complainantContactDetails',
                 'ocComplaints' => 'ocComplaints',
                 'description' => 'description',
                 'status' => ['id' => 'ecst_open'],
             ],
-            [
-                'caseId' => 545,
-                'complaintDate' => 'complaintDate',
-                'complainantContactDetails' => 'complainantContactDetails',
-                'ocComplaints' => 'ocComplaints',
-                'description' => 'description',
-                'status' => ['id' => 'ecst_closed'],
-            ]
+        ];
+        $expected = [
+            $cases[2],
+            $cases[0],
+            $cases[1],
         ];
 
         $result = $this->helper->sortCasesOpenClosed($cases);
