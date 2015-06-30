@@ -40,7 +40,7 @@ trait CrudTableTrait
         );
 
         if ($this->isButtonPressed('addAnother')) {
-            $action = $prefix !== null ? $prefix . '-' . 'add' : 'add';
+            $action = $prefix !== null ? $prefix . '-add' : 'add';
             $routeParams['action'] = $action;
             $method = 'toRoute';
         } else {
@@ -71,9 +71,15 @@ trait CrudTableTrait
                 return $response;
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
-                'section.' . $this->params('action') . '.' . $this->section
-            );
+            if ($response === false) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
+                    'section.' . $this->params('action') . '.' . $this->section . '-failed'
+                );
+            } else {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
+                    'section.' . $this->params('action') . '.' . $this->section
+                );
+            }
 
             return $this->redirect()->toRouteAjax(
                 null,

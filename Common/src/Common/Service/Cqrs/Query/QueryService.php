@@ -38,6 +38,8 @@ class QueryService
      */
     protected $request;
 
+    protected $cache;
+
     public function __construct(RouteInterface $router, Client $client, Request $request)
     {
         $this->router = $router;
@@ -48,7 +50,7 @@ class QueryService
     /**
      * Send a query and return the response
      *
-     * @param DvsaQuery $query
+     * @param QueryContainerInterface $query
      * @return Response
      */
     public function send(QueryContainerInterface $query)
@@ -57,6 +59,21 @@ class QueryService
             return $this->invalidResponse($query->getMessages(), HttpResponse::STATUS_CODE_422);
         }
 
+        if ($query->isCachable()) {
+            $id = $query->getCacheIdentifier();
+
+            if (!isset($this->cache[$id])) {
+                $this->cache[$id] = $this->handleSend($query);
+            }
+
+            return $this->cache[$id];
+        }
+
+        return $this->handleSend($query);
+    }
+
+    protected function handleSend(QueryContainerInterface $query)
+    {
         $routeName = $query->getRouteName();
         $data = $query->getDto()->getArrayCopy();
 

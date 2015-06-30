@@ -81,7 +81,7 @@ class FormHelperServiceTest extends MockeryTestCase
                             'messageTemplates' => array(
                                 'notSame' => 'csrf-message'
                             ),
-                            'timeout' => 600
+                            'timeout' => 3600
                         )
                     ),
                     'attributes' => array(
@@ -99,7 +99,8 @@ class FormHelperServiceTest extends MockeryTestCase
                     ),
                     'attributes' => array(
                         'type' => 'submit',
-                        'class' => 'visually-hidden'
+                        'class' => 'visually-hidden',
+                        'id' => 'hidden-continue'
                     )
                 )
             );

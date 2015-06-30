@@ -26,7 +26,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     /**
      * Get licence id from the given lva id
      *
-     * @param int id
+     * @param int $id
      * @return int
      */
     abstract protected function getLicenceId($id);
@@ -34,7 +34,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     /**
      * Get the LVA operating centre entity service
      *
-     * @return \Common\Service\Entity\AbstractEntity
+     * @return \Common\Service\Entity\AbstractEntityService
      */
     abstract protected function getLvaOperatingCentreEntityService();
 
@@ -180,8 +180,8 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     /**
      * Each LVA section must implement this method
      *
-     * @param int id
-     * @returna array
+     * @param int $id
+     * @return array
      */
     protected function getOperatingCentresForList($id)
     {

@@ -31,7 +31,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
     /**
      * Disc pending bundle
      */
-    protected $discBundle = array(
+    private $discBundle = array(
         'children' => array(
             'goodsDiscs'
         )
@@ -91,27 +91,13 @@ class LicenceVehicleEntityService extends AbstractEntityService
      * Delete functionality just sets the removal date for licence vehicle
      *
      * @param int $id
+     * @NOTE this has been migrated
      */
     public function delete($id)
     {
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
         $this->forceUpdate($id, array('removalDate' => $date));
-    }
-
-    /**
-     * Cease the active disc
-     *
-     * @param int $id
-     */
-    public function getActiveDiscs($id)
-    {
-        return $this->get($id, $this->discBundle);
-    }
-
-    public function getDiscPendingData($id)
-    {
-        return $this->get($id, $this->discBundle);
     }
 
     public function getVrm($id)
@@ -208,113 +194,5 @@ class LicenceVehicleEntityService extends AbstractEntityService
             $ids[] = $lv['id'];
         }
         return $this->removeVehicles($ids);
-    }
-
-    public function getVehiclesDataForApplication($applicationId, array $filters = array())
-    {
-        // If we want to show specified vehicles, then we need to widen our search to included the licence too
-        if (isset($filters['specifiedDate']) && $filters['specifiedDate'] === 'NOT NULL') {
-
-            // then our query needs to be where...
-            $query = [
-                // either ...
-                [
-                    // application id matches...
-                    'application' => $applicationId,
-                    // OR licence id matches...
-                    'licence' => $this->getServiceLocator()->get('Entity\Application')
-                        ->getLicenceIdForApplication($applicationId),
-                ]
-            ];
-
-        } else {
-            // Otherwise just filter by application
-            $query = [
-                'application' => $applicationId
-            ];
-        }
-
-        $query = $this->buildVehiclesDataQuery($query, $filters);
-        $bundle = $this->buildVehiclesDataBundle($filters);
-
-        if (isset($filters['specifiedDate'])) {
-            $query['specifiedDate'] = $filters['specifiedDate'];
-        }
-
-        return $this->get($query, $bundle);
-    }
-
-    public function getVehiclesDataForVariation($applicationId, array $filters = array())
-    {
-        // then our query needs to be where...
-        $query = [
-            // either ...
-            [
-                // application id matches...
-                'application' => $applicationId,
-                // OR licence id matches...
-                'licence' => $this->getServiceLocator()->get('Entity\Application')
-                    ->getLicenceIdForApplication($applicationId),
-            ]
-        ];
-
-        $query = $this->buildVehiclesDataQuery($query, $filters);
-        $bundle = $this->buildVehiclesDataBundle($filters);
-
-        if (isset($filters['specifiedDate'])) {
-            $query['specifiedDate'] = $filters['specifiedDate'];
-        }
-
-        return $this->get($query, $bundle);
-    }
-
-    public function getVehiclesDataForLicence($licenceId, array $filters = array())
-    {
-        $query = ['licence' => $licenceId, 'specifiedDate' => 'NOT NULL'];
-
-        $query = $this->buildVehiclesDataQuery($query, $filters);
-        $bundle = $this->buildVehiclesDataBundle($filters);
-
-        return $this->get($query, $bundle);
-    }
-
-    protected function buildVehiclesDataQuery($query, $filters)
-    {
-        if (isset($filters['removalDate'])) {
-            $query['removalDate'] = $filters['removalDate'];
-        }
-
-        $pagination = [
-            'page' => isset($filters['page']) ? $filters['page'] : 1,
-            'limit' => isset($filters['limit']) ? $filters['limit'] : 10,
-        ];
-
-        return array_merge($query, $pagination);
-    }
-
-    protected function buildVehiclesDataBundle($filters)
-    {
-        $bundle = $this->vehicleDataBundle;
-
-        if (isset($filters['vrm'])) {
-            $bundle['children']['vehicle']['required'] = true;
-            $bundle['children']['vehicle']['criteria']['vrm'] = $filters['vrm'];
-        }
-
-        if (isset($filters['disc']) && in_array($filters['disc'], ['Y', 'N'])) {
-
-            $bundle['children']['goodsDiscs']['criteria']['ceasedDate'] = 'NULL';
-            $bundle['children']['goodsDiscs']['criteria']['issuedDate'] = 'NOT NULL';
-
-            if ($filters['disc'] === 'Y') {
-                $bundle['children']['goodsDiscs']['required'] = true;
-            }
-
-            if ($filters['disc'] === 'N') {
-                $bundle['children']['goodsDiscs']['requireNone'] = true;
-            }
-        }
-
-        return $bundle;
     }
 }

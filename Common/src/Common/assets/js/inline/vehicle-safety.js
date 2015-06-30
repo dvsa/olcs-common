@@ -10,7 +10,7 @@ $(function() {
           var input = OLCS.formHelper("licence", "tachographIns")
           .filter(":checked");
 
-          return input.length && input.val() !== "tach_na";
+          return input.length && input.val() == "tach_external";
         }
       }
     }

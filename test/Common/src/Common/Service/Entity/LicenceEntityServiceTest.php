@@ -365,19 +365,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetPsvDiscsRequestData()
-    {
-        $id = 7;
-
-        $this->expectOneRestCall('Licence', 'GET', $id)
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getPsvDiscsRequestData($id));
-    }
-
-    /**
-     * @group entity_services
-     */
     public function testGetPsvDiscs()
     {
         $id = 7;
@@ -1004,22 +991,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Licence', 'PUT', $data);
 
         $this->sut->setLicenceStatus($id, $status);
-    }
-
-    public function testHasApprovedUnfulfilledConditionsFalse()
-    {
-        $this->expectOneRestCall('Licence', 'GET', 111)
-            ->will($this->returnValue(['conditionUndertakings' => []]));
-
-        $this->assertFalse($this->sut->hasApprovedUnfulfilledConditions(111));
-    }
-
-    public function testHasApprovedUnfulfilledConditionsTrue()
-    {
-        $this->expectOneRestCall('Licence', 'GET', 111)
-            ->will($this->returnValue(['conditionUndertakings' => ['foo']]));
-
-        $this->assertTrue($this->sut->hasApprovedUnfulfilledConditions(111));
     }
 
     public function testGetConditionsAndUndertakings()

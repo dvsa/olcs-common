@@ -19,13 +19,11 @@ trait CommonVariationControllerTrait
      */
     protected function preDispatch()
     {
-        $applicationId = $this->getApplicationId();
-
-        if (!$this->isApplicationVariation($applicationId)) {
+        if ($this->isApplicationNew()) {
             return $this->notFoundAction();
         }
 
-        return $this->checkForRedirect($applicationId);
+        return $this->checkForRedirect($this->getApplicationId());
     }
 
     protected function postSave($section)

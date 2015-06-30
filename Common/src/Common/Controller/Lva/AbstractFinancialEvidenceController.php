@@ -82,6 +82,9 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         );
 
         $this->uploadFile($file, $data);
+
+        // force reload of data with new document included
+        $this->getAdapter()->getData($id, true);
     }
 
     /**

@@ -31,6 +31,8 @@ class PsvDiscEntityService extends AbstractEntityService
      * Void any discs for each given ID
      *
      * @param array $ids
+     *
+     * @NOTE migrated [VoidPsvDiscs]
      */
     public function ceaseDiscs(array $ids = array())
     {
@@ -54,6 +56,8 @@ class PsvDiscEntityService extends AbstractEntityService
      *
      * @param int $count
      * @param array $data
+     *
+     * @NOTE This has been migrated [CreatePsvDiscs]
      */
     public function requestDiscs($count, $data = array())
     {

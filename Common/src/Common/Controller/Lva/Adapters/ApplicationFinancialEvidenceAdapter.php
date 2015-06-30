@@ -85,10 +85,9 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      * Single call to get all the application data from the backend, including
      * financial evidence data and documents.
      */
-    public function getData($applicationId)
+    public function getData($applicationId, $noCache = false)
     {
-        if (is_null($this->applicationData)) {
-
+        if (is_null($this->applicationData) || $noCache) {
             $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
                 ->createQuery(FinancialEvidence::create(['id' => $applicationId]));
 

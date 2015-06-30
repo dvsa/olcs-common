@@ -32,7 +32,7 @@ class FormHelperService extends AbstractHelperService
     const ALTER_LABEL_APPEND = 1;
     const ALTER_LABEL_PREPEND = 2;
 
-    const CSRF_TIMEOUT = 600;
+    const CSRF_TIMEOUT = 3600;
 
     /**
      * Create a form
@@ -84,7 +84,8 @@ class FormHelperService extends AbstractHelperService
                 ),
                 'attributes' => array(
                     'type' => 'submit',
-                    'class' => 'visually-hidden'
+                    'class' => 'visually-hidden',
+                    'id' => 'hidden-continue'
                 )
             );
             $form->add($config);
@@ -480,6 +481,18 @@ class FormHelperService extends AbstractHelperService
     }
 
     /**
+     * Enable date element
+     *
+     * @param \Zend\Form\Element\DateSelect $element
+     */
+    public function enableDateElement($element)
+    {
+        $element->getDayElement()->removeAttribute('disabled');
+        $element->getMonthElement()->removeAttribute('disabled');
+        $element->getYearElement()->removeAttribute('disabled');
+    }
+
+    /**
      * Disable all elements recursively
      *
      * @param \Zend\Form\Fieldset $elements
@@ -505,6 +518,35 @@ class FormHelperService extends AbstractHelperService
 
         if ($elements instanceof Element) {
             $elements->setAttribute('disabled', 'disabled');
+        }
+    }
+
+    /**
+     * Enable all elements recursively
+     *
+     * @param \Zend\Form\Fieldset $elements
+     * @return null
+     */
+    public function enableElements($elements)
+    {
+        if ($elements instanceof Fieldset) {
+            foreach ($elements->getElements() as $element) {
+                $this->enableElements($element);
+            }
+
+            foreach ($elements->getFieldsets() as $fieldset) {
+                $this->enableElements($fieldset);
+            }
+            return;
+        }
+
+        if ($elements instanceof DateSelect) {
+            $this->enableDateElement($elements);
+            return;
+        }
+
+        if ($elements instanceof Element) {
+            $elements->removeAttribute('disabled');
         }
     }
 

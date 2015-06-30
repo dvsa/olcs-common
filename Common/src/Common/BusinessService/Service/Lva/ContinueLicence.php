@@ -111,6 +111,7 @@ class ContinueLicence implements BusinessServiceInterface, ServiceLocatorAwareIn
             }
         }
 
+        // @todo this has been migrated - Don't forget to re-use
         $licenceProcessingService->generateDocument($licenceId);
 
         // Set the status of the continuation record to 'Complete'
