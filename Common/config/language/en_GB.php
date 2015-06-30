@@ -9,6 +9,7 @@ return array(
     'Continue' => 'Continue',
     'FHAdditionalInfo.validation.is_empty' => 'You selected \'yes\' in one of the provided questions, so value is
         required and can\'t be empty',
+    'LIC-SAFE-TACH-1' => 'Please specify the name of the external contractor',
     'N/A' => 'Not applicable',
     'No' => 'No',
     'OperatingCentreAdPlacedInValidator.required' => 'Please enter a newspaper name',

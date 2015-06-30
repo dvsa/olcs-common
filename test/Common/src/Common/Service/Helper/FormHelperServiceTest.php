@@ -81,7 +81,7 @@ class FormHelperServiceTest extends MockeryTestCase
                             'messageTemplates' => array(
                                 'notSame' => 'csrf-message'
                             ),
-                            'timeout' => 600
+                            'timeout' => 3600
                         )
                     ),
                     'attributes' => array(

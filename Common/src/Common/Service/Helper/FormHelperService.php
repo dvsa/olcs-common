@@ -32,7 +32,7 @@ class FormHelperService extends AbstractHelperService
     const ALTER_LABEL_APPEND = 1;
     const ALTER_LABEL_PREPEND = 2;
 
-    const CSRF_TIMEOUT = 600;
+    const CSRF_TIMEOUT = 3600;
 
     /**
      * Create a form
