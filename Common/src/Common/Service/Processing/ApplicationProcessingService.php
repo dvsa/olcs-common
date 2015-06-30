@@ -716,6 +716,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $this->getServiceLocator()->get('Processing\GrantPeople')->grant($id);
 
+        // @todo this has been migrated - Don't forget to re-use
         $this->getServiceLocator()->get('Processing\Licence')->generateDocument($licenceId);
     }
 

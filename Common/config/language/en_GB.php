@@ -1369,6 +1369,7 @@ return array(
     'licence.overview.saved' => 'Your changes have been saved',
     'licence.overview.title' => 'Licence overview',
     'licence.print' => 'Print licence',
+    'licence.print.failed' => 'Licence failed to print',
     'licence.print.success' => 'Licence printed successfully',
     'licence.surrender' => 'Surrender licence',
     'licence.variation' => 'Create variation',

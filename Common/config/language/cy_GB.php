@@ -1373,6 +1373,7 @@ return array(
     'licence.overview.saved' => 'W Your changes have been saved',
     'licence.overview.title' => 'W Licence overview',
     'licence.print' => 'W Print licence',
+    'licence.print.failed' => 'W Licence failed to print',
     'licence.print.success' => 'W Licence printed successfully',
     'licence.surrender' => 'W Surrender licence',
     'licence.variation' => 'W Create variation',

@@ -13,6 +13,8 @@ use Common\Service\Data\CategoryDataService;
 /**
  * Document Dispatch Helper Service
  *
+ * @NOTE Migrated
+ *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 class DocumentDispatchHelperService extends AbstractHelperService
@@ -107,7 +109,8 @@ class DocumentDispatchHelperService extends AbstractHelperService
     private function attemptPrint($licence, $file, $description)
     {
         if ($licence['translateToWelsh'] === 'Y') {
-            return $this->generateTranslationTask($licence, $description);
+            $this->generateTranslationTask($licence, $description);
+            return;
         }
 
         return $this->getServiceLocator()
