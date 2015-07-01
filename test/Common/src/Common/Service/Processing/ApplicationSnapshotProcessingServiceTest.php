@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Processing;
 
+use Dvsa\Olcs\Transfer\Command\Application\CreateSnapshot;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Processing\ApplicationSnapshotProcessingService;
@@ -43,7 +44,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
     {
         // Params
         $applicationId = 123;
-        $event = ApplicationSnapshotProcessingService::ON_GRANT;
+        $event = CreateSnapshot::ON_GRANT;
 
         // Expected data
         $expectedDocumentData = [
@@ -150,7 +151,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
     {
         // Params
         $applicationId = 123;
-        $event = ApplicationSnapshotProcessingService::ON_SUBMIT;
+        $event = CreateSnapshot::ON_SUBMIT;
 
         // Expected data
         $expectedDocumentData = [
@@ -260,7 +261,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
     {
         // Params
         $applicationId = 123;
-        $event = ApplicationSnapshotProcessingService::ON_GRANT;
+        $event = CreateSnapshot::ON_GRANT;
 
         // Expected data
         $expectedDocumentData = [
@@ -430,7 +431,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
     {
         return [
             [
-                ApplicationSnapshotProcessingService::ON_REFUSE,
+                CreateSnapshot::ON_REFUSE,
                 0,
                 false,
                 [
@@ -441,7 +442,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
                 'GV79 Application Snapshot (at refuse)',
             ],
             [
-                ApplicationSnapshotProcessingService::ON_REFUSE,
+                CreateSnapshot::ON_REFUSE,
                 0,
                 false,
                 [
@@ -452,7 +453,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
                 'PSV421 Application Snapshot (at refuse)',
             ],
             [
-                ApplicationSnapshotProcessingService::ON_REFUSE,
+                CreateSnapshot::ON_REFUSE,
                 0,
                 false,
                 [
@@ -463,7 +464,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
                 'PSV356 Application Snapshot (at refuse)',
             ],
             [
-                ApplicationSnapshotProcessingService::ON_REFUSE,
+                CreateSnapshot::ON_REFUSE,
                 1,
                 false,
                 [
@@ -474,7 +475,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
                 'GV81 Application Snapshot (at refuse)',
             ],
             [
-                ApplicationSnapshotProcessingService::ON_REFUSE,
+                CreateSnapshot::ON_REFUSE,
                 1,
                 true,
                 [
@@ -485,7 +486,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
                 'GV80A Application Snapshot (at refuse)',
             ],
             [
-                ApplicationSnapshotProcessingService::ON_REFUSE,
+                CreateSnapshot::ON_REFUSE,
                 1,
                 false,
                 [
@@ -496,7 +497,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
                 'PSV431 Application Snapshot (at refuse)',
             ],
             [
-                ApplicationSnapshotProcessingService::ON_REFUSE,
+                CreateSnapshot::ON_REFUSE,
                 1,
                 true,
                 [
@@ -507,7 +508,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
                 'PSV431A Application Snapshot (at refuse)',
             ],
             [
-                ApplicationSnapshotProcessingService::ON_WITHDRAW,
+                CreateSnapshot::ON_WITHDRAW,
                 1,
                 true,
                 [
@@ -518,7 +519,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
                 'PSV431A Application Snapshot (at withdraw)',
             ],
             [
-                ApplicationSnapshotProcessingService::ON_NTU,
+                CreateSnapshot::ON_NTU,
                 0,
                 false,
                 [

@@ -13,7 +13,6 @@ use Zend\View\Model\ViewModel;
  * Review View Model
  *
  * @author Rob Caiger <rob@clocal.co.uk>
- * @todo maybe remove this
  */
 class ReviewViewModel extends ViewModel
 {

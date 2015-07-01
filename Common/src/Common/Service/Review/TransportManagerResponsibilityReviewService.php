@@ -24,8 +24,6 @@ class TransportManagerResponsibilityReviewService extends AbstractReviewService
      */
     public function getConfigFromData(array $data = [])
     {
-        $hours = $this->translate('hours');
-
         return [
             'subSections' => [
                 [
@@ -55,31 +53,31 @@ class TransportManagerResponsibilityReviewService extends AbstractReviewService
                                 [
                                     [
                                         'label' => 'tm-review-responsibility-mon',
-                                        'value' => $data['hoursMon'] . ' ' . $hours
+                                        'value' => $this->renderHours($data['hoursMon'])
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-tue',
-                                        'value' => $data['hoursTue'] . ' ' . $hours
+                                        'value' => $this->renderHours($data['hoursTue'])
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-wed',
-                                        'value' => $data['hoursWed'] . ' ' . $hours
+                                        'value' => $this->renderHours($data['hoursWed'])
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-thu',
-                                        'value' => $data['hoursThu'] . ' ' . $hours
+                                        'value' => $this->renderHours($data['hoursThu'])
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-fri',
-                                        'value' => $data['hoursFri'] . ' ' . $hours
+                                        'value' => $this->renderHours($data['hoursFri'])
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-sat',
-                                        'value' => $data['hoursSat'] . ' ' . $hours
+                                        'value' => $this->renderHours($data['hoursSat'])
                                     ],
                                     [
                                         'label' => 'tm-review-responsibility-sun',
-                                        'value' => $data['hoursSun'] . ' ' . $hours
+                                        'value' => $this->renderHours($data['hoursSun'])
                                     ]
                                 ],
                             ]
@@ -112,6 +110,13 @@ class TransportManagerResponsibilityReviewService extends AbstractReviewService
                 ]
             ]
         ];
+    }
+
+    protected function renderHours($value)
+    {
+        $hours = $this->translate('hours');
+
+        return (int)$value . ' ' . $hours;
     }
 
     private function formatOperatingCentres($data)
