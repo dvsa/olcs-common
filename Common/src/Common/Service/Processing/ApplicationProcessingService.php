@@ -316,12 +316,11 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     /**
      * @param int $applicationId
-     * @param boolean if there are any outstanding fees
      */
     public function enforcementAreaIsValid($applicationId)
     {
         $licenceId = $this->getLicenceId($applicationId);
-        $licenceData = $this->getServiceLocator()->get('\Entity\Licence')->getOverview($licenceId);
+        $licenceData = $this->getServiceLocator()->get('Entity\Licence')->getOverview($licenceId);
         return !empty($licenceData['enforcementArea']);
     }
 
