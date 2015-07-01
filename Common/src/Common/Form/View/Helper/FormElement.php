@@ -75,7 +75,7 @@ class FormElement extends ZendFormElement
                 sprintf(
                     $view->translate('trafficAreaSet.hint' . $translationSuffix),
                     // @todo replace with real link
-                    '#'
+                    'http://www.google.co.uk'
                 )
             );
         }

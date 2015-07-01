@@ -25,9 +25,12 @@ trait CrudTableTrait
      *
      * @param string $prefix - if our actions aren't just 'add', 'edit', provide a prefix
      */
-    protected function handlePostSave($prefix = null)
+    protected function handlePostSave($prefix = null, $doPostSave = true)
     {
-        $this->postSave($this->section);
+        // @NOTE tmp override to prevent this on migrated sections
+        if ($doPostSave) {
+            $this->postSave($this->section);
+        }
 
         // we can't just opt-in to all existing route params because
         // we might have a child ID if we're editing; if so we *don't*
@@ -37,7 +40,7 @@ trait CrudTableTrait
         );
 
         if ($this->isButtonPressed('addAnother')) {
-            $action = $prefix !== null ? $prefix . '-' . 'add' : 'add';
+            $action = $prefix !== null ? $prefix . '-add' : 'add';
             $routeParams['action'] = $action;
             $method = 'toRoute';
         } else {
@@ -68,9 +71,15 @@ trait CrudTableTrait
                 return $response;
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
-                'section.' . $this->params('action') . '.' . $this->section
-            );
+            if ($response === false) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
+                    'section.' . $this->params('action') . '.' . $this->section . '-failed'
+                );
+            } else {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
+                    'section.' . $this->params('action') . '.' . $this->section
+                );
+            }
 
             return $this->redirect()->toRouteAjax(
                 null,

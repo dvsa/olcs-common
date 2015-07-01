@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Service\Entity\LicenceEntityService as Licence;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
 
 /**
  * Abstract Financial Evidence Controller
@@ -50,22 +50,17 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
             // update application record and redirect
-            $this->saveData($id, $data);
-            $this->postSave('financial_evidence');
-            return $this->completeSection('financial_evidence');
+            if ($this->saveFinancialEvidence($data)) {
+                return $this->completeSection('financial_evidence');
+            }
         }
 
         // load scripts
         $this->getServiceLocator()->get('Script')->loadFiles(['financial-evidence']);
 
         // render view
-        $variables = array_merge(
-            [
-                'vehicles' => $adapter->getTotalNumberOfAuthorisedVehicles($id),
-                'requiredFinance' => $adapter->getRequiredFinance($id),
-            ],
-            $adapter->getRatesForView($id)
-        );
+        $financialEvidenceData = $adapter->getData($id);
+        $variables = $financialEvidenceData['financialEvidence'];
 
         return $this->render('financial_evidence', $form, $variables);
     }
@@ -87,6 +82,9 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         );
 
         $this->uploadFile($file, $data);
+
+        // force reload of data with new document included
+        $this->getAdapter()->getData($id, true);
     }
 
     /**
@@ -100,18 +98,27 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         return $this->getAdapter()->getDocuments($id);
     }
 
-    /**
-     * @param int $id,
-     * @param array $data
-     */
-    protected function saveData($id, $data)
+    protected function saveFinancialEvidence($formData)
     {
-        $saveData = [
-            'id' => $id,
-            'version' => $data['version'],
-            'financialEvidenceUploaded' => $data['evidence']['uploadNow'],
-        ];
-        $this->getServiceLocator()->get('Entity\Application')->save($saveData);
+        $dto = UpdateFinancialEvidence::create(
+            [
+                'id' => $this->getIdentifier(),
+                'version' => $formData['version'],
+                'financialEvidenceUploaded' => $formData['evidence']['uploadNow'],
+            ]
+        );
+
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+
+        /** @var \Common\Service\Cqrs\Response $response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+
+        if ($response->isOk()) {
+            return true;
+        }
+
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+        return false;
     }
 
     /**
@@ -119,7 +126,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
      *
      * @return \Zend\Form\Form
      */
-    private function getFinancialEvidenceForm()
+    protected function getFinancialEvidenceForm()
     {
         return $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\FinancialEvidence');

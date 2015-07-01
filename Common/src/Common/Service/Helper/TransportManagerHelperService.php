@@ -105,6 +105,37 @@ class TransportManagerHelperService extends AbstractHelperService
         );
     }
 
+    /**
+     * This method superseeds alterPreviousHistoryFieldset
+     *
+     * @param \Zend\Form\Fieldset $fieldset
+     * @param array               $tm
+     */
+    public function alterPreviousHistoryFieldsetTm($fieldset, $tm)
+    {
+        $convictionsAndPenaltiesTable = $this->getServiceLocator()->get('Table')->prepareTable(
+            'tm.convictionsandpenalties',
+            $tm['previousConvictions']
+        );
+        $previousLicencesTable = $this->getServiceLocator()->get('Table')->prepareTable(
+            'tm.previouslicences',
+            $tm['otherLicences']
+        );
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper->populateFormTable(
+            $fieldset->get('convictions'),
+            $convictionsAndPenaltiesTable,
+            'convictions'
+        );
+        $formHelper->populateFormTable(
+            $fieldset->get('previousLicences'),
+            $previousLicencesTable,
+            'previousLicences'
+        );
+    }
+
     public function alterPreviousHistoryFieldset($fieldset, $tmId)
     {
         $convictionsAndPenaltiesTable = $this->getConvictionsAndPenaltiesTable($tmId);
@@ -122,6 +153,21 @@ class TransportManagerHelperService extends AbstractHelperService
             $previousLicencesTable,
             'previousLicences'
         );
+    }
+
+    /**
+     * This method superseeds prepareOtherEmploymentTable
+     *
+     * @param \Zend\Form\Element $element
+     * @param array              $tm      Transport Manager data
+     */
+    public function prepareOtherEmploymentTableTm($element, $tm)
+    {
+        $table = $this->getServiceLocator()->get('Table')->prepareTable('tm.employments', $tm['employments']);
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper->populateFormTable($element, $table, 'employment');
     }
 
     public function prepareOtherEmploymentTable($element, $tmId)
@@ -142,7 +188,12 @@ class TransportManagerHelperService extends AbstractHelperService
 
     public function getOtherEmploymentData($id)
     {
-        $employment = $this->getServiceLocator()->get('Entity\TmEmployment')->getEmployment($id);
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(\Dvsa\Olcs\Transfer\Query\TmEmployment\GetSingle::create(['id' => $id]));
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('QueryService')->send($query);
+        $employment = $response->getResult();
+
         $data = [
             'tm-employment-details' => [
                 'id' => $employment['id'],

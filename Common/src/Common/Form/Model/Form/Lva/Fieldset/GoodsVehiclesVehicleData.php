@@ -24,8 +24,7 @@ class GoodsVehiclesVehicleData
     /**
      * @Form\Attributes({"class":"medium","id":"vrm","placeholder":""})
      * @Form\Options({
-     *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm",
-     *     "help-block": "Between 2 and 50 characters."
+     *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Common\Filter\Vrm"})
@@ -36,10 +35,10 @@ class GoodsVehiclesVehicleData
     /**
      * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":""})
      * @Form\Options({
-     *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight",
-     *     "help-block": "Between 2 and 50 characters."
+     *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight"
      * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\VehicleWeight")
+     * @Form\Validator({"name": "Zend\Validator\Between", "options": {"min": 0, "max": 999999}})
+     * @Form\Type("Text")
      */
     public $platedWeight = null;
 }

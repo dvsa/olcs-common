@@ -254,163 +254,6 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated, 2));
     }
 
-    public function testHasChangedRegisteredAddressWithNoDiffs()
-    {
-        $this->sm->setService('Helper\Data', new DataHelperService());
-
-        $existing = [
-            'contactDetails' => [
-                'address' => [
-                    'addressLine1' => 'one',
-                    'addressLine2' => 'two',
-                    'addressLine3' => 'three',
-                    'addressLine4' => 'four',
-                    'postcode' => 'LS20',
-                    'town' => 'Leeds'
-                ]
-            ]
-        ];
-
-        $updated = [
-            'addressLine1' => 'one',
-            'addressLine2' => 'two',
-            'addressLine3' => 'three',
-            'addressLine4' => 'four',
-            'postcode' => 'LS20',
-            'town' => 'Leeds'
-        ];
-
-        $id = 1;
-
-        $this->expectOneRestCall('Organisation', 'GET', $id)
-            ->will($this->returnValue($existing));
-
-        $this->assertFalse($this->sut->hasChangedRegisteredAddress($id, $updated));
-    }
-
-    public function testHasChangedRegisteredAddressWithDifferentData()
-    {
-        $this->sm->setService('Helper\Data', new DataHelperService());
-
-        $existing = [
-            'contactDetails' => [
-                'address' => [
-                    'addressLine1' => 'one',
-                    'addressLine2' => 'six',
-                    'addressLine3' => 'three',
-                    'addressLine4' => 'ten',
-                    'postcode' => 'LS20',
-                    'town' => 'Leeds'
-                ]
-            ]
-        ];
-
-        $updated = [
-            'addressLine1' => 'one',
-            'addressLine2' => 'two',
-            'addressLine3' => 'three',
-            'addressLine4' => 'four',
-            'postcode' => 'LS20',
-            'town' => 'Leeds'
-        ];
-
-        $id = 1;
-
-        $this->expectOneRestCall('Organisation', 'GET', $id)
-            ->will($this->returnValue($existing));
-
-        $this->assertTrue($this->sut->hasChangedRegisteredAddress($id, $updated));
-    }
-
-    public function testChangedNatureOfBusinessWithNoDiffs()
-    {
-        $this->sm->setService('Helper\Data', new DataHelperService());
-
-        $existing = [
-            'natureOfBusinesses' => [
-                ['id' => 'foo'],
-                ['id' => 'bar']
-            ]
-        ];
-
-        $updated = [
-            'foo', 'bar'
-        ];
-
-        $id = 1;
-
-        $this->expectOneRestCall('Organisation', 'GET', ['id' => $id, 'limit' => 'all'])
-            ->will($this->returnValue($existing));
-
-        $this->assertFalse($this->sut->hasChangedNatureOfBusiness($id, $updated));
-    }
-
-    public function testChangedNatureOfBusinessWithDifferentValues()
-    {
-        $this->sm->setService('Helper\Data', new DataHelperService());
-
-        $existing = [
-            'natureOfBusinesses' => [
-                ['id' => 'foo'],
-                ['id' => 'baz']
-            ]
-        ];
-
-        $updated = [
-            'foo', 'bar'
-        ];
-
-        $id = 1;
-
-        $this->expectOneRestCall('Organisation', 'GET', ['id' => $id, 'limit' => 'all'])
-            ->will($this->returnValue($existing));
-
-        $this->assertTrue($this->sut->hasChangedNatureOfBusiness($id, $updated));
-    }
-
-    public function testChangedNatureOfBusinessWithAdded()
-    {
-        $existing = [
-            'natureOfBusinesses' => [
-                ['id' => 'foo'],
-                ['id' => 'bar']
-            ]
-        ];
-
-        $updated = [
-            'foo', 'bar', 'baz'
-        ];
-
-        $id = 1;
-
-        $this->expectOneRestCall('Organisation', 'GET', ['id' => $id, 'limit' => 'all'])
-            ->will($this->returnValue($existing));
-
-        $this->assertTrue($this->sut->hasChangedNatureOfBusiness($id, $updated));
-    }
-
-    public function testChangedNatureOfBusinessWithRemoved()
-    {
-        $existing = [
-            'natureOfBusinesses' => [
-                ['id' => 'foo'],
-                ['id' => 'bar'],
-                ['id' => 'baz']
-            ]
-        ];
-
-        $updated = [
-            'foo', 'bar'
-        ];
-
-        $id = 1;
-
-        $this->expectOneRestCall('Organisation', 'GET', ['id' => $id, 'limit' => 'all'])
-            ->will($this->returnValue($existing));
-
-        $this->assertTrue($this->sut->hasChangedNatureOfBusiness($id, $updated));
-    }
-
     public function testHasChangedSubsidiaryCompanyWithNoDiffs()
     {
         $this->sm->setService('Helper\Data', new DataHelperService());
@@ -794,5 +637,21 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
                 true
             ]
         ];
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetByCompanyOrLlpNo()
+    {
+        $companyNo = '01234567';
+
+        $this->expectOneRestCall('Organisation', 'GET', ['companyOrLlpNo' => $companyNo])
+            ->will($this->returnValue(['RESPONSE']));
+
+        $this->assertEquals(
+            ['RESPONSE'],
+            $this->sut->getByCompanyOrLlpNo($companyNo)
+        );
     }
 }

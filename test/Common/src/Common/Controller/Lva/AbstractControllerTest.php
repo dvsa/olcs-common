@@ -24,6 +24,7 @@ class AbstractControllerTest extends MockeryTestCase
 
     public function setUp()
     {
+        $this->markTestSkipped();
         $this->sm = Bootstrap::getServiceManager();
 
         $this->sut = new Stubs\LvaControllerStub();

@@ -63,6 +63,8 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
             }
         }
 
+        $this->alterForm($form);
+
         $this->getAdapter()->attachMainScripts();
 
         return $this->render('operating_centres', $form);
@@ -172,5 +174,10 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
     protected function getDeleteTitle()
     {
         return 'delete-oc';
+    }
+
+    protected function alterForm($form)
+    {
+        return $form;
     }
 }

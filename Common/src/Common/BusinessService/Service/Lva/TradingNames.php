@@ -17,6 +17,8 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
  * Trading Names
  *
+ * @NOTE This business service has been migrated to backend [Organisation\UpdateTradingNames]
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 class TradingNames implements BusinessServiceInterface, BusinessRuleAwareInterface, ServiceLocatorAwareInterface

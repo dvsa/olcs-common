@@ -48,18 +48,6 @@ return array(
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter
         'delegators' => array(
-            'LvaApplication/Review' => array(
-                'Common\Controller\Lva\Delegators\ApplicationReviewDelegator'
-            ),
-            'LvaVariation/Review' => array(
-                'Common\Controller\Lva\Delegators\VariationReviewDelegator'
-            ),
-            'LvaLicence/TypeOfLicence' => array(
-                'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
-            ),
-            'LvaVariation/TypeOfLicence' => array(
-                'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
-            ),
             'LvaApplication/BusinessType' => array(
                 // @NOTE: we need an associative array when we need to override the
                 // delegator elsewhere, such as in selfserve or internal
@@ -70,15 +58,6 @@ return array(
             ),
             'LvaVariation/BusinessType' => array(
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
-            ),
-            'LvaApplication/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
-            ),
-            'LvaLicence/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\LicenceVehiclesGoodsDelegator'
-            ),
-            'LvaVariation/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\VariationVehiclesGoodsDelegator'
             ),
             'LvaApplication/VehiclesPsv' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehiclesPsvDelegator'
@@ -97,15 +76,6 @@ return array(
             ),
             'LvaApplication/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
-            ),
-            'LvaApplication/CommunityLicences' => array(
-                'Common\Controller\Lva\Delegators\ApplicationCommunityLicenceDelegator'
-            ),
-            'LvaVariation/CommunityLicences' => array(
-                'Common\Controller\Lva\Delegators\VariationCommunityLicenceDelegator'
-            ),
-            'LvaLicence/CommunityLicences' => array(
-                'Common\Controller\Lva\Delegators\LicenceCommunityLicenceDelegator'
             ),
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
@@ -149,6 +119,8 @@ return array(
         'factories' => [
             'currentUser' => \Common\Controller\Plugin\CurrentUserFactory::class,
             'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
+            'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
+            'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
         ]
     ),
     'console' => array(
@@ -184,7 +156,9 @@ return array(
         ],
         'shared' => array(
             'Helper\FileUpload' => false,
-            'CantIncreaseValidator' => false
+            'CantIncreaseValidator' => false,
+            // Create a new request each time
+            'CqrsRequest' => false
         ),
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
@@ -204,8 +178,6 @@ return array(
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
             'CrudListener' => 'Common\Controller\Crud\Listener',
             'SectionConfig' => 'Common\Service\Data\SectionConfig',
-            'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
-            'VariationReviewAdapter' => 'Common\Controller\Lva\Adapters\VariationReviewAdapter',
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
             'GenericBusinessTypeAdapter'
                 => 'Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter',
@@ -217,10 +189,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
             'ApplicationVehicleGoodsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
-            'LicenceTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
-            'VariationTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\VariationTypeOfLicenceAdapter',
             'LicenceOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\LicenceOperatingCentreAdapter',
             'VariationOperatingCentreAdapter'
@@ -231,18 +199,9 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
             'ApplicationFinancialEvidenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
-            'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
-            'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
-            'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',
             'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
             'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
             'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
-            'ApplicationCommunityLicenceAdapter' =>
-                'Common\Controller\Lva\Adapters\ApplicationCommunityLicenceAdapter',
-            'VariationCommunityLicenceAdapter' =>
-                'Common\Controller\Lva\Adapters\VariationCommunityLicenceAdapter',
-            'LicenceCommunityLicenceAdapter' =>
-                'Common\Controller\Lva\Adapters\LicenceCommunityLicenceAdapter',
             'ApplicationPeopleAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationPeopleAdapter',
             'LicencePeopleAdapter'
@@ -275,6 +234,7 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
+            'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
             'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
@@ -421,6 +381,24 @@ return array(
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
         ),
+        'ApplicationPublicationFilter' => array(
+            'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
+            'Common\Filter\Publication\Application',
+            'Common\Filter\Publication\ApplicationPubType',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PreviousApplicationPublication',
+            'Common\Filter\Publication\PreviousUnpublishedApplication',
+            'Common\Filter\Publication\ApplicationOperatingCentre',
+            'Common\Filter\Publication\ApplicationLicenceCancelled',
+            'Common\Filter\Publication\ApplicationBusNote',
+            'Common\Filter\Publication\ApplicationConditionUndertaking',
+            'Common\Filter\Publication\ApplicationTransportManager',
+            'Common\Filter\Publication\ApplicationText1',
+            'Common\Filter\Publication\ApplicationText2',
+            'Common\Filter\Publication\ApplicationText3',
+            'Common\Filter\Publication\Clean'
+        ),
     ),
     'search' => [
         'invokables' => [
@@ -472,6 +450,7 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             'partials/view' => __DIR__ . '/../view',
+            'zfcuser' => __DIR__ . '/../view',
             'translations' => __DIR__ . '/../config/language/partials'
         )
     ),
@@ -504,7 +483,8 @@ return array(
             'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
             'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'Common\Validator\OneOf' => 'Common\Validator\OneOf',
-            'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date'
+            'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date',
+            'Common\Validator\DateInFuture' => 'Common\Validator\DateInFuture',
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
@@ -512,7 +492,8 @@ return array(
             'NumberCompare' => 'Common\Validator\NumberCompare',
             'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'OneOf' => 'Common\Validator\OneOf',
-            'Date' => 'Common\Form\Elements\Validators\Date'
+            'Date' => 'Common\Form\Elements\Validators\Date',
+            'DateInFuture' => 'Common\Validator\DateInFuture',
         ]
     ],
     'filters' => [
@@ -587,7 +568,7 @@ return array(
         'endpoints' => array(
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
-            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/',
+            'postcode' => 'http://postcode.cit.olcs.mgt.mtpdvsa/',
             'email' => 'http://olcs-email/',
         )
     ),
@@ -624,6 +605,9 @@ return array(
     ],
     'form_service_manager' => [
         'invokables' => [
+            'lva-application-business_type' => 'Common\FormService\Form\Lva\BusinessType\ApplicationBusinessType',
+            'lva-licence-business_type' => 'Common\FormService\Form\Lva\BusinessType\LicenceBusinessType',
+            'lva-variation-business_type' => 'Common\FormService\Form\Lva\BusinessType\VariationBusinessType',
             // Lva form services
             'lva-licence' => 'Common\FormService\Form\Lva\Licence',
             'lva-variation' => 'Common\FormService\Form\Lva\Variation',
@@ -640,10 +624,6 @@ return array(
             'lva-licence-goods-vehicles' => 'Common\FormService\Form\Lva\LicenceGoodsVehicles',
             'lva-variation-goods-vehicles' => 'Common\FormService\Form\Lva\VariationGoodsVehicles',
             'lva-application-goods-vehicles' => 'Common\FormService\Form\Lva\ApplicationGoodsVehicles',
-            // Goods vehicles vehicle form services
-            'lva-licence-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\LicenceGoodsVehiclesVehicle',
-            'lva-variation-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\VariationGoodsVehiclesVehicle',
-            'lva-application-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\ApplicationGoodsVehiclesVehicle',
             // Psv vehicles vehicle form services
             'lva-licence-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\LicencePsvVehiclesVehicle',
             'lva-variation-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\VariationPsvVehiclesVehicle',
@@ -655,6 +635,11 @@ return array(
             // Common vehicle services
             'lva-licence-variation-vehicles' => 'Common\FormService\Form\Lva\LicenceVariationVehicles',
             'lva-generic-vehicles-vehicle' => 'Common\FormService\Form\Lva\GenericVehiclesVehicle',
+            // Type of licence
+            'lva-licence-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\LicenceTypeOfLicence::class,
+            'lva-application-type-of-licence'
+                => \Common\FormService\Form\Lva\TypeOfLicence\ApplicationTypeOfLicence::class,
+            'lva-variation-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\VariationTypeOfLicence::class
         ]
     ],
     'business_rule_manager' => [
@@ -664,12 +649,6 @@ return array(
             'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
             'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
-            'GoodsVehiclesVehicle' => 'Common\BusinessRule\Rule\GoodsVehiclesVehicle',
-            'LicenceGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesLicenceVehicle',
-            'LicenceGoodsVehiclesRemovedVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesRemovedVehicle',
-            'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
-            'ApplicationGoodsVehiclesLicenceVehicle'
-                => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
             'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
             'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
             'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
@@ -681,14 +660,8 @@ return array(
             'Task' => 'Common\BusinessService\Service\Task',
             'Fee' => 'Common\BusinessService\Service\Fee',
             // Some of these LVA services may be re-usable outside of LVA, if so please move them from the LVA namespace
-            'Lva\BusinessDetails' => 'Common\BusinessService\Service\Lva\BusinessDetails',
             'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames',
-            'Lva\RegisteredAddress' => 'Common\BusinessService\Service\Lva\RegisteredAddress',
             'Lva\ContactDetails' => 'Common\BusinessService\Service\Lva\ContactDetails',
-            'Lva\BusinessDetailsChangeTask' => 'Common\BusinessService\Service\Lva\BusinessDetailsChangeTask',
-            'Lva\CompanySubsidiaryChangeTask' => 'Common\BusinessService\Service\Lva\CompanySubsidiaryChangeTask',
-            'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
-            'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
             'Lva\LicenceAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
             'Lva\VariationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
             'Lva\ApplicationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
@@ -699,25 +672,10 @@ return array(
             'Lva\Application' => 'Common\BusinessService\Service\Lva\Application',
             'Lva\ApplicationRevive' => 'Common\BusinessService\Service\Lva\ApplicationRevive',
             'Lva\Licence' => 'Common\BusinessService\Service\Lva\Licence',
-            // Goods Vehicles business services
-            'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
-            'Lva\VariationGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
-            'Lva\ApplicationGoodsVehicles' => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehicles',
             // Psv Vehicles business services
             'Lva\LicencePsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
             'Lva\VariationPsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
             'Lva\ApplicationPsvVehicles' => 'Common\BusinessService\Service\Lva\ApplicationPsvVehicles',
-            // Goods vehicles vehicle business service
-            'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
-            'Lva\LicenceGoodsVehiclesRemovedVehicle' =>
-                'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesRemovedVehicle',
-            'Lva\VariationGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\VariationGoodsVehiclesVehicle',
-            'Lva\ApplicationGoodsVehiclesVehicle'
-                => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehiclesVehicle',
-            'Lva\RequestDisc' => 'Common\BusinessService\Service\Lva\RequestDisc',
-            'Lva\ReprintDisc' => 'Common\BusinessService\Service\Lva\ReprintDisc',
-            'Lva\CeaseActiveDisc' => 'Common\BusinessService\Service\Lva\CeaseActiveDisc',
-            'Lva\DeleteGoodsVehicle' => 'Common\BusinessService\Service\Lva\DeleteGoodsVehicle',
             'Lva\DeleteTransportManagerApplication' =>
                 'Common\BusinessService\Service\Lva\DeleteTransportManagerApplication',
             'Lva\TransportManagerApplicationForUser' =>
@@ -758,10 +716,6 @@ return array(
                 => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaint',
             'Cases\Complaint\EnvironmentalComplaintTask'
                 => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaintTask',
-            'Cases\Submission\Decision' => 'Common\BusinessService\Service\Cases\Submission\Decision',
-            'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
-            'Cases\Submission\SubmissionActionTask'
-                => 'Common\BusinessService\Service\Cases\Submission\SubmissionActionTask',
             'Cases\Submission\SubmissionAssignmentTask'
             => 'Common\BusinessService\Service\Cases\Submission\SubmissionAssignmentTask',
             'Cases\Submission\Submission' => 'Common\BusinessService\Service\Cases\Submission\Submission',
@@ -772,8 +726,6 @@ return array(
             'CreateSeparatorSheet' => 'Common\BusinessService\Service\CreateSeparatorSheet',
             'Lva\AccessCorrespondence' => 'Common\BusinessService\Service\Lva\AccessCorrespondence',
             // Operator services
-            'Operator\IrfoDetails'
-                => 'Common\BusinessService\Service\Operator\IrfoDetails',
             'Lva\TransportConsultant' => 'Common\BusinessService\Service\Lva\TransportConsultant',
             'Lva\ContinueLicence'
                 => 'Common\BusinessService\Service\Lva\ContinueLicence',

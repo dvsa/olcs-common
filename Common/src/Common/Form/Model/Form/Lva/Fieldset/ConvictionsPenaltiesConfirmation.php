@@ -10,7 +10,10 @@ use Zend\Form\Annotation as Form;
 class ConvictionsPenaltiesConfirmation
 {
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({
+     *     "id":"",
+     *     "data-container-class": "confirm"
+     * })
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",

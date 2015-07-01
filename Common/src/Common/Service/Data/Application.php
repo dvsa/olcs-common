@@ -95,7 +95,7 @@ class Application extends CrudAbstract
         $application = $this->fetchApplicationData($id);
 
         if (empty($application['status'])
-            || ($application['status']['id'] == ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED)
+            || ((is_array($application['status']) ? $application['status']['id'] : $application['status'])  == ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED)
             || empty($application['licence']) || empty($application['licence']['licNo'])
         ) {
             return false;

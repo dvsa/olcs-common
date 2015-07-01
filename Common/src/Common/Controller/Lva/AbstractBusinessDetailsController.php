@@ -8,7 +8,12 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\CrudTableTrait;
-use Common\BusinessService\Response;
+use Common\Data\Mapper\Lva\BusinessDetails as Mapper;
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateBusinessDetails;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateBusinessDetails as ApplicationUpdateBusinessDetails;
+use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
+use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
+use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
 
 /**
  * Shared logic between Business Details Controller
@@ -28,30 +33,30 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     {
         $request = $this->getRequest();
 
-        $orgId = $this->getCurrentOrganisationId();
+        $response = $this->handleQuery(BusinessDetails::create(['id' => $this->getLicenceId()]));
 
-        $organisationEntity = $this->getServiceLocator()->get('Entity\Organisation');
+        if ($response->isClientError() || $response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+            return $this->notFoundAction();
+        }
 
-        // we *always* want to get org data because we rely on it in
-        // alterForm which is called irrespective of whether we're doing
-        // a GET or a POST
-        $orgData = $organisationEntity->getBusinessDetailsData($orgId, $this->getLicenceId());
+        $orgData = $response->getResult();
 
         if ($request->isPost()) {
             $data = $this->getFormPostData($orgData);
         } else {
-            $data = $this->formatDataForForm($orgData, $organisationEntity->getNatureOfBusinessesForSelect($orgId));
+            $data = Mapper::mapFromResult($orgData);
         }
 
         // Gets a fully configured/altered form for any version of this section
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
-            ->getForm($orgData['type']['id'], $orgId)
+            ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'])
             ->setData($data);
 
         if ($form->has('table')) {
-            $this->populateTable($form);
+            $this->populateTable($form, $orgData);
         }
 
         // Added an early return for non-posts to improve the readability of the code
@@ -61,16 +66,19 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         // If we are performing a company number lookup
         if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
+
             $this->getServiceLocator()->get('Helper\Form')
                 ->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
+
             return $this->renderForm($form);
         }
 
         // We'll re-use this in a few places, so cache the lookup just for the sake of legibility
-        $tradingNames = isset($data['data']['tradingNames']) ? $data['data']['tradingNames'] : array();
+        $tradingNames = isset($data['data']['tradingNames']) ? $data['data']['tradingNames'] : [];
 
         // If we are interacting with the trading names collection element
         if (isset($tradingNames['submit_add_trading_name'])) {
+
             $this->processTradingNames($tradingNames, $form);
             return $this->renderForm($form);
         }
@@ -80,29 +88,41 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             return $this->renderForm($form);
         }
 
-        // If we have gotten to here, then we want to start persisting
-        $tradingNamesToProcess = [];
-        if (isset($tradingNames['trading_name'])) {
-            $tradingNamesToProcess = $tradingNames['trading_name'];
-        }
+        if ($this->lva === 'licence') {
+            $dtoData = [
+                'id' => $this->getLicenceId(),
+                'version' => $data['version'],
+                'name' => $data['data']['name'],
+                'tradingNames' => isset($tradingNames['trading_name']) ? $tradingNames['trading_name'] : [],
+                'natureOfBusinesses' => $data['data']['natureOfBusinesses'],
+                'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
+                    ? $data['data']['companyNumber']['company_number'] : null,
+                'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null
+            ];
 
-        $response = $this->getServiceLocator()->get('BusinessServiceManager')
-            ->get('Lva\BusinessDetails')
-            ->process(
-                [
-                    'tradingNames' => $tradingNamesToProcess,
-                    'orgId' => $orgId,
-                    'data' => $data,
-                    'licenceId' => $this->getLicenceId()
-                ]
-            );
+            $response = $this->handleCommand(UpdateBusinessDetails::create($dtoData));
+        } else {
+            $dtoData = [
+                'id' => $this->getIdentifier(),
+                'licence' => $this->getLicenceId(),
+                'version' => $data['version'],
+                'name' => $data['data']['name'],
+                'tradingNames' => isset($tradingNames['trading_name']) ? $tradingNames['trading_name'] : [],
+                'natureOfBusinesses' => $data['data']['natureOfBusinesses'],
+                'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
+                    ? $data['data']['companyNumber']['company_number'] : null,
+                'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null
+            ];
+
+            $response = $this->handleCommand(ApplicationUpdateBusinessDetails::create($dtoData));
+        }
 
         if (!$response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
+                $response->getResult()['messages']
+            );
             return $this->renderForm($form);
         }
-
-        $this->postSave('business_details');
 
         // If we have a table, then we may have a crud action to handle
         if (isset($data['table'])) {
@@ -149,7 +169,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $data = (array)$this->getRequest()->getPost();
 
         if (!isset($data['data']['companyNumber'])
-            || !array_key_exists('company_number', $data['data']['companyNumber'])) {
+            || !array_key_exists('company_number', $data['data']['companyNumber'])
+        ) {
             $data['data']['companyNumber']['company_number'] = $orgData['companyOrLlpNo'];
         }
 
@@ -195,7 +216,14 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $data = ['data' => $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($id)];
+
+            $response = $this->handleQuery(CompanySubsidiary::create(['id' => $id]));
+
+            if ($response->isClientError()) {
+                return $this->notFoundAction();
+            }
+
+            $data = CompanySubsidiaryMapper::mapFromResult($response->getResult());
         }
 
         // @todo Move this into a form service
@@ -210,58 +238,43 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         if ($request->isPost() && $form->isValid()) {
 
-            $data['id'] = $id;
-            $data['licenceId'] = $this->getLicenceId();
+            $dtoData = [
+                $this->getIdentifierIndex() => $this->getIdentifier(),
+                'name' => $data['data']['name'],
+                'companyNo' => $data['data']['companyNo'],
+            ];
 
-            $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                ->get('Lva\CompanySubsidiary')->process($data);
-
-            if ($response->isOk()) {
-                return $this->handlePostSave();
+            if ($this->lva === 'licence') {
+                $lvaNamespace = 'Licence';
+            } else {
+                $lvaNamespace = 'Application';
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+            // Creating
+            if ($id !== null) {
+                $dtoData['id'] = $id;
+                $dtoData['version'] = $data['data']['version'];
+                $dtoClass = sprintf('\Dvsa\Olcs\Transfer\Command\%s\UpdateCompanySubsidiary', $lvaNamespace);
+            } else {
+                $dtoClass = sprintf('\Dvsa\Olcs\Transfer\Command\%s\CreateCompanySubsidiary', $lvaNamespace);
+            }
+
+            $response = $this->handleCommand($dtoClass::create($dtoData));
+
+            if ($response->isOk()) {
+                return $this->handlePostSave(null, false);
+            }
+
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
 
         return $this->render($mode . '_subsidiary_company', $form);
     }
 
-    /**
-     * Format data for form (This is presentation logic)
-     *
-     * @param array $data
-     * @param array $natureOfBusiness
-     * @return array
-     */
-    protected function formatDataForForm($data, $natureOfBusiness)
+    protected function populateTable($form, $orgData)
     {
-        $tradingNames = array();
-        foreach ($data['tradingNames'] as $tradingName) {
-            $tradingNames[] = $tradingName['name'];
-        }
-
-        return array(
-            'version' => $data['version'],
-            'data' => array(
-                'companyNumber' => array(
-                    'company_number' => $data['companyOrLlpNo']
-                ),
-                'tradingNames' => array(
-                    'trading_name' => $tradingNames
-                ),
-                'name' => $data['name'],
-                'type' => $data['type']['id'],
-                'natureOfBusinesses' => $natureOfBusiness
-            ),
-            'registeredAddress' => $data['contactDetails']['address'],
-        );
-    }
-
-    protected function populateTable($form)
-    {
-        $tableData = $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getForLicence($this->getLicenceId());
-
-        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-subsidiaries', $tableData);
+        $table = $this->getServiceLocator()->get('Table')
+            ->prepareTable('lva-subsidiaries', $orgData['companySubsidiaries']);
 
         $this->getServiceLocator()->get('Helper\Form')->populateFormTable($form->get('table'), $table);
     }
@@ -274,16 +287,23 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $id = $this->params('child_id');
         $ids = explode(',', $id);
 
-        $params = [
+        $data = [
             'ids' => $ids,
-            'licenceId' => $this->getLicenceId()
+            $this->getIdentifierIndex() => $this->getIdentifier()
         ];
 
-        $response = $this->getServiceLocator()->get('BusinessServiceManager')->get('Lva\DeleteCompanySubsidiary')
-            ->process($params);
+        if ($this->lva === 'licence') {
+            $lvaNamespace = 'Licence';
+        } else {
+            $lvaNamespace = 'Application';
+        }
+
+        $dtoClass = sprintf('\Dvsa\Olcs\Transfer\Command\%s\DeleteCompanySubsidiary', $lvaNamespace);
+
+        $response = $this->handleCommand($dtoClass::create($data));
 
         if (!$response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
     }
 }

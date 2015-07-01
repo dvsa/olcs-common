@@ -14,10 +14,8 @@ namespace Common\FormService\Form\Lva;
  */
 class ApplicationGoodsVehicles extends AbstractGoodsVehicles
 {
-    protected function alterForm($form, $isCrudPressed)
+    protected function alterForm($form)
     {
         $this->getFormServiceLocator()->get('lva-application')->alterForm($form);
-
-        parent::alterForm($form, $isCrudPressed);
     }
 }

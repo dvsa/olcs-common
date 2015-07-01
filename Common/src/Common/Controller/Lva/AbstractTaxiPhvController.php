@@ -207,6 +207,9 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
+        // remove enforcement area as not required
+        $formHelper->remove($form, 'dataTrafficArea->enforcementArea');
+
         if (empty($licenceTableData)) {
             $formHelper->remove($form, 'dataTrafficArea');
         } elseif ($trafficAreaId) {

@@ -29,7 +29,9 @@ class BusRegLicence extends AbstractPublicationFilter
      */
     public function filter($publication)
     {
-        $licence = $this->getServiceLocator()->get('\Common\Service\Data\Licence')->fetchLicenceData();
+        $licenceService = $this->getServiceLocator()->get('\Common\Service\Data\Licence');
+        $licenceService->setData($licenceService->getId(), null);
+        $licence = $licenceService->fetchLicenceData();
 
         if (!isset($licence['id'])) {
             throw new ResourceNotFoundException('No licence found');
@@ -37,6 +39,7 @@ class BusRegLicence extends AbstractPublicationFilter
 
         $newData = [
             'licence' => $licence['id'],
+            'licType' => $licence['goodsOrPsv']['id'],
             'licenceData' => $licence
         ];
 

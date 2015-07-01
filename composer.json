@@ -21,18 +21,21 @@
         {
             "type": "vcs",
             "url": "git@gitlab.inf.mgt.mtpdvsa:cpms/cpms-client.git"
+        },
+        {
+            "url": "git@gitlab.inf.mgt.mtpdvsa:olcs/olcs-transfer.git",
+            "type": "vcs"
         }
     ],
     "require": {
         "php": ">=5.4",
 
         "zendframework/zendframework": "~2.3.5",
-        "doctrine/doctrine-orm-module": "~0.8.0",
+        "doctrine/doctrine-orm-module": "~0.9.0",
         "doctrine/annotations": "^1.2.3",
         "symfony/Filesystem": "~2.6.0",
         "zf-commons/zfc-rbac": "~2.4.0",
         "zf-commons/zfc-user": "~1.2.2",
-
         "cpms/client": "0.1.x-dev"
     },
     "require-dev": {
@@ -42,7 +45,8 @@
         "major-caiger/munit": "~0.1.0",
         "dvsa/jackrabbit": "~1.1.2",
         "mikey179/vfsStream": "~1.4.0",
-        "olcs/olcs-testhelpers": "dev-develop"
+        "olcs/olcs-testhelpers": "dev-develop",
+        "olcs/olcs-transfer": "dev-develop"
     },
     "autoload": {
         "psr-0": {

@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Cqrs\Query;
 
-use Dvsa\Olcs\Transfer\Query\QueryContainer as DvsaQuery;
+use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Common\Service\Cqrs\Response;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
@@ -33,24 +33,47 @@ class QueryService
      */
     protected $client;
 
-    public function __construct(RouteInterface $router, Client $client)
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    protected $cache;
+
+    public function __construct(RouteInterface $router, Client $client, Request $request)
     {
         $this->router = $router;
         $this->client = $client;
+        $this->request = $request;
     }
 
     /**
      * Send a query and return the response
      *
-     * @param DvsaQuery $query
+     * @param QueryContainerInterface $query
      * @return Response
      */
-    public function send(DvsaQuery $query)
+    public function send(QueryContainerInterface $query)
     {
         if (!$query->isValid()) {
             return $this->invalidResponse($query->getMessages(), HttpResponse::STATUS_CODE_422);
         }
 
+        if ($query->isCachable()) {
+            $id = $query->getCacheIdentifier();
+
+            if (!isset($this->cache[$id])) {
+                $this->cache[$id] = $this->handleSend($query);
+            }
+
+            return $this->cache[$id];
+        }
+
+        return $this->handleSend($query);
+    }
+
+    protected function handleSend(QueryContainerInterface $query)
+    {
         $routeName = $query->getRouteName();
         $data = $query->getDto()->getArrayCopy();
 
@@ -62,12 +85,11 @@ class QueryService
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
         }
 
-        $request = new Request();
-        $request->setUri($uri);
-        $request->setMethod('GET');
+        $this->request->setUri($uri);
+        $this->request->setMethod('GET');
 
         try {
-            return new Response($this->client->send($request));
+            return new Response($this->client->send($this->request));
         } catch (HttpClientExceptionInterface $ex) {
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_500);
         }

@@ -197,19 +197,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetSafetyData()
-    {
-        $id = 7;
-
-        $this->expectOneRestCall('Licence', 'GET', $id)
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getSafetyData($id));
-    }
-
-    /**
-     * @group entity_services
-     */
     public function testGetVehiclesData()
     {
         $id = 7;
@@ -373,19 +360,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getTotalAuths($id));
-    }
-
-    /**
-     * @group entity_services
-     */
-    public function testGetPsvDiscsRequestData()
-    {
-        $id = 7;
-
-        $this->expectOneRestCall('Licence', 'GET', $id)
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getPsvDiscsRequestData($id));
     }
 
     /**
@@ -1019,22 +993,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->sut->setLicenceStatus($id, $status);
     }
 
-    public function testHasApprovedUnfulfilledConditionsFalse()
-    {
-        $this->expectOneRestCall('Licence', 'GET', 111)
-            ->will($this->returnValue(['conditionUndertakings' => []]));
-
-        $this->assertFalse($this->sut->hasApprovedUnfulfilledConditions(111));
-    }
-
-    public function testHasApprovedUnfulfilledConditionsTrue()
-    {
-        $this->expectOneRestCall('Licence', 'GET', 111)
-            ->will($this->returnValue(['conditionUndertakings' => ['foo']]));
-
-        $this->assertTrue($this->sut->hasApprovedUnfulfilledConditions(111));
-    }
-
     public function testGetConditionsAndUndertakings()
     {
         $this->expectOneRestCall('Licence', 'GET', 111)
@@ -1341,5 +1299,13 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getWhereContinuationNotSought('START_DATE', 'END_DATE'));
+    }
+
+    public function testGetByLicenceNumberWithOperatingCentres()
+    {
+        $this->expectOneRestCall('Licence', 'GET', ['licNo' => 1, 'limit' => 'all'])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByLicenceNumberWithOperatingCentres(1));
     }
 }

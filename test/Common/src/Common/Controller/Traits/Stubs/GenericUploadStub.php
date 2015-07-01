@@ -19,8 +19,17 @@ class GenericUploadStub extends AbstractActionController
 {
     use GenericUpload;
 
+    public $stubResponse;
+
     public function callDeleteFile($id)
     {
         return $this->deleteFile($id);
+    }
+
+    public function handleCommand($dto)
+    {
+        $this->stubResponse->dto = $dto;
+
+        return $this->stubResponse;
     }
 }

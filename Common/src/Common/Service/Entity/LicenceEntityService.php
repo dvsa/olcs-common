@@ -141,17 +141,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
-    /**
-     * Safety data bundle
-     *
-     * @var array
-     */
-    protected $safetyDataBundle = array(
-        'children' => array(
-            'tachographIns'
-        )
-    );
-
     protected $vehicleDataBundle = array(
         'children' => array(
             'licenceVehicles' => array(
@@ -315,17 +304,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         ]
     ];
 
-    protected $hasApprovedUnfulfilledConditionsBundle = [
-        'children' => [
-            'conditionUndertakings' => [
-                'criteria' => [
-                    'isDraft' => '0',
-                    'isFulfilled' => '0'
-                ]
-            ]
-        ]
-    ];
-
     protected $conditionsUndertakingsBundle = [
         'children' => [
             'conditionUndertakings' => [
@@ -357,6 +335,41 @@ class LicenceEntityService extends AbstractLvaEntityService
             'trafficArea',
             'enforcementArea',
         ),
+    );
+
+    protected $getByLicenceNumberWithOperatingCentresBundle = array(
+        'children' => array(
+            'operatingCentres' => array(
+                'children' => array(
+                    'operatingCentre' => array(
+                        'children' => array(
+                            'address',
+                            'conditionUndertakings' => array(
+                                'criteria' => array(
+                                    'isFulfilled' => 'Y',
+                                    'isDraft' => 'Y'
+                                )
+                            ),
+                            'ocComplaints' => array(
+                                'children' => array(
+                                    'complaint' => array(
+                                        'criteria' => array(
+                                            'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
+                                        )
+                                    )
+                                )
+                            ),
+                            'conditionUndertakings' => array(
+                                'criteria' => array(
+                                    'isFulfilled' => 'Y',
+                                    'isDraft' => 'Y'
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
     );
 
     protected $continuationNotSoughtBundle = [
@@ -446,17 +459,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $this->get($id, $this->addressesDataBundle);
     }
 
-    /**
-     * Get safety data
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getSafetyData($id)
-    {
-        return $this->get($id, $this->safetyDataBundle);
-    }
-
     public function getVehiclesData($id)
     {
         return $this->get($id, $this->vehicleDataBundle)['licenceVehicles'];
@@ -499,11 +501,6 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function getTotalAuths($id)
     {
         return $this->get($id);
-    }
-
-    public function getPsvDiscsRequestData($id)
-    {
-        return $this->get($id, $this->psvDiscsBundle);
     }
 
     public function getPsvDiscs($id)
@@ -809,13 +806,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $this->forceUpdate($id, ['status' => $status]);
     }
 
-    public function hasApprovedUnfulfilledConditions($id)
-    {
-        $data = $this->get($id, $this->hasApprovedUnfulfilledConditionsBundle);
-
-        return !empty($data['conditionUndertakings']);
-    }
-
     public function getConditionsAndUndertakings($id)
     {
         return $this->get($id, $this->conditionsUndertakingsBundle);
@@ -993,5 +983,22 @@ class LicenceEntityService extends AbstractLvaEntityService
         ];
 
         return $this->getAll($query, $bundle);
+    }
+
+    /**
+     * Get licence by licence number and return all operating centres and complaints.
+     *
+     * @param $licNo
+     *
+     * @return array
+     */
+    public function getByLicenceNumberWithOperatingCentres($licNo)
+    {
+        return $this->getAll(
+            array(
+                'licNo' => $licNo
+            ),
+            $this->getByLicenceNumberWithOperatingCentresBundle
+        );
     }
 }

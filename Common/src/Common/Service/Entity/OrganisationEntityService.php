@@ -240,6 +240,8 @@ class OrganisationEntityService extends AbstractEntityService
     }
 
     /**
+     * @NOTE This functionality has been migrated to the backend [Query\Organisation\BusinessDetails]
+     *
      * Get business details data
      *
      * @param type $id
@@ -284,6 +286,9 @@ class OrganisationEntityService extends AbstractEntityService
         return $licences['Count'] > 0;
     }
 
+    /**
+     * @NOTE This behaviour is not longer being used in Lva Business Details, but is still used in IRFO
+     */
     public function hasChangedTradingNames($id, $tradingNames, $licenceId = null)
     {
         $data = $this->getBusinessDetailsData($id, $licenceId);
@@ -294,32 +299,6 @@ class OrganisationEntityService extends AbstractEntityService
 
         $existing = array_map($map, $data['tradingNames']);
         $updated  = array_map($map, $tradingNames);
-
-        $diff = array_diff($updated, $existing);
-
-        return count($existing) !== count($updated) || !empty($diff);
-    }
-
-    public function hasChangedRegisteredAddress($id, $address)
-    {
-        $data = $this->getBusinessDetailsData($id);
-
-        $diff = $this->compareKeys(
-            $data['contactDetails']['address'],
-            $address,
-            [
-                'addressLine1', 'addressLine2',
-                'addressLine3', 'addressLine4',
-                'postcode', 'town',
-            ]
-        );
-
-        return !empty($diff);
-    }
-
-    public function hasChangedNatureOfBusiness($id, $updated)
-    {
-        $existing = $this->getNatureOfBusinessesForSelect($id);
 
         $diff = array_diff($updated, $existing);
 
@@ -393,6 +372,12 @@ class OrganisationEntityService extends AbstractEntityService
         return $this->getAll($id, $this->natureOfBusinessDataBundle)['natureOfBusinesses'];
     }
 
+    /**
+     * @NOTE After migrating to business services, this is no longer used in the business details lva controller
+     *
+     * @param $id
+     * @return array
+     */
     public function getNatureOfBusinessesForSelect($id)
     {
         $naturesOfBusiness = $this->getNatureOfBusinesses($id);
@@ -425,6 +410,10 @@ class OrganisationEntityService extends AbstractEntityService
         return $people;
     }
 
+    /**
+     * @todo maybe remove this
+     * @NOTE migrated
+     */
     public function getAdminEmailAddresses($id)
     {
         $users = [];
@@ -443,5 +432,14 @@ class OrganisationEntityService extends AbstractEntityService
         }
 
         return $users;
+    }
+
+    public function getByCompanyOrLlpNo($companyNumber)
+    {
+        $query = [
+            'companyOrLlpNo' => $companyNumber,
+        ];
+
+        return $this->get($query);
     }
 }

@@ -20,26 +20,14 @@ abstract class AbstractGoodsVehicles extends AbstractFormService implements Serv
 {
     use ServiceLocatorAwareTrait;
 
-    public function getForm($table, $isCrudPressed)
+    public function getForm($table)
     {
         $form = $this->getFormHelper()->createForm('Lva\GoodsVehicles');
 
         $this->getFormHelper()->populateFormTable($form->get('table'), $table);
 
-        $this->alterForm($form, $isCrudPressed);
+        $this->alterForm($form);
 
         return $form;
-    }
-
-    protected function alterForm($form, $isCrudPressed)
-    {
-        $rows = [$form->get('table')->get('rows')->getValue()];
-
-        $oneRowInTablesRequiredValidator = $this->getServiceLocator()->get('oneRowInTablesRequired');
-        $oneRowInTablesRequiredValidator->setRows($rows);
-        $oneRowInTablesRequiredValidator->setCrud($isCrudPressed);
-
-        $form->getInputFilter()->get('data')->get('hasEnteredReg')
-            ->getValidatorChain()->attach($oneRowInTablesRequiredValidator);
     }
 }

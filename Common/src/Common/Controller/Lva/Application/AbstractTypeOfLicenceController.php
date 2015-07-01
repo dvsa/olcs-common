@@ -12,7 +12,6 @@ use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Common\Controller\Lva;
 use Zend\Http\Response;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
-use Zend\Form\Form;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -42,7 +41,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         // If we have no data (not posted)
         if ($prg === false) {
 
-            $response = $this->getTypeOfLicence();
+            $response = $this->handleQuery(Application::create(['id' => $this->getIdentifier()]));
 
             if ($response->isNotFound()) {
                 return $this->notFoundAction();
@@ -53,8 +52,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             }
 
             if ($response->isOk()) {
-                $mapper = new TypeOfLicenceMapper();
-                $form->setData($mapper->mapFromResult($response->getResult()));
+                $form->setData(TypeOfLicenceMapper::mapFromResult($response->getResult()));
             }
 
             return $this->renderIndex($form);
@@ -115,55 +113,49 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         return $this->renderIndex($form);
     }
 
-    /**
-     * @return \Common\Service\Cqrs\Response
-     */
-    protected function getTypeOfLicence()
+    public function confirmationAction()
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(Application::create(['id' => $this->getIdentifier()]));
+        $request = $this->getRequest();
 
-        return $this->getServiceLocator()->get('QueryService')->send($query);
-    }
+        if ($request->isPost()) {
 
-    protected function renderIndex($form)
-    {
-        $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
+            $query = (array)$this->params()->fromQuery();
 
-        return $this->render('type_of_licence', $form);
-    }
+            $dto = UpdateTypeOfLicence::create(
+                [
+                    'id' => $this->getIdentifier(),
+                    'version' => $query['version'],
+                    'operatorType' => $query['operator-type'],
+                    'licenceType' => $query['licence-type'],
+                    'niFlag' => $query['operator-location'],
+                    'confirm' => true
+                ]
+            );
 
-    protected function mapErrors(Form $form, array $errors)
-    {
-        $formMessages = [];
+            /** @var \Common\Service\Cqrs\Response $response */
+            $response = $this->handleCommand($dto);
 
-        if (isset($errors['licenceType'])) {
-
-            foreach ($errors['licenceType'][0] as $key => $message) {
-                $formMessages['type-of-licence']['licence-type'][] = $key;
+            if ($response->isOk()) {
+                return $this->redirect()->toRouteAjax(
+                    'lva-application',
+                    ['application' => $response->getResult()['id']['application']]
+                );
             }
 
-            unset($errors['licenceType']);
+            $this->getServiceLocator()->get('Helper\FlashMessenger')
+                ->addErrorMessage('unknown-error');
+
+            return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
         }
 
-        if (isset($errors['goodsOrPsv'])) {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('GenericConfirmation');
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
 
-            foreach ($errors['goodsOrPsv'][0] as $key => $message) {
-                $formMessages['type-of-licence']['operator-type'][] = $key;
-            }
-
-            unset($errors['licenceType']);
-        }
-
-        // @todo might need tweaking
-        if (!empty($errors)) {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
-
-            foreach ($errors as $error) {
-                $fm->addCurrentErrorMessage($error);
-            }
-        }
-
-        $form->setMessages($formMessages);
+        return $this->render(
+            'application_type_of_licence_confirmation',
+            $form,
+            ['sectionText' => 'application_type_of_licence_confirmation_subtitle']
+        );
     }
 }

@@ -8,6 +8,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Dvsa\Olcs\Transfer\Command;
 
 /**
  * Abstract Transport Managers Controller
@@ -46,7 +47,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             $form->setData($data);
 
             // if is it not required to have at least one TM, then remove the validator
-            if (!$this->getAdapter()->mustHaveAtLeastOneTm($this->getIdentifier())) {
+            if (!$this->getAdapter()->mustHaveAtLeastOneTm()) {
                 $form->getInputFilter()->remove('table');
             }
 
@@ -56,7 +57,6 @@ abstract class AbstractTransportManagersController extends AbstractController im
             }
 
             if ($form->isValid()) {
-                $this->postSave('transport_managers');
                 return $this->completeSection('transport_managers');
             }
         }
@@ -98,22 +98,20 @@ abstract class AbstractTransportManagersController extends AbstractController im
         // So we don't need to continue to show the form
         if ($user['id'] == $childId) {
 
-            $params = [
-                'userId' => $childId,
-                'applicationId' => $this->getIdentifier()
-            ];
-
-            $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                // Should be fine to hard code Application here, as this page is only accessible for
-                // new apps and variations
-                ->get('Lva\TransportManagerApplicationForUser')
-                ->process($params);
+            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+                ->createCommand(
+                    Command\TransportManagerApplication\Create::create(
+                        ['application' => $this->getIdentifier(), 'user' => $childId, 'action' => 'A']
+                    )
+                );
+            /* @var $response \Common\Service\Cqrs\Response */
+            $response = $this->getServiceLocator()->get('CommandService')->send($command);
 
             return $this->redirect()->toRouteAjax(
                 null,
                 [
                     'action' => 'details',
-                    'child_id' => $response->getData()['linkId']
+                    'child_id' => $response->getResult()['id']['transportManagerApplication']
                 ],
                 [],
                 true
@@ -122,10 +120,13 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
         $request = $this->getRequest();
 
-        $userDetails = $this->getServiceLocator()->get('Entity\User')->getUserDetails($childId);
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(\Dvsa\Olcs\Transfer\Query\User\User::create(['id' => $childId]));
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('QueryService')->send($query);
+        $userDetails = $response->getResult();
 
         $form = $this->getTmDetailsForm($userDetails['contactDetails']['emailAddress']);
-
         $formData = [
             'data' => [
                 'forename' => $userDetails['contactDetails']['person']['forename'],
@@ -146,15 +147,28 @@ abstract class AbstractTransportManagersController extends AbstractController im
         if ($request->isPost() && $form->isValid()) {
             $formData = $form->getData();
 
-            $params = [
-                'userId' => $childId,
-                'applicationId' => $this->getIdentifier(),
-                'dob' => $formData['data']['birthDate']
-            ];
+            // Update DOB
+            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+                ->createCommand(
+                    Command\Person\Update::create(
+                        [
+                            'id' => $userDetails['contactDetails']['person']['id'],
+                            'dob' => $formData['data']['birthDate']
+                        ]
+                    )
+                );
+            /* @var $response \Common\Service\Cqrs\Response */
+            $response = $this->getServiceLocator()->get('CommandService')->send($command);
 
-            $this->getServiceLocator()->get('BusinessServiceManager')
-                ->get('Lva\SendTransportManagerApplication')
-                ->process($params);
+            // create TMA
+            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+                ->createCommand(
+                    Command\TransportManagerApplication\Create::create(
+                        ['application' => $this->getIdentifier(), 'user' => $childId, 'action' => 'A']
+                    )
+                );
+            /* @var $response \Common\Service\Cqrs\Response */
+            $response = $this->getServiceLocator()->get('CommandService')->send($command);
 
             $this->getServiceLocator()->get('Helper\FlashMessenger')
                 ->addSuccessMessage('lva-tm-sent-success');
@@ -189,14 +203,38 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
         $orgId = $this->getCurrentOrganisationId();
 
-        $registeredUsers = $this->getServiceLocator()
-            ->get('Entity\Organisation')
-            ->getRegisteredUsersForSelect($orgId);
+        $registeredUsers = $this->getOrganisationUsersForSelect($orgId);
 
         $form->get('data')->get('registeredUser')->setEmptyOption('Please select');
         $form->get('data')->get('registeredUser')->setValueOptions($registeredUsers);
 
         return $form;
+    }
+
+    /**
+     * Get users in organisation for use in a select element
+     *
+     * @param int $organisationId
+     *
+     * @return array
+     */
+    protected function getOrganisationUsersForSelect($organisationId)
+    {
+        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createQuery(\Dvsa\Olcs\Transfer\Query\User\UserList::create(['organisation' => $organisationId]));
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('QueryService')->send($query);
+        $options = [];
+        foreach ($response->getResult()['results'] as $user) {
+            $name = $user['contactDetails']['person']['forename'] .' '. $user['contactDetails']['person']['familyName'];
+            if (empty(trim($name))) {
+                $name = 'User ID '. $user['id'];
+            }
+            $options[$user['id']] = $name;
+        }
+        asort($options);
+
+        return $options;
     }
 
     /**
@@ -237,43 +275,50 @@ abstract class AbstractTransportManagersController extends AbstractController im
     {
         $ids = explode(',', $this->params('child_id'));
 
+        // get table data
+        $data = $this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId());
+
         $tmaIdsToDelete = [];
         foreach ($ids as $id) {
             if (strpos($id, 'L') === 0) {
-                // remove "L" prefix and get int ID
-                $transportManagerLicenceId = (int) trim($id, 'L');
-
-                // get the transport manager ID from TML
-                $tmlEntityService = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
-                $tmlData = $tmlEntityService->getTransportManagerLicence($transportManagerLicenceId);
-                $transportManagerId = $tmlData['transportManager']['id'];
-
-                // get the transport manager application ID using TM
-                $tmaEntityService = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
-                $tmaData = $tmaEntityService->getByApplicationTransportManager(
-                    $this->getIdentifier(),
-                    $transportManagerId
-                );
-                foreach ($tmaData['Results'] as $row) {
-                    $tmaIdsToDelete[] = $row['id'];
-                }
+                $tmaId = $this->findTmaId($data, $id);
+                $tmaIdsToDelete[] = $tmaId;
             } else {
                 // add TMA ID to delete array
                 $tmaIdsToDelete[] = $id;
             }
         }
 
-        // remove any duplicates, eg if restoring the current and updated versions
-        $tmaIdsToDelete = array_unique($tmaIdsToDelete);
-
-        // if any TMA ID added to array then delete them
-        if (count($tmaIdsToDelete) > 0) {
-            $tmaDeleteService = $this->getServiceLocator()
-                ->get('BusinessServiceManager')
-                    ->get('Lva\DeleteTransportManagerApplication');
-            $tmaDeleteService->process(['ids' => $tmaIdsToDelete]);
+        if (!empty($tmaIdsToDelete)) {
+            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+                ->createCommand(
+                    Command\TransportManagerApplication\Delete::create(
+                        ['ids' => array_unique($tmaIdsToDelete)]
+                    )
+                );
+            $this->getServiceLocator()->get('CommandService')->send($command);
         }
 
         return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+    }
+
+    /**
+     * Find the Transport manager application ID that is linked to Transport manager application ID
+     *
+     * @param array  $data
+     * @param string $tmlId This is the TML ID prefixed with an "L"
+     * @param int    $applicationId
+     *
+     * @return int|false The TMA ID or false if not found
+     */
+    protected function findTmaId($data, $tmlId)
+    {
+        foreach ($data as $tmId => $row) {
+            if ($row['id'] === $tmlId) {
+                return $data[$tmId .'a']['id'];
+            }
+        }
+
+        return false;
     }
 }
