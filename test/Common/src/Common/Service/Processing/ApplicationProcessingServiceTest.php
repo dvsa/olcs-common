@@ -21,6 +21,7 @@ use Common\Service\Processing\ApplicationSnapshotProcessingService;
 use Common\Service\Entity\ApplicationTrackingEntityService as Tracking;
 use Common\Service\Entity\ApplicationCompletionEntityService as Completion;
 use Common\Service\Entity\CommunityLicEntityService as CommunityLic;
+use Dvsa\Olcs\Transfer\Command\Application\CreateSnapshot;
 
 /**
  * Application Processing Service Test
@@ -208,7 +209,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
-        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, CreateSnapshot::ON_GRANT);
         $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         $this->mockDate($date);
@@ -413,7 +414,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
-        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, CreateSnapshot::ON_GRANT);
         $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         $this->mockDate($date);
@@ -661,7 +662,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
-        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, CreateSnapshot::ON_GRANT);
         $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         $this->mockApplicationService($id, $licenceId, $validationData);
@@ -733,7 +734,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
-        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, CreateSnapshot::ON_GRANT);
         $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         $mockApplicationService = $this->mockApplicationService($id, $licenceId, $validationData);
@@ -1065,7 +1066,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
-        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, CreateSnapshot::ON_GRANT);
         $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         // Mocked services

@@ -7,8 +7,6 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Service\Entity\LicenceEntityService as Licence;
-use Common\Service\Entity\ApplicationEntityService as Application;
 use Common\Service\Data\CategoryDataService as Category;
 use Dvsa\Olcs\Transfer\Query\Application\FinancialEvidence;
 
