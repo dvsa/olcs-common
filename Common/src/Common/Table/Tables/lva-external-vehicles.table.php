@@ -15,13 +15,13 @@ return array(
                     'label' => 'vehicle_table_action.add.label',
                     'class' => 'primary'
                 ),
-                'edit' => array(
-                    'label' => 'vehicle_table_action.edit.label',
-                    'requireRows' => true
-                ),
                 'delete' => array(
                     'label' => 'vehicle_table_action.delete.label',
                     'class' => 'secondary',
+                    'requireRows' => true
+                ),
+                'edit' => array(
+                    'label' => 'vehicle_table_action.edit.label',
                     'requireRows' => true
                 ),
                 // @note other actions may be added dynamically,
@@ -32,7 +32,9 @@ return array(
             'limit' => array(
                 'options' => array(10, 25, 50)
             )
-        )
+        ),
+        'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
+        'collapseAt' => 2,
     ),
     'columns' => array(
         array(
