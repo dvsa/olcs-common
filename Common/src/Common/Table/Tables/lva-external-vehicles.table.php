@@ -15,17 +15,18 @@ return array(
                     'label' => 'vehicle_table_action.add.label',
                     'class' => 'primary'
                 ),
+                'edit' => array(
+                    'label' => 'vehicle_table_action.edit.label',
+                    'requireRows' => true
+                ),
                 'delete' => array(
                     'label' => 'vehicle_table_action.delete.label',
                     'class' => 'secondary',
                     'requireRows' => true
                 ),
-                'edit' => array(
-                    'label' => 'vehicle_table_action.edit.label',
-                    'requireRows' => true
-                ),
                 // @note other actions may be added dynamically,
-                // @see Common\Controller\Lva\AbstractGoodsVehiclesController
+                // see Common\Controller\Lva\AbstractGoodsVehiclesController
+                // for an example
             )
         ),
         'paginate' => array(
@@ -34,7 +35,7 @@ return array(
             )
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
-        'collapseAt' => 2,
+        'collapseAt' => 3, // this will collapse remaining actions into a 'More Actions' dropdown
     ),
     'columns' => array(
         array(
