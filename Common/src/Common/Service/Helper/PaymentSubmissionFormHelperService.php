@@ -26,8 +26,8 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
      * @param boolean $enabled
      * @param string $fee fee amount
      */
-    public function updatePaymentSubmissonForm(Form $form, $actionUrl, $visible, $enabled, $fee) {
-
+    public function updatePaymentSubmissonForm(Form $form, $actionUrl, $visible, $enabled, $fee)
+    {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         if ($visible) {
