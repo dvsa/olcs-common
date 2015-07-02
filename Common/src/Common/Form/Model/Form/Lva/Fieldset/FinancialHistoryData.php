@@ -118,6 +118,14 @@ class FinancialHistoryData
      */
     public $disqualified = null;
 
+
+    /**
+     * @Form\Attributes({"value":"<h3 class=js-financial-history>%s</h3>", "data-container-class":"legend"})
+     * @Form\Options({"tokens":{"application_previous-history_financial-history.insolvencyDetails.title"}})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $additionalInfoLabel = null;
+
     /**
      * @Form\AllowEmpty(true)
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
@@ -130,8 +138,7 @@ class FinancialHistoryData
      * })
      * @Form\Options({
      *     "short-label": "short-label-financial-history-additional-information",
-     *     "label": "application_previous-history_financial-history.insolvencyDetails.title",
-     *     "hint": "application_previous-history_financial-history.insolvencyDetails.hint",
+     *     "label": "application_previous-history_financial-history.insolvencyDetails.hint",
      *     "label_attributes": {
      *         "id": "additional-information"
      *     }
