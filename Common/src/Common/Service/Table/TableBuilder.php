@@ -1561,11 +1561,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $newActions = array();
 
+        $translator = $this->getServiceLocator()->get('translator');
+
         foreach ($actions as $name => $details) {
 
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
-            $label = isset($details['label']) ? $details['label'] : $value;
+            $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
 
             $class = isset($details['class']) ? $details['class'] : 'secondary';
 
