@@ -47,6 +47,9 @@ class CommunityLicEntityService extends AbstractEntityService
         )
     );
 
+    /**
+     * @todo migrated (maybe remove?)
+     */
     public function getPendingForLicence($licenceId)
     {
         $query = array(
@@ -159,6 +162,8 @@ class CommunityLicEntityService extends AbstractEntityService
      *
      * @param int $licenceId licence ID
      * @return array
+     *
+     * @todo migrated (maybe remove?)
      */
     public function getActivePendingLicences($licenceId)
     {

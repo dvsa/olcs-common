@@ -106,6 +106,7 @@ class FeeListenerService implements ServiceLocatorAwareInterface
      *  we can make the application valid
      *
      * @param int $id
+     * @todo migrate me
      */
     protected function maybeProcessApplicationFee($id)
     {

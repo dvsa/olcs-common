@@ -123,6 +123,9 @@ class LicenceVehicleEntityService extends AbstractEntityService
         return $vrms;
     }
 
+    /**
+     * @todo migrated (maybe remove?)
+     */
     public function getForApplicationValidation($licenceId, $applicationId)
     {
         $query = array(

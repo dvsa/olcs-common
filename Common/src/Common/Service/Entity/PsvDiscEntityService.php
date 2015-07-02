@@ -33,6 +33,7 @@ class PsvDiscEntityService extends AbstractEntityService
      * @param array $ids
      *
      * @NOTE migrated [VoidPsvDiscs]
+     * @todo maybe remove?
      */
     public function ceaseDiscs(array $ids = array())
     {
@@ -80,6 +81,7 @@ class PsvDiscEntityService extends AbstractEntityService
      *
      * @param int $licenceID
      * @param int $count
+     * @todo migrated (maybe remove?)
      */
     public function requestBlankDiscs($licenceId, $count)
     {
@@ -98,6 +100,7 @@ class PsvDiscEntityService extends AbstractEntityService
      *
      * @param int $licenceId
      * @return array
+     * @todo migrated (maye remove?)
      */
     public function getNotCeasedDiscs($licenceId)
     {
@@ -115,6 +118,7 @@ class PsvDiscEntityService extends AbstractEntityService
      * blank replacements
      *
      * @param int $licenceId
+     * @todo migrated (maybe remove?)
      */
     public function updateExistingForLicence($licenceId)
     {

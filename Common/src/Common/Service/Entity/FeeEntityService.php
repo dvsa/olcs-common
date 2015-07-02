@@ -170,6 +170,9 @@ class FeeEntityService extends AbstractLvaEntityService
         return isset($data['application']) ? $data['application'] : null;
     }
 
+    /**
+     * @todo migrate me
+     */
     public function getOutstandingFeesForApplication($applicationId)
     {
         $query = array(
@@ -275,6 +278,7 @@ class FeeEntityService extends AbstractLvaEntityService
 
     /**
      * @NOTE This functionality has been replicated in the API [Licence/CancelLicenceFees]
+     * @todo maybe remove?
      */
     public function cancelForLicence($licenceId)
     {
@@ -345,6 +349,9 @@ class FeeEntityService extends AbstractLvaEntityService
         $this->multiUpdate($updates);
     }
 
+    /**
+     * @todo migrated (remove me?)
+     */
     public function cancelInterimForApplication($applicationId)
     {
         $results = $this->getOutstandingFeesForApplication($applicationId);
@@ -474,6 +481,8 @@ class FeeEntityService extends AbstractLvaEntityService
      * @param int $applicationId Application ID
      * 
      * @return array Fee Entity data
+     *
+     * @todo migrate me
      */
     public function getOutstandingGrantFeesForApplication($applicationId)
     {

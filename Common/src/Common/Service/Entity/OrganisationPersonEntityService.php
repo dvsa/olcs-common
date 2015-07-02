@@ -65,6 +65,7 @@ class OrganisationPersonEntityService extends AbstractEntityService
 
     /**
      * Remove a record by org *and* person ID
+     * @todo migrated (maybe remove?)
      */
     public function deleteByOrgAndPersonId($orgId, $personId)
     {

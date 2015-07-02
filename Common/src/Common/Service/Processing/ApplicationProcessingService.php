@@ -34,12 +34,13 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      *
      * @var array
      */
-    protected $applicationValidatingData = array();
+    private $applicationValidatingData = array();
 
     /**
      * Called when an application is validated (When GV fee is paid)
      *
      * @param int $id
+     * @todo migrated (maybe remove?)
      */
     public function validateApplication($id)
     {
@@ -62,27 +63,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Called when granting an NEW application
-     *
-     * @param int $id
-     */
-    public function processGrantApplication($id)
-    {
-        $licenceId = $this->getLicenceId($id);
-
-        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
-
-        if ($category === LicenceEntityService::LICENCE_CATEGORY_PSV) {
-            $this->processGrantPsvApplication($id, $licenceId);
-        } else {
-            $this->processGrantGoodsApplication($id, $licenceId);
-        }
-    }
-
-    /**
      * Called when granting a variation application
      *
      * @param int $id
+     * @todo migrate me
      */
     public function processGrantVariation($id)
     {
@@ -119,8 +103,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      * @param int $licenceId
      * @param int $applicationId
      * @param string $category
+     * @todo migrate me
      */
-    protected function updateExistingDiscs($licenceId, $applicationId, $category)
+    private function updateExistingDiscs($licenceId, $applicationId, $category)
     {
         if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
             $this->getServiceLocator()
@@ -137,20 +122,22 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      * Called when un-granting an application
      *
      * @param int $id
+     * @todo migrate me
      */
     public function processUnGrantApplication($id)
     {
-        $licenceId = $this->getLicenceId($id);
-
-        $this->undoGrantApplication($id);
-        $this->undoGrantLicence($licenceId);
-
-        $this->cancelFees($licenceId);
-        $this->closeGrantTask($id, $licenceId);
+//        $licenceId = $this->getLicenceId($id);
+//
+//        $this->undoGrantApplication($id);
+//        $this->undoGrantLicence($licenceId);
+//
+//        $this->cancelFees($licenceId);
+//        $this->closeGrantTask($id, $licenceId);
     }
 
     /**
      * @NOTE This functionality has been replicated in the API [Licence/CancelLicenceFees]
+     * @todo migrate me
      */
     public function cancelFees($licenceId)
     {
@@ -236,6 +223,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     /**
      * @param int $applicationId
      * @param array $requiredSections
+     *
+     * @todo migrated (maybe remove?)
      */
     public function trackingIsValid($applicationId, $requiredSections)
     {
@@ -259,6 +248,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     /**
      * @param int $applicationId
      * @param array $requiredSections
+     *
+     * @todo migrated (maybe remove?)
      */
     public function sectionCompletionIsValid($applicationId, $requiredSections)
     {
@@ -280,6 +271,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     /**
      * @param int $applicationId
      * @param array $requiredSections
+     *
+     * @todo migrated (maybe remove?)
      */
     public function getIncompleteSections($applicationId, $requiredSections)
     {
@@ -301,7 +294,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     /**
      * @param int $applicationId
-     * @param boolean if there are any outstanding fees
+     *
+     * @todo migrated (maybe remove?)
      */
     public function feeStatusIsValid($applicationId)
     {
@@ -316,6 +310,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     /**
      * @param int $applicationId
+     *
+     * @todo migrated (maybe remove?)
      */
     public function enforcementAreaIsValid($applicationId)
     {
@@ -341,7 +337,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         return $this->getFeeForApplicationByType($applicationId, $feeType);
     }
 
-    protected function getFeeForApplicationByType($applicationId, $feeType)
+    private function getFeeForApplicationByType($applicationId, $feeType)
     {
         $feeTypeData = $this->getFeeTypeForApplication(
             $applicationId,
@@ -355,12 +351,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         );
     }
 
-    protected function createGrantFee($applicationId, $licenceId, $taskId)
-    {
-        $this->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_GRANT, $taskId);
-    }
-
-    protected function closeGrantTask($id, $licenceId)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function closeGrantTask($id, $licenceId)
     {
         $this->getServiceLocator()->get('Entity\Task')->closeByQuery(
             array(
@@ -372,31 +366,38 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         );
     }
 
-    protected function undoGrantApplication($id)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function undoGrantApplication($id)
     {
         $status = ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION;
 
         $this->updateStatusAndDate($id, $status, 'Application', null);
     }
 
-    protected function undoGrantLicence($id)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function undoGrantLicence($id)
     {
         $status = LicenceEntityService::LICENCE_STATUS_UNDER_CONSIDERATION;
 
         $this->updateStatusAndDate($id, $status, 'Licence', null);
     }
 
-    protected function grantApplication($id, $status = ApplicationEntityService::APPLICATION_STATUS_GRANTED)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function grantApplication($id, $status = ApplicationEntityService::APPLICATION_STATUS_GRANTED)
     {
         $this->updateStatusAndDate($id, $status, 'Application');
     }
 
-    protected function grantLicence($id, $status = LicenceEntityService::LICENCE_STATUS_GRANTED)
-    {
-        $this->updateStatusAndDate($id, $status, 'Licence');
-    }
-
-    protected function updateStatusAndDate($id, $status, $which, $grantedToday = true)
+    /**
+     * @todo migrate me
+     */
+    private function updateStatusAndDate($id, $status, $which, $grantedToday = true)
     {
         if ($grantedToday) {
             $grantedDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
@@ -410,29 +411,6 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         );
 
         $this->getServiceLocator()->get('Entity\\' . $which)->forceUpdate($id, $data);
-    }
-
-    protected function createGrantTask($id, $licenceId)
-    {
-        $user = $this->getServiceLocator()->get('Entity\User')->getCurrentUser();
-        $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
-
-        $data = array(
-            'category' => CategoryDataService::CATEGORY_APPLICATION,
-            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE,
-            'description' => 'Grant fee due',
-            'actionDate' => $date,
-            'assignedToUser' => $user['id'],
-            'assignedToTeam' => $user['team']['id'],
-            'isClosed' => 'N',
-            'urgent' => 'N',
-            'application' => $id,
-            'licence' => $licenceId,
-        );
-
-        $saved = $this->getServiceLocator()->get('Entity\Task')->save($data);
-
-        return $saved['id'];
     }
 
     /**
@@ -461,7 +439,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         );
     }
 
-    protected function processApplicationOperatingCentres($id, $licenceId)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function processApplicationOperatingCentres($id, $licenceId)
     {
         $applicationOperatingCentres = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
             ->getForApplication($id);
@@ -539,7 +520,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         }
     }
 
-    protected function getDifferenceInTotalAuth($licenceId, $applicationId)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function getDifferenceInTotalAuth($licenceId, $applicationId)
     {
         $licence = $this->getServiceLocator()->get('Entity\Licence')->getById($licenceId);
         $application = $this->getServiceLocator()->get('Entity\Application')->getById($applicationId);
@@ -559,7 +543,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         return $totalApplicationAuth - $totalLicenceAuth;
     }
 
-    protected function createDiscRecords($licenceId, $category, $applicationId)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function createDiscRecords($licenceId, $category, $applicationId)
     {
         if ($category === LicenceEntityService::LICENCE_CATEGORY_PSV) {
 
@@ -582,7 +569,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         }
     }
 
-    protected function specifyVehicles($licenceVehicles)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function specifyVehicles($licenceVehicles)
     {
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
@@ -599,19 +589,28 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($licenceVehicles);
     }
 
-    protected function createGoodsDiscs($licenceVehicles)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function createGoodsDiscs($licenceVehicles)
     {
         $this->getServiceLocator()->get('Entity\GoodsDisc')
             ->createForVehicles($licenceVehicles);
     }
 
-    protected function createPsvDiscs($licenceId, $count)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function createPsvDiscs($licenceId, $count)
     {
         $this->getServiceLocator()->get('Entity\PsvDisc')
             ->requestBlankDiscs($licenceId, $count);
     }
 
-    protected function copyApplicationDataToLicence($id, $licenceId)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function copyApplicationDataToLicence($id, $licenceId)
     {
         $licenceData = array_merge(
             array(
@@ -624,7 +623,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Entity\Licence')->forceUpdate($licenceId, $licenceData);
     }
 
-    protected function getApplicationDataForValidating($id)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function getApplicationDataForValidating($id)
     {
         if (!isset($this->applicationValidatingData[$id])) {
             $this->applicationValidatingData[$id] = $this->getServiceLocator()
@@ -634,7 +636,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         return $this->applicationValidatingData[$id];
     }
 
-    protected function getImportantLicenceDates()
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function getImportantLicenceDates()
     {
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
         $reviewDate = date('Y-m-d', strtotime($date . ' +5 years'));
@@ -649,49 +654,49 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         );
     }
 
-    protected function setApplicationStatus($id, $status)
+    private function setApplicationStatus($id, $status)
     {
         $data = array('status' => $status);
 
         $this->getServiceLocator()->get('Entity\Application')->forceUpdate($id, $data);
     }
 
-    protected function getLicenceId($id)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function getLicenceId($id)
     {
         return $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($id);
     }
 
-    protected function processGrantPsvApplication($id, $licenceId)
+    /**
+     * @param $id
+     * @param $licenceId
+     *
+     * @todo migrate me
+     */
+    private function processGrantPsvApplication($id, $licenceId)
     {
-        $this->processPreGrantData($id);
+        //$this->processPreGrantData($id);
 
-        $appStatus = ApplicationEntityService::APPLICATION_STATUS_VALID;
-        $licStatus = LicenceEntityService::LICENCE_STATUS_VALID;
-
-        $this->grantApplication($id, $appStatus);
-        $this->grantLicence($licenceId, $licStatus);
+//        $appStatus = ApplicationEntityService::APPLICATION_STATUS_VALID;
+//        $licStatus = LicenceEntityService::LICENCE_STATUS_VALID;
+//
+//        $this->grantApplication($id, $appStatus);
+//        $this->grantLicence($licenceId, $licStatus);
 
         // @NOTE: as with variations, order matters here because we diff total auth
         // creating PSV discs
-        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id);
-        $this->copyApplicationDataToLicence($id, $licenceId);
+        //$this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id);
+        //$this->copyApplicationDataToLicence($id, $licenceId);
 
-        $dataForValidating = $this->getApplicationDataForValidating($id);
+        //$dataForValidating = $this->getApplicationDataForValidating($id);
 
-        if ($dataForValidating['licenceType'] !== LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
-            $this->processApplicationOperatingCentres($id, $licenceId);
-        }
+//        if ($dataForValidating['licenceType'] !== LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+//            $this->processApplicationOperatingCentres($id, $licenceId);
+//        }
 
         $this->processCommonGrantData($id, $licenceId);
-    }
-
-    protected function processGrantGoodsApplication($id, $licenceId)
-    {
-        $this->grantApplication($id);
-        $this->grantLicence($licenceId);
-
-        $taskId = $this->createGrantTask($id, $licenceId);
-        $this->createGrantFee($id, $licenceId, $taskId);
     }
 
     /**
@@ -702,8 +707,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      *
      * @param int $id
      * @param int $licenceId
+     * @todo migrated (maybe remove?)
      */
-    protected function processCommonGrantData($id, $licenceId)
+    private function processCommonGrantData($id, $licenceId)
     {
         $this->getServiceLocator()->get('Entity\Fee')->cancelInterimForApplication($id);
 
@@ -715,11 +721,13 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $this->getServiceLocator()->get('Processing\GrantPeople')->grant($id);
 
-        // @todo this has been migrated - Don't forget to re-use
         $this->getServiceLocator()->get('Processing\Licence')->generateDocument($licenceId);
     }
 
-    protected function processPreGrantData($id)
+    /**
+     * @todo migrated (maybe remove?)
+     */
+    private function processPreGrantData($id)
     {
         $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
             ->storeSnapshot($id, CreateSnapshot::ON_GRANT);
@@ -935,7 +943,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Entity\Task')->save($task);
     }
 
-    protected function getTaskDescription($applicationId)
+    private function getTaskDescription($applicationId)
     {
         $applicationData = $this->getApplicationDataForValidating($applicationId);
 

@@ -678,6 +678,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
         return $data['receivedDate'];
     }
 
+    /**
+     * @todo migrated (maybe remove?)
+     */
     public function getDataForValidating($id)
     {
         $data = $this->get($id, $this->validatingDataBundle);

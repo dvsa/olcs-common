@@ -245,6 +245,9 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
+    /**
+     * @todo migrate me
+     */
     public function getGrantDataForApplication($applicationId)
     {
         return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];

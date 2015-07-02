@@ -21,6 +21,9 @@ class FeeProcessingService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
+    /**
+     * @todo migrated (maybe remove?)
+     */
     public function generateDocument($feeTypeName, array $params = [])
     {
         if ($feeTypeName !== FeeTypeDataService::FEE_TYPE_GRANT) {

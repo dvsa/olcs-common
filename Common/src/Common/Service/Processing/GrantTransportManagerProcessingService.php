@@ -15,6 +15,8 @@ use Common\Service\Entity\LicenceEntityService;
  * Grant Transport Manager Processing Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ *
+ * @todo migrate me
  */
 class GrantTransportManagerProcessingService implements ServiceLocatorAwareInterface
 {
@@ -89,7 +91,8 @@ class GrantTransportManagerProcessingService implements ServiceLocatorAwareInter
         $this->getServiceLocator()->get('Entity\OtherLicence')->save($data);
     }
 
-    public function licenceHasTransportManager($transportManagerId, $licenceId)
+
+    protected function licenceHasTransportManager($transportManagerId, $licenceId)
     {
         $results = $this->getServiceLocator()->get('Entity\TransportManagerLicence')
             ->getByTransportManagerAndLicence($transportManagerId, $licenceId);

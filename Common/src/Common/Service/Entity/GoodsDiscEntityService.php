@@ -29,6 +29,8 @@ class GoodsDiscEntityService extends AbstractEntityService
      *
      * @param int $licenceId
      * @param int $applicationId
+     *
+     * @todo migrate me
      */
     public function updateExistingForLicence($licenceId, $applicationId)
     {

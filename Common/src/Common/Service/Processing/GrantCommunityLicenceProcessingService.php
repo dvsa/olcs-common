@@ -16,6 +16,8 @@ use Common\Service\Entity\LicenceEntityService;
  * Grant Community Licences Processing Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ *
+ * @todo migrated (maybe remove?)
  */
 class GrantCommunityLicenceProcessingService implements ServiceLocatorAwareInterface
 {
