@@ -22,19 +22,11 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
      *
      * @param Zend\Form\Form $form
      * @param string $actionUrl
-     * @param int $applicationId
      * @param boolean $canSubmit
      * @param boolean $enabled
-     * @param string $actionUrl
+     * @param string $fee fee amount
      */
-    public function updatePaymentSubmissonForm(
-        Form $form,
-        $actionUrl,
-        $applicationId,
-        $visible = false,
-        $enabled = false,
-        $fee
-    ) {
+    public function updatePaymentSubmissonForm(Form $form, $actionUrl, $visible, $enabled, $fee) {
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
