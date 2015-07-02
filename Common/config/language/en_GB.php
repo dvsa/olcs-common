@@ -455,7 +455,7 @@ return array(
         obtaining an operator\'s licence by any traffic commissioner?',
     'application_previous-history_licence-history_heldLicence' => '3. Within the last twelve months, have you, your
         company or organisation or your partners or directors purchased the assets or shareholding of any company that,
-        to you knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
+        to your knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_personsInformation' => '2. Has any person named in the application
         (including partners, directors or transport managers):',
     'application_previous-history_licence-history_prevBeenAtPi' => 'd. Ever attended a Public Inquiry before a traffic
@@ -473,7 +473,7 @@ return array(
         operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_prevPurchasedAssets' => '3. Within the last twelve months, have you,
         your company or organisation or your partners or directors purchased the assets or shareholding of any company
-        that, to you knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
+        that, to your knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_publicInquiryLicence' => 'd. Ever attended a Public Inquiry before a
         traffic commissioner?',
     'application_previous-history_licence-history_refusedLicence' => 'b. Ever had an application for a goods or a public
