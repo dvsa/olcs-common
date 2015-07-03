@@ -1153,19 +1153,32 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $content = '';
 
         if ($collapseAt) {
-            for ($i=0; $i<$collapseAt; $i++) {
+            $i = 0;
+            $max = count($actions);
+            while ($i < $max && $i < $collapseAt) {
                 $content .= $this->replaceContent('{{[elements/actionButton]}}', array_shift($actions));
+                $i++;
             }
-            $moreActions = '';
-            foreach ($actions as $details) {
-                $moreActions .= $this->replaceContent('{{[elements/actionButton]}}', $details);
-            }
-            $content .= $this->replaceContent('{{[elements/moreActions]}}', ['content' => $moreActions]);
+            $content .= $this->renderMoreActions($actions);
             return $content;
         }
 
         foreach ($actions as $details) {
             $content .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+        }
+
+        return $content;
+    }
+
+    private function renderMoreActions($actions)
+    {
+        $content = '';
+        if (!empty($actions)) {
+            $moreActions = '';
+            foreach ($actions as $details) {
+                $moreActions .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+            }
+            $content .= $this->replaceContent('{{[elements/moreActions]}}', ['content' => $moreActions]);
         }
 
         return $content;
