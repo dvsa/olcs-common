@@ -17,39 +17,36 @@ use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
  */
 class LicencePeopleAdapter extends AbstractPeopleAdapter
 {
-    public function addMessages($orgId, $id)
+    public function addMessages()
     {
-        if ($this->isExceptionalOrganisation($orgId)) {
+        if ($this->isExceptionalOrganisation()) {
             return;
         }
 
-        return $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($id);
+        return $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId());
     }
 
-    public function alterFormForOrganisation(Form $form, $table, $orgId)
+    public function alterFormForOrganisation(Form $form, $table)
     {
-        if ($this->isExceptionalOrganisation($orgId)) {
+        if ($this->isExceptionalOrganisation()) {
             return;
         }
 
         return $this->getServiceLocator()->get('Lva\People')->lockOrganisationForm($form, $table);
     }
 
-    public function alterAddOrEditFormForOrganisation(Form $form, $orgId)
+    public function alterAddOrEditFormForOrganisation(Form $form)
     {
-        if ($this->isExceptionalOrganisation($orgId)) {
+        if ($this->isExceptionalOrganisation()) {
             return;
         }
 
-        return $this->getServiceLocator()->get('Lva\People')->lockPersonForm(
-            $form,
-            $this->getOrganisationType($orgId)
-        );
+        return $this->getServiceLocator()->get('Lva\People')->lockPersonForm($form, $this->getOrganisationType());
     }
 
-    public function canModify($orgId)
+    public function canModify()
     {
         // internally we can modify simple orgs only
-        return $this->isExceptionalOrganisation($orgId);
+        return $this->isExceptionalOrganisation();
     }
 }
