@@ -716,10 +716,6 @@ return array(
                 => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaint',
             'Cases\Complaint\EnvironmentalComplaintTask'
                 => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaintTask',
-            'Cases\Submission\Decision' => 'Common\BusinessService\Service\Cases\Submission\Decision',
-            'Cases\Submission\Recommendation' => 'Common\BusinessService\Service\Cases\Submission\Recommendation',
-            'Cases\Submission\SubmissionActionTask'
-                => 'Common\BusinessService\Service\Cases\Submission\SubmissionActionTask',
             'Cases\Submission\SubmissionAssignmentTask'
             => 'Common\BusinessService\Service\Cases\Submission\SubmissionAssignmentTask',
             'Cases\Submission\Submission' => 'Common\BusinessService\Service\Cases\Submission\Submission',

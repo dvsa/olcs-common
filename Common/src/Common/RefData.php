@@ -43,4 +43,13 @@ class RefData
      */
     const LICENCE_CATEGORY_GOODS_VEHICLE = 'lcat_gv';
     const LICENCE_CATEGORY_PSV = 'lcat_psv';
+
+    /**
+     * Licence statuses
+     */
+    const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
+    const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
+    const LICENCE_STATUS_SUSPENDED = 'lsts_suspended';
+    const LICENCE_STATUS_TERMINATED = 'lsts_terminated';
+    const LICENCE_STATUS_VALID = 'lsts_valid';
 }
