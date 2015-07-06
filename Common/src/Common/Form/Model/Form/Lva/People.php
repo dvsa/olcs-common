@@ -13,16 +13,16 @@ use Zend\Form\Annotation as Form;
 class People
 {
     /**
-     * @Form\Name("table")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     */
-    public $table = null;
-
-    /**
      * @Form\Name("guidance")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Guidance")
      */
     public $guidance = null;
+
+    /**
+     * @Form\Name("table")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     */
+    public $table = null;
 
     /**
      * @Form\Name("form-actions")

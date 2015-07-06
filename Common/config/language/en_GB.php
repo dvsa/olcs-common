@@ -2419,6 +2419,7 @@ return array(
     'vehicle-remove-confirm-label' => 'Are you sure you want to remove these vehicles?',
     'vehicle_table_action.add.label' => 'Add Vehicle',
     'vehicle_table_action.delete.label' => 'Remove',
+    'people_table_action.delete.label' => 'Remove',
     'vehicle_table_action.edit.label' => 'Edit',
     'vehicle_table_action.export.label' => 'Export',
     'vehicle_table_action.print-vehicles.label' => 'Print vehicle list',

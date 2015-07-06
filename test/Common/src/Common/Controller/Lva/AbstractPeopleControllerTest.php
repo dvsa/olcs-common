@@ -76,15 +76,12 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('translate')
             ->with('selfserve-app-subSection-your-business-people-tableHeaderDirectors')
             ->andReturn('Directors')
-            ->shouldReceive('translate')
-            ->with('selfserve-app-subSection-your-business-people-guidanceLC')
-            ->andReturn('Guidance')
             ->getMock()
         );
 
         $element = m::mock()
-            ->shouldReceive('setValue')
-            ->with('Guidance')
+            ->shouldReceive('setTokens')
+            ->with(['selfserve-app-subSection-your-business-people-guidanceLC'])
             ->getMock();
 
         $fieldset = m::mock()
