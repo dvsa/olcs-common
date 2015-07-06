@@ -17,7 +17,13 @@ OLCS.ready(function() {
     // set up a cascade form with the appropriate rules
     OLCS.cascadeForm({
       form: "form",
+      cascade: false,
       rulesets: {
+        "type-of-licence": {
+          "selector:.js-difference-guidance": function() {
+            return niFlag.filter(":checked").val() === "N";;
+          },
+        },
         // operator location is *always* shown
         "operator-location": true,
 

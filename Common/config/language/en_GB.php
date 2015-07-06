@@ -502,9 +502,9 @@ return array(
     'application_type-of-licence_licence-type.data' => 'Licence type',
     'application_type-of-licence_licence-type.data.licenceType' => 'What type of licence do you want to apply for?',
     'application_type-of-licence_operator-location.data' => 'Operator location',
-    'application_type-of-licence_operator-location.data.niFlag' => 'Where do you operate from?',
+    'application_type-of-licence_operator-location.data.niFlag' => 'Where will you operate your vehicles?',
     'application_type-of-licence_operator-type.data' => 'Operator type',
-    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'What type of operator are you?',
+    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'What type of vehicles will you be operating?',
     'application_type_of_licence_confirmation_subtitle' => 'The application will be reset and all the information
         entered will be lost!',
     'application_vehicle-safety_discs-psv-replace-label' => 'Are you sure you want to reprint these discs?',
@@ -1780,6 +1780,7 @@ return array(
         for further advice.',
     'people.org_t_st.title.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
         further advice.',
+    'people_table_action.delete.label' => 'Remove',
     'persons' => 'Person Information',
     'pi_s_reg' => 'PI Registered',
     'pi_s_schedule' => 'PI Scheduled',
@@ -2419,7 +2420,6 @@ return array(
     'vehicle-remove-confirm-label' => 'Are you sure you want to remove these vehicles?',
     'vehicle_table_action.add.label' => 'Add Vehicle',
     'vehicle_table_action.delete.label' => 'Remove',
-    'people_table_action.delete.label' => 'Remove',
     'vehicle_table_action.edit.label' => 'Edit',
     'vehicle_table_action.export.label' => 'Export',
     'vehicle_table_action.print-vehicles.label' => 'Print vehicle list',
