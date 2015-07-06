@@ -243,8 +243,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
         $corAdd = $applicationData['licence']['correspondenceCd'];
 
-        if (isset($corAdd['phoneContacts'][0])) {
-            $phoneNumber = !empty($corAdd['phoneContacts'][0]['phoneNumber']);
+        // Must have a phone number
+        if (is_array($corAdd['phoneContacts'])) {
+            $number = array_shift($corAdd['phoneContacts']);
+            $phoneNumber = !empty($number['phoneNumber']);
         }
 
         if (!$skipEstablishmentAddress
