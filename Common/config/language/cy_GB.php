@@ -2157,6 +2157,7 @@ return array(
     'summary-overview.button' => 'W View my application summary',
     'surname' => 'W Surname',
     't-auth' => 'W T-auth',
+    'table_button_more_actions' => 'W More actions',
     'tachograph_analyser.tach_external' => 'W An external contractor',
     'tachograph_analyser.tach_internal' => 'W An owner or employee of the business',
     'tachograph_analyser.tach_na' => 'W Not applicable',

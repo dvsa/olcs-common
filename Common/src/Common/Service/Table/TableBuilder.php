@@ -1178,7 +1178,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             foreach ($actions as $details) {
                 $moreActions .= $this->replaceContent('{{[elements/actionButton]}}', $details);
             }
-            $content .= $this->replaceContent('{{[elements/moreActions]}}', ['content' => $moreActions]);
+            $translator = $this->getServiceLocator()->get('translator');
+            $content .= $this->replaceContent(
+                '{{[elements/moreActions]}}',
+                [
+                    'content' => $moreActions,
+                    'label' => $translator->translate('table_button_more_actions'),
+                ]
+            );
         }
 
         return $content;
