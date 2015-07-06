@@ -66,6 +66,7 @@ OLCS.ready(function() {
   OLCS.formHandler({
     form: "#lva-type-of-licence",
     onChange: false,
+    disable: false,
     success: OLCS.normaliseResponse(function(data) {
       if (data.hasErrors) {
         F.render(".js-body", data.body);
