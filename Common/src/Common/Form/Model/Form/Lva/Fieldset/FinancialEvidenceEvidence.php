@@ -31,9 +31,6 @@ class FinancialEvidenceEvidence
     /**
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Attributes({"id":"files"})
-     * @Form\Options({
-     *     "hint": "lva-financial-evidence-upload.files.hint"
-     * })
      */
     public $files = null;
 

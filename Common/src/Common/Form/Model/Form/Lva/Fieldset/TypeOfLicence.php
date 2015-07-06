@@ -41,8 +41,8 @@ class TypeOfLicence
      *      "fieldset-data-group": "operator-type",
      *      "label": "application_type-of-licence_operator-type.data.goodsOrPsv",
      *      "value_options":{
-     *          "lcat_gv":"Goods",
-     *          "lcat_psv":"PSV"
+     *          "lcat_gv":"Goods vehciles",
+     *          "lcat_psv":"Public service vehicles"
      *      }
      * })
      * @Form\Type("Radio")

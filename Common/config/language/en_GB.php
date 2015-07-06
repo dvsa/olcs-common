@@ -249,7 +249,7 @@ return array(
     'application-review-title-psv-sr' => 'Application for a Special Restricted Public Service Vehicle Operator\'s
         Licence',
     'application-review-type-of-licence-licence-type' => 'What type of licence do you want to apply for?',
-    'application-review-type-of-licence-operator-location' => 'Where do you operate from?',
+    'application-review-type-of-licence-operator-location' => 'Where will you operate your vehicles?',
     'application-review-type-of-licence-operator-type' => 'What type of operator are you?',
     'application-review-vehicles-declarations-15b1' => 'Do you intend to operate small vehicles as a small part of a
         large bus business as detailed by Section 79A of the Public Passenger Vehicles Act (as amended by Section 265 of
@@ -386,12 +386,11 @@ return array(
     'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'How many community licences
         do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'Your traffic area is determined by your
-        operating centre\'s location.<br />For more information and to find your traffic area please visit <a href="#"
-        target="_blank">this link.</a>',
+        operating centre\'s location.<a href="#"target="_blank">More information about traffic areas</a>',
     'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'Your traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Traffic area',
-    'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => '<p class="hint">Your traffic
-        area has been determined from your address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
+    'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => '<p class="hint">Your traffic area is determined by your
+        operating centre\'s location.<a href="#"target="_blank">More information about traffic areas</a></p>',
     'application_operating-centres_authorisation.enforcementArea.label' => 'Enforcement area',
     'application_operating-centres_authorisation.table.address' => 'Address',
     'application_operating-centres_authorisation.table.advertised' => 'Advertised',
@@ -421,7 +420,7 @@ return array(
         are aware that you must tell the traffic commissioner immediately of any insolvency proceedings that occur
         between the submission of your application and a decision being made on the application',
     'application_previous-history_financial-history.insolvencyDetails.hint' => 'Please provide additional information
-        relating to any prior insolvency proceedings. You may also upload evidence such as legal documents.',
+        relating to any prior insolvency proceedings (Min. 200 characters). You may also upload evidence such as legal documents below.',
     'application_previous-history_financial-history.insolvencyDetails.placeholder' => 'Min 200 characters',
     'application_previous-history_financial-history.insolvencyDetails.title' => 'Additional information',
     'application_previous-history_licence-history-table-licences-applied-add' => 'Add licence',
@@ -493,8 +492,7 @@ return array(
     'application_taxi-phv_licence.table.licence-number' => 'Licence number',
     'application_taxi-phv_licence.table.title' => 'Licences',
     'application_taxi-phv_licence.trafficArea.hint.new' => 'Your traffic area is determined based on the first Taxi/PHV
-        licence address.<br />For more information and to find your traffic area please visit <a href="#"
-        target="_blank">this link.</a>',
+        licence address. <a href="#"target="_blank">More information about traffic areas</a>',
     'application_taxi-phv_licence.trafficArea.label.exists' => 'Your traffic area',
     'application_taxi-phv_licence.trafficArea.label.new' => 'Traffic area',
     'application_taxi-phv_licence.trafficArea.labelasahint.exists' => '<p class="hint">Your traffic area has been
@@ -502,9 +500,9 @@ return array(
     'application_type-of-licence_licence-type.data' => 'Licence type',
     'application_type-of-licence_licence-type.data.licenceType' => 'What type of licence do you want to apply for?',
     'application_type-of-licence_operator-location.data' => 'Operator location',
-    'application_type-of-licence_operator-location.data.niFlag' => 'Where do you operate from?',
+    'application_type-of-licence_operator-location.data.niFlag' => 'Where will you operate your vehicles?',
     'application_type-of-licence_operator-type.data' => 'Operator type',
-    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'What type of operator are you?',
+    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'What type of vehciles will you be operating?',
     'application_type_of_licence_confirmation_subtitle' => 'The application will be reset and all the information
         entered will be lost!',
     'application_vehicle-safety_discs-psv-replace-label' => 'Are you sure you want to reprint these discs?',
@@ -660,6 +658,7 @@ return array(
     'application_your-business_business-type.data' => 'Business type',
     'application_your-business_business-type.data.type' => 'What type of business are you?',
     'application_your-business_business-type.establishment.label' => 'Establishment address',
+    'application_your-business_business-type.establishment.hint' => 'This is where you usually keep your operator licence records',
     'application_your-business_business-type.registered-office.label' => 'Registered office address',
     'application_your-business_business-type.transport-consultant.label' => 'Transport Consultant',
     'application_your-business_business-type.written-perm-engage.label' => 'Written permission to engage',
@@ -2073,8 +2072,7 @@ return array(
     'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'Other names',
     'selfserve-app-subSection-your-business-people-columnName' => 'Name',
     'selfserve-app-subSection-your-business-people-columnPosition' => 'Position',
-    'selfserve-app-subSection-your-business-people-guidanceLC' => 'Please provide details of the company directors. This
-        must be the same as the details that are on the companies house register',
+    'selfserve-app-subSection-your-business-people-guidanceLC' => 'Your list of company Directors should match those on the companies house register',
     'selfserve-app-subSection-your-business-people-guidanceLLP' => 'Please provide details of the members. This must be
         the same as the details that are on the companies house register',
     'selfserve-app-subSection-your-business-people-guidanceO' => 'Please provide details of the persons responsible for
@@ -2248,9 +2246,9 @@ return array(
     'tol-no-changes-message' => 'No changes to the type of licence detected',
     'traffic-area' => 'Traffic area',
     'trafficAreaSet.hint-operating-centres' => 'Your traffic area is determined by the location of your operating
-        centres.<br />For more information and to find your traffic area please visit <a href="%s">this link</a>',
-    'trafficAreaSet.hint-taxi-phv' => 'Your traffic area is determined by the location of the council addresses.<br
-        />For more information and to find your traffic area please visit <a href="%s">this link</a>',
+        centres. More information about <a href="%s"> traffic areas</a>.',
+    'trafficAreaSet.hint-taxi-phv' => 'Your traffic area is determined by the location of your operating
+        centres. More information about <a href="%s">traffic areas</a>.',
     'trafficAreaSet.trafficArea' => 'Traffic area',
     'trailer' => 'Trailer',
     'trailer-count' => '%s trailers',
@@ -2416,7 +2414,7 @@ return array(
     'vehicle-list-print-failed' => 'The vehicle list document failed to print',
     'vehicle-list-printed' => 'The vehicle list document has been sent to the printer',
     'vehicle-remove-confirm-label' => 'Are you sure you want to remove these vehicles?',
-    'vehicle_table_action.add.label' => 'Add Vehicle',
+    'vehicle_table_action.add.label' => 'Add vehicle',
     'vehicle_table_action.delete.label' => 'Remove',
     'vehicle_table_action.edit.label' => 'Edit',
     'vehicle_table_action.export.label' => 'Export',
