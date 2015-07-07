@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Processing;
 
+use Dvsa\Olcs\Transfer\Command\Application\CreateSnapshot;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Common\Service\Data\FeeTypeDataService;
@@ -15,7 +16,6 @@ use Common\Service\Entity\FeeEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\TrafficAreaEntityService;
-use Common\Service\Processing\ApplicationSnapshotProcessingService;
 use Common\Service\Entity\ApplicationTrackingEntityService as Tracking;
 use Common\Service\Entity\ApplicationCompletionEntityService as Completion;
 use Common\Service\Entity\CommunityLicEntityService as CommunityLic;
@@ -316,12 +316,11 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     /**
      * @param int $applicationId
-     * @param boolean if there are any outstanding fees
      */
     public function enforcementAreaIsValid($applicationId)
     {
         $licenceId = $this->getLicenceId($applicationId);
-        $licenceData = $this->getServiceLocator()->get('\Entity\Licence')->getOverview($licenceId);
+        $licenceData = $this->getServiceLocator()->get('Entity\Licence')->getOverview($licenceId);
         return !empty($licenceData['enforcementArea']);
     }
 
@@ -723,7 +722,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     protected function processPreGrantData($id)
     {
         $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
-            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_GRANT);
+            ->storeSnapshot($id, CreateSnapshot::ON_GRANT);
     }
 
     /**
@@ -736,7 +735,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     public function processWithdrawApplication($id, $reason)
     {
         $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
-            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_WITHDRAW);
+            ->storeSnapshot($id, CreateSnapshot::ON_WITHDRAW);
 
         $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
 
@@ -771,7 +770,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     public function processRefuseApplication($id)
     {
         $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
-            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_REFUSE);
+            ->storeSnapshot($id, CreateSnapshot::ON_REFUSE);
 
         $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
 
@@ -805,7 +804,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     public function processNotTakenUpApplication($id)
     {
         $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
-            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_NTU);
+            ->storeSnapshot($id, CreateSnapshot::ON_NTU);
 
         $licenceId = $this->getLicenceId($id);
 

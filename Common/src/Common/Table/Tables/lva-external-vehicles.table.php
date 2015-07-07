@@ -11,16 +11,31 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true),
+                'add' => array(
+                    'label' => 'vehicle_table_action.add.label',
+                    'class' => 'primary'
+                ),
+                'edit' => array(
+                    'label' => 'vehicle_table_action.edit.label',
+                    'requireRows' => true
+                ),
+                'delete' => array(
+                    'label' => 'vehicle_table_action.delete.label',
+                    'class' => 'secondary',
+                    'requireRows' => true
+                ),
+                // @note other actions may be added dynamically,
+                // see Common\Controller\Lva\AbstractGoodsVehiclesController
+                // for an example
             )
         ),
         'paginate' => array(
             'limit' => array(
                 'options' => array(10, 25, 50)
             )
-        )
+        ),
+        'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
+        'collapseAt' => 3, // this will collapse remaining actions into a 'More Actions' dropdown
     ),
     'columns' => array(
         array(

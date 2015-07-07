@@ -142,23 +142,6 @@ abstract class AbstractVehiclesController extends AbstractController implements 
         $licenceVehicle = $data['licence-vehicle'];
         unset($data['licence-vehicle']);
 
-        if (isset($licenceVehicle['receivedDate'])) {
-            if (checkdate(
-                (int)$licenceVehicle['receivedDate']['month'],
-                (int)$licenceVehicle['receivedDate']['day'],
-                (int)$licenceVehicle['receivedDate']['year']
-            )) {
-                $licenceVehicle['receivedDate'] = sprintf(
-                    '%s-%s-%s',
-                    $licenceVehicle['receivedDate']['year'],
-                    $licenceVehicle['receivedDate']['month'],
-                    $licenceVehicle['receivedDate']['day']
-                );
-            } else {
-                unset($licenceVehicle['receivedDate']);
-            }
-        }
-
         $licenceVehicle = $this->getAdapter()->maybeFormatRemovedAndSpecifiedDates($licenceVehicle);
 
         // persist the vehicle first...

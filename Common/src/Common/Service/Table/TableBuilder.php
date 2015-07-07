@@ -1110,7 +1110,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         $newActions = $this->formatActions($actions);
 
-        $content = $this->formatActionContent($newActions, $this->getSetting('actionFormat'));
+        $content = $this->formatActionContent(
+            $newActions,
+            $this->getSetting('actionFormat'),
+            $this->getSetting('collapseAt')
+        );
 
         return $this->replaceContent('{{[elements/actionContainer]}}', array('content' => $content));
     }
@@ -1140,15 +1144,48 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Render the button version of the actions
      *
      * @param array $actions
+     * @param int $collapseAt number of buttons to show before they are 'collapsed' into
+     * a 'more actions' dropdown
      * @return string
      */
-    public function renderButtonActions($actions = array())
+    public function renderButtonActions($actions = array(), $collapseAt = 0)
     {
         $content = '';
 
-        foreach ($actions as $details) {
+        if ($collapseAt) {
+            $i = 0;
+            $max = count($actions);
+            while ($i < $max && $i < $collapseAt) {
+                $content .= $this->replaceContent('{{[elements/actionButton]}}', array_shift($actions));
+                $i++;
+            }
+            $content .= $this->renderMoreActions($actions);
+            return $content;
+        }
 
+        foreach ($actions as $details) {
             $content .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+        }
+
+        return $content;
+    }
+
+    private function renderMoreActions($actions)
+    {
+        $content = '';
+        if (!empty($actions)) {
+            $moreActions = '';
+            foreach ($actions as $details) {
+                $moreActions .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+            }
+            $translator = $this->getServiceLocator()->get('translator');
+            $content .= $this->replaceContent(
+                '{{[elements/moreActions]}}',
+                [
+                    'content' => $moreActions,
+                    'label' => $translator->translate('table_button_more_actions'),
+                ]
+            );
         }
 
         return $content;
@@ -1535,20 +1572,20 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param string $overrideFormat
      * @return string
      */
-    private function formatActionContent($actions, $overrideFormat)
+    private function formatActionContent($actions, $overrideFormat, $collapseAt = 0)
     {
         switch ($overrideFormat) {
             case self::ACTION_FORMAT_DROPDOWN:
                 return $this->renderDropdownActions($actions);
             case self::ACTION_FORMAT_BUTTONS:
-                return $this->renderButtonActions($actions);
+                return $this->renderButtonActions($actions, $collapseAt);
         }
 
         if (count($actions) > self::MAX_FORM_ACTIONS) {
             return $this->renderDropdownActions($actions);
         }
 
-        return $this->renderButtonActions($actions);
+        return $this->renderButtonActions($actions, $collapseAt);
     }
 
     /**
@@ -1561,11 +1598,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $newActions = array();
 
+        $translator = $this->getServiceLocator()->get('translator');
+
         foreach ($actions as $name => $details) {
 
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
-            $label = isset($details['label']) ? $details['label'] : $value;
+            $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
 
             $class = isset($details['class']) ? $details['class'] : 'secondary';
 

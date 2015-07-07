@@ -1296,6 +1296,67 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
+     * Test renderButtonActions with collapseAt value set
+     */
+    public function testRenderButtonActionsCollapse()
+    {
+        $actions = array(
+            array(
+                'foo' => 'bar'
+            ),
+            array(
+                'bar' => 'cake'
+            ),
+            array(
+                'more' => 'bar'
+            ),
+            array(
+                'more' => 'cake'
+            ),
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->at(0))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['foo' => 'bar'])
+            ->will($this->returnValue('foo bar'));
+
+        $mockContentHelper->expects($this->at(1))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['bar' => 'cake'])
+            ->will($this->returnValue('bar cake'));
+
+        $mockContentHelper->expects($this->at(2))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['more' => 'bar'])
+            ->will($this->returnValue('more bar '));
+
+        $mockContentHelper->expects($this->at(3))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['more' => 'cake'])
+            ->will($this->returnValue('more cake '));
+
+        $mockContentHelper->expects($this->at(4))
+            ->method('replaceContent')
+            ->with(
+                '{{[elements/moreActions]}}',
+                [
+                    'content' => 'more bar more cake ',
+                    'label' => null,
+                ]
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderButtonActions($actions, 2);
+    }
+
+    /**
      * Test renderFooter Without pagination
      */
     public function testRenderFooterWithoutPagination()

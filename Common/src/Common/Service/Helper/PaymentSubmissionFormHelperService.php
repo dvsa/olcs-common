@@ -22,23 +22,15 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
      *
      * @param Zend\Form\Form $form
      * @param string $actionUrl
-     * @param int $applicationId
      * @param boolean $canSubmit
      * @param boolean $enabled
-     * @param string $actionUrl
+     * @param string $fee fee amount
      */
-    public function updatePaymentSubmissonForm(
-        Form $form,
-        $actionUrl,
-        $applicationId,
-        $visible = false,
-        $enabled = false
-    ) {
-
+    public function updatePaymentSubmissonForm(Form $form, $actionUrl, $visible, $enabled, $fee)
+    {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         if ($visible) {
-            $fee = $this->getFee($applicationId);
             if ($fee) {
                 // show fee amount
                 $feeAmount = number_format($fee, 2);
@@ -67,33 +59,5 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
             $formHelper->remove($form, 'amount');
             $formHelper->remove($form, 'submitPay');
         }
-    }
-
-    /**
-     * @param int $applicationId
-     * @return float
-     * @todo OLCS-9592 can use Dvsa\Olcs\Api\Domain\QueryHandler\Application\OutstandingFees
-     */
-    protected function getFee($applicationId)
-    {
-        $processingService = $this->getServiceLocator()->get('Processing\Application');
-        $applicationFee = $processingService->getApplicationFee($applicationId);
-
-        $fee = 0;
-
-        if ($applicationFee) {
-            $fee += $applicationFee['amount'];
-        }
-
-        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($applicationId);
-        if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-            $interimFee = $processingService->getInterimFee($applicationId);
-
-            if ($interimFee) {
-                $fee += $interimFee['amount'];
-            }
-        }
-
-        return $fee;
     }
 }

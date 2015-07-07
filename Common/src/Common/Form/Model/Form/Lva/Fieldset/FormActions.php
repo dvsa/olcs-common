@@ -26,7 +26,7 @@ class FormActions
     public $save = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--tertiary"})
+     * @Form\Attributes({"type":"submit","class":"action--tertiary large"})
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */

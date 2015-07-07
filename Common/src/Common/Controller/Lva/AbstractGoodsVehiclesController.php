@@ -536,28 +536,42 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         if ($params['canReprint']) {
             $table->addAction(
                 'reprint',
-                ['label' => 'Reprint Disc', 'requireRows' => true]
+                [
+                    'label' => 'vehicle_table_action.reprint.label',
+                    'requireRows' => true,
+                ]
             );
         }
 
         if ($params['canTransfer']) {
             $table->addAction(
                 'transfer',
-                ['label' => 'Transfer', 'class' => 'secondary js-require--multiple', 'requireRows' => true]
+                [
+                    'label' => 'vehicle_table_action.transfer.label',
+                    'class' => 'secondary js-require--multiple',
+                    'requireRows' => true,
+                ]
             );
         }
 
         if ($params['canExport']) {
             $table->addAction(
                 'export',
-                ['requireRows' => true, 'class' => 'secondary js-disable-crud']
+                [
+                    'label' => 'vehicle_table_action.export.label',
+                    'requireRows' => true,
+                    'class' => 'secondary js-disable-crud',
+                ]
             );
         }
 
         if ($params['canPrintVehicle']) {
             $table->addAction(
                 'print-vehicles',
-                ['label' => 'Print vehicle list', 'requireRows' => true]
+                [
+                    'label' => 'vehicle_table_action.print-vehicles.label',
+                    'requireRows' => true,
+                ]
             );
         }
     }
