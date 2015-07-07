@@ -27,9 +27,6 @@ class Safety
     /**
      * @Form\Name("application")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyApplication")
-     * @Form\Attributes({
-     *   "class":"visually-hidden"
-     * })
      */
     public $application = null;
 
