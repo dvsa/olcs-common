@@ -23,9 +23,6 @@ class GoodsVehicles
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesData")
-     * @Form\Attributes({
-     *   "class": "visually-hidden"
-     * })
      */
     public $data = null;
 
