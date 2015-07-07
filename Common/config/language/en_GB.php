@@ -2073,7 +2073,7 @@ return array(
     'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'Other names',
     'selfserve-app-subSection-your-business-people-columnName' => 'Name',
     'selfserve-app-subSection-your-business-people-columnPosition' => 'Position',
-    'selfserve-app-subSection-your-business-people-guidanceLC' => 'Your list of company Directors should match those on the companies house register',
+    'selfserve-app-subSection-your-business-people-guidanceLC' => '<p>Your list of company Directors should match those on the companies house register</p>',
     'selfserve-app-subSection-your-business-people-guidanceLLP' => 'Please provide details of the members. This must be
         the same as the details that are on the companies house register',
     'selfserve-app-subSection-your-business-people-guidanceO' => 'Please provide details of the persons responsible for
