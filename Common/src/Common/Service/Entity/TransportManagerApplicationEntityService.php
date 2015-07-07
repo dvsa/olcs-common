@@ -47,16 +47,6 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
-    protected $grantDataBundle = [
-        'children' => [
-            'application',
-            'transportManager',
-            'tmType',
-            'operatingCentres',
-            'otherLicences'
-        ]
-    ];
-
     protected $homeContactDetailsBundle = [
         'children' => [
             'application',
@@ -244,14 +234,6 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             ]
         ]
     ];
-
-    /**
-     * @todo migrate me
-     */
-    public function getGrantDataForApplication($applicationId)
-    {
-        return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
-    }
 
     /**
      * Get transport manager applications

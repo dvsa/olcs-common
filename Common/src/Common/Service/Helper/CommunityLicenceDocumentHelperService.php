@@ -14,7 +14,6 @@ use Common\Service\Printing\PrintSchedulerInterface;
  * Community Licence Document Generation Helper Service
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
- * @todo Looks like this has been migrated
  */
 class CommunityLicenceDocumentHelperService extends AbstractHelperService
 {

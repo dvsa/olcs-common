@@ -413,8 +413,6 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      * Fetch list of all sections requiring attention
      *
      * @return array
-     *
-     * @todo migrated (maybe remove?)
      */
     public function getSectionsRequiringAttention()
     {
@@ -430,16 +428,15 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
     /**
      * @return boolean if any section has been changed
-     *
-     * @todo migrated (maybe remove?)
      */
     public function hasChanged()
     {
         foreach ($this->getSectionCompletion() as $section => $status) {
-        if ($status !== self::STATUS_UNCHANGED) {
-            return true;
+            if ($status !== self::STATUS_UNCHANGED) {
+                return true;
+            }
         }
-    }
+
         return false;
     }
 

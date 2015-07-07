@@ -33,7 +33,6 @@ class PsvDiscEntityService extends AbstractEntityService
      * @param array $ids
      *
      * @NOTE migrated [VoidPsvDiscs]
-     * @todo maybe remove?
      */
     public function ceaseDiscs(array $ids = array())
     {
@@ -81,7 +80,6 @@ class PsvDiscEntityService extends AbstractEntityService
      *
      * @param int $licenceID
      * @param int $count
-     * @todo migrated (maybe remove?)
      */
     public function requestBlankDiscs($licenceId, $count)
     {
@@ -100,7 +98,6 @@ class PsvDiscEntityService extends AbstractEntityService
      *
      * @param int $licenceId
      * @return array
-     * @todo migrated (maye remove?)
      */
     public function getNotCeasedDiscs($licenceId)
     {
@@ -110,28 +107,5 @@ class PsvDiscEntityService extends AbstractEntityService
         ];
 
         return $this->getAll($query, $this->bundle);
-    }
-
-    /**
-     * Update any existing discs relating to the given licence. This
-     * will void any discs which are currently active and request
-     * blank replacements
-     *
-     * @param int $licenceId
-     * @todo migrated (maybe remove?)
-     */
-    public function updateExistingForLicence($licenceId)
-    {
-        $results = $this->getNotCeasedDiscs($licenceId);
-        $ids = array_map(
-            function ($v) {
-                return $v['id'];
-            },
-            $results['Results']
-        );
-
-        $this->ceaseDiscs($ids);
-
-        return $this->requestBlankDiscs($licenceId, $results['Count']);
     }
 }

@@ -124,22 +124,6 @@ class LicenceVehicleEntityService extends AbstractEntityService
     }
 
     /**
-     * @todo migrated (maybe remove?)
-     */
-    public function getForApplicationValidation($licenceId, $applicationId)
-    {
-        $query = array(
-            'licence' => $licenceId,
-            'removalDate' => 'NULL',
-            'application' => $applicationId
-        );
-
-        $results = $this->getAll($query);
-
-        return $results['Results'];
-    }
-
-    /**
      * Fetch all results against a licence which are valid and NOT related
      * to the given application
      */

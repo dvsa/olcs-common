@@ -437,47 +437,6 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetDataForValidating()
-    {
-        $id = 3;
-
-        $response = array(
-            'licenceType' => array(
-                'id' => 'xxx'
-            ),
-            'goodsOrPsv' => array(
-                'id' => 'yyy'
-            ),
-            'totAuthTrailers' => 50,
-            'totAuthVehicles' => 50,
-            'totAuthSmallVehicles' => 10,
-            'totAuthMediumVehicles' => 20,
-            'totAuthLargeVehicles' => 20,
-            'niFlag' => 'Y',
-            'foo' => 'bar',
-            'cake' => 'here'
-        );
-
-        $expected = array(
-            'licenceType' => 'xxx',
-            'goodsOrPsv' => 'yyy',
-            'totAuthTrailers' => 50,
-            'totAuthVehicles' => 50,
-            'totAuthSmallVehicles' => 10,
-            'totAuthMediumVehicles' => 20,
-            'totAuthLargeVehicles' => 20,
-            'niFlag' => 'Y'
-        );
-
-        $this->expectOneRestCall('Application', 'GET', $id)
-            ->will($this->returnValue($response));
-
-        $this->assertEquals($expected, $this->sut->getDataForValidating($id));
-    }
-
-    /**
-     * @group entity_services
-     */
     public function testCreateVariation()
     {
         $this->mockDate('2014-01-01');

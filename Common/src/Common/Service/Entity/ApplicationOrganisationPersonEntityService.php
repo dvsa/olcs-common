@@ -46,7 +46,6 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
      *
      * @param int $applicationId
      * @param int $limit
-     * @todo migrate me
      */
     public function getAllByApplication($applicationId, $limit = null)
     {

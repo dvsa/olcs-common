@@ -170,24 +170,6 @@ class FeeEntityService extends AbstractLvaEntityService
         return isset($data['application']) ? $data['application'] : null;
     }
 
-    /**
-     * @todo migrate me
-     */
-    public function getOutstandingFeesForApplication($applicationId)
-    {
-        $query = array(
-            'application' => $applicationId,
-            'feeStatus' => array(
-                self::STATUS_OUTSTANDING,
-                self::STATUS_WAIVE_RECOMMENDED
-            )
-        );
-
-        $data = $this->getAll($query, $this->overviewBundle);
-
-        return $data['Results'];
-    }
-
     public function getLatestOutstandingFeeForApplication($applicationId)
     {
         $params = [
@@ -276,50 +258,6 @@ class FeeEntityService extends AbstractLvaEntityService
         return $this->getAll($query, $this->outstandingForOrganisationBundle);
     }
 
-    /**
-     * @NOTE This functionality has been replicated in the API [Licence/CancelLicenceFees]
-     * @todo maybe remove?
-     */
-    public function cancelForLicence($licenceId)
-    {
-        $query = array(
-            'licence' => $licenceId,
-            'feeStatus' => array(
-                self::STATUS_OUTSTANDING,
-                self::STATUS_WAIVE_RECOMMENDED
-            )
-        );
-
-        $results = $this->getAll($query, array('children' => array('task')));
-
-        if (empty($results['Results'])) {
-            return;
-        }
-
-        $updates = array();
-        $tasks = array();
-
-        foreach ($results['Results'] as $fee) {
-            $updates[] = array(
-                'id' => $fee['id'],
-                'feeStatus' => self::STATUS_CANCELLED,
-                '_OPTIONS_' => array('force' => true)
-            );
-            if (isset($fee['task']['id'])) {
-                $tasks[] = array(
-                    'id' => $fee['task']['id'],
-                    'version' => $fee['task']['version'],
-                    'isClosed' => 'Y'
-                );
-            }
-        }
-
-        $this->multiUpdate($updates);
-        if ($tasks) {
-            $this->getServiceLocator()->get('Entity\Task')->multiUpdate($tasks);
-        }
-    }
-
     public function cancelForApplication($applicationId)
     {
         $query = array(
@@ -344,27 +282,6 @@ class FeeEntityService extends AbstractLvaEntityService
                 'feeStatus' => self::STATUS_CANCELLED,
                 '_OPTIONS_' => array('force' => true)
             );
-        }
-
-        $this->multiUpdate($updates);
-    }
-
-    /**
-     * @todo migrated (remove me?)
-     */
-    public function cancelInterimForApplication($applicationId)
-    {
-        $results = $this->getOutstandingFeesForApplication($applicationId);
-
-        $updates = [];
-        foreach ($results as $fee) {
-            if ($fee['feeType']['feeType']['id'] === FeeTypeDataService::FEE_TYPE_GRANTINT) {
-                $updates[] = [
-                    'id' => $fee['id'],
-                    'feeStatus' => self::STATUS_CANCELLED,
-                    '_OPTIONS_' => array('force' => true)
-                ];
-            }
         }
 
         $this->multiUpdate($updates);
@@ -473,36 +390,6 @@ class FeeEntityService extends AbstractLvaEntityService
             ]
         ];
         return $this->getAll($query, $bundle);
-    }
-
-    /**
-     * Get any outstanding/wave recommended GRANT fees for an application
-     *
-     * @param int $applicationId Application ID
-     * 
-     * @return array Fee Entity data
-     *
-     * @todo migrate me
-     */
-    public function getOutstandingGrantFeesForApplication($applicationId)
-    {
-        $query = array(
-            'application' => $applicationId,
-            'feeStatus' => array(
-                self::STATUS_OUTSTANDING,
-                self::STATUS_WAIVE_RECOMMENDED
-            )
-        );
-
-        $bundle = $this->overviewBundle;
-        $bundle['children']['feeType']['criteria'] = [
-            'feeType' => FeeTypeDataService::FEE_TYPE_GRANT,
-        ];
-        $bundle['children']['feeType']['required'] = true;
-
-        $data = $this->getAll($query, $bundle);
-
-        return $data['Results'];
     }
 
     /**

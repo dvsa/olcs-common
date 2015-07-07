@@ -44,17 +44,6 @@ class ConditionUndertakingEntityService extends AbstractEntityService
         )
     );
 
-    protected $grantDataBundle = array(
-        'children' => array(
-            'case',
-            'attachedTo',
-            'conditionType',
-            'operatingCentre',
-            'addedVia',
-            'licConditionVariation'
-        )
-    );
-
     protected $variationDataBundle = array(
         'children' => array(
             'case',
@@ -96,14 +85,6 @@ class ConditionUndertakingEntityService extends AbstractEntityService
     public function getForApplication($applicationId)
     {
         return $this->getAll(['application' => $applicationId], $this->dataBundle)['Results'];
-    }
-
-    /**
-     * @todo migrate this
-     */
-    public function getGrantData($applicationId)
-    {
-        return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
     }
 
     public function getForVariation($applicationId)
