@@ -28,7 +28,6 @@ class UserEntityService extends AbstractEntityService
     protected $userDetailsBundle = [
         'children' => [
             'localAuthority',
-            'organisation',
             'contactDetails' => [
                 'children' => [
                     'person',
