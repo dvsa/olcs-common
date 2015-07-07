@@ -504,9 +504,9 @@ return array(
     'application_type-of-licence_licence-type.data' => 'W Licence type',
     'application_type-of-licence_licence-type.data.licenceType' => 'W What type of licence do you want to apply for?',
     'application_type-of-licence_operator-location.data' => 'W Operator location',
-    'application_type-of-licence_operator-location.data.niFlag' => 'W Where do you operate from?',
+    'application_type-of-licence_operator-location.data.niFlag' => 'W Where will you operate your vehicles?',
     'application_type-of-licence_operator-type.data' => 'W Operator type',
-    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'W What type of operator are you?',
+    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'W What type of vehicles will you be operating?',
     'application_type_of_licence_confirmation_subtitle' => 'W The application will be reset and all the information
         entered will be lost!',
     'application_vehicle-safety_discs-psv-replace-label' => 'W Are you sure you want to reprint these discs?',
@@ -1786,6 +1786,7 @@ return array(
         Office for further advice.',
     'people.org_t_st.title.locked' => 'W You cannot change people details. Please contact the Central Licensing Office
         for further advice.',
+    'people_table_action.delete.label' => 'W Remove',
     'persons' => 'W Person Information',
     'pi_s_reg' => 'W PI Registered',
     'pi_s_schedule' => 'W PI Scheduled',
@@ -2157,6 +2158,7 @@ return array(
     'summary-overview.button' => 'W View my application summary',
     'surname' => 'W Surname',
     't-auth' => 'W T-auth',
+    'table_button_more_actions' => 'W More actions',
     'tachograph_analyser.tach_external' => 'W An external contractor',
     'tachograph_analyser.tach_internal' => 'W An owner or employee of the business',
     'tachograph_analyser.tach_na' => 'W Not applicable',

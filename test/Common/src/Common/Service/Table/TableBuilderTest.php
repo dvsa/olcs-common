@@ -1339,7 +1339,13 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->at(4))
             ->method('replaceContent')
-            ->with('{{[elements/moreActions]}}', ['content' => 'more bar more cake ']);
+            ->with(
+                '{{[elements/moreActions]}}',
+                [
+                    'content' => 'more bar more cake ',
+                    'label' => null,
+                ]
+            );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 

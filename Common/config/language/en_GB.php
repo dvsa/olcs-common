@@ -1779,6 +1779,7 @@ return array(
         for further advice.',
     'people.org_t_st.title.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
         further advice.',
+    'people_table_action.delete.label' => 'Remove',
     'persons' => 'Person Information',
     'pi_s_reg' => 'PI Registered',
     'pi_s_schedule' => 'PI Scheduled',
@@ -2148,6 +2149,7 @@ return array(
     'summary-overview.button' => 'View my application summary',
     'surname' => 'Surname',
     't-auth' => 'T-auth',
+    'table_button_more_actions' => 'More actions',
     'tachograph_analyser.tach_external' => 'An external contractor',
     'tachograph_analyser.tach_internal' => 'An owner or employee of the business',
     'tachograph_analyser.tach_na' => 'Not applicable',

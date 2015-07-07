@@ -50,6 +50,15 @@ class TypeOfLicence
     public $operatorType = null;
 
     /**
+     * @Form\Attributes({
+     *  "value": "markup-type-of-licence-difference",
+     *  "data-container-class":"js-difference-guidance"
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $difference = null;
+
+    /**
      * @Form\Name("licence-type")
      * @Form\Attributes({"id": ""})
      * @Form\Options({

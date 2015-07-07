@@ -21,4 +21,10 @@ class FinancialEvidenceFinance
      * (value is set by individual LVA adapters)
      */
     public $requiredFinance = null;
+
+    /**
+     * @Form\Attributes({"value": "markup-financial-evidence-help" })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $help = null;
 }
