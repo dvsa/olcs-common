@@ -6,6 +6,9 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("establishment")
+ * @Form\Attributes({
+ *     "class": "visually-hidden"
+ * })
  */
 class Establishment
 {

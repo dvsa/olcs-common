@@ -14,7 +14,7 @@ OLCS.ready(function() {
 
   OLCS.conditionalButton({
     container: tableSelector,
-    label: "Delete",
+    selector: "#delete",
     predicate: {
       allow: ["A", "E", "U"]
     }

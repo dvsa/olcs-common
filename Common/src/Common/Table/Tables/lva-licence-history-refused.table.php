@@ -11,9 +11,9 @@ return array(
         'crud' => array(
             'formName' => 'refused',
             'actions' => array(
-                'add' => array('class' => 'primary'),
+                'add' => array('class' => 'primary', 'label' => 'Add licence'),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
+                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove')
             )
         )
     ),

@@ -23,7 +23,7 @@ class FlashMessenger extends ZendFlashMessenger
      * @var string
      */
     protected $messageCloseString     = '</p></div>';
-    protected $messageOpenFormat      = '<div %s><p>';
+    protected $messageOpenFormat      = '<div %s><p role="alert">';
     protected $messageSeparatorString = '</p></div><div %s><p>';
 
     /**

@@ -15,18 +15,26 @@ class GoodsVehicles
     /**
      * @Form\Name("query")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesQuery")
+     * @Form\Attributes({
+     *   "class": "visually-hidden"
+     * })
      */
     public $query = null;
 
     /**
-     * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesData")
+     * @Form\Attributes({
+     *   "class": "visually-hidden"
+     * })
      */
     public $data = null;
 
     /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({
+     *   "class": "table"
+     * })
      */
     public $table = null;
 

@@ -41,7 +41,7 @@ class CompanyNumber extends Fieldset
                     'label' => 'Find company',
                 ],
                 'attributes' => [
-                    'class' => 'action--secondary large',
+                    'class' => 'action--primary large',
                     'data-container-class' => 'inline',
                     'type' => 'submit',
                 ],
