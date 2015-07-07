@@ -506,7 +506,7 @@ return array(
     'application_type-of-licence_operator-location.data' => 'W Operator location',
     'application_type-of-licence_operator-location.data.niFlag' => 'W Where will you operate your vehicles?',
     'application_type-of-licence_operator-type.data' => 'W Operator type',
-    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'W What type of vehciles will you be operating?',
+    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'W What type of vehicles will you be operating?',
     'application_type_of_licence_confirmation_subtitle' => 'W The application will be reset and all the information
         entered will be lost!',
     'application_vehicle-safety_discs-psv-replace-label' => 'W Are you sure you want to reprint these discs?',
