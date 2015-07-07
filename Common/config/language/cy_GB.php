@@ -2379,6 +2379,7 @@ return array(
     'transport_managers-details-PreviousLicences-delete-success' => 'W Previous licence(s) removed successfully',
     'type-of-licence' => 'W Type of licence',
     'undertakings' => 'W Undertakings',
+    'undertakings_summary_download' => 'W <p style="margin-top: -20px;"><b><a href="%s" target="_blank">%s</a></b></p>',
     'united-kingdom' => 'W United Kingdom',
     'unknown-error' => 'W An error occurred processing your request, please try again',
     'update-continuation.saved' => 'W The continuation details have been updated',

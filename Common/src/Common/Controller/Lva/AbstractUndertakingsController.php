@@ -78,10 +78,12 @@ abstract class AbstractUndertakingsController extends AbstractController
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
 
-        $summaryDownload = sprintf(
-            '<p style="margin-top: -20px;"><b><a href="%s" target="_blank">%s</a></b></p>',
-            $this->url()->fromRoute('lva-' . $this->lva . '/review', [], [], true),
-            $translator->translate('view-full-application')
+        $summaryDownload = $translator->translateReplace(
+            'undertakings_summary_download',
+            [
+                $this->url()->fromRoute('lva-' . $this->lva . '/review', [], [], true),
+                $translator->translate('view-full-application'),
+            ]
         );
 
         $form->get('declarationsAndUndertakings')->get('summaryDownload')->setAttribute('value', $summaryDownload);
