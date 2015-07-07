@@ -389,8 +389,9 @@ return array(
         operating centre\'s location.<a href="#"target="_blank">More information about traffic areas</a>',
     'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'Your traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Traffic area',
-    'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => '<p class="hint">Your traffic area is determined by your
-        operating centre\'s location.<a href="#"target="_blank">More information about traffic areas</a></p>',
+    'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => '<p class="hint">Your traffic
+        area is determined by your operating centre\'s location.<a href="#"target="_blank">More information about
+        traffic areas</a></p>',
     'application_operating-centres_authorisation.enforcementArea.label' => 'Enforcement area',
     'application_operating-centres_authorisation.table.address' => 'Address',
     'application_operating-centres_authorisation.table.advertised' => 'Advertised',
@@ -420,7 +421,8 @@ return array(
         are aware that you must tell the traffic commissioner immediately of any insolvency proceedings that occur
         between the submission of your application and a decision being made on the application',
     'application_previous-history_financial-history.insolvencyDetails.hint' => 'Please provide additional information
-        relating to any prior insolvency proceedings (Min. 200 characters). You may also upload evidence such as legal documents below.',
+        relating to any prior insolvency proceedings (Min. 200 characters). You may also upload evidence such as legal
+        documents below.',
     'application_previous-history_financial-history.insolvencyDetails.placeholder' => 'Min 200 characters',
     'application_previous-history_financial-history.insolvencyDetails.title' => 'Additional information',
     'application_previous-history_licence-history-table-licences-applied-add' => 'Add licence',
@@ -657,8 +659,9 @@ return array(
     'application_your-business_business-type.correspondence.label' => 'Correspondence address',
     'application_your-business_business-type.data' => 'Business type',
     'application_your-business_business-type.data.type' => 'What type of business are you?',
+    'application_your-business_business-type.establishment.hint' => 'This is where you usually keep your operator
+        licence records',
     'application_your-business_business-type.establishment.label' => 'Establishment address',
-    'application_your-business_business-type.establishment.hint' => 'This is where you usually keep your operator licence records',
     'application_your-business_business-type.registered-office.label' => 'Registered office address',
     'application_your-business_business-type.transport-consultant.label' => 'Transport Consultant',
     'application_your-business_business-type.written-perm-engage.label' => 'Written permission to engage',
@@ -2073,7 +2076,8 @@ return array(
     'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'Other names',
     'selfserve-app-subSection-your-business-people-columnName' => 'Name',
     'selfserve-app-subSection-your-business-people-columnPosition' => 'Position',
-    'selfserve-app-subSection-your-business-people-guidanceLC' => '<p>Your list of company Directors should match those on the companies house register</p>',
+    'selfserve-app-subSection-your-business-people-guidanceLC' => '<p>Your list of company Directors should match those
+        on the companies house register</p>',
     'selfserve-app-subSection-your-business-people-guidanceLLP' => 'Please provide details of the members. This must be
         the same as the details that are on the companies house register',
     'selfserve-app-subSection-your-business-people-guidanceO' => 'Please provide details of the persons responsible for
@@ -2249,8 +2253,8 @@ return array(
     'traffic-area' => 'Traffic area',
     'trafficAreaSet.hint-operating-centres' => 'Your traffic area is determined by the location of your operating
         centres. More information about <a href="%s"> traffic areas</a>.',
-    'trafficAreaSet.hint-taxi-phv' => 'Your traffic area is determined by the location of your operating
-        centres. More information about <a href="%s">traffic areas</a>.',
+    'trafficAreaSet.hint-taxi-phv' => 'Your traffic area is determined by the location of your operating centres. More
+        information about <a href="%s">traffic areas</a>.',
     'trafficAreaSet.trafficArea' => 'Traffic area',
     'trailer' => 'Trailer',
     'trailer-count' => '%s trailers',
