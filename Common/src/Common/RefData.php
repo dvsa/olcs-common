@@ -52,4 +52,16 @@ class RefData
     const LICENCE_STATUS_SUSPENDED = 'lsts_suspended';
     const LICENCE_STATUS_TERMINATED = 'lsts_terminated';
     const LICENCE_STATUS_VALID = 'lsts_valid';
+
+    /**
+     * Application statuses
+     */
+    const APPLICATION_STATUS_NOT_SUBMITTED = 'apsts_not_submitted';
+
+    /**
+     * Variation section statuses
+     */
+    const VARIATION_STATUS_UNCHANGED = 0;
+    const VARIATION_STATUS_REQUIRES_ATTENTION = 1;
+    const VARIATION_STATUS_UPDATED = 2;
 }

@@ -33,12 +33,10 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
     }
 
-    public function testUpdatePaymentSubmissonFormWithFeesAndGoodsApplication()
+    public function testUpdatePaymentSubmissonFormWithFee()
     {
-        $applicationId = 69;
-        $applicationFee = ['id' => 1, 'amount' => 1234.56];
-        $interimFee = ['id' => 2, 'amount' => 123.45];
         $actionUrl = 'actionUrl';
+        $feeAmount = '1358.01';
 
         $form = m::mock('\Zend\Form\Form')
             ->shouldReceive('get')
@@ -59,28 +57,6 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
         $formHelper = m::mock('Common\Service\Helper\FormHelperService');
 
         $this->sm->setService('Helper\Form', $formHelper);
-
-        $this->sm->setService(
-            'Entity\Application',
-            m::mock()
-            ->shouldReceive('getCategory')
-            ->andReturn(LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE)
-            ->getMock()
-        );
-
-        $this->sm->setService(
-            'Processing\Application',
-            m::mock()
-                ->shouldReceive('getApplicationFee')
-                    ->once()
-                    ->with($applicationId)
-                    ->andReturn($applicationFee)
-                ->shouldReceive('getInterimFee')
-                    ->once()
-                    ->with($applicationId)
-                    ->andReturn($interimFee)
-                ->getMock()
-        );
 
         $this->sm->setService(
             'Helper\Translation',
@@ -92,71 +68,12 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
-        $this->sut->updatePaymentSubmissonForm($form, $actionUrl, $applicationId, true, true);
-    }
-
-    public function testUpdatePaymentSubmissonFormWithFeesAndPsvApplication()
-    {
-        $applicationId = 69;
-        $applicationFee = ['id' => 1, 'amount' => 1234.56];
-        $actionUrl = 'actionUrl';
-
-        $form = m::mock('\Zend\Form\Form')
-            ->shouldReceive('get')
-                ->with('amount')
-                ->once()
-                ->andReturn(
-                    m::mock()
-                        ->shouldReceive('setValue')
-                        ->with('HTML VALUE')
-                    ->getMock()
-                )
-            ->shouldReceive('setAttribute')
-                ->once()
-                ->with('action', 'actionUrl')
-                ->andReturnSelf()
-            ->getMock();
-
-        $formHelper = m::mock('Common\Service\Helper\FormHelperService');
-
-        $this->sm->setService('Helper\Form', $formHelper);
-
-        $this->sm->setService(
-            'Entity\Application',
-            m::mock()
-            ->shouldReceive('getCategory')
-            ->andReturn(LicenceEntityService::LICENCE_CATEGORY_PSV)
-            ->getMock()
-        );
-
-        $this->sm->setService(
-            'Processing\Application',
-            m::mock()
-                ->shouldReceive('getApplicationFee')
-                    ->once()
-                    ->with($applicationId)
-                    ->andReturn($applicationFee)
-                ->shouldReceive('getInterimFee')
-                    ->never()
-                ->getMock()
-        );
-
-        $this->sm->setService(
-            'Helper\Translation',
-            m::mock()
-                ->shouldReceive('translateReplace')
-                    ->once()
-                    ->with('application.payment-submission.amount.value', array('1,234.56'))
-                    ->andReturn('HTML VALUE')
-                ->getMock()
-        );
-
-        $this->sut->updatePaymentSubmissonForm($form, $actionUrl, $applicationId, true, true);
+        $this->sut->updatePaymentSubmissonForm($form, $actionUrl, true, true, $feeAmount);
     }
 
     public function testUpdatePaymentSubmissonFormWithNoFeesAndIncomplete()
     {
-        $applicationId = 69;
+        $feeAmount = '0';
         $actionUrl = 'actionUrl';
 
         $form = m::mock('\Zend\Form\Form')
@@ -173,28 +90,6 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
 
         $formHelper = m::mock('Common\Service\Helper\FormHelperService');
 
-        $this->sm->setService(
-            'Entity\Application',
-            m::mock()
-            ->shouldReceive('getCategory')
-            ->andReturn(LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE)
-            ->getMock()
-        );
-
-        $this->sm->setService(
-            'Processing\Application',
-            m::mock()
-                ->shouldReceive('getApplicationFee')
-                    ->once()
-                    ->with($applicationId)
-                    ->andReturn(null)
-                ->shouldReceive('getInterimFee')
-                    ->once()
-                    ->with($applicationId)
-                    ->andReturn(null)
-                ->getMock()
-        );
-
         // assert fee amount is removed
         $formHelper->shouldReceive('remove')->once()->with($form, 'amount');
 
@@ -203,7 +98,7 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
 
         $this->sm->setService('Helper\Form', $formHelper);
 
-        $this->sut->updatePaymentSubmissonForm($form, $actionUrl, $applicationId, true, false);
+        $this->sut->updatePaymentSubmissonForm($form, $actionUrl, true, false, $feeAmount);
     }
 
     public function testUpdatePaymentSubmissonFormAlreadySubmitted()
@@ -217,6 +112,6 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
 
         $this->sm->setService('Helper\Form', $formHelper);
 
-        $this->sut->updatePaymentSubmissonForm($form, '', null, false, false);
+        $this->sut->updatePaymentSubmissonForm($form, '', false, false, 'foo');
     }
 }
