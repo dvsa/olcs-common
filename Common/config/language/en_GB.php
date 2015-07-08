@@ -816,6 +816,7 @@ return array(
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
     'crud-companies-house-alert-title' => 'Companies House Alerts',
+    'crud-companies-house-alert-title-singular' => 'Companies House Alert',
     'crud-event-history-title' => 'History',
     'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
         rate(s)?',
