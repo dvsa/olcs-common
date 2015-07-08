@@ -41,7 +41,7 @@ class TypeOfLicence
      *      "fieldset-data-group": "operator-type",
      *      "label": "application_type-of-licence_operator-type.data.goodsOrPsv",
      *      "value_options":{
-     *          "lcat_gv":"Goods vehciles",
+     *          "lcat_gv":"Goods vehicles",
      *          "lcat_psv":"Public service vehicles"
      *      }
      * })
