@@ -37,6 +37,7 @@ class GoodsVehiclesVehicleData
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight"
      * })
+     * @Form\Validator({"name": "Zend\Validator\Digits"})
      * @Form\Validator({"name": "Zend\Validator\Between", "options": {"min": 0, "max": 999999}})
      * @Form\Type("Text")
      */
