@@ -18,8 +18,8 @@ class Licence extends Bundle
      */
     protected function doInit(ServiceLocatorInterface $serviceLocator)
     {
-        $appeals = new Bundle();
-        $appeals->addChild('outcome')
+        $appeal = new Bundle();
+        $appeal->addChild('outcome')
                 ->addChild('reason');
 
         $stays = new Bundle();
@@ -27,7 +27,7 @@ class Licence extends Bundle
               ->addChild('outcome');
 
         $cases = new Bundle();
-        $cases->addChild('appeals', $appeals)
+        $cases->addChild('appeal', $appeal)
               ->addChild('stays', $stays);
 
         $correspondenceCd = new Bundle();
