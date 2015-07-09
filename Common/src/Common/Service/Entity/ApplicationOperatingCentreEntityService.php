@@ -75,30 +75,8 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
     }
 
     /**
-     * Get all OC for given application for inspection request listbox
-     *
-     * @param int $applicationId
-     * @return array
+     * @todo remove when TM migrated (TransportManager/Details/TransportManagerDetailsResponsibilityController.php)
      */
-    public function getAllForInspectionRequest($applicationId)
-    {
-        $query = [
-            'application' => $applicationId,
-            'action' => '!= D'
-        ];
-        $bundle = [
-            'children' => [
-                'operatingCentre' => [
-                    'children' => [
-                        'address'
-                    ]
-                ],
-                'application'
-            ]
-        ];
-        return $this->getAll($query, $bundle);
-    }
-
     public function getForSelect($applicationId)
     {
         $data = $this->getAll(['application' => $applicationId], $this->selectBundle);

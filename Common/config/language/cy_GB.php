@@ -995,6 +995,8 @@ return array(
     'impt_paper' => 'W Paperwork',
     'inspection-request-task-description-satisfactory' => 'W Satisfactory inspection request: ID %s',
     'inspection-request-task-description-unsatisfactory' => 'W Unsatisfactory inspection request: ID %s',
+    'inspection-request.delete-question' => 'W Are you sure you want to permanently delete the selected record(s)?',
+    'inspection-request.deleted-successfully' => 'W Deleted successfully',
     'interim-start-date' => 'W Interim start date',
     'interim-status' => 'W Interim status',
     'interim.application.undertakings.form.checkbox.label' => 'W Do you wish to apply for an interim authority? There is
