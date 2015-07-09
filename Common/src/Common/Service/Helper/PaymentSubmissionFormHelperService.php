@@ -31,7 +31,7 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         if ($visible) {
-            if ($fee) {
+            if (floatval($fee) > 0) {
                 // show fee amount
                 $feeAmount = number_format($fee, 2);
                 $translator = $this->getServiceLocator()->get('Helper\Translation');
