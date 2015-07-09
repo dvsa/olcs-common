@@ -678,29 +678,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
         return $data['receivedDate'];
     }
 
-    public function getDataForValidating($id)
-    {
-        $data = $this->get($id, $this->validatingDataBundle);
-
-        $data['licenceType'] = $data['licenceType']['id'];
-        $data['goodsOrPsv'] = $data['goodsOrPsv']['id'];
-
-        return array_intersect_key(
-            $data,
-            [
-                'totAuthTrailers' => null,
-                'totAuthVehicles' => null,
-                'totAuthSmallVehicles' => null,
-                'totAuthMediumVehicles' => null,
-                'totAuthLargeVehicles' => null,
-                'licenceType' => null,
-                'goodsOrPsv' => null,
-                'niFlag' => null,
-                'isVariation' => null,
-            ]
-        );
-    }
-
     public function getOrganisation($applicationId)
     {
         $licenceId = $this->getLicenceIdForApplication($applicationId);

@@ -142,18 +142,6 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
         $this->assertEquals('RESPONSE', $this->sut->getByApplication($id));
     }
 
-    public function testGetGrantDataForApplication()
-    {
-        $applicationId = 123;
-
-        $query = ['application' => $applicationId, 'limit' => 'all'];
-
-        $this->expectOneRestCall('TransportManagerApplication', 'GET', $query)
-            ->will($this->returnValue(['Results' => 'RESPONSE']));
-
-        $this->assertEquals('RESPONSE', $this->sut->getGrantDataForApplication($applicationId));
-    }
-
     public function testDeleteForApplication()
     {
         $applicationId = 123;
