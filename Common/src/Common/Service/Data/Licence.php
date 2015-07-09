@@ -148,7 +148,7 @@ class Licence extends AbstractData implements AddressProviderInterface
             'children' => array(
                 'cases' => array(
                     'children' => array(
-                        'appeals' => array(
+                        'appeal' => array(
                             'children' => array(
                                 'outcome' => array(),
                                 'reason' => array(),
