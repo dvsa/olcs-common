@@ -10,7 +10,7 @@ use Common\Service\Table\Formatter\OcConditions;
 use Mockery as m;
 
 /**
- * Class OcComplaintsTest
+ * Class OcConditionsTest
  *
  * Formatter test.
  *
