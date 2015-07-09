@@ -2,7 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => '',
+        'title' => 'Transport managers',
         'within_form' => true,
         'empty_message' => 'lva-transport-manager-table-empty-message'
     ),

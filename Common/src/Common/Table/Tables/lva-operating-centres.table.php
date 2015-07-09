@@ -9,9 +9,9 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
+                'add' => array('class' => 'primary', 'label' => 'Add operating centre'),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true),
+                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove'),
             )
         )
     ),

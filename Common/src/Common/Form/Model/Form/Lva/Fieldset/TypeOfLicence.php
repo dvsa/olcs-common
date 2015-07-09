@@ -41,13 +41,22 @@ class TypeOfLicence
      *      "fieldset-data-group": "operator-type",
      *      "label": "application_type-of-licence_operator-type.data.goodsOrPsv",
      *      "value_options":{
-     *          "lcat_gv":"Goods",
-     *          "lcat_psv":"PSV"
+     *          "lcat_gv":"Goods vehicles",
+     *          "lcat_psv":"Public service vehicles"
      *      }
      * })
      * @Form\Type("Radio")
      */
     public $operatorType = null;
+
+    /**
+     * @Form\Attributes({
+     *  "value": "markup-type-of-licence-difference",
+     *  "data-container-class":"js-difference-guidance"
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $difference = null;
 
     /**
      * @Form\Name("licence-type")

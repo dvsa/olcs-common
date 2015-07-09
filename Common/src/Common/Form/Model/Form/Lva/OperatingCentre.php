@@ -51,6 +51,9 @@ class OperatingCentre
     /**
      * @Form\Name("operatingCentre")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentre")
+     * @Form\Attributes({
+     *     "class": "visually-hidden"
+     * })
      */
     public $operatingCentre = null;
 }

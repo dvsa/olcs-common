@@ -33,7 +33,7 @@ class Advertisements
 
     /**
      * @Form\Required(true)
-     * @Form\Attributes({"class":"","id":"adPlacedIn","required":false})
+     * @Form\Attributes({"class":"long","id":"adPlacedIn","required":false})
      * @Form\Options({
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn"

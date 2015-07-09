@@ -20,7 +20,9 @@ return array(
             'limit' => array(
                 'options' => array(10, 25, 50)
             )
-        )
+        ),
+        'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
+        'collapseAt' => 3,
     ),
     'columns' => array(
         array(

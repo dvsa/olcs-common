@@ -43,7 +43,10 @@ class Addresses
     /**
      * @Form\Name("establishment_address")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
-     * @Form\Options({"label":"application_your-business_business-type.establishment.label"})
+     * @Form\Options({
+     *     "label":"application_your-business_business-type.establishment.label",
+     *     "hint": "application_your-business_business-type.establishment.hint"
+     *  })
      */
     public $establishmentAddress = null;
 

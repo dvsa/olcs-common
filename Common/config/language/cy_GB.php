@@ -251,7 +251,7 @@ return array(
     'application-review-title-psv-sr' => 'W Application for a Special Restricted Public Service Vehicle Operator\'s
         Licence',
     'application-review-type-of-licence-licence-type' => 'W What type of licence do you want to apply for?',
-    'application-review-type-of-licence-operator-location' => 'W Where do you operate from?',
+    'application-review-type-of-licence-operator-location' => 'W Where will you operate your vehicles?',
     'application-review-type-of-licence-operator-type' => 'W What type of operator are you?',
     'application-review-vehicles-declarations-15b1' => 'W Do you intend to operate small vehicles as a small part of a
         large bus business as detailed by Section 79A of the Public Passenger Vehicles Act (as amended by Section 265 of
@@ -388,12 +388,12 @@ return array(
     'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'W How many community
         licences do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'W Your traffic area is determined by your
-        operating centre\'s location.<br />For more information and to find your traffic area please visit <a href="#"
-        target="_blank">this link.</a>',
+        operating centre\'s location.<a href="#"target="_blank">More information about traffic areas</a>',
     'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'W Your traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'W Traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => 'W <p class="hint">Your traffic
-        area has been determined from your address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
+        area is determined by your operating centre\'s location.<a href="#"target="_blank">More information about
+        traffic areas</a></p>',
     'application_operating-centres_authorisation.enforcementArea.label' => 'W Enforcement area',
     'application_operating-centres_authorisation.table.address' => 'W Address',
     'application_operating-centres_authorisation.table.advertised' => 'W Advertised',
@@ -423,7 +423,8 @@ return array(
         are aware that you must tell the traffic commissioner immediately of any insolvency proceedings that occur
         between the submission of your application and a decision being made on the application',
     'application_previous-history_financial-history.insolvencyDetails.hint' => 'W Please provide additional information
-        relating to any prior insolvency proceedings. You may also upload evidence such as legal documents.',
+        relating to any prior insolvency proceedings (Min. 200 characters). You may also upload evidence such as legal
+        documents below.',
     'application_previous-history_financial-history.insolvencyDetails.placeholder' => 'W Min 200 characters',
     'application_previous-history_financial-history.insolvencyDetails.title' => 'W Additional information',
     'application_previous-history_licence-history-table-licences-applied-add' => 'W Add licence',
@@ -495,8 +496,7 @@ return array(
     'application_taxi-phv_licence.table.licence-number' => 'W Licence number',
     'application_taxi-phv_licence.table.title' => 'W Licences',
     'application_taxi-phv_licence.trafficArea.hint.new' => 'W Your traffic area is determined based on the first
-        Taxi/PHV licence address.<br />For more information and to find your traffic area please visit <a href="#"
-        target="_blank">this link.</a>',
+        Taxi/PHV licence address. <a href="#"target="_blank">More information about traffic areas</a>',
     'application_taxi-phv_licence.trafficArea.label.exists' => 'W Your traffic area',
     'application_taxi-phv_licence.trafficArea.label.new' => 'W Traffic area',
     'application_taxi-phv_licence.trafficArea.labelasahint.exists' => 'W <p class="hint">Your traffic area has been
@@ -504,9 +504,9 @@ return array(
     'application_type-of-licence_licence-type.data' => 'W Licence type',
     'application_type-of-licence_licence-type.data.licenceType' => 'W What type of licence do you want to apply for?',
     'application_type-of-licence_operator-location.data' => 'W Operator location',
-    'application_type-of-licence_operator-location.data.niFlag' => 'W Where do you operate from?',
+    'application_type-of-licence_operator-location.data.niFlag' => 'W Where will you operate your vehicles?',
     'application_type-of-licence_operator-type.data' => 'W Operator type',
-    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'W What type of operator are you?',
+    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'W What type of vehicles will you be operating?',
     'application_type_of_licence_confirmation_subtitle' => 'W The application will be reset and all the information
         entered will be lost!',
     'application_vehicle-safety_discs-psv-replace-label' => 'W Are you sure you want to reprint these discs?',
@@ -653,16 +653,18 @@ return array(
     'application_your-business_business-type.add-transport-consultant.label' => 'W Do you wish to add details of a
         Transport Consultant?',
     'application_your-business_business-type.consultant-name.label' => 'W Transport consultant name',
-    'application_your-business_business-type.contact-details.business-phone' => 'W Business telephone No. (optional)',
+    'application_your-business_business-type.contact-details.business-phone' => 'W Business telephone No.',
     'application_your-business_business-type.contact-details.email' => 'W E-mail address',
-    'application_your-business_business-type.contact-details.fax-phone' => 'W Fax telephone No. (optional)',
+    'application_your-business_business-type.contact-details.fax-phone' => 'W Fax telephone No.',
     'application_your-business_business-type.contact-details.hint' => 'W Please enter at least one telephone number',
-    'application_your-business_business-type.contact-details.home-phone' => 'W Home telephone No. (optional)',
+    'application_your-business_business-type.contact-details.home-phone' => 'W Home telephone No.',
     'application_your-business_business-type.contact-details.label' => 'W Contact details',
-    'application_your-business_business-type.contact-details.mobile-phone' => 'W Mobile telephone No. (optional)',
+    'application_your-business_business-type.contact-details.mobile-phone' => 'W Mobile telephone No.',
     'application_your-business_business-type.correspondence.label' => 'W Correspondence address',
     'application_your-business_business-type.data' => 'W Business type',
     'application_your-business_business-type.data.type' => 'W What type of business are you?',
+    'application_your-business_business-type.establishment.hint' => 'W This is where you usually keep your operator
+        licence records',
     'application_your-business_business-type.establishment.label' => 'W Establishment address',
     'application_your-business_business-type.registered-office.label' => 'W Registered office address',
     'application_your-business_business-type.transport-consultant.label' => 'W Transport Consultant',
@@ -1561,7 +1563,7 @@ return array(
     'lva.section.title.interim' => 'W Interim application',
     'lva.section.title.licence_history' => 'W Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => 'W Adding an operating centre',
-    'lva.section.title.operating_centres' => 'W Operating centres & authorisation',
+    'lva.section.title.operating_centres' => 'W Operating centres',
     'lva.section.title.overview' => 'W Overview',
     'lva.section.title.people' => 'W People',
     'lva.section.title.person' => 'W Your details',
@@ -1788,6 +1790,7 @@ return array(
         Office for further advice.',
     'people.org_t_st.title.locked' => 'W You cannot change people details. Please contact the Central Licensing Office
         for further advice.',
+    'people_table_action.delete.label' => 'W Remove',
     'persons' => 'W Person Information',
     'pi_s_reg' => 'W PI Registered',
     'pi_s_schedule' => 'W PI Scheduled',
@@ -1989,7 +1992,7 @@ return array(
     'section.name.financial_evidence' => 'W Financial evidence',
     'section.name.financial_history' => 'W Financial history',
     'section.name.licence_history' => 'W Licence history',
-    'section.name.operating_centres' => 'W Operating centres & authorisation',
+    'section.name.operating_centres' => 'W Operating centres',
     'section.name.overview' => 'W Overview',
     'section.name.people' => 'W People',
     'section.name.safety' => 'W Safety',
@@ -2082,8 +2085,8 @@ return array(
     'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'W Other names',
     'selfserve-app-subSection-your-business-people-columnName' => 'W Name',
     'selfserve-app-subSection-your-business-people-columnPosition' => 'W Position',
-    'selfserve-app-subSection-your-business-people-guidanceLC' => 'W Please provide details of the company directors.
-        This must be the same as the details that are on the companies house register',
+    'selfserve-app-subSection-your-business-people-guidanceLC' => 'W <p>Your list of company Directors should match
+        those on the companies house register</p>',
     'selfserve-app-subSection-your-business-people-guidanceLLP' => 'W Please provide details of the members. This must
         be the same as the details that are on the companies house register',
     'selfserve-app-subSection-your-business-people-guidanceO' => 'W Please provide details of the persons responsible
@@ -2159,6 +2162,7 @@ return array(
     'summary-overview.button' => 'W View my application summary',
     'surname' => 'W Surname',
     't-auth' => 'W T-auth',
+    'table_button_more_actions' => 'W More actions',
     'tachograph_analyser.tach_external' => 'W An external contractor',
     'tachograph_analyser.tach_internal' => 'W An owner or employee of the business',
     'tachograph_analyser.tach_na' => 'W Not applicable',
@@ -2257,9 +2261,9 @@ return array(
     'tol-no-changes-message' => 'W No changes to the type of licence detected',
     'traffic-area' => 'W Traffic area',
     'trafficAreaSet.hint-operating-centres' => 'W Your traffic area is determined by the location of your operating
-        centres.<br />For more information and to find your traffic area please visit <a href="%s">this link</a>',
-    'trafficAreaSet.hint-taxi-phv' => 'W Your traffic area is determined by the location of the council addresses.<br
-        />For more information and to find your traffic area please visit <a href="%s">this link</a>',
+        centres. More information about <a href="%s"> traffic areas</a>.',
+    'trafficAreaSet.hint-taxi-phv' => 'W Your traffic area is determined by the location of your operating centres. More
+        information about <a href="%s">traffic areas</a>.',
     'trafficAreaSet.trafficArea' => 'W Traffic area',
     'trailer' => 'W Trailer',
     'trailer-count' => 'W %s trailers',
@@ -2377,6 +2381,7 @@ return array(
     'transport_managers-details-PreviousLicences-delete-success' => 'W Previous licence(s) removed successfully',
     'type-of-licence' => 'W Type of licence',
     'undertakings' => 'W Undertakings',
+    'undertakings_summary_download' => 'W <p style="margin-top: -20px;"><b><a href="%s" target="_blank">%s</a></b></p>',
     'united-kingdom' => 'W United Kingdom',
     'unknown-error' => 'W An error occurred processing your request, please try again',
     'update-continuation.saved' => 'W The continuation details have been updated',
@@ -2427,7 +2432,7 @@ return array(
     'vehicle-list-print-failed' => 'W The vehicle list document failed to print',
     'vehicle-list-printed' => 'W The vehicle list document has been sent to the printer',
     'vehicle-remove-confirm-label' => 'W Are you sure you want to remove these vehicles?',
-    'vehicle_table_action.add.label' => 'W Add Vehicle',
+    'vehicle_table_action.add.label' => 'W Add vehicle',
     'vehicle_table_action.delete.label' => 'W Remove',
     'vehicle_table_action.edit.label' => 'W Edit',
     'vehicle_table_action.export.label' => 'W Export',

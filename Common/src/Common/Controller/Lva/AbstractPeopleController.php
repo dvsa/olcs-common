@@ -171,7 +171,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $form->get('guidance')
             ->get('guidance')
-            ->setValue($translator->translate($guidanceLabel));
+            ->setTokens([$guidanceLabel]);
     }
 
     private function alterCrudForm($form, $mode, $orgData)

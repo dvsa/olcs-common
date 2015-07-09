@@ -12,7 +12,9 @@ class FinancialEvidencePost
     /**
      * @Form\Attributes({
      *     "id":"sendByPost",
-     *     "value": "markup-financial-evidence-send-by-post"
+     *     "data-container-class": "send-by-post",
+     *     "value": "markup-financial-evidence-send-by-post",
+     *     "class": "send-by-post"
      * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */

@@ -12,7 +12,11 @@ return array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
+                'delete' => array(
+                    'label' => 'people_table_action.delete.label',
+                    'class' => 'secondary',
+                    'requireRows' => true,
+                ),
             )
         )
     ),

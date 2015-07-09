@@ -2,15 +2,15 @@
 
 return array(
     'variables' => array(
-        'title' => '',
+        'title' => 'Transport managers',
         'within_form' => true,
         'empty_message' => 'lva-transport-manager-table-empty-message'
     ),
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true),
+                'add' => array('class' => 'primary', 'label' => 'Add Transport Manager'),
+                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove'),
                 'restore' => array('class' => 'secondary', 'requireRows' => true),
             )
         ),

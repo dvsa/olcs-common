@@ -18,4 +18,9 @@ $(function() {
       }
     }
   });
+
+  OLCS.toggleElement({
+    triggerSelector: '.more-actions',
+    targetSelector: '.more-actions__list'
+  });
 });
