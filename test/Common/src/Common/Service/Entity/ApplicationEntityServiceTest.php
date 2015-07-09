@@ -522,59 +522,6 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
     }
 
-    /**
-     * @group entity_services
-     */
-    public function testCreateVariationWithVariationUtility()
-    {
-        $this->mockDate('2014-01-01');
-
-        $licenceId = 3;
-        $stubbedLicenceData = [
-            'bar' => 'foo'
-        ];
-        $applicationData = [
-            'foo' => 'bar'
-        ];
-        $expectedData = [
-            'licence' => 3,
-            'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
-            'isVariation' => true,
-            'foo' => 'bar',
-            'bar' => 'foo'
-        ];
-
-        $mockLicenceEntity = m::mock();
-        $mockLicenceEntity->shouldReceive('getVariationData')
-            ->with($licenceId)
-            ->andReturn($stubbedLicenceData);
-
-        $this->expectOneRestCall('Application', 'POST', $expectedData)
-            ->will($this->returnValue(['id' => 5]));
-
-        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
-
-        $mockVariationCompletion = m::mock();
-        $mockVariationCompletion->shouldReceive('save')
-            ->with(['application' => 5]);
-
-        $mockApplicationTrackingService = $this->getMock('\stdClass', array('save'));
-        $mockApplicationTrackingService->expects($this->once())
-            ->method('save')
-            ->with(['application' => 5]);
-
-        $this->sm->setService('Entity\VariationCompletion', $mockVariationCompletion);
-        $this->sm->setService('Entity\ApplicationTracking', $mockApplicationTrackingService);
-
-        $mockVariation = m::mock();
-        $this->sm->setService('VariationUtility', $mockVariation);
-        $mockVariation->shouldReceive('alterCreateVariationData')
-            ->with($expectedData)
-            ->andReturn($expectedData);
-
-        $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
-    }
-
     public function testGetLicenceTotCommunityLicences()
     {
         $id = 3;

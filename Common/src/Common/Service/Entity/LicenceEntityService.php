@@ -626,6 +626,9 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $result['Results'][0];
     }
 
+    /**
+     * @todo maybe remove?
+     */
     public function getVariationData($id)
     {
         $data = $this->get($id, $this->typeOfLicenceBundle);
