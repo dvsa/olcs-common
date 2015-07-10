@@ -41,7 +41,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
                 return $this->handleCrudAction($crudAction);
             }
 
-            $this->postSave($this->section);
+            $this->updateCompletion();
 
             return $this->completeSection($this->section);
         }
@@ -137,6 +137,17 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         }
 
         return $this->render($mode . '_condition_undertaking', $form);
+    }
+
+    protected function updateCompletion()
+    {
+        if ($this->lva != 'licence') {
+            $this->handleCommand(
+                \Dvsa\Olcs\Transfer\Command\Application\UpdateCompletion::create(
+                    ['id' => $this->getIdentifier(), 'section' => 'conditionsUndertakings']
+                )
+            );
+        }
     }
 
     /**

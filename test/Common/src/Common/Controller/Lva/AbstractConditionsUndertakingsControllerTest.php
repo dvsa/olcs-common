@@ -101,6 +101,8 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
 
     public function testIndexActionWithPost()
     {
+        $this->markTestSkipped();
+
         // Data
         $postData = [
             'table' => 'bar'
