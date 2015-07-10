@@ -867,7 +867,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function __toString()
     {
-        return $this->render();
+        try {
+            return $this->render();
+        } catch (\Exception $ex) {
+            $content = $ex->getMessage();
+            $content .= $ex->getTraceAsString();
+
+            return $content;
+        }
     }
 
     /**
