@@ -31,6 +31,11 @@ trait CreateVariationTrait
 
             $appId = $processingService->createVariation($licenceId, $data);
 
+            if ($appId === null) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                return $this->redirect()->refreshAjax();
+            }
+
             return $this->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
         }
 

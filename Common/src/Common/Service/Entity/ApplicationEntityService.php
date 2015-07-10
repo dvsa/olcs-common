@@ -483,6 +483,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
      *
      * @param int $licenceId
      * @param array $applicationData
+     * @todo maybe remove?
      */
     public function createVariation($licenceId, $applicationData = array())
     {
