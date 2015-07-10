@@ -29,15 +29,20 @@ class OcComplaintsTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     'operatingCentre' => array(
-                        'ocComplaints' => array(
-                            array('complaint' => array()),
-                            array('complaint' => array()),
-                            array('complaint' => array()),
-                            array('complaint' => null),
+                        'complaints' => array(
+                            array('id' => 1),
+                            array('id' => 2),
+                            array('id' => 3),
                         )
                     )
                 ),
                 3
+            ),
+            array(
+                array(
+                    'operatingCentre'
+                ),
+                0
             )
         );
     }

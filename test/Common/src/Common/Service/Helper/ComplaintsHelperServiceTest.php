@@ -34,21 +34,18 @@ class ComplaintsHelperServiceTest extends PHPUnit_Framework_TestCase
             [
                 'complaintDate' => 'complaintDate',
                 'complainantContactDetails' => 'complainantContactDetails',
-                'ocComplaints' => 'ocComplaints',
                 'description' => 'description',
                 'status' => ['id' => 'ecst_closed'],
             ],
             [
                 'complaintDate' => 'complaintDate',
                 'complainantContactDetails' => 'complainantContactDetails',
-                'ocComplaints' => 'ocComplaints',
                 'description' => 'description',
                 'status' => ['id' => 'ecst_closed'],
             ],
             [
                 'complaintDate' => 'complaintDate',
                 'complainantContactDetails' => 'complainantContactDetails',
-                'ocComplaints' => 'ocComplaints',
                 'description' => 'description',
                 'status' => ['id' => 'ecst_open'],
             ],

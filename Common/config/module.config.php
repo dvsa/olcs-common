@@ -652,7 +652,6 @@ return array(
             'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
             'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
             'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
-            'EnvironmentalComplaint' => 'Common\BusinessRule\Rule\EnvironmentalComplaint',
         ]
     ],
     'business_service_manager' => [
@@ -712,10 +711,6 @@ return array(
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
             // Cases business services
-            'Cases\Complaint\EnvironmentalComplaint'
-                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaint',
-            'Cases\Complaint\EnvironmentalComplaintTask'
-                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaintTask',
             'Cases\Submission\SubmissionAssignmentTask'
             => 'Common\BusinessService\Service\Cases\Submission\SubmissionAssignmentTask',
             'Cases\Submission\Submission' => 'Common\BusinessService\Service\Cases\Submission\Submission',

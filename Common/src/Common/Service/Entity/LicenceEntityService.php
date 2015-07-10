@@ -350,13 +350,9 @@ class LicenceEntityService extends AbstractLvaEntityService
                                     'isDraft' => 'Y'
                                 )
                             ),
-                            'ocComplaints' => array(
-                                'children' => array(
-                                    'complaint' => array(
-                                        'criteria' => array(
-                                            'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
-                                        )
-                                    )
+                            'complaints' => array(
+                                'criteria' => array(
+                                    'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
                                 )
                             ),
                             'conditionUndertakings' => array(
