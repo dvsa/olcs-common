@@ -19,37 +19,238 @@ use Common\Service\Entity\OrganisationEntityService;
  */
 abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter implements PeopleAdapterInterface
 {
+    const ACTION_ADDED = 'A';
+    const ACTION_EXISTING = 'E';
+    const ACTION_CURRENT = 'C';
+    const ACTION_UPDATED = 'U';
+    const ACTION_DELETED = 'D';
+
+    const SOURCE_APPLICATION = 'A';
+    const SOURCE_ORGANISATION = 'O';
+
     protected $tableData = [];
 
-    private $exceptionalTypes = [
-        OrganisationEntityService::ORG_TYPE_SOLE_TRADER,
-        OrganisationEntityService::ORG_TYPE_PARTNERSHIP
-    ];
+    private $licence;
+    private $application;
+    private $data;
 
-    private $organisation;
+    /**
+     * Load the people dataa
+     *
+     * @param int $id Either an Application or Licence ID
+     *
+     * @throws \RuntimeException
+     */
+    public function loadPeopleData($lva, $id)
+    {
+        if ($lva === 'licence') {
+            $this->loadPeopleDataForLicence($id);
+        } else {
+            $this->loadPeopleDataForApplication($id);
+        }
 
-    public function addMessages($orgId, $id)
+        if (count($this->getPeople()) === 0 &&
+            ($this->getOrganisationType() == OrganisationEntityService::ORG_TYPE_LLP ||
+            $this->getOrganisationType() == OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY)
+            ) {
+            $response = $this->handleCommand(
+                \Dvsa\Olcs\Transfer\Command\OrganisationPerson\PopulateFromCompaniesHouse::create(
+                    ['id' => $this->getOrganisationId()]
+                )
+            );
+            if (!$response->isOk()) {
+                throw new \RuntimeException(
+                    'Error populating persons from Companies House : '. print_r($response->getResult(), true)
+                );
+            }
+            // reload data after populate from companies house
+            if ($lva === 'licence') {
+                $this->loadPeopleDataForLicence($id);
+            } else {
+                $this->loadPeopleDataForApplication($id);
+            }
+        }
+    }
+
+    /**
+     * Load People data for a Licence
+     *
+     * @param int $licenceId
+     *
+     * @throws \RuntimeException
+     */
+    protected function loadPeopleDataForLicence($licenceId)
+    {
+        $command = \Dvsa\Olcs\Transfer\Query\Licence\People::create(['id' => $licenceId]);
+
+        $response = $this->handleQuery($command);
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Failed to load people data');
+        }
+        $data = $response->getResult();
+
+        $this->data = $data;
+        $this->licence = $data;
+    }
+
+    /**
+     * Load People data for an Application/Variation
+     *
+     * @param int $applicationId
+     *
+     * @throws \RuntimeException
+     */
+    protected function loadPeopleDataForApplication($applicationId)
+    {
+        $command = \Dvsa\Olcs\Transfer\Query\Application\People::create(['id' => $applicationId]);
+
+        $response = $this->handleQuery($command);
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Failed to load people data');
+        }
+        $data = $response->getResult();
+
+        $this->data = $data;
+        $this->application = $data;
+        $this->licence = $data['licence'];
+    }
+
+    /**
+     *
+     * @param \Dvsa\Olcs\Transfer\Query\QueryInterface $command
+     * @return
+     */
+    protected function handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $command)
+    {
+        $serviceLocator = $this->getServiceLocator();
+
+        $query = $serviceLocator->get('TransferAnnotationBuilder')->createQuery($command);
+        return $serviceLocator->get('QueryService')->send($query);
+    }
+
+    /**
+     *
+     * @param \Dvsa\Olcs\Transfer\Command\CommandInterface $command
+     * @return
+     */
+    protected function handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $command)
+    {
+        $serviceLocator = $this->getServiceLocator();
+
+        $annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
+        $commandService = $serviceLocator->get('CommandService');
+
+        return $commandService->send($annotationBuilder->createCommand($command));
+    }
+
+    public function hasInforceLicences()
+    {
+        return $this->data['hasInforceLicences'];
+    }
+
+    public function isExceptionalOrganisation()
+    {
+        return $this->data['isExceptionalType'];
+    }
+
+    public function getOrganisation()
+    {
+        return $this->licence['organisation'];
+    }
+
+    public function getOrganisationId()
+    {
+        return $this->licence['organisation']['id'];
+    }
+
+    public function getLicence()
+    {
+        return $this->licence;
+    }
+
+    public function getApplication()
+    {
+        return $this->application;
+    }
+
+    public function isSoleTrader()
+    {
+        return $this->data['isSoleTrader'];
+    }
+
+    public function useDeltas()
+    {
+        return (isset($this->data['useDeltas']) && $this->data['useDeltas']);
+    }
+
+    /**
+     * Get and array of all people
+     *
+     * @return array
+     */
+    public function getPeople()
+    {
+        if ($this->getApplication()) {
+            // need to merge the orgPeople with the appOrgPeople
+            return $this->updateAndFilterTableData(
+                $this->indexRows(self::SOURCE_ORGANISATION, $this->data['people']),
+                $this->indexRows(self::SOURCE_APPLICATION, $this->data['application-people'])
+            );
+        } else {
+            return $this->data['people'];
+        }
+    }
+
+    /**
+     * Get person data
+     *
+     * @param int $personId
+     *
+     * @return array|false person data or false if not found
+     */
+    public function getPersonData($personId)
+    {
+        foreach ($this->getPeople() as $organisationPerson) {
+            if ($organisationPerson['person']['id'] == $personId) {
+                return $organisationPerson;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get first person data
+     *
+     * @return array|false person data or false if not found
+     */
+    public function getFirstPersonData()
+    {
+        return (isset($this->getPeople()[0])) ? $this->getPeople()[0] : false;
+    }
+
+    public function addMessages()
     {
     }
 
-    public function alterFormForOrganisation(Form $form, $table, $orgId)
+    public function alterFormForOrganisation(Form $form, $table)
     {
     }
 
-    public function alterAddOrEditFormForOrganisation(Form $form, $orgId)
+    public function alterAddOrEditFormForOrganisation(Form $form)
     {
     }
 
-    public function canModify($orgId)
+    public function canModify()
     {
         return true;
     }
 
-    public function createTable($orgId)
+    public function createTable()
     {
         return $this->getServiceLocator()
             ->get('Table')
-            ->prepareTable($this->getTableConfig($orgId), $this->getTableData($orgId));
+            ->prepareTable($this->getTableConfig(), $this->getTableData());
     }
 
     /**
@@ -58,13 +259,10 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      * @param int $orgId
      * @return array
      */
-    protected function getTableData($orgId)
+    protected function getTableData()
     {
         if (empty($this->tableData)) {
-            $results = $this->getServiceLocator()->get('Entity\Person')
-                ->getAllForOrganisation($orgId)['Results'];
-
-            $this->tableData = $this->formatTableData($results);
+            $this->tableData = $this->formatTableData($this->getPeople());
         }
         return $this->tableData;
     }
@@ -86,93 +284,179 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $final;
     }
 
-    protected function isExceptionalType($orgType)
+    /**
+     * @return int
+     */
+    public function getLicenceId()
     {
-        return in_array($orgType, $this->exceptionalTypes);
+        return $this->getLicence()['id'];
     }
 
-    protected function getOrganisation($orgId)
+    /**
+     * @return int
+     */
+    public function getApplicationId()
     {
-        if ($this->organisation === null) {
-            $this->organisation = $this->getServiceLocator()
-                ->get('Entity\Organisation')
-                ->getType($orgId);
-        }
-
-        return $this->organisation;
+        return $this->getApplication()['id'];
     }
 
-    protected function getOrganisationType($orgId)
+    /**
+     * Get the Organisation Type ID eg "org_t_p"
+     *
+     * @return string
+     */
+    public function getOrganisationType()
     {
-        $orgData = $this->getOrganisation($orgId);
-
+        $orgData = $this->getOrganisation();
         return $orgData['type']['id'];
-    }
-
-    protected function isExceptionalOrganisation($orgId)
-    {
-        return $this->isExceptionalType(
-            $this->getOrganisationType($orgId)
-        );
     }
 
     /**
      * Delete a person from the organisation, and then delete the person if they are now an orphan
      *
-     * @param int $id
+     * @param array $ids
      */
-    public function delete($orgId, $id)
+    public function delete($ids)
     {
-        $this->getServiceLocator()
-            ->get('Entity\OrganisationPerson')
-            ->deleteByOrgAndPersonId($orgId, $id);
-    }
-
-    public function restore($orgId, $id)
-    {
-        throw new \Exception('Not implemented');
-    }
-
-    public function save($orgId, $data)
-    {
-        $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
-
-        $orgType = $this->getOrganisationType($orgId);
-
-        if (empty($data['id'])) {
-            $orgPersonData = array(
-                'organisation' => $orgId,
-                'person' => $person['id'],
-                'position' => isset($data['position']) ? $data['position'] : ''
-            );
-        } elseif ($orgType === OrganisationEntityService::ORG_TYPE_OTHER) {
-            $orgPerson = $this->getServiceLocator()
-                ->get('Entity\OrganisationPerson')
-                ->getByOrgAndPersonId($orgId, $data['id']);
-
-            $orgPersonData = array(
-                'position' => isset($data['position']) ? $data['position'] : '',
-                'id' => $orgPerson['id'],
-                'version' => $orgPerson['version'],
-            );
+        $response = $this->handleCommand($this->getDeleteCommand(['personIds' => $ids]));
+        /* @var $response \Common\Service\Cqrs\Response */
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error deleteing Org Person : '. print_r($response->getResult(), true));
         }
 
-        if (isset($orgPersonData)) {
-            $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgPersonData);
-        }
+        return true;
     }
 
-    protected function getTableConfig($orgId)
+    public function restore($ids)
+    {
+        // Can only restore in an application\variation
+        $response = $this->handleCommand(
+            \Dvsa\Olcs\Transfer\Command\Application\RestorePeople::create(
+                ['id' => $this->getApplicationId(), 'personIds' => $ids]
+            )
+        );
+        /* @var $response \Common\Service\Cqrs\Response */
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error restoring Person : '. print_r($response->getResult(), true));
+        }
+
+        return true;
+    }
+
+    public function create($data)
+    {
+        $response = $this->handleCommand($this->getCreateCommand($data));
+        /* @var $response \Common\Service\Cqrs\Response */
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error creating Person : '. print_r($response->getResult(), true));
+        }
+
+        return true;
+    }
+
+    public function update($data)
+    {
+        $response = $this->handleCommand($this->getUpdateCommand($data));
+        /* @var $response \Common\Service\Cqrs\Response */
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error updating Person : '. print_r($response->getResult(), true));
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the backend command to create a Person
+     *
+     * @param array $params
+     *
+     * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
+     */
+    protected function getCreateCommand($params)
+    {
+        $params['id'] = $this->getLicenceId();
+        return \Dvsa\Olcs\Transfer\Command\Licence\CreatePeople::create($params);
+    }
+
+    /**
+     * Get the backend command to update a Person
+     *
+     * @param array $params
+     *
+     * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
+     */
+    protected function getUpdateCommand($params)
+    {
+        $params['person'] = $params['id'];
+        $params['id'] = $this->getLicenceId();
+        return \Dvsa\Olcs\Transfer\Command\Licence\UpdatePeople::create($params);
+    }
+
+    /**
+     * Get the backend command to delete a Person
+     *
+     * @param array $params
+     *
+     * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
+     */
+    protected function getDeleteCommand($params)
+    {
+        $params['id'] = $this->getLicenceId();
+        return \Dvsa\Olcs\Transfer\Command\Licence\DeletePeople::create($params);
+    }
+
+
+    protected function getTableConfig()
     {
         return 'lva-people';
     }
 
-    public function getPersonPosition($orgId, $personId)
+    /**
+     * Update and filter the table data for variations
+     *
+     * @param array $orgData
+     * @param array $applicationData
+     * @return array
+     */
+    private function updateAndFilterTableData($orgData, $applicationData)
     {
-        $orgPerson = $this->getServiceLocator()
-            ->get('Entity\OrganisationPerson')
-            ->getByOrgAndPersonId($orgId, $personId);
+        $data = array();
 
-        return $orgPerson['position'];
+        foreach ($orgData as $id => $row) {
+
+            if (!isset($applicationData[$id])) {
+
+                // E for existing (No updates)
+                $row['action'] = self::ACTION_EXISTING;
+                $data[] = $row;
+            } elseif ($applicationData[$id]['action'] === self::ACTION_UPDATED) {
+
+                $row['action'] = self::ACTION_CURRENT;
+                $data[] = $row;
+            }
+        }
+
+        $data = array_merge($data, $applicationData);
+
+        return $data;
+    }
+
+    private function indexRows($key, $data)
+    {
+        $indexed = [];
+
+        foreach ($data as $value) {
+            // if we've got a link to an original person then that
+            // trumps any other relation
+            if (isset($value['originalPerson']['id'])) {
+                $id = $value['originalPerson']['id'];
+            } else {
+                $id = $value['person']['id'];
+            }
+            $value['person']['source'] = $key;
+            $indexed[$id] = $value;
+        }
+
+        return $indexed;
     }
 }
