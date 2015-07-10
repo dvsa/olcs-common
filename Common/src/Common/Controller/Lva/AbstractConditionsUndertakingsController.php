@@ -84,36 +84,54 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     protected function addOrEdit($mode)
     {
         $request = $this->getRequest();
-
-        $data = [];
-
+        $formData = [];
         $id = $this->params('child_id');
-
-        if (!$this->getAdapter()->canEditRecord($id, $this->getIdentifier())) {
-
-            $this->getServiceLocator()->get('Helper\FlashMessenger')
-                ->addErrorMessage('generic-cant-edit-message');
-
-            return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
-        }
-
         if ($request->isPost()) {
-            $data = (array)$request->getPost();
+            $formData = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $data = $this->getConditionPenaltyDetails($id);
+            $response = $this->handleQuery(
+                \Dvsa\Olcs\Transfer\Query\ConditionUndertaking\Get::create(['id' => $id])
+            );
+            if (!$response->isOk()) {
+                throw new \RuntimeException('Failed to get ConditionUndertaking');
+            }
+            $conditionUndertakingData = $response->getResult();
+            if (!$this->getAdapter()->canEditRecord($conditionUndertakingData)) {
+
+                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    ->addErrorMessage('generic-cant-edit-message');
+
+                return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+            }
+            $formData = [
+                'fields' => [
+                    'id' => $conditionUndertakingData['id'],
+                    'version' => $conditionUndertakingData['version'],
+                    'conditionType' => $conditionUndertakingData['conditionType']['id'],
+                    'notes' => $conditionUndertakingData['notes'],
+                    'isFulfilled' => $conditionUndertakingData['isFulfilled'],
+                    'attachedTo' => 'cat_lic'
+                ]
+            ];
+
+            if (isset($conditionUndertakingData['operatingCentre']['id'])) {
+                $formData['fields']['attachedTo'] = $conditionUndertakingData['operatingCentre']['id'];
+            }
         }
 
         $form = $this->getConditionUndertakingForm();
 
-        $this->getAdapter()->alterForm($form, $this->getIdentifier());
+        $this->getAdapter()->alterForm($form, $this->getData());
 
-        $form->setData($data);
+        $form->setData($formData);
 
         if ($request->isPost() && $form->isValid()) {
 
-            $data = $this->getAdapter()->processDataForSave($data, $this->getIdentifier());
-
-            $this->getAdapter()->save($data['fields']);
+            if (empty($formData['fields']['id'])) {
+                $this->create($formData);
+            } else {
+                $this->update($formData);
+            }
 
             return $this->handlePostSave();
         }
@@ -122,32 +140,80 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     }
 
     /**
-     * Delete 1 or more conditions
+     * Get Data for the licence/application and operating centres
+     *
+     * @return array
+     * @throws \RuntimeException
      */
-    protected function delete()
+    protected function getData()
     {
-        $id = $this->params('child_id');
+        if ($this->lva === 'licence') {
+            $command = \Dvsa\Olcs\Transfer\Query\Licence\OperatingCentre::create(['id' => $this->getIdentifier()]);
+        } else {
+            $command = \Dvsa\Olcs\Transfer\Query\Application\OperatingCentre::create(['id' => $this->getIdentifier()]);
+        }
+        $response = $this->handleQuery($command);
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Failed getting operating centre data');
+        }
 
-        $ids = explode(',', $id);
+        return $response->getResult();
+    }
 
-        foreach ($ids as $id) {
-            $this->getAdapter()->delete($id, $this->getIdentifier());
+    /**
+     * Create a new ConditionUndertaking
+     *
+     * @param array $formData
+     * @throws \RuntimeException
+     */
+    protected function create($formData)
+    {
+        $command = $this->getAdapter()->getCreateCommand($formData, $this->lva, $this->getIdentifier());
+
+        $response = $this->handleCommand($command);
+        if (!$response->isOk()) {
+            throw new \RuntimeException(
+                'Failed creating a ConnditionUndertaking - '. print_r($response->getResult(), true)
+            );
         }
     }
 
     /**
-     * Get the form data for a given id
+     * Update a ConditionUndertaking
      *
-     * @param int $id
-     * @return array
+     * @param array $formData
+     * @throws \RuntimeException
      */
-    protected function getConditionPenaltyDetails($id)
+    protected function update($formData)
     {
-        $entity = $this->getServiceLocator()->get('Entity\ConditionUndertaking')->getCondition($id);
+        $command = $this->getAdapter()->getUpdateCommand($formData);
 
-        $data = ['fields' => $this->getServiceLocator()->get('Helper\Data')->replaceIds($entity)];
+        $response = $this->handleCommand($command);
+        if (!$response->isOk()) {
+            throw new \RuntimeException(
+                'Failed updating a ConnditionUndertaking - '. print_r($response->getResult(), true)
+            );
+        }
+    }
 
-        return $this->getAdapter()->processDataForForm($data);
+    /**
+     * Delete one or more ConditionUndertaking
+     * @throws \RuntimeException
+     */
+    protected function delete()
+    {
+        $id = $this->params('child_id');
+        $ids = explode(',', $id);
+
+        $command = $this->getAdapter()->getDeleteCommand($this->getIdentifier(), $ids);
+
+        $response = $this->handleCommand($command);
+        if (!$response->isOk()) {
+            throw new \RuntimeException(
+                'Failed deleting a ConnditionUndertaking - '. print_r($response->getResult(), true)
+            );
+        }
+
     }
 
     /**
@@ -196,13 +262,33 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     }
 
     /**
-     * Grab the table data
+     * Grab the table data, list of ConditionUndertaking
      *
      * @return array
      */
     protected function getTableData()
     {
-        return $this->getAdapter()->getTableData($this->getIdentifier());
+        $la = ($this->lva === 'licence') ? 'licence' : 'application';
+        $response = $this->handleQuery(
+            \Dvsa\Olcs\Transfer\Query\ConditionUndertaking\GetList::create([$la => $this->getIdentifier()])
+        );
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Failed to get ConditionUndertaking data.');
+        }
+        $results = $response->getResult()['results'];
+
+        $data = [];
+        foreach ($results as $row) {
+            if ($row['action'] === 'U') {
+                $data[$row['licConditionVariation']['id']]['action'] = 'C';
+            }
+            if ($row['action'] === 'D') {
+                unset($data[$row['licConditionVariation']['id']]);
+            }
+            $data[$row['id']] = $row;
+        }
+
+        return $data;
     }
 
     /**
