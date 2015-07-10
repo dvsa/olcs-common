@@ -76,6 +76,10 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
 
     /**
      * @todo remove when TM migrated (TransportManager/Details/TransportManagerDetailsResponsibilityController.php)
+     * Get all OC for given application for inspection request listbox
+     *
+     * @param int $applicationId
+     * @return array
      */
     public function getForSelect($applicationId)
     {

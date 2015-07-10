@@ -67,6 +67,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     protected $headerData = null;
 
+    protected function checkForAlternativeCrudAction($action)
+    {
+        return null;
+    }
+
     public function indexAction()
     {
         $request = $this->getRequest();

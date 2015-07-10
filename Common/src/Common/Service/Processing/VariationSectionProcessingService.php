@@ -436,11 +436,12 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
                 return true;
             }
         }
+
         return false;
     }
 
     /**
-     * Apply the generic rules on sections requiring attension
+     * Apply the generic rules on sections requiring attention
      *
      * @param string $currentSection
      */

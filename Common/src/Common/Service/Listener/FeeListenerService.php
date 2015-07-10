@@ -38,14 +38,12 @@ class FeeListenerService implements ServiceLocatorAwareInterface
 
     protected function triggerPay($id)
     {
-        $this->maybeProcessApplicationFee($id);
         $this->maybeContinueLicence($id);
         $this->maybeProcessGrantingFee($id);
     }
 
     protected function triggerWaive($id)
     {
-        $this->maybeProcessApplicationFee($id);
         $this->maybeContinueLicence($id);
         $this->maybeProcessGrantingFee($id);
     }
@@ -99,34 +97,6 @@ class FeeListenerService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('licence.continued.message');
 
         return true;
-    }
-
-    /**
-     * @NOTE When waiving or paying an application fee, we need to check if there are any outstanding fees, if not then
-     *  we can make the application valid
-     *
-     * @param int $id
-     */
-    protected function maybeProcessApplicationFee($id)
-    {
-        $feeService = $this->getServiceLocator()->get('Entity\Fee');
-
-        $application = $feeService->getApplication($id);
-
-        if ($application === null
-            || $application['isVariation']
-            || $application['status']['id'] !== ApplicationEntityService::APPLICATION_STATUS_GRANTED
-        ) {
-            return;
-        }
-
-        // if there are any outstanding GRANT fees then don't continue
-        $outstandingGrantFees = $feeService->getOutstandingGrantFeesForApplication($application['id']);
-        if (!empty($outstandingGrantFees)) {
-            return;
-        }
-
-        $this->getServiceLocator()->get('Processing\Application')->validateApplication($application['id']);
     }
 
     /**

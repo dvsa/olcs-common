@@ -58,129 +58,6 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
         $this->sut->trigger(3, 'FAKE');
     }
 
-    /**
-     * @group listener_services
-     * @dataProvider providerEventType
-     */
-    public function testTriggerPayOrWaiveWithoutApplicationFee($eventType)
-    {
-        $this->mockFeeService->expects($this->once())
-            ->method('getApplication')
-            ->will($this->returnValue(null));
-
-        $this->setupMaybeContinueLicenceStub(3);
-        $this->setupMaybeProcessGrantingFee(3);
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
-    /**
-     * @group listener_services
-     * @dataProvider providerEventType
-     */
-    public function testTriggerPayOrWaiveWithVariation($eventType)
-    {
-        $application = array(
-            'isVariation' => true
-        );
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getApplication')
-            ->will($this->returnValue($application));
-
-        $this->setupMaybeContinueLicenceStub(3);
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
-    /**
-     * @group listener_services
-     * @dataProvider providerEventType
-     */
-    public function testTriggerPayOrWaiveWithoutGrantedApplication($eventType)
-    {
-        $application = array(
-            'isVariation' => false,
-            'status' => array(
-                'id' => 'FOO'
-            )
-        );
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getApplication')
-            ->will($this->returnValue($application));
-
-        $this->setupMaybeContinueLicenceStub(3);
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
-    /**
-     * @group listener_services
-     * @dataProvider providerEventType
-     */
-    public function testTriggerPayOrWaiveWithOutstandingFees($eventType)
-    {
-        $application = array(
-            'id' => 7,
-            'isVariation' => false,
-            'status' => array(
-                'id' => ApplicationEntityService::APPLICATION_STATUS_GRANTED
-            )
-        );
-
-        $fees = array(
-            'foo'
-        );
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getApplication')
-            ->will($this->returnValue($application));
-        $this->mockFeeService->expects($this->once())
-            ->method('getOutstandingGrantFeesForApplication')
-            ->with(7)
-            ->will($this->returnValue($fees));
-
-        $this->setupMaybeContinueLicenceStub(3);
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
-    /**
-     * @group listener_services
-     * @dataProvider providerEventType
-     */
-    public function testTriggerPayOrWaive($eventType)
-    {
-        $application = array(
-            'id' => 7,
-            'isVariation' => false,
-            'status' => array(
-                'id' => ApplicationEntityService::APPLICATION_STATUS_GRANTED
-            )
-        );
-
-        $fees = array();
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getApplication')
-            ->will($this->returnValue($application));
-        $this->mockFeeService->expects($this->once())
-            ->method('getOutstandingGrantFeesForApplication')
-            ->with(7)
-            ->will($this->returnValue($fees));
-
-        $mockProcessor = $this->getMock('\stdClass', ['validateApplication']);
-        $mockProcessor->expects($this->once())
-            ->method('validateApplication')
-            ->with(7);
-        $this->sm->setService('Processing\Application', $mockProcessor);
-
-        $this->setupMaybeContinueLicenceStub(3);
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
     public function providerEventType()
     {
         return [
@@ -209,24 +86,10 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Stub out the maybeContinueLicenceStub method
-     *
-     * @param int $feeId Fee ID
-     */
-    protected function setupMaybeProcessApplicationFeeStub($feeId)
-    {
-        $this->mockFeeService->expects($this->once())
-            ->method('getApplication')->with($feeId)
-            ->will($this->returnValue(null));
-    }
-
-    /**
      * @dataProvider providerEventType
      */
     public function testMaybeContinueLicenceNotContFee($eventType)
     {
-        $this->setupMaybeProcessApplicationFeeStub(3);
-
         $feeEntity = [
             'licenceId' => 1966,
             'feeType' => [
@@ -248,8 +111,6 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testMaybeContinueLicenceNotContFeeNoOngoingContinuation($eventType)
     {
-        $this->setupMaybeProcessApplicationFeeStub(3);
-
         $mockContinuationDetailService = $this->getMock('\stdClass', ['getOngoingForLicence']);
         $this->sm->setService('Entity\ContinuationDetail', $mockContinuationDetailService);
 
@@ -278,8 +139,6 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testMaybeContinueLicenceInvalidLicenceStatus($eventType)
     {
-        $this->setupMaybeProcessApplicationFeeStub(3);
-
         $mockContinuationDetailService = $this->getMock('\stdClass', ['getOngoingForLicence']);
         $this->sm->setService('Entity\ContinuationDetail', $mockContinuationDetailService);
 
@@ -316,8 +175,6 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testMaybeContinueLicenceHasOutstandingFees($eventType)
     {
-        $this->setupMaybeProcessApplicationFeeStub(3);
-
         $mockContinuationDetailService = $this->getMock('\stdClass', ['getOngoingForLicence']);
         $this->sm->setService('Entity\ContinuationDetail', $mockContinuationDetailService);
 
@@ -358,8 +215,6 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testMaybeContinueLicenceSuccess($eventType)
     {
-        $this->setupMaybeProcessApplicationFeeStub(3);
-
         $mockContinuationDetailService = $this->getMock('\stdClass', ['getOngoingForLicence']);
         $this->sm->setService('Entity\ContinuationDetail', $mockContinuationDetailService);
 
@@ -441,7 +296,6 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
             ],
         ];
 
-        $this->setupMaybeProcessApplicationFeeStub(3);
         $this->setupMaybeProcessGrantingFee(3, $feeEntity);
 
         $this->mockFeeService->expects($this->once())
@@ -472,7 +326,6 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
             ]
         ];
 
-        $this->setupMaybeProcessApplicationFeeStub(3);
         $this->setupMaybeProcessGrantingFee(3, $feeEntity);
 
         $this->mockFeeService->expects($this->once())

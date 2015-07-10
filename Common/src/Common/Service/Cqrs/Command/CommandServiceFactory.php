@@ -24,7 +24,7 @@ class CommandServiceFactory implements FactoryInterface
         $client = new Client();
         $client->setOptions(
             [
-                'timeout' => 30
+                'timeout' => 60
             ]
         );
         $request = $serviceLocator->get('CqrsRequest');
