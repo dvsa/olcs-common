@@ -59,7 +59,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             if ($crudAction !== null) {
                 return $this->handleCrudAction($crudAction);
             }
-            $this->updateCompletion();
+            $this->postSaveCommands();
 
             return $this->completeSection('people');
         }
@@ -117,7 +117,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
             if ($form->getAttribute('locked') !== true) {
                 $this->savePerson($data);
-                $this->updateCompletion();
+                $this->postSaveCommands();
             }
 
             return $this->completeSection('people');
@@ -126,7 +126,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         return $this->render('person', $form);
     }
 
-    private function updateCompletion()
+    protected function postSaveCommands()
     {
         if ($this->lva != 'licence') {
             $this->handleCommand(
@@ -135,14 +135,21 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
                 )
             );
         }
+        if ($this->lva === 'application' && $this->location === 'external') {
+            $this->handleCommand(
+                \Dvsa\Olcs\Transfer\Command\Application\GenerateOrganisationName::create(
+                    ['id' => $this->getIdentifier()]
+                )
+            );
+        }
     }
 
-    private function savePerson($formData)
+    private function savePerson($data)
     {
-        if (empty($formData['id'])) {
-            $this->getAdapter()->create($formData);
+        if (empty($data['id'])) {
+            $this->getAdapter()->create($data);
         } else {
-            $this->getAdapter()->update($formData);
+            $this->getAdapter()->update($data);
         }
     }
 

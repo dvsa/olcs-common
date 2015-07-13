@@ -39,7 +39,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      *
      * @param int $id Either an Application or Licence ID
      *
-     * @throws \RuntimeException
+     * @return bool If successful
      */
     public function loadPeopleData($lva, $id)
     {
@@ -59,9 +59,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
                 )
             );
             if (!$response->isOk()) {
-                throw new \RuntimeException(
-                    'Error populating persons from Companies House : '. print_r($response->getResult(), true)
-                );
+                return false;
             }
             // reload data after populate from companies house
             if ($lva === 'licence') {
@@ -70,6 +68,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
                 $this->loadPeopleDataForApplication($id);
             }
         }
+
+        return true;
     }
 
     /**
