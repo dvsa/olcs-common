@@ -54,30 +54,33 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
     }
 
     /**
+     * Clear all interim markers against a set of application OCs
+     */
+    public function clearInterims(array $ids = [])
+    {
+        $data = [];
+
+        foreach ($ids as $id) {
+
+            $data[] = [
+                'id' => $id,
+                'isInterim' => false,
+                '_OPTIONS_' => ['force' => true]
+            ];
+        }
+
+        $data['_OPTIONS_']['multiple'] = true;
+
+        $this->put($data);
+    }
+
+    /**
+     * @todo remove when TM migrated (TransportManager/Details/TransportManagerDetailsResponsibilityController.php)
      * Get all OC for given application for inspection request listbox
      *
      * @param int $applicationId
      * @return array
      */
-    public function getAllForInspectionRequest($applicationId)
-    {
-        $query = [
-            'application' => $applicationId,
-            'action' => '!= D'
-        ];
-        $bundle = [
-            'children' => [
-                'operatingCentre' => [
-                    'children' => [
-                        'address'
-                    ]
-                ],
-                'application'
-            ]
-        ];
-        return $this->getAll($query, $bundle);
-    }
-
     public function getForSelect($applicationId)
     {
         $data = $this->getAll(['application' => $applicationId], $this->selectBundle);

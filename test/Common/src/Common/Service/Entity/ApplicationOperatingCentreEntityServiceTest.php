@@ -66,37 +66,26 @@ class ApplicationOperatingCentreEntityServiceTest extends AbstractEntityServiceT
         $this->assertEquals('RESPONSE', $this->sut->getByApplicationAndOperatingCentre($id, $ocId));
     }
 
-    /**
-     * Test get all for inspection request
-     *
-     * @group applicationOperatingCentre
-     */
-    public function testGetAllForInspectionRequest()
+    public function testClearInterims()
     {
-        $query = [
-            'application' => 1,
-            'action' => '!= D',
-            'limit' => 'all'
-        ];
-        $bundle = [
-            'children' => [
-                'operatingCentre' => [
-                    'children' => [
-                        'address'
-                    ]
-                ],
-                'application'
+        $data = [
+            [
+                'id' => 1,
+                'isInterim' => false,
+                '_OPTIONS_' => ['force' => true],
+            ],
+            [
+                'id' => 2,
+                'isInterim' => false,
+                '_OPTIONS_' => ['force' => true],
+            ],
+            '_OPTIONS_' => [
+                'multiple' => true
             ]
         ];
+        $this->expectOneRestCall('ApplicationOperatingCentre', 'PUT', $data);
 
-        $response = array(
-            'Results' => 'RESPONSE'
-        );
-
-        $this->expectOneRestCall('ApplicationOperatingCentre', 'GET', $query, $bundle)
-            ->will($this->returnValue($response));
-
-        $this->assertEquals(['Results' => 'RESPONSE'], $this->sut->getAllForInspectionRequest(1));
+        $this->sut->clearInterims([1, 2]);
     }
 
     public function testGetForSelect()
