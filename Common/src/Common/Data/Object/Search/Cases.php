@@ -78,7 +78,7 @@ class Cases extends InternalSearchAbstract
             [
                 'title' => 'Name',
                 'formatter' => function ($data) {
-                    if (!empty($data['tm_id'])) {
+                    if (!empty($data['tmId'])) {
                         return '<a href="/transport-manager/' . $data['tmId'] . '">'
                                . $data['tmForename'] . ' '
                                . $data['tmFamilyName']
