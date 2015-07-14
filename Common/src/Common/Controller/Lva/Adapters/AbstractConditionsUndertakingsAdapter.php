@@ -170,11 +170,12 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     /**
      * Get the command to update
      *
-     * @param array  $formData Form data
+     * @param array $formData Form data
+     * @param int   $id       Licence/Application ID
      *
      * @return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\Update
      */
-    public function getUpdateCommand($formData)
+    public function getUpdateCommand($formData, $id)
     {
         $data = $this->processDataForSave($formData, null);
         $params = [

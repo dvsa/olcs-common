@@ -197,7 +197,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function update($formData)
     {
-        $command = $this->getAdapter()->getUpdateCommand($formData);
+        $command = $this->getAdapter()->getUpdateCommand($formData, $this->getIdentifier());
 
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
@@ -290,15 +290,19 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $data = [];
         foreach ($results as $row) {
-            if ($row['action'] === 'U') {
-                $data[$row['licConditionVariation']['id']]['action'] = 'C';
+            if ($row['action'] == '') {
+                $row['action'] = 'E';
             }
-            if ($row['action'] === 'D') {
-                unset($data[$row['licConditionVariation']['id']]);
+            switch ($row['action']) {
+                case 'U':
+                    $data[$row['licConditionVariation']['id']]['action'] = 'C';
+                    break;
+                case 'D':
+                    unset($data[$row['licConditionVariation']['id']]);
+                    break;
             }
             $data[$row['id']] = $row;
         }
-
         return $data;
     }
 
