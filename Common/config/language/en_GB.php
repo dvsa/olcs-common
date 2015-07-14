@@ -1258,7 +1258,7 @@ return array(
         licences before the office copy',
     'internal.community_licence.void_not_allowed' => 'You cannot annul the office copy without annulling all the
         licences',
-    'internal.delete-action-trait.title' => 'Remove',
+    'internal.delete-action-trait.title' => 'Delete',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
     'internal.inspection-request.form.12-month' => '12 month',
