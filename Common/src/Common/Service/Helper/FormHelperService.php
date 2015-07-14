@@ -102,6 +102,10 @@ class FormHelperService extends AbstractHelperService
         return $form;
     }
 
+    /**
+     * @param \Zend\Form\Form $form
+     * @param $request
+     */
     public function setFormActionFromRequest($form, $request)
     {
         if (!$form->hasAttribute('action')) {
@@ -112,14 +116,21 @@ class FormHelperService extends AbstractHelperService
 
             if ($query !== '') {
                 $url .= '?' . $query;
-            } else {
-                // WARNING: As rubbish as this looks, do *not* remove
-                // the trailing space. When rendering forms in modals,
-                // IE strips quote marks off attributes wherever possible.
-                // This means that an action of /foo/bar/baz/ will render
-                // without quotes, and the trailing slash will self-close
-                // and completely destroy the form
-                $url .= ' ';
+            } elseif (substr($url, -1) == '/') {
+
+                // @NOTE Had to add the following check in, as the trailing space hack was breaking filter forms
+                if (strtoupper($form->getAttribute('method')) === 'GET') {
+                    $url .= '?i=e';
+                } else {
+
+                    // WARNING: As rubbish as this looks, do *not* remove
+                    // the trailing space. When rendering forms in modals,
+                    // IE strips quote marks off attributes wherever possible.
+                    // This means that an action of /foo/bar/baz/ will render
+                    // without quotes, and the trailing slash will self-close
+                    // and completely destroy the form
+                    $url .= ' ';
+                }
             }
 
             $form->setAttribute('action', $url);
