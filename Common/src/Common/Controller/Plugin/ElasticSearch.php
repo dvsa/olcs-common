@@ -288,9 +288,8 @@ class ElasticSearch extends AbstractPlugin
         // added this line as a quick fix for broken UT
         $incomingParameters['search'] = isset($incomingParameters['search']) ? $incomingParameters['search'] : '';
 
-        $container = new Container(
-            $this->getContainerName() . '_' . str_replace(' ', '', $incomingParameters['search'])
-        );
+        $key = md5($this->getContainerName() . '_' . str_replace(' ', '', $incomingParameters['search']));
+        $container = new Container($key);
 
         /**
          * Now remove all the data we don't want in the query string.
