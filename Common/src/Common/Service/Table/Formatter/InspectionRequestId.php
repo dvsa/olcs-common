@@ -40,9 +40,7 @@ class InspectionRequestId implements FormatterInterface
                 ]
             );
         } else {
-            $route = $data['application']['isVariation']
-                ? 'lva-variation/processing/inspection-request'
-                : 'lva-application/processing/inspection-request';
+            $route = 'lva-application/processing/inspection-request';
             $url = $urlHelper->fromRoute(
                 $route,
                 [
