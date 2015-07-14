@@ -1846,6 +1846,8 @@ return array(
     'removals-construction-plant-hire' => 'W Removals / Construction / Plant Hire',
     'representations' => 'W Representations',
     'reprint-pending-disc-error' => 'W You have selected a vehicle where a disc print has already been requested',
+    'review-transport_managers_delete' => 'W Are you sure you want to remove the selected transport manager(s) from the
+        application?',
     'safety-inspection-providers.table.address' => 'W Workshop address',
     'safety-inspection-providers.table.empty_message' => 'W Please tell us about who will carry out the safety
         inspections on the vehicles and trailers you intend to operate under your licence.',
