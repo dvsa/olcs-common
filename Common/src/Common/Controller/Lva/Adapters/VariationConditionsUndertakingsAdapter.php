@@ -75,15 +75,16 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
     /**
      * Get the command to update
      *
-     * @param array  $formData Form data
+     * @param array $formData Form data
+     * @param int   $id Application ID
      *
      * @return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\Update
      */
-    public function getUpdateCommand($formData)
+    public function getUpdateCommand($formData, $id)
     {
         $data = $this->processDataForSave($formData, null);
         $params = [
-            'id' => 2, // not required
+            'id' => $id,
             'conditionUndertaking' => $data['fields']['id'],
             'version' => $data['fields']['version'],
             'type' => $data['fields']['conditionType'],
