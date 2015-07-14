@@ -46,7 +46,8 @@
         "dvsa/jackrabbit": "~1.1.2",
         "mikey179/vfsStream": "~1.4.0",
         "olcs/olcs-testhelpers": "dev-develop",
-        "olcs/olcs-transfer": "dev-develop"
+        "olcs/olcs-transfer": "dev-develop",
+        "soflomo/purifier": ">=0.1.0"
     },
     "autoload": {
         "psr-0": {
