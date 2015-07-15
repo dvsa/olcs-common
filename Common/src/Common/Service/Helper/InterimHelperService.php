@@ -12,7 +12,6 @@ use Common\Service\Entity\FeeEntityService;
 use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Entity\CommunityLicEntityService;
 use Common\Service\Data\CategoryDataService as Category;
-use Common\Service\Printing\PrintSchedulerInterface;
 
 /**
  * Class InterimHelperService
@@ -300,6 +299,8 @@ class InterimHelperService extends AbstractHelperService
      * Grant interim
      *
      * @param int $applicationId
+     *
+     * @todo migrate me
      */
     public function grantInterim($applicationId)
     {
@@ -332,13 +333,14 @@ class InterimHelperService extends AbstractHelperService
 
         // Print the interim document
         $this->printInterimDocument($interimData);
-
     }
 
     /**
      * Print the interim application document for an application.
      *
-     * @param $application The application.
+     * @param $application
+     *
+     * @todo migrated
      */
     public function printInterimDocument($application = null)
     {
@@ -346,10 +348,8 @@ class InterimHelperService extends AbstractHelperService
             $application = $application['id'];
         }
 
-        $licenceProcessingService = $this->getServiceLocator()
-            ->get('Processing\Licence');
-
-        $licenceProcessingService->generateInterimDocument($application);
+        // @todo remove this method, as it has been migrated
+        //$this->handleCommand(PrintInterimDocument::create(['id' => $application]));
     }
 
     /**
@@ -376,6 +376,8 @@ class InterimHelperService extends AbstractHelperService
      *
      * @param array $interimData
      * @param array
+     *
+     * @todo migrate me
      */
     protected function processLicenceVehicleSaving($interimData)
     {
@@ -420,6 +422,8 @@ class InterimHelperService extends AbstractHelperService
      * Process active discs voiding
      *
      * @param array $newDiscs
+     *
+     * @todo migrated
      */
     public function processActiveDiscsVoiding($activeDiscs)
     {
@@ -441,6 +445,8 @@ class InterimHelperService extends AbstractHelperService
      * Process new discs adding
      *
      * @param array $newDiscs
+     *
+     * @todo migrated
      */
     public function processNewDiscsAdding($newDiscs)
     {
@@ -454,6 +460,8 @@ class InterimHelperService extends AbstractHelperService
      * Process community licences
      *
      * @param array $interimData
+     *
+     * @todo migrate
      */
     protected function processCommunityLicences($interimData)
     {
@@ -489,6 +497,7 @@ class InterimHelperService extends AbstractHelperService
      * Refuse interim
      *
      * @param int $applicationId
+     * @todo migrated (Maybe remove?)
      */
     public function refuseInterim($applicationId)
     {
@@ -530,6 +539,8 @@ class InterimHelperService extends AbstractHelperService
      * @param string $fileName
      * @param array $interimData
      * @return string
+     *
+     * @todo migrate me
      */
     protected function generateDocument($fileName, $interimData)
     {
@@ -556,6 +567,8 @@ class InterimHelperService extends AbstractHelperService
      *
      * @param int $applicationId
      * @param int $feeId
+     *
+     * @todo migrated
      */
     public function generateInterimFeeRequestDocument($applicationId, $feeId)
     {

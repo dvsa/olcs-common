@@ -746,6 +746,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
      *
      * @param array $data
      * @param bool $type (true: save data, false: remove data)
+     *
+     * @todo maybe remove?
      */
     public function saveInterimData($formData = [], $type = true)
     {
@@ -803,6 +805,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
      *
      * @param array $ocData
      * @param int $id
+     *
+     * @todo maybe remove?
      */
     protected function saveApplictionOperatingCentresForInterim($ocData, $id)
     {
@@ -843,6 +847,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @param array $vehcileData
      * @param int $id
      * @param bool $processInForce
+     *
+     * @todo maybe remove?
      */
     protected function saveVehiclesForInterim($vehcileData, $id, $processInForce)
     {
