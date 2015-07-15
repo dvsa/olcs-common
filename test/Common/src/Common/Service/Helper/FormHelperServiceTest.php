@@ -1367,17 +1367,20 @@ class FormHelperServiceTest extends MockeryTestCase
         $helper = new FormHelperService();
 
         $form = m::mock()
+            ->shouldReceive('getAttribute')
+            ->with('method')
+            ->andReturn('POST')
             ->shouldReceive('hasAttribute')
             ->with('action')
             ->andReturn(false)
             ->shouldReceive('setAttribute')
-            ->with('action', 'URI ')
+            ->with('action', 'URI/ ')
             ->getMock();
 
         $request = m::mock();
 
         $request->shouldReceive('getUri->getPath')
-            ->andReturn('URI');
+            ->andReturn('URI/');
 
         $request->shouldReceive('getUri->getQuery')
             ->andReturn('');

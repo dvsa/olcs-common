@@ -1258,7 +1258,7 @@ return array(
         licences before the office copy',
     'internal.community_licence.void_not_allowed' => 'You cannot annul the office copy without annulling all the
         licences',
-    'internal.delete-action-trait.title' => 'Remove',
+    'internal.delete-action-trait.title' => 'Delete',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
     'internal.inspection-request.form.12-month' => '12 month',
@@ -1840,6 +1840,8 @@ return array(
     'removals-construction-plant-hire' => 'Removals / Construction / Plant Hire',
     'representations' => 'Representations',
     'reprint-pending-disc-error' => 'You have selected a vehicle where a disc print has already been requested',
+    'review-transport_managers_delete' => 'Are you sure you want to remove the selected transport manager(s) from the
+        application?',
     'safety-inspection-providers.table.address' => 'Workshop address',
     'safety-inspection-providers.table.empty_message' => 'Please tell us about who will carry out the safety inspections
         on the vehicles and trailers you intend to operate under your licence.',
@@ -2160,6 +2162,10 @@ return array(
     'tachograph_analyser.tach_internal' => 'An owner or employee of the business',
     'tachograph_analyser.tach_na' => 'Not applicable',
     'target-completion-date' => 'Target completion date',
+    'task-close-success' => 'Task(s) successfully closed',
+    'task-create-success' => 'Task(s) successfully created',
+    'task-reassign-success' => 'Task(s) successfully reassigned',
+    'task-update-success' => 'Task(s) successfully updated',
     'tasks.assignedBy' => 'Assigned by',
     'tasks.assignedBy.user' => 'User',
     'tasks.assignment' => 'Assigned to',

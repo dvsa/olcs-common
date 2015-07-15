@@ -88,22 +88,7 @@ class InspectionRequestIdTest extends MockeryTestCase
                 ],
                 'url2',
                 '<a href="url2" class=js-modal-ajax>1</a>'
-            ],
-            'variation inspection request' => [
-                [
-                    'id' => 1,
-                    'licence' => ['id' => 2],
-                    'application' => ['id' => 3, 'isVariation' => true]
-                ],
-                'lva-variation/processing/inspection-request',
-                [
-                    'action' => 'edit',
-                    'application' => 3,
-                    'id' => 1,
-                ],
-                'url3',
-                '<a href="url3" class=js-modal-ajax>1</a>'
-            ],
+            ]
         ];
     }
 }

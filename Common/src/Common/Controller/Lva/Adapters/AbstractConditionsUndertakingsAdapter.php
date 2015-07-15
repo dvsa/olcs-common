@@ -24,37 +24,11 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     protected $tableName = 'lva-conditions-undertakings';
 
     /**
-     * Get licence id from the given lva id
-     *
-     * @param int $id
-     * @return int
-     */
-    abstract protected function getLicenceId($id);
-
-    /**
-     * Get the LVA operating centre entity service
-     *
-     * @return \Common\Service\Entity\AbstractEntityService
-     */
-    abstract protected function getLvaOperatingCentreEntityService();
-
-    /**
      * Attach the relevant scripts to the main page
      */
     public function attachMainScripts()
     {
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
-    }
-
-    /**
-     * Delete a record
-     *
-     * @param int $id
-     * @param int $parentId
-     */
-    public function delete($id, $parentId)
-    {
-        $this->getServiceLocator()->get('Entity\ConditionUndertaking')->delete($id);
     }
 
     /**
@@ -64,8 +38,10 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      * @param int $parentId
      * @return bool
      */
-    public function canEditRecord($id, $parentId)
+    public function canEditRecord($data)
     {
+        // prevent PMD errors
+        unset($data);
         return true;
     }
 
@@ -80,23 +56,6 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     }
 
     /**
-     * Save the data
-     *
-     * @param array $data
-     * @return int
-     */
-    public function save($data)
-    {
-        $response = $this->getServiceLocator()->get('Entity\ConditionUndertaking')->save($data);
-
-        if (isset($response['id'])) {
-            return $response['id'];
-        }
-
-        return $data['id'];
-    }
-
-    /**
      * Process the data for saving
      *
      * @param array $data
@@ -105,6 +64,8 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      */
     public function processDataForSave($data, $id)
     {
+        // prevent PMD errors
+        unset($id);
         if ($data['fields']['attachedTo'] == ConditionUndertakingEntityService::ATTACHED_TO_LICENCE) {
             $data['fields']['operatingCentre'] = null;
         } else {
@@ -116,35 +77,20 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     }
 
     /**
-     * Process the data for the form
-     *
-     * @param array $data
-     * @return array
-     */
-    public function processDataForForm($data)
-    {
-        if (isset($data['fields']['attachedTo'])
-            && $data['fields']['attachedTo'] != ConditionUndertakingEntityService::ATTACHED_TO_LICENCE
-        ) {
-
-            $data['fields']['attachedTo'] =
-                isset($data['fields']['operatingCentre']) ? $data['fields']['operatingCentre'] : '';
-        }
-
-        return $data;
-    }
-
-    /**
      * Set the attached to options for the form, based on the lva type and id
      *
-     * @param Form $form
-     * @param int $id
+     * @param Form  $form
+     * @param array $data
      */
-    public function alterForm(Form $form, $id)
+    public function alterForm(Form $form, $data)
     {
-        $licenceId = $this->getLicenceId($id);
-
-        $licNo = $this->getLicenceNumber($licenceId);
+        $licNo = 'Unknown';
+        if (isset($data['licence']['licNo'])) {
+            $licNo = $data['licence']['licNo'];
+        }
+        if (isset($data['licNo'])) {
+            $licNo = $data['licNo'];
+        }
 
         $options = array(
             'Licence' => array(
@@ -155,7 +101,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
             )
         );
 
-        $operatingCentres = $this->getOperatingCentresForList($id);
+        $operatingCentres = $this->getOperatingCentresForList($data);
         $attachedToOperatingCentres = [];
 
         foreach ($operatingCentres as $oc) {
@@ -178,35 +124,99 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     }
 
     /**
-     * Each LVA section must implement this method
+     * Get a list of Operating Centres
      *
-     * @param int $id
+     * @param array $data
+     *
      * @return array
      */
-    protected function getOperatingCentresForList($id)
+    protected function getOperatingCentresForList($data)
     {
-        $results = $this->getLvaOperatingCentreEntityService()
-            ->getOperatingCentreListForLva($id);
-
-        $oc = [];
-
-        foreach ($results['Results'] as $loc) {
-            $oc[] = $loc['operatingCentre'];
+        $ocs = [];
+        if (isset($data['licence'])) {
+            foreach ($data['licence']['operatingCentres'] as $loc) {
+                $ocs[$loc['operatingCentre']['id']] = $loc['operatingCentre'];
+            }
+            foreach ($data['operatingCentres'] as $aoc) {
+                if ($aoc['action'] === 'D') {
+                    unset($ocs[$aoc['operatingCentre']['id']]);
+                    continue;
+                }
+                $ocs[$aoc['operatingCentre']['id']] = $aoc['operatingCentre'];
+            }
+        } else {
+            foreach ($data['operatingCentres'] as $loc) {
+                $ocs[$loc['operatingCentre']['id']] = $loc['operatingCentre'];
+            }
         }
 
-        return $oc;
+        return $ocs;
     }
 
     /**
-     * Grab the licence number from the licence id
+     * Get the command to delete
      *
-     * @param int $licenceId
-     * @return string
+     * @param array  $ids List of ConditionUndertaking ID to delete
+     *
+     * @return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\DeleteList
      */
-    protected function getLicenceNumber($licenceId)
+    public function getDeleteCommand($id, $ids)
     {
-        $licence = $this->getServiceLocator()->get('Entity\Licence')->getById($licenceId);
+        // prevent PMD errors
+        unset($id);
+        return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\DeleteList::create(['ids' => $ids]);
+    }
 
-        return $licence['licNo'];
+    /**
+     * Get the command to update
+     *
+     * @param array $formData Form data
+     * @param int   $id       Licence/Application ID
+     *
+     * @return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\Update
+     */
+    public function getUpdateCommand($formData, $id)
+    {
+        $data = $this->processDataForSave($formData, null);
+        $params = [
+            'id' => $data['fields']['id'],
+            'version' => $data['fields']['version'],
+            'type' => $data['fields']['conditionType'],
+            'notes' => $data['fields']['notes'],
+            'fulfilled' => $data['fields']['isFulfilled'],
+            'attachedTo' => $data['fields']['attachedTo'],
+            'operatingCentre' => $data['fields']['operatingCentre'],
+        ];
+
+        return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\Update::create($params);
+    }
+
+    /**
+     * Get the command to create
+     *
+     * @param array  $formData Form data
+     * @param string $lva      "licence", "application" or "variation"
+     * @param int    $id       Licence or Application ID
+     *
+     * @return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\Create
+     */
+    public function getCreateCommand($formData, $lva, $id)
+    {
+        $data = $this->processDataForSave($formData, null);
+        $params = [
+            'type' => $data['fields']['conditionType'],
+            'notes' => $data['fields']['notes'],
+            'fulfilled' => $data['fields']['isFulfilled'],
+            'attachedTo' => $data['fields']['attachedTo'],
+            'operatingCentre' => $data['fields']['operatingCentre'],
+        ];
+
+        if ($lva === 'licence') {
+            $params['licence'] = $id;
+        } else {
+            $params['application'] = $id;
+        }
+
+        return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\Create::create($params);
     }
 }
