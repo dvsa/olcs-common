@@ -7,6 +7,10 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
+use Zend\Form\Form;
+
+use Dvsa\Olcs\Transfer\Query\Application\Schedule41;
+
 /**
  * Application Operating Centre Adapter
  *
@@ -94,5 +98,33 @@ class ApplicationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         }
 
         return $formData;
+    }
+
+    public function alterForm(Form $form)
+    {
+        $form = parent::alterForm($form);
+
+        $response = $this->getController()
+            ->handleQuery(
+                Schedule41::create(
+                    [
+                        'id' => $this->getApplicationAdapter()->getIdentifier()
+                    ]
+                )
+            );
+
+        if ($response->isOk()) {
+            $result = $response->getResult();
+
+            if ($result['goodsOrPsv']['id'] !== 'lcat_gv') {
+                $form->get('table')->get('table')->getTable()->removeAction('schedule41');
+            }
+
+            if ($result['status']['id'] !== 'apsts_consideration' || $result['hasS4Records'] == true) {
+                $form->get('table')->get('table')->getTable()->removeAction('schedule41');
+            }
+        }
+
+        return $form;
     }
 }
