@@ -47,7 +47,7 @@
         "mikey179/vfsStream": "~1.4.0",
         "olcs/olcs-testhelpers": "dev-develop",
         "olcs/olcs-transfer": "dev-develop",
-        "soflomo/purifier": ">=0.1.0"
+        "soflomo/purifier": "~0.1.0"
     },
     "autoload": {
         "psr-0": {
