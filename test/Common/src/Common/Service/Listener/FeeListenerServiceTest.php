@@ -67,208 +67,6 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Stub out the maybeContinueLicenceStub method
-     *
-     * @param int $feeId Fee ID
-     */
-    protected function setupMaybeContinueLicenceStub($feeId)
-    {
-        $feeEntity = [
-            'feeType' => [
-                'feeType' => [
-                    'id' => 'BLANK',
-                ]
-            ],
-        ];
-        $this->mockFeeService->expects($this->once())
-            ->method('getOverview')->with($feeId)
-            ->will($this->returnValue($feeEntity));
-    }
-
-    /**
-     * @dataProvider providerEventType
-     */
-    public function testMaybeContinueLicenceNotContFee($eventType)
-    {
-        $feeEntity = [
-            'licenceId' => 1966,
-            'feeType' => [
-                'feeType' => [
-                    'id' => 'XX',
-                ]
-            ],
-        ];
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getOverview')->with(3)
-            ->will($this->returnValue($feeEntity));
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
-    /**
-     * @dataProvider providerEventType
-     */
-    public function testMaybeContinueLicenceNotContFeeNoOngoingContinuation($eventType)
-    {
-        $mockContinuationDetailService = $this->getMock('\stdClass', ['getOngoingForLicence']);
-        $this->sm->setService('Entity\ContinuationDetail', $mockContinuationDetailService);
-
-        $feeEntity = [
-            'licenceId' => 1966,
-            'feeType' => [
-                'feeType' => [
-                    'id' => 'CONT',
-                ]
-            ],
-        ];
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getOverview')->with(3)
-            ->will($this->returnValue($feeEntity));
-
-        $mockContinuationDetailService->expects($this->once())
-            ->method('getOngoingForLicence')->with(1966)
-            ->will($this->returnValue(false));
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
-    /**
-     * @dataProvider providerEventType
-     */
-    public function testMaybeContinueLicenceInvalidLicenceStatus($eventType)
-    {
-        $mockContinuationDetailService = $this->getMock('\stdClass', ['getOngoingForLicence']);
-        $this->sm->setService('Entity\ContinuationDetail', $mockContinuationDetailService);
-
-        $feeEntity = [
-            'licenceId' => 1966,
-            'feeType' => [
-                'feeType' => [
-                    'id' => 'CONT',
-                ]
-            ],
-        ];
-
-        $continuationDetailEntity = [
-            'licence' => [
-                'status' => [
-                    'id' => 'lsts_withdrawn',
-                ]
-            ]
-        ];
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getOverview')->with(3)
-            ->will($this->returnValue($feeEntity));
-
-        $mockContinuationDetailService->expects($this->once())
-            ->method('getOngoingForLicence')->with(1966)
-            ->will($this->returnValue($continuationDetailEntity));
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
-    /**
-     * @dataProvider providerEventType
-     */
-    public function testMaybeContinueLicenceHasOutstandingFees($eventType)
-    {
-        $mockContinuationDetailService = $this->getMock('\stdClass', ['getOngoingForLicence']);
-        $this->sm->setService('Entity\ContinuationDetail', $mockContinuationDetailService);
-
-        $feeEntity = [
-            'licenceId' => 1966,
-            'feeType' => [
-                'feeType' => [
-                    'id' => 'CONT',
-                ]
-            ],
-        ];
-
-        $continuationDetailEntity = [
-            'licence' => [
-                'status' => [
-                    'id' => 'lsts_valid',
-                ]
-            ]
-        ];
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getOverview')->with(3)
-            ->will($this->returnValue($feeEntity));
-
-        $mockContinuationDetailService->expects($this->once())
-            ->method('getOngoingForLicence')->with(1966)
-            ->will($this->returnValue($continuationDetailEntity));
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getOutstandingContinuationFee')->with(1966)
-            ->will($this->returnValue(['Count' => 1]));
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
-    /**
-     * @dataProvider providerEventType
-     */
-    public function testMaybeContinueLicenceSuccess($eventType)
-    {
-        $mockContinuationDetailService = $this->getMock('\stdClass', ['getOngoingForLicence']);
-        $this->sm->setService('Entity\ContinuationDetail', $mockContinuationDetailService);
-
-        $mockFlashMessenger = $this->getMock('\stdClass', ['addSuccessMessage']);
-        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
-
-        $mockBsm = $this->getMock('\stdClass', ['get']);
-        $this->sm->setService('BusinessServiceManager', $mockBsm);
-
-        $mockContinueLicenceService = $this->getMock('\stdClass', ['process']);
-        $mockBsm->expects($this->once())->method('get')->with('Lva\ContinueLicence')
-            ->will($this->returnValue($mockContinueLicenceService));
-
-        $feeEntity = [
-            'licenceId' => 1966,
-            'feeType' => [
-                'feeType' => [
-                    'id' => 'CONT',
-                ]
-            ],
-        ];
-
-        $continuationDetailEntity = [
-            'id' => 32,
-            'licence' => [
-                'status' => [
-                    'id' => 'lsts_valid',
-                ]
-            ]
-        ];
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getOverview')->with(3)
-            ->will($this->returnValue($feeEntity));
-
-        $mockContinuationDetailService->expects($this->once())
-            ->method('getOngoingForLicence')->with(1966)
-            ->will($this->returnValue($continuationDetailEntity));
-
-        $this->mockFeeService->expects($this->once())
-            ->method('getOutstandingContinuationFee')->with(1966)
-            ->will($this->returnValue(['Count' => 0]));
-
-        $mockContinueLicenceService->expects($this->once())
-            ->method('process')
-            ->with(['continuationDetailId' => 32]);
-
-        $mockFlashMessenger->expects($this->once())
-            ->method('addSuccessMessage')->with('licence.continued.message');
-
-        $this->assertNull($this->sut->trigger(3, $eventType));
-    }
-
-    /**
      * Stub out the maybeProcessGrantingFee method
      *
      * @param int $feeId Fee ID
@@ -298,10 +96,6 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 
         $this->setupMaybeProcessGrantingFee(3, $feeEntity);
 
-        $this->mockFeeService->expects($this->once())
-            ->method('getOverview')->with(3)
-            ->will($this->returnValue($feeEntity));
-
         $this->assertNull($this->sut->trigger(3, $eventType));
     }
 
@@ -328,19 +122,12 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 
         $this->setupMaybeProcessGrantingFee(3, $feeEntity);
 
-        $this->mockFeeService->expects($this->once())
-            ->method('getOverview')->with(3)
-            ->will($this->returnValue($feeEntity));
-
         $mockInterimHelper = $this->getMock('\stdClass', ['grantInterim']);
         $mockInterimHelper->expects($this->once())
             ->method('grantInterim')->with(48);
 
         $this->sm->setService('Helper\Interim', $mockInterimHelper);
 
-        $this->mockFeeService->expects($this->once())
-            ->method('getOverview')->with(3)
-            ->will($this->returnValue($feeEntity));
         $this->assertNull($this->sut->trigger(3, $eventType));
     }
 }
