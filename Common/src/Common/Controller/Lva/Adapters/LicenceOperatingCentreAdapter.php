@@ -53,6 +53,8 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
             );
         }
 
+        $form->get('table')->get('table')->getTable()->removeAction('schedule41');
+
         return $form;
     }
 

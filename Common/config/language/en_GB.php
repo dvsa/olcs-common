@@ -2448,5 +2448,13 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'lva.section.title.schedule41' => 'Schedule 4/1',
+    'schedule41.operating-centre.table.title' => 'Add Schedule 4/1',
+    'schedule41.operating-centre.table.address' => 'Address',
+    'schedule41.operating-centre.table.vehicles' => 'Vehicles',
+    'schedule41.operating-centre.table.trailers' => 'Trailers',
+    'schedule41.operating-centre.table.complaints' => 'Complaints',
+    'schedule41.operating-centre.table.conditions' => 'Conditions',
+    'schedule41.operating-centre.table.undertakings' => 'Undertakings'
     // Potentially unused (Not found with grep)
 );

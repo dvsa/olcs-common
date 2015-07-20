@@ -9,9 +9,14 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary', 'label' => 'Add operating centre'),
+                'add' => array('class' => 'primary'),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove'),
+                'delete' => array('class' => 'secondary', 'requireRows' => true),
+                'schedule41' => array(
+                    'class' => 'secondary',
+                    'value' => 'Add schedule 4/1',
+                    'requireRows' => false
+                )
             )
         )
     ),
