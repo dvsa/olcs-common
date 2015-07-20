@@ -26,6 +26,7 @@ return array(
             'title' => 'application_operating-centres_authorisation.table.address',
             'type' => 'Action',
             'action' => 'edit',
+            'name' => 'operatingCentre->address',
             'formatter' => 'Address',
         ),
         array(

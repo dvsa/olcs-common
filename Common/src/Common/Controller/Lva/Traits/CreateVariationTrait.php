@@ -36,7 +36,14 @@ trait CreateVariationTrait
                 return $this->redirect()->refreshAjax();
             }
 
-            return $this->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
+            $route = 'lva-variation';
+
+            $redirectRoute = $this->params('redirectRoute');
+            if ($redirectRoute !== null) {
+                $route .= '/' . $redirectRoute;
+            }
+
+            return $this->redirect()->toRouteAjax($route, ['application' => $appId]);
         }
 
         return $form;

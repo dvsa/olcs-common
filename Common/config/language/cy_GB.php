@@ -12,45 +12,48 @@ return array(
     'Authorisation' => 'W Authorisation',
     'Confirm' => 'W Confirm',
     'Continue' => 'W Continue',
+    'ERR_OC_AD_DT_1' => 'W Please enter the date the advertisement was placed',
+    'ERR_OC_AD_IN_1' => 'W Please enter a newspaper name',
+    'ERR_OC_CL_1' => 'W The number of community licences must not exceed the the total number of vehicles',
+    'ERR_OC_PSV_SUM_1A' => 'W The sum of small, medium and large vehicles does not match the total number of vehicles',
+    'ERR_OC_PSV_SUM_1B' => 'W The sum of small and medium vehicles does not match the total number of vehicles',
+    'ERR_OC_R_1' => 'W The total number of vehicles on a restricted licence cannot exceed 2',
+    'ERR_OC_TA_1' => 'W Please select a traffic area',
+    'ERR_OC_T_1' => 'W If you are only applying for one operating centre, the total number of authorised trailers must
+        be the same as at your operating centre',
+    'ERR_OC_T_2' => 'W The total number of authorised trailers must be equal or greater than the largest number of
+        trailers authorised at any individual operating centre',
+    'ERR_OC_T_3' => 'W The number of authorised trailers must not exceed the total number of trailers parked across all
+        of your operating centres',
+    'ERR_OC_T_4' => 'W Please add an operating centre before setting the total number of trailers',
+    'ERR_OC_VR_1A' => 'W You must enter at least 1 vehicle or trailer',
+    'ERR_OC_VR_1B' => 'W You must enter at least 1 vehicle',
+    'ERR_OC_V_1' => 'W If you are only applying for one operating centre, the total number of authorised vehicles must
+        be the same as at your operating centre',
+    'ERR_OC_V_2' => 'W The total number of authorised vehicles must be equal or greater than the largest number of
+        vehicles authorised at any individual operating centre',
+    'ERR_OC_V_3' => 'W The number of authorised vehicles must not exceed the total number of vehicles parked across all
+        of your operating centres',
+    'ERR_OC_V_4' => 'W Please add an operating centre before setting the total number of vehicles',
     'FHAdditionalInfo.validation.is_empty' => 'W You selected \'yes\' in one of the provided questions, so value is
         required and can\'t be empty',
+    'Invalid type given. String, integer or float expected' => 'W Please enter a numeric value',
     'LIC-SAFE-TACH-1' => 'W Please specify the name of the external contractor',
     'N/A' => 'W Not applicable',
     'No' => 'W No',
-    'OperatingCentreAdPlacedInValidator.required' => 'W Please enter a newspaper name',
-    'OperatingCentreCommunityLicencesValidator.too-many' => 'W The number of community licences must not exceed the the
-        total number of vehicles',
     'OperatingCentreNoOfOperatingCentres.required' => 'W Please add an operating centre',
-    'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'W If you are only applying for one operating
-        centre, the total number of authorised trailers must be the same as at your operating centre',
-    'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
-        setting the total number of trailers',
     'OperatingCentreTrailerAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
-    'OperatingCentreTrailerAuthorisationsValidator.too-high' => 'W The number of authorised trailers must not exceed the
-        total number of trailers parked across all of your operating centres',
-    'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'W The total number of authorised trailers must be equal
-        or greater than the largest number of trailers authorised at any individual operating centre',
     'OperatingCentreVehicleAuthorisationValidator.too-high-psv-r' => 'W 2 is the maximum number of vehicles on a PSV
         Restricted licence',
-    'OperatingCentreVehicleAuthorisationValidator.too-low' => 'W You must enter at least 1 vehicle or trailer',
-    'OperatingCentreVehicleAuthorisationValidator.too-low-psv' => 'W You must enter at least 1 vehicle',
-    'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre' => 'W If you are only applying for one operating
-        centre, the total number of authorised vehicles must be the same as at your operating centre',
-    'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
-        setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'W You must enter at least 1 vehicle type',
     'OperatingCentreVehicleAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
-    'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'W The total number of vehicles on a
-        restricted licence cannot exceed 2',
-    'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'W The number of authorised vehicles must not exceed the
-        total number of vehicles parked across all of your operating centres',
-    'OperatingCentreVehicleAuthorisationsValidator.too-low' => 'W The total number of authorised vehicles must be equal
-        or greater than the largest number of vehicles authorised at any individual operating centre',
     'Please Select' => 'W Please Select',
     'Please add a person' => 'W Please add a person',
     'Please add a safety inspection provider' => 'W Please add a safety inspection provider',
     'Please add a transport manager' => 'W You must add at least one transport manager',
     'Save and continue' => 'W Save & continue',
+    'Total number of vehicles: The input is not between \'1\' and \'1000000\', inclusively' => 'W Total number of
+        vehicles: You must have at least 1 vehicle',
     'Value is required and can\'t be empty' => 'W value is required',
     'Week' => 'W Week',
     'Weeks' => 'W Weeks',
@@ -1506,10 +1509,6 @@ return array(
         sufficient financial resources to maintain the vehicles and run the business.',
     'lva-financial-evidence-upload.label' => 'W Upload files',
     'lva-financial-evidence-upload.required' => 'W Please upload evidence of financial standing',
-    'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles' => 'W The sum of small
-        and medium vehicles does not match the total number of vehicles',
-    'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles-totAuthLargeVehicles' =>
-        'W The sum of small, medium and large vehicles does not match the total number of vehicles',
     'lva-post-submit-summary-application-no' => 'W Application no.',
     'lva-post-submit-summary-reference-number' => 'W Reference No.',
     'lva-post-submit-summary-title' => 'W Application overview',
@@ -1543,6 +1542,7 @@ return array(
     'lva-tm-details-submit-success' => 'W The transport manager application has been submitted successfully',
     'lva-tm-sent-success' => 'W The form has been emailed to the transport manager',
     'lva-transport-manager-table-empty-message' => 'W To be nominated',
+    'lva.section.operating_centres_delete' => 'W Are you sure you wish to remove the selected operating centre(s)',
     'lva.section.title.add-grace-period' => 'W Add Grace Period',
     'lva.section.title.add-transport_managers' => 'W Add transport manager',
     'lva.section.title.addTm-transport_managers' => 'W Transport manager details',
@@ -1695,6 +1695,7 @@ return array(
     'operating-centre' => 'W Operating centres',
     'operating-centre-address-requires-variation' => 'W You cannot change the address of your operating centre',
     'operating-centres' => 'W Operating centres',
+    'operating-centres-licence-locked' => 'W Making changes to this field will require a variation application',
     'operator' => 'W Operator',
     'operator-edit-popup-header' => 'W Edit Operator Name',
     'operator-location' => 'W Operator location',
@@ -2303,6 +2304,8 @@ return array(
     'tm_application.table.status.removed' => 'W  (Removed)',
     'tm_application.table.status.updated' => 'W  (Updated)',
     'tol-no-changes-message' => 'W No changes to the type of licence detected',
+    'totAuthTrailers' => 'W Total number of trailers',
+    'totAuthVehicles' => 'W Total number of vehicles',
     'traffic-area' => 'W Traffic area',
     'trafficAreaSet.hint-operating-centres' => 'W Your traffic area is determined by the location of your operating
         centres. More information about <a href="%s"> traffic areas</a>.',
