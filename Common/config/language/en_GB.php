@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'lva.section.title.grant.interim' => 'Grant interim',
+    'lva.section.title.refuse.interim' => 'Refuse interim',
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'AP-VEH-1' => 'Please add at least one vehicle',
