@@ -75,6 +75,20 @@ class ScriptFactory implements FactoryInterface
     }
 
     /**
+     * add an array of files
+     *
+     * @param array $files - the files to load
+     *
+     * @return array
+     */
+    public function appendFiles($files = [])
+    {
+        foreach ($files as $file) {
+            $this->appendFile($file);
+        }
+    }
+
+    /**
      * load a single file, will check multiple paths depending on the number of available modules
      *
      * @param string $file - the file to load
@@ -102,6 +116,17 @@ class ScriptFactory implements FactoryInterface
         }
 
         throw new \Exception('Attempted to load invalid script file "'. $file . '"');
+    }
+
+    /**
+     * Append a single file, will check multiple paths depending on the number of available modules
+     *
+     * @param string $file - the file to load
+     */
+    public function appendFile($fileName)
+    {
+        $assetPath = $this->getViewHelperManager()->get('assetPath');
+        $this->getViewHelperManager()->get('inlineScript')->appendFile($assetPath($fileName));
     }
 
     /**
