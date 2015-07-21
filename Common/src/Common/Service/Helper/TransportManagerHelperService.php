@@ -83,9 +83,10 @@ class TransportManagerHelperService extends AbstractHelperService
 
     public function getConvictionsAndPenaltiesTable($transportManagerId)
     {
-        $results = $this->getServiceLocator()
-            ->get('Entity\PreviousConviction')
-            ->getDataForTransportManager($transportManagerId);
+        $result = $this->handleQuery(
+            \Dvsa\Olcs\Transfer\Query\PreviousConviction\GetList::create(['transportManager' => $transportManagerId])
+        );
+        $results = $result['results'];
 
         return $this->getServiceLocator()->get('Table')->prepareTable(
             'tm.convictionsandpenalties',
@@ -93,11 +94,35 @@ class TransportManagerHelperService extends AbstractHelperService
         );
     }
 
+    /**
+     * Execute a query DTO
+     *
+     * @param \Dvsa\Olcs\Transfer\Query\QueryInterface $dto
+     *
+     * @return array of results
+     * @throws \RuntimeException
+     */
+    protected function handleQuery($dto)
+    {
+        $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
+        $queryService = $this->getServiceLocator()->get('QueryService');
+        $response = $queryService->send($annotationBuilder->createQuery($dto));
+
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error fetching query '. get_class($dto));
+        }
+
+        return $response->getResult();
+    }
+
+
     public function getPreviousLicencesTable($transportManagerId)
     {
-        $results = $this->getServiceLocator()
-            ->get('Entity\OtherLicence')
-            ->getDataForTransportManager($transportManagerId);
+        $result = $this->handleQuery(
+            \Dvsa\Olcs\Transfer\Query\OtherLicence\GetList::create(['transportManager' => $transportManagerId])
+        );
+
+        $results = $result['results'];
 
         return $this->getServiceLocator()->get('Table')->prepareTable(
             'tm.previouslicences',
