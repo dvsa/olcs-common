@@ -33,8 +33,8 @@ class ConvictionsAndPenaltiesDetails
      * })
      * @Form\Type("DateSelect")
      * @Form\Filter({"name":"DateSelectNullifier"})
+     * @Form\Required(true)
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     * @Form\Validator({"name": "\Zend\Validator\NotEmpty"})
      * @Form\Validator({"name":"\Common\Form\Elements\Validators\DateNotInFuture"})
      */
     public $convictionDate = null;
@@ -43,9 +43,8 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Attributes({"class":"long","id":"category-text"})
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.offence"})
      * @Form\Type("Text")
-     * @Form\Validator({
-     *      "name":"Zend\Validator\NotEmpty"
-     * })
+     * @Form\Required(true)
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":1,"max":1024}})
      */
     public $categoryText = null;
 
@@ -53,9 +52,8 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Attributes({"class":"long","id":"notes"})
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.offence-details"})
      * @Form\Type("Text")
-     * @Form\Validator({
-     *      "name":"Zend\Validator\NotEmpty"
-     * })
+     * @Form\Required(true)
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":1,"max":4000}})
      */
     public $notes = null;
 
@@ -63,9 +61,8 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Attributes({"class":"long","id":"court-fpn"})
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.court-fpn"})
      * @Form\Type("Text")
-     * @Form\Validator({
-     *      "name":"Zend\Validator\NotEmpty"
-     * })
+     * @Form\Required(true)
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":1,"max":70}})
      */
     public $courtFpn = null;
 
@@ -73,9 +70,8 @@ class ConvictionsAndPenaltiesDetails
      * @Form\Attributes({"class":"long","id":"penalty"})
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.penalty"})
      * @Form\Type("Text")
-     * @Form\Validator({
-     *      "name":"Zend\Validator\NotEmpty"
-     * })
+     * @Form\Required(true)
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":1,"max":255}})
      */
     public $penalty = null;
 }
