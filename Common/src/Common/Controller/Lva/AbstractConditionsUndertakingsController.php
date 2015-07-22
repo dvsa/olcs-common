@@ -234,7 +234,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      */
     protected function getConditionUndertakingForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('ConditionUndertakingForm');
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('ConditionUndertaking');
     }
 
     /**
