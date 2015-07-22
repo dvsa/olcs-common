@@ -1,8 +1,6 @@
 <?php
 
 return array(
-    'lva.section.title.grant.interim' => 'Grant interim',
-    'lva.section.title.refuse.interim' => 'Refuse interim',
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'AP-VEH-1' => 'Please add at least one vehicle',
@@ -982,6 +980,9 @@ return array(
     'generic-delete-confirmation-label' => 'Are you sure you want to remove these?',
     'generic-nothing-updated' => 'Nothing to update',
     'generic-restore-success' => 'Record(s) restored successfully',
+    'generic.added.success' => 'Successfully added.',
+    'generic.deleted.success' => 'Successfully deleted.',
+    'generic.updated.success' => 'Successfully updated.',
     'gv_interim_direction_fee_request' => 'GV Interim direction fee request',
     'gv_interim_licence_fee_request' => 'GV Interim licence fee request',
     'header-correspondence-details' => 'Correspondence details',
@@ -1557,6 +1558,7 @@ return array(
     'lva.section.title.financial_evidence' => 'Financial evidence',
     'lva.section.title.financial_history' => 'Financial history',
     'lva.section.title.grace-period' => 'Licence Grace Periods',
+    'lva.section.title.grant.interim' => 'Grant interim',
     'lva.section.title.grant_application' => 'Grant application',
     'lva.section.title.interim' => 'Interim application',
     'lva.section.title.licence_history' => 'Licence history',
@@ -1565,10 +1567,12 @@ return array(
     'lva.section.title.overview' => 'Overview',
     'lva.section.title.people' => 'People',
     'lva.section.title.person' => 'Your details',
+    'lva.section.title.refuse.interim' => 'Refuse interim',
     'lva.section.title.replaced_discs' => 'Are you sure you would like to replace these discs?',
     'lva.section.title.reprint_vehicles' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
     'lva.section.title.safety' => 'Safety',
+    'lva.section.title.schedule41' => 'Schedule 4/1',
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
     'lva.section.title.trailer' => 'Trailers',
     'lva.section.title.transfer_vehicles' => 'Transfer Vehicles',
@@ -1871,6 +1875,13 @@ return array(
     'scanning.error.entity.8' => 'The IRFO ID is invalid',
     'scanning.error.entity.9' => 'The Licence No is invalid',
     'scanning.message.success' => 'The separator sheet has been generated',
+    'schedule41.operating-centre.table.address' => 'Address',
+    'schedule41.operating-centre.table.complaints' => 'Complaints',
+    'schedule41.operating-centre.table.conditions' => 'Conditions',
+    'schedule41.operating-centre.table.title' => 'Add Schedule 4/1',
+    'schedule41.operating-centre.table.trailers' => 'Trailers',
+    'schedule41.operating-centre.table.undertakings' => 'Undertakings',
+    'schedule41.operating-centre.table.vehicles' => 'Vehicles',
     'search' => 'Search',
     'section-updated-successfully-message-suffix' => 'section has been updated',
     'section.add.business_details' => 'Subsidiary company added',
@@ -2450,13 +2461,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'lva.section.title.schedule41' => 'Schedule 4/1',
-    'schedule41.operating-centre.table.title' => 'Add Schedule 4/1',
-    'schedule41.operating-centre.table.address' => 'Address',
-    'schedule41.operating-centre.table.vehicles' => 'Vehicles',
-    'schedule41.operating-centre.table.trailers' => 'Trailers',
-    'schedule41.operating-centre.table.complaints' => 'Complaints',
-    'schedule41.operating-centre.table.conditions' => 'Conditions',
-    'schedule41.operating-centre.table.undertakings' => 'Undertakings'
     // Potentially unused (Not found with grep)
 );
