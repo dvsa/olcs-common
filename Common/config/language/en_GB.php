@@ -2457,6 +2457,9 @@ return array(
     'schedule41.operating-centre.table.trailers' => 'Trailers',
     'schedule41.operating-centre.table.complaints' => 'Complaints',
     'schedule41.operating-centre.table.conditions' => 'Conditions',
-    'schedule41.operating-centre.table.undertakings' => 'Undertakings'
+    'schedule41.operating-centre.table.undertakings' => 'Undertakings',
+    'application.schedule41.licence-number-not-valid' => 'The licence number is invalid',
+    'application.schedule41.licence-not-valid' => 'You can only select a valid, suspended or curtailed licence',
+    'application.schedule41.licence-is-psv' => 'You cannot transfer operating centres from a PSV licence'
     // Potentially unused (Not found with grep)
 );
