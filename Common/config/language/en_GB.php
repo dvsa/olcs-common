@@ -693,6 +693,7 @@ return array(
     'apsts_refused' => 'Refused',
     'apsts_valid' => 'Valid',
     'apsts_withdrawn' => 'Withdrawn',
+    'approve.button' => 'Cancel',
     'back-to-licence-overview' => 'Back to licence overview',
     'both' => 'Both',
     'built-by' => 'Built by',
@@ -2469,8 +2470,9 @@ return array(
     'schedule41.operating-centre.table.complaints' => 'Complaints',
     'schedule41.operating-centre.table.conditions' => 'Conditions',
     'schedule41.operating-centre.table.undertakings' => 'Undertakings',
+    'schedule41.approve.application.message' => 'Are you sure you want to approve this schedule 4/1?',
     'application.schedule41.licence-number-not-valid' => 'The licence number is invalid',
     'application.schedule41.licence-not-valid' => 'You can only select a valid, suspended or curtailed licence',
-    'application.schedule41.licence-is-psv' => 'You cannot transfer operating centres from a PSV licence'
+    'application.schedule41.licence-is-psv' => 'You cannot transfer operating centres from a PSV licence',
     // Potentially unused (Not found with grep)
 );
