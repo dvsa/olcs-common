@@ -37,6 +37,7 @@ class Person
      * @Form\Options({"label":"application_your-business_people-sub-action-formFirstName"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})
      */
     public $forename = null;
 
@@ -45,6 +46,8 @@ class Person
      * @Form\Options({"label":"application_your-business_people-sub-action-formSurname"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":2,"max":35}})
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})
      */
     public $familyName = null;
 
@@ -53,6 +56,7 @@ class Person
      * @Form\Options({"label":"application_your-business_people-sub-action-formOtherNames"})
      * @Form\Required(false)
      * @Form\Type("Text")
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})
      */
     public $otherName = null;
 
@@ -61,6 +65,7 @@ class Person
      * @Form\Options({"label":"application_your-business_people-sub-action-formPosition"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":45}})
      */
     public $position = null;
 
