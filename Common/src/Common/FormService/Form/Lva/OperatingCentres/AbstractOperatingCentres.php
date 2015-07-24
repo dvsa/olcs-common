@@ -40,7 +40,6 @@ abstract class AbstractOperatingCentres extends AbstractFormService
         }
 
         if (!$params['canHaveCommunityLicences']) {
-            $removeFields[] = 'totCommunityLicences';
             $this->getFormHelper()->remove($form, 'data->totCommunityLicences');
         }
 

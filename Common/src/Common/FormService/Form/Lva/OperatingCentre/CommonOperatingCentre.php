@@ -66,8 +66,7 @@ class CommonOperatingCentre extends AbstractFormService
         $this->getFormHelper()->remove($form, 'data->noOfTrailersRequired');
         $this->getFormHelper()->remove($form, 'advertisements');
 
-        $this->getFormHelper()
-            ->alterElementLabel(
+        $this->getFormHelper()->alterElementLabel(
             $form->get('data'),
             '-psv',
             FormHelperService::ALTER_LABEL_APPEND

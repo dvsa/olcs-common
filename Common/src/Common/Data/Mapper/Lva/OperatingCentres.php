@@ -22,12 +22,10 @@ class OperatingCentres implements MapperInterface
     {
         $enforcementArea = null;
 
-        if (isset($data['enforcementArea']['id'])) {
-            $enforcementArea = $data['enforcementArea']['id'];
-        }
-
         if (isset($data['licence']['enforcementArea']['id'])) {
             $enforcementArea = $data['licence']['enforcementArea']['id'];
+        } elseif (isset($data['enforcementArea']['id'])) {
+            $enforcementArea = $data['enforcementArea']['id'];
         }
 
         return [
