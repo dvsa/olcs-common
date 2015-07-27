@@ -32,7 +32,7 @@ class Address extends AbstractHelper
             'addressLine3',
             'town',
             'postcode',
-            'country'
+            'countryCode'
         ]
     )
     {
@@ -40,11 +40,9 @@ class Address extends AbstractHelper
         $parts = array();
 
         if (isset($address['countryCode']['id'])) {
-            $address['country'] = $address['countryCode']['countryDesc'];
             $address['countryCode'] = $address['countryCode']['id'];
         } else {
             $address['countryCode'] = null;
-            $address['country'] = null;
         }
 
         foreach ($fields as $item) {
