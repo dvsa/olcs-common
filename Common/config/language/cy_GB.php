@@ -1244,6 +1244,7 @@ return array(
     'internal-navigation-transport-manager-processing-publications' => 'W Publication',
     'internal-navigation-transport-manager-processing-tasks' => 'W Tasks',
     'internal-operator-create-new-operator' => 'W Create new operator',
+    'internal-operator-create-new-unlicensed-operator' => 'W Create new unlicensed operator',
     'internal-operator-new-application' => 'W New application',
     'internal-operator-profile-business-type' => 'W Business type',
     'internal-operator-profile-business-type-refresh' => 'W Refresh',
