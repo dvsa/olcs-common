@@ -1728,6 +1728,7 @@ return array(
     'other-licences-or-apps' => 'W Other licences / apps',
     'other-please-specify' => 'W Other - please specify',
     'outstanding-applications' => 'W Outstanding applications',
+    'overview.fieldset.check.override-opposition-date' => 'W Override opposition date',
     'overview.fieldset.check.welsh' => 'W Welsh language',
     'owner' => 'W Owner',
     'partially-agree' => 'W Partially agree',

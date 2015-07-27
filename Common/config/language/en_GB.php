@@ -1722,6 +1722,7 @@ return array(
     'other-licences-or-apps' => 'Other licences / apps',
     'other-please-specify' => 'Other - please specify',
     'outstanding-applications' => 'Outstanding applications',
+    'overview.fieldset.check.override-opposition-date' => 'Override opposition date',
     'overview.fieldset.check.welsh' => 'Welsh language',
     'owner' => 'Owner',
     'partially-agree' => 'Partially agree',
@@ -2478,16 +2479,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'lva.section.title.schedule41' => 'Schedule 4/1',
-    'schedule41.operating-centre.table.title' => 'Add Schedule 4/1',
-    'schedule41.operating-centre.table.address' => 'Address',
-    'schedule41.operating-centre.table.vehicles' => 'Vehicles',
-    'schedule41.operating-centre.table.trailers' => 'Trailers',
-    'schedule41.operating-centre.table.complaints' => 'Complaints',
-    'schedule41.operating-centre.table.conditions' => 'Conditions',
-    'schedule41.operating-centre.table.undertakings' => 'Undertakings',
-    'application.schedule41.licence-number-not-valid' => 'The licence number is invalid',
-    'application.schedule41.licence-not-valid' => 'You can only select a valid, suspended or curtailed licence',
-    'application.schedule41.licence-is-psv' => 'You cannot transfer operating centres from a PSV licence'
     // Potentially unused (Not found with grep)
 );
