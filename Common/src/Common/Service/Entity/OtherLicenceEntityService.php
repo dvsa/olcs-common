@@ -73,6 +73,7 @@ class OtherLicenceEntityService extends AbstractEntityService
     /**
      * Get data for tansport manager application
      *
+     * @todo remove
      * @param int $id
      * @return array
      */
@@ -84,6 +85,7 @@ class OtherLicenceEntityService extends AbstractEntityService
     /**
      * Get data for tansport manager licence
      *
+     * @todo remove
      * @param int $id
      * @return array
      */
