@@ -63,7 +63,7 @@ class TransportManagerHelperService extends AbstractHelperService
 
     /**
      * Get transport manager documents
-     *
+     * @todo remove after tm responsibilities migrated
      * @return array
      */
     public function getResponsibilityFiles($tmId, $tmaId)

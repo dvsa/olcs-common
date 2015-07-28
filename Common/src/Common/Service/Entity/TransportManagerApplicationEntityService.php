@@ -236,30 +236,6 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     ];
 
     /**
-     * Get transport manager applications
-     *
-     * @param int $id
-     * @param array $status
-     * @return array
-     */
-    public function getTransportManagerApplications($id, $status = [])
-    {
-        $results = $this->getAll(['transportManager' => $id, 'action' => '!=D'], $this->dataBundle);
-
-        $finalResults = [];
-
-        foreach ($results['Results'] as &$result) {
-
-            if (in_array($result['application']['status']['id'], $status)) {
-                $result['ocCount'] = count($result['operatingCentres']);
-                $finalResults[] = $result;
-            }
-        }
-
-        return $finalResults;
-    }
-
-    /**
      * Get transport manager application
      *
      * @param int $id
