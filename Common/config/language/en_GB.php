@@ -744,10 +744,21 @@ return array(
     'cat_lic' => 'Licence',
     'cat_oc' => 'Operating Centre',
     'categories' => 'Categories',
+    'ch_alert_reason.all' => 'All',
+    'ch_alert_reason.company_address_change' => 'Company address change',
+    'ch_alert_reason.company_name_change' => 'Company name change',
+    'ch_alert_reason.company_people_change' => 'Company people change',
+    'ch_alert_reason.company_status_change' => 'Company status change',
+    'ch_alert_reason.invalid_company_number' => 'Invalid company number',
     'choose-one' => 'Choose one',
     'closed' => 'Closed',
     'community-licence-changes-contact-office' => 'If you wish to request additional community licences, please contact
         the central office',
+    'companies-house-alert.close.confirm' => 'Are you sure you want to close the selected alert(s)?',
+    'companies-house-alert.close.success' => 'The selected change alert(s) have been closed',
+    'companies-house-alert.close.title' => 'Close change alert(s)',
+    'companies-house-alert.filters.include-closed' => 'Include closed alerts',
+    'companies-house-alert.filters.type-of-change' => 'Type of change',
     'company-registration-form-button-find-address' => 'Find address',
     'company-registration-form-button-search' => 'Search',
     'company-registration-form-label-address1' => 'Address line 1',
@@ -816,6 +827,7 @@ return array(
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
     'crud-companies-house-alert-title' => 'Companies House Alerts',
+    'crud-companies-house-alert-title-singular' => 'Companies House Alert',
     'crud-event-history-title' => 'History',
     'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
         rate(s)?',
@@ -2466,6 +2478,7 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+<<<<<<< HEAD
     'lva.section.title.schedule41' => 'Schedule 4/1',
     'schedule41.operating-centre.table.title' => 'Add Schedule 4/1',
     'schedule41.operating-centre.table.address' => 'Address',
@@ -2477,5 +2490,7 @@ return array(
     'application.schedule41.licence-number-not-valid' => 'The licence number is invalid',
     'application.schedule41.licence-not-valid' => 'You can only select a valid, suspended or curtailed licence',
     'application.schedule41.licence-is-psv' => 'You cannot transfer operating centres from a PSV licence'
+=======
+>>>>>>> OLCS-9873 translations
     // Potentially unused (Not found with grep)
 );
