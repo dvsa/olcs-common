@@ -2478,7 +2478,6 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-<<<<<<< HEAD
     'lva.section.title.schedule41' => 'Schedule 4/1',
     'schedule41.operating-centre.table.title' => 'Add Schedule 4/1',
     'schedule41.operating-centre.table.address' => 'Address',
@@ -2490,7 +2489,5 @@ return array(
     'application.schedule41.licence-number-not-valid' => 'The licence number is invalid',
     'application.schedule41.licence-not-valid' => 'You can only select a valid, suspended or curtailed licence',
     'application.schedule41.licence-is-psv' => 'You cannot transfer operating centres from a PSV licence'
-=======
->>>>>>> OLCS-9873 translations
     // Potentially unused (Not found with grep)
 );
