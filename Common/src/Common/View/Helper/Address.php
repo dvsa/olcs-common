@@ -34,9 +34,7 @@ class Address extends AbstractHelper
             'postcode',
             'countryCode'
         ]
-    )
-    {
-
+    ) {
         $parts = array();
 
         if (isset($address['countryCode']['id'])) {
@@ -46,14 +44,11 @@ class Address extends AbstractHelper
         }
 
         foreach ($fields as $item) {
-
             if (isset($address[$item]) && !empty($address[$item])) {
-
                 $parts[] = $address[$item];
             }
         }
 
         return implode(', ', $parts);
-
     }
 }
