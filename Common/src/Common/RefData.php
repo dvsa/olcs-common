@@ -64,4 +64,17 @@ class RefData
     const VARIATION_STATUS_UNCHANGED = 0;
     const VARIATION_STATUS_REQUIRES_ATTENTION = 1;
     const VARIATION_STATUS_UPDATED = 2;
+
+    /**
+     * Condition and Undertakings
+     */
+    const ATTACHED_TO_LICENCE = 'cat_lic';
+    const ATTACHED_TO_OPERATING_CENTRE = 'cat_oc';
+
+    const ADDED_VIA_CASE = 'cav_case';
+    const ADDED_VIA_LICENCE = 'cav_lic';
+    const ADDED_VIA_APPLICATION = 'cav_app';
+
+    const TYPE_CONDITION = 'cdt_con';
+    const TYPE_UNDERTAKING = 'cdt_und';
 }

@@ -511,10 +511,23 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->sm->setService('Review\TransportManagerPreviousConviction', $mockTmConviction);
         $this->sm->setService('Review\TransportManagerPreviousLicence', $mockTmLicences);
 
-        // Expectations
-        $mockTma->shouldReceive('getReviewData')
-            ->with(111)
-            ->andReturn($stubbedData);
+        $mockTransferAnnotationBuilder = m::mock();
+        $mockQueryService = m::mock();
+        $this->sm->setService('TransferAnnotationBuilder', $mockTransferAnnotationBuilder);
+        $this->sm->setService('QueryService', $mockQueryService);
+
+        $mockTransferAnnotationBuilder->shouldReceive('createQuery')->once()->andReturnUsing(
+            function ($query) {
+                $this->assertSame(111, $query->getId());
+                return 'QUERY';
+            }
+        );
+        $mockQueryService->shouldReceive('send')->with('QUERY')->once()->andReturn(
+            m::mock()
+                ->shouldReceive('isOk')->with()->once()->andReturn(true)
+                ->shouldReceive('getResult')->with()->once()->andReturn($stubbedData)
+                ->getMock()
+        );
 
         $mockTmMain->shouldReceive('getConfigFromData')
             ->with($stubbedData)

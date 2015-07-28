@@ -240,8 +240,18 @@ class TransportManagerHelperService extends AbstractHelperService
 
     public function getReviewConfig($id)
     {
-        $data = $this->getServiceLocator()->get('Entity\TransportManagerApplication')
-            ->getReviewData($id);
+        $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
+        $queryService = $this->getServiceLocator()->get('QueryService');
+
+        $query = $annotationBuilder->createQuery(
+            \Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails::create(['id' => $id])
+        );
+        $response = $queryService->send($query);
+
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error getting Transport Manager Application review data');
+        }
+        $data = $response->getResult();
 
         $subTitle = sprintf(
             '%s %s/%s',

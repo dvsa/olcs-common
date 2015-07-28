@@ -120,6 +120,17 @@ class LicenceTypeShortTest extends PHPUnit_Framework_TestCase
                     ]
                 ],
                 'PSV-SR'
+            ],
+            'combined: psv sr ON licence' => [
+                [
+                    'goodsOrPsv' => [
+                        'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                    ],
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                    ]
+                ],
+                'PSV-SR'
             ]
         ];
     }
