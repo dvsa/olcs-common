@@ -2587,5 +2587,12 @@ return array(
     'search-result-label-total-community-licences' => 'Number of certifies copies of community licences',
     'search-result-label-multiple-licence-holder' => 'Multiple licence holder',
     'search-result-label-lead-tc' => 'Lead TC / Traffic Regulator',
+    'search-result-label-phone-numbers' => 'Phone numbers',
+    'search-result-label-fax-numbers' => 'Fax numbers',
+    'entity-view-section-header-registered-company-details' => 'Registered company details',
+    'entity-view-label-company-registration-number' => 'Company registration number',
+    'entity-view-label-registered-company-name' => 'Registered company name',
+    'entity-view-label-registered-address' => 'Registered address'
+
     // Potentially unused (Not found with grep)
 );
