@@ -61,26 +61,6 @@ class TransportManagerHelperService extends AbstractHelperService
         ];
     }
 
-    /**
-     * Get transport manager documents
-     * @todo remove after tm responsibilities migrated
-     * @return array
-     */
-    public function getResponsibilityFiles($tmId, $tmaId)
-    {
-        $data = $this->getServiceLocator()->get('Entity\TransportManagerApplication')
-            ->getTransportManagerApplication($tmaId);
-
-        return $this->getServiceLocator()->get('Entity\TransportManager')
-            ->getDocuments(
-                $tmId,
-                $data['application']['id'],
-                'application',
-                CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
-                CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
-            );
-    }
-
     public function getConvictionsAndPenaltiesTable($transportManagerId)
     {
         $result = $this->handleQuery(
