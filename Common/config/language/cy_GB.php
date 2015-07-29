@@ -1255,6 +1255,8 @@ return array(
     'internal-operator-profile-name' => 'W Operator name',
     'internal-operator-profile-nature-of-business' => 'W Nature of business',
     'internal-operator-quick-actions' => 'W Quick actions',
+    'internal-operator-unlicensed-redirect' => 'W You have been redirected to the Operator Profile for this unlicensed
+        operator',
     'internal-pi-hearing-add' => 'W Add hearing',
     'internal-pi-hearing-edit' => 'W Edit hearing',
     'internal-transport-manager-created' => 'W The Transport Manager has been created successfully',

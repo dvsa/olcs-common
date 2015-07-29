@@ -58,6 +58,7 @@ class RefData
     const LICENCE_STATUS_SUSPENDED = 'lsts_suspended';
     const LICENCE_STATUS_TERMINATED = 'lsts_terminated';
     const LICENCE_STATUS_VALID = 'lsts_valid';
+    const LICENCE_STATUS_UNLICENSED = 'lsts_unlicenced';
 
     /**
      * Application statuses
