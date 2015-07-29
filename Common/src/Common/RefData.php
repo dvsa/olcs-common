@@ -112,4 +112,10 @@ class RefData
     const BUSREG_STATUS_WITHDRAWN = 'breg_s_withdrawn';
     const BUSREG_STATUS_CNS = 'breg_s_cns';
     const BUSREG_STATUS_CANCELLED = 'breg_s_cancelled';
+
+    /**
+     * Role permissions
+     */
+    const PERMISSION_SELFSERVE_PARTNER_ADMIN = 'partner-admin';
+    const PERMISSION_SELFSERVE_PARTNER_USER = 'partner-user';
 }

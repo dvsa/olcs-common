@@ -2576,5 +2576,16 @@ return array(
     'search-result-section-applications' => 'Applications',
     'search-result-section-condition-undertakings' => 'Condition & undertakings',
     'search-result-section-other-licences' => 'Other licences',
+    'search-result-label-licence-start-date' => 'Start date',
+    'search-result-label-licence-review-date' => 'Review date',
+    'search-result-label-vauth' => 'Total vehicle authorisation (VAUTH)',
+    'search-result-label-vip' => 'Vehicles in possession (VIP)',
+    'search-result-label-tauth' => 'Total trailer authorisation (TAUTH)',
+    'search-result-label-tip' => 'Trailers in possession (TIP)',
+    'search-result-label-existing-pi' => 'Existing PI records',
+    'search-result-label-operator-disqualified' => 'Operator disqualified',
+    'search-result-label-total-community-licences' => 'Number of certifies copies of community licences',
+    'search-result-label-multiple-licence-holder' => 'Multiple licence holder',
+    'search-result-label-lead-tc' => 'Lead TC / Traffic Regulator',
     // Potentially unused (Not found with grep)
 );
