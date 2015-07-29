@@ -1916,6 +1916,7 @@ return array(
     'section.add.business_details' => 'W Subsidiary company added',
     'section.add.conditions_undertakings' => 'W Condition / undertaking added successfully',
     'section.add.convictions_penalties' => 'W Offence added',
+    'section.add.grace-periods' => 'W Licence grace periods added.',
     'section.add.operating_centres' => 'W Operating Centre added',
     'section.add.people' => 'W Person added',
     'section.add.safety' => 'W Safety inspector added',

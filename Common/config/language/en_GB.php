@@ -1910,6 +1910,7 @@ return array(
     'section.add.business_details' => 'Subsidiary company added',
     'section.add.conditions_undertakings' => 'Condition / undertaking added successfully',
     'section.add.convictions_penalties' => 'Offence added',
+    'section.add.grace-periods' => 'Licence grace periods added.',
     'section.add.operating_centres' => 'Operating Centre added',
     'section.add.people' => 'Person added',
     'section.add.safety' => 'Safety inspector added',
