@@ -1558,7 +1558,7 @@ return array(
     'lva.section.title.business_type' => 'Business type',
     'lva.section.title.community_licences' => 'Community licences',
     'lva.section.title.conditions_undertakings' => 'Conditions and undertakings',
-    'lva.section.title.convictions_penalties' => 'Convictions penalties',
+    'lva.section.title.convictions_penalties' => 'Convictions &amp; Penalties',
     'lva.section.title.create-variation-confirmation' => 'Create variation application',
     'lva.section.title.delete' => 'Are you sure you want to remove these records?',
     'lva.section.title.delete-oc' => 'Confirm removal',
