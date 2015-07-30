@@ -2561,7 +2561,7 @@ return array(
     'search-result-label-continuation-date' => 'Continuation date',
     'search-result-label-traffic-area' => 'Traffic area',
     'search-result-label-address' => 'Address',
-    'search-result-label-operating-centre' => 'Operating centre',
+    'entity-view-label-operating-centre' => 'Operating centre',
     'search-result-label-vehicles' => 'Vehicles',
     'search-result-label-trailers' => 'Trailers',
     'search-result-label-name' => 'Name',
@@ -2592,7 +2592,14 @@ return array(
     'entity-view-section-header-registered-company-details' => 'Registered company details',
     'entity-view-label-company-registration-number' => 'Company registration number',
     'entity-view-label-registered-company-name' => 'Registered company name',
-    'entity-view-label-registered-address' => 'Registered address'
+    'entity-view-label-registered-address' => 'Registered address',
+    'entity-view-table-header-vehicles-authorised' => 'Vehicles authorised',
+    'entity-view-table-header-trailers-authorised' => 'Trailers authorised',
+    'entity-view-label-subsidiaries' => 'Subsidiaries',
+    'entity-view-table-header-removed' => 'Removed',
+    'entity-view-table-header-date-added' => 'Date added',
+    'entity-view-table-header-date-removed' => 'Date removed',
+    'entity-view-table-header-interim' => 'Interim'
 
     // Potentially unused (Not found with grep)
 );
