@@ -2602,6 +2602,16 @@ return array(
     'entity-view-table-header-interim' => 'Interim',
     'search-result-section-header-vehicles' => 'Vehicles',
     'search-result-section-header-current-applications' => 'Current applications',
-    'search-result-section-header-conditions-undertakings' => 'Conditions and Undertakings'
+    'search-result-section-header-conditions-undertakings' => 'Conditions and Undertakings',
+
+    'entity-view-table-current-applications.table.variationNumber' => 'VariationNumber',
+    'entity-view-table-current-applications.table.dateReceived' => 'date received',
+    'entity-view-table-current-applications.table.datePublished' => 'Date published',
+    'entity-view-table-current-applications.table.publicationNumber' => 'Publication number',
+    'entity-view-table-current-applications.table.grantDate' => 'Grant date',
+    'entity-view-table-current-applications.table.oooDate' => 'OOO Date',
+    'entity-view-table-current-applications.table.oorDate' => 'OOR Date',
+    'entity-view-table-current-applications.table.variationNumber' => 'VariationNumber',
+    'entity-view-table-current-applications.table.variationNumber' => 'VariationNumber',
     // Potentially unused (Not found with grep)
 );
