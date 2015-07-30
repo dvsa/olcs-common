@@ -12,14 +12,6 @@ class RefData
     const LICENCE_TYPE_STANDARD_NATIONAL = 'ltyp_sn';
     const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
 
-    const ORG_TYPE_LLP = 'org_t_llp';
-    const ORG_TYPE_RC = 'org_t_rc';
-    const ORG_TYPE_PARTNERSHIP = 'org_t_p';
-    const ORG_TYPE_OTHER = 'org_t_pa';
-    const ORG_TYPE_REGISTERED_COMPANY = 'org_t_rc';
-    const ORG_TYPE_SOLE_TRADER = 'org_t_st';
-    const ORG_TYPE_IRFO = 'org_t_ir';
-
     const CASE_TYPE_LICENCE = 'case_t_lic';
     const CASE_TYPE_APPLICATION = 'case_t_app';
     const CASE_TYPE_TM = 'case_t_tm';
@@ -96,6 +88,10 @@ class RefData
      */
     const ORG_TYPE_REGISTERED_COMPANY = 'org_t_rc';
     const ORG_TYPE_SOLE_TRADER = 'org_t_st';
+    const ORG_TYPE_LLP = 'org_t_llp';
+    const ORG_TYPE_PARTNERSHIP = 'org_t_p';
+    const ORG_TYPE_OTHER = 'org_t_pa';
+    const ORG_TYPE_IRFO = 'org_t_ir';
 
     /**
      * Schedule41
