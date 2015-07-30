@@ -445,6 +445,7 @@ return array(
             'currentUser' => 'Common\View\Helper\CurrentUser',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
             'licenceStatus' => 'Common\View\Helper\LicenceStatus',
+            'address' => 'Common\View\Helper\Address',
         )
     ),
     'view_manager' => array(
