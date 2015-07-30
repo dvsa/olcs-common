@@ -9,6 +9,7 @@
 namespace Common\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
+use Zend\View\Helper\EscapeHtml;
 
 /**
  * Address view helper
@@ -17,6 +18,14 @@ use Zend\View\Helper\AbstractHelper;
  */
 class Address extends AbstractHelper
 {
+
+    /**
+     * Html escape helper
+     *
+     * @var EscapeHtml
+     */
+    protected $escapeHtmlHelper;
+
     /**
      * Get the HTML to render an address array
      *
@@ -36,6 +45,7 @@ class Address extends AbstractHelper
         ]
     ) {
         $parts = array();
+        $escapeHtml = $this->getEscapeHtmlHelper();
 
         if (isset($address['countryCode']['id'])) {
             $address['countryCode'] = $address['countryCode']['id'];
@@ -45,10 +55,32 @@ class Address extends AbstractHelper
 
         foreach ($fields as $item) {
             if (isset($address[$item]) && !empty($address[$item])) {
-                $parts[] = $address[$item];
+                $parts[] = $escapeHtml($address[$item]);
             }
         }
 
         return implode(', ', $parts);
+    }
+
+    /**
+     * Retrieve the escapeHtml helper
+     *
+     * @return EscapeHtml
+     */
+    private function getEscapeHtmlHelper()
+    {
+        if ($this->escapeHtmlHelper) {
+            return $this->escapeHtmlHelper;
+        }
+
+        if (method_exists($this->getView(), 'plugin')) {
+            $this->escapeHtmlHelper = $this->view->plugin('escapehtml');
+        }
+
+        if (!$this->escapeHtmlHelper instanceof EscapeHtml) {
+            $this->escapeHtmlHelper = new EscapeHtml();
+        }
+
+        return $this->escapeHtmlHelper;
     }
 }
