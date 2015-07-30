@@ -2604,14 +2604,20 @@ return array(
     'search-result-section-header-current-applications' => 'Current applications',
     'search-result-section-header-conditions-undertakings' => 'Conditions and Undertakings',
 
-    'entity-view-table-current-applications.table.variationNumber' => 'VariationNumber',
-    'entity-view-table-current-applications.table.dateReceived' => 'date received',
+    'entity-view-table-current-applications.table.variationNumber' => 'Variation number',
+    'entity-view-table-current-applications.table.dateReceived' => 'Date received',
     'entity-view-table-current-applications.table.datePublished' => 'Date published',
     'entity-view-table-current-applications.table.publicationNumber' => 'Publication number',
     'entity-view-table-current-applications.table.grantDate' => 'Grant date',
     'entity-view-table-current-applications.table.oooDate' => 'OOO Date',
     'entity-view-table-current-applications.table.oorDate' => 'OOR Date',
-    'entity-view-table-current-applications.table.variationNumber' => 'VariationNumber',
-    'entity-view-table-current-applications.table.variationNumber' => 'VariationNumber',
+    'entity-view-table-current-applications.table.objectionRepresentationMade' =>
+        'Objection or representation made?',
+
+    'entity-view-table-conditions-undertakings.table.description' => 'Description',
+    'entity-view-table-conditions-undertakings.table.type' => 'Type',
+    'entity-view-table-conditions-undertakings.table.dateAdded' => 'Date added',
+    'entity-view-table-conditions-undertakings.table.fulfilled' => 'Fulfilled',
+    'entity-view-table-conditions-undertakings.table.status' => 'Status'
     // Potentially unused (Not found with grep)
 );
