@@ -260,6 +260,8 @@ abstract class AbstractTrailersController extends AbstractController
      */
     protected function alterForm(FormInterface $form, $table)
     {
+        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'form-actions->saveAndContinue');
+
         $translator = $this->getServiceLocator()->get('translator');
 
         $form->get('table')
