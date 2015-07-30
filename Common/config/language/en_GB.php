@@ -2599,7 +2599,9 @@ return array(
     'entity-view-table-header-removed' => 'Removed',
     'entity-view-table-header-date-added' => 'Date added',
     'entity-view-table-header-date-removed' => 'Date removed',
-    'entity-view-table-header-interim' => 'Interim'
-
+    'entity-view-table-header-interim' => 'Interim',
+    'search-result-section-header-vehicles' => 'Vehicles',
+    'search-result-section-header-current-applications' => 'Current applications',
+    'search-result-section-header-conditions-undertakings' => 'Conditions and Undertakings'
     // Potentially unused (Not found with grep)
 );
