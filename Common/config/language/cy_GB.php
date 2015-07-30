@@ -1489,6 +1489,8 @@ return array(
     'licence_goods-trailers_trailer.table.tableEmptyMessage' => 'W No trailers found for this licence.',
     'licence_goods-trailers_trailer.table.title' => 'W Licence Trailers',
     'licence_goods-trailers_trailer.table.trailerNo' => 'W Trailer No.',
+    'licence_type_of_licence_change' => 'W Making changes to licence type will cause discs to be reissued and may cause
+        other effects (e.g. re-issue of community licences)',
     'licence_type_of_licence_confirmation' => 'W In order to change your type of licence you must create a variation
         application, Would you like to proceed?',
     'list-of-convictions' => 'W List of convictions',
