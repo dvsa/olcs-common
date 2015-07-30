@@ -52,5 +52,5 @@ class TrafficArea
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $hiddenId = null;
+    //public $hiddenId = null;
 }

@@ -85,7 +85,10 @@ class AbstractVariationControllerTest extends MockeryTestCase
             ->andReturn($mockRequest)
             ->shouldReceive('params')
             ->with('licence')
-            ->andReturn(123);
+            ->andReturn(123)
+            ->shouldReceive('params')
+            ->with('redirectRoute')
+            ->andReturnNull();
 
         $mockForm->shouldReceive('isValid')
             ->andReturn(true);

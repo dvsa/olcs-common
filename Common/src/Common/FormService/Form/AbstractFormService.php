@@ -21,6 +21,9 @@ abstract class AbstractFormService implements FormServiceInterface, FormHelperAw
 {
     use FormHelperAwareTrait;
 
+    /**
+     * @var FormServiceManager
+     */
     protected $formServiceLocator;
 
     public function setFormServiceLocator(FormServiceManager $formServiceLocator)
@@ -28,8 +31,16 @@ abstract class AbstractFormService implements FormServiceInterface, FormHelperAw
         $this->formServiceLocator = $formServiceLocator;
     }
 
+    /**
+     * @return FormServiceManager
+     */
     public function getFormServiceLocator()
     {
         return $this->formServiceLocator;
+    }
+
+    public function getServiceLocator()
+    {
+        return $this->getFormServiceLocator()->getServiceLocator();
     }
 }

@@ -432,6 +432,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
         ]
     );
 
+    /**
+     * @todo migrate me
+     */
     protected $operatingCentresDataBundle = array(
         'children' => array(
             'licence' => array(
