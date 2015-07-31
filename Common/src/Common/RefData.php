@@ -83,4 +83,10 @@ class RefData
      */
     const ORG_TYPE_REGISTERED_COMPANY = 'org_t_rc';
     const ORG_TYPE_SOLE_TRADER = 'org_t_st';
+
+    /**
+     * Schedule41
+     */
+    const STATUS_APPROVED = 's4_sts_approved';
+    const STATUS_REFUSED = 's4_sts_refused';
 }
