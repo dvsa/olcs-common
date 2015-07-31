@@ -76,6 +76,7 @@ class TmOtherLicenceDetails
      * @Form\Attributes({"class":"long","id":"hoursPerWeek"})
      * @Form\Options({"label":"transport-manager.other-licence.form.hours-per-week"})
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
+     * @Form\Validator({"name":"Digits"})
      * @Form\Type("Text")
      */
     public $hoursPerWeek = null;

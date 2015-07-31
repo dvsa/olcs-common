@@ -526,6 +526,7 @@ class LicenceEntityService extends AbstractLvaEntityService
      *
      * @param int $licenceId
      * @param int $trafficAreaId
+     * @NOTE this has been migrated [UpdateTrafficArea]
      */
     public function setTrafficArea($licenceId, $trafficAreaId = null)
     {
@@ -543,6 +544,7 @@ class LicenceEntityService extends AbstractLvaEntityService
      *
      * @param int $licenceId
      * @param int $enforcementAreaId
+     * @todo maybe remove?
      */
     public function setEnforcementArea($licenceId, $enforcementAreaId)
     {

@@ -32,6 +32,7 @@ class TrafficAreaEnforcementAreaEntityService extends AbstractEntityService
      * a select element
      *
      * @return array
+     * @todo maybe remove
      */
     public function getValueOptions($trafficArea)
     {

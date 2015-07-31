@@ -3,10 +3,7 @@
 /**
  * OpCenterDeltaSum.php
  */
-
 namespace Common\Service\Table\Formatter;
-
-use Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter;
 
 /**
  * Class OpCenterDeltaSum
@@ -36,9 +33,9 @@ class OpCentreDeltaSum implements FormatterInterface
         if (isset($column['name'])) {
             foreach ($data as $operatingCenter) {
                 switch ($operatingCenter['action']) {
-                    case VariationOperatingCentreAdapter::ACTION_UPDATED:
-                    case VariationOperatingCentreAdapter::ACTION_EXISTING:
-                    case VariationOperatingCentreAdapter::ACTION_ADDED:
+                    case 'U':
+                    case 'E':
+                    case 'A':
                         $sum += $operatingCenter[$column['name']];
                         break;
                     default:

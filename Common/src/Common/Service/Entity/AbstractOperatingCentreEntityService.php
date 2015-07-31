@@ -19,6 +19,7 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
      * Address summary data
      *
      * @var array
+     * @todo migrate
      */
     protected $addressSummaryBundle = array(
         'children' => array(
@@ -90,6 +91,9 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
         return $this->getAll(array($this->type => $lvaId), $this->listBundle);
     }
 
+    /**
+     * @todo migrate me
+     */
     public function getAddressSummaryData($lvaId)
     {
         $query = array($this->type => $lvaId);
