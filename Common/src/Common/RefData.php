@@ -87,6 +87,6 @@ class RefData
     /**
      * Schedule41
      */
-    const STATUS_APPROVED = 's4_sts_approved';
-    const STATUS_REFUSED = 's4_sts_refused';
+    const S4_STATUS_APPROVED = 's4_sts_approved';
+    const S4_STATUS_REFUSED = 's4_sts_refused';
 }

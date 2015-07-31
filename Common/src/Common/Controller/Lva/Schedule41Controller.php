@@ -12,6 +12,7 @@ use Common\BusinessService\BusinessServiceAwareInterface;
 use Common\BusinessService\BusinessServiceAwareTrait;
 use Common\BusinessService\Response;
 
+use Dvsa\Olcs\Transfer\Command\Application\Schedule41Reset;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\LicenceByNumber;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41;
@@ -132,7 +133,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
                 $this->flashMessenger()
                     ->addSuccessMessage('lva.section.title.schedule41.success');
 
-                return $this->redirect()->toRoute(
+                return $this->redirect()->toRouteAjax(
                     'lva-application/operating_centres',
                     array(
                         'application' => $this->params('application')
@@ -206,7 +207,57 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
                     $this->flashMessenger()
                         ->addSuccessMessage('lva.section.title.schedule41.approve.success');
 
-                    return $this->redirect()->toRoute(
+                    return $this->redirect()->toRouteAjax(
+                        'lva-application/overview',
+                        array(
+                            'application' => $this->params('application')
+                        )
+                    );
+                }
+            }
+        }
+
+        return $this->render('schedule41', $form);
+    }
+
+
+    /**
+     * Reset the registered schedule 4/1 request for the application.
+     *
+     * @return \Zend\Http\Response|ViewModel
+     */
+    public function resetSchedule41Action()
+    {
+        $request = $this->getRequest();
+
+        $form = $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createFormWithRequest(
+                'GenericConfirmation',
+                $request
+            );
+
+        $form->get('messages')->get('message')->setValue('schedule41.reset.application.message');
+        $form->get('form-actions')->get('submit')->setLabel('Reset');
+
+        if ($request->isPost()) {
+            $form->setData((array)$request->getPost());
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $command = Schedule41Reset::create(
+                    [
+                        'id' => $this->params('application'),
+                    ]
+                );
+
+                $response = $this->handleCommand($command);
+
+                if ($response->isOk()) {
+                    $this->flashMessenger()
+                        ->addSuccessMessage('lva.section.title.schedule41.reset.success');
+
+                    return $this->redirect()->toRouteAjax(
                         'lva-application/overview',
                         array(
                             'application' => $this->params('application')
