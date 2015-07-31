@@ -170,24 +170,6 @@ class FeeEntityService extends AbstractLvaEntityService
         return isset($data['application']) ? $data['application'] : null;
     }
 
-    public function getLatestOutstandingFeeForApplication($applicationId)
-    {
-        $params = [
-            'application' => $applicationId,
-            'feeStatus' => array(
-                self::STATUS_OUTSTANDING,
-                self::STATUS_WAIVE_RECOMMENDED
-            ),
-            'sort'  => 'invoicedDate',
-            'order' => 'DESC',
-            'limit' => 1
-        ];
-
-        $data = $this->get($params, $this->latestOutstandingFeeForBundle);
-
-        return !empty($data['Results']) ? $data['Results'][0] : null;
-    }
-
     public function getLatestFeeForBusReg($busRegId)
     {
         $params = [
@@ -256,35 +238,6 @@ class FeeEntityService extends AbstractLvaEntityService
         ];
 
         return $this->getAll($query, $this->outstandingForOrganisationBundle);
-    }
-
-    public function cancelForApplication($applicationId)
-    {
-        $query = array(
-            'application' => $applicationId,
-            'feeStatus' => array(
-                self::STATUS_OUTSTANDING,
-                self::STATUS_WAIVE_RECOMMENDED
-            )
-        );
-
-        $results = $this->getAll($query);
-
-        if (empty($results['Results'])) {
-            return;
-        }
-
-        $updates = array();
-
-        foreach ($results['Results'] as $fee) {
-            $updates[] = array(
-                'id' => $fee['id'],
-                'feeStatus' => self::STATUS_CANCELLED,
-                '_OPTIONS_' => array('force' => true)
-            );
-        }
-
-        $this->multiUpdate($updates);
     }
 
     /**

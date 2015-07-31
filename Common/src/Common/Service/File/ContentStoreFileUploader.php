@@ -101,6 +101,8 @@ class ContentStoreFileUploader extends AbstractFileUploader
             $headers = ['Content-Disposition: attachment; filename="' . $name . '"'];
         }
 
+        // @todo DOCUMENT STORE Remove this line when we migrate to the new content store as it doesn't bother saving
+        // mimetype, so this is null
         $headers['Content-Type'] = $file->getMimeType();
         $headers['Content-Length'] = strlen($fileData);
 

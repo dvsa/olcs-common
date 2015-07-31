@@ -350,9 +350,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             return 'delete.confirmation.text';
         }
 
-        $total = $result['activeVehicleCount'];
-
-        if ($total > $toDelete) {
+        if ($result['activeVehicleCount'] > $toDelete) {
             return 'delete.confirmation.text';
         }
 

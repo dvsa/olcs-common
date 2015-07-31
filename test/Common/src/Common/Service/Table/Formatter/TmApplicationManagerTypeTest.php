@@ -91,8 +91,8 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
                     'tmType' => ['description' => 'desc1']
                 ],
                 'tm_application.table.status.new',
-                ' status new',
-                '<a href="url">desc1</a> status new'
+                'status new',
+                '<a href="url">desc1 status new</a>'
             ],
             [
                 [
@@ -101,8 +101,8 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
                     'tmType' => ['description' => 'desc2']
                 ],
                 'tm_application.table.status.updated',
-                ' status updated',
-                '<a href="url">desc2</a> status updated'
+                'status updated',
+                '<a href="url">desc2 status updated</a>'
             ],
             [
                 [
@@ -111,8 +111,8 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
                     'tmType' => ['description' => 'desc3']
                 ],
                 'tm_application.table.status.removed',
-                ' status removed',
-                '<a href="url">desc3</a> status removed'
+                'status removed',
+                '<a href="url">desc3 status removed</a>'
             ],
             [
                 [

@@ -8,6 +8,8 @@
  */
 namespace Common\Controller\Lva\Traits;
 
+use Dvsa\Olcs\Transfer\Command\Variation\RestoreOperatingCentre;
+
 /**
  * Common variation OC controller logic
  *
@@ -16,22 +18,25 @@ namespace Common\Controller\Lva\Traits;
  */
 trait VariationOperatingCentresControllerTrait
 {
-    /**
-     * Generic delete functionality; usually does the trick but
-     * can be overridden if not
-     */
-    public function deleteAction()
-    {
-        if ($this->getAdapter()->canDeleteRecord($this->params('child_id'))) {
-            return parent::deleteAction();
-        }
-
-        // JS should restrict requests to only valid ones, however we better double check
-        return $this->getAdapter()->processUndeletableResponse();
-    }
-
     public function restoreAction()
     {
-        return $this->getAdapter()->restore();
+        $data = [
+            'id' => $this->params('child_id'),
+            'application' => $this->getIdentifier()
+        ];
+
+        $response = $this->handleCommand(RestoreOperatingCentre::create($data));
+
+        if ($response->isOk()) {
+            return $this->redirect()->toRouteAjax(null, ['action' => null, 'child_id' => null], [], true);
+        }
+
+        if ($response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+        } else {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('Can\'t restore this record');
+        }
+
+        return $this->redirect()->toRouteAjax(null, ['action' => null, 'child_id' => null], [], true);
     }
 }

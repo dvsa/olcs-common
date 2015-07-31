@@ -43,7 +43,7 @@ class VariationLvaServiceTest extends MockeryTestCase
         $this->sm->setService('Helper\Guidance', $mockGuidance);
 
         $mockUrl->shouldReceive('fromRoute')
-            ->with('lva-licence/variation', ['licence' => 123])
+            ->with('lva-licence/variation', ['licence' => 123, 'redirectRoute' => null])
             ->andReturn('URL');
 
         $mockTranslator->shouldReceive('translateReplace')
