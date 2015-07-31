@@ -58,14 +58,17 @@ trait CrudTableTrait
      * Generic delete functionality; usually does the trick but
      * can be overridden if not
      */
-    public function deleteAction()
+    public function deleteAction($doPostSave = true)
     {
         $request = $this->getRequest();
 
         if ($request->isPost()) {
 
             $response = $this->delete();
-            $this->postSave($this->section);
+            // @NOTE tmp override to prevent this on migrated sections
+            if ($doPostSave) {
+                $this->postSave($this->section);
+            }
 
             if ($response instanceof Response) {
                 return $response;

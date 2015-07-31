@@ -307,7 +307,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function currentDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -331,7 +331,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function appliedDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -355,7 +355,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function refusedDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -379,7 +379,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function revokedDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -403,7 +403,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function disqualifiedDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -427,7 +427,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function heldDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -451,7 +451,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function publicInquiryDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -493,7 +493,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
             $this->saveLicence($form, $form->getData());
 
-            return $this->handlePostSave($which);
+            return $this->handlePostSave($which, false);
         }
 
         return $this->render($mode . '_licence_history', $form);
