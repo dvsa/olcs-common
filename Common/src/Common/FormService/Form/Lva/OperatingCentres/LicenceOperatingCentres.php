@@ -21,5 +21,13 @@ class LicenceOperatingCentres extends AbstractOperatingCentres
         $this->getFormServiceLocator()->get('lva-licence')->alterForm($form);
 
         parent::alterForm($form, $params);
+
+        if ($form->get('data')->has('totCommunityLicences')) {
+            $this->getFormHelper()->disableElement($form, 'data->totCommunityLicences');
+            $this->getFormHelper()->lockElement(
+                $form->get('data')->get('totCommunityLicences'),
+                'community-licence-changes-contact-office'
+            );
+        }
     }
 }
