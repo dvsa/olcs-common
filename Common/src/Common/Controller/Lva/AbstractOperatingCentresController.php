@@ -181,25 +181,6 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
 
     protected function alterForm($form)
     {
-        $application = $this->getApplication();
-
-        if ($application['goodsOrPsv'] !== LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-            $form->get('table')->get('table')->getTable()->removeAction('schedule41');
-            return $form;
-        }
-
-        if ($application['status']['id'] !== ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION) {
-            $form->get('table')->get('table')->getTable()->removeAction('schedule41');
-            return $form;
-        }
-
-        $schedule41 = $this->getServiceLocator()
-            ->get('Entity\Schedule41')
-            ->getByApplication($application['id']);
-        if ($schedule41['Count'] > 0) {
-            $form->get('table')->get('table')->getTable()->removeAction('schedule41');
-        }
-
         return $form;
     }
 }
