@@ -27,6 +27,9 @@ use Dvsa\Olcs\Transfer\Command\Licence\UpdateOperatingCentres as LicUpdateOperat
 use Dvsa\Olcs\Transfer\Query\LicenceOperatingCentre\LicenceOperatingCentre;
 use Dvsa\Olcs\Transfer\Query\VariationOperatingCentre\VariationOperatingCentre;
 
+use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ApplicationEntityService;
+
 /**
  * Shared logic between Operating Centres controllers
  *
