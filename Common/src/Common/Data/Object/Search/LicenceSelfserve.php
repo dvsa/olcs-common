@@ -1,28 +1,27 @@
 <?php
-
 namespace Common\Data\Object\Search;
-use Common\Data\Object\Search\Aggregations\Terms\BusRegStatus;
-use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
+
+use Common\Data\Object\Search\Aggregations\Terms as Filter;
 
 /**
- * Class BusReg
+ * Class Licence
  * @package Common\Data\Object\Search
  */
-class BusReg extends InternalSearchAbstract
+class LicenceSelfserve extends InternalSearchAbstract
 {
     /**
      * @var string
      */
-    protected $title = 'Bus registrations';
+    protected $title = 'Licence';
     /**
      * @var string
      */
-    protected $key = 'bus_reg';
+    protected $key = 'licence';
 
     /**
      * @var string
      */
-    protected $searchIndices = 'busreg';
+    protected $searchIndices = 'licence';
 
     /**
      * Contains an array of the instantiated filters classes.
@@ -41,8 +40,10 @@ class BusReg extends InternalSearchAbstract
         if (empty($this->filters)) {
 
             $this->filters = [
-                new TrafficArea(),
-                new BusRegStatus(),
+                new Filter\EntityType(),
+                new Filter\LicenceType(),
+                new Filter\LicenceStatus(),
+                new Filter\TrafficArea(),
             ];
         }
 
@@ -56,32 +57,27 @@ class BusReg extends InternalSearchAbstract
     {
         return [
             [
-                'title' => 'Registration no',
-                'name'=> 'regNo',
+                'title' => 'Licence number',
+                'name'=> 'licNo',
                 'formatter' => function ($data) {
-
-                    return '<a href="/licence/'
-                    . $data['licId'] . '/bus/' . $data['busregId']
-                    . '/details">' . $data['regNo'] . '</a>';
+                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
+            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
                 'formatter' => function ($data) {
 
                     $orgName = $data['orgName'];
+                    if ($data['noOfLicencesHeld'] > 1) {
+                        $orgName .= ' (MLH)';
+                    }
 
                     return '<a href="/operator/' . $data['orgId'] . '">' .$orgName . '</a>';
                 }
             ],
-            ['title' => 'Variation number', 'name'=> 'variationNo'],
-            ['title' => 'Status', 'name'=> 'busRegStatus'],
-            ['title' => 'Date first registered / cancelled', 'name'=> 'date_1stReg'],
-            ['title' => 'Service no', 'name'=> 'serviceNo'],
-            ['title' => 'Start point', 'name'=> 'startPoint'],
-            ['title' => 'Finish point', 'name'=> 'finishPoint'],
-            ['title' => 'Conditions on licence', 'name'=> 'finishPoint']
+            ['title' => 'Trading name', 'name'=> 'tradingName']
         ];
     }
 }

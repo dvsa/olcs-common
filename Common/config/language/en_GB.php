@@ -855,6 +855,56 @@ return array(
     'dashboard.link' => 'Home',
     'dashboard.subtitle' => 'Operator Licensing Ltd.',
     'dashboard.title' => 'Home',
+
+    'index.subtitle' => 'Search the database for operator details, bus services, publications and vehicles.',
+    'index.title' => 'Search',
+
+    'search.what-are-you-looking-for' => 'What would you like to search for?',
+
+    'search.subtitle.operating-centre' => 'Search the database for operating centres.',
+    'search.title.operating-centre' => 'Find Operating centre',
+    'search.subtitle.person' => 'Search the database for people.',
+    'search.title.person' => 'Find a person',
+    'search.subtitle.traffic-commissioner' => 'Search the database for a Traffic Commissioner Publications.',
+    'search.title.traffic-commissioner' => 'Find a traffic commissioner publication',
+    'search.subtitle.bus' => 'Search the database for bus registrations.',
+    'search.title.bus' => 'Find a bus registration',
+    'search.subtitle.operator' => 'Search the database for heavy goods and public service operator details.',
+    'search.title.operator' => 'Find a vehicle operator',
+    'search.subtitle.vehicle-external' => 'Search the database for heavy goods and public service vehicles.',
+    'search.title.vehicle-external' => 'Find a vehicle',
+
+    'search.form.label' => 'Enter keywords',
+    'search.form.hint' => 'Can include operator name, licence number, person, postcode, town or city',
+    'search.page.replaces' => 'This service replaces the VOSA Operator Search',
+
+    'search.form.filter.update_button' => 'Update results',
+
+    'search.operating-centre' => 'Operating Centre',
+    'search.people' => 'People',
+    'search.operator' => 'Vehicle Operator',
+    'search.bus' => 'Bus Registration',
+    'search.vehicle-external' => 'Vehicle',
+    'search.traffic-commissioner' => 'Traffic Commissioner',
+
+    'search.result.title.operating-centre' => 'Operating Centre result',
+    'search.result.subtitle.operating-centre' => 'Operating Centre search result page.',
+
+    'search.result.title.person' => 'Person search result',
+    'search.result.subtitle.person' => 'Person search result page.',
+
+    'search.result.title.operator' => 'Vehicle Operator search result',
+    'search.result.subtitle.operator' => 'Operator search result page.',
+
+    'search.result.title.bus' => 'Bus Registration search result',
+    'search.result.subtitle.bus' => 'Bus Registration search result page.',
+
+    'search.result.title.traffic-commissioner-publication' => 'Traffic Commissioner publication search result',
+    'search.result.subtitle.traffic-commissioner-publication' => 'Traffic Commissioner search result page.',
+
+    'search.result.title.vehicle-external' => 'Vehicle search result',
+    'search.result.subtitle.vehicle-external' => 'Vehicle search result page.',
+
     'date-app-rec' => 'Date app. rec.',
     'date-closed' => 'Date closed',
     'date-created' => 'Date created',
