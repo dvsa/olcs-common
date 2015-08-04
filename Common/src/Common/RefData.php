@@ -13,6 +13,7 @@ class RefData
     const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
 
     const ORG_TYPE_LLP = 'org_t_llp';
+    const ORG_TYPE_RC = 'org_t_rc';
 
     const CASE_TYPE_LICENCE = 'case_t_lic';
     const CASE_TYPE_APPLICATION = 'case_t_app';

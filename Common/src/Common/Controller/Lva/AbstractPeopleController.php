@@ -38,7 +38,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         $adapter = $this->getAdapter();
         $adapter->loadPeopleData($this->lva, $this->getIdentifier());
 
-        $adapter->addMessages();
+        if ($this->location === 'external') {
+            $this->addGuidanceMessage();
+        }
 
         if ($adapter->isSoleTrader()) {
             return $this->handleSoleTrader();
@@ -161,30 +163,24 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         $this->alterFormForLva($form);
 
         $tableHeader = 'selfserve-app-subSection-your-business-people-tableHeader';
-        $guidanceLabel = 'selfserve-app-subSection-your-business-people-guidance';
 
         // needed in here?
         $translator = $this->getServiceLocator()->get('translator');
-
         switch ($organisationTypeId) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
                 $tableHeader .= 'Directors';
-                $guidanceLabel .= 'LC';
                 break;
 
             case OrganisationEntityService::ORG_TYPE_LLP:
                 $tableHeader .= 'Partners';
-                $guidanceLabel .= 'LLP';
                 break;
 
             case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
                 $tableHeader .= 'Partners';
-                $guidanceLabel .= 'P';
                 break;
 
             case OrganisationEntityService::ORG_TYPE_OTHER:
                 $tableHeader .= 'People';
-                $guidanceLabel .= 'O';
                 break;
 
             default:
@@ -200,10 +196,44 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             'title',
             $translator->translate($tableHeader)
         );
+    }
 
-        $form->get('guidance')
-            ->get('guidance')
-            ->setTokens([$guidanceLabel]);
+    private function addGuidanceMessage()
+    {
+        $guidanceLabel = 'selfserve-app-subSection-your-business-people-guidance';
+        switch ($this->getAdapter()->getOrganisationType()) {
+            case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
+                $guidanceLabel .= 'LC';
+                break;
+            case OrganisationEntityService::ORG_TYPE_LLP:
+                $guidanceLabel .= 'LLP';
+                break;
+            case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
+                $guidanceLabel .= 'P';
+                break;
+            case OrganisationEntityService::ORG_TYPE_OTHER:
+                $guidanceLabel .= 'O';
+                break;
+            default:
+                $guidanceLabel = null;
+        }
+
+        if ($this->getAdapter()->canModify()) {
+            if ($guidanceLabel !== null) {
+                $this->getServiceLocator()->get('Helper\Guidance')->append($guidanceLabel);
+            }
+        } else {
+            if ($this->lva === 'licence' &&
+                $this->getAdapter()->isOrganisationLimited() &&
+                $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
+            ) {
+                $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId());
+            } else {
+                $this->getServiceLocator()->get('Helper\Guidance')->append(
+                    'selfserve-app-subSection-your-business-people-guidance-disabled'
+                );
+            }
+        }
     }
 
     private function alterCrudForm($form, $mode, $orgData)
