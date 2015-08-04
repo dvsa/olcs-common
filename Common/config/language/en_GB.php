@@ -1296,7 +1296,7 @@ return array(
     'internal-navigation-transport-manager-processing-notes' => 'Notes',
     'internal-navigation-transport-manager-processing-publications' => 'Publication',
     'internal-navigation-transport-manager-processing-tasks' => 'Tasks',
-    'internal-navigation-unlicensed-operator-profile' => 'Unlicensed operator profile',
+    'internal-navigation-unlicensed-operator-profile' => 'Unlicensed operator',
     'internal-operator-create-new-operator' => 'Create new operator',
     'internal-operator-create-new-unlicensed-operator' => 'Create new unlicensed operator',
     'internal-operator-new-application' => 'New application',
