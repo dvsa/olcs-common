@@ -63,8 +63,6 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             $data = $this->getServiceLocator()->get('Helper\Data')->processDataMap($data, $this->dataMap);
 
             if ($this->saveFinancialHistory($form, $data)) {
-                // @todo This needs to be removed and the update application completion should happen as a sideeffect
-                $this->postSave('financial_history');
                 return $this->completeSection('financial_history');
             }
         }

@@ -73,49 +73,4 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
 
         $this->put($data);
     }
-
-    /**
-     * @todo remove when TM migrated (TransportManager/Details/TransportManagerDetailsResponsibilityController.php)
-     * Get all OC for given application for inspection request listbox
-     *
-     * @param int $applicationId
-     * @return array
-     */
-    public function getForSelect($applicationId)
-    {
-        $data = $this->getAll(['application' => $applicationId], $this->selectBundle);
-
-        $list = [];
-        $deleted = [];
-
-        $addressFields = ['addressLine1', 'town'];
-        $options = ['name' => 'address', 'addressFields' => $addressFields];
-
-        foreach ($data['Results'] as $result) {
-
-            $id = $result['operatingCentre']['id'];
-
-            if ($result['action'] !== 'D') {
-                $list[$id] = Address::format($result['operatingCentre'], $options);
-            } else {
-                $deleted[] = $id;
-            }
-        }
-
-        $licenceId = $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($applicationId);
-
-        $licenceOcData = $this->getServiceLocator()->get('Entity\LicenceOperatingCentre')
-            ->getOperatingCentresForLicence($licenceId);
-
-        foreach ($licenceOcData['Results'] as $result) {
-
-            $id = $result['operatingCentre']['id'];
-
-            if (!in_array($id, $deleted)) {
-                $list[$id] = Address::format($result['operatingCentre'], $options);
-            }
-        }
-
-        return $list;
-    }
 }

@@ -383,7 +383,15 @@ class TableBuilderTest extends MockeryTestCase
             array('foo' => 'bar'),
         );
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $sl = $this->getMockServiceLocator();
+
+        $table = new TableBuilder($sl);
+
+        $sl->get('translator')
+            ->expects($this->any())
+            ->method('translate')
+            ->with('Thing')
+            ->will($this->returnValue('Translated Thing'));
 
         $table->setVariable('title', 'Things');
         $table->setVariable('titleSingular', 'Thing');
@@ -394,7 +402,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $this->assertEquals(1, $table->getTotal());
 
-        $this->assertEquals('Thing', $table->getVariable('title'));
+        $this->assertEquals('Translated Thing', $table->getVariable('title'));
     }
 
     /**

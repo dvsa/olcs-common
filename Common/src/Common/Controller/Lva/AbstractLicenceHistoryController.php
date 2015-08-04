@@ -65,19 +65,14 @@ abstract class AbstractLicenceHistoryController extends AbstractController
                 $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
             }
 
-            if ($form->isValid()) {
+            if ($form->isValid() && $this->saveLicenceHistory($form, $data, $inProgress)) {
 
-                if ($this->saveLicenceHistory($form, $data, $inProgress)) {
+                if ($crudAction !== null) {
 
-                    $this->postSave('licence_history');
-
-                    if ($crudAction !== null) {
-
-                        return $this->handleCrudAction($crudAction);
-                    }
-
-                    return $this->completeSection('licence_history');
+                    return $this->handleCrudAction($crudAction);
                 }
+
+                return $this->completeSection('licence_history');
             }
         }
 
@@ -312,7 +307,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function currentDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -336,7 +331,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function appliedDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -360,7 +355,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function refusedDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -384,7 +379,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function revokedDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -408,7 +403,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function disqualifiedDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -432,7 +427,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function heldDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -456,7 +451,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function publicInquiryDeleteAction()
     {
-        return $this->deleteAction();
+        return $this->deleteAction(false);
     }
 
     /**
@@ -498,7 +493,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
             $this->saveLicence($form, $form->getData());
 
-            return $this->handlePostSave($which);
+            return $this->handlePostSave($which, false);
         }
 
         return $this->render($mode . '_licence_history', $form);

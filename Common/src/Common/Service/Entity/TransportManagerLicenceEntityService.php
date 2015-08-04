@@ -107,31 +107,6 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
     ];
 
     /**
-     * Get transport manager licences
-     *
-     * @param int $id
-     * @param array $status
-     * @return array
-     */
-    public function getTransportManagerLicences($id, $status = [])
-    {
-        $results = $this->get(['transportManager' => $id], $this->dataBundle);
-
-        $finalResults = [];
-
-        foreach ($results['Results'] as $result) {
-
-            if (in_array($result['licence']['status']['id'], $status)) {
-
-                $result['ocCount'] = count($result['operatingCentres']);
-                $finalResults[] = $result;
-            }
-        }
-
-        return $finalResults;
-    }
-
-    /**
      * Get transport manager licence
      *
      * @param int $id

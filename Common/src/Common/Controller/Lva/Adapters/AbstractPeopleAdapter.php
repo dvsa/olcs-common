@@ -178,6 +178,20 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->data['isSoleTrader'];
     }
 
+    /**
+     * Is the Organisation an LLP or LTD company
+     *
+     * @return bool
+     */
+    public function isOrganisationLimited()
+    {
+        $limitedTypes = [
+            \Common\RefData::ORG_TYPE_LLP,
+            \Common\RefData::ORG_TYPE_RC,
+        ];
+        return in_array($this->getOrganisationType(), $limitedTypes);
+    }
+
     public function useDeltas()
     {
         return (isset($this->data['useDeltas']) && $this->data['useDeltas']);
@@ -309,6 +323,15 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     {
         $orgData = $this->getOrganisation();
         return $orgData['type']['id'];
+    }
+
+    public function getLicenceType()
+    {
+        if ($this->application !== null) {
+            return $this->application['licenceType']['id'];
+        }
+
+        return $this->licence['licenceType']['id'];
     }
 
     /**

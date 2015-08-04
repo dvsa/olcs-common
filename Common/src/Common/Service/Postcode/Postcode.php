@@ -13,6 +13,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  * Service to get traffic area by postcode
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @todo maybe remove
  */
 class Postcode implements ServiceLocatorAwareInterface
 {

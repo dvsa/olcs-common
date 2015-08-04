@@ -95,7 +95,7 @@ abstract class AbstractTrailersController extends AbstractController
                 $response = $this->handleCommand($dto);
 
                 if ($response->isOk()) {
-                    return $this->handlePostSave();
+                    return $this->handlePostSave(null, false);
                 }
 
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
@@ -132,7 +132,7 @@ abstract class AbstractTrailersController extends AbstractController
                 $response = $this->handleCommand($dto);
 
                 if ($response->isOk()) {
-                    return $this->handlePostSave();
+                    return $this->handlePostSave(null, false);
                 }
             }
         }
@@ -260,6 +260,8 @@ abstract class AbstractTrailersController extends AbstractController
      */
     protected function alterForm(FormInterface $form, $table)
     {
+        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'form-actions->saveAndContinue');
+
         $translator = $this->getServiceLocator()->get('translator');
 
         $form->get('table')

@@ -13,6 +13,7 @@ class RefData
     const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
 
     const ORG_TYPE_LLP = 'org_t_llp';
+    const ORG_TYPE_RC = 'org_t_rc';
 
     const CASE_TYPE_LICENCE = 'case_t_lic';
     const CASE_TYPE_APPLICATION = 'case_t_app';
@@ -77,4 +78,16 @@ class RefData
 
     const TYPE_CONDITION = 'cdt_con';
     const TYPE_UNDERTAKING = 'cdt_und';
+
+    /**
+     * Organisation types
+     */
+    const ORG_TYPE_REGISTERED_COMPANY = 'org_t_rc';
+    const ORG_TYPE_SOLE_TRADER = 'org_t_st';
+
+    /**
+     * Schedule41
+     */
+    const S4_STATUS_APPROVED = 's4_sts_approved';
+    const S4_STATUS_REFUSED = 's4_sts_refused';
 }

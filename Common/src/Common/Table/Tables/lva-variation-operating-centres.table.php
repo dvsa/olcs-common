@@ -11,7 +11,12 @@ return array(
                 'add' => array('class' => 'primary'),
                 'edit' => array('requireRows' => true),
                 'delete' => array('class' => 'secondary', 'requireRows' => true),
-                'restore' => array('class' => 'secondary', 'requireRows' => true)
+                'restore' => array('class' => 'secondary', 'requireRows' => true),
+                'schedule41' => array(
+                    'class' => 'secondary',
+                    'value' => 'Add schedule 4/1',
+                    'requireRows' => false
+                )
             )
         ),
         'row-disabled-callback' => function ($row) {
@@ -24,6 +29,7 @@ return array(
             'title' => 'application_operating-centres_authorisation.table.address',
             'type' => 'VariationRecordAction',
             'action' => 'edit',
+            'name' => 'operatingCentre->address',
             'formatter' => 'Address',
         ),
         array(

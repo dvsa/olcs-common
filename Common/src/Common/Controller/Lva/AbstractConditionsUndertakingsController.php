@@ -133,7 +133,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
                 $this->update($formData);
             }
 
-            return $this->handlePostSave();
+            return $this->handlePostSave(null, false);
         }
 
         return $this->render($mode . '_condition_undertaking', $form);
