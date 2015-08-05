@@ -657,6 +657,11 @@ return array(
             'lva-licence-conditions_undertakings' => \Common\FormService\Form\Lva\ConditionsUndertakings::class,
             'lva-variation-conditions_undertakings' => \Common\FormService\Form\Lva\ConditionsUndertakings::class,
             'lva-application-conditions_undertakings' => \Common\FormService\Form\Lva\ConditionsUndertakings::class,
+
+            // Financial History form services
+            'lva-licence-financial_history' => \Common\FormService\Form\Lva\FinancialHistory::class,
+            'lva-variation-financial_history' => \Common\FormService\Form\Lva\FinancialHistory::class,
+            'lva-application-financial_history' => \Common\FormService\Form\Lva\FinancialHistory::class,
         ]
     ],
     'business_rule_manager' => [
