@@ -597,9 +597,12 @@ return array(
             'lva-variation' => 'Common\FormService\Form\Lva\Variation',
             'lva-application' => 'Common\FormService\Form\Lva\Application',
             // Business details form services
-            'lva-licence-business_details' => 'Common\FormService\Form\Lva\LicenceBusinessDetails',
-            'lva-variation-business_details' => 'Common\FormService\Form\Lva\VariationBusinessDetails',
-            'lva-application-business_details' => 'Common\FormService\Form\Lva\ApplicationBusinessDetails',
+            'lva-licence-business_details' =>
+                \Common\FormService\Form\Lva\BusinessDetails\LicenceBusinessDetails::class,
+            'lva-variation-business_details' =>
+                \Common\FormService\Form\Lva\BusinessDetails\VariationBusinessDetails::class,
+            'lva-application-business_details' =>
+                Common\FormService\Form\Lva\BusinessDetails\ApplicationBusinessDetails::class,
             // Addresses form services
             'lva-licence-addresses' => 'Common\FormService\Form\Lva\Addresses',
             'lva-variation-addresses' => 'Common\FormService\Form\Lva\Addresses',
@@ -621,8 +624,8 @@ return array(
             'lva-generic-vehicles-vehicle' => 'Common\FormService\Form\Lva\GenericVehiclesVehicle',
             // Type of licence
             'lva-licence-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\LicenceTypeOfLicence::class,
-            'lva-application-type-of-licence'
-                => \Common\FormService\Form\Lva\TypeOfLicence\ApplicationTypeOfLicence::class,
+            'lva-application-type-of-licence' =>
+                \Common\FormService\Form\Lva\TypeOfLicence\ApplicationTypeOfLicence::class,
             'lva-variation-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\VariationTypeOfLicence::class,
 
             // People form services

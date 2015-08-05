@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\FormService\Form\Lva;
+namespace Common\FormService\Form\Lva\BusinessDetails;
 
 use Common\FormService\Form\AbstractFormService;
 use Common\Service\Entity\OrganisationEntityService;
