@@ -653,10 +653,9 @@ return array(
             'lva-variation-financial_history' => \Common\FormService\Form\Lva\FinancialHistory::class,
             'lva-application-financial_history' => \Common\FormService\Form\Lva\FinancialHistory::class,
 
-            // Financial Evidence form services
-            'lva-licence-financial_evidence' => \Common\FormService\Form\Lva\FinancialEvidence::class,
-            'lva-variation-financial_evidence' => \Common\FormService\Form\Lva\FinancialEvidence::class,
-            'lva-application-financial_evidence' => \Common\FormService\Form\Lva\FinancialEvidence::class,
+            // Declarations (undertakings) form services
+            'lva-variation-undertakings' => \Common\FormService\Form\Lva\Undertakings::class,
+            'lva-application-undertakings' => \Common\FormService\Form\Lva\Undertakings::class,
         ]
     ],
     'business_rule_manager' => [
