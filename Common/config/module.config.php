@@ -656,6 +656,11 @@ return array(
             // Declarations (undertakings) form services
             'lva-variation-undertakings' => \Common\FormService\Form\Lva\Undertakings::class,
             'lva-application-undertakings' => \Common\FormService\Form\Lva\Undertakings::class,
+
+            'lva-licence-taxi_phv' => \Common\FormService\Form\Lva\TaxiPhv::class,
+            'lva-variation-taxi_phv' => \Common\FormService\Form\Lva\TaxiPhv::class,
+            'lva-application-taxi_phv' => \Common\FormService\Form\Lva\TaxiPhv::class,
+
         ]
     ],
     'business_rule_manager' => [

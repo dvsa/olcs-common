@@ -8,7 +8,6 @@
 namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * People Form
