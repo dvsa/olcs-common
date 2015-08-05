@@ -107,9 +107,9 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
                 'fields' => [
                     'id' => $conditionUndertakingData['id'],
                     'version' => $conditionUndertakingData['version'],
-                    'conditionType' => $conditionUndertakingData['conditionType']['id'],
+                    'type' => $conditionUndertakingData['conditionType']['id'],
                     'notes' => $conditionUndertakingData['notes'],
-                    'isFulfilled' => $conditionUndertakingData['isFulfilled'],
+                    'fulfilled' => $conditionUndertakingData['isFulfilled'],
                     'attachedTo' => 'cat_lic'
                 ]
             ];

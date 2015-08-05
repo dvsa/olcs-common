@@ -46,17 +46,26 @@ class ApplicationOperatingCentre extends AbstractData implements FactoryInterfac
                 $outputType = $this->getOutputType();
                 foreach ($rawData['operatingCentres'] as $applicationOperatingCentre) {
                     if ($outputType == self::OUTPUT_TYPE_PARTIAL) {
-                        $data[$applicationOperatingCentre['operatingCentre']['id']] =
-                            $applicationOperatingCentre['operatingCentre']['address']['addressLine1'] . ', ' .
-                            $applicationOperatingCentre['operatingCentre']['address']['town'];
+                        $fields = [
+                            'addressLine1',
+                            'town'
+                        ];
                     } else {
-                        $data[$applicationOperatingCentre['operatingCentre']['id']] =
-                            $applicationOperatingCentre['operatingCentre']['address']['addressLine1'] . ', ' .
-                            $applicationOperatingCentre['operatingCentre']['address']['addressLine2'] . ', ' .
-                            $applicationOperatingCentre['operatingCentre']['address']['addressLine3'] . ' ' .
-                            $applicationOperatingCentre['operatingCentre']['address']['addressLine4'] . ' ' .
-                            $applicationOperatingCentre['operatingCentre']['address']['postcode'];
+                        $fields = [
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'town',
+                            'postcode',
+                        ];
                     }
+                    $addressString = '';
+                    foreach ($fields as $field) {
+                        $addressString .= !empty($applicationOperatingCentre['operatingCentre']['address'][$field]) ?
+                            $applicationOperatingCentre['operatingCentre']['address'][$field] . ', ' : '';
+                    }
+                    $data[$applicationOperatingCentre['operatingCentre']['id']] = substr($addressString, 0, -2);
                 }
             }
             $this->setData($id, $data);

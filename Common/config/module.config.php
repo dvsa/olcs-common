@@ -441,6 +441,7 @@ return array(
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
             'licenceStatus' => 'Common\View\Helper\LicenceStatus',
             'address' => 'Common\View\Helper\Address',
+            'personName' => 'Common\View\Helper\PersonName',
         )
     ),
     'view_manager' => array(

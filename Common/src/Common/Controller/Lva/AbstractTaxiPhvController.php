@@ -292,9 +292,14 @@ abstract class AbstractTaxiPhvController extends AbstractController
     {
         $ids = explode(',', $this->params('child_id'));
 
-        $response = $this->handleCommand(
-            \Dvsa\Olcs\Transfer\Command\PrivateHireLicence\DeleteList::create(['ids' => $ids])
-        );
+        if ($this->lva === 'licence') {
+            $command = \Dvsa\Olcs\Transfer\Command\PrivateHireLicence\DeleteList::create(['ids' => $ids]);
+        } else {
+            $command = \Dvsa\Olcs\Transfer\Command\Application\DeleteTaxiPhv::create(
+                ['id' => $this->getIdentifier(), 'ids' => $ids]
+            );
+        }
+        $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException('Failed to delete PrivateHireLicence');
         }
@@ -381,24 +386,29 @@ abstract class AbstractTaxiPhvController extends AbstractController
      */
     protected function create($formData)
     {
-        $response = $this->handleCommand(
-            \Dvsa\Olcs\Transfer\Command\PrivateHireLicence\Create::create(
-                [
-                    'licence' => $this->getLicenceId(),
-                    'privateHireLicenceNo' => $formData['data']['privateHireLicenceNo'],
-                    'councilName' => $formData['contactDetails']['description'],
-                    'address' => [
-                        'addressLine1' => $formData['address']['addressLine1'],
-                        'addressLine2' => $formData['address']['addressLine2'],
-                        'addressLine3' => $formData['address']['addressLine3'],
-                        'addressLine4' => $formData['address']['addressLine4'],
-                        'town' => $formData['address']['town'],
-                        'postcode' => $formData['address']['postcode'],
-                        'countryCode' => $formData['address']['countryCode'],
-                    ]
-                ]
-            )
-        );
+        $params = [
+            'id' => $this->getIdentifier(),
+            'licence' => $this->getLicenceId(),
+            'privateHireLicenceNo' => $formData['data']['privateHireLicenceNo'],
+            'councilName' => $formData['contactDetails']['description'],
+            'address' => [
+                'addressLine1' => $formData['address']['addressLine1'],
+                'addressLine2' => $formData['address']['addressLine2'],
+                'addressLine3' => $formData['address']['addressLine3'],
+                'addressLine4' => $formData['address']['addressLine4'],
+                'town' => $formData['address']['town'],
+                'postcode' => $formData['address']['postcode'],
+                'countryCode' => $formData['address']['countryCode'],
+            ]
+        ];
+
+        if ($this->lva === 'licence') {
+            $command = \Dvsa\Olcs\Transfer\Command\PrivateHireLicence\Create::create($params);
+        } else {
+            $command = \Dvsa\Olcs\Transfer\Command\Application\CreateTaxiPhv::create($params);
+        }
+
+        $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException('Failed creating privateHireLicence');
         }
@@ -412,25 +422,31 @@ abstract class AbstractTaxiPhvController extends AbstractController
      */
     protected function update($formData)
     {
-        $response = $this->handleCommand(
-            \Dvsa\Olcs\Transfer\Command\PrivateHireLicence\Update::create(
-                [
-                    'id' => $this->params('child_id'),
-                    'version' => $formData['data']['version'],
-                    'privateHireLicenceNo' => $formData['data']['privateHireLicenceNo'],
-                    'councilName' => $formData['contactDetails']['description'],
-                    'address' => [
-                        'addressLine1' => $formData['address']['addressLine1'],
-                        'addressLine2' => $formData['address']['addressLine2'],
-                        'addressLine3' => $formData['address']['addressLine3'],
-                        'addressLine4' => $formData['address']['addressLine4'],
-                        'town' => $formData['address']['town'],
-                        'postcode' => $formData['address']['postcode'],
-                        'countryCode' => $formData['address']['countryCode'],
-                    ]
-                ]
-            )
-        );
+        $params = [
+            'version' => $formData['data']['version'],
+            'privateHireLicenceNo' => $formData['data']['privateHireLicenceNo'],
+            'councilName' => $formData['contactDetails']['description'],
+            'address' => [
+                'addressLine1' => $formData['address']['addressLine1'],
+                'addressLine2' => $formData['address']['addressLine2'],
+                'addressLine3' => $formData['address']['addressLine3'],
+                'addressLine4' => $formData['address']['addressLine4'],
+                'town' => $formData['address']['town'],
+                'postcode' => $formData['address']['postcode'],
+                'countryCode' => $formData['address']['countryCode'],
+            ]
+        ];
+
+        if ($this->lva === 'licence') {
+            $params['id'] = $this->params('child_id');
+            $command = \Dvsa\Olcs\Transfer\Command\PrivateHireLicence\Update::create($params);
+        } else {
+            $params['id'] = $this->getIdentifier();
+            $params['privateHireLicence'] = $this->params('child_id');
+            $command = \Dvsa\Olcs\Transfer\Command\Application\UpdateTaxiPhv::create($params);
+        }
+
+        $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException('Failed updating privateHireLicence');
         }

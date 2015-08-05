@@ -96,7 +96,7 @@ class ApplicationOperatingCentreTest extends MockeryTestCase
 
         $output = $this->sut->fetchListOptions($context, $useGroups);
 
-        $this->assertEquals([99 => 'a1, a2, a3 a4 pc'], $output);
+        $this->assertEquals([99 => 'a1, a2, a3, a4, anytown, pc'], $output);
     }
 
     public function testFetchListOptionsPartialAddress()
