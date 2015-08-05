@@ -181,9 +181,9 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
         $params = [
             'id' => $data['fields']['id'],
             'version' => $data['fields']['version'],
-            'type' => $data['fields']['conditionType'],
+            'type' => $data['fields']['type'],
             'notes' => $data['fields']['notes'],
-            'fulfilled' => $data['fields']['isFulfilled'],
+            'fulfilled' => $data['fields']['fulfilled'],
             'attachedTo' => $data['fields']['attachedTo'],
             'operatingCentre' => $data['fields']['operatingCentre'],
         ];
