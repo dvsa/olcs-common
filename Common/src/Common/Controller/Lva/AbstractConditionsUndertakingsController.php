@@ -246,7 +246,10 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $form = $formHelper->createForm('Lva\ConditionsUndertakings');
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm();
 
         $formHelper->populateFormTable($form->get('table'), $this->getTable());
 
