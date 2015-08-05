@@ -47,16 +47,6 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
-    protected $grantDataBundle = [
-        'children' => [
-            'application',
-            'transportManager',
-            'tmType',
-            'operatingCentres',
-            'otherLicences'
-        ]
-    ];
-
     protected $homeContactDetailsBundle = [
         'children' => [
             'application',
@@ -244,35 +234,6 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             ]
         ]
     ];
-
-    public function getGrantDataForApplication($applicationId)
-    {
-        return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
-    }
-
-    /**
-     * Get transport manager applications
-     *
-     * @param int $id
-     * @param array $status
-     * @return array
-     */
-    public function getTransportManagerApplications($id, $status = [])
-    {
-        $results = $this->getAll(['transportManager' => $id, 'action' => '!=D'], $this->dataBundle);
-
-        $finalResults = [];
-
-        foreach ($results['Results'] as &$result) {
-
-            if (in_array($result['application']['status']['id'], $status)) {
-                $result['ocCount'] = count($result['operatingCentres']);
-                $finalResults[] = $result;
-            }
-        }
-
-        return $finalResults;
-    }
 
     /**
      * Get transport manager application

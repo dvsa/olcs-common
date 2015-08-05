@@ -39,34 +39,6 @@ class FormErrorsTest extends MockeryTestCase
         $this->assertSame($this->sut, $sut($form));
     }
 
-    public function testInvokeWithoutMessageWithoutValidated()
-    {
-        $form = m::mock('\Zend\Form\Form');
-
-        $sut = $this->sut;
-
-        // Expectations
-        $form->shouldReceive('hasValidated')
-            ->andReturn(false);
-
-        $this->assertEquals('', $sut($form));
-    }
-
-    public function testInvokeWithoutMessageWithValid()
-    {
-        $form = m::mock('\Zend\Form\Form');
-
-        $sut = $this->sut;
-
-        // Expectations
-        $form->shouldReceive('hasValidated')
-            ->andReturn(true)
-            ->shouldReceive('isValid')
-            ->andReturn(true);
-
-        $this->assertEquals('', $sut($form));
-    }
-
     public function testInvokeRenderWithoutMessages()
     {
         $form = m::mock('\Zend\Form\Form');

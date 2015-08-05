@@ -129,7 +129,7 @@ function translatePartials($partials) {
                 $source = $file->getPathname();
                 $dest = str_replace('en_GB', 'cy_GB', $source);
 
-                $content = '<p><b>Translated to Welsh<b></p>'. file_get_contents($source);
+                $content = '<p><b>Translated to Welsh</b></p>'. file_get_contents($source);
                 file_put_contents($dest, str_replace('en_GB', 'cy_GB', $content));
             }
         }

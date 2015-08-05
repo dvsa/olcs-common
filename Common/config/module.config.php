@@ -68,15 +68,6 @@ return array(
             'LvaVariation/VehiclesPsv' => array(
                 'Common\Controller\Lva\Delegators\VariationVehiclesPsvDelegator'
             ),
-            'LvaLicence/OperatingCentres' => array(
-                'Common\Controller\Lva\Delegators\LicenceOperatingCentreDelegator'
-            ),
-            'LvaVariation/OperatingCentres' => array(
-                'Common\Controller\Lva\Delegators\VariationOperatingCentreDelegator'
-            ),
-            'LvaApplication/OperatingCentres' => array(
-                'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
-            ),
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
             ),
@@ -189,12 +180,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
             'ApplicationVehicleGoodsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
-            'LicenceOperatingCentreAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceOperatingCentreAdapter',
-            'VariationOperatingCentreAdapter'
-                => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
-            'ApplicationOperatingCentreAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
             'VariationFinancialEvidenceAdapter'
                 => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
             'ApplicationFinancialEvidenceAdapter'
@@ -445,6 +430,7 @@ return array(
             'currentUser' => 'Common\View\Helper\CurrentUser',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
             'licenceStatus' => 'Common\View\Helper\LicenceStatus',
+            'address' => 'Common\View\Helper\Address',
         )
     ),
     'view_manager' => array(
@@ -605,6 +591,17 @@ return array(
     ],
     'form_service_manager' => [
         'invokables' => [
+            // OC Forms
+            'lva-licence-operating_centres' => 'Common\FormService\Form\Lva\OperatingCentres\LicenceOperatingCentres',
+            'lva-variation-operating_centres'
+                => 'Common\FormService\Form\Lva\OperatingCentres\VariationOperatingCentres',
+            'lva-application-operating_centres'
+                => 'Common\FormService\Form\Lva\OperatingCentres\ApplicationOperatingCentres',
+            'lva-licence-operating_centre' => 'Common\FormService\Form\Lva\OperatingCentre\CommonOperatingCentre',
+            'lva-variation-operating_centre' => 'Common\FormService\Form\Lva\OperatingCentre\CommonOperatingCentre',
+            'lva-application-operating_centre'
+                => 'Common\FormService\Form\Lva\OperatingCentre\CommonOperatingCentre',
+            // Business type forms
             'lva-application-business_type' => 'Common\FormService\Form\Lva\BusinessType\ApplicationBusinessType',
             'lva-licence-business_type' => 'Common\FormService\Form\Lva\BusinessType\LicenceBusinessType',
             'lva-variation-business_type' => 'Common\FormService\Form\Lva\BusinessType\VariationBusinessType',
@@ -652,7 +649,6 @@ return array(
             'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
             'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
             'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
-            'EnvironmentalComplaint' => 'Common\BusinessRule\Rule\EnvironmentalComplaint',
         ]
     ],
     'business_service_manager' => [
@@ -712,17 +708,12 @@ return array(
             'Admin\User' =>
                 'Common\BusinessService\Service\Admin\User',
             // Cases business services
-            'Cases\Complaint\EnvironmentalComplaint'
-                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaint',
-            'Cases\Complaint\EnvironmentalComplaintTask'
-                => 'Common\BusinessService\Service\Cases\Complaint\EnvironmentalComplaintTask',
             'Cases\Submission\SubmissionAssignmentTask'
             => 'Common\BusinessService\Service\Cases\Submission\SubmissionAssignmentTask',
             'Cases\Submission\Submission' => 'Common\BusinessService\Service\Cases\Submission\Submission',
             // Bus business services
             'Bus\BusReg'
                 => 'Common\BusinessService\Service\Bus\BusReg',
-            'Lva\UpdateContinuationDetail' => 'Common\BusinessService\Service\Lva\UpdateContinuationDetail',
             'CreateSeparatorSheet' => 'Common\BusinessService\Service\CreateSeparatorSheet',
             'Lva\AccessCorrespondence' => 'Common\BusinessService\Service\Lva\AccessCorrespondence',
             // Operator services

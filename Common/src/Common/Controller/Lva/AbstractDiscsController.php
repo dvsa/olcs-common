@@ -205,6 +205,14 @@ abstract class AbstractDiscsController extends AbstractController
                 $disc['discNo'] = $this->getDiscNumberFromDisc($disc);
                 $this->formTableData[] = $disc;
             }
+
+            // sort discs so that "Pending" are at the top
+            uasort(
+                $this->formTableData,
+                function($disc1, $disc2) {
+                    return ($disc1['discNo'] === 'Pending') ? -1 : 1;
+                }
+            );
         }
 
         return $this->formTableData;

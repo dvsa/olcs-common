@@ -20,18 +20,26 @@ class TemplateWorker
 
         $client->setHttpClient($http);
 
+        // @todo DOCUMENT STORE Set this to the new endpoint
         $client->setBaseUri('http://scdv-ap05.sc.npm:8080/hcs');
+        //$client->setBaseUri('http://fs01.olcs.mgt.mtpdvsa:8080/hfs/');
 
         $client->setWorkspace('olcs');
 
         $this->client = $client;
     }
 
+    /**
+     * @todo DOCUMENT STORE Remove this method
+     */
     public function readWorkspace()
     {
         return $this->client->readMeta()['structure']['children'];
     }
 
+    /**
+     * @todo DOCUMENT STORE Remove this method
+     */
     public function deleteFolder($name, $data)
     {
         foreach ($data as $folder) {
@@ -107,11 +115,15 @@ if (isset($argv[2])) {
 $worker = new TemplateWorker($argv);
 
 echo "Reading remote workspace...\n";
-$data = $worker->readWorkspace();
+// @todo DOCUMENT STORE Remove this code block as the new service doesn't allow us to get metadata of folders
+// or recursively remove files. It does allow us to update existing files, the only problem will be that any templates
+// we have REMOVED from the template repo, won't be removed from the document store automatically
+{
+    $data = $worker->readWorkspace();
+    // always clear out tmp; it can get a bit cluttered
+    $worker->deleteFolder('/tmp', $data);
+    // then mirror whatever our directory was
+    $worker->deleteFolder('/' . $baseDir, $data);
+}
 
-// always clear out tmp; it can get a bit cluttered
-$worker->deleteFolder('/tmp', $data);
-
-// then mirror whatever our directory was
-$worker->deleteFolder('/' . $baseDir, $data);
 $worker->uploadFolder($baseDir, $argv[1]);

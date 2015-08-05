@@ -61,31 +61,12 @@ class TransportManagerHelperService extends AbstractHelperService
         ];
     }
 
-    /**
-     * Get transport manager documents
-     *
-     * @return array
-     */
-    public function getResponsibilityFiles($tmId, $tmaId)
-    {
-        $data = $this->getServiceLocator()->get('Entity\TransportManagerApplication')
-            ->getTransportManagerApplication($tmaId);
-
-        return $this->getServiceLocator()->get('Entity\TransportManager')
-            ->getDocuments(
-                $tmId,
-                $data['application']['id'],
-                'application',
-                CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
-                CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
-            );
-    }
-
     public function getConvictionsAndPenaltiesTable($transportManagerId)
     {
-        $results = $this->getServiceLocator()
-            ->get('Entity\PreviousConviction')
-            ->getDataForTransportManager($transportManagerId);
+        $result = $this->handleQuery(
+            \Dvsa\Olcs\Transfer\Query\PreviousConviction\GetList::create(['transportManager' => $transportManagerId])
+        );
+        $results = $result['results'];
 
         return $this->getServiceLocator()->get('Table')->prepareTable(
             'tm.convictionsandpenalties',
@@ -93,11 +74,35 @@ class TransportManagerHelperService extends AbstractHelperService
         );
     }
 
+    /**
+     * Execute a query DTO
+     *
+     * @param \Dvsa\Olcs\Transfer\Query\QueryInterface $dto
+     *
+     * @return array of results
+     * @throws \RuntimeException
+     */
+    protected function handleQuery($dto)
+    {
+        $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
+        $queryService = $this->getServiceLocator()->get('QueryService');
+        $response = $queryService->send($annotationBuilder->createQuery($dto));
+
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error fetching query '. get_class($dto));
+        }
+
+        return $response->getResult();
+    }
+
+
     public function getPreviousLicencesTable($transportManagerId)
     {
-        $results = $this->getServiceLocator()
-            ->get('Entity\OtherLicence')
-            ->getDataForTransportManager($transportManagerId);
+        $result = $this->handleQuery(
+            \Dvsa\Olcs\Transfer\Query\OtherLicence\GetList::create(['transportManager' => $transportManagerId])
+        );
+
+        $results = $result['results'];
 
         return $this->getServiceLocator()->get('Table')->prepareTable(
             'tm.previouslicences',
@@ -215,8 +220,18 @@ class TransportManagerHelperService extends AbstractHelperService
 
     public function getReviewConfig($id)
     {
-        $data = $this->getServiceLocator()->get('Entity\TransportManagerApplication')
-            ->getReviewData($id);
+        $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
+        $queryService = $this->getServiceLocator()->get('QueryService');
+
+        $query = $annotationBuilder->createQuery(
+            \Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails::create(['id' => $id])
+        );
+        $response = $queryService->send($query);
+
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Error getting Transport Manager Application review data');
+        }
+        $data = $response->getResult();
 
         $subTitle = sprintf(
             '%s %s/%s',

@@ -18,15 +18,15 @@ return array(
     ),
     'columns' => array(
         array(
-            'title' => 'transport-manager.convictionsandpenalties.table.offence',
-            'name' => 'categoryText',
+            'title' => 'transport-manager.convictionsandpenalties.table.conviction-date',
+            'name' => 'convictionDate',
+            'formatter' => 'Date',
             'type' => 'Action',
             'action' => 'edit-previous-conviction'
         ),
         array(
-            'title' => 'transport-manager.convictionsandpenalties.table.conviction-date',
-            'name' => 'convictionDate',
-            'formatter' => 'Date'
+            'title' => 'transport-manager.convictionsandpenalties.table.offence',
+            'name' => 'categoryText',
         ),
         array(
             'title' => 'transport-manager.convictionsandpenalties.table.name-of-court',

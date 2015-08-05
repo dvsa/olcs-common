@@ -10,32 +10,18 @@ use Zend\Form\Annotation as Form;
 class OperatingCentreData
 {
     /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $id = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $version = null;
-
-    /**
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired"
+     *     "label": "application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired"
      * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\NumberOfVehicles")
+     * @Form\Validator({"name": "Between", "options": {"min":0, "max":1000000}})
      */
     public $noOfVehiclesRequired = null;
 
     /**
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation-sub-action.data.noOfTrailersRequired"
+     *     "label": "application_operating-centres_authorisation-sub-action.data.noOfTrailersRequired"
      * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\NumberOfVehicles")
+     * @Form\Validator({"name": "Between", "options": {"min":0, "max":1000000}})
      */
     public $noOfTrailersRequired = null;
 
@@ -44,8 +30,7 @@ class OperatingCentreData
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
-     *     "label":
-     * "application_operating-centres_authorisation-sub-action.data.sufficientParking",
+     *     "label": "application_operating-centres_authorisation-sub-action.data.sufficientParking",
      *     "help-block": "Please choose",
      *     "must_be_value": "Y"
      * })
@@ -58,8 +43,7 @@ class OperatingCentreData
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
-     *     "label":
-     * "application_operating-centres_authorisation-sub-action.data.permission",
+     *     "label": "application_operating-centres_authorisation-sub-action.data.permission",
      *     "help-block": "Please choose",
      *     "must_be_value": "Y"
      * })

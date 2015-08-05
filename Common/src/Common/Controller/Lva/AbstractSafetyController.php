@@ -274,7 +274,7 @@ abstract class AbstractSafetyController extends AbstractController
             $response = $this->handleCommand($dto);
 
             if ($response->isOk()) {
-                return $this->handlePostSave();
+                return $this->handlePostSave(null, false);
             }
 
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');

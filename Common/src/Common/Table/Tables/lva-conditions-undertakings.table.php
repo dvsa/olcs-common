@@ -23,7 +23,7 @@ return array(
             'action' => 'edit',
             'formatter' => function ($data, $column) {
                 if (in_array($data['action'], ['U', 'D'])) {
-                    return $data['licConditionVariation']['id'];
+                     return $data['licConditionVariation']['id'];
                 }
 
                 return $data['id'];

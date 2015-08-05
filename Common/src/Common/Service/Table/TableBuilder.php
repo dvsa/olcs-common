@@ -789,9 +789,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->setTotal(isset($data['count']) ? $data['count'] : count($this->rows));
 
         // if there's only one row and we have a singular title, use it
+        $translator = $this->getServiceLocator()->get('translator');
         if ($this->getTotal() == 1) {
             if ($this->getVariable('titleSingular')) {
-                $this->setVariable('title', $this->getVariable('titleSingular'));
+                $this->setVariable('title', $translator->translate($this->getVariable('titleSingular')));
             }
         }
     }
@@ -867,7 +868,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function __toString()
     {
-        return $this->render();
+        try {
+            return $this->render();
+        } catch (\Exception $ex) {
+            $content = $ex->getMessage();
+            $content .= $ex->getTraceAsString();
+
+            return $content;
+        }
     }
 
     /**

@@ -71,9 +71,11 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
         $this->sut->updatePaymentSubmissonForm($form, $actionUrl, true, true, $feeAmount);
     }
 
-    public function testUpdatePaymentSubmissonFormWithNoFeesAndIncomplete()
+    /**
+     * @dataProvider noFeeProvider
+     */
+    public function testUpdatePaymentSubmissonFormWithNoFeesAndIncomplete($feeAmount)
     {
-        $feeAmount = '0';
         $actionUrl = 'actionUrl';
 
         $form = m::mock('\Zend\Form\Form')
@@ -101,6 +103,15 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
         $this->sut->updatePaymentSubmissonForm($form, $actionUrl, true, false, $feeAmount);
     }
 
+    public function noFeeProvider()
+    {
+        return [
+            ['0'],
+            [0],
+            ['0.00'],
+            [0.00],
+        ];
+    }
     public function testUpdatePaymentSubmissonFormAlreadySubmitted()
     {
         $form = m::mock('\Zend\Form\Form');

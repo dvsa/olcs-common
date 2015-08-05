@@ -39,6 +39,8 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
         if ($orgType !== OrganisationEntityService::ORG_TYPE_SOLE_TRADER) {
             $formHelper->remove($form, 'form-actions->submit');
         }
+
+        $form->setAttribute('locked', true);
     }
 
     public function lockPartnershipForm(Form $form, $table)

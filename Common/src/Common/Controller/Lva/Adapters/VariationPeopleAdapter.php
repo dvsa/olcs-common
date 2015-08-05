@@ -7,8 +7,6 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Zend\Form\Form;
-
 /**
  * Common (aka Internal) Variation People Adapter
  *
@@ -16,89 +14,51 @@ use Zend\Form\Form;
  */
 class VariationPeopleAdapter extends AbstractPeopleAdapter
 {
-    protected function getTableConfig($orgId)
+    protected function getTableConfig()
     {
-        if ($this->doesNotRequireDeltas($orgId)) {
+        if (!$this->useDeltas()) {
             return 'lva-people';
         }
-
         return 'lva-variation-people';
     }
 
     /**
-     * Extend the abstract behaviour to get the table data for the main form
+     * Get the backend command to create a Person
      *
-     * @return array
+     * @param array $params
+     *
+     * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
      */
-    protected function getTableData($orgId)
+    protected function getCreateCommand($params)
     {
-        if ($this->doesNotRequireDeltas($orgId)) {
-            return parent::getTableData($orgId);
-        }
-
-        $appId = $this->getApplicationAdapter()->getIdentifier();
-
-        $data = $this->getServiceLocator()
-            ->get('Lva\VariationPeople')
-            ->getTableData($orgId, $appId);
-
-        return $this->tableData = $this->formatTableData($data);
+        $params['id'] = $this->getApplicationId();
+        return \Dvsa\Olcs\Transfer\Command\Application\CreatePeople::create($params);
     }
 
-    public function delete($orgId, $id)
+    /**
+     * Get the backend command to update a Person
+     *
+     * @param array $params
+     *
+     * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
+     */
+    protected function getUpdateCommand($params)
     {
-        if ($this->doesNotRequireDeltas($orgId)) {
-            return parent::delete($orgId, $id);
-        }
-
-        $appId = $this->getApplicationAdapter()->getIdentifier();
-
-        return $this->getServiceLocator()
-            ->get('Lva\VariationPeople')
-            ->deletePerson($orgId, $id, $appId);
+        $params['person'] = $params['id'];
+        $params['id'] = $this->getApplicationId();
+        return \Dvsa\Olcs\Transfer\Command\Application\UpdatePeople::create($params);
     }
 
-    public function restore($orgId, $id)
+    /**
+     * Get the backend command to delete a Person
+     *
+     * @param array $params
+     *
+     * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
+     */
+    protected function getDeleteCommand($params)
     {
-        if ($this->doesNotRequireDeltas($orgId)) {
-            return parent::restore($orgId, $id);
-        }
-
-        $appId = $this->getApplicationAdapter()->getIdentifier();
-
-        return $this->getServiceLocator()
-            ->get('Lva\VariationPeople')
-            ->restorePerson($orgId, $id, $appId);
-    }
-
-    public function save($orgId, $data)
-    {
-        if ($this->doesNotRequireDeltas($orgId)) {
-            return parent::save($orgId, $data);
-        }
-
-        $appId = $this->getApplicationAdapter()->getIdentifier();
-
-        return $this->getServiceLocator()
-            ->get('Lva\VariationPeople')
-            ->savePerson($orgId, $data, $appId);
-    }
-
-    public function getPersonPosition($orgId, $personId)
-    {
-        if ($this->doesNotRequireDeltas($orgId)) {
-            return parent::getPersonPosition($orgId, $personId);
-        }
-
-        $appId = $this->getApplicationAdapter()->getIdentifier();
-
-        return $this->getServiceLocator()
-            ->get('Lva\VariationPeople')
-            ->getPersonPosition($orgId, $appId, $personId);
-    }
-
-    protected function doesNotRequireDeltas($orgId)
-    {
-        return $this->isExceptionalOrganisation($orgId);
+        $params['id'] = $this->getApplicationId();
+        return \Dvsa\Olcs\Transfer\Command\Application\DeletePeople::create($params);
     }
 }

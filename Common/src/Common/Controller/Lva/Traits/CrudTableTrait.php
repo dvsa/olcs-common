@@ -25,13 +25,8 @@ trait CrudTableTrait
      *
      * @param string $prefix - if our actions aren't just 'add', 'edit', provide a prefix
      */
-    protected function handlePostSave($prefix = null, $doPostSave = true)
+    protected function handlePostSave($prefix = null)
     {
-        // @NOTE tmp override to prevent this on migrated sections
-        if ($doPostSave) {
-            $this->postSave($this->section);
-        }
-
         // we can't just opt-in to all existing route params because
         // we might have a child ID if we're editing; if so we *don't*
         // want that in the redirect or we'll end up back on the same page
@@ -65,7 +60,6 @@ trait CrudTableTrait
         if ($request->isPost()) {
 
             $response = $this->delete();
-            $this->postSave($this->section);
 
             if ($response instanceof Response) {
                 return $response;

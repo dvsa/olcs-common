@@ -30,6 +30,7 @@ class PostcodeEnforcementAreaEntityService extends AbstractEntityService
     /**
      * @param string $prefix e.g. 'LS9' or 'LS9 6'
      * @return array
+     * @todo maybe remove
      */
     public function getEnforcementAreaByPostcodePrefix($prefix)
     {

@@ -182,7 +182,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             $response = $this->handleCommand($dto);
 
             if ($response->isOk()) {
-                return $this->handlePostSave();
+                return $this->handlePostSave(null, false);
             }
 
             if ($response->isNotFound()) {

@@ -49,6 +49,6 @@ class TmApplicationManagerType implements FormatterInterface
             default:
                 $status = '';
         }
-        return '<a href="' . $url . '">' . $row['tmType']['description'] . '</a>' . $status;
+        return '<a href="' . $url . '">' . trim($row['tmType']['description']  . ' ' . $status) . '</a>';
     }
 }

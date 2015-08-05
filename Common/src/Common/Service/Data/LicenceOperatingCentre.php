@@ -45,18 +45,28 @@ class LicenceOperatingCentre extends AbstractData implements FactoryInterface, L
             if (is_array($rawData['operatingCentres'])) {
                 $outputType = $this->getOutputType();
                 foreach ($rawData['operatingCentres'] as $licenceOperatingCentre) {
+
                     if ($outputType == self::OUTPUT_TYPE_PARTIAL) {
-                        $data[$licenceOperatingCentre['operatingCentre']['id']] =
-                            $licenceOperatingCentre['operatingCentre']['address']['addressLine1'] . ', ' .
-                            $licenceOperatingCentre['operatingCentre']['address']['town'];
+                        $fields = [
+                            'addressLine1',
+                            'town'
+                        ];
                     } else {
-                        $data[$licenceOperatingCentre['operatingCentre']['id']] =
-                            $licenceOperatingCentre['operatingCentre']['address']['addressLine1'] . ', ' .
-                            $licenceOperatingCentre['operatingCentre']['address']['addressLine2'] . ', ' .
-                            $licenceOperatingCentre['operatingCentre']['address']['addressLine3'] . ' ' .
-                            $licenceOperatingCentre['operatingCentre']['address']['addressLine4'] . ' ' .
-                            $licenceOperatingCentre['operatingCentre']['address']['postcode'];
+                        $fields = [
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'town',
+                            'postcode',
+                        ];
                     }
+                    $addressString = '';
+                    foreach ($fields as $field) {
+                        $addressString .= !empty($licenceOperatingCentre['operatingCentre']['address'][$field]) ?
+                            $licenceOperatingCentre['operatingCentre']['address'][$field] . ', ' : '';
+                    }
+                    $data[$licenceOperatingCentre['operatingCentre']['id']] = substr($addressString, 0, -2);
                 }
             }
             $this->setData($id, $data);

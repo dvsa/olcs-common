@@ -10,6 +10,7 @@ namespace Common\Controller\Lva;
 
 use Common\Service\Entity\CommunityLicEntityService;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateCompletion;
 use Zend\View\Model\ViewModel;
 use Common\Data\Mapper\Lva\CommunityLic as CommunityLicMapper;
 use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLic;
@@ -62,7 +63,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             if ($crudAction !== null) {
                 return $this->handleCrudAction($crudAction, ['add', 'office-licence-add']);
             }
-            $this->postSave('community_licences');
+            if ($this->lva !== 'licence') {
+                $this->handleCommand(
+                    UpdateCompletion::create(['id' => $this->getIdentifier(), 'section' => 'communityLicences'])
+                );
+            }
             return $this->completeSection('community_licences');
         }
 

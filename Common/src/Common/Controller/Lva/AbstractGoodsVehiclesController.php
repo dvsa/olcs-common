@@ -65,17 +65,18 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         'application' => ApplicationDeleteGoodsVehicle::class
     ];
 
+    protected $headerData = null;
+
+    protected function checkForAlternativeCrudAction($action)
+    {
+        return null;
+    }
+
     public function indexAction()
     {
         $request = $this->getRequest();
 
-        $dtoData = $this->getFilters();
-        $dtoData['id'] = $this->getIdentifier();
-
-        $dtoClass = $this->loadDataMap[$this->lva];
-
-        $response = $this->handleQuery($dtoClass::create($dtoData));
-        $headerData = $response->getResult();
+        $headerData = $this->getHeaderData();
 
         $formData = [];
         $haveCrudAction = false;
@@ -120,6 +121,14 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
             if ($haveCrudAction) {
 
+                $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
+                    $this->getActionFromCrudAction($crudAction)
+                );
+
+                if ($alternativeCrudResponse !== null) {
+                    return $alternativeCrudResponse;
+                }
+
                 return $this->handleCrudAction($crudAction, ['add', 'print-vehicles']);
             }
 
@@ -127,6 +136,21 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         return $this->renderForm($form, $headerData);
+    }
+
+    protected function getHeaderData()
+    {
+        if ($this->headerData === null) {
+            $dtoData = $this->getFilters();
+            $dtoData['id'] = $this->getIdentifier();
+
+            $dtoClass = $this->loadDataMap[$this->lva];
+
+            $response = $this->handleQuery($dtoClass::create($dtoData));
+            $this->headerData = $response->getResult();
+        }
+
+        return $this->headerData;
     }
 
     public function addAction()
@@ -326,9 +350,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             return 'delete.confirmation.text';
         }
 
-        $total = $result['activeVehicleCount'];
-
-        if ($total > $toDelete) {
+        if ($result['activeVehicleCount'] > $toDelete) {
             return 'delete.confirmation.text';
         }
 

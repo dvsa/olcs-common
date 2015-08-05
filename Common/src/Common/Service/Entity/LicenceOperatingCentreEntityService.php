@@ -39,6 +39,9 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
         return $this->get($id);
     }
 
+    /**
+     * @todo migrate me
+     */
     public function variationDelete($id, $applicationId)
     {
         $addressData = $this->getAddressData($id);
@@ -60,34 +63,13 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
         return $this->getAll(['licence' => $licId], $this->operatingCentresForLicenceBundle);
     }
 
+    /**
+     * @todo maybe remove
+     */
     public function getAuthorityDataForLicence($licId)
     {
         $data = $this->get(['licence' => $licId], $this->authorityDataBundle);
 
         return $data['Results'];
-    }
-
-    /**
-     * Get all OC for given licence for inspection request listbox
-     * 
-     * @param int $licenceId
-     * @return array
-     */
-    public function getAllForInspectionRequest($licenceId)
-    {
-        $query = [
-            'licence' => $licenceId,
-        ];
-        $bundle = [
-            'children' => [
-                'operatingCentre' => [
-                    'children' => [
-                        'address'
-                    ]
-                ],
-                'licence'
-            ]
-        ];
-        return $this->getAll($query, $bundle);
     }
 }

@@ -7,8 +7,6 @@
  */
 namespace Common\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\FormatterInterface;
-
 /**
  * Document Description Formatter
  *
@@ -25,6 +23,10 @@ class DocumentDescription implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
+        if (!isset($data['filename'])) {
+            return $data['description'];
+        }
+
         $urlHelper = $sm->get('Helper\Url');
 
         $url = $urlHelper->fromRoute(

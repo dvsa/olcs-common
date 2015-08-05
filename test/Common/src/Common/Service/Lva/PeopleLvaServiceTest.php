@@ -47,6 +47,7 @@ class PeopleLvaServiceTest extends MockeryTestCase
             ->shouldReceive('get')
             ->with('data')
             ->andReturn($fieldset)
+            ->shouldReceive('setAttribute')->with('locked', true)->once()
             ->getMock();
 
         $this->setService(

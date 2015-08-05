@@ -133,11 +133,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
             $licenceId = $this->params('licence');
 
-            // @todo migrate this to business
             $appId = $processingService->createVariation($licenceId, $data);
-            $this->getServiceLocator()->get('Processing\VariationSection')
-                ->setApplicationId($appId)
-                ->completeSection('type_of_licence');
 
             return $this->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
         }

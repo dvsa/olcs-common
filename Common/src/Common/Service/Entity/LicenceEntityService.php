@@ -350,13 +350,9 @@ class LicenceEntityService extends AbstractLvaEntityService
                                     'isDraft' => 'Y'
                                 )
                             ),
-                            'ocComplaints' => array(
-                                'children' => array(
-                                    'complaint' => array(
-                                        'criteria' => array(
-                                            'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
-                                        )
-                                    )
+                            'complaints' => array(
+                                'criteria' => array(
+                                    'status' => ComplaintEntityService::COMPLAIN_STATUS_OPEN
                                 )
                             ),
                             'conditionUndertakings' => array(
@@ -530,6 +526,7 @@ class LicenceEntityService extends AbstractLvaEntityService
      *
      * @param int $licenceId
      * @param int $trafficAreaId
+     * @NOTE this has been migrated [UpdateTrafficArea]
      */
     public function setTrafficArea($licenceId, $trafficAreaId = null)
     {
@@ -547,6 +544,7 @@ class LicenceEntityService extends AbstractLvaEntityService
      *
      * @param int $licenceId
      * @param int $enforcementAreaId
+     * @todo maybe remove?
      */
     public function setEnforcementArea($licenceId, $enforcementAreaId)
     {
@@ -626,6 +624,9 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $result['Results'][0];
     }
 
+    /**
+     * @todo maybe remove?
+     */
     public function getVariationData($id)
     {
         $data = $this->get($id, $this->typeOfLicenceBundle);

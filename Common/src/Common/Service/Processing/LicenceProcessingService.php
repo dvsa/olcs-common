@@ -10,7 +10,6 @@ namespace Common\Service\Processing;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Data\CategoryDataService;
 
 /**
  * Licence Processing Service
@@ -20,48 +19,6 @@ use Common\Service\Data\CategoryDataService;
 class LicenceProcessingService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
-
-    public function generateInterimDocument($applicationId)
-    {
-        $application = $this->getServiceLocator()
-            ->get('Entity\Application')
-            ->getDataForProcessing($applicationId);
-
-        $licenceId = $application['licence']['id'];
-
-        if ($application['isVariation']) {
-            $template = 'GV_INT_DIRECTION_V1';
-            $description = "GV Interim Direction";
-        } else {
-            $template = 'GV_INT_LICENCE_V1';
-            $description = "GV Interim Licence";
-        }
-
-        $storedFile = $this->getServiceLocator()
-            ->get('Helper\DocumentGeneration')
-            ->generateAndStore(
-                $template,
-                $description,
-                [
-                    'application' => $applicationId,
-                    'licence' => $licenceId
-                ]
-            );
-
-        $this->getServiceLocator()->get('Helper\DocumentDispatch')->process(
-            $storedFile,
-            [
-                'description' => $description,
-                'filename'    => str_replace(" ", "_", $description) . '.rtf',
-                'application' => $applicationId,
-                'licence'     => $licenceId,
-                'category'    => CategoryDataService::CATEGORY_LICENSING,
-                'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
-                'isExternal'  => false,
-                'isScan'      => false
-            ]
-        );
-    }
 
     /**
      * Void all active discs attached to a licence

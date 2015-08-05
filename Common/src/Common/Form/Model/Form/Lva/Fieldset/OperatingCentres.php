@@ -16,7 +16,7 @@ class OperatingCentres
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $licenceType = null;
+    public $version = null;
 
     /**
      * @Form\Attributes({"class":"short","id":""})
@@ -57,16 +57,13 @@ class OperatingCentres
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
      * @Form\Attributes({"class":"short","id":"","required":false})
-     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthVehicles"})
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreTotalVehicleAuthorisationsValidator"})
-     * @Form\Validator({
-     *     "name": "Common\Form\Elements\Validators\EqualSum",
-     *     "options": {
-     *         "errorPrefix": "lva-operating-centre-tot-auth-vehicles-equalsum",
-     *         "fields":{"totAuthSmallVehicles", "totAuthMediumVehicles", "totAuthLargeVehicles"}
-     *     }
+     * @Form\Options({
+     *     "label": "application_operating-centres_authorisation.data.totAuthVehicles",
+     *     "short-label": "totAuthVehicles"
      * })
-     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
+     * @Form\Validator({"name": "Digits"})
+     * @Form\Validator({"name": "Between", "options": {"min":1, "max": 1000000}})
+     * @Form\Filter({"name":"\Zend\Filter\Null", "options":{"type":"string"}})
      */
     public $totAuthVehicles = null;
 
@@ -76,9 +73,13 @@ class OperatingCentres
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
      * @Form\Attributes({"class":"short","id":"","required":false})
-     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthTrailers"})
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreTrailerAuthorisationsValidator"});
-     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
+     * @Form\Options({
+     *     "label": "application_operating-centres_authorisation.data.totAuthTrailers",
+     *     "short-label": "totAuthTrailers"
+     * })
+     * @Form\Validator({"name": "Digits"})
+     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
+     * @Form\Filter({"name":"\Zend\Filter\Null", "options":{"type":"string"}})
      */
     public $totAuthTrailers = null;
 
@@ -87,50 +88,7 @@ class OperatingCentres
      * @Form\Options({"label": "application_operating-centres_authorisation.data.totCommunityLicences"})
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreCommunityLicencesValidator"})
      * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
      */
     public $totCommunityLicences = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $id = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $version = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $noOfOperatingCentres = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $minVehicleAuth = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $maxVehicleAuth = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $minTrailerAuth = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $maxTrailerAuth = null;
 }

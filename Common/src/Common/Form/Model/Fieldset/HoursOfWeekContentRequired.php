@@ -12,6 +12,7 @@ class HoursOfWeekContentRequired
 {
     /**
      * @Form\Type("Text")
+     * @Form\AllowEmpty(true)
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
