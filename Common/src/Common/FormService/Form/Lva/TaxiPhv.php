@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FinancialEvidence Form
+ * TaxiPhv Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
@@ -10,15 +10,15 @@ namespace Common\FormService\Form\Lva;
 use Common\FormService\Form\AbstractFormService;
 
 /**
- * FinancialEvidence Form
+ * TaxiPhv Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FinancialEvidence extends AbstractFormService
+class TaxiPhv extends AbstractFormService
 {
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\FinancialEvidence');
+        $form = $this->getFormHelper()->createForm('Lva\TaxiPhv');
 
         $this->alterForm($form);
 
