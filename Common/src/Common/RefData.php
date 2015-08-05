@@ -100,13 +100,13 @@ class RefData
     /**
      * Bus Reg Status
      */
-    const STATUS_NEW = 'breg_s_new';
-    const STATUS_VAR = 'breg_s_var';
-    const STATUS_CANCEL = 'breg_s_cancellation';
-    const STATUS_ADMIN = 'breg_s_admin';
-    const STATUS_REGISTERED = 'breg_s_registered';
-    const STATUS_REFUSED = 'breg_s_refused';
-    const STATUS_WITHDRAWN = 'breg_s_withdrawn';
-    const STATUS_CNS = 'breg_s_cns';
-    const STATUS_CANCELLED = 'breg_s_cancelled';
+    const BUSREG_STATUS_NEW = 'breg_s_new';
+    const BUSREG_STATUS_VARIATION = 'breg_s_var';
+    const BUSREG_STATUS_CANCELLATION = 'breg_s_cancellation';
+    const BUSREG_STATUS_ADMIN = 'breg_s_admin';
+    const BUSREG_STATUS_REGISTERED = 'breg_s_registered';
+    const BUSREG_STATUS_REFUSED = 'breg_s_refused';
+    const BUSREG_STATUS_WITHDRAWN = 'breg_s_withdrawn';
+    const BUSREG_STATUS_CNS = 'breg_s_cns';
+    const BUSREG_STATUS_CANCELLED = 'breg_s_cancelled';
 }
