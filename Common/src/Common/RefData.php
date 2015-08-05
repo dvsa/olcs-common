@@ -92,6 +92,7 @@ class RefData
     const ORG_TYPE_PARTNERSHIP = 'org_t_p';
     const ORG_TYPE_OTHER = 'org_t_pa';
     const ORG_TYPE_IRFO = 'org_t_ir';
+    const ORG_TYPE_RC = 'org_t_rc';
 
     /**
      * Schedule41
