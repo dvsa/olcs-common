@@ -639,19 +639,24 @@ return array(
             'lva-variation-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\VariationTypeOfLicence::class,
 
             // People form services
-            'lva-licence-people' => 'Common\FormService\Form\Lva\People',
-            'lva-variation-people' => 'Common\FormService\Form\Lva\People',
-            'lva-application-people' => 'Common\FormService\Form\Lva\People',
+            'lva-licence-people' => \Common\FormService\Form\Lva\People::class,
+            'lva-variation-people' => \Common\FormService\Form\Lva\People::class,
+            'lva-application-people' => \Common\FormService\Form\Lva\People::class,
 
             // Community Licences form services
-            'lva-licence-community_licences' => 'Common\FormService\Form\Lva\CommunityLicences',
-            'lva-variation-community_licences' => 'Common\FormService\Form\Lva\CommunityLicences',
-            'lva-application-community_licences' => 'Common\FormService\Form\Lva\CommunityLicences',
+            'lva-licence-community_licences' => \Common\FormService\Form\Lva\CommunityLicences::class,
+            'lva-variation-community_licences' => \Common\FormService\Form\Lva\CommunityLicences::class,
+            'lva-application-community_licences' => \Common\FormService\Form\Lva\CommunityLicences::class,
 
-            // Community Licences form services
-            'lva-licence-safety' => 'Common\FormService\Form\Lva\Safety',
-            'lva-variation-safety' => 'Common\FormService\Form\Lva\Safety',
-            'lva-application-safety' => 'Common\FormService\Form\Lva\Safety',
+            // Safety form services
+            'lva-licence-safety' => \Common\FormService\Form\Lva\Safety::class,
+            'lva-variation-safety' => \Common\FormService\Form\Lva\Safety::class,
+            'lva-application-safety' => \Common\FormService\Form\Lva\Safety::class,
+
+            // Conditions and Undertakings form services
+            'lva-licence-conditions_undertakings' => \Common\FormService\Form\Lva\ConditionsUndertakings::class,
+            'lva-variation-conditions_undertakings' => \Common\FormService\Form\Lva\ConditionsUndertakings::class,
+            'lva-application-conditions_undertakings' => \Common\FormService\Form\Lva\ConditionsUndertakings::class,
         ]
     ],
     'business_rule_manager' => [
