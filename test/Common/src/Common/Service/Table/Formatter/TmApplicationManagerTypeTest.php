@@ -112,7 +112,7 @@ class TmApplicationManagerTypeTest extends MockeryTestCase
                 ],
                 'tm_application.table.status.removed',
                 'status removed',
-                '<a href="url">desc3 status removed</a>'
+                'desc3 status removed'
             ],
             [
                 [
