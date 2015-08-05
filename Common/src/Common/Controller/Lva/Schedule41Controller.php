@@ -17,6 +17,7 @@ use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\LicenceByNumber;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Approve;
+use Dvsa\Olcs\Transfer\Command\Application\Schedule41Refuse;
 
 use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
@@ -220,7 +221,6 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         return $this->render('schedule41', $form);
     }
 
-
     /**
      * Reset the registered schedule 4/1 request for the application.
      *
@@ -256,6 +256,55 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
                 if ($response->isOk()) {
                     $this->flashMessenger()
                         ->addSuccessMessage('lva.section.title.schedule41.reset.success');
+
+                    return $this->redirect()->toRouteAjax(
+                        'lva-application/overview',
+                        array(
+                            'application' => $this->params('application')
+                        )
+                    );
+                }
+            }
+        }
+
+        return $this->render('schedule41', $form);
+    }
+
+    /**
+     * Refuse the registered schedule 4/1 request for the application.
+     *
+     * @return \Zend\Http\Response|ViewModel
+     */
+    public function refuseSchedule41Action()
+    {
+        $request = $this->getRequest();
+
+        $form = $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createFormWithRequest(
+                'GenericConfirmation',
+                $request
+            );
+
+        $form->get('messages')->get('message')->setValue('schedule41.refuse.application.message');
+        $form->get('form-actions')->get('submit')->setLabel('Refuse');
+
+        if ($request->isPost()) {
+            $form->setData((array)$request->getPost());
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $command = Schedule41Refuse::create(
+                    [
+                        'id' => $this->params('application'),
+                    ]
+                );
+
+                $response = $this->handleCommand($command);
+
+                if ($response->isOk()) {
+                    $this->flashMessenger()
+                        ->addSuccessMessage('lva.section.title.schedule41.refuse.success');
 
                     return $this->redirect()->toRouteAjax(
                         'lva-application/overview',
@@ -409,7 +458,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
 
         if (isset($errors['is-psv'])) {
 
-            foreach ($errors['dueDate'][0] as $key => $message) {
+            foreach ($errors['is-psv'] as $key => $message) {
                 $formMessages['licence-number']['licenceNumber'][] = $message;
             }
 
