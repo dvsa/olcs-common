@@ -633,7 +633,22 @@ return array(
             'lva-licence-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\LicenceTypeOfLicence::class,
             'lva-application-type-of-licence'
                 => \Common\FormService\Form\Lva\TypeOfLicence\ApplicationTypeOfLicence::class,
-            'lva-variation-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\VariationTypeOfLicence::class
+            'lva-variation-type-of-licence' => \Common\FormService\Form\Lva\TypeOfLicence\VariationTypeOfLicence::class,
+
+            // People form services
+            'lva-licence-people' => 'Common\FormService\Form\Lva\People',
+            'lva-variation-people' => 'Common\FormService\Form\Lva\People',
+            'lva-application-people' => 'Common\FormService\Form\Lva\People',
+
+            // Community Licences form services
+            'lva-licence-community_licences' => 'Common\FormService\Form\Lva\CommunityLicences',
+            'lva-variation-community_licences' => 'Common\FormService\Form\Lva\CommunityLicences',
+            'lva-application-community_licences' => 'Common\FormService\Form\Lva\CommunityLicences',
+
+            // Community Licences form services
+            'lva-licence-safety' => 'Common\FormService\Form\Lva\Safety',
+            'lva-variation-safety' => 'Common\FormService\Form\Lva\Safety',
+            'lva-application-safety' => 'Common\FormService\Form\Lva\Safety',
         ]
     ],
     'business_rule_manager' => [

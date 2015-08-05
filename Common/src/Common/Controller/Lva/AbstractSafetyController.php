@@ -389,7 +389,11 @@ abstract class AbstractSafetyController extends AbstractController
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         /** @var \Zend\Form\Form $form */
-        $form = $formHelper->createForm('Lva\Safety');
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm();
+
         $formHelper->populateFormTable(
             $form->get('table'),
             $this->getServiceLocator()->get('Table')->prepareTable('lva-safety', $this->workshops)

@@ -115,7 +115,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $form = $formHelper->createForm('Lva\CommunityLicences');
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm();
 
         $table = $this->alterTable($this->getTable());
         $formHelper->populateFormTable($form->get('table'), $table);
