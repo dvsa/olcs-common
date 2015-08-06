@@ -115,48 +115,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
             if ($form->isValid()) {
 
-                $dtoData = OperatingCentres::mapFromForm($form->getData());
-                $dtoData['id'] = $this->getIdentifier();
+                $response = $this->processUpdateOc($form, $crudAction);
 
-                if ($crudAction !== null) {
-                    $dtoData['partial'] = true;
-                    $dtoData['partialAction'] = $this->getActionFromCrudAction($crudAction);
-                } else {
-                    $dtoData['partial'] = false;
-                }
-
-                $dtoClass = $this->updateCommandMap[$this->lva];
-                $response = $this->handleCommand($dtoClass::create($dtoData));
-
-                if ($response->isOk()) {
-                    if ($crudAction !== null) {
-                        return $this->handleCrudAction($crudAction);
-                    }
-
-                    return $this->completeSection('operating_centres');
-                }
-
-                if ($response->isServerError()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
-                } else {
-                    $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
-
-                    $errors = $response->getResult()['messages'];
-
-                    if ($crudAction !== null) {
-                        if (!empty($errors)) {
-
-                            foreach ($errors as $error) {
-                                $fm->addErrorMessage($error);
-                            }
-                        } else {
-                            $fm->addUnknownError();
-                        }
-
-                        return $this->redirect()->refreshAjax();
-                    } else {
-                        OperatingCentres::mapFormErrors($form, $errors, $fm);
-                    }
+                if ($response !== null) {
+                    return $response;
                 }
             }
         }
@@ -168,6 +130,53 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         return $this->render('operating_centres', $form);
+    }
+
+    protected function processUpdateOc($form, $crudAction)
+    {
+        $dtoData = OperatingCentres::mapFromForm($form->getData());
+        $dtoData['id'] = $this->getIdentifier();
+
+        if ($crudAction !== null) {
+            $dtoData['partial'] = true;
+            $dtoData['partialAction'] = $this->getActionFromCrudAction($crudAction);
+        } else {
+            $dtoData['partial'] = false;
+        }
+
+        $dtoClass = $this->updateCommandMap[$this->lva];
+        $response = $this->handleCommand($dtoClass::create($dtoData));
+
+        if ($response->isOk()) {
+            if ($crudAction !== null) {
+                return $this->handleCrudAction($crudAction);
+            }
+
+            return $this->completeSection('operating_centres');
+        }
+
+        if ($response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+        } else {
+            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+            $errors = $response->getResult()['messages'];
+
+            if ($crudAction !== null) {
+                if (!empty($errors)) {
+
+                    foreach ($errors as $error) {
+                        $fm->addErrorMessage($error);
+                    }
+                } else {
+                    $fm->addUnknownError();
+                }
+
+                return $this->redirect()->refreshAjax();
+            } else {
+                OperatingCentres::mapFormErrors($form, $errors, $fm);
+            }
+        }
     }
 
     /**
