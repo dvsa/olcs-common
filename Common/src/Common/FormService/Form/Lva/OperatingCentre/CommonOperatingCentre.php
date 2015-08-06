@@ -52,11 +52,11 @@ class CommonOperatingCentre extends AbstractFormService
 
         if ($params['wouldIncreaseRequireAdditionalAdvertisement']) {
 
-            $form->get('data')->get('noOfVehiclesRequired')->setAttribute('data-current', $params['totAuthVehicles']);
+            $form->get('data')->get('noOfVehiclesRequired')->setAttribute('data-current', $params['currentVehiclesRequired']);
 
             if ($form->get('data')->has('noOfTrailersRequired')) {
                 $form->get('data')->get('noOfTrailersRequired')
-                    ->setAttribute('data-current', $params['totAuthTrailers']);
+                    ->setAttribute('data-current', $params['currentTrailersRequired']);
             }
         }
     }
