@@ -101,7 +101,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
                 return $this->redirect()->toRoute(
                     'lva-application/overview',
                     array(
-                        'application' => $this->params('applicatOion')
+                        'application' => $this->params('application')
                     )
                 );
             }
