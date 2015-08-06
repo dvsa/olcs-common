@@ -76,6 +76,11 @@ class OperatingCentresTest extends MockeryTestCase
                 'table' => [
                     'bar7'
                 ]
+            ],
+            'dataTrafficArea' => [
+                'enforcementArea' => [
+                    'bar8'
+                ]
             ]
         ];
 
@@ -100,6 +105,9 @@ class OperatingCentresTest extends MockeryTestCase
             ],
             'operatingCentres' => [
                 'foo' => 'bar7'
+            ],
+            'enforcementArea' => [
+                'foo' => 'bar8'
             ],
             'cake' => 'bar'
         ];

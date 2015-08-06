@@ -237,8 +237,8 @@ class CommonOperatingCentreTest extends MockeryTestCase
             'canAddAnother' => true,
             'canUpdateAddress' => true,
             'wouldIncreaseRequireAdditionalAdvertisement' => true,
-            'totAuthVehicles' => 10,
-            'totAuthTrailers' => 11
+            'currentVehiclesRequired' => 10,
+            'currentTrailersRequired' => 11
         ];
 
         $this->mockFormHelper->shouldReceive('remove')
