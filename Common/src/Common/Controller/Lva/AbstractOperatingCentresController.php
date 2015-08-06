@@ -27,9 +27,6 @@ use Dvsa\Olcs\Transfer\Command\Licence\UpdateOperatingCentres as LicUpdateOperat
 use Dvsa\Olcs\Transfer\Query\LicenceOperatingCentre\LicenceOperatingCentre;
 use Dvsa\Olcs\Transfer\Query\VariationOperatingCentre\VariationOperatingCentre;
 
-use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Entity\ApplicationEntityService;
-
 /**
  * Shared logic between Operating Centres controllers
  *
@@ -143,7 +140,23 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
                 } else {
                     $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
-                    OperatingCentres::mapFormErrors($form, $response->getResult()['messages'], $fm);
+
+                    $errors = $response->getResult()['messages'];
+
+                    if ($crudAction !== null) {
+                        if (!empty($errors)) {
+
+                            foreach ($errors as $error) {
+                                $fm->addErrorMessage($error);
+                            }
+                        } else {
+                            $fm->addUnknownError();
+                        }
+
+                        return $this->redirect()->refreshAjax();
+                    } else {
+                        OperatingCentres::mapFormErrors($form, $errors, $fm);
+                    }
                 }
             }
         }
@@ -217,7 +230,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
             if ($response->isServerError()) {
                 $fm->addUnknownError();
             } else {
-                OperatingCentre::mapFormErrors($form, $response->getResult()['messages'], $fm);
+                $translator = $this->getServiceLocator()->get('Helper\Translation');
+                OperatingCentre::mapFormErrors($form, $response->getResult()['messages'], $fm, $translator);
             }
         }
 
@@ -234,6 +248,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $request = $this->getRequest();
 
         $resultData = $this->fetchOcItemData();
+
         $this->documents = $resultData['operatingCentre']['adDocuments'];
 
         if ($request->isPost()) {
@@ -297,7 +312,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
             if ($response->isServerError()) {
                 $fm->addUnknownError();
             } else {
-                OperatingCentre::mapFormErrors($form, $response->getResult()['messages'], $fm);
+                $translator = $this->getServiceLocator()->get('Helper\Translation');
+                OperatingCentre::mapFormErrors($form, $response->getResult()['messages'], $fm, $translator);
             }
         }
 

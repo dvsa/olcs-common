@@ -205,7 +205,6 @@ return array(
             'email' => 'Common\Service\Email\Email',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
             'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
-            'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
