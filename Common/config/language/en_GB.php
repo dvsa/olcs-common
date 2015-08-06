@@ -2603,6 +2603,8 @@ return array(
     'entity-view-table-conditions-undertakings.table.type' => 'Type',
     'entity-view-table-conditions-undertakings.table.dateAdded' => 'Date added',
     'entity-view-table-conditions-undertakings.table.fulfilled' => 'Fulfilled',
-    'entity-view-table-conditions-undertakings.table.status' => 'Status'
+    'entity-view-table-conditions-undertakings.table.status' => 'Status',
+    'internal-operator-profile-cpid' => 'CPID'
+
     // Potentially unused (Not found with grep)
 );

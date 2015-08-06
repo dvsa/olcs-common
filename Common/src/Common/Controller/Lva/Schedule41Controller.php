@@ -95,16 +95,16 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         )->getResult();
 
         if ($request->isPost()) {
-            if ($this->isButtonPressed('cancel')) {
+            $postData = (array)$request->getPost();
+
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute(
                     'lva-application/overview',
                     array(
-                        'application' => $this->params('application')
+                        'application' => $this->params('applicatOion')
                     )
                 );
             }
-
-            $postData = (array)$request->getPost();
 
             if (!isset($postData['table']['id'])) {
                 $this->flashMessenger()

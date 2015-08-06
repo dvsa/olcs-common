@@ -35,7 +35,10 @@ class OcUndertakings implements FormatterInterface
 
         if (!is_null($data['undertakings'])) {
             foreach ($data['undertakings'] as $undertaking) {
-                if ($undertaking['conditionType']['id'] === ConditionUndertakingEntityService::TYPE_UNDERTAKING) {
+                if (
+                    !is_null($undertaking['licence']) &&
+                    $undertaking['conditionType']['id'] === ConditionUndertakingEntityService::TYPE_UNDERTAKING
+                ) {
                     $count++;
                 }
             }
