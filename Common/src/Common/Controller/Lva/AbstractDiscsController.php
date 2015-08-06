@@ -26,8 +26,9 @@ abstract class AbstractDiscsController extends AbstractController
      */
     protected $section = 'discs';
 
-
     protected $formTableData;
+
+    protected $spacesRemaining = null;
 
     // Command keys
     const CMD_REQUEST_DISCS = 'requested';
@@ -77,6 +78,9 @@ abstract class AbstractDiscsController extends AbstractController
 
         $this->getServiceLocator()->get('Script')->loadFiles(['forms/filter']);
 
+        if (!is_null($this->spacesRemaining) && $this->spacesRemaining < 0) {
+            $this->getServiceLocator()->get('Helper\Guidance')->append('more-discs-than-authorisation');
+        }
         return $this->render('discs', $form, ['filterForm' => $filterForm]);
     }
 
@@ -197,7 +201,9 @@ abstract class AbstractDiscsController extends AbstractController
                 'includeCeased' => $this->params()->fromQuery('includeCeased', 0)
             ];
 
-            $data = $this->handleQuery(PsvDiscs::create($data))->getResult()['psvDiscs'];
+            $result = $this->handleQuery(PsvDiscs::create($data))->getResult();
+            $data = $result['psvDiscs'];
+            $this->spacesRemaining = $result['remainingSpacesPsv'];
 
             $this->formTableData = array();
 
@@ -209,7 +215,7 @@ abstract class AbstractDiscsController extends AbstractController
             // sort discs so that "Pending" are at the top
             uasort(
                 $this->formTableData,
-                function($disc1, $disc2) {
+                function ($disc1, $disc2) {
                     return ($disc1['discNo'] === 'Pending') ? -1 : 1;
                 }
             );
