@@ -9,6 +9,7 @@ namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Dvsa\Olcs\Transfer\Command;
+use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
 
 /**
  * Abstract Transport Managers Controller
@@ -97,6 +98,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         // User has selected [him/her]self
         // So we don't need to continue to show the form
         if ($user['id'] == $childId) {
+            $form = $this->getAddForm();
 
             $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
                 ->createCommand(
@@ -107,12 +109,32 @@ abstract class AbstractTransportManagersController extends AbstractController im
             /* @var $response \Common\Service\Cqrs\Response */
             $response = $this->getServiceLocator()->get('CommandService')->send($command);
 
-            return $this->redirect()->toRouteAjax(
+            if ($response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            }
+
+            if ($response->isClientError()) {
+                $errors = TransportManagerApplicationMapper::mapFromErrors($form, $response->getResult());
+
+                foreach ($errors as $error) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($error);
+                }
+            }
+
+            if ($response->isOk()) {
+                return $this->redirect()->toRouteAjax(
+                    null,
+                    [
+                        'action' => 'details',
+                        'child_id' => $response->getResult()['id']['transportManagerApplication']
+                    ],
+                    [],
+                    true
+                );
+            }
+            return $this->redirect()->toRoute(
                 null,
-                [
-                    'action' => 'details',
-                    'child_id' => $response->getResult()['id']['transportManagerApplication']
-                ],
+                ['action' => 'add'],
                 [],
                 true
             );
@@ -170,17 +192,30 @@ abstract class AbstractTransportManagersController extends AbstractController im
             /* @var $response \Common\Service\Cqrs\Response */
             $response = $this->getServiceLocator()->get('CommandService')->send($command);
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')
-                ->addSuccessMessage('lva-tm-sent-success');
+            if ($response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            }
+            if ($response->isClientError()) {
+                $errors = TransportManagerApplicationMapper::mapFromErrors($form, $response->getResult());
 
-            return $this->redirect()->toRouteAjax(
-                null,
-                [
-                    'action' => null
-                ],
-                [],
-                true
-            );
+                foreach ($errors as $error) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($error);
+                }
+            }
+
+            if ($response->isOk()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    ->addSuccessMessage('lva-tm-sent-success');
+
+                return $this->redirect()->toRouteAjax(
+                    null,
+                    [
+                        'action' => null
+                    ],
+                    [],
+                    true
+                );
+            }
         }
 
         return $this->render('addTm-transport_managers', $form);
