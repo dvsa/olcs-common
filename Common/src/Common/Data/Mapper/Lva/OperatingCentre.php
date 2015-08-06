@@ -116,7 +116,7 @@ class OperatingCentre implements MapperInterface
                 foreach ($message as $k => $v) {
                     if ($k === 'ERR_OC_PC_TA_GB') {
                         $data = json_decode($v, true);
-                        $message = $translator->translateReplace($k, [$data['oc'], $data['current']]);
+                        $message[$k] = $translator->translateReplace($k, [$data['oc'], $data['current']]);
                     }
                 }
 
