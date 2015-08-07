@@ -15,6 +15,10 @@ return array(
     'ERR_OC_AD_DT_1' => 'W Please enter the date the advertisement was placed',
     'ERR_OC_AD_IN_1' => 'W Please enter a newspaper name',
     'ERR_OC_CL_1' => 'W The number of community licences must not exceed the the total number of vehicles',
+    'ERR_OC_EA_EMPTY' => 'W Please select an enforcement area',
+    'ERR_OC_PC_TA_GB' => 'W Your operating centre is in %s traffic area, which differs to your first operating centre
+        (%s). You will need to apply for more than one licence. <a href="#">Read more</a>',
+    'ERR_OC_PC_TA_NI' => 'W Your Operating Centre must be located in Northern Ireland',
     'ERR_OC_PSV_SUM_1A' => 'W The sum of small, medium and large vehicles does not match the total number of vehicles',
     'ERR_OC_PSV_SUM_1B' => 'W The sum of small and medium vehicles does not match the total number of vehicles',
     'ERR_OC_R_1' => 'W The total number of vehicles on a restricted licence cannot exceed 2',
@@ -35,6 +39,7 @@ return array(
     'ERR_OC_V_3' => 'W The number of authorised vehicles must not exceed the total number of vehicles parked across all
         of your operating centres',
     'ERR_OC_V_4' => 'W Please add an operating centre before setting the total number of vehicles',
+    'ERR_OR_R_TOO_MANY' => 'W 2 is the maximum number of vehicles on a PSV Restricted licence',
     'FHAdditionalInfo.validation.is_empty' => 'W You selected \'yes\' in one of the provided questions, so value is
         required and can\'t be empty',
     'Invalid type given. String, integer or float expected' => 'W Please enter a numeric value',
@@ -42,11 +47,6 @@ return array(
     'N/A' => 'W Not applicable',
     'No' => 'W No',
     'OperatingCentreNoOfOperatingCentres.required' => 'W Please add an operating centre',
-    'OperatingCentreTrailerAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
-    'OperatingCentreVehicleAuthorisationValidator.too-high-psv-r' => 'W 2 is the maximum number of vehicles on a PSV
-        Restricted licence',
-    'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'W You must enter at least 1 vehicle type',
-    'OperatingCentreVehicleAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
     'Please Select' => 'W Please Select',
     'Please add a person' => 'W Please add a person',
     'Please add a safety inspection provider' => 'W Please add a safety inspection provider',

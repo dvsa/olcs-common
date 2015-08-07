@@ -114,7 +114,17 @@ class OperatingCentres implements MapperInterface
             unset($errors['operatingCentres']);
         }
 
+        if (isset($errors['enforcementArea'])) {
+
+            foreach ($errors['enforcementArea'] as $key => $message) {
+                $formMessages['dataTrafficArea']['enforcementArea'][] = $message;
+            }
+
+            unset($errors['enforcementArea']);
+        }
+
         if (!empty($errors)) {
+
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);
             }
