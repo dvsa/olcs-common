@@ -46,7 +46,6 @@ class Person
      * @Form\Options({"label":"application_your-business_people-sub-action-formSurname"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":2,"max":35}})
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})
      */
     public $familyName = null;
