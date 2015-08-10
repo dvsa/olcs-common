@@ -12,7 +12,7 @@ interface FileStoreAwareInterface
     /**
      * @NOTE: FileStoreService isn't a real interface so isn't type hinted, but in the future
      * we could implement it. It should just expose some basic read and write methods and
-     * could internally be backed by whatever storage it wants (disk, memory, JackRabbit etc)
+     * could internally be backed by whatever storage it wants (disk, memory etc)
      */
     public function setFileStore(/* FileStoreService */ $fileStore);
 
