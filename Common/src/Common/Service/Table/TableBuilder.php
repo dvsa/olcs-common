@@ -904,19 +904,20 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         $found = false;
 
-        foreach ($this->applicationConfig['tables']['config'] as $location) {
+        // @NOTE Reverse the array so the internal/selfserve config locations are checked before common
+        $locations = array_reverse($this->applicationConfig['tables']['config']);
+
+        foreach ($locations as $location) {
 
             $configFile = $location . $name . '.table.php';
 
             if (file_exists($configFile)) {
-
                 $found = true;
                 break;
             }
         }
 
         if (!$found) {
-
             throw new \Exception('Table configuration not found');
         }
 

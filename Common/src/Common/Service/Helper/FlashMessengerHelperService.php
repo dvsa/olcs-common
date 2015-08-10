@@ -110,4 +110,9 @@ class FlashMessengerHelperService extends AbstractHelperService
     {
         return $this->addErrorMessage('unknown-error');
     }
+
+    public function addCurrentUnknownError()
+    {
+        $this->addCurrentErrorMessage('unknown-error');
+    }
 }

@@ -63,15 +63,6 @@ return array(
             'LvaVariation/BusinessType' => array(
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
             ),
-            'LvaApplication/VehiclesPsv' => array(
-                'Common\Controller\Lva\Delegators\ApplicationVehiclesPsvDelegator'
-            ),
-            'LvaLicence/VehiclesPsv' => array(
-                'Common\Controller\Lva\Delegators\LicenceVehiclesPsvDelegator'
-            ),
-            'LvaVariation/VehiclesPsv' => array(
-                'Common\Controller\Lva\Delegators\VariationVehiclesPsvDelegator'
-            ),
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
             ),
@@ -188,9 +179,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
             'ApplicationFinancialEvidenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
-            'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
-            'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
-            'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
             'ApplicationPeopleAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationPeopleAdapter',
             'LicencePeopleAdapter'
@@ -207,7 +195,6 @@ return array(
             'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
-            'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
             'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
@@ -633,7 +620,7 @@ return array(
             'lva-application-goods-vehicles' => 'Common\FormService\Form\Lva\ApplicationGoodsVehicles',
             // Psv vehicles vehicle form services
             'lva-licence-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\LicencePsvVehiclesVehicle',
-            'lva-variation-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\VariationPsvVehiclesVehicle',
+            'lva-variation-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\ApplicationPsvVehiclesVehicle',
             'lva-application-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\ApplicationPsvVehiclesVehicle',
             // Goods vehicle filter form services
             'lva-licence-goods-vehicles-filters' => 'Common\FormService\Form\Lva\LicenceGoodsVehiclesFilters',

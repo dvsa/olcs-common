@@ -25,6 +25,16 @@ class YesNo implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        return ($data[$column['name']] == 1 || $data[$column['name']] === 'Y' ? 'Yes' : 'No');
+        if (isset($column['stack'])) {
+            if (is_string($column['stack'])) {
+                $column['stack'] = explode('->', $column['stack']);
+            }
+
+            $value = $sm->get('Helper\Stack')->getStackValue($data, $column['stack']);
+        } else {
+            $value = $data[$column['name']];
+        }
+
+        return ($value == 1 || $value === 'Y' ? 'Yes' : 'No');
     }
 }
