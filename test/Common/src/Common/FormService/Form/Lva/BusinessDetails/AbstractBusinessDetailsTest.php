@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace CommonTest\FormService\Form\Lva;
+namespace CommonTest\FormService\Form\Lva\BusinessDetails;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -27,7 +27,7 @@ class AbstractBusinessDetailsTest extends MockeryTestCase
     {
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
 
-        $this->sut = m::mock('\Common\FormService\Form\Lva\AbstractBusinessDetails')->makePartial();
+        $this->sut = m::mock('\Common\FormService\Form\Lva\BusinessDetails\AbstractBusinessDetails')->makePartial();
         $this->sut->setFormHelper($this->formHelper);
     }
 
