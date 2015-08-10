@@ -8,7 +8,6 @@
 namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
-use Common\Form\Elements\Validators\NewVrm;
 
 /**
  * Generic Vehicles Vehicle
@@ -28,19 +27,6 @@ class GenericVehiclesVehicle extends AbstractFormService
     {
         if ($params['mode'] === 'edit') {
             $this->getFormHelper()->disableElement($form, 'data->vrm');
-        }
-
-        if ($params['mode'] === 'add' && $params['isPost']) {
-
-            $filter = $form->getInputFilter();
-            $validators = $filter->get('data')->get('vrm')->getValidatorChain();
-
-            $validator = new NewVrm();
-
-            $validator->setType(ucwords($params['lva']));
-            $validator->setVrms($params['currentVrms']);
-
-            $validators->attach($validator);
         }
 
         if ($params['mode'] === 'edit' || !$params['canAddAnother']) {

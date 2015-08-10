@@ -40,6 +40,7 @@ return array(
         your operating centres',
     'ERR_OC_V_4' => 'Please add an operating centre before setting the total number of vehicles',
     'ERR_OR_R_TOO_MANY' => '2 is the maximum number of vehicles on a PSV Restricted licence',
+    'ERR_PSV_VE_NO_ROWS' => 'Please add at least one vehicle',
     'FHAdditionalInfo.validation.is_empty' => 'You selected \'yes\' in one of the provided questions, so value is
         required and can\'t be empty',
     'Invalid type given. String, integer or float expected' => 'Please enter a numeric value',
@@ -1905,6 +1906,18 @@ return array(
         Please destroy the old discs',
     'psv-discs-requested-successfully' => 'The request for additional discs has been submitted',
     'psv-discs-voided-successfully' => 'The selected discs have been voided. You must destroy the old discs',
+    'psv-vehicles-licence-missing-breakdown' => 'Before changing the vehicle list, you will need to provide the number
+        of small and medium vehicles that comprise the total vehicle authority. To do this, start a variation
+        application by <a href="%s" class="%s">clicking here</a>',
+    'psv-vehicles-licence-missing-breakdown-large' => 'Before changing the vehicle list, you will need to provide the
+        number of small, medium and large vehicles that comprise the total vehicle authority. To do this, start a
+        variation application by <a href="%s" class="%s">clicking here</a>',
+    'psv-vehicles-variation-missing-breakdown' => 'Before changing the vehicle list, you will need to provide the number
+        of small and medium vehicles that comprise the total vehicle authority. To do this, go to the Operating Centre &
+        Authorisation page by <a href="%s" class="%s">clicking here</a>',
+    'psv-vehicles-variation-missing-breakdown-large' => 'Before changing the vehicle list, you will need to provide the
+        number of small, medium and large vehicles that comprise the total vehicle authority. To do this, go to the
+        Operating Centre & Authorisation page by <a href="%s" class="%s">clicking here</a>',
     'psv_discs.table.ceasedDate' => 'Ceased date',
     'psv_discs.table.discNo' => 'Disc number',
     'psv_discs.table.issuedDate' => 'Issued date',

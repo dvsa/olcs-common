@@ -86,21 +86,4 @@ class GenericVehiclesVehicleTest extends MockeryTestCase
 
         $this->assertNull($this->sut->alterForm($mockForm, $params));
     }
-
-    public function testAlterFormAddPost()
-    {
-        $mockForm = m::mock();
-        $params = [
-            'lva' => 'application',
-            'currentVrms' => [],
-            'mode' => 'add',
-            'isPost' => true,
-            'canAddAnother' => true
-        ];
-
-        $mockForm->shouldReceive('getInputFilter->get->get->getValidatorChain->attach')
-            ->with(m::type('\Common\Form\Elements\Validators\NewVrm'));
-
-        $this->assertNull($this->sut->alterForm($mockForm, $params));
-    }
 }

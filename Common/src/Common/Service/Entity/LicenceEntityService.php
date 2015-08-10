@@ -828,6 +828,8 @@ class LicenceEntityService extends AbstractLvaEntityService
      *
      * @param int $licenceId
      * @return array
+     *
+     * @todo maybe remove?
      */
     public function getOtherActiveLicences($licenceId)
     {
