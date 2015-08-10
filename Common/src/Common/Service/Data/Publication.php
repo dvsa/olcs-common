@@ -9,10 +9,10 @@ namespace Common\Service\Data;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-
 use Common\Util\RestClient;
 use Common\Exception\ResourceNotFoundException;
 use Common\Exception\DataServiceException;
+use Dvsa\Olcs\DocumentShare\Client\Data\Object\File;
 
 /**
  * Publication service
@@ -91,8 +91,7 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
             throw new DataServiceException('Only publications with status of New may be generated');
         }
 
-        $storedFile = $this->createPublicationDocument($currentPublication);
-        $documentId = $this->createPublicationDocumentRecord($storedFile, $currentPublication);
+        $documentId = $this->createPublicationDocumentRecord($currentPublication);
 
         //set the publication to generated
         $data = [
@@ -128,12 +127,12 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
         $date = new \DateTime($publication['pubDate']);
 
         return $publication['trafficArea']['name']
-        . $publication['pubType']
-        . $date->format('Y')
-        . $date->format('m')
-        . $date->format('d')
-        . date($this->getDocumentService()->getTimestampFormat())
-        . '.rtf';
+            . $publication['pubType']
+            . $date->format('Y')
+            . $date->format('m')
+            . $date->format('d')
+            . date($this->getDocumentService()->getTimestampFormat())
+            . '.rtf';
     }
 
     /**
@@ -178,16 +177,17 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
     /**
      * Creates a publication document record
      *
-     * @param \Dvsa\Jackrabbit\Data\Object\File $storedFile
      * @param array $currentPublication
      * @return mixed
      */
-    private function createPublicationDocumentRecord($storedFile, $currentPublication)
+    private function createPublicationDocumentRecord($currentPublication)
     {
         $fileName = $this->getDocumentService()->formatFilename($this->getPublicationFilename($currentPublication));
 
+        $storedFile = $this->createPublicationDocument($currentPublication, $fileName);
+
         $templateData = [
-            'identifier'    => $storedFile->getIdentifier(),
+            'identifier'    => $fileName,
             'description'   => $currentPublication['docTemplate']['description'],
             'filename'      => $fileName,
             'category'      => $currentPublication['docTemplate']['category']['id'],
@@ -207,7 +207,7 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
      * @param $publication
      * @return mixed
      */
-    private function createPublicationDocument($publication)
+    private function createPublicationDocument($publication, $fileName)
     {
         $queryData = [
             'user' => 1,
@@ -233,21 +233,11 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
             $result
         );
 
-        $details = json_encode(
-            [
-                'details' => [],
-                'bookmarks' => []
-            ]
-        );
-
-        $meta = [$this->getDocumentService()->getMetadataKey() => $details];
-
         $uploader = $this->getUploader();
         $uploader->setFile(
             [
                 'name' => $publication['docTemplate']['description'],
-                'content' => $content,
-                'meta'    => $meta,
+                'content' => $content
             ]
         );
 
@@ -264,7 +254,7 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
         $urlParams = $this->getFilePathVariablesFromPublication($publication);
         $documentPath = $uploader->buildPathNamespace($urlParams);
 
-        return $uploader->upload($documentPath);
+        return $uploader->upload($documentPath, $fileName);
     }
 
     /**
@@ -304,9 +294,9 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Returns a Jackrabbit client
+     * Returns a document share client
      *
-     * @return \Dvsa\Jackrabbit\Service\Client
+     * @return \Dvsa\Olcs\DocumentShare\Client\Service\Client
      */
     protected function getContentStore()
     {
