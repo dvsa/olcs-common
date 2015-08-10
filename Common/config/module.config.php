@@ -667,10 +667,30 @@ return array(
             'lva-variation-undertakings' => \Common\FormService\Form\Lva\Undertakings::class,
             'lva-application-undertakings' => \Common\FormService\Form\Lva\Undertakings::class,
 
+            // Taxi/PHV form services
             'lva-licence-taxi_phv' => \Common\FormService\Form\Lva\TaxiPhv::class,
             'lva-variation-taxi_phv' => \Common\FormService\Form\Lva\TaxiPhv::class,
             'lva-application-taxi_phv' => \Common\FormService\Form\Lva\TaxiPhv::class,
 
+            // Licence History form services
+            'lva-application-licence_history' => \Common\FormService\Form\Lva\LicenceHistory::class,
+
+            // Convictions & Penalties form services
+            'lva-variation-convictions_penalties' => \Common\FormService\Form\Lva\ConvictionsPenalties::class,
+            'lva-application-convictions_penalties' => \Common\FormService\Form\Lva\ConvictionsPenalties::class,
+
+            // Vehicles Declaratinos form services
+            'lva-variation-vehicles_declarations' => \Common\FormService\Form\Lva\VehiclesDeclarations::class,
+            'lva-application-vehicles_declarations' => \Common\FormService\Form\Lva\VehiclesDeclarations::class,
+
+            // PSV Vehicles form services
+            'lva-licence-vehicles_psv' => \Common\FormService\Form\Lva\PsvVehicles::class,
+            'lva-variation-vehicles_psv' => \Common\FormService\Form\Lva\PsvVehicles::class,
+            'lva-application-vehicles_psv' => \Common\FormService\Form\Lva\PsvVehicles::class,
+
+            // Discs form services
+            'lva-licence-discs' => \Common\FormService\Form\Lva\PsvDiscs::class,
+            'lva-variation-discs' => \Common\FormService\Form\Lva\PsvDiscs::class,
         ]
     ],
     'business_rule_manager' => [
