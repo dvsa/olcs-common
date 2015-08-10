@@ -185,7 +185,6 @@ abstract class AbstractDiscsController extends AbstractController
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
-
         $formHelper->populateFormTable($form->get('table'), $this->getDiscsTable());
 
         return $form;
