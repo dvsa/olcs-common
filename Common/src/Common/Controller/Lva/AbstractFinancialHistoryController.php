@@ -184,7 +184,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
 
         foreach ($fields as $errorKey => $fieldName) {
             if (isset($errors[$errorKey])) {
-                foreach ($errors[$errorKey] as $key => $message) {
+                foreach ($errors[$errorKey] as $message) {
                     $formMessages['data'][$fieldName][] = $message;
                 }
 

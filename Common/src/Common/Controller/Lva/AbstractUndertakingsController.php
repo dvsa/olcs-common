@@ -77,6 +77,9 @@ abstract class AbstractUndertakingsController extends AbstractController
         return $applicationData;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function updateForm($form, $data)
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
