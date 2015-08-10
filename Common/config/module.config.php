@@ -1,6 +1,10 @@
 <?php
 
 use \Common\Service\Data\Search\SearchType;
+use Common\Data\Object\Search\Licence as LicenceSearch;
+use Common\Data\Object\Search\LicenceSelfserve as LicenceSelfserve;
+use Common\Data\Object\Search\OperatingCentre as OperatingCentreSearchIndex;
+use Common\Data\Object\Search\PeopleSelfserve as PeopleSelfserveSearchIndex;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -373,17 +377,23 @@ return array(
     ),
     'search' => [
         'invokables' => [
-            'licence'     => 'Common\Data\Object\Search\Licence',
-            'application' => 'Common\Data\Object\Search\Application',
-            'case'        => 'Common\Data\Object\Search\Cases',
-            'psv_disc'    => 'Common\Data\Object\Search\PsvDisc',
-            'vehicle'     => 'Common\Data\Object\Search\Vehicle',
-            'address'     => 'Common\Data\Object\Search\Address',
-            'bus_reg'     => 'Common\Data\Object\Search\BusReg',
-            'people'      => 'Common\Data\Object\Search\People',
-            'user'        => 'Common\Data\Object\Search\User',
-            'publication' => 'Common\Data\Object\Search\Publication',
-            'organisation'     => 'Common\Data\Object\Search\Organisation',
+            'operator'    => LicenceSelfserve::class, // Selfserve licence search
+            'licence'     => LicenceSearch::class,
+            'application' => \Common\Data\Object\Search\Application::class,
+            'case'        => \Common\Data\Object\Search\Cases::class,
+            'psv_disc'    => \Common\Data\Object\Search\PsvDisc::class,
+            'vehicle'     => \Common\Data\Object\Search\Vehicle::class,
+            'vehicle-external' => \Common\Data\Object\Search\VehicleSelfServe::class,
+            'address'     => \Common\Data\Object\Search\Address::class,
+            'bus'         => \Common\Data\Object\Search\BusRegSelfServe::class,
+            'bus_reg'     => \Common\Data\Object\Search\BusReg::class,
+            'people'      => \Common\Data\Object\Search\People::class,
+            'person'      => PeopleSelfserveSearchIndex::class,
+            'user'        => \Common\Data\Object\Search\User::class,
+            'publication' => \Common\Data\Object\Search\Publication::class,
+            'organisation'     => \Common\Data\Object\Search\Organisation::class,
+            'operating-centre' => OperatingCentreSearchIndex::class,
+            'traffic-commissioner-publication' => \Common\Data\Object\Search\TrafficCommissionerPublications::class,
         ]
     ],
     'file_uploader' => array(

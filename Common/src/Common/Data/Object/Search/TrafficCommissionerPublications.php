@@ -6,22 +6,22 @@ namespace Common\Data\Object\Search;
  * Class People
  * @package Common\Data\Object\Search
  */
-class People extends InternalSearchAbstract
+class TrafficCommissionerPublications extends InternalSearchAbstract
 {
     /**
      * @var string
      */
-    protected $title = 'People';
+    protected $title = 'Traffic Commissioner Publication';
 
     /**
      * @var string
      */
-    protected $key = 'people';
+    protected $key = 'traffic-commissioner-publication';
 
     /**
      * @var string
      */
-    protected $searchIndices = 'person';
+    protected $searchIndices = 'publication';
 
     /**
      * Contains an array of the instantiated filters classes.
@@ -46,9 +46,8 @@ class People extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Forename', 'name'=> 'foreName'],
-            ['title' => 'Family name', 'name'=> 'familyName'],
-            ['title' => 'DOB', 'name'=> 'dob']
+            ['title' => 'Forename', 'name'=> 'pubNo'],
+            ['title' => 'Family name', 'name'=> 'pubSecDesc'],
         ];
     }
 }
