@@ -46,10 +46,12 @@ class RefData
      * Licence statuses
      */
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
+    const LICENCE_STATUS_REVOKED = 'lsts_revoked';
     const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
     const LICENCE_STATUS_SUSPENDED = 'lsts_suspended';
     const LICENCE_STATUS_TERMINATED = 'lsts_terminated';
     const LICENCE_STATUS_VALID = 'lsts_valid';
+    const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
     const LICENCE_STATUS_UNLICENSED = 'lsts_unlicenced';
 
     /**
