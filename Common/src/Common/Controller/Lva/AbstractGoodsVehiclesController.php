@@ -8,6 +8,7 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Controller\Lva\Traits\TransferVehiclesTrait;
 use Common\Data\Mapper\Lva\GoodsVehicles;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Common\RefData;
@@ -18,7 +19,7 @@ use Dvsa\Olcs\Transfer\Command\Licence\TransferVehicles;
 use Dvsa\Olcs\Transfer\Command\Vehicle\ReprintDisc;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
-use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteGoodsVehicle as LicenceDeleteGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteLicenceVehicle as LicenceDeleteLicenceVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicles;
 use Dvsa\Olcs\Transfer\Query\Licence\OtherActiveLicences;
 use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
@@ -35,7 +36,8 @@ use Dvsa\Olcs\Transfer\Query\Variation\GoodsVehicles as VariationGoodsVehicles;
  */
 abstract class AbstractGoodsVehiclesController extends AbstractController
 {
-    use Traits\CrudTableTrait;
+    use Traits\CrudTableTrait,
+        TransferVehiclesTrait;
 
     protected $section = 'vehicles';
     protected $totalAuthorisedVehicles = [];
@@ -60,7 +62,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     ];
 
     protected $deleteVehicleMap = [
-        'licence' => LicenceDeleteGoodsVehicle::class,
+        'licence' => LicenceDeleteLicenceVehicle::class,
         'variation' => ApplicationDeleteGoodsVehicle::class,
         'application' => ApplicationDeleteGoodsVehicle::class
     ];
@@ -387,124 +389,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      */
     public function transferAction()
     {
-        $response = $this->handleQuery(OtherActiveLicences::create(['id' => $this->getLicenceId()]));
-
-        $options = [];
-
-        foreach ($response->getResult()['otherActiveLicences'] as $licence) {
-            $options[$licence['id']] = $licence['licNo'];
-        }
-
-        $form = $this->getVehicleTransferForm($options);
-
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-
-            $form->setData((array) $request->getPost());
-
-            if ($form->isValid()) {
-
-                $formData = $form->getData();
-
-                $ids = explode(',', $this->params()->fromRoute('child_id'));
-
-                $dtoData = [
-                    'id' => $this->getLicenceId(),
-                    'target' => $formData['data']['licence'],
-                    'licenceVehicles' => $ids
-                ];
-
-                $response = $this->handleCommand(TransferVehicles::create($dtoData));
-
-                $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
-
-                if ($response->isOk()) {
-
-                    $fm->addSuccessMessage('licence.vehicles_transfer.form.vehicles_transfered');
-
-                    return $this->redirect()->toRouteAjax(
-                        null,
-                        [$this->getIdentifierIndex() => $this->getIdentifier()]
-                    );
-                }
-
-                if ($response->isClientError()) {
-
-                    $messages = $response->getResult()['messages'];
-                    $th = $this->getServiceLocator()->get('Helper\Translation');
-                    $licNo = $options[$formData['data']['licence']];
-
-                    $knownError = false;
-
-                    if (isset($messages['LIC_TRAN_1'])) {
-                        $fm->addErrorMessage(
-                            $th->translateReplace('licence.vehicles_transfer.form.message_exceed', [$licNo])
-                        );
-
-                        $knownError = true;
-                    }
-
-                    if (isset($messages['LIC_TRAN_2'])) {
-                        $fm->addErrorMessage(
-                            $th->translateReplace(
-                                'licence.vehicles_transfer.form.message_already_on_licence_singular',
-                                [
-                                    implode(', ', json_decode($messages['LIC_TRAN_2'], true)),
-                                    $licNo
-                                ]
-                            )
-                        );
-
-                        $knownError = true;
-                    }
-
-                    if (isset($messages['LIC_TRAN_3'])) {
-                        $fm->addErrorMessage(
-                            $th->translateReplace(
-                                'licence.vehicles_transfer.form.message_already_on_licence',
-                                [
-                                    implode(', ', json_decode($messages['LIC_TRAN_3'], true)),
-                                    $licNo
-                                ]
-                            )
-                        );
-
-                        $knownError = true;
-                    }
-
-                    if ($knownError == false) {
-                        $fm->addCurrentErrorMessage('unknown-error');
-                    } else {
-                        return $this->redirect()->toRouteAjax(
-                            null,
-                            [$this->getIdentifierIndex() => $this->getIdentifier()]
-                        );
-                    }
-                }
-
-                if ($response->isServerError()) {
-                    $fm->addCurrentErrorMessage('unknown-error');
-                }
-            }
-        }
-
-        return $this->render('transfer_vehicles', $form);
-    }
-
-    /**
-     * Get vehicles transfer form
-     *
-     * @return \Zend\Form\Form
-     */
-    protected function getVehicleTransferForm($options)
-    {
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest('Lva\VehiclesTransfer', $this->getRequest());
-
-        $form->get('data')->get('licence')->setValueOptions($options);
-
-        return $form;
+        return $this->transferVehicles();
     }
 
     protected function renderForm($form, $headerData)

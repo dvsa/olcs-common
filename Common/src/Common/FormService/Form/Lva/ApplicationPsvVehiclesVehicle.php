@@ -21,5 +21,9 @@ class ApplicationPsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
         $this->getFormHelper()->disableDateElement($dataFieldset->get('removalDate'));
 
         parent::alterForm($form, $params);
+
+        if ($params['isRemoved']) {
+            $form->get('form-actions')->remove('submit');
+        }
     }
 }

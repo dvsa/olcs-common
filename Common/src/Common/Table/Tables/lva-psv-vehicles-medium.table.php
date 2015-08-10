@@ -26,7 +26,8 @@ return array(
     'columns' => array(
         array(
             'title' => $translationPrefix . '.vrm',
-            'name' => 'vrm',
+            'stack' => 'vehicle->vrm',
+            'formatter' => 'StackValue',
             'action' => 'edit',
             'type' => 'Action',
         ),
@@ -38,7 +39,7 @@ return array(
         array(
             'title' => $translationPrefix . '.removed',
             'formatter' => 'Date',
-            'name' => 'deletedDate'
+            'name' => 'removalDate'
         ),
         array(
             'width' => 'checkbox',
