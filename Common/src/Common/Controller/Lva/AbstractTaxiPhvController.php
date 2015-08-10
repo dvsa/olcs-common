@@ -293,10 +293,12 @@ abstract class AbstractTaxiPhvController extends AbstractController
         $ids = explode(',', $this->params('child_id'));
 
         if ($this->lva === 'licence') {
-            $command = \Dvsa\Olcs\Transfer\Command\PrivateHireLicence\DeleteList::create(['ids' => $ids]);
+            $command = \Dvsa\Olcs\Transfer\Command\PrivateHireLicence\DeleteList::create(
+                ['ids' => $ids, 'licence' => $this->getLicenceId(), 'lva' => $this->lva]
+            );
         } else {
             $command = \Dvsa\Olcs\Transfer\Command\Application\DeleteTaxiPhv::create(
-                ['id' => $this->getIdentifier(), 'ids' => $ids]
+                ['id' => $this->getIdentifier(), 'ids' => $ids, 'licence' => $this->getLicenceId(), 'lva' => $this->lva]
             );
         }
         $response = $this->handleCommand($command);
@@ -389,6 +391,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
         $params = [
             'id' => $this->getIdentifier(),
             'licence' => $this->getLicenceId(),
+            'lva' => $this->lva,
             'privateHireLicenceNo' => $formData['data']['privateHireLicenceNo'],
             'councilName' => $formData['contactDetails']['description'],
             'address' => [
@@ -424,6 +427,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
     {
         $params = [
             'version' => $formData['data']['version'],
+            'licence' => $this->getLicenceId(),
+            'lva' => $this->lva,
             'privateHireLicenceNo' => $formData['data']['privateHireLicenceNo'],
             'councilName' => $formData['contactDetails']['description'],
             'address' => [
