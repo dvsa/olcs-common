@@ -180,7 +180,11 @@ abstract class AbstractDiscsController extends AbstractController
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $form = $formHelper->createForm('Lva\PsvDiscs');
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm();
+
 
         $formHelper->populateFormTable($form->get('table'), $this->getDiscsTable());
 

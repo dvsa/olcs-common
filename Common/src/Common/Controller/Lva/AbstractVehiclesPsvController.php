@@ -71,7 +71,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $form = $formHelper->createForm('Lva\PsvVehicles')->setData($data);
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm()
+            ->setData($data);
 
         $removeActions = false;
         if (!$resultData['hasBreakdown'] && in_array($this->lva, ['licence', 'variation'])) {

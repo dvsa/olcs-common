@@ -63,9 +63,10 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
 
     protected function getForm()
     {
-        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\VehiclesDeclarations');
-
-        return $form;
+        return $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-vehicles_declarations')
+            ->getForm();
     }
 
     protected function getFormData()

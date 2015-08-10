@@ -113,7 +113,10 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $form = $formHelper->createForm('Lva\ConvictionsPenalties');
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm();
 
         $formHelper->populateFormTable(
             $form->get('data')->get('table'),
