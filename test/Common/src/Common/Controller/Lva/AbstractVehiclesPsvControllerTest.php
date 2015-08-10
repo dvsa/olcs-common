@@ -341,7 +341,20 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             'hasEnteredReg' => 'Y'
         ];
 
-        $form = $this->createMockForm('Lva\PsvVehicles');
+        $form = m::mock(\Common\Form\Form::class);
+        $mockFormService = m::mock();
+        $mockFormServiceManager = m::mock();
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--vehicles_psv')
+            ->andReturn($mockFormService);
+
+        $mockFormService
+            ->shouldReceive('getForm')
+            ->once()
+            ->andReturn($form);
 
         $formTable = m::mock('Zend\Form\Fieldset');
         $table = m::mock('Common\Service\Table\TableBuilder');

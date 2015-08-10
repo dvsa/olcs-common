@@ -27,11 +27,27 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                     return $input;
                 }
             );
+
+        $mockFormServiceManager = m::mock();
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
     }
 
     public function testGetIndexAction()
     {
-        $form = $this->createMockForm('Lva\VehiclesDeclarations');
+        $form = m::mock(\Common\Form\Form::class);
+        $mockFormService = m::mock();
+        $mockFormServiceManager = m::mock();
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--vehicles_declarations')
+            ->andReturn($mockFormService);
+
+        $mockFormService
+            ->shouldReceive('getForm')
+            ->once()
+            ->andReturn($form);
 
         $form->shouldReceive('setData')
             ->with(
