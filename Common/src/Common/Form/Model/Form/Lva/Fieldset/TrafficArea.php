@@ -47,10 +47,4 @@ class TrafficArea
      * @Form\Type("\Zend\Form\Element\Select")
      */
     public $enforcementArea = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    //public $hiddenId = null;
 }

@@ -32,10 +32,10 @@ class OcUndertakingsTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     'undertakings' => array(
-                        array('conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING]),
-                        array('conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING]),
-                        array('conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_CONDITION]),
-                        array('conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_CONDITION])
+                        array('licence' => 1, 'conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING]),
+                        array('licence' => 1, 'conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING]),
+                        array('licence' => null, 'conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_CONDITION]),
+                        array('licence' => null, 'conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_CONDITION])
                     )
                 ),
                 2

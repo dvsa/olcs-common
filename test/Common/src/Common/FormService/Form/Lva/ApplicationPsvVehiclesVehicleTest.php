@@ -26,6 +26,7 @@ class ApplicationPsvVehiclesVehicleTest extends MockeryTestCase
 
     public function setUp()
     {
+        $this->markTestSkipped();
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
         $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 

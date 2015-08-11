@@ -9,6 +9,7 @@ namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\OperatingCentre;
 use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -105,6 +106,10 @@ class OperatingCentreTest extends MockeryTestCase
     {
         $form = m::mock(\Zend\Form\Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);
+        $th = m::mock(TranslationHelperService::class);
+        $th->shouldReceive('translateReplace')
+            ->with('ERR_OC_PC_TA_GB', ['Bar', 'Foo'])
+            ->andReturn('translated');
 
         $expectedMessages = [
             'data' => [
@@ -122,10 +127,20 @@ class OperatingCentreTest extends MockeryTestCase
                 'adPlacedDate' => [
                     'bar4'
                 ]
+            ],
+            'address' => [
+                'postcode' => [
+                    ['ERR_OC_PC_TA_GB' => 'translated']
+                ]
             ]
         ];
 
         $errors = [
+            'postcode' => [
+                [
+                    'ERR_OC_PC_TA_GB' => '{"current":"Foo","oc":"Bar"}'
+                ]
+            ],
             'noOfVehiclesRequired' => [
                 'foo' => 'bar1'
             ],
@@ -149,6 +164,6 @@ class OperatingCentreTest extends MockeryTestCase
             ->once()
             ->with('bar');
 
-        OperatingCentre::mapFormErrors($form, $errors, $fm);
+        OperatingCentre::mapFormErrors($form, $errors, $fm, $th);
     }
 }

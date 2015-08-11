@@ -1,6 +1,10 @@
 <?php
 
 use \Common\Service\Data\Search\SearchType;
+use Common\Data\Object\Search\Licence as LicenceSearch;
+use Common\Data\Object\Search\LicenceSelfserve as LicenceSelfserve;
+use Common\Data\Object\Search\OperatingCentre as OperatingCentreSearchIndex;
+use Common\Data\Object\Search\PeopleSelfserve as PeopleSelfserveSearchIndex;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -58,15 +62,6 @@ return array(
             ),
             'LvaVariation/BusinessType' => array(
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
-            ),
-            'LvaApplication/VehiclesPsv' => array(
-                'Common\Controller\Lva\Delegators\ApplicationVehiclesPsvDelegator'
-            ),
-            'LvaLicence/VehiclesPsv' => array(
-                'Common\Controller\Lva\Delegators\LicenceVehiclesPsvDelegator'
-            ),
-            'LvaVariation/VehiclesPsv' => array(
-                'Common\Controller\Lva\Delegators\VariationVehiclesPsvDelegator'
             ),
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
@@ -184,9 +179,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
             'ApplicationFinancialEvidenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
-            'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
-            'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
-            'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
             'ApplicationPeopleAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationPeopleAdapter',
             'LicencePeopleAdapter'
@@ -201,10 +193,8 @@ return array(
             'email' => 'Common\Service\Email\Email',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
             'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
-            'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
-            'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
             'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
@@ -387,17 +377,23 @@ return array(
     ),
     'search' => [
         'invokables' => [
-            'licence'     => 'Common\Data\Object\Search\Licence',
-            'application' => 'Common\Data\Object\Search\Application',
-            'case'        => 'Common\Data\Object\Search\Cases',
-            'psv_disc'    => 'Common\Data\Object\Search\PsvDisc',
-            'vehicle'     => 'Common\Data\Object\Search\Vehicle',
-            'address'     => 'Common\Data\Object\Search\Address',
-            'bus_reg'     => 'Common\Data\Object\Search\BusReg',
-            'people'      => 'Common\Data\Object\Search\People',
-            'user'        => 'Common\Data\Object\Search\User',
-            'publication' => 'Common\Data\Object\Search\Publication',
-            'organisation'     => 'Common\Data\Object\Search\Organisation',
+            'operator'    => LicenceSelfserve::class, // Selfserve licence search
+            'licence'     => LicenceSearch::class,
+            'application' => \Common\Data\Object\Search\Application::class,
+            'case'        => \Common\Data\Object\Search\Cases::class,
+            'psv_disc'    => \Common\Data\Object\Search\PsvDisc::class,
+            'vehicle'     => \Common\Data\Object\Search\Vehicle::class,
+            'vehicle-external' => \Common\Data\Object\Search\VehicleSelfServe::class,
+            'address'     => \Common\Data\Object\Search\Address::class,
+            'bus'         => \Common\Data\Object\Search\BusRegSelfServe::class,
+            'bus_reg'     => \Common\Data\Object\Search\BusReg::class,
+            'people'      => \Common\Data\Object\Search\People::class,
+            'person'      => PeopleSelfserveSearchIndex::class,
+            'user'        => \Common\Data\Object\Search\User::class,
+            'publication' => \Common\Data\Object\Search\Publication::class,
+            'organisation'     => \Common\Data\Object\Search\Organisation::class,
+            'operating-centre' => OperatingCentreSearchIndex::class,
+            'traffic-commissioner-publication' => \Common\Data\Object\Search\TrafficCommissionerPublications::class,
         ]
     ],
     'file_uploader' => array(
@@ -624,7 +620,7 @@ return array(
             'lva-application-goods-vehicles' => 'Common\FormService\Form\Lva\ApplicationGoodsVehicles',
             // Psv vehicles vehicle form services
             'lva-licence-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\LicencePsvVehiclesVehicle',
-            'lva-variation-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\VariationPsvVehiclesVehicle',
+            'lva-variation-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\ApplicationPsvVehiclesVehicle',
             'lva-application-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\ApplicationPsvVehiclesVehicle',
             // Goods vehicle filter form services
             'lva-licence-goods-vehicles-filters' => 'Common\FormService\Form\Lva\LicenceGoodsVehiclesFilters',

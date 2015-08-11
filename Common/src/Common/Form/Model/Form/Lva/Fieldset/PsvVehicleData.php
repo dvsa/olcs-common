@@ -23,12 +23,6 @@ class PsvVehicleData
     public $version = null;
 
     /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $psvType = null;
-
-    /**
      * @Form\Attributes({"id":"vrm","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-psv-sub-action.data.vrm",

@@ -8,7 +8,7 @@ use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
  * Class BusReg
  * @package Common\Data\Object\Search
  */
-class BusReg extends InternalSearchAbstract
+class BusRegSelfServe extends InternalSearchAbstract
 {
     /**
      * @var string
@@ -80,8 +80,7 @@ class BusReg extends InternalSearchAbstract
             ['title' => 'Date first registered / cancelled', 'name'=> 'date_1stReg'],
             ['title' => 'Service no', 'name'=> 'serviceNo'],
             ['title' => 'Start point', 'name'=> 'startPoint'],
-            ['title' => 'Finish point', 'name'=> 'finishPoint'],
-            ['title' => 'Conditions on licence', 'name'=> 'finishPoint']
+            ['title' => 'Finish point', 'name'=> 'finishPoint']
         ];
     }
 }

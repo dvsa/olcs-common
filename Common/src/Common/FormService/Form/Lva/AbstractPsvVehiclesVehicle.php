@@ -18,8 +18,7 @@ abstract class AbstractPsvVehiclesVehicle extends AbstractFormService
 {
     public function getForm($request, $params)
     {
-        $form = $this->getFormHelper()
-            ->createFormWithRequest('Lva\PsvVehiclesVehicle', $request);
+        $form = $this->getFormHelper()->createFormWithRequest('Lva\PsvVehiclesVehicle', $request);
 
         $this->alterForm($form, $params);
 
@@ -45,5 +44,19 @@ abstract class AbstractPsvVehiclesVehicle extends AbstractFormService
         $this->getFormHelper()->remove($form, 'licence-vehicle->discNo');
 
         $this->getFormServiceLocator()->get('lva-generic-vehicles-vehicle')->alterForm($form, $params);
+
+        if ($params['isRemoved']) {
+            $this->getFormHelper()->disableElement($form, 'data->vrm');
+
+            if ($form->get('data')->has('makeModel')) {
+                $this->getFormHelper()->disableElement($form, 'data->makeModel');
+            }
+
+            if ($form->get('data')->has('isNovelty')) {
+                $this->getFormHelper()->disableElement($form, 'data->isNovelty');
+            }
+
+            $this->getFormHelper()->disableElements($form->get('licence-vehicle'));
+        }
     }
 }

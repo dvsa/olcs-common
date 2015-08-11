@@ -61,9 +61,11 @@ abstract class AbstractOperatingCentres extends AbstractFormService
             return $form;
         }
 
-        $trafficArea = isset($params['licence']['trafficArea'])
-            ? $params['licence']['trafficArea']
-            : $params['trafficArea'];
+        if (isset($params['licence'])) {
+            $trafficArea = $params['licence']['trafficArea'];
+        } else {
+            $trafficArea = $params['trafficArea'];
+        }
 
         $trafficAreaId = $trafficArea ? $trafficArea['id'] : null;
 

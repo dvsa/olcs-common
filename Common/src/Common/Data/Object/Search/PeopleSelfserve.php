@@ -2,11 +2,13 @@
 
 namespace Common\Data\Object\Search;
 
+use Common\Data\Object\Search\Aggregations\Terms as Filter;
+
 /**
  * Class People
  * @package Common\Data\Object\Search
  */
-class People extends InternalSearchAbstract
+class PeopleSelfServe extends InternalSearchAbstract
 {
     /**
      * @var string
@@ -37,6 +39,16 @@ class People extends InternalSearchAbstract
      */
     public function getFilters()
     {
+        if (empty($this->filters)) {
+
+            $this->filters = [
+                new Filter\EntityType(),
+                new Filter\LicenceType(),
+                new Filter\LicenceStatus(),
+                new Filter\TrafficArea()
+            ];
+        }
+
         return $this->filters;
     }
 
@@ -46,9 +58,9 @@ class People extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Forename', 'name'=> 'foreName'],
-            ['title' => 'Family name', 'name'=> 'familyName'],
-            ['title' => 'DOB', 'name'=> 'dob']
+            ['title' => 'Forename', 'name'=> 'personForename'],
+            ['title' => 'Family name', 'name'=> 'personFamilyName'],
+            ['title' => 'DOB', 'name'=> 'personBirthDate']
         ];
     }
 }

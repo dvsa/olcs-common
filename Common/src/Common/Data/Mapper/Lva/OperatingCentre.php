@@ -9,6 +9,7 @@ namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\TranslationHelperService;
 use Zend\Form\Form;
 
 /**
@@ -64,8 +65,12 @@ class OperatingCentre implements MapperInterface
         return $mappedData;
     }
 
-    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm)
-    {
+    public static function mapFormErrors(
+        Form $form,
+        array $errors,
+        FlashMessengerHelperService $fm,
+        TranslationHelperService $translator
+    ) {
         $formMessages = [];
 
         if (isset($errors['noOfVehiclesRequired'])) {
@@ -102,6 +107,23 @@ class OperatingCentre implements MapperInterface
             }
 
             unset($errors['adPlacedDate']);
+        }
+
+        if (isset($errors['postcode'])) {
+
+            foreach ($errors['postcode'] as $key => $message) {
+
+                foreach ($message as $k => $v) {
+                    if ($k === 'ERR_OC_PC_TA_GB') {
+                        $data = json_decode($v, true);
+                        $message[$k] = $translator->translateReplace($k, [$data['oc'], $data['current']]);
+                    }
+                }
+
+                $formMessages['address']['postcode'][] = $message;
+            }
+
+            unset($errors['postcode']);
         }
 
         if (!empty($errors)) {
