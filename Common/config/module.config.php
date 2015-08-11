@@ -629,6 +629,8 @@ return array(
             'lva-licence-goods-vehicles-filters' => 'Common\FormService\Form\Lva\LicenceGoodsVehiclesFilters',
             'lva-variation-goods-vehicles-filters' => 'Common\FormService\Form\Lva\CommonGoodsVehiclesFilters',
             'lva-application-goods-vehicles-filters' => 'Common\FormService\Form\Lva\CommonGoodsVehiclesFilters',
+            // PSV filter form services
+            'lva-psv-vehicles-filters' => 'Common\FormService\Form\Lva\CommonPsvVehiclesFilters',
             // Common vehicle services
             'lva-licence-variation-vehicles' => 'Common\FormService\Form\Lva\LicenceVariationVehicles',
             'lva-generic-vehicles-vehicle' => 'Common\FormService\Form\Lva\GenericVehiclesVehicle',
