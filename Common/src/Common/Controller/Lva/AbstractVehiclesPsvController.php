@@ -140,7 +140,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $this->maybeWarnAboutTotalAuth($resultData);
 
-        return $this->render('vehicles_psv', $form);
+        return $this->renderForm($form, 'vehicles_psv');
     }
 
     /**
@@ -585,7 +585,23 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     private function renderForm($form)
     {
-        return $this->render('vehicles_psv', $form);
+        $params = [];
+
+        if (!($this->lva === 'application' && $this->location === 'external')) {
+            $filterForm = $this->getServiceLocator()->get('FormServiceManager')
+                ->get('lva-psv-vehicles-filters')
+                ->getForm();
+
+            if ($filterForm !== null) {
+                $files[] = 'forms/filter';
+                $params['filterForm'] = $filterForm;
+
+                $query = (array)$this->getRequest()->getQuery();
+
+                $filterForm->setData($query);
+            }
+        }
+        return $this->render('vehicles_psv', $form, $params);
     }
 
     /**
