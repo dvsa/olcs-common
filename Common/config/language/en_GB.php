@@ -2007,6 +2007,7 @@ return array(
     'save' => 'Save',
     'save-and-add-another' => 'Save and add another',
     'save.button' => 'Save & return',
+    'internal.save.button' => 'Save',
     'save.continue.button' => 'Continue',
     'scanning.data.category' => 'Category',
     'scanning.data.description' => 'Description',

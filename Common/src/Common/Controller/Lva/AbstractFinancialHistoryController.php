@@ -74,7 +74,10 @@ abstract class AbstractFinancialHistoryController extends AbstractController
 
     protected function getFinancialHistoryForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\FinancialHistory');
+        return $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-financial_history')
+            ->getForm();
     }
 
     protected function getFormData()
@@ -181,7 +184,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
 
         foreach ($fields as $errorKey => $fieldName) {
             if (isset($errors[$errorKey])) {
-                foreach ($errors[$errorKey] as $key => $message) {
+                foreach ($errors[$errorKey] as $message) {
                     $formMessages['data'][$fieldName][] = $message;
                 }
 

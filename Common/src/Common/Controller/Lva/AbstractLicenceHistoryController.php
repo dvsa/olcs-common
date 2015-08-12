@@ -252,7 +252,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $form = $formHelper->createForm('Lva\LicenceHistory');
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm();
 
         foreach (array_keys($this->sections) as $section) {
             $formHelper->populateFormTable(

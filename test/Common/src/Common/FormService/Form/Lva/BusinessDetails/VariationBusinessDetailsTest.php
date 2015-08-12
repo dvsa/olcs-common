@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Application Business Details Test
+ * Variation Business Details Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace CommonTest\FormService\Form\Lva;
+namespace CommonTest\FormService\Form\Lva\BusinessDetails;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Entity\OrganisationEntityService;
-use Common\FormService\Form\Lva\ApplicationBusinessDetails;
+use Common\FormService\Form\Lva\BusinessDetails\VariationBusinessDetails;
 
 /**
- * Application Business Details Test
+ * Variation Business Details Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationBusinessDetailsTest extends MockeryTestCase
+class VariationBusinessDetailsTest extends MockeryTestCase
 {
     protected $sut;
 
@@ -30,7 +30,7 @@ class ApplicationBusinessDetailsTest extends MockeryTestCase
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
         $this->fsl = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 
-        $this->sut = new ApplicationBusinessDetails();
+        $this->sut = new VariationBusinessDetails();
         $this->sut->setFormHelper($this->formHelper);
         $this->sut->setFormServiceLocator($this->fsl);
     }
@@ -39,12 +39,13 @@ class ApplicationBusinessDetailsTest extends MockeryTestCase
     {
         // Params
         $orgType = OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY;
+        $orgId = 111;
 
         // Mocks
         $mockForm = m::mock();
         $mockLva = m::mock('\Common\FormService\FormServiceInterface');
 
-        $this->fsl->setService('lva-application', $mockLva);
+        $this->fsl->setService('lva-variation', $mockLva);
 
         // Expectations
         $mockLva->shouldReceive('alterForm')
@@ -54,7 +55,7 @@ class ApplicationBusinessDetailsTest extends MockeryTestCase
             ->with('Lva\BusinessDetails')
             ->andReturn($mockForm);
 
-        $form = $this->sut->getForm($orgType, true);
+        $form = $this->sut->getForm($orgType, $orgId);
 
         $this->assertSame($mockForm, $form);
     }

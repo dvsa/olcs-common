@@ -66,7 +66,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             return $this->completeSection('people');
         }
 
-        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\People');
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm();
+        // @todo move alterForm and alterFormForOrganisation logic into form services
 
         $table = $adapter->createTable();
 

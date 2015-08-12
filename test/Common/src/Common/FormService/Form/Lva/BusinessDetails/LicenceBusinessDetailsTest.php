@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Variation Business Details Test
+ * Licence Business Details Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace CommonTest\FormService\Form\Lva;
+namespace CommonTest\FormService\Form\Lva\BusinessDetails;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Entity\OrganisationEntityService;
-use Common\FormService\Form\Lva\VariationBusinessDetails;
+use Common\FormService\Form\Lva\BusinessDetails\LicenceBusinessDetails;
 
 /**
- * Variation Business Details Test
+ * Licence Business Details Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationBusinessDetailsTest extends MockeryTestCase
+class LicenceBusinessDetailsTest extends MockeryTestCase
 {
     protected $sut;
 
@@ -30,7 +30,7 @@ class VariationBusinessDetailsTest extends MockeryTestCase
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
         $this->fsl = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 
-        $this->sut = new VariationBusinessDetails();
+        $this->sut = new LicenceBusinessDetails();
         $this->sut->setFormHelper($this->formHelper);
         $this->sut->setFormServiceLocator($this->fsl);
     }
@@ -45,7 +45,7 @@ class VariationBusinessDetailsTest extends MockeryTestCase
         $mockForm = m::mock();
         $mockLva = m::mock('\Common\FormService\FormServiceInterface');
 
-        $this->fsl->setService('lva-variation', $mockLva);
+        $this->fsl->setService('lva-licence', $mockLva);
 
         // Expectations
         $mockLva->shouldReceive('alterForm')

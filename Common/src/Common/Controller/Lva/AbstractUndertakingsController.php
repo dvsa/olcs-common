@@ -65,7 +65,10 @@ abstract class AbstractUndertakingsController extends AbstractController
      */
     protected function getForm()
     {
-        // no-op, override in concrete classes
+        return $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-undertakings')
+            ->getForm();
     }
 
     protected function formatDataForForm($applicationData)
@@ -74,6 +77,9 @@ abstract class AbstractUndertakingsController extends AbstractController
         return $applicationData;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function updateForm($form, $data)
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
