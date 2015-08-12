@@ -140,4 +140,5 @@ class RefData
     const OPERATOR_CPID_LOCAL = 'op_cpid_local';
     const OPERATOR_CPID_CORPORATION = 'op_cpid_corporation';
     const OPERATOR_CPID_DEFAULT = 'op_cpid_default';
+    const OPERATOR_CPID_ALL = 'op_cpid_all';
 }
