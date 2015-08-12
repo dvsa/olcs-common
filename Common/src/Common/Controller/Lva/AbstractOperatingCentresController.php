@@ -229,9 +229,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
             $dtoClass = $this->createCommandMap[$this->lva];
             $response = $this->handleCommand($dtoClass::create($dtoData));
-            echo '<pre>';
-            print_r($response);
-            die();
+
             if ($response->isOk()) {
                 return $this->handlePostSave(null, false);
             }
