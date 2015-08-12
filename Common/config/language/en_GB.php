@@ -900,6 +900,9 @@ return array(
     'search.subtitle.vehicle-external' => 'Search the database for heavy goods and public service vehicles.',
     'search.title.vehicle-external' => 'Find a vehicle',
 
+    'search.subtitle.vehicle' => 'Search the database for heavy goods and public service vehicles.',
+    'search.title.vehicle' => 'Find a vehicle',
+
     'search.form.label' => 'Enter keywords',
     'search.form.hint' => 'Can include operator name, licence number, person, postcode, town or city',
     'search.page.replaces' => 'This service replaces the VOSA Operator Search',
