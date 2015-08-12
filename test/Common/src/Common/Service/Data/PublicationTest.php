@@ -117,7 +117,7 @@ class PublicationTest extends MockeryTestCase
         $mockFileUploader->shouldReceive('setFile');
 
         $mockFileUploader->shouldReceive('buildPathNamespace')->andReturn($documentPath);
-        $mockFileUploader->shouldReceive('upload')->with($documentPath)->andReturn($mockDocShareFile);
+        $mockFileUploader->shouldReceive('upload')->with($documentPath, null)->andReturn($mockDocShareFile);
 
         $mockFileFactory = m::mock('Common\Service\File\FileUploaderFactory');
         $mockFileFactory->shouldReceive('getUploader')->andReturn($mockFileUploader);
