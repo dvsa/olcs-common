@@ -616,8 +616,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected function getFormClass($type)
     {
         return $this->getServiceLocator()->get('Helper\Form')->createForm(
-            $this->normaliseFormName($type, true),
-            $this->getEnabledCsrf()
+            $this->normaliseFormName($type, true)
         );
     }
 
