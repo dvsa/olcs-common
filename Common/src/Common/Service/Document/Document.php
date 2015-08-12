@@ -4,7 +4,7 @@ namespace Common\Service\Document;
 
 use Common\Service\Document\Bookmark\Interfaces\DateHelperAwareInterface;
 use Common\Service\Document\Bookmark\Interfaces\FileStoreAwareInterface;
-use Dvsa\Olcs\DocumentShare\Client\Data\Object\File as ContentStoreFile;
+use Dvsa\Olcs\DocumentShare\Data\Object\File as ContentStoreFile;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
