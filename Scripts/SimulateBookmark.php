@@ -24,7 +24,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Dvsa\Olcs\DocumentShare\Client\Data\Object\File as ContentStoreFile;
+use Dvsa\Olcs\DocumentShare\Data\Object\File as ContentStoreFile;
 
 // Get and configure the service manager for use later on.
 $serviceManager = new \Zend\ServiceManager\ServiceManager(new \Zend\Mvc\Service\ServiceManagerConfig());

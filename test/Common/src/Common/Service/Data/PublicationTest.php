@@ -4,7 +4,7 @@ namespace OlcsTest\Service\Data;
 
 use Common\Service\Data\Publication;
 
-use Dvsa\Olcs\DocumentShare\Client\Data\Object\File;
+use Dvsa\Olcs\DocumentShare\Data\Object\File;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -103,7 +103,7 @@ class PublicationTest extends MockeryTestCase
         $mockDocShareFile->shouldReceive('getIdentifier')->andReturn($docIdentifier);
         $mockDocShareFile->shouldReceive('getSize')->andReturn($docSize);
 
-        $mockContentStore = m::mock('Dvsa\Olcs\DocumentShare\Client\Service\Client');
+        $mockContentStore = m::mock('Dvsa\Olcs\DocumentShare\Service\Client');
         $mockContentStore->shouldReceive('read')->with($docIdentifier)->andReturn($mockDocShareFile);
 
         $mockDocumentService = m::mock('Common\Service\Document\Document');

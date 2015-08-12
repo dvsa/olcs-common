@@ -3,7 +3,7 @@
 namespace CommonTest\Service\Document;
 
 use Common\Service\Document\Document;
-use Dvsa\Olcs\DocumentShare\Client\Data\Object\File;
+use Dvsa\Olcs\DocumentShare\Data\Object\File;
 
 /**
  * Document service test

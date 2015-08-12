@@ -8,7 +8,7 @@
 namespace CommonTest\Service\File;
 
 use Common\Service\File\ContentStoreFileUploader;
-use Dvsa\Olcs\DocumentShare\Client\Data\Object\File;
+use Dvsa\Olcs\DocumentShare\Data\Object\File;
 use PHPUnit_Framework_TestCase;
 
 /**

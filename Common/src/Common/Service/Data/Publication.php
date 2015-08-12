@@ -12,7 +12,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Util\RestClient;
 use Common\Exception\ResourceNotFoundException;
 use Common\Exception\DataServiceException;
-use Dvsa\Olcs\DocumentShare\Client\Data\Object\File;
+use Dvsa\Olcs\DocumentShare\Data\Object\File;
 
 /**
  * Publication service
@@ -296,7 +296,7 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
     /**
      * Returns a document share client
      *
-     * @return \Dvsa\Olcs\DocumentShare\Client\Service\Client
+     * @return \Dvsa\Olcs\DocumentShare\Service\Client
      */
     protected function getContentStore()
     {
