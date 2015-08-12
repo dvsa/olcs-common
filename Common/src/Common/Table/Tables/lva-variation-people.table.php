@@ -44,6 +44,17 @@ return array(
             'formatter' => 'Date',
         ),
         array(
+            'title' => 'Disqual',
+            'name' => 'disqual',
+            'formatter' => function ($row) {
+                return sprintf(
+                    '<a href="%s" class="js-modal-ajax">%s</a>',
+                    $this->generateUrl(array('child_id' => $row['id'], 'action' => 'disqualify')),
+                    $row['disqualificationStatus']
+                );
+            }
+        ),
+        array(
             'title' => 'selfserve-app-subSection-your-business-people-columnPosition',
             'name' => 'position',
         ),

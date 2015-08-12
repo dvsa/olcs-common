@@ -162,7 +162,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Alter form based on company type
      */
-    private function alterForm($form, $table, $organisationTypeId)
+    private function alterForm($form, \Common\Service\Table\TableBuilder $table, $organisationTypeId)
     {
         $this->alterFormForLva($form);
 
@@ -189,6 +189,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
             default:
                 break;
+        }
+
+        // if not on internal then remove the disqual column
+        if ($this->location !== 'internal') {
+            $table->removeColumn('disqual');
         }
 
         // a separate if saves repeating this three times in the switch...
