@@ -85,8 +85,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $form = $this->alterForm($form, $resultData, $removeActions);
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'vehicle-psv']);
-
         if ($request->isPost() && $form->isValid()) {
 
             $crudAction = $this->getCrudAction($data);
@@ -111,12 +109,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                         $response->getResult()['messages'],
                         $this->getServiceLocator()->get('Helper\FlashMessenger')
                     );
-                    return $this->renderForm($form);
+                    return $this->renderForm($form, 'vehicles_psv');
                 }
 
                 if ($response->isServerError()) {
                     $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
-                    return $this->renderForm($form);
+                    return $this->renderForm($form, 'vehicles_psv');
                 }
             }
 
@@ -140,7 +138,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $this->maybeWarnAboutTotalAuth($resultData);
 
-        return $this->render('vehicles_psv', $form);
+        return $this->renderForm($form, 'vehicles_psv');
     }
 
     /**
@@ -585,7 +583,26 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     private function renderForm($form)
     {
-        return $this->render('vehicles_psv', $form);
+        $params = [];
+
+        $files = ['lva-crud', 'vehicle-psv'];
+
+        if (!($this->lva === 'application' && $this->location === 'external')) {
+            $filterForm = $this->getServiceLocator()->get('FormServiceManager')
+                ->get('lva-psv-vehicles-filters')
+                ->getForm();
+
+            if ($filterForm !== null) {
+                $files[] = 'forms/filter';
+                $params['filterForm'] = $filterForm;
+
+                $query = (array)$this->getRequest()->getQuery();
+
+                $filterForm->setData($query);
+            }
+        }
+        $this->getServiceLocator()->get('Script')->loadFiles($files);
+        return $this->render('vehicles_psv', $form, $params);
     }
 
     /**
@@ -616,8 +633,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     private function fetchResultData()
     {
         $dtoClass = $this->queryMap[$this->lva];
-
-        $response = $this->handleQuery($dtoClass::create(['id' => $this->getIdentifier()]));
+        $dtoData = $this->getFilters();
+        $dtoData['id'] = $this->getIdentifier();
+        $response = $this->handleQuery($dtoClass::create($dtoData));
         return $response->getResult();
     }
 
@@ -626,5 +644,23 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $response = $this->handleQuery(QueryDto\LicenceVehicle\PsvLicenceVehicle::create(['id' => $id]));
 
         return $response->getResult();
+    }
+
+    protected function getFilters()
+    {
+        if ($this->getRequest()->isPost()) {
+            $query = $this->getRequest()->getPost('query');
+        } else {
+            $query = $this->getRequest()->getQuery();
+        }
+
+        return $this->formatFilters((array)$query);
+    }
+
+    protected function formatFilters($query)
+    {
+        $filters = [];
+        $filters['includeRemoved'] = (isset($query['includeRemoved']) && $query['includeRemoved'] == '1');
+        return $filters;
     }
 }
