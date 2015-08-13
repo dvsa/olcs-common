@@ -69,8 +69,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             $data = PsvVehicles::mapFromResult($resultData);
         }
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
@@ -250,6 +248,10 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      */
     public function getDeleteMessage()
     {
+        if ($this->lva === 'application') {
+            return 'delete.confirmation.text';
+        }
+
         $resultData = $this->fetchResultData();
 
         $toDelete = count(explode(',', $this->params('child_id')));
@@ -531,9 +533,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      */
     private function getTotalNumberOfVehicles($resultData)
     {
-        $type = $this->getType();
-
-        return count($resultData[$type]);
+        return $resultData['total'];
     }
 
     private function maybeWarnAboutTotalAuth($resultData, $current = true)
