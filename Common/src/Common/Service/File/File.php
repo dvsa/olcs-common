@@ -29,13 +29,6 @@ class File
     protected $name;
 
     /**
-     * Holds the type
-     *
-     * @var string
-     */
-    protected $type;
-
-    /**
      * Holds the path
      *
      * @var string
@@ -55,13 +48,6 @@ class File
      * @var string
      */
     protected $content;
-
-    /**
-     * Holds any associated metadata. Not supported by all stores
-     *
-     * @var array
-     */
-    protected $meta = [];
 
     /**
      * Setter for identifier
@@ -101,26 +87,6 @@ class File
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Setter for type
-     *
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * Getter for type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -183,26 +149,6 @@ class File
         return $this->content;
     }
 
-    /**
-     * Setter for meta
-     *
-     * @param int $meta
-     */
-    public function setMeta($meta)
-    {
-        $this->meta = $meta;
-    }
-
-    /**
-     * Getter for meta
-     *
-     * @return int
-     */
-    public function getMeta()
-    {
-        return $this->meta;
-    }
-
     public function getExtension()
     {
         if (empty($this->name)) {
@@ -233,11 +179,9 @@ class File
     {
         $propertyMap = array(
             'name' => array('name', 'filename'),
-            'type' => array('type'),
             'path' => array('tmp_name'),
             'size' => array('size'),
             'content' => array('content'),
-            'meta' => array('meta'),
             'identifier' => array('identifier')
         );
 
@@ -261,11 +205,9 @@ class File
         return array(
             'identifier' => $this->getIdentifier(),
             'name' => $this->getName(),
-            'type' => $this->getType(),
             'path' => $this->getPath(),
             'size' => $this->getSize(),
-            'content' => $this->getContent(),
-            'meta' => $this->getMeta()
+            'content' => $this->getContent()
         );
     }
 }

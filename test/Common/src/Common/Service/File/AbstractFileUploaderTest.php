@@ -18,21 +18,17 @@ class AbstractFileUploaderTest extends \PHPUnit_Framework_TestCase
     {
         $data = array(
             'name' => 'Bob',
-            'type' => 'image/png',
             'tmp_name' => '/sdflkajdsf/asdfjasldf',
             'size' => 45646,
-            'content' => 'foo',
-            'meta' => [1]
+            'content' => 'foo'
         );
 
         $expected = array(
             'identifier' => null,
             'name' => 'Bob',
-            'type' => 'image/png',
             'path' => '/sdflkajdsf/asdfjasldf',
             'size' => 45646,
-            'content' => 'foo',
-            'meta' => [1]
+            'content' => 'foo'
         );
 
         $abstractFileUploader = $this->getMockForAbstractClass('\Common\Service\File\AbstractFileUploader');

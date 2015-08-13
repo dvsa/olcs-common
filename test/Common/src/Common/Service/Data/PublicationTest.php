@@ -4,6 +4,7 @@ namespace OlcsTest\Service\Data;
 
 use Common\Service\Data\Publication;
 
+use Dvsa\Olcs\DocumentShare\Data\Object\File;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -98,12 +99,12 @@ class PublicationTest extends MockeryTestCase
             )
             ->andReturn(['id' => $newId]);
 
-        $mockJackRabbitFile = m::mock('Dvsa\Jackrabbit\Data\Object\File');
-        $mockJackRabbitFile->shouldReceive('getIdentifier')->andReturn($docIdentifier);
-        $mockJackRabbitFile->shouldReceive('getSize')->andReturn($docSize);
+        $mockDocShareFile = m::mock(File::class);
+        $mockDocShareFile->shouldReceive('getIdentifier')->andReturn($docIdentifier);
+        $mockDocShareFile->shouldReceive('getSize')->andReturn($docSize);
 
-        $mockContentStore = m::mock('Dvsa\Jackrabbit\Service\Client');
-        $mockContentStore->shouldReceive('read')->with($docIdentifier)->andReturn($mockJackRabbitFile);
+        $mockContentStore = m::mock('Dvsa\Olcs\DocumentShare\Service\Client');
+        $mockContentStore->shouldReceive('read')->with($docIdentifier)->andReturn($mockDocShareFile);
 
         $mockDocumentService = m::mock('Common\Service\Document\Document');
         $mockDocumentService->shouldReceive('getBookmarkQueries');
@@ -116,7 +117,7 @@ class PublicationTest extends MockeryTestCase
         $mockFileUploader->shouldReceive('setFile');
 
         $mockFileUploader->shouldReceive('buildPathNamespace')->andReturn($documentPath);
-        $mockFileUploader->shouldReceive('upload')->with($documentPath)->andReturn($mockJackRabbitFile);
+        $mockFileUploader->shouldReceive('upload')->with($documentPath, null)->andReturn($mockDocShareFile);
 
         $mockFileFactory = m::mock('Common\Service\File\FileUploaderFactory');
         $mockFileFactory->shouldReceive('getUploader')->andReturn($mockFileUploader);

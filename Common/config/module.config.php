@@ -156,7 +156,7 @@ return array(
             'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
-            'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
+            'ContentStore' => 'Dvsa\Olcs\DocumentShare\Service\Client',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
             'NavigationFactory' => 'Common\Service\NavigationFactory',
         ),

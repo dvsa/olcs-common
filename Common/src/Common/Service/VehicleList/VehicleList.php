@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Service to get create vehicle list and save it to JackRabbit
+ * Service to get create vehicle list and save it to the document share
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
@@ -12,7 +12,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Service\Data\CategoryDataService;
 
 /**
- * Service to get create vehicle list and save it to JackRabbit
+ * Service to get create vehicle list and save it to the document share
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
