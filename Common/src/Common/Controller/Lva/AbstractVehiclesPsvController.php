@@ -394,12 +394,13 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     {
         if ($this->lva === 'licence' && $this->location === 'external' && $action === 'export') {
             $type = $this->getType();
-
             $resultData = $this->fetchResultData();
+
+            $data = $resultData[$type];
 
             return $this->getServiceLocator()
                 ->get('Helper\Response')
-                ->tableToCsv($this->getResponse(), $this->getTableBasic($type, $resultData), $type . '-vehicles');
+                ->tableToCsv($this->getResponse(), $this->getTableBasic($type, $data), $type . '-vehicles');
         }
 
         if ($action === 'add') {
