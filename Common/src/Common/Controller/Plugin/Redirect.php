@@ -27,16 +27,15 @@ class Redirect extends ZendRedirect
         $controller = $this->getController();
 
         if ($controller->getRequest()->isXmlHttpRequest()) {
-            $data = array(
+            $data = [
                 'status' => 302,
                 'location' => $controller->url()->fromRoute($route, $params, $options, $reuseMatchedParams)
-            );
+            ];
             $this->getResponse()->getHeaders()->addHeaders(['Content-Type' => 'application/json']);
             $this->getResponse()->setContent(Json::encode($data));
             return $this->getResponse();
 
         } else {
-
             return $this->toRoute($route, $params, $options, $reuseMatchedParams);
         }
     }
