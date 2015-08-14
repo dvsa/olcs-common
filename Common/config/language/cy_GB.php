@@ -1300,7 +1300,7 @@ return array(
     'internal-navigation-transport-manager-processing-notes' => 'W Notes',
     'internal-navigation-transport-manager-processing-publications' => 'W Publication',
     'internal-navigation-transport-manager-processing-tasks' => 'W Tasks',
-    'internal-navigation-unlicensed-operator-profile' => 'W Unlicensed operator profile',
+    'internal-navigation-unlicensed-operator-profile' => 'W Unlicensed operator',
     'internal-operator-create-new-operator' => 'W Create new operator',
     'internal-operator-create-new-unlicensed-operator' => 'W Create new unlicensed operator',
     'internal-operator-new-application' => 'W New application',
