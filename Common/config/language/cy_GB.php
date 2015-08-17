@@ -2009,6 +2009,7 @@ return array(
     'search-result-label-lead-tc' => 'W Lead TC / Traffic Regulator',
     'search-result-label-lic-no' => 'W Lic no.',
     'search-result-label-licence-review-date' => 'W Review date',
+    'search-result-label-business-type' => 'W Business type',
     'search-result-label-licence-start-date' => 'W Start date',
     'search-result-label-licence-status' => 'W Licence status',
     'search-result-label-licence-type' => 'W Licence type',

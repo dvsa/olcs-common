@@ -2003,6 +2003,7 @@ return array(
     'search-result-label-lead-tc' => 'Lead TC / Traffic Regulator',
     'search-result-label-lic-no' => 'Lic no.',
     'search-result-label-licence-review-date' => 'Review date',
+    'search-result-label-business-type' => 'Business type',
     'search-result-label-licence-start-date' => 'Start date',
     'search-result-label-licence-status' => 'Licence status',
     'search-result-label-licence-type' => 'Licence type',
