@@ -52,9 +52,20 @@ class TemplateWorker
 
                 $path = $name . '/' . str_replace(" ", "_", $entry);
 
+                echo "Removing $path... ";
+
+                $result = $this->client->remove($path);
+
+                if ($result->isSuccess()) {
+                    echo "OK\n";
+                } else {
+                    echo "ERROR: " . $result->getStatusCode() . "\n";
+                }
+
                 echo "Uploading $path... ";
 
                 $result = $this->client->write($path, $file);
+
                 if ($result->isSuccess()) {
                     echo "OK\n";
                 } else {
