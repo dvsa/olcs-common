@@ -28,8 +28,13 @@ class PublicationNumber implements FormatterInterface
 
         $uriPattern = $sm->get('Config')['document_share']['uri_pattern'];
 
-        $url = str_replace('/', '\\', sprintf($uriPattern, $documentPath . '/' . $data['document']['filename']));
+        $url = sprintf($uriPattern, $documentPath . '/' . $data['document']['filename']);
 
-        return sprintf('<a href="%s" target="blank">%s</a>', $url, $data['publicationNo']);
+        return sprintf(
+            '<a href="%s" data-file-url="%s" target="blank">%s</a>',
+            $url,
+            $url,
+            $data['publicationNo']
+        );
     }
 }
