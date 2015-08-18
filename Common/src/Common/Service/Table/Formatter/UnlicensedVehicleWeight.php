@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unlicensed Vehicle PSV Type formatter
+ * Unlicensed Vehicle Weight formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
@@ -9,11 +9,11 @@
 namespace Common\Service\Table\Formatter;
 
 /**
- * Unlicensed Vehicle PSV Type formatter
+ * Unlicensed Vehicle Weight formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class UnlicensedVehiclePsvType extends StackValue
+class UnlicensedVehicleWeight extends StackValue
 {
     /**
      * @param array $data
@@ -25,11 +25,6 @@ class UnlicensedVehiclePsvType extends StackValue
     {
         $value = parent::format($data, $column, $sm);
 
-        if ($value) {
-            $key = 'internal-operator-unlicensed-vehicles.type.'.$value;
-            return $sm->get('translator')->translate($key);
-        }
-
-        return $value;
+        return empty($value) ? '' : $value . ' kg';
     }
 }
