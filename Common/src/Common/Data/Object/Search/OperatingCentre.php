@@ -13,7 +13,7 @@ class OperatingCentre extends InternalSearchAbstract
     /**
      * @var string
      */
-    protected $title = 'Address';
+    protected $title = 'Operating Centres';
 
     /**
      * @var string
@@ -66,7 +66,8 @@ class OperatingCentre extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>/'
+                    . $data['appId'] . '<br />' . $data['licStatus'];
                 }
             ],
             [
@@ -84,7 +85,7 @@ class OperatingCentre extends InternalSearchAbstract
 
                         $row['street'],
                         $row['locality'],
-                        $row['town'],
+                        '<br />' . $row['town'],
                         $row['postcode']
                     ];
 
