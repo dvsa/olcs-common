@@ -11,4 +11,9 @@ use Zend\Form\Element\Select;
 class DynamicSelect extends Select
 {
     use DynamicTrait;
+
+    public function addValueOption(array $valueOption)
+    {
+        $this->setValueOptions(array_merge($this->getValueOptions(), $valueOption));
+    }
 }
