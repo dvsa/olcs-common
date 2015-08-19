@@ -31,7 +31,7 @@ class TaskDate implements FormatterInterface
             $date .= ' (urgent)';
         }
 
-        if ($data['isClosed'] === 'Y') {
+        if (isset($data['isClosed']) && $data['isClosed'] === 'Y') {
             $date .= ' <span class="status red">closed</span>';
         }
 

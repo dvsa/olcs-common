@@ -40,13 +40,53 @@ class TaskDateTest extends \PHPUnit_Framework_TestCase
      */
     public function provider()
     {
-        return array(
-            array(array('date' => '2013-01-01'), array('dateformat' => 'd/m/Y', 'name' => 'date'), '01/01/2013'),
-            array(
-                array('date' => '2013-01-01', 'urgent' => 'Y'),
-                array('dateformat' => 'd/m/Y', 'name' => 'date'),
-                '01/01/2013 (urgent)'
-            )
-        );
+        return [
+            'non-urgent' => [
+                [
+                    'date' => '2013-01-01',
+                ],
+                [
+                    'dateformat' => 'd/m/Y',
+                    'name' => 'date',
+                ],
+                '01/01/2013',
+            ],
+            'urgent' => [
+                [
+                    'date' => '2013-01-01',
+                    'urgent' => 'Y',
+                    'isClosed' => 'N',
+                ],
+                [
+                    'dateformat' => 'd/m/Y',
+                    'name' => 'date',
+                ],
+                '01/01/2013 (urgent)',
+            ],
+            'closed non-urgent' => [
+                [
+                    'date' => '2013-01-01',
+                    'isClosed' => 'Y',
+                    'urgent' => 'N',
+                ],
+                [
+                    'dateformat' => 'd/m/Y',
+                    'name' => 'date',
+                ],
+                '01/01/2013 <span class="status red">closed</span>',
+            ],
+            'closed urgent' => [
+                [
+                    'date' => '2013-01-01',
+                    'isClosed' => 'Y',
+                    'urgent' => 'Y',
+                ],
+                [
+                    'dateformat' => 'd/m/Y',
+                    'name' => 'date',
+                ],
+                '01/01/2013 (urgent) <span class="status red">closed</span>',
+            ],
+        ];
     }
 }
