@@ -26,9 +26,10 @@ class TaskCheckbox implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        if ($data['isClosed'] !== 'Y') {
-            return $sm->get('TableBuilder')->replaceContent('{{[elements/checkbox]}}', $data);
+        if (isset($data['isClosed']) && $data['isClosed'] === 'Y') {
+            return '';
         }
-        return '';
+
+        return $sm->get('TableBuilder')->replaceContent('{{[elements/checkbox]}}', $data);
     }
 }
