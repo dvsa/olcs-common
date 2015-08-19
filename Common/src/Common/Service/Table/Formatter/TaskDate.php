@@ -30,6 +30,11 @@ class TaskDate implements FormatterInterface
             // @TODO no AC for what the urgent marker looks like
             $date .= ' (urgent)';
         }
+
+        if ($data['isClosed'] === 'Y') {
+            $date .= ' <span class="status red">closed</span>';
+        }
+
         return $date;
     }
 }

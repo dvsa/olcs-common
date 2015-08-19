@@ -18,12 +18,13 @@ class TaskDescription implements FormatterInterface
     /**
      * Format a task description
      *
-     * @param array $data
+     * @param array $row
      * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param \Zend\ServiceManager\ServiceManager $serviceLocator
      * @return string
+     * @inheritdoc
      */
-    public static function format ($row, $column, $serviceLocator) {
+    public static function format ($row, $column = array(), $serviceLocator = null) {
         $router     = $serviceLocator->get('router');
         $request    = $serviceLocator->get('request');
         $routeMatch = $router->match($request);
@@ -56,15 +57,16 @@ class TaskDescription implements FormatterInterface
                 $routeParams = [];
                 break;
         }
-        $url = $this->generateUrl(
+
+        $url = $serviceLocator->get('Helper\Url')->fromRoute(
+            'task_action',
             array_merge(
                 [
                     'task' => $row['id'],
                     'action' => 'edit',
                 ],
                 $routeParams
-            ),
-            'task_action'
+            )
         );
         return '<a href="'
             . $url
