@@ -24,7 +24,8 @@ class TaskDescription implements FormatterInterface
      * @return string
      * @inheritdoc
      */
-    public static function format ($row, $column = array(), $serviceLocator = null) {
+    public static function format ($row, $column = array(), $serviceLocator = null)
+    {
         $router     = $serviceLocator->get('router');
         $request    = $serviceLocator->get('request');
         $routeMatch = $router->match($request);
