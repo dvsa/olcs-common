@@ -132,7 +132,7 @@ class RefData
     const PSV_TYPE_SMALL  = 'vhl_t_a';
     const PSV_TYPE_MEDIUM = 'vhl_t_b';
     const PSV_TYPE_LARGE  = 'vhl_t_c';
-    
+
     /**
      * Operator CPID.
      */
