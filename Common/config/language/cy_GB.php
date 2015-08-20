@@ -49,6 +49,7 @@ return array(
     'LIC-SAFE-TACH-1' => '{WELSH} Please specify the name of the external contractor',
     'N/A' => '{WELSH} Not applicable',
     'No' => '{WELSH} No',
+    'OC_CANNOT_DELETE_HAS_S4' => '{WELSH} Operating centres that are part of a schedule 4/1 action cannot be removed',
     'OperatingCentreNoOfOperatingCentres.required' => '{WELSH} Please add an operating centre',
     'Please Select' => '{WELSH} Please Select',
     'Please add a person' => '{WELSH} Please add a person',

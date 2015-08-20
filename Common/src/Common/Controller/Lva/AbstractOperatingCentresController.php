@@ -354,10 +354,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
         ];
 
         $dtoClass = $this->deleteCommandMap[$this->lva];
+        /* @var $response \Common\Service\Cqrs\Response */
         $response = $this->handleCommand($dtoClass::create($data));
 
         if ($response->isOk()) {
-            return;
+            return true;
         }
 
         $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
@@ -373,10 +374,15 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 $fm->addUnknownError();
             }
 
-            return;
+            return false;
         }
 
         $fm->addUnknownError();
+    }
+
+    protected function deleteFailed()
+    {
+        // do nothing as message already display in delete method
     }
 
     /**
