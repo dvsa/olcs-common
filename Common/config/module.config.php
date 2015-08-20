@@ -245,7 +245,6 @@ return array(
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
-            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
             \Common\Service\Data\Search\SearchTypeManager::class =>
