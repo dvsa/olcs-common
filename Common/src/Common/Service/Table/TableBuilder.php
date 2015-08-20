@@ -1630,6 +1630,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $class = isset($details['class']) ? $details['class'] : 'secondary';
 
             $disabled = isset($details['disabled']) ? $details['disabled'] : '';
+            if ($disabled) {
+                $class .= ' js-force-disable';
+            }
 
             $actionFieldName = $this->getActionFieldName();
 
