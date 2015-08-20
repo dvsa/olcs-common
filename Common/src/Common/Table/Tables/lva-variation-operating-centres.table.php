@@ -27,7 +27,7 @@ return array(
     'columns' => array(
         array(
             'title' => 'application_operating-centres_authorisation.table.address',
-            'type' => 'VariationRecordAction',
+            'type' => 'OperatingCentreVariationRecordAction',
             'action' => 'edit',
             'name' => 'operatingCentre->address',
             'formatter' => 'Address',
