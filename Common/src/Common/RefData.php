@@ -132,4 +132,13 @@ class RefData
     const PSV_TYPE_SMALL  = 'vhl_t_a';
     const PSV_TYPE_MEDIUM = 'vhl_t_b';
     const PSV_TYPE_LARGE  = 'vhl_t_c';
+    
+    /**
+     * Operator CPID.
+     */
+    const OPERATOR_CPID_CENTRAL = 'op_cpid_central';
+    const OPERATOR_CPID_LOCAL = 'op_cpid_local';
+    const OPERATOR_CPID_CORPORATION = 'op_cpid_corporation';
+    const OPERATOR_CPID_DEFAULT = 'op_cpid_default';
+    const OPERATOR_CPID_ALL = 'op_cpid_all';
 }
