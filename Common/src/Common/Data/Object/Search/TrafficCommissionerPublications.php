@@ -50,4 +50,19 @@ class TrafficCommissionerPublications extends InternalSearchAbstract
             ['title' => 'Family name', 'name'=> 'pubSecDesc'],
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function getSettings()
+    {
+        return [
+            'paginate' => [
+                'limit' => [
+                    'options' => [10, 25, 50]
+                ]
+            ],
+            'layout' => 'traffic-commissioner-publication',
+        ];
+    }
 }

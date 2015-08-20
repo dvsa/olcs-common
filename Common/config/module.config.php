@@ -375,7 +375,7 @@ return array(
             'Common\Filter\Publication\Clean'
         ),
     ),
-    'search' => [
+    /*'search' => [
         'invokables' => [
             'operator'    => LicenceSelfserve::class, // Selfserve licence search
             'licence'     => LicenceSearch::class,
@@ -395,7 +395,7 @@ return array(
             'operating-centre' => OperatingCentreSearchIndex::class,
             'traffic-commissioner-publication' => \Common\Data\Object\Search\TrafficCommissionerPublications::class,
         ]
-    ],
+    ],*/
     'file_uploader' => array(
         'default' => 'ContentStore',
         'config' => array(
