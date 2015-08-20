@@ -399,6 +399,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
+     * Disable an action
+     *
+     * @param string $name
+     */
+    public function disableAction($name)
+    {
+        if ($this->hasAction($name)) {
+            $this->settings['crud']['actions'][$name]['disabled'] = 'disabled';
+        }
+    }
+
+    /**
      * Get the content helper
      *
      * @return object
@@ -1617,6 +1629,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $class = isset($details['class']) ? $details['class'] : 'secondary';
 
+            $disabled = isset($details['disabled']) ? $details['disabled'] : '';
+
             $actionFieldName = $this->getActionFieldName();
 
             $newActions[] = array(
@@ -1624,7 +1638,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 'value' => $value,
                 'label' => $label,
                 'class' => $class,
-                'action_field_name' => $actionFieldName
+                'action_field_name' => $actionFieldName,
+                'disabled' => $disabled,
             );
         }
 
