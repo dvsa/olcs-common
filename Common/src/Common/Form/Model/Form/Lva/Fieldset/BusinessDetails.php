@@ -41,6 +41,7 @@ class BusinessDetails
      *     "hint":"You can find a list of business types at
      *      <a href=""https://www.gov.uk/government/publications/standard-industrial-classification-of-economic-activities-sic"" target=""_blank"">Companies House</a>"
      * })
+     * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      */
     public $natureOfBusiness = null;
 }
