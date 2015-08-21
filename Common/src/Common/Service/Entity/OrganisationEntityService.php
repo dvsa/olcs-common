@@ -113,12 +113,6 @@ class OrganisationEntityService extends AbstractEntityService
         )
     );
 
-    protected $natureOfBusinessDataBundle = array(
-        'children' => array(
-            'natureOfBusinesses'
-        )
-    );
-
     protected $registeredUsersBundle = array(
         'children' => array(
             'organisationUsers' => array(
@@ -365,30 +359,6 @@ class OrganisationEntityService extends AbstractEntityService
     {
         $data = $this->get($id);
         return (!empty($data['isIrfo']) && ('Y' === $data['isIrfo'])) ? true : false;
-    }
-
-    public function getNatureOfBusinesses($id)
-    {
-        return $this->getAll($id, $this->natureOfBusinessDataBundle)['natureOfBusinesses'];
-    }
-
-    /**
-     * @NOTE After migrating to business services, this is no longer used in the business details lva controller
-     *
-     * @param $id
-     * @return array
-     */
-    public function getNatureOfBusinessesForSelect($id)
-    {
-        $naturesOfBusiness = $this->getNatureOfBusinesses($id);
-
-        $normalized = [];
-
-        foreach ($naturesOfBusiness as $value) {
-            $normalized[] = $value['id'];
-        }
-
-        return $normalized;
     }
 
     public function getRegisteredUsersForSelect($id)
