@@ -1310,9 +1310,9 @@ return array(
     'internal-operator-quick-actions' => 'Quick actions',
     'internal-operator-unlicensed-redirect' => 'You have been redirected to the Operator Profile for this unlicensed
         operator',
+    'internal-operator-unlicensed-vehicles.table.type' => 'Type',
     'internal-operator-unlicensed-vehicles.table.vrm' => 'VRM',
     'internal-operator-unlicensed-vehicles.table.weight' => 'Gross plated weight (kg)',
-    'internal-operator-unlicensed-vehicles.table.type' => 'Type',
     'internal-operator-unlicensed-vehicles.type.vhl_t_a' => 'Small vehicle',
     'internal-operator-unlicensed-vehicles.type.vhl_t_b' => '9 - 16 passenger seat vehicle',
     'internal-operator-unlicensed-vehicles.type.vhl_t_c' => '17 or more passenger seat vehicle',

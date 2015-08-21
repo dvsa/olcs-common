@@ -92,7 +92,10 @@ function wrapLine($string) {
 foreach ($foundArray as $key => $value) {
 
     $gbLine = wrapLine("    '" . $key . "' => '" . $value . "',");
-    $cyLine = wrapLine("    '" . $key . "' => 'W " . $value . "',");
+
+    $welsh = preg_replace('/[aeiou]/', 'y', $value);
+
+    $cyLine = wrapLine("    '" . $key . "' => '" . $welsh . "',");
 
     $enGbContent .= "\n" . $gbLine;
     $cyGbContent .= "\n" . $cyLine;
