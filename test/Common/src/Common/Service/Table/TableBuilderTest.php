@@ -2804,6 +2804,39 @@ class TableBuilderTest extends MockeryTestCase
         $table->removeActions();
     }
 
+    public function testDisableAction()
+    {
+        $tableConfig = array(
+            'settings' => array(
+                'paginate' => array(),
+                'crud' => array(
+                    'actions' => array(
+                        'foo' => array(),
+                        'bar' => array()
+                    )
+                )
+            )
+        );
+
+        $table = $this->getMockTableBuilder(array('getConfigFromFile'));
+
+        $table->expects($this->once())
+            ->method('getConfigFromFile')
+            ->will($this->returnValue($tableConfig));
+
+        $table->loadConfig('test');
+
+        $table->disableAction('foo');
+
+        $this->assertEquals(
+            array(
+                'foo' => array('disabled' => 'disabled'),
+                'bar' => array(),
+            ),
+            $table->getSettings()['crud']['actions']
+        );
+    }
+
     public function testGetEmptyMessage()
     {
         $message = 'foo';
