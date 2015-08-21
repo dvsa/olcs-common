@@ -31,11 +31,6 @@ class Language implements FactoryInterface
     ];
 
     /**
-     * @var Cookie
-     */
-    private $cookie;
-
-    /**
      * @var SetCookie
      */
     private $requestCookie;
@@ -46,16 +41,16 @@ class Language implements FactoryInterface
 
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $this->cookie = $serviceLocator->get('Request')->getCookie();
+        $cookie = $serviceLocator->get('Request')->getCookie();
 
         $this->preference = self::OPTION_EN;
 
-        if ($this->cookie instanceof Cookie && isset($this->cookie[$this->key])) {
-            $this->preference = $this->cookie[$this->key];
+        if ($cookie instanceof Cookie && isset($cookie[$this->key])) {
+            $this->preference = $cookie[$this->key];
         }
 
         $this->requestCookie = new SetCookie();
-        $this->requestCookie->setName('langPref');
+        $this->requestCookie->setName($this->key);
         $this->requestCookie->setValue($this->preference);
 
         /** @var Response $response */
