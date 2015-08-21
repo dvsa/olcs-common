@@ -1,0 +1,18 @@
+<?php
+/**
+ * @var $this->object \Common\Service\Table\TableBuilder
+ */
+?>
+<div class="traffic-commissioner-publication">
+    <?php foreach ($this->object->getRows() as $row): ?>
+        <h5>[Licence No] [Licence type] (<?php echo $this->escapeHtml($row['pubNo']); ?>)</h5>
+        <p><a>[Operator Name Here]</a></p>
+        <p><?php echo $this->escapeHtml($row['text1']); ?></p>
+        <p><?php echo $this->escapeHtml($row['text2']); ?></p>
+        <p><?php echo $this->escapeHtml($row['text3']); ?></p>
+        <p><b>Date:</b> <?php echo date('d/m/Y', strtotime($row['pubDate'])); ?></p>
+        <p><b>Status:</b> <?php echo $this->escapeHtml($row['pubStatus']); ?></p>
+        <hr />
+    <?php endforeach; ?>
+<?php echo $this->object->renderFooter(); ?>
+</div>

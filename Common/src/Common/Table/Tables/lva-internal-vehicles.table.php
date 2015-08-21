@@ -40,7 +40,7 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.weight',
-            'stringFormat' => '{vehicle->platedWeight} Kg',
+            'stringFormat' => '{vehicle->platedWeight} kg',
             'formatter' => 'StackValueReplacer'
         ),
         array(
