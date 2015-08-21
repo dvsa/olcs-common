@@ -35,8 +35,6 @@ class Module
         $languagePrefListener = $sm->get('LanguageListener');
         $languagePrefListener->attach($events, 1);
 
-        $langPref = $sm->get('LanguagePreference');
-
         $missingTranslationProcessor = new \Common\Service\Translator\MissingTranslationProcessor(
             // Inject the renderer and template resolver
             $e->getApplication()->getServiceManager()->get('ViewRenderer'),
