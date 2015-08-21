@@ -53,6 +53,7 @@ class RefData
     const LICENCE_STATUS_VALID = 'lsts_valid';
     const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
     const LICENCE_STATUS_UNLICENSED = 'lsts_unlicenced';
+    const LICENCE_STATUS_NOT_SUBMITTED = 'lsts_not_submitted';
 
     /**
      * Application statuses
@@ -141,4 +142,7 @@ class RefData
     const OPERATOR_CPID_CORPORATION = 'op_cpid_corporation';
     const OPERATOR_CPID_DEFAULT = 'op_cpid_default';
     const OPERATOR_CPID_ALL = 'op_cpid_all';
+
+    const TRANSPORT_MANAGER_TYPE_EXTERNAL = 'tm_t_e';
+    const TRANSPORT_MANAGER_TYPE_BOTH = 'tm_t_b';
 }
