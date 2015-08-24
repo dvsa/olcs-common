@@ -1075,6 +1075,14 @@ return array(
     'form.disqualify.notes' => '{WELSH} Notes',
     'form.disqualify.period' => '{WELSH} Period (months)',
     'form.disqualify.start-date' => '{WELSH} Start date',
+    'form.operator-merge.confirm' => '{WELSH} I am aware that any licences and applications will be transferred from the
+        losing operator to the winning operator and that this operation cannot be undone',
+    'form.operator-merge.confirm.validation' => '{WELSH} Must be checked',
+    'form.operator-merge.from-operator-name' => '{WELSH} From operator',
+    'form.operator-merge.success' => '{WELSH} The current operator\'s records having been merged into the winning
+        operator',
+    'form.operator-merge.to-operator-id' => '{WELSH} To operator id',
+    'form.operator-merge.to-operator-id.validation' => '{WELSH} Invalid Operator id',
     'from' => '{WELSH} From',
     'further-info-required' => '{WELSH} Further info required',
     'gen-haulier-distribution' => '{WELSH} Gen Haulier / Distribution',
