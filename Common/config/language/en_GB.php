@@ -1052,6 +1052,13 @@ return array(
     'form.disqualify.notes' => 'Notes',
     'form.disqualify.period' => 'Period (months)',
     'form.disqualify.start-date' => 'Start date',
+    'form.operator-merge.confirm' => 'I am aware that any licences and applications will be transferred from the losing
+        operator to the winning operator and that this operation cannot be undone',
+    'form.operator-merge.confirm.validation' => 'Must be checked',
+    'form.operator-merge.from-operator-name' => 'From operator',
+    'form.operator-merge.success' => 'The current operator\'s records having been merged into the winning operator',
+    'form.operator-merge.to-operator-id' => 'To operator id',
+    'form.operator-merge.to-operator-id.validation' => 'Invalid Operator id',
     'from' => 'From',
     'further-info-required' => 'Further info required',
     'gen-haulier-distribution' => 'Gen Haulier / Distribution',
