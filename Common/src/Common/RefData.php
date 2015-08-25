@@ -145,4 +145,12 @@ class RefData
 
     const TRANSPORT_MANAGER_TYPE_EXTERNAL = 'tm_t_e';
     const TRANSPORT_MANAGER_TYPE_BOTH = 'tm_t_b';
+
+    /**
+     * IRFO Stock Control
+     */
+    const IRFO_STOCK_CONTROL_STATUS_IN_STOCK = 'irfo_perm_s_s_in_stock';
+    const IRFO_STOCK_CONTROL_STATUS_ISSUED = 'irfo_perm_s_s_issued';
+    const IRFO_STOCK_CONTROL_STATUS_VOID = 'irfo_perm_s_s_void';
+    const IRFO_STOCK_CONTROL_STATUS_RETURNED = 'irfo_perm_s_s_ret';
 }
