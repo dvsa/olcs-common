@@ -20,6 +20,8 @@ class Module
 
     public function onBootstrap(\Zend\Mvc\MvcEvent $e)
     {
+        $sm = $e->getApplication()->getServiceManager();
+
         $translator = $e->getApplication()->getServiceManager()->get('translator');
 
         $translator->setLocale($this->getLanguageLocalePreference())
@@ -29,6 +31,9 @@ class Module
         $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/sic-codes/', 'sicCodes_%s.php');
 
         $events = $e->getApplication()->getEventManager();
+
+        $languagePrefListener = $sm->get('LanguageListener');
+        $languagePrefListener->attach($events, 1);
 
         $missingTranslationProcessor = new \Common\Service\Translator\MissingTranslationProcessor(
             // Inject the renderer and template resolver

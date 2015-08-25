@@ -176,4 +176,22 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($thrown, 'Expected exception not thrown or message incorrect');
     }
+
+    public function testAddValueOption()
+    {
+        $original = [
+            1 => 2,
+            2 => 3
+        ];
+
+        $additional = [
+            3 => 4
+        ];
+
+        $sut = new DynamicSelect();
+        $sut->setValueOptions($original);
+        $sut->addValueOption($additional);
+
+        $this->assertEquals($sut->getValueOptions(), array_merge($original, $additional));
+    }
 }
