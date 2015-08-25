@@ -72,6 +72,7 @@ class RegisteredAddress
      * @Form\Type("Text")
      * @Form\Required(false)
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":8}})
      */
     public $postcode = null;
 }
