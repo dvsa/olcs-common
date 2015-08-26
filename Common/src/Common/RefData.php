@@ -53,6 +53,7 @@ class RefData
     const LICENCE_STATUS_VALID = 'lsts_valid';
     const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
     const LICENCE_STATUS_UNLICENSED = 'lsts_unlicenced';
+    const LICENCE_STATUS_NOT_SUBMITTED = 'lsts_not_submitted';
 
     /**
      * Application statuses
@@ -132,4 +133,16 @@ class RefData
     const PSV_TYPE_SMALL  = 'vhl_t_a';
     const PSV_TYPE_MEDIUM = 'vhl_t_b';
     const PSV_TYPE_LARGE  = 'vhl_t_c';
+
+    /**
+     * Operator CPID.
+     */
+    const OPERATOR_CPID_CENTRAL = 'op_cpid_central';
+    const OPERATOR_CPID_LOCAL = 'op_cpid_local';
+    const OPERATOR_CPID_CORPORATION = 'op_cpid_corporation';
+    const OPERATOR_CPID_DEFAULT = 'op_cpid_default';
+    const OPERATOR_CPID_ALL = 'op_cpid_all';
+
+    const TRANSPORT_MANAGER_TYPE_EXTERNAL = 'tm_t_e';
+    const TRANSPORT_MANAGER_TYPE_BOTH = 'tm_t_b';
 }

@@ -106,8 +106,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'version' => $data['version'],
                 'name' => $data['data']['name'],
                 'tradingNames' => isset($tradingNames['trading_name']) ? $tradingNames['trading_name'] : [],
-                'natureOfBusinesses' => isset($data['data']['natureOfBusinesses'])
-                    ? $data['data']['natureOfBusinesses'] : null,
+                'natureOfBusiness' => isset($data['data']['natureOfBusiness'])
+                    ? $data['data']['natureOfBusiness'] : null,
                 'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
                     ? $data['data']['companyNumber']['company_number'] : null,
                 'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null,
@@ -122,8 +122,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'version' => $data['version'],
                 'name' => $data['data']['name'],
                 'tradingNames' => isset($tradingNames['trading_name']) ? $tradingNames['trading_name'] : [],
-                'natureOfBusinesses' => isset($data['data']['natureOfBusinesses'])
-                    ? $data['data']['natureOfBusinesses'] : null,
+                'natureOfBusiness' => isset($data['data']['natureOfBusiness'])
+                    ? $data['data']['natureOfBusiness'] : null,
                 'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
                     ? $data['data']['companyNumber']['company_number'] : null,
                 'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null,
@@ -322,13 +322,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     {
         $formMessages = [];
 
-        if (isset($errors['natureOfBusinesses'])) {
-
-            foreach ($errors['natureOfBusinesses'][0] as $key => $message) {
-                $formMessages['data']['natureOfBusinesses'][] = $key;
-            }
-
-            unset($errors['natureOfBusinesses']);
+        if (isset($errors['natureOfBusiness'])) {
+            $formMessages['data']['natureOfBusiness'] = $errors['natureOfBusiness'];
+            unset($errors['natureOfBusiness']);
         }
 
         if (!empty($errors)) {

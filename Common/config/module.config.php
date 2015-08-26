@@ -209,6 +209,8 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
+            'LanguagePreference' => \Common\Preference\Language::class,
+            'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
             'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
@@ -245,7 +247,6 @@ return array(
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
-            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
             \Common\Service\Data\Search\SearchTypeManager::class =>
@@ -427,7 +428,10 @@ return array(
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
             'licenceStatus' => 'Common\View\Helper\LicenceStatus',
             'address' => 'Common\View\Helper\Address',
-            'personName' => 'Common\View\Helper\PersonName',
+            'personName' => 'Common\View\Helper\PersonName'
+        ),
+        'factories' => array(
+            'languageLink' => \Common\View\Helper\LanguageLink::class,
         )
     ),
     'view_manager' => array(

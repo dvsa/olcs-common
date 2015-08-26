@@ -23,11 +23,6 @@ class BusinessDetails implements MapperInterface
             $tradingNames[] = $tradingName['name'];
         }
 
-        $natureOfBusiness = [];
-        foreach ($data['natureOfBusinesses'] as $nob) {
-            $natureOfBusiness[] = $nob['id'];
-        }
-
         return array(
             'version' => $data['version'],
             'data' => array(
@@ -39,7 +34,7 @@ class BusinessDetails implements MapperInterface
                 ),
                 'name' => $data['name'],
                 'type' => $data['type']['id'],
-                'natureOfBusinesses' => $natureOfBusiness
+                'natureOfBusiness' => $data['natureOfBusiness']
             ),
             'registeredAddress' => $data['contactDetails']['address'],
         );
