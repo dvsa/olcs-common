@@ -66,9 +66,7 @@ trait CrudTableTrait
             }
 
             if ($response === false) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
-                    'section.' . $this->params('action') . '.' . $this->section . '-failed'
-                );
+                $this->deleteFailed();
             } else {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
                     'section.' . $this->params('action') . '.' . $this->section
@@ -87,6 +85,17 @@ trait CrudTableTrait
         $params = ['sectionText' => $this->getDeleteMessage()];
 
         return $this->render($this->getDeleteTitle(), $form, $params);
+    }
+
+    /**
+     * Called when delete fails, eg to display a flash error message
+     * Override in controller for specific messages
+     */
+    protected function deleteFailed()
+    {
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
+            'section.' . $this->params('action') . '.' . $this->section . '-failed'
+        );
     }
 
     /**

@@ -36,6 +36,9 @@ return array(
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
         'collapseAt' => 3, // this will collapse remaining actions into a 'More Actions' dropdown
+        'row-disabled-callback' => function ($row) {
+            return $row['removalDate'] !== null;
+        }
     ),
     'columns' => array(
         array(
@@ -68,7 +71,8 @@ return array(
         array(
             'name' => 'action',
             'width' => 'checkbox',
-            'type' => 'Checkbox'
+            'type' => 'Checkbox',
+            'disableIfRowIsDisabled' => true
         )
     )
 );

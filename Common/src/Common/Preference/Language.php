@@ -52,6 +52,8 @@ class Language implements FactoryInterface
         $this->requestCookie = new SetCookie();
         $this->requestCookie->setName($this->key);
         $this->requestCookie->setValue($this->preference);
+        $this->requestCookie->setPath('/');
+        $this->requestCookie->setExpires(time() + (10 * 365 * 24 * 60 * 60));
 
         /** @var Response $response */
         $response = $serviceLocator->get('Response');
