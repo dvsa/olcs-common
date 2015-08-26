@@ -29,7 +29,7 @@ class SumColumns implements FormatterInterface
         if (isset($column['columns']) && is_array($column['columns'])) {
             foreach ($column['columns'] as $name) {
                 if (isset($data[$name]) && is_numeric($data[$name])) {
-                    $total += (int)$data[$name];
+                    $total += (float)$data[$name];
                 }
             }
         }
