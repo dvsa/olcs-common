@@ -66,6 +66,19 @@ class LicenceLicenceVehicle
     public $removalDate = null;
 
     /**
+     * @Form\Attributes({})
+     * @Form\Options({
+     *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.seedDate",
+     *     "create_empty_option": true,
+     *     "render_delimiters": false
+     * })
+     * @Form\Required(false)
+     * @Form\Filter({"name": "DateSelectNullifier"})
+     * @Form\Type("Common\Form\Elements\Custom\DateSelect")
+     */
+    public $warningLetterSeedDate = null;
+
+    /**
      * @Form\Attributes({"disabled":"disabled"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo"

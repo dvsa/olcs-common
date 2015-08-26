@@ -643,6 +643,7 @@ return array(
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo' => 'Disc No.',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate' => 'Received date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.removalDate' => 'Removed date',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.seedDate' => 'Warning letter seed date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate' => 'Specified date',
     'application_vehicle-safety_vehicle.table.disc-no' => 'Disc No.',
     'application_vehicle-safety_vehicle.table.removed' => 'Removed',
@@ -2656,10 +2657,12 @@ return array(
     'vehicle-belongs-to-another-licence-confirmation' => 'I confirm that I would like to continue adding this vehicle',
     'vehicle-belongs-to-another-licence-message-external' => 'This vehicle is specified on another licence. Please
         confirm you would like to continue adding this vehicle',
-    'vehicle-belongs-to-another-licence-message-internal' => 'This vehicle is specified on another licence: %s. Please
-        confirm you would like to continue adding this vehicle',
+    'vehicle-belongs-to-another-licence-message-internal' => 'This vehicle is specified on another licence: %s. If the
+        duplication is not removed, a warning letter will be sent in 28 days to the operator(s) on whose licence the
+        vehicle is currently specified',
     'vehicle-belongs-to-another-licence-message-internal-multiple' => 'This vehicle is specified on other licences: %s.
-        Please confirm you would like to continue adding this vehicle',
+        If the duplication is not removed, a warning letter will be sent in 28 days to the operator(s) on whose licence
+        the vehicle is currently specified',
     'vehicle-count' => '%s vehicles',
     'vehicle-disc-reprint-confirm-label' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',

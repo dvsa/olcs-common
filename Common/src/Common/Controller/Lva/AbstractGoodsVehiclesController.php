@@ -295,6 +295,8 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                         ? $formData['licence-vehicle']['receivedDate'] : null,
                     'specifiedDate' => isset($formData['licence-vehicle']['specifiedDate'])
                         ? $formData['licence-vehicle']['specifiedDate'] : null,
+                    'seedDate' => isset($formData['licence-vehicle']['warningLetterSeedDate'])
+                        ? $formData['licence-vehicle']['warningLetterSeedDate'] : null,
                 ];
 
                 $dtoClass = $this->updateVehicleMap[$this->lva];
