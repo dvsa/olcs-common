@@ -19,7 +19,8 @@ class HandleCommandFactory implements FactoryInterface
 
         $annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
         $commandService = $serviceLocator->get('CommandService');
+        $fm = $serviceLocator->get('Helper\FlashMessenger');
 
-        return new HandleCommand($annotationBuilder, $commandService);
+        return new HandleCommand($annotationBuilder, $commandService, $fm);
     }
 }

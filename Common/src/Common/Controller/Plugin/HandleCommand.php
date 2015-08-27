@@ -2,7 +2,10 @@
 
 namespace Common\Controller\Plugin;
 
+use Common\Exception\BailOutException;
+use Common\Exception\ResourceConflictException;
 use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Helper\FlashMessengerHelperService;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
@@ -24,13 +27,23 @@ class HandleCommand extends AbstractPlugin
     private $commandService;
 
     /**
+     * @var FlashMessengerHelperService
+     */
+    private $fm;
+
+    /**
      * @param TransferAnnotationBuilder $annotationBuilder
      * @param CommandService $commandService
+     * @param FlashMessengerHelperService $fm
      */
-    public function __construct(TransferAnnotationBuilder $annotationBuilder, CommandService $commandService)
-    {
+    public function __construct(
+        TransferAnnotationBuilder $annotationBuilder,
+        CommandService $commandService,
+        FlashMessengerHelperService $fm
+    ) {
         $this->commandService = $commandService;
         $this->annotationBuilder = $annotationBuilder;
+        $this->fm = $fm;
     }
 
     /**
@@ -40,6 +53,11 @@ class HandleCommand extends AbstractPlugin
     public function __invoke(CommandInterface $command)
     {
         $command = $this->annotationBuilder->createCommand($command);
-        return $this->commandService->send($command);
+        try {
+            return $this->commandService->send($command);
+        } catch (ResourceConflictException $ex) {
+            $this->fm->addConflictError();
+            throw new BailOutException('', $this->getController()->redirect()->refresh());
+        }
     }
 }
