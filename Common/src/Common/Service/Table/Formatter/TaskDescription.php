@@ -54,6 +54,12 @@ class TaskDescription implements FormatterInterface
             case 'case_processing_tasks':
                 $routeParams = ['type' => 'case', 'typeId' => $params['case']];
                 break;
+            case 'operator/processing/tasks':
+                $routeParams = [
+                    'type'    => 'organisation',
+                    'typeId'  => $params['organisation']
+                ];
+                break;
             default:
                 $routeParams = [];
                 break;

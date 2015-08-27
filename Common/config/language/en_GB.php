@@ -1287,6 +1287,7 @@ return array(
     'internal-navigation-operator-processing' => 'Processing',
     'internal-navigation-operator-processing-history' => 'History',
     'internal-navigation-operator-processing-notes' => 'Notes',
+    'internal-navigation-operator-processing-tasks' => 'Tasks',
     'internal-navigation-operator-profile' => 'Operator profile',
     'internal-navigation-operator-responsibilities' => 'Responsibilities',
     'internal-navigation-operator-vehicles' => 'Vehicles',

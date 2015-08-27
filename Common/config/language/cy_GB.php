@@ -1313,6 +1313,7 @@ return array(
     'internal-navigation-operator-processing' => '{WELSH} Processing',
     'internal-navigation-operator-processing-history' => '{WELSH} History',
     'internal-navigation-operator-processing-notes' => '{WELSH} Notes',
+    'internal-navigation-operator-processing-tasks' => '{WELSH} Tasks',
     'internal-navigation-operator-profile' => '{WELSH} Operator profile',
     'internal-navigation-operator-responsibilities' => '{WELSH} Responsibilities',
     'internal-navigation-operator-vehicles' => '{WELSH} Vehicles',
