@@ -30,28 +30,16 @@ class FeeUrl implements FormatterInterface
         $urlHelper  = $serviceLocator->get('Helper\Url');
         $routeMatch = $router->match($request);
         $modal      = true;
+        $matchedRouteName = $routeMatch->getMatchedRouteName();
 
-        switch ($routeMatch->getMatchedRouteName()) {
+        switch ($matchedRouteName) {
+            case 'operator/fees':
             case 'licence/bus-fees':
-                $url = $urlHelper->fromRoute(
-                    'licence/bus-fees/fee_action',
-                    ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'BusFeesController'],
-                    [],
-                    true
-                );
-                break;
             case 'licence/fees':
-                $url = $urlHelper->fromRoute(
-                    'licence/fees/fee_action',
-                    ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'LicenceController'],
-                    [],
-                    true
-                );
-                break;
             case 'lva-application/fees':
                 $url = $urlHelper->fromRoute(
-                    'lva-application/fees/fee_action',
-                    ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'ApplicationController'],
+                    $matchedRouteName.'/fee_action',
+                    ['fee' => $row['id'], 'action' => 'edit-fee'],
                     [],
                     true
                 );
