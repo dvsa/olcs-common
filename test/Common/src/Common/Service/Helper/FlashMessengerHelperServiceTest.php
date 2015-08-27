@@ -120,10 +120,31 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
         $this->sut->addCurrentWarningMessage('warning message');
         $this->sut->addCurrentSuccessMessage('success message');
         $this->sut->addCurrentMessage('success', 'success message 2');
+        $this->sut->addCurrentUnknownError();
 
         $this->assertEquals(['info message', 'info message 2'], $this->sut->getCurrentMessages('info'));
         $this->assertEquals(['success message', 'success message 2'], $this->sut->getCurrentMessages('success'));
-        $this->assertEquals(['error message'], $this->sut->getCurrentMessages('error'));
+        $this->assertEquals(['error message', 'unknown-error'], $this->sut->getCurrentMessages('error'));
         $this->assertEquals(['warning message'], $this->sut->getCurrentMessages('warning'));
+    }
+
+    public function testAddUnknownError()
+    {
+        $this->mockFlashMessenger->expects($this->once())
+            ->method('addErrorMessage')
+            ->with('unknown-error')
+            ->will($this->returnSelf());
+
+        $this->assertSame($this->mockFlashMessenger, $this->sut->addUnknownError());
+    }
+
+    public function testAddConflictError()
+    {
+        $this->mockFlashMessenger->expects($this->once())
+            ->method('addErrorMessage')
+            ->with('conflict-error')
+            ->will($this->returnSelf());
+
+        $this->assertSame($this->mockFlashMessenger, $this->sut->addConflictError());
     }
 }
