@@ -5,6 +5,9 @@ namespace Common\Controller\Plugin;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Handle Command Factory
+ */
 class HandleCommandFactory implements FactoryInterface
 {
     /**
