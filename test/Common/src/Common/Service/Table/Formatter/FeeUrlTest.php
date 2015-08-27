@@ -75,6 +75,16 @@ class FeeUrlTest extends MockeryTestCase
     public function provider()
     {
         return [
+            'operator fee' => [
+                [
+                    'id' => '99',
+                    'description' => 'operator fee',
+                ],
+                'operator/fees',
+                'operator/fees/fee_action',
+                ['fee' => '99', 'action' => 'edit-fee'],
+                '<a href="the_url" class="js-modal-ajax">operator fee</a>',
+            ],
             'licence fee' => [
                 [
                     'id' => '99',
@@ -82,7 +92,7 @@ class FeeUrlTest extends MockeryTestCase
                 ],
                 'licence/fees',
                 'licence/fees/fee_action',
-                ['fee' => '99', 'action' => 'edit-fee', 'controller' => 'LicenceController'],
+                ['fee' => '99', 'action' => 'edit-fee'],
                 '<a href="the_url" class="js-modal-ajax">licence fee</a>',
             ],
             'application fee' => [
@@ -92,7 +102,7 @@ class FeeUrlTest extends MockeryTestCase
                 ],
                 'lva-application/fees',
                 'lva-application/fees/fee_action',
-                ['fee' => '99', 'action' => 'edit-fee', 'controller' => 'ApplicationController'],
+                ['fee' => '99', 'action' => 'edit-fee'],
                 '<a href="the_url" class="js-modal-ajax">app fee</a>',
             ],
             'bus reg fee' => [
@@ -102,7 +112,7 @@ class FeeUrlTest extends MockeryTestCase
                 ],
                 'licence/bus-fees',
                 'licence/bus-fees/fee_action',
-                ['fee' => '99', 'action' => 'edit-fee', 'controller' => 'BusFeesController'],
+                ['fee' => '99', 'action' => 'edit-fee'],
                 '<a href="the_url" class="js-modal-ajax">bus reg fee</a>',
             ],
             'misc fee' => [
