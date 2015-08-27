@@ -2576,6 +2576,9 @@ return array(
         on your duties',
     'transport-manager-remove' => '{WELSH} Remove Transport Manager',
     'transport-manager-remove-are-you-sure' => '{WELSH} Are you sure you want to remove this transport manager?',
+    'transport-manager-remove-has-users-error' => '{WELSH} This transport manager is linked to user account: ',
+    'transport-manager-remove-not-detached-error' => '{WELSH} You cannot remove a transport manager that has associated
+        licences, applications or cases',
     'transport-manager-removed' => '{WELSH} Transport manager removed.',
     'transport-manager.competences.form.country' => '{WELSH} Country',
     'transport-manager.competences.form.date-of-issue' => '{WELSH} Date of Issue',

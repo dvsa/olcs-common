@@ -2530,6 +2530,9 @@ return array(
         duties',
     'transport-manager-remove' => 'Remove Transport Manager',
     'transport-manager-remove-are-you-sure' => 'Are you sure you want to remove this transport manager?',
+    'transport-manager-remove-has-users-error' => 'This transport manager is linked to user account: ',
+    'transport-manager-remove-not-detached-error' => 'You cannot remove a transport manager that has associated
+        licences, applications or cases',
     'transport-manager-removed' => 'Transport manager removed.',
     'transport-manager.competences.form.country' => 'Country',
     'transport-manager.competences.form.date-of-issue' => 'Date of Issue',
