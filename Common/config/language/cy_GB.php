@@ -2573,6 +2573,9 @@ return array(
     'transport-manager-details-work-address' => '{WELSH} Work Address',
     'transport-manager-hours-per-week-validation-message' => '{WELSH} You must enter the hours per week you will spend
         on your duties',
+    'transport-manager-remove' => '{WELSH} Remove Transport Manager',
+    'transport-manager-remove-are-you-sure' => '{WELSH} Are you sure you want to remove this transport manager?',
+    'transport-manager-removed' => '{WELSH} Transport manager removed.',
     'transport-manager.competences.form.country' => '{WELSH} Country',
     'transport-manager.competences.form.date-of-issue' => '{WELSH} Date of Issue',
     'transport-manager.competences.form.qualification-type' => '{WELSH} Qualification type',
