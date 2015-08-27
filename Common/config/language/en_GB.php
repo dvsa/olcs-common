@@ -2437,6 +2437,7 @@ return array(
     'tm-previous-history-convictions-and-penalties' => 'Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => 'Revoked, Curtailed or Suspended Licences',
     'tm-quick-action-print-form' => 'Print form',
+    'tm-quick-action-remove' => 'Remove transport manager',
     'tm-responsibilities-applications' => 'Applications',
     'tm-responsibilities-licences' => 'Licences',
     'tm-review-main' => 'Your details',

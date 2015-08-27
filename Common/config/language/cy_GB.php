@@ -2483,6 +2483,7 @@ return array(
     'tm-previous-history-convictions-and-penalties' => '{WELSH} Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => '{WELSH} Revoked, Curtailed or Suspended Licences',
     'tm-quick-action-print-form' => '{WELSH} Print form',
+    'tm-quick-action-remove' => '{WELSH} Remove transport manager',
     'tm-responsibilities-applications' => '{WELSH} Applications',
     'tm-responsibilities-licences' => '{WELSH} Licences',
     'tm-review-main' => '{WELSH} Your details',
