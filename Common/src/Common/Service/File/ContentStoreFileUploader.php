@@ -92,6 +92,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
         }
 
         $headers['Content-Length'] = strlen($fileData);
+        $headers['Content-Type'] = $file->getRealType();
 
         $response->setStatusCode(200);
         $response->getHeaders()->addHeaders($headers);

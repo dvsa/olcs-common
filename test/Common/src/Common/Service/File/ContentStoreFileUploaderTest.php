@@ -66,7 +66,8 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
 
         $headers = [
             'Content-Disposition' => 'attachment; filename="file.txt"',
-            'Content-Length' => '13'
+            'Content-Length' => '13',
+            'Content-Type' => 'text/plain'
         ];
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -87,7 +88,8 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
         $response = $this->uploader->download('identifier', 'file.html');
 
         $headers = [
-            'Content-Length' => '13'
+            'Content-Length' => '13',
+            'Content-Type' => 'text/plain'
         ];
 
         $this->assertEquals(200, $response->getStatusCode());

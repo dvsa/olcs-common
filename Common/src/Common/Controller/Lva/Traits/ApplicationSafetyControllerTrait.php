@@ -56,6 +56,7 @@ trait ApplicationSafetyControllerTrait
         $application = $response->getResult();
 
         $this->canHaveTrailers = $application['canHaveTrailers'];
+        $this->hasTrailers = $application['hasTrailers'];
         $this->workshops = $application['licence']['workshops'];
 
         return $application;

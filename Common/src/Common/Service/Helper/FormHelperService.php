@@ -831,4 +831,13 @@ class FormHelperService extends AbstractHelperService
             $form->setData($sessionContainer->offsetGet($form->getName()));
         }
     }
+
+    public function removeValueOption(Element\Select $element, $key)
+    {
+        $options = $element->getValueOptions();
+
+        unset($options[$key]);
+
+        $element->setValueOptions($options);
+    }
 }

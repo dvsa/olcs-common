@@ -10,6 +10,7 @@ namespace CommonTest\Service\Helper;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
+use Zend\Form\Element\Select;
 
 /**
  * Form Helper Service Test
@@ -1642,6 +1643,24 @@ class FormHelperServiceTest extends MockeryTestCase
         $mockForm->shouldReceive('setData')->with(['an' => 'array'])->once();
 
         $helper->restoreFormState($mockForm);
+    }
 
+    public function testRemoveValueOption()
+    {
+        $helper = new FormHelperService();
+
+        $options = [
+            'a' => 'A',
+            'b' => 'B',
+            'c' => 'C'
+        ];
+
+        /** @var Select $select */
+        $select = m::mock(Select::class)->makePartial();
+        $select->setValueOptions($options);
+
+        $helper->removeValueOption($select, 'a');
+
+        $this->assertEquals(['b' => 'B', 'c' => 'C'], $select->getValueOptions());
     }
 }
