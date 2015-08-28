@@ -2437,6 +2437,7 @@ return array(
     'tm-previous-history-convictions-and-penalties' => 'Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => 'Revoked, Curtailed or Suspended Licences',
     'tm-quick-action-print-form' => 'Print form',
+    'tm-quick-action-remove' => 'Remove transport manager',
     'tm-responsibilities-applications' => 'Applications',
     'tm-responsibilities-licences' => 'Licences',
     'tm-review-main' => 'Your details',
@@ -2527,6 +2528,12 @@ return array(
     'transport-manager-details-work-address' => 'Work Address',
     'transport-manager-hours-per-week-validation-message' => 'You must enter the hours per week you will spend on your
         duties',
+    'transport-manager-remove' => 'Remove Transport Manager',
+    'transport-manager-remove-are-you-sure' => 'Are you sure you want to remove this transport manager?',
+    'transport-manager-remove-has-users-error' => 'This transport manager is linked to user account: ',
+    'transport-manager-remove-not-detached-error' => 'You cannot remove a transport manager that has associated
+        licences, applications or cases',
+    'transport-manager-removed' => 'Transport manager removed.',
     'transport-manager.competences.form.country' => 'Country',
     'transport-manager.competences.form.date-of-issue' => 'Date of Issue',
     'transport-manager.competences.form.qualification-type' => 'Qualification type',

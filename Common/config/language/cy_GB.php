@@ -2483,6 +2483,7 @@ return array(
     'tm-previous-history-convictions-and-penalties' => '{WELSH} Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => '{WELSH} Revoked, Curtailed or Suspended Licences',
     'tm-quick-action-print-form' => '{WELSH} Print form',
+    'tm-quick-action-remove' => '{WELSH} Remove transport manager',
     'tm-responsibilities-applications' => '{WELSH} Applications',
     'tm-responsibilities-licences' => '{WELSH} Licences',
     'tm-review-main' => '{WELSH} Your details',
@@ -2573,6 +2574,12 @@ return array(
     'transport-manager-details-work-address' => '{WELSH} Work Address',
     'transport-manager-hours-per-week-validation-message' => '{WELSH} You must enter the hours per week you will spend
         on your duties',
+    'transport-manager-remove' => '{WELSH} Remove Transport Manager',
+    'transport-manager-remove-are-you-sure' => '{WELSH} Are you sure you want to remove this transport manager?',
+    'transport-manager-remove-has-users-error' => '{WELSH} This transport manager is linked to user account: ',
+    'transport-manager-remove-not-detached-error' => '{WELSH} You cannot remove a transport manager that has associated
+        licences, applications or cases',
+    'transport-manager-removed' => '{WELSH} Transport manager removed.',
     'transport-manager.competences.form.country' => '{WELSH} Country',
     'transport-manager.competences.form.date-of-issue' => '{WELSH} Date of Issue',
     'transport-manager.competences.form.qualification-type' => '{WELSH} Qualification type',
