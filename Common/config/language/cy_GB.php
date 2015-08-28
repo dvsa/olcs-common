@@ -822,6 +822,7 @@ return array(
     'conditions-and-undertakings-undertakings' => '{WELSH} Undertakings',
     'confirm-grant-application' => '{WELSH} Are you sure you want to grant this application?',
     'confirm-undo-grant-application' => '{WELSH} Are you sure you want to undo the grant?',
+    'conflict-error' => '{WELSH} The data you were editing is out of date. Please review and re-enter your changes.',
     'continuation-detail-filter-licenceNo' => '{WELSH} Licence no.',
     'continuation-detail-filter-licenceStatus' => '{WELSH} Licence status',
     'continuation-detail-filter-method' => '{WELSH} Method',

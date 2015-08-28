@@ -5,6 +5,9 @@ namespace Common\Controller\Plugin;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Handle Command Factory
+ */
 class HandleCommandFactory implements FactoryInterface
 {
     /**
@@ -19,7 +22,8 @@ class HandleCommandFactory implements FactoryInterface
 
         $annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
         $commandService = $serviceLocator->get('CommandService');
+        $fm = $serviceLocator->get('Helper\FlashMessenger');
 
-        return new HandleCommand($annotationBuilder, $commandService);
+        return new HandleCommand($annotationBuilder, $commandService, $fm);
     }
 }

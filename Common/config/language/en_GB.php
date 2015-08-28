@@ -801,6 +801,7 @@ return array(
     'conditions-and-undertakings-undertakings' => 'Undertakings',
     'confirm-grant-application' => 'Are you sure you want to grant this application?',
     'confirm-undo-grant-application' => 'Are you sure you want to undo the grant?',
+    'conflict-error' => 'The data you were editing is out of date. Please review and re-enter your changes.',
     'continuation-detail-filter-licenceNo' => 'Licence no.',
     'continuation-detail-filter-licenceStatus' => 'Licence status',
     'continuation-detail-filter-method' => 'Method',
