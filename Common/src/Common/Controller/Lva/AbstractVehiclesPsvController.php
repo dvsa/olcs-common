@@ -357,6 +357,16 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             ->getForm($this->getRequest(), $params)
             ->setData($data);
 
+        if ($resultData['showHistory']) {
+            $table = $this->getServiceLocator()->get('Table')
+                ->prepareTable('lva-psv-vehicles-history', $resultData['history']);
+            $table->removeColumn('discNo');
+            $this->getServiceLocator()->get('Helper\Form')->populateFormTable(
+                $form->get('vehicle-history-table'),
+                $table
+            );
+        }
+
         if ($request->isPost() && $form->isValid()) {
 
             $formData = $form->getData();
