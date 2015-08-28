@@ -31,7 +31,19 @@ trait CreateVariationTrait
 
             $appId = $processingService->createVariation($licenceId, $data);
 
-            return $this->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
+            if ($appId === null) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                return $this->redirect()->refreshAjax();
+            }
+
+            $route = 'lva-variation';
+
+            $redirectRoute = $this->params('redirectRoute');
+            if ($redirectRoute !== null) {
+                $route .= '/' . $redirectRoute;
+            }
+
+            return $this->redirect()->toRouteAjax($route, ['application' => $appId]);
         }
 
         return $form;

@@ -8,6 +8,7 @@
 namespace CommonTest\Service\File;
 
 use Common\Service\File\ContentStoreFileUploader;
+use Dvsa\Olcs\DocumentShare\Data\Object\File;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -53,9 +54,8 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
 
     public function testDownloadWithValidFile()
     {
-        $file = new \Dvsa\Jackrabbit\Data\Object\File();
+        $file = new File();
         $file->setContent('dummy content');
-        $file->setMimeType('application/rtf');
 
         $this->contentStoreMock->expects($this->once())
             ->method('read')
@@ -66,8 +66,8 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
 
         $headers = [
             'Content-Disposition' => 'attachment; filename="file.txt"',
-            'Content-Type' => 'application/rtf',
-            'Content-Length' => '13'
+            'Content-Length' => '13',
+            'Content-Type' => 'text/plain'
         ];
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -77,9 +77,8 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
 
     public function testDownloadWithValidHtmlFile()
     {
-        $file = new \Dvsa\Jackrabbit\Data\Object\File();
+        $file = new File();
         $file->setContent('dummy content');
-        $file->setMimeType('text/html');
 
         $this->contentStoreMock->expects($this->once())
             ->method('read')
@@ -89,8 +88,8 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
         $response = $this->uploader->download('identifier', 'file.html');
 
         $headers = [
-            'Content-Type' => 'text/html',
-            'Content-Length' => '13'
+            'Content-Length' => '13',
+            'Content-Type' => 'text/plain'
         ];
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -100,9 +99,8 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
 
     public function testDownloadWithValidFileAndNamespace()
     {
-        $file = new \Dvsa\Jackrabbit\Data\Object\File();
+        $file = new File();
         $file->setContent('dummy content');
-        $file->setMimeType('application/rtf');
 
         $this->contentStoreMock->expects($this->once())
             ->method('read')
@@ -134,8 +132,7 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
 
         $this->uploader->setFile(
             [
-                'content' => 'dummy content',
-                'type' => 'txt/plain'
+                'content' => 'dummy content'
             ]
         );
 
@@ -155,8 +152,7 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
 
         $this->uploader->setFile(
             [
-                'tmp_name' => __DIR__ . '/Resources/TestFile.txt',
-                'type' => 'txt/plain'
+                'tmp_name' => __DIR__ . '/Resources/TestFile.txt'
             ]
         );
 
@@ -185,8 +181,7 @@ class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
 
         $this->uploader->setFile(
             [
-                'content' => 'dummy content',
-                'type' => 'txt/plain'
+                'content' => 'dummy content'
             ]
         );
 

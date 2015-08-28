@@ -275,4 +275,9 @@ trait DynamicTrait
 
         return parent::setValue($value);
     }
+
+    public function addValueOption(array $valueOption)
+    {
+        $this->setValueOptions(array_merge($this->getValueOptions(), $valueOption));
+    }
 }

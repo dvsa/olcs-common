@@ -36,7 +36,10 @@ class OcConditions implements FormatterInterface
 
         if (!is_null($data['conditions'])) {
             foreach ($data['conditions'] as $condition) {
-                if ($condition['condition_type'] === ConditionUndertakingEntityService::TYPE_CONDITION) {
+                if (
+                    !is_null($condition['licence']) &&
+                    $condition['conditionType']['id'] === ConditionUndertakingEntityService::TYPE_CONDITION
+                ) {
                     $count++;
                 }
             }

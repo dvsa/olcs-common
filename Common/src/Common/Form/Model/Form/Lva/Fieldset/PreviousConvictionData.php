@@ -57,6 +57,7 @@ class PreviousConvictionData
      * @Form\Type("DateSelect")
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Validator({"name": "Date", "options": {"format": "Y-m-d"}})
+     * @Form\Validator({"name": "\Common\Form\Elements\Validators\DateNotInFuture"})
      */
     public $convictionDate = null;
 

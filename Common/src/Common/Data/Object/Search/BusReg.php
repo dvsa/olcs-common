@@ -2,6 +2,7 @@
 
 namespace Common\Data\Object\Search;
 use Common\Data\Object\Search\Aggregations\Terms\BusRegStatus;
+use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
 
 /**
  * Class BusReg
@@ -40,6 +41,7 @@ class BusReg extends InternalSearchAbstract
         if (empty($this->filters)) {
 
             $this->filters = [
+                new TrafficArea(),
                 new BusRegStatus(),
             ];
         }

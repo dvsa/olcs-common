@@ -19,10 +19,10 @@ class VariationLvaService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function addVariationMessage($licenceId)
+    public function addVariationMessage($licenceId, $redirectRoute = null)
     {
         $link = $this->getServiceLocator()->get('Helper\Url')
-            ->fromRoute('lva-licence/variation', ['licence' => $licenceId]);
+            ->fromRoute('lva-licence/variation', ['licence' => $licenceId, 'redirectRoute' => $redirectRoute]);
 
         $message = $this->getServiceLocator()->get('Helper\Translation')
             ->translateReplace('variation-message', [$link]);

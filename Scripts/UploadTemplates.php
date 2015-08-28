@@ -9,7 +9,7 @@ class TemplateWorker
 
     public function __construct()
     {
-        $client = new \Dvsa\Jackrabbit\Service\Client();
+        $client = new \Dvsa\Olcs\DocumentShare\Service\Client();
 
         $request = new \Zend\Http\Request();
         $request->getHeaders()->addHeaderLine('uuid', 'uD12345');
@@ -20,39 +20,11 @@ class TemplateWorker
 
         $client->setHttpClient($http);
 
-        $client->setBaseUri('http://scdv-ap05.sc.npm:8080/hcs');
+        $client->setBaseUri('http://fs01.olcs.mgt.mtpdvsa:8080/hfs/');
 
         $client->setWorkspace('olcs');
 
         $this->client = $client;
-    }
-
-    public function readWorkspace()
-    {
-        return $this->client->readMeta()['structure']['children'];
-    }
-
-    public function deleteFolder($name, $data)
-    {
-        foreach ($data as $folder) {
-            if ($folder['name'] !== basename($name)) {
-                continue;
-            }
-            if ($folder['folder'] === true) {
-                echo "Entering folder '" . $name . "'\n";
-                foreach ($folder['children'] as $child) {
-                    $this->deleteFolder($name . '/' . $child['name'], $folder['children']);
-                }
-            } else {
-                echo "Deleting file: " . $name . "\n";
-                $r = $this->client->remove($name, true);
-                if ($r->isSuccess()) {
-                    echo "OK\n";
-                } else {
-                    echo "ERROR: " . $r->getStatusCode() . "\n";
-                }
-            }
-        }
     }
 
     public function uploadFolder($name, $source)
@@ -75,18 +47,25 @@ class TemplateWorker
             } else {
                 $data = file_get_contents($source . '/' . $entry);
 
-                $finfo = new \finfo(FILEINFO_MIME_TYPE);
-                $mimeType = $finfo->buffer($data);
-
-                $file = new \Dvsa\Jackrabbit\Data\Object\File();
+                $file = new \Dvsa\Olcs\DocumentShare\Data\Object\File();
                 $file->setContent($data);
-                $file->setMimeType($mimeType);
 
                 $path = $name . '/' . str_replace(" ", "_", $entry);
+
+                echo "Removing $path... ";
+
+                $result = $this->client->remove($path);
+
+                if ($result->isSuccess()) {
+                    echo "OK\n";
+                } else {
+                    echo "ERROR: " . $result->getStatusCode() . "\n";
+                }
 
                 echo "Uploading $path... ";
 
                 $result = $this->client->write($path, $file);
+
                 if ($result->isSuccess()) {
                     echo "OK\n";
                 } else {
@@ -106,12 +85,4 @@ if (isset($argv[2])) {
 
 $worker = new TemplateWorker($argv);
 
-echo "Reading remote workspace...\n";
-$data = $worker->readWorkspace();
-
-// always clear out tmp; it can get a bit cluttered
-$worker->deleteFolder('/tmp', $data);
-
-// then mirror whatever our directory was
-$worker->deleteFolder('/' . $baseDir, $data);
 $worker->uploadFolder($baseDir, $argv[1]);

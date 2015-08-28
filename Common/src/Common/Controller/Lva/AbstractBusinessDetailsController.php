@@ -14,6 +14,7 @@ use Dvsa\Olcs\Transfer\Command\Application\UpdateBusinessDetails as ApplicationU
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
+use Zend\Form\Form;
 
 /**
  * Shared logic between Business Details Controller
@@ -83,6 +84,17 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             return $this->renderForm($form);
         }
 
+        $crudAction = null;
+
+        if (isset($data['table'])) {
+            $crudAction = $this->getCrudAction([$data['table']]);
+        }
+
+        if ($crudAction !== null) {
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $formHelper->disableValidation($form->getInputFilter());
+        }
+
         // If our form is invalid, render the form to display the errors
         if (!$form->isValid()) {
             return $this->renderForm($form);
@@ -94,10 +106,12 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'version' => $data['version'],
                 'name' => $data['data']['name'],
                 'tradingNames' => isset($tradingNames['trading_name']) ? $tradingNames['trading_name'] : [],
-                'natureOfBusinesses' => $data['data']['natureOfBusinesses'],
+                'natureOfBusiness' => isset($data['data']['natureOfBusiness'])
+                    ? $data['data']['natureOfBusiness'] : null,
                 'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
                     ? $data['data']['companyNumber']['company_number'] : null,
-                'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null
+                'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null,
+                'partial' => $crudAction !== null
             ];
 
             $response = $this->handleCommand(UpdateBusinessDetails::create($dtoData));
@@ -108,29 +122,26 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'version' => $data['version'],
                 'name' => $data['data']['name'],
                 'tradingNames' => isset($tradingNames['trading_name']) ? $tradingNames['trading_name'] : [],
-                'natureOfBusinesses' => $data['data']['natureOfBusinesses'],
+                'natureOfBusiness' => isset($data['data']['natureOfBusiness'])
+                    ? $data['data']['natureOfBusiness'] : null,
                 'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
                     ? $data['data']['companyNumber']['company_number'] : null,
-                'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null
+                'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null,
+                'partial' => $crudAction !== null
             ];
 
             $response = $this->handleCommand(ApplicationUpdateBusinessDetails::create($dtoData));
         }
 
         if (!$response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
-                $response->getResult()['messages']
-            );
+
+            $this->mapErrors($form, $response->getResult()['messages']);
+
             return $this->renderForm($form);
         }
 
-        // If we have a table, then we may have a crud action to handle
-        if (isset($data['table'])) {
-            $crudAction = $this->getCrudAction(array($data['table']));
-
-            if ($crudAction !== null) {
-                return $this->handleCrudAction($crudAction);
-            }
+        if ($crudAction !== null) {
+            return $this->handleCrudAction($crudAction);
         }
 
         return $this->completeSection('business_details');
@@ -305,5 +316,25 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         if (!$response->isOk()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
+    }
+
+    protected function mapErrors(Form $form, array $errors)
+    {
+        $formMessages = [];
+
+        if (isset($errors['natureOfBusiness'])) {
+            $formMessages['data']['natureOfBusiness'] = $errors['natureOfBusiness'];
+            unset($errors['natureOfBusiness']);
+        }
+
+        if (!empty($errors)) {
+            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+            foreach ($errors as $error) {
+                $fm->addCurrentErrorMessage($error);
+            }
+        }
+
+        $form->setMessages($formMessages);
     }
 }

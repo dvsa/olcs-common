@@ -24,7 +24,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
+use Dvsa\Olcs\DocumentShare\Data\Object\File as ContentStoreFile;
 
 // Get and configure the service manager for use later on.
 $serviceManager = new \Zend\ServiceManager\ServiceManager(new \Zend\Mvc\Service\ServiceManagerConfig());
@@ -56,7 +56,6 @@ if (!isset($argv[2])) {
 $bookmarkName = $argv[1];
 
 $file = new ContentStoreFile();
-$file->setMimeType('application/rtf');
 $file->setContent(sprintf('{\*\bkmkstart %s} {\*\bkmkend %s}', $bookmarkName, $bookmarkName));
 
 // Data should be provided as a json object.
@@ -72,8 +71,7 @@ echo "\033[0;32mQueries:\033[0m\n";
 print_r($queries);
 
 // Get the rest helper and make the request to the backend.
-$result = $serviceManager->get('Helper\Rest')
-    ->makeRestCall('BookmarkSearch', 'GET', [], $queries);
+$result = $serviceManager->get('Helper\Rest')->makeRestCall('BookmarkSearch', 'GET', [], $queries);
 
 // Dump the query result from the backend.
 echo "\n\n\033[0;32mBackend result:\033[0m\n";

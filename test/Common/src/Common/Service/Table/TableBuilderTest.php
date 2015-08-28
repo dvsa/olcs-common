@@ -383,7 +383,15 @@ class TableBuilderTest extends MockeryTestCase
             array('foo' => 'bar'),
         );
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $sl = $this->getMockServiceLocator();
+
+        $table = new TableBuilder($sl);
+
+        $sl->get('translator')
+            ->expects($this->any())
+            ->method('translate')
+            ->with('Thing')
+            ->will($this->returnValue('Translated Thing'));
 
         $table->setVariable('title', 'Things');
         $table->setVariable('titleSingular', 'Thing');
@@ -394,7 +402,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $this->assertEquals(1, $table->getTotal());
 
-        $this->assertEquals('Thing', $table->getVariable('title'));
+        $this->assertEquals('Translated Thing', $table->getVariable('title'));
     }
 
     /**
@@ -2794,6 +2802,39 @@ class TableBuilderTest extends MockeryTestCase
             ->with('bar');
 
         $table->removeActions();
+    }
+
+    public function testDisableAction()
+    {
+        $tableConfig = array(
+            'settings' => array(
+                'paginate' => array(),
+                'crud' => array(
+                    'actions' => array(
+                        'foo' => array(),
+                        'bar' => array()
+                    )
+                )
+            )
+        );
+
+        $table = $this->getMockTableBuilder(array('getConfigFromFile'));
+
+        $table->expects($this->once())
+            ->method('getConfigFromFile')
+            ->will($this->returnValue($tableConfig));
+
+        $table->loadConfig('test');
+
+        $table->disableAction('foo');
+
+        $this->assertEquals(
+            array(
+                'foo' => array('disabled' => 'disabled'),
+                'bar' => array(),
+            ),
+            $table->getSettings()['crud']['actions']
+        );
     }
 
     public function testGetEmptyMessage()

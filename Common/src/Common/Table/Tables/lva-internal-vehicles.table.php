@@ -23,6 +23,9 @@ return array(
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
         'collapseAt' => 3,
+        'row-disabled-callback' => function ($row) {
+            return $row['removalDate'] !== null;
+        }
     ),
     'columns' => array(
         array(
@@ -40,7 +43,7 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.weight',
-            'stringFormat' => '{vehicle->platedWeight} Kg',
+            'stringFormat' => '{vehicle->platedWeight} kg',
             'formatter' => 'StackValueReplacer'
         ),
         array(
@@ -61,7 +64,8 @@ return array(
         array(
             'name' => 'action',
             'width' => 'checkbox',
-            'type' => 'Checkbox'
+            'type' => 'Checkbox',
+            'disableIfRowIsDisabled' => true
         )
     )
 );

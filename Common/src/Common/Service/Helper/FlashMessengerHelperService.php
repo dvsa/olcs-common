@@ -105,4 +105,14 @@ class FlashMessengerHelperService extends AbstractHelperService
     {
         return $this->getServiceLocator()->get('ControllerPluginManager')->get('FlashMessenger');
     }
+
+    public function addUnknownError()
+    {
+        return $this->addErrorMessage('unknown-error');
+    }
+
+    public function addCurrentUnknownError()
+    {
+        $this->addCurrentErrorMessage('unknown-error');
+    }
 }

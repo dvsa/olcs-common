@@ -78,10 +78,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -115,11 +112,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
         $mockOrganisation->shouldReceive('getBusinessDetailsData')
             ->once()
             ->with(111, 222)
-            ->andReturn($stubbedBusinessDetails)
-            ->shouldReceive('getNatureOfBusinessesForSelect')
-            ->once()
-            ->with(111)
-            ->andReturn($stubbedNoB);
+            ->andReturn($stubbedBusinessDetails);
 
         $mockRequest->shouldReceive('isPost')
             ->andReturn(false);
@@ -178,10 +171,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -278,10 +268,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -376,10 +363,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -405,10 +389,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -498,10 +479,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -526,10 +504,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -617,10 +592,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -645,10 +617,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -766,10 +735,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -794,10 +760,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -906,10 +869,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -935,10 +895,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -1050,10 +1007,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -1079,10 +1033,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                 ],
                 'name' => 'Foo ltd',
                 'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                'natureOfBusinesses' => [
-                    'sic1',
-                    'sic2'
-                ]
+                'natureOfBusiness' => 'sic1'
             ],
             'registeredAddress' => [
                 'addressLine1' => 'Foo street'
@@ -1606,10 +1557,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                         ],
                         'name' => 'Foo ltd',
                         'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                        'natureOfBusinesses' => [
-                            'sic1',
-                            'sic2'
-                        ]
+                        'natureOfBusiness' => 'sic1',
                     ],
                     'registeredAddress' => [
                         'addressLine1' => 'Foo street'
@@ -1636,10 +1584,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                         ],
                         'name' => 'Foo ltd',
                         'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                        'natureOfBusinesses' => [
-                            'sic1',
-                            'sic2'
-                        ]
+                        'natureOfBusiness' => 'sic1',
                     ],
                     'registeredAddress' => [
                         'addressLine1' => 'Foo street'
@@ -1668,10 +1613,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                         ],
                         'name' => 'Foo ltd',
                         'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                        'natureOfBusinesses' => [
-                            'sic1',
-                            'sic2'
-                        ]
+                        'natureOfBusiness' => 'sic1',
                     ],
                     'registeredAddress' => [
                         'addressLine1' => 'Foo street'
@@ -1701,10 +1643,7 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
                             ]
                         ],
                         'type' => OrganisationEntityService::ORG_TYPE_LLP,
-                        'natureOfBusinesses' => [
-                            'sic1',
-                            'sic2'
-                        ]
+                        'natureOfBusiness' => 'sic1',
                     ],
                     'registeredAddress' => [
                         'addressLine1' => 'Foo street'

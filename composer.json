@@ -12,15 +12,11 @@
         },
         {
             "type": "vcs",
-            "url": "git@gitlab.inf.mgt.mtpdvsa:sc/jackrabbit.git"
+            "url": "git@gitlab.inf.mgt.mtpdvsa:olcs/olcs-document-share.git"
         },
         {
             "type": "vcs",
             "url": "git@gitlab.inf.mgt.mtpdvsa:olcs/olcs-testhelpers.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@gitlab.inf.mgt.mtpdvsa:cpms/cpms-client.git"
         },
         {
             "url": "git@gitlab.inf.mgt.mtpdvsa:olcs/olcs-transfer.git",
@@ -29,24 +25,23 @@
     ],
     "require": {
         "php": ">=5.4",
-
         "zendframework/zendframework": "~2.3.5",
         "doctrine/doctrine-orm-module": "~0.9.0",
         "doctrine/annotations": "^1.2.3",
         "symfony/Filesystem": "~2.6.0",
         "zf-commons/zfc-rbac": "~2.4.0",
         "zf-commons/zfc-user": "~1.2.2",
-        "cpms/client": "0.1.x-dev"
+        "olcs/dvsa/document-share": "dev-develop"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",
         "phpunit/phpunit": "^4.4.0",
         "mockery/mockery": "~0.9.3",
         "major-caiger/munit": "~0.1.0",
-        "dvsa/jackrabbit": "~1.1.2",
         "mikey179/vfsStream": "~1.4.0",
         "olcs/olcs-testhelpers": "dev-develop",
-        "olcs/olcs-transfer": "dev-develop"
+        "olcs/olcs-transfer": "dev-develop",
+        "soflomo/purifier": "~0.1.0"
     },
     "autoload": {
         "psr-0": {

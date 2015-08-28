@@ -38,16 +38,18 @@ class LicenceTypeShort implements FormatterInterface
     {
         $ref = [];
 
-        if (isset($data['licence']['goodsOrPsv']['id'])
-            && isset(self::$prefixMap[$data['licence']['goodsOrPsv']['id']])
+        $licence = isset($data['licence']) ? $data['licence'] : $data;
+
+        if (isset($licence['goodsOrPsv']['id'])
+            && isset(self::$prefixMap[$licence['goodsOrPsv']['id']])
         ) {
-            $ref[] = self::$prefixMap[$data['licence']['goodsOrPsv']['id']];
+            $ref[] = self::$prefixMap[$licence['goodsOrPsv']['id']];
         }
 
-        if (isset($data['licence']['licenceType']['id'])
-            && isset(self::$suffixMap[$data['licence']['licenceType']['id']])
+        if (isset($licence['licenceType']['id'])
+            && isset(self::$suffixMap[$licence['licenceType']['id']])
         ) {
-            $ref[] = self::$suffixMap[$data['licence']['licenceType']['id']];
+            $ref[] = self::$suffixMap[$licence['licenceType']['id']];
         }
 
         return implode('-', $ref);

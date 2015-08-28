@@ -7,8 +7,7 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("advertisements")
  * @Form\Options({
- *     "label":
- * "application_operating-centres_authorisation-sub-action.advertisements"
+ *     "label": "application_operating-centres_authorisation-sub-action.advertisements"
  * })
  */
 class Advertisements
@@ -19,8 +18,7 @@ class Advertisements
      *      "fieldset-attributes": {
      *          "class": "checkbox inline"
      *      },
-     *     "label":
-     * "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
+     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
@@ -32,53 +30,24 @@ class Advertisements
     public $adPlaced = null;
 
     /**
-     * @Form\Required(true)
-     * @Form\Attributes({"class":"long","id":"adPlacedIn","required":false})
+     * @Form\Required(false)
+     * @Form\Attributes({"class":"long","id":"adPlacedIn"})
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn"
-     * })
-     * @Form\AllowEmpty(true)
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\Validator({"name": "ValidateIf",
-     *      "options":{
-     *          "context_field": "adPlaced",
-     *          "context_values": {"Y"},
-     *          "validators": {
-     *              {"name": "\Zend\Validator\NotEmpty"}
-     *          }
-     *      }
+     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn"
      * })
      * @Form\Type("Text")
      */
     public $adPlacedIn = null;
 
     /**
-     * @Form\Required(true)
-     * @Form\Attributes({"id":"adPlacedDate","required":false})
+     * @Form\Required(false)
+     * @Form\Attributes({"id":"adPlacedDate"})
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate",
+     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })
-     * @Form\AllowEmpty(true)
      * @Form\Filter({"name": "DateSelectNullifier"})
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\Validator({"name": "ValidateIf",
-     *      "options":{
-     *          "context_field": "adPlaced",
-     *          "context_values": {"Y"},
-     *          "validators": {
-     *              {
-     *                  "name": "Common\Form\Elements\Validators\Date", "options":
-     *                  {
-     *                      "format": "Y-m-d"
-     *                  }
-     *              }
-     *          }
-     *      }
-     * })
      * @Form\Type("DateSelect")
      */
     public $adPlacedDate = null;
@@ -87,10 +56,8 @@ class Advertisements
      * @Form\Name("file")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation-sub-action.advertisements.file",
-     *     "hint":
-     * "application_operating-centres_authorisation-sub-action.advertisements.file.hint"
+     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.file",
+     *     "hint": "application_operating-centres_authorisation-sub-action.advertisements.file.hint"
      * })
      */
     public $file = null;

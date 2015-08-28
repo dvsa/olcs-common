@@ -75,6 +75,7 @@ abstract class AbstractSafetyController extends AbstractController
     abstract protected function getSafetyData();
 
     protected $canHaveTrailers;
+    protected $hasTrailers;
 
     protected $workshops;
 
@@ -108,7 +109,6 @@ abstract class AbstractSafetyController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-
             $data = $this->formatDataForForm($result);
         }
 
@@ -274,7 +274,7 @@ abstract class AbstractSafetyController extends AbstractController
             $response = $this->handleCommand($dto);
 
             if ($response->isOk()) {
-                return $this->handlePostSave();
+                return $this->handlePostSave(null, false);
             }
 
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
@@ -327,6 +327,7 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function alterForm($form)
     {
+        /** @var FormHelperService $formHelper */
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         // This element needs to be visible internally
@@ -348,6 +349,10 @@ abstract class AbstractSafetyController extends AbstractController
             $table->setVariable('empty_message', $emptyMessage . '-psv');
 
             $form->get('table')->get('table')->setTable($table);
+        } elseif (!$this->hasTrailers) {
+            $formHelper->disableElement($form, 'licence->safetyInsTrailers');
+        } else {
+            $formHelper->removeValueOption($form->get('licence')->get('safetyInsTrailers'), 0);
         }
 
         $this->alterFormForLva($form);
@@ -362,6 +367,10 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function formatDataForForm($data)
     {
+        if (!$this->hasTrailers) {
+            $data['licence']['safetyInsTrailers'] = '0';
+        }
+
         if (isset($data['licence']['tachographIns']['id'])) {
             $data['licence']['tachographIns'] = $data['licence']['tachographIns']['id'];
         }
@@ -389,7 +398,11 @@ abstract class AbstractSafetyController extends AbstractController
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         /** @var \Zend\Form\Form $form */
-        $form = $formHelper->createForm('Lva\Safety');
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm();
+
         $formHelper->populateFormTable(
             $form->get('table'),
             $this->getServiceLocator()->get('Table')->prepareTable('lva-safety', $this->workshops)

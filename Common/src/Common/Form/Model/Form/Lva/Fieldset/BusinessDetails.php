@@ -34,16 +34,14 @@ class BusinessDetails
     public $tradingNames = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":"","class":"chosen-select-large",  "multiple" : true})
+     * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "Nature of business",
      *     "help-block": "Please select a nature of business",
-     *     "category":"nature_of_business",
      *     "hint":"You can find a list of business types at
      *      <a href=""https://www.gov.uk/government/publications/standard-industrial-classification-of-economic-activities-sic"" target=""_blank"">Companies House</a>"
      * })
-     * @Form\Type("DynamicSelect")
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      */
-    public $natureOfBusinesses = null;
+    public $natureOfBusiness = null;
 }

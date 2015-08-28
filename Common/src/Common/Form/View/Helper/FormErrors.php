@@ -54,11 +54,13 @@ class FormErrors extends AbstractHelper
      */
     public function render(FormInterface $form)
     {
-        if (!$this->ignoreValidation) {
-            if (!$form->hasValidated() || $form->isValid()) {
-                return '';
-            }
-        }
+        // @NOTE Commenting this out, as messages returned from the api that are set against the form will have already
+        // passed form validation
+        //if (!$this->ignoreValidation) {
+        //    if (!$form->hasValidated() || $form->isValid()) {
+        //        return '';
+        //    }
+        //}
 
         $messages = $form->getMessages();
 

@@ -10,7 +10,7 @@ use Common\Service\Table\Formatter\OcConditions;
 use Mockery as m;
 
 /**
- * Class OcComplaintsTest
+ * Class OcConditionsTest
  *
  * Formatter test.
  *
@@ -32,10 +32,10 @@ class OcConditionsTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     'conditions' => array(
-                        array('condition_type' => ConditionUndertakingEntityService::TYPE_UNDERTAKING),
-                        array('condition_type' => ConditionUndertakingEntityService::TYPE_UNDERTAKING),
-                        array('condition_type' => ConditionUndertakingEntityService::TYPE_CONDITION),
-                        array('condition_type' => ConditionUndertakingEntityService::TYPE_CONDITION)
+                        array('licence' => null, 'conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING]),
+                        array('licence' => null, 'conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING]),
+                        array('licence' => 1, 'conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_CONDITION]),
+                        array('licence' => 1, 'conditionType' => ['id' => ConditionUndertakingEntityService::TYPE_CONDITION])
                     )
                 ),
                 2

@@ -44,12 +44,8 @@ class CasesEntityService extends AbstractEntityService
                             'person'
                         ]
                     ],
-                    'ocComplaints' => [
-                        'children' => [
-                            'operatingCentre' => [
-                                'children' => ['address']
-                            ]
-                        ]
+                    'operatingCentres' => [
+                        'children' => ['address']
                     ],
                     'status'
                 ]

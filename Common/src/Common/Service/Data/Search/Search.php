@@ -218,9 +218,12 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
 
         /** @var \Common\Data\Object\Search\Aggregations\DateRange\DateRangeAbstract $dateRangeClass */
         foreach ($this->getDateRanges() as $dateRangeClass) {
-
             $field = $form->get('dateRanges')->get($dateRangeClass->getKey());
-            $field->setValue($dateRangeClass->getValue());
+
+            // set to null for empty string as '' sets Zend\Form\Element\DateSelect to today's date
+            $value = ($dateRangeClass->getValue() !== '') ? $dateRangeClass->getValue() : null;
+
+            $field->setValue($value);
         }
 
         return $form;

@@ -21,7 +21,7 @@ class People extends InternalSearchAbstract
     /**
      * @var string
      */
-    protected $searchIndices = 'people';
+    protected $searchIndices = 'person';
 
     /**
      * Contains an array of the instantiated filters classes.
@@ -46,9 +46,13 @@ class People extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Forename', 'name'=> 'foreName'],
-            ['title' => 'Family name', 'name'=> 'familyName'],
-            ['title' => 'DOB', 'name'=> 'dob']
+            ['title' => 'Found As', 'name'=> ''],
+            ['title' => 'Forename', 'name'=> 'personForename'],
+            ['title' => 'Family name', 'name'=> 'personFamilyName'],
+            ['title' => 'DOB', 'name'=> 'personBirthDate'],
+            ['title' => 'Date added', 'name'=> ''],
+            ['title' => 'Date removed', 'name'=> ''],
+            ['title' => 'Disq?', 'name'=> '']
         ];
     }
 }

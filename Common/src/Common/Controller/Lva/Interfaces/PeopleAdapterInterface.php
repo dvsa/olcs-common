@@ -16,19 +16,17 @@ use Zend\Form\Form;
  */
 interface PeopleAdapterInterface
 {
-    public function addMessages($orgId, $id);
+    public function addMessages();
 
-    public function alterFormForOrganisation(Form $form, $table, $orgId);
+    public function alterFormForOrganisation(Form $form, $table);
 
-    public function alterAddOrEditFormForOrganisation(Form $form, $orgId);
+    public function alterAddOrEditFormForOrganisation(Form $form);
 
-    public function canModify($orgId);
+    public function canModify();
 
-    public function createTable($orgId);
+    public function createTable();
 
-    public function delete($orgId, $id);
+    public function delete($ids);
 
-    public function restore($orgId, $id);
-
-    public function save($orgId, $data);
+    public function restore($ids);
 }

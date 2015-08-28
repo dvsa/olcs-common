@@ -12,6 +12,7 @@ class HoursOfWeekContentRequired
 {
     /**
      * @Form\Type("Text")
+     * @Form\AllowEmpty(true)
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -25,11 +26,7 @@ class HoursOfWeekContentRequired
      *         "belowMin": "transport-manager-hours-per-week-validation-message"
      *     }
      * }})
-     * @Form\Validator({"name":"Digits", "options": {
-     *     "messages": {
-     *         "notDigits": "Mon must be a whole number"
-     *     }
-     * }})
+     * @Form\Validator({"name":"Zend\I18n\Validator\Float"})
      * @Form\Validator({"name":"Between", "options": {
      *     "min": 0,
      *     "max": 24,
@@ -49,11 +46,7 @@ class HoursOfWeekContentRequired
      * @Form\Options({
      *     "label": "days-of-week-short-tue"
      * })
-     * @Form\Validator({"name":"Digits", "options": {
-     *     "messages": {
-     *         "notDigits": "Tue must be a whole number"
-     *     }
-     * }})
+     * @Form\Validator({"name":"Zend\I18n\Validator\Float"})
      * @Form\Validator({"name":"Between", "options": {
      *     "min": 0,
      *     "max": 24,
@@ -73,11 +66,7 @@ class HoursOfWeekContentRequired
      * @Form\Options({
      *     "label": "days-of-week-short-wed"
      * })
-     * @Form\Validator({"name":"Digits", "options": {
-     *     "messages": {
-     *         "notDigits": "Wed must be a whole number"
-     *     }
-     * }})
+     * @Form\Validator({"name":"Zend\I18n\Validator\Float"})
      * @Form\Validator({"name":"Between", "options": {
      *     "min": 0,
      *     "max": 24,
@@ -97,11 +86,7 @@ class HoursOfWeekContentRequired
      * @Form\Options({
      *     "label": "days-of-week-short-thu"
      * })
-     * @Form\Validator({"name":"Digits", "options": {
-     *     "messages": {
-     *         "notDigits": "Thu must be a whole number"
-     *     }
-     * }})
+     * @Form\Validator({"name":"Zend\I18n\Validator\Float"})
      * @Form\Validator({"name":"Between", "options": {
      *     "min": 0,
      *     "max": 24,
@@ -121,11 +106,7 @@ class HoursOfWeekContentRequired
      * @Form\Options({
      *     "label": "days-of-week-short-fri"
      * })
-     * @Form\Validator({"name":"Digits", "options": {
-     *     "messages": {
-     *         "notDigits": "Fri must be a whole number"
-     *     }
-     * }})
+     * @Form\Validator({"name":"Zend\I18n\Validator\Float"})
      * @Form\Validator({"name":"Between", "options": {
      *     "min": 0,
      *     "max": 24,
@@ -145,11 +126,7 @@ class HoursOfWeekContentRequired
      * @Form\Options({
      *     "label": "days-of-week-short-sat"
      * })
-     * @Form\Validator({"name":"Digits", "options": {
-     *     "messages": {
-     *         "notDigits": "Sat must be a whole number"
-     *     }
-     * }})
+     * @Form\Validator({"name":"Zend\I18n\Validator\Float"})
      * @Form\Validator({"name":"Between", "options": {
      *     "min": 0,
      *     "max": 24,
@@ -169,11 +146,7 @@ class HoursOfWeekContentRequired
      * @Form\Options({
      *     "label": "days-of-week-short-sun"
      * })
-     * @Form\Validator({"name":"Digits", "options": {
-     *     "messages": {
-     *         "notDigits": "Sun must be a whole number"
-     *     }
-     * }})
+     * @Form\Validator({"name":"Zend\I18n\Validator\Float"})
      * @Form\Validator({"name":"Between", "options": {
      *     "min": 0,
      *     "max": 24,

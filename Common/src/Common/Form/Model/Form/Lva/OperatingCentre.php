@@ -12,6 +12,12 @@ use Zend\Form\Annotation as Form;
 class OperatingCentre
 {
     /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $version = null;
+
+    /**
      * @Form\Name("address")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      * @Form\Options({"label":"Address"})
@@ -35,25 +41,9 @@ class OperatingCentre
     public $advertisements = null;
 
     /**
-     * @Form\Name("trafficArea")
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $trafficArea = null;
-
-    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
-
-    /**
-     * @Form\Name("operatingCentre")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentre")
-     * @Form\Attributes({
-     *     "class": "visually-hidden"
-     * })
-     */
-    public $operatingCentre = null;
 }

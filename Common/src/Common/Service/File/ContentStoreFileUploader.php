@@ -1,23 +1,17 @@
 <?php
 
 /**
- * Content store (jackrabbit) file uploader
+ * Content store file uploader
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 namespace Common\Service\File;
 
 use Zend\Http\Response;
-use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
-
-if (!class_exists('Dvsa\Jackrabbit\Data\Object\File')) {
-    //@TODO remove this when all applications use version 2.
-    //handle BC break in jackrabbit v2.0.0 library
-    class_alias('Dvsa\Jackrabbit\Client\Data\Object\File', 'Dvsa\Jackrabbit\Data\Object\File');
-}
+use Dvsa\Olcs\DocumentShare\Data\Object\File as ContentStoreFile;
 
 /**
- * Content store (jackrabbit) file uploader
+ * Content store file uploader
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
@@ -43,13 +37,9 @@ class ContentStoreFileUploader extends AbstractFileUploader
         }
 
         $storeFile = new ContentStoreFile();
-        $storeFile->setContent($file->getContent())
-            ->setMimeType($file->getRealType())
-            ->setMetaData(new \ArrayObject($file->getMeta()));
+        $storeFile->setContent($file->getContent());
 
-        $response = $this->getServiceLocator()
-            ->get('ContentStore')
-            ->write($path, $storeFile);
+        $response = $this->getServiceLocator()->get('ContentStore')->write($path, $storeFile);
 
         if (!$response->isSuccess()) {
             throw new Exception('Unable to store uploaded file: ' . $response->getBody());
@@ -101,8 +91,8 @@ class ContentStoreFileUploader extends AbstractFileUploader
             $headers = ['Content-Disposition: attachment; filename="' . $name . '"'];
         }
 
-        $headers['Content-Type'] = $file->getMimeType();
         $headers['Content-Length'] = strlen($fileData);
+        $headers['Content-Type'] = $file->getRealType();
 
         $response->setStatusCode(200);
         $response->getHeaders()->addHeaders($headers);

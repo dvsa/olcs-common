@@ -30,10 +30,7 @@ class BusinessDetailsTest extends PHPUnit_Framework_TestCase
                 ['name' => 'Foo'],
                 ['name' => 'Bar']
             ],
-            'natureOfBusinesses' => [
-                ['id' => 111],
-                ['id' => 222]
-            ],
+            'natureOfBusiness' => 'SIC Code 1',
             'contactDetails' => [
                 'address' => [
                     'foo' => 'bar'
@@ -57,10 +54,7 @@ class BusinessDetailsTest extends PHPUnit_Framework_TestCase
                         'Bar'
                     ]
                 ],
-                'natureOfBusinesses' => [
-                    111,
-                    222
-                ]
+                'natureOfBusiness' => 'SIC Code 1',
             ],
             'registeredAddress' => [
                 'foo' => 'bar'

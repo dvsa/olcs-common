@@ -399,6 +399,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
+     * Disable an action
+     *
+     * @param string $name
+     */
+    public function disableAction($name)
+    {
+        if ($this->hasAction($name)) {
+            $this->settings['crud']['actions'][$name]['disabled'] = 'disabled';
+        }
+    }
+
+    /**
      * Get the content helper
      *
      * @return object
@@ -789,9 +801,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->setTotal(isset($data['count']) ? $data['count'] : count($this->rows));
 
         // if there's only one row and we have a singular title, use it
+        $translator = $this->getServiceLocator()->get('translator');
         if ($this->getTotal() == 1) {
             if ($this->getVariable('titleSingular')) {
-                $this->setVariable('title', $this->getVariable('titleSingular'));
+                $this->setVariable('title', $translator->translate($this->getVariable('titleSingular')));
             }
         }
     }
@@ -867,7 +880,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function __toString()
     {
-        return $this->render();
+        try {
+            return $this->render();
+        } catch (\Exception $ex) {
+            $content = $ex->getMessage();
+            $content .= $ex->getTraceAsString();
+
+            return $content;
+        }
     }
 
     /**
@@ -896,19 +916,20 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         $found = false;
 
-        foreach ($this->applicationConfig['tables']['config'] as $location) {
+        // @NOTE Reverse the array so the internal/selfserve config locations are checked before common
+        $locations = array_reverse($this->applicationConfig['tables']['config']);
+
+        foreach ($locations as $location) {
 
             $configFile = $location . $name . '.table.php';
 
             if (file_exists($configFile)) {
-
                 $found = true;
                 break;
             }
         }
 
         if (!$found) {
-
             throw new \Exception('Table configuration not found');
         }
 
@@ -1014,6 +1035,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         if (isset($this->settings['submission_section'])) {
             return $this->renderLayout('submission-section');
+        }
+
+        if (isset($this->settings['layout'])) {
+            return $this->renderLayout($this->settings['layout']);
         }
 
         return $this->renderLayout('default');
@@ -1608,6 +1633,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $class = isset($details['class']) ? $details['class'] : 'secondary';
 
+            $disabled = isset($details['disabled']) ? $details['disabled'] : '';
+            if ($disabled) {
+                $class .= ' js-force-disable';
+            }
+
             $actionFieldName = $this->getActionFieldName();
 
             $newActions[] = array(
@@ -1615,7 +1645,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 'value' => $value,
                 'label' => $label,
                 'class' => $class,
-                'action_field_name' => $actionFieldName
+                'action_field_name' => $actionFieldName,
+                'disabled' => $disabled,
             );
         }
 
