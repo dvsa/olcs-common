@@ -20,7 +20,7 @@ class Person
 
     /**
      * @Form\Name("form-actions")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActionsPerson")
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;

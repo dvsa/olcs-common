@@ -20,7 +20,7 @@ class SoleTrader
 
     /**
      * @Form\Name("form-actions")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActionsPerson")
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
