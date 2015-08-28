@@ -34,6 +34,9 @@ abstract class AbstractPsvVehiclesVehicle extends AbstractFormService
      */
     protected function alterForm($form, $params)
     {
+        if ($params['mode'] == 'add' || $params['location'] == 'external') {
+            $this->getFormHelper()->remove($form, 'vehicle-history-table');
+        }
         $this->getFormServiceLocator()->get('lva-psv-vehicles-vehicle')->alterForm($form);
 
         if (!in_array($params['action'], ['small-add', 'small-edit'])) {
