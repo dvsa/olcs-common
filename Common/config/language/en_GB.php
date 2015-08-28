@@ -1840,7 +1840,7 @@ return array(
     'reprint-pending-disc-error' => 'You have selected a vehicle where a disc print has already been requested',
     'safety-inspection-providers.table.address' => 'Workshop address',
     'safety-inspection-providers.table.empty_message' => 'Please tell us about who will carry out the safety inspections
-        on the vehicles and trailers you intend to operate under your licence.',
+        on the vehicles and trailers that will be operated under this licence',
     'safety-inspection-providers.table.empty_message-psv' => 'Please tell us about who will carry out the safety
         inspections on the vehicles you intend to operate under your licence.',
     'safety-inspection-providers.table.external' => 'External?',

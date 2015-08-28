@@ -1784,6 +1784,7 @@ return array(
         Office for further advice.',
     'people.org_t_st.forename.locked' => 'W You cannot change people details. Please contact the Central Licensing
         Office for further advice.',
+<<<<<<< Updated upstream
     'people.org_t_st.otherName.locked' => 'W You cannot change people details. Please contact the Central Licensing
         Office for further advice.',
     'people.org_t_st.title.locked' => 'W You cannot change people details. Please contact the Central Licensing Office
@@ -1848,6 +1849,82 @@ return array(
     'safety-inspection-providers.table.empty_message' => 'W Please tell us about who will carry out the safety
         inspections on the vehicles and trailers you intend to operate under your licence.',
     'safety-inspection-providers.table.empty_message-psv' => 'W Please tell us about who will carry out the safety
+=======
+    'people_table_action.delete.label' => '{WELSH} Remove',
+    'persons' => '{WELSH} Person Information',
+    'pi_s_reg' => '{WELSH} PI Registered',
+    'pi_s_schedule' => '{WELSH} PI Scheduled',
+    'pi_t_app_new' => '{WELSH} Application New',
+    'pi_t_app_var' => '{WELSH} Application Variation',
+    'pi_t_disc' => '{WELSH} Disciplinary',
+    'pi_t_env_new' => '{WELSH} Environmental New',
+    'pi_t_env_var' => '{WELSH} Environmental Variation',
+    'pi_t_imp' => '{WELSH} Impounding',
+    'pi_t_oc_review' => '{WELSH} OC Review',
+    'pi_t_other' => '{WELSH} Other',
+    'please-select' => '{WELSH} Please select',
+    'please-select-row' => '{WELSH} Please select a row',
+    'points' => '{WELSH} Points',
+    'position' => '{WELSH} Position',
+    'postcode.address.manual_entry' => '{WELSH} Enter address manually',
+    'postcode.error.no-addresses-found' => '{WELSH} No addresses found for postcode',
+    'postcode.error.not-available' => '{WELSH} Address search unavailable. Please enter your address manually',
+    'previous-history' => '{WELSH} Previous history',
+    'priority' => '{WELSH} Priority',
+    'privacy-and-cookies' => '{WELSH} Privacy &amp; Cookies',
+    'progress' => '{WELSH} Progress',
+    'prohibition-history' => '{WELSH} Prohibition history',
+    'propose-to-revoke' => '{WELSH} In-Office revocation',
+    'propose-to-revoke-text' => '{WELSH} Use this form for a In-Office revocation.',
+    'psv-discs-replaced-successfully' => '{WELSH} The selected discs have been voided and the new discs have been
+        requested. Please destroy the old discs',
+    'psv-discs-requested-successfully' => '{WELSH} The request for additional discs has been submitted',
+    'psv-discs-voided-successfully' => '{WELSH} The selected discs have been voided. You must destroy the old discs',
+    'psv-vehicles-licence-missing-breakdown' => '{WELSH} Before changing the vehicle list, you will need to provide the
+        number of small and medium vehicles that comprise the total vehicle authority. To do this, start a variation
+        application by <a href="%s" class="%s">clicking here</a>',
+    'psv-vehicles-licence-missing-breakdown-large' => '{WELSH} Before changing the vehicle list, you will need to
+        provide the number of small, medium and large vehicles that comprise the total vehicle authority. To do this,
+        start a variation application by <a href="%s" class="%s">clicking here</a>',
+    'psv-vehicles-variation-missing-breakdown' => '{WELSH} Before changing the vehicle list, you will need to provide
+        the number of small and medium vehicles that comprise the total vehicle authority. To do this, go to the
+        Operating Centre & Authorisation page by <a href="%s" class="%s">clicking here</a>',
+    'psv-vehicles-variation-missing-breakdown-large' => '{WELSH} Before changing the vehicle list, you will need to
+        provide the number of small, medium and large vehicles that comprise the total vehicle authority. To do this, go
+        to the Operating Centre & Authorisation page by <a href="%s" class="%s">clicking here</a>',
+    'psv_discs.table.ceasedDate' => '{WELSH} Ceased date',
+    'psv_discs.table.discNo' => '{WELSH} Disc number',
+    'psv_discs.table.issuedDate' => '{WELSH} Issued date',
+    'psv_discs.table.replacement' => '{WELSH} Replacement',
+    'psv_discs.table.title' => '{WELSH} Discs',
+    'public-authority' => '{WELSH} Public Authority',
+    'public-inquiry' => '{WELSH} Public inquiry',
+    'publications' => '{WELSH} Publications',
+    'publicauthority-details-header' => '{WELSH} Public Authority Details',
+    'publicauthority-form-label-operator-name' => '{WELSH} Public authority name',
+    'qualification-type' => '{WELSH} Qualification type',
+    'readmore-pager' => '{WELSH} Showing %s of %s results.',
+    'receipt' => '{WELSH} Receipt',
+    'recommendation' => '{WELSH} Recommendation',
+    'recommendations' => '{WELSH} Recommendations',
+    'record-deleted' => '{WELSH} Record(s) deleted successfully',
+    'record-not-found' => '{WELSH} Record not found',
+    'record-saved-successfully' => '{WELSH} Record saved successfully',
+    'refrigerated-transport' => '{WELSH} Refrigerated Transport',
+    'register-cancel-update-service' => '{WELSH} Register, update or cancel a service',
+    'registered-company' => '{WELSH} Registered Company',
+    'registered-company-details-header' => '{WELSH} Registered company details',
+    'registered-office-details-header' => '{WELSH} Registered office details',
+    'removals-construction-plant-hire' => '{WELSH} Removals / Construction / Plant Hire',
+    'representations' => '{WELSH} Representations',
+    'reprint-pending-disc-error' => '{WELSH} You have selected a vehicle where a disc print has already been requested',
+    'review-transport_managers_delete' => '{WELSH} Are you sure you want to remove the selected transport manager(s)
+        from the application?',
+    'safety-inspection-providers.table.address' => '{WELSH} Workshop address',
+    'safety-inspection-providers.table.empty_message' => '{WELSH} Please tell us about who will carry out the safety
+        inspections on the vehicles and trailers that will be operated under this licence',
+    'safety-inspection-providers.table.empty_message-psv' => '{WELSH} Please tell us about who will carry out the safety
+>>>>>>> Stashed changes
         inspections on the vehicles you intend to operate under your licence.',
     'safety-inspection-providers.table.external' => 'W External?',
     'safety-inspection-providers.table.providerName' => 'W Provider\'s name',
