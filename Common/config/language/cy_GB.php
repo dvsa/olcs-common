@@ -663,6 +663,7 @@ return array(
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo' => '{WELSH} Disc No.',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate' => '{WELSH} Received date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.removalDate' => '{WELSH} Removed date',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.seedDate' => '{WELSH} Warning letter seed date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate' => '{WELSH} Specified date',
     'application_vehicle-safety_vehicle.table.disc-no' => '{WELSH} Disc No.',
     'application_vehicle-safety_vehicle.table.removed' => '{WELSH} Removed',
@@ -2715,9 +2716,11 @@ return array(
     'vehicle-belongs-to-another-licence-message-external' => '{WELSH} This vehicle is specified on another licence.
         Please confirm you would like to continue adding this vehicle',
     'vehicle-belongs-to-another-licence-message-internal' => '{WELSH} This vehicle is specified on another licence: %s.
-        Please confirm you would like to continue adding this vehicle',
+        If the duplication is not removed, a warning letter will be sent in 28 days to the operator(s) on whose licence
+        the vehicle is currently specified',
     'vehicle-belongs-to-another-licence-message-internal-multiple' => '{WELSH} This vehicle is specified on other
-        licences: %s. Please confirm you would like to continue adding this vehicle',
+        licences: %s. If the duplication is not removed, a warning letter will be sent in 28 days to the operator(s) on
+        whose licence the vehicle is currently specified',
     'vehicle-count' => '{WELSH} %s vehicles',
     'vehicle-disc-reprint-confirm-label' => '{WELSH} Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
