@@ -1492,6 +1492,9 @@ return array(
     'licence.surrender' => 'Surrender licence',
     'licence.variation' => 'Create variation',
     'licence.variation.confirmation.text' => 'Are you sure you want to create a variation application?',
+    'licence.vehicles-trailers.share-info' => 'Please tick this box to confirm that you wish to share this information
+        with DVSA for its purposes such as test history reports or Operator Compliance Risk Score (OCRS). You must then
+        keep this information up to date. If you do not, it may result in an inaccurate test history report or OCRS.',
     'licence.vehicles_transfer.form.licence' => 'To which licence would you like to transfer the selected vehicle(s)?',
     'licence.vehicles_transfer.form.message_already_on_licence' => 'These vehicles: %s are already on licence %s',
     'licence.vehicles_transfer.form.message_already_on_licence_singular' => 'This vehicle: %s is already on licence %s',
