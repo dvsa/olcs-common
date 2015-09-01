@@ -625,7 +625,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-large-delete' => '{WELSH} Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-large-edit' => '{WELSH} Edit large vehicle',
     'application_vehicle-safety_vehicle-psv-large.table.empty_message' => '{WELSH} Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-large.table.removed' => '{WELSH} Removed',
     'application_vehicle-safety_vehicle-psv-large.table.specified' => '{WELSH} Specified',
     'application_vehicle-safety_vehicle-psv-large.table.title' => '{WELSH} 17 or more passenger seat vehicles (if
@@ -635,7 +635,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-medium-delete' => '{WELSH} Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-medium-edit' => '{WELSH} Edit medium vehicle',
     'application_vehicle-safety_vehicle-psv-medium.table.empty_message' => '{WELSH} Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-medium.table.removed' => '{WELSH} Removed',
     'application_vehicle-safety_vehicle-psv-medium.table.specified' => '{WELSH} Specified',
     'application_vehicle-safety_vehicle-psv-medium.table.title' => '{WELSH} 9 - 16 passenger seat vehicles (if
@@ -645,7 +645,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small-delete' => '{WELSH} Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-small-edit' => '{WELSH} Edit small vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.empty_message' => '{WELSH} Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-small.table.make' => '{WELSH} Make / model',
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => '{WELSH} Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.removed' => '{WELSH} Removed',
