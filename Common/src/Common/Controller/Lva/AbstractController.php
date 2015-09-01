@@ -76,6 +76,8 @@ abstract class AbstractController extends AbstractActionController
             throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
         }
 
+        $this->maybeTranslateForNi();
+
         $action = $routeMatch->getParam('action', 'not-found');
         $method = static::getMethodFromAction($action);
 
@@ -95,6 +97,15 @@ abstract class AbstractController extends AbstractActionController
         $e->setResult($actionResponse);
 
         return $actionResponse;
+    }
+
+    protected function maybeTranslateForNi()
+    {
+        if ($this->lva !== null && $this->getIdentifier() !== null) {
+            $tolData = $this->getTypeOfLicenceData();
+            $niTranslation = $this->getServiceLocator()->get('Utils\NiTextTranslation');
+            $niTranslation->setLocaleForNiFlag($tolData['niFlag']);
+        }
     }
 
     /**
