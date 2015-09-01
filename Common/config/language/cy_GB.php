@@ -1082,7 +1082,7 @@ return array(
         losing operator to the winning operator and that this operation cannot be undone',
     'form.operator-merge.confirm.validation' => '{WELSH} Must be checked',
     'form.operator-merge.from-operator-name' => '{WELSH} From operator',
-    'form.operator-merge.success' => '{WELSH} The current operator\'s records having been merged into the winning
+    'form.operator-merge.success' => '{WELSH} The current operator\'s records have been merged into the winning
         operator',
     'form.operator-merge.to-operator-id' => '{WELSH} To operator id',
     'form.operator-merge.to-operator-id.validation' => '{WELSH} Invalid Operator id',
