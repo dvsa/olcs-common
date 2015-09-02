@@ -43,6 +43,31 @@ class People extends InternalSearchAbstract
     /**
      * @return array
      */
+    public function getSettings()
+    {
+        return [
+            'crud' => [
+                'links' => [
+                    'create-transport-manager' => [
+                        'label' => 'Create transport manager',
+                        'class' => 'primary',
+                        'route' => [
+                            'route' => 'create_transport_manager'
+                        ]
+                    ]
+                ]
+            ],
+            'paginate' => [
+                'limit' => [
+                    'options' => [10, 25, 50]
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function getColumns()
     {
         return [
