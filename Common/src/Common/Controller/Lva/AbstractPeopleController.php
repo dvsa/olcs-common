@@ -236,7 +236,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
                 $this->getAdapter()->isOrganisationLimited() &&
                 $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             ) {
-                $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId());
+                $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId(), 'people');
             } else {
                 $this->getServiceLocator()->get('Helper\Guidance')->append(
                     'selfserve-app-subSection-your-business-people-guidance-disabled'

@@ -50,7 +50,10 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         if (!$data['canUpdateLicenceType']) {
             $this->getServiceLocator()->get('Helper\Guidance')->append('variation-application-text');
         } elseif ($data['doesChangeRequireVariation']) {
-            $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getIdentifier());
+            $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage(
+                $this->getIdentifier(),
+                'type_of_licence'
+            );
         }
 
         $params = [
