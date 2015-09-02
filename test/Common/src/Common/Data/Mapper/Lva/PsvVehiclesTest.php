@@ -24,13 +24,19 @@ class PsvVehiclesTest extends MockeryTestCase
     {
         $data = [
             'version' => 1,
-            'hasEnteredReg' => 'Y'
+            'hasEnteredReg' => 'Y',
+            'organisation' => [
+                'confirmShareVehicleInfo' => 'Y'
+            ]
         ];
 
         $expected = [
             'data' => [
                 'version' => 1,
                 'hasEnteredReg' => 'Y'
+            ],
+            'shareInfo' => [
+                'shareInfo' => 'Y'
             ]
         ];
 
