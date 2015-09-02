@@ -30,11 +30,15 @@ class RefData
     const FEE_STATUS_WAIVED            = 'lfs_w';
     const FEE_STATUS_CANCELLED         = 'lfs_cn';
 
+    // deprecated ////////////////////////////////////
     const PAYMENT_STATUS_OUTSTANDING = 'pay_s_os';
     const PAYMENT_STATUS_CANCELLED   = 'pay_s_cn';
     const PAYMENT_STATUS_LEGACY      = 'pay_s_leg';
     const PAYMENT_STATUS_FAILED      = 'pay_s_fail';
     const PAYMENT_STATUS_PAID        = 'pay_s_pd';
+    //////////////////////////////////////////////////
+
+    const TRANSACTION_STATUS_COMPLETE = 'pay_s_pd';
 
     /**
      * Goods or PSV keys
