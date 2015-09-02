@@ -607,7 +607,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-large-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-large-edit' => 'Edit large vehicle',
     'application_vehicle-safety_vehicle-psv-large.table.empty_message' => 'Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-large.table.removed' => 'Removed',
     'application_vehicle-safety_vehicle-psv-large.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-large.table.title' => '17 or more passenger seat vehicles (if applicable)',
@@ -616,7 +616,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-medium-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-medium-edit' => 'Edit medium vehicle',
     'application_vehicle-safety_vehicle-psv-medium.table.empty_message' => 'Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-medium.table.removed' => 'Removed',
     'application_vehicle-safety_vehicle-psv-medium.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-medium.table.title' => '9 - 16 passenger seat vehicles (if applicable)',
@@ -625,7 +625,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-small-edit' => 'Edit small vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.empty_message' => 'Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-small.table.make' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.removed' => 'Removed',
