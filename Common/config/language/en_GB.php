@@ -1277,6 +1277,7 @@ return array(
     'internal-navigation-operator' => 'Operator',
     'internal-navigation-operator-business_details' => 'Business details',
     'internal-navigation-operator-cases' => 'Cases',
+    'internal-navigation-operator-documents' => 'Docs & attachments',
     'internal-navigation-operator-fees' => 'Fees',
     'internal-navigation-operator-history' => 'History',
     'internal-navigation-operator-irfo' => 'IRFO',

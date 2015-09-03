@@ -1303,6 +1303,7 @@ return array(
     'internal-navigation-operator' => '{WELSH} Operator',
     'internal-navigation-operator-business_details' => '{WELSH} Business details',
     'internal-navigation-operator-cases' => '{WELSH} Cases',
+    'internal-navigation-operator-documents' => '{WELSH} Docs & attachments',
     'internal-navigation-operator-fees' => '{WELSH} Fees',
     'internal-navigation-operator-history' => '{WELSH} History',
     'internal-navigation-operator-irfo' => '{WELSH} IRFO',
