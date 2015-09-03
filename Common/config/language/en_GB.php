@@ -1059,7 +1059,7 @@ return array(
         operator to the winning operator and that this operation cannot be undone',
     'form.operator-merge.confirm.validation' => 'Must be checked',
     'form.operator-merge.from-operator-name' => 'From operator',
-    'form.operator-merge.success' => 'The current operator\'s records having been merged into the winning operator',
+    'form.operator-merge.success' => 'The current operator\'s records have been merged into the winning operator',
     'form.operator-merge.to-operator-id' => 'To operator id',
     'form.operator-merge.to-operator-id.validation' => 'Invalid Operator id',
     'from' => 'From',
