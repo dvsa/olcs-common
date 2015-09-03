@@ -68,29 +68,6 @@ class FeeEntityService extends AbstractLvaEntityService
     /**
      * @var array
      */
-    private $latestOutstandingFeeForBundle = array(
-        'children' => array(
-            'application',
-            'licence',
-            'feeType' => array(
-                'children' => array('accrualRule' => array())
-            ),
-            'feePayments' => array(
-                'children' => array(
-                    'payment' => array(
-                        'children' => array(
-                            'status'
-                        )
-                    )
-                )
-            ),
-            'paymentMethod',
-        )
-    );
-
-    /**
-     * @var array
-     */
     protected $organisationBundle = array(
         'children' => array(
             'licence' => array(

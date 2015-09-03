@@ -24,6 +24,7 @@ class FeeStatus implements FormatterInterface
      * @param array $column
      * @param \Zend\ServiceManager\ServiceManager $serviceLocator
      * @return string
+     * @inheritdoc
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
