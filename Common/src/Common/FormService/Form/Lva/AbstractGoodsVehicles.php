@@ -20,6 +20,8 @@ abstract class AbstractGoodsVehicles extends AbstractFormService implements Serv
 {
     use ServiceLocatorAwareTrait;
 
+    protected $showShareInfo = false;
+
     public function getForm($table)
     {
         $form = $this->getFormHelper()->createForm('Lva\GoodsVehicles');
@@ -27,6 +29,10 @@ abstract class AbstractGoodsVehicles extends AbstractFormService implements Serv
         $this->getFormHelper()->populateFormTable($form->get('table'), $table);
 
         $this->alterForm($form);
+
+        if ($this->showShareInfo === false) {
+            $this->getFormHelper()->remove($form, 'shareInfo');
+        }
 
         return $form;
     }

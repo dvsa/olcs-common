@@ -36,6 +36,11 @@ class GoodsVehicles
     public $table = null;
 
     /**
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ShareInfo")
+     */
+    public $shareInfo = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})
