@@ -1340,7 +1340,7 @@ return array(
     'internal-operator-new-application' => '{WELSH} New application',
     'internal-operator-profile-business-type' => '{WELSH} Business type',
     'internal-operator-profile-business-type-refresh' => '{WELSH} Refresh',
-    'internal-operator-profile-cpid' => '{WELSH} CPID',
+    'internal-operator-profile-cpid' => '{WELSH} CPID (Finance users only)',
     'internal-operator-profile-first-name' => '{WELSH} First name',
     'internal-operator-profile-last-name' => '{WELSH} Last name',
     'internal-operator-profile-name' => '{WELSH} Operator name',

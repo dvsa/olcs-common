@@ -1314,7 +1314,7 @@ return array(
     'internal-operator-new-application' => 'New application',
     'internal-operator-profile-business-type' => 'Business type',
     'internal-operator-profile-business-type-refresh' => 'Refresh',
-    'internal-operator-profile-cpid' => 'CPID',
+    'internal-operator-profile-cpid' => 'CPID (Finance users only)',
     'internal-operator-profile-first-name' => 'First name',
     'internal-operator-profile-last-name' => 'Last name',
     'internal-operator-profile-name' => 'Operator name',
