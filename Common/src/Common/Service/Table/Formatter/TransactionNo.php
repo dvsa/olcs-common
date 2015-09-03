@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Fee Status formatter
+ * Transaction Number formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
@@ -11,11 +11,11 @@ namespace Common\Service\Table\Formatter;
 use Common\RefData;
 
 /**
- * Fee Status formatter
+ * Transaction Number formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FeeStatus implements FormatterInterface
+class TransactionNo implements FormatterInterface
 {
     /**
      * Format a fee status
@@ -28,25 +28,25 @@ class FeeStatus implements FormatterInterface
     public static function format($row, $column = null, $serviceLocator = null)
     {
         $statusClass = 'status';
-        switch ($row['feeStatus']['id']) {
-            case RefData::FEE_STATUS_PAID:
-            case RefData::FEE_STATUS_WAIVED:
+        switch ($row['transaction']['status']['id']) {
+            case RefData::TRANSACTION_STATUS_FAILED:
+            case RefData::TRANSACTION_STATUS_CANCELLED:
+                $statusClass .= ' red';
+                break;
+            case RefData::TRANSACTION_STATUS_PAID:
+            case RefData::TRANSACTION_STATUS_COMPLETE:
                 $statusClass .= ' green';
                 break;
-            case RefData::FEE_STATUS_OUTSTANDING:
-            case RefData::FEE_STATUS_WAIVE_RECOMMENDED:
+            case RefData::TRANSACTION_STATUS_OUTSTANDING:
                 $statusClass .= ' orange';
-                break;
-            case RefData::FEE_STATUS_CANCELLED:
-                $statusClass .= ' red';
                 break;
             default:
                 $statusClass .= ' grey';
                 break;
         }
         return vsprintf(
-            '<span class="%s">%s</span>',
-            [$statusClass, $row['feeStatus']['description']]
+            '%s <span class="%s">%s</span>',
+            [$row['transaction']['id'], $statusClass, $row['transaction']['status']['description']]
         );
     }
 }

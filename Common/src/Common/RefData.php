@@ -38,7 +38,12 @@ class RefData
     const PAYMENT_STATUS_PAID        = 'pay_s_pd';
     //////////////////////////////////////////////////
 
-    const TRANSACTION_STATUS_COMPLETE = 'pay_s_pd';
+    const TRANSACTION_STATUS_COMPLETE    = 'pay_s_pd';
+    const TRANSACTION_STATUS_OUTSTANDING = 'pay_s_os';
+    const TRANSACTION_STATUS_CANCELLED   = 'pay_s_cn';
+    const TRANSACTION_STATUS_LEGACY      = 'pay_s_leg';
+    const TRANSACTION_STATUS_FAILED      = 'pay_s_fail';
+    const TRANSACTION_STATUS_PAID        = 'pay_s_pd';
 
     /**
      * Goods or PSV keys
