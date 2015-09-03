@@ -7,7 +7,8 @@
  */
 namespace Common\Service\Table\Formatter;
 
-use Common\RefData;
+// need to alias as RefData exists in Formatter namespace
+use Common\RefData as Ref;
 
 /**
  * Transaction Amount Sum formatter
@@ -29,7 +30,7 @@ class TransactionAmountSum implements FormatterInterface
         $sum = 0;
 
         foreach ($data as $row) {
-            if ($row['transaction']['status']['id'] === RefData::TRANSACTION_STATUS_COMPLETE) {
+            if ($row['transaction']['status']['id'] === Ref::TRANSACTION_STATUS_COMPLETE) {
                 $sum += (float)$row['amount'];
             }
         }

@@ -22,6 +22,7 @@ class BusReg implements BusinessServiceInterface, ServiceLocatorAwareInterface
      *
      * @param array $params
      * @return Common\BusinessService\ResponseInterface
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function process(array $params)
     {

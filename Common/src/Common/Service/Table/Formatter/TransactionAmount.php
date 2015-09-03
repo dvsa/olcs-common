@@ -8,7 +8,8 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\RefData;
+// need to alias as RefData exists in Formatter namespace
+use Common\RefData as Ref;
 
 /**
  * Transaction Amount formatter
@@ -27,14 +28,14 @@ class TransactionAmount extends Money
      */
     public static function format($data, $column = array())
     {
-        $class = '';
-
-        if ($data['transaction']['status']['id'] !== RefData::TRANSACTION_STATUS_COMPLETE) {
-            $class = ' class="void"';
-        }
-
         $amount = parent::format($data, $column);
 
-        return sprintf('<span%s>%s</span>', $class, $amount);
+        if (isset($data['transaction']['status']['id'])
+            && $data['transaction']['status']['id'] !== Ref::TRANSACTION_STATUS_COMPLETE
+        ) {
+            return sprintf('<span class="void">%s</span>', $amount);
+        }
+
+        return $amount;
     }
 }

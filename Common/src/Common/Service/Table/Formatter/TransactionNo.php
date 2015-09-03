@@ -8,7 +8,8 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Common\RefData;
+// need to alias as RefData exists in Formatter namespace
+use Common\RefData as Ref;
 
 /**
  * Transaction Number formatter
@@ -30,15 +31,15 @@ class TransactionNo implements FormatterInterface
     {
         $statusClass = 'status';
         switch ($row['transaction']['status']['id']) {
-            case RefData::TRANSACTION_STATUS_FAILED:
-            case RefData::TRANSACTION_STATUS_CANCELLED:
+            case Ref::TRANSACTION_STATUS_FAILED:
+            case Ref::TRANSACTION_STATUS_CANCELLED:
                 $statusClass .= ' red';
                 break;
-            case RefData::TRANSACTION_STATUS_PAID:
-            case RefData::TRANSACTION_STATUS_COMPLETE:
+            case Ref::TRANSACTION_STATUS_PAID:
+            case Ref::TRANSACTION_STATUS_COMPLETE:
                 $statusClass .= ' green';
                 break;
-            case RefData::TRANSACTION_STATUS_OUTSTANDING:
+            case Ref::TRANSACTION_STATUS_OUTSTANDING:
                 $statusClass .= ' orange';
                 break;
             default:
