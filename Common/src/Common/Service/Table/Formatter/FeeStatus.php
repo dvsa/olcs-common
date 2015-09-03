@@ -30,11 +30,9 @@ class FeeStatus implements FormatterInterface
         $statusClass = 'status';
         switch ($row['feeStatus']['id']) {
             case RefData::FEE_STATUS_PAID:
-            case RefData::FEE_STATUS_WAIVED:
                 $statusClass .= ' green';
                 break;
             case RefData::FEE_STATUS_OUTSTANDING:
-            case RefData::FEE_STATUS_WAIVE_RECOMMENDED:
                 $statusClass .= ' orange';
                 break;
             case RefData::FEE_STATUS_CANCELLED:

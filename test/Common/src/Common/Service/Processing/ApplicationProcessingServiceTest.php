@@ -229,7 +229,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 ->shouldReceive('getLatestFeeByTypeStatusesAndApplicationId')
                 ->with(
                     99,
-                    [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+                    [FeeEntityService::STATUS_OUTSTANDING],
                     $applicationId
                 )
                 ->andReturn($fee)
@@ -298,7 +298,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 ->shouldReceive('getLatestFeeByTypeStatusesAndApplicationId')
                 ->with(
                     101,
-                    [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+                    [FeeEntityService::STATUS_OUTSTANDING],
                     $applicationId
                 )
                 ->andReturn($fee)

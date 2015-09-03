@@ -141,7 +141,6 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $id = 3;
         $statuses = array(
             FeeEntityService::STATUS_OUTSTANDING,
-            FeeEntityService::STATUS_WAIVE_RECOMMENDED
         );
         $query = array(
             'application' => $id,
@@ -197,7 +196,6 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $id = 3;
         $statuses = [
             FeeEntityService::STATUS_OUTSTANDING,
-            FeeEntityService::STATUS_WAIVE_RECOMMENDED
         ];
 
         $query = [
@@ -319,7 +317,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $expectedQuery = [
             'licence' => 1966,
-            'feeStatus' => [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+            'feeStatus' => FeeEntityService::STATUS_OUTSTANDING,
             'limit' => 'all',
         ];
         $expectedBundle = [
