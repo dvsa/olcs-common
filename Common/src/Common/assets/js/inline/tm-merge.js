@@ -1,10 +1,11 @@
 $(function() {
-    "use strict";
+    'use strict';
 
-    $('#toTmId').focusout(function() {
+    $('#toTmId').change(function() {
         $('#toTmName').text('');
         if ($.isNumeric($(this).val())) {
-            $.getJSON('/transport-manager/'+ $(this).val() +'/lookup', null ,function(e) {
+            var ajaxUrl = $(this).data('lookup-url');
+            $.getJSON(ajaxUrl +'?transportManager='+ $(this).val(), null ,function(e) {
                 if ($('#toTmName').length == 0) {
                     var element = $('<span id="toTmName"></span');
                     $('#toTmId').after(element);

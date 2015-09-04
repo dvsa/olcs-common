@@ -1064,7 +1064,6 @@ return array(
     'form.operator-merge.to-operator-id.validation' => 'Invalid Operator ID',
     'form.tm-merge.confirm' => 'I am aware that any licences and applications will be transferred from the losing
         transport manager to the winning transport manager',
-    'form.tm-merge.confirm.validation' => 'Must be checked',
     'form.tm-merge.from-tm-name' => 'From transport manager',
     'form.tm-merge.success' => 'The transport manager has been merged',
     'form.tm-merge.to-tm-id' => 'To transport manager ID',
