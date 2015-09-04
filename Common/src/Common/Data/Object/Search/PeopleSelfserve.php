@@ -58,9 +58,30 @@ class PeopleSelfServe extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Forename', 'name'=> 'personForename'],
-            ['title' => 'Family name', 'name'=> 'personFamilyName'],
-            ['title' => 'DOB', 'name'=> 'personBirthDate']
+            ['title' => 'Found As', 'name'=> ''],
+            [
+                'title' => 'Name',
+                'formatter' => function ($row) {
+
+                    $name = [
+
+                        $row['personForename'],
+                        $row['personFamilyName']
+                    ];
+
+                    return implode(' ', $name);
+                }
+            ],
+            [
+                'title' => 'Date of Birth',
+                'formatter' => function ($row) {
+
+                    return date('d/m/Y', strtotime($row['personBirthDate']));
+                }
+            ],
+            ['title' => 'Date added', 'name'=> ''],
+            ['title' => 'Date removed', 'name'=> ''],
+            ['title' => 'Disq?', 'name'=> '']
         ];
     }
 }
