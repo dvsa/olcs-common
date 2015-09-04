@@ -46,9 +46,25 @@ class TransactionNo implements FormatterInterface
                 $statusClass .= ' grey';
                 break;
         }
+
+        $router     = $serviceLocator->get('router');
+        $request    = $serviceLocator->get('request');
+        $urlHelper  = $serviceLocator->get('Helper\Url');
+        $routeMatch = $router->match($request);
+        $matchedRouteName = $routeMatch->getMatchedRouteName();
+
+        $url = $urlHelper->fromRoute(
+            $matchedRouteName.'/transaction',
+            ['transaction' => $row['transaction']['id']],
+            [],
+            true
+        );
+
+        $link = '<a href="'. $url . '">'. $row['transaction']['id'] . '</a>';
+
         return vsprintf(
             '%s <span class="%s">%s</span>',
-            [$row['transaction']['id'], $statusClass, $row['transaction']['status']['description']]
+            [$link, $statusClass, $row['transaction']['status']['description']]
         );
     }
 }
