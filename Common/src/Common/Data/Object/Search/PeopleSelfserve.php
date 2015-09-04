@@ -41,12 +41,7 @@ class PeopleSelfServe extends InternalSearchAbstract
     {
         if (empty($this->filters)) {
 
-            $this->filters = [
-                new Filter\EntityType(),
-                new Filter\LicenceType(),
-                new Filter\LicenceStatus(),
-                new Filter\TrafficArea()
-            ];
+            $this->filters = [];
         }
 
         return $this->filters;
