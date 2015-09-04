@@ -1060,8 +1060,18 @@ return array(
     'form.operator-merge.confirm.validation' => 'Must be checked',
     'form.operator-merge.from-operator-name' => 'From operator',
     'form.operator-merge.success' => 'The current operator\'s records have been merged into the winning operator',
-    'form.operator-merge.to-operator-id' => 'To operator id',
-    'form.operator-merge.to-operator-id.validation' => 'Invalid Operator id',
+    'form.operator-merge.to-operator-id' => 'To operator ID',
+    'form.operator-merge.to-operator-id.validation' => 'Invalid Operator ID',
+    'form.tm-merge.confirm' => 'I am aware that any licences and applications will be transferred from the losing
+        transport manager to the winning transport manager',
+    'form.tm-merge.from-tm-name' => 'From transport manager',
+    'form.tm-merge.success' => 'The transport manager has been merged',
+    'form.tm-merge.to-tm-id' => 'To transport manager ID',
+    'form.tm-merge.to-tm-id.validation.TM_MERGE_BOTH_HAVE_USER_ACCOUNTS' => 'Both transport managers have linked user
+        accounts. You must remove one of the user accounts prior to merge.',
+    'form.tm-merge.to-tm-id.validation.TM_MERGE_DONAR_RECIPIENT_SAME' => 'Cannot be the same as the from transport
+        manager',
+    'form.tm-merge.to-tm-id.validation.not-found' => 'Transport manager not found',
     'from' => 'From',
     'further-info-required' => 'Further info required',
     'gen-haulier-distribution' => 'Gen Haulier / Distribution',
@@ -2443,6 +2453,7 @@ return array(
     'tm-details-view-form-link-text' => 'View form',
     'tm-previous-history-convictions-and-penalties' => 'Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => 'Revoked, Curtailed or Suspended Licences',
+    'tm-quick-action-merge' => 'Merge transport manager',
     'tm-quick-action-print-form' => 'Print form',
     'tm-quick-action-remove' => 'Remove transport manager',
     'tm-responsibilities-applications' => 'Applications',

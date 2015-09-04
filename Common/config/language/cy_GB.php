@@ -1084,8 +1084,19 @@ return array(
     'form.operator-merge.from-operator-name' => '{WELSH} From operator',
     'form.operator-merge.success' => '{WELSH} The current operator\'s records have been merged into the winning
         operator',
-    'form.operator-merge.to-operator-id' => '{WELSH} To operator id',
-    'form.operator-merge.to-operator-id.validation' => '{WELSH} Invalid Operator id',
+    'form.operator-merge.to-operator-id' => '{WELSH} To operator ID',
+    'form.operator-merge.to-operator-id.validation' => '{WELSH} Invalid Operator ID',
+    'form.tm-merge.confirm' => '{WELSH} I am aware that any licences and applications will be transferred from the
+        losing transport manager to the winning transport manager',
+    'form.tm-merge.confirm.validation' => '{WELSH} Must be checked',
+    'form.tm-merge.from-tm-name' => '{WELSH} From transport manager',
+    'form.tm-merge.success' => '{WELSH} The transport manager has been merged',
+    'form.tm-merge.to-tm-id' => '{WELSH} To transport manager ID',
+    'form.tm-merge.to-tm-id.validation.TM_MERGE_BOTH_HAVE_USER_ACCOUNTS' => '{WELSH} Both transport managers have linked
+        user accounts. You must remove one of the user accounts prior to merge.',
+    'form.tm-merge.to-tm-id.validation.TM_MERGE_DONAR_RECIPIENT_SAME' => '{WELSH} Cannot be the same as the from
+        transport manager',
+    'form.tm-merge.to-tm-id.validation.not-found' => '{WELSH} Transport manager not found',
     'from' => '{WELSH} From',
     'further-info-required' => '{WELSH} Further info required',
     'gen-haulier-distribution' => '{WELSH} Gen Haulier / Distribution',
@@ -2490,6 +2501,7 @@ return array(
     'tm-details-view-form-link-text' => '{WELSH} View form',
     'tm-previous-history-convictions-and-penalties' => '{WELSH} Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => '{WELSH} Revoked, Curtailed or Suspended Licences',
+    'tm-quick-action-merge' => '{WELSH} Merge transport manager',
     'tm-quick-action-print-form' => '{WELSH} Print form',
     'tm-quick-action-remove' => '{WELSH} Remove transport manager',
     'tm-responsibilities-applications' => '{WELSH} Applications',
