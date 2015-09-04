@@ -361,10 +361,7 @@ class ContinuationDetailEntityServiceTest extends AbstractEntityServiceTestCase
                                 ],
                             ],
                             'criteria' => [
-                                'feeStatus' => [
-                                    \Common\Service\Entity\FeeEntityService::STATUS_OUTSTANDING,
-                                    \Common\Service\Entity\FeeEntityService::STATUS_WAIVE_RECOMMENDED
-                                ]
+                                'feeStatus' => \Common\Service\Entity\FeeEntityService::STATUS_OUTSTANDING,
                             ],
                         ]
                     ],

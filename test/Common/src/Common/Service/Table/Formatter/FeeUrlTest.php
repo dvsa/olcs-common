@@ -83,7 +83,7 @@ class FeeUrlTest extends MockeryTestCase
                 'operator/fees',
                 'operator/fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url" class="js-modal-ajax">operator fee</a>',
+                '<a href="the_url">operator fee</a>',
             ],
             'licence fee' => [
                 [
@@ -93,7 +93,7 @@ class FeeUrlTest extends MockeryTestCase
                 'licence/fees',
                 'licence/fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url" class="js-modal-ajax">licence fee</a>',
+                '<a href="the_url">licence fee</a>',
             ],
             'application fee' => [
                 [
@@ -103,7 +103,7 @@ class FeeUrlTest extends MockeryTestCase
                 'lva-application/fees',
                 'lva-application/fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url" class="js-modal-ajax">app fee</a>',
+                '<a href="the_url">app fee</a>',
             ],
             'bus reg fee' => [
                 [
@@ -113,7 +113,7 @@ class FeeUrlTest extends MockeryTestCase
                 'licence/bus-fees',
                 'licence/bus-fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee'],
-                '<a href="the_url" class="js-modal-ajax">bus reg fee</a>',
+                '<a href="the_url">bus reg fee</a>',
             ],
             'misc fee' => [
                 [
@@ -123,7 +123,7 @@ class FeeUrlTest extends MockeryTestCase
                 'admin-dashboard/admin-payment-processing/misc-fees',
                 'admin-dashboard/admin-payment-processing/misc-fees/fee_action',
                 ['fee' => '99', 'action' => 'edit-fee', 'controller' => 'Admin\PaymentProcessingController'],
-                '<a href="the_url" class="js-modal-ajax">misc fee</a>',
+                '<a href="the_url">misc fee</a>',
             ],
             'dashboard fee link' => [
                 [

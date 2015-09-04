@@ -5,17 +5,16 @@
  */
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery as m;
-
-
 use Common\Service\Table\Formatter\UnlicensedVehiclePsvType;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Class UnlicensedVehiclePsvTypeTest
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class UnlicensedVehiclePsvTypeTest extends \PHPUnit_Framework_TestCase
+class UnlicensedVehiclePsvTypeTest extends MockeryTestCase
 {
     /**
      * @dataProvider formatProvider

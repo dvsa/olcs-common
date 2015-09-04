@@ -22,6 +22,7 @@ class BusReg implements BusinessServiceInterface, ServiceLocatorAwareInterface
      *
      * @param array $params
      * @return Common\BusinessService\ResponseInterface
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function process(array $params)
     {
@@ -163,7 +164,7 @@ class BusReg implements BusinessServiceInterface, ServiceLocatorAwareInterface
         }
 
         if (!empty($fee['feeStatus'])
-            && in_array($fee['feeStatus']['id'], [FeeEntityService::STATUS_PAID, FeeEntityService::STATUS_WAIVED])
+            && $fee['feeStatus']['id'] === FeeEntityService::STATUS_PAID
         ) {
             // the fee is paid or waived
             return true;

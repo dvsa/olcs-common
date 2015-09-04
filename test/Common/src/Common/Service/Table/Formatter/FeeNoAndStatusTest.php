@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Fee status formatter test
+ * Fee number and status formatter test
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
 namespace CommonTest\Service\Table\Formatter;
 
-use Common\Service\Table\Formatter\FeeStatus;
+use Common\Service\Table\Formatter\FeeNoAndStatus as Sut;
 use PHPUnit_Framework_TestCase;
 
 /**
- * Fee status formatter test
+ * Fee number and status formatter test
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FeeStatusTest extends PHPUnit_Framework_TestCase
+class FeeNoAndStatusTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -28,7 +28,7 @@ class FeeStatusTest extends PHPUnit_Framework_TestCase
      */
     public function testFormat($data, $expected)
     {
-        $this->assertEquals($expected, FeeStatus::format($data));
+        $this->assertEquals($expected, Sut::format($data));
     }
 
     /**
@@ -41,39 +41,43 @@ class FeeStatusTest extends PHPUnit_Framework_TestCase
         return [
             'outstanding' => [
                 [
+                    'id' => '99',
                     'feeStatus' => [
                         'id' => 'lfs_ot',
                         'description' => 'outstanding'
                     ],
                 ],
-                '<span class="status orange">outstanding</span>',
+                '99 <span class="status orange">outstanding</span>',
             ],
             'paid' => [
                 [
+                    'id' => '99',
                     'feeStatus' => [
                         'id' => 'lfs_pd',
                         'description' => 'paid'
                     ],
                 ],
-                '<span class="status green">paid</span>',
+                '99 <span class="status green">paid</span>',
             ],
             'cancelled' => [
                 [
+                    'id' => '99',
                     'feeStatus' => [
                         'id' => 'lfs_cn',
                         'description' => 'cancelled'
                     ],
                 ],
-                '<span class="status red">cancelled</span>',
+                '99 <span class="status red">cancelled</span>',
             ],
             'other' => [
                 [
+                    'id' => '99',
                     'feeStatus' => [
                         'id' => 'foo',
                         'description' => 'foo'
                     ],
                 ],
-                '<span class="status grey">foo</span>',
+                '99 <span class="status grey">foo</span>',
             ],
         ];
     }

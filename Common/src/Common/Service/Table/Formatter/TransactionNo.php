@@ -1,21 +1,22 @@
 <?php
 
 /**
- * Fee Status formatter
+ * Transaction Number formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
 
 namespace Common\Service\Table\Formatter;
 
-use Common\RefData;
+// need to alias as RefData exists in Formatter namespace
+use Common\RefData as Ref;
 
 /**
- * Fee Status formatter
+ * Transaction Number formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FeeStatus implements FormatterInterface
+class TransactionNo implements FormatterInterface
 {
     /**
      * Format a fee status
@@ -29,23 +30,25 @@ class FeeStatus implements FormatterInterface
     public static function format($row, $column = null, $serviceLocator = null)
     {
         $statusClass = 'status';
-        switch ($row['feeStatus']['id']) {
-            case RefData::FEE_STATUS_PAID:
+        switch ($row['transaction']['status']['id']) {
+            case Ref::TRANSACTION_STATUS_FAILED:
+            case Ref::TRANSACTION_STATUS_CANCELLED:
+                $statusClass .= ' red';
+                break;
+            case Ref::TRANSACTION_STATUS_PAID:
+            case Ref::TRANSACTION_STATUS_COMPLETE:
                 $statusClass .= ' green';
                 break;
-            case RefData::FEE_STATUS_OUTSTANDING:
+            case Ref::TRANSACTION_STATUS_OUTSTANDING:
                 $statusClass .= ' orange';
-                break;
-            case RefData::FEE_STATUS_CANCELLED:
-                $statusClass .= ' red';
                 break;
             default:
                 $statusClass .= ' grey';
                 break;
         }
         return vsprintf(
-            '<span class="%s">%s</span>',
-            [$statusClass, $row['feeStatus']['description']]
+            '%s <span class="%s">%s</span>',
+            [$row['transaction']['id'], $statusClass, $row['transaction']['status']['description']]
         );
     }
 }

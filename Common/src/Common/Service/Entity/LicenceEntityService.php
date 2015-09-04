@@ -377,12 +377,10 @@ class LicenceEntityService extends AbstractLvaEntityService
                 ]
             ],
             'psvDiscs',
-            // there is an outstanding (or waive recommended) continuation fee;
+            // there is an outstanding continuation fee;
             'fees' => [
                 'criteria' => [
-                    'feeStatus' => [
-                        FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED
-                    ],
+                    'feeStatus' => FeeEntityService::STATUS_OUTSTANDING,
                 ],
                 'required' => true,
                 'children' => [

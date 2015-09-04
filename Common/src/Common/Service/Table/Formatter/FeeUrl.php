@@ -22,6 +22,7 @@ class FeeUrl implements FormatterInterface
      * @param array $column
      * @param \Zend\ServiceManager\ServiceManager $serviceLocator
      * @return string
+     * @inheritdoc
      */
     public static function format($row, $column = array(), $serviceLocator = null)
     {
@@ -29,7 +30,6 @@ class FeeUrl implements FormatterInterface
         $request    = $serviceLocator->get('request');
         $urlHelper  = $serviceLocator->get('Helper\Url');
         $routeMatch = $router->match($request);
-        $modal      = true;
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
         switch ($matchedRouteName) {
@@ -45,8 +45,6 @@ class FeeUrl implements FormatterInterface
                 );
                 break;
             case 'fees':
-                // selfserve
-                $modal = false;
                 $url = $urlHelper->fromRoute('fees/pay', ['fee' => $row['id']], [], true);
                 break;
             default:
@@ -58,12 +56,6 @@ class FeeUrl implements FormatterInterface
                 );
                 break;
         }
-        return '<a href="'
-            . $url
-            . '"'
-            . ($modal ? ' class="js-modal-ajax"' : '')
-            . '>'
-            . $row['description']
-            . '</a>';
+        return '<a href="'. $url . '">'. $row['description'] . '</a>';
     }
 }

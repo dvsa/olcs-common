@@ -242,12 +242,6 @@ class BusRegTest extends MockeryTestCase
                 ['feeStatus' => ['id' => FeeEntityService::STATUS_PAID]],
                 true
             ],
-            // Grantable - Rule: Other - isShortNotice: N - Fee: waived
-            [
-                $minimumGrantableBusRegData,
-                ['feeStatus' => ['id' => FeeEntityService::STATUS_WAIVED]],
-                true
-            ],
             // nonGrantable - Rule: Other - isShortNotice: N - Fee: outstanding
             [
                 $minimumGrantableBusRegData,

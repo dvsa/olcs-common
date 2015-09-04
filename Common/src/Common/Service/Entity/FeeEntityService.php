@@ -27,8 +27,6 @@ class FeeEntityService extends AbstractLvaEntityService
 
     const STATUS_OUTSTANDING = 'lfs_ot';
     const STATUS_PAID = 'lfs_pd';
-    const STATUS_WAIVE_RECOMMENDED = 'lfs_wr';
-    const STATUS_WAIVED = 'lfs_w';
     const STATUS_CANCELLED = 'lfs_cn';
 
     protected $applicationIdBundle = array(
@@ -64,29 +62,6 @@ class FeeEntityService extends AbstractLvaEntityService
                     'feeType', // need this now that fee_type.fee_type is ref_data!
                 ),
             ),
-        )
-    );
-
-    /**
-     * @var array
-     */
-    private $latestOutstandingFeeForBundle = array(
-        'children' => array(
-            'application',
-            'licence',
-            'feeType' => array(
-                'children' => array('accrualRule' => array())
-            ),
-            'feePayments' => array(
-                'children' => array(
-                    'payment' => array(
-                        'children' => array(
-                            'status'
-                        )
-                    )
-                )
-            ),
-            'paymentMethod',
         )
     );
 
@@ -330,7 +305,7 @@ class FeeEntityService extends AbstractLvaEntityService
     {
         $query = [
             'licence' => $licenceId,
-            'feeStatus' => [self::STATUS_OUTSTANDING, self::STATUS_WAIVE_RECOMMENDED]
+            'feeStatus' => self::STATUS_OUTSTANDING,
         ];
         $bundle = [
             'children' => [
