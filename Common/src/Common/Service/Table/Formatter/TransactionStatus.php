@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Transaction Number formatter
+ * Transaction Status formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
@@ -12,11 +12,11 @@ namespace Common\Service\Table\Formatter;
 use Common\RefData as Ref;
 
 /**
- * Transaction Number formatter
+ * Transaction Status formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionNo implements FormatterInterface
+class TransactionStatus implements FormatterInterface
 {
     /**
      * Format a fee status
@@ -46,25 +46,10 @@ class TransactionNo implements FormatterInterface
                 $statusClass .= ' grey';
                 break;
         }
-
-        $router     = $serviceLocator->get('router');
-        $request    = $serviceLocator->get('request');
-        $urlHelper  = $serviceLocator->get('Helper\Url');
-        $routeMatch = $router->match($request);
-        $matchedRouteName = $routeMatch->getMatchedRouteName();
-
-        $url = $urlHelper->fromRoute(
-            $matchedRouteName.'/transaction',
-            ['transaction' => $row['transaction']['id']],
-            [],
-            true
-        );
-
-        $link = '<a href="'. $url . '">'. $row['transaction']['id'] . '</a>';
-
-        return vsprintf(
-            '%s <span class="%s">%s</span>',
-            [$link, $statusClass, $row['transaction']['status']['description']]
+        return sprintf(
+            '<span class="%s">%s</span>',
+            $statusClass,
+            $row['transaction']['status']['description']
         );
     }
 }
