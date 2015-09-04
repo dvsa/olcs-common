@@ -1072,6 +1072,9 @@ return array(
     'form.tm-merge.to-tm-id.validation.TM_MERGE_DONAR_RECIPIENT_SAME' => 'Cannot be the same as the from transport
         manager',
     'form.tm-merge.to-tm-id.validation.not-found' => 'Transport manager not found',
+    'form.tm-unmerge.confirm.action' => 'Unmerge',
+    'form.tm-unmerge.message' => 'Are you sure you want to unmerge this transport manager: %1$d %2$s from: %3$d %4$s?',
+    'form.tm-unmerge.success' => 'The transport manager merge has been reversed',
     'from' => 'From',
     'further-info-required' => 'Further info required',
     'gen-haulier-distribution' => 'Gen Haulier / Distribution',
@@ -2456,6 +2459,7 @@ return array(
     'tm-quick-action-merge' => 'Merge transport manager',
     'tm-quick-action-print-form' => 'Print form',
     'tm-quick-action-remove' => 'Remove transport manager',
+    'tm-quick-action-unmerge' => 'Unmerge transport manager',
     'tm-responsibilities-applications' => 'Applications',
     'tm-responsibilities-licences' => 'Licences',
     'tm-review-main' => 'Your details',
