@@ -100,6 +100,7 @@ class SubmissionAssignmentTaskTest extends MockeryTestCase
                     'urgent' => 'N',
                     'assignedByUser' => 456,
                     'case' => 111,
+                    'submission' => 222
                 ]
             ],
             [
@@ -120,7 +121,8 @@ class SubmissionAssignmentTaskTest extends MockeryTestCase
                     'isClosed' => 'N',
                     'urgent' => 'Y',
                     'assignedByUser' => 456,
-                    'case' => 112
+                    'case' => 112,
+                    'submission' => 223
                 ]
             ],
         ];
