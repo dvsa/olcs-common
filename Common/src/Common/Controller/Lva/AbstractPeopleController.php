@@ -98,10 +98,10 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         $adapter = $this->getAdapter();
 
         $request = $this->getRequest();
+        $personData = $adapter->getFirstPersonData();
         if ($request->isPost()) {
             $data = (array) $request->getPost();
         } else {
-            $personData = $adapter->getFirstPersonData();
             if ($personData === false) {
                 $data['data'] = [];
             } else {
@@ -115,8 +115,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         $form = $formHelper->createForm('Lva\SoleTrader')->setData($data);
 
         $this->alterFormForLva($form);
-
         $adapter->alterAddOrEditFormForOrganisation($form);
+        $this->alterSoleTraderForm($form, $personData);
 
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
@@ -236,7 +236,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
                 $this->getAdapter()->isOrganisationLimited() &&
                 $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             ) {
-                $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId());
+                $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId(), 'people');
             } else {
                 $this->getServiceLocator()->get('Helper\Guidance')->append(
                     'selfserve-app-subSection-your-business-people-guidance-disabled'
@@ -392,5 +392,38 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             null,
             [$this->getIdentifierIndex() => $this->getIdentifier()]
         );
+    }
+
+    protected function alterSoleTraderForm(\Zend\Form\Form $form, $personData)
+    {
+        $personId = (isset($personData['person']['id'])) ? $personData['person']['id'] : null;
+        // if not internal OR no  person OR already disqualified then hide the disqualify button
+        if ($this->location !== 'internal' ||
+            empty($personId) ||
+            $this->isPersonDisqualified($personData)
+        ) {
+            $this->getServiceLocator()->get('Helper\Form')->remove($form, 'form-actions->disqualify');
+        } else {
+            $form->get('form-actions')->get('disqualify')->setValue(
+                $this->url()->fromRoute(
+                    'operator/disqualify_person',
+                    ['organisation' => $this->getAdapter()->getOrganisationId(), 'person' => $personId]
+                )
+            );
+        }
+    }
+
+    /**
+     * Is the person in the personData disqualified
+     *
+     * @param array $personData
+     * @return boolean
+     */
+    protected function isPersonDisqualified($personData)
+    {
+        if (isset($personData['person']['disqualificationStatus'])) {
+            return $personData['person']['disqualificationStatus'] !== 'None';
+        }
+        return false;
     }
 }

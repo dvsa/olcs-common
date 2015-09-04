@@ -143,8 +143,9 @@ class TransportManagerHelperService extends AbstractHelperService
 
     public function alterPreviousHistoryFieldset($fieldset, $tmId)
     {
-        $convictionsAndPenaltiesTable = $this->getConvictionsAndPenaltiesTable($tmId);
-        $previousLicencesTable = $this->getPreviousLicencesTable($tmId);
+        $transportManager = $this->getTransportManager($tmId);
+        $convictionsAndPenaltiesTable = $this->getConvictionsAndPenaltiesTable($transportManager['id']);
+        $previousLicencesTable = $this->getPreviousLicencesTable($transportManager['id']);
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
@@ -157,6 +158,22 @@ class TransportManagerHelperService extends AbstractHelperService
             $fieldset->get('previousLicences'),
             $previousLicencesTable,
             'previousLicences'
+        );
+
+        if (!is_null($transportManager['removedDate'])) {
+            $fieldset->get('convictions')->get('table')->getTable()->setDisabled(true);
+            $fieldset->get('previousLicences')->get('table')->getTable()->setDisabled(true);
+        }
+    }
+
+    private function getTransportManager($tmId)
+    {
+        return $this->handleQuery(
+            \Dvsa\Olcs\Transfer\Query\Tm\TransportManager::create(
+                [
+                    'id' => $tmId
+                ]
+            )
         );
     }
 

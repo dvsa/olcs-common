@@ -41,63 +41,39 @@ class FeeStatusTest extends PHPUnit_Framework_TestCase
         return [
             'outstanding' => [
                 [
-                    'id' => '99',
                     'feeStatus' => [
                         'id' => 'lfs_ot',
                         'description' => 'outstanding'
                     ],
                 ],
-                '99 <span class="status red">outstanding</span>',
+                '<span class="status orange">outstanding</span>',
             ],
             'paid' => [
                 [
-                    'id' => '99',
                     'feeStatus' => [
                         'id' => 'lfs_pd',
                         'description' => 'paid'
                     ],
                 ],
-                '99 <span class="status green">paid</span>',
-            ],
-            'waive requested' => [
-                [
-                    'id' => '99',
-                    'feeStatus' => [
-                        'id' => 'lfs_wr',
-                        'description' => 'waive requested'
-                    ],
-                ],
-                '99 <span class="status orange">waive requested</span>',
-            ],
-            'waived' => [
-                [
-                    'id' => '99',
-                    'feeStatus' => [
-                        'id' => 'lfs_w',
-                        'description' => 'waived'
-                    ],
-                ],
-                '99 <span class="status green">waived</span>',
+                '<span class="status green">paid</span>',
             ],
             'cancelled' => [
                 [
-                    'id' => '99',
                     'feeStatus' => [
                         'id' => 'lfs_cn',
                         'description' => 'cancelled'
                     ],
                 ],
-                '99 <span class="status grey">cancelled</span>',
+                '<span class="status red">cancelled</span>',
             ],
             'other' => [
                 [
-                    'id' => '99',
                     'feeStatus' => [
                         'id' => 'foo',
                         'description' => 'foo'
                     ],
                 ],
-                '99 <span class="status">foo</span>',
+                '<span class="status grey">foo</span>',
             ],
         ];
     }

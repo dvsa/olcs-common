@@ -87,33 +87,10 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
             $crudAction = $this->getCrudAction($data);
 
-            if ($this->lva === 'application') {
-                $formData = $form->getData();
+            $response = $this->updateVehiclesSection($form, $crudAction);
 
-                $dtoData = [
-                    'id' => $this->getIdentifier(),
-                    'version' => $formData['data']['version'],
-                    'hasEnteredReg' => $formData['data']['hasEnteredReg'],
-                    'partial' => $crudAction !== null
-                ];
-
-                $resultData['hasEnteredReg'] = $formData['data']['hasEnteredReg'];
-
-                $response = $this->handleCommand(UpdatePsvVehicles::create($dtoData));
-
-                if ($response->isClientError()) {
-                    PsvVehicles::mapFormErrors(
-                        $form,
-                        $response->getResult()['messages'],
-                        $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    );
-                    return $this->renderForm($form, 'vehicles_psv');
-                }
-
-                if ($response->isServerError()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
-                    return $this->renderForm($form, 'vehicles_psv');
-                }
+            if ($response !== null) {
+                return $response;
             }
 
             $this->maybeWarnAboutTotalAuth($resultData, false);
@@ -137,6 +114,55 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $this->maybeWarnAboutTotalAuth($resultData);
 
         return $this->renderForm($form, 'vehicles_psv');
+    }
+
+    protected function updateVehiclesSection($form, $crudAction)
+    {
+        if ($this->lva === 'application') {
+            $formData = $form->getData();
+
+            $dtoData = [
+                'id' => $this->getIdentifier(),
+                'version' => $formData['data']['version'],
+                'hasEnteredReg' => $formData['data']['hasEnteredReg'],
+                'partial' => $crudAction !== null
+            ];
+
+            $resultData['hasEnteredReg'] = $formData['data']['hasEnteredReg'];
+
+            $response = $this->handleCommand(UpdatePsvVehicles::create($dtoData));
+
+            if ($response->isClientError()) {
+                PsvVehicles::mapFormErrors(
+                    $form,
+                    $response->getResult()['messages'],
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')
+                );
+                return $this->renderForm($form, 'vehicles_psv');
+            }
+
+            if ($response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+                return $this->renderForm($form, 'vehicles_psv');
+            }
+        }
+
+        if ($this->lva === 'licence' && $this->location === 'external') {
+
+            $shareInfo = $form->getData()['shareInfo']['shareInfo'];
+
+            $dtoData = [
+                'id' => $this->getIdentifier(),
+                'shareInfo' => $shareInfo
+            ];
+
+            $response = $this->handleCommand(CommandDto\Licence\UpdateVehicles::create($dtoData));
+
+            if (!$response->isOk()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                return $this->renderForm($form, 'vehicles_psv');
+            }
+        }
     }
 
     /**
@@ -356,6 +382,16 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             ->get('lva-' . $this->lva . '-' . $this->section . '-vehicle')
             ->getForm($this->getRequest(), $params)
             ->setData($data);
+
+        if ($resultData['showHistory']) {
+            $table = $this->getServiceLocator()->get('Table')
+                ->prepareTable('lva-psv-vehicles-history', $resultData['history']);
+            $table->removeColumn('discNo');
+            $this->getServiceLocator()->get('Helper\Form')->populateFormTable(
+                $form->get('vehicle-history-table'),
+                $table
+            );
+        }
 
         if ($request->isPost() && $form->isValid()) {
 

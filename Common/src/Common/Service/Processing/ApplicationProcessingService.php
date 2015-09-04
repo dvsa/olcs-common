@@ -147,7 +147,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         return $this->getServiceLocator()->get('Entity\Fee')->getLatestFeeByTypeStatusesAndApplicationId(
             $feeTypeData['id'],
-            [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+            [FeeEntityService::STATUS_OUTSTANDING],
             $applicationId
         );
     }

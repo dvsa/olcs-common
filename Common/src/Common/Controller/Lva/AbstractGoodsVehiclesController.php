@@ -20,7 +20,8 @@ use Dvsa\Olcs\Transfer\Command\Vehicle\ReprintDisc;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteLicenceVehicle as LicenceDeleteLicenceVehicle;
-use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicles;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicles as AppUpdateVehicles;
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateVehicles as LicUpdateVehicles;
 use Dvsa\Olcs\Transfer\Query\Licence\OtherActiveLicences;
 use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
 use Zend\Form\Element\Checkbox;
@@ -89,6 +90,8 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $haveCrudAction = $crudAction !== null;
         } elseif ($this->lva === 'application') {
             $formData = GoodsVehicles::mapFromResult($headerData);
+        } elseif ($this->lva === 'licence' && $this->location === 'external') {
+            $formData = \Common\Data\Mapper\Lva\LicenceGoodsVehicles::mapFromResult($headerData);
         }
 
         $formData = array_merge($formData, ['query' => (array)$request->getQuery()]);
@@ -97,28 +100,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         if ($request->isPost() && $form->isValid()) {
 
-            if ($this->lva === 'application') {
+            $response = $this->updateVehiclesSection($form, $haveCrudAction, $headerData);
 
-                $data = $form->getData()['data'];
-
-                $dtoData = [
-                    'id' => $this->getIdentifier(),
-                    'version' => $data['version'],
-                    'hasEnteredReg' => $data['hasEnteredReg'],
-                    'partial' => $haveCrudAction
-                ];
-
-                $response = $this->handleCommand(UpdateVehicles::create($dtoData));
-
-                if ($response->isServerError()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
-                    return $this->renderForm($form, $headerData);
-                }
-
-                if ($response->isClientError()) {
-                    $this->mapErrors($form, $response->getResult()['messages']);
-                    return $this->renderForm($form, $headerData);
-                }
+            if ($response !== null) {
+                return $response;
             }
 
             if ($haveCrudAction) {
@@ -138,6 +123,50 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         return $this->renderForm($form, $headerData);
+    }
+
+    protected function updateVehiclesSection($form, $haveCrudAction, $headerData)
+    {
+        if ($this->lva === 'application') {
+
+            $data = $form->getData()['data'];
+
+            $dtoData = [
+                'id' => $this->getIdentifier(),
+                'version' => $data['version'],
+                'hasEnteredReg' => $data['hasEnteredReg'],
+                'partial' => $haveCrudAction
+            ];
+
+            $response = $this->handleCommand(AppUpdateVehicles::create($dtoData));
+
+            if ($response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                return $this->renderForm($form, $headerData);
+            }
+
+            if ($response->isClientError()) {
+                $this->mapErrors($form, $response->getResult()['messages']);
+                return $this->renderForm($form, $headerData);
+            }
+        }
+
+        if ($this->lva === 'licence' && $this->location === 'external') {
+
+            $shareInfo = $form->getData()['shareInfo']['shareInfo'];
+
+            $dtoData = [
+                'id' => $this->getIdentifier(),
+                'shareInfo' => $shareInfo
+            ];
+
+            $response = $this->handleCommand(LicUpdateVehicles::create($dtoData));
+
+            if (!$response->isOk()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                return $this->renderForm($form, $headerData);
+            }
+        }
     }
 
     protected function getHeaderData()
@@ -295,6 +324,8 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                         ? $formData['licence-vehicle']['receivedDate'] : null,
                     'specifiedDate' => isset($formData['licence-vehicle']['specifiedDate'])
                         ? $formData['licence-vehicle']['specifiedDate'] : null,
+                    'seedDate' => isset($formData['licence-vehicle']['warningLetterSeedDate'])
+                        ? $formData['licence-vehicle']['warningLetterSeedDate'] : null,
                 ];
 
                 $dtoClass = $this->updateVehicleMap[$this->lva];

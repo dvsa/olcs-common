@@ -625,7 +625,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-large-delete' => '{WELSH} Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-large-edit' => '{WELSH} Edit large vehicle',
     'application_vehicle-safety_vehicle-psv-large.table.empty_message' => '{WELSH} Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-large.table.removed' => '{WELSH} Removed',
     'application_vehicle-safety_vehicle-psv-large.table.specified' => '{WELSH} Specified',
     'application_vehicle-safety_vehicle-psv-large.table.title' => '{WELSH} 17 or more passenger seat vehicles (if
@@ -635,7 +635,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-medium-delete' => '{WELSH} Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-medium-edit' => '{WELSH} Edit medium vehicle',
     'application_vehicle-safety_vehicle-psv-medium.table.empty_message' => '{WELSH} Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-medium.table.removed' => '{WELSH} Removed',
     'application_vehicle-safety_vehicle-psv-medium.table.specified' => '{WELSH} Specified',
     'application_vehicle-safety_vehicle-psv-medium.table.title' => '{WELSH} 9 - 16 passenger seat vehicles (if
@@ -645,7 +645,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small-delete' => '{WELSH} Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-small-edit' => '{WELSH} Edit small vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.empty_message' => '{WELSH} Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-small.table.make' => '{WELSH} Make / model',
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => '{WELSH} Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.removed' => '{WELSH} Removed',
@@ -663,6 +663,7 @@ return array(
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo' => '{WELSH} Disc No.',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate' => '{WELSH} Received date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.removalDate' => '{WELSH} Removed date',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.seedDate' => '{WELSH} Warning letter seed date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate' => '{WELSH} Specified date',
     'application_vehicle-safety_vehicle.table.disc-no' => '{WELSH} Disc No.',
     'application_vehicle-safety_vehicle.table.removed' => '{WELSH} Removed',
@@ -821,6 +822,7 @@ return array(
     'conditions-and-undertakings-undertakings' => '{WELSH} Undertakings',
     'confirm-grant-application' => '{WELSH} Are you sure you want to grant this application?',
     'confirm-undo-grant-application' => '{WELSH} Are you sure you want to undo the grant?',
+    'conflict-error' => '{WELSH} The data you were editing is out of date. Please review and re-enter your changes.',
     'continuation-detail-filter-licenceNo' => '{WELSH} Licence no.',
     'continuation-detail-filter-licenceStatus' => '{WELSH} Licence status',
     'continuation-detail-filter-method' => '{WELSH} Method',
@@ -1080,7 +1082,7 @@ return array(
         losing operator to the winning operator and that this operation cannot be undone',
     'form.operator-merge.confirm.validation' => '{WELSH} Must be checked',
     'form.operator-merge.from-operator-name' => '{WELSH} From operator',
-    'form.operator-merge.success' => '{WELSH} The current operator\'s records having been merged into the winning
+    'form.operator-merge.success' => '{WELSH} The current operator\'s records have been merged into the winning
         operator',
     'form.operator-merge.to-operator-id' => '{WELSH} To operator id',
     'form.operator-merge.to-operator-id.validation' => '{WELSH} Invalid Operator id',
@@ -1301,6 +1303,7 @@ return array(
     'internal-navigation-operator' => '{WELSH} Operator',
     'internal-navigation-operator-business_details' => '{WELSH} Business details',
     'internal-navigation-operator-cases' => '{WELSH} Cases',
+    'internal-navigation-operator-documents' => '{WELSH} Docs & attachments',
     'internal-navigation-operator-fees' => '{WELSH} Fees',
     'internal-navigation-operator-history' => '{WELSH} History',
     'internal-navigation-operator-irfo' => '{WELSH} IRFO',
@@ -1312,6 +1315,7 @@ return array(
     'internal-navigation-operator-processing' => '{WELSH} Processing',
     'internal-navigation-operator-processing-history' => '{WELSH} History',
     'internal-navigation-operator-processing-notes' => '{WELSH} Notes',
+    'internal-navigation-operator-processing-tasks' => '{WELSH} Tasks',
     'internal-navigation-operator-profile' => '{WELSH} Operator profile',
     'internal-navigation-operator-responsibilities' => '{WELSH} Responsibilities',
     'internal-navigation-operator-vehicles' => '{WELSH} Vehicles',
@@ -1337,7 +1341,7 @@ return array(
     'internal-operator-new-application' => '{WELSH} New application',
     'internal-operator-profile-business-type' => '{WELSH} Business type',
     'internal-operator-profile-business-type-refresh' => '{WELSH} Refresh',
-    'internal-operator-profile-cpid' => '{WELSH} CPID',
+    'internal-operator-profile-cpid' => '{WELSH} CPID (Finance users only)',
     'internal-operator-profile-first-name' => '{WELSH} First name',
     'internal-operator-profile-last-name' => '{WELSH} Last name',
     'internal-operator-profile-name' => '{WELSH} Operator name',
@@ -1517,6 +1521,10 @@ return array(
     'licence.surrender' => '{WELSH} Surrender licence',
     'licence.variation' => '{WELSH} Create variation',
     'licence.variation.confirmation.text' => '{WELSH} Are you sure you want to create a variation application?',
+    'licence.vehicles-trailers.share-info' => '{WELSH} Please tick this box to confirm that you wish to share this
+        information with DVSA for its purposes such as test history reports or Operator Compliance Risk Score (OCRS).
+        You must then keep this information up to date. If you do not, it may result in an inaccurate test history
+        report or OCRS.',
     'licence.vehicles_transfer.form.licence' => '{WELSH} To which licence would you like to transfer the selected
         vehicle(s)?',
     'licence.vehicles_transfer.form.message_already_on_licence' => '{WELSH} These vehicles: %s are already on licence
@@ -2015,7 +2023,7 @@ return array(
         from the application?',
     'safety-inspection-providers.table.address' => '{WELSH} Workshop address',
     'safety-inspection-providers.table.empty_message' => '{WELSH} Please tell us about who will carry out the safety
-        inspections on the vehicles and trailers you intend to operate under your licence.',
+        inspections on the vehicles and trailers that will be operated under this licence',
     'safety-inspection-providers.table.empty_message-psv' => '{WELSH} Please tell us about who will carry out the safety
         inspections on the vehicles you intend to operate under your licence.',
     'safety-inspection-providers.table.external' => '{WELSH} External?',
@@ -2483,6 +2491,7 @@ return array(
     'tm-previous-history-convictions-and-penalties' => '{WELSH} Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => '{WELSH} Revoked, Curtailed or Suspended Licences',
     'tm-quick-action-print-form' => '{WELSH} Print form',
+    'tm-quick-action-remove' => '{WELSH} Remove transport manager',
     'tm-responsibilities-applications' => '{WELSH} Applications',
     'tm-responsibilities-licences' => '{WELSH} Licences',
     'tm-review-main' => '{WELSH} Your details',
@@ -2573,6 +2582,12 @@ return array(
     'transport-manager-details-work-address' => '{WELSH} Work Address',
     'transport-manager-hours-per-week-validation-message' => '{WELSH} You must enter the hours per week you will spend
         on your duties',
+    'transport-manager-remove' => '{WELSH} Remove Transport Manager',
+    'transport-manager-remove-are-you-sure' => '{WELSH} Are you sure you want to remove this transport manager?',
+    'transport-manager-remove-has-users-error' => '{WELSH} This transport manager is linked to user account: ',
+    'transport-manager-remove-not-detached-error' => '{WELSH} You cannot remove a transport manager that has associated
+        licences, applications or cases',
+    'transport-manager-removed' => '{WELSH} Transport manager removed.',
     'transport-manager.competences.form.country' => '{WELSH} Country',
     'transport-manager.competences.form.date-of-issue' => '{WELSH} Date of Issue',
     'transport-manager.competences.form.qualification-type' => '{WELSH} Qualification type',
@@ -2708,9 +2723,11 @@ return array(
     'vehicle-belongs-to-another-licence-message-external' => '{WELSH} This vehicle is specified on another licence.
         Please confirm you would like to continue adding this vehicle',
     'vehicle-belongs-to-another-licence-message-internal' => '{WELSH} This vehicle is specified on another licence: %s.
-        Please confirm you would like to continue adding this vehicle',
+        If the duplication is not removed, a warning letter will be sent in 28 days to the operator(s) on whose licence
+        the vehicle is currently specified',
     'vehicle-belongs-to-another-licence-message-internal-multiple' => '{WELSH} This vehicle is specified on other
-        licences: %s. Please confirm you would like to continue adding this vehicle',
+        licences: %s. If the duplication is not removed, a warning letter will be sent in 28 days to the operator(s) on
+        whose licence the vehicle is currently specified',
     'vehicle-count' => '{WELSH} %s vehicles',
     'vehicle-disc-reprint-confirm-label' => '{WELSH} Are you sure you want to request replacement discs for the selected
         vehicle(s)?',

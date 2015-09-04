@@ -1129,16 +1129,21 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             isset($this->settings['crud']['actions']) ? $this->settings['crud']['actions'] : array()
         );
 
-        if (empty($actions)) {
+        $links = isset($this->settings['crud']['links']) ? $this->settings['crud']['links'] : array();
+
+        if (empty($actions) && empty($links)) {
             return '';
         }
 
         $newActions = $this->formatActions($actions);
 
+        $newLinks = $this->formatLinks($links);
+
         $content = $this->formatActionContent(
             $newActions,
             $this->getSetting('actionFormat'),
-            $this->getSetting('collapseAt')
+            $this->getSetting('collapseAt'),
+            $newLinks
         );
 
         return $this->replaceContent('{{[elements/actionContainer]}}', array('content' => $content));
@@ -1150,7 +1155,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param array $actions
      * @return string
      */
-    public function renderDropdownActions($actions = array())
+    public function renderDropdownActions($actions = array(), $links = [])
     {
         $options = '';
 
@@ -1159,10 +1164,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $options .= $this->replaceContent('{{[elements/actionOption]}}', $details);
         }
 
-        return $this->replaceContent(
+        $content = '';
+
+        if (!empty($links)) {
+            $content .= $this->renderLinks($links);
+        }
+
+        $content .= $this->replaceContent(
             '{{[elements/actionSelect]}}',
             array('option' => $options, 'action_field_name' => $this->getActionFieldName())
         );
+
+        return $content;
     }
 
     /**
@@ -1173,9 +1186,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * a 'more actions' dropdown
      * @return string
      */
-    public function renderButtonActions($actions = array(), $collapseAt = 0)
+    public function renderButtonActions($actions = array(), $collapseAt = 0, $links = [])
     {
         $content = '';
+
+        if (!empty($links)) {
+            $content .= $this->renderLinks($links);
+        }
 
         if ($collapseAt) {
             $i = 0;
@@ -1190,6 +1207,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         foreach ($actions as $details) {
             $content .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+        }
+
+        return $content;
+    }
+
+    public function renderLinks(array $links = [])
+    {
+        $content = '';
+
+        foreach ($links as $details) {
+
+            $content .= $this->replaceContent('{{[elements/link]}}', $details);
         }
 
         return $content;
@@ -1597,20 +1626,20 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param string $overrideFormat
      * @return string
      */
-    private function formatActionContent($actions, $overrideFormat, $collapseAt = 0)
+    private function formatActionContent($actions, $overrideFormat, $collapseAt = 0, $newLinks = [])
     {
         switch ($overrideFormat) {
             case self::ACTION_FORMAT_DROPDOWN:
-                return $this->renderDropdownActions($actions);
+                return $this->renderDropdownActions($actions, $newLinks);
             case self::ACTION_FORMAT_BUTTONS:
-                return $this->renderButtonActions($actions, $collapseAt);
+                return $this->renderButtonActions($actions, $collapseAt, $newLinks);
         }
 
         if (count($actions) > self::MAX_FORM_ACTIONS) {
-            return $this->renderDropdownActions($actions);
+            return $this->renderDropdownActions($actions, $newLinks);
         }
 
-        return $this->renderButtonActions($actions, $collapseAt);
+        return $this->renderButtonActions($actions, $collapseAt, $newLinks);
     }
 
     /**
@@ -1651,6 +1680,36 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         return $newActions;
+    }
+
+    private function formatLinks($links)
+    {
+        $newLinks = array();
+
+        $translator = $this->getServiceLocator()->get('translator');
+
+        foreach ($links as $name => $details) {
+
+            $value = isset($details['value']) ? $details['value'] : ucwords($name);
+
+            $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
+
+            $class = isset($details['class']) ? $details['class'] : 'secondary';
+
+            $route = isset($details['route']['route']) ? $details['route']['route'] : null;
+            $params = isset($details['route']['params']) ? $details['route']['params'] : [];
+            $options = isset($details['route']['options']) ? $details['route']['options'] : [];
+            $reuse = isset($details['route']['reuse']) ? $details['route']['reuse'] : false;
+
+            $newLinks[] = array(
+                'href' => $this->getUrl()->fromRoute($route, $params, $options, $reuse),
+                'value' => $value,
+                'label' => $label,
+                'class' => $class
+            );
+        }
+
+        return $newLinks;
     }
 
     /**

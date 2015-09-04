@@ -1,36 +1,29 @@
 <?php
 
 /**
- * AbstractTrailersController.php
+ * Abstract Trailers Controller
+ *
+ * @author Josh Curtis <josh.curtis@valtech.co.uk>
  */
-
 namespace Common\Controller\Lva;
 
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateTrailers;
 use Zend\Form\FormInterface;
 use Zend\Stdlib\RequestInterface;
-
 use Dvsa\Olcs\Transfer\Query\Trailer\Trailer;
-use Dvsa\Olcs\Transfer\Query\Trailer\Trailers;
+use Dvsa\Olcs\Transfer\Query\Licence\Trailers;
 use Dvsa\Olcs\Transfer\Command\Trailer\CreateTrailer;
 use Dvsa\Olcs\Transfer\Command\Trailer\UpdateTrailer;
 use Dvsa\Olcs\Transfer\Command\Trailer\DeleteTrailer;
+use Common\Service\Table\TableBuilder as Table;
 
 /**
- * Class AbstractTrailersController
- *
- * Controller for managing (cruding) the licences trailers.
- *
- * @package Common\Controller\Lva
+ * Abstract Trailers Controller
  *
  * @author Josh Curtis <josh.curtis@valtech.co.uk>
  */
 abstract class AbstractTrailersController extends AbstractController
 {
-    /*
-     * The key for the guidance text displayed below the form.
-     */
-    const GUIDANCE_LABEL = 'licence_goods-trailers_trailer.table.guidance';
-
     /**
      * Trait to support a CRUD table.
      */
@@ -47,21 +40,45 @@ abstract class AbstractTrailersController extends AbstractController
     {
         $request = $this->getRequest();
 
+        $response = $this->handleQuery(Trailers::create(['id' => $this->getIdentifier()]));
+        $result = $response->getResult();
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
-            $crudAction = $this->getCrudAction($data);
-
-            if ($crudAction !== null) {
-                return $this->handleCrudAction($crudAction);
-            }
-
-            return $this->completeSection('trailers');
+        } else {
+            $data = \Common\Data\Mapper\Lva\Trailers::mapFromResult($result);
         }
 
         $form = $this->getForm($request);
-        $table = $this->getTable();
-
+        $table = $this->getTable($result['trailers']);
         $this->alterForm($form, $table);
+
+        $form->setData($data);
+
+        if ($request->isPost() && $form->isValid()) {
+
+            $formData = (array)$form->getData();
+
+            $dtoData = [
+                'id' => $this->getIdentifier(),
+                'shareInfo' => $formData['trailers']['shareInfo']
+            ];
+
+            $response = $this->handleCommand(UpdateTrailers::create($dtoData));
+
+            if ($response->isOk()) {
+                $crudAction = $this->getCrudAction($data);
+
+                if ($crudAction !== null) {
+                    return $this->handleCrudAction($crudAction);
+                }
+
+                return $this->completeSection('trailers');
+
+            } else {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentUnknownError();
+            }
+        }
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
@@ -76,6 +93,7 @@ abstract class AbstractTrailersController extends AbstractController
     public function addAction()
     {
         $request = $this->getRequest();
+
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Trailer', $request);
 
@@ -88,17 +106,13 @@ abstract class AbstractTrailersController extends AbstractController
                 $data['licence'] = $this->getLicenceId();
                 $data['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
-                $dto = CreateTrailer::create(
-                    $data
-                );
-
-                $response = $this->handleCommand($dto);
+                $response = $this->handleCommand(CreateTrailer::create($data));
 
                 if ($response->isOk()) {
                     return $this->handlePostSave(null, false);
                 }
 
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
             }
         }
 
@@ -113,6 +127,7 @@ abstract class AbstractTrailersController extends AbstractController
     public function editAction()
     {
         $request = $this->getRequest();
+
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Trailer', $request);
 
@@ -125,11 +140,7 @@ abstract class AbstractTrailersController extends AbstractController
                 $data = $form->getData()['data'];
                 $data['licence'] = $this->getLicenceId();
 
-                $dto = UpdateTrailer::create(
-                    $data
-                );
-
-                $response = $this->handleCommand($dto);
+                $response = $this->handleCommand(UpdateTrailer::create($data));
 
                 if ($response->isOk()) {
                     return $this->handlePostSave(null, false);
@@ -137,29 +148,19 @@ abstract class AbstractTrailersController extends AbstractController
             }
         }
 
-        $query = Trailer::create(
-            [
-                'id' => $this->params()->fromRoute('child_id', null)
-            ]
-        );
+        $query = Trailer::create(['id' => $this->params()->fromRoute('child_id', null)]);
 
         $response = $this->handleQuery($query);
 
         if (!$response->isOk()) {
-            if ($response->isClientError() || $response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
-            }
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
 
             return $this->notFoundAction();
         }
 
-        $gracePeriod = $response->getResult();
+        $trailer = $response->getResult();
 
-        $form->setData(
-            array(
-                'data' => $gracePeriod
-            )
-        );
+        $form->setData(['data' => $trailer]);
 
         return $this->render('edit_trailer', $form);
     }
@@ -167,26 +168,18 @@ abstract class AbstractTrailersController extends AbstractController
     /**
      * Method is called from the deleteAction in the abstract.
      *
-     * @return void
+     * @return boolean
      */
     public function delete()
     {
         $id = $this->params('child_id');
         $ids = explode(',', $id);
 
-        $dto = DeleteTrailer::create(
-            [
-                'ids' => $ids
-            ]
-        );
+        $dto = DeleteTrailer::create(['ids' => $ids]);
 
         $response = $this->handleCommand($dto);
 
-        if ($response->isOk()) {
-            return true;
-        }
-
-        return false;
+        return $response->isOk();
     }
 
     /**
@@ -194,11 +187,9 @@ abstract class AbstractTrailersController extends AbstractController
      *
      * @return Table The trailers table.
      */
-    protected function getTable()
+    protected function getTable($tableData)
     {
-        return $this->getServiceLocator()
-            ->get('Table')
-            ->prepareTable('lva-trailers', $this->getTableData());
+        return $this->getServiceLocator()->get('Table')->prepareTable('lva-trailers', $tableData);
     }
 
     /**
@@ -206,50 +197,11 @@ abstract class AbstractTrailersController extends AbstractController
      *
      * @param RequestInterface $request The request
      *
-     * @return Form $form The form
+     * @return \Zend\Form\Form $form The form
      */
     protected function getForm(RequestInterface $request)
     {
-        return $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest('Lva\Trailers', $request);
-    }
-
-    /**
-     * Pull trailer data from the backend and format it for display
-     * within a table.
-     *
-     * @return array The trailer table rows.
-     */
-    protected function getTableData()
-    {
-        $query = Trailers::create(
-            array(
-                'licence' => $this->getLicenceId()
-            )
-        );
-
-        $response = $this->handleQuery($query);
-
-        if (!$response->isOk()) {
-            if ($response->isClientError() || $response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
-            }
-
-            return $this->notFoundAction();
-        }
-
-        $result = (array)$response->getResult();
-
-        $tableData = [];
-        foreach ($result['results'] as $trailer) {
-            $tableData[] = [
-                'id' => $trailer['id'],
-                'trailerNo' => $trailer['trailerNo'],
-                'specifiedDate' => $trailer['specifiedDate']
-            ];
-        }
-
-        return $tableData;
+        return $this->getServiceLocator()->get('Helper\Form')->createFormWithRequest('Lva\Trailers', $request);
     }
 
     /**
@@ -262,16 +214,6 @@ abstract class AbstractTrailersController extends AbstractController
     {
         $this->getServiceLocator()->get('Helper\Form')->remove($form, 'form-actions->saveAndContinue');
 
-        $translator = $this->getServiceLocator()->get('translator');
-
-        $form->get('table')
-            ->get('table')
-            ->setTable($table);
-
-        $form->get('guidance')
-            ->get('guidance')
-            ->setValue(
-                $translator->translate(self::GUIDANCE_LABEL)
-            );
+        $form->get('table')->get('table')->setTable($table);
     }
 }

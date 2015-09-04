@@ -8,6 +8,8 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\RefData;
+
 /**
  * Fee Status formatter
  *
@@ -22,32 +24,28 @@ class FeeStatus implements FormatterInterface
      * @param array $column
      * @param \Zend\ServiceManager\ServiceManager $serviceLocator
      * @return string
+     * @inheritdoc
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
         $statusClass = 'status';
         switch ($row['feeStatus']['id']) {
-            case 'lfs_ot':
-                $statusClass .= ' red';
-                break;
-            case 'lfs_pd':
+            case RefData::FEE_STATUS_PAID:
                 $statusClass .= ' green';
                 break;
-            case 'lfs_wr':
+            case RefData::FEE_STATUS_OUTSTANDING:
                 $statusClass .= ' orange';
                 break;
-            case 'lfs_w':
-                $statusClass .= ' green';
-                break;
-            case 'lfs_cn':
-                $statusClass .= ' grey';
+            case RefData::FEE_STATUS_CANCELLED:
+                $statusClass .= ' red';
                 break;
             default:
+                $statusClass .= ' grey';
                 break;
         }
         return vsprintf(
-            '%s <span class="%s">%s</span>',
-            [$row['id'], $statusClass, $row['feeStatus']['description']]
+            '<span class="%s">%s</span>',
+            [$statusClass, $row['feeStatus']['description']]
         );
     }
 }

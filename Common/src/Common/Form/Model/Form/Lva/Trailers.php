@@ -19,10 +19,10 @@ class Trailers
     public $table = null;
 
     /**
-     * @Form\Name("guidance")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Guidance")
+     * @Form\Name("trailers")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ShareInfo")
      */
-    public $guidance = null;
+    public $trailers = null;
 
     /**
      * @Form\Name("form-actions")

@@ -307,10 +307,7 @@ class ContinuationDetailEntityService extends AbstractEntityService
                                 ],
                             ],
                             'criteria' => [
-                                'feeStatus' => [
-                                    FeeEntityService::STATUS_OUTSTANDING,
-                                    FeeEntityService::STATUS_WAIVE_RECOMMENDED
-                                ]
+                                'feeStatus' => FeeEntityService::STATUS_OUTSTANDING,
                             ],
                         ]
                     ],

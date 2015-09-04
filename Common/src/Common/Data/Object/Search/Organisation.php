@@ -43,6 +43,38 @@ class Organisation extends InternalSearchAbstract
     /**
      * @return array
      */
+    public function getSettings()
+    {
+        return [
+            'crud' => [
+                'links' => [
+                    'create-operator' => [
+                        'label' => 'Create operator',
+                        'class' => 'primary',
+                        'route' => [
+                            'route' => 'create_operator'
+                        ]
+                    ],
+                    'create-unlicensed-operator' => [
+                        'label' => 'Create unlicensed operator',
+                        'class' => 'primary',
+                        'route' => [
+                            'route' => 'create_unlicensed_operator'
+                        ]
+                    ]
+                ]
+            ],
+            'paginate' => [
+                'limit' => [
+                    'options' => [10, 25, 50]
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function getColumns()
     {
         return [

@@ -21,6 +21,12 @@ abstract class AbstractLvaFormServiceTestCase extends MockeryTestCase
 
     protected $formName = 'override_me_too';
 
+    protected $sut;
+
+    protected $formHelper;
+
+    protected $fsm;
+
     public function setUp()
     {
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');

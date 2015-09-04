@@ -607,7 +607,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-large-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-large-edit' => 'Edit large vehicle',
     'application_vehicle-safety_vehicle-psv-large.table.empty_message' => 'Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-large.table.removed' => 'Removed',
     'application_vehicle-safety_vehicle-psv-large.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-large.table.title' => '17 or more passenger seat vehicles (if applicable)',
@@ -616,7 +616,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-medium-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-medium-edit' => 'Edit medium vehicle',
     'application_vehicle-safety_vehicle-psv-medium.table.empty_message' => 'Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-medium.table.removed' => 'Removed',
     'application_vehicle-safety_vehicle-psv-medium.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-medium.table.title' => '9 - 16 passenger seat vehicles (if applicable)',
@@ -625,7 +625,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-small-edit' => 'Edit small vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.empty_message' => 'Please provide us with the vehicle
-        registration number and size of your vehicles.',
+        registration number of your vehicles.',
     'application_vehicle-safety_vehicle-psv-small.table.make' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.removed' => 'Removed',
@@ -643,6 +643,7 @@ return array(
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo' => 'Disc No.',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate' => 'Received date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.removalDate' => 'Removed date',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.seedDate' => 'Warning letter seed date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate' => 'Specified date',
     'application_vehicle-safety_vehicle.table.disc-no' => 'Disc No.',
     'application_vehicle-safety_vehicle.table.removed' => 'Removed',
@@ -800,6 +801,7 @@ return array(
     'conditions-and-undertakings-undertakings' => 'Undertakings',
     'confirm-grant-application' => 'Are you sure you want to grant this application?',
     'confirm-undo-grant-application' => 'Are you sure you want to undo the grant?',
+    'conflict-error' => 'The data you were editing is out of date. Please review and re-enter your changes.',
     'continuation-detail-filter-licenceNo' => 'Licence no.',
     'continuation-detail-filter-licenceStatus' => 'Licence status',
     'continuation-detail-filter-method' => 'Method',
@@ -1057,7 +1059,7 @@ return array(
         operator to the winning operator and that this operation cannot be undone',
     'form.operator-merge.confirm.validation' => 'Must be checked',
     'form.operator-merge.from-operator-name' => 'From operator',
-    'form.operator-merge.success' => 'The current operator\'s records having been merged into the winning operator',
+    'form.operator-merge.success' => 'The current operator\'s records have been merged into the winning operator',
     'form.operator-merge.to-operator-id' => 'To operator id',
     'form.operator-merge.to-operator-id.validation' => 'Invalid Operator id',
     'from' => 'From',
@@ -1275,6 +1277,7 @@ return array(
     'internal-navigation-operator' => 'Operator',
     'internal-navigation-operator-business_details' => 'Business details',
     'internal-navigation-operator-cases' => 'Cases',
+    'internal-navigation-operator-documents' => 'Docs & attachments',
     'internal-navigation-operator-fees' => 'Fees',
     'internal-navigation-operator-history' => 'History',
     'internal-navigation-operator-irfo' => 'IRFO',
@@ -1286,6 +1289,7 @@ return array(
     'internal-navigation-operator-processing' => 'Processing',
     'internal-navigation-operator-processing-history' => 'History',
     'internal-navigation-operator-processing-notes' => 'Notes',
+    'internal-navigation-operator-processing-tasks' => 'Tasks',
     'internal-navigation-operator-profile' => 'Operator profile',
     'internal-navigation-operator-responsibilities' => 'Responsibilities',
     'internal-navigation-operator-vehicles' => 'Vehicles',
@@ -1311,7 +1315,7 @@ return array(
     'internal-operator-new-application' => 'New application',
     'internal-operator-profile-business-type' => 'Business type',
     'internal-operator-profile-business-type-refresh' => 'Refresh',
-    'internal-operator-profile-cpid' => 'CPID',
+    'internal-operator-profile-cpid' => 'CPID (Finance users only)',
     'internal-operator-profile-first-name' => 'First name',
     'internal-operator-profile-last-name' => 'Last name',
     'internal-operator-profile-name' => 'Operator name',
@@ -1489,6 +1493,9 @@ return array(
     'licence.surrender' => 'Surrender licence',
     'licence.variation' => 'Create variation',
     'licence.variation.confirmation.text' => 'Are you sure you want to create a variation application?',
+    'licence.vehicles-trailers.share-info' => 'Please tick this box to confirm that you wish to share this information
+        with DVSA for its purposes such as test history reports or Operator Compliance Risk Score (OCRS). You must then
+        keep this information up to date. If you do not, it may result in an inaccurate test history report or OCRS.',
     'licence.vehicles_transfer.form.licence' => 'To which licence would you like to transfer the selected vehicle(s)?',
     'licence.vehicles_transfer.form.message_already_on_licence' => 'These vehicles: %s are already on licence %s',
     'licence.vehicles_transfer.form.message_already_on_licence_singular' => 'This vehicle: %s is already on licence %s',
@@ -1976,7 +1983,7 @@ return array(
         application?',
     'safety-inspection-providers.table.address' => 'Workshop address',
     'safety-inspection-providers.table.empty_message' => 'Please tell us about who will carry out the safety inspections
-        on the vehicles and trailers you intend to operate under your licence.',
+        on the vehicles and trailers that will be operated under this licence',
     'safety-inspection-providers.table.empty_message-psv' => 'Please tell us about who will carry out the safety
         inspections on the vehicles you intend to operate under your licence.',
     'safety-inspection-providers.table.external' => 'External?',
@@ -2437,6 +2444,7 @@ return array(
     'tm-previous-history-convictions-and-penalties' => 'Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => 'Revoked, Curtailed or Suspended Licences',
     'tm-quick-action-print-form' => 'Print form',
+    'tm-quick-action-remove' => 'Remove transport manager',
     'tm-responsibilities-applications' => 'Applications',
     'tm-responsibilities-licences' => 'Licences',
     'tm-review-main' => 'Your details',
@@ -2527,6 +2535,12 @@ return array(
     'transport-manager-details-work-address' => 'Work Address',
     'transport-manager-hours-per-week-validation-message' => 'You must enter the hours per week you will spend on your
         duties',
+    'transport-manager-remove' => 'Remove Transport Manager',
+    'transport-manager-remove-are-you-sure' => 'Are you sure you want to remove this transport manager?',
+    'transport-manager-remove-has-users-error' => 'This transport manager is linked to user account: ',
+    'transport-manager-remove-not-detached-error' => 'You cannot remove a transport manager that has associated
+        licences, applications or cases',
+    'transport-manager-removed' => 'Transport manager removed.',
     'transport-manager.competences.form.country' => 'Country',
     'transport-manager.competences.form.date-of-issue' => 'Date of Issue',
     'transport-manager.competences.form.qualification-type' => 'Qualification type',
@@ -2656,10 +2670,12 @@ return array(
     'vehicle-belongs-to-another-licence-confirmation' => 'I confirm that I would like to continue adding this vehicle',
     'vehicle-belongs-to-another-licence-message-external' => 'This vehicle is specified on another licence. Please
         confirm you would like to continue adding this vehicle',
-    'vehicle-belongs-to-another-licence-message-internal' => 'This vehicle is specified on another licence: %s. Please
-        confirm you would like to continue adding this vehicle',
+    'vehicle-belongs-to-another-licence-message-internal' => 'This vehicle is specified on another licence: %s. If the
+        duplication is not removed, a warning letter will be sent in 28 days to the operator(s) on whose licence the
+        vehicle is currently specified',
     'vehicle-belongs-to-another-licence-message-internal-multiple' => 'This vehicle is specified on other licences: %s.
-        Please confirm you would like to continue adding this vehicle',
+        If the duplication is not removed, a warning letter will be sent in 28 days to the operator(s) on whose licence
+        the vehicle is currently specified',
     'vehicle-count' => '%s vehicles',
     'vehicle-disc-reprint-confirm-label' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
