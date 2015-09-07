@@ -2,6 +2,8 @@
 
 namespace Common\Data\Object\Search;
 
+use Common\Data\Object\Search\Aggregations\Terms as Filter;
+
 /**
  * Class People
  * @package Common\Data\Object\Search
@@ -37,6 +39,13 @@ class People extends InternalSearchAbstract
      */
     public function getFilters()
     {
+        if (empty($this->filters)) {
+
+            $this->filters = [
+                new Filter\FoundBy()
+            ];
+        }
+
         return $this->filters;
     }
 
@@ -71,13 +80,70 @@ class People extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Found As', 'name'=> ''],
-            ['title' => 'Forename', 'name'=> 'personForename'],
-            ['title' => 'Family name', 'name'=> 'personFamilyName'],
-            ['title' => 'DOB', 'name'=> 'personBirthDate'],
-            ['title' => 'Date added', 'name'=> ''],
-            ['title' => 'Date removed', 'name'=> ''],
-            ['title' => 'Disq?', 'name'=> '']
+            ['title' => 'Found As', 'name'=> 'foundAs'],
+            [
+                'title' => 'Record',
+                'formatter' => function ($row) {
+
+                    //die('<pre>' . print_r($row, 1));
+
+                    if (!empty($row['tmId'])) {
+                        return '<a href="/transport-manager/' . $row['tmId'] . '">'
+                            . 'TM ' . $row['tmId']
+                            . '</a>';
+                    }
+
+                    $licence = '<a href="/licence/' . $row['licId'] . '">'
+                             . $row['licNo']
+                             . '</a>, '
+                             . $row['licTypeDesc']
+                             . '<br />'
+                             . $row['licStatusDesc'];
+
+                    return $licence;
+                }
+            ],
+            [
+                'title' => 'Name',
+                'formatter' => function ($row) {
+
+                    return $row['personForename'] . '  ' .$row['personFamilyName'];
+                }
+            ],
+            [
+                'title' => 'DOB',
+                'name'=> 'personBirthDate',
+                'formatter' => function ($row) {
+
+                    //die('<pre>' . print_r($row, 1));
+
+                    return empty($row['personBirthDate']) ? 'Not known' : date('d/m/Y', strtotime($row['personBirthDate']));
+                }
+            ],
+            [
+                'title' => 'Date added',
+                'name'=> 'dateAdded',
+                'formatter' => function ($row) {
+
+                    return empty($row['dateAdded']) ? 'NA' : date('d/m/Y', strtotime($row['dateAdded']));
+                }
+            ],
+            [
+                'title' => 'Date removed',
+                'name'=> 'dateRemoved',
+                'formatter' => function ($row) {
+
+                    return empty($row['dateRemoved']) ? 'NA' : date('d/m/Y', strtotime($row['dateRemoved']));
+                }
+            ],
+            [
+                'title' => 'Disq?',
+                'name'=> 'disqualified',
+                'formatter' => function ($row) {
+
+                    return empty($row['disqualified']) ? 'No' : 'Yes';
+                }
+            ]
         ];
     }
 }
