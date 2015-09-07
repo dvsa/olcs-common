@@ -57,6 +57,7 @@ return array(
     'Save and continue' => 'Save & continue',
     'Total number of vehicles: The input is not between \'1\' and \'1000000\', inclusively' => 'Total number of
         vehicles: You must have at least 1 vehicle',
+    'VE-VRM_SECTION26' => 'Under Section 26 (23 NI) Direction this vehicle is suspended and cannot be added',
     'Value is required and can\'t be empty' => 'value is required',
     'Week' => 'Week',
     'Weeks' => 'Weeks',
