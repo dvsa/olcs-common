@@ -157,4 +157,28 @@ class SelectorTest extends MockeryTestCase
             $response
         );
     }
+
+    /**
+     * @group checkboxTest
+     */
+    public function testRenderWithDataIdxSet()
+    {
+        $fieldset = null;
+        $data = [
+            'fooBarId' => 7,
+        ];
+        $column = [
+            'name' => 'fooBarId'
+        ];
+
+        $this->table->shouldReceive('getFieldset')
+            ->andReturn($fieldset);
+
+        $response = $this->sut->render($data, $column);
+
+        $this->assertEquals(
+            '<input type="radio" name="id" value="7"  />',
+            $response
+        );
+    }
 }

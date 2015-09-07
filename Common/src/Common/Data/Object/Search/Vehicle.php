@@ -48,6 +48,31 @@ class Vehicle extends InternalSearchAbstract
         return $this->filters;
     }
 
+    public function getSettings()
+    {
+        $settings = parent::getSettings();
+
+        return array_merge(
+            $settings,
+            [
+                'crud' => array(
+                    'actions' => array(
+                        'vehicleSet26' => array(
+                            'class' => 'secondary js-require--multiple',
+                            'requireRows' => true,
+                            'label' => 'Set Sec26',
+                        ),
+                        'vehicleRemove26' => array(
+                            'class' => 'secondary js-require--multiple',
+                            'requireRows' => true,
+                            'label' => 'Remove section 26'
+                        ),
+                    )
+                ),
+            ]
+        );
+    }
+
     /**
      * @return array
      */
@@ -69,10 +94,22 @@ class Vehicle extends InternalSearchAbstract
                     return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
                 }
             ],
-            ['title' => 'VRM', 'name'=> 'vrm'],
+            [
+                'title' => 'VRM',
+                'formatter' => function ($data) {
+                    $section26 = (isset($data['section_26']) && $data['section_26']) ? ' (sec26)' : '';
+                    return $data['vrm'] . $section26;
+                }
+            ],
             ['title' => 'Disc Number', 'name'=> 'discNo'],
             ['title' => 'Specified date', 'name'=> 'specifiedDate'],
             ['title' => 'Removed date', 'name'=> 'removalDate'],
+            [
+                'title' => '',
+                'width' => 'checkbox',
+                'type' => 'Checkbox',
+                'name' => 'vehId',
+            ],
         ];
     }
 }
