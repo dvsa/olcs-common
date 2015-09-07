@@ -58,6 +58,7 @@ return array(
     'Save and continue' => '{WELSH} Save & continue',
     'Total number of vehicles: The input is not between \'1\' and \'1000000\', inclusively' => '{WELSH} Total number of
         vehicles: You must have at least 1 vehicle',
+    'VE-VRM_SECTION26' => '{WELSH} Under Section 26 (23 NI) Direction this vehicle is suspended and cannot be added',
     'Value is required and can\'t be empty' => '{WELSH} value is required',
     'Week' => '{WELSH} Week',
     'Weeks' => '{WELSH} Weeks',
@@ -1084,8 +1085,22 @@ return array(
     'form.operator-merge.from-operator-name' => '{WELSH} From operator',
     'form.operator-merge.success' => '{WELSH} The current operator\'s records have been merged into the winning
         operator',
-    'form.operator-merge.to-operator-id' => '{WELSH} To operator id',
-    'form.operator-merge.to-operator-id.validation' => '{WELSH} Invalid Operator id',
+    'form.operator-merge.to-operator-id' => '{WELSH} To operator ID',
+    'form.operator-merge.to-operator-id.validation' => '{WELSH} Invalid Operator ID',
+    'form.tm-merge.confirm' => '{WELSH} I am aware that any licences and applications will be transferred from the
+        losing transport manager to the winning transport manager',
+    'form.tm-merge.from-tm-name' => '{WELSH} From transport manager',
+    'form.tm-merge.success' => '{WELSH} The transport manager has been merged',
+    'form.tm-merge.to-tm-id' => '{WELSH} To transport manager ID',
+    'form.tm-merge.to-tm-id.validation.TM_MERGE_BOTH_HAVE_USER_ACCOUNTS' => '{WELSH} Both transport managers have linked
+        user accounts. You must remove one of the user accounts prior to merge.',
+    'form.tm-merge.to-tm-id.validation.TM_MERGE_DONAR_RECIPIENT_SAME' => '{WELSH} Cannot be the same as the from
+        transport manager',
+    'form.tm-merge.to-tm-id.validation.not-found' => '{WELSH} Transport manager not found',
+    'form.tm-unmerge.confirm.action' => '{WELSH} Unmerge',
+    'form.tm-unmerge.message' => '{WELSH} Are you sure you want to unmerge this transport manager: %1$d %2$s from: %3$d
+        %4$s?',
+    'form.tm-unmerge.success' => '{WELSH} The transport manager merge has been reversed',
     'from' => '{WELSH} From',
     'further-info-required' => '{WELSH} Further info required',
     'gen-haulier-distribution' => '{WELSH} Gen Haulier / Distribution',
@@ -2490,8 +2505,10 @@ return array(
     'tm-details-view-form-link-text' => '{WELSH} View form',
     'tm-previous-history-convictions-and-penalties' => '{WELSH} Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => '{WELSH} Revoked, Curtailed or Suspended Licences',
+    'tm-quick-action-merge' => '{WELSH} Merge transport manager',
     'tm-quick-action-print-form' => '{WELSH} Print form',
     'tm-quick-action-remove' => '{WELSH} Remove transport manager',
+    'tm-quick-action-unmerge' => '{WELSH} Unmerge transport manager',
     'tm-responsibilities-applications' => '{WELSH} Applications',
     'tm-responsibilities-licences' => '{WELSH} Licences',
     'tm-review-main' => '{WELSH} Your details',

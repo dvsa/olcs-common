@@ -53,6 +53,11 @@ class Response
         $this->result = $result;
     }
 
+    public function getBody()
+    {
+        return $this->httpResponse->getBody();
+    }
+
     public function getResult()
     {
         if ($this->result === null) {

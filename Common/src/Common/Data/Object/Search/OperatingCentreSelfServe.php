@@ -42,14 +42,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
         if (empty($this->filters)) {
 
             $this->filters = [
-                new Filter\EntityType(),
-                new Filter\LicenceType(),
-                new Filter\LicenceStatus(),
-                new Filter\TrafficArea(),
-                new Filter\ApplicationStatus(),
-                //new Filter\OppositionStatus(),
-                //new Filter\Opposition(),
-                //new Filter\Complaints(),
+                new Filter\LicenceType()
             ];
         }
 
