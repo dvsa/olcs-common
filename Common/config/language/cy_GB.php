@@ -1088,7 +1088,6 @@ return array(
     'form.operator-merge.to-operator-id.validation' => '{WELSH} Invalid Operator ID',
     'form.tm-merge.confirm' => '{WELSH} I am aware that any licences and applications will be transferred from the
         losing transport manager to the winning transport manager',
-    'form.tm-merge.confirm.validation' => '{WELSH} Must be checked',
     'form.tm-merge.from-tm-name' => '{WELSH} From transport manager',
     'form.tm-merge.success' => '{WELSH} The transport manager has been merged',
     'form.tm-merge.to-tm-id' => '{WELSH} To transport manager ID',
@@ -1097,6 +1096,10 @@ return array(
     'form.tm-merge.to-tm-id.validation.TM_MERGE_DONAR_RECIPIENT_SAME' => '{WELSH} Cannot be the same as the from
         transport manager',
     'form.tm-merge.to-tm-id.validation.not-found' => '{WELSH} Transport manager not found',
+    'form.tm-unmerge.confirm.action' => '{WELSH} Unmerge',
+    'form.tm-unmerge.message' => '{WELSH} Are you sure you want to unmerge this transport manager: %1$d %2$s from: %3$d
+        %4$s?',
+    'form.tm-unmerge.success' => '{WELSH} The transport manager merge has been reversed',
     'from' => '{WELSH} From',
     'further-info-required' => '{WELSH} Further info required',
     'gen-haulier-distribution' => '{WELSH} Gen Haulier / Distribution',
@@ -2504,6 +2507,7 @@ return array(
     'tm-quick-action-merge' => '{WELSH} Merge transport manager',
     'tm-quick-action-print-form' => '{WELSH} Print form',
     'tm-quick-action-remove' => '{WELSH} Remove transport manager',
+    'tm-quick-action-unmerge' => '{WELSH} Unmerge transport manager',
     'tm-responsibilities-applications' => '{WELSH} Applications',
     'tm-responsibilities-licences' => '{WELSH} Licences',
     'tm-review-main' => '{WELSH} Your details',
