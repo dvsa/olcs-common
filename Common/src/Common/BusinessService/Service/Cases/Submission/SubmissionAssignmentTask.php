@@ -67,6 +67,7 @@ class SubmissionAssignmentTask implements
             'urgent' => $params['urgent'],
             'assignedByUser' => $currentUser['id'],
             'case' => $params['caseId'],
+            'submission' => $params['submissionId']
         ];
 
         return $this->getBusinessServiceManager()->get('Task')->process($taskParams);

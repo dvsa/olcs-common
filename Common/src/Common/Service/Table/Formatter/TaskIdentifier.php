@@ -52,6 +52,15 @@ class TaskIdentifier implements FormatterInterface
                     array('busRegId' => $data['linkId'], 'licence' => $data['licenceId'])
                 );
                 break;
+            case 'IRFO Organisation':
+                $url = $urlHelper->fromRoute('operator/business-details', array('organisation' => $data['linkId']));
+                break;
+            case 'Submission':
+                $url = $urlHelper->fromRoute(
+                    'submission',
+                    array('case' => $data['caseId'], 'submission' => $data['linkId'], 'action' => 'details')
+                );
+                break;
             default:
                 break;
         }
