@@ -85,8 +85,6 @@ class People extends InternalSearchAbstract
                 'title' => 'Record',
                 'formatter' => function ($row) {
 
-                    //die('<pre>' . print_r($row, 1));
-
                     if (!empty($row['tmId'])) {
                         return '<a href="/transport-manager/' . $row['tmId'] . '">'
                             . 'TM ' . $row['tmId']
@@ -114,8 +112,6 @@ class People extends InternalSearchAbstract
                 'title' => 'DOB',
                 'name'=> 'personBirthDate',
                 'formatter' => function ($row) {
-
-                    //die('<pre>' . print_r($row, 1));
 
                     return empty($row['personBirthDate']) ? 'Not known' : date('d/m/Y', strtotime($row['personBirthDate']));
                 }
