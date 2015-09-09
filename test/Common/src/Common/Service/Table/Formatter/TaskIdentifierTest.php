@@ -275,6 +275,86 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                 'case',
                 '<a href="#">1234</a>',
             ),
+            // IRFO Organisation
+            17 => array(
+                array(
+                    'linkDisplay' => 'Unlinked',
+                    'linkType' => 'IRFO Organisation',
+                    'linkId' => null,
+                    'licenceCount' => 1
+                ),
+                array(),
+                'operator/business-details',
+                'organisation',
+                'Unlinked'
+            ),
+            18 => array(
+                array(
+                    'linkDisplay' => '1234',
+                    'linkType' => 'IRFO Organisation',
+                    'linkId' => 99,
+                    'licenceCount' => 1,
+                ),
+                array(),
+                'operator/business-details',
+                'organisation',
+                '<a href="correctUrl">1234</a>',
+            ),
+            19 => array(
+                array(
+                    'linkDisplay' => '1234',
+                    'linkType' => '',
+                    'linkId' => 99,
+                    'licenceCount' => 1,
+                ),
+                array(),
+                'operator/business-details',
+                'organisation',
+                '<a href="#">1234</a>',
+            ),
+            // Submission
+            20 => array(
+                array(
+                    'linkDisplay' => 'Unlinked',
+                    'linkType' => 'Submission',
+                    'linkId' => null,
+                    'licenceCount' => 1,
+                    'caseId' => 5
+                ),
+                array(),
+                'submission',
+                'submission',
+                'Unlinked',
+                array('case' => 5, 'action' => 'details')
+            ),
+            21 => array(
+                array(
+                    'linkDisplay' => '1234/5',
+                    'linkType' => 'Submission',
+                    'linkId' => 99,
+                    'licenceCount' => 1,
+                    'caseId' => 5
+                ),
+                array(),
+                'submission',
+                'submission',
+                '<a href="correctUrl">1234/5</a>',
+                array('case' => 5, 'action' => 'details')
+            ),
+            22 => array(
+                array(
+                    'linkDisplay' => '1234/5',
+                    'linkType' => '',
+                    'linkId' => 99,
+                    'licenceCount' => 1,
+                    'caseId' => 5
+                ),
+                array(),
+                'submission',
+                'submission',
+                '<a href="#">1234/5</a>',
+                array('case' => 5, 'action' => 'details')
+            ),
         );
     }
 }
