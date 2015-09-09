@@ -53,7 +53,7 @@ class PeopleSelfServe extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Found As', 'name'=> ''],
+            ['title' => 'Found As', 'name'=> 'foundAs'],
             [
                 'title' => 'Name',
                 'formatter' => function ($row) {
@@ -71,12 +71,11 @@ class PeopleSelfServe extends InternalSearchAbstract
                 'title' => 'Date of Birth',
                 'formatter' => function ($row) {
 
+                    //die('<pre>' . print_r($row, 1));
+
                     return date('d/m/Y', strtotime($row['personBirthDate']));
                 }
-            ],
-            ['title' => 'Date added', 'name'=> ''],
-            ['title' => 'Date removed', 'name'=> ''],
-            ['title' => 'Disq?', 'name'=> '']
+            ]
         ];
     }
 }
