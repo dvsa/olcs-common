@@ -86,8 +86,6 @@ class PeopleSelfServe extends InternalSearchAbstract
                 'title' => 'Date of Birth',
                 'formatter' => function ($row) {
 
-                    //die('<pre>' . print_r($row, 1));
-
                     return date('d/m/Y', strtotime($row['personBirthDate']));
                 }
             ]
