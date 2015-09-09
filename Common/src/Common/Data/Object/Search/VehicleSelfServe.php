@@ -32,6 +32,21 @@ class VehicleSelfServe extends InternalSearchAbstract
     protected $filters = [];
 
     /**
+     * @return array
+     */
+    public function getSettings()
+    {
+        return [
+            'paginate' => [
+                'limit' => [
+                    'options' => [10, 25, 50, 100]
+                ]
+            ],
+            'layout' => 'headless'
+        ];
+    }
+
+    /**
      * Returns an array of filters for this index
      *
      * @return array

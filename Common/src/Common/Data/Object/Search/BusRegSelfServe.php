@@ -25,6 +25,21 @@ class BusRegSelfServe extends InternalSearchAbstract
     protected $searchIndices = 'busreg';
 
     /**
+     * @return array
+     */
+    public function getSettings()
+    {
+        return [
+            'paginate' => [
+                'limit' => [
+                    'options' => [10, 25, 50, 100]
+                ]
+            ],
+            'layout' => 'headless'
+        ];
+    }
+
+    /**
      * Contains an array of the instantiated filters classes.
      *
      * @var array
