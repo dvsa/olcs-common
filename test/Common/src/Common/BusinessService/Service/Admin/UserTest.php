@@ -221,11 +221,9 @@ class UserTest extends MockeryTestCase
             'transportManager' => [
                 'id' => 3
             ],
-            'userRoles' => [
-                0 => [
-                    'role' => [
-                        'id' => 99
-                    ]
+            'roles' => [
+                [
+                    'id' => 99
                 ]
             ],
             'contactDetails' => [
