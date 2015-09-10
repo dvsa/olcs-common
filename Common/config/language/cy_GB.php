@@ -1101,6 +1101,13 @@ return array(
     'form.tm-unmerge.message' => '{WELSH} Are you sure you want to unmerge this transport manager: %1$d %2$s from: %3$d
         %4$s?',
     'form.tm-unmerge.success' => '{WELSH} The transport manager merge has been reversed',
+    'form.vehicle.removeSection26.confirm' => '{WELSH} Are you sure you want to remove the section 26 marker for the
+        selected vehicle(s)?',
+    'form.vehicle.removeSection26.success' => '{WELSH} The section 26 markers have been removed from the selected
+        vehicle(s)',
+    'form.vehicle.setSection26.confirm' => '{WELSH} Are you sure you want to set the section 26 marker for the selected
+        vehicle(s)?',
+    'form.vehicle.setSection26.success' => '{WELSH} The section 26 markers have been set on the selected vehicle(s)',
     'from' => '{WELSH} From',
     'further-info-required' => '{WELSH} Further info required',
     'gen-haulier-distribution' => '{WELSH} Gen Haulier / Distribution',

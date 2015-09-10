@@ -53,6 +53,12 @@ class Selector extends AbstractType
             $attributes[] = 'disabled="disabled"';
         }
 
-        return sprintf($this->format, $name, $data['id'], implode(' ', $attributes));
+        // allow setting the data index name that contains the id value
+        $idx = 'id';
+        if (isset($column['name'])) {
+            $idx = $column['name'];
+        }
+
+        return sprintf($this->format, $name, $data[$idx], implode(' ', $attributes));
     }
 }
