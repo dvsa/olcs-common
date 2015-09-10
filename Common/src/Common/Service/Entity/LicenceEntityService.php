@@ -888,6 +888,9 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $vehicles;
     }
 
+    /**
+     * @todo remove
+     */
     public function findForContinuationCriteria($criteria)
     {
         $startDate = $criteria['year'] . '-' . $criteria['month'] . '-01';

@@ -9,7 +9,7 @@ namespace Common\Service\Entity;
 
 /**
  * Continuation Detail Entity Service
- *
+ * @todo remove
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 class ContinuationDetailEntityService extends AbstractEntityService
