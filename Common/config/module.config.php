@@ -92,7 +92,6 @@ return array(
             'Common\Controller\Lva\AbstractControllerFactory',
         ),
         'invokables' => array(
-            'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
             'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
@@ -214,7 +213,6 @@ return array(
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
             'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
-            'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
             'BusinessRuleManager' => 'Common\BusinessRule\BusinessRuleManagerFactory',
