@@ -3,6 +3,7 @@
 namespace Common\Service\Cqrs;
 
 use Zend\Http\Header\Authorization;
+use Zend\Http\Header\Cookie;
 use Zend\Http\Headers;
 use Zend\Http\Header\Accept;
 use Zend\Http\Header\ContentType;
@@ -29,8 +30,16 @@ class RequestFactory implements FactoryInterface
         $contentType = new ContentType();
         $contentType->setMediaType('application/json');
 
+
         $headers = new Headers();
-        $headers->addHeaders([$accept, $contentType, $this->getAuthorizationHeader($serviceLocator)]);
+        $headers->addHeaders([$accept, $contentType/*, $this->getAuthorizationHeader($serviceLocator)*/]);
+
+        $userRequest = $serviceLocator->get('Request');
+        if ($userRequest instanceof Request) {
+            $cookies = $userRequest->getCookie();
+            $secureToken = new Cookie(['secureToken' => $cookies['secureToken']]);
+            $headers->addHeader($secureToken);
+        }
 
         $request = new Request();
         $request->setHeaders($headers);

@@ -72,6 +72,7 @@ class QueryService implements QueryServiceInterface
         $this->request->setMethod('GET');
 
         try {
+            $this->client->resetParameters(true);
             return new Response($this->client->send($this->request));
         } catch (HttpClientExceptionInterface $ex) {
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_500);

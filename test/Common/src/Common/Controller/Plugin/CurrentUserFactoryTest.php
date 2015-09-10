@@ -7,7 +7,7 @@ use Common\Controller\Plugin\CurrentUserInterface;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Authentication\AuthenticationService;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Class CurrentUserFactoryTest
@@ -17,11 +17,11 @@ class CurrentUserFactoryTest extends TestCase
 {
     public function testCreateService()
     {
-        $mockAuth = m::mock(AuthenticationService::class);
+        $mockAuth = m::mock(AuthorizationService::class);
 
         $mockSl = m::mock(ServiceLocatorInterface::class);
         $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
-        $mockSl->shouldReceive('get')->with(AuthenticationService::class)->andReturn($mockAuth);
+        $mockSl->shouldReceive('get')->with(AuthorizationService::class)->andReturn($mockAuth);
         $sut = new CurrentUserFactory();
         $service = $sut->createService($mockSl);
 

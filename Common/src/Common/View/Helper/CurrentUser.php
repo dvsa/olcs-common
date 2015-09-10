@@ -73,7 +73,7 @@ class CurrentUser extends AbstractHelper implements ServiceLocatorAwareInterface
     {
         if (!$this->userData) {
             $authService = $this->getServiceLocator()->getServiceLocator()
-                ->get(\Zend\Authentication\AuthenticationService::class);
+                ->get(\ZfcRbac\Service\AuthorizationService::class);
 
             if (!$authService->getIdentity()) {
                 return "Not logged in";

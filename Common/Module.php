@@ -74,9 +74,6 @@ class Module
             $events->attach(
                 $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\UnauthorizedStrategy')
             );
-            $events->attach(
-                $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\RedirectStrategy')
-            );
         } catch (\Exception $e) {
             null;
         }

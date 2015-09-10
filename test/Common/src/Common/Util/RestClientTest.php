@@ -195,7 +195,7 @@ class RestClientTest extends AbstractHttpControllerTestCase
 
         $client = $this->getMock(
             '\stdClass',
-            array('setRequest', 'setUri', 'setHeaders', 'setMethod', 'setEncType', 'setRawBody', 'getRequest')
+            array('setRequest', 'setUri', 'setHeaders', 'setMethod', 'setEncType', 'setRawBody', 'getRequest', 'resetParameters')
         );
         $client->expects($this->once())
             ->method('setRequest')
@@ -210,8 +210,7 @@ class RestClientTest extends AbstractHttpControllerTestCase
         $mock->url = $toString;
 
         $client->expects($this->once())
-            ->method('setHeaders')
-            ->with(array($accept, $acceptLanguage));
+            ->method('setHeaders');
         $client->expects($this->once())
             ->method('setMethod')
             ->with('POST');
@@ -226,6 +225,9 @@ class RestClientTest extends AbstractHttpControllerTestCase
         $mock->expects($this->once())
             ->method('getClientRequest')
             ->will($this->returnValue('responseHelper'));
+
+        $client->expects($this->once())
+             ->method('resetParameters');
 
         $mock->prepareRequest('POST', 'licence', array('id' => 7));
     }
@@ -265,7 +267,8 @@ class RestClientTest extends AbstractHttpControllerTestCase
                 'setMethod',
                 'getRequest',
                 'getQuery',
-                'fromArray'
+                'fromArray',
+                'resetParameters'
             )
         );
         $client->expects($this->once())
@@ -281,8 +284,7 @@ class RestClientTest extends AbstractHttpControllerTestCase
         $mock->url = $toString;
 
         $client->expects($this->once())
-            ->method('setHeaders')
-            ->with(array($accept, $acceptLanguage));
+            ->method('setHeaders');
         $client->expects($this->once())
             ->method('setMethod')
             ->with('GET');
