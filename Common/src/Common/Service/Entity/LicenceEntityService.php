@@ -889,25 +889,6 @@ class LicenceEntityService extends AbstractLvaEntityService
     }
 
     /**
-     * @todo remove
-     */
-    public function findForContinuationCriteria($criteria)
-    {
-        $startDate = $criteria['year'] . '-' . $criteria['month'] . '-01';
-        $endDate = date('Y-m-t', strtotime($startDate));
-
-        // TA
-        $query = [
-            'expiryDate' => [
-                ['>=' . $startDate, '<=' . $endDate]
-            ],
-            'trafficArea' => $criteria['trafficArea']
-        ];
-
-        return $this->getAll($query)['Results'];
-    }
-
-    /**
      * Get a list if licences where the status needs to change to Continuation Not Sought
      *
      * @return array ['Count' => ?, 'Results' => [...]]
