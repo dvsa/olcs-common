@@ -747,6 +747,9 @@ return array(
     'business-type' => '{WELSH} Business type',
     'business-type.locked' => '{WELSH} Cannot change business type. Please contact Central Licensing Office for further
         advice.',
+    'business-type.locked.message' => '{WELSH} You cannot make changes to this section. Please contact Operator
+        Licensing if your business type has changed or click <a href="https://www.gov.uk/">here</a> for further
+        information',
     'cancel' => '{WELSH} Cancel',
     'cancel.button' => '{WELSH} Cancel',
     'cannot-change-conditions-undertakings-guidance' => '{WELSH} Cannot change conditions and undertakings. Please
