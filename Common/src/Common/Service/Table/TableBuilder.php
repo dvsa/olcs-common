@@ -1027,14 +1027,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $this->setType($this->whichType());
 
+        if (isset($this->settings['submission_section'])) {
+            return $this->renderLayout('submission-section');
+        }
+
         if ((!isset($this->variables['within_form']) || $this->variables['within_form'] == false)
             && isset($this->settings['crud'])) {
 
             return $this->renderLayout('crud');
-        }
-
-        if (isset($this->settings['submission_section'])) {
-            return $this->renderLayout('submission-section');
         }
 
         if (isset($this->settings['layout'])) {
