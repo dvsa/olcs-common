@@ -63,8 +63,6 @@ class Cases extends InternalSearchAbstract
                 'name'=> 'caseId',
                 'formatter' => function ($data) {
 
-                    //die('<pre>' . print_r($data, 1));
-
                     return '<a href="/case/details/' . $data['caseId'] . '">' . $data['caseId'] . '</a>';
                 }
             ],
