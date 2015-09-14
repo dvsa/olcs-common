@@ -8,7 +8,7 @@
 namespace Common\Service\Printing;
 
 use Common\Service\Data\CategoryDataService;
-use Common\Service\File\File;
+use Dvsa\Olcs\Api\Service\File\File;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**

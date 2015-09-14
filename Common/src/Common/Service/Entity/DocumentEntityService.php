@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Entity;
 
-use Common\Service\File\File;
+use Dvsa\Olcs\Api\Service\File\File;
 
 /**
  * Document Entity Service

@@ -480,10 +480,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * Get uploader
      *
      * @return object
+     * @todo remove this completely
      */
     public function getUploader()
     {
-        return $this->getServiceLocator()->get('FileUploader')->getUploader();
+        return $this->getServiceLocator()->get('FileUploader');
     }
 
     /*

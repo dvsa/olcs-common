@@ -20,15 +20,9 @@ class PublicationNumber implements FormatterInterface
             return $data['publicationNo'];
         }
 
-        $publicationService = $sm->get('DataServiceManager')->get('Common\Service\Data\Publication');
-        $urlParams = $publicationService->getFilePathVariablesFromPublication($data);
-
-        $uploader = $sm->get('FileUploader')->getUploader();
-        $documentPath = $uploader->buildPathNamespace($urlParams);
-
         $uriPattern = $sm->get('Config')['document_share']['uri_pattern'];
 
-        $url = sprintf($uriPattern, $documentPath . '/' . $data['document']['filename']);
+        $url = sprintf($uriPattern, $data['document']['identifier']);
 
         return sprintf(
             '<a href="%s" data-file-url="%s" target="blank">%s</a>',

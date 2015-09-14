@@ -51,8 +51,6 @@ class PublicationNumberTest extends MockeryTestCase
             ->with('FileUploader')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('getUploader')
-                ->andReturnSelf()
                 ->shouldReceive('buildPathNamespace')
                 ->with($params)
                 ->andReturn('some/path')
