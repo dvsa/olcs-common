@@ -62,9 +62,13 @@ class Cases extends InternalSearchAbstract
                 'title' => 'Case Id',
                 'name'=> 'caseId',
                 'formatter' => function ($data) {
+
+                    //die('<pre>' . print_r($data, 1));
+
                     return '<a href="/case/details/' . $data['caseId'] . '">' . $data['caseId'] . '</a>';
                 }
             ],
+            ['title' => 'Case type', 'name'=> 'caseStatusDesc'],
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
@@ -73,8 +77,37 @@ class Cases extends InternalSearchAbstract
                 }
             ],
             ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
-            ['title' => 'Application Id', 'name'=> 'appId'],
-            ['title' => 'Application Status', 'name'=> 'appStatusDesc'],
+            [
+                'title' => 'Application Id',
+                'name'=> 'appId',
+                'formatter' => function ($data) {
+                    if (!empty($data['appId'])) {
+                        return '<a href="/application/' . $data['appId'] . '">'
+                        . $data['appId']
+                        . '</a>';
+
+                    } else {
+
+                        return 'N/a';
+
+                    }
+                }
+            ],
+            [
+                'title' => 'Application Status',
+                'name'=> 'appStatusDesc',
+                'formatter' => function ($data) {
+                    if (!empty($data['appStatusDesc'])) {
+
+                        return $data['appStatusDesc'];
+
+                    } else {
+
+                        return 'N/a';
+
+                    }
+                }
+            ],
             [
                 'title' => 'Name',
                 'formatter' => function ($data) {
