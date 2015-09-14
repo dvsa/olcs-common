@@ -23,28 +23,4 @@ class ContinuationEntityService extends AbstractEntityService
      * @var string
      */
     protected $entity = 'Continuation';
-
-    protected $headerBundle = [
-        'children' => [
-            'trafficArea'
-        ]
-    ];
-
-    public function find($criteria)
-    {
-        $criteria['limit'] = 1;
-
-        $results = $this->get($criteria);
-
-        if (empty($results['Results'])) {
-            return null;
-        }
-
-        return $results['Results'][0];
-    }
-
-    public function getHeaderData($id)
-    {
-        return $this->get($id, $this->headerBundle);
-    }
 }
