@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Transaction Number formatter
+ * Transaction Status formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
@@ -12,11 +12,11 @@ namespace Common\Service\Table\Formatter;
 use Common\RefData as Ref;
 
 /**
- * Transaction Number formatter
+ * Transaction Status formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionNo implements FormatterInterface
+class TransactionStatus implements FormatterInterface
 {
     /**
      * Format a fee status
@@ -46,9 +46,10 @@ class TransactionNo implements FormatterInterface
                 $statusClass .= ' grey';
                 break;
         }
-        return vsprintf(
-            '%s <span class="%s">%s</span>',
-            [$row['transaction']['id'], $statusClass, $row['transaction']['status']['description']]
+        return sprintf(
+            '<span class="%s">%s</span>',
+            $statusClass,
+            $row['transaction']['status']['description']
         );
     }
 }
