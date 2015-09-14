@@ -191,7 +191,6 @@ return array(
             'postcode' => 'Common\Service\Postcode\Postcode',
             'email' => 'Common\Service\Email\Email',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
-            'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
