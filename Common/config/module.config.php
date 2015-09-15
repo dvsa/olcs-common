@@ -463,6 +463,7 @@ return array(
     'validators' => [
         'invokables' => [
             'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
+            'Common\Validator\ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
             'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
             'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
@@ -472,6 +473,7 @@ return array(
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
+            'ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'DateCompare' => 'Common\Validator\DateCompare',
             'NumberCompare' => 'Common\Validator\NumberCompare',
             'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
