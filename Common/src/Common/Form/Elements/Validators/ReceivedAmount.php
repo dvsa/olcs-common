@@ -14,16 +14,18 @@ namespace Common\Form\Elements\Validators;
  */
 class ReceivedAmount extends \Zend\Validator\Between
 {
+    const PART_PAYMENT_ERROR = 'partPaymentError';
+
     /**
      * Validation failure message template definitions
      *
      * @var array
      */
     protected $messageTemplates = array(
-        self::NOT_BETWEEN => "Part payments are permitted but the amount entered is insufficient to
-            allocate any payment to one or more of the selected fees.
-            Please enter a value between %min% and %max%.",
-        self::NOT_BETWEEN_STRICT => "The input is not strictly between '%min%' and '%max%'"
+        self::NOT_BETWEEN        => "The payment amount must be between %min% and %max%",
+        self::NOT_BETWEEN_STRICT => "The payment amount must be between %min% and %max%",
+        self::PART_PAYMENT_ERROR => "Part payments are permitted but the amount entered is insufficient to
+            allocate any payment to one or more of the selected fees.",
     );
 
     public function isValid($value, $context = null)
@@ -36,6 +38,12 @@ class ReceivedAmount extends \Zend\Validator\Between
         }
         $this->setInclusive(true);
 
-        return parent::isValid($value);
+        $valid = parent::isValid($value);
+
+        if (!$valid) {
+            $this->error(self::PART_PAYMENT_ERROR);
+        }
+
+        return $valid;
     }
 }
