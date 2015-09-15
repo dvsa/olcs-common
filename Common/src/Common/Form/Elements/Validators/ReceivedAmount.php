@@ -21,8 +21,7 @@ class ReceivedAmount extends \Zend\Validator\Between
      */
     protected $messageTemplates = array(
         self::NOT_BETWEEN => "Part payments are permitted but the amount entered is insufficient to
-            allocate any payment to one or more of the selected fees.
-            Please enter a value between %min% and %max%.",
+            allocate any payment to one or more of the selected fees.",
         self::NOT_BETWEEN_STRICT => "The input is not strictly between '%min%' and '%max%'"
     );
 
