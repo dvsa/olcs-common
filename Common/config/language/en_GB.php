@@ -87,7 +87,7 @@ return array(
     'admin_disc-printing.discPrefix' => 'Disc prefix',
     'admin_disc-printing.endNumber' => 'End number',
     'admin_disc-printing.noDiscs' => 'There are no discs to be printed',
-    'admin_disc-printing.pageHeader' => 'Discs Printing',
+    'admin_disc-printing.pageHeader' => 'Disc Printing',
     'admin_disc-printing.startNumber' => 'Start number',
     'admin_disc-printing.totalPages' => 'Number of pages',
     'admin_disc-printing.typeOfLicence' => 'Type of Licence',
@@ -2103,8 +2103,8 @@ return array(
     'search.result.subtitle.operating-centre' => 'We\'ve found <b>%s</b> Operating Centres that match your search.',
     'search.result.subtitle.operator' => 'We\'ve found <b>%s</b> Operators that match your search.',
     'search.result.subtitle.person' => 'We\'ve found <b>%s</b> People that match your search.',
-    'search.result.subtitle.traffic-commissioner-publication'
-        => 'We\'ve found <b>%s</b> Traffic Commissioner publications that match your search.',
+    'search.result.subtitle.traffic-commissioner-publication' => 'We\'ve found <b>%s</b> Traffic Commissioner
+        publications that match your search.',
     'search.result.subtitle.vehicle-external' => 'We\'ve found <b>%s</b> Vehicle search results.',
     'search.result.title.bus' => 'Search results',
     'search.result.title.operating-centre' => 'Search results',
