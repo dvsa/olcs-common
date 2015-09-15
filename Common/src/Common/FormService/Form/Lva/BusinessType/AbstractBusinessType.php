@@ -42,5 +42,7 @@ abstract class AbstractBusinessType extends AbstractFormService
         $this->getFormHelper()->lockElement($element, 'business-type.locked');
 
         $this->getFormHelper()->disableElement($form, 'data->type');
+
+        $this->getServiceLocator()->get('Helper\Guidance')->append('business-type.locked.message');
     }
 }
