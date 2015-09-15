@@ -108,7 +108,7 @@ class Vehicle extends InternalSearchAbstract
                 'title' => '',
                 'width' => 'checkbox',
                 'type' => 'Checkbox',
-                'name' => 'vehId',
+                'idIndex' => 'vehId',
             ],
         ];
     }
