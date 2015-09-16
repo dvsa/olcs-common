@@ -1444,6 +1444,12 @@ return array(
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
+    'internal.fee-payment.part-payment-single' => 'The payment amount is less than the total outstanding amount.
+        Would you like to continue with the payment? ',
+    'internal.fee-payment.part-payment-multiple' => 'The payment amount is less than the total outstanding amount.
+        Would you like to continue with the payment? The invoices will be paid in date order starting with the
+        earliest first',
+
     'invalid-licence-type' => '*DUPLICATE TRANSLATION* If you are a goods vehicle operator, you can not apply for a
         special restricted licence',
     'invalid-operator-type' => '*DUPLICATE TRANSLATION* If you operate in Northern Ireland, you can only apply for a
