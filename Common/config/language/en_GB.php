@@ -273,7 +273,7 @@ return array(
     'application-review-vehicles-declarations-15e' => 'Vehicles with eight passenger seats or less will not be operated
         under the licence without the prior written agreement of the traffic commissioner who may require you to agree
         to certain undertakings',
-    'application-review-vehicles-declarations-15f1' => 'Are the vehicles you are applying for to be used as Limousines
+    'application-review-vehicles-declarations-15f1' => 'Are the vehicles you are applying for to be used as limousines
         or novelty type vehicles?',
     'application-review-vehicles-declarations-15f2' => 'Limousines and novelty type vehicles are not to be operated
         under this operator\'s licence',
@@ -566,7 +566,7 @@ return array(
     'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'Do you agree to the following
         undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'Are the vehicles you are applying for to
-        be used as Limousines or novelty type vehicles?',
+        be used as limousines or novelty type vehicles?',
     'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Only limousines and novelty type vehicles
         with nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
@@ -2136,7 +2136,7 @@ return array(
     'section.add.conditions_undertakings' => 'Condition / undertaking added successfully',
     'section.add.convictions_penalties' => 'Conviction/penalty added',
     'section.add.grace-periods' => 'Licence grace periods added.',
-    'section.add.operating_centres' => 'Operating Centre added',
+    'section.add.operating_centres' => 'Operating centre added',
     'section.add.people' => 'Person added',
     'section.add.safety' => 'Safety inspector added',
     'section.add.taxi_phv' => 'Taxi/PHV added',
@@ -2166,7 +2166,7 @@ return array(
     'section.edit.business_details' => 'Subsidiary company updated',
     'section.edit.conditions_undertakings' => 'Condition / undertaking updated successfully',
     'section.edit.convictions_penalties' => 'Conviction/penalty updated',
-    'section.edit.operating_centres' => 'Operating Centre updated',
+    'section.edit.operating_centres' => 'Operating centre updated',
     'section.edit.people' => 'Person updated',
     'section.edit.safety' => 'Safety inspector updated',
     'section.edit.taxi_phv' => 'Taxi/PHV updated',

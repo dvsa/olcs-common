@@ -282,7 +282,7 @@ return array(
         operated under the licence without the prior written agreement of the traffic commissioner who may require you
         to agree to certain undertakings',
     'application-review-vehicles-declarations-15f1' => '{WELSH} Are the vehicles you are applying for to be used as
-        Limousines or novelty type vehicles?',
+        limousines or novelty type vehicles?',
     'application-review-vehicles-declarations-15f2' => '{WELSH} Limousines and novelty type vehicles are not to be
         operated under this operator\'s licence',
     'application-review-vehicles-declarations-15g' => '{WELSH} Only limousines and novelty type vehicles with nine
@@ -584,7 +584,7 @@ return array(
     'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => '{WELSH} Do you agree to the
         following undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => '{WELSH} Are the vehicles you are applying
-        for to be used as Limousines or novelty type vehicles?',
+        for to be used as limousines or novelty type vehicles?',
     'application_vehicle-safety_undertakings.limousinesNine.agreement' => '{WELSH} Only limousines and novelty type
         vehicles with nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => '{WELSH} If you intend to operate
@@ -2180,7 +2180,7 @@ return array(
     'section.add.conditions_undertakings' => '{WELSH} Condition / undertaking added successfully',
     'section.add.convictions_penalties' => '{WELSH} Conviction/penalty added',
     'section.add.grace-periods' => '{WELSH} Licence grace periods added.',
-    'section.add.operating_centres' => '{WELSH} Operating Centre added',
+    'section.add.operating_centres' => '{WELSH} Operating centre added',
     'section.add.people' => '{WELSH} Person added',
     'section.add.safety' => '{WELSH} Safety inspector added',
     'section.add.taxi_phv' => '{WELSH} Taxi/PHV added',
@@ -2210,7 +2210,7 @@ return array(
     'section.edit.business_details' => '{WELSH} Subsidiary company updated',
     'section.edit.conditions_undertakings' => '{WELSH} Condition / undertaking updated successfully',
     'section.edit.convictions_penalties' => '{WELSH} Conviction/penalty updated',
-    'section.edit.operating_centres' => '{WELSH} Operating Centre updated',
+    'section.edit.operating_centres' => '{WELSH} Operating centre updated',
     'section.edit.people' => '{WELSH} Person updated',
     'section.edit.safety' => '{WELSH} Safety inspector updated',
     'section.edit.taxi_phv' => '{WELSH} Taxi/PHV updated',
