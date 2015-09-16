@@ -18,7 +18,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class PublicationNumberTest extends MockeryTestCase
 {
-
     /**
      * @dataProvider provider
      */
@@ -48,15 +47,6 @@ class PublicationNumberTest extends MockeryTestCase
                 ->getMock()
             )
             ->shouldReceive('get')
-            ->with('FileUploader')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('buildPathNamespace')
-                ->with($params)
-                ->andReturn('some/path')
-                ->getMock()
-            )
-            ->shouldReceive('get')
             ->with('Config')
             ->andReturn($config);
 
@@ -83,7 +73,7 @@ class PublicationNumberTest extends MockeryTestCase
                     ],
                     'publicationNo' => 12345,
                     'document' => [
-                        'filename' => 'foo.rtf'
+                        'identifier' => 'some/path/foo.rtf'
                     ]
                 ],
                 [],

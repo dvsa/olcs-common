@@ -21,6 +21,8 @@ class DocumentStubPrintSchedulerTest extends MockeryTestCase
 {
     public function testEnqueueFile()
     {
+        $this->markTestSkipped('Being removed shortly');
+
         $file = m::mock('\Common\Service\File\File')
             ->shouldReceive('getIdentifier')
             ->andReturn('f123')

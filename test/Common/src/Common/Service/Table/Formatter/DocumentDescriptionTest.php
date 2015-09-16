@@ -38,7 +38,7 @@ class DocumentDescriptionTest extends MockeryTestCase
             ->andReturn($mockUrlHelper);
 
         $mockUrlHelper->shouldReceive('fromRoute')
-            ->with('getfile', ['file' => 'foo', 'name' => 'foo.pdf'])
+            ->with('getfile', ['identifier' => base64_encode('foo')])
             ->andReturn('URL');
 
         $expected = '<a href="URL" >Foo file</a>';
@@ -65,7 +65,7 @@ class DocumentDescriptionTest extends MockeryTestCase
             ->andReturn($mockUrlHelper);
 
         $mockUrlHelper->shouldReceive('fromRoute')
-            ->with('getfile', ['file' => 'foo', 'name' => 'foo.html'])
+            ->with('getfile', ['identifier' => base64_encode('foo')])
             ->andReturn('URL');
 
         $expected = '<a href="URL" target="_blank">Foo file</a>';
