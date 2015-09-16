@@ -2100,6 +2100,7 @@ return array(
     'search-result-label-operator-disqualified' => '{WELSH} Operator disqualified',
     'search-result-label-partners' => '{WELSH} Partners',
     'search-result-label-phone-numbers' => '{WELSH} Phone numbers',
+    'search-result-label-email' => '{WELSH} Email',
     'search-result-label-tauth' => '{WELSH} Total trailer authorisation (TAUTH)',
     'search-result-label-tip' => '{WELSH} Trailers in possession (TIP)',
     'search-result-label-total-community-licences' => '{WELSH} Number of certifies copies of community licences',
