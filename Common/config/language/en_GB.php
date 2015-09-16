@@ -2057,6 +2057,7 @@ return array(
     'search-result-label-operator-disqualified' => 'Operator disqualified',
     'search-result-label-partners' => 'Partners',
     'search-result-label-phone-numbers' => 'Phone numbers',
+    'search-result-label-email' => 'Email',
     'search-result-label-tauth' => 'Total trailer authorisation (TAUTH)',
     'search-result-label-tip' => 'Trailers in possession (TIP)',
     'search-result-label-total-community-licences' => 'Number of certifies copies of community licences',
