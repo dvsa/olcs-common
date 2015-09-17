@@ -1403,6 +1403,10 @@ return array(
         first',
     'internal.fee-payment.part-payment-single' => 'The payment amount is less than the total outstanding amount. Would
         you like to continue with the payment? ',
+    'internal.fee-payment.over-payment-standard' => 'The payment is more than the total outstanding.
+        A refund will be created for the overpayment. Would you like to continue?',
+    'internal.fee-payment.over-payment-double' => 'The payment is more than <b>double</b> the total outstanding!!
+        A refund will be created for the overpayment. Would you like to continue? ',
     'internal.inspection-request.form.12-month' => '12 month',
     'internal.inspection-request.form.3-month' => '3 month',
     'internal.inspection-request.form.6-month' => '6 month',

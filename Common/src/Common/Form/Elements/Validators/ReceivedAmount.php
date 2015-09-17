@@ -12,7 +12,7 @@ namespace Common\Form\Elements\Validators;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class ReceivedAmount extends \Zend\Validator\Between
+class ReceivedAmount extends \Zend\Validator\GreaterThan
 {
     /**
      * Validation failure message template definitions
@@ -20,9 +20,9 @@ class ReceivedAmount extends \Zend\Validator\Between
      * @var array
      */
     protected $messageTemplates = array(
-        self::NOT_BETWEEN => "Part payments are permitted but the amount entered is insufficient to
+        self::NOT_GREATER_INCLUSIVE => "Part payments are permitted but the amount entered is insufficient to
             allocate any payment to one or more of the selected fees.",
-        self::NOT_BETWEEN_STRICT => "The input is not strictly between '%min%' and '%max%'"
+        self::NOT_GREATER => "The input is not greater than '%min%'",
     );
 
     public function isValid($value, $context = null)
@@ -30,9 +30,7 @@ class ReceivedAmount extends \Zend\Validator\Between
         if (isset($context['minAmountForValidator'])) {
             $this->setMin($context['minAmountForValidator']);
         }
-        if (isset($context['maxAmountForValidator'])) {
-            $this->setMax($context['maxAmountForValidator']);
-        }
+
         $this->setInclusive(true);
 
         return parent::isValid($value);
