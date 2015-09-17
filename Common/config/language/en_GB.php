@@ -1397,6 +1397,11 @@ return array(
     'internal.documents.documents_copied' => 'Successfully copied the document(s)',
     'internal.documents.documents_moved' => 'Successfully moved the document(s),',
     'internal.documents.relink_documents' => 'Relink documents',
+    'internal.fee-payment.part-payment-multiple' => 'The payment amount is less than the total outstanding amount. Would
+        you like to continue with the payment? The invoices will be paid in date order starting with the earliest
+        first',
+    'internal.fee-payment.part-payment-single' => 'The payment amount is less than the total outstanding amount. Would
+        you like to continue with the payment? ',
     'internal.inspection-request.form.12-month' => '12 month',
     'internal.inspection-request.form.3-month' => '3 month',
     'internal.inspection-request.form.6-month' => '6 month',
@@ -1444,12 +1449,6 @@ return array(
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
-    'internal.fee-payment.part-payment-single' => 'The payment amount is less than the total outstanding amount.
-        Would you like to continue with the payment? ',
-    'internal.fee-payment.part-payment-multiple' => 'The payment amount is less than the total outstanding amount.
-        Would you like to continue with the payment? The invoices will be paid in date order starting with the
-        earliest first',
-
     'invalid-licence-type' => '*DUPLICATE TRANSLATION* If you are a goods vehicle operator, you can not apply for a
         special restricted licence',
     'invalid-operator-type' => '*DUPLICATE TRANSLATION* If you operate in Northern Ireland, you can only apply for a
@@ -2049,6 +2048,7 @@ return array(
     'search-result-label-business-type' => 'Business type',
     'search-result-label-continuation-date' => 'Continuation date',
     'search-result-label-directors' => 'Directors',
+    'search-result-label-email' => 'Email',
     'search-result-label-existing-pi' => 'Existing PI records',
     'search-result-label-fax-numbers' => 'Fax numbers',
     'search-result-label-lead-tc' => 'Lead TC / Traffic Regulator',
@@ -2063,7 +2063,6 @@ return array(
     'search-result-label-operator-disqualified' => 'Operator disqualified',
     'search-result-label-partners' => 'Partners',
     'search-result-label-phone-numbers' => 'Phone numbers',
-    'search-result-label-email' => 'Email',
     'search-result-label-tauth' => 'Total trailer authorisation (TAUTH)',
     'search-result-label-tip' => 'Trailers in possession (TIP)',
     'search-result-label-total-community-licences' => 'Number of certifies copies of community licences',
