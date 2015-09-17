@@ -7,8 +7,9 @@
  */
 namespace Common\Controller;
 
-use Common\View\Model\ReviewViewModel;
+use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\Review;
 use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+use Zend\View\Model\ViewModel;
 
 /**
  * Transport Manager Review Controller
@@ -19,11 +20,14 @@ class TransportManagerReviewController extends ZendAbstractActionController
 {
     public function indexAction()
     {
-        $id = $this->params('id');
+        $response = $this->handleQuery(Review::create(['id' => $this->params('id')]));
+        $data = $response->getResult();
 
-        $config = $this->getServiceLocator()->get('Helper\TransportManager')
-            ->getReviewConfig($id);
+        $view = new ViewModel(['content' => $data['markup']]);
 
-        return new ReviewViewModel($config);
+        $view->setTerminal(true);
+        $view->setTemplate('layout/blank');
+
+        return $view;
     }
 }
