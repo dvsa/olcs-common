@@ -2253,7 +2253,7 @@ return array(
     'section.name.financial_evidence' => 'Financial evidence',
     'section.name.financial_history' => 'Financial history',
     'section.name.licence_history' => 'Licence history',
-    'section.name.operating_centres' => 'Operating centres',
+    'section.name.operating_centres' => 'Operating centres & authorisation',
     'section.name.overview' => 'Overview',
     'section.name.people' => 'People',
     'section.name.safety' => 'Safety',

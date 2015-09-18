@@ -2297,7 +2297,7 @@ return array(
     'section.name.financial_evidence' => '{WELSH} Financial evidence',
     'section.name.financial_history' => '{WELSH} Financial history',
     'section.name.licence_history' => '{WELSH} Licence history',
-    'section.name.operating_centres' => '{WELSH} Operating centres',
+    'section.name.operating_centres' => '{WELSH} Operating centres & authorisation',
     'section.name.overview' => '{WELSH} Overview',
     'section.name.people' => '{WELSH} People',
     'section.name.safety' => '{WELSH} Safety',
