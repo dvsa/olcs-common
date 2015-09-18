@@ -20,7 +20,7 @@ return array(
             'getfile' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/file/:file[/:namespace]/:name',
+                    'route' => '/file/:identifier',
                     'defaults' => array(
                         'controller' => 'Common\Controller\File',
                         'action' => 'download'
@@ -155,7 +155,6 @@ return array(
             'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
-            'ContentStore' => 'Dvsa\Olcs\DocumentShare\Service\Client',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
             'NavigationFactory' => 'Common\Service\NavigationFactory',
         ),
@@ -184,10 +183,8 @@ return array(
                 => 'Common\Controller\Lva\Adapters\LicencePeopleAdapter',
             'VariationPeopleAdapter'
                 => 'Common\Controller\Lva\Adapters\VariationPeopleAdapter',
-            'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
-            'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
             'postcode' => 'Common\Service\Postcode\Postcode',
             'email' => 'Common\Service\Email\Email',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
@@ -207,6 +204,7 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
+            'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
             'LanguagePreference' => \Common\Preference\Language::class,
             'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
@@ -233,7 +231,6 @@ return array(
             'Table' => '\Common\Service\Table\TableFactory',
             // Added in a true Zend Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
             'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
-            'FileUploader' => '\Common\Service\File\FileUploaderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',

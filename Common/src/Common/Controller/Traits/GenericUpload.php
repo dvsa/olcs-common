@@ -9,6 +9,7 @@ namespace Common\Controller\Traits;
 
 use Dvsa\Olcs\Transfer\Command\Document\CreateDocument;
 use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
+use Dvsa\Olcs\Transfer\Command\Document\Upload;
 
 /**
  * Generic Upload
@@ -62,22 +63,21 @@ trait GenericUpload
      */
     protected function uploadFile($fileData, $data)
     {
-        $uploader = $this->getServiceLocator()->get('FileUploader')->getUploader();
+        if (!isset($data['filename'])) {
+            if (isset($fileData['name'])) {
+                $data['filename'] = $fileData['name'];
+            } elseif (isset($fileData['filename'])) {
+                $data['filename'] = $fileData['filename'];
+            }
+        }
 
-        $uploader->setFile($fileData);
+        if (!isset($fileData['content']) && isset($fileData['tmp_name'])) {
+            $fileData['content'] = file_get_contents($fileData['tmp_name']);
+        }
 
-        $file = $uploader->upload();
+        $data['content'] = base64_encode($fileData['content']);
 
-        $docData = array_merge(
-            array(
-                'filename'   => $file->getName(),
-                'identifier' => $file->getIdentifier(),
-                'size'       => $file->getSize()
-            ),
-            $data
-        );
-
-        $response = $this->handleCommand(CreateDocument::create($docData));
+        $response = $this->handleCommand(Upload::create($data));
 
         return $response->isOk();
     }

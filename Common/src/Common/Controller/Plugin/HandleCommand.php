@@ -4,10 +4,9 @@ namespace Common\Controller\Plugin;
 
 use Common\Exception\BailOutException;
 use Common\Exception\ResourceConflictException;
-use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Command\CommandSender;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Dvsa\Olcs\Transfer\Command\CommandInterface;
 
 /**
@@ -16,15 +15,11 @@ use Dvsa\Olcs\Transfer\Command\CommandInterface;
  */
 class HandleCommand extends AbstractPlugin
 {
-    /**
-     * @var TransferAnnotationBuilder
-     */
-    private $annotationBuilder;
 
     /**
-     * @var CommandService
+     * @var CommandSender
      */
-    private $commandService;
+    private $commandSender;
 
     /**
      * @var FlashMessengerHelperService
@@ -32,17 +27,12 @@ class HandleCommand extends AbstractPlugin
     private $fm;
 
     /**
-     * @param TransferAnnotationBuilder $annotationBuilder
-     * @param CommandService $commandService
+     * @param CommandSender $commandService
      * @param FlashMessengerHelperService $fm
      */
-    public function __construct(
-        TransferAnnotationBuilder $annotationBuilder,
-        CommandService $commandService,
-        FlashMessengerHelperService $fm
-    ) {
-        $this->commandService = $commandService;
-        $this->annotationBuilder = $annotationBuilder;
+    public function __construct(CommandSender $sender, FlashMessengerHelperService $fm)
+    {
+        $this->commandSender = $sender;
         $this->fm = $fm;
     }
 
@@ -52,9 +42,8 @@ class HandleCommand extends AbstractPlugin
      */
     public function __invoke(CommandInterface $command)
     {
-        $command = $this->annotationBuilder->createCommand($command);
         try {
-            return $this->commandService->send($command);
+            return $this->commandSender->send($command);
         } catch (ResourceConflictException $ex) {
             $this->fm->addConflictError();
             throw new BailOutException('', $this->getController()->redirect()->refresh());
