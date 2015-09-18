@@ -1782,6 +1782,12 @@ return array(
     'lva.section.title.vehicles_psv' => '{WELSH} Vehicles',
     'lva.section.title.voided_discs' => '{WELSH} Are you sure you would like to void these discs?',
     'maint' => '{WELSH} Maint',
+    'manage-users.create.error' => '{WELSH} The user could not be created',
+    'manage-users.create.success' => '{WELSH} User successfully created',
+    'manage-users.delete.error' => '{WELSH} The user could not be deleted, possibly due to some tasks still being open',
+    'manage-users.delete.success' => '{WELSH} User successfully deleted',
+    'manage-users.update.error' => '{WELSH} The user could not be updated',
+    'manage-users.update.success' => '{WELSH} User successfully updated',
     'mark-urgent' => '{WELSH} Mark as urgent',
     'markup-tm-declaration-gb-confirmation' => '{WELSH} Should I fail to meet any of the above requirements I understand
         that the traffic commissioner has the power to disqualify me from being a transport manager in any European
