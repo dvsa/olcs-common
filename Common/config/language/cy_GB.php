@@ -1426,6 +1426,11 @@ return array(
     'internal.documents.documents_copied' => '{WELSH} Successfully copied the document(s)',
     'internal.documents.documents_moved' => '{WELSH} Successfully moved the document(s),',
     'internal.documents.relink_documents' => '{WELSH} Relink documents',
+    'internal.fee-payment.part-payment-multiple' => '{WELSH} The payment amount is less than the total outstanding
+        amount. Would you like to continue with the payment? The invoices will be paid in date order starting with the
+        earliest first',
+    'internal.fee-payment.part-payment-single' => '{WELSH} The payment amount is less than the total outstanding amount.
+        Would you like to continue with the payment? ',
     'internal.inspection-request.form.12-month' => '{WELSH} 12 month',
     'internal.inspection-request.form.3-month' => '{WELSH} 3 month',
     'internal.inspection-request.form.6-month' => '{WELSH} 6 month',
@@ -2086,6 +2091,7 @@ return array(
     'search-result-label-business-type' => '{WELSH} Business type',
     'search-result-label-continuation-date' => '{WELSH} Continuation date',
     'search-result-label-directors' => '{WELSH} Directors',
+    'search-result-label-email' => '{WELSH} Email',
     'search-result-label-existing-pi' => '{WELSH} Existing PI records',
     'search-result-label-fax-numbers' => '{WELSH} Fax numbers',
     'search-result-label-lead-tc' => '{WELSH} Lead TC / Traffic Regulator',
@@ -2100,7 +2106,6 @@ return array(
     'search-result-label-operator-disqualified' => '{WELSH} Operator disqualified',
     'search-result-label-partners' => '{WELSH} Partners',
     'search-result-label-phone-numbers' => '{WELSH} Phone numbers',
-    'search-result-label-email' => '{WELSH} Email',
     'search-result-label-tauth' => '{WELSH} Total trailer authorisation (TAUTH)',
     'search-result-label-tip' => '{WELSH} Trailers in possession (TIP)',
     'search-result-label-total-community-licences' => '{WELSH} Number of certifies copies of community licences',
