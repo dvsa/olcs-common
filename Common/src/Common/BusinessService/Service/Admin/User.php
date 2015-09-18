@@ -74,11 +74,7 @@ class User implements
 
         $dataToSave['team'] = isset($params['userType']['team']) ? $params['userType']['team'] : null;
 
-        foreach ($params['userType']['roles'] as $role) {
-            $dataToSave['userRoles'][] = [
-                'role' => $role,
-            ];
-        }
+        $dataToSave['roles'] = $params['userType']['roles'];
 
         // set up contact data
         if (isset($existingData['contactDetails']['id']) && isset($existingData['contactDetails']['version'])) {
@@ -148,12 +144,6 @@ class User implements
                 'single' => array(
                     'contactDetails' => array(
                         'entity' => 'ContactDetails'
-                    )
-                ),
-                'list' => array(
-                    'userRoles' => array(
-                        'entity' => 'UserRole',
-                        'parent' => 'user'
                     )
                 )
             )

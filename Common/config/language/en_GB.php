@@ -87,7 +87,7 @@ return array(
     'admin_disc-printing.discPrefix' => 'Disc prefix',
     'admin_disc-printing.endNumber' => 'End number',
     'admin_disc-printing.noDiscs' => 'There are no discs to be printed',
-    'admin_disc-printing.pageHeader' => 'Discs Printing',
+    'admin_disc-printing.pageHeader' => 'Disc Printing',
     'admin_disc-printing.startNumber' => 'Start number',
     'admin_disc-printing.totalPages' => 'Number of pages',
     'admin_disc-printing.typeOfLicence' => 'Type of Licence',
@@ -273,7 +273,7 @@ return array(
     'application-review-vehicles-declarations-15e' => 'Vehicles with eight passenger seats or less will not be operated
         under the licence without the prior written agreement of the traffic commissioner who may require you to agree
         to certain undertakings',
-    'application-review-vehicles-declarations-15f1' => 'Are the vehicles you are applying for to be used as Limousines
+    'application-review-vehicles-declarations-15f1' => 'Are the vehicles you are applying for to be used as limousines
         or novelty type vehicles?',
     'application-review-vehicles-declarations-15f2' => 'Limousines and novelty type vehicles are not to be operated
         under this operator\'s licence',
@@ -566,7 +566,7 @@ return array(
     'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'Do you agree to the following
         undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'Are the vehicles you are applying for to
-        be used as Limousines or novelty type vehicles?',
+        be used as limousines or novelty type vehicles?',
     'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Only limousines and novelty type vehicles
         with nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
@@ -2057,6 +2057,7 @@ return array(
     'search-result-label-operator-disqualified' => 'Operator disqualified',
     'search-result-label-partners' => 'Partners',
     'search-result-label-phone-numbers' => 'Phone numbers',
+    'search-result-label-email' => 'Email',
     'search-result-label-tauth' => 'Total trailer authorisation (TAUTH)',
     'search-result-label-tip' => 'Trailers in possession (TIP)',
     'search-result-label-total-community-licences' => 'Number of certifies copies of community licences',
@@ -2105,8 +2106,8 @@ return array(
     'search.result.subtitle.operating-centre' => 'We\'ve found <b>%s</b> Operating Centres that match your search.',
     'search.result.subtitle.operator' => 'We\'ve found <b>%s</b> Operators that match your search.',
     'search.result.subtitle.person' => 'We\'ve found <b>%s</b> People that match your search.',
-    'search.result.subtitle.traffic-commissioner-publication'
-        => 'We\'ve found <b>%s</b> Traffic Commissioner publications that match your search.',
+    'search.result.subtitle.traffic-commissioner-publication' => 'We\'ve found <b>%s</b> Traffic Commissioner
+        publications that match your search.',
     'search.result.subtitle.vehicle-external' => 'We\'ve found <b>%s</b> Vehicle search results.',
     'search.result.title.bus' => 'Search results',
     'search.result.title.operating-centre' => 'Search results',
@@ -2136,7 +2137,7 @@ return array(
     'section.add.conditions_undertakings' => 'Condition / undertaking added successfully',
     'section.add.convictions_penalties' => 'Conviction/penalty added',
     'section.add.grace-periods' => 'Licence grace periods added.',
-    'section.add.operating_centres' => 'Operating Centre added',
+    'section.add.operating_centres' => 'Operating centre added',
     'section.add.people' => 'Person added',
     'section.add.safety' => 'Safety inspector added',
     'section.add.taxi_phv' => 'Taxi/PHV added',
@@ -2166,7 +2167,7 @@ return array(
     'section.edit.business_details' => 'Subsidiary company updated',
     'section.edit.conditions_undertakings' => 'Condition / undertaking updated successfully',
     'section.edit.convictions_penalties' => 'Conviction/penalty updated',
-    'section.edit.operating_centres' => 'Operating Centre updated',
+    'section.edit.operating_centres' => 'Operating centre updated',
     'section.edit.people' => 'Person updated',
     'section.edit.safety' => 'Safety inspector updated',
     'section.edit.taxi_phv' => 'Taxi/PHV updated',
@@ -2252,7 +2253,7 @@ return array(
     'section.name.financial_evidence' => 'Financial evidence',
     'section.name.financial_history' => 'Financial history',
     'section.name.licence_history' => 'Licence history',
-    'section.name.operating_centres' => 'Operating centres',
+    'section.name.operating_centres' => 'Operating centres & authorisation',
     'section.name.overview' => 'Overview',
     'section.name.people' => 'People',
     'section.name.safety' => 'Safety',

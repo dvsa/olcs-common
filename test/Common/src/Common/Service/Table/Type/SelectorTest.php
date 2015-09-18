@@ -168,7 +168,7 @@ class SelectorTest extends MockeryTestCase
             'fooBarId' => 7,
         ];
         $column = [
-            'name' => 'fooBarId'
+            'idIndex' => 'fooBarId'
         ];
 
         $this->table->shouldReceive('getFieldset')

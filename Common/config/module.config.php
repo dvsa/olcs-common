@@ -92,7 +92,6 @@ return array(
             'Common\Controller\Lva\AbstractControllerFactory',
         ),
         'invokables' => array(
-            'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
             'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
@@ -192,7 +191,6 @@ return array(
             'postcode' => 'Common\Service\Postcode\Postcode',
             'email' => 'Common\Service\Email\Email',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
-            'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
@@ -214,7 +212,6 @@ return array(
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
             'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
-            'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
             'BusinessRuleManager' => 'Common\BusinessRule\BusinessRuleManagerFactory',
@@ -466,6 +463,7 @@ return array(
     'validators' => [
         'invokables' => [
             'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
+            'Common\Validator\ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
             'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
             'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
@@ -475,6 +473,7 @@ return array(
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
+            'ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'DateCompare' => 'Common\Validator\DateCompare',
             'NumberCompare' => 'Common\Validator\NumberCompare',
             'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',

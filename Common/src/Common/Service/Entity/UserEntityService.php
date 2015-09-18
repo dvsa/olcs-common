@@ -36,11 +36,7 @@ class UserEntityService extends AbstractEntityService
             ],
             'transportManager',
             'team',
-            'userRoles' => [
-                'children' => [
-                    'role'
-                ]
-            ]
+            'roles'
         ]
     ];
 
@@ -77,11 +73,7 @@ class UserEntityService extends AbstractEntityService
             ],
             'transportManager',
             'team',
-            'userRoles' => [
-                'children' => [
-                    'role'
-                ]
-            ]
+            'roles'
         ]
     ];
 
