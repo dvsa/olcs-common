@@ -15,6 +15,8 @@ class AbstractTransportManagersControllerTest extends AbstractLvaControllerTestC
 
     public function setUp()
     {
+        $this->markTestSkipped();
+
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractTransportManagersController');
