@@ -58,6 +58,12 @@ abstract class AbstractTransportManagersController extends AbstractController im
             }
 
             if ($form->isValid()) {
+
+                if ($this->lva !== 'licence') {
+                    $data = ['id' => $this->getIdentifier(), 'section' => 'transportManagers'];
+                    $this->handleCommand(Command\Application\UpdateCompletion::create($data));
+                }
+
                 return $this->completeSection('transport_managers');
             }
         }

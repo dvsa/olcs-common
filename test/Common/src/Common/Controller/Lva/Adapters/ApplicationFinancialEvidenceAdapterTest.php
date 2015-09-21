@@ -14,7 +14,6 @@ use Common\Service\Entity\LicenceEntityService as Licence;
 use Common\Service\Entity\ApplicationEntityService as Application;
 use Common\Service\Data\CategoryDataService;
 use CommonTest\Bootstrap;
-use CommonTest\Traits\MockFinancialStandingRatesTrait;
 
 /**
  * Application Financial Evidence Adapter Test

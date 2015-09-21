@@ -26,6 +26,7 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
             array(
                 'identifier' => 'hgafdjklhaldsf',
                 'filename' => 'someFile.png',
+                'description' => 'someFile',
                 'size' => 50,
                 'id' => 7,
                 'version' => 1
@@ -33,6 +34,7 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
             array(
                 'identifier' => 'hgafdjklhalsdgs',
                 'filename' => 'someOtherFile.png',
+                'description' => 'someOtherFile',
                 'size' => 5000,
                 'id' => 8,
                 'version' => 1
@@ -40,6 +42,7 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
             array(
                 'identifier' => 'hdsfgafdjklhalsdgs',
                 'filename' => 'anotherFile.png',
+                'description' => 'anotherFile',
                 'size' => 50000000,
                 'id' => 9,
                 'version' => 1

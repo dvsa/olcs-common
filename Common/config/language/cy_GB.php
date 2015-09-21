@@ -88,7 +88,7 @@ return array(
     'admin_disc-printing.discPrefix' => '{WELSH} Disc prefix',
     'admin_disc-printing.endNumber' => '{WELSH} End number',
     'admin_disc-printing.noDiscs' => '{WELSH} There are no discs to be printed',
-    'admin_disc-printing.pageHeader' => '{WELSH} Discs Printing',
+    'admin_disc-printing.pageHeader' => '{WELSH} Disc Printing',
     'admin_disc-printing.startNumber' => '{WELSH} Start number',
     'admin_disc-printing.totalPages' => '{WELSH} Number of pages',
     'admin_disc-printing.typeOfLicence' => '{WELSH} Type of Licence',
@@ -282,7 +282,7 @@ return array(
         operated under the licence without the prior written agreement of the traffic commissioner who may require you
         to agree to certain undertakings',
     'application-review-vehicles-declarations-15f1' => '{WELSH} Are the vehicles you are applying for to be used as
-        Limousines or novelty type vehicles?',
+        limousines or novelty type vehicles?',
     'application-review-vehicles-declarations-15f2' => '{WELSH} Limousines and novelty type vehicles are not to be
         operated under this operator\'s licence',
     'application-review-vehicles-declarations-15g' => '{WELSH} Only limousines and novelty type vehicles with nine
@@ -584,7 +584,7 @@ return array(
     'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => '{WELSH} Do you agree to the
         following undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => '{WELSH} Are the vehicles you are applying
-        for to be used as Limousines or novelty type vehicles?',
+        for to be used as limousines or novelty type vehicles?',
     'application_vehicle-safety_undertakings.limousinesNine.agreement' => '{WELSH} Only limousines and novelty type
         vehicles with nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => '{WELSH} If you intend to operate
@@ -1426,6 +1426,11 @@ return array(
     'internal.documents.documents_copied' => '{WELSH} Successfully copied the document(s)',
     'internal.documents.documents_moved' => '{WELSH} Successfully moved the document(s),',
     'internal.documents.relink_documents' => '{WELSH} Relink documents',
+    'internal.fee-payment.part-payment-multiple' => '{WELSH} The payment amount is less than the total outstanding
+        amount. Would you like to continue with the payment? The invoices will be paid in date order starting with the
+        earliest first',
+    'internal.fee-payment.part-payment-single' => '{WELSH} The payment amount is less than the total outstanding amount.
+        Would you like to continue with the payment? ',
     'internal.inspection-request.form.12-month' => '{WELSH} 12 month',
     'internal.inspection-request.form.3-month' => '{WELSH} 3 month',
     'internal.inspection-request.form.6-month' => '{WELSH} 6 month',
@@ -1744,7 +1749,7 @@ return array(
     'lva.section.title.replaced_discs' => '{WELSH} Are you sure you would like to replace these discs?',
     'lva.section.title.reprint_vehicles' => '{WELSH} Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
-    'lva.section.title.safety' => '{WELSH} Safety',
+    'lva.section.title.safety' => '{WELSH} Safety & maintenance',
     'lva.section.title.schedule41' => '{WELSH} Schedule 4/1',
     'lva.section.title.schedule41.approve.success' => '{WELSH} The schedule 4/1 has been approved',
     'lva.section.title.schedule41.refuse.success' => '{WELSH} The schedule 4/1 has been refused',
@@ -1777,6 +1782,12 @@ return array(
     'lva.section.title.vehicles_psv' => '{WELSH} Vehicles',
     'lva.section.title.voided_discs' => '{WELSH} Are you sure you would like to void these discs?',
     'maint' => '{WELSH} Maint',
+    'manage-users.create.error' => '{WELSH} The user could not be created',
+    'manage-users.create.success' => '{WELSH} User successfully created',
+    'manage-users.delete.error' => '{WELSH} The user could not be deleted, possibly due to some tasks still being open',
+    'manage-users.delete.success' => '{WELSH} User successfully deleted',
+    'manage-users.update.error' => '{WELSH} The user could not be updated',
+    'manage-users.update.success' => '{WELSH} User successfully updated',
     'mark-urgent' => '{WELSH} Mark as urgent',
     'markup-tm-declaration-gb-confirmation' => '{WELSH} Should I fail to meet any of the above requirements I understand
         that the traffic commissioner has the power to disqualify me from being a transport manager in any European
@@ -2086,6 +2097,7 @@ return array(
     'search-result-label-business-type' => '{WELSH} Business type',
     'search-result-label-continuation-date' => '{WELSH} Continuation date',
     'search-result-label-directors' => '{WELSH} Directors',
+    'search-result-label-email' => '{WELSH} Email',
     'search-result-label-existing-pi' => '{WELSH} Existing PI records',
     'search-result-label-fax-numbers' => '{WELSH} Fax numbers',
     'search-result-label-lead-tc' => '{WELSH} Lead TC / Traffic Regulator',
@@ -2144,18 +2156,20 @@ return array(
     'search.operator' => '{WELSH} Vehicle Operator',
     'search.page.replaces' => '{WELSH} This service replaces the VOSA Operator Search',
     'search.people' => '{WELSH} People',
-    'search.result.subtitle.bus' => '{WELSH} Bus Registration search result page.',
-    'search.result.subtitle.operating-centre' => '{WELSH} Operating Centre search result page.',
-    'search.result.subtitle.operator' => '{WELSH} Operator search result page.',
-    'search.result.subtitle.person' => '{WELSH} Person search result page.',
-    'search.result.subtitle.traffic-commissioner-publication' => '{WELSH} Traffic Commissioner search result page.',
-    'search.result.subtitle.vehicle-external' => '{WELSH} Vehicle search result page.',
-    'search.result.title.bus' => '{WELSH} Bus Registration search result',
-    'search.result.title.operating-centre' => '{WELSH} Operating Centre result',
-    'search.result.title.operator' => '{WELSH} Vehicle Operator search result',
-    'search.result.title.person' => '{WELSH} Person search result',
-    'search.result.title.traffic-commissioner-publication' => '{WELSH} Traffic Commissioner publication search result',
-    'search.result.title.vehicle-external' => '{WELSH} Vehicle search result',
+    'search.result.subtitle.bus' => '{WELSH} We\'ve found <b>%s</b> Bus Registrations that match your search.',
+    'search.result.subtitle.operating-centre' => '{WELSH} We\'ve found <b>%s</b> Operating Centres that match your
+        search.',
+    'search.result.subtitle.operator' => '{WELSH} We\'ve found <b>%s</b> Operators that match your search.',
+    'search.result.subtitle.person' => '{WELSH} We\'ve found <b>%s</b> People that match your search.',
+    'search.result.subtitle.traffic-commissioner-publication' => '{WELSH} We\'ve found <b>%s</b> Traffic Commissioner
+        publications that match your search.',
+    'search.result.subtitle.vehicle-external' => '{WELSH} We\'ve found <b>%s</b> Vehicle search results.',
+    'search.result.title.bus' => '{WELSH} Search results',
+    'search.result.title.operating-centre' => '{WELSH} Search results',
+    'search.result.title.operator' => '{WELSH} Search results',
+    'search.result.title.person' => '{WELSH} Search results',
+    'search.result.title.traffic-commissioner-publication' => '{WELSH} Search results',
+    'search.result.title.vehicle-external' => '{WELSH} Search results',
     'search.subtitle.bus' => '{WELSH} Search the database for bus registrations.',
     'search.subtitle.operating-centre' => '{WELSH} Search the database for operating centres.',
     'search.subtitle.operator' => '{WELSH} Search the database for heavy goods and public service operator details.',
@@ -2178,7 +2192,7 @@ return array(
     'section.add.conditions_undertakings' => '{WELSH} Condition / undertaking added successfully',
     'section.add.convictions_penalties' => '{WELSH} Conviction/penalty added',
     'section.add.grace-periods' => '{WELSH} Licence grace periods added.',
-    'section.add.operating_centres' => '{WELSH} Operating Centre added',
+    'section.add.operating_centres' => '{WELSH} Operating centre added',
     'section.add.people' => '{WELSH} Person added',
     'section.add.safety' => '{WELSH} Safety inspector added',
     'section.add.taxi_phv' => '{WELSH} Taxi/PHV added',
@@ -2208,7 +2222,7 @@ return array(
     'section.edit.business_details' => '{WELSH} Subsidiary company updated',
     'section.edit.conditions_undertakings' => '{WELSH} Condition / undertaking updated successfully',
     'section.edit.convictions_penalties' => '{WELSH} Conviction/penalty updated',
-    'section.edit.operating_centres' => '{WELSH} Operating Centre updated',
+    'section.edit.operating_centres' => '{WELSH} Operating centre updated',
     'section.edit.people' => '{WELSH} Person updated',
     'section.edit.safety' => '{WELSH} Safety inspector updated',
     'section.edit.taxi_phv' => '{WELSH} Taxi/PHV updated',
@@ -2294,10 +2308,10 @@ return array(
     'section.name.financial_evidence' => '{WELSH} Financial evidence',
     'section.name.financial_history' => '{WELSH} Financial history',
     'section.name.licence_history' => '{WELSH} Licence history',
-    'section.name.operating_centres' => '{WELSH} Operating centres',
+    'section.name.operating_centres' => '{WELSH} Operating centres & authorisation',
     'section.name.overview' => '{WELSH} Overview',
     'section.name.people' => '{WELSH} People',
-    'section.name.safety' => '{WELSH} Safety',
+    'section.name.safety' => '{WELSH} Safety & maintenance',
     'section.name.taxi_phv' => '{WELSH} Taxi/PHV',
     'section.name.trailers' => '{WELSH} Trailers',
     'section.name.transport_managers' => '{WELSH} Transport managers',

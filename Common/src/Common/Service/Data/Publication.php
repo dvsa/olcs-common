@@ -7,12 +7,12 @@
  */
 namespace Common\Service\Data;
 
+use Dvsa\Olcs\Transfer\Command\Document\GenerateAndStore;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Util\RestClient;
 use Common\Exception\ResourceNotFoundException;
 use Common\Exception\DataServiceException;
-use Dvsa\Olcs\DocumentShare\Data\Object\File;
 
 /**
  * Publication service
@@ -117,25 +117,6 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Generates a publication filename
-     *
-     * @param array $publication
-     * @return string
-     */
-    public function getPublicationFilename($publication)
-    {
-        $date = new \DateTime($publication['pubDate']);
-
-        return $publication['trafficArea']['name']
-            . $publication['pubType']
-            . $date->format('Y')
-            . $date->format('m')
-            . $date->format('d')
-            . date($this->getDocumentService()->getTimestampFormat())
-            . '.rtf';
-    }
-
-    /**
      * @param string $locale
      * @param string $docTypeName
      * @param int $year
@@ -155,26 +136,6 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Gets file path variables from a publication array
-     *
-     * @param array $publication
-     * @return array
-     */
-    public function getFilePathVariablesFromPublication($publication)
-    {
-        $locale = ($publication['trafficArea']['isNi'] == 'Y' ? 'ni' : 'gb');
-        $date = new \DateTime($publication['pubDate']);
-
-        return $this->getFilePathVariables(
-            $locale,
-            'publications',
-            $date->format('Y'),
-            $date->format('m'),
-            strtolower($publication['pubStatus']['description'])
-        );
-    }
-
-    /**
      * Creates a publication document record
      *
      * @param array $currentPublication
@@ -182,79 +143,50 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
      */
     private function createPublicationDocumentRecord($currentPublication)
     {
-        $fileName = $this->getDocumentService()->formatFilename($this->getPublicationFilename($currentPublication));
+        // @NOTE Tmp doc generation solution until section is migrated
 
-        $storedFile = $this->createPublicationDocument($currentPublication, $fileName);
+        $description = $currentPublication['docTemplate']['description'];
 
-        $templateData = [
-            'identifier'    => $fileName,
-            'description'   => $currentPublication['docTemplate']['description'],
-            'filename'      => $fileName,
-            'category'      => $currentPublication['docTemplate']['category']['id'],
-            'subCategory'   => $currentPublication['docTemplate']['subCategory']['id'],
-            'isExternal'    => true,
-            'isReadOnly'    => true,
-            'issuedDate'    => date('Y-m-d H:i:s'),
-            'size'          => $storedFile->getSize()
-        ];
-
-        return $this->getDocumentDataService()->save($templateData);
-    }
-
-    /**
-     * Builds a publication document
-     *
-     * @param $publication
-     * @return mixed
-     */
-    private function createPublicationDocument($publication, $fileName)
-    {
-        $queryData = [
-            'user' => 1,
-            'publicationId' => $publication['id'],
-            'pubType' => $publication['pubType']
-        ];
-
-        //get the template
-        $file = $this->getContentStore()->read($publication['docTemplate']['document']['identifier']);
-
-        //work out the query to be sent
-        $query = $this->getDocumentService()->getBookmarkQueries(
-            $file,
-            $queryData
-        );
-
-        $restClient = $this->getServiceLocator()->get('Helper\Rest');
-        $result = $restClient->makeRestCall('BookmarkSearch', 'GET', [], $query);
-
-        //populate the bookmarks
-        $content = $this->getDocumentService()->populateBookmarks(
-            $file,
-            $result
-        );
-
-        $uploader = $this->getUploader();
-        $uploader->setFile(
-            [
-                'name' => $publication['docTemplate']['description'],
-                'content' => $content
-            ]
-        );
-
-        //we need to increment the publication status here as the existing record will contain the old status
-        switch ($publication['pubStatus']['id']) {
+        switch ($currentPublication['pubStatus']['id']) {
             case 'pub_s_new':
-                $publication['pubStatus']['description'] = 'generated';
+                $description .= 'generated';
                 break;
             case 'pub_s_generated':
-                $publication['pubStatus']['description'] = 'printed';
+                $description .= 'printed';
                 break;
         }
 
-        $urlParams = $this->getFilePathVariablesFromPublication($publication);
-        $documentPath = $uploader->buildPathNamespace($urlParams);
+        $dtoData = [
+            'template' => $currentPublication['docTemplate']['document']['identifier'],
+            'query' => [
+                'publicationId' => $currentPublication['id'],
+                'pubType' => $currentPublication['pubType']
+            ],
+            'description'   => $description,
+            'category'      => $currentPublication['docTemplate']['category']['id'],
+            'subCategory'   => $currentPublication['docTemplate']['subCategory']['id'],
+            'isExternal'    => true,
+            'isReadOnly'    => true
+        ];
 
-        return $uploader->upload($documentPath, $fileName);
+        $response = $this->handleCommand(GenerateAndStore::create($dtoData));
+
+        $result = $response->getResult();
+
+        return $result['id']['document'];
+
+    }
+
+    /**
+     * @NOTE Tmp code until section migrated
+     */
+    private function handleCommand($command)
+    {
+        $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
+        $commandService = $this->getServiceLocator()->get('CommandService');
+
+        $command = $annotationBuilder->createCommand($command);
+        return $commandService->send($command);
     }
 
     /**
@@ -291,40 +223,5 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
         $date->add(new \DateInterval('P14D'));
 
         return $date->format('Y-m-d');
-    }
-
-    /**
-     * Returns a document share client
-     *
-     * @return \Dvsa\Olcs\DocumentShare\Service\Client
-     */
-    protected function getContentStore()
-    {
-        return $this->getServiceLocator()->get('ContentStore');
-    }
-
-    /**
-     * Gets the document service
-     *
-     * @return \Common\Service\Document\Document
-     */
-    protected function getDocumentService()
-    {
-        return $this->getServiceLocator()->get('Document');
-    }
-
-    protected function getDocumentDataService()
-    {
-        return $this->getServiceLocator()->get('DataServiceManager')->get('Generic\Service\Data\Document');
-    }
-
-    /**
-     * Get uploader
-     *
-     * @return \Common\Service\File\FileUploaderFactory
-     */
-    protected function getUploader()
-    {
-        return $this->getServiceLocator()->get('FileUploader')->getUploader();
     }
 }

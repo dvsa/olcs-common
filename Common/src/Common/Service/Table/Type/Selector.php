@@ -55,8 +55,8 @@ class Selector extends AbstractType
 
         // allow setting the data index name that contains the id value
         $idx = 'id';
-        if (isset($column['name'])) {
-            $idx = $column['name'];
+        if (isset($column['idIndex'])) {
+            $idx = $column['idIndex'];
         }
 
         return sprintf($this->format, $name, $data[$idx], implode(' ', $attributes));

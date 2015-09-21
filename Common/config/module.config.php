@@ -20,7 +20,7 @@ return array(
             'getfile' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/file/:file[/:namespace]/:name',
+                    'route' => '/file/:identifier',
                     'defaults' => array(
                         'controller' => 'Common\Controller\File',
                         'action' => 'download'
@@ -92,7 +92,6 @@ return array(
             'Common\Controller\Lva\AbstractControllerFactory',
         ),
         'invokables' => array(
-            'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
             'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
@@ -156,7 +155,6 @@ return array(
             'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
-            'ContentStore' => 'Dvsa\Olcs\DocumentShare\Service\Client',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
             'NavigationFactory' => 'Common\Service\NavigationFactory',
         ),
@@ -185,14 +183,11 @@ return array(
                 => 'Common\Controller\Lva\Adapters\LicencePeopleAdapter',
             'VariationPeopleAdapter'
                 => 'Common\Controller\Lva\Adapters\VariationPeopleAdapter',
-            'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
-            'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
             'postcode' => 'Common\Service\Postcode\Postcode',
             'email' => 'Common\Service\Email\Email',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
-            'Email\ContinuationNotSought' => 'Common\Service\Email\Message\ContinuationNotSought',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
@@ -209,12 +204,12 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
         ),
         'factories' => array(
+            'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
             'LanguagePreference' => \Common\Preference\Language::class,
             'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
             'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
-            'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
             'BusinessRuleManager' => 'Common\BusinessRule\BusinessRuleManagerFactory',
@@ -236,7 +231,6 @@ return array(
             'Table' => '\Common\Service\Table\TableFactory',
             // Added in a true Zend Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
             'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
-            'FileUploader' => '\Common\Service\File\FileUploaderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
@@ -466,6 +460,7 @@ return array(
     'validators' => [
         'invokables' => [
             'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
+            'Common\Validator\ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
             'Common\Validator\NumberCompare' => 'Common\Validator\NumberCompare',
             'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
@@ -475,6 +470,7 @@ return array(
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
+            'ValidateIfMultiple' => 'Common\Validator\ValidateIfMultiple',
             'DateCompare' => 'Common\Validator\DateCompare',
             'NumberCompare' => 'Common\Validator\NumberCompare',
             'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',

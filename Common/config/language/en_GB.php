@@ -87,7 +87,7 @@ return array(
     'admin_disc-printing.discPrefix' => 'Disc prefix',
     'admin_disc-printing.endNumber' => 'End number',
     'admin_disc-printing.noDiscs' => 'There are no discs to be printed',
-    'admin_disc-printing.pageHeader' => 'Discs Printing',
+    'admin_disc-printing.pageHeader' => 'Disc Printing',
     'admin_disc-printing.startNumber' => 'Start number',
     'admin_disc-printing.totalPages' => 'Number of pages',
     'admin_disc-printing.typeOfLicence' => 'Type of Licence',
@@ -273,7 +273,7 @@ return array(
     'application-review-vehicles-declarations-15e' => 'Vehicles with eight passenger seats or less will not be operated
         under the licence without the prior written agreement of the traffic commissioner who may require you to agree
         to certain undertakings',
-    'application-review-vehicles-declarations-15f1' => 'Are the vehicles you are applying for to be used as Limousines
+    'application-review-vehicles-declarations-15f1' => 'Are the vehicles you are applying for to be used as limousines
         or novelty type vehicles?',
     'application-review-vehicles-declarations-15f2' => 'Limousines and novelty type vehicles are not to be operated
         under this operator\'s licence',
@@ -566,7 +566,7 @@ return array(
     'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'Do you agree to the following
         undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'Are the vehicles you are applying for to
-        be used as Limousines or novelty type vehicles?',
+        be used as limousines or novelty type vehicles?',
     'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Only limousines and novelty type vehicles
         with nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
@@ -1399,6 +1399,11 @@ return array(
     'internal.documents.documents_copied' => 'Successfully copied the document(s)',
     'internal.documents.documents_moved' => 'Successfully moved the document(s),',
     'internal.documents.relink_documents' => 'Relink documents',
+    'internal.fee-payment.part-payment-multiple' => 'The payment amount is less than the total outstanding amount. Would
+        you like to continue with the payment? The invoices will be paid in date order starting with the earliest
+        first',
+    'internal.fee-payment.part-payment-single' => 'The payment amount is less than the total outstanding amount. Would
+        you like to continue with the payment? ',
     'internal.inspection-request.form.12-month' => '12 month',
     'internal.inspection-request.form.3-month' => '3 month',
     'internal.inspection-request.form.6-month' => '6 month',
@@ -1707,7 +1712,7 @@ return array(
     'lva.section.title.replaced_discs' => 'Are you sure you would like to replace these discs?',
     'lva.section.title.reprint_vehicles' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
-    'lva.section.title.safety' => 'Safety',
+    'lva.section.title.safety' => 'Safety & maintenance',
     'lva.section.title.schedule41' => 'Schedule 4/1',
     'lva.section.title.schedule41.approve.success' => 'The schedule 4/1 has been approved',
     'lva.section.title.schedule41.refuse.success' => 'The schedule 4/1 has been refused',
@@ -1739,6 +1744,12 @@ return array(
     'lva.section.title.vehicles_psv' => 'Vehicles',
     'lva.section.title.voided_discs' => 'Are you sure you would like to void these discs?',
     'maint' => 'Maint',
+    'manage-users.create.error' => 'The user could not be created',
+    'manage-users.create.success' => 'User successfully created',
+    'manage-users.delete.error' => 'The user could not be deleted, possibly due to some tasks still being open',
+    'manage-users.delete.success' => 'User successfully deleted',
+    'manage-users.update.error' => 'The user could not be updated',
+    'manage-users.update.success' => 'User successfully updated',
     'mark-urgent' => 'Mark as urgent',
     'markup-tm-declaration-gb-confirmation' => 'Should I fail to meet any of the above requirements I understand that
         the traffic commissioner has the power to disqualify me from being a transport manager in any European Union
@@ -2045,6 +2056,7 @@ return array(
     'search-result-label-business-type' => 'Business type',
     'search-result-label-continuation-date' => 'Continuation date',
     'search-result-label-directors' => 'Directors',
+    'search-result-label-email' => 'Email',
     'search-result-label-existing-pi' => 'Existing PI records',
     'search-result-label-fax-numbers' => 'Fax numbers',
     'search-result-label-lead-tc' => 'Lead TC / Traffic Regulator',
@@ -2108,8 +2120,8 @@ return array(
     'search.result.subtitle.operating-centre' => 'We\'ve found <b>%s</b> Operating Centres that match your search.',
     'search.result.subtitle.operator' => 'We\'ve found <b>%s</b> Operators that match your search.',
     'search.result.subtitle.person' => 'We\'ve found <b>%s</b> People that match your search.',
-    'search.result.subtitle.traffic-commissioner-publication'
-        => 'We\'ve found <b>%s</b> Traffic Commissioner publications that match your search.',
+    'search.result.subtitle.traffic-commissioner-publication' => 'We\'ve found <b>%s</b> Traffic Commissioner
+        publications that match your search.',
     'search.result.subtitle.vehicle-external' => 'We\'ve found <b>%s</b> Vehicle search results.',
     'search.result.title.bus' => 'Search results',
     'search.result.title.operating-centre' => 'Search results',
@@ -2139,7 +2151,7 @@ return array(
     'section.add.conditions_undertakings' => 'Condition / undertaking added successfully',
     'section.add.convictions_penalties' => 'Conviction/penalty added',
     'section.add.grace-periods' => 'Licence grace periods added.',
-    'section.add.operating_centres' => 'Operating Centre added',
+    'section.add.operating_centres' => 'Operating centre added',
     'section.add.people' => 'Person added',
     'section.add.safety' => 'Safety inspector added',
     'section.add.taxi_phv' => 'Taxi/PHV added',
@@ -2169,7 +2181,7 @@ return array(
     'section.edit.business_details' => 'Subsidiary company updated',
     'section.edit.conditions_undertakings' => 'Condition / undertaking updated successfully',
     'section.edit.convictions_penalties' => 'Conviction/penalty updated',
-    'section.edit.operating_centres' => 'Operating Centre updated',
+    'section.edit.operating_centres' => 'Operating centre updated',
     'section.edit.people' => 'Person updated',
     'section.edit.safety' => 'Safety inspector updated',
     'section.edit.taxi_phv' => 'Taxi/PHV updated',
@@ -2255,10 +2267,10 @@ return array(
     'section.name.financial_evidence' => 'Financial evidence',
     'section.name.financial_history' => 'Financial history',
     'section.name.licence_history' => 'Licence history',
-    'section.name.operating_centres' => 'Operating centres',
+    'section.name.operating_centres' => 'Operating centres & authorisation',
     'section.name.overview' => 'Overview',
     'section.name.people' => 'People',
-    'section.name.safety' => 'Safety',
+    'section.name.safety' => 'Safety & maintenance',
     'section.name.taxi_phv' => 'Taxi/PHV',
     'section.name.trailers' => 'Trailers',
     'section.name.transport_managers' => 'Transport managers',

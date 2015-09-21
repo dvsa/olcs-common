@@ -11,6 +11,10 @@ namespace Common\Service\Entity;
  * Financial Standing Rate Entity Service
  *
  * @author Dan Eggleston <dan@stolenegg.com>
+ *
+ * @see Common\Service\Document\BookmarkFstandingAdditionalVeh
+ * @see Common\Service\Document\BookmarkFstandingFirstVeh
+ * @deprecated this can be removed once Bookmarks have migrated
  */
 class FinancialStandingRateEntityService extends AbstractEntityService
 {
