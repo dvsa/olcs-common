@@ -21,6 +21,16 @@ use Zend\Form\Element\Submit;
 class FileUploadList extends Fieldset
 {
     /**
+     * Flag to toggle image previews on or off
+     */
+    protected $showImagesPreviews = false;
+
+    /**
+     * array of image extensions that can be previewed
+     */
+    protected $previewableExtensions = ['gif', 'jpg', 'jpeg', 'bmp', 'tif', 'tiff', 'png'];
+
+    /**
      * Set the files in the file list
      *
      * @param array $fileData
@@ -74,6 +84,64 @@ class FileUploadList extends Fieldset
             $fileItem->add($version);
 
             $this->add($fileItem);
+
+            // show image previews if permitted
+            if ($this->getShowImagesPreviews() && $this->isPreviewableImage($file)) {
+
+                $imagePreview = new Html('preview', array('render-container' => true));
+                $imagePreview->setValue(
+                    '<p><img src="' . $file['url'] . '" /></p>'
+                );
+                $this->add($imagePreview);
+
+            }
         }
+    }
+
+    /**
+     * Is this file an image we can preview?
+     *
+     * @param $file
+     * @return bool
+     */
+    private function isPreviewableImage($file)
+    {
+        if (
+            in_array(
+                strtolower(pathinfo($file['filename'], PATHINFO_EXTENSION)),
+                $this->getPreviewableExtensions()
+            )
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Can we show image previews?
+     *
+     * @return mixed
+     */
+    public function getShowImagesPreviews()
+    {
+        return $this->showImagesPreviews;
+    }
+
+    /**
+     * Set image previews (default is false)
+     * @param mixed $showImagesPreviews
+     */
+    public function setShowImagesPreviews($showImagesPreviews)
+    {
+        $this->showImagesPreviews = $showImagesPreviews;
+    }
+
+    /**
+     * Return list of image extensions we can preview
+     * @return mixed
+     */
+    public function getPreviewableExtensions()
+    {
+        return $this->previewableExtensions;
     }
 }
