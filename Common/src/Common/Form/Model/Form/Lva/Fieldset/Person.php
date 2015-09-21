@@ -29,6 +29,7 @@ class Person
      *     "category":"person_title",
      * })
      * @Form\Type("DynamicSelect")
+     * @Form\Required(false)
      */
     public $title = null;
 
