@@ -1710,7 +1710,7 @@ return array(
     'lva.section.title.replaced_discs' => 'Are you sure you would like to replace these discs?',
     'lva.section.title.reprint_vehicles' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
-    'lva.section.title.safety' => 'Safety',
+    'lva.section.title.safety' => 'Safety & maintenance',
     'lva.section.title.schedule41' => 'Schedule 4/1',
     'lva.section.title.schedule41.approve.success' => 'The schedule 4/1 has been approved',
     'lva.section.title.schedule41.refuse.success' => 'The schedule 4/1 has been refused',
@@ -2267,7 +2267,7 @@ return array(
     'section.name.operating_centres' => 'Operating centres & authorisation',
     'section.name.overview' => 'Overview',
     'section.name.people' => 'People',
-    'section.name.safety' => 'Safety',
+    'section.name.safety' => 'Safety & maintenance',
     'section.name.taxi_phv' => 'Taxi/PHV',
     'section.name.trailers' => 'Trailers',
     'section.name.transport_managers' => 'Transport managers',

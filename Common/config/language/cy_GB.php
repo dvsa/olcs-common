@@ -1749,7 +1749,7 @@ return array(
     'lva.section.title.replaced_discs' => '{WELSH} Are you sure you would like to replace these discs?',
     'lva.section.title.reprint_vehicles' => '{WELSH} Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
-    'lva.section.title.safety' => '{WELSH} Safety',
+    'lva.section.title.safety' => '{WELSH} Safety & maintenance',
     'lva.section.title.schedule41' => '{WELSH} Schedule 4/1',
     'lva.section.title.schedule41.approve.success' => '{WELSH} The schedule 4/1 has been approved',
     'lva.section.title.schedule41.refuse.success' => '{WELSH} The schedule 4/1 has been refused',
@@ -2311,7 +2311,7 @@ return array(
     'section.name.operating_centres' => '{WELSH} Operating centres & authorisation',
     'section.name.overview' => '{WELSH} Overview',
     'section.name.people' => '{WELSH} People',
-    'section.name.safety' => '{WELSH} Safety',
+    'section.name.safety' => '{WELSH} Safety & maintenance',
     'section.name.taxi_phv' => '{WELSH} Taxi/PHV',
     'section.name.trailers' => '{WELSH} Trailers',
     'section.name.transport_managers' => '{WELSH} Transport managers',
