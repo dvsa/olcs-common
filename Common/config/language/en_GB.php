@@ -984,6 +984,8 @@ return array(
     'entity-details-section-header-vehicles' => 'Vehicles',
     'entity-type' => 'Entity type',
     'entity-view-label-company-registration-number' => 'Company registration number',
+    'entity-view-label-oppositions' => 'Opposition(s)',
+    'entity-view-label-environmental-complaints' => 'Environmental Complaint(s)',
     'entity-view-label-operating-centre' => 'Operating centre',
     'entity-view-label-registered-address' => 'Registered address',
     'entity-view-label-registered-company-name' => 'Registered company name',
