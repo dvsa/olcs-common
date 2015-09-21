@@ -248,17 +248,35 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 )
             )
         ),
-        'undertakings' => array(
-            'restricted' => array(
-                array(
+        // external decalrations
+        'undertakings' => [
+            'restricted' => [
+                [
                     // Must be variation or application
-                    array(
+                    [
                         'application',
                         'variation'
-                    ),
-                )
-            ),
-        ),
+                    ],
+                    [
+                        'external'
+                    ],
+                ]
+            ],
+        ],
+        'declarations_internal' => [
+            'restricted' => [
+                [
+                    // Must be variation or application
+                    [
+                        'application',
+                        'variation'
+                    ],
+                    [
+                        'internal'
+                    ],
+                ]
+            ],
+        ],
     );
 
     protected $init = false;

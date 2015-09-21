@@ -335,6 +335,7 @@ return array(
     'application.review-declarations.confirm-text' => 'I declare that the statements made in this application are true
         and that all supporting evidence supplied with regard to my application is correct. I understand that it is an
         offence to make a false declaration',
+    'application.review-declarations.confirm-text-internal' => 'Signature seen?',
     'application.review-declarations.summary' => 'Application summary',
     'application.review-declarations.summary.new-window' => 'View in another window',
     'application.schedule41.licence-is-psv' => 'You cannot transfer operating centres from a PSV licence',
@@ -2260,6 +2261,7 @@ return array(
     'section.name.community_licences' => 'Community licences',
     'section.name.conditions_undertakings' => 'Conditions & undertakings',
     'section.name.convictions_penalties' => 'Convictions & penalties',
+    'section.name.declarations_internal' => 'Declarations',
     'section.name.discs' => 'Discs',
     'section.name.financial_evidence' => 'Financial evidence',
     'section.name.financial_history' => 'Financial history',
