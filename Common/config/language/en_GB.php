@@ -1703,7 +1703,7 @@ return array(
     'lva.section.title.interim' => 'Interim application',
     'lva.section.title.licence_history' => 'Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => 'Adding an operating centre',
-    'lva.section.title.operating_centres' => 'Operating centres',
+    'lva.section.title.operating_centres' => 'Operating centres & authorisation',
     'lva.section.title.overview' => 'Overview',
     'lva.section.title.people' => 'People',
     'lva.section.title.person' => 'Your details',
