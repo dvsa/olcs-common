@@ -118,6 +118,12 @@ class OperatingCentreTest extends MockeryTestCase
                 ],
                 'noOfTrailersRequired' => [
                     'bar2'
+                ],
+                'sufficientParking' => [
+                    'bar5'
+                ],
+                'permission' => [
+                    'bar6'
                 ]
             ],
             'advertisements' => [
@@ -152,6 +158,12 @@ class OperatingCentreTest extends MockeryTestCase
             ],
             'adPlacedDate' => [
                 'foo' => 'bar4'
+            ],
+            'sufficientParking' => [
+                'foo' => 'bar5'
+            ],
+            'permission' => [
+                'foo' => 'bar6'
             ],
             'cake' => 'bar'
         ];

@@ -126,6 +126,23 @@ class OperatingCentre implements MapperInterface
             unset($errors['postcode']);
         }
 
+        if (isset($errors['sufficientParking'])) {
+
+            foreach ($errors['sufficientParking'] as $key => $message) {
+                $formMessages['data']['sufficientParking'][] = $message;
+            }
+
+            unset($errors['sufficientParking']);
+        }
+        if (isset($errors['permission'])) {
+
+            foreach ($errors['permission'] as $key => $message) {
+                $formMessages['data']['permission'][] = $message;
+            }
+
+            unset($errors['permission']);
+        }
+
         if (!empty($errors)) {
             foreach ($errors as $error) {
                 $fm->addCurrentErrorMessage($error);
