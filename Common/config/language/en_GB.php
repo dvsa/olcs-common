@@ -1398,15 +1398,16 @@ return array(
     'internal.documents.documents_copied' => 'Successfully copied the document(s)',
     'internal.documents.documents_moved' => 'Successfully moved the document(s),',
     'internal.documents.relink_documents' => 'Relink documents',
+    'internal.fee-details.title' => 'Fee details',
+    'internal.fee-payment.over-payment-double' => 'The payment is more than <b>double</b> the total outstanding!! A
+        refund will be created for the overpayment. Would you like to continue? ',
+    'internal.fee-payment.over-payment-standard' => 'The payment is more than the total outstanding. A refund will be
+        created for the overpayment. Would you like to continue?',
     'internal.fee-payment.part-payment-multiple' => 'The payment amount is less than the total outstanding amount. Would
         you like to continue with the payment? The invoices will be paid in date order starting with the earliest
         first',
     'internal.fee-payment.part-payment-single' => 'The payment amount is less than the total outstanding amount. Would
         you like to continue with the payment? ',
-    'internal.fee-payment.over-payment-standard' => 'The payment is more than the total outstanding.
-        A refund will be created for the overpayment. Would you like to continue?',
-    'internal.fee-payment.over-payment-double' => 'The payment is more than <b>double</b> the total outstanding!!
-        A refund will be created for the overpayment. Would you like to continue? ',
     'internal.inspection-request.form.12-month' => '12 month',
     'internal.inspection-request.form.3-month' => '3 month',
     'internal.inspection-request.form.6-month' => '6 month',
@@ -1451,6 +1452,7 @@ return array(
     'internal.interim.vehicles.table.weight' => 'Gross plated weight (kg)',
     'internal.new_application.task_description' => 'Application Fee Due',
     'internal.save.button' => 'Save',
+    'internal.transaction-details.title' => 'Transaction details',
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
