@@ -31,6 +31,7 @@ class MultipleFileUpload extends Fieldset
         $this->setLabel('Upload file');
 
         $list = new FileUploadList('list');
+        
         $this->add($list);
 
         $messages = new Element\Hidden('__messages__');

@@ -21,6 +21,11 @@ use Zend\Form\Element\Submit;
 class FileUploadList extends Fieldset
 {
     /**
+     * array of image extensions that can be previewed
+     */
+    protected $previewableExtensions = ['gif', 'jpg', 'jpeg', 'bmp', 'tif', 'tiff', 'png'];
+
+    /**
      * Set the files in the file list
      *
      * @param array $fileData
@@ -73,7 +78,46 @@ class FileUploadList extends Fieldset
             $fileItem->add($id);
             $fileItem->add($version);
 
+            // show image previews if permitted
+            if (($this->getOption('preview_images') === true) && $this->isPreviewableImage($file)) {
+
+                $imagePreview = new Html('preview', array('render-container' => false));
+                $imagePreview->setValue(
+                    '<p><img src="' . $file['url'] . '" /></p>'
+                );
+                $fileItem->add($imagePreview);
+
+            }
             $this->add($fileItem);
+
         }
+    }
+
+    /**
+     * Is this file an image we can preview?
+     *
+     * @param $file
+     * @return bool
+     */
+    private function isPreviewableImage($file)
+    {
+        if (
+            in_array(
+                strtolower(pathinfo($file['filename'], PATHINFO_EXTENSION)),
+                $this->getPreviewableExtensions()
+            )
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Return list of image extensions we can preview
+     * @return mixed
+     */
+    public function getPreviewableExtensions()
+    {
+        return $this->previewableExtensions;
     }
 }
