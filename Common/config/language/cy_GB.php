@@ -20,10 +20,12 @@ return array(
     'ERR_OC_PC_TA_GB' => '{WELSH} Your operating centre is in %s traffic area, which differs to your first operating
         centre (%s). You will need to apply for more than one licence. <a href="#">Read more</a>',
     'ERR_OC_PC_TA_NI' => '{WELSH} Your Operating Centre must be located in Northern Ireland',
+    'ERR_OC_PERMISSION' => '{WELSH} You must check this box to continue',
     'ERR_OC_PSV_SUM_1A' => '{WELSH} The sum of small, medium and large vehicles does not match the total number of
         vehicles',
     'ERR_OC_PSV_SUM_1B' => '{WELSH} The sum of small and medium vehicles does not match the total number of vehicles',
     'ERR_OC_R_1' => '{WELSH} The total number of vehicles on a restricted licence cannot exceed 2',
+    'ERR_OC_SUFFICIENT_PARKING' => '{WELSH} You must check this box to continue',
     'ERR_OC_TA_1' => '{WELSH} Please select a traffic area',
     'ERR_OC_T_1' => '{WELSH} If you are only applying for one operating centre, the total number of authorised trailers
         must be the same as at your operating centre',

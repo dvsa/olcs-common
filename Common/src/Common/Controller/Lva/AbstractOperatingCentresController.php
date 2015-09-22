@@ -146,7 +146,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $dtoClass = $this->updateCommandMap[$this->lva];
         $response = $this->handleCommand($dtoClass::create($dtoData));
-
         if ($response->isOk()) {
             if ($crudAction !== null) {
                 return $this->handleCrudAction($crudAction);
