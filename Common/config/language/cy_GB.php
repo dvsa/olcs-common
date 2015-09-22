@@ -1750,7 +1750,7 @@ return array(
     'lva.section.title.interim' => '{WELSH} Interim application',
     'lva.section.title.licence_history' => '{WELSH} Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => '{WELSH} Adding an operating centre',
-    'lva.section.title.operating_centres' => '{WELSH} Operating centres',
+    'lva.section.title.operating_centres' => '{WELSH} Operating centres & authorisation',
     'lva.section.title.overview' => '{WELSH} Overview',
     'lva.section.title.people' => '{WELSH} People',
     'lva.section.title.person' => '{WELSH} Your details',
