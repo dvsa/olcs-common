@@ -118,7 +118,6 @@ class FinancialHistoryData
      */
     public $disqualified = null;
 
-
     /**
      * @Form\Attributes({"value":"<h3 class=js-financial-history>%s</h3>", "data-container-class":"legend"})
      * @Form\Options({"tokens":{"application_previous-history_financial-history.insolvencyDetails.title"}})

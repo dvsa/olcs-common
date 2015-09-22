@@ -13,6 +13,7 @@ return array(
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
+    'ERR_MIME' => 'The type of file you attempted to upload is not allowed',
     'ERR_OC_AD_DT_1' => 'Please enter the date the advertisement was placed',
     'ERR_OC_AD_IN_1' => 'Please enter a newspaper name',
     'ERR_OC_CL_1' => 'The number of community licences must not exceed the the total number of vehicles',

@@ -13,6 +13,7 @@ return array(
     'Authorisation' => '{WELSH} Authorisation',
     'Confirm' => '{WELSH} Confirm',
     'Continue' => '{WELSH} Continue',
+    'ERR_MIME' => '{WELSH} The type of file you attempted to upload is not allowed',
     'ERR_OC_AD_DT_1' => '{WELSH} Please enter the date the advertisement was placed',
     'ERR_OC_AD_IN_1' => '{WELSH} Please enter a newspaper name',
     'ERR_OC_CL_1' => '{WELSH} The number of community licences must not exceed the the total number of vehicles',
