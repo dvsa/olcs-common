@@ -12,11 +12,14 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true),
+                'add' => array('class' => 'primary', 'id' => 'addLarge'),
+                'edit' => array('requireRows' => true, 'id' => 'editLarge'),
+                'delete' => array('class' => 'secondary', 'requireRows' => true, 'id' => 'deleteLarge'),
                 'transfer' => array(
-                    'label' => 'Transfer', 'class' => 'secondary js-require--multiple', 'requireRows' => true
+                    'label' => 'Transfer',
+                    'class' => 'secondary js-require--multiple',
+                    'requireRows' => true,
+                    'id' => 'transferLarge'
                 )
             )
         ),
