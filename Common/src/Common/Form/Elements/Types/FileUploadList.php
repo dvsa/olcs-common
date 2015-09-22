@@ -78,18 +78,18 @@ class FileUploadList extends Fieldset
             $fileItem->add($id);
             $fileItem->add($version);
 
-            $this->add($fileItem);
-
             // show image previews if permitted
             if (($this->getOption('preview_images') === true) && $this->isPreviewableImage($file)) {
 
-                $imagePreview = new Html('preview', array('render-container' => true));
+                $imagePreview = new Html('preview', array('render-container' => false));
                 $imagePreview->setValue(
                     '<p><img src="' . $file['url'] . '" /></p>'
                 );
-                $this->add($imagePreview);
+                $fileItem->add($imagePreview);
 
             }
+            $this->add($fileItem);
+
         }
     }
 

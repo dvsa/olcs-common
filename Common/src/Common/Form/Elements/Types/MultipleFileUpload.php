@@ -31,10 +31,7 @@ class MultipleFileUpload extends Fieldset
         $this->setLabel('Upload file');
 
         $list = new FileUploadList('list');
-
-        if (isset($options['preview_images']) && $options['preview_images']) {
-            $list->setShowImagesPreviews(true);
-        }
+        
         $this->add($list);
 
         $messages = new Element\Hidden('__messages__');
