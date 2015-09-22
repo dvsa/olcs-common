@@ -1427,6 +1427,11 @@ return array(
     'internal.documents.documents_copied' => '{WELSH} Successfully copied the document(s)',
     'internal.documents.documents_moved' => '{WELSH} Successfully moved the document(s),',
     'internal.documents.relink_documents' => '{WELSH} Relink documents',
+    'internal.fee-details.title' => '{WELSH} Fee details',
+    'internal.fee-payment.over-payment-double' => '{WELSH} The payment is more than <b>double</b> the total
+        outstanding!! A refund will be created for the overpayment. Would you like to continue? ',
+    'internal.fee-payment.over-payment-standard' => '{WELSH} The payment is more than the total outstanding. A refund
+        will be created for the overpayment. Would you like to continue?',
     'internal.fee-payment.part-payment-multiple' => '{WELSH} The payment amount is less than the total outstanding
         amount. Would you like to continue with the payment? The invoices will be paid in date order starting with the
         earliest first',
@@ -1478,6 +1483,7 @@ return array(
     'internal.interim.vehicles.table.weight' => '{WELSH} Gross plated weight (kg)',
     'internal.new_application.task_description' => '{WELSH} Application Fee Due',
     'internal.save.button' => '{WELSH} Save',
+    'internal.transaction-details.title' => '{WELSH} Transaction details',
     'internal.transport_manager.responsibilities.other_licence' => '{WELSH} other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => '{WELSH} Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => '{WELSH} Edit other licence',

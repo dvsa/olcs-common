@@ -48,7 +48,6 @@ class ReceivedAmountTest extends \PHPUnit_Framework_TestCase
                 '100',
                 [
                     'minAmountForValidator' => '10',
-                    'maxAmountForValidator' => '100',
                 ],
                 true,
             ],
@@ -56,7 +55,6 @@ class ReceivedAmountTest extends \PHPUnit_Framework_TestCase
                 '10',
                 [
                     'minAmountForValidator' => '10',
-                    'maxAmountForValidator' => '100',
                 ],
                 true,
             ],
@@ -64,15 +62,6 @@ class ReceivedAmountTest extends \PHPUnit_Framework_TestCase
                 '9.99',
                 [
                     'minAmountForValidator' => '10',
-                    'maxAmountForValidator' => '100',
-                ],
-                false,
-            ],
-            [
-                '101',
-                [
-                    'minAmountForValidator' => '10',
-                    'maxAmountForValidator' => '100',
                 ],
                 false,
             ],
