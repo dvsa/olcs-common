@@ -1662,6 +1662,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $class = isset($details['class']) ? $details['class'] : 'secondary';
 
+            $id = isset($details['id']) ? $details['id'] : $name;
+
             $disabled = isset($details['disabled']) ? $details['disabled'] : '';
             if ($disabled) {
                 $class .= ' js-force-disable';
@@ -1671,6 +1673,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $newActions[] = array(
                 'name' => $name,
+                'id' => $id,
                 'value' => $value,
                 'label' => $label,
                 'class' => $class,
