@@ -21,11 +21,6 @@ use Zend\Form\Element\Submit;
 class FileUploadList extends Fieldset
 {
     /**
-     * Flag to toggle image previews on or off
-     */
-    protected $showImagesPreviews = false;
-
-    /**
      * array of image extensions that can be previewed
      */
     protected $previewableExtensions = ['gif', 'jpg', 'jpeg', 'bmp', 'tif', 'tiff', 'png'];
@@ -86,7 +81,7 @@ class FileUploadList extends Fieldset
             $this->add($fileItem);
 
             // show image previews if permitted
-            if ($this->getShowImagesPreviews() && $this->isPreviewableImage($file)) {
+            if (($this->getOption('preview_images') === true) && $this->isPreviewableImage($file)) {
 
                 $imagePreview = new Html('preview', array('render-container' => true));
                 $imagePreview->setValue(
@@ -115,25 +110,6 @@ class FileUploadList extends Fieldset
             return true;
         }
         return false;
-    }
-
-    /**
-     * Can we show image previews?
-     *
-     * @return mixed
-     */
-    public function getShowImagesPreviews()
-    {
-        return $this->showImagesPreviews;
-    }
-
-    /**
-     * Set image previews (default is false)
-     * @param mixed $showImagesPreviews
-     */
-    public function setShowImagesPreviews($showImagesPreviews)
-    {
-        $this->showImagesPreviews = $showImagesPreviews;
     }
 
     /**

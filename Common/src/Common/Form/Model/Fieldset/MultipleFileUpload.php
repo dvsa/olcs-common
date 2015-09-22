@@ -28,7 +28,7 @@ class MultipleFileUpload
      * @Form\Attributes({
      *   "class": "js-upload-list"
      * })
-     * @Form\Options({})
+     * @Form\Options({"preview_images": "true"})
      * @Form\Type("\Common\Form\Elements\Types\FileUploadList")
      */
     public $list = null;
