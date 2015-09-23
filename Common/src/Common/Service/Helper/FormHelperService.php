@@ -34,6 +34,9 @@ class FormHelperService extends AbstractHelperService
 
     const CSRF_TIMEOUT = 3600;
 
+    const MIN_COMPANY_NUMBER_LENGTH = 1;
+    const MAX_COMPANY_NUMBER_LENGTH = 8;
+
     /**
      * Create a form
      *
@@ -645,15 +648,23 @@ class FormHelperService extends AbstractHelperService
      */
     public function processCompanyNumberLookupForm(Form $form, $data, $detailsFieldset, $addressFieldset = null)
     {
-        if (strlen(trim($data[$detailsFieldset]['companyNumber']['company_number'])) === 8) {
+        $companyNumber = $data[$detailsFieldset]['companyNumber']['company_number'];
+        if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH &&
+            strlen($companyNumber) <= self::MAX_COMPANY_NUMBER_LENGTH) {
 
-            try {
-                $result = $this->getServiceLocator()
-                    ->get('Data\CompaniesHouse')
-                    ->search('companyDetails', $data[$detailsFieldset]['companyNumber']['company_number']);
-            } catch (\Exception $e) {
-                // ResponseHelper throws root-level exceptions so can't be more specific here :(
-                $message = 'company_number.search_error.error';
+            list($result, $message) = $this->doCompanySearch($companyNumber);
+
+            // company not found so let's try alternative search with/without leading zero
+            if (!isset($message) && !$result['Count']) {
+                if (substr($companyNumber, 0, 1) === '0' && strlen($companyNumber) == self::MAX_COMPANY_NUMBER_LENGTH) {
+                    $companyNumber = ltrim($companyNumber, '0');
+                } else {
+                    $companyNumber = str_pad($companyNumber, self::MAX_COMPANY_NUMBER_LENGTH, "0", STR_PAD_LEFT);
+                }
+                if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH  &&
+                    strlen($companyNumber) <= self::MAX_COMPANY_NUMBER_LENGTH) {
+                    list($result, $message) = $this->doCompanySearch($companyNumber);
+                }
             }
 
             if (isset($result) && $result['Count'] === 1) {
@@ -684,6 +695,21 @@ class FormHelperService extends AbstractHelperService
                 'company_number' => array($translator->translate($message))
             )
         );
+    }
+
+    protected function doCompanySearch($companyNumber)
+    {
+        $result = null;
+        $message = null;
+        try {
+            $result = $this->getServiceLocator()
+                ->get('Data\CompaniesHouse')
+                ->search('companyDetails', $companyNumber);
+        } catch (\Exception $e) {
+            // ResponseHelper throws root-level exceptions so can't be more specific here :(
+            $message = 'company_number.search_error.error';
+        }
+        return [$result, $message];
     }
 
     /**
