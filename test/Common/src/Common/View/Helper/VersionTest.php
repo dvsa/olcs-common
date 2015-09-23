@@ -18,6 +18,8 @@ use \Common\View\Helper\Version;
  */
 class VersionTest extends PHPUnit_Framework_TestCase
 {
+    protected $viewHelper;
+
     /**
      * Setup the view helper
      */
@@ -43,11 +45,9 @@ class VersionTest extends PHPUnit_Framework_TestCase
      */
     public function testRenderWithoutVersion()
     {
-        $config = array(
+        $config = [];
 
-        );
-
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get', 'getServiceLocator'));
+        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', ['get', 'getServiceLocator']);
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
@@ -68,11 +68,14 @@ class VersionTest extends PHPUnit_Framework_TestCase
      */
     public function testRenderWithVersion()
     {
-        $config = array(
-            'version' => '1.0'
-        );
+        $config = [
+            'version' => [
+                'environment' => 'Unit Test',
+                'release' => '1.0'
+            ]
+        ];
 
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get', 'getServiceLocator'));
+        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', ['get', 'getServiceLocator']);
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
@@ -85,19 +88,29 @@ class VersionTest extends PHPUnit_Framework_TestCase
             ->with('Config')
             ->will($this->returnValue($config));
 
-        $this->assertEquals('V1.0', $this->viewHelper->render());
+        $helper = $this->viewHelper;
+
+        $expected = '<div class="version-header">
+    <p class="environment">Environment: <span class="environment-marker">Unit Test</span></p>
+    <p class="version">Version: <span>1.0</span></p>
+</div>';
+
+        $this->assertEquals($expected, $helper());
     }
 
     /**
-     * Test invoke
+     * Test render with version
      */
-    public function testInvoke()
+    public function testRenderWithoutDetails()
     {
-        $config = array(
-            'version' => '1.0'
-        );
+        $config = [
+            'version' => [
+                'environment' => null,
+                'release' => null
+            ]
+        ];
 
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get', 'getServiceLocator'));
+        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', ['get', 'getServiceLocator']);
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
@@ -110,6 +123,13 @@ class VersionTest extends PHPUnit_Framework_TestCase
             ->with('Config')
             ->will($this->returnValue($config));
 
-        $this->assertEquals('V1.0', $this->viewHelper->__invoke());
+        $helper = $this->viewHelper;
+
+        $expected = '<div class="version-header">
+    <p class="environment">Environment: <span class="environment-marker">unknown</span></p>
+    <p class="version">Version: <span>unknown</span></p>
+</div>';
+
+        $this->assertEquals($expected, $helper());
     }
 }
