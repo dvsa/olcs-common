@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Traits;
 
+use Common\Exception\File\InvalidMimeException;
 use Dvsa\Olcs\Transfer\Command\Document\CreateDocument;
 use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
 use Dvsa\Olcs\Transfer\Command\Document\Upload;
@@ -79,7 +80,19 @@ trait GenericUpload
 
         $response = $this->handleCommand(Upload::create($data));
 
-        return $response->isOk();
+        if ($response->isClientError()) {
+            $messages = $response->getResult()['messages'];
+
+            if (isset($messages['ERR_MIME'])) {
+                throw new InvalidMimeException();
+            }
+        }
+
+        if ($response->isOk()) {
+            return true;
+        }
+
+        throw new \Exception();
     }
 
     /**

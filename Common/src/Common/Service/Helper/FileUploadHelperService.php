@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Helper;
 
+use Common\Exception\File\InvalidMimeException;
 use Zend\Validator\File\FilesSize;
 use Common\Exception\ConfigurationException;
 
@@ -255,10 +256,18 @@ class FileUploadHelperService extends AbstractHelperService
 
         switch ($error) {
             case UPLOAD_ERR_OK:
-                call_user_func(
-                    $callback,
-                    $fileData['file-controls']['file']
-                );
+                try {
+                    call_user_func(
+                        $callback,
+                        $fileData['file-controls']['file']
+                    );
+                } catch (InvalidMimeException $ex) {
+                    $this->invalidMime();
+                    return false;
+                } catch (\Exception $ex) {
+                    $this->failedUpload();
+                    return false;
+                }
                 break;
             case UPLOAD_ERR_PARTIAL:
                 $this->getForm()->setMessages($this->formatErrorMessageForForm('File was only partially uploaded'));
@@ -395,5 +404,15 @@ class FileUploadHelperService extends AbstractHelperService
         }
 
         return $form->get($selector);
+    }
+
+    private function invalidMime()
+    {
+        $this->getForm()->setMessages($this->formatErrorMessageForForm('ERR_MIME'));
+    }
+
+    private function failedUpload()
+    {
+        $this->getForm()->setMessages($this->formatErrorMessageForForm('unknown_error'));
     }
 }
