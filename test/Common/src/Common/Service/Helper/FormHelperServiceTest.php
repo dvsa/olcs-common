@@ -1156,19 +1156,32 @@ class FormHelperServiceTest extends MockeryTestCase
         $helper->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
     }
 
-    public function testProcessCompanyLookupWithNoResults()
+    /**
+     * @dataProvider companyNumberProvider
+     */
+    public function testProcessCompanyLookupWithNoResults($firstNumber, $secondNumber)
     {
         $helper = new FormHelperService();
 
         $service = m::mock()
             ->shouldReceive('search')
-            ->with('companyDetails', '12345678')
+            ->with('companyDetails', $firstNumber)
             ->andReturn(
                 [
                     'Count' => 0,
                     'Results' => []
                 ]
             )
+            ->once()
+            ->shouldReceive('search')
+            ->with('companyDetails', $secondNumber)
+            ->andReturn(
+                [
+                    'Count' => 0,
+                    'Results' => []
+                ]
+            )
+            ->once()
             ->getMock();
 
         $translator = m::mock()
@@ -1193,7 +1206,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $data = [
             'data' => [
                 'companyNumber' => [
-                    'company_number' => '12345678'
+                    'company_number' => $firstNumber
                 ]
             ]
         ];
@@ -1216,6 +1229,14 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn($fieldset);
 
         $helper->processCompanyNumberLookupForm($form, $data, 'data');
+    }
+
+    public function companyNumberProvider()
+    {
+        return [
+            ['01234567', '1234567'],
+            ['1234567', '01234567'],
+        ];
     }
 
     public function testProcessCompanyLookupInvalidNumber()
@@ -1241,7 +1262,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $data = [
             'data' => [
                 'companyNumber' => [
-                    'company_number' => '123'
+                    'company_number' => '123456789'
                 ]
             ]
         ];

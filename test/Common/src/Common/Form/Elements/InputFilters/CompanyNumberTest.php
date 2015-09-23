@@ -1,34 +1,45 @@
 <?php
 
 /**
- * Company Number
+ * Test CompanyNumber
  *
- * @author Someone <someone@valtech.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-namespace Common\Form\Elements\InputFilters;
+namespace CommonTest\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use PHPUnit_Framework_TestCase;
+use Common\Form\Elements\InputFilters\CompanyNumber;
 use Zend\I18n\Validator\Alnum;
 use Zend\Validator\StringLength;
 
 /**
- * Company Number
+ * Test CompanyNumber
  *
- * @author Someone <someone@valtech.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class CompanyNumber extends ZendElement implements InputProviderInterface
+class CompanyNumberTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * Provide default input rules for this element.
-     *
-     * @return array
+    /**+
+     * Holds the element
      */
-    public function getInputSpecification()
+    private $element;
+
+    /**
+     * Setup the element
+     */
+    public function setUp()
     {
-        $specification = [
-            'name' => $this->getName(),
+        $this->element = new CompanyNumber();
+    }
+
+    /**
+     * Test validators
+     */
+    public function testValidators()
+    {
+        $spec = $this->element->getInputSpecification();
+        $expected = [
+            'name' => null,
             'required' => true,
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim'],
@@ -48,7 +59,7 @@ class CompanyNumber extends ZendElement implements InputProviderInterface
                     'name' => 'Alnum',
                     'options' => [
                         'messages' => [
-                             Alnum::NOT_ALNUM =>
+                            Alnum::NOT_ALNUM =>
                                 'Must be 8 digits; alpha-numeric characters allowed; ' .
                                 'no special characters; mandatory when displayed'
                         ],
@@ -56,7 +67,6 @@ class CompanyNumber extends ZendElement implements InputProviderInterface
                 ]
             ]
         ];
-
-        return $specification;
+        $this->assertEquals($spec, $expected);
     }
 }
