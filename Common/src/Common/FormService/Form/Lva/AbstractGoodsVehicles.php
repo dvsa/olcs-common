@@ -7,19 +7,13 @@
  */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-
 /**
  * Abstract Goods Vehicles Form
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractGoodsVehicles extends AbstractFormService implements ServiceLocatorAwareInterface
+abstract class AbstractGoodsVehicles extends AbstractLvaFormService
 {
-    use ServiceLocatorAwareTrait;
-
     protected $showShareInfo = false;
 
     public function getForm($table)

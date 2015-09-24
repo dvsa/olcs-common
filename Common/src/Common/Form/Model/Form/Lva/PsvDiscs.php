@@ -26,7 +26,7 @@ class PsvDiscs
 
     /**
      * @Form\Name("form-actions")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\Type("Zend\Form\Fieldset")
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;

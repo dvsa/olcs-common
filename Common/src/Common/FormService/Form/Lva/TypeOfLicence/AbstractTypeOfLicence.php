@@ -32,6 +32,11 @@ abstract class AbstractTypeOfLicence extends AbstractFormService
         // no op
     }
 
+    protected function allElementsLocked(Form $form)
+    {
+        // no op
+    }
+
     protected function lockElements(Form $form, $params = [])
     {
         $typeOfLicenceFieldset = $form->get('type-of-licence');
@@ -63,6 +68,8 @@ abstract class AbstractTypeOfLicence extends AbstractFormService
                 $typeOfLicenceFieldset->get('licence-type'),
                 'licence-type-lock-message'
             );
+
+            $this->allElementsLocked($form);
 
             // Disable buttons
             $this->getFormHelper()->disableElement($form, 'form-actions->save');

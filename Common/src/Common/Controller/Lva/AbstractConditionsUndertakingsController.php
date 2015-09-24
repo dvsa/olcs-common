@@ -48,8 +48,6 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $form = $this->getForm();
 
-        $this->alterFormForLva($form);
-
         $this->getAdapter()->attachMainScripts();
 
         return $this->render($this->section, $form, $this->getRenderVariables());

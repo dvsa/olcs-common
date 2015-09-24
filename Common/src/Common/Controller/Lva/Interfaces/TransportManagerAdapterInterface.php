@@ -18,8 +18,6 @@ interface TransportManagerAdapterInterface extends AdapterInterface
 
     public function getTableData($applicationId, $licenceId);
 
-    public function getForm();
-
     public function mustHaveAtLeastOneTm();
 
     public function delete(array $ids, $applicationId);

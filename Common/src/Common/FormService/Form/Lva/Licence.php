@@ -7,17 +7,16 @@
  */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
-
 /**
  * Licence Form
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Licence extends AbstractFormService
+class Licence extends AbstractLvaFormService
 {
     public function alterForm($form)
     {
-        $form->get('form-actions')->remove('saveAndContinue');
+        $this->removeFormAction($form, 'saveAndContinue');
+        $this->setPrimaryAction($form, 'save');
     }
 }

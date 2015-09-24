@@ -4,17 +4,19 @@
  * People Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\FormService\Form\Lva;
+namespace Common\FormService\Form\Lva\People;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\FormService\Form\Lva\AbstractLvaFormService;
 
 /**
  * People Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-class People extends AbstractFormService
+abstract class AbstractPeople extends AbstractLvaFormService
 {
     public function getForm()
     {
@@ -25,14 +27,9 @@ class People extends AbstractFormService
         return $form;
     }
 
-    /**
-     * Make form alterations
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
     protected function alterForm($form)
     {
+        // No op
         return $form;
     }
 }

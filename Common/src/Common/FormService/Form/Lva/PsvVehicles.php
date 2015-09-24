@@ -7,14 +7,12 @@
  */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
-
 /**
  * PSV Vehicles Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class PsvVehicles extends AbstractFormService
+class PsvVehicles extends AbstractLvaFormService
 {
     protected $showShareInfo = false;
 

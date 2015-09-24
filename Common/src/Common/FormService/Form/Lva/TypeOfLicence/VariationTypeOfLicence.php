@@ -2,6 +2,7 @@
 
 namespace Common\FormService\Form\Lva\TypeOfLicence;
 
+use Common\Form\Elements\InputFilters\Lva\BackToApplicationActionLink;
 use Zend\Form\Form;
 
 /**
@@ -21,5 +22,17 @@ class VariationTypeOfLicence extends AbstractTypeOfLicence
             $form->get('type-of-licence')->get('licence-type'),
             $params['currentLicenceType']
         );
+    }
+
+    protected function allElementsLocked(Form $form)
+    {
+        /** @var \Zend\Form\Fieldset $formActions */
+        $formActions = $form->get('form-actions');
+
+        foreach ($formActions->getElements() as $name => $element) {
+            $formActions->remove($name);
+        }
+
+        $formActions->add(new BackToApplicationActionLink());
     }
 }

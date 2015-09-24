@@ -33,41 +33,54 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $this->getAdapter()->addMessages($this->getLicenceId());
 
         /* @var $form \Zend\Form\Form */
-        $form = $this->getAdapter()->getForm();
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-transport_managers')
+            ->getForm();
+
         $table = $this->getAdapter()->getTable('lva-transport-managers-'. $this->location .'-'. $this->lva);
         $table->loadData($this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId()));
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
-        $this->getServiceLocator()->get('FormServiceManager')->get('Lva\\'. ucfirst($this->lva))->alterForm($form);
+        $this->getServiceLocator()->get('FormServiceManager')
+            ->get('Lva\\'. ucfirst($this->lva))
+            ->alterForm($form);
 
         $request = $this->getRequest();
-        if ($request->isPost()) {
 
-            $data = (array) $request->getPost();
-            $form->setData($data);
-
-            // if is it not required to have at least one TM, then remove the validator
-            if (!$this->getAdapter()->mustHaveAtLeastOneTm()) {
-                $form->getInputFilter()->remove('table');
-            }
-
-            $crudAction = $this->getCrudAction(array($data['table']));
-            if ($crudAction !== null) {
-                return $this->handleCrudAction($crudAction);
-            }
-
-            if ($form->isValid()) {
-
-                if ($this->lva !== 'licence') {
-                    $data = ['id' => $this->getIdentifier(), 'section' => 'transportManagers'];
-                    $this->handleCommand(Command\Application\UpdateCompletion::create($data));
-                }
-
-                return $this->completeSection('transport_managers');
-            }
+        if (!$request->isPost()) {
+            return $this->renderForm($form);
         }
 
+        $data = (array) $request->getPost();
+        $form->setData($data);
+
+        // if is it not required to have at least one TM, then remove the validator
+        if (!$this->getAdapter()->mustHaveAtLeastOneTm()) {
+            $form->getInputFilter()->remove('table');
+        }
+
+        $crudAction = $this->getCrudAction(array($data['table']));
+        if ($crudAction !== null) {
+            return $this->handleCrudAction($crudAction);
+        }
+
+        if ($form->isValid()) {
+
+            if ($this->lva !== 'licence') {
+                $data = ['id' => $this->getIdentifier(), 'section' => 'transportManagers'];
+                $this->handleCommand(Command\Application\UpdateCompletion::create($data));
+            }
+
+            return $this->completeSection('transport_managers');
+        }
+
+        return $this->renderForm($form);
+    }
+
+    protected function renderForm($form)
+    {
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
 
         return $this->render('transport_managers', $form);
