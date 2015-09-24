@@ -2,6 +2,7 @@
 
 namespace Common\FormService\Form\Lva\TypeOfLicence;
 
+use Common\Form\Elements\InputFilters\Lva\BackToVariationActionLink;
 use Common\FormService\Form\Lva\Variation;
 use Common\FormService\FormServiceManager;
 use Common\RefData;
@@ -146,6 +147,18 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->with('type-of-licence')
             ->andReturn($tolFieldset);
 
+        $formActions = m::mock();
+        $formActions->shouldReceive('has')->with('save')->andReturn(true);
+        $formActions->shouldReceive('remove')->once()->with('save');
+        $formActions->shouldReceive('has')->with('cancel')->andReturn(true);
+        $formActions->shouldReceive('remove')->once()->with('cancel');
+        $formActions->shouldReceive('has')->with('saveAndContinue')->andReturn(true);
+        $formActions->shouldReceive('remove')->once()->with('saveAndContinue');
+        $formActions->shouldReceive('add')->once()->with(m::type(BackToVariationActionLink::class));
+
+        $mockForm->shouldReceive('has')->with('form-actions')->andReturn(true);
+        $mockForm->shouldReceive('get')->with('form-actions')->andReturn($formActions);
+
         $this->fh->shouldReceive('createForm')
             ->once()
             ->with('Lva\TypeOfLicence')
@@ -168,9 +181,6 @@ class VariationTypeOfLicenceTest extends MockeryTestCase
             ->shouldReceive('disableElement')
             ->once()
             ->with($mockForm, 'type-of-licence->licence-type')
-            ->shouldReceive('disableElement')
-            ->once()
-            ->with($mockForm, 'form-actions->save')
             ->shouldReceive('removeOption')
             ->once()
             ->with($mockLt, RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)

@@ -7,7 +7,7 @@
  */
 namespace Common\FormService\Form\Lva\TypeOfLicence;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Zend\Form\Form;
 use Common\RefData;
 
@@ -16,7 +16,7 @@ use Common\RefData;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractTypeOfLicence extends AbstractFormService
+abstract class AbstractTypeOfLicence extends AbstractLvaFormService
 {
     public function getForm($params = [])
     {
@@ -70,9 +70,6 @@ abstract class AbstractTypeOfLicence extends AbstractFormService
             );
 
             $this->allElementsLocked($form);
-
-            // Disable buttons
-            $this->getFormHelper()->disableElement($form, 'form-actions->save');
         }
 
         if (!$params['canBecomeSpecialRestricted']) {

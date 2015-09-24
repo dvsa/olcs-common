@@ -655,7 +655,8 @@ return array(
             // Community Licences form services
             'lva-licence-community_licences' => LvaFormService\CommunityLicences\LicenceCommunityLicences::class,
             'lva-variation-community_licences' => LvaFormService\CommunityLicences\VariationCommunityLicences::class,
-            'lva-application-community_licences' => LvaFormService\CommunityLicences\ApplicationCommunityLicences::class,
+            'lva-application-community_licences'
+                => LvaFormService\CommunityLicences\ApplicationCommunityLicences::class,
 
             // Safety form services
             'lva-licence-safety' => LvaFormService\Safety::class,

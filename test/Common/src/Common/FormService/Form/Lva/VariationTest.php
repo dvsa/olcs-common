@@ -25,12 +25,37 @@ class VariationTest extends MockeryTestCase
         $this->sut = new Variation();
     }
 
-    /**
-     * No op
-     */
     public function testAlterForm()
     {
         $form = m::mock('\Zend\Form\Form');
+
+        $form->shouldReceive('has')
+            ->with('form-actions')
+            ->andReturn(true)
+            ->shouldReceive('get')
+            ->with('form-actions')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('has')
+                    ->with('saveAndContinue')
+                    ->andReturn(true)
+                    ->shouldReceive('has')
+                    ->with('save')
+                    ->andReturn(true)
+                    ->shouldReceive('get')
+                    ->with('save')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('setAttribute')
+                            ->once()
+                            ->with('class', 'action--primary large')
+                            ->getMock()
+                    )
+                    ->shouldReceive('remove')
+                    ->once()
+                    ->with('saveAndContinue')
+                    ->getMock()
+            );
 
         $this->assertNull($this->sut->alterForm($form));
     }
