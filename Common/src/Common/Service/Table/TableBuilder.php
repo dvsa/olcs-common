@@ -678,6 +678,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         $this->setupAction();
 
+        $this->setupDataAttributes();
+
         return $this;
     }
 
@@ -1796,5 +1798,21 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     protected function shouldPaginate()
     {
         return isset($this->settings['paginate']);
+    }
+
+    protected function setupDataAttributes()
+    {
+        if (isset($this->variables['dataAttributes']) && is_array($this->variables['dataAttributes'])) {
+
+            $attrs = [];
+            foreach ($this->variables['dataAttributes'] as $attribute => $value) {
+                $attrs[] = $attribute . '="' . (string)$value . '"';
+            }
+
+            $this->variables['dataAttributes'] = implode(' ', $attrs);
+            return;
+        }
+
+        $this->variables['dataAttributes'] = '';
     }
 }

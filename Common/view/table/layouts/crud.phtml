@@ -1,4 +1,4 @@
-<form method="post" action="{{action}}" class="table__form">
+<form method="post" action="{{action}}" class="table__form" {{dataAttributes}}>
     <input type="hidden" value="{{hidden}}" name="table">
     <?php echo $this->object->renderLayout('default'); ?>
 </form>
