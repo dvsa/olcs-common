@@ -30,6 +30,14 @@ class Licence extends AbstractData implements AddressProviderInterface
         if (is_null($this->getData($id))) {
             $bundle = is_null($bundle) ? $this->getBundle() : $bundle;
             $data =  $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
+
+            // niFlag is now determined from traffic area
+            if (isset($data['trafficArea']['isNi'])) {
+                $data['niFlag'] = $data['trafficArea']['isNi'] ? 'Y' : 'N';
+            } else {
+                $data['niFlag'] = null;
+            }
+
             $this->setData($id, $data);
         }
         return $this->getData($id);

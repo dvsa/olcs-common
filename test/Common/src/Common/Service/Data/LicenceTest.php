@@ -31,7 +31,22 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
 
     public function testFetchLicenceData()
     {
-        $licence = ['id' => 78, 'isNi' => true, 'trafficArea' => ['id' => 'B']];
+        $licence = [
+            'id' => 78,
+            'trafficArea' => [
+                'id' => 'B',
+                'isNi' => true
+            ]
+        ];
+
+        $expected = [
+            'id' => 78,
+            'trafficArea' => [
+                'id' => 'B',
+                'isNi' => true
+            ],
+            'niFlag' => 'Y',
+        ];
 
         $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', false);
         $mockRestClient->expects($this->once())
@@ -42,9 +57,9 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
         $sut = new Licence();
         $sut->setRestClient($mockRestClient);
 
-        $this->assertEquals($licence, $sut->fetchLicenceData(78));
+        $this->assertEquals($expected, $sut->fetchLicenceData(78));
         //test data is cached
-        $this->assertEquals($licence, $sut->fetchLicenceData(78));
+        $this->assertEquals($expected, $sut->fetchLicenceData(78));
     }
 
     public function testGetAddressBundle()
