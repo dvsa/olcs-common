@@ -231,7 +231,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $data = $this->formatDataForLicenceForm($mode, $data);
         }
 
-        $form = $this->getLicenceForm()->setData($data);
+        $form = $this->getLicenceForm($mode)->setData($data);
 
         if ($mode === 'edit') {
             $form->get('form-actions')->remove('addAnother');
@@ -250,35 +250,39 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return $this->render($mode . '_taxi_phv', $form);
     }
 
-    protected function getLicenceForm()
+    protected function getLicenceForm($mode)
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $form = $formHelper->createFormWithRequest('Lva\TaxiPhvLicence', $this->getRequest());
-        return $this->alterActionForm($form);
+        return $this->alterActionForm($form, $mode);
     }
 
     /**
      * Alter form to process traffic area
      *
      * @param Form $form
+     * @param string $mode edit or add
      */
-    protected function alterActionForm($form)
+    protected function alterActionForm($form, $mode)
     {
         $form->getInputFilter()->get('address')->get('postcode')->setRequired(false);
 
         $trafficArea = $this->getTrafficArea();
-        $trafficAreaValidator = new PrivateHireLicenceTrafficAreaValidator();
-        $trafficAreaValidator->setServiceLocator($this->getServiceLocator());
 
-        $trafficAreaValidator->setPrivateHireLicencesCount(
-            $this->getPrivateHireLicencesCount()
-        );
+        if (!($mode === 'edit' && $this->getPrivateHireLicencesCount() === 1)) {
+            $trafficAreaValidator = new PrivateHireLicenceTrafficAreaValidator();
+            $trafficAreaValidator->setServiceLocator($this->getServiceLocator());
 
-        $trafficAreaValidator->setTrafficArea($trafficArea);
+            $trafficAreaValidator->setPrivateHireLicencesCount(
+                $this->getPrivateHireLicencesCount()
+            );
 
-        $postcodeValidatorChain = $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
-        $postcodeValidatorChain->attach($trafficAreaValidator);
+            $trafficAreaValidator->setTrafficArea($trafficArea);
+
+            $postcodeValidatorChain = $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
+            $postcodeValidatorChain->attach($trafficAreaValidator);
+        }
 
         if (!$trafficArea && $form->get('form-actions')->has('addAnother')) {
             $form->get('form-actions')->remove('addAnother');
@@ -357,29 +361,6 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $this->update($data);
         } else {
             $this->create($data);
-        }
-
-        // set default Traffic Area if we don't have one
-        if (!isset($data['trafficArea'])
-            || empty($data['trafficArea']['id'])
-            && $data['address']['postcode']
-        ) {
-
-            $licencesCount = $this->getPrivateHireLicencesCount();
-            // first Licence was just added or we are editing the first one
-            if ($licencesCount === 0) {
-                $postcodeService = $this->getServiceLocator()->get('postcode');
-
-                try {
-                    $trafficAreaId = $postcodeService->getTrafficAreaByPostcode($data['address']['postcode'])[0];
-                } catch (\Exception $e) {
-                    // handle error from postcode service, just don't set traffic area
-                    $trafficAreaId = null;
-                }
-                if (!empty($trafficAreaId)) {
-                    $this->updateTrafficArea($trafficAreaId);
-                }
-            }
         }
     }
 
