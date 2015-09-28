@@ -706,7 +706,7 @@ return array(
     'application_your-business_business-type.data' => '{WELSH} Business type',
     'application_your-business_business-type.data.type' => '{WELSH} What type of business are you?',
     'application_your-business_business-type.establishment.hint' => '{WELSH} This is where you usually keep your
-        operator licence records',
+        operator licence records<br />(leave blank if it is the same as your correspondence address)',
     'application_your-business_business-type.establishment.label' => '{WELSH} Establishment address',
     'application_your-business_business-type.registered-office.label' => '{WELSH} Registered office address',
     'application_your-business_business-type.transport-consultant.label' => '{WELSH} Transport Consultant',

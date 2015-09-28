@@ -685,7 +685,7 @@ return array(
     'application_your-business_business-type.data' => 'Business type',
     'application_your-business_business-type.data.type' => 'What type of business are you?',
     'application_your-business_business-type.establishment.hint' => 'This is where you usually keep your operator
-        licence records',
+        licence records<br />(leave blank if it is the same as your correspondence address)',
     'application_your-business_business-type.establishment.label' => 'Establishment address',
     'application_your-business_business-type.registered-office.label' => 'Registered office address',
     'application_your-business_business-type.transport-consultant.label' => 'Transport Consultant',
