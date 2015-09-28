@@ -81,6 +81,12 @@ abstract class AbstractOperatingCentresController extends AbstractController
     protected $documents;
 
     /**
+     * Operating centre ID, when editing
+     * @var int|null
+     */
+    protected $operatingCentreId;
+
+    /**
      * Operating centre list action
      */
     public function indexAction()
@@ -258,6 +264,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $resultData = $this->fetchOcItemData();
 
         $this->documents = $resultData['operatingCentre']['adDocuments'];
+        // need to store the operating centre ID so that uploaded documents can be attached
+        $this->operatingCentreId = $resultData['operatingCentre']['id'];
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -406,6 +414,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $data['application'] = $this->getIdentifier();
         }
 
+        if (!empty($this->operatingCentreId)) {
+            $data['operatingCentre'] = $this->operatingCentreId;
+        }
         $this->uploadFile($file, $data);
     }
 
@@ -432,6 +443,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $this->traitHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
     }
 
+    /**
+     * Fetch applicaiton/licence with OC
+     *
+     * @return array
+     */
     protected function fetchOcData()
     {
         $queryDtoClass = $this->listQueryMap[$this->lva];
@@ -440,6 +456,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $response->getResult();
     }
 
+    /**
+     * Fetch application/licence operating centre data
+     *
+     * @return array
+     */
     protected function fetchOcItemData()
     {
         $dtoClass = $this->getItemCommandMap[$this->lva];
