@@ -706,9 +706,6 @@ return array(
             'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
             'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
             'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
-            'LockedDate' => 'Common\BusinessRule\Rule\LockedDate',
-            'PhoneContacts' => 'Common\BusinessRule\Rule\PhoneContacts',
-            'BirthDate' => 'Common\BusinessRule\Rule\BirthDate',
         ]
     ],
     'business_service_manager' => [
@@ -764,9 +761,6 @@ return array(
                 'Common\BusinessService\Service\Lva\Address',
             'TmEmployment' =>
                 'Common\BusinessService\Service\TmEmployment',
-            // User administration
-            'Admin\User' =>
-                'Common\BusinessService\Service\Admin\User',
             // Cases business services
             'Cases\Submission\SubmissionAssignmentTask'
             => 'Common\BusinessService\Service\Cases\Submission\SubmissionAssignmentTask',

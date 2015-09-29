@@ -29,15 +29,13 @@ class UserTypesListDataService implements FactoryInterface, ListDataInterface
      */
     public function fetchListOptions($context = null, $useGroups = false)
     {
-        $options = [
+        return [
             'internal' => 'Internal',
-            'transport-manager' => 'Transport manager',
-            'partner' => 'Partner',
             'local-authority' => 'Local authority',
-            'self-service' => 'Self service',
-            'self-service-no-licence' => 'Self service no licence',
+            'operator' => 'Operator',
+            'partner' => 'Partner',
+            'transport-manager' => 'Transport manager',
         ];
-        return $options;
     }
 
     /**
