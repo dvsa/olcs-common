@@ -1,18 +1,18 @@
 <?php
 
-namespace Common\Service\Cqrs\Command;
+namespace Common\Service\Cqrs\Query;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Dvsa\Olcs\Transfer\Command\CommandInterface;
+use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 
 /**
- * Command Sender
+ * Query Sender
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CommandSender implements FactoryInterface
+class QuerySender implements FactoryInterface
 {
     /**
      * @var TransferAnnotationBuilder
@@ -20,25 +20,25 @@ class CommandSender implements FactoryInterface
     private $annotationBuilder;
 
     /**
-     * @var CommandService
+     * @var QueryService
      */
-    private $commandService;
+    private $queryService;
 
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $this->commandService = $serviceLocator->get('CommandService');
+        $this->queryService = $serviceLocator->get('QueryService');
         $this->annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
 
         return $this;
     }
 
     /**
-     * @param CommandInterface $command
+     * @param QueryInterface $query
      * @return \Common\Service\Cqrs\Response
      */
-    public function send(CommandInterface $command)
+    public function send(QueryInterface $query)
     {
-        $command = $this->annotationBuilder->createCommand($command);
-        return $this->commandService->send($command);
+        $query = $this->annotationBuilder->createQuery($query);
+        return $this->queryService->send($query);
     }
 }
