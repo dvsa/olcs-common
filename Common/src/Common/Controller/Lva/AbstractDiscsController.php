@@ -74,8 +74,6 @@ abstract class AbstractDiscsController extends AbstractController
 
         $form = $this->getDiscsForm()->setData($data);
 
-        $this->alterFormForLva($form);
-
         $this->getServiceLocator()->get('Script')->loadFiles(['forms/filter']);
 
         if (!is_null($this->spacesRemaining) && $this->spacesRemaining < 0) {

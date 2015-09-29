@@ -35,22 +35,24 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     public function indexAction()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
-        $adapter = $this->getAdapter();
-        $adapter->loadPeopleData($this->lva, $this->getIdentifier());
+        $this->getAdapter()->loadPeopleData($this->lva, $this->getIdentifier());
 
         if ($this->location === 'external') {
             $this->addGuidanceMessage();
         }
 
-        if ($adapter->isSoleTrader()) {
+        if ($this->getAdapter()->isSoleTrader()) {
             return $this->handleSoleTrader();
         }
 
-        /**
-         * Could bung this in another method, but since it's everything other
-         * than sole trader, it makes no real difference
-         */
+        return $this->handleNonSoleTrader();
+    }
 
+    /**
+     * Handle all except sole trader
+     */
+    private function handleNonSoleTrader()
+    {
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -72,15 +74,15 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             ->getForm();
         // @todo move alterForm and alterFormForOrganisation logic into form services
 
-        $table = $adapter->createTable();
+        $table = $this->getAdapter()->createTable();
 
         $form->get('table')
             ->get('table')
             ->setTable($table);
 
-        $this->alterForm($form, $table, $adapter->getOrganisationType());
+        $this->alterForm($form, $table, $this->getAdapter()->getOrganisationType());
 
-        $adapter->alterFormForOrganisation($form, $table);
+        $this->getAdapter()->alterFormForOrganisation($form, $table);
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
 
@@ -89,8 +91,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     /**
      * Handle indexAction if a sole trader
-     *
-     * @return type
      */
     private function handleSoleTrader()
     {
@@ -110,12 +110,30 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             }
         }
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $params = [
+            'location' => $this->location,
+            'canModify' => $adapter->canModify(),
+            'orgType' => $adapter->getOrganisationType()
+        ];
 
-        $form = $formHelper->createForm('Lva\SoleTrader')->setData($data);
+        if ($this->location === 'internal') {
+            $personId = (isset($personData['person']['id'])) ? $personData['person']['id'] : null;
 
-        $this->alterFormForLva($form);
-        $adapter->alterAddOrEditFormForOrganisation($form);
+            $params['disqualifyUrl'] = $this->url()->fromRoute(
+                'operator/disqualify_person',
+                ['organisation' => $adapter->getOrganisationId(), 'person' => $personId]
+            );
+            $params['isDisqualified'] = $this->isPersonDisqualified($personData);
+            $params['personId'] = $personId;
+        }
+
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-sole_trader')
+            ->getForm($params);
+
+        $form->setData($data);
+
         $this->alterCrudForm($form, 'edit', $adapter->getOrganisation());
 
         if ($request->isPost() && $form->isValid()) {

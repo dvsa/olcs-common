@@ -19,16 +19,6 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     TransportManagerAdapterInterface
 {
     /**
-     * Get transport managers form
-     *
-     * @return \Zend\Form\Form
-     */
-    public function getForm()
-    {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\TransportManagers');
-    }
-
-    /**
      * Get the table
      *
      * @return \Common\Service\Table\TableBuilder

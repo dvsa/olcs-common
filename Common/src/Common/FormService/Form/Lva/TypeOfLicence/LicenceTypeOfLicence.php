@@ -17,4 +17,10 @@ class LicenceTypeOfLicence extends AbstractTypeOfLicence
 
         $this->lockElements($form, $params);
     }
+
+    protected function allElementsLocked(Form $form)
+    {
+        $this->removeStandardFormActions($form);
+        $this->addBackToOverviewLink($form, 'licence');
+    }
 }

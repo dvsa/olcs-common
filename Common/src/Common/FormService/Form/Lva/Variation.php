@@ -7,17 +7,16 @@
  */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
-
 /**
  * Variation Form
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Variation extends AbstractFormService
+class Variation extends AbstractLvaFormService
 {
     public function alterForm($form)
     {
-        // No op
+        $this->removeFormAction($form, 'saveAndContinue');
+        $this->setPrimaryAction($form, 'save');
     }
 }

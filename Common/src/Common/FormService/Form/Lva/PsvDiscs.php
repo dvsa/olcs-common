@@ -7,14 +7,12 @@
  */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
-
 /**
  * PSV Discs Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class PsvDiscs extends AbstractFormService
+class PsvDiscs extends AbstractLvaFormService
 {
     public function getForm()
     {

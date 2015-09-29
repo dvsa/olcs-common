@@ -31,11 +31,13 @@ class VariationGoodsVehiclesTest extends MockeryTestCase
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->formHelper->shouldReceive('getServiceLocator')
+            ->andReturn($this->sm);
+
         $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 
         $this->sut = new VariationGoodsVehicles();
         $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setServiceLocator($this->sm);
         $this->sut->setFormServiceLocator($this->formService);
     }
 
@@ -69,15 +71,21 @@ class VariationGoodsVehiclesTest extends MockeryTestCase
         $mockForm->shouldReceive('getInputFilter->get->get->getValidatorChain->attach')
             ->with($mockValidator);
 
+        $formActions = m::mock();
+        $formActions->shouldReceive('has')->with('save')->andReturn(true);
+        $formActions->shouldReceive('remove')->once()->with('save');
+        $formActions->shouldReceive('has')->with('cancel')->andReturn(true);
+        $formActions->shouldReceive('remove')->once()->with('cancel');
+        $formActions->shouldReceive('has')->with('saveAndContinue')->andReturn(true);
+        $formActions->shouldReceive('remove')->once()->with('saveAndContinue');
+
+        $mockForm->shouldReceive('has')->with('form-actions')->andReturn(true);
+        $mockForm->shouldReceive('get')->with('form-actions')->andReturn($formActions);
+
         // <<--- START SUT::alterForm
-        $mockVariation = m::mock('\Common\FormService\FormServiceInterface');
-        $this->formService->setService('lva-variation', $mockVariation);
 
         $mockLicenceVariationVehicles = m::mock('\Common\FormService\FormServiceInterface');
         $this->formService->setService('lva-licence-variation-vehicles', $mockLicenceVariationVehicles);
-
-        $mockVariation->shouldReceive('alterForm')
-            ->with($mockForm);
 
         $mockLicenceVariationVehicles->shouldReceive('alterForm')
             ->with($mockForm);

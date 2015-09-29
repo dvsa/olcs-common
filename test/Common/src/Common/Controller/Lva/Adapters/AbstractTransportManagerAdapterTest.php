@@ -26,14 +26,6 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
     }
 
-    public function testGetForm()
-    {
-        $mockForm = m::mock('StdClass');
-        $this->sm->shouldReceive('get->createForm')->once()->with('Lva\TransportManagers')->andReturn($mockForm);
-
-        $this->assertEquals($mockForm, $this->sut->getForm());
-    }
-
     public function testGetTable()
     {
         $mockTable = m::mock('StdClass');

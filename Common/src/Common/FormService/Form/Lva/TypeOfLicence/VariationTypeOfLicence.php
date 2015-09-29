@@ -22,4 +22,10 @@ class VariationTypeOfLicence extends AbstractTypeOfLicence
             $params['currentLicenceType']
         );
     }
+
+    protected function allElementsLocked(Form $form)
+    {
+        $this->removeStandardFormActions($form);
+        $this->addBackToOverviewLink($form, 'variation');
+    }
 }

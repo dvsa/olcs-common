@@ -16,7 +16,7 @@ class VariationGoodsVehicles extends AbstractGoodsVehicles
 {
     protected function alterForm($form)
     {
-        $this->getFormServiceLocator()->get('lva-variation')->alterForm($form);
+        $this->removeStandardFormActions($form);
         $this->getFormServiceLocator()->get('lva-licence-variation-vehicles')->alterForm($form);
     }
 }

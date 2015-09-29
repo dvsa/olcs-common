@@ -1,24 +1,24 @@
 <?php
 
 /**
- * ConditionsUndertakings Form
+ * Community Licences
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-namespace Common\FormService\Form\Lva;
+namespace Common\FormService\Form\Lva\CommunityLicences;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\FormService\Form\Lva\AbstractLvaFormService;
 
 /**
- * ConditionsUndertakings Form
+ * Community Licences
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class ConditionsUndertakings extends AbstractFormService
+abstract class AbstractCommunityLicences extends AbstractLvaFormService
 {
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\ConditionsUndertakings');
+        $form = $this->getFormHelper()->createForm('Lva\CommunityLicences');
 
         $this->alterForm($form);
 

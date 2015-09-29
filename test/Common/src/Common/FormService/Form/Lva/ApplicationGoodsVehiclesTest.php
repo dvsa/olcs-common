@@ -31,11 +31,12 @@ class ApplicationGoodsVehiclesTest extends MockeryTestCase
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->formHelper->shouldReceive('getServiceLocator')
+            ->andReturn($this->sm);
         $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 
         $this->sut = new ApplicationGoodsVehicles();
         $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setServiceLocator($this->sm);
         $this->sut->setFormServiceLocator($this->formService);
     }
 

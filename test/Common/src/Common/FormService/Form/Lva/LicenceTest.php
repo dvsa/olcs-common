@@ -22,7 +22,6 @@ class LicenceTest extends MockeryTestCase
 
     public function setUp()
     {
-        $this->markTestSkipped();
         $this->sut = new Licence();
     }
 
@@ -30,13 +29,32 @@ class LicenceTest extends MockeryTestCase
     {
         $form = m::mock('\Zend\Form\Form');
 
-        $form->shouldReceive('get')
+        $form->shouldReceive('has')
+            ->with('form-actions')
+            ->andReturn(true)
+            ->shouldReceive('get')
             ->with('form-actions')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('remove')
-                ->with('saveAndContinue')
-                ->getMock()
+                    ->shouldReceive('has')
+                    ->with('saveAndContinue')
+                    ->andReturn(true)
+                    ->shouldReceive('has')
+                    ->with('save')
+                    ->andReturn(true)
+                    ->shouldReceive('get')
+                    ->with('save')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('setAttribute')
+                            ->once()
+                            ->with('class', 'action--primary large')
+                            ->getMock()
+                    )
+                    ->shouldReceive('remove')
+                    ->once()
+                    ->with('saveAndContinue')
+                    ->getMock()
             );
 
         $this->assertNull($this->sut->alterForm($form));
