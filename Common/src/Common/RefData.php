@@ -53,6 +53,11 @@ class RefData
     const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
     const LICENCE_STATUS_UNLICENSED = 'lsts_unlicenced';
     const LICENCE_STATUS_NOT_SUBMITTED = 'lsts_not_submitted';
+    const LICENCE_STATUS_CONSIDERATION = 'lsts_consideration';
+    const LICENCE_STATUS_GRANTED = 'lsts_granted';
+    const LICENCE_STATUS_NOT_TAKEN_UP = 'lsts_ntu';
+    const LICENCE_STATUS_WITHDRAWN = 'lsts_withdrawn';
+    const LICENCE_STATUS_REFUSED = 'lsts_refused';
 
     /**
      * Application statuses
