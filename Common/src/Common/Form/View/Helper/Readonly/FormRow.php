@@ -23,6 +23,7 @@ class FormRow extends AbstractHelper
      * @var array
      */
     protected $classMap = [
+        'Zend\Form\Element\Radio' => 'readonlyformselect',
         'Zend\Form\Element\Select' => 'readonlyformselect',
         'Zend\Form\Element\DateSelect' => 'readonlyformdateselect',
         'Common\Form\Elements\Types\Table' => 'readonlyformtable'

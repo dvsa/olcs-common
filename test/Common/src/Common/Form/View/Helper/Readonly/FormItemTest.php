@@ -23,4 +23,13 @@ class FormItemTest extends TestCase
 
         $this->assertEquals('test', $markup);
     }
+
+    public function testRender()
+    {
+        $element = new \Zend\Form\Element();
+        $element->setValue('foo');
+
+        $sut = new FormItem();
+        $this->assertSame('foo', $sut->render($element));
+    }
 }
