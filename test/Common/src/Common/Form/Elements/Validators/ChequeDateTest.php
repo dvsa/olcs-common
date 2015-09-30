@@ -44,11 +44,11 @@ class ChequeDateTest extends PHPUnit_Framework_TestCase
                 true
             ),
             array(
-                date('Y-m-d', strtotime('+6 months')),
+                date('Y-m-d', strtotime('-6 months')),
                 true
             ),
             array(
-                date('Y-m-d', strtotime('+7 months')),
+                date('Y-m-d', strtotime('-7 months')),
                 false
             )
         );
