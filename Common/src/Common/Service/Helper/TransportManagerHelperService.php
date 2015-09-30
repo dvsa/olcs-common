@@ -163,6 +163,15 @@ class TransportManagerHelperService extends AbstractHelperService
         if (!is_null($transportManager['removedDate'])) {
             $fieldset->get('convictions')->get('table')->getTable()->setDisabled(true);
             $fieldset->get('previousLicences')->get('table')->getTable()->setDisabled(true);
+
+            // remove hyperlinks from table
+            $column = $fieldset->get('convictions')->get('table')->getTable()->getColumn('convictionDate');
+            unset($column['type']);
+            $fieldset->get('convictions')->get('table')->getTable()->setColumn('convictionDate', $column);
+
+            $column = $fieldset->get('previousLicences')->get('table')->getTable()->getColumn('licNo');
+            unset($column['type']);
+            $fieldset->get('previousLicences')->get('table')->getTable()->setColumn('licNo', $column);
         }
     }
 

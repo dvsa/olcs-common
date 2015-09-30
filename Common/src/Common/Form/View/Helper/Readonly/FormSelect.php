@@ -86,7 +86,7 @@ class FormSelect extends AbstractHelper
      */
     public function render(ElementInterface $element)
     {
-        if (!($element instanceof Select)) {
+        if (!($element instanceof Select) && !($element instanceof \Zend\Form\Element\Radio)) {
             return '';
         }
 
