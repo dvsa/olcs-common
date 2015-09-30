@@ -1009,8 +1009,7 @@ return array(
     'entity-view-table-current-applications.table.datePublished' => 'Date published',
     'entity-view-table-current-applications.table.dateReceived' => 'Date received',
     'entity-view-table-current-applications.table.grantDate' => 'Grant date',
-    'entity-view-table-current-applications.table.objectionRepresentationMade' => 'Objection or <br>representation
-        made?',
+    'entity-view-table-current-applications.table.objectionRepresentationMade' => 'Opposition made?',
     'entity-view-table-current-applications.table.oooDate' => 'OOO Date',
     'entity-view-table-current-applications.table.oorDate' => 'OOR Date',
     'entity-view-table-current-applications.table.publicationNumber' => 'Publication <br>number',

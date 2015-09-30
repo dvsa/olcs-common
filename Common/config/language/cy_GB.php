@@ -1031,8 +1031,7 @@ return array(
     'entity-view-table-current-applications.table.datePublished' => '{WELSH} Date published',
     'entity-view-table-current-applications.table.dateReceived' => '{WELSH} Date received',
     'entity-view-table-current-applications.table.grantDate' => '{WELSH} Grant date',
-    'entity-view-table-current-applications.table.objectionRepresentationMade' => '{WELSH} Objection or
-        <br>representation made?',
+    'entity-view-table-current-applications.table.objectionRepresentationMade' => '{WELSH} Opposition made?',
     'entity-view-table-current-applications.table.oooDate' => '{WELSH} OOO Date',
     'entity-view-table-current-applications.table.oorDate' => '{WELSH} OOR Date',
     'entity-view-table-current-applications.table.publicationNumber' => '{WELSH} Publication <br>number',
