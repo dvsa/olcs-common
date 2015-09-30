@@ -34,12 +34,12 @@ class Contact
      *     "label": "application_your-business_business-type.contact-details.business-phone"
      * })
      * @Form\Required(false)
-     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
+     * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({
      *     "name": "Zend\Validator\Regex",
      *     "options": {
-     *         "pattern": "/^[0-9 ]+$/",
+     *         "pattern": "/^[0-9 \(\)\-\+]+$/",
      *         "messages": {
      *             "regexNotMatch": "The input must contain only digits or spaces"
      *         }
@@ -71,12 +71,12 @@ class Contact
      * "application_your-business_business-type.contact-details.home-phone"
      * })
      * @Form\Required(false)
-     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
+     * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({
      *     "name": "Zend\Validator\Regex",
      *     "options": {
-     *         "pattern": "/^[0-9 ]+$/",
+     *         "pattern": "/^[0-9 \(\)\-\+]+$/",
      *         "messages": {
      *             "regexNotMatch": "The input must contain only digits or spaces"
      *         }
@@ -108,12 +108,12 @@ class Contact
      * "application_your-business_business-type.contact-details.mobile-phone"
      * })
      * @Form\Required(false)
-     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
+     * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({
      *     "name": "Zend\Validator\Regex",
      *     "options": {
-     *         "pattern": "/^[0-9 ]+$/",
+     *         "pattern": "/^[0-9 \(\)\-\+]+$/",
      *         "messages": {
      *             "regexNotMatch": "The input must contain only digits or spaces"
      *         }
@@ -144,12 +144,12 @@ class Contact
      *     "label": "application_your-business_business-type.contact-details.fax-phone"
      * })
      * @Form\Required(false)
-     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
+     * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({
      *     "name": "Zend\Validator\Regex",
      *     "options": {
-     *         "pattern": "/^[0-9 ]+$/",
+     *         "pattern": "/^[0-9 \(\)\-\+]+$/",
      *         "messages": {
      *             "regexNotMatch": "The input must contain only digits or spaces"
      *         }
