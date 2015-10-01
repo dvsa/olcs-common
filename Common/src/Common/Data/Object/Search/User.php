@@ -94,11 +94,6 @@ class User extends InternalSearchAbstract
                 'name' => 'role'
             ),
             array(
-                'title' => 'Last login',
-                'name' => 'lastSuccessfulLoginDate',
-                'formatter' => 'Date'
-            ),
-            array(
                 'title' => '',
                 'width' => 'checkbox',
                 'data-field' => 'userId',
