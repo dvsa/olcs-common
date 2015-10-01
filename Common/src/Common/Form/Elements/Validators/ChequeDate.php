@@ -25,14 +25,14 @@ class ChequeDate extends AbstractValidator
     /**
      * @const string
      */
-    const MAX_INTERVAL = '+6 months';
+    const MIN_INTERVAL = '-6 months';
 
     /**
      * Error messages
      * @var array
      */
     protected $messageTemplates = array(
-        self::INVALID => "This date is not allowed to be more than six months in the future",
+        self::INVALID => "Cheque date cannot be older than 6 months",
     );
 
     /**
@@ -41,10 +41,10 @@ class ChequeDate extends AbstractValidator
      */
     public function isValid($value)
     {
-        $date = strtotime($value);
-        $limit = strtotime(self::MAX_INTERVAL);
+        $date = strtotime('noon '. $value);
+        $limit = strtotime('noon' . self::MIN_INTERVAL);
 
-        if ($date > $limit) {
+        if ($date < $limit) {
             $this->error(self::INVALID);
             return false;
         }
