@@ -225,7 +225,7 @@ class ElasticSearch extends AbstractPlugin
             ->setSearch($data['search']);
 
         $view = new ViewModel();
-        $view->setTemplate('new/sections/search/pages/results');
+        $view->setTemplate('sections/search/pages/results');
 
         $view->indexes = $this->getSearchTypeService()->getNavigation('internal-search', ['search' => $sd['search']]);
         $view->results = $this->getSearchService()->fetchResultsTable();
@@ -312,7 +312,7 @@ class ElasticSearch extends AbstractPlugin
             ->setSearch($data['search']);
 
         $view->results = $this->getSearchService()->fetchResultsTable();
-        $view->setTemplate('new/sections/search/pages/results');
+        $view->setTemplate('sections/search/pages/results');
 
         return $view;
     }
