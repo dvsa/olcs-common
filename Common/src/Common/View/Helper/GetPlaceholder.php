@@ -16,21 +16,28 @@ use Zend\View\Model\ViewModel;
  */
 class GetPlaceholder
 {
-    private $value;
+    private $container;
 
     public function __construct($container = null)
     {
-        $this->value = $container->getValue();
+        $this->container = $container;
+    }
+
+    protected function getValue()
+    {
+        return $this->container->getValue();
     }
 
     public function asString()
     {
-        if (is_array($this->value)) {
-            $this->value = reset($this->value);
+        $value = $this->getValue();
+
+        if (is_array($value)) {
+            $value = reset($value);
         }
 
-        if (is_string($this->value)) {
-            return (string)$this->value;
+        if (is_string($value)) {
+            return (string)$value;
         }
 
         return null;
@@ -38,12 +45,14 @@ class GetPlaceholder
 
     public function asView()
     {
-        if (is_array($this->value)) {
-            $this->value = reset($this->value);
+        $value = $this->getValue();
+
+        if (is_array($value)) {
+            $value = reset($value);
         }
 
-        if ($this->value instanceof ViewModel) {
-            return $this->value;
+        if ($value instanceof ViewModel) {
+            return $value;
         }
 
         return null;
@@ -51,12 +60,14 @@ class GetPlaceholder
 
     public function asObject()
     {
-        if (is_array($this->value)) {
-            $this->value = reset($this->value);
+        $value = $this->getValue();
+
+        if (is_array($value)) {
+            $value = reset($value);
         }
 
-        if (is_object($this->value)) {
-            return $this->value;
+        if (is_object($value)) {
+            return $value;
         }
 
         return null;

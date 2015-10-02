@@ -20,8 +20,6 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
     public function testGettersAndSetters()
     {
         $methods = [
-            'PageTitle' => 'Page Title',
-            'PageSubTitle' => 'Page Sub Title',
             'InlineScripts' => 'Inline Scripts',
             'LoadedData' => ['id' => 1],
             'EnabledCsrf' => true
