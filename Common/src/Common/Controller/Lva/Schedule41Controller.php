@@ -259,8 +259,6 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         if ($request->isPost()) {
             $form->setData((array)$request->getPost());
             if ($form->isValid()) {
-                $data = $form->getData();
-
                 $command = Schedule41Reset::create(
                     [
                         'id' => $this->params('application'),
@@ -308,8 +306,6 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         if ($request->isPost()) {
             $form->setData((array)$request->getPost());
             if ($form->isValid()) {
-                $data = $form->getData();
-
                 $command = Schedule41Refuse::create(
                     [
                         'id' => $this->params('application'),
