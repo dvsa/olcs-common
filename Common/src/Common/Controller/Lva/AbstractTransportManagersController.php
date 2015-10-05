@@ -92,6 +92,13 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $form = $this->getAddForm();
 
         if ($request->isPost()) {
+
+            $formData = (array)$request->getPost();
+
+            if (isset($formData['data']['addUser'])) {
+                return $this->redirect()->toRoute(null, ['action' => 'addNewUser'], [], true);
+            }
+
             $formData = (array)$request->getPost();
             $form->setData($formData);
 
@@ -162,7 +169,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $request = $this->getRequest();
 
         $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(\Dvsa\Olcs\Transfer\Query\User\User::create(['id' => $childId]));
+            ->createQuery(\Dvsa\Olcs\Transfer\Query\User\UserSelfserve::create(['id' => $childId]));
         /* @var $response \Common\Service\Cqrs\Response */
         $response = $this->getServiceLocator()->get('QueryService')->send($query);
         $userDetails = $response->getResult();
@@ -238,6 +245,49 @@ abstract class AbstractTransportManagersController extends AbstractController im
         }
 
         return $this->render('addTm-transport_managers', $form);
+    }
+
+    public function addNewUserAction()
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createFormWithRequest('Lva\NewTmUser', $this->getRequest());
+
+        if ($this->getRequest()->isPost()) {
+            $form->setData((array)$this->getRequest()->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $command = Command\Tm\CreateNewUser::create(
+                    [
+                        'application' => $this->getIdentifier(),
+                        'firstName' => $data['data']['forename'],
+                        'familyName' => $data['data']['familyName'],
+                        'birthDate' => $data['data']['birthDate'],
+                        'hasEmail' => isset($data['data']['hasEmail']) ? $data['data']['hasEmail'] : null,
+                        'username' => $data['data']['username'],
+                        'emailAddress' => $data['data']['emailAddress']
+                    ]
+                );
+
+                $response = $this->handleCommand($command);
+
+                if ($response->isOk()) {
+                    return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+                }
+
+                if ($response->isServerError()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentUnknownError();
+                } else {
+                    var_dump($response->getResult());
+                    exit;
+                }
+            }
+        }
+
+        $this->getServiceLocator()->get('Script')->loadFile('lva-tm-add-user');
+
+        return $this->render('add-transport_managers', $form);
     }
 
     protected function getTmDetailsForm($email)

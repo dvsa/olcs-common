@@ -2,6 +2,13 @@
 
 return array(
     'ANY_TO_ST' => '<li>All people apart from the first one</li>',
+    'tm-add-user-forename' => 'First name',
+    'tm-add-user-familyName' => 'Last name',
+    'tm-add-user-birthDate' => 'Date of birth',
+    'tm-add-user-hasEmail' => 'Does this Transport Manager have an email address?',
+    'tm-add-user-username' => 'Username',
+    'tm-add-user-email' => 'Email address',
+    'tm-add-user-confirm-email' => 'Re-enter email address',
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'AP-VEH-1' => 'Please add at least one vehicle',
