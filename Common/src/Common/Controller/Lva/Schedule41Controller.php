@@ -163,27 +163,23 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         $request = $this->getRequest();
 
         $application = $this->handleQuery(
-            Application::create(
-                [
-                    'id' => $this->params('application')
-                ]
+            \Dvsa\Olcs\Transfer\Query\Application\Schedule41Approve::create(
+                ['id' => $this->params('application')]
             )
         )->getResult();
+
+        if (!empty($application['errors'])) {
+            return $this->cannotPublish($application['errors']);
+        }
 
         if ($application['isVariation']) {
             $form = $this->getServiceLocator()
                 ->get('Helper\Form')
-                ->createFormWithRequest(
-                    'VariationApproveSchedule41',
-                    $request
-                );
+                ->createFormWithRequest('VariationApproveSchedule41', $request);
         } else {
             $form = $this->getServiceLocator()
                 ->get('Helper\Form')
-                ->createFormWithRequest(
-                    'GenericConfirmation',
-                    $request
-                );
+                ->createFormWithRequest('GenericConfirmation', $request);
 
             $form->get('messages')->get('message')->setValue('schedule41.approve.application.message');
         }
@@ -219,6 +215,26 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         }
 
         return $this->render('schedule41', $form);
+    }
+
+    /**
+     * Get a form with the cannot publish validation messages
+     *
+     * @param array $errors
+     *
+     * @return \Zend\View\Helper\ViewModel
+     */
+    private function cannotPublish($errors)
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createFormWithRequest('Message', $this->getRequest());
+        $form->setMessage($errors);
+        $form->removeOkButton();
+
+        return $this->render(
+            'publish_application_error',
+            $form
+        );
     }
 
     /**
