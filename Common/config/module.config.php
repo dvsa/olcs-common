@@ -207,6 +207,7 @@ return array(
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
+            'QuerySender' => \Common\Service\Cqrs\Query\QuerySender::class,
             'LanguagePreference' => \Common\Preference\Language::class,
             'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
@@ -427,6 +428,7 @@ return array(
         ),
         'factories' => array(
             'languageLink' => \Common\View\Helper\LanguageLink::class,
+            'getPlaceholder' => \Common\View\Helper\GetPlaceholderFactory::class,
         )
     ),
     'view_manager' => array(

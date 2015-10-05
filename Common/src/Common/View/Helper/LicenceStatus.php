@@ -9,10 +9,12 @@
 namespace Common\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Common\Service\Entity\LicenceEntityService;
+use Common\RefData;
 
 /**
  * LicenceStatus view helper
+ *
+ * @todo maybe rename this as it is now used elsewhere other than licence
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
@@ -27,10 +29,19 @@ class LicenceStatus extends AbstractHelper
      */
     public function __invoke($status)
     {
+        if (is_array($status) && isset($status['colour'])) {
+            return $this->render($status['value'], $status['colour']);
+        }
+
+        return $this->render($status, $this->getColourForStatus($status));
+    }
+
+    protected function render($value, $colour)
+    {
         return sprintf(
             '<span class="status %s">%s</span>',
-            $this->getColourForStatus($status),
-            $this->getView()->translate($status)
+            $colour,
+            $this->getView()->translate($value)
         );
     }
 
@@ -44,18 +55,26 @@ class LicenceStatus extends AbstractHelper
     protected function getColourForStatus($status)
     {
         $colors = [
-            LicenceEntityService::LICENCE_STATUS_VALID => 'green',
-            LicenceEntityService::LICENCE_STATUS_UNDER_CONSIDERATION => 'orange',
-            LicenceEntityService::LICENCE_STATUS_GRANTED => 'orange',
-            LicenceEntityService::LICENCE_STATUS_SUSPENDED => 'orange',
-            LicenceEntityService::LICENCE_STATUS_CURTAILED => 'orange',
-            LicenceEntityService::LICENCE_STATUS_WITHDRAWN => 'red',
-            LicenceEntityService::LICENCE_STATUS_REFUSED => 'red',
-            LicenceEntityService::LICENCE_STATUS_NOT_TAKEN_UP => 'red',
-            LicenceEntityService::LICENCE_STATUS_SURRENDERED => 'red',
-            LicenceEntityService::LICENCE_STATUS_REVOKED => 'red',
-            LicenceEntityService::LICENCE_STATUS_TERMINATED => 'red',
-            LicenceEntityService::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT => 'red',
+            RefData::LICENCE_STATUS_VALID => 'green',
+            RefData::LICENCE_STATUS_SUSPENDED => 'orange',
+            RefData::LICENCE_STATUS_CURTAILED => 'orange',
+            RefData::LICENCE_STATUS_SURRENDERED => 'red',
+            RefData::LICENCE_STATUS_REVOKED => 'red',
+            RefData::LICENCE_STATUS_TERMINATED => 'red',
+            RefData::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT => 'red',
+            RefData::LICENCE_STATUS_UNDER_CONSIDERATION => 'orange',
+            RefData::LICENCE_STATUS_GRANTED => 'orange',
+            RefData::LICENCE_STATUS_WITHDRAWN => 'red',
+            RefData::LICENCE_STATUS_REFUSED => 'red',
+            RefData::LICENCE_STATUS_NOT_TAKEN_UP => 'red',
+            // Application statuses @todo double check these colours
+            RefData::APPLICATION_STATUS_NOT_SUBMITTED => 'grey',
+            RefData::APPLICATION_STATUS_GRANTED => 'green',
+            RefData::APPLICATION_STATUS_UNDER_CONSIDERATION => 'orange',
+            RefData::APPLICATION_STATUS_VALID => 'green',
+            RefData::APPLICATION_STATUS_WITHDRAWN => 'red',
+            RefData::APPLICATION_STATUS_REFUSED => 'red',
+            RefData::APPLICATION_STATUS_NOT_TAKEN_UP => 'red',
         ];
 
         if (isset($colors[$status])) {

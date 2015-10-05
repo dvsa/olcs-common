@@ -1,10 +1,10 @@
 <?php
 
-namespace OlcsTest\Controller\Plugin;
+namespace CommonTest\Controller\Plugin;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use \Common\Controller\Plugin\ElasticSearch;
+use Common\Controller\Plugin\ElasticSearch;
 use Olcs\TestHelpers\ControllerPluginManagerHelper;
 use CommonTest\Bootstrap;
 use Zend\Mvc\MvcEvent;
@@ -56,7 +56,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->pm = m::mock('\Zend\Mvc\Controller\PluginManager[setInvokableClass]')->makePartial();
         $this->pm->setInvokableClass('ElasticSearch', 'Common\Controller\Plugin\ElasticSearch');
 
-        $this->sut = new TestController();
+        $this->sut = new ControllerStub();
         $this->sut->setEvent($this->event);
         $this->sut->setServiceLocator($this->sm);
         $this->sut->setPluginManager($this->pm);
@@ -66,14 +66,12 @@ class ElasticSearchTest extends MockeryTestCase
     {
         $options = [
             'container_name' => 'testcontainer',
-            'layout_template' => 'testlayouttemplate',
             'page_route' => 'testroute'
         ];
 
         $result = $this->sut->pluginInvoke($options);
 
         $this->assertEquals($result->getContainerName(), $options['container_name']);
-        $this->assertEquals($result->getLayoutTemplate(), $options['layout_template']);
         $this->assertEquals($result->getPageRoute(), $options['page_route']);
     }
 
@@ -82,23 +80,8 @@ class ElasticSearchTest extends MockeryTestCase
         $result = $this->sut->pluginInvoke([]);
 
         $this->assertEquals($result->getContainerName(), 'global_search');
-        $this->assertEquals($result->getLayoutTemplate(), 'main-search-results');
         $this->assertEquals($result->getPageRoute(), 'testindex');
     }
-
-    /*
-    public function testPostAction()
-    {
-        $this->sut->postAction();
-    }
-    */
-
-    /*
-    public function testBackAction()
-    {
-        $this->sut->backAction();
-    }
-    */
 
     public function testProcessSearchData()
     {
@@ -260,7 +243,7 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertEquals($result['index'], 'SEARCHINDEX');
     }
 
-    public function testGenerateNavigation()
+    public function testConfigureNavigation()
     {
         $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
         $mockSearchService = m::mock('Common\Service\Data\Search\Search');
@@ -270,16 +253,23 @@ class ElasticSearchTest extends MockeryTestCase
             ['search' => 'foo']
         )->andReturn('MOCKINDEXES');
 
+        $mockPlaceholder = m::mock('Zend\View\Helper\Placeholder');
+        $mockPlaceholder->shouldReceive('getContainer')
+            ->with('horizontalNavigationContainer')
+            ->andReturn(m::mock()->shouldReceive('set')->once()->with('MOCKINDEXES')->getMock());
+
+        $mockViewHelperManager = m::mock('Zend\Mvc\Service\ViewHelperManagerFactory');
+        $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
+
+        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+
         $plugin = $this->sut->getPlugin();
         $plugin->setSearchTypeService($mockSearchTypeService);
         $plugin->setSearchService($mockSearchService);
         $plugin->setSearchData(['search' => 'foo']);
 
         $view = new ViewModel();
-        $result = $plugin->generateNavigation($view);
-
-        $this->assertSame($result, $view);
-        $this->assertEquals($result->indexes, 'MOCKINDEXES');
+        $plugin->configureNavigation();
     }
 
     private function getMockSearchObjectArray()
@@ -346,67 +336,11 @@ class ElasticSearchTest extends MockeryTestCase
         $this->assertEquals('testsearchdata', $plugin->getSearchData());
     }
 
-    public function testGetSetLayoutTemplate()
-    {
-        $plugin = $this->sut->pluginInvoke([]);
-
-        $plugin->setLayoutTemplate('testLayoutTemplate');
-        $this->assertEquals('testLayoutTemplate', $plugin->getLayoutTemplate());
-    }
-
     public function testGetSetPageRoute()
     {
         $plugin = $this->sut->pluginInvoke([]);
 
         $plugin->setPageRoute('testpageroute');
         $this->assertEquals('testpageroute', $plugin->getPageRoute());
-    }
-}
-
-/**
- * Class TestController
- * Provuides a controlled and consistent environment with which to test the plugin.
- * 
- * @package OlcsTest\Controller\Plugin
- */
-class TestController extends \Common\Controller\AbstractActionController
-{
-    /**
-     * Method to test the invoking of the plugin with array of options
-     * @param $options
-     * @return mixed
-     */
-    public function pluginInvoke($options)
-    {
-        $plugin = $this->ElasticSearch($options);
-
-        return $plugin;
-    }
-
-    /**
-     * Method to return the plugin
-     * @return mixed
-     */
-    public function getPlugin()
-    {
-        $plugin = $this->ElasticSearch();
-
-        return $plugin;
-    }
-
-    /**
-     * Method called by controller as a result of plugin calls. Not tested here.
-     *
-     * @param string|ViewModel $view
-     * @param null $pageTitle
-     * @param null $pageSubTitle
-     * @return string|ViewModel
-     */
-    public function renderView($view, $pageTitle = null, $pageSubTitle = null)
-    {
-        $view->pageTitle = $pageTitle;
-        $view->pageSubTitle = $pageSubTitle;
-
-        return $view;
     }
 }

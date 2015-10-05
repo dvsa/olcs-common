@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * Get Placeholder
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+namespace Common\View\Helper;
+
+use Zend\View\Model\ViewModel;
+
+/**
+ * Get Placeholder
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+class GetPlaceholder
+{
+    private $container;
+
+    public function __construct($container = null)
+    {
+        $this->container = $container;
+    }
+
+    protected function getValue()
+    {
+        return $this->container->getValue();
+    }
+
+    public function asString()
+    {
+        $value = $this->getValue();
+
+        if (is_array($value)) {
+            $value = reset($value);
+        }
+
+        if (is_string($value)) {
+            return (string)$value;
+        }
+
+        return null;
+    }
+
+    public function asView()
+    {
+        $value = $this->getValue();
+
+        if (is_array($value)) {
+            $value = reset($value);
+        }
+
+        if ($value instanceof ViewModel) {
+            return $value;
+        }
+
+        return null;
+    }
+
+    public function asObject()
+    {
+        $value = $this->getValue();
+
+        if (is_array($value)) {
+            $value = reset($value);
+        }
+
+        if (is_object($value)) {
+            return $value;
+        }
+
+        return null;
+    }
+}

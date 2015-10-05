@@ -40,14 +40,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     private $loggedInUser;
 
     /**
-     * These properties must be defined to use the GenericRenderView trait
-     */
-    protected $pageTitle = null;
-    protected $pageSubTitle = null;
-    protected $pageLayout = null;
-    protected $headerViewTemplate = 'partials/header';
-
-    /**
      * onDispatch now populates this with the route for the index of
      * the controller curently being executed.
      *
@@ -83,13 +75,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @var array
      */
     protected $loadedData;
-
-    /**
-     * Holds the layout
-     *
-     * @var string
-     */
-    protected $layout;
 
     /**
      * Data map
@@ -1178,26 +1163,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected function getCaughtResponse()
     {
         return $this->caughtResponse;
-    }
-
-    /**
-     * Set the layout
-     *
-     * @param string $layout
-     */
-    protected function setLayout($layout)
-    {
-        $this->layout = $layout;
-    }
-
-    /**
-     * Get the layout
-     *
-     * @param string $layout
-     */
-    protected function getLayout()
-    {
-        return $this->layout;
     }
 
     /**
