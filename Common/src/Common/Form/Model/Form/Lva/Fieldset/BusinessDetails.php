@@ -34,7 +34,7 @@ class BusinessDetails
     public $tradingNames = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"","placeholder":"","class":"extra-long"})
      * @Form\Options({
      *     "label": "Nature of business",
      *     "help-block": "Please select a nature of business",
