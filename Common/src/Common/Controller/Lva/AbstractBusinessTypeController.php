@@ -27,13 +27,6 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
      */
     public function indexAction()
     {
-        $prg = $this->prg();
-
-        // If have posted, and need to redirect to get
-        if ($prg instanceof Response) {
-            return $prg;
-        }
-
         $orgId = $this->getCurrentOrganisationId();
         $response = $this->getBusinessType($orgId);
 
@@ -56,7 +49,7 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
             ->getForm($hasInForceLicences);
 
         // If we haven't posted
-        if ($prg === false) {
+        if ($this->getRequest()->isPost() === false) {
             $data = BusinessType::mapFromResult($result);
 
             $form->setData($data);
@@ -64,28 +57,57 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
             return $this->render('business_type', $form);
         }
 
-        $form->setData($prg);
+        $postData = (array)$this->getRequest()->getPost();
 
-        if (!$form->isValid()) {
-            return $this->render('business_type', $form);
+        // If this is set, then we have confirmed
+        if (isset($postData['custom'])) {
+            $dtoData = json_decode($postData['custom'], true);
+            $dtoData['confirm'] = true;
+        } else {
+            $form->setData($postData);
+
+            if (!$form->isValid()) {
+                return $this->render('business_type', $form);
+            }
+
+            $data = $form->getData();
+
+            $dtoData = [
+                'id' => $orgId,
+                'version' => $data['version'],
+                $this->lva => $this->getIdentifier(),
+                'confirm' => false
+            ];
+
+            if (isset($data['data']['type'])) {
+                $dtoData['businessType'] = $data['data']['type'];
+            }
         }
 
-        $data = $form->getData();
-
-        $dtoData = [
-            'id' => $orgId,
-            'version' => $data['version'],
-            $this->lva => $this->getIdentifier()
-        ];
-
-        if (isset($data['data']['type'])) {
-            $dtoData['businessType'] = $data['data']['type'];
-        }
+        $dto = UpdateBusinessType::create($dtoData);
 
         $response = $this->handleCommand(UpdateBusinessType::create($dtoData));
 
         if ($response->isOk()) {
-            return $this->completeSection('business_type', $prg);
+            return $this->completeSection('business_type', $postData);
+        }
+
+        $messages = $response->getResult()['messages'];
+
+        if (isset($messages['BUS_TYP_REQ_CONF'])) {
+            $transitions = json_decode($messages['BUS_TYP_REQ_CONF']);
+
+            $labels = [];
+
+            $translation = $this->getServiceLocator()->get('Helper\Translation');
+
+            foreach ($transitions as $transition) {
+                $labels[] = $translation->translate($transition);
+            }
+
+            $label = $translation->translateReplace('BUS_TYP_REQ_CONF', [implode('', $labels)]);
+
+            return $this->confirm($label, $this->getRequest()->isXmlHttpRequest(), json_encode($dto->getArrayCopy()));
         }
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
@@ -97,6 +119,13 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
         }
 
         return $this->render('business_type', $form);
+    }
+
+    public function getForm($form)
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        return $formHelper->createFormWithRequest($form, $this->getRequest());
     }
 
     /**

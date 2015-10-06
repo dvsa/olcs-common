@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'ANY_TO_ST' => '<li>All people apart from the first one</li>',
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'AP-VEH-1' => 'Please add at least one vehicle',
@@ -15,6 +16,7 @@ return array(
     'APP-PUB-TM' => 'Please complete the Transport managers section',
     'Add' => 'Add',
     'Authorisation' => 'Authorisation',
+    'BUS_TYP_REQ_CONF' => 'The items below will be deleted. Would you like to continue? <ul>%s</ul>',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
     'ERR_MIME' => 'The type of file you attempted to upload is not allowed',
@@ -61,6 +63,7 @@ return array(
     'Please add a person' => 'Please add a person',
     'Please add a safety inspection provider' => 'Please add a safety inspection provider',
     'Please add a transport manager' => 'You must add at least one transport manager',
+    'REG_TO_ST' => '<li>Registered company number</li><li>Registered address</li><li>Any subsidiaries</li>',
     'Save and continue' => 'Save & continue',
     'Total number of vehicles: The input is not between \'1\' and \'1000000\', inclusively' => 'Total number of
         vehicles: You must have at least 1 vehicle',
