@@ -969,6 +969,7 @@ return array(
     'email.licensing-information.continuation.subject' => 'Operator licence continuation/expiry',
     'email.licensing-information.standard.subject' => 'Operator licensing information',
     'email.transport-manager-complete-digital-form.subject' => 'Request for transport manager details',
+    'email.ebsr-received.subject' => 'EBSR Application Received',
     'end-date' => 'End date',
     'entity-details' => 'Entity details',
     'entity-details-nav-back-to-operator-search' => 'Back to operator search',
