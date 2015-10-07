@@ -56,17 +56,7 @@ class AssetPathTest extends PHPUnit_Framework_TestCase
             ->with('Config')
             ->will($this->returnValue($config));
 
-        $mockView = $this->getMock('\stdClass', ['basePath']);
-        $mockView->expects($this->once())
-            ->method('basePath')
-            ->with(null)
-            ->will($this->returnValue('/static'));
-
-        $this->viewHelper->expects($this->once())
-            ->method('getView')
-            ->will($this->returnValue($mockView));
-
-        $this->assertEquals('/static', $this->viewHelper->__invoke());
+        $this->assertEquals('', $this->viewHelper->__invoke());
     }
 
     public function testInvokeWithAssetPath()
@@ -88,17 +78,7 @@ class AssetPathTest extends PHPUnit_Framework_TestCase
             ->with('Config')
             ->will($this->returnValue($config));
 
-        $mockView = $this->getMock('\stdClass', ['basePath']);
-        $mockView->expects($this->once())
-            ->method('basePath')
-            ->with(null)
-            ->will($this->returnValue('/static'));
-
-        $this->viewHelper->expects($this->once())
-            ->method('getView')
-            ->will($this->returnValue($mockView));
-
-        $this->assertEquals('http://test-asset-domain/static', $this->viewHelper->__invoke());
+        $this->assertEquals('http://test-asset-domain', $this->viewHelper->__invoke());
     }
 
     public function testInvokeWithAssetPathAndArgument()
@@ -120,16 +100,6 @@ class AssetPathTest extends PHPUnit_Framework_TestCase
             ->with('Config')
             ->will($this->returnValue($config));
 
-        $mockView = $this->getMock('\stdClass', ['basePath']);
-        $mockView->expects($this->once())
-            ->method('basePath')
-            ->with('/foo.png')
-            ->will($this->returnValue('/static/foo.png'));
-
-        $this->viewHelper->expects($this->once())
-            ->method('getView')
-            ->will($this->returnValue($mockView));
-
-        $this->assertEquals('http://test-asset-domain/static/foo.png', $this->viewHelper->__invoke('/foo.png'));
+        $this->assertEquals('http://test-asset-domain/foo.png', $this->viewHelper->__invoke('/foo.png'));
     }
 }
