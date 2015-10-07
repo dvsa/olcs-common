@@ -1,10 +1,9 @@
 <?php
+
 namespace Common\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\View\Model\ViewModel;
-use Common\Service\Data\Search\Search;
-use Common\Service\Data\Search\SearchType;
 use Zend\Session\Container;
 
 /**
@@ -45,13 +44,6 @@ class ElasticSearch extends AbstractPlugin
     protected $navigationService;
 
     /**
-     * Layout template to use for the results page - defaults to main-search-results with index nav,
-     * filter form and results table
-     * @var
-     */
-    private $layoutTemplate;
-
-    /**
      * Page route to determine where forms should post and redirect to
      * @var string
      */
@@ -66,7 +58,6 @@ class ElasticSearch extends AbstractPlugin
     public function __invoke($options = [])
     {
         $containerName = isset($options['container_name']) ? $options['container_name'] : 'global_search';
-        $layoutTemplate = isset($options['layout_template']) ? $options['layout_template'] : 'main-search-results';
 
         if (isset($options['page_route'])) {
             $pageRoute = $options['page_route'];
@@ -75,7 +66,6 @@ class ElasticSearch extends AbstractPlugin
         }
 
         $this->setContainerName($containerName);
-        $this->setLayoutTemplate($layoutTemplate);
         $this->setPageRoute($pageRoute);
 
         $this->setSearchData($this->extractSearchData());
@@ -235,12 +225,10 @@ class ElasticSearch extends AbstractPlugin
             ->setSearch($data['search']);
 
         $view = new ViewModel();
+        $view->setTemplate('sections/search/pages/results');
 
         $view->indexes = $this->getSearchTypeService()->getNavigation('internal-search', ['search' => $sd['search']]);
         $view->results = $this->getSearchService()->fetchResultsTable();
-
-        $layout = 'layout/' . $this->getLayoutTemplate();
-        $view->setTemplate($layout);
 
         return $this->getController()->renderView($view, 'Search results');
     }
@@ -303,12 +291,14 @@ class ElasticSearch extends AbstractPlugin
         return $container->getArrayCopy();
     }
 
-    public function generateNavigation($view)
+    public function configureNavigation()
     {
         $sd = $this->getSearchData();
-        $view->indexes = $this->getSearchTypeService()->getNavigation('internal-search', ['search' => $sd['search']]);
 
-        return $view;
+        $this->getController()->getViewHelperManager()
+            ->get('placeholder')
+            ->getContainer('horizontalNavigationContainer')
+            ->set($this->getSearchTypeService()->getNavigation('internal-search', ['search' => $sd['search']]));
     }
 
     public function generateResults($view)
@@ -322,9 +312,7 @@ class ElasticSearch extends AbstractPlugin
             ->setSearch($data['search']);
 
         $view->results = $this->getSearchService()->fetchResultsTable();
-
-        $layout = 'layout/' . $this->getLayoutTemplate();
-        $view->setTemplate($layout);
+        $view->setTemplate('sections/search/pages/results');
 
         return $view;
     }
@@ -361,23 +349,6 @@ class ElasticSearch extends AbstractPlugin
     public function getSearchData()
     {
         return $this->searchData;
-    }
-
-    /**
-     * @param mixed $layoutTemplate
-     */
-    public function setLayoutTemplate($layoutTemplate)
-    {
-        $this->layoutTemplate = $layoutTemplate;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLayoutTemplate()
-    {
-        return $this->layoutTemplate;
     }
 
     /**

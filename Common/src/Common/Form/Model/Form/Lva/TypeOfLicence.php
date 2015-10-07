@@ -13,7 +13,7 @@ use Common\Form\Model\Form\Traits\VersionTrait;
 /**
  * @Form\Name("lva-type-of-licence")
  * @Form\Options({"label":"Type of licence"})
- * @Form\Attributes({"method":"post"})
+ * @Form\Attributes({"method":"post", "class": "js-form-ajax-submit"})
  * @Form\Type("Common\Form\Form")
  * @Form\Options({"prefer_form_input_filter": true})
  */

@@ -12,8 +12,8 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true),
+                'edit' => array('requireRows' => true, 'class' => 'secondary js-require--one'),
+                'delete' => array('label' => 'Remove', 'class' => 'secondary js-require--multiple', 'requireRows' => true),
             )
         ),
         'paginate' => array(
