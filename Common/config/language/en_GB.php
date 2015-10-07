@@ -969,7 +969,14 @@ return array(
     'email.licensing-information.continuation.subject' => 'Operator licence continuation/expiry',
     'email.licensing-information.standard.subject' => 'Operator licensing information',
     'email.transport-manager-complete-digital-form.subject' => 'Request for transport manager details',
+
     'email.ebsr-received.subject' => 'EBSR Application Received',
+    'email.ebsr-registered.subject' => 'EBSR Registered',
+    'email.ebsr-cancelled.subject' => 'EBSR Cancelled',
+    'email.ebsr-refused.subject' => 'EBSR Application Refused',
+    'email.ebsr-withdrawn.subject' => 'EBSR Application Withdrawn',
+    'email.ebsr-refereshed.subject' => 'EBSR Refreshed',
+    
     'end-date' => 'End date',
     'entity-details' => 'Entity details',
     'entity-details-nav-back-to-operator-search' => 'Back to operator search',
