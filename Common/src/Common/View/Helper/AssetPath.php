@@ -31,7 +31,7 @@ class AssetPath extends AbstractHelper implements HelperInterface, ServiceLocato
 
         $base = isset($config['asset_path']) && !empty($config['asset_path']) ? $config['asset_path'] : '';
 
-        return $base . $path;
+        return rtrim($base, '/') . '/' . ltrim($path, '/');
     }
 
     /**
