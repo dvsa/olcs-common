@@ -56,7 +56,7 @@ class AssetPathTest extends PHPUnit_Framework_TestCase
             ->with('Config')
             ->will($this->returnValue($config));
 
-        $this->assertEquals('', $this->viewHelper->__invoke());
+        $this->assertEquals('/', $this->viewHelper->__invoke());
     }
 
     public function testInvokeWithAssetPath()
@@ -78,7 +78,7 @@ class AssetPathTest extends PHPUnit_Framework_TestCase
             ->with('Config')
             ->will($this->returnValue($config));
 
-        $this->assertEquals('http://test-asset-domain', $this->viewHelper->__invoke());
+        $this->assertEquals('http://test-asset-domain/', $this->viewHelper->__invoke());
     }
 
     public function testInvokeWithAssetPathAndArgument()
