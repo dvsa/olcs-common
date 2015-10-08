@@ -994,7 +994,7 @@ return array(
     'email.cns.subject' => '{WELSH} Licences set to CNS between %s and %s',
     'email.ebsr-cancelled.subject' => '{WELSH} EBSR Cancelled',
     'email.ebsr-received.subject' => '{WELSH} EBSR Application Received',
-    'email.ebsr-refereshed.subject' => '{WELSH} EBSR Refreshed',
+    'email.ebsr-refreshed.subject' => '{WELSH} EBSR Refreshed',
     'email.ebsr-refused.subject' => '{WELSH} EBSR Application Refused',
     'email.ebsr-registered.subject' => '{WELSH} EBSR Registered',
     'email.ebsr-withdrawn.subject' => '{WELSH} EBSR Application Withdrawn',

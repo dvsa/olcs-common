@@ -972,7 +972,7 @@ return array(
     'email.cns.subject' => 'Licences set to CNS between %s and %s',
     'email.ebsr-cancelled.subject' => 'EBSR Cancelled',
     'email.ebsr-received.subject' => 'EBSR Application Received',
-    'email.ebsr-refereshed.subject' => 'EBSR Refreshed',
+    'email.ebsr-refreshed.subject' => 'EBSR Refreshed',
     'email.ebsr-refused.subject' => 'EBSR Application Refused',
     'email.ebsr-registered.subject' => 'EBSR Registered',
     'email.ebsr-withdrawn.subject' => 'EBSR Application Withdrawn',
