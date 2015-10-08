@@ -35,6 +35,9 @@ class RefData
     const TRANSACTION_STATUS_FAILED      = 'pay_s_fail';
     const TRANSACTION_STATUS_PAID        = 'pay_s_pd';
 
+    const TRANSACTION_TYPE_WAIVE   = 'trt_waive';
+    const TRANSACTION_TYPE_PAYMENT = 'trt_payment';
+
     /**
      * Goods or PSV keys
      */
