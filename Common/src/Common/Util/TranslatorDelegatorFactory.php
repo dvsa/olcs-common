@@ -23,7 +23,7 @@ class TranslatorDelegatorFactory implements DelegatorFactoryInterface
 
         $config = $serviceLocator->get('Config');
 
-        $replacements = isset($config['translator']['replacements']) ? $config['translator']['replacements'] : '';
+        $replacements = isset($config['translator']['replacements']) ? $config['translator']['replacements'] : [];
 
         return new TranslatorDelegator($realTranslator, $replacements);
     }
