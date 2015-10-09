@@ -10,7 +10,7 @@ namespace Common\Controller\Lva;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Dvsa\Olcs\Transfer\Command;
 use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
-
+use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
 /**
  * Abstract Transport Managers Controller
  *
@@ -258,13 +258,15 @@ abstract class AbstractTransportManagersController extends AbstractController im
             if ($form->isValid()) {
                 $data = $form->getData();
 
+                $hasEmail = isset($data['data']['hasEmail']) ? $data['data']['hasEmail'] : null;
+
                 $command = Command\Tm\CreateNewUser::create(
                     [
                         'application' => $this->getIdentifier(),
                         'firstName' => $data['data']['forename'],
                         'familyName' => $data['data']['familyName'],
                         'birthDate' => $data['data']['birthDate'],
-                        'hasEmail' => isset($data['data']['hasEmail']) ? $data['data']['hasEmail'] : null,
+                        'hasEmail' => $hasEmail,
                         'username' => $data['data']['username'],
                         'emailAddress' => $data['data']['emailAddress']
                     ]
@@ -272,15 +274,28 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
                 $response = $this->handleCommand($command);
 
+                $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
                 if ($response->isOk()) {
+
+                    if ($hasEmail === 'Y') {
+                        $successMessage = 'tm-add-user-success-message';
+                    } else {
+                        $successMessage = 'tm-add-user-success-message-no-email';
+                    }
+
+                    $fm->addSuccessMessage($successMessage);
+
                     return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
                 }
 
                 if ($response->isServerError()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentUnknownError();
+                    $fm->addCurrentUnknownError();
                 } else {
-                    var_dump($response->getResult());
-                    exit;
+
+                    $messages = $response->getResult()['messages'];
+
+                    NewTmUserMapper::mapFormErrors($form, $messages, $fm);
                 }
             }
         }
