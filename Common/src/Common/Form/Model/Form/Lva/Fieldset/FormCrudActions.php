@@ -26,7 +26,7 @@ class FormCrudActions
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({
-     *     "label": "Save & add another",
+     *     "label": "Save and add another",
      *     "label_attributes": {
      *         "class": "col-sm-2"
      *     },
