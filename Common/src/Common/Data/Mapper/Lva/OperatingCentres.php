@@ -78,33 +78,6 @@ class OperatingCentres implements MapperInterface
             unset($errors['totAuthTrailers']);
         }
 
-        if (isset($errors['totAuthSmallVehicles'])) {
-
-            foreach ($errors['totAuthSmallVehicles'] as $key => $message) {
-                $formMessages['data']['totAuthSmallVehicles'][] = $message;
-            }
-
-            unset($errors['totAuthSmallVehicles']);
-        }
-
-        if (isset($errors['totAuthMediumVehicles'])) {
-
-            foreach ($errors['totAuthMediumVehicles'] as $key => $message) {
-                $formMessages['data']['totAuthMediumVehicles'][] = $message;
-            }
-
-            unset($errors['totAuthMediumVehicles']);
-        }
-
-        if (isset($errors['totAuthLargeVehicles'])) {
-
-            foreach ($errors['totAuthLargeVehicles'] as $key => $message) {
-                $formMessages['data']['totAuthLargeVehicles'][] = $message;
-            }
-
-            unset($errors['totAuthLargeVehicles']);
-        }
-
         if (isset($errors['operatingCentres'])) {
 
             foreach ($errors['operatingCentres'] as $key => $message) {

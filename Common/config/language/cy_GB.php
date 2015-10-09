@@ -429,10 +429,6 @@ return array(
         that you want authorised on the licence you are applying for.',
     'application_operating-centres_authorisation.data.hint.psv' => '{WELSH} Indicate the number of each category of
         vehicle you intend to operate under the licence',
-    'application_operating-centres_authorisation.data.totAuthLargeVehicles' => '{WELSH} 17 or more passenger seats',
-    'application_operating-centres_authorisation.data.totAuthMediumVehicles' => '{WELSH} 9 - 16 passenger seats',
-    'application_operating-centres_authorisation.data.totAuthSmallVehicles' => '{WELSH} Small vehicles (Less than 9
-        passenger seats)',
     'application_operating-centres_authorisation.data.totAuthTrailers' => '{WELSH} Total number of trailers',
     'application_operating-centres_authorisation.data.totAuthVehicles' => '{WELSH} Total number of vehicles',
     'application_operating-centres_authorisation.data.totCommunityLicences' => '{WELSH} Community licences',
