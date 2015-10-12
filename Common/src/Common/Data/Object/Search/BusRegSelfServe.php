@@ -75,9 +75,9 @@ class BusRegSelfServe extends InternalSearchAbstract
                 'name'=> 'regNo',
                 'formatter' => function ($data) {
 
-                    return '<a href="/licence/'
+                    return '<a href="/view-details/licence/'
                     . $data['licId'] . '/bus/' . $data['busregId']
-                    . '/details">' . $data['regNo'] . '</a>';
+                    . '/details">' . $data['regNo'] . '</a> <br>' . $data['busRegStatus'];
                 }
             ],
             [
@@ -87,12 +87,15 @@ class BusRegSelfServe extends InternalSearchAbstract
 
                     $orgName = $data['orgName'];
 
-                    return '<a href="/operator/' . $data['orgId'] . '">' .$orgName . '</a>';
+                    return $orgName;
                 }
             ],
             ['title' => 'Variation number', 'name'=> 'variationNo'],
-            ['title' => 'Status', 'name'=> 'busRegStatus'],
-            ['title' => 'Date first registered / cancelled', 'name'=> 'date_1stReg'],
+            [
+                'title' => 'Date first registered / cancelled',
+                'formatter' => 'Date',
+                'name'=> 'date_1stReg'
+            ],
             ['title' => 'Service no', 'name'=> 'serviceNo'],
             ['title' => 'Start point', 'name'=> 'startPoint'],
             ['title' => 'Finish point', 'name'=> 'finishPoint']
