@@ -84,17 +84,6 @@ class TransactionStatusTest extends PHPUnit_Framework_TestCase
                 ],
                 '<span class="status red">failed</span>',
             ],
-            'legacy' => [
-                [
-                    'transaction' => [
-                        'status' => [
-                            'id' => RefData::TRANSACTION_STATUS_LEGACY,
-                            'description' => 'legacy',
-                        ],
-                    ],
-                ],
-                '<span class="status grey">legacy</span>',
-            ],
             'other' => [
                 [
                     'transaction' => [
