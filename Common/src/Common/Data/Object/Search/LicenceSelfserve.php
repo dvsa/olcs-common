@@ -75,7 +75,7 @@ class LicenceSelfserve extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                    return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licId'] . '</a>';
                 }
             ],
             ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
@@ -89,7 +89,7 @@ class LicenceSelfserve extends InternalSearchAbstract
                         $orgName .= ' (MLH)';
                     }
 
-                    return '<a href="/operator/' . $data['orgId'] . '">' .$orgName . '</a>';
+                    return $orgName;
                 }
             ],
             ['title' => 'Trading name', 'name'=> 'tradingName']
