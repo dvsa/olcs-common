@@ -65,9 +65,6 @@ class TaskIdentifier implements FormatterInterface
                 break;
         }
         $value = '<a href="' . $url . '">' . $data['linkDisplay'] . '</a>';
-        if ($data['licenceCount'] > 1) {
-            $value .= ' (MLH)';
-        }
 
         return $value;
     }
