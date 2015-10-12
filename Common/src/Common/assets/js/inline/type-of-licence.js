@@ -21,8 +21,8 @@ OLCS.ready(function() {
       rulesets: {
         "type-of-licence": {
           "selector:.js-difference-guidance": function() {
-            return niFlag.filter(":checked").val() === "N";;
-          },
+            return niFlag.filter(":checked").val() === "N";
+          }
         },
         // operator location is *always* shown
         "operator-location": true,
