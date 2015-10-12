@@ -107,7 +107,11 @@ abstract class AbstractBusinessTypeController extends AbstractController impleme
 
             $label = $translation->translateReplace('BUS_TYP_REQ_CONF', [implode('', $labels)]);
 
-            return $this->confirm($label, $this->getRequest()->isXmlHttpRequest(), json_encode($dto->getArrayCopy()));
+            $view = $this->confirm($label, $this->getRequest()->isXmlHttpRequest(), json_encode($dto->getArrayCopy()));
+            $view->setTerminal(false);
+
+            $this->placeholder()->setPlaceholder('contentTitle', 'Business type change');
+            return $this->viewBuilder()->buildView($view);
         }
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
