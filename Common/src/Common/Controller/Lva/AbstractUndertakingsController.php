@@ -8,9 +8,9 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\RefData;
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService as Licence;
-use Common\Service\Entity\ApplicationEntityService as Application;
 
 /**
  * Abstract Undertakings Controller
@@ -82,6 +82,8 @@ abstract class AbstractUndertakingsController extends AbstractController
      */
     protected function updateForm($form, $data)
     {
+        $fieldset = $form->get('declarationsAndUndertakings');
+
         $translator = $this->getServiceLocator()->get('Helper\Translation');
 
         $summaryDownload = $translator->translateReplace(
@@ -92,7 +94,39 @@ abstract class AbstractUndertakingsController extends AbstractController
             ]
         );
 
-        $form->get('declarationsAndUndertakings')->get('summaryDownload')->setAttribute('value', $summaryDownload);
+        $fieldset->get('summaryDownload')->setAttribute('value', $summaryDownload);
+
+        if ($this->lva === 'application') {
+
+            $declarationDownload = $translator->translateReplace(
+                'undertakings_declaration_download',
+                [
+                    $this->url()->fromRoute('lva-' . $this->lva . '/review', [], [], true),
+                    $translator->translate('print-declaration-form'),
+                ]
+            );
+
+            $fieldset->get('declarationDownload')->setAttribute('value', $declarationDownload);
+
+            switch ($data['licence']['organisation']['type']['id']) {
+                case RefData::ORG_TYPE_SOLE_TRADER:
+                    $suffix = '-st';
+                    break;
+                case RefData::ORG_TYPE_OTHER:
+                    $suffix = '-o';
+                    break;
+                case RefData::ORG_TYPE_PARTNERSHIP:
+                    $suffix = '-p';
+                    break;
+                default:
+                    $suffix = '';
+                    break;
+            }
+
+            $value = $fieldset->get('declaration')->getValue();
+            $value .= $suffix;
+            $fieldset->get('declaration')->setValue($value);
+        }
     }
 
     /**
@@ -102,10 +136,9 @@ abstract class AbstractUndertakingsController extends AbstractController
      */
     protected function getUndertakingsData()
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(\Dvsa\Olcs\Transfer\Query\Application\Declaration::create(['id' => $this->getIdentifier()]));
+        $query = \Dvsa\Olcs\Transfer\Query\Application\Declaration::create(['id' => $this->getIdentifier()]);
 
-        $response =  $this->getServiceLocator()->get('QueryService')->send($query);
+        $response =  $this->handleQuery($query);
 
         if ($response->isOk()) {
             return $response->getResult();

@@ -354,9 +354,8 @@ return array(
     'application.progress' => '{WELSH} %s of %s sections complete',
     'application.review-declarations' => '{WELSH} Review & declarations',
     'application.review-declarations.confirm-short-label' => '{WELSH} Declarations',
-    'application.review-declarations.confirm-text' => '{WELSH} I declare that the statements made in this application
-        are true and that all supporting evidence supplied with regard to my application is correct. I understand that
-        it is an offence to make a false declaration',
+    'application.review-declarations.confirm-text' => '{WELSH} I understand that my application cannot be considered
+        until I have returned my signed application form',
     'application.review-declarations.confirm-text-internal' => '{WELSH} Signature seen?',
     'application.review-declarations.summary' => '{WELSH} Application summary',
     'application.review-declarations.summary.new-window' => '{WELSH} View in another window',
@@ -2047,6 +2046,7 @@ return array(
     'postcode.error.no-addresses-found' => '{WELSH} No addresses found for postcode',
     'postcode.error.not-available' => '{WELSH} Address search unavailable. Please enter your address manually',
     'previous-history' => '{WELSH} Previous history',
+    'print-declaration-form' => '{WELSH} Print declaration form',
     'priority' => '{WELSH} Priority',
     'privacy-and-cookies' => '{WELSH} Privacy &amp; Cookies',
     'progress' => '{WELSH} Progress',
@@ -2726,8 +2726,8 @@ return array(
     'transport_managers-details-PreviousLicences-delete-success' => '{WELSH} Previous licence(s) removed successfully',
     'type-of-licence' => '{WELSH} Type of licence',
     'undertakings' => '{WELSH} Undertakings',
-    'undertakings_summary_download' => '{WELSH} <p style="margin-top: -20px;"><b><a href="%s"
-        target="_blank">%s</a></b></p>',
+    'undertakings_declaration_download' => '{WELSH} <p><a href="%s" target="_blank" class="download">%s</a></p>',
+    'undertakings_summary_download' => '{WELSH} <p><a href="%s" target="_blank" class="download">%s</a></p>',
     'united-kingdom' => '{WELSH} United Kingdom',
     'unknown-error' => '{WELSH} An error occurred processing your request, please try again',
     'update-continuation.saved' => '{WELSH} The continuation details have been updated',
@@ -2756,8 +2756,8 @@ return array(
     'variation.print' => '{WELSH} Print application',
     'variation.review-declarations.confirm-short-label' => '{WELSH} Declarations',
     'variation.review-declarations.confirm-text' => '{WELSH} I declare that the statements made in this application are
-        true and that there have been no other changes that affect the licence. I understand that it is an offence to
-        make a false declaration. Please see the licence undertakings below as a reminder of your obligations.',
+        true and that all supporting evidence supplied with regard to my application is correct. I understand that it is
+        an offence to make a false declaration.',
     'variation.review-declarations.confirm-text-upgrade' => '{WELSH} I declare that the statements made in this
         application are true and that all supporting evidence supplied with regard to my application is correct. I
         understand that it is an offence to make a false declaration. Please see the licence undertakings below as a
