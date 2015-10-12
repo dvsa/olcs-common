@@ -81,31 +81,17 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Licence',
                     'linkId' => 1,
-                    'licenceCount' => 1
                 ),
                 array(),
                 'lva-licence/overview',
                 'licence',
                 '<a href="correctUrl">P1234</a>'
             ),
-            2 => array(
-                array(
-                    'linkDisplay' => 'P1234',
-                    'linkType' => 'Licence',
-                    'linkId' => 1,
-                    'licenceCount' => 2
-                ),
-                array(),
-                'lva-licence/overview',
-                'licence',
-                '<a href="correctUrl">P1234</a> (MLH)'
-            ),
             3 => array(
                 array(
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Licence',
                     'linkId' => 1,
-                    'licenceCount' => 1
                 ),
                 array(),
                 'lva-licence/overview',
@@ -117,7 +103,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'P1234',
                     'linkType' => '',
                     'linkId' => 1,
-                    'licenceCount' => 1
                 ),
                 array(),
                 'lva-licence/overview',
@@ -141,7 +126,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Application',
                     'linkId' => 1,
-                    'licenceCount' => 1
                 ),
                 array(),
                 'lva-application/overview',
@@ -153,7 +137,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'P1234',
                     'linkType' => '',
                     'linkId' => 1,
-                    'licenceCount' => 1
                 ),
                 array(),
                 'lva-application/overview',
@@ -166,7 +149,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Transport Manager',
                     'linkId' => null,
-                    'licenceCount' => 0
                 ),
                 array(),
                 'lva-application/overview',
@@ -178,7 +160,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => '1234',
                     'linkType' => 'Transport Manager',
                     'linkId' => 1,
-                    'licenceCount' => 0
                 ),
                 array(),
                 'transport-manager',
@@ -190,7 +171,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => '1234',
                     'linkType' => '',
                     'linkId' => 1,
-                    'licenceCount' => 0
                 ),
                 array(),
                 'transport-manager',
@@ -203,7 +183,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Bus Registration',
                     'linkId' => null,
-                    'licenceCount' => 1
                 ),
                 array(),
                 'licence/bus-details',
@@ -215,7 +194,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'P1234/123',
                     'linkType' => 'Bus Registration',
                     'linkId' => 99,
-                    'licenceCount' => 1,
                     'licenceId' => 110
                 ),
                 array(),
@@ -229,7 +207,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'P1234/123',
                     'linkType' => '',
                     'linkId' => 99,
-                    'licenceCount' => 1,
                     'licenceId' => 110
                 ),
                 array(),
@@ -244,7 +221,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Case',
                     'linkId' => null,
-                    'licenceCount' => 1
                 ),
                 array(),
                 'case',
@@ -256,7 +232,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => '1234',
                     'linkType' => 'Case',
                     'linkId' => 99,
-                    'licenceCount' => 1,
                 ),
                 array(),
                 'case',
@@ -268,7 +243,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => '1234',
                     'linkType' => '',
                     'linkId' => 99,
-                    'licenceCount' => 1,
                 ),
                 array(),
                 'case',
@@ -281,7 +255,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'IRFO Organisation',
                     'linkId' => null,
-                    'licenceCount' => 1
                 ),
                 array(),
                 'operator/business-details',
@@ -293,7 +266,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => '1234',
                     'linkType' => 'IRFO Organisation',
                     'linkId' => 99,
-                    'licenceCount' => 1,
                 ),
                 array(),
                 'operator/business-details',
@@ -305,7 +277,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => '1234',
                     'linkType' => '',
                     'linkId' => 99,
-                    'licenceCount' => 1,
                 ),
                 array(),
                 'operator/business-details',
@@ -318,7 +289,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Submission',
                     'linkId' => null,
-                    'licenceCount' => 1,
                     'caseId' => 5
                 ),
                 array(),
@@ -332,7 +302,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => '1234/5',
                     'linkType' => 'Submission',
                     'linkId' => 99,
-                    'licenceCount' => 1,
                     'caseId' => 5
                 ),
                 array(),
@@ -346,7 +315,6 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkDisplay' => '1234/5',
                     'linkType' => '',
                     'linkId' => 99,
-                    'licenceCount' => 1,
                     'caseId' => 5
                 ),
                 array(),

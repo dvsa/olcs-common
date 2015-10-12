@@ -14,6 +14,7 @@ class UserProvider implements UserInterface
      * @var array
      */
     protected $users = [
+        // test (Rollout.sql) users
         [1, 'teal\'c', '$2a$12$I/kfi/F3uRflYV5Nnk48vuTf1zFkbhctnk0xmVnZHKQupPZc6mtk6', ['internal-limited-read-only']],
         [2, 'daniel', '$2a$12$I/kfi/F3uRflYV5Nnk48vuTf1zFkbhctnk0xmVnZHKQupPZc6mtk6', ['internal-read-only']],
         [3, 'sam', '$2a$12$I/kfi/F3uRflYV5Nnk48vuTf1zFkbhctnk0xmVnZHKQupPZc6mtk6', ['internal-case-worker']],
@@ -27,6 +28,10 @@ class UserProvider implements UserInterface
             ['local-authority-admin']],
         [25, 'local-authority-user', '$2a$12$I/kfi/F3uRflYV5Nnk48vuTf1zFkbhctnk0xmVnZHKQupPZc6mtk6',
             ['local-authority-user']],
+
+        // ETL users
+        [336, 'usr336', '$2a$12$I/kfi/F3uRflYV5Nnk48vuTf1zFkbhctnk0xmVnZHKQupPZc6mtk6', ['internal-admin']],
+        [542, 'usr542', '$2a$12$I/kfi/F3uRflYV5Nnk48vuTf1zFkbhctnk0xmVnZHKQupPZc6mtk6', ['operator-admin']],
     ];
 
     /**
