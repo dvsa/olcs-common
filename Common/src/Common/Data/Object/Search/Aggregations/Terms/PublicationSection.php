@@ -21,5 +21,5 @@ class PublicationSection extends TermsAbstract
      *
      * @var string
      */
-    protected $key = 'pubSecDesc';
+    protected $key = 'pubStatusDesc';
 }

@@ -77,11 +77,14 @@ class BusReg extends InternalSearchAbstract
             ],
             ['title' => 'Variation number', 'name'=> 'variationNo'],
             ['title' => 'Status', 'name'=> 'busRegStatus'],
-            ['title' => 'Date first registered / cancelled', 'name'=> 'date_1stReg'],
+            [
+                'title' => 'Date first registered / cancelled',
+                'formatter' => 'Date',
+                'name'=> 'date_1stReg'
+            ],
             ['title' => 'Service no', 'name'=> 'serviceNo'],
             ['title' => 'Start point', 'name'=> 'startPoint'],
-            ['title' => 'Finish point', 'name'=> 'finishPoint'],
-            ['title' => 'Conditions on licence', 'name'=> 'finishPoint']
+            ['title' => 'Finish point', 'name'=> 'finishPoint']
         ];
     }
 }
