@@ -75,7 +75,7 @@ class LicenceSelfserve extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licId'] . '</a>';
+                    return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
             ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
