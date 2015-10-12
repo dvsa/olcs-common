@@ -21,5 +21,5 @@ class LicenceStatus extends TermsAbstract
      *
      * @var string
      */
-    protected $key = 'licStatusDesc';
+    protected $key = 'licStatus';
 }

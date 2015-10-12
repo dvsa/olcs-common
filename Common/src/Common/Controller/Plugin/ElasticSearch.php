@@ -20,6 +20,12 @@ class ElasticSearch extends AbstractPlugin
     private $containerName;
 
     /**
+     * Search Term
+     * @var string
+     */
+    private $searchTerm;
+
+    /**
      * Search Data
      * @var array
      */
@@ -276,7 +282,9 @@ class ElasticSearch extends AbstractPlugin
         // added this line as a quick fix for broken UT
         $incomingParameters['search'] = isset($incomingParameters['search']) ? $incomingParameters['search'] : '';
 
-        $key = md5($this->getContainerName() . '_' . str_replace(' ', '', $incomingParameters['search']));
+        $this->setSearchTerm($incomingParameters['search']);
+
+        $key = md5($this->getContainerName() . '_' . str_replace(' ', '', $this->getSearchTerm()));
         $container = new Container($key);
 
         /**
@@ -332,6 +340,22 @@ class ElasticSearch extends AbstractPlugin
     public function getContainerName()
     {
         return $this->containerName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSearchTerm()
+    {
+        return $this->searchTerm;
+    }
+
+    /**
+     * @param string $searchTerm
+     */
+    public function setSearchTerm($searchTerm)
+    {
+        $this->searchTerm = $searchTerm;
     }
 
     /**
@@ -418,5 +442,14 @@ class ElasticSearch extends AbstractPlugin
     public function getNavigationService()
     {
         return $this->navigationService;
+    }
+
+    public function resetSearchSession($term)
+    {
+        // A bit fudgy way to clear session container.
+
+        $key = md5($this->getContainerName() . '_' . str_replace(' ', '', $this->getSearchTerm()));
+        $container = new Container($key);
+        $container->exchangeArray(['search' => $term]);
     }
 }

@@ -57,7 +57,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
         if (empty($this->filters)) {
 
             $this->filters = [
-                new Filter\LicenceType()
+                new Filter\LicenceStatus()
             ];
         }
 
@@ -74,8 +74,8 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/view-details/licence/7' . $data['licId'] . '">' . $data['licNo'] . '</a>/'
-                    . $data['appId'] . '<br />' . $data['licStatus'];
+                    return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
+                    . '<br />' . $data['licStatus'];
                 }
             ],
             [

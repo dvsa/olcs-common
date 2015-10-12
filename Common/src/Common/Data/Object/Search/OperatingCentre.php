@@ -67,7 +67,7 @@ class OperatingCentre extends InternalSearchAbstract
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
                     return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>/'
-                    . $data['appId'] . '<br />' . $data['licStatus'];
+                    . '<br />' . $data['licStatus'];
                 }
             ],
             [

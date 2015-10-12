@@ -100,8 +100,12 @@ class Publication extends InternalSearchAbstract
     {
         return array(
             array(
+                'title' => 'Publication No',
+                'name' => 'pubNo'
+            ),
+            array(
                 'title' => 'Traffic area',
-                'name' => 'taName'
+                'name' => 'trafficArea'
             ),
             array(
                 'title' => 'Pub type',
@@ -110,8 +114,7 @@ class Publication extends InternalSearchAbstract
             ),
             array(
                 'title' => 'Doc status',
-                'type' => 'RefData',
-                'name' => 'description'
+                'name' => 'pubStatusDesc'
             ),
             array(
                 'title' => 'Close date',

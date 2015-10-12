@@ -125,7 +125,7 @@ abstract class SearchAbstract
         return [
             'label' => $this->getTitle(),
             'route' => 'search',
-            'params' => ['index' => $this->getKey()],
+            'params' => ['index' => $this->getKey(), 'action' => 'reset'],
             'query' => $queryParams
         ];
     }

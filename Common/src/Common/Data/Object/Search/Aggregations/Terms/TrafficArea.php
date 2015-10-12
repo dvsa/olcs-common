@@ -21,5 +21,5 @@ class TrafficArea extends TermsAbstract
      *
      * @var string
      */
-    protected $key = 'licenceTrafficArea';
+    protected $key = 'trafficArea';
 }
