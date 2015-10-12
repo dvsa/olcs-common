@@ -21,18 +21,6 @@ class VariationDeclarationsAndUndertakings
     public $summaryDownload = null;
 
     /**
-     * @Form\Attributes({"value": "<h3>%s</h3>" })
-     * @Form\Options({"tokens": { 0: "section.name.undertakings" } })
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $heading = null;
-
-    /**
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $additionalUndertakings = null;
-
-    /**
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
@@ -45,11 +33,6 @@ class VariationDeclarationsAndUndertakings
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $declarationConfirmation = null;
-
-    /**
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $undertakings = null;
 
     /**
      * @Form\Attributes({"value":""})

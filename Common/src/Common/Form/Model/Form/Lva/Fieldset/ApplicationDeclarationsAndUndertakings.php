@@ -21,16 +21,15 @@ class ApplicationDeclarationsAndUndertakings
     public $summaryDownload = null;
 
     /**
-     * @Form\Attributes({"value": "<h3>%s</h3>" })
-     * @Form\Options({"tokens": { 0: "section.name.undertakings" } })
+     * @Form\Attributes({"value": "markup-declaration-text"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $heading = null;
+    public $declaration = null;
 
     /**
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     * @Form\Type("\Common\Form\Elements\Types\Html")
      */
-    public $undertakings = null;
+    public $declarationDownload = null;
 
     /**
      * @Form\Options({

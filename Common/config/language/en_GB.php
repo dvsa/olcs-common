@@ -347,9 +347,8 @@ return array(
     'application.progress' => '%s of %s sections complete',
     'application.review-declarations' => 'Review & declarations',
     'application.review-declarations.confirm-short-label' => 'Declarations',
-    'application.review-declarations.confirm-text' => 'I declare that the statements made in this application are true
-        and that all supporting evidence supplied with regard to my application is correct. I understand that it is an
-        offence to make a false declaration',
+    'application.review-declarations.confirm-text' => 'I understand that my application cannot be considered until I
+        have returned my signed application form',
     'application.review-declarations.confirm-text-internal' => 'Signature seen?',
     'application.review-declarations.summary' => 'Application summary',
     'application.review-declarations.summary.new-window' => 'View in another window',
@@ -2007,6 +2006,7 @@ return array(
     'postcode.error.no-addresses-found' => 'No addresses found for postcode',
     'postcode.error.not-available' => 'Address search unavailable. Please enter your address manually',
     'previous-history' => 'Previous history',
+    'print-declaration-form' => 'Print declaration form',
     'priority' => 'Priority',
     'privacy-and-cookies' => 'Privacy &amp; Cookies',
     'progress' => 'Progress',
@@ -2684,7 +2684,8 @@ return array(
     'transport_managers-details-PreviousLicences-delete-success' => 'Previous licence(s) removed successfully',
     'type-of-licence' => 'Type of licence',
     'undertakings' => 'Undertakings',
-    'undertakings_summary_download' => '<p style="margin-top: -20px;"><b><a href="%s" target="_blank">%s</a></b></p>',
+    'undertakings_declaration_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',
+    'undertakings_summary_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',
     'united-kingdom' => 'United Kingdom',
     'unknown-error' => 'An error occurred processing your request, please try again',
     'update-continuation.saved' => 'The continuation details have been updated',
@@ -2713,8 +2714,8 @@ return array(
     'variation.print' => 'Print application',
     'variation.review-declarations.confirm-short-label' => 'Declarations',
     'variation.review-declarations.confirm-text' => 'I declare that the statements made in this application are true and
-        that there have been no other changes that affect the licence. I understand that it is an offence to make a
-        false declaration. Please see the licence undertakings below as a reminder of your obligations.',
+        that all supporting evidence supplied with regard to my application is correct. I understand that it is an
+        offence to make a false declaration.',
     'variation.review-declarations.confirm-text-upgrade' => 'I declare that the statements made in this application are
         true and that all supporting evidence supplied with regard to my application is correct. I understand that it is
         an offence to make a false declaration. Please see the licence undertakings below as a reminder of your existing
