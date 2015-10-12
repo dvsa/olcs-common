@@ -64,7 +64,11 @@ class Application extends InternalSearchAbstract
                 }
             ],
             ['title' => 'Application status', 'name'=> 'appStatusDesc'],
-            ['title' => 'Date received', 'name'=> 'receivedDate'],
+            [
+                'title' => 'Date received',
+                'formatter' => 'Date',
+                'name'=> 'receivedDate'
+            ],
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',

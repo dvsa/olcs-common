@@ -14,12 +14,12 @@ class DocumentStatus extends TermsAbstract
      *
      * @var string
      */
-    protected $title = 'Doc status';
+    protected $title = 'Publication status';
 
     /**
      * The actual name of the field to ask for filter information for.
      *
      * @var string
      */
-    protected $key = 'description';
+    protected $key = 'pubStatusDesc';
 }

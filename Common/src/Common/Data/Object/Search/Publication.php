@@ -108,12 +108,12 @@ class Publication extends InternalSearchAbstract
                 'name' => 'trafficArea'
             ),
             array(
-                'title' => 'Pub type',
+                'title' => 'Publication type',
                 'name' => 'pubType'
 
             ),
             array(
-                'title' => 'Doc status',
+                'title' => 'Publication status',
                 'name' => 'pubStatusDesc'
             ),
             array(
