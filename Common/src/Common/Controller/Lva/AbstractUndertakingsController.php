@@ -101,7 +101,7 @@ abstract class AbstractUndertakingsController extends AbstractController
             $declarationDownload = $translator->translateReplace(
                 'undertakings_declaration_download',
                 [
-                    $this->url()->fromRoute('lva-' . $this->lva . '/review', [], [], true),
+                    $this->url()->fromRoute('lva-' . $this->lva . '/declaration', [], [], true),
                     $translator->translate('print-declaration-form'),
                 ]
             );
