@@ -39,6 +39,8 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
         $mockFormServiceManager = m::mock();
         $this->sm->setService('FormServiceManager', $mockFormServiceManager);
 
+        $form->shouldReceive('setValidationGroup')->once();
+
         $mockFormServiceManager->shouldReceive('get')
             ->once()
             ->with('lva--vehicles_declarations')
@@ -53,6 +55,9 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
             ->with(
                 [
                     'version' => 1,
+                    'psvVehicleSize' => array(
+                        'size' => 'PSV_SIZE',
+                    ),
                     'smallVehiclesIntention' => [
                         'psvOperateSmallVhl' => 'x',
                         'psvSmallVhlNotes' => '',
@@ -88,7 +93,7 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                     'psvLimousines' => '',
                     'psvNoLimousineConfirmation' => '',
                     'psvOnlyLimousinesConfirmation' => '',
-                    'totAuthSmallVehicles' => null,
+                    'psvWhichVehicleSizes' => ['id' => 'PSV_SIZE'],
                     'totAuthMediumVehicles' => null,
                     'totAuthLargeVehicles' => null,
                     'psvMediumVhlConfirmation' => null,

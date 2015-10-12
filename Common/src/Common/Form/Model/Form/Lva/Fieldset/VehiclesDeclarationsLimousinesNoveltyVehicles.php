@@ -7,6 +7,9 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("limousinesNoveltyVehicles")
  * @Form\Options({"label":"application_vehicle-safety_undertakings-limousines"})
+ * @Form\Attributes({
+ *      "class": "psv-show-small psv-show-large psv-show-both"
+ * })
  */
 class VehiclesDeclarationsLimousinesNoveltyVehicles
 {
@@ -54,6 +57,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
     public $psvNoLimousineConfirmation = null;
 
     /**
+     * @Form\Attributes({"data-container-class":"psv-show-large psv-show-both"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesNine.agreement.label"
      * })
@@ -62,7 +66,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
     public $psvOnlyLimousinesConfirmationLabel = null;
 
     /**
-     * @Form\Attributes({"class": "js-only-confirmation"})
+     * @Form\Attributes({"class": "js-only-confirmation", "data-container-class":"psv-show-large psv-show-both"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesNine.agreement",
      *     "checked_value": "Y",

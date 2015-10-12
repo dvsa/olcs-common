@@ -6,6 +6,9 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("nineOrMore")
+ * @Form\Attributes({
+ *     "class": "psv-show-large"
+ * })
  */
 class VehiclesDeclarationsNineOrMore
 {

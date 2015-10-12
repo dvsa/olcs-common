@@ -519,6 +519,7 @@ return array(
         service vehicle operator\'s licence refused by any EU licensing authority?',
     'application_previous-history_licence-history_revokedLicence' => 'c. Ever had a goods or public service vehicle
         operator\'s licence revoked, suspended or curtailed by any EU licensing authority?',
+    'application_psv_vehicle_size' => 'Which sizes of vehicles do you intend to operate',
     'application_taxi-phv_licence-add' => 'Add taxi/PHV licence',
     'application_taxi-phv_licence-edit' => 'Edit taxi/PHV licence',
     'application_taxi-phv_licence-sub-action.contactDetails' => 'Council details',

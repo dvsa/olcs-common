@@ -7,7 +7,10 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("smallVehiclesIntention")
  * @Form\Options({
- *     "label": "application_vehicle-safety_undertakings-smallVehiclesUndertakings"
+ *     "label": "application_vehicle-safety_undertakings-smallVehiclesUndertakings",
+ * })
+ * @Form\Attributes({
+ *     "class": "psv-show-small psv-show-both"
  * })
  */
 class VehiclesDeclarationsSmallVehiclesIntention

@@ -47,7 +47,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
 
         $form = $this->getForm()->setData($data);
 
-        $this->alterForm($form);
+        $this->alterForm($form, $data);
 
         $this->getServiceLocator()->get('Script')->loadFile('vehicle-declarations');
 
@@ -98,8 +98,12 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      */
     protected function formatDataForForm($data)
     {
+        $psvVehicleSize = isset($data['psvWhichVehicleSizes']['id']) ? $data['psvWhichVehicleSizes']['id'] : null;
         return array(
             'version' => $data['version'],
+            'psvVehicleSize' => array(
+                'size' => $psvVehicleSize,
+            ),
             'smallVehiclesIntention' => array(
                 'psvOperateSmallVhl' => $data['psvOperateSmallVhl'],
                 'psvSmallVhlNotes' => $data['psvSmallVhlNotes'],
@@ -127,7 +131,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      * @param Zend\Form\Form $form
      * @return Zend\Form\Form
      */
-    protected function alterForm($form)
+    protected function alterForm(\Zend\Form\Form $form, $formData)
     {
         $this->alterFormForLva($form);
 
@@ -136,44 +140,66 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        // If this traffic area has no Scottish Rules flag, set it to false.
-        if (!isset($data['licence']['trafficArea']['isScotland'])) {
-            $data['licence']['trafficArea']['isScotland'] = false;
-        }
+        $isScotland = isset($data['licence']['trafficArea']['isScotland']) &&
+            $data['licence']['trafficArea']['isScotland'];
 
-        // In some cases, totAuthSmallVhl etc. can be set NULL, and we
-        // need to evaluate as zero, so fix that here.
-        $arrayCheck = array('totAuthSmallVehicles', 'totAuthMediumVehicles', 'totAuthLargeVehicles');
+        // if Vehicle size not selected then
+        if (!isset($formData['psvVehicleSize']['size'])) {
+            // only validate the vehicle size
+            $validationGroup = ['psvVehicleSize'];
+        } else {
+            // start with validating everything
+            $validationGroup = [
+                'psvVehicleSize',
+                // 15bi, 15bii, 15c/d
+                'smallVehiclesIntention' => ['psvOperateSmallVhl', 'psvSmallVhlNotes', 'psvSmallVhlConfirmation'],
+                // 15e
+                'nineOrMore' => ['psvNoSmallVhlConfirmation'],
+                // section 10, 8
+                'mainOccupation' => ['psvMediumVhlConfirmation', 'psvMediumVhlNotes'],
+                // 15fi, 15fii, 15g
+                'limousinesNoveltyVehicles' => [
+                    'psvLimousines',
+                    'psvNoLimousineConfirmation',
+                    'psvOnlyLimousinesConfirmation',
+                ],
+            ];
 
-        foreach ($arrayCheck as $attribute) {
-            if (is_null($data[$attribute])) {
-                $data[$attribute] = 0;
+            if ($formData['psvVehicleSize']['size'] === \Common\RefData::PSV_VEHICLE_SIZE_SMALL) {
+                unset($validationGroup['mainOccupation']);
+                unset($validationGroup['limousinesNoveltyVehicles'][2]);
+            }
+
+            if ($formData['psvVehicleSize']['size'] === \Common\RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE) {
+                unset($validationGroup['smallVehiclesIntention']);
+            }
+
+            if ($formData['psvVehicleSize']['size'] !== \Common\RefData::PSV_VEHICLE_SIZE_MEDIUM_LARGE) {
+                unset($validationGroup['nineOrMore']);
             }
         }
 
-        // @see https://jira.i-env.net/browse/OLCS-2853
-        if ($data['licenceType']['id'] !== LicenceEntityService::LICENCE_TYPE_RESTRICTED
-            || $data['totAuthMediumVehicles'] === 0
-        ) {
-            $formHelper->remove($form, 'mainOccupation');
-        }
-
-        if ($data['totAuthSmallVehicles'] === 0) {
-            $formHelper->remove($form, 'smallVehiclesIntention');
-            return;
-        }
-
-        $formHelper->remove($form, 'nineOrMore');
-
-        if ($data['totAuthMediumVehicles'] === 0 && $data['totAuthLargeVehicles'] === 0) {
-            $formHelper->remove($form, 'limousinesNoveltyVehicles->psvOnlyLimousinesConfirmationLabel');
-            $formHelper->remove($form, 'limousinesNoveltyVehicles->psvOnlyLimousinesConfirmation');
-        }
-
-        if ($data['licence']['trafficArea']['isScotland']) {
+        // if Scotland remove 15bi and 15bii
+        if ($isScotland) {
             $formHelper->remove($form, 'smallVehiclesIntention->psvOperateSmallVhl');
             $formHelper->remove($form, 'smallVehiclesIntention->psvSmallVhlNotes');
+            if (isset($validationGroup['smallVehiclesIntention'][0])) {
+                unset($validationGroup['smallVehiclesIntention'][0]);
+            }
+            if (isset($validationGroup['smallVehiclesIntention'][1])) {
+                unset($validationGroup['smallVehiclesIntention'][1]);
+            }
         }
+
+        // Section 10 only visible for Restricted licences
+        if ($data['licenceType']['id'] !== LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+            $formHelper->remove($form, 'mainOccupation');
+            if (isset($validationGroup['mainOccupation'])) {
+                unset($validationGroup['mainOccupation']);
+            }
+        }
+
+        $form->setValidationGroup($validationGroup);
     }
 
     /**
@@ -185,9 +211,9 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
     protected function save($data)
     {
         $saveData = $this->getServiceLocator()->get('Helper\Data')->processDataMap($data, $this->dataMap);
-
         $saveData['version'] = $data['version'];
         $saveData['id'] = $this->getApplicationId();
+        $saveData['psvVehicleSize'] = $data['psvVehicleSize']['size'];
 
         $response = $this->handleCommand(
             \Dvsa\Olcs\Transfer\Command\Application\UpdateVehicleDeclaration::create($saveData)
