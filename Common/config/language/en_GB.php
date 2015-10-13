@@ -370,6 +370,7 @@ return array(
     'application.vehicle-safety.undertakings' => 'Vehicle Undertakings',
     'application.vehicle-safety.vehicle' => 'Vehicles',
     'application.vehicle-safety.vehicle-psv' => 'Vehicles',
+    'application.withdraw' => 'Withdraw application',
     'application.your-business' => 'Your business',
     'application.your-business.addresses' => 'Addresses',
     'application.your-business.business-details' => 'Business details',
@@ -1038,6 +1039,16 @@ return array(
     'error.vehicle.vrm-exists-on-licence' => 'A vehicle with this registration number already exists on this licence',
     'error.vrm.invalid' => 'Invalid Registration Number',
     'external' => 'External',
+    'external.cancel_application.confirm.back_button' => 'Back',
+    'external.cancel_application.confirm.cancel_message' => 'Application cancelled',
+    'external.cancel_application.confirm.confirm_button' => 'Cancel application',
+    'external.cancel_application.confirm.message' => 'Are you sure you want to cancel this application? It will be
+        removed from your list and you will not be able to access it again.',
+    'external.withdraw_application.confirm.back_button' => 'Back',
+    'external.withdraw_application.confirm.cancel_message' => 'Application withdrawn',
+    'external.withdraw_application.confirm.confirm_button' => 'Withdraw application',
+    'external.withdraw_application.confirm.message' => 'Are you sure you want to withdraw this application? It will be
+        removed from your list and you will not be able to access it again. A refund will not be given. ',
     'fabs-reference' => 'Fabs Ref',
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
     'fee-details' => 'Fee Details',
@@ -1706,6 +1717,7 @@ return array(
     'lva.section.title.application_type_of_licence_confirmation' => 'Are you sure you want to make this change?',
     'lva.section.title.business_details' => 'Business details',
     'lva.section.title.business_type' => 'Business type',
+    'lva.section.title.cancel_appliction_confirmation' => 'Cancel application ',
     'lva.section.title.community_licences' => 'Community licences',
     'lva.section.title.conditions_undertakings' => 'Conditions and undertakings',
     'lva.section.title.convictions_penalties' => 'Convictions and Penalties',
@@ -1777,6 +1789,7 @@ return array(
     'lva.section.title.vehicles_declarations' => 'Vehicle declarations',
     'lva.section.title.vehicles_psv' => 'Vehicles',
     'lva.section.title.voided_discs' => 'Are you sure you would like to void these discs?',
+    'lva.section.title.withdraw_application_confirmation' => 'Withdraw application ',
     'maint' => 'Maint',
     'manage-users.action.add' => 'Add new user',
     'manage-users.create.error' => 'The user could not be created',
@@ -2741,20 +2754,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'lva.section.title.cancel_appliction_confirmation' => 'Cancel application ',
-    'external.cancel_application.confirm.message' =>
-        'Are you sure you want to cancel this application? It will be removed from your list and you will not be ' .
-        'able to access it again.',
-    'external.cancel_application.confirm.confirm_button' => 'Cancel application',
-    'external.cancel_application.confirm.back_button' => 'Back',
-    'external.cancel_application.confirm.cancel_message' => 'Application cancelled',
-    'external.withdraw_application.confirm.message' =>
-        'Are you sure you want to withdraw this application? It will be removed from your list and you will not be ' .
-        'able to access it again. A refund will not be given. ',
-    'lva.section.title.withdraw_application_confirmation' => 'Withdraw application ',
-    'external.withdraw_application.confirm.confirm_button' => 'Withdraw application',
-    'external.withdraw_application.confirm.back_button' => 'Back',
-    'external.withdraw_application.confirm.cancel_message' => 'Application withdrawn',
-    'application.withdraw' => 'Withdraw application',
     // Potentially unused (Not found with grep)
 );
