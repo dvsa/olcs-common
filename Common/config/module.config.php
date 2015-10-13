@@ -139,6 +139,9 @@ return array(
         'delegators' => [
             'zfcuser_user_mapper' => [
                 \Common\Rbac\UserProviderDelegatorFactory::class
+            ],
+            'MvcTranslator' => [
+                \Common\Util\TranslatorDelegatorFactory::class,
             ]
         ],
         'shared' => array(
@@ -797,5 +800,8 @@ return array(
             'from_address' => 'donotreply@otc.gsi.gov.uk',
             'from_name'  => 'OLCS do not reply'
         ]
+    ],
+    'translator' => [
+        'replacements' => include_once(__DIR__ . '/language/replacements.php')
     ]
 );

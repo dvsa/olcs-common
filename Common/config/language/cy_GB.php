@@ -19,6 +19,7 @@ return array(
     'BUS_TYP_REQ_CONF' => '{WELSH} The items below will be deleted. Would you like to continue? <ul>%s</ul>',
     'Confirm' => '{WELSH} Confirm',
     'Continue' => '{WELSH} Continue',
+    'ERR_EMAIL_REQUIRED' => '{WELSH} Email address is required',
     'ERR_MIME' => '{WELSH} The type of file you attempted to upload is not allowed',
     'ERR_OC_AD_DT_1' => '{WELSH} Please enter the date the advertisement was placed',
     'ERR_OC_AD_IN_1' => '{WELSH} Please enter a newspaper name',
@@ -52,6 +53,7 @@ return array(
     'ERR_OC_V_4' => '{WELSH} Please add an operating centre before setting the total number of vehicles',
     'ERR_OR_R_TOO_MANY' => '{WELSH} 2 is the maximum number of vehicles on a PSV Restricted licence',
     'ERR_PSV_VE_NO_ROWS' => '{WELSH} Please add at least one vehicle',
+    'ERR_USERNAME_EXISTS' => '{WELSH} Username is already taken',
     'FHAdditionalInfo.validation.is_empty' => '{WELSH} You selected \'yes\' in one of the provided questions, so value
         is required and can\'t be empty',
     'Invalid type given. String, integer or float expected' => '{WELSH} Please enter a numeric value',
@@ -354,9 +356,8 @@ return array(
     'application.progress' => '{WELSH} %s of %s sections complete',
     'application.review-declarations' => '{WELSH} Review & declarations',
     'application.review-declarations.confirm-short-label' => '{WELSH} Declarations',
-    'application.review-declarations.confirm-text' => '{WELSH} I declare that the statements made in this application
-        are true and that all supporting evidence supplied with regard to my application is correct. I understand that
-        it is an offence to make a false declaration',
+    'application.review-declarations.confirm-text' => '{WELSH} I understand that my application cannot be considered
+        until I have returned my signed application form',
     'application.review-declarations.confirm-text-internal' => '{WELSH} Signature seen?',
     'application.review-declarations.summary' => '{WELSH} Application summary',
     'application.review-declarations.summary.new-window' => '{WELSH} View in another window',
@@ -2047,6 +2048,7 @@ return array(
     'postcode.error.no-addresses-found' => '{WELSH} No addresses found for postcode',
     'postcode.error.not-available' => '{WELSH} Address search unavailable. Please enter your address manually',
     'previous-history' => '{WELSH} Previous history',
+    'print-declaration-form' => '{WELSH} Print declaration form',
     'priority' => '{WELSH} Priority',
     'privacy-and-cookies' => '{WELSH} Privacy &amp; Cookies',
     'progress' => '{WELSH} Progress',
@@ -2568,6 +2570,16 @@ return array(
     'testProperty' => '{WELSH} the test',
     'testPropertyPlaceHolder' => '{WELSH} test @placeHolder is @here',
     'tic' => '{WELSH} TIC',
+    'tm-add-user-birthDate' => '{WELSH} Date of birth',
+    'tm-add-user-confirm-email' => '{WELSH} Re-enter email address',
+    'tm-add-user-email' => '{WELSH} Email address',
+    'tm-add-user-familyName' => '{WELSH} Last name',
+    'tm-add-user-forename' => '{WELSH} First name',
+    'tm-add-user-hasEmail' => '{WELSH} Does this Transport Manager have an email address?',
+    'tm-add-user-success-message' => '{WELSH} The user account has been created and form has been emailed to the
+        transport manager',
+    'tm-add-user-success-message-no-email' => '{WELSH} The transport manager has been added to the application',
+    'tm-add-user-username' => '{WELSH} Username',
     'tm-details-edit-form-link-text' => '{WELSH} Edit form',
     'tm-details-heading' => '{WELSH} Transport manager form',
     'tm-details-licence-application-no' => '{WELSH} Licence application No.',
@@ -2726,8 +2738,8 @@ return array(
     'transport_managers-details-PreviousLicences-delete-success' => '{WELSH} Previous licence(s) removed successfully',
     'type-of-licence' => '{WELSH} Type of licence',
     'undertakings' => '{WELSH} Undertakings',
-    'undertakings_summary_download' => '{WELSH} <p style="margin-top: -20px;"><b><a href="%s"
-        target="_blank">%s</a></b></p>',
+    'undertakings_declaration_download' => '{WELSH} <p><a href="%s" target="_blank" class="download">%s</a></p>',
+    'undertakings_summary_download' => '{WELSH} <p><a href="%s" target="_blank" class="download">%s</a></p>',
     'united-kingdom' => '{WELSH} United Kingdom',
     'unknown-error' => '{WELSH} An error occurred processing your request, please try again',
     'update-continuation.saved' => '{WELSH} The continuation details have been updated',
@@ -2756,8 +2768,8 @@ return array(
     'variation.print' => '{WELSH} Print application',
     'variation.review-declarations.confirm-short-label' => '{WELSH} Declarations',
     'variation.review-declarations.confirm-text' => '{WELSH} I declare that the statements made in this application are
-        true and that there have been no other changes that affect the licence. I understand that it is an offence to
-        make a false declaration. Please see the licence undertakings below as a reminder of your obligations.',
+        true and that all supporting evidence supplied with regard to my application is correct. I understand that it is
+        an offence to make a false declaration.',
     'variation.review-declarations.confirm-text-upgrade' => '{WELSH} I declare that the statements made in this
         application are true and that all supporting evidence supplied with regard to my application is correct. I
         understand that it is an offence to make a false declaration. Please see the licence undertakings below as a

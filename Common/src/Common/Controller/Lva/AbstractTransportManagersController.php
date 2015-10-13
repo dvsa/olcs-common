@@ -10,6 +10,8 @@ namespace Common\Controller\Lva;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Dvsa\Olcs\Transfer\Command;
 use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
+use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
+use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
 
 /**
  * Abstract Transport Managers Controller
@@ -92,6 +94,13 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $form = $this->getAddForm();
 
         if ($request->isPost()) {
+
+            $formData = (array)$request->getPost();
+
+            if (isset($formData['data']['addUser'])) {
+                return $this->redirect()->toRoute(null, ['action' => 'addNewUser'], [], true);
+            }
+
             $formData = (array)$request->getPost();
             $form->setData($formData);
 
@@ -162,7 +171,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $request = $this->getRequest();
 
         $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(\Dvsa\Olcs\Transfer\Query\User\User::create(['id' => $childId]));
+            ->createQuery(UserSelfserve::create(['id' => $childId]));
+
         /* @var $response \Common\Service\Cqrs\Response */
         $response = $this->getServiceLocator()->get('QueryService')->send($query);
         $userDetails = $response->getResult();
@@ -188,32 +198,38 @@ abstract class AbstractTransportManagersController extends AbstractController im
         if ($request->isPost() && $form->isValid()) {
             $formData = $form->getData();
 
-            // Update DOB
-            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-                ->createCommand(
-                    Command\Person\Update::create(
-                        [
-                            'id' => $userDetails['contactDetails']['person']['id'],
-                            'dob' => $formData['data']['birthDate']
-                        ]
-                    )
-                );
-            /* @var $response \Common\Service\Cqrs\Response */
-            $response = $this->getServiceLocator()->get('CommandService')->send($command);
+            /**
+             * @todo We are making 2 calls here,
+             * we need to combine these into 1 command with side effects
+             */
 
-            // create TMA
-            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-                ->createCommand(
-                    Command\TransportManagerApplication\Create::create(
-                        ['application' => $this->getIdentifier(), 'user' => $childId, 'action' => 'A']
-                    )
-                );
+            // Update DOB
+            $command = Command\Person\Update::create(
+                [
+                    'id' => $userDetails['contactDetails']['person']['id'],
+                    'dob' => $formData['data']['birthDate']
+                ]
+            );
             /* @var $response \Common\Service\Cqrs\Response */
-            $response = $this->getServiceLocator()->get('CommandService')->send($command);
+            $response = $this->handleCommand($command);
+
+            if ($response->isOk()) {
+                // create TMA
+                $command = Command\TransportManagerApplication\Create::create(
+                    [
+                        'application' => $this->getIdentifier(),
+                        'user' => $childId,
+                        'action' => 'A'
+                    ]
+                );
+                /* @var $response \Common\Service\Cqrs\Response */
+                $response = $this->handleCommand($command);
+            }
 
             if ($response->isServerError()) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
             }
+
             if ($response->isClientError()) {
                 $errors = TransportManagerApplicationMapper::mapFromErrors($form, $response->getResult());
 
@@ -238,6 +254,64 @@ abstract class AbstractTransportManagersController extends AbstractController im
         }
 
         return $this->render('addTm-transport_managers', $form);
+    }
+
+    public function addNewUserAction()
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createFormWithRequest('Lva\NewTmUser', $this->getRequest());
+
+        if ($this->getRequest()->isPost()) {
+            $form->setData((array)$this->getRequest()->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $hasEmail = isset($data['data']['hasEmail']) ? $data['data']['hasEmail'] : null;
+
+                $command = Command\Tm\CreateNewUser::create(
+                    [
+                        'application' => $this->getIdentifier(),
+                        'firstName' => $data['data']['forename'],
+                        'familyName' => $data['data']['familyName'],
+                        'birthDate' => $data['data']['birthDate'],
+                        'hasEmail' => $hasEmail,
+                        'username' => $data['data']['username'],
+                        'emailAddress' => $data['data']['emailAddress']
+                    ]
+                );
+
+                $response = $this->handleCommand($command);
+
+                $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+                if ($response->isOk()) {
+
+                    if ($hasEmail === 'Y') {
+                        $successMessage = 'tm-add-user-success-message';
+                    } else {
+                        $successMessage = 'tm-add-user-success-message-no-email';
+                    }
+
+                    $fm->addSuccessMessage($successMessage);
+
+                    return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+                }
+
+                if ($response->isServerError()) {
+                    $fm->addCurrentUnknownError();
+                } else {
+
+                    $messages = $response->getResult()['messages'];
+
+                    NewTmUserMapper::mapFormErrors($form, $messages, $fm);
+                }
+            }
+        }
+
+        $this->getServiceLocator()->get('Script')->loadFile('lva-tm-add-user');
+
+        return $this->render('add-transport_managers', $form);
     }
 
     protected function getTmDetailsForm($email)
