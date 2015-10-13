@@ -11,6 +11,7 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Dvsa\Olcs\Transfer\Command;
 use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
 use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
+use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
 
 /**
  * Abstract Transport Managers Controller
@@ -170,7 +171,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $request = $this->getRequest();
 
         $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(\Dvsa\Olcs\Transfer\Query\User\UserSelfserve::create(['id' => $childId]));
+            ->createQuery(UserSelfserve::create(['id' => $childId]));
+
         /* @var $response \Common\Service\Cqrs\Response */
         $response = $this->getServiceLocator()->get('QueryService')->send($query);
         $userDetails = $response->getResult();
@@ -196,32 +198,38 @@ abstract class AbstractTransportManagersController extends AbstractController im
         if ($request->isPost() && $form->isValid()) {
             $formData = $form->getData();
 
-            // Update DOB
-            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-                ->createCommand(
-                    Command\Person\Update::create(
-                        [
-                            'id' => $userDetails['contactDetails']['person']['id'],
-                            'dob' => $formData['data']['birthDate']
-                        ]
-                    )
-                );
-            /* @var $response \Common\Service\Cqrs\Response */
-            $response = $this->getServiceLocator()->get('CommandService')->send($command);
+            /**
+             * @todo We are making 2 calls here,
+             * we need to combine these into 1 command with side effects
+             */
 
-            // create TMA
-            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-                ->createCommand(
-                    Command\TransportManagerApplication\Create::create(
-                        ['application' => $this->getIdentifier(), 'user' => $childId, 'action' => 'A']
-                    )
-                );
+            // Update DOB
+            $command = Command\Person\Update::create(
+                [
+                    'id' => $userDetails['contactDetails']['person']['id'],
+                    'dob' => $formData['data']['birthDate']
+                ]
+            );
             /* @var $response \Common\Service\Cqrs\Response */
-            $response = $this->getServiceLocator()->get('CommandService')->send($command);
+            $response = $this->handleCommand($command);
+
+            if ($response->isOk()) {
+                // create TMA
+                $command = Command\TransportManagerApplication\Create::create(
+                    [
+                        'application' => $this->getIdentifier(),
+                        'user' => $childId,
+                        'action' => 'A'
+                    ]
+                );
+                /* @var $response \Common\Service\Cqrs\Response */
+                $response = $this->handleCommand($command);
+            }
 
             if ($response->isServerError()) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
             }
+
             if ($response->isClientError()) {
                 $errors = TransportManagerApplicationMapper::mapFromErrors($form, $response->getResult());
 
