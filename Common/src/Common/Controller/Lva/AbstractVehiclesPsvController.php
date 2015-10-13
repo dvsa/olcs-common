@@ -31,13 +31,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         TransferVehiclesTrait;
 
     protected $section = 'vehicles_psv';
-    private $type;
-
-    private $typeMap = [
-        'small'  => RefData::PSV_TYPE_SMALL,
-        'medium' => RefData::PSV_TYPE_MEDIUM,
-        'large'  => RefData::PSV_TYPE_LARGE
-    ];
 
     private $queryMap = [
         'licence' => QueryDto\Licence\PsvVehicles::class,
@@ -93,19 +86,15 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 return $response;
             }
 
-            $this->maybeWarnAboutTotalAuth($resultData, false);
-
             if ($crudAction !== null) {
-                $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
-                    $this->getActionFromCrudAction($crudAction)
-                );
+                $alternativeCrudResponse = $this->checkForAlternativeCrudAction($crudAction);
 
                 if ($alternativeCrudResponse !== null) {
                     return $alternativeCrudResponse;
                 }
 
                 // handle the original action as planned
-                return $this->handleCrudAction($crudAction);
+                return $this->handleCrudAction($data['vehicles']);
             }
 
             return $this->completeSection('vehicles_psv');
@@ -166,108 +155,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     }
 
     /**
-     * Add a small vehicle
-     */
-    public function smallAddAction()
-    {
-        return $this->add('small');
-    }
-
-    /**
-     * Edit a small vehicle
-     */
-    public function smallEditAction()
-    {
-        return $this->edit('small');
-    }
-
-    /**
-     * Delete a small vehicle
-     */
-    public function smallDeleteAction()
-    {
-        $this->type = 'small';
-
-        return $this->deleteAction();
-    }
-
-    /**
-     * Transfer vehicles
-     */
-    public function smallTransferAction()
-    {
-        return $this->transferVehicles();
-    }
-
-    /**
-     * Add a medium vehicle
-     */
-    public function mediumAddAction()
-    {
-        return $this->add('medium');
-    }
-
-    /**
-     * Edit a medium vehicle
-     */
-    public function mediumEditAction()
-    {
-        return $this->edit('medium');
-    }
-
-    /**
-     * Delete a medium vehicle
-     */
-    public function mediumDeleteAction()
-    {
-        $this->type = 'medium';
-
-        return $this->deleteAction();
-    }
-
-    /**
-     * Transfer vehicles
-     */
-    public function mediumTransferAction()
-    {
-        return $this->transferVehicles();
-    }
-
-    /**
-     * Add a large vehicle
-     */
-    public function largeAddAction()
-    {
-        return $this->add('large');
-    }
-
-    /**
-     * Edit a large vehicle
-     */
-    public function largeEditAction()
-    {
-        return $this->edit('large');
-    }
-
-    /**
-     * Delete a large vehicle
-     */
-    public function largeDeleteAction()
-    {
-        $this->type = 'large';
-
-        return $this->deleteAction();
-    }
-
-    /**
-     * Transfer vehicles
-     */
-    public function largeTransferAction()
-    {
-        return $this->transferVehicles();
-    }
-
-    /**
      * Get the delete message.
      *
      * @return string
@@ -295,11 +182,22 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return 'delete.confirmation.text';
     }
 
-    private function add($type)
+    /**
+     * Transfer vehicles
+     */
+    public function transferAction()
     {
-        $this->type = $type;
-        $request = $this->getRequest();
+        return $this->transferVehicles();
+    }
 
+    /**
+     * Add a vehicle action
+     *
+     * @return type
+     */
+    public function addAction()
+    {
+        $request = $this->getRequest();
         $resultData = $this->fetchResultData();
 
         if ($request->isPost()) {
@@ -310,7 +208,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $params = [
             'mode' => 'add',
-            'canAddAnother' => $resultData['available' . ucfirst($type) . 'Spaces'] > 1,
+            'canAddAnother' => $resultData['availableSpaces'] > 1,
             'action' => $this->params('action'),
             'isRemoved' => false
         ];
@@ -329,12 +227,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
             $dtoData = PsvVehiclesVehicle::mapFromForm($formData);
             $dtoData[$this->getIdentifierIndex()] = $this->getIdentifier();
-            $dtoData['type'] = $type;
 
             $response = $this->handleCommand($dtoClass::create($dtoData));
 
             if ($response->isOk()) {
-                return $this->handlePostSave($type, false);
+                return $this->handlePostSave();
             }
 
             $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
@@ -351,9 +248,13 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $this->render('add_vehicle', $form);
     }
 
-    private function edit($type)
+    /**
+     * Edit action
+     *
+     * @return type
+     */
+    public function editAction()
     {
-        $this->type = $type;
         $request = $this->getRequest();
 
         $id = $this->params('child_id');
@@ -404,7 +305,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             $response = $this->handleCommand(CommandDto\LicenceVehicle\UpdatePsvLicenceVehicle::create($dtoData));
 
             if ($response->isOk()) {
-                return $this->handlePostSave($type, false);
+                return $this->handlePostSave();
             }
 
             $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
@@ -428,22 +329,20 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      */
     protected function checkForAlternativeCrudAction($action)
     {
+        // export to CSV action
         if ($this->lva === 'licence' && $this->location === 'external' && $action === 'export') {
-            $type = $this->getType();
             $resultData = $this->fetchResultData();
-
-            $data = $resultData[$type];
+            $data = $resultData['vehicles'];
 
             return $this->getServiceLocator()
                 ->get('Helper\Response')
-                ->tableToCsv($this->getResponse(), $this->getTableBasic($type, $data), $type . '-vehicles');
+                ->tableToCsv($this->getResponse(), $this->getTableBasic($data), 'psv-vehicles');
         }
 
+        // if adding check that we haven't exceeded the to the totAuthVehicles
         if ($action === 'add') {
-            $type = $this->getType();
             $resultData = $this->fetchResultData();
-
-            if ($resultData['available' . ucfirst($type) . 'Spaces'] < 1) {
+            if ($resultData['availableSpaces'] < 1) {
 
                 $this->getServiceLocator()->get('Helper\FlashMessenger')
                     ->addErrorMessage('more-vehicles-than-total-auth-error');
@@ -455,6 +354,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     private function alterTable($table)
     {
+        // if licence on external then add an "Export" action
         if ($this->lva === 'licence' && $this->location === 'external') {
             $table->addAction(
                 'export',
@@ -468,48 +368,22 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $table;
     }
 
-    private function getTypeMap()
-    {
-        return $this->typeMap;
-    }
-
-    private function getTableNames()
-    {
-        $map = $this->getTypeMap();
-
-        return array_keys($map);
-    }
-
     /**
      * Remove vehicle size tables based on OC data
      *
      * @param Form $form
      * @return Form
      */
-    private function alterForm($form, $resultData, $removeActions)
+    private function alterForm(Form $form, $resultData, $removeActions)
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        foreach ($this->getTableNames() as $tableName) {
+        $table = $this->getTable($resultData['vehicles'], $removeActions);
 
-            if (!$resultData['show' . ucfirst($tableName) . 'Table']) {
-                $form->remove($tableName);
-                continue;
-            }
+        $formHelper->populateFormTable($form->get('vehicles'), $table, 'vehicles');
 
-            if ($removeActions) {
-                $tableConfigName = $tableName . '-readonly';
-            } else {
-                $tableConfigName = $tableName;
-            }
-
-            $table = $this->getTable($tableConfigName, $resultData[$tableName]);
-
-            $formHelper->populateFormTable($form->get($tableName), $table, $tableName);
-
-            if (!$removeActions && !$resultData['canTransfer']) {
-                $table->removeAction('transfer');
-            }
+        if (!$removeActions && !$resultData['canTransfer']) {
+            $table->removeAction('transfer');
         }
 
         if (in_array($this->lva, ['licence', 'variation'])) {
@@ -523,10 +397,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     private function addGuidance($resultData)
     {
         $message = 'psv-vehicles-' . $this->lva . '-missing-breakdown';
-
-        if ($resultData['showLargeTable']) {
-            $message .= '-large';
-        }
 
         if ($this->lva === 'variation') {
             $link = $this->url()->fromRoute('lva-variation/operating_centres', [], [], true);
@@ -546,24 +416,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     }
 
     /**
-     * Helper so we can always work out what type of PSV we're
-     */
-    private function getType()
-    {
-        if (isset($this->type)) {
-            return $this->type;
-        }
-
-        $data = (array)$this->getRequest()->getPost();
-
-        foreach ($this->getTableNames() as $type) {
-            if (isset($data[$type]['action'])) {
-                return $type;
-            }
-        }
-    }
-
-    /**
      * Get the total number of vehicles
      *
      * @return int
@@ -573,18 +425,21 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $resultData['total'];
     }
 
+    /**
+     * Add a Flash messenger warning if the total vehicles has been exceeded
+     *
+     * @param array $resultData
+     * @param bool  $current
+     */
     private function maybeWarnAboutTotalAuth($resultData, $current = true)
     {
         if ($this->lva !== 'licence' && $resultData['hasEnteredReg'] === 'Y') {
 
             $method = $current ? 'addCurrentWarningMessage' : 'addWarningMessage';
-
-            foreach ($this->getTableNames() as $tableName) {
-                if ($resultData[$tableName . 'AuthExceeded']) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->$method(
-                        'more-vehicles-than-' . $tableName . '-authorisation'
-                    );
-                }
+            if ((int) $resultData['availableSpaces'] < 0) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->$method(
+                    'more-vehicles-than-authorisation'
+                );
             }
         }
     }
@@ -606,16 +461,35 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $this->handleCommand($dtoClass::create($dtoData));
     }
 
-    private function getTable($tableName, $tableData)
+    /**
+     * Get the altered table
+     *
+     * @param array $tableData
+     * @param bool  $readOnly
+     *
+     * @return \Common\Service\Table\TableBuilder
+     */
+    private function getTable($tableData, $readOnly = false)
     {
-        return $this->alterTable($this->getTableBasic($tableName, $tableData));
+        return $this->alterTable($this->getTableBasic($tableData, $readOnly));
     }
 
-    private function getTableBasic($tableName, $tableData)
+    /**
+     * Get the table
+     *
+     * @param array $tableData
+     * @param bool  $readOnly
+     *
+     * @return \Common\Service\Table\TableBuilder
+     */
+    private function getTableBasic($tableData, $readOnly = false)
     {
-        return $this->getServiceLocator()
-            ->get('Table')
-            ->prepareTable('lva-psv-vehicles-' . $tableName, $tableData);
+        $tableName = 'lva-psv-vehicles';
+        if ($readOnly) {
+            $tableName .= '-readonly';
+        }
+
+        return $this->getServiceLocator()->get('Table')->prepareTable($tableName, $tableData);
     }
 
     private function renderForm($form)
@@ -652,21 +526,20 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     {
         $data = $formTables;
 
-        foreach ($this->getTableNames() as $section) {
+        if (isset($data['vehicles']['action'])) {
+            $action = $this->getActionFromCrudAction($data['vehicles']);
 
-            if (isset($data[$section]['action'])) {
-
-                $action = $this->getActionFromCrudAction($data[$section]);
-
-                $data[$section]['routeAction'] = $section . '-' . strtolower($action);
-
-                return $data[$section];
-            }
+            return $action;
         }
 
         return null;
     }
 
+    /**
+     * Fetch vehicle data
+     *
+     * @return array
+     */
     private function fetchResultData()
     {
         $dtoClass = $this->queryMap[$this->lva];
@@ -676,6 +549,13 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $response->getResult();
     }
 
+    /**
+     * Fetch one vehicles data
+     *
+     * @param int $id
+     *
+     * @return array
+     */
     private function fetchItemData($id)
     {
         $response = $this->handleQuery(QueryDto\LicenceVehicle\PsvLicenceVehicle::create(['id' => $id]));

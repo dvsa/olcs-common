@@ -26,7 +26,6 @@ class PsvVehiclesVehicle implements MapperInterface
                 'version' => $data['version'],
                 'vrm' => $data['vehicle']['vrm'],
                 'makeModel' => $data['vehicle']['makeModel'],
-                'isNovelty' => $data['vehicle']['isNovelty']
             ],
             'licence-vehicle' => [
                 'receivedDate' => $data['receivedDate'],
@@ -59,10 +58,6 @@ class PsvVehiclesVehicle implements MapperInterface
         if (isset($data['data']['makeModel'])) {
             $mappedData['makeModel'] = $data['data']['makeModel'];
         }
-        if (isset($data['data']['isNovelty'])) {
-            $mappedData['isNovelty'] = $data['data']['isNovelty'];
-        }
-
         return $mappedData;
     }
 

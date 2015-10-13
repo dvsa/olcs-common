@@ -1,6 +1,6 @@
 <?php
 
-$translationPrefix = 'application_vehicle-safety_vehicle-psv-large.table';
+$translationPrefix = 'application_vehicle-safety_vehicle-psv.table';
 
 return array(
     'variables' => array(
@@ -12,14 +12,14 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary', 'id' => 'addLarge'),
-                'edit' => array('requireRows' => true, 'id' => 'editLarge'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'id' => 'deleteLarge'),
+                'add' => array('class' => 'primary', 'id' => 'addSmall'),
+                'edit' => array('requireRows' => true, 'id' => 'editSmall'),
+                'delete' => array('class' => 'secondary', 'requireRows' => true, 'id' => 'deleteSmall'),
                 'transfer' => array(
                     'label' => 'Transfer',
                     'class' => 'secondary js-require--multiple',
                     'requireRows' => true,
-                    'id' => 'transferLarge'
+                    'id' => 'transferSmall'
                 )
             )
         ),
@@ -38,14 +38,9 @@ return array(
             'type' => 'Action',
         ),
         array(
-            'title' => $translationPrefix . '.specified',
-            'formatter' => 'Date',
-            'name' => 'specifiedDate'
-        ),
-        array(
-            'title' => $translationPrefix . '.removed',
-            'formatter' => 'Date',
-            'name' => 'removalDate'
+            'title' => $translationPrefix . '.make',
+            'stack' => 'vehicle->makeModel',
+            'formatter' => 'StackValue'
         ),
         array(
             'name' => 'action',

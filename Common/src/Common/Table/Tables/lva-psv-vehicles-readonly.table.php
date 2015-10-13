@@ -1,6 +1,6 @@
 <?php
 
-$translationPrefix = 'application_vehicle-safety_vehicle-psv-large.table';
+$translationPrefix = 'application_vehicle-safety_vehicle-psv.table';
 
 return array(
     'variables' => array(
@@ -17,6 +17,11 @@ return array(
         array(
             'title' => $translationPrefix . '.vrm',
             'stack' => 'vehicle->vrm',
+            'formatter' => 'StackValue',
+        ),
+        array(
+            'title' => $translationPrefix . '.make',
+            'stack' => 'vehicle->makeModel',
             'formatter' => 'StackValue'
         ),
         array(

@@ -314,7 +314,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Licence', 'GET', ['id' => $id, 'limit' => 'all'])
             ->will($this->returnValue($response));
 
-        $this->assertEquals(2, $this->sut->getVehiclesPsvTotal($id, $type));
+        $this->assertEquals(5, $this->sut->getVehiclesPsvTotal($id, $type));
     }
 
     /**

@@ -144,10 +144,6 @@ class RefData
     const TYPE_MOBILE = 'phone_t_mobile';
     const TYPE_FAX = 'phone_t_fax';
 
-    const PSV_TYPE_SMALL  = 'vhl_t_a';
-    const PSV_TYPE_MEDIUM = 'vhl_t_b';
-    const PSV_TYPE_LARGE  = 'vhl_t_c';
-
     /**
      * Operator CPID.
      */

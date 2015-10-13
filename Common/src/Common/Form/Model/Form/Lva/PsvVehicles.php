@@ -19,22 +19,9 @@ class PsvVehicles
     public $data = null;
 
     /**
-     * @Form\Name("small")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Small")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\PsvVehicles")
      */
-    public $small = null;
-
-    /**
-     * @Form\Name("medium")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Medium")
-     */
-    public $medium = null;
-
-    /**
-     * @Form\Name("large")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Large")
-     */
-    public $large = null;
+    public $vehicles = null;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ShareInfo")
