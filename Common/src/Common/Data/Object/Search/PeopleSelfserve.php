@@ -56,7 +56,11 @@ class PeopleSelfServe extends InternalSearchAbstract
     {
         if (empty($this->filters)) {
 
-            $this->filters = [];
+            $this->filters = [
+                new Filter\OrgType(),
+                new Filter\LicenceType(),
+                new Filter\LicenceStatus(),
+            ];
         }
 
         return $this->filters;
@@ -68,7 +72,23 @@ class PeopleSelfServe extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Found As', 'name'=> 'foundAs'],
+            //['title' => 'Found As', 'name'=> 'foundAs'],
+            [
+                'title' => 'Licence number',
+                'name'=> 'licNo',
+                'formatter' => function ($data) {
+                    return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                }
+            ],
+            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
+            [
+                'title' => 'Operator name',
+                'name'=> 'orgName',
+                'formatter' => function ($data) {
+                    $orgName = $data['orgName'];
+                    return $orgName;
+                }
+            ],
             [
                 'title' => 'Name',
                 'formatter' => function ($row) {
@@ -84,10 +104,8 @@ class PeopleSelfServe extends InternalSearchAbstract
             ],
             [
                 'title' => 'Date of Birth',
-                'formatter' => function ($row) {
-
-                    return date('d/m/Y', strtotime($row['personBirthDate']));
-                }
+                'formatter' => 'Date',
+                'name' => 'personBirthDate'
             ]
         ];
     }
