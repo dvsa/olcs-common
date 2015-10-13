@@ -42,7 +42,7 @@ class Licence extends InternalSearchAbstract
             $this->filters = [
                 new Filter\LicenceType(),
                 new Filter\LicenceStatus(),
-                new Filter\TrafficArea(),
+                new Filter\LicenceTrafficArea(),
                 new Filter\EntityType(),
             ];
         }
