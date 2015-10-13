@@ -8,6 +8,8 @@ OLCS.ready(function() {
   // cache some input lookups
   var hasEmailElement = F("data", "hasEmail");
 
+  F.selectRadio("data", "hasEmail", "Y");
+
   var hasEmail = function () {
     return hasEmailElement.filter(":checked").val() !== "N";
   };
