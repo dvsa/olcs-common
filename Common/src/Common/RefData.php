@@ -73,6 +73,12 @@ class RefData
     const APPLICATION_STATUS_WITHDRAWN = 'apsts_withdrawn';
     const APPLICATION_STATUS_REFUSED = 'apsts_refused';
     const APPLICATION_STATUS_NOT_TAKEN_UP = 'apsts_ntu';
+    const APPLICATION_STATUS_CANCELLED = 'apsts_cancelled';
+
+    /**
+     * Application withdraw reasons
+     */
+    const APPLICATION_WITHDRAW_REASON_WITHDRAWN = 'withdrawn';
 
     /**
      * Variation section statuses
