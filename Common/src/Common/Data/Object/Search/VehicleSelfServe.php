@@ -84,8 +84,16 @@ class VehicleSelfServe extends InternalSearchAbstract
             ],
             ['title' => 'VRM', 'name'=> 'vrm'],
             ['title' => 'Disc Number', 'name'=> 'discNo'],
-            ['title' => 'Specified date', 'name'=> 'specifiedDate'],
-            ['title' => 'Removed date', 'name'=> 'removalDate'],
+            [
+                'title' => 'Specified date',
+                'formatter' => 'Date',
+                'name'=> 'specifiedDate'
+            ],
+            [
+                'title' => 'Removed date',
+                'formatter' => 'Date',
+                'name'=> 'removalDate'
+            ],
         ];
     }
 }
