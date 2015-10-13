@@ -72,7 +72,6 @@ class PeopleSelfServe extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            //['title' => 'Found As', 'name'=> 'foundAs'],
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
