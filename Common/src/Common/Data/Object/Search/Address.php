@@ -2,6 +2,8 @@
 
 namespace Common\Data\Object\Search;
 
+use Common\Data\Object\Search\Aggregations\Terms as Filter;
+
 /**
  * Class Address
  * @package Common\Data\Object\Search
@@ -37,6 +39,13 @@ class Address extends InternalSearchAbstract
      */
     public function getFilters()
     {
+        if (empty($this->filters)) {
+
+            $this->filters = [
+                new Filter\AddressType(),
+            ];
+        }
+
         return $this->filters;
     }
 
@@ -75,6 +84,28 @@ class Address extends InternalSearchAbstract
                     return implode(', ', $address);
                 }
             ],
+            [
+                'title' => 'Compliant',
+                'formatter' => function ($row) {
+
+                    if ($row['complaintCaseId']) {
+                        return '<a href="/case/details/' . $row['complaintCaseId'] . '">Yes</a>';
+                    }
+
+                    return 'No';
+                }
+            ],
+            [
+                'title' => 'Opposition',
+                'formatter' => function ($row) {
+
+                    if ($row['oppositionCaseId']) {
+                        return '<a href="/case/details/' . $row['oppositionCaseId'] . '">Yes</a>';
+                    }
+
+                    return 'No';
+                }
+            ]
         ];
     }
 }

@@ -75,9 +75,8 @@ class BusRegSelfServe extends InternalSearchAbstract
                 'name'=> 'regNo',
                 'formatter' => function ($data) {
 
-                    return '<a href="/view-details/licence/'
-                    . $data['licId'] . '/bus/' . $data['busregId']
-                    . '/details">' . $data['regNo'] . '</a> <br>' . $data['busRegStatus'];
+                    return '<a href="/bus-registration/details/busreg/'
+                    . $data['busregId'] . '">' . $data['regNo'] . '</a> <br>' . $data['busRegStatus'];
                 }
             ],
             [
