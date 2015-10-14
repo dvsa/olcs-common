@@ -113,7 +113,8 @@ class People extends InternalSearchAbstract
                 'name'=> 'personBirthDate',
                 'formatter' => function ($row) {
 
-                    return empty($row['personBirthDate']) ? 'Not known' : date('d/m/Y', strtotime($row['personBirthDate']));
+                    return empty($row['personBirthDate']) ?
+                        'Not known' : date('d/m/Y', strtotime($row['personBirthDate']));
                 }
             ],
             [
