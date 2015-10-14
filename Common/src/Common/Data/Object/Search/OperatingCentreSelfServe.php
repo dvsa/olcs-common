@@ -75,7 +75,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
                     return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
-                    . '<br />' . $data['licStatus'];
+                    . '<br />' . $data['licStatusDesc'];
                 }
             ],
             [
