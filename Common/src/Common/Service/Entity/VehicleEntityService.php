@@ -48,6 +48,10 @@ class VehicleEntityService extends AbstractEntityService
         )
     );
 
+    /*
+     * NB Vehicle type has been removed, therefore these methods will not work anymore
+     */
+
     public function getTypeMap()
     {
         return $this->typeMap;
