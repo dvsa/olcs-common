@@ -59,7 +59,7 @@ class People extends InternalSearchAbstract
                 'links' => [
                     'create-transport-manager' => [
                         'label' => 'Create transport manager',
-                        'class' => 'primary',
+                        'class' => 'primary js-modal-ajax',
                         'route' => [
                             'route' => 'create_transport_manager'
                         ]

@@ -50,14 +50,14 @@ class Organisation extends InternalSearchAbstract
                 'links' => [
                     'create-operator' => [
                         'label' => 'Create operator',
-                        'class' => 'primary',
+                        'class' => 'primary js-modal-ajax',
                         'route' => [
                             'route' => 'create_operator'
                         ]
                     ],
                     'create-unlicensed-operator' => [
                         'label' => 'Create unlicensed operator',
-                        'class' => 'primary',
+                        'class' => 'primary js-modal-ajax',
                         'route' => [
                             'route' => 'create_unlicensed_operator'
                         ]
