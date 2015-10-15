@@ -60,6 +60,16 @@ class GetPlaceholderTest extends MockeryTestCase
         $this->assertEquals($expected, $this->sut->asObject());
     }
 
+    /**
+     * @dataProvider asBoolProvider
+     */
+    public function testAsBool($value, $expected)
+    {
+        $this->container->shouldReceive('getValue')->andReturn($value);
+
+        $this->assertEquals($expected, $this->sut->asBool());
+    }
+
     public function asStringProvider()
     {
         return [
@@ -122,6 +132,30 @@ class GetPlaceholderTest extends MockeryTestCase
             [
                 [
                     [$class]
+                ],
+                null
+            ],
+            [
+                'foo',
+                null
+            ]
+        ];
+    }
+
+    public function asBoolProvider()
+    {
+        return [
+            [
+                [true],
+                true
+            ],
+            [
+                true,
+                true
+            ],
+            [
+                [
+                    [true]
                 ],
                 null
             ],
