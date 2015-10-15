@@ -59,6 +59,7 @@ return array(
     'ERR_USERNAME_EXISTS' => '{WELSH} Username is already taken',
     'FHAdditionalInfo.validation.is_empty' => '{WELSH} You selected \'yes\' in one of the provided questions, so value
         is required and can\'t be empty',
+    'Find out more' => '{WELSH} Find out more',
     'Full name in block capitals' => '{WELSH} Full name in block capitals',
     'Invalid type given. String, integer or float expected' => '{WELSH} Please enter a numeric value',
     'LIC-SAFE-TACH-1' => '{WELSH} Please specify the name of the external contractor',
@@ -859,6 +860,7 @@ return array(
     'conviction-history' => '{WELSH} Conviction history',
     'conviction-notes' => '{WELSH} Conviction Notes',
     'convictions' => '{WELSH} Convictions',
+    'cookie-banner' => '{WELSH} Vehicle Operator Licensing uses cookies.',
     'correspondence-address-form-button-find-address' => '{WELSH} Find address',
     'correspondence-address-form-label-address1' => '{WELSH} Address line 1',
     'correspondence-address-form-label-address2' => '{WELSH} Address line 2',

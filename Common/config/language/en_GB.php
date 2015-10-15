@@ -58,6 +58,7 @@ return array(
     'ERR_USERNAME_EXISTS' => 'Username is already taken',
     'FHAdditionalInfo.validation.is_empty' => 'You selected \'yes\' in one of the provided questions, so value is
         required and can\'t be empty',
+    'Find out more' => 'Find out more',
     'Full name in block capitals' => 'Full name in block capitals',
     'Invalid type given. String, integer or float expected' => 'Please enter a numeric value',
     'LIC-SAFE-TACH-1' => 'Please specify the name of the external contractor',
@@ -838,6 +839,7 @@ return array(
     'conviction-history' => 'Conviction history',
     'conviction-notes' => 'Conviction Notes',
     'convictions' => 'Convictions',
+    'cookie-banner' => 'Vehicle Operator Licensing uses cookies.',
     'correspondence-address-form-button-find-address' => 'Find address',
     'correspondence-address-form-label-address1' => 'Address line 1',
     'correspondence-address-form-label-address2' => 'Address line 2',

@@ -72,4 +72,19 @@ class GetPlaceholder
 
         return null;
     }
+
+    public function asBool()
+    {
+        $value = $this->getValue();
+
+        if (is_array($value)) {
+            $value = reset($value);
+        }
+
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        return null;
+    }
 }
