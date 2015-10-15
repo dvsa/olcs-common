@@ -61,7 +61,7 @@ class RefData
     const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
     const LICENCE_STATUS_UNLICENSED = 'lsts_unlicenced';
     const LICENCE_STATUS_CONSIDERATION = 'lsts_consideration';
-
+    const LICENCE_STATUS_CANCELLED = 'lsts_cancelled';
 
     /**
      * Application statuses

@@ -750,6 +750,7 @@ return array(
     'applications' => '{WELSH} Applications',
     'apply-changes' => '{WELSH} Apply changes',
     'approve.button' => '{WELSH} Cancel',
+    'apsts_cancelled' => '{WELSH} Cancelled',
     'apsts_consideration' => '{WELSH} Under consideration',
     'apsts_curtailed' => '{WELSH} Curtailed',
     'apsts_granted' => '{WELSH} Granted',
@@ -1665,6 +1666,7 @@ return array(
     'lookup-town' => '{WELSH} Town',
     'lookup-transport-manager-id' => '{WELSH} Transport Manager ID',
     'lookup-vehicle-registration-mark' => '{WELSH} Vehicle Registration Mark',
+    'lsts_cancelled' => '{WELSH} Cancelled',
     'lsts_cns' => '{WELSH} Continuation Not Sought',
     'lsts_consideration' => '{WELSH} Under consideration',
     'lsts_curtailed' => '{WELSH} Curtailed',
@@ -2777,19 +2779,24 @@ return array(
         authorised vehicles.',
     'urgent' => '{WELSH} Urgent',
     'user-name' => '{WELSH} Username',
-    'user-registration.error.err_admin_user_already_exists'
-        => '{WELSH} This operator has already been registered. Please contact your administrator to add you as a user.',
+    'user-registration.error.err_admin_user_already_exists' => '{WELSH} This operator has already been registered.
+        Please contact your administrator to add you as a user.',
     'user-registration.field.businessType.label' => '{WELSH} What type of business are you?',
     'user-registration.field.isLicenceHolder.label' => '{WELSH} Do you already hold a Vehicle Operator Licence?',
     'user-registration.field.licenceNumber.label' => '{WELSH} Licence number',
     'user-registration.field.organisationName.label' => '{WELSH} Organisation name',
     'user-registration.form.label' => '{WELSH} Your details',
-    'user-registration.page.create-account.title' => '{WELSH} Create an account',
-    'user-registration.page.check-email.title' => '{WELSH} Check your email',
-    'user-registration.page.check-email.guidance' => '{WELSH} We have sent an email to <b class="js-email">%s</b> containing a temporary password. Once you have signed in using the temporary password you will need to reset it.',
-    'user-registration.page.check-email.content' => '{WELSH} Please follow the link in the email to <a href="%s">sign in to your account</a>',
+    'user-registration.page.check-email.content' => '{WELSH} Please follow the link in the email to <a href="%s">sign in
+        to your account</a>',
+    'user-registration.page.check-email.guidance' => '{WELSH} We have sent an email to <b class="js-email">%s</b>
+        containing a temporary password. Once you have signed in using the temporary password you will need to reset
+        it.',
     'user-registration.page.check-email.problems.header' => '{WELSH} Problems signing in?',
-    'user-registration.page.check-email.problems.text' => '{WELSH} If you have issues signing in or you didn’t recieve an email containing your temporary email address please email <a href="MAILTO:help@vehicleoperatorlicencing.dvsa.gov.uk">help@vehicleoperatorlicencing.dvsa.gov.uk</a>',
+    'user-registration.page.check-email.problems.text' => '{WELSH} If you have issues signing in or you didn’t recieve
+        an email containing your temporary email address please email <a
+        href="MAILTO:help@vehicleoperatorlicencing.dvsa.gov.uk">help@vehicleoperatorlicencing.dvsa.gov.uk</a>',
+    'user-registration.page.check-email.title' => '{WELSH} Check your email',
+    'user-registration.page.create-account.title' => '{WELSH} Create an account',
     'utilities' => '{WELSH} Utilities',
     'v-auth' => '{WELSH} V-auth',
     'v-auth-t-auth' => '{WELSH} V-auth/T-auth',

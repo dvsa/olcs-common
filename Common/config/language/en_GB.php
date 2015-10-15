@@ -729,6 +729,7 @@ return array(
     'applications' => 'Applications',
     'apply-changes' => 'Apply changes',
     'approve.button' => 'Cancel',
+    'apsts_cancelled' => 'Cancelled',
     'apsts_consideration' => 'Under consideration',
     'apsts_curtailed' => 'Curtailed',
     'apsts_granted' => 'Granted',
@@ -1630,6 +1631,7 @@ return array(
     'lookup-town' => 'Town',
     'lookup-transport-manager-id' => 'Transport Manager ID',
     'lookup-vehicle-registration-mark' => 'Vehicle Registration Mark',
+    'lsts_cancelled' => 'Cancelled',
     'lsts_cns' => 'Continuation Not Sought',
     'lsts_consideration' => 'Under consideration',
     'lsts_curtailed' => 'Curtailed',
@@ -2723,19 +2725,23 @@ return array(
         vehicles.',
     'urgent' => 'Urgent',
     'user-name' => 'Username',
-    'user-registration.error.err_admin_user_already_exists'
-        => 'This operator has already been registered. Please contact your administrator to add you as a user.',
+    'user-registration.error.err_admin_user_already_exists' => 'This operator has already been registered. Please
+        contact your administrator to add you as a user.',
     'user-registration.field.businessType.label' => 'What type of business are you?',
     'user-registration.field.isLicenceHolder.label' => 'Do you already hold a Vehicle Operator Licence?',
     'user-registration.field.licenceNumber.label' => 'Licence number',
     'user-registration.field.organisationName.label' => 'Organisation name',
     'user-registration.form.label' => 'Your details',
-    'user-registration.page.create-account.title' => 'Create an account',
-    'user-registration.page.check-email.title' => 'Check your email',
-    'user-registration.page.check-email.guidance' => 'We have sent an email to <b class="js-email">%s</b> containing a temporary password. Once you have signed in using the temporary password you will need to reset it.',
-    'user-registration.page.check-email.content' => 'Please follow the link in the email to <a href="%s">sign in to your account</a>',
+    'user-registration.page.check-email.content' => 'Please follow the link in the email to <a href="%s">sign in to your
+        account</a>',
+    'user-registration.page.check-email.guidance' => 'We have sent an email to <b class="js-email">%s</b> containing a
+        temporary password. Once you have signed in using the temporary password you will need to reset it.',
     'user-registration.page.check-email.problems.header' => 'Problems signing in?',
-    'user-registration.page.check-email.problems.text' => 'If you have issues signing in or you didn’t recieve an email containing your temporary email address please email <a href="MAILTO:help@vehicleoperatorlicencing.dvsa.gov.uk">help@vehicleoperatorlicencing.dvsa.gov.uk</a>',
+    'user-registration.page.check-email.problems.text' => 'If you have issues signing in or you didn’t recieve an
+        email containing your temporary email address please email <a
+        href="MAILTO:help@vehicleoperatorlicencing.dvsa.gov.uk">help@vehicleoperatorlicencing.dvsa.gov.uk</a>',
+    'user-registration.page.check-email.title' => 'Check your email',
+    'user-registration.page.create-account.title' => 'Create an account',
     'utilities' => 'Utilities',
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',

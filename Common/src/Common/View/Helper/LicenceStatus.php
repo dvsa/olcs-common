@@ -67,6 +67,7 @@ class LicenceStatus extends AbstractHelper
             RefData::LICENCE_STATUS_WITHDRAWN => 'red',
             RefData::LICENCE_STATUS_REFUSED => 'red',
             RefData::LICENCE_STATUS_NOT_TAKEN_UP => 'red',
+            RefData::LICENCE_STATUS_CANCELLED => 'grey',
             // Application statuses @todo double check these colours
             RefData::APPLICATION_STATUS_NOT_SUBMITTED => 'grey',
             RefData::APPLICATION_STATUS_GRANTED => 'green',
@@ -75,6 +76,7 @@ class LicenceStatus extends AbstractHelper
             RefData::APPLICATION_STATUS_WITHDRAWN => 'red',
             RefData::APPLICATION_STATUS_REFUSED => 'red',
             RefData::APPLICATION_STATUS_NOT_TAKEN_UP => 'red',
+            RefData::APPLICATION_STATUS_CANCELLED => 'grey',
         ];
 
         if (isset($colors[$status])) {
