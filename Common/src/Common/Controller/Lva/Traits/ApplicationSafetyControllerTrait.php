@@ -61,14 +61,4 @@ trait ApplicationSafetyControllerTrait
 
         return $application;
     }
-
-    /**
-     * Alter the form depending on the LVA type
-     *
-     * @param \Zend\Form\Form
-     */
-    protected function alterFormForLva(Form $form)
-    {
-
-    }
 }

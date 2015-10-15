@@ -16,6 +16,8 @@ use Zend\Form\Form;
  */
 class LicenceBusinessType extends AbstractBusinessType
 {
+    protected $lva = 'licence';
+
     protected function alterForm(Form $form, $params)
     {
         $this->getFormServiceLocator()->get('lva-licence')->alterForm($form);

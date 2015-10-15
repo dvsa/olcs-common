@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Traits;
 
+use Zend\Form\Form;
+
 /**
  * Variation Controller Trait
  *
@@ -53,5 +55,10 @@ trait CommonVariationControllerTrait
             return $this->redirect()
                 ->toRouteAjax('lva-variation/' . $sections[$index + 1], $params);
         }
+    }
+
+    protected function alterFormForLva(Form $form)
+    {
+        return $this->getServiceLocator()->get('FormServiceManager')->get('lva-variation')->alterForm($form);
     }
 }

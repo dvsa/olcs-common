@@ -16,6 +16,8 @@ use Zend\Form\Form;
  */
 class VariationBusinessType extends AbstractBusinessType
 {
+    protected $lva = 'variation';
+
     protected function alterForm(Form $form, $params)
     {
         $this->getFormServiceLocator()->get('lva-variation')->alterForm($form);
