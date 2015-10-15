@@ -77,7 +77,8 @@ class PublicationNumberTest extends MockeryTestCase
                     ]
                 ],
                 [],
-                '<a href="//foo/some/path/foo.rtf" data-file-url="//foo/some/path/foo.rtf" target="blank">12345</a>'
+                '<a href="//foo/some/path/foo.rtf" data-file-url="file:///Z:/olcs/some/path/foo.rtf" target="blank">'
+                    . '12345</a>'
             ]
         ];
     }
