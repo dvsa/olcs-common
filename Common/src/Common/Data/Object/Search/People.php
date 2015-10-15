@@ -59,7 +59,7 @@ class People extends InternalSearchAbstract
                 'links' => [
                     'create-transport-manager' => [
                         'label' => 'Create transport manager',
-                        'class' => 'primary',
+                        'class' => 'primary js-modal-ajax',
                         'route' => [
                             'route' => 'create_transport_manager'
                         ]
@@ -113,7 +113,8 @@ class People extends InternalSearchAbstract
                 'name'=> 'personBirthDate',
                 'formatter' => function ($row) {
 
-                    return empty($row['personBirthDate']) ? 'Not known' : date('d/m/Y', strtotime($row['personBirthDate']));
+                    return empty($row['personBirthDate']) ?
+                        'Not known' : date('d/m/Y', strtotime($row['personBirthDate']));
                 }
             ],
             [
