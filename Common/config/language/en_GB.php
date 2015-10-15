@@ -61,6 +61,8 @@ return array(
     'Full name in block capitals' => 'Full name in block capitals',
     'Invalid type given. String, integer or float expected' => 'Please enter a numeric value',
     'LIC-SAFE-TACH-1' => 'Please specify the name of the external contractor',
+    'MISSING_EVIDENCE_FINANCIAL' => 'Proof of financial standing',
+    'MISSING_EVIDENCE_OC' => 'The local newspaper advert for each operating centre',
     'N/A' => 'Not applicable',
     'No' => 'No',
     'OC_CANNOT_DELETE_HAS_S4' => 'Operating centres that are part of a schedule 4/1 action cannot be removed',
@@ -79,9 +81,11 @@ return array(
         vehicles: You must have at least 1 vehicle',
     'VE-VRM_SECTION26' => 'Under Section 26 (23 NI) Direction this vehicle is suspended and cannot be added',
     'Value is required and can\'t be empty' => 'value is required',
+    'View details' => 'View details',
     'Week' => 'Week',
     'Weeks' => 'Weeks',
     'What do I need to do next?' => 'What do I need to do next?',
+    'What happens next?' => 'What happens next?',
     'Yes' => 'Yes',
     'account-balance' => 'Account balance',
     'add' => 'Add',
@@ -327,6 +331,8 @@ return array(
     'application-search-person-header-partner' => 'Add new partner',
     'application-search-person-header-person' => 'Add new responsible person',
     'application-search-subsidiary-header' => 'Subsidiary Company',
+    'application-summary-complete-what-next-text' => 'The Central Licensing Office aims to process your application as
+        soon as possible. The information provided will be checked and further information may be requested.',
     'application-summary-important-text' => 'You are advised that you cannot lawfully operate goods vehicles with a
         gross plated weight exceeding 3.5 tonnes for the carriage of goods in connection with your trade or business or
         for hire or reward until your application has been granted, any relevant grant fee has been paid and the licence
@@ -810,6 +816,7 @@ return array(
     'companyname' => 'Company Name',
     'companynumber' => 'Company #',
     'complaints' => 'Complaints',
+    'completion-date.title' => 'Target completion date',
     'conditions' => 'Conditions',
     'conditions-and-undertaking-for-licences' => 'Conditions and undertakings for licences',
     'conditions-and-undertakings' => 'Conditions and undertakings',
@@ -2021,6 +2028,9 @@ return array(
     'previous-history' => 'Previous history',
     'print-declaration-form' => 'Print declaration form',
     'print-sign-return-declaration-form' => 'Print, sign and return the declaration form',
+    'print-sign-return-declaration-form-text' => 'If you haven\'t already, an owner or Director of the business must
+        sign the declaration form and return it to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central
+        Licensing Office</a>.',
     'priority' => 'Priority',
     'privacy-and-cookies' => 'Privacy &amp; Cookies',
     'progress' => 'Progress',
@@ -2495,6 +2505,11 @@ return array(
     'summary-application-actions-transport-managers' => 'Approve any outstanding Transport Manager applications',
     'summary-dashboard.button' => 'Take me to my dashboard',
     'summary-overview.button' => 'View my application summary',
+    'supply-supporting-evidence' => 'Supply supporting evidence',
+    'supply-supporting-evidence-text-1' => 'You did not upload the following documents:',
+    'supply-supporting-evidence-text-2' => 'You will need to send these documents to the <a
+        href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a> along with your application reference
+        number',
     'surname' => 'Surname',
     't-auth' => 'T-auth',
     'table_button_more_actions' => 'More actions',
@@ -2784,5 +2799,4 @@ return array(
     'withdraw-application' => 'Withdraw application',
     'your-business' => 'Your business',
     // Potentially unused (Not found with grep)
-    'completion-date.title' => 'Target completion date',
 );

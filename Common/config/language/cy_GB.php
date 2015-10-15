@@ -62,6 +62,8 @@ return array(
     'Full name in block capitals' => '{WELSH} Full name in block capitals',
     'Invalid type given. String, integer or float expected' => '{WELSH} Please enter a numeric value',
     'LIC-SAFE-TACH-1' => '{WELSH} Please specify the name of the external contractor',
+    'MISSING_EVIDENCE_FINANCIAL' => '{WELSH} Proof of financial standing',
+    'MISSING_EVIDENCE_OC' => '{WELSH} The local newspaper advert for each operating centre',
     'N/A' => '{WELSH} Not applicable',
     'No' => '{WELSH} No',
     'OC_CANNOT_DELETE_HAS_S4' => '{WELSH} Operating centres that are part of a schedule 4/1 action cannot be removed',
@@ -80,9 +82,11 @@ return array(
         vehicles: You must have at least 1 vehicle',
     'VE-VRM_SECTION26' => '{WELSH} Under Section 26 (23 NI) Direction this vehicle is suspended and cannot be added',
     'Value is required and can\'t be empty' => '{WELSH} value is required',
+    'View details' => '{WELSH} View details',
     'Week' => '{WELSH} Week',
     'Weeks' => '{WELSH} Weeks',
     'What do I need to do next?' => '{WELSH} What do I need to do next?',
+    'What happens next?' => '{WELSH} What happens next?',
     'Yes' => '{WELSH} Yes',
     'account-balance' => '{WELSH} Account balance',
     'add' => '{WELSH} Add',
@@ -335,6 +339,9 @@ return array(
     'application-search-person-header-partner' => '{WELSH} Add new partner',
     'application-search-person-header-person' => '{WELSH} Add new responsible person',
     'application-search-subsidiary-header' => '{WELSH} Subsidiary Company',
+    'application-summary-complete-what-next-text' => '{WELSH} The Central Licensing Office aims to process your
+        application as soon as possible. The information provided will be checked and further information may be
+        requested.',
     'application-summary-important-text' => '{WELSH} You are advised that you cannot lawfully operate goods vehicles
         with a gross plated weight exceeding 3.5 tonnes for the carriage of goods in connection with your trade or
         business or for hire or reward until your application has been granted, any relevant grant fee has been paid and
@@ -830,6 +837,7 @@ return array(
     'companyname' => '{WELSH} Company Name',
     'companynumber' => '{WELSH} Company #',
     'complaints' => '{WELSH} Complaints',
+    'completion-date.title' => '{WELSH} Target completion date',
     'conditions' => '{WELSH} Conditions',
     'conditions-and-undertaking-for-licences' => '{WELSH} Conditions and undertakings for licences',
     'conditions-and-undertakings' => '{WELSH} Conditions and undertakings',
@@ -2061,6 +2069,9 @@ return array(
     'previous-history' => '{WELSH} Previous history',
     'print-declaration-form' => '{WELSH} Print declaration form',
     'print-sign-return-declaration-form' => '{WELSH} Print, sign and return the declaration form',
+    'print-sign-return-declaration-form-text' => '{WELSH} If you haven\'t already, an owner or Director of the business
+        must sign the declaration form and return it to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central
+        Licensing Office</a>.',
     'priority' => '{WELSH} Priority',
     'privacy-and-cookies' => '{WELSH} Privacy &amp; Cookies',
     'progress' => '{WELSH} Progress',
@@ -2543,6 +2554,11 @@ return array(
         applications',
     'summary-dashboard.button' => '{WELSH} Take me to my dashboard',
     'summary-overview.button' => '{WELSH} View my application summary',
+    'supply-supporting-evidence' => '{WELSH} Supply supporting evidence',
+    'supply-supporting-evidence-text-1' => '{WELSH} You did not upload the following documents:',
+    'supply-supporting-evidence-text-2' => '{WELSH} You will need to send these documents to the <a
+        href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a> along with your application reference
+        number',
     'surname' => '{WELSH} Surname',
     't-auth' => '{WELSH} T-auth',
     'table_button_more_actions' => '{WELSH} More actions',
