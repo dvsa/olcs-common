@@ -19,6 +19,12 @@ class VehiclesDeclarations
     public $version = null;
 
     /**
+     * @Form\Name("psvVehicleSize")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\PsvVehiclesSize")
+     */
+    public $psvVehicleSize = null;
+
+    /**
      * @Form\Name("smallVehiclesIntention")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsSmallVehiclesIntention")
      */

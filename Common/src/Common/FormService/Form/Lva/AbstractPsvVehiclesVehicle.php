@@ -39,11 +39,6 @@ abstract class AbstractPsvVehiclesVehicle extends AbstractFormService
         }
         $this->getFormServiceLocator()->get('lva-psv-vehicles-vehicle')->alterForm($form);
 
-        if (!in_array($params['action'], ['small-add', 'small-edit'])) {
-            $this->getFormHelper()->remove($form, 'data->isNovelty');
-            $this->getFormHelper()->remove($form, 'data->makeModel');
-        }
-
         $this->getFormHelper()->remove($form, 'licence-vehicle->discNo');
 
         $this->getFormServiceLocator()->get('lva-generic-vehicles-vehicle')->alterForm($form, $params);
@@ -53,10 +48,6 @@ abstract class AbstractPsvVehiclesVehicle extends AbstractFormService
 
             if ($form->get('data')->has('makeModel')) {
                 $this->getFormHelper()->disableElement($form, 'data->makeModel');
-            }
-
-            if ($form->get('data')->has('isNovelty')) {
-                $this->getFormHelper()->disableElement($form, 'data->isNovelty');
             }
 
             $this->getFormHelper()->disableElements($form->get('licence-vehicle'));

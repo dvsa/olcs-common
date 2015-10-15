@@ -103,10 +103,6 @@ abstract class AbstractOperatingCentres extends AbstractFormService
             'totAuthTrailers'
         ];
 
-        if (!$params['canHaveLargeVehicles']) {
-            $removeFields[] = 'totAuthLargeVehicles';
-        }
-
         $this->getFormHelper()->removeFieldList($form, 'data', $removeFields);
     }
 
@@ -126,12 +122,5 @@ abstract class AbstractOperatingCentres extends AbstractFormService
 
     protected function alterFormForGoodsLicences(Form $form)
     {
-        $removeFields = [
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles'
-        ];
-
-        $this->getFormHelper()->removeFieldList($form, 'data', $removeFields);
     }
 }

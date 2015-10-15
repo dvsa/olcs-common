@@ -144,10 +144,6 @@ class RefData
     const TYPE_MOBILE = 'phone_t_mobile';
     const TYPE_FAX = 'phone_t_fax';
 
-    const PSV_TYPE_SMALL  = 'vhl_t_a';
-    const PSV_TYPE_MEDIUM = 'vhl_t_b';
-    const PSV_TYPE_LARGE  = 'vhl_t_c';
-
     /**
      * Operator CPID.
      */
@@ -167,4 +163,9 @@ class RefData
     const IRFO_STOCK_CONTROL_STATUS_ISSUED = 'irfo_perm_s_s_issued';
     const IRFO_STOCK_CONTROL_STATUS_VOID = 'irfo_perm_s_s_void';
     const IRFO_STOCK_CONTROL_STATUS_RETURNED = 'irfo_perm_s_s_ret';
+
+    // PSV Vehicle sizes
+    const PSV_VEHICLE_SIZE_SMALL = 'psvvs_small';
+    const PSV_VEHICLE_SIZE_MEDIUM_LARGE = 'psvvs_medium_large';
+    const PSV_VEHICLE_SIZE_BOTH = 'psvvs_both';
 }

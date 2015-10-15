@@ -1,6 +1,46 @@
 $(function() {
   "use strict";
 
+    updateVehicleSize()
+
+    $('input[name="psvVehicleSize[size]"]').change(function() {
+      updateVehicleSize();
+    })
+
+    function updateVehicleSize() {
+      switch (getVehicleSize()) {
+        case "psvvs_small":
+          $(".psv-show-large").hide();
+          $(".psv-show-both").hide();
+          $(".psv-show-small").show();
+          break;
+        case "psvvs_medium_large":
+          $(".psv-show-small").hide();
+          $(".psv-show-both").hide();
+          $(".psv-show-large").show();
+          break;
+        case "psvvs_both":
+          $(".psv-show-small").hide();
+          $(".psv-show-large").hide();
+          $(".psv-show-both").show();
+          break;
+        default :
+          $(".psv-show-small").hide();
+          $(".psv-show-large").hide();
+          $(".psv-show-both").hide();
+    }
+  }
+
+  function getVehicleSize()
+  {
+    return $('input[name="psvVehicleSize[size]"]:checked').val();
+  }
+  
+  function isVehicleSizeSmall()
+  {
+     return getVehicleSize() === "psvvs_small";
+  }
+
   function limoChecked(value) {
     return function() {
       return OLCS.formHelper.isChecked("limousinesNoveltyVehicles", "psvLimousines", value);
@@ -17,6 +57,12 @@ $(function() {
     };
   }
 
+  function show15g() {
+    return function() {
+       return !isVehicleSizeSmall() && OLCS.formHelper.isChecked("limousinesNoveltyVehicles", "psvLimousines", 'Y');
+    }
+  }
+
   OLCS.cascadeForm({
     cascade: false,
     rulesets: {
@@ -30,9 +76,9 @@ $(function() {
         "label:limousinesNoveltyVehicles\\[psvNoLimousineConfirmationLabel\\]": limoChecked("N"),
         "parent:.js-no-confirmation": limoChecked("N"),
 
-        "label:limousinesNoveltyVehicles\\[psvOnlyLimousinesConfirmationLabel\\]": limoChecked("Y"),
-        "parent:.js-only-confirmation": limoChecked("Y")
-      }
+        "label:limousinesNoveltyVehicles\\[psvOnlyLimousinesConfirmationLabel\\]": show15g(),
+        "parent:.js-only-confirmation": show15g()
+      },
     }
   });
 });

@@ -19,39 +19,6 @@ class OperatingCentres
     public $version = null;
 
     /**
-     * @Form\Attributes({"class":"short","id":""})
-     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\AllowEmpty(false)
-     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthSmallVehicles"})
-     * @Form\Validator({"name": "Digits"})
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
-     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
-     */
-    public $totAuthSmallVehicles = null;
-
-    /**
-     * @Form\Attributes({"class":"short","id":""})
-     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\AllowEmpty(false)
-     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthMediumVehicles"})
-     * @Form\Validator({"name": "Digits"})
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
-     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
-     */
-    public $totAuthMediumVehicles = null;
-
-    /**
-     * @Form\Attributes({"class":"short","id":""})
-     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\AllowEmpty(false)
-     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthLargeVehicles"})
-     * @Form\Validator({"name": "Digits"})
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
-     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
-     */
-    public $totAuthLargeVehicles = null;
-
-    /**
      * @Form\Type("Text")
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\AllowEmpty(true)

@@ -221,9 +221,6 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         $comparisons = [
             'totAuthVehicles',
             'totAuthTrailers',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles'
         ];
 
         foreach ($comparisons as $comparison) {
@@ -519,9 +516,6 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     {
         $allAuths = [
             'totAuthVehicles',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles'
         ];
 
         foreach ($allAuths as $authKey) {
@@ -597,10 +591,6 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      */
     protected function getTotAuthVehicles($data)
     {
-        if ($this->isPsv()) {
-            return $data['totAuthSmallVehicles'] + $data['totAuthMediumVehicles'] + $data['totAuthLargeVehicles'];
-        }
-
         return $data['totAuthVehicles'];
     }
 

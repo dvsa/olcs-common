@@ -5,7 +5,7 @@ $(function() {
     return OLCS.formHelper.isChecked("data", "hasEnteredReg") || !OLCS.formHelper.findInput("data", "hasEnteredReg").length;
   }
 
-  var tableSelector = "form [data-group*='small'], form [data-group*='medium'], form [data-group*='large']";
+  var tableSelector = "form [data-group*='vehicles']";
 
   /**
    * Always bind some generic edit and delete buttons as they're
@@ -38,9 +38,7 @@ $(function() {
   OLCS.cascadeForm({
     cascade: false,
     rulesets: {
-      "small": showTables,
-      "medium": showTables,
-      "large": showTables
+      "vehicles": showTables
     }
   });
 });

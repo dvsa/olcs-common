@@ -49,18 +49,4 @@ class PsvVehicleData
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":2,"max":100}})
      */
     public $makeModel = null;
-
-    /**
-     * @Form\Attributes({"id":"","placeholder":""})
-     * @Form\Options({
-     *     "label": "application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty",
-     *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
-     * })
-     * @Form\Type("\Zend\Form\Element\Radio")
-     */
-    public $isNovelty = null;
 }

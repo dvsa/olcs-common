@@ -62,15 +62,6 @@ class OperatingCentresTest extends MockeryTestCase
                 'totAuthTrailers' => [
                     'bar3'
                 ],
-                'totAuthSmallVehicles' => [
-                    'bar4'
-                ],
-                'totAuthMediumVehicles' => [
-                    'bar5'
-                ],
-                'totAuthLargeVehicles' => [
-                    'bar6'
-                ]
             ],
             'table' => [
                 'table' => [
@@ -93,15 +84,6 @@ class OperatingCentresTest extends MockeryTestCase
             ],
             'totAuthTrailers' => [
                 'foo' => 'bar3'
-            ],
-            'totAuthSmallVehicles' => [
-                'foo' => 'bar4'
-            ],
-            'totAuthMediumVehicles' => [
-                'foo' => 'bar5'
-            ],
-            'totAuthLargeVehicles' => [
-                'foo' => 'bar6'
             ],
             'operatingCentres' => [
                 'foo' => 'bar7'

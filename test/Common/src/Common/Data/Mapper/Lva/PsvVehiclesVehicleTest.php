@@ -28,7 +28,6 @@ class PsvVehiclesVehicleTest extends MockeryTestCase
             'vehicle' => [
                 'vrm' => 'AB111AB',
                 'makeModel' => 'Foo',
-                'isNovelty' => 'Y'
             ],
             'receivedDate' => '2015-01-01',
             'specifiedDate' => '2015-01-01',
@@ -41,7 +40,6 @@ class PsvVehiclesVehicleTest extends MockeryTestCase
                 'version' => 1,
                 'vrm' => 'AB111AB',
                 'makeModel' => 'Foo',
-                'isNovelty' => 'Y'
             ],
             'licence-vehicle' => [
                 'receivedDate' => '2015-01-01',
@@ -61,7 +59,6 @@ class PsvVehiclesVehicleTest extends MockeryTestCase
                 'version' => 1,
                 'vrm' => 'AB111AB',
                 'makeModel' => 'Foo',
-                'isNovelty' => 'Y'
             ],
             'licence-vehicle' => [
                 'receivedDate' => '2015-01-01',
@@ -74,7 +71,6 @@ class PsvVehiclesVehicleTest extends MockeryTestCase
             'version' => 1,
             'vrm' => 'AB111AB',
             'makeModel' => 'Foo',
-            'isNovelty' => 'Y',
             'receivedDate' => '2015-01-01',
             'specifiedDate' => '2015-01-01',
             'removalDate' => null

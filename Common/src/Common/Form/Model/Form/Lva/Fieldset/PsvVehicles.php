@@ -5,9 +5,9 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Name("medium")
+ * @Form\Name("psv-vehicles")
  */
-class Medium
+class PsvVehicles
 {
     /**
      * @Form\Options({"label":"row"})
