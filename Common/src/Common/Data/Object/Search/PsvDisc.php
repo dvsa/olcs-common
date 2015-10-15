@@ -70,10 +70,7 @@ class PsvDisc extends InternalSearchAbstract
                     return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
                 }
             ],
-            ['title' => 'VRM', 'name'=> ''],
             ['title' => 'Disc Number', 'name'=> 'discNo'],
-            ['title' => 'Specified date', 'name'=> ''],
-            ['title' => 'Removed date', 'name'=> ''],
         ];
     }
 }

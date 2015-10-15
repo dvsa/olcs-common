@@ -89,12 +89,6 @@ class BusRegSelfServe extends InternalSearchAbstract
                     return $orgName;
                 }
             ],
-            ['title' => 'Variation number', 'name'=> 'variationNo'],
-            [
-                'title' => 'Date first registered / cancelled',
-                'formatter' => 'Date',
-                'name'=> 'date_1stReg'
-            ],
             ['title' => 'Service no', 'name'=> 'serviceNo'],
             ['title' => 'Start point', 'name'=> 'startPoint'],
             ['title' => 'Finish point', 'name'=> 'finishPoint']
