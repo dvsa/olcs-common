@@ -46,7 +46,13 @@ class RequestFactory implements FactoryInterface
         /** @var \ZfcRbac\Service\AuthorizationService $userProvider */
         $auth = $serviceLocator->get('ZfcRbac\Service\AuthorizationService');
         $identity = $auth->getIdentity();
-        $userId = $identity->getId();
+        //$userId = $identity->getId();
+
+        // Temporary commit to get around problem of allowing anonymous user access.
+        // @to-do CHANGE THIS BEFORE GO LIVE
+        // CRiley Authorised this commit. Piotr provided the code. For CraigR to use.
+
+        $userId = ($identity instanceOf \ZfcRbac\Identity\IdentityInterface) ? $identity->getId() : 1;
 
         $auth = new Authorization($userId);
         return $auth;
