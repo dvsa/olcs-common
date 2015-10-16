@@ -1,11 +1,6 @@
 <?php
 
 use Common\Service\Data\Search\SearchType;
-use Common\Data\Object\Search\Licence as LicenceSearch;
-use Common\Data\Object\Search\LicenceSelfserve as LicenceSelfserve;
-use Common\Data\Object\Search\OperatingCentre as OperatingCentreSearchIndex;
-use Common\Data\Object\Search\PeopleSelfserve as PeopleSelfserveSearchIndex;
-
 use Common\FormService\Form\Lva as LvaFormService;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
@@ -689,7 +684,7 @@ return array(
             'lva-application-undertakings' => LvaFormService\Undertakings::class,
 
             // Taxi/PHV form services
-            'lva-licence-taxi_phv' => LvaFormService\TaxiPhv::class,
+            'lva-licence-taxi_phv' => LvaFormService\LicenceTaxiPhv::class,
             'lva-variation-taxi_phv' => LvaFormService\TaxiPhv::class,
             'lva-application-taxi_phv' => LvaFormService\TaxiPhv::class,
 

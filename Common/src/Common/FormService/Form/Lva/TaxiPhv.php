@@ -7,14 +7,12 @@
  */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
-
 /**
  * TaxiPhv Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TaxiPhv extends AbstractFormService
+class TaxiPhv extends AbstractLvaFormService
 {
     public function getForm()
     {
@@ -33,6 +31,8 @@ class TaxiPhv extends AbstractFormService
      */
     protected function alterForm($form)
     {
+        $this->removeFormAction($form, 'save');
+        $this->removeFormAction($form, 'cancel');
         return $form;
     }
 }

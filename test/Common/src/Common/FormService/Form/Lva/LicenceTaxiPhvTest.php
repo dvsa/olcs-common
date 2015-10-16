@@ -1,26 +1,26 @@
 <?php
 
 /**
- * Taxi Phv Test
+ * Licence Taxi Phv Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace CommonTest\FormService\Form\Lva;
 
-use Common\FormService\Form\Lva\TaxiPhv;
+use Common\FormService\Form\Lva\LicenceTaxiPhv;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Taxi Phv Test
+ * Licence Taxi Phv Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TaxiPhvTest extends MockeryTestCase
+class LicenceTaxiPhvTest extends MockeryTestCase
 {
     /**
-     * @var TaxiPhv
+     * @var LicenceTaxiPhv
      */
     private $sut;
 
@@ -33,7 +33,7 @@ class TaxiPhvTest extends MockeryTestCase
     {
         $this->formHelper = m::mock(FormHelperService::class);
 
-        $this->sut = new TaxiPhv();
+        $this->sut = new LicenceTaxiPhv();
         $this->sut->setFormHelper($this->formHelper);
     }
 
@@ -41,9 +41,11 @@ class TaxiPhvTest extends MockeryTestCase
     {
         $formActions = m::mock();
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
+        $formActions->shouldReceive('has')->with('saveAndContinue')->andReturn(true);
         $formActions->shouldReceive('has')->with('cancel')->andReturn(true);
 
         $formActions->shouldReceive('remove')->with('save');
+        $formActions->shouldReceive('remove')->with('saveAndContinue');
         $formActions->shouldReceive('remove')->with('cancel');
 
         $form = m::mock();

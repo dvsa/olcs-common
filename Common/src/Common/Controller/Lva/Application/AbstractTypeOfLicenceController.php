@@ -78,10 +78,8 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             ]
         );
 
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
-
         /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        $response = $this->handleCommand($dto);
 
         if ($response->isOk()) {
             return $this->completeSection('type_of_licence', $prg);

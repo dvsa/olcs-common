@@ -7,7 +7,7 @@
  */
 namespace Common\FormService\Form\Lva\BusinessType;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Zend\Form\Form;
 
 /**
@@ -15,8 +15,10 @@ use Zend\Form\Form;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractBusinessType extends AbstractFormService
+abstract class AbstractBusinessType extends AbstractLvaFormService
 {
+    protected $lva;
+
     public function getForm($inForceLicences)
     {
         $form = $this->getFormHelper()->createForm('Lva\BusinessType');
@@ -35,7 +37,7 @@ abstract class AbstractBusinessType extends AbstractFormService
         // Noop
     }
 
-    protected function lockForm(Form $form)
+    protected function lockForm(Form $form, $removeStandardActions = true)
     {
         $element = $form->get('data')->get('type');
 
@@ -44,5 +46,10 @@ abstract class AbstractBusinessType extends AbstractFormService
         $this->getFormHelper()->disableElement($form, 'data->type');
 
         $this->getServiceLocator()->get('Helper\Guidance')->append('business-type.locked.message');
+
+        if ($removeStandardActions) {
+            $this->removeStandardFormActions($form);
+            $this->addBackToOverviewLink($form, $this->lva);
+        }
     }
 }

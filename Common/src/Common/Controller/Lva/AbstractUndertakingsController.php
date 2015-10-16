@@ -29,6 +29,7 @@ abstract class AbstractUndertakingsController extends AbstractController
         $applicationData = $this->getUndertakingsData();
         $form = $this->getForm();
         $this->updateForm($form, $applicationData);
+        $this->alterFormForLva($form);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();

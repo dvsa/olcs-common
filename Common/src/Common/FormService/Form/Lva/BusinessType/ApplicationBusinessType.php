@@ -16,6 +16,8 @@ use Zend\Form\Form;
  */
 class ApplicationBusinessType extends AbstractBusinessType
 {
+    protected $lva = 'application';
+
     protected function alterForm(Form $form, $params)
     {
         $this->getFormServiceLocator()->get('lva-application')->alterForm($form);
