@@ -2,7 +2,6 @@
 
 namespace CommonTest;
 
-use Olcs\Logging\Log\Logger;
 use Zend\Mvc\I18n\Translator;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
@@ -42,17 +41,6 @@ class Bootstrap
         self::$config = $config;
 
         self::getServiceManager();
-
-        self::setupLogger();
-    }
-
-    public static function setupLogger()
-    {
-        $logWriter = new \Zend\Log\Writer\Mock();
-        $logger = new \Zend\Log\Logger();
-        $logger->addWriter($logWriter);
-
-        Logger::setLogger($logger);
     }
 
     /**
