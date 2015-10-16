@@ -49,7 +49,7 @@ class CommandService
     /**
      * Send a query and return the response
      *
-     * @param DvsaCommand $command
+     * @param CommandContainerInterface $command
      * @return Response
      */
     public function send(CommandContainerInterface $command)

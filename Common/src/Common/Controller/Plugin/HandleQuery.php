@@ -2,7 +2,7 @@
 
 namespace Common\Controller\Plugin;
 
-use Common\Service\Cqrs\Query\QueryService;
+use Common\Service\Cqrs\Query\QueryServiceInterface;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -19,15 +19,15 @@ class HandleQuery extends AbstractPlugin
     private $annotationBuilder;
 
     /**
-     * @var QueryService
+     * @var QueryServiceInterface
      */
     private $queryService;
 
     /**
      * @param TransferAnnotationBuilder $annotationBuilder
-     * @param QueryService $queryService
+     * @param QueryServiceInterface $queryService
      */
-    public function __construct(TransferAnnotationBuilder $annotationBuilder, QueryService $queryService)
+    public function __construct(TransferAnnotationBuilder $annotationBuilder, QueryServiceInterface $queryService)
     {
         $this->queryService = $queryService;
         $this->annotationBuilder = $annotationBuilder;
