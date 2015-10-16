@@ -162,6 +162,7 @@ return array(
             'Zend\Log' => 'Logger',
             'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
             'NavigationFactory' => 'Common\Service\NavigationFactory',
+            'QueryService' => \Common\Service\Cqrs\Query\CachingQueryService::class,
         ),
         'invokables' => array(
             'Common\Service\NavigationFactory' => 'Common\Service\NavigationFactory',
@@ -214,7 +215,8 @@ return array(
             'LanguagePreference' => \Common\Preference\Language::class,
             'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
-            'QueryService' => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
+            \Common\Service\Cqrs\Query\CachingQueryService::class => \Common\Service\Cqrs\Query\CachingQueryServiceFactory::class,
+            \Common\Service\Cqrs\Query\QueryService::class => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
@@ -803,5 +805,8 @@ return array(
     ],
     'translator' => [
         'replacements' => include_once(__DIR__ . '/language/replacements.php')
+    ],
+    'cacheable_queries' => [
+        \Dvsa\Olcs\Transfer\Query\User\Roles::class => ['persistent' => true]
     ]
 );

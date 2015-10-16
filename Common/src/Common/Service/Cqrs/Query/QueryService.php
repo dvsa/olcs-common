@@ -21,7 +21,7 @@ use Zend\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterfac
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class QueryService
+class QueryService implements QueryServiceInterface
 {
     /**
      * @var RouteInterface
@@ -37,8 +37,6 @@ class QueryService
      * @var Request
      */
     protected $request;
-
-    protected $cache;
 
     public function __construct(RouteInterface $router, Client $client, Request $request)
     {
@@ -59,21 +57,6 @@ class QueryService
             return $this->invalidResponse($query->getMessages(), HttpResponse::STATUS_CODE_422);
         }
 
-        if ($query->isCachable()) {
-            $id = $query->getCacheIdentifier();
-
-            if (!isset($this->cache[$id])) {
-                $this->cache[$id] = $this->handleSend($query);
-            }
-
-            return $this->cache[$id];
-        }
-
-        return $this->handleSend($query);
-    }
-
-    protected function handleSend(QueryContainerInterface $query)
-    {
         $routeName = $query->getRouteName();
         $data = $query->getDto()->getArrayCopy();
 
