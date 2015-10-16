@@ -5,14 +5,30 @@ namespace Common\Service\Cqrs\Query;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Zend\Cache\Storage\StorageInterface as CacheInterface;
 
+/**
+ * Class CachingQueryService
+ * @package Common\Service\Cqrs\Query
+ */
 class CachingQueryService implements QueryServiceInterface
 {
+    /**
+     * @var QueryServiceInterface
+     */
     private $queryService;
 
+    /**
+     * @var array
+     */
     private $config = [];
 
+    /**
+     * @var
+     */
     private $localCache;
 
+    /**
+     * @var CacheInterface
+     */
     private $cacheService;
 
     /**
@@ -46,6 +62,10 @@ class CachingQueryService implements QueryServiceInterface
         return $this->handleLocalCache($query);
     }
 
+    /**
+     * @param QueryContainerInterface $query
+     * @return mixed
+     */
     private function handleLocalCache(QueryContainerInterface $query)
     {
         $cacheIdentifier = $query->getCacheIdentifier();

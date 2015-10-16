@@ -10,6 +10,10 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Cache\Storage\StorageInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class CachingQueryServiceFactoryTest
+ * @package CommonTest\Service\Cqrs\Query
+ */
 class CachingQueryServiceFactoryTest extends MockeryTestCase
 {
     public function testCreateService()

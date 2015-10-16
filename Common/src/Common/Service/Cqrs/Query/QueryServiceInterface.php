@@ -5,9 +5,7 @@ use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 
 /**
- * Query
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * QueryServiceInterface
  */
 interface QueryServiceInterface
 {

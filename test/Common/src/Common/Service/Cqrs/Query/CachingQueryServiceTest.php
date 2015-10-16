@@ -9,6 +9,10 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Cache\Storage\StorageInterface;
 
+/**
+ * Class CachingQueryServiceTest
+ * @package CommonTest\Service\Cqrs\Query
+ */
 class CachingQueryServiceTest extends MockeryTestCase
 {
     public function testSendWithNoCache()
