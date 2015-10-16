@@ -4,7 +4,6 @@ namespace Common\Service\Cqrs\Query;
 use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 
-
 /**
  * Query
  *

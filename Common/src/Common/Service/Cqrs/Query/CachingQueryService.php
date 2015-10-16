@@ -63,12 +63,13 @@ class CachingQueryService implements QueryServiceInterface
      */
     private function handlePersistentCache(QueryContainerInterface $query)
     {
-        $success = false;
-        $result = $this->cacheService->getItem($query->getCacheIdentifier(), $success);
+        $success = $this->cacheService->hasItem($query->getCacheIdentifier());
 
         if (!$success) {
             $result = $this->queryService->send($query);
             $this->cacheService->setItem($query->getCacheIdentifier(), $result);
+        } else {
+            $result = $this->cacheService->getItem($query->getCacheIdentifier());
         }
 
         return $result;
