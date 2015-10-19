@@ -2187,7 +2187,7 @@ return array(
     'search-result-section-vehicles' => 'Vehicles',
     'search.bus' => 'Bus Registration',
     'search.form.filter.update_button' => 'Update results',
-    'search.form.hint' => 'Can include operator name, licence number, person, postcode, town or city',
+    'search.form.hint' => 'Try searching for a company name, company location, person\'s name or licence number',
     'search.form.label' => 'Keywords',
     'search.operating-centre' => 'Operating Centre',
     'search.operator' => 'Vehicle Operator',
@@ -2197,7 +2197,7 @@ return array(
     'search.result.subtitle.operating-centre' => 'We\'ve found <b>%s</b> Operating Centres that match your search.',
     'search.result.subtitle.operator' => 'We\'ve found <b>%s</b> Operators that match your search.',
     'search.result.subtitle.person' => 'We\'ve found <b>%s</b> People that match your search.',
-    'search.result.subtitle.traffic-commissioner-publication' => 'We\'ve found <b>%s</b> Traffic Commissioner
+    'search.result.subtitle.traffic-commissioner-publication' => 'We\'ve found <b>%s</b>
         publications that match your search.',
     'search.result.subtitle.vehicle-external' => 'We\'ve found <b>%s</b> Vehicle search results.',
     'search.result.title.bus' => 'Search results',
