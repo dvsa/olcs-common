@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Helper;
 
+use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FlashMessengerHelperService;
 
@@ -31,17 +32,9 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
      */
     protected function setUp()
     {
-        $this->mockFlashMessenger = $this->getMock(
-            '\Zend\Mvc\Controller\Plugin\FlashMessenger',
-            array(
-                'addSuccessMessage',
-                'addErrorMessage',
-                'addInfoMessage',
-                'addWarningMessage'
-            )
-        );
+        $this->mockFlashMessenger = m::mock('\Zend\Mvc\Controller\Plugin\FlashMessenger');
 
-        $mockServiceManager = \Mockery::mock('\Zend\ServiceManager\ServiceManager');
+        $mockServiceManager = m::mock('\Zend\ServiceManager\ServiceManager');
         $mockServiceManager->shouldReceive('get->get')->andReturn($this->mockFlashMessenger);
 
         $this->sut = new FlashMessengerHelperService();
@@ -56,12 +49,28 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
     {
         $message = 'foo';
 
-        $this->mockFlashMessenger->expects($this->once())
-            ->method('addErrorMessage')
+        $this->mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->once()
             ->with($message)
-            ->will($this->returnSelf());
+            ->andReturnSelf();
 
         $this->assertSame($this->mockFlashMessenger, $this->sut->addErrorMessage($message));
+    }
+
+    /**
+     * @group helper_service
+     * @group flash_messenger_helper_service
+     */
+    public function testAddProminentErrorMessage()
+    {
+        $message = 'foo';
+
+        $this->mockFlashMessenger->shouldReceive('getNamespace')->once()->andReturn('default');
+        $this->mockFlashMessenger->shouldReceive('setNamespace')->once()->with('prominent-error');
+        $this->mockFlashMessenger->shouldReceive('addMessage')->once()->with('foo');
+        $this->mockFlashMessenger->shouldReceive('setNamespace')->once()->with('default');
+
+        $this->sut->addProminentErrorMessage($message);
     }
 
     /**
@@ -72,10 +81,10 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
     {
         $message = 'foo';
 
-        $this->mockFlashMessenger->expects($this->once())
-            ->method('addSuccessMessage')
+        $this->mockFlashMessenger->shouldReceive('addSuccessMessage')
+            ->once()
             ->with($message)
-            ->will($this->returnSelf());
+            ->andReturnSelf();
 
         $this->assertSame($this->mockFlashMessenger, $this->sut->addSuccessMessage($message));
     }
@@ -88,10 +97,10 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
     {
         $message = 'foo';
 
-        $this->mockFlashMessenger->expects($this->once())
-            ->method('addWarningMessage')
+        $this->mockFlashMessenger->shouldReceive('addWarningMessage')
+            ->once()
             ->with($message)
-            ->will($this->returnSelf());
+            ->andReturnSelf();
 
         $this->assertSame($this->mockFlashMessenger, $this->sut->addWarningMessage($message));
     }
@@ -104,10 +113,10 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
     {
         $message = 'foo';
 
-        $this->mockFlashMessenger->expects($this->once())
-            ->method('addInfoMessage')
+        $this->mockFlashMessenger->shouldReceive('addInfoMessage')
+            ->once()
             ->with($message)
-            ->will($this->returnSelf());
+            ->andReturnSelf();
 
         $this->assertSame($this->mockFlashMessenger, $this->sut->addInfoMessage($message));
     }
@@ -130,20 +139,20 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
 
     public function testAddUnknownError()
     {
-        $this->mockFlashMessenger->expects($this->once())
-            ->method('addErrorMessage')
+        $this->mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->once()
             ->with('unknown-error')
-            ->will($this->returnSelf());
+            ->andReturnSelf();
 
         $this->assertSame($this->mockFlashMessenger, $this->sut->addUnknownError());
     }
 
     public function testAddConflictError()
     {
-        $this->mockFlashMessenger->expects($this->once())
-            ->method('addErrorMessage')
+        $this->mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->once()
             ->with('conflict-error')
-            ->will($this->returnSelf());
+            ->andReturnSelf();
 
         $this->assertSame($this->mockFlashMessenger, $this->sut->addConflictError());
     }
