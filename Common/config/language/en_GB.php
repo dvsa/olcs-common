@@ -1731,6 +1731,7 @@ return array(
     'lva.section.title.conditions_undertakings' => 'Conditions and undertakings',
     'lva.section.title.convictions_penalties' => 'Convictions and Penalties',
     'lva.section.title.create-variation-confirmation' => 'Create variation application',
+    'lva.section.title.declarations_internal' => 'Declarations Internal',
     'lva.section.title.delete' => 'Are you sure you want to remove these records?',
     'lva.section.title.delete-oc' => 'Confirm removal',
     'lva.section.title.delete-tm' => 'Remove transport manager',
