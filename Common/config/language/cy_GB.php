@@ -1766,6 +1766,7 @@ return array(
     'lva.section.title.conditions_undertakings' => '{WELSH} Conditions and undertakings',
     'lva.section.title.convictions_penalties' => '{WELSH} Convictions and Penalties',
     'lva.section.title.create-variation-confirmation' => '{WELSH} Create variation application',
+    'lva.section.title.declarations_internal' => '{WELSH} Declarations Internal',
     'lva.section.title.delete' => '{WELSH} Are you sure you want to remove these records?',
     'lva.section.title.delete-oc' => '{WELSH} Confirm removal',
     'lva.section.title.delete-tm' => '{WELSH} Remove transport manager',
