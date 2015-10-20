@@ -2198,8 +2198,8 @@ return array(
     'search.result.subtitle.operating-centre' => 'We\'ve found <b>%s</b> Operating Centres that match your search.',
     'search.result.subtitle.operator' => 'We\'ve found <b>%s</b> Operators that match your search.',
     'search.result.subtitle.person' => 'We\'ve found <b>%s</b> People that match your search.',
-    'search.result.subtitle.traffic-commissioner-publication' => 'We\'ve found <b>%s</b>
-        publications that match your search.',
+    'search.result.subtitle.traffic-commissioner-publication' => 'We\'ve found <b>%s</b> publications that match your
+        search.',
     'search.result.subtitle.vehicle-external' => 'We\'ve found <b>%s</b> Vehicle search results.',
     'search.result.title.bus' => 'Search results',
     'search.result.title.operating-centre' => 'Search results',

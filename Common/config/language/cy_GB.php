@@ -2228,8 +2228,10 @@ return array(
     'search-result-section-vehicles' => '{WELSH} Vehicles',
     'search.bus' => '{WELSH} Bus Registration',
     'search.form.filter.update_button' => '{WELSH} Update results',
-    'search.form.hint' => '{WELSH} Can include operator name, licence number, person, postcode, town or city',
-    'search.form.label' => '{WELSH} Enter keywords',
+    'search.form.hint' => '{WELSH} Try searching for a company name, company location, person\'s name or licence
+        number',
+    'search.form.label' => '{WELSH} Keywords',
+    'search.form.reset' => '{WELSH} Update results',
     'search.operating-centre' => '{WELSH} Operating Centre',
     'search.operator' => '{WELSH} Vehicle Operator',
     'search.page.replaces' => '{WELSH} This service replaces the VOSA Operator Search',
@@ -2239,8 +2241,8 @@ return array(
         search.',
     'search.result.subtitle.operator' => '{WELSH} We\'ve found <b>%s</b> Operators that match your search.',
     'search.result.subtitle.person' => '{WELSH} We\'ve found <b>%s</b> People that match your search.',
-    'search.result.subtitle.traffic-commissioner-publication' => '{WELSH} We\'ve found <b>%s</b> Traffic Commissioner
-        publications that match your search.',
+    'search.result.subtitle.traffic-commissioner-publication' => '{WELSH} We\'ve found <b>%s</b> publications that match
+        your search.',
     'search.result.subtitle.vehicle-external' => '{WELSH} We\'ve found <b>%s</b> Vehicle search results.',
     'search.result.title.bus' => '{WELSH} Search results',
     'search.result.title.operating-centre' => '{WELSH} Search results',
@@ -2259,7 +2261,7 @@ return array(
     'search.title.operating-centre' => '{WELSH} Find Operating centre',
     'search.title.operator' => '{WELSH} Find a vehicle operator',
     'search.title.person' => '{WELSH} Find a person',
-    'search.title.traffic-commissioner' => '{WELSH} Find a traffic commissioner publication',
+    'search.title.traffic-commissioner' => '{WELSH} Find a publication',
     'search.title.vehicle' => '{WELSH} Find a vehicle',
     'search.title.vehicle-external' => '{WELSH} Find a vehicle',
     'search.traffic-commissioner' => '{WELSH} Traffic Commissioner',
