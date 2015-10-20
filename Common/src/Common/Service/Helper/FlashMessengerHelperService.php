@@ -14,6 +14,8 @@ namespace Common\Service\Helper;
  */
 class FlashMessengerHelperService extends AbstractHelperService
 {
+    const NAMESPACE_PROMINENT_ERROR = 'prominent-error';
+
     protected $currentMessages = [
         'default' => [],
         'success' => [],
@@ -72,6 +74,18 @@ class FlashMessengerHelperService extends AbstractHelperService
     public function addErrorMessage($message)
     {
         return $this->getFlashMessenger()->addErrorMessage($message);
+    }
+
+    public function addProminentErrorMessage($message)
+    {
+        $namespace = $this->getFlashMessenger()->getNamespace();
+
+        $this->getFlashMessenger()->setNamespace(self::NAMESPACE_PROMINENT_ERROR);
+        $this->getFlashMessenger()->addMessage($message);
+
+        $this->getFlashMessenger()->setNamespace($namespace);
+
+        return $this;
     }
 
     /**

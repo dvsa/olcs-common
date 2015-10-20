@@ -189,8 +189,20 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $result = $this->getVehicleSectionData();
 
         if ($result['spacesRemaining'] < 1) {
+
+            $variation = $this->getServiceLocator()->get('Lva\Variation');
+
+            $message = $this->getServiceLocator()->get('Helper\Translation')
+                ->translateReplace(
+                    'markup-more-vehicles-than-total-auth-error',
+                    [
+                        $result['totAuthVehicles'],
+                        $variation->getVariationLink($this->getLicenceId(), 'operating_centres')
+                    ]
+                );
+
             $this->getServiceLocator()->get('Helper\FlashMessenger')
-                ->addErrorMessage('more-vehicles-than-total-auth-error');
+                ->addProminentErrorMessage($message);
 
             return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
         }
