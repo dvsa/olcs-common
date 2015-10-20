@@ -3,7 +3,6 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
-use Common\Util\RestClient;
 
 /**
  * Class Role
@@ -24,7 +23,7 @@ class Role extends AbstractData implements ListData
         $data = $this->fetchListData();
 
         foreach ($data as $datum) {
-            $optionData[$datum['id']] = $datum['description'];
+            $optionData[$datum['role']] = $datum['description'];
         }
 
         return $optionData;
