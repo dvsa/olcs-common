@@ -17,14 +17,14 @@ class RoleTest extends MockeryTestCase
     {
         $roleData = [
             'Results' => [
-                'role1' => ['id' => 1, 'description' => 'role1desc'],
-                'role2' => ['id' => 2, 'description' => 'role2desc']
+                'role1' => ['id' => 1, 'role' => 'role1', 'description' => 'role1desc'],
+                'role2' => ['id' => 2, 'role' => 'role2', 'description' => 'role2desc']
             ]
         ];
 
         $expected = [
-            1 => 'role1desc',
-            2 => 'role2desc'
+            'role1' => 'role1desc',
+            'role2' => 'role2desc'
         ];
 
         $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', false);

@@ -31,8 +31,7 @@ use Common\Form\Elements\Types\Address;
  */
 abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractActionController
 {
-    use Util\LoggerTrait,
-        Util\FlashMessengerTrait,
+    use Util\FlashMessengerTrait,
         Util\RestCallTrait,
         Traits\ViewHelperManagerAware,
         Traits\GenericRenderView;

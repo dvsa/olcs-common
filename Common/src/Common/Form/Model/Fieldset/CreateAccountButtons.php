@@ -13,7 +13,7 @@ class CreateAccountButtons
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({
-     *     "label": "Create account",
+     *     "label": "user-registration.form-actions.create-account.label",
      *     "label_attributes": {
      *         "class": "col-sm-2"
      *     },
@@ -26,7 +26,7 @@ class CreateAccountButtons
     /**
      * @Form\Attributes({"id":"cancel","type":"submit","class":"action--secondary large"})
      * @Form\Options({
-     *     "label": "Cancel",
+     *     "label": "cancel.button",
      *     "label_attributes": {
      *         "class": "col-sm-2"
      *     },
