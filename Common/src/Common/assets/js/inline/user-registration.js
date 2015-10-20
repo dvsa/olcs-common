@@ -1,9 +1,11 @@
 OLCS.ready(function() {
   "use strict";
 
+  var F = OLCS.formHelper;
+
   function hasValue(fieldset, field, value) {
     return function () {
-      return OLCS.formHelper(fieldset, field).filter(":checked").val() === value;
+      return F.isChecked(fieldset, field, value);
     };
   }
 

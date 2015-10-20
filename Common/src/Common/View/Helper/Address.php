@@ -33,17 +33,8 @@ class Address extends AbstractHelper
      *
      * @return string HTML
      */
-    public function __invoke(
-        array $address,
-        $fields = [
-            'addressLine1',
-            'addressLine2',
-            'addressLine3',
-            'town',
-            'postcode',
-            'countryCode'
-        ]
-    ) {
+    public function __invoke(array $address, array $fields = null, $glue = ', ')
+    {
         $parts = array();
         $escapeHtml = $this->getEscapeHtmlHelper();
 
@@ -53,13 +44,24 @@ class Address extends AbstractHelper
             $address['countryCode'] = null;
         }
 
+        if (!isset($fields)) {
+            $fields = [
+                'addressLine1',
+                'addressLine2',
+                'addressLine3',
+                'town',
+                'postcode',
+                'countryCode'
+            ];
+        }
+
         foreach ($fields as $item) {
             if (isset($address[$item]) && !empty($address[$item])) {
                 $parts[] = $escapeHtml($address[$item]);
             }
         }
 
-        return implode(', ', $parts);
+        return implode($glue, $parts);
     }
 
     /**
