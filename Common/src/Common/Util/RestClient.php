@@ -7,6 +7,7 @@
  */
 namespace Common\Util;
 
+use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Header\AcceptLanguage;
 use Zend\Http\Request;
@@ -61,6 +62,9 @@ class RestClient
 
         $this->url = $url;
         $this->client = new HttpClient(null, $options);
+
+        $adapter = new ClientAdapterLoggingWrapper();
+        $adapter->wrapAdapter($this->client);
 
         if (!empty($auth)) {
             $this->client->setAuth(
