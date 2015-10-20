@@ -5,7 +5,7 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * Add transport manager details fieldset
+ * Add Transport Manager details fieldset
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */

@@ -13,7 +13,7 @@ return array(
     'APP-PUB-OC' => '{WELSH} Please complete the Operating centres section',
     'APP-PUB-OUSTANDING-FEE' => '{WELSH} You must process the application fee',
     'APP-PUB-S4' => '{WELSH} There is a schedule 4/1',
-    'APP-PUB-TM' => '{WELSH} Please complete the Transport managers section',
+    'APP-PUB-TM' => '{WELSH} Please complete the Transport Managers section',
     'Add' => '{WELSH} Add',
     'Applicant' => '{WELSH} Applicant',
     'Application reference' => '{WELSH} Application reference',
@@ -76,7 +76,7 @@ return array(
     'Please Select' => '{WELSH} Please Select',
     'Please add a person' => '{WELSH} Please add a person',
     'Please add a safety inspection provider' => '{WELSH} Please add a safety inspection provider',
-    'Please add a transport manager' => '{WELSH} You must add at least one transport manager',
+    'Please add a Transport Manager' => '{WELSH} You must add at least one Transport Manager',
     'REG_TO_ST' => '{WELSH} <li>Registered company number</li><li>Registered address</li><li>Any subsidiaries</li>',
     'Return to' => '{WELSH} Return to',
     'S41_APP_APPROVE_OC' => '{WELSH} Please complete the Operating Centres section',
@@ -200,7 +200,7 @@ return array(
     'application-review-convictions-penalties-conviction-offence-penalty' => '{WELSH} Penalty',
     'application-review-convictions-penalties-conviction-title' => '{WELSH} Title',
     'application-review-convictions-penalties-question' => '{WELSH} Has any person named in this application, (including
-        partners, directors and transport managers); any company of which a person named on this application is or has
+        partners, directors and Transport Managers); any company of which a person named on this application is or has
         been a director; any parent company if you are a limited company; or any of your employees or agents been
         convicted of any relevant offence which must be declared to the traffic commissioner?',
     'application-review-financial-evidence-evidence' => '{WELSH} Evidence',
@@ -209,13 +209,13 @@ return array(
     'application-review-financial-evidence-no-of-vehicles' => '{WELSH} Number of vehicles',
     'application-review-financial-evidence-required-finance' => '{WELSH} Required finance',
     'application-review-financial-history-administration' => '{WELSH} Has any person named in this application
-        (including partners, directors or transport managers) ever been involved with a company, or business, that has
+        (including partners, directors or Transport Managers) ever been involved with a company, or business, that has
         gone into (or is going into) administration?',
     'application-review-financial-history-bankrupt' => '{WELSH} Has any person named in this application (including
-        partners, directors or transport managers) ever been declared bankrupt or had their estate seized or
+        partners, directors or Transport Managers) ever been declared bankrupt or had their estate seized or
         confiscated?',
     'application-review-financial-history-disqualified' => '{WELSH} Have you, or have any of your partners, directors,
-        majority shareholders or your transport manager ever been disqualified from acting as a director of a company or
+        majority shareholders or your Transport Manager ever been disqualified from acting as a director of a company or
         from taking part in the management of a company?',
     'application-review-financial-history-evidence' => '{WELSH} Evidence',
     'application-review-financial-history-evidence-send' => '{WELSH} Operator to send original evidence to the Central
@@ -225,23 +225,23 @@ return array(
         your application and a decision being made on the application',
     'application-review-financial-history-insolvencyDetails' => '{WELSH} Additional information',
     'application-review-financial-history-liquidation' => '{WELSH} Has any person named in this application (including
-        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        partners, directors or Transport Managers) ever been involved with a company, or business, that has gone into
         (or is going into) liquidation, owing money?',
     'application-review-financial-history-receivership' => '{WELSH} Has any person named in this application (including
-        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        partners, directors or Transport Managers) ever been involved with a company, or business, that has gone into
         (or is going into) receivership?',
     'application-review-licence-history-applied-question' => '{WELSH} Has any person named in the application (including
-        partners, directors or transport managers) previously held or applied for a goods or public service vehicle
+        partners, directors or Transport Managers) previously held or applied for a goods or public service vehicle
         operator\'s licence in any traffic area?',
     'application-review-licence-history-applied-title' => '{WELSH} Previous licences',
     'application-review-licence-history-current-question' => '{WELSH} Does any person named in this application
-        (including partners, directors and transport managers) currently hold a goods or public service vehicle
+        (including partners, directors and Transport Managers) currently hold a goods or public service vehicle
         operator\'s licence in any traffic area?',
     'application-review-licence-history-current-title' => '{WELSH} Current licences',
     'application-review-licence-history-disqualification-date' => '{WELSH} Date of disqualification',
     'application-review-licence-history-disqualification-length' => '{WELSH} Length of disqualification',
     'application-review-licence-history-disqualified-question' => '{WELSH} Has any person named in the application
-        (including partners, directors or transport managers) been disqualified from holding or obtaining an operator\'s
+        (including partners, directors or Transport Managers) been disqualified from holding or obtaining an operator\'s
         licence by any traffic commissioner?',
     'application-review-licence-history-disqualified-title' => '{WELSH} Disqualifications',
     'application-review-licence-history-held-question' => '{WELSH} Within the last twelve months, have you, your company
@@ -251,16 +251,16 @@ return array(
     'application-review-licence-history-licence-holder' => '{WELSH} Licence holder name',
     'application-review-licence-history-licence-no' => '{WELSH} Licence number',
     'application-review-licence-history-public-inquiry-question' => '{WELSH} Has any person named in the application
-        (including partners, directors or transport managers) ever attended a Public Inquiry before a traffic
+        (including partners, directors or Transport Managers) ever attended a Public Inquiry before a traffic
         commissioner?',
     'application-review-licence-history-public-inquiry-title' => '{WELSH} Public Inquiries',
     'application-review-licence-history-purchase-date' => '{WELSH} Date of purchase',
     'application-review-licence-history-refused-question' => '{WELSH} Has any person named in the application (including
-        partners, directors or transport managers) ever had an application for a goods or a public service vehicle
+        partners, directors or Transport Managers) ever had an application for a goods or a public service vehicle
         operator\'s licence refused by any EU licensing authority?',
     'application-review-licence-history-refused-title' => '{WELSH} Refused licences',
     'application-review-licence-history-revoked-question' => '{WELSH} Has any person named in the application (including
-        partners, directors or transport managers) ever had a goods or public service vehicle operator\'s licence
+        partners, directors or Transport Managers) ever had a goods or public service vehicle operator\'s licence
         revoked, suspended or curtailed by any EU licensing authority?',
     'application-review-licence-history-revoked-title' => '{WELSH} Revoked, suspended or curtailed licences',
     'application-review-licence-history-will-surrender' => '{WELSH} Will this licence be surrendered if this application
@@ -400,8 +400,8 @@ return array(
     'application.steps' => '{WELSH} Step %s of %s',
     'application.taxi-phv' => '{WELSH} Taxi/PHV licences',
     'application.taxi-phv.licence' => '{WELSH} Taxi/PHV licences',
-    'application.transport-managers' => '{WELSH} Transport managers',
-    'application.transport-managers.placeholder' => '{WELSH} Transport managers',
+    'application.transport-managers' => '{WELSH} Transport Managers',
+    'application.transport-managers.placeholder' => '{WELSH} Transport Managers',
     'application.type-of-licence' => '{WELSH} Type of licence',
     'application.type-of-licence.licence-type' => '{WELSH} Licence type',
     'application.type-of-licence.operator-location' => '{WELSH} Operator location',
@@ -479,10 +479,10 @@ return array(
     'application_previous-history_financial-history.finance.bankrupt' => '{WELSH} a. Declared bankrupt or had their
         estate seized or confiscated?',
     'application_previous-history_financial-history.finance.disqualified' => '{WELSH} 2. Have you, or have any of your
-        partners, directors, majority shareholders or your transport manager ever been disqualified from acting as a
+        partners, directors, majority shareholders or your Transport Manager ever been disqualified from acting as a
         director of a company or from taking part in the management of a company?',
     'application_previous-history_financial-history.finance.hint' => '{WELSH} 1. Has any person named in this
-        application (including partners, directors or transport managers) ever been:',
+        application (including partners, directors or Transport Managers) ever been:',
     'application_previous-history_financial-history.finance.liquidation' => '{WELSH} b. Involved with a company, or
         business, that has gone into (or is going into) liquidation, owing money?',
     'application_previous-history_financial-history.finance.receivership' => '{WELSH} c. Involved with a company, or
@@ -520,7 +520,7 @@ return array(
     'application_previous-history_licence-history_appliedForLicence' => '{WELSH} a. Previously held or applied for a
         goods or public service vehicle operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_currentLicence' => '{WELSH} 1. Does any person named in this
-        application (including partners, directors and transport managers) currently hold a goods or public service
+        application (including partners, directors and Transport Managers) currently hold a goods or public service
         vehicle operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_disqualifiedLicence' => '{WELSH} e. Been disqualified from holding or
         obtaining an operator\'s licence by any traffic commissioner?',
@@ -528,7 +528,7 @@ return array(
         your company or organisation or your partners or directors purchased the assets or shareholding of any company
         that, to your knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_personsInformation' => '{WELSH} 2. Has any person named in the
-        application (including partners, directors or transport managers):',
+        application (including partners, directors or Transport Managers):',
     'application_previous-history_licence-history_prevBeenAtPi' => '{WELSH} d. Ever attended a Public Inquiry before a
         traffic commissioner?',
     'application_previous-history_licence-history_prevBeenDisqualifiedTc' => '{WELSH} e. Been disqualified from holding
@@ -540,7 +540,7 @@ return array(
     'application_previous-history_licence-history_prevHadLicence' => '{WELSH} a. Previously held or applied for a goods
         or public service vehicle operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_prevHasLicence' => '{WELSH} 1. Does any person named in this
-        application (including partners, directors and transport managers) currently hold a goods or public service
+        application (including partners, directors and Transport Managers) currently hold a goods or public service
         vehicle operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_prevPurchasedAssets' => '{WELSH} 3. Within the last twelve months,
         have you, your company or organisation or your partners or directors purchased the assets or shareholding of any
@@ -1018,7 +1018,7 @@ return array(
     'email.inbox-reminder.standard.subject' => '{WELSH} Operator licensing information - Reminder',
     'email.licensing-information.continuation.subject' => '{WELSH} Operator licence continuation/expiry',
     'email.licensing-information.standard.subject' => '{WELSH} Operator licensing information',
-    'email.transport-manager-complete-digital-form.subject' => '{WELSH} Request for transport manager details',
+    'email.transport-manager-complete-digital-form.subject' => '{WELSH} Request for Transport Manager details',
     'end-date' => '{WELSH} End date',
     'entity-details' => '{WELSH} Entity details',
     'entity-details-nav-back-to-operator-search' => '{WELSH} Back to operator search',
@@ -1031,7 +1031,7 @@ return array(
     'entity-details-nav-operating-centres' => '{WELSH} Operating centres',
     'entity-details-nav-operator-details' => '{WELSH} Operator details',
     'entity-details-nav-related-operator-licences' => '{WELSH} Related operator licences',
-    'entity-details-nav-transport-managers' => '{WELSH} Transport managers',
+    'entity-details-nav-transport-managers' => '{WELSH} Transport Managers',
     'entity-details-nav-vehicles' => '{WELSH} Vehicles',
     'entity-details-on-this-page' => '{WELSH} On this page',
     'entity-details-section-header-conditions-undertakings' => '{WELSH} Conditions and Undertaking',
@@ -1040,7 +1040,7 @@ return array(
     'entity-details-section-header-licence-details' => '{WELSH} Licence details',
     'entity-details-section-header-operating-centres' => '{WELSH} Operating centres',
     'entity-details-section-header-related-operator-licences' => '{WELSH} Related operator licences',
-    'entity-details-section-header-transport-managers' => '{WELSH} Transport managers',
+    'entity-details-section-header-transport-managers' => '{WELSH} Transport Managers',
     'entity-details-section-header-vehicles' => '{WELSH} Vehicles',
     'entity-type' => '{WELSH} Entity type',
     'entity-view-label-company-registration-number' => '{WELSH} Company registration number',
@@ -1140,19 +1140,19 @@ return array(
     'form.operator-merge.to-operator-id' => '{WELSH} To operator ID',
     'form.operator-merge.to-operator-id.validation' => '{WELSH} Invalid Operator ID',
     'form.tm-merge.confirm' => '{WELSH} I am aware that any licences and applications will be transferred from the
-        losing transport manager to the winning transport manager',
-    'form.tm-merge.from-tm-name' => '{WELSH} From transport manager',
-    'form.tm-merge.success' => '{WELSH} The transport manager has been merged',
-    'form.tm-merge.to-tm-id' => '{WELSH} To transport manager ID',
-    'form.tm-merge.to-tm-id.validation.TM_MERGE_BOTH_HAVE_USER_ACCOUNTS' => '{WELSH} Both transport managers have linked
+        losing Transport Manager to the winning Transport Manager',
+    'form.tm-merge.from-tm-name' => '{WELSH} From Transport Manager',
+    'form.tm-merge.success' => '{WELSH} The Transport Manager has been merged',
+    'form.tm-merge.to-tm-id' => '{WELSH} To Transport Manager ID',
+    'form.tm-merge.to-tm-id.validation.TM_MERGE_BOTH_HAVE_USER_ACCOUNTS' => '{WELSH} Both Transport Managers have linked
         user accounts. You must remove one of the user accounts prior to merge.',
     'form.tm-merge.to-tm-id.validation.TM_MERGE_DONAR_RECIPIENT_SAME' => '{WELSH} Cannot be the same as the from
-        transport manager',
-    'form.tm-merge.to-tm-id.validation.not-found' => '{WELSH} Transport manager not found',
+        Transport Manager',
+    'form.tm-merge.to-tm-id.validation.not-found' => '{WELSH} Transport Manager not found',
     'form.tm-unmerge.confirm.action' => '{WELSH} Unmerge',
-    'form.tm-unmerge.message' => '{WELSH} Are you sure you want to unmerge this transport manager: %1$d %2$s from: %3$d
+    'form.tm-unmerge.message' => '{WELSH} Are you sure you want to unmerge this Transport Manager: %1$d %2$s from: %3$d
         %4$s?',
-    'form.tm-unmerge.success' => '{WELSH} The transport manager merge has been reversed',
+    'form.tm-unmerge.success' => '{WELSH} The Transport Manager merge has been reversed',
     'form.vehicle.removeSection26.confirm' => '{WELSH} Are you sure you want to remove the section 26 marker for the
         selected vehicle(s)?',
     'form.vehicle.removeSection26.success' => '{WELSH} The section 26 markers have been removed from the selected
@@ -1334,9 +1334,9 @@ return array(
     'internal-licence-details-taxi_phv' => '{WELSH} Taxi/PHV licences',
     'internal-licence-details-taxi_phv-label' => '{WELSH} Taxi/PHV licences',
     'internal-licence-details-taxi_phv-title' => '{WELSH} Taxi/PHV licences',
-    'internal-licence-details-transport_manager' => '{WELSH} Transport managers',
-    'internal-licence-details-transport_manager-label' => '{WELSH} Transport managers',
-    'internal-licence-details-transport_manager-title' => '{WELSH} Transport managers',
+    'internal-licence-details-transport_manager' => '{WELSH} Transport Managers',
+    'internal-licence-details-transport_manager-label' => '{WELSH} Transport Managers',
+    'internal-licence-details-transport_manager-title' => '{WELSH} Transport Managers',
     'internal-licence-details-type_of_licence' => '{WELSH} Type of licence',
     'internal-licence-details-type_of_licence-label' => '{WELSH} Type of licence',
     'internal-licence-details-type_of_licence-title' => '{WELSH} Type of licence',
@@ -1393,7 +1393,7 @@ return array(
     'internal-navigation-operator-profile' => '{WELSH} Operator profile',
     'internal-navigation-operator-responsibilities' => '{WELSH} Responsibilities',
     'internal-navigation-operator-vehicles' => '{WELSH} Vehicles',
-    'internal-navigation-transport-manager' => '{WELSH} Transport manager',
+    'internal-navigation-transport-manager' => '{WELSH} Transport Manager',
     'internal-navigation-transport-manager-cases' => '{WELSH} Cases',
     'internal-navigation-transport-manager-details' => '{WELSH} TM details',
     'internal-navigation-transport-manager-details-competences' => '{WELSH} Competences',
@@ -1730,9 +1730,9 @@ return array(
     'lva-tm-details-details-certificate' => '{WELSH} Certificate of professional competence',
     'lva-tm-details-details-declarations' => '{WELSH} Declarations',
     'lva-tm-details-details-declarations-by-submitting' => '{WELSH} By submitting this form you are confirming your
-        status as an internal transport manager, an external transport manager or both.',
-    'lva-tm-details-details-declarations-external-header' => '{WELSH} External transport manager’s declaration:',
-    'lva-tm-details-details-declarations-internal-header' => '{WELSH} Internal transport manager’s declaration:',
+        status as an internal Transport Manager, an external Transport Manager or both.',
+    'lva-tm-details-details-declarations-external-header' => '{WELSH} External Transport Manager’s declaration:',
+    'lva-tm-details-details-declarations-internal-header' => '{WELSH} Internal Transport Manager’s declaration:',
     'lva-tm-details-details-email' => '{WELSH} Email address',
     'lva-tm-details-details-homeAddress' => '{WELSH} Home address',
     'lva-tm-details-details-name' => '{WELSH} Name',
@@ -1743,14 +1743,14 @@ return array(
     'lva-tm-details-familyName' => '{WELSH} Last name',
     'lva-tm-details-forename' => '{WELSH} First name',
     'lva-tm-details-save-success' => '{WELSH} The transport details have been saved',
-    'lva-tm-details-submit-success' => '{WELSH} The transport manager application has been submitted successfully',
-    'lva-tm-sent-success' => '{WELSH} The form has been emailed to the transport manager',
+    'lva-tm-details-submit-success' => '{WELSH} The Transport Manager application has been submitted successfully',
+    'lva-tm-sent-success' => '{WELSH} The form has been emailed to the Transport Manager',
     'lva-transport-manager-table-empty-message' => '{WELSH} To be nominated',
     'lva.section.operating_centres_delete' => '{WELSH} Are you sure you wish to remove the selected operating
         centre(s)',
     'lva.section.title.add-grace-period' => '{WELSH} Add Grace Period',
-    'lva.section.title.add-transport_managers' => '{WELSH} Add transport manager',
-    'lva.section.title.addTm-transport_managers' => '{WELSH} Transport manager details',
+    'lva.section.title.add-transport_managers' => '{WELSH} Add Transport Manager',
+    'lva.section.title.addTm-transport_managers' => '{WELSH} Transport Manager details',
     'lva.section.title.add_condition_undertaking' => '{WELSH} Add condition/undertaking',
     'lva.section.title.add_convictions_penalties' => '{WELSH} Add previous conviction',
     'lva.section.title.add_discs' => '{WELSH} Request discs',
@@ -1776,7 +1776,7 @@ return array(
     'lva.section.title.declarations_internal' => '{WELSH} Declarations Internal',
     'lva.section.title.delete' => '{WELSH} Are you sure you want to remove these records?',
     'lva.section.title.delete-oc' => '{WELSH} Confirm removal',
-    'lva.section.title.delete-tm' => '{WELSH} Remove transport manager',
+    'lva.section.title.delete-tm' => '{WELSH} Remove Transport Manager',
     'lva.section.title.discs' => '{WELSH} Licence discs',
     'lva.section.title.edit-grace-period' => '{WELSH} Update Grace Period',
     'lva.section.title.edit_condition_undertaking' => '{WELSH} Edit condition/undertaking',
@@ -1820,8 +1820,8 @@ return array(
     'lva.section.title.transfer_vehicles' => '{WELSH} Transfer Vehicles',
     'lva.section.title.transport-manager-application.edit-form' => '{WELSH} Edit Transport Manager application form',
     'lva.section.title.transport-manager-application.resend-form' => '{WELSH} Resend link ',
-    'lva.section.title.transport_managers' => '{WELSH} Transport managers',
-    'lva.section.title.transport_managers-details' => '{WELSH} Transport manager details',
+    'lva.section.title.transport_managers' => '{WELSH} Transport Managers',
+    'lva.section.title.transport_managers-details' => '{WELSH} Transport Manager details',
     'lva.section.title.transport_managers-details-OtherEmployments-success' => '{WELSH} Employment saved successfully',
     'lva.section.title.transport_managers-details-OtherLicences-success' => '{WELSH} Other licence saved successfully',
     'lva.section.title.transport_managers-details-PreviousConvictions-success' => '{WELSH} Previous conviction saved
@@ -1857,10 +1857,10 @@ return array(
     'manage-users.update.success' => '{WELSH} User successfully updated',
     'mark-urgent' => '{WELSH} Mark as urgent',
     'markup-tm-declaration-gb-confirmation' => '{WELSH} Should I fail to meet any of the above requirements I understand
-        that the traffic commissioner has the power to disqualify me from being a transport manager in any European
+        that the traffic commissioner has the power to disqualify me from being a Transport Manager in any European
         Union country.',
     'markup-tm-declaration-ni-confirmation' => '{WELSH} Should I fail to meet any of the above requirements I understand
-        that the Department has the power to disqualify me from being a transport manager in any European Union
+        that the Department has the power to disqualify me from being a Transport Manager in any European Union
         country.',
     'mlh' => '{WELSH} MLH',
     'money-element-invalid' => '{WELSH} Please enter a valid amount (max 2 decimal places)',
@@ -2133,7 +2133,7 @@ return array(
     'representations' => '{WELSH} Representations',
     'reprint-pending-disc-error' => '{WELSH} You have selected a vehicle where a disc print has already been requested',
     'return-home-button-text' => '{WELSH} Return to home',
-    'review-transport_managers_delete' => '{WELSH} Are you sure you want to remove the selected transport manager(s)
+    'review-transport_managers_delete' => '{WELSH} Are you sure you want to remove the selected Transport Manager(s)
         from the application?',
     'role.local-authority-admin' => '{WELSH} Administrator',
     'role.local-authority-user' => '{WELSH} Standard user',
@@ -2162,7 +2162,7 @@ return array(
     'scanning.error.entity.1' => '{WELSH} The Licence No is invalid',
     'scanning.error.entity.2' => '{WELSH} The Case ID is invalid',
     'scanning.error.entity.3' => '{WELSH} The Bus registration No is invalid',
-    'scanning.error.entity.5' => '{WELSH} The Transport manager No is invalid',
+    'scanning.error.entity.5' => '{WELSH} The Transport Manager No is invalid',
     'scanning.error.entity.7' => '{WELSH} The Licence No is invalid',
     'scanning.error.entity.8' => '{WELSH} The IRFO ID is invalid',
     'scanning.error.entity.9' => '{WELSH} The Licence No is invalid',
@@ -2214,7 +2214,7 @@ return array(
     'search-result-nav-operating-centres' => '{WELSH} Operating centres',
     'search-result-nav-operator-details' => '{WELSH} Operator details',
     'search-result-nav-related-operator-licences' => '{WELSH} Related operator licences',
-    'search-result-nav-transport-managers' => '{WELSH} Transport managers',
+    'search-result-nav-transport-managers' => '{WELSH} Transport Managers',
     'search-result-on-this-page' => '{WELSH} On this page',
     'search-result-section-applications' => '{WELSH} Applications',
     'search-result-section-condition-undertakings' => '{WELSH} Condition & undertakings',
@@ -2226,13 +2226,13 @@ return array(
     'search-result-section-header-licence-details' => '{WELSH} Licence details',
     'search-result-section-header-operating-centres' => '{WELSH} Operating centres',
     'search-result-section-header-related-operator-licences' => '{WELSH} Related operator licences',
-    'search-result-section-header-transport-managers' => '{WELSH} Transport managers',
+    'search-result-section-header-transport-managers' => '{WELSH} Transport Managers',
     'search-result-section-header-vehicles' => '{WELSH} Vehicles',
     'search-result-section-licence-details' => '{WELSH} Licence details',
     'search-result-section-operating-centres' => '{WELSH} Operating centres',
     'search-result-section-operator-details' => '{WELSH} Operator details',
     'search-result-section-other-licences' => '{WELSH} Other licences',
-    'search-result-section-transport-managers' => '{WELSH} Transport managers',
+    'search-result-section-transport-managers' => '{WELSH} Transport Managers',
     'search-result-section-vehicles' => '{WELSH} Vehicles',
     'search.bus' => '{WELSH} Bus Registration',
     'search.form.filter.update_button' => '{WELSH} Update results',
@@ -2300,7 +2300,7 @@ return array(
     'section.delete.safety' => '{WELSH} Safety inspector removed',
     'section.delete.taxi_phv' => '{WELSH} Taxi/PHV removed',
     'section.delete.trailers' => '{WELSH} The trailer has been removed',
-    'section.delete.transport_managers' => '{WELSH} The transport manager(s) have been removed',
+    'section.delete.transport_managers' => '{WELSH} The Transport Manager(s) have been removed',
     'section.delete.vehicles' => '{WELSH} The vehicle has been removed',
     'section.delete.vehicles-failed' => '{WELSH} The vehicles could not be removed',
     'section.delete.vehicles_psv' => '{WELSH} The vehicle has been removed',
@@ -2334,7 +2334,7 @@ return array(
     'section.link.add.people' => '{WELSH} Add people',
     'section.link.add.safety' => '{WELSH} Add safety',
     'section.link.add.taxi_phv' => '{WELSH} Add taxi/PHV licences',
-    'section.link.add.transport_managers' => '{WELSH} Add transport managers',
+    'section.link.add.transport_managers' => '{WELSH} Add Transport Managers',
     'section.link.add.type_of_licence' => '{WELSH} Add type of licence',
     'section.link.add.undertakings' => '{WELSH} Add declarations',
     'section.link.add.vehicles' => '{WELSH} Add vehicles',
@@ -2354,7 +2354,7 @@ return array(
     'section.link.edit.people' => '{WELSH} Edit people',
     'section.link.edit.safety' => '{WELSH} Edit safety',
     'section.link.edit.taxi_phv' => '{WELSH} Edit taxi/PHV licences',
-    'section.link.edit.transport_managers' => '{WELSH} Edit transport managers',
+    'section.link.edit.transport_managers' => '{WELSH} Edit Transport Managers',
     'section.link.edit.type_of_licence' => '{WELSH} Edit type of licence',
     'section.link.edit.undertakings' => '{WELSH} Edit declarations',
     'section.link.edit.vehicles' => '{WELSH} Edit vehicles',
@@ -2375,7 +2375,7 @@ return array(
     'section.link.update.safety' => '{WELSH} Update safety',
     'section.link.update.taxi_phv' => '{WELSH} Update taxi/PHV licences',
     'section.link.update.trailers' => '{WELSH} Update trailers',
-    'section.link.update.transport_managers' => '{WELSH} Update transport managers',
+    'section.link.update.transport_managers' => '{WELSH} Update Transport Managers',
     'section.link.update.type_of_licence' => '{WELSH} Update type of licence',
     'section.link.update.undertakings' => '{WELSH} Update declarations',
     'section.link.update.vehicles' => '{WELSH} Update vehicles',
@@ -2398,7 +2398,7 @@ return array(
     'section.name.safety' => '{WELSH} Safety and maintenance',
     'section.name.taxi_phv' => '{WELSH} Taxi/PHV',
     'section.name.trailers' => '{WELSH} Trailers',
-    'section.name.transport_managers' => '{WELSH} Transport managers',
+    'section.name.transport_managers' => '{WELSH} Transport Managers',
     'section.name.transport_managers.details' => '{WELSH} Details',
     'section.name.type_of_licence' => '{WELSH} Type of licence',
     'section.name.undertakings' => '{WELSH} Declarations',
@@ -2448,7 +2448,7 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMrs' => '{WELSH} Mrs',
     'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMs' => '{WELSH} Ms',
     'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => '{WELSH} Has any person named in this
-        application, (including partners, directors and transport managers); any company of which a person named on this
+        application, (including partners, directors and Transport Managers); any company of which a person named on this
         application is or has been a director; any parent company if you are a limited company; or any of your employees
         or agents been convicted of any relevant offence which must be declared to the traffic commissioner? ',
     'selfserve-app-subSection-previous-history-criminal-conviction-helpBlock' => '{WELSH} Please provide full details of
@@ -2514,7 +2514,7 @@ return array(
     'selfserve-licence-pay' => '{WELSH} Pay and submit',
     'selfserve-licence-previous_history' => '{WELSH} Previous history',
     'selfserve-licence-review' => '{WELSH} Review',
-    'selfserve-licence-transport_managers' => '{WELSH} Transport managers',
+    'selfserve-licence-transport_managers' => '{WELSH} Transport Managers',
     'selfserve-licence-vehicle_safety' => '{WELSH} Vehicles and safety',
     'selfserve-licence-your_business' => '{WELSH} Your business',
     'send-form.button' => '{WELSH} Send form',
@@ -2548,7 +2548,7 @@ return array(
     'submission-operating-centre-header' => '{WELSH} Operating Centres',
     'submission-recommend' => '{WELSH} Submission recommendation',
     'submission-recommend-text' => '{WELSH} Add a recommendation to this submission',
-    'submission-transport-manager-header' => '{WELSH} Transport managers if applicable',
+    'submission-transport-manager-header' => '{WELSH} Transport Managers if applicable',
     'submission-vehicle-possession' => '{WELSH} Veh in pos',
     'submission-vehicle-trailer' => '{WELSH} V-auth / T-auth',
     'submission-view-title' => '{WELSH} OTC case submission - %s',
@@ -2614,11 +2614,11 @@ return array(
     'tm-add-user-forename' => '{WELSH} First name',
     'tm-add-user-hasEmail' => '{WELSH} Does this Transport Manager have an email address?',
     'tm-add-user-success-message' => '{WELSH} The user account has been created and form has been emailed to the
-        transport manager',
-    'tm-add-user-success-message-no-email' => '{WELSH} The transport manager has been added to the application',
+        Transport Manager',
+    'tm-add-user-success-message-no-email' => '{WELSH} The Transport Manager has been added to the application',
     'tm-add-user-username' => '{WELSH} Username',
     'tm-details-edit-form-link-text' => '{WELSH} Edit form',
-    'tm-details-heading' => '{WELSH} Transport manager form',
+    'tm-details-heading' => '{WELSH} Transport Manager form',
     'tm-details-licence-application-no' => '{WELSH} Licence application No.',
     'tm-details-reference-no' => '{WELSH} Reference No.',
     'tm-details-resend-form-link-text' => '{WELSH} Send the link again',
@@ -2628,10 +2628,10 @@ return array(
     'tm-details-view-form-link-text' => '{WELSH} View form',
     'tm-previous-history-convictions-and-penalties' => '{WELSH} Convictions/Penalties',
     'tm-previous-history-revoked-curtailed-suspended-licences' => '{WELSH} Revoked, Curtailed or Suspended Licences',
-    'tm-quick-action-merge' => '{WELSH} Merge transport manager',
+    'tm-quick-action-merge' => '{WELSH} Merge Transport Manager',
     'tm-quick-action-print-form' => '{WELSH} Print form',
-    'tm-quick-action-remove' => '{WELSH} Remove transport manager',
-    'tm-quick-action-unmerge' => '{WELSH} Unmerge transport manager',
+    'tm-quick-action-remove' => '{WELSH} Remove Transport Manager',
+    'tm-quick-action-unmerge' => '{WELSH} Unmerge Transport Manager',
     'tm-responsibilities-applications' => '{WELSH} Applications',
     'tm-responsibilities-licences' => '{WELSH} Licences',
     'tm_application.table.status.current' => '{WELSH}  (Current)',
@@ -2678,11 +2678,11 @@ return array(
     'transport-manager-hours-per-week-validation-message' => '{WELSH} You must enter the hours per week you will spend
         on your duties',
     'transport-manager-remove' => '{WELSH} Remove Transport Manager',
-    'transport-manager-remove-are-you-sure' => '{WELSH} Are you sure you want to remove this transport manager?',
-    'transport-manager-remove-has-users-error' => '{WELSH} This transport manager is linked to user account: ',
-    'transport-manager-remove-not-detached-error' => '{WELSH} You cannot remove a transport manager that has associated
+    'transport-manager-remove-are-you-sure' => '{WELSH} Are you sure you want to remove this Transport Manager?',
+    'transport-manager-remove-has-users-error' => '{WELSH} This Transport Manager is linked to user account: ',
+    'transport-manager-remove-not-detached-error' => '{WELSH} You cannot remove a Transport Manager that has associated
         licences, applications or cases',
-    'transport-manager-removed' => '{WELSH} Transport manager removed.',
+    'transport-manager-removed' => '{WELSH} Transport Manager removed.',
     'transport-manager.competences.form.country' => '{WELSH} Country',
     'transport-manager.competences.form.date-of-issue' => '{WELSH} Date of Issue',
     'transport-manager.competences.form.qualification-type' => '{WELSH} Qualification type',
@@ -2754,7 +2754,7 @@ return array(
     'transport-manager.responsibilities.save' => '{WELSH} Save',
     'transport-manager.responsibilities.table.applications' => '{WELSH} Applications',
     'transport-manager.responsibilities.table.licences' => '{WELSH} Licences',
-    'transport-manager.responsibilities.tm-app-status' => '{WELSH} Transport manager application status',
+    'transport-manager.responsibilities.tm-app-status' => '{WELSH} Transport Manager application status',
     'transport-manager.responsibilities.tm-application-oc' => '{WELSH} Which operating centre(s) will you be responsible
         for?',
     'transport-manager.responsibilities.tm-type' => '{WELSH} What type of manager will you be for this licence?',

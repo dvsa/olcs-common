@@ -22,7 +22,7 @@ class TransportManager implements BusinessServiceInterface, ServiceLocatorAwareI
     use ServiceLocatorAwareTrait;
 
     /**
-     * Format and save the transport manager data
+     * Format and save the Transport Manager data
      *
      * @param array $params
      * @return ResponseInterface

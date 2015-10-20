@@ -43,7 +43,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
     }
 
     /**
-     * Test get transport manager licence
+     * Test get Transport Manager licence
      *
      * @group transportManagerLicences
      */

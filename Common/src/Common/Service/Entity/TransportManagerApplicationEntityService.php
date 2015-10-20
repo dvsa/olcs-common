@@ -236,7 +236,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     ];
 
     /**
-     * Get transport manager application
+     * Get Transport Manager application
      *
      * @param int $id
      * @return array
@@ -258,7 +258,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     }
 
     /**
-     * Delete transport manager application(s)
+     * Delete Transport Manager application(s)
      *
      * @param mixed $transportManagerApplicationId either one int ID or an array of int D's
      *
@@ -288,7 +288,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     }
 
     /**
-     * Get transport manager applications linked to an application and a transport manager
+     * Get Transport Manager applications linked to an application and a Transport Manager
      *
      * @param int $applicationId      Application ID
      * @param int $transportManagerId Transport Manager ID

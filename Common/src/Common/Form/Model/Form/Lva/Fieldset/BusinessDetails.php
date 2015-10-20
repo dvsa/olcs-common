@@ -38,8 +38,7 @@ class BusinessDetails
      * @Form\Options({
      *     "label": "Nature of business",
      *     "help-block": "Please select a nature of business",
-     *     "hint":"You can find a list of business types at
-     *      <a href=""https://www.gov.uk/government/publications/standard-industrial-classification-of-economic-activities-sic"" target=""_blank"">Companies House</a>"
+     *     "hint":"application-review-business-details-nature-of-business-hint"
      * })
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      */

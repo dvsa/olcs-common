@@ -1184,7 +1184,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
-            // transport managers - Restricted license type does not require any TMs
+            // Transport Managers - Restricted license type does not require any TMs
             'transport_managers_1' => array(
                 // Current section
                 'transport_managers',
@@ -1224,7 +1224,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
-            // transport managers - Licence type SN does require at least one TM
+            // Transport Managers - Licence type SN does require at least one TM
             'transport_managers_2' => array(
                 // Current section
                 'transport_managers',
@@ -1264,7 +1264,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
-            // transport managers - Licence type SI does require at least one TM
+            // Transport Managers - Licence type SI does require at least one TM
             'transport_managers_3' => array(
                 // Current section
                 'transport_managers',
@@ -1304,7 +1304,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
-            // transport managers - Validation passed for Licence type SN
+            // Transport Managers - Validation passed for Licence type SN
             'transport_managers_4' => array(
                 // Current section
                 'transport_managers',

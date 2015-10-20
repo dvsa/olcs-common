@@ -90,7 +90,7 @@ class ApplicationText3 extends AbstractPublicationFilter
             }
         }
 
-        //transport managers
+        //Transport Managers
         if ($publication->offsetExists('transportManagers')) {
             $text[] = 'Transport Manager(s): ' . $publication->offsetGet('transportManagers');
         }

@@ -45,7 +45,7 @@ class Advanced
 
     /**
      * @Form\Attributes({"class":"medium","id":""})
-     * @Form\Options({"label":"Transport manager ID"})
+     * @Form\Options({"label":"Transport Manager ID"})
      * @Form\Required(false)
      * @Form\Type("Text")
      */

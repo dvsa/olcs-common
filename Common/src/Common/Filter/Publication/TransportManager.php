@@ -29,7 +29,7 @@ class TransportManager extends AbstractPublicationFilter
         $tmData = $this->getServiceLocator()->get('\Common\Service\Data\TransportManager')->fetchTmData($tmId);
 
         if (!isset($tmData['id'])) {
-            throw new ResourceNotFoundException('No transport manager found');
+            throw new ResourceNotFoundException('No Transport Manager found');
         }
 
         $newData = [

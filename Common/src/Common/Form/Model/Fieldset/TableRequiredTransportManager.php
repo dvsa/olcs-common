@@ -17,7 +17,7 @@ class TableRequiredTransportManager extends TableRequired
      * @Form\Type("\Common\Form\Elements\Types\Table")
      * @Form\Validator({
      *     "name":"Common\Form\Elements\Validators\TableRequiredValidator",
-     *     "options":{"label":"transport manager"}
+     *     "options":{"label":"Transport Manager"}
      * })
      */
     public $table = null;

@@ -74,8 +74,8 @@ class Address
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label":"Town/City",
-     *     "short-label":"Town/City"
+     *     "label":"Town/city",
+     *     "short-label":"Town/city"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
