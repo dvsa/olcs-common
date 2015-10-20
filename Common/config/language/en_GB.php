@@ -2193,6 +2193,7 @@ return array(
     'search.form.hint' => 'Try searching for a company name, company location, person\'s name or licence number',
     'search.form.label' => 'Keywords',
     'search.form.reset' => 'Update results',
+    'search.form.restart' => 'Start again',
     'search.operating-centre' => 'Operating Centre',
     'search.operator' => 'Vehicle Operator',
     'search.page.replaces' => 'This service replaces the VOSA Operator Search',
