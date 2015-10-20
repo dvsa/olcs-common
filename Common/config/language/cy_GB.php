@@ -2235,6 +2235,7 @@ return array(
         number',
     'search.form.label' => '{WELSH} Keywords',
     'search.form.reset' => '{WELSH} Update results',
+    'search.form.restart' => '{WELSH} Start again',
     'search.operating-centre' => '{WELSH} Operating Centre',
     'search.operator' => '{WELSH} Vehicle Operator',
     'search.page.replaces' => '{WELSH} This service replaces the VOSA Operator Search',
