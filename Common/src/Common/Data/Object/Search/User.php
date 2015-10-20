@@ -2,6 +2,8 @@
 
 namespace Common\Data\Object\Search;
 
+use Common\Data\Object\Search\Aggregations\Terms as Filter;
+
 /**
  * Class User
  * @package Common\Data\Object\Search
@@ -36,7 +38,28 @@ class User extends InternalSearchAbstract
      */
     public function getFilters()
     {
+        if (empty($this->filters)) {
+
+            $this->filters = [
+                new Filter\UserRole(),
+            ];
+        }
+
         return $this->filters;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVariables()
+    {
+        return [
+            'title' => $this->getTitle(),
+            'action_route' => [
+                'route' => 'admin-dashboard/admin-user-management',
+                'params' => ['action' => null]
+            ]
+        ];
     }
 
     /**
@@ -84,6 +107,10 @@ class User extends InternalSearchAbstract
             array(
                 'title' => 'Email address',
                 'name' => 'emailAddress'
+            ),
+            array(
+                'title' => 'Entity',
+                'name' => 'entity'
             ),
             array(
                 'title' => 'Type',
