@@ -6,5 +6,5 @@ return [
     '{{OPENING_TIMES_LINK}}' => 'https://www.gov.uk/government/organisations/traffic-commissioners/about/'
         . 'access-and-opening',
     '{{SIC_CODES}}' => 'https://www.gov.uk/government/publications/standard-industrial-classification-of'
-    	. '-economic-activities-sic',
+        . '-economic-activities-sic',
 ];
