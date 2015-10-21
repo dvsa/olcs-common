@@ -36,7 +36,7 @@ class VehiclesData
      * @Form\Type("Common\Form\Elements\Types\Html")
      * @Form\Attributes({
      *      "value":
-     *      "<div id=""notice"">If you don't have vehicle details at the moment, you must tell the Central Licensing Office when they're available.</div>"})
+     *      "<p id=""notice"">If you don’t have vehicle details yet, you must tell the Central Licensing Office as soon as they’re available.</p></div>"})
      */
     public $notice = null;
 }
