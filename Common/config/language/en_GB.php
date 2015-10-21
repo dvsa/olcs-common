@@ -441,11 +441,11 @@ return array(
     'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'How many community licences
         do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'Your traffic area is determined by your
-        operating centre\'s location.<a href="#"target="_blank">More information about traffic areas</a>',
+        operating centre\'s location. <a href="#" target="_blank">More information about traffic areas</a>',
     'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'Your traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Traffic area',
     'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => '<p class="hint">Your traffic
-        area is determined by your operating centre\'s location.<a href="#"target="_blank">More information about
+        area is determined by your operating centre\'s location. <a href="#" target="_blank">More information about
         traffic areas</a></p>',
     'application_operating-centres_authorisation.enforcementArea.label' => 'Enforcement area',
     'application_operating-centres_authorisation.table.address' => 'Address',
@@ -546,7 +546,7 @@ return array(
     'application_taxi-phv_licence.table.licence-number' => 'Licence number',
     'application_taxi-phv_licence.table.title' => 'Licences',
     'application_taxi-phv_licence.trafficArea.hint.new' => 'Your traffic area is determined based on the first Taxi/PHV
-        licence address. <a href="#"target="_blank">More information about traffic areas</a>',
+        licence address. <a href="#" target="_blank">More information about traffic areas</a>',
     'application_taxi-phv_licence.trafficArea.label.exists' => 'Your traffic area',
     'application_taxi-phv_licence.trafficArea.label.new' => 'Traffic area',
     'application_taxi-phv_licence.trafficArea.labelasahint.exists' => '<p class="hint">Your traffic area has been
