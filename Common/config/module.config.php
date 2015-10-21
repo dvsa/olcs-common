@@ -231,7 +231,8 @@ return array(
             'LanguagePreference' => \Common\Preference\Language::class,
             'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
-            \Common\Service\Cqrs\Query\CachingQueryService::class => \Common\Service\Cqrs\Query\CachingQueryServiceFactory::class,
+            \Common\Service\Cqrs\Query\CachingQueryService::class
+                => \Common\Service\Cqrs\Query\CachingQueryServiceFactory::class,
             \Common\Service\Cqrs\Query\QueryService::class => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
