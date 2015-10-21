@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Cqrs\Query;
 
+use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Http\Client;
@@ -20,10 +21,18 @@ class QueryServiceFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $router = $serviceLocator->get('ApiRouter');
-        $client = new Client();
-        $request = $serviceLocator->get('CqrsRequest');
+        $config = $serviceLocator->get('Config');
 
-        return new QueryService($router, $client, $request);
+        $clientOptions = [];
+        if (isset($config['cqrs_client'])) {
+            $clientOptions = $config['cqrs_client'];
+        }
+
+        $client = new Client(null, $clientOptions);
+
+        $adapter = new ClientAdapterLoggingWrapper();
+        $adapter->wrapAdapter($client);
+
+        return new QueryService($serviceLocator->get('ApiRouter'), $client, $serviceLocator->get('CqrsRequest'));
     }
 }

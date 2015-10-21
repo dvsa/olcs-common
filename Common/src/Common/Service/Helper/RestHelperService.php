@@ -26,7 +26,7 @@ class RestHelperService extends AbstractHelperService
     protected $apiResolver;
 
     /**
-     * Gets instance of RestClient() to make api call
+     * Gets instance of RestClient to make api call
      *
      * @param string $service
      */

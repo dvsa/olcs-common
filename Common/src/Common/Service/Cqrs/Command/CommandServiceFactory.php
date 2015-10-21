@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Cqrs\Command;
 
+use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Http\Client;
@@ -18,17 +19,24 @@ use Zend\Http\Client;
  */
 class CommandServiceFactory implements FactoryInterface
 {
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return CommandService
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $router = $serviceLocator->get('ApiRouter');
-        $client = new Client();
-        $client->setOptions(
-            [
-                'timeout' => 60
-            ]
-        );
-        $request = $serviceLocator->get('CqrsRequest');
+        $config = $serviceLocator->get('Config');
 
-        return new CommandService($router, $client, $request);
+        $clientOptions = [];
+        if (isset($config['cqrs_client'])) {
+            $clientOptions = $config['cqrs_client'];
+        }
+
+        $client = new Client(null, $clientOptions);
+
+        $adapter = new ClientAdapterLoggingWrapper();
+        $adapter->wrapAdapter($client);
+
+        return new CommandService($serviceLocator->get('ApiRouter'), $client, $serviceLocator->get('CqrsRequest'));
     }
 }

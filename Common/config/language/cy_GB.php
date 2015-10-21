@@ -22,6 +22,8 @@ return array(
     'Confirm' => '{WELSH} Confirm',
     'Continue' => '{WELSH} Continue',
     'Date' => '{WELSH} Date',
+    'ERR_ADDRESS_NOT_FOUND' => '{WELSH} A correspondence address has not been found',
+    'ERR_ADMIN_EXISTS' => '{WELSH} The organisation already has registered admin users',
     'ERR_EMAIL_REQUIRED' => '{WELSH} Email address is required',
     'ERR_MIME' => '{WELSH} The type of file you attempted to upload is not allowed',
     'ERR_OC_AD_DT_1' => '{WELSH} Please enter the date the advertisement was placed',
@@ -56,10 +58,9 @@ return array(
     'ERR_OC_V_4' => '{WELSH} Please add an operating centre before setting the total number of vehicles',
     'ERR_OR_R_TOO_MANY' => '{WELSH} 2 is the maximum number of vehicles on a PSV Restricted licence',
     'ERR_PSV_VE_NO_ROWS' => '{WELSH} Please add at least one vehicle',
-    'ERR_USERNAME_EXISTS' => '{WELSH} Username is already taken',
-    'ERR_ADDRESS_NOT_FOUND' => '{WELSH} A correspondence address has not been found',
     'ERR_UNLICENCED_ORG' => '{WELSH} The organisation is unlicenced',
-    'ERR_ADMIN_EXISTS' => '{WELSH} The organisation already has registered admin users',
+    'ERR_USERNAME_EXISTS' => '{WELSH} Username is already taken',
+    'ERR_USERNAME_REQUIRED' => '{WELSH} Username is required',
     'FHAdditionalInfo.validation.is_empty' => '{WELSH} You selected \'yes\' in one of the provided questions, so value
         is required and can\'t be empty',
     'Find out more' => '{WELSH} Find out more',
@@ -2794,19 +2795,23 @@ return array(
     'user-registration.field.isLicenceHolder.label' => '{WELSH} Do you already hold a Vehicle Operator Licence?',
     'user-registration.field.licenceNumber.label' => '{WELSH} Licence number (for existing licence holders only)',
     'user-registration.field.organisationName.label' => '{WELSH} Organisation name',
-    'user-registration.form.label' => '{WELSH} Your details',
     'user-registration.form-actions.create-account.label' => '{WELSH} Create account',
     'user-registration.form-actions.post-account.label' => '{WELSH} Post account details to this address',
+    'user-registration.form.label' => '{WELSH} Your details',
+    'user-registration.page.account-created.text' => '{WELSH} Your account details should arrive in the next 3-5 working
+        days.',
     'user-registration.page.account-created.title' => '{WELSH} Account created',
-    'user-registration.page.account-created.text' => '{WELSH} Your account details should arrive in the next 3-5 working days.',
-    'user-registration.page.create-account.title' => '{WELSH} Create an account',
-    'user-registration.page.check-details.title' => '{WELSH} Check your details',
-    'user-registration.page.check-details.text' => '{WELSH} To make sure you’re an owner or employee of the company, we’ll need to post account details to your registered address.',
     'user-registration.page.check-details.address-incorrect.header' => '{WELSH} Wrong address',
-    'user-registration.page.check-details.address-incorrect.text' => '{WELSH} If your address is wrong, you’ll need to contact the Central Licensing Office to change it:',
-    'user-registration.page.check-email.title' => '{WELSH} Check your email',
-    'user-registration.page.check-email.guidance' => '{WELSH} We have sent an email to <b class="js-email">%s</b> containing a temporary password. Once you have signed in using the temporary password you will need to reset it.',
-    'user-registration.page.check-email.content' => '{WELSH} Please follow the link in the email to <a href="%s">sign in to your account</a>',
+    'user-registration.page.check-details.address-incorrect.text' => '{WELSH} If your address is wrong, you’ll need to
+        contact the Central Licensing Office to change it:',
+    'user-registration.page.check-details.text' => '{WELSH} To make sure you’re an owner or employee of the company,
+        we’ll need to post account details to your registered address.',
+    'user-registration.page.check-details.title' => '{WELSH} Check your details',
+    'user-registration.page.check-email.content' => '{WELSH} Please follow the link in the email to <a href="%s">sign in
+        to your account</a>',
+    'user-registration.page.check-email.guidance' => '{WELSH} We have sent an email to <b class="js-email">%s</b>
+        containing a temporary password. Once you have signed in using the temporary password you will need to reset
+        it.',
     'user-registration.page.check-email.problems.header' => '{WELSH} Problems signing in?',
     'user-registration.page.check-email.problems.text' => '{WELSH} If you have issues signing in or you didn’t recieve
         an email containing your temporary email address please email <a
