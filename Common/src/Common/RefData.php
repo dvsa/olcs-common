@@ -168,4 +168,15 @@ class RefData
     const PSV_VEHICLE_SIZE_SMALL = 'psvvs_small';
     const PSV_VEHICLE_SIZE_MEDIUM_LARGE = 'psvvs_medium_large';
     const PSV_VEHICLE_SIZE_BOTH = 'psvvs_both';
+
+    /**
+     * IRFO Status
+     */
+    const IRFO_PSV_AUTH_STATUS_APPROVED = 'irfo_auth_s_approved';
+    const IRFO_PSV_AUTH_STATUS_CNS = 'irfo_auth_s_cns';
+    const IRFO_PSV_AUTH_STATUS_GRANTED = 'irfo_auth_s_granted';
+    const IRFO_PSV_AUTH_STATUS_PENDING = 'irfo_auth_s_pending';
+    const IRFO_PSV_AUTH_STATUS_REFUSED = 'irfo_auth_s_refused';
+    const IRFO_PSV_AUTH_STATUS_RENEW = 'irfo_auth_s_renew';
+    const IRFO_PSV_AUTH_STATUS_WITHDRAWN = 'irfo_auth_s_withdrawn';
 }
