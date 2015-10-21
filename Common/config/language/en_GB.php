@@ -13,7 +13,7 @@ return array(
     'APP-PUB-OC' => 'Please complete the Operating centres section',
     'APP-PUB-OUSTANDING-FEE' => 'You must process the application fee',
     'APP-PUB-S4' => 'There is a schedule 4/1',
-    'APP-PUB-TM' => 'Please complete the Transport Managers section',
+    'APP-PUB-TM' => 'Please complete the Transport Managers\' section',
     'Add' => 'Add',
     'Applicant' => 'Applicant',
     'Application reference' => 'Application reference',
@@ -185,7 +185,7 @@ return array(
     'application-review-conditions-undertakings-oc-conditions-added' => 'Operating centre conditions',
     'application-review-conditions-undertakings-oc-undertakings-added' => 'Operating centre undertakings',
     'application-review-convictions-penalties-confirmation' => 'Confirm that you are aware that you must tell the
-        traffic commissioner immediately of any relevant convictions that occur between the submission of your
+        Traffic Commissioner immediately of any relevant convictions that occur between the submission of your
         application and a decision being made on this application',
     'application-review-convictions-penalties-conviction-convictionDate' => 'Date of conviction',
     'application-review-convictions-penalties-conviction-familyName' => 'Last name',
@@ -198,7 +198,7 @@ return array(
     'application-review-convictions-penalties-question' => 'Has anybody named in this application, (including
         partners, directors and Transport Managers); any company of which a person named on this application is or has
         been a director; any parent company if you are a limited company; or any of your employees or agents been
-        convicted of any relevant offence which must be declared to the traffic commissioner?',
+        convicted of any relevant offence which must be declared to the Traffic Commissioner?',
     'application-review-financial-evidence-evidence' => 'Evidence',
     'application-review-financial-evidence-evidence-post' => 'Operator to send original evidence to the Central
         Licensing Office',
@@ -215,7 +215,7 @@ return array(
     'application-review-financial-history-evidence-send' => 'Operator to send original evidence to the Central Licensing
         Office',
     'application-review-financial-history-insolvencyConfirmation' => 'Confirm that you are aware that you must tell the
-        traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
+        Traffic Commissioner immediately of any insolvency proceedings that occur between the submission of your
         application and a decision being made on the application',
     'application-review-financial-history-insolvencyDetails' => 'Additional information',
     'application-review-financial-history-liquidation' => 'Has anybody named in this application (including partners,
@@ -236,7 +236,7 @@ return array(
     'application-review-licence-history-disqualification-length' => 'Length of disqualification',
     'application-review-licence-history-disqualified-question' => 'Has anybody named in this application (including
         partners, directors or Transport Managers) been disqualified from holding or obtaining an operator\'s licence by
-        any traffic commissioner?',
+        any Traffic Commissioner?',
     'application-review-licence-history-disqualified-title' => 'Disqualifications',
     'application-review-licence-history-held-question' => 'Within the last 12 months, have you, your company or
         organisation or your partners or directors purchased the assets or shareholding of any company that, to your
@@ -264,7 +264,7 @@ return array(
     'application-review-people-person-othername' => 'Other name(s)',
     'application-review-people-person-position' => 'Position',
     'application-review-people-person-title' => 'Title',
-    'application-review-safety-safetyConfirmation' => 'Confirm that you\'ve made arrangements to keep
+    'application-review-safety-safetyConfirmation' => 'Confirm that you\'ve made arrangements to keep the
         vehicles in a fit and serviceable condition at all times',
     'application-review-safety-safetyInsTrailers' => 'What\'s the maximum time between safety inspections on your trailers',
     'application-review-safety-safetyInsVaries' => 'Are some of your vehicles or trailers inspected more often than this?',
@@ -349,7 +349,7 @@ return array(
     'application.cancel' => 'Cancel application',
     'application.change-of-entity.create.success' => 'Change of entity details updated',
     'application.change-of-entity.delete.success' => 'Change of entity details removed',
-    'application.change-of-entity.details.old-licence-no' => 'Previous licence No.',
+    'application.change-of-entity.details.old-licence-no' => 'Previous licence number',
     'application.change-of-entity.details.previous-operator-name' => 'Previous operator name',
     'application.community_licence.form.total_community_licences' => 'How many additional licences are required?',
     'application.delete' => 'Delete application',
@@ -819,7 +819,7 @@ return array(
     'confirm-grant-application' => 'Are you sure you want to grant this application?',
     'confirm-undo-grant-application' => 'Are you sure you want to undo the grant?',
     'conflict-error' => 'The data you were editing is out of date. Please review and re-enter your changes.',
-    'continuation-detail-filter-licenceNo' => 'Licence no.',
+    'continuation-detail-filter-licenceNo' => 'Licence number',
     'continuation-detail-filter-licenceStatus' => 'Licence status',
     'continuation-detail-filter-method' => 'Method',
     'continuation-detail-filter-status' => 'Status',
@@ -885,17 +885,17 @@ return array(
     'dashboard-table-applications' => 'New applications',
     'dashboard-table-applications-appId' => 'Application No.',
     'dashboard-table-applications-createdDate' => 'Created',
-    'dashboard-table-applications-licNo' => 'Licence No.',
+    'dashboard-table-applications-licNo' => 'Licence number',
     'dashboard-table-applications-status' => 'Status',
     'dashboard-table-applications-submittedDate' => 'Submitted',
     'dashboard-table-licences' => 'Licences',
-    'dashboard-table-licences-licNo' => 'Licence No.',
+    'dashboard-table-licences-licNo' => 'Licence number',
     'dashboard-table-licences-licType' => 'Type',
     'dashboard-table-licences-status' => 'Status',
     'dashboard-table-variations' => 'Variation applications',
     'dashboard-table-variations-appId' => 'Application No.',
     'dashboard-table-variations-createdDate' => 'Created',
-    'dashboard-table-variations-licNo' => 'Licence No.',
+    'dashboard-table-variations-licNo' => 'Licence number',
     'dashboard-table-variations-status' => 'Status',
     'dashboard-table-variations-submittedDate' => 'Submitted',
     'dashboard-tm-applications.table.EmptyMessage' => 'There are no open applications right now that you have been named
@@ -1553,7 +1553,7 @@ return array(
     'licence.grace-periods.table.title' => 'Grace periods',
     'licence.overview' => 'Overview',
     'licence.overview.details' => 'Overview',
-    'licence.overview.licence-no' => 'Licence No.',
+    'licence.overview.licence-no' => 'Licence number',
     'licence.overview.save.failed' => 'There was a problem saving the data',
     'licence.overview.saved' => 'Your changes have been saved',
     'licence.overview.title' => 'Licence overview',
@@ -1699,7 +1699,7 @@ return array(
     'lva-tm-sent-success' => 'The form has been emailed to the Transport Manager',
     'lva-transport-manager-table-empty-message' => 'To be nominated',
     'lva.section.operating_centres_delete' => 'Are you sure you wish to remove the selected operating centre(s)',
-    'lva.section.title.add-grace-period' => 'Add Grace Period',
+    'lva.section.title.add-grace-period' => 'Add grace period',
     'lva.section.title.add-transport_managers' => 'Add Transport Manager',
     'lva.section.title.addTm-transport_managers' => 'Transport Manager details',
     'lva.section.title.add_condition_undertaking' => 'Add condition/undertaking',
@@ -1721,7 +1721,7 @@ return array(
     'lva.section.title.cancel_appliction_confirmation' => 'Cancel application ',
     'lva.section.title.community_licences' => 'Community licences',
     'lva.section.title.conditions_undertakings' => 'Conditions and undertakings',
-    'lva.section.title.convictions_penalties' => 'Convictions and Penalties',
+    'lva.section.title.convictions_penalties' => 'Convictions and penalties',
     'lva.section.title.create-variation-confirmation' => 'Create variation application',
     'lva.section.title.declarations_internal' => 'Declarations Internal',
     'lva.section.title.delete' => 'Are you sure you want to remove these records?',
@@ -1927,7 +1927,7 @@ return array(
     'pay-fees.created' => 'Created',
     'pay-fees.description' => 'Description',
     'pay-fees.fee-no' => 'Fee No.',
-    'pay-fees.lic-no' => 'Licence No.',
+    'pay-fees.lic-no' => 'Licence number',
     'pay-fees.outstanding' => 'Outstanding',
     'pay-fees.success.amount' => 'Amount received',
     'pay-fees.success.header' => 'Details',
@@ -2103,13 +2103,13 @@ return array(
     'scanning.data.entity' => 'Entity ID',
     'scanning.data.sub_category' => 'Subcategory',
     'scanning.details' => 'Scanning details',
-    'scanning.error.entity.1' => 'The Licence No is invalid',
-    'scanning.error.entity.2' => 'The Case ID is invalid',
-    'scanning.error.entity.3' => 'The Bus registration No is invalid',
-    'scanning.error.entity.5' => 'The Transport Manager No is invalid',
-    'scanning.error.entity.7' => 'The Licence No is invalid',
+    'scanning.error.entity.1' => 'The licence number is invalid',
+    'scanning.error.entity.2' => 'The case ID is invalid',
+    'scanning.error.entity.3' => 'The bus registration number is invalid',
+    'scanning.error.entity.5' => 'The Transport Manager number is invalid',
+    'scanning.error.entity.7' => 'The licence number is invalid',
     'scanning.error.entity.8' => 'The IRFO ID is invalid',
-    'scanning.error.entity.9' => 'The Licence No is invalid',
+    'scanning.error.entity.9' => 'The licence number is invalid',
     'scanning.message.success' => 'The separator sheet has been generated',
     'schedule41.approve.application.message' => 'Are you sure you want to approve this schedule 4/1?',
     'schedule41.operating-centre.table.address' => 'Address',
@@ -2391,14 +2391,14 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'Has anybody named in this
         application, (including partners, directors and Transport Managers); any company of which a person named on this
         application is or has been a director; any parent company if you are a limited company; or any of your employees
-        or agents been convicted of any relevant offence which must be declared to the traffic commissioner? ',
+        or agents been convicted of any relevant offence which must be declared to the Traffic Commissioner? ',
     'selfserve-app-subSection-previous-history-criminal-conviction-helpBlock' => 'Please provide full details of the
         background circumstances of this offence.',
     'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' => 'Please confirm that you\'ll tell the Traffic Commissioner immediately about any relevant convictions that occur between
         between submitting this application and a decision being made.',
     'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'Offence Details',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'Please add any relevant
-        offences which must be declared to the traffic commissioner.',
+        offences which must be declared to the Traffic Commissioner.',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'Convictions and penalties (if
         applicable)',
     'selfserve-app-subSection-previous-history-criminal-conviction-viewAddOffence' => 'Add offence',
@@ -2412,7 +2412,7 @@ return array(
     'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationDate' => 'Date of disq.',
     'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationLength' => 'Length of disq.',
     'selfserve-app-subSection-previous-history-previous-licence-columnHolderName' => 'Name of licence holder',
-    'selfserve-app-subSection-previous-history-previous-licence-columnLicNo' => 'Licence No.',
+    'selfserve-app-subSection-previous-history-previous-licence-columnLicNo' => 'Licence number',
     'selfserve-app-subSection-previous-history-previous-licence-columnPurchaseDate' => 'Date of purchase',
     'selfserve
         surrendered?',
@@ -2664,12 +2664,12 @@ return array(
         record(s)?',
     'transport-manager.previous-history.deleted-message' => 'Deleted successfully',
     'transport-manager.previous-licences.form.holder-name' => 'Licence holder name',
-    'transport-manager.previous-licences.form.lic-no' => 'Licence no.',
+    'transport-manager.previous-licences.form.lic-no' => 'Licence number',
     'transport-manager.previouslicences.table' => 'Revoked, curtailed or suspended licences',
     'transport-manager.previouslicences.table.empty' => 'Have you had any association in the past with a licence that
         has been revoked, curtailed or suspended?',
     'transport-manager.previouslicences.table.holderName' => 'Licence holder name',
-    'transport-manager.previouslicences.table.lic-no' => 'Licence no.',
+    'transport-manager.previouslicences.table.lic-no' => 'Licence number',
     'transport-manager.processing.notes.add.title' => 'Add note',
     'transport-manager.processing.notes.modify.title' => 'Edit note',
     'transport-manager.responsibilities.additional-information' => 'Additional information',

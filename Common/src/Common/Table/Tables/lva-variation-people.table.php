@@ -10,7 +10,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
+                'add' => array('class' => 'primary', 'label' => 'Add person'),
                 'edit' => array('requireRows' => true),
                 'delete' => array(
                     'label' => 'people_table_action.delete.label',
