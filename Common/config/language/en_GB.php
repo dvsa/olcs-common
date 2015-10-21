@@ -2197,6 +2197,7 @@ return array(
     'search.form.filter.update_button' => 'Update results',
     'search.form.hint' => 'Can include operator name, licence number, person, postcode, town or city',
     'search.form.label' => 'Enter keywords',
+    'search.form.restart' => 'Start again',
     'search.operating-centre' => 'Operating Centre',
     'search.operator' => 'Vehicle Operator',
     'search.page.replaces' => 'This service replaces the VOSA Operator Search',
