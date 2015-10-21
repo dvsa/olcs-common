@@ -233,7 +233,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * If we have updated the transport manager section
+     * If we have updated the Transport Manager section
      *
      * @return boolean
      */

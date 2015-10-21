@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Transport manager application test
+ * Transport Manager application test
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
@@ -12,7 +12,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Data\Mapper\Lva\TransportManagerApplication;
 
 /**
- * Transport manager application test
+ * Transport Manager application test
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */

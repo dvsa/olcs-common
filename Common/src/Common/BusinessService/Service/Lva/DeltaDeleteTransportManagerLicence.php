@@ -50,7 +50,7 @@ class DeltaDeleteTransportManagerLicence implements
         $tmlService = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
         $tml = $tmlService->getTransportManagerLicence($transportManagerLicenceId);
 
-        // create the transport manager application row with action D (delete)
+        // create the Transport Manager application row with action D (delete)
         $tmaBusinessService = $this->getBusinessServiceManager()->get('Lva\TransportManagerApplication');
         $tma = [
             'application' => $applicationId,

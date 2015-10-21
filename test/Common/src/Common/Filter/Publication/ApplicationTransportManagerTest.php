@@ -16,7 +16,7 @@ class ApplicationTransportManagerTest extends MockeryTestCase
     /**
      * @group publicationFilter
      *
-     * Test the application transport manager filter
+     * Test the application Transport Manager filter
      */
     public function testFilter()
     {

@@ -34,7 +34,7 @@ class UserTypesListDataService implements FactoryInterface, ListDataInterface
             'local-authority' => 'Local authority',
             'operator' => 'Operator',
             'partner' => 'Partner',
-            'transport-manager' => 'Transport manager / Operator with TM access',
+            'transport-manager' => 'Transport Manager / Operator with TM access',
         ];
     }
 

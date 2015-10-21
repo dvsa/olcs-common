@@ -8,16 +8,16 @@ $translations = include($translationLocation . 'en_GB.php');
 
 $translated = include($translationLocation . 'google-translated.php');
 
-$directories = array(
-    realpath(__DIR__ . '/../Common/config/list-data/'),
-    realpath(__DIR__ . '/../Common/src/'),
-    realpath(__DIR__ . '/../test/'),
-    realpath(__DIR__ . '/../Common/view/'),
-    realpath(__DIR__ . '/../../olcs-internal/module/'),
-    realpath(__DIR__ . '/../../olcs-internal/test/'),
-    realpath(__DIR__ . '/../../olcs-selfserve/module/'),
-    realpath(__DIR__ . '/../../olcs-selfserve/test/')
-);
+//$directories = array(
+//    realpath(__DIR__ . '/../Common/config/list-data/'),
+//    realpath(__DIR__ . '/../Common/src/'),
+//    realpath(__DIR__ . '/../test/'),
+//    realpath(__DIR__ . '/../Common/view/'),
+//    realpath(__DIR__ . '/../../olcs-internal/module/'),
+//    realpath(__DIR__ . '/../../olcs-internal/test/'),
+//    realpath(__DIR__ . '/../../olcs-selfserve/module/'),
+//    realpath(__DIR__ . '/../../olcs-selfserve/test/')
+//);
 
 $unusedArray = $foundArray = array();
 
@@ -61,34 +61,35 @@ return array(';
 
 function wrapLine($string) {
 
-    $newString = '';
-
-    $remainingString = $string;
-
-    if (strlen($remainingString) <= 120) {
-        $newString = $remainingString;
-    }
-
-    while (strlen($remainingString) > 120) {
-
-        $offset = 120 - strlen($remainingString);
-
-        $splitSpaceOffset = strrpos($remainingString, ' ', $offset);
-
-        $lines = substr_replace($remainingString, "\n", $splitSpaceOffset, 1);
-
-        list($trimedLine, $remainingString) = explode("\n", $lines);
-
-        $newString .= $trimedLine . "\n";
-
-        $remainingString = "        " . $remainingString;
-
-        if (strlen($remainingString) < 120) {
-            $newString .= $remainingString;
-        }
-    }
-
-    return $newString;
+    return $string;
+//    $newString = '';
+//
+//    $remainingString = $string;
+//
+//    if (strlen($remainingString) <= 120) {
+//        $newString = $remainingString;
+//    }
+//
+//    while (strlen($remainingString) > 120) {
+//
+//        $offset = 120 - strlen($remainingString);
+//
+//        $splitSpaceOffset = strrpos($remainingString, ' ', $offset);
+//
+//        $lines = substr_replace($remainingString, "\n", $splitSpaceOffset, 1);
+//
+//        list($trimedLine, $remainingString) = explode("\n", $lines);
+//
+//        $newString .= $trimedLine . "\n";
+//
+//        $remainingString = "        " . $remainingString;
+//
+//        if (strlen($remainingString) < 120) {
+//            $newString .= $remainingString;
+//        }
+//    }
+//
+//    return $newString;
 }
 
 $toBeTranslated = [];

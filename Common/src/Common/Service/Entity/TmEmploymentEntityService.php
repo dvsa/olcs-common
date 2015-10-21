@@ -33,7 +33,7 @@ class TmEmploymentEntityService extends AbstractEntityService
     ];
 
     /**
-     * Get all transport manager employment for transport manager
+     * Get all Transport Manager employment for Transport Manager
      *
      * @param int $id
      * @return array
@@ -44,7 +44,7 @@ class TmEmploymentEntityService extends AbstractEntityService
     }
 
     /**
-     * Get transport manager other employment
+     * Get Transport Manager other employment
      *
      * @param int $id
      * @return array

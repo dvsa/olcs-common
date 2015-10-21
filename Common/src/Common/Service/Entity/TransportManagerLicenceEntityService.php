@@ -107,7 +107,7 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
     ];
 
     /**
-     * Get transport manager licence
+     * Get Transport Manager licence
      *
      * @param int $id
      * @return array

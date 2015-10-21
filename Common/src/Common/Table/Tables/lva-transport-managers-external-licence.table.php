@@ -2,7 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => 'Transport managers',
+        'title' => 'Transport Managers',
         'within_form' => true,
         'empty_message' => 'lva-transport-manager-table-empty-message'
     ),
@@ -22,7 +22,7 @@ return array(
             'name' => 'email'
         ),
         array(
-            'title' => 'DOB',
+            'title' => 'Date of birth',
             'name' => 'dob',
             'formatter' => 'Date',
         ),
