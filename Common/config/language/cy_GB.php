@@ -907,6 +907,8 @@ return array(
     'fees.create.success' => '{WELSH} Fee successfully created',
     'fees.create.title' => '{WELSH} Create new fee',
     'fees.created_date' => '{WELSH} Created',
+    'fees.irfoGvPermit' => '{WELSH} GV Permit',
+    'fees.irfoPsvAuth' => '{WELSH} PSV Authorisation',
     'fees.max_amount' => '{WELSH} Fee amount',
     'fees.pay.error.please-select' => '{WELSH} Please select at least one item',
     'fees.payer' => '{WELSH} Payer name',
@@ -1253,9 +1255,19 @@ return array(
     'internal.community_licence.licences_withdrawn' => '{WELSH} The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => '{WELSH} The office copy has been created',
     'internal.community_licence.reprint_not_allowed' => '{WELSH} You can only reprint \'Active\' community licences',
+<<<<<<< HEAD
     'internal.community_licence.restore_not_allowed' => '{WELSH} You cannot restore these licences without restoring the office copy',
     'internal.community_licence.stop_not_allowed' => '{WELSH} Please annul, withdraw or suspend the other pending/active licences before the office copy',
     'internal.community_licence.void_not_allowed' => '{WELSH} You cannot annul the office copy without annulling all the licences',
+=======
+    'internal.community_licence.restore_not_allowed' => '{WELSH} You cannot restore these licences without restoring the
+        office copy',
+    'internal.community_licence.stop_not_allowed' => '{WELSH} Please annul, withdraw or suspend the other pending/active
+        licences before the office copy',
+    'internal.community_licence.void_not_allowed' => '{WELSH} You cannot annul the office copy without annulling all the
+        licences',
+    'internal.create-fee.irfo-required' => '{WELSH} Either GV Permit or PSV Authorisation is required',
+>>>>>>> OLCS-10611 translations
     'internal.delete-action-trait.title' => '{WELSH} Delete',
     'internal.documents.delete.delete_message' => '{WELSH} Are you sure you want to remove the selected record(s)?',
     '0' => '{WELSH} selfserve surrendered?',
