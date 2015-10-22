@@ -11,6 +11,7 @@ namespace Common\Controller\Traits;
 use Common\View\Model\ReceiptViewModel;
 use Dvsa\Olcs\Transfer\Query\Transaction\TransactionByReference as PaymentByReference;
 use Common\Exception\ResourceNotFoundException;
+use Common\RefData;
 
 /**
  * Generic receipt functionality
@@ -30,6 +31,7 @@ trait GenericReceipt
 
         return $view;
     }
+
 
     protected function getReceiptData($paymentRef)
     {
@@ -57,7 +59,19 @@ trait GenericReceipt
 
         // get operator name from the first fee
         $operatorName = $fees[0]['licence']['organisation']['name'];
+        $hasContinuation = $this->hasContinuationFee($fees);
 
-        return compact('payment', 'fees', 'operatorName', 'table');
+        return compact('payment', 'fees', 'operatorName', 'table', 'hasContinuation');
     }
+
+    protected function hasContinuationFee($fees)
+    {
+        foreach ($fees as $fee) {
+            if ($fee['feeType']['feeType']['id'] == RefData::FEE_TYPE_CONT) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
