@@ -1,6 +1,10 @@
 <?php
 
 return array(
+    '404-text' => 'The page you are looking for could not be found.',
+    '404-title' => 'Page not found',
+    '500-text' => 'There was an unexpected error while performing your action.',
+    '500-title' => 'Something went wrong',
     'ANY_TO_ST' => '<li>All people apart from the first one</li>',
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',

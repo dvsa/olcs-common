@@ -39,7 +39,27 @@ return array(
                 'options' => array(
                     'route' => '/correspondence'
                 )
-            )
+            ),
+            'not-found' => array(
+                'type' => 'segment',
+                'options' =>  array(
+                    'route' => '/404[/]',
+                    'defaults' => array(
+                        'controller' => \Common\Controller\ErrorController::class,
+                        'action' => 'notFound'
+                    )
+                )
+            ),
+            'server-error' => array(
+                'type' => 'segment',
+                'options' =>  array(
+                    'route' => '/error[/]',
+                    'defaults' => array(
+                        'controller' => \Common\Controller\ErrorController::class,
+                        'action' => 'serverError'
+                    )
+                )
+            ),
         )
     ),
     'controllers' => array(
@@ -92,6 +112,7 @@ return array(
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
             'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
+            \Common\Controller\ErrorController::class => \Common\Controller\ErrorController::class,
         )
     ),
     'controller_plugins' => array(
@@ -210,7 +231,8 @@ return array(
             'LanguagePreference' => \Common\Preference\Language::class,
             'LanguageListener' => \Common\Preference\LanguageListener::class,
             'CqrsRequest' => \Common\Service\Cqrs\RequestFactory::class,
-            \Common\Service\Cqrs\Query\CachingQueryService::class => \Common\Service\Cqrs\Query\CachingQueryServiceFactory::class,
+            \Common\Service\Cqrs\Query\CachingQueryService::class
+                => \Common\Service\Cqrs\Query\CachingQueryServiceFactory::class,
             \Common\Service\Cqrs\Query\QueryService::class => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
