@@ -248,15 +248,20 @@ class ElasticSearchTest extends MockeryTestCase
         $mockSearchTypeService = m::mock('Olcs\Service\Data\Search\SearchType');
         $mockSearchService = m::mock('Common\Service\Data\Search\Search');
 
+        $mi = m::mock('Zend\Navigation\Navigation');
+        $mi->shouldReceive('findOneBy')->with('id', 'search-da')->andReturnSelf();
+        $mi->shouldReceive('setActive')->with(true)->andReturnNull();
+
+
         $mockSearchTypeService->shouldReceive('getNavigation')->with(
             'internal-search',
             ['search' => 'foo']
-        )->andReturn('MOCKINDEXES');
+        )->andReturn($mi);
 
         $mockPlaceholder = m::mock('Zend\View\Helper\Placeholder');
         $mockPlaceholder->shouldReceive('getContainer')
             ->with('horizontalNavigationContainer')
-            ->andReturn(m::mock()->shouldReceive('set')->once()->with('MOCKINDEXES')->getMock());
+            ->andReturn(m::mock()->shouldReceive('set')->once()->with($mi)->getMock());
 
         $mockViewHelperManager = m::mock('Zend\Mvc\Service\ViewHelperManagerFactory');
         $mockViewHelperManager->shouldReceive('get')->with('placeholder')->andReturn($mockPlaceholder);
@@ -266,7 +271,7 @@ class ElasticSearchTest extends MockeryTestCase
         $plugin = $this->sut->getPlugin();
         $plugin->setSearchTypeService($mockSearchTypeService);
         $plugin->setSearchService($mockSearchService);
-        $plugin->setSearchData(['search' => 'foo']);
+        $plugin->setSearchData(['search' => 'foo', 'index' => 'da']);
 
         $view = new ViewModel();
         $plugin->configureNavigation();
