@@ -73,5 +73,4 @@ trait GenericReceipt
         }
         return false;
     }
-
 }
