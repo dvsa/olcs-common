@@ -77,7 +77,7 @@ return array(
         'org_t_st' => 'Sole Trader',
         'org_t_p' => 'Partnership',
         'org_t_llp' => 'Limited Liability Partnership',
-        'org_t_pa' => 'Other (e.g. public authority, charity, trust, university)',
+        'org_t_pa' => 'Other (eg public authority, charity, trust, university)',
         'org_t_ir' => 'IRFO',
     ],
     'defendant_types' =>

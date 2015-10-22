@@ -70,7 +70,7 @@ class AddressOptional
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Town/City"})
+     * @Form\Options({"label":"Town/city"})
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})

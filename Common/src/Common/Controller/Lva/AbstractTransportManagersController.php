@@ -28,7 +28,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     protected $location = 'external';
 
     /**
-     * Transport managers section
+     * Transport Managers section
      */
     public function indexAction()
     {
@@ -397,7 +397,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     }
 
     /**
-     * Restore Transport managers
+     * Restore Transport Managers
      */
     public function restoreAction()
     {
@@ -431,7 +431,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     }
 
     /**
-     * Find the Transport manager application ID that is linked to Transport manager application ID
+     * Find the Transport Manager application ID that is linked to Transport Manager application ID
      *
      * @param array  $data
      * @param string $tmlId This is the TML ID prefixed with an "L"

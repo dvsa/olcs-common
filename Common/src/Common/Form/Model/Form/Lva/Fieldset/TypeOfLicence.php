@@ -70,6 +70,7 @@ class TypeOfLicence
      *      },
      *      "fieldset-data-group": "licence-type",
      *      "label": "application_type-of-licence_licence-type.data.licenceType",
+     *      "hint": "application_type-of-licence_licence-type.data.licenceType-hint",
      *      "value_options":{
      *          "ltyp_r": "Restricted",
      *          "ltyp_sn": "Standard National",

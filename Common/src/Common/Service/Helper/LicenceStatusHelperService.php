@@ -304,7 +304,7 @@ class LicenceStatusHelperService extends AbstractHelperService
     }
 
     /**
-     * Remove the transport managers for a licence.
+     * Remove the Transport Managers for a licence.
      *
      * @param null|array $transportManagers The TM's
      */

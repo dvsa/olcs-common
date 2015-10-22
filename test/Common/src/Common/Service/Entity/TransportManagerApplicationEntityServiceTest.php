@@ -43,7 +43,7 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
     }
 
     /**
-     * Test get transport manager appplication
+     * Test get Transport Manager appplication
      *
      * @group transportManagerApplication
      */

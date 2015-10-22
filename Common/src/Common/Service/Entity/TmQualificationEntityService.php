@@ -42,7 +42,7 @@ class TmQualificationEntityService extends AbstractEntityService
     ];
 
     /**
-     * Get transport manager qualifiactions
+     * Get Transport Manager qualifiactions
      *
      * @param int $id
      * @return array

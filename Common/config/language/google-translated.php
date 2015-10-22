@@ -46,7 +46,7 @@ return array(
     'Please Select' => 'Dewiswch',
     'Please add a person' => 'Ychwanegwch person',
     'Please add a safety inspection provider' => 'Ychwanegwch darparwr archwiliad diogelwch',
-    'Please add a transport manager' => 'Rhaid i chi ychwanegu o leiaf un rheolwr trafnidiaeth',
+    'Please add a Transport Manager' => 'Rhaid i chi ychwanegu o leiaf un rheolwr trafnidiaeth',
     'Save and continue' => 'Cadw & parhau',
     'Value is required and can\'t be empty' => 'Mae angen gwerth',
     'Week' => 'Wythnos',
