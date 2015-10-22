@@ -37,7 +37,7 @@ class ScanEntityProcessingService implements ServiceLocatorAwareInterface
         CategoryDataService::CATEGORY_LICENSING         => 'Licence',
         CategoryDataService::CATEGORY_ENVIRONMENTAL     => 'Licence',
         CategoryDataService::CATEGORY_IRFO              => 'IRFO',
-        CategoryDataService::CATEGORY_TRANSPORT_MANAGER => 'Transport manager'
+        CategoryDataService::CATEGORY_TRANSPORT_MANAGER => 'Transport Manager'
     ];
 
     public function findEntityForCategory($category, $identifier)

@@ -93,7 +93,7 @@ class TransportManagerName extends Name
     }
 
     /**
-     * Get URL for the Transport managers name
+     * Get URL for the Transport Managers name
      *
      * @param array $data
      * @param \Zend\ServiceManager\ServiceManager $sm
@@ -111,7 +111,7 @@ class TransportManagerName extends Name
     }
 
     /**
-     * Get URL for the Transport managers name
+     * Get URL for the Transport Managers name
      *
      * @param array $data
      * @param \Zend\ServiceManager\ServiceManager $sm

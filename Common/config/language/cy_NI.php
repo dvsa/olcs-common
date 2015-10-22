@@ -6,7 +6,7 @@ $ni = array_merge(
     $gb,
     [
         'application_previous-history_licence-history_prevHasLicence' => '{WELSH} 1. Does any person named in this
-            application (including partners, directors and transport managers) currently hold a goods or public service
+            application (including partners, directors and Transport Managers) currently hold a goods or public service
             vehicle operator\'s licence in GB or Northern Ireland?',
         'application_previous-history_licence-history_prevHadLicence' => '{WELSH} a. previously held or applied for a
             goods or public service vehicle operator’s licence in Northern Ireland or GB?',
@@ -19,7 +19,7 @@ $ni = array_merge(
             shareholding of any company that, to your knowledge, currently holds or has previously held an operator\'s
             licence in Northern Ireland or GB?',
         'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => '{WELSH} Has any person named in this
-            application (including partners, directors and transport managers); any company of which a person named on
+            application (including partners, directors and Transport Managers); any company of which a person named on
             this application is or has been a director; any parent company if you are a limited company; received any
             penalties or have currently any unspent convictions?',
         'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => '{WELSH} Please add any

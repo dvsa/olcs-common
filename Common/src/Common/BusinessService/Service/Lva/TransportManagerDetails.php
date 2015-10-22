@@ -153,7 +153,7 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
     }
 
     /**
-     * Persist transport managers work address
+     * Persist Transport Managers work address
      *
      * @param array $params
      * @param int $workContactDetailsId
@@ -173,7 +173,7 @@ class TransportManagerDetails implements BusinessServiceInterface, BusinessServi
     }
 
     /**
-     * Update transport manager application status
+     * Update Transport Manager application status
      *
      * @param array $params
      * @return Response

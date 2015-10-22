@@ -66,7 +66,7 @@ class TransportManagerApplicationForUser implements
                 'transportManager' => $user['transportManager']['id']
             ];
 
-            // Update the user record, so we can link them to the transport manager record
+            // Update the user record, so we can link them to the Transport Manager record
             $this->getServiceLocator()->get('Entity\User')->save($userData);
         }
 

@@ -60,7 +60,7 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Town/City","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"Town/city","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */

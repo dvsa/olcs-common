@@ -118,7 +118,7 @@ class TransportManagerEntityService extends AbstractEntityService
     ];
 
     /**
-     * Get transport manager details
+     * Get Transport Manager details
      *
      * @param int $id
      */
@@ -139,7 +139,7 @@ class TransportManagerEntityService extends AbstractEntityService
     }
 
     /**
-     * Get transport manager documents
+     * Get Transport Manager documents
      *
      * @param int $tmId
      * @param int $secondaryId
@@ -166,7 +166,7 @@ class TransportManagerEntityService extends AbstractEntityService
     }
 
     /**
-     * Get transport manager details for markers
+     * Get Transport Manager details for markers
      *
      * @param int $id
      */

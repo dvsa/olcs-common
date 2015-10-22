@@ -373,7 +373,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     }
 
     /**
-     * Get transport managers status
+     * Get Transport Managers status
      *
      * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateTransportManagersStatus]
      *
