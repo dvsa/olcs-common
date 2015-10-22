@@ -303,10 +303,14 @@ class ElasticSearch extends AbstractPlugin
     {
         $sd = $this->getSearchData();
 
+        $nav = $this->getSearchTypeService()->getNavigation('internal-search', ['search' => $sd['search']]);
+        // A little workaround to set the current nav as active
+        $nav->findOneBy('id', 'search-' . $sd['index'])->setActive(true);
+
         $this->getController()->getViewHelperManager()
             ->get('placeholder')
             ->getContainer('horizontalNavigationContainer')
-            ->set($this->getSearchTypeService()->getNavigation('internal-search', ['search' => $sd['search']]));
+            ->set($nav);
     }
 
     public function generateResults($view)

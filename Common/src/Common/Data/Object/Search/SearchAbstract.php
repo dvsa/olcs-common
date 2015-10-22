@@ -123,6 +123,7 @@ abstract class SearchAbstract
     public function getNavigation(array $queryParams = [])
     {
         return [
+            'id' => 'search-' . $this->getKey(),
             'label' => $this->getTitle(),
             'route' => 'search',
             'params' => ['index' => $this->getKey(), 'action' => 'reset'],
