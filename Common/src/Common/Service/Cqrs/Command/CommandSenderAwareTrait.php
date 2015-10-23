@@ -17,16 +17,16 @@ trait CommandSenderAwareTrait
     /**
      * @var CommandSender
      */
-    protected $CommandSender;
+    protected $commandSender;
 
     /**
      * Set Command sender
      *
-     * @param CommandSender $CommandSender
+     * @param CommandSender $commandSender
      */
-    public function setCommandSender(CommandSender $CommandSender)
+    public function setCommandSender(CommandSender $commandSender)
     {
-        $this->CommandSender = $CommandSender;
+        $this->commandSender = $commandSender;
     }
 
     /**
@@ -36,6 +36,6 @@ trait CommandSenderAwareTrait
      */
     public function getCommandSender()
     {
-        return $this->CommandSender;
+        return $this->commandSender;
     }
 }
