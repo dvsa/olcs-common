@@ -841,6 +841,7 @@ return array(
     'entity-details-nav-licence-details' => '{WELSH} Licence details',
     'entity-details-nav-operating-centres' => '{WELSH} Operating centres',
     'entity-details-nav-operator-details' => '{WELSH} Operator details',
+    '0' => '{WELSH} selfserve surrendered?',
     'entity-details-nav-related-operator-licences' => '{WELSH} Related operator licences',
     'entity-details-nav-transport-managers' => '{WELSH} Transport Managers',
     'entity-details-nav-vehicles' => '{WELSH} Vehicles',
@@ -1255,25 +1256,14 @@ return array(
     'internal.community_licence.licences_withdrawn' => '{WELSH} The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => '{WELSH} The office copy has been created',
     'internal.community_licence.reprint_not_allowed' => '{WELSH} You can only reprint \'Active\' community licences',
-<<<<<<< HEAD
     'internal.community_licence.restore_not_allowed' => '{WELSH} You cannot restore these licences without restoring the office copy',
     'internal.community_licence.stop_not_allowed' => '{WELSH} Please annul, withdraw or suspend the other pending/active licences before the office copy',
     'internal.community_licence.void_not_allowed' => '{WELSH} You cannot annul the office copy without annulling all the licences',
-=======
-    'internal.community_licence.restore_not_allowed' => '{WELSH} You cannot restore these licences without restoring the
-        office copy',
-    'internal.community_licence.stop_not_allowed' => '{WELSH} Please annul, withdraw or suspend the other pending/active
-        licences before the office copy',
-    'internal.community_licence.void_not_allowed' => '{WELSH} You cannot annul the office copy without annulling all the
-        licences',
     'internal.create-fee.irfo-required' => '{WELSH} Either GV Permit or PSV Authorisation is required',
->>>>>>> OLCS-10611 translations
     'internal.delete-action-trait.title' => '{WELSH} Delete',
     'internal.documents.delete.delete_message' => '{WELSH} Are you sure you want to remove the selected record(s)?',
-    '0' => '{WELSH} selfserve surrendered?',
     'internal.documents.delete.deleted_successfully' => '{WELSH} Deleted successfully',
     'internal.documents.documents_copied' => '{WELSH} Successfully copied the document(s)',
-    '0' => '{WELSH} selfserve surrendered?',
     'internal.documents.documents_moved' => '{WELSH} Successfully moved the document(s),',
     'internal.documents.relink_documents' => '{WELSH} Relink documents',
     'internal.fee-details.title' => '{WELSH} Fee details',
@@ -1693,7 +1683,6 @@ return array(
     'operating-centres' => '{WELSH} Operating centres',
     'operating-centres-licence-locked' => '{WELSH} Making changes to this field will require a variation application',
     'operator' => '{WELSH} Operator',
-    '0' => '{WELSH} selfserve surrendered?',
     'operator-edit-popup-header' => '{WELSH} Edit Operator Name',
     'operator-location' => '{WELSH} Operator location',
     'operator-location-lock-message' => '{WELSH} You cannot change the operator location',
