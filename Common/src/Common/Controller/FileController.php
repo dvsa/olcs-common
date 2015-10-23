@@ -49,6 +49,15 @@ class FileController extends \Zend\Mvc\Controller\AbstractActionController
 
         $headers['Content-Length'] = strlen($content);
 
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mime = $finfo->buffer($content);
+
+        if ($mime !== null) {
+            $headers['Content-Type'] = $mime;
+        } else {
+            $headers['Content-Type'] = 'application/octet-stream';
+        }
+
         $response->setStatusCode(200);
         $response->getHeaders()->addHeaders($headers);
 

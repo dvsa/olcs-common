@@ -28,6 +28,8 @@ class RefData
     const FEE_STATUS_PAID              = 'lfs_pd';
     const FEE_STATUS_CANCELLED         = 'lfs_cn';
 
+    const FEE_TYPE_CONT = 'CONT';
+
     const TRANSACTION_STATUS_COMPLETE    = 'pay_s_pd';
     const TRANSACTION_STATUS_OUTSTANDING = 'pay_s_os';
     const TRANSACTION_STATUS_CANCELLED   = 'pay_s_cn';
