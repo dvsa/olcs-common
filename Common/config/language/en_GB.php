@@ -2516,4 +2516,11 @@ return array(
     'withdraw-application' => 'Withdraw application',
     'your-business' => 'Your business',
     // Potentially unused (Not found with grep)
+    'date-hint' => 'E.g. 12, 6, 2014',
+    'date-Day' => 'Day',
+    'date-Month' => 'Month',
+    'date-Year' => 'Year',
+    'date-Hour' => 'Hour',
+    'date-Minute' => 'Minute',
+
 );

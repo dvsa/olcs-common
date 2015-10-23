@@ -8,6 +8,8 @@
  */
 namespace Common\Form\View\Helper;
 
+use Zend\Form\Element\DateSelect;
+use Zend\Form\Element\DateTimeSelect;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\View\Helper\FormRow as ZendFormRow;
 use Zend\Form\ElementInterface as ZendElementInterface;
@@ -79,6 +81,13 @@ class FormRow extends ZendFormRow
 
         if ($element instanceof Table) {
             $markup = $element->render();
+        } elseif ($element instanceof DateSelect ) {
+            $element->setOption('hint-position', 'end');
+            $hint = $element->getOption('hint');
+            if (empty($hint)) {
+                $element->setOption('hint', 'date-hint');
+            }
+            $markup = $this->renderFieldset($element, false);
         } else {
 
             if ($element instanceof SingleCheckbox) {
@@ -139,7 +148,7 @@ class FormRow extends ZendFormRow
         return $markup;
     }
 
-    protected function renderFieldset(ElementInterface $element)
+    protected function renderFieldset(ElementInterface $element, $primary = true)
     {
         $label = $element->getLabel();
         $hint = sprintf(
@@ -151,7 +160,12 @@ class FormRow extends ZendFormRow
 
         $element->setOption('hint', '');
         $element->setLabel('');
-        $markup = $hint . $this->renderRow($element);
+
+        if ($element->getOption('hint-position') === 'end') {
+            $markup = $this->renderRow($element) . $hint;
+        } else {
+            $markup = $hint . $this->renderRow($element);
+        }
 
         if (!empty($label)) {
 
@@ -180,7 +194,7 @@ class FormRow extends ZendFormRow
             $markup,
             $legend,
             '',
-            ' class="fieldset--primary"'
+            $primary ? ' class="fieldset--primary"' : ''
         );
     }
 

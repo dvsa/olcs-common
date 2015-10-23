@@ -431,6 +431,7 @@ return array(
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
             'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
+            'formDateSelect' => \Common\Form\View\Helper\FormDateSelect::class,
             'version' => 'Common\View\Helper\Version',
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
