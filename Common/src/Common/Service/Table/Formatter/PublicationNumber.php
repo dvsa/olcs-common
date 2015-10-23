@@ -24,12 +24,10 @@ class PublicationNumber implements FormatterInterface
 
         $url = sprintf($uriPattern, $data['document']['identifier']);
 
-        $fileUrl = 'file:///Z:/olcs/' . $data['document']['identifier'];
-
         return sprintf(
             '<a href="%s" data-file-url="%s" target="blank">%s</a>',
             $url,
-            $fileUrl,
+            $url,
             $data['publicationNo']
         );
     }
