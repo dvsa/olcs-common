@@ -458,8 +458,6 @@ class FormHelperService extends AbstractHelperService
             return $this->disableEmptyValidationOnElement($form->get($index), $reference, $filter->get($index));
         }
 
-        $element = $form->get($reference);
-
         $filter->get($reference)->setAllowEmpty(true);
         $filter->get($reference)->setRequired(false);
     }

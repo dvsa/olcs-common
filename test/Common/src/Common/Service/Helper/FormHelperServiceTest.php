@@ -949,6 +949,45 @@ class FormHelperServiceTest extends MockeryTestCase
         $helper->disableEmptyValidation($form);
     }
 
+    public function testDisableEmptyValidationOnElement()
+    {
+        $helper = new FormHelperService();
+
+        $input = m::mock('Zend\InputFilter\Input');
+        $input->shouldReceive('setAllowEmpty')
+            ->with(true)
+            ->andReturnSelf()
+            ->shouldReceive('setRequired')
+            ->with(false)
+            ->andReturnSelf()
+            ->shouldReceive('setValidatorChain');
+
+        $filter = m::mock('Zend\InputFilter\InputFilter');
+        $filter->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($input)
+            ->shouldReceive('get')
+            ->with('fieldset')
+            ->andReturnSelf();
+
+        $element = m::mock('\stdClass');
+
+        $fieldset = m::mock('Zend\Form\Fieldset');
+        $fieldset
+            ->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($element);
+
+        $form = m::mock('Zend\Form\Form');
+        $form->shouldReceive('getInputFilter')
+            ->andReturn($filter)
+            ->shouldReceive('get')
+            ->with('fieldset')
+            ->andReturn($fieldset);
+
+        $helper->disableEmptyValidationOnElement($form, 'fieldset->foo');
+    }
+
     public function testPopulateFormTable()
     {
         $helper = new FormHelperService();
