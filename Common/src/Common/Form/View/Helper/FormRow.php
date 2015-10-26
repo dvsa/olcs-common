@@ -60,16 +60,11 @@ class FormRow extends ZendFormRow
             return sprintf(self::$readonlyFormat, $class, $label, $value);
         }
 
-        //$oldRenderErrors = $this->getRenderErrors();
-        $oldRenderErrors = true;
-        if ($oldRenderErrors) {
-
-            /**
-             * We don't want the parent class to render the errors.
-             */
-            $this->setRenderErrors(false);
-            $elementErrors = $this->getElementErrorsHelper()->render($element);
-        }
+        /**
+         * We don't want the parent class to render the errors.
+         */
+        $this->setRenderErrors(false);
+        $elementErrors = $this->getElementErrorsHelper()->render($element);
 
         if ($element instanceof ActionButton || $element instanceof ActionLink) {
             return $this->renderRow($element);
@@ -119,7 +114,7 @@ class FormRow extends ZendFormRow
             $wrap = false;
         }
 
-        if ($oldRenderErrors && $elementErrors != '') {
+        if ($elementErrors != '') {
             $markup = $elementErrors . $markup;
         }
 
@@ -143,17 +138,18 @@ class FormRow extends ZendFormRow
             }
         }
 
-        if ($oldRenderErrors && $elementErrors != '') {
+        if ($elementErrors != '') {
             $markup = sprintf(self::$errorClass, $markup);
         }
 
-        $this->setRenderErrors($oldRenderErrors);
+        $this->setRenderErrors(true);
 
         return $markup;
     }
 
     protected function renderFieldset(ElementInterface $element, $primary = true)
     {
+        $legend = '';
         $label = $element->getLabel();
         $hint = sprintf(
             $this->fieldsetHintFormat,
@@ -289,12 +285,6 @@ class FormRow extends ZendFormRow
                 } else {
                     $labelOpen  = $labelHelper->openTag($labelAttributes);
                     $labelClose = $labelHelper->closeTag();
-                }
-
-                if ($label !== '' && (!$element->hasAttribute('id'))
-                    || ($element instanceof LabelAwareInterface && $element->getLabelOption('always_wrap'))
-                ) {
-                    $label = $label;
                 }
 
                 // Button element is a special case, because label is always rendered inside it

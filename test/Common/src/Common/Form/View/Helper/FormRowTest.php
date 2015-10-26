@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\View\Helper;
 
+use Zend\Form\Element\DateSelect;
 use Zend\View\HelperPluginManager;
 use Zend\Form\View\Helper as ZendHelper;
 use Common\Form\View\Helper as CommonHelper;
@@ -377,5 +378,49 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($element);
 
         $this->expectOutputString('<div class="field read-only "><p>Foo<br><b>Bar</b></p></div>');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderDateSelectElement()
+    {
+        $element = $this->prepareElement(
+            'DateSelect',
+            [
+                'name' => 'date',
+                'label' => 'Foo'
+            ],
+            []
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $expected = '<div class="field "><fieldset><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>';
+
+        $this->expectOutputString($expected);
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderDateTimeSelectElement()
+    {
+        $element = $this->prepareElement(
+            'DateTimeSelect',
+            [
+                'name' => 'date',
+                'label' => 'Foo'
+            ],
+            []
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $expected = '<div class="field "><fieldset><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>';
+
+        $this->expectOutputString($expected);
     }
 }
