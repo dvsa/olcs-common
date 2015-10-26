@@ -39,18 +39,22 @@ class FormDateTimeSelect extends ZendFormDateTimeSelect
         $this->pattern = $element->getOption('pattern');
 
         if (!$element instanceof DateTimeSelectElement) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '%s requires that the element is of type Zend\Form\Element\DateTimeSelect',
-                __METHOD__
-            ));
+            throw new Exception\InvalidArgumentException(
+                sprintf(
+                    '%s requires that the element is of type Zend\Form\Element\DateTimeSelect',
+                    __METHOD__
+                )
+            );
         }
 
         $name = $element->getName();
         if ($name === null || $name === '') {
-            throw new Exception\DomainException(sprintf(
-                '%s requires that the element has an assigned name; none discovered',
-                __METHOD__
-            ));
+            throw new Exception\DomainException(
+                sprintf(
+                    '%s requires that the element has an assigned name; none discovered',
+                    __METHOD__
+                )
+            );
         }
 
         $shouldRenderDelimiters = $element->shouldRenderDelimiters();
