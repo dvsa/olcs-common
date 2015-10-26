@@ -82,11 +82,15 @@ class FormRow extends ZendFormRow
         if ($element instanceof Table) {
             $markup = $element->render();
         } elseif ($element instanceof DateSelect ) {
-            $element->setOption('hint-position', 'end');
-            $hint = $element->getOption('hint');
-            if (empty($hint)) {
-                $element->setOption('hint', 'date-hint');
+
+            if (! ($element instanceof DateTimeSelect)) {
+                $element->setOption('hint-position', 'end');
+                $hint = $element->getOption('hint');
+                if (empty($hint)) {
+                    $element->setOption('hint', 'date-hint');
+                }
             }
+
             $markup = $this->renderFieldset($element, false);
         } else {
 

@@ -78,8 +78,8 @@ class FormDateTimeSelect extends ZendFormDateTimeSelect
         $data[$pattern['day']]    = $this->renderDayInput($dayElement);
         $data[$pattern['month']]  = $this->renderMonthInput($monthElement);
         $data[$pattern['year']]   = $this->renderYearInput($yearElement);
-        $data[$pattern['hour']]   = $this->wrap($selectHelper->render($hourElement), 'Hour');
-        $data[$pattern['minute']] = $this->wrap($selectHelper->render($minuteElement), 'Minute');
+        $data[$pattern['hour']]   = $selectHelper->render($hourElement);
+        $data[$pattern['minute']] = $selectHelper->render($minuteElement);
 
         if ($element->shouldShowSeconds()) {
             $data[$pattern['second']]  = $selectHelper->render($secondElement);
