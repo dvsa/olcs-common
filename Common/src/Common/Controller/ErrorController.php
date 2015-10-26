@@ -8,7 +8,7 @@
 namespace Common\Controller;
 
 use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -16,7 +16,7 @@ use Zend\View\Model\ViewModel;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ErrorController extends AbstractActionController
+class ErrorController extends ZendAbstractActionController
 {
     public function notFoundAction()
     {
