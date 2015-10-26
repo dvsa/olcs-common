@@ -23,6 +23,9 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
+     *     },
+     *     "fieldset-attributes": {
+     *         "class": "checkbox inline"
      *     }
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
@@ -33,11 +36,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Attributes({"id":"","class":"long"})
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
-     *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-6"
+     *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title"
      * })
      * @Form\Validator({"name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValidator"})
      * @Form\Type("Textarea")
@@ -77,6 +76,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "checked_value": "Y",
      *     "unchecked_value": "N"
      * })
+     * @Form\Attributes({"data-container-class": "confirm"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      * @Form\Validator({
      *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator"
