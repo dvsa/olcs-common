@@ -443,23 +443,13 @@ class FormHelperService extends AbstractHelperService
      *
      * @param \Zend\Form\Form $form
      * @param string $reference
-     * @param \Zend\InputFilter\InputFilter $filter
      * @return null
      */
-    public function disableEmptyValidationOnElement($form, $reference, $filter = null)
+    public function disableEmptyValidationOnElement($form, $reference)
     {
-        if ($filter === null) {
-            $filter = $form->getInputFilter();
-        }
-
-        if (strstr($reference, '->')) {
-            list($index, $reference) = explode('->', $reference, 2);
-
-            return $this->disableEmptyValidationOnElement($form->get($index), $reference, $filter->get($index));
-        }
-
-        $filter->get($reference)->setAllowEmpty(true);
-        $filter->get($reference)->setRequired(false);
+        list($form, $filter, $name) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        $filter->get($name)->setAllowEmpty(true);
+        $filter->get($name)->setRequired(false);
     }
 
     /**
