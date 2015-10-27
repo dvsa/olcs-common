@@ -8,7 +8,7 @@ use Zend\Form\Annotation as Form;
  * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("generic-confirmation")
  * @Form\Attributes({"method":"post", "class":"js-modal-alert"})
- * @Form\Type("Common\Form\Form")
+ * @Form\Type("Common\Form\GenericConfirmation")
  */
 class GenericConfirmation
 {
