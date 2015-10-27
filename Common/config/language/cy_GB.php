@@ -849,6 +849,7 @@ return array(
     'entity-details-nav-current-applications' => '{WELSH} Current applications',
     '0' => '{WELSH} selfserve surrendered?',
     'entity-details-nav-licence-details' => '{WELSH} Licence details',
+    '0' => '{WELSH} selfserve surrendered?',
     'entity-details-nav-operating-centres' => '{WELSH} Operating centres',
     'entity-details-nav-operator-details' => '{WELSH} Operator details',
     'entity-details-nav-related-operator-licences' => '{WELSH} Related operator licences',
