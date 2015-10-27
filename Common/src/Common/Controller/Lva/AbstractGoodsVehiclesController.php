@@ -15,14 +15,12 @@ use Common\RefData;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Licence\CreateGoodsVehicle as LicenceCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateGoodsVehicle as ApplicationUpdateGoodsVehicle;
-use Dvsa\Olcs\Transfer\Command\Licence\TransferVehicles;
 use Dvsa\Olcs\Transfer\Command\Vehicle\ReprintDisc;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteLicenceVehicle as LicenceDeleteLicenceVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicles as AppUpdateVehicles;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateVehicles as LicUpdateVehicles;
-use Dvsa\Olcs\Transfer\Query\Licence\OtherActiveLicences;
 use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
 use Zend\Form\Element\Checkbox;
 use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
@@ -190,16 +188,29 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         if ($result['spacesRemaining'] < 1) {
 
-            $variation = $this->getServiceLocator()->get('Lva\Variation');
+            if ($this->lva === 'variation') {
 
-            $message = $this->getServiceLocator()->get('Helper\Translation')
-                ->translateReplace(
-                    'markup-more-vehicles-than-total-auth-error',
-                    [
-                        $result['totAuthVehicles'],
-                        $variation->getVariationLink($this->getLicenceId(), 'operating_centres')
-                    ]
-                );
+                $message = $this->getServiceLocator()->get('Helper\Translation')
+                    ->translateReplace(
+                        'markup-more-vehicles-than-total-auth-error-variation',
+                        [
+                            $result['totAuthVehicles'],
+                            $this->url()->fromRoute('lva-variation/operating_centres', ['action' => null], [], true)
+                        ]
+                    );
+
+            } else {
+                $variation = $this->getServiceLocator()->get('Lva\Variation');
+
+                $message = $this->getServiceLocator()->get('Helper\Translation')
+                    ->translateReplace(
+                        'markup-more-vehicles-than-total-auth-error',
+                        [
+                            $result['totAuthVehicles'],
+                            $variation->getVariationLink($this->getLicenceId(), 'operating_centres')
+                        ]
+                    );
+            }
 
             $this->getServiceLocator()->get('Helper\FlashMessenger')
                 ->addProminentErrorMessage($message);
