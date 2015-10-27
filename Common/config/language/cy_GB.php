@@ -991,8 +991,6 @@ return array(
     'impt_paper' => '{WELSH} Paperwork',
     'index.subtitle' => '{WELSH} Search the database for operator details, bus services, publications and vehicles.',
     'index.title' => '{WELSH} Search',
-    'inspection-request-task-description-satisfactory' => '{WELSH} Satisfactory inspection request: ID %s',
-    'inspection-request-task-description-unsatisfactory' => '{WELSH} Unsatisfactory inspection request: ID %s',
     'inspection-request.delete-question' => '{WELSH} Are you sure you want to permanently delete the selected record(s)?',
     'inspection-request.deleted-successfully' => '{WELSH} Deleted successfully',
     'interim-start-date' => '{WELSH} Interim start date',

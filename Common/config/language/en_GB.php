@@ -991,8 +991,6 @@ return array(
     'impt_paper' => 'Paperwork',
     'index.subtitle' => 'Search the database for operator details, bus services, publications and vehicles.',
     'index.title' => 'Search',
-    'inspection-request-task-description-satisfactory' => 'Satisfactory inspection request: ID %s',
-    'inspection-request-task-description-unsatisfactory' => 'Unsatisfactory inspection request: ID %s',
     'inspection-request.delete-question' => 'Are you sure you want to permanently delete the selected record(s)?',
     'inspection-request.deleted-successfully' => 'Deleted successfully',
     'interim-start-date' => 'Interim start date',
