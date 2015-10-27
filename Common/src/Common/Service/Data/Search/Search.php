@@ -173,11 +173,17 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
      */
     public function fetchResultsTable()
     {
-        $tableBuilder = $this->getServiceLocator()->get('Table');
+        $results = $this->fetchResults();
+        // if results is not an array then something is wrong, so make it an empty array
+        if (!is_array($results)) {
+            $results = [];
+        }
 
+        $tableBuilder = $this->getServiceLocator()->get('Table');
+        /* @var $tableBuilder \Common\Service\Table\TableBuilder */
         return $tableBuilder->buildTable(
             $this->getDataClass()->getTableConfig(),
-            $this->fetchResults(),
+            $results,
             [
                 'query' => $this->getQuery(),
                 'limit' => $this->getLimit(),
