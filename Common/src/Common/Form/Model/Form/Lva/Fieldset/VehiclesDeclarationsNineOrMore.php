@@ -27,6 +27,7 @@ class VehiclesDeclarationsNineOrMore
      *     "help-block": "Please choose",
      *     "must_be_value": "Y"
      * })
+     * @Form\Attributes({"data-container-class": "confirm"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $psvNoSmallVhlConfirmation = null;
