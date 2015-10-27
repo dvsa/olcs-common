@@ -108,4 +108,28 @@ class SearchTest extends MockeryTestCase
 
         $this->assertEquals('table', $sut->fetchResultsTable());
     }
+
+    public function testFetchResultsTableNoResults()
+    {
+        $mockTableBuilder = m::mock('Common\Service\Table\TableBuilder');
+        $mockTableBuilder->shouldReceive('buildTable')->andReturn('table');
+
+        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl->shouldReceive('get')
+            ->with(SearchTypeManager::class)
+            ->andReturn($this->getMockSearchTypeManager());
+
+        $mockRequest = m::mock(get_class(new HttpRequest));
+        $mockRequest->shouldReceive('getPost')->with()->andReturn(null);
+
+        $mockSl->shouldReceive('get')->with('Table')->andReturn($mockTableBuilder);
+
+        $sut = new Search();
+        $sut->setData('results', false);
+        $sut->setServiceLocator($mockSl);
+        $sut->setIndex('application');
+        $sut->setRequest($mockRequest);
+
+        $this->assertEquals('table', $sut->fetchResultsTable());
+    }
 }
