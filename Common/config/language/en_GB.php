@@ -848,6 +848,7 @@ return array(
     'entity-details-nav-contact-details' => 'Contact details',
     'entity-details-nav-current-applications' => 'Current applications',
     'entity-details-nav-licence-details' => 'Licence details',
+    '0' => 'selfserve surrendered?',
     'entity-details-nav-operating-centres' => 'Operating centres',
     'entity-details-nav-operator-details' => 'Operator details',
     'entity-details-nav-related-operator-licences' => 'Related operator licences',
