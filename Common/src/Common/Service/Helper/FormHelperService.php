@@ -439,6 +439,20 @@ class FormHelperService extends AbstractHelperService
     }
 
     /**
+     * Disable empty validation on a single element
+     *
+     * @param \Zend\Form\Form $form
+     * @param string $reference
+     * @return null
+     */
+    public function disableEmptyValidationOnElement($form, $reference)
+    {
+        list($form, $filter, $name) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        $filter->get($name)->setAllowEmpty(true);
+        $filter->get($name)->setRequired(false);
+    }
+
+    /**
      * Populate form table
      *
      * @param \Zend\Form\Fieldset $fieldset
