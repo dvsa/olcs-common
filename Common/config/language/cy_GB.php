@@ -948,6 +948,8 @@ return array(
     'form.disqualify.notes' => '{WELSH} Notes',
     'form.disqualify.period' => '{WELSH} Period (months)',
     'form.disqualify.start-date' => '{WELSH} Start date',
+    'form.fee-stored-cards.label' => '{WELSH} Would you like to use a stored card?',
+    'form.fee-stored-cards.option1' => '{WELSH} Use new card',
     'form.operator-merge.confirm' => '{WELSH} I am aware that any licences and applications will be transferred from the losing operator to the winning operator and that this operation cannot be undone',
     'form.operator-merge.confirm.validation' => '{WELSH} Must be checked',
     'form.operator-merge.from-operator-name' => '{WELSH} From operator',
