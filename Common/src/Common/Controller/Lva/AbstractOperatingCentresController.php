@@ -453,6 +453,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $queryDtoClass = $this->listQueryMap[$this->lva];
 
         $response = $this->handleQuery($queryDtoClass::create(['id' => $this->getIdentifier()]));
+
         return $response->getResult();
     }
 

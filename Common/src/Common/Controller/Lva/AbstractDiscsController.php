@@ -154,7 +154,7 @@ abstract class AbstractDiscsController extends AbstractController
 
     protected function getFormData()
     {
-        $discs = $this->getTableData();
+        $discs = $this->getTableResults();
 
         $data = array(
             'data' => array(
@@ -220,9 +220,20 @@ abstract class AbstractDiscsController extends AbstractController
                     return ($disc1['discNo'] === 'Pending') ? -1 : 1;
                 }
             );
+
+            $this->formTableData = [
+                'results' => $this->formTableData,
+                'count' => count($this->formTableData),
+                'count-unfiltered' => $result['totalPsvDiscs']
+            ];
         }
 
         return $this->formTableData;
+    }
+
+    protected function getTableResults()
+    {
+        return $this->getTableData()['results'];
     }
 
     protected function getDiscNumberFromDisc($disc)
