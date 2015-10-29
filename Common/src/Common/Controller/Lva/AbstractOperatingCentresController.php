@@ -444,7 +444,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     }
 
     /**
-     * Fetch applicaiton/licence with OC
+     * Fetch application/licence with OC
      *
      * @return array
      */

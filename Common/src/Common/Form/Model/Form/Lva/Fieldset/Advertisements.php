@@ -56,9 +56,14 @@ class Advertisements
      * @Form\Name("file")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Options({
-     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.file",
-     *     "hint": "application_operating-centres_authorisation-sub-action.advertisements.file.hint"
+     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.file"
      * })
      */
     public $file = null;
+
+    /**
+     * @Form\Attributes({"data-container-class":"ad-send-by-post"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $adSendByPost = null;
 }

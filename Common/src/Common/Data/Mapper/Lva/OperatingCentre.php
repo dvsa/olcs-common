@@ -109,6 +109,15 @@ class OperatingCentre implements MapperInterface
             unset($errors['adPlacedDate']);
         }
 
+        if (isset($errors['file'])) {
+
+            foreach ($errors['file'] as $key => $message) {
+                $formMessages['advertisements']['file']['upload'][] = $message;
+            }
+
+            unset($errors['file']);
+        }
+
         if (isset($errors['postcode'])) {
 
             foreach ($errors['postcode'] as $key => $message) {

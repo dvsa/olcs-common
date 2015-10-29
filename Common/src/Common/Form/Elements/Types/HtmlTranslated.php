@@ -7,8 +7,6 @@
  */
 namespace Common\Form\Elements\Types;
 
-use Common\Form\Elements\Types\Html;
-
 /**
  * Html Translated Element
  *

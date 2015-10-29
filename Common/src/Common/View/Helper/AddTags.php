@@ -7,6 +7,7 @@
  */
 namespace Common\View\Helper;
 
+use Zend\ServiceManager\FactoryInterface;
 use Zend\View\Helper\HelperInterface;
 use Zend\View\Helper\AbstractHelper;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -21,9 +22,10 @@ class AddTags extends AbstractHelper implements HelperInterface
 {
     private $tags = [
         // yes, slight repetition of the key phrase
-        // but it'll be faster than using a backreference
-        // @TODO welsh equivalent when we know what it is
-        '\(if\s+applicable\)' => '<span class=js-hidden>(if applicable)</span>'
+        // but it'll be faster than using a back reference
+        '\(if\s+applicable\)' => '<span class=js-hidden>(if applicable)</span>',
+        // @TODO check welsh equivalent
+        '\(os\s+yw\'n\s+berthnasol\)' => '<span class=js-hidden>(os yw\'n berthnasol)</span>',
     ];
 
     /**
