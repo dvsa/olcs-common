@@ -42,6 +42,9 @@ class User extends InternalSearchAbstract
 
             $this->filters = [
                 new Filter\UserRole(),
+                new Filter\Partner(),
+                new Filter\Team(),
+                new Filter\LocalAuthority(),
             ];
         }
 
