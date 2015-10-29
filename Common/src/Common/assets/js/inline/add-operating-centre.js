@@ -11,7 +11,11 @@ $(function() {
   var isVariation = vehicles.data("current");
 
   function hasAdvertisements() {
-    return F.isChecked("advertisements", "adPlaced");
+    return F.isChecked("advertisements", "adPlaced", "Y");
+  }
+
+  function isSendingByPost() {
+    return F.isChecked("advertisements", "adPlaced", "N");
   }
 
   /**
@@ -50,7 +54,8 @@ $(function() {
         },
         "label:adPlacedIn": hasAdvertisements,
         "label:adPlacedDate": hasAdvertisements,
-        ".file-uploader": hasAdvertisements
+        ".file-uploader": hasAdvertisements,
+        ".ad-send-by-post": isSendingByPost
       }
     }
   });
