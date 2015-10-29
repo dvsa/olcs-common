@@ -1,10 +1,8 @@
 <?php
 
 return array(
-    '404-text' => 'The page you are looking for could not be found.',
-    '404-title' => 'Page not found',
-    '500-text' => 'There was an unexpected error while performing your action.',
-    '500-title' => 'Something went wrong',
+    '404-title' => 'We can\'t find that page',
+    '500-title' => 'This page isn\'t working at the moment',
     'ANY_TO_ST' => '<li>All people apart from the first one</li>',
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
@@ -861,6 +859,7 @@ return array(
     '0' => 'selfserve surrendered?',
     'entity-details-nav-operating-centres' => 'Operating centres',
     'entity-details-nav-operator-details' => 'Operator details',
+    '0' => 'selfserve surrendered?',
     'entity-details-nav-related-operator-licences' => 'Related operator licences',
     'entity-details-nav-transport-managers' => 'Transport Managers',
     'entity-details-nav-vehicles' => 'Vehicles',
@@ -1284,7 +1283,6 @@ return array(
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
     'internal.documents.documents_copied' => 'Successfully copied the document(s)',
     'internal.documents.documents_moved' => 'Successfully moved the document(s),',
-    '0' => 'selfserve surrendered?',
     'internal.documents.relink_documents' => 'Relink documents',
     'internal.fee-details.title' => 'Fee details',
     'internal.fee-payment.over-payment-double' => 'The payment is more than <b>double</b> the total outstanding!! A refund will be created for the overpayment. Would you like to continue? ',

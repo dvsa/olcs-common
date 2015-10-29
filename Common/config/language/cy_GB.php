@@ -1,10 +1,8 @@
 <?php
 
 return array(
-    '404-text' => '{WELSH} The page you are looking for could not be found.',
-    '404-title' => '{WELSH} Page not found',
-    '500-text' => '{WELSH} There was an unexpected error while performing your action.',
-    '500-title' => '{WELSH} Something went wrong',
+    '404-title' => '{WELSH} We can\'t find that page',
+    '500-title' => '{WELSH} This page isn\'t working at the moment',
     'ANY_TO_ST' => '{WELSH} <li>All people apart from the first one</li>',
     'AP-TOL-1' => '{WELSH} If you operate in Northern Ireland, you can only apply for a Goods licence',
     'AP-TOL-2' => '{WELSH} If you are a goods vehicle operator, you can not apply for a special restricted licence',
@@ -861,6 +859,7 @@ return array(
     '0' => '{WELSH} selfserve surrendered?',
     'entity-details-nav-operating-centres' => '{WELSH} Operating centres',
     'entity-details-nav-operator-details' => '{WELSH} Operator details',
+    '0' => '{WELSH} selfserve surrendered?',
     'entity-details-nav-related-operator-licences' => '{WELSH} Related operator licences',
     'entity-details-nav-transport-managers' => '{WELSH} Transport Managers',
     'entity-details-nav-vehicles' => '{WELSH} Vehicles',
@@ -1284,7 +1283,6 @@ return array(
     'internal.documents.delete.deleted_successfully' => '{WELSH} Deleted successfully',
     'internal.documents.documents_copied' => '{WELSH} Successfully copied the document(s)',
     'internal.documents.documents_moved' => '{WELSH} Successfully moved the document(s),',
-    '0' => '{WELSH} selfserve surrendered?',
     'internal.documents.relink_documents' => '{WELSH} Relink documents',
     'internal.fee-details.title' => '{WELSH} Fee details',
     'internal.fee-payment.over-payment-double' => '{WELSH} The payment is more than <b>double</b> the total outstanding!! A refund will be created for the overpayment. Would you like to continue? ',
