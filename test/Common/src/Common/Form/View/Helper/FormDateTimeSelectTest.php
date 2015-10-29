@@ -56,6 +56,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
     public function testRender()
     {
         $element = new DateTimeSelect('date');
+        $element->setOption('pattern', "d MMMM y 'at' HH:mm:ss");
 
         $markup = $this->sut->render($element);
 
@@ -112,6 +113,7 @@ class FormDateTimeSelectTest extends MockeryTestCase
         $element = new DateTimeSelect('date');
         $element->setShouldCreateEmptyOption(true);
         $element->setShouldShowSeconds(true);
+        $element->setOption('pattern', "d MMMM y 'at' HH:mm:ss");
 
         $markup = $this->sut->render($element);
 
