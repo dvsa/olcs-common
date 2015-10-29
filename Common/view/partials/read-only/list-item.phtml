@@ -5,7 +5,7 @@ if (array_key_exists('date', $item)) {
         $dateFormat = isset($item['dateFormat']) ? $item['dateFormat'] : \DateTime::ISO8601;
 
         $outputDate = \DateTime::createFromFormat($dateFormat, $item['date']);
-        $item['value'] = $outputDate->format(DATE_FORMAT);
+        $item['value'] = $outputDate->format(\DATE_FORMAT);
 
         if ($item['value'] === false) {
             $item['value'] = $item['date'];
