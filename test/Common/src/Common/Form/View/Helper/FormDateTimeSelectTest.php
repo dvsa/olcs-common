@@ -57,8 +57,6 @@ class FormDateTimeSelectTest extends MockeryTestCase
     {
         $element = new DateTimeSelect('date');
 
-        $this->sut->setLocale('en_GB');
-
         $markup = $this->sut->render($element);
 
         $expected = '<div class="field inline-text">'
@@ -116,7 +114,6 @@ class FormDateTimeSelectTest extends MockeryTestCase
         $element->setShouldShowSeconds(true);
 
         $markup = $this->sut->render($element);
-        $this->sut->setLocale('en_GB');
 
         $expected = '<div class="field inline-text">'
             . '<label>translated-date-Day</label>'

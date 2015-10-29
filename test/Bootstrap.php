@@ -40,6 +40,8 @@ class Bootstrap
 
         self::$config = $config;
 
+        \Locale::setDefault('en-GB');
+
         self::getServiceManager();
     }
 
