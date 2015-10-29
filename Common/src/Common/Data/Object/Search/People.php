@@ -114,7 +114,7 @@ class People extends InternalSearchAbstract
                 'formatter' => function ($row) {
 
                     return empty($row['personBirthDate']) ?
-                        'Not known' : date('d/m/Y', strtotime($row['personBirthDate']));
+                        'Not known' : date(\DATE_FORMAT, strtotime($row['personBirthDate']));
                 }
             ],
             [
@@ -122,7 +122,7 @@ class People extends InternalSearchAbstract
                 'name'=> 'dateAdded',
                 'formatter' => function ($row) {
 
-                    return empty($row['dateAdded']) ? 'NA' : date('d/m/Y', strtotime($row['dateAdded']));
+                    return empty($row['dateAdded']) ? 'NA' : date(\DATE_FORMAT, strtotime($row['dateAdded']));
                 }
             ],
             [
@@ -130,7 +130,7 @@ class People extends InternalSearchAbstract
                 'name'=> 'dateRemoved',
                 'formatter' => function ($row) {
 
-                    return empty($row['dateRemoved']) ? 'NA' : date('d/m/Y', strtotime($row['dateRemoved']));
+                    return empty($row['dateRemoved']) ? 'NA' : date(\DATE_FORMAT, strtotime($row['dateRemoved']));
                 }
             ],
             [
