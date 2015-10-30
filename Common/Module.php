@@ -20,6 +20,44 @@ use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
  */
 class Module
 {
+    public function init($moduleManager)
+    {
+        $events = $moduleManager->getEventManager();
+        $events->attach('loadModules.post', array($this, 'modulesLoaded'));
+    }
+
+    public function modulesLoaded($e)
+    {
+        $moduleManager = $e->getTarget();
+
+        if ($moduleManager->getModule('Olcs')) {
+            $config = $moduleManager->getModule('Olcs')->getConfig();
+        } else {
+            $config = [];
+        }
+        if (!defined('DATE_FORMAT')) {
+            define(
+                'DATE_FORMAT',
+                isset($config['date_settings']['date_format']) ?
+                $config['date_settings']['date_format'] : 'd/m/Y'
+            );
+        }
+        if (!defined('DATETIME_FORMAT')) {
+            define(
+                'DATETIME_FORMAT',
+                isset($config['date_settings']['datetime_format']) ?
+                $config['date_settings']['datetime_format'] : 'd/m/Y H:i'
+            );
+        }
+        if (!defined('DATETIMESEC_FORMAT')) {
+            define(
+                'DATETIMESEC_FORMAT',
+                isset($config['date_settings']['datetimesec_format']) ?
+                $config['date_settings']['datetimesec_format'] : 'd/m/Y H:i:s'
+            );
+        }
+    }
+
     public function onBootstrap(MvcEvent $e)
     {
         $sm = $e->getApplication()->getServiceManager();
