@@ -32,6 +32,7 @@ class UserProvider implements UserInterface
         // ETL users
         [336, 'usr336', '$2a$12$I/kfi/F3uRflYV5Nnk48vuTf1zFkbhctnk0xmVnZHKQupPZc6mtk6', ['internal-admin']],
         [542, 'usr542', '$2a$12$I/kfi/F3uRflYV5Nnk48vuTf1zFkbhctnk0xmVnZHKQupPZc6mtk6', ['operator-admin']],
+        [42955, 'usr42955', '$2a$12$I/kfi/F3uRflYV5Nnk48vuTf1zFkbhctnk0xmVnZHKQupPZc6mtk6', ['operator-admin', 'operator-ebsr']],
     ];
 
     /**
