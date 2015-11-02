@@ -10,7 +10,6 @@ namespace Common\Controller\Lva;
 
 use Common\Service\Entity\CommunityLicEntityService;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
-use Dvsa\Olcs\Transfer\Command\Application\UpdateCompletion;
 use Zend\View\Model\ViewModel;
 use Common\Data\Mapper\Lva\CommunityLic as CommunityLicMapper;
 use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLic;
@@ -58,16 +57,14 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+
             $data = (array)$request->getPost();
             $crudAction = $this->getCrudAction([$data['table']]);
+
             if ($crudAction !== null) {
                 return $this->handleCrudAction($crudAction, ['add', 'office-licence-add']);
             }
-            if ($this->lva !== 'licence') {
-                $this->handleCommand(
-                    UpdateCompletion::create(['id' => $this->getIdentifier(), 'section' => 'communityLicences'])
-                );
-            }
+
             return $this->completeSection('community_licences');
         }
 
@@ -362,6 +359,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                 'communityLicenceIds' => $ids,
                 'checkOfficeCopy' => true
             ];
+
+            if ($this->lva !== 'licence') {
+                $void['application'] = $this->getIdentifier();
+            }
+
             return $this->processDto(VoidDto::create($void), 'internal.community_licence.licences_voided');
         }
         return $this->redirectToIndex();
@@ -426,6 +428,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                         isset($formattedData['dates']['endDate']) ? $formattedData['dates']['endDate'] : null,
                     'reasons' => $formattedData['data']['reason']
                 ];
+
+                if ($this->lva !== 'licence') {
+                    $stop['application'] = $this->getIdentifier();
+                }
+
                 return $this->processDto(StopDto::create($stop), $message);
             }
         }
