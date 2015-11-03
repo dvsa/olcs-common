@@ -31,7 +31,10 @@ class Date extends AbstractValidator
             return true;
         }
 
-        list($year, $month, $day) = explode('-', $value);
+        // If it's a Date Time Select We don't care about the time part, so just grab the date
+        $date = explode(' ', $value)[0];
+
+        list($year, $month, $day) = explode('-', $date);
 
         $errors = [];
 
