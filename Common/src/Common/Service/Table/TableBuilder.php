@@ -56,7 +56,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Hold the contentType
      *
-     * @var object
+     * @var string
      */
     private $contentType = self::CONTENT_TYPE_HTML;
 
@@ -115,6 +115,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @var int
      */
     private $total;
+
+    /**
+     * Total of the unfiltered results
+     *
+     * @var int
+     */
+    private $unfilteredTotal;
 
     /**
      * Data rows
@@ -331,6 +338,16 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function setTotal($total)
     {
         $this->total = $total;
+    }
+
+    /**
+     * Setter for unfilteredTotal
+     *
+     * @param int $unfilteredTotal
+     */
+    public function setUnfilteredTotal($unfilteredTotal)
+    {
+        $this->unfilteredTotal = $unfilteredTotal;
     }
 
     /**
@@ -801,6 +818,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         $this->setRows(isset($data['results']) ? $data['results'] : $data);
         $this->setTotal(isset($data['count']) ? $data['count'] : count($this->rows));
+        $this->setUnfilteredTotal(isset($data['count-unfiltered']) ? $data['count-unfiltered'] : $this->getTotal());
 
         // if there's only one row and we have a singular title, use it
         $translator = $this->getServiceLocator()->get('translator');
@@ -1084,7 +1102,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderLayout($name)
     {
-        if ($name === 'default' && empty($this->rows)) {
+        if ($name === 'default' && (empty($this->unfilteredTotal) && empty($this->rows))) {
             return $this->renderLayout('default_empty');
         }
 
@@ -1478,9 +1496,15 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $columns = $this->getColumns();
 
+            if ($this->unfilteredTotal > 0) {
+                $message = 'There are no results matching your search';
+            } else {
+                $message = $this->getEmptyMessage();
+            }
+
             $vars = array(
                 'colspan' => count($columns),
-                'message' => $this->getEmptyMessage()
+                'message' => $message
             );
 
             $content .= $this->replaceContent('{{[elements/emptyRow]}}', $vars);
@@ -1514,7 +1538,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private function callFormatter($column, $data)
     {
         if (is_string($column['formatter'])
-                && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
+            && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
 
             $className =  '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
 

@@ -127,7 +127,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     }
 
     /**
-     * @return Common\Service\Table\TableBuilder
+     * @return \Common\Service\Table\TableBuilder
      */
     private function getTable()
     {
@@ -145,13 +145,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             'sort' => 'issueNo',
             'order' => 'DESC'
         ];
-        $queryToSend = $this->getServiceLocator()
-            ->get('TransferAnnotationBuilder')
-            ->createQuery(
-                CommunityLic::create($query)
-            );
 
-        $response = $this->getServiceLocator()->get('QueryService')->send($queryToSend);
+        $response = $this->handleQuery(CommunityLic::create($query));
+
         if ($response->isNotFound()) {
             return $this->notFoundAction();
         }
@@ -160,14 +156,15 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
 
-        $mappedResults = [];
+        $results = [];
+
         if ($response->isOk()) {
-            $mapper = new CommunityLicMapper();
-            $mappedResults = $mapper->mapFromResult($response->getResult());
-            $this->officeCopy = $mappedResults['extra']['officeCopy'];
-            $this->totCommunityLicences = $mappedResults['extra']['totCommunityLicences'];
+            $results = $response->getResult();
+            $this->officeCopy = $results['extra']['officeCopy'];
+            $this->totCommunityLicences = $results['extra']['totCommunityLicences'];
         }
-        return $mappedResults;
+
+        return $results;
     }
 
     /**
