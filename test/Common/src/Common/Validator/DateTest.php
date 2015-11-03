@@ -35,6 +35,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function provideIsValid()
     {
         return [
+            [null, true],
             ['2015-01-02', true],
             ['2015-01-aa', false],
             ['2015-aa-02', false],
