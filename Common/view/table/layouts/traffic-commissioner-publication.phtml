@@ -14,7 +14,7 @@
         <p><?php echo htmlentities($row['text2']); ?></p>
         <p><?php echo htmlentities($row['text3']); ?></p>
         <p><b>Section:</b> <?php echo htmlentities($row['pubSecDesc']); ?></p>
-        <p><b>Date:</b> <?php echo date('d/m/Y', strtotime($row['pubDate'])); ?></p>
+        <p><b>Date:</b> <?php echo date(\DATE_FORMAT, strtotime($row['pubDate'])); ?></p>
         <p><b>Status:</b> <?php echo htmlentities($row['pubStatusDesc']); ?></p>
         <hr />
     <?php endforeach; ?>

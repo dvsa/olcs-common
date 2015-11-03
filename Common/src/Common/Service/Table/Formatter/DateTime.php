@@ -26,7 +26,7 @@ class DateTime implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         if (!isset($column['dateformat'])) {
-            $column['dateformat'] = 'd/m/Y H:i';
+            $column['dateformat'] = \DATETIME_FORMAT;
         }
 
         if (isset($data[$column['name']]) && !is_null($data[$column['name']])) {

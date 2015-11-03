@@ -15,7 +15,7 @@ class FormDateSelect extends AbstractHelper
     /**
      * @var string
      */
-    protected $format = 'd/m/Y';
+    protected $format = \DATE_FORMAT;
 
     /**
      * Invoke helper as function
