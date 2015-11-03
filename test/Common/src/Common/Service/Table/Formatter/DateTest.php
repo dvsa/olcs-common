@@ -26,7 +26,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUpBeforeClass();
         if (!defined('DATE_FORMAT')) {
-            define('DATE_FORMAT','d/m/Y');
+            define('DATE_FORMAT', 'd/m/Y');
         }
     }
 
