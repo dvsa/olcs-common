@@ -56,6 +56,17 @@ class FlashMessengerTest extends MockeryTestCase
         return '*' . $message . '*';
     }
 
+    public function testGetMessagesFromNamespace()
+    {
+        $namespace = 'foo';
+
+        $this->mockPluginManager->shouldReceive('getMessagesFromNamespace')
+            ->with('foo')
+            ->andReturn(['foo', 'bar']);
+
+        $this->assertEquals(['foo', 'bar'], $this->sut->getMessagesFromNamespace($namespace));
+    }
+
     /**
      * @group view_helper
      * @group flash_messenger_view_helper
