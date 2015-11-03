@@ -67,6 +67,13 @@ class FlashMessengerTest extends MockeryTestCase
         $this->assertEquals(['foo', 'bar'], $this->sut->getMessagesFromNamespace($namespace));
     }
 
+    public function testInvokeNoRender()
+    {
+        $sut = $this->sut;
+
+        $this->assertSame($sut, $sut('norender'));
+    }
+
     /**
      * @group view_helper
      * @group flash_messenger_view_helper
