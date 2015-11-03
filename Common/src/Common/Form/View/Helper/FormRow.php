@@ -170,16 +170,11 @@ class FormRow extends ZendFormRow implements FactoryInterface
     protected function renderFieldset(ElementInterface $element, $primary = true)
     {
         $hintText = $element->getOption('hint');
+        $legend = '';
+        $label = $element->getLabel();
 
-        if (empty($hintText)) {
-            $legend = '';
-            $label = $element->getLabel();
-            $hint = sprintf(
-                $this->fieldsetHintFormat,
-                $this->getView()->translate(
-                    $element->getOption('hint')
-                )
-            );
+        if (!empty($hintText)) {
+            $hint = sprintf($this->fieldsetHintFormat, $this->getView()->translate($hintText));
         } else {
             $hint = '';
         }
