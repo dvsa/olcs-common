@@ -46,18 +46,14 @@ class TransactionAmountSumTest extends \PHPUnit_Framework_TestCase
             'invalid amounts' => [
                 [
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 'A'
                     ],
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 'B'
                     ],
@@ -67,10 +63,8 @@ class TransactionAmountSumTest extends \PHPUnit_Framework_TestCase
             'one complete transaction' => [
                 [
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 5
                     ],
@@ -80,18 +74,14 @@ class TransactionAmountSumTest extends \PHPUnit_Framework_TestCase
             'two complete transactions' => [
                 [
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 5
                     ],
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 7
                     ],
@@ -101,26 +91,20 @@ class TransactionAmountSumTest extends \PHPUnit_Framework_TestCase
             'two complete one invalid' => [
                 [
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 5
                     ],
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 7
                     ],
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 'A'
                     ]
@@ -130,26 +114,20 @@ class TransactionAmountSumTest extends \PHPUnit_Framework_TestCase
             'one outstanding two complete' => [
                 [
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_OUTSTANDING
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_OUTSTANDING
                         ],
                         'amount' => 5
                     ],
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 7
                     ],
                     [
-                        'transaction' => [
-                            'status' => [
-                                'id' => RefData::TRANSACTION_STATUS_COMPLETE
-                            ]
+                        'status' => [
+                            'id' => RefData::TRANSACTION_STATUS_COMPLETE
                         ],
                         'amount' => 95
                     ]

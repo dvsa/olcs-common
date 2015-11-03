@@ -17,6 +17,18 @@ use Common\Service\Table\Formatter\Date;
  */
 class DateTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @todo the Date formatter now appears to rely on global constants defined
+     * in the Common\Module::modulesLoaded method which can cause this test to
+     * fail :(
+     */
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+        if (!defined('DATE_FORMAT')) {
+            define('DATE_FORMAT','d/m/Y');
+        }
+    }
 
     /**
      * Test the format method
