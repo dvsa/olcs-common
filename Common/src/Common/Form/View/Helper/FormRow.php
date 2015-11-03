@@ -22,6 +22,8 @@ use Common\Form\Elements\InputFilters\NoRender;
 use Common\Form\Elements\InputFilters\ActionButton;
 use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\Types\Readonly;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Render form row
@@ -29,8 +31,10 @@ use Common\Form\Elements\Types\Readonly;
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormRow extends ZendFormRow
+class FormRow extends ZendFormRow implements FactoryInterface
 {
+    private $config;
+
     /**
      * The form row output format.
      *
@@ -42,6 +46,17 @@ class FormRow extends ZendFormRow
     protected $fieldsetWrapper = '<fieldset%4$s>%2$s%1$s%3$s</fieldset>';
     protected $fieldsetLabelWrapper = '<legend>%s</legend>';
     protected $fieldsetHintFormat = "<p class=\"hint\">%s</p>";
+
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $sm = $serviceLocator->getServiceLocator();
+
+        $mainConfig = $sm->get('Config');
+
+        $this->config = isset($mainConfig['form_row']) ? $mainConfig['form_row'] : [];
+
+        return $this;
+    }
 
     /**
      * Utility form helper that renders a label (if it exists), an element and errors
@@ -78,9 +93,14 @@ class FormRow extends ZendFormRow
             $markup = $element->render();
         } elseif ($element instanceof DateSelect ) {
 
-            if (! ($element instanceof DateTimeSelect)) {
-                $element->setOption('hint-position', 'end');
+            $element->setOption('hint-position', 'end');
+
+            // This isn't ideal, but for pragmatism we add the hint here, so it shows on all
+            // date select elements (unless internal)
+            if (!empty($this->config['render_date_hint']) && !($element instanceof DateTimeSelect)) {
+
                 $hint = $element->getOption('hint');
+
                 if (empty($hint)) {
                     $element->setOption('hint', 'date-hint');
                 }
