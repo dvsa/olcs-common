@@ -153,10 +153,9 @@ abstract class AbstractDiscsController extends AbstractController
 
     protected function getGenericConfirmationForm()
     {
-        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $formHelper->setFormActionFromRequest($form, $this->getRequest());
-        return $form;
+        return $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createFormWithRequest('GenericConfirmation', $this->getRequest());
     }
 
     protected function getFormData()
