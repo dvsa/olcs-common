@@ -79,6 +79,8 @@ abstract class AbstractDiscsController extends AbstractController
         if (!is_null($this->spacesRemaining) && $this->spacesRemaining < 0) {
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-discs-than-authorisation');
         }
+
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
         return $this->render('discs', $form, ['filterForm' => $filterForm]);
     }
 
@@ -87,6 +89,8 @@ abstract class AbstractDiscsController extends AbstractController
         $request = $this->getRequest();
 
         $form = $this->getRequestForm();
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper->setFormActionFromRequest($form, $request);
 
         if ($request->isPost()) {
             $form->setData((array)$request->getPost());
@@ -99,7 +103,7 @@ abstract class AbstractDiscsController extends AbstractController
                 $this->getServiceLocator()->get('Helper\FlashMessenger')
                     ->addSuccessMessage('psv-discs-' . self::CMD_REQUEST_DISCS . '-successfully');
 
-                return $this->redirect()->toRoute(null, [$this->getIdentifierIndex() => $this->getIdentifier()]);
+                return $this->redirect()->toRouteAjax(null, [$this->getIdentifierIndex() => $this->getIdentifier()]);
             }
 
             if ($response->isServerError()) {
@@ -149,7 +153,9 @@ abstract class AbstractDiscsController extends AbstractController
 
     protected function getGenericConfirmationForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
+        return $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createFormWithRequest('GenericConfirmation', $this->getRequest());
     }
 
     protected function getFormData()
@@ -268,7 +274,7 @@ abstract class AbstractDiscsController extends AbstractController
 
         if ($request->isPost()) {
             $this->commonSave($commandKey);
-            return $this->redirect()->toRoute(null, [$this->getIdentifierIndex() => $this->getIdentifier()]);
+            return $this->redirect()->toRouteAjax(null, [$this->getIdentifierIndex() => $this->getIdentifier()]);
         }
 
         $form = $this->getGenericConfirmationForm();
