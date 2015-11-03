@@ -22,6 +22,8 @@ return array(
     'BUS_TYP_REQ_CONF' => 'The items below will be deleted. Would you like to continue? <ul>%s</ul>',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
+    'DATE_ERR_CONTAINS_STRING' => 'The date should be entered in number format',
+    'DATE_ERR_YEAR_LENGTH' => 'Please enter all 4 digits of the year',
     'Date' => 'Date',
     'ERR_ADDRESS_NOT_FOUND' => 'A correspondence address has not been found',
     'ERR_ADMIN_EXISTS' => 'This operator has already been registered. Please contact your administrator to add you as a user.',

@@ -22,6 +22,8 @@ return array(
     'BUS_TYP_REQ_CONF' => '{WELSH} The items below will be deleted. Would you like to continue? <ul>%s</ul>',
     'Confirm' => '{WELSH} Confirm',
     'Continue' => '{WELSH} Continue',
+    'DATE_ERR_CONTAINS_STRING' => '{WELSH} The date should be entered in number format',
+    'DATE_ERR_YEAR_LENGTH' => '{WELSH} Please enter all 4 digits of the year',
     'Date' => '{WELSH} Date',
     'ERR_ADDRESS_NOT_FOUND' => '{WELSH} A correspondence address has not been found',
     'ERR_ADMIN_EXISTS' => '{WELSH} This operator has already been registered. Please contact your administrator to add you as a user.',
