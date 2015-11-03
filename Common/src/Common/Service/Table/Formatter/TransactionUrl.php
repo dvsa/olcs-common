@@ -34,11 +34,11 @@ class TransactionUrl implements FormatterInterface
 
         $url = $urlHelper->fromRoute(
             $matchedRouteName.'/transaction',
-            ['transaction' => $row['transaction']['id']],
+            ['transaction' => $row['transactionId']],
             [],
             true
         );
 
-        return '<a href="'. $url . '">'. $row['transaction']['id'] . '</a>';
+        return '<a href="'. $url . '">'. $row['transactionId'] . '</a>';
     }
 }

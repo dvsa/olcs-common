@@ -30,7 +30,7 @@ class TransactionAmountSum implements FormatterInterface
         $sum = 0;
 
         foreach ($data as $row) {
-            if ($row['transaction']['status']['id'] === Ref::TRANSACTION_STATUS_COMPLETE) {
+            if ($row['status']['id'] === Ref::TRANSACTION_STATUS_COMPLETE) {
                 $sum += (float)$row['amount'];
             }
         }
