@@ -53,8 +53,12 @@ abstract class AbstractTaxiPhvController extends AbstractController
             }
 
             if ($form->isValid()) {
-
-                $this->save($data);
+                if ($this->lva !== 'licence' &&
+                    ($crudAction == null || $this->getActionFromCrudAction($crudAction) == 'add') &&
+                    !$this->save($data)
+                ) {
+                    return $this->reload();
+                }
 
                 if ($crudAction !== null) {
                     return $this->handleCrudAction($crudAction);
@@ -85,12 +89,9 @@ abstract class AbstractTaxiPhvController extends AbstractController
             if ($action == 'add' && empty($trafficArea) && $this->getPrivateHireLicencesCount() > 0) {
 
                 $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addWarningMessage('Please select a traffic area');
+                    ->addErrorMessage('Please select a traffic area');
 
                 return $this->reload();
-
-            } elseif ($action == 'add' && !empty($trafficArea)) {
-                $this->updateTrafficArea($trafficArea);
             }
         }
 
@@ -98,26 +99,42 @@ abstract class AbstractTaxiPhvController extends AbstractController
     }
 
     /**
-     * Save method
+     * Save the Taxi Phv page
      *
-     * @param array $data
+     * @param array $data Form data
+     *
+     * @return boolean
      */
     protected function save($data)
     {
-        // update trafiic area if selected
-        if (isset($data['dataTrafficArea']['trafficArea']) && !empty($data['dataTrafficArea']['trafficArea'])) {
-            $this->updateTrafficArea($data['dataTrafficArea']['trafficArea']);
+        $commandData = [
+            'id' => $this->getIdentifier(),
+            'trafficArea' => isset($data['dataTrafficArea']['trafficArea']) ?
+                $data['dataTrafficArea']['trafficArea'] :
+                null
+        ];
 
+        $response = $this->handleCommand(
+            \Dvsa\Olcs\Transfer\Command\Application\UpdateTaxiPhv::create($commandData)
+        );
+
+        if ($response->isOk()) {
+            return true;
         }
 
-        // update completion if application/variation
-        if ($this->lva !== 'licence') {
-            $this->handleCommand(
-                \Dvsa\Olcs\Transfer\Command\Application\UpdateCompletion::create(
-                    ['id' => $this->getIdentifier(), 'section' => 'taxiPhv']
-                )
+        if ($response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+        }
+
+        // handle the response error message
+        foreach ($response->getResult()['messages'] as $key => $message) {
+            $translator = $this->getServiceLocator()->get('Helper\Translation');
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
+                $translator->translateReplace($key .'_'. strtoupper($this->location), $message)
             );
         }
+
+        return false;
     }
 
     protected function getForm()
@@ -242,9 +259,13 @@ abstract class AbstractTaxiPhvController extends AbstractController
         // (don't validate or proceed if we're just processing the postcode lookup)
 
         if (!$hasProcessed && $request->isPost() && $form->isValid()) {
-            $this->saveLicence($data);
-
-            return $this->handlePostSave();
+            $result = $this->saveLicence($data);
+            if (is_array($result)) {
+                $formMessages['address']['postcode'][] = $this->getTrafficAreaValidationMessage($result);
+                $form->setMessages($formMessages);
+            } else {
+                return $this->handlePostSave();
+            }
         }
 
         return $this->render($mode . '_taxi_phv', $form);
@@ -358,16 +379,27 @@ abstract class AbstractTaxiPhvController extends AbstractController
     protected function saveLicence($data)
     {
         if (is_numeric($data['contactDetails']['id'])) {
-            $this->update($data);
+            $response = $this->update($data);
         } else {
-            $this->create($data);
+            $response = $this->create($data);
         }
+
+        if ($response->isClientError()) {
+            return $response->getResult()['messages'];
+        }
+        if (!$response->isOk()) {
+            throw new \RuntimeException('Failed creating privateHireLicence');
+        }
+
+        return true;
     }
 
     /**
      * Create a new PrivateHireLicence
      *
      * @param array $formData
+     *
+     * @return \Common\Service\Cqrs\Response
      * @throws \RuntimeException
      */
     protected function create($formData)
@@ -395,16 +427,21 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $command = \Dvsa\Olcs\Transfer\Command\Application\CreateTaxiPhv::create($params);
         }
 
-        $response = $this->handleCommand($command);
-        if (!$response->isOk()) {
-            throw new \RuntimeException('Failed creating privateHireLicence');
-        }
+        return $this->handleCommand($command);
+    }
+
+    private function getTrafficAreaValidationMessage(array $message)
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        return $translator->translateReplace(key($message) .'_'. strtoupper($this->location), current($message));
     }
 
     /**
      * Update a new PrivateHireLicence
      *
      * @param array $formData
+     *
+     * @return \Common\Service\Cqrs\Response
      * @throws \RuntimeException
      */
     protected function update($formData)
@@ -432,13 +469,10 @@ abstract class AbstractTaxiPhvController extends AbstractController
         } else {
             $params['id'] = $this->getIdentifier();
             $params['privateHireLicence'] = $this->params('child_id');
-            $command = \Dvsa\Olcs\Transfer\Command\Application\UpdateTaxiPhv::create($params);
+            $command = \Dvsa\Olcs\Transfer\Command\Application\UpdatePrivateHireLicence::create($params);
         }
 
-        $response = $this->handleCommand($command);
-        if (!$response->isOk()) {
-            throw new \RuntimeException('Failed updating privateHireLicence');
-        }
+        return $this->handleCommand($command);
     }
 
     /**
@@ -539,23 +573,5 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return (isset($this->data['licence'])) ?
             $this->data['licence']['version'] :
             $this->data['version'];
-    }
-
-    /**
-     * Update the Traffic Area of a licence
-     *
-     * @param string $trafficAreaId TrafficAreaId eg B, C
-     */
-    protected function updateTrafficArea($trafficAreaId)
-    {
-        $this->handleCommand(
-            \Dvsa\Olcs\Transfer\Command\Licence\UpdateTrafficArea::create(
-                [
-                    'id' => $this->getLicenceId(),
-                    'version' => $this->getLicenceVersion(),
-                    'trafficArea' => $trafficAreaId
-                ]
-            )
-        );
     }
 }

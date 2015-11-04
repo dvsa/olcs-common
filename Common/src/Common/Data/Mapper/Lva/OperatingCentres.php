@@ -47,8 +47,13 @@ class OperatingCentres implements MapperInterface
         return $mappedData;
     }
 
-    public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm)
-    {
+    public static function mapFormErrors(
+        Form $form,
+        array $errors,
+        FlashMessengerHelperService $fm,
+        $translator,
+        $location
+    ) {
         $formMessages = [];
 
         if (isset($errors['totCommunityLicences'])) {
@@ -94,6 +99,14 @@ class OperatingCentres implements MapperInterface
             }
 
             unset($errors['enforcementArea']);
+        }
+
+        if (isset($errors['trafficArea'])) {
+            foreach ($errors['trafficArea'] as $taError) {
+                $formMessages['dataTrafficArea']['trafficArea'][] =
+                    $translator->translateReplace(key($taError) .'_'. strtoupper($location), $taError);
+            }
+            unset($errors['trafficArea']);
         }
 
         if (!empty($errors)) {
