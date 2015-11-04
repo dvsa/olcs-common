@@ -30,7 +30,7 @@ class TransactionStatus implements FormatterInterface
     public static function format($row, $column = null, $serviceLocator = null)
     {
         $statusClass = 'status';
-        switch ($row['transaction']['status']['id']) {
+        switch ($row['status']['id']) {
             case Ref::TRANSACTION_STATUS_FAILED:
             case Ref::TRANSACTION_STATUS_CANCELLED:
                 $statusClass .= ' red';
@@ -49,7 +49,7 @@ class TransactionStatus implements FormatterInterface
         return sprintf(
             '<span class="%s">%s</span>',
             $statusClass,
-            $row['transaction']['status']['description']
+            $row['status']['description']
         );
     }
 }

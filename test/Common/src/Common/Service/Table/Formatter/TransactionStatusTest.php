@@ -42,55 +42,45 @@ class TransactionStatusTest extends PHPUnit_Framework_TestCase
         return [
             'outstanding' => [
                 [
-                    'transaction' => [
-                        'status' => [
-                            'id' => RefData::TRANSACTION_STATUS_OUTSTANDING,
-                            'description' => 'outstanding',
-                        ],
+                    'status' => [
+                        'id' => RefData::TRANSACTION_STATUS_OUTSTANDING,
+                        'description' => 'outstanding',
                     ],
                 ],
                 '<span class="status orange">outstanding</span>',
             ],
             'complete' => [
                 [
-                    'transaction' => [
-                        'status' => [
-                            'id' => RefData::TRANSACTION_STATUS_COMPLETE,
-                            'description' => 'complete',
-                        ],
+                    'status' => [
+                        'id' => RefData::TRANSACTION_STATUS_COMPLETE,
+                        'description' => 'complete',
                     ],
                 ],
                 '<span class="status green">complete</span>',
             ],
             'cancelled' => [
                 [
-                    'transaction' => [
-                        'status' => [
-                            'id' => RefData::TRANSACTION_STATUS_CANCELLED,
-                            'description' => 'cancelled',
-                        ],
+                    'status' => [
+                        'id' => RefData::TRANSACTION_STATUS_CANCELLED,
+                        'description' => 'cancelled',
                     ],
                 ],
                 '<span class="status red">cancelled</span>',
             ],
             'failed' => [
                 [
-                    'transaction' => [
-                        'status' => [
-                            'id' => RefData::TRANSACTION_STATUS_FAILED,
-                            'description' => 'failed',
-                        ],
+                    'status' => [
+                        'id' => RefData::TRANSACTION_STATUS_FAILED,
+                        'description' => 'failed',
                     ],
                 ],
                 '<span class="status red">failed</span>',
             ],
             'other' => [
                 [
-                    'transaction' => [
-                        'status' => [
-                            'id' => 'foo',
-                            'description' => 'bar',
-                        ],
+                    'status' => [
+                        'id' => 'foo',
+                        'description' => 'bar',
                     ],
                 ],
                 '<span class="status grey">bar</span>',
