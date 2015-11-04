@@ -42,7 +42,18 @@ class FlashMessenger extends ZendFlashMessenger
 
     public function __invoke($namespace = null)
     {
+        if ($namespace === 'norender') {
+            return $this;
+        }
+
         return $this->render();
+    }
+
+    public function getMessagesFromNamespace($namespace)
+    {
+        $fm = $this->getPluginFlashMessenger();
+
+        return $fm->getMessagesFromNamespace($namespace);
     }
 
     public function setIsRendered($isRendered)
