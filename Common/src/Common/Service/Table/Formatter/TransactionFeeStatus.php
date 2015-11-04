@@ -38,12 +38,11 @@ class TransactionFeeStatus extends Money
             $routeMatch = $router->match($request);
             $matchedRouteName = $routeMatch->getMatchedRouteName();
 
-            $url = $urlHelper->fromRoute(
-                $matchedRouteName,
-                ['transaction' => $row['reversingTransaction']['id']],
-                [],
-                true
-            );
+            $params = [
+                'transaction' => $row['reversingTransaction']['id'],
+                'action' => 'edit-fee',
+            ];
+            $url = $urlHelper->fromRoute($matchedRouteName, $params, [], true);
 
             switch ($row['reversingTransaction']['type']) {
                 case Ref::TRANSACTION_TYPE_REFUND:
