@@ -1821,7 +1821,7 @@ return array(
     'print-sign-return-declaration-form' => 'Print, sign and return the declaration form',
     'print-sign-return-declaration-form-text' => 'If you haven\'t already, an owner or Director of the business must sign the declaration form and return it to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a>.',
     'priority' => 'Priority',
-    'privacy-and-cookies' => 'Privacy &amp; Cookies',
+    'privacy-and-cookies-title' => 'Privacy and Cookies',
     'progress' => 'Progress',
     'prohibition-history' => 'Prohibition history',
     'propose-to-revoke' => 'In-Office revocation',
