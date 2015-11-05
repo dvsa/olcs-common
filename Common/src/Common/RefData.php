@@ -40,6 +40,7 @@ class RefData
     const TRANSACTION_TYPE_PAYMENT  = 'trt_payment';
     const TRANSACTION_TYPE_REFUND   = 'trt_refund';
     const TRANSACTION_TYPE_REVERSAL = 'trt_reversal';
+    const TRANSACTION_TYPE_OTHER    = 'trt_other';
 
 
     /**
