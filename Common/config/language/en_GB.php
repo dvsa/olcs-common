@@ -1638,8 +1638,6 @@ return array(
     'manage-users.update.error' => 'The user could not be updated',
     'manage-users.update.success' => 'User successfully updated',
     'mark-urgent' => 'Mark as urgent',
-    'markup-tm-declaration-gb-confirmation' => 'Should I fail to meet any of the above requirements I understand that the traffic commissioner has the power to disqualify me from being a Transport Manager in any European Union country.',
-    'markup-tm-declaration-ni-confirmation' => 'Should I fail to meet any of the above requirements I understand that the Department has the power to disqualify me from being a Transport Manager in any European Union country.',
     'mlh' => 'MLH',
     'money-element-invalid' => 'Please enter a valid amount (max 2 decimal places)',
     'month' => 'Month',
