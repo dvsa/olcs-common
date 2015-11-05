@@ -142,6 +142,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             if ($form->getAttribute('locked') !== true) {
                 $this->savePerson($data);
                 $this->postSaveCommands();
+            } else {
+                $this->updateCompletion();
             }
 
             return $this->completeSection('people');
@@ -152,17 +154,23 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     protected function postSaveCommands()
     {
-        if ($this->lva != 'licence') {
-            $this->handleCommand(
-                \Dvsa\Olcs\Transfer\Command\Application\UpdateCompletion::create(
-                    ['id' => $this->getIdentifier(), 'section' => 'people']
-                )
-            );
-        }
+        $this->updateCompletion();
+
         if ($this->lva === 'application' && $this->location === 'external') {
             $this->handleCommand(
                 \Dvsa\Olcs\Transfer\Command\Application\GenerateOrganisationName::create(
                     ['id' => $this->getIdentifier()]
+                )
+            );
+        }
+    }
+
+    protected function updateCompletion()
+    {
+        if ($this->lva != 'licence') {
+            $this->handleCommand(
+                \Dvsa\Olcs\Transfer\Command\Application\UpdateCompletion::create(
+                    ['id' => $this->getIdentifier(), 'section' => 'people']
                 )
             );
         }
