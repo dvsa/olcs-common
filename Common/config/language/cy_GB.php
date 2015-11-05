@@ -1,5 +1,5 @@
 <?php
-
+// @codingStandardsIgnoreFile
 return array(
     '404-title' => '{WELSH} We can\'t find that page',
     '500-title' => '{WELSH} This page isn\'t working at the moment',

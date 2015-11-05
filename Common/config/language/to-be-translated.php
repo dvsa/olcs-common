@@ -1,4 +1,4 @@
 <?php
-
+// @codingStandardsIgnoreFile
 return array(
 );
