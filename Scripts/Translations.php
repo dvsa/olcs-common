@@ -56,7 +56,7 @@ ksort($foundArray);
 ksort($unusedArray);
 
 $cyGbContent = $enGbContent = $toBeContent = '<?php
-
+// @codingStandardsIgnoreFile
 return array(';
 
 function wrapLine($string) {

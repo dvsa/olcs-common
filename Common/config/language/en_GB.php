@@ -1,5 +1,5 @@
 <?php
-
+// @codingStandardsIgnoreFile
 return array(
     '404-title' => 'We can\'t find that page',
     '500-title' => 'This page isn\'t working at the moment',
@@ -921,6 +921,10 @@ return array(
     'fees.refund.confirm' => 'All payments will be refunded and the fee will be cancelled. Are you sure you wish to proceed?',
     'fees.refund.success' => 'The fee has been refunded',
     'fees.refund.title' => 'Refund fee',
+    'fees.reverse-transaction.cannotReverse' => 'You cannot reverse a payment that has already been refunded or reversed',
+    'fees.reverse-transaction.confirm' => 'Are you sure you wish to reverse this %s payment?',
+    'fees.reverse-transaction.success' => 'The payment has been reversed',
+    'fees.reverse-transaction.title' => 'Reverse payment',
     'fees.slip' => 'Slip No.',
     'fees.type' => 'Type',
     'filter-button' => 'Filter',
