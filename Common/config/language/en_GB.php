@@ -1246,6 +1246,8 @@ return array(
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
     'internal-vehicle-licence-wrong-removal-date' => 'Removed date is invalid',
+    'internal.admin.reassing-tasks.main-message' => 'Cannot remove team as it is linked to the records below:',
+    'internal.admin.remove-team-label' => 'This team is associated with %s task(s). Are you sure you want to remove this team?',
     'internal.community_licence.confirm_reprint_licences' => 'Are you sure you want to reprint these licences?',
     'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'Are you sure you want to annul these licences?',
