@@ -49,6 +49,8 @@ class Advertisements
      * })
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("DateSelect")
+     * @Form\Validator({"name": "\Common\Validator\Date"})
+     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      */
     public $adPlacedDate = null;
 

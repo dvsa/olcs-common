@@ -426,7 +426,6 @@ return array(
         'invokables' => array(
             'form' => 'Common\Form\View\Helper\Form',
             'formCollection' => 'Common\Form\View\Helper\FormCollection',
-            'formRow' => 'Common\Form\View\Helper\FormRow',
             'formElement' => 'Common\Form\View\Helper\FormElement',
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
@@ -450,6 +449,7 @@ return array(
             'personName' => 'Common\View\Helper\PersonName'
         ),
         'factories' => array(
+            'formRow' => 'Common\Form\View\Helper\FormRow',
             'languageLink' => \Common\View\Helper\LanguageLink::class,
             'getPlaceholder' => \Common\View\Helper\GetPlaceholderFactory::class,
         )

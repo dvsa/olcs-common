@@ -32,6 +32,8 @@ class LicenceLicenceVehicle
      * @Form\Required(false)
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
+     * @Form\Validator({"name": "\Common\Validator\Date"})
+     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      */
     public $receivedDate = null;
 
@@ -46,6 +48,8 @@ class LicenceLicenceVehicle
      * @Form\Required(false)
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
+     * @Form\Validator({"name": "\Common\Validator\Date"})
+     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      */
     public $specifiedDate = null;
 
@@ -62,6 +66,8 @@ class LicenceLicenceVehicle
      * @Form\Required(false)
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
+     * @Form\Validator({"name": "\Common\Validator\Date"})
+     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      */
     public $removalDate = null;
 
@@ -75,6 +81,8 @@ class LicenceLicenceVehicle
      * @Form\Required(false)
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
+     * @Form\Validator({"name": "\Common\Validator\Date"})
+     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      */
     public $warningLetterSeedDate = null;
 

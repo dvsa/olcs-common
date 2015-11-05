@@ -79,6 +79,8 @@ class FormDateSelect extends ZendFormDateSelect
 
     protected function renderDayInput($element)
     {
+        $element->setAttribute('placeholder', 'dd');
+
         return $this->wrap(
             $this->renderInput($element, 2),
             'Day'
@@ -87,6 +89,8 @@ class FormDateSelect extends ZendFormDateSelect
 
     protected function renderMonthInput($element)
     {
+        $element->setAttribute('placeholder', 'mm');
+
         return $this->wrap(
             $this->renderInput($element, 2),
             'Month'
@@ -95,6 +99,8 @@ class FormDateSelect extends ZendFormDateSelect
 
     protected function renderYearInput($element)
     {
+        $element->setAttribute('placeholder', 'yyyy');
+
         return $this->wrap(
             $this->renderInput($element, 4),
             'Year'

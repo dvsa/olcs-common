@@ -19,6 +19,7 @@ class CommunityLicencesDataStopDates
      * })
      * @Form\Type("DateSelect")
      * @Form\Filter({"name":"DateSelectNullifier"})
+     * @Form\Validator({"name": "\Common\Validator\Date"})
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      */
     public $startDate = null;
@@ -32,6 +33,7 @@ class CommunityLicencesDataStopDates
      * })
      * @Form\Type("DateSelect")
      * @Form\Filter({"name":"DateSelectNullifier"})
+     * @Form\Validator({"name": "\Common\Validator\Date"})
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      */
     public $endDate = null;
