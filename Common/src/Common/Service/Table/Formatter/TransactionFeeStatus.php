@@ -19,7 +19,7 @@ use Common\RefData as Ref;
 class TransactionFeeStatus implements FormatterInterface
 {
     /**
-     * Format a transaction fee allocated amount
+     * Format a transaction fee status
      *
      * @param array $row
      * @param array $column
