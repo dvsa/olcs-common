@@ -451,7 +451,6 @@ return array(
         ),
         'factories' => array(
             'languageLink' => \Common\View\Helper\LanguageLink::class,
-            'getPlaceholder' => \Common\View\Helper\GetPlaceholderFactory::class,
         )
     ),
     'view_manager' => array(
