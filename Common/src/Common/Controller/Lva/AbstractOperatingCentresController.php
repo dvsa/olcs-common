@@ -207,6 +207,13 @@ abstract class AbstractOperatingCentresController extends AbstractController
         // Only applicable when editing (On a variation)
         $resultData['canUpdateAddress'] = true;
 
+        $resultData['isVariation'] = ($this->lva === 'variation');
+        if ($this->lva !== 'licence') {
+            $lvaData = $this->fetchDataForLva();
+            $resultData['licNo'] = $lvaData['licence']['licNo'];
+            $resultData['applicationId'] = $this->getIdentifier();
+        }
+
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-operating_centre')
             ->getForm($resultData, $request)
@@ -279,6 +286,13 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $resultData['canAddAnother'] = false;
         $resultData['action'] = 'edit';
+
+        $resultData['isVariation'] = ($this->lva === 'variation');
+        if ($this->lva !== 'licence') {
+            $lvaData = $this->fetchDataForLva();
+            $resultData['licNo'] = $lvaData['licence']['licNo'];
+            $resultData['applicationId'] = $this->getIdentifier();
+        }
 
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-operating_centre')

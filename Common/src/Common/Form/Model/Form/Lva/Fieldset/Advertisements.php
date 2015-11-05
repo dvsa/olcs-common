@@ -41,7 +41,7 @@ class Advertisements
 
     /**
      * @Form\Required(false)
-     * @Form\Attributes({"id":"adPlacedDate"})
+     * @Form\Attributes({"id":"adPlacedDate", "data-container-class": "adPlacedDate"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate",
      *     "create_empty_option": true,
