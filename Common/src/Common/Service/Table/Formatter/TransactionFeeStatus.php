@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Transaction Fee Statusformatter
+ * Transaction Fee Status formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
@@ -12,11 +12,11 @@ namespace Common\Service\Table\Formatter;
 use Common\RefData as Ref;
 
 /**
- * Transaction Fee Statusformatter
+ * Transaction Fee Status formatter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionFeeStatus extends Money
+class TransactionFeeStatus implements FormatterInterface
 {
     /**
      * Format a transaction fee allocated amount
