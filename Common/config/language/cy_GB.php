@@ -2192,6 +2192,7 @@ return array(
     'selfserve-app-subSection-previous-history-previous-licence-columnHolderName' => '{WELSH} Name of licence holder',
     'selfserve-app-subSection-previous-history-previous-licence-columnLicNo' => '{WELSH} Licence number',
     'selfserve-app-subSection-previous-history-previous-licence-columnPurchaseDate' => '{WELSH} Date of purchase',
+    'selfserve-app-subSection-previous-history-previous-licence-columnWillSurrender' => '{WELSH} Will the licence be surrendered?',
     'selfserve-app-subSection-previous-history-previous-licence-tableEmptyMessage' => '{WELSH} Please provide details about these licences here',
     'selfserve-app-subSection-previous-history-previous-licence-tableHeader' => '{WELSH} Licences (if applicable)',
     'selfserve-app-subSection-your-business-people-columnDate' => '{WELSH} Date of birth',
