@@ -185,17 +185,20 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
         if (!empty($errors)) {
+        
+            $expectedErrors = ['ERR_TA_GOODS', 'ERR_TA_PSV', 'ERR_TA_PSV_SR'];
+        
             foreach ($errors as $section => $error) {
                 foreach ($error as $errorMessage) {
-                    if ($section == 'trafficArea' &&
-                        (key($errorMessage) === 'ERR_TA_GOODS' ||
-                        key($errorMessage) === 'ERR_TA_PSV' ||
-                        key($errorMessage) === 'ERR_TA_PSV_SR')
-                    ) {
+                
+                    $key = key($errorMessage);
+                
+                    if ($section == 'trafficArea' && in_array($key, $expectedErrors)) {
+
                         $translator = $this->getServiceLocator()->get('Helper\Translation');
                         $fm->addErrorMessage(
                             $translator->translateReplace(
-                                key($errorMessage) .'_'. strtoupper($this->location),
+                                $key .'_'. strtoupper($this->location),
                                 current($errorMessage)
                             )
                         );
