@@ -13,7 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\BusinessService\Service\Lva\TransportManagerApplicationForUser;
 use Common\BusinessService\Response;
 use Common\Service\Entity\TransportManagerApplicationEntityService;
-use Common\Service\Entity\TransportManagerEntityService;
+use Common\RefData;
 
 /**
  * Transport Manager Application Test
@@ -156,7 +156,7 @@ class TransportManagerApplicationForUserTest extends MockeryTestCase
 
         $expectedTm = [
             'data' => [
-                'tmStatus' => TransportManagerEntityService::TRANSPORT_MANAGER_STATUS_CURRENT,
+                'tmStatus' => RefData::TRANSPORT_MANAGER_STATUS_CURRENT,
                 'homeCd' => 555
             ]
         ];
@@ -212,7 +212,7 @@ class TransportManagerApplicationForUserTest extends MockeryTestCase
 
         $expectedTm = [
             'data' => [
-                'tmStatus' => TransportManagerEntityService::TRANSPORT_MANAGER_STATUS_CURRENT,
+                'tmStatus' => RefData::TRANSPORT_MANAGER_STATUS_CURRENT,
                 'homeCd' => 555
             ]
         ];

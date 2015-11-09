@@ -21,9 +21,6 @@ class TransportManagerEntityService extends AbstractEntityService
      */
     protected $entity = 'TransportManager';
 
-    const TRANSPORT_MANAGER_STATUS_CURRENT = 'tm_s_cur';
-    const TRANSPORT_MANAGER_STATUS_ACTIVE = 'tm_st_act';
-    const TRANSPORT_MANAGER_STATUS_DISABLED = 'tm_st_disa';
     const TRANSPORT_MANAGER_TYPE_EXTERNAL = 'tm_t_e';
     const TRANSPORT_MANAGER_TYPE_BOTH = 'tm_t_b';
 
