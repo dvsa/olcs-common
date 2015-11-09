@@ -2308,6 +2308,7 @@ return array(
     'tc_r_dtc' => '{WELSH} Deputy Traffic Commissioner',
     'tc_r_htru' => '{WELSH} Head of Traffic Regulation Unit',
     'tc_r_tc' => '{WELSH} Traffic Commissioner',
+    'terms-and-conditions-title' => '{WELSH} Terms and conditions',
     'testProperty' => '{WELSH} the test',
     'testPropertyPlaceHolder' => '{WELSH} test @placeHolder is @here',
     'tic' => '{WELSH} TIC',

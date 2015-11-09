@@ -2308,6 +2308,7 @@ return array(
     'tc_r_dtc' => 'Deputy Traffic Commissioner',
     'tc_r_htru' => 'Head of Traffic Regulation Unit',
     'tc_r_tc' => 'Traffic Commissioner',
+    'terms-and-conditions-title' => 'Terms and conditions',
     'testProperty' => 'the test',
     'testPropertyPlaceHolder' => 'test @placeHolder is @here',
     'tic' => 'TIC',
