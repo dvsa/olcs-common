@@ -2192,6 +2192,7 @@ return array(
     'selfserve-app-subSection-previous-history-previous-licence-columnHolderName' => 'Name of licence holder',
     'selfserve-app-subSection-previous-history-previous-licence-columnLicNo' => 'Licence number',
     'selfserve-app-subSection-previous-history-previous-licence-columnPurchaseDate' => 'Date of purchase',
+    'selfserve-app-subSection-previous-history-previous-licence-columnWillSurrender' => 'Will the licence be surrendered?',
     'selfserve-app-subSection-previous-history-previous-licence-tableEmptyMessage' => 'Please provide details about these licences here',
     'selfserve-app-subSection-previous-history-previous-licence-tableHeader' => 'Licences (if applicable)',
     'selfserve-app-subSection-your-business-people-columnDate' => 'Date of birth',
