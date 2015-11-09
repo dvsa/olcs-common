@@ -1502,6 +1502,7 @@ return array(
     'lva-post-submit-summary-title' => '{WELSH} Application overview',
     'lva-summary-application-before-processing' => '{WELSH} Before your application can be processed you must:',
     'lva-summary-application-submitted' => '{WELSH} Thank you, your application has been submitted.',
+    'lva-summary-application-submitted-fee-outstanding' => '{WELSH} Thank you, your application has been submitted. We’ll contact you soon about payment.',
     'lva-summary-application-what-next-text' => '{WELSH} The Central Licensing Office aims to process your application as soon as possible. The information provided will be checked and further information may be requested.',
     'lva-summary-back-to-dashboard' => '{WELSH} Back to dashboard',
     'lva-summary-important' => '{WELSH} Important',
