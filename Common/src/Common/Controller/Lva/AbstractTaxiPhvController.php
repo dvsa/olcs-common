@@ -126,14 +126,19 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
         }
 
-        // handle the response error message
-        foreach ($response->getResult()['messages'] as $key => $message) {
-            $translator = $this->getServiceLocator()->get('Helper\Translation');
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage(
-                $translator->translateReplace($key .'_'. strtoupper($this->location), $message)
-            );
-        }
+        $messages = $response->getResult()['messages'];
 
+        if (!empty($messages)) {
+            $translator = $this->getServiceLocator()->get('Helper\Translation');
+            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        
+            foreach ($messages as $key => $message) {
+                $fm->addErrorMessage(
+                    $translator->translateReplace($key .'_'. strtoupper($this->location), $message)
+                );
+            }
+        }
+        
         return false;
     }
 
