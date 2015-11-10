@@ -1,13 +1,46 @@
-<p><b>Translated to Welsh</b></p><h3>Required finance</h3>
+<p><b>Translated to Welsh</b></p><div class="article">
+    <p>
+        As part of your application, you’ll need to show you have enough money to keep your vehicles and run your business.
+        <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>">Read more about financial evidence</a>
+    </p>
 
-<p>
-  Based on the total authority of
-  <b>
-    <?php echo $vehicles; ?>
-    <?php echo (($vehicles!=1) ? 'vehicles' : 'vehicle'); ?>
-  </b>
-  for this application, any other submitted applications and any existing
-  licences, you are required to have the following finance available:
-</p>
+    <h3>How much will you need?</h3>
 
-<h2>£ <?php echo number_format($requiredFinance); ?></h2>
+    <h2>&pound; <?php echo number_format($requiredFinance); ?></h2>
+
+    <p>This figure’s based on:</p>
+    <ul>
+        <li>this application for <?php echo $applicationVehicles; ?> vehicle<?php echo $applicationVehicles != 1 ? 's' : ''; ?></li>
+        <?php if ((int) $otherLicenceVehicles > 0): ?>
+        <li>maintenance of <?php echo $otherLicenceVehicles; ?> vehicle<?php echo $otherLicenceVehicles != 1 ? 's' : ''; ?> on your other licences</li>
+        <?php endif; ?>
+        <?php if ((int) $otherApplicationVehicles > 0): ?>
+        <li>your other applications for <?php echo $otherApplicationVehicles; ?> vehicle<?php echo $otherApplicationVehicles != 1 ? 's' : ''; ?></li>
+        <?php endif; ?>
+    </ul>
+
+    <p>
+        <details class="help">
+          <summary class="help__summary">
+            How did we calculate this?
+          </summary>
+          <div class="help__text">
+            <p>
+                For standard national and international licences you must have:<br>
+                &pound;<?php echo number_format($standardFirst); ?> for the first vehicle<br>
+                &pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle
+            </p>
+            <p>
+                For restricted licences you must have:<br>
+                &pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle<br>
+                &pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle
+            </p>
+          </div>
+        </details>
+    </p>
+
+    <h3>Send a copy to us</h3>
+    <p>
+        Once you have your financial evidence, you should either upload or post a copy to us. See the <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>">types of evidence we accept</a>.
+    </p>
+</div>

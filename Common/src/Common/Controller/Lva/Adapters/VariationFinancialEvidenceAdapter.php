@@ -17,13 +17,4 @@ use Common\Service\Data\CategoryDataService as Category;
  */
 class VariationFinancialEvidenceAdapter extends ApplicationFinancialEvidenceAdapter
 {
-    /**
-     * @param Common\Form\Form
-     * @return void
-     */
-    public function alterFormForLva($form)
-    {
-        $form->get('finance')->get('requiredFinance')
-            ->setValue('markup-required-finance-variation');
-    }
 }

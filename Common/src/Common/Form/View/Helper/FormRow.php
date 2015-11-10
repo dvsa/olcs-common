@@ -283,15 +283,20 @@ class FormRow extends ZendFormRow implements FactoryInterface
                     $fieldsetAttributes['data-group'] = $dataGroup;
                 }
 
-                $attributesString = '';
+                $legendAttributes = $element->getOption('legend-attributes');
+                $legendAttributesString = '';
+                if (is_array($legendAttributes)) {
+                    $legendAttributesString = ' ' . $this->createAttributesString($legendAttributes);
+                }
 
+                $attributesString = '';
                 if (is_array($fieldsetAttributes)) {
                     $attributesString = ' ' . $this->createAttributesString($fieldsetAttributes);
                 }
-
                 $markup = sprintf(
-                    '<fieldset%s><legend>%s</legend>%s</fieldset>',
+                    '<fieldset%s><legend%s>%s</legend>%s</fieldset>',
                     $attributesString,
+                    $legendAttributesString,
                     $label,
                     $elementString
                 );

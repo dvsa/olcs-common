@@ -14,6 +14,9 @@ class FinancialEvidenceEvidence
      *     "fieldset-attributes": {
      *          "class": "checkbox inline",
      *     },
+     *     "legend-attributes": {
+     *          "class": "visually-hidden",
+     *     },
      *     "label": "lva-financial-evidence-upload-now.label",
      *     "value_options": {
      *         "Y":"lva-financial-evidence-upload-now.yes",
