@@ -1601,6 +1601,7 @@ return array(
     'lva.section.title.transport-manager-application.details-not-submitted' => '{WELSH} Details not submitted',
     'lva.section.title.transport-manager-application.details-received' => '{WELSH} Details received',
     'lva.section.title.transport-manager-application.edit-form' => '{WELSH} Edit Transport Manager application form',
+    'lva.section.title.transport-manager-application.important' => '{WELSH} It\'s unlawful to act as a Transport Manager for this licence until we\'ve approved your application.',
     'lva.section.title.transport-manager-application.print-sign' => '{WELSH} Print, sign and return',
     'lva.section.title.transport-manager-application.resend-form' => '{WELSH} Resend link ',
     'lva.section.title.transport-manager-application.review-and-submit' => '{WELSH} Review and submit',
