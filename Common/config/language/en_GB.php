@@ -1490,7 +1490,7 @@ return array(
     'lva-conditions-undertakings-table-title' => 'Conditions and undertakings',
     'lva-conditions-undertakings-table-type' => 'Type',
     'lva-financial-evidence-evidence.label' => 'How would you like to send your evidence?',
-    'lva-financial-evidence-upload-now.label' => 'Choose and option',
+    'lva-financial-evidence-upload-now.label' => 'Choose an option',
     'lva-financial-evidence-upload-now.no' => 'Send in the post',
     'lva-financial-evidence-upload-now.yes' => 'Upload files',
     'lva-financial-evidence-upload.files.hint' => 'Please ensure the evidence provided demonstrates there are sufficient financial resources to maintain the vehicles and run the business.',

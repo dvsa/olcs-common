@@ -1490,7 +1490,7 @@ return array(
     'lva-conditions-undertakings-table-title' => '{WELSH} Conditions and undertakings',
     'lva-conditions-undertakings-table-type' => '{WELSH} Type',
     'lva-financial-evidence-evidence.label' => '{WELSH} How would you like to send your evidence?',
-    'lva-financial-evidence-upload-now.label' => '{WELSH} Choose and option',
+    'lva-financial-evidence-upload-now.label' => '{WELSH} Choose an option',
     'lva-financial-evidence-upload-now.no' => '{WELSH} Send in the post',
     'lva-financial-evidence-upload-now.yes' => '{WELSH} Upload files',
     'lva-financial-evidence-upload.files.hint' => '{WELSH} Please ensure the evidence provided demonstrates there are sufficient financial resources to maintain the vehicles and run the business.',
