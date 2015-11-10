@@ -162,6 +162,10 @@ class RefData
     const TRANSPORT_MANAGER_TYPE_EXTERNAL = 'tm_t_e';
     const TRANSPORT_MANAGER_TYPE_BOTH = 'tm_t_b';
 
+    const TRANSPORT_MANAGER_STATUS_CURRENT = 'tm_s_cur';
+    const TRANSPORT_MANAGER_STATUS_DISQUALIFIED = 'tm_s_dis';
+    const TRANSPORT_MANAGER_STATUS_REMOVED = 'tm_s_rem';
+
     /**
      * IRFO Stock Control
      */

@@ -13,8 +13,8 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\BusinessService\BusinessServiceAwareInterface;
 use Common\BusinessService\BusinessServiceAwareTrait;
 use Common\BusinessService\Response;
-use Common\Service\Entity\TransportManagerEntityService;
 use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\RefData;
 
 /**
  * Transport Manager Application
@@ -47,7 +47,7 @@ class TransportManagerApplicationForUser implements
         if ($user['transportManager'] === null) {
             $tmParams = [
                 'data' => [
-                    'tmStatus' => TransportManagerEntityService::TRANSPORT_MANAGER_STATUS_CURRENT,
+                    'tmStatus' => RefData::TRANSPORT_MANAGER_STATUS_CURRENT,
                     'homeCd' => $user['contactDetails']['id']
                 ]
             ];
