@@ -131,14 +131,14 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if (!empty($messages)) {
             $translator = $this->getServiceLocator()->get('Helper\Translation');
             $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
-        
+
             foreach ($messages as $key => $message) {
                 $fm->addErrorMessage(
                     $translator->translateReplace($key .'_'. strtoupper($this->location), $message)
                 );
             }
         }
-        
+
         return false;
     }
 
@@ -268,8 +268,10 @@ abstract class AbstractTaxiPhvController extends AbstractController
             if (is_array($result)) {
                 $formMessages['address']['postcode'][] = $this->getTrafficAreaValidationMessage($result);
                 $form->setMessages($formMessages);
-            } else {
+            } elseif ($result === true) {
                 return $this->handlePostSave();
+            } else {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentUnknownError();
             }
         }
 
@@ -378,8 +380,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
      * Save the licence
      *
      * @param array $data
-     * @param string $service
-     * @return null|Response
+     *
+     * @return bool|array Array of error messages, false = the request failed, true = everything was good
      */
     protected function saveLicence($data)
     {
@@ -392,11 +394,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if ($response->isClientError()) {
             return $response->getResult()['messages'];
         }
-        if (!$response->isOk()) {
-            throw new \RuntimeException('Failed creating privateHireLicence');
-        }
 
-        return true;
+        return $response->isOk();
     }
 
     /**
