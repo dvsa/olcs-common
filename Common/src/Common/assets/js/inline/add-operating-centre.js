@@ -53,7 +53,7 @@ $(function() {
           return true;
         },
         "label:adPlacedIn": hasAdvertisements,
-        "label:adPlacedDate": hasAdvertisements,
+        ".adPlacedDate": hasAdvertisements,
         ".file-uploader": hasAdvertisements,
         ".ad-send-by-post": isSendingByPost
       }
