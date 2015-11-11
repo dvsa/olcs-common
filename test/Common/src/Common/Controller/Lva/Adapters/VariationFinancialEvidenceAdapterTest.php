@@ -25,7 +25,7 @@ class VariationFinancialEvidenceAdapterTest extends MockeryTestCase
         $mockElement = m::mock()
             ->shouldReceive('setValue')
             ->once()
-            ->with('markup-required-finance-variation')
+            ->with('markup-required-finance-application')
             ->getMock();
 
         $mockFieldset = m::mock()

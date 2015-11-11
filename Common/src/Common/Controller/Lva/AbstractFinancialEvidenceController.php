@@ -61,6 +61,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         // render view
         $financialEvidenceData = $adapter->getData($id);
         $variables = $financialEvidenceData['financialEvidence'];
+        $variables['applicationReference'] = $financialEvidenceData['applicationReference'];
 
         return $this->render('financial_evidence', $form, $variables);
     }

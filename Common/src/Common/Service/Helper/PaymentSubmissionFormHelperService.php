@@ -26,8 +26,14 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
      * @param boolean $enabled
      * @param string $fee fee amount
      */
-    public function updatePaymentSubmissonForm(Form $form, $actionUrl, $visible, $enabled, $fee)
-    {
+    public function updatePaymentSubmissonForm(
+        Form $form,
+        $actionUrl,
+        $visible,
+        $enabled,
+        $fee,
+        $disableCardPayments = false
+    ) {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         if ($visible) {
@@ -44,6 +50,11 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
             } else {
                 // if no fee, change submit button text
                 $formHelper->remove($form, 'amount');
+                $form->get('submitPay')->setLabel('submit-application.button');
+            }
+
+            // if card payments disabled, change button label
+            if ($disableCardPayments) {
                 $form->get('submitPay')->setLabel('submit-application.button');
             }
 

@@ -125,4 +125,32 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
 
         $this->sut->updatePaymentSubmissonForm($form, '', false, false, 'foo');
     }
+
+    public function testUpdatePaymentSubmissonFormDisableCardPayments()
+    {
+        $form = m::mock('\Zend\Form\Form');
+        $formHelper = m::mock('Common\Service\Helper\FormHelperService');
+
+        $form = m::mock('\Zend\Form\Form')
+            ->shouldReceive('setAttribute')
+                ->once()
+                ->with('action', '')
+                ->andReturnSelf()
+            ->shouldReceive('get')
+                ->with('submitPay')
+                ->andReturn(
+                    m::mock()
+                        ->shouldReceive('setLabel')
+                        ->twice()
+                        ->with('submit-application.button')
+                    ->getMock()
+                )
+            ->getMock();
+
+        $formHelper->shouldReceive('remove')->once()->with($form, 'amount');
+
+        $this->sm->setService('Helper\Form', $formHelper);
+
+        $this->sut->updatePaymentSubmissonForm($form, '', true, true, 'foo', true);
+    }
 }

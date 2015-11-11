@@ -208,6 +208,26 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
+    public function testRenderRadioLegendAttribute()
+    {
+        $element = $this->prepareElement(
+            'Radio',
+            [
+                "legend-attributes" => [
+                    'class' => 'A_CLASS'
+                ]
+            ]
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<fieldset><legend class="A_CLASS">(.*)<\/legend><\/fieldset>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
     public function testRenderRadioWithDataGroupAttribute()
     {
         $element = $this->prepareElement(
