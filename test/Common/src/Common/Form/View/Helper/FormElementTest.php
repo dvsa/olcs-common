@@ -307,7 +307,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertEquals(
-            '<p>trafficAreaSet.trafficArea</p><h3>ABC</h3><p class="hint">trafficAreaSet.hint</p>',
+            '<p>trafficAreaSet.trafficArea</p><h3>ABC</h3>',
             $markup
         );
     }
@@ -324,7 +324,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertEquals(
-            '<p>trafficAreaSet.trafficArea</p><h3>ABC</h3><p class="hint">trafficAreaSet.hint-foo</p>',
+            '<p>trafficAreaSet.trafficArea</p><h3>ABC</h3>',
             $markup
         );
     }
