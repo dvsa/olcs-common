@@ -2574,4 +2574,10 @@ return array(
     'withdraw-application' => 'Withdraw application',
     'your-business' => 'Your business',
     // Potentially unused (Not found with grep)
+    'crown-copyright-link' => '{{CROWN_COPYRIGHT}}',
+    'DVSA-link' => '{{DVSA_LINK}}',
+    'being-an-operator-link' => '{{BEING_AN_OPERATOR}}',
+    'public-services-link' => '{{PUBLIC_SERVICES_LICENCE}}',
+    'vehicle-safety-link' => '{{VEHICLE_SAFETY_GUIDE}}'
+    
 );
