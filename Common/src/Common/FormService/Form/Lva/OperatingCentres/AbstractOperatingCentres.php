@@ -71,6 +71,11 @@ abstract class AbstractOperatingCentres extends AbstractFormService
 
         $dataTrafficAreaFieldset = $form->get('dataTrafficArea');
 
+        // if application/licence is NI then don't show trafficArea help
+        if ($params['niFlag'] === 'Y') {
+            $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficAreaHelp');
+        }
+
         if (!empty($trafficAreaId)) {
 
             $dataTrafficAreaFieldset->get('enforcementArea')
@@ -79,8 +84,7 @@ abstract class AbstractOperatingCentres extends AbstractFormService
             $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficArea');
 
             $dataTrafficAreaFieldset->get('trafficAreaSet')
-                ->setValue($trafficArea['name'])
-                ->setOption('hint-suffix', '-operating-centres');
+                ->setValue($trafficArea['name']);
 
             return $form;
         }
