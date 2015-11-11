@@ -50,6 +50,10 @@ class OperatingCentresTest extends MockeryTestCase
     {
         $form = m::mock(\Zend\Form\Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);
+        $translator = m::mock();
+        $translator->shouldReceive('translateReplace')->with('CODE_EXTERNAL', ['CODE' => 'MESSAGE'])->once()
+            ->andReturn('TRANSLATED');
+        $location = 'EXTERNAL';
 
         $expectedMessages = [
             'data' => [
@@ -69,6 +73,9 @@ class OperatingCentresTest extends MockeryTestCase
                 ]
             ],
             'dataTrafficArea' => [
+                'trafficArea' => [
+                    'TRANSLATED'
+                ],
                 'enforcementArea' => [
                     'bar8'
                 ]
@@ -88,6 +95,9 @@ class OperatingCentresTest extends MockeryTestCase
             'operatingCentres' => [
                 'foo' => 'bar7'
             ],
+            'trafficArea' => [
+                'foo' => ['CODE' => 'MESSAGE']
+            ],
             'enforcementArea' => [
                 'foo' => 'bar8'
             ],
@@ -102,7 +112,7 @@ class OperatingCentresTest extends MockeryTestCase
             ->once()
             ->with('bar');
 
-        OperatingCentres::mapFormErrors($form, $errors, $fm);
+        OperatingCentres::mapFormErrors($form, $errors, $fm, $translator, $location);
     }
 
     public function resultProvider()

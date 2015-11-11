@@ -104,12 +104,16 @@ class OperatingCentreTest extends MockeryTestCase
 
     public function testMapFormErrors()
     {
+        $location = 'EXTERNAL';
         $form = m::mock(\Zend\Form\Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);
         $th = m::mock(TranslationHelperService::class);
         $th->shouldReceive('translateReplace')
             ->with('ERR_OC_PC_TA_GB', ['Bar', 'Foo'])
             ->andReturn('translated');
+        $th->shouldReceive('translateReplace')
+            ->with('ERR_TA_PSV_SR_EXTERNAL', ['Foo'])
+            ->andReturn('translated 2');
 
         $expectedMessages = [
             'data' => [
@@ -136,7 +140,10 @@ class OperatingCentreTest extends MockeryTestCase
             ],
             'address' => [
                 'postcode' => [
-                    ['ERR_OC_PC_TA_GB' => 'translated']
+                    [
+                        'ERR_OC_PC_TA_GB' => 'translated',
+                        'ERR_TA_PSV_SR' => 'translated 2',
+                    ]
                 ]
             ]
         ];
@@ -144,7 +151,8 @@ class OperatingCentreTest extends MockeryTestCase
         $errors = [
             'postcode' => [
                 [
-                    'ERR_OC_PC_TA_GB' => '{"current":"Foo","oc":"Bar"}'
+                    'ERR_OC_PC_TA_GB' => '{"current":"Foo","oc":"Bar"}',
+                    'ERR_TA_PSV_SR' => 'Foo',
                 ]
             ],
             'noOfVehiclesRequired' => [
@@ -176,6 +184,6 @@ class OperatingCentreTest extends MockeryTestCase
             ->once()
             ->with('bar');
 
-        OperatingCentre::mapFormErrors($form, $errors, $fm, $th);
+        OperatingCentre::mapFormErrors($form, $errors, $fm, $th, $location);
     }
 }

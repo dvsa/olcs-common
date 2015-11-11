@@ -164,23 +164,51 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
         } else {
             $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
-
             $errors = $response->getResult()['messages'];
 
             if ($crudAction !== null) {
-                if (!empty($errors)) {
-
-                    foreach ($errors as $error) {
-                        $fm->addErrorMessage($error);
-                    }
-                } else {
-                    $fm->addUnknownError();
-                }
-
+                $this->displayCrudErrors($errors);
                 return $this->redirect()->refreshAjax();
             } else {
-                OperatingCentres::mapFormErrors($form, $errors, $fm);
+                $translator = $this->getServiceLocator()->get('Helper\Translation');
+                OperatingCentres::mapFormErrors($form, $errors, $fm, $translator, $this->location);
             }
+        }
+    }
+
+    /**
+     * Display error from updating OC page after a CRUD action
+     *
+     * @param array $errors
+     */
+    private function displayCrudErrors($errors)
+    {
+        $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        if (!empty($errors)) {
+
+            $expectedErrors = ['ERR_TA_GOODS', 'ERR_TA_PSV', 'ERR_TA_PSV_SR'];
+
+            foreach ($errors as $section => $error) {
+                foreach ($error as $errorMessage) {
+
+                    $key = key($errorMessage);
+
+                    if ($section == 'trafficArea' && in_array($key, $expectedErrors)) {
+
+                        $translator = $this->getServiceLocator()->get('Helper\Translation');
+                        $fm->addErrorMessage(
+                            $translator->translateReplace(
+                                $key .'_'. strtoupper($this->location),
+                                current($errorMessage)
+                            )
+                        );
+                    } else {
+                        $fm->addErrorMessage($errorMessage);
+                    }
+                }
+            }
+        } else {
+            $fm->addUnknownError();
         }
     }
 
@@ -252,7 +280,13 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 $fm->addUnknownError();
             } else {
                 $translator = $this->getServiceLocator()->get('Helper\Translation');
-                OperatingCentre::mapFormErrors($form, $response->getResult()['messages'], $fm, $translator);
+                OperatingCentre::mapFormErrors(
+                    $form,
+                    $response->getResult()['messages'],
+                    $fm,
+                    $translator,
+                    $this->location
+                );
             }
         }
 
@@ -343,7 +377,13 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 $fm->addUnknownError();
             } else {
                 $translator = $this->getServiceLocator()->get('Helper\Translation');
-                OperatingCentre::mapFormErrors($form, $response->getResult()['messages'], $fm, $translator);
+                OperatingCentre::mapFormErrors(
+                    $form,
+                    $response->getResult()['messages'],
+                    $fm,
+                    $translator,
+                    $this->location
+                );
             }
         }
 
