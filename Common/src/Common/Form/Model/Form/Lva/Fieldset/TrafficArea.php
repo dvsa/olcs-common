@@ -21,7 +21,6 @@ class TrafficArea
      *     },
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
-     *     "hint": "application_operating-centres_authorisation.dataTrafficArea.hint.new"
      * })
      * @Form\Type("\Zend\Form\Element\Select")
      */
@@ -32,6 +31,13 @@ class TrafficArea
      * @Form\Type("Common\Form\Elements\Types\TrafficAreaSet")
      */
     public $trafficAreaSet = null;
+
+    /**
+     * @Form\Attributes({"value": "markup-traffic-area-help"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $trafficAreaHelp = null;
+
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
