@@ -14,7 +14,7 @@ class AddTransportManager
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label": "Choose a registered user"
+     *     "label": "transport-manager-choose"
      * })
      * @Form\Type("Select")
      */
@@ -22,7 +22,7 @@ class AddTransportManager
 
     /**
      * @Form\Attributes({"id":"addUser","type":"submit","class":"action--tertiary"})
-     * @Form\Options({"label": "Or add a new user"})
+     * @Form\Options({"label": "transport-manager-add"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $addUser = null;
