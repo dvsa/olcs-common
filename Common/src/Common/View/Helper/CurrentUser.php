@@ -38,7 +38,7 @@ class CurrentUser extends AbstractHelper implements ServiceLocatorAwareInterface
             $name = 'User ID '. $this->userData['id'];
         }
 
-        return $name;
+        return $this->getView()->escapeHtml($name);
     }
 
     /**
@@ -61,7 +61,7 @@ class CurrentUser extends AbstractHelper implements ServiceLocatorAwareInterface
             $name = 'NO ORGANISATION';
         }
 
-        return $name;
+        return $this->getView()->escapeHtml($name);
     }
 
     /**
