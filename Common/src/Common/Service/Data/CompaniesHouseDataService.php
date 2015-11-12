@@ -1,26 +1,30 @@
 <?php
 
+/**
+ * Companies House data service
+ *
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ */
 namespace Common\Service\Data;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Dvsa\Olcs\Transfer\Query\CompaniesHouse\GetList;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
- * Companies house data service
+ * Companies House data service
+ *
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class CompaniesHouseDataService implements ServiceLocatorAwareInterface
+class CompaniesHouseDataService extends AbstractDataService
 {
-    use ServiceLocatorAwareTrait;
-
     public function search($type, $value)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
-            'CompaniesHouse',
-            'GET',
-            [
-                'type' => $type,
-                'value' => $value
-            ]
-        );
+        $dtoData = GetList::create(['type' => $type, 'value' => $value]);
+
+        $response = $this->handleQuery($dtoData);
+        if ($response->isServerError() || $response->isClientError() || !$response->isOk()) {
+            throw new UnexpectedResponseException('unknown-error');
+        }
+        return $this->formatResult($response->getResult());
     }
 }
