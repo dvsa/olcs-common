@@ -228,7 +228,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
 
-            $response = $this->handleQuery(CompanySubsidiary::create(['id' => $id]));
+            $entity = ($this->lva === 'licence' ? 'licence' : 'application');
+
+            $query = CompanySubsidiary::create(['id' => $id, $entity => $this->getIdentifier()]);
+
+            $response = $this->handleQuery($query);
 
             if ($response->isClientError()) {
                 return $this->notFoundAction();
