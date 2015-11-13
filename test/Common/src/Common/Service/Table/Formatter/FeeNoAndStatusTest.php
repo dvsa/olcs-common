@@ -47,7 +47,7 @@ class FeeNoAndStatusTest extends PHPUnit_Framework_TestCase
                         'description' => 'outstanding'
                     ],
                 ],
-                '99 <span class="status orange">outstanding</span>',
+                '99<span class="status orange">outstanding</span>',
             ],
             'paid' => [
                 [
@@ -57,7 +57,7 @@ class FeeNoAndStatusTest extends PHPUnit_Framework_TestCase
                         'description' => 'paid'
                     ],
                 ],
-                '99 <span class="status green">paid</span>',
+                '99<span class="status green">paid</span>',
             ],
             'cancelled' => [
                 [
@@ -67,7 +67,7 @@ class FeeNoAndStatusTest extends PHPUnit_Framework_TestCase
                         'description' => 'cancelled'
                     ],
                 ],
-                '99 <span class="status red">cancelled</span>',
+                '99<span class="status red">cancelled</span>',
             ],
             'other' => [
                 [
@@ -77,7 +77,7 @@ class FeeNoAndStatusTest extends PHPUnit_Framework_TestCase
                         'description' => 'foo'
                     ],
                 ],
-                '99 <span class="status grey">foo</span>',
+                '99<span class="status grey">foo</span>',
             ],
         ];
     }
