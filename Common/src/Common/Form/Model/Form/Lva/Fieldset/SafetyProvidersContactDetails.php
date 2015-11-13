@@ -15,6 +15,7 @@ class SafetyProvidersContactDetails
      * @Form\Options({"label":"application_vehicle-safety_safety-sub-action.data.fao"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":1,"max":90}})
      */
     public $fao = null;
 
