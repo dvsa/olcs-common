@@ -112,7 +112,7 @@ class OrganisationEntityService extends AbstractEntityService
     }
 
     /**
-     * @note use in isMlh method
+     * @note used in isMlh method
      *
      * @param int $id organisation id
      * @param array $licenceStatuses only return child licences matching
