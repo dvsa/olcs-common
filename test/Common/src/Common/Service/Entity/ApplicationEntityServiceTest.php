@@ -27,25 +27,6 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetForOrganisation()
-    {
-        $orgId = 3;
-
-        $mockOrganisationEntityService = $this->getMock('\stdClass', array('getApplications'));
-
-        $mockOrganisationEntityService->expects($this->once())
-            ->method('getApplications')
-            ->with($orgId)
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->sm->setService('Entity\Organisation', $mockOrganisationEntityService);
-
-        $this->assertEquals('RESPONSE', $this->sut->getForOrganisation($orgId));
-    }
-
-    /**
-     * @group entity_services
-     */
     public function testDoesBelongToOrganisationNoResponse()
     {
         $id = 4;

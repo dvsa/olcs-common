@@ -470,16 +470,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
     }
 
     /**
-     * Get applications for a given organisation
-     *
-     * @param int $organisationId
-     */
-    public function getForOrganisation($organisationId)
-    {
-        return $this->getServiceLocator()->get('Entity\Organisation')->getApplications($organisationId);
-    }
-
-    /**
      * Create a variation application for a given organisation
      *
      * @param int $licenceId
