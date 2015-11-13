@@ -2230,6 +2230,7 @@ return array(
     'selfserve-app-subSection-your-business-people-tableHeaderPartners' => 'Partners',
     'selfserve-app-subSection-your-business-people-tableHeaderPeople' => 'Responsible people',
     'selfserve-business-registered-company-description' => 'If you don\'t have your company number, or you\'re having problems retrieving your company details, enter them below.',
+    'selfserve-card-payments-disabled' => 'Online payments is currently unavailable. You can contact Operator Licensing to pay your fees.',
     'selfserve-dashboard-submission-date' => 'Submission date',
     'selfserve-dashboard-target-not-yet-submitted' => 'Not yet submitted',
     'selfserve-dashboard-target-renewal-date' => 'Renewal date',
