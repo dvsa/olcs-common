@@ -934,6 +934,7 @@ return array(
     'fees.reverse-transaction.title' => '{WELSH} Reverse payment',
     'fees.slip' => '{WELSH} Slip No.',
     'fees.type' => '{WELSH} Type',
+    'fees.vat_rate' => '{WELSH} VAT rate',
     'filter-button' => '{WELSH} Filter',
     'filters' => '{WELSH} Filters',
     'finance' => '{WELSH} Finance',
