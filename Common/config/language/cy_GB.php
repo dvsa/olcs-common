@@ -768,7 +768,6 @@ return array(
     'dashboard-table-variations-submittedDate' => '{WELSH} Submitted',
     'dashboard-tm-applications.table.EmptyMessage' => '{WELSH} There are no open applications right now that you have been named as Transport Manager',
     'dashboard.link' => '{WELSH} Home',
-    'dashboard.subtitle' => '{WELSH} Operator Licensing Ltd.',
     'dashboard.title' => '{WELSH} Home',
     'date-Day' => '{WELSH} Day',
     'date-Hour' => '{WELSH} Hour',

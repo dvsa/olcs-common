@@ -768,7 +768,6 @@ return array(
     'dashboard-table-variations-submittedDate' => 'Submitted',
     'dashboard-tm-applications.table.EmptyMessage' => 'There are no open applications right now that you have been named as Transport Manager',
     'dashboard.link' => 'Home',
-    'dashboard.subtitle' => 'Operator Licensing Ltd.',
     'dashboard.title' => 'Home',
     'date-Day' => 'Day',
     'date-Hour' => 'Hour',
