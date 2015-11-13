@@ -1930,6 +1930,7 @@ return array(
     'schedule41.refuse.application.message' => 'Are you sure you want to refuse the schedule 4/1?',
     'schedule41.reset.application.message' => 'Are you sure you want to reset the schedule 4/1?',
     'search' => 'Search',
+    'search-no-results-internal' => '<p>There were no results for your search.</p><p>Try using different keywords, or picking another category.</p><p>You can look for every result in a category by choosing "all" from the dropdown lists</p>',
     'search-result-label-address' => 'Address',
     'search-result-label-business-type' => 'Business type',
     'search-result-label-continuation-date' => 'Continuation date',

@@ -157,11 +157,6 @@ class ElasticSearch extends AbstractPlugin
         //update data with information from route, and rebind to form so that form data is correct
         $data['index'] = $this->getController()->params()->fromRoute('index');
         $this->getSearchForm()->setData($data);
-
-        if (empty($data['search'])) {
-            $this->getController()->flashMessenger()->addErrorMessage('Please provide a search term');
-            return $this->getController()->redirectToRoute('dashboard');
-        }
     }
 
     /**
