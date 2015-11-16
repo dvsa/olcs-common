@@ -530,6 +530,7 @@ return array(
     'application_vehicle-safety_vehicle-psv.table.removed' => '{WELSH} Removed',
     'application_vehicle-safety_vehicle-psv.table.specified' => '{WELSH} Specified',
     'application_vehicle-safety_vehicle-psv.table.title' => '{WELSH} Vehicles',
+    'application_vehicle-safety_vehicle-psv.table.title.singular' => '{WELSH} Vehicle',
     'application_vehicle-safety_vehicle-psv.table.vrm' => '{WELSH} Vehicle registration No.',
     'application_vehicle-safety_vehicle-reprint' => '{WELSH} Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => '{WELSH} Vehicle registration mark (VRM)',
