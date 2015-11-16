@@ -944,6 +944,7 @@ return array(
     'fees.reverse-transaction.title' => 'Reverse payment',
     'fees.slip' => 'Slip No.',
     'fees.type' => 'Type',
+    'fees.vat_rate' => 'VAT rate',
     'filter-button' => 'Filter',
     'filters' => 'Filters',
     'finance' => 'Finance',
