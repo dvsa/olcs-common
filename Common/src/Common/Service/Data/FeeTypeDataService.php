@@ -4,22 +4,21 @@
  * Fee Type Data Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Service\Data;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Dvsa\Olcs\Transfer\Query\Fee\GetLatestFeeType;
 
 /**
  * Fee Type Data Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class FeeTypeDataService implements ServiceLocatorAwareInterface
+class FeeTypeDataService extends AbstractDataService
 {
-    use ServiceLocatorAwareTrait;
-
     const FEE_TYPE_APP = 'APP';
     const FEE_TYPE_VAR = 'VAR';
     const FEE_TYPE_GRANT = 'GRANT';
@@ -44,39 +43,22 @@ class FeeTypeDataService implements ServiceLocatorAwareInterface
     const ACCRUAL_RULE_CONTINUATION  = 'acr_continuation';
     const ACCRUAL_RULE_IMMEDIATE     = 'acr_immediate';
 
-    protected $dataBundle = array(
-        'children' => array(
-            'feeType',
-        ),
-    );
-
-    /**
-     * @NOTE This functionality has been replicated in the API [Repository/FeeType->getLatest()]
-     */
-    public function getLatest($feeType, $goodsOrPsv, $licenceType, $date, $trafficArea = null)
+    public function getLatest($feeType, $goodsOrPsv, $licenceType = null, $date = null, $trafficArea = null)
     {
-        $query = array(
-            'feeType' => $feeType,
-            'goodsOrPsv' => $goodsOrPsv,
-            'licenceType' => array(
-                $licenceType,
-                'NULL'
-            ),
-            'effectiveFrom' => '<= ' . $date,
-            'trafficArea' => $trafficArea ? $trafficArea : 'NULL',
-            'sort' => 'effectiveFrom',
-            'order' => 'DESC',
-            'limit' => 1
+        $dtoData = GetLatestFeeType::create(
+            [
+                'feeType' => $feeType,
+                'operatorType' => $goodsOrPsv,
+                'licenceType' => $licenceType,
+                'date' => $date,
+                'trafficArea' => $trafficArea
+            ]
         );
 
-        $restHelper = $this->getServiceLocator()->get('Helper\Rest');
-
-        $data = $restHelper->makeRestCall('FeeType', 'GET', $query, $this->dataBundle);
-
-        if (!isset($data['Results'][0])) {
-            throw new UnexpectedResponseException('No fee type found');
+        $response = $this->handleQuery($dtoData);
+        if ($response->isServerError() || $response->isClientError() || !$response->isOk()) {
+            throw new UnexpectedResponseException('unknown-error');
         }
-
-        return $data['Results'][0];
+        return $this->formatResult($response->getResult());
     }
 }
