@@ -34,28 +34,6 @@ class OrganisationEntityService extends AbstractEntityService
     protected $entity = 'Organisation';
 
     /**
-     * Holds the organisation bundle
-     *
-     * @var array
-     */
-    private $organisationFromUserBundle = array(
-        'children' => array(
-            'organisation'
-        )
-    );
-
-    /**
-     * Holds the organisation type bundle
-     *
-     * @var array
-     */
-    private $typeBundle = array(
-        'children' => array(
-            'type'
-        )
-    );
-
-    /**
      * Bundle to retrieve data to update completion status
      *
      * @var array
@@ -70,29 +48,6 @@ class OrganisationEntityService extends AbstractEntityService
             ),
             'type',
             'tradingNames'
-        )
-    );
-
-    /**
-     * Holds the applications bundle
-     *
-     * @var array
-     */
-    private $applicationsBundle = array(
-        'children' => array(
-            'licences' => array(
-                'children' => array(
-                    'applications' => array(
-                        'children' => array(
-                            'status',
-                            'licenceType',
-                            'goodsOrPsv',
-                        )
-                    ),
-                    'licenceType',
-                    'status'
-                )
-            )
         )
     );
 
@@ -113,128 +68,10 @@ class OrganisationEntityService extends AbstractEntityService
         )
     );
 
-    protected $registeredUsersBundle = array(
-        'children' => array(
-            'organisationUsers' => array(
-                'children' => array(
-                    'user' => array(
-                        'children' => array(
-                            'contactDetails' => array(
-                                'children' => array(
-                                    'person'
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        )
-    );
-
-    protected $adminUsersBundle = [
-        'children' => [
-            'organisationUsers' => [
-                'criteria' => [
-                    'isAdministrator' => true
-                ],
-                'children' => [
-                    'user' => [
-                        'children' => [
-                            'contactDetails' => [
-                                'children' => ['person']
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ]
-    ];
-
-    public function getApplications($id)
-    {
-        return $this->get($id, $this->applicationsBundle);
-    }
-
-    /**
-     * @param int $id organisation id
-     * @param array $applicationStatuses only return child applications
-     *        matching these statuses (excluding variations)
-     * @return array
-     */
-    public function getNewApplicationsByStatus($id, $applicationStatuses)
-    {
-        $applications = [];
-
-        $bundle = $this->applicationsBundle;
-        $bundle['children']['licences']['children']['applications']['criteria'] = [
-            'status' => 'IN ' . json_encode($applicationStatuses),
-            'isVariation' => false,
-        ];
-
-        $data = $this->get($id, $bundle);
-        foreach ($data['licences'] as $licence) {
-            $applications = array_merge($applications, $licence['applications']);
-        }
-
-        return $applications;
-    }
-
-    /**
-     * @param int $id organisation id
-     * @param array $applicationStatuses only return child applications
-     *        matching these statuses (including variaions)
-     * @return array
-     */
-    public function getAllApplicationsByStatus($id, $applicationStatuses)
-    {
-        $applications = [];
-
-        $bundle = $this->applicationsBundle;
-        $bundle['children']['licences']['children']['applications']['criteria'] = [
-            'status' => 'IN ' . json_encode($applicationStatuses)
-        ];
-
-        $data = $this->get($id, $bundle);
-
-        if (isset($data['licences'])) {
-            foreach ($data['licences'] as $licence) {
-                $applications = array_merge($applications, $licence['applications']);
-            }
-        }
-
-        return $applications;
-    }
-
-    /**
-     * Get the organisation for the given user
-     *
-     * @param int $userId
-     */
-    public function getForUser($userId)
-    {
-        $organisation = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall('OrganisationUser', 'GET', ['user' => $userId], $this->organisationFromUserBundle);
-
-        if ($organisation['Count'] < 1) {
-            throw new Exceptions\UnexpectedResponseException('Organisation not found');
-        }
-
-        return $organisation['Results'][0]['organisation'];
-    }
-
-    /**
-     * Get type of organisation
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getType($id)
-    {
-        return $this->get($id, $this->typeBundle);
-    }
-
     /**
      * @NOTE This functionality has been migrated to the backend [Query\Organisation\BusinessDetails]
+     *
+     * @note need to check Olcs\Controller\Traits\OperatorControllerTrait->getViewWithOrganisation
      *
      * Get business details data
      *
@@ -266,63 +103,17 @@ class OrganisationEntityService extends AbstractEntityService
         return $this->get($id, $bundle);
     }
 
+    /*
+     * @note need to find out if ScanEntityProcessingService migrated
+     */
     public function findByIdentifier($identifier)
     {
         return $this->get($identifier);
     }
 
-    public function hasInForceLicences($id)
-    {
-        $licences = $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getInForceForOrganisation($id);
-
-        return $licences['Count'] > 0;
-    }
-
     /**
-     * @NOTE This behaviour is not longer being used in Lva Business Details, but is still used in IRFO
-     */
-    public function hasChangedTradingNames($id, $tradingNames, $licenceId = null)
-    {
-        $data = $this->getBusinessDetailsData($id, $licenceId);
-
-        $map = function ($v) {
-            return $v['name'];
-        };
-
-        $existing = array_map($map, $data['tradingNames']);
-        $updated  = array_map($map, $tradingNames);
-
-        $diff = array_diff($updated, $existing);
-
-        return count($existing) !== count($updated) || !empty($diff);
-    }
-
-    public function hasChangedSubsidiaryCompany($id, $company)
-    {
-        $existing = $this->getServiceLocator()
-            ->get('Entity\CompanySubsidiary')
-            ->getById($id);
-
-        $diff = $this->compareKeys(
-            $existing,
-            $company,
-            [
-                'companyNo',
-                'name'
-            ]
-        );
-
-        return !empty($diff);
-    }
-
-    private function compareKeys($from, $to, $keys = [])
-    {
-        return $this->getServiceLocator()->get('Helper\Data')->compareKeys($from, $to, $keys);
-    }
-
-    /**
+     * @note used in isMlh method
+     *
      * @param int $id organisation id
      * @param array $licenceStatuses only return child licences matching
      *        these statuses
@@ -340,6 +131,8 @@ class OrganisationEntityService extends AbstractEntityService
     /**
      * Determine is an organisation isMlh (has at least one valid licence)
      *
+     * @note used in  Olcs\Filter\SubmissionSection\CaseSummary
+     *
      * @param $id
      * @return bool
      */
@@ -347,69 +140,5 @@ class OrganisationEntityService extends AbstractEntityService
     {
         $licences = $this->getLicencesByStatus($id, [Licence::LICENCE_STATUS_VALID]);
         return (bool) count($licences);
-    }
-
-    /**
-     * Determine is an organisation is IRFO
-     *
-     * @param $id
-     * @return bool
-     */
-    public function isIrfo($id)
-    {
-        $data = $this->get($id);
-        return (!empty($data['isIrfo']) && ('Y' === $data['isIrfo'])) ? true : false;
-    }
-
-    public function getRegisteredUsersForSelect($id)
-    {
-        $organisation = $this->get($id, $this->registeredUsersBundle);
-
-        $people = [];
-
-        foreach ($organisation['organisationUsers'] as $orgUser) {
-
-            $user = $orgUser['user'];
-            $person = $user['contactDetails']['person'];
-
-            $people[$user['id']] = trim($person['forename'] . ' ' . $person['familyName']);
-        }
-
-        asort($people);
-
-        return $people;
-    }
-
-    /**
-     * @todo maybe remove this
-     * @NOTE migrated
-     */
-    public function getAdminEmailAddresses($id)
-    {
-        $users = [];
-        $orgUsers = $this->get($id, $this->adminUsersBundle)['organisationUsers'];
-
-        foreach ($orgUsers as $user) {
-            if (isset($user['user']['emailAddress'])) {
-                $details = $user['user']['contactDetails']['person'];
-                $users[] = sprintf(
-                    '%s %s <%s>',
-                    $details['forename'],
-                    $details['familyName'],
-                    $user['user']['emailAddress']
-                );
-            }
-        }
-
-        return $users;
-    }
-
-    public function getByCompanyOrLlpNo($companyNumber)
-    {
-        $query = [
-            'companyOrLlpNo' => $companyNumber,
-        ];
-
-        return $this->get($query);
     }
 }

@@ -159,62 +159,6 @@ class FeeEntityService extends AbstractLvaEntityService
         return !empty($data['Results']) ? $data['Results'][0] : null;
     }
 
-    public function getOutstandingFeesForOrganisation($organisationId)
-    {
-        $organisationEntityService = $this->getServiceLocator()->get('Entity\Organisation');
-
-        $licences = $organisationEntityService->getLicencesByStatus(
-            $organisationId,
-            [
-                Licence::LICENCE_STATUS_VALID,
-                Licence::LICENCE_STATUS_CURTAILED,
-                Licence::LICENCE_STATUS_SUSPENDED,
-            ]
-        );
-        $applications = $organisationEntityService->getAllApplicationsByStatus(
-            $organisationId,
-            [
-                Application::APPLICATION_STATUS_UNDER_CONSIDERATION,
-                Application::APPLICATION_STATUS_GRANTED,
-            ]
-        );
-
-        $queryParams = [];
-
-        if (!empty($licences)) {
-            $licenceIds = array_map(
-                function ($licence) {
-                    return $licence['id'];
-                },
-                $licences
-            );
-            $queryParams['licence'] =  "IN ".json_encode($licenceIds);
-        }
-
-        if (!empty($applications)) {
-            $applicationIds = array_map(
-                function ($application) {
-                    return isset($application['id']) ? $application['id'] : null;
-                },
-                $applications
-            );
-            $queryParams['application'] =  "IN ".json_encode($applicationIds);
-        }
-
-        if (empty($queryParams)) {
-            return;
-        }
-
-        $query = [
-            'feeStatus' => self::STATUS_OUTSTANDING,
-            $queryParams,
-            'sort'  => 'invoicedDate',
-            'order' => 'ASC',
-        ];
-
-        return $this->getAll($query, $this->outstandingForOrganisationBundle);
-    }
-
     /**
      * Get data for overview
      *
