@@ -530,6 +530,7 @@ return array(
     'application_vehicle-safety_vehicle-psv.table.removed' => 'Removed',
     'application_vehicle-safety_vehicle-psv.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv.table.title' => 'Vehicles',
+    'application_vehicle-safety_vehicle-psv.table.title.singular' => 'Vehicle',
     'application_vehicle-safety_vehicle-psv.table.vrm' => 'Vehicle registration No.',
     'application_vehicle-safety_vehicle-reprint' => 'Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'Vehicle registration mark (VRM)',

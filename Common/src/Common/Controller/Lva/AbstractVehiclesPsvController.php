@@ -382,6 +382,17 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $formHelper->populateFormTable($form->get('vehicles'), $table, 'vehicles');
 
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $vehiclesCount = count($resultData['vehicles']);
+        $table->setVariable(
+            'title',
+            $vehiclesCount . ' ' .
+            $translator->translate(
+                'application_vehicle-safety_vehicle-psv.table.title' .
+                ($vehiclesCount == 1 ? '.singular' : '')
+            )
+        );
+
         if (!$removeActions && !$resultData['canTransfer']) {
             $table->removeAction('transfer');
         }
