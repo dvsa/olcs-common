@@ -2232,6 +2232,7 @@ return array(
     'selfserve-app-subSection-your-business-people-tableHeaderPartners' => '{WELSH} Partners',
     'selfserve-app-subSection-your-business-people-tableHeaderPeople' => '{WELSH} Responsible people',
     'selfserve-business-registered-company-description' => '{WELSH} If you don\'t have your company number, or you\'re having problems retrieving your company details, enter them below.',
+    'selfserve-card-payments-disabled' => '{WELSH} Online payments is currently unavailable. You can contact Operator Licensing to pay your fees.',
     'selfserve-dashboard-submission-date' => '{WELSH} Submission date',
     'selfserve-dashboard-target-not-yet-submitted' => '{WELSH} Not yet submitted',
     'selfserve-dashboard-target-renewal-date' => '{WELSH} Renewal date',
