@@ -605,6 +605,7 @@ return array(
     'apsts_valid' => '{WELSH} Valid',
     'apsts_withdrawn' => '{WELSH} Withdrawn',
     'back-to-application-overview' => '{WELSH} Back to application overview',
+    'back-to-fees' => '{WELSH} Back to fees',
     'back-to-home' => '{WELSH} Back to home',
     'back-to-licence-overview' => '{WELSH} Back to licence overview',
     'back-to-variation-overview' => '{WELSH} Back to application overview',
