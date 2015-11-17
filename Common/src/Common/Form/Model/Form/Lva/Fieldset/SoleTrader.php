@@ -23,6 +23,7 @@ class SoleTrader
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Required(false)
      * @Form\Options({
      *     "empty_option": "Please Select",
      *     "label": "application_your-business_people-sub-action-formTitle",
@@ -63,6 +64,7 @@ class SoleTrader
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
      *     "label": "application_your-business_people-sub-action-formDateOfBirth",
+     *     "short-label": "application_your-business_people-sub-action-formDateOfBirth",
      *     "create_empty_option": false,
      *     "render_delimiters": "d m y"
      * })

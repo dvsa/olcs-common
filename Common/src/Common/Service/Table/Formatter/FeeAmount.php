@@ -15,4 +15,22 @@ namespace Common\Service\Table\Formatter;
  */
 class FeeAmount extends Money
 {
+    /**
+     * Format a fee amount
+     *
+     * @param array $data
+     * @param array $column
+     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @return string
+     */
+    public static function format($data, $column = array())
+    {
+        $amount = parent::format($data, $column);
+
+        if (isset($data['vatAmount']) && $data['vatAmount'] > 0) {
+            $amount .= '<span class="status orange">includes VAT</span>';
+        }
+
+        return $amount;
+    }
 }

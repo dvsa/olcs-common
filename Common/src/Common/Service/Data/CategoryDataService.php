@@ -7,22 +7,13 @@
  */
 namespace Common\Service\Data;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\FactoryInterface;
-use Common\Util\RestCallTrait;
-
 /**
  * Category Data Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterface
+class CategoryDataService
 {
-    use ServiceLocatorAwareTrait,
-        RestCallTrait;
-
     const CATEGORY_SERVICE = 'Category';
     const SUB_CATEGORY_SERVICE = 'SubCategory';
 
@@ -63,146 +54,4 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
     const DOC_SUB_CATEGORY_OTHER_DOCUMENTS = 79;
     const DOC_SUB_CATEGORY_FEE_REQUEST = 110;
     const DOC_SUB_CATEGORY_CONTINUATIONS_AND_RENEWALS_LICENCE = 74;
-
-    /**
-     * Cache the categories
-     *
-     * @var array
-     */
-    private $cache = array();
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->setServiceLocator($serviceLocator);
-
-        return $this;
-    }
-
-    /**
-     * Get a category by its description
-     *
-     * @param string $description
-     * @param string $subCategoryType
-     * @return array
-     */
-    public function getCategoryByDescription($description, $subCategoryType = null)
-    {
-        $service = $this->getServiceFromSubCategoryType($subCategoryType);
-
-        $params = $this->getParams($description, $subCategoryType);
-
-        $cached = $this->getFromCache($service, $params);
-
-        if ($cached) {
-            return $cached;
-        }
-
-        return $this->fetchCategory($service, $params);
-    }
-
-    /**
-     * Fetch and cache the category
-     *
-     * @param string $service
-     * @param array $params
-     * @return string
-     */
-    private function fetchCategory($service, $params)
-    {
-        $data = $this->makeRestCall($service, 'GET', $params);
-
-        if ($data['Count'] > 1) {
-            $category = $data['Results'];
-        } elseif ($data['Count'] == 1) {
-            $category = $data['Results'][0];
-        } else {
-            $category = null;
-        }
-
-        $this->addToCache($service, $params, $category);
-
-        return $category;
-    }
-
-    /**
-     * Get service from sub category
-     *
-     * @param string $subCategoryType
-     * @return string
-     */
-    private function getServiceFromSubCategoryType($subCategoryType = null)
-    {
-        if ($subCategoryType === null) {
-            return self::CATEGORY_SERVICE;
-        }
-
-        return self::SUB_CATEGORY_SERVICE;
-    }
-
-    /**
-     * Get query params from sub category
-     *
-     * @param string $subCategoryType
-     * @return string
-     */
-    private function getParams($description, $subCategoryType = null)
-    {
-        if ($subCategoryType === null) {
-            return ['description' => $description];
-        }
-
-        return [
-            'subCategoryName' => $description,
-            $this->getRestriction($subCategoryType) => true
-        ];
-    }
-
-    /**
-     * Map a user friendly description to a query restriction
-     */
-    private function getRestriction($subCategoryType)
-    {
-        switch ($subCategoryType) {
-            case 'Document':
-                return 'isDoc';
-            case 'Task':
-                return 'isTask';
-            case 'Scan':
-                return 'isScan';
-            default:
-                return null;
-        }
-    }
-
-    /**
-     * Check if we have this category cached
-     *
-     * @param string $service
-     * @param array $params
-     * @return string|null
-     */
-    private function getFromCache($service, $params)
-    {
-        $description = implode("|", $params);
-        return (isset($this->cache[$service][$description]) ? $this->cache[$service][$description] : null);
-    }
-
-    /**
-     * Check if we have this category cached
-     *
-     * @param string $service
-     * @param array $params
-     * @param array $category
-     */
-    private function addToCache($service, $params, $category)
-    {
-        $description = implode("|", $params);
-        $this->cache[$service][$description] = $category;
-    }
 }

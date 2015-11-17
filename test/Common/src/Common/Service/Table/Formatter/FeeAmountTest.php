@@ -42,6 +42,14 @@ class FeeAmountTest extends PHPUnit_Framework_TestCase
             [[],[], ''],
             [['amount' => 25],['name' => 'amount'], '£25.00'],
             [['amount' => 251.40],['name' => 'amount'], '£251.40'],
+            [
+                [
+                    'amount' => 120,
+                    'vatAmount' => 20,
+                ],
+                ['name' => 'amount'],
+                '£120.00<span class="status orange">includes VAT</span>'
+            ],
         ];
     }
 }

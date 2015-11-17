@@ -55,6 +55,7 @@ abstract class AbstractDiscsController extends AbstractController
         $request = $this->getRequest();
 
         $filterForm = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\DiscFilter');
+        $filterForm->setData($this->getFilters());
 
         if ($request->isPost()) {
 
@@ -196,17 +197,32 @@ abstract class AbstractDiscsController extends AbstractController
 
     protected function getDiscsTable()
     {
-        return $this->getServiceLocator()->get('Table')->prepareTable('lva-psv-discs', $this->getTableData());
+        $tableParams = $this->getFilters();
+        $tableParams['query'] = $this->getFilters();
+
+        return $this->getServiceLocator()->get('Table')->prepareTable(
+            'lva-psv-discs',
+            $this->getTableData(),
+            $tableParams
+        );
     }
+
+    protected function getFilters()
+    {
+        return [
+            'includeCeased' => $this->params()->fromQuery('includeCeased', 0),
+            'limit' => $this->params()->fromQuery('limit', 10),
+            'page' => $this->params()->fromQuery('page', 1),
+        ];
+    }
+
 
     protected function getTableData()
     {
         if ($this->formTableData === null) {
 
-            $data = [
-                'id' => $this->getLicenceId(),
-                'includeCeased' => $this->params()->fromQuery('includeCeased', 0)
-            ];
+            $data = $this->getFilters();
+            $data['id'] = $this->getLicenceId();
 
             $result = $this->handleQuery(PsvDiscs::create($data))->getResult();
             $data = $result['psvDiscs'];
@@ -229,8 +245,7 @@ abstract class AbstractDiscsController extends AbstractController
 
             $this->formTableData = [
                 'results' => $this->formTableData,
-                'count' => count($this->formTableData),
-                'count-unfiltered' => $result['totalPsvDiscs']
+                'count' => $result['totalPsvDiscs'],
             ];
         }
 
