@@ -90,7 +90,7 @@ class Address
      *     "short-label":"Postcode"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
      */
     public $postcode = null;
