@@ -91,7 +91,7 @@ class Address
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":8}})
+     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
      */
     public $postcode = null;
 
