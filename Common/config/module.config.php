@@ -60,6 +60,28 @@ return array(
                     )
                 )
             ),
+            'guides' => array(
+                'type' => 'segment',
+                'options' =>  array(
+                    'route' => '/guides[/]'
+                ),
+                'may_terminate' => false,
+                'child_routes' => array(
+                    'guide' => array(
+                        'type' => 'segment',
+                        'options' =>  array(
+                            'route' => ':guide[/]',
+                            'constraints' => [
+                                'guide' => '[a-zA-Z\-0-9]+'
+                            ],
+                            'defaults' => array(
+                                'controller' => \Common\Controller\GuidesController::class,
+                                'action' => 'index'
+                            )
+                        ),
+                    ),
+                )
+            ),
         )
     ),
     'controllers' => array(
@@ -113,6 +135,7 @@ return array(
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
             'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
             \Common\Controller\ErrorController::class => \Common\Controller\ErrorController::class,
+            \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
         )
     ),
     'controller_plugins' => array(
