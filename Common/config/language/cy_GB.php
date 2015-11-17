@@ -2528,6 +2528,7 @@ return array(
     'user-registration.field.isLicenceHolder.label' => '{WELSH} Do you already hold a Vehicle Operator Licence?',
     'user-registration.field.licenceNumber.label' => '{WELSH} Licence number (for existing licence holders only)',
     'user-registration.field.organisationName.label' => '{WELSH} Organisation name',
+    'user-registration.field.termsAgreed.label' => '{WELSH} I agree to the <a href="%s" target="_blank">terms and conditions</a>',
     'user-registration.form-actions.create-account.label' => '{WELSH} Create account',
     'user-registration.form-actions.post-account.label' => '{WELSH} Post account details to this address',
     'user-registration.form.label' => '{WELSH} Your details',
