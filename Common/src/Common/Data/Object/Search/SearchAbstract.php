@@ -56,7 +56,7 @@ abstract class SearchAbstract
      */
     public function getVariables()
     {
-        return ['title' => $this->getTitle()];
+        return ['title' => $this->getTitle(), 'empty_message' => 'search-no-results-internal'];
     }
 
     /**

@@ -1932,6 +1932,7 @@ return array(
     'schedule41.refuse.application.message' => '{WELSH} Are you sure you want to refuse the schedule 4/1?',
     'schedule41.reset.application.message' => '{WELSH} Are you sure you want to reset the schedule 4/1?',
     'search' => '{WELSH} Search',
+    'search-no-results-internal' => '{WELSH} <p>There were no results for your search.</p><p>Try using different keywords, or picking another category.</p><p>You can look for every result in a category by choosing "all" from the dropdown lists.</p>',
     'search-result-label-address' => '{WELSH} Address',
     'search-result-label-business-type' => '{WELSH} Business type',
     'search-result-label-continuation-date' => '{WELSH} Continuation date',
