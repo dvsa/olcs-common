@@ -9,7 +9,15 @@
             <?php
             foreach ($actions as $action) {
                 if (isset($action['url'])) {
-                    echo '<a href="' . $action['url'] . '" class="' . (isset($action['class']) ? $action['class'] : 'action--secondary') . '">' . $this->translate($action['label']) . '</a>';
+                    $attributeString = ' ';
+                    if (isset($action['attributes']) && is_array($action['attributes'])) {
+                        foreach ($action['attributes'] as $a_key => $a_val) {
+                            $attributeString .= $a_key . '="' . $a_val . '"';
+                        }
+                    }
+                    echo '<a href="' . $action['url'] . '" class="' . (isset($action['class']) ? $action['class'] :
+                            'action--secondary') . '"' . $attributeString . '>' . $this->translate($action['label']) .
+                        '</a>';
                 }
                 else{
                     $lowerLabel = strtolower($action['label']);
