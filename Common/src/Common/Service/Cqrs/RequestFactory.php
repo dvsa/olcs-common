@@ -29,6 +29,11 @@ class RequestFactory implements FactoryInterface
         $contentType = new ContentType();
         $contentType->setMediaType('application/json');
 
+        $userRequest = $serviceLocator->get('Request');
+        $cookies = $userRequest->getCookie();
+
+        $secureToken = new Cookie(['secureToken' => $cookies['secureToken']]);
+
         $headers = new Headers();
         $headers->addHeaders([$accept, $contentType]);
 
