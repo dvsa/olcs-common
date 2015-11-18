@@ -93,17 +93,6 @@ class CurrentUser extends AbstractHelper
         return hash('sha256', $userData['pid']);
     }
 
-    public function getUniqueId()
-    {
-        $userData = $this->getUserData();
-
-        if (empty($userData)) {
-            return '';
-        }
-
-        return hash('sha256', $userData['pid']);
-    }
-
     private function getUserData()
     {
         if (!$this->userData) {
