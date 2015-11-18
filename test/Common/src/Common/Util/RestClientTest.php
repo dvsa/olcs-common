@@ -195,7 +195,10 @@ class RestClientTest extends AbstractHttpControllerTestCase
 
         $client = $this->getMock(
             '\stdClass',
-            array('setRequest', 'setUri', 'setHeaders', 'setMethod', 'setEncType', 'setRawBody', 'getRequest', 'resetParameters')
+            array(
+                'setRequest', 'setUri', 'setHeaders', 'setMethod', 'setEncType', 'setRawBody', 'getRequest',
+                'resetParameters'
+            )
         );
         $client->expects($this->once())
             ->method('setRequest')

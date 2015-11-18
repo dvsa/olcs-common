@@ -14,9 +14,6 @@ namespace Common\Service\Entity;
  */
 class UserEntityService extends AbstractEntityService
 {
-    const PERMISSION_SELFSERVE_LVA = 'selfserve-lva';
-    const PERMISSION_SELFSERVE_TM_DASHBOARD = 'selfserve-tm-dashboard';
-
     protected $entity = 'User';
 
     protected $currentUserBundle = [
@@ -83,12 +80,11 @@ class UserEntityService extends AbstractEntityService
     /**
      * Get the current logged in user ID
      *
-     * @todo when we have implemented auth, we need to amend this
      * @return int
      */
     public function getCurrentUserId()
     {
-        return 1;
+        return $this->getServiceLocator()->get('ZfcRbac\Service\AuthorizationService')->getIdentity()->getId();
     }
 
     /**

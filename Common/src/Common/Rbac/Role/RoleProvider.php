@@ -2,74 +2,30 @@
 
 namespace Common\Rbac\Role;
 
+use Common\Service\Cqrs\Query\QuerySender;
 use Rbac\Role\Role;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfcRbac\Role\RoleProviderInterface;
+use Dvsa\Olcs\Transfer\Query\User\RoleList;
 
 /**
  * Class RoleProvider
  * @package Common\Rbac\Role
  */
-class RoleProvider implements RoleProviderInterface, FactoryInterface
+class RoleProvider implements RoleProviderInterface
 {
-    const CACHE_KEY = 'rbac.roles';
-    const MAX_ROLES = 50;
+    /**
+     * @var QuerySender
+     */
+    private $queryService;
 
     /**
-     * @var \Zend\Cache\Storage\StorageInterface
+     * @var Role[]
      */
-    protected $cache;
+    private $roles = [];
 
-    /**
-     * @var \Common\Service\Data\Interfaces\DataService
-     */
-    protected $dataService;
-
-    /**
-     * @param \Zend\Cache\Storage\StorageInterface $cache
-     */
-    public function setCache($cache)
+    public function __construct(QuerySender $queryService)
     {
-        $this->cache = $cache;
-    }
-
-    /**
-     * @return \Zend\Cache\Storage\StorageInterface
-     */
-    public function getCache()
-    {
-        return $this->cache;
-    }
-
-    /**
-     * @param \Common\Service\Data\Interfaces\DataService $dataService
-     */
-    public function setDataService($dataService)
-    {
-        $this->dataService = $dataService;
-    }
-
-    /**
-     * @return \Common\Service\Data\Interfaces\DataService
-     */
-    public function getDataService()
-    {
-        return $this->dataService;
-    }
-
-    /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $serviceLocator = $serviceLocator->getServiceLocator();
-        $this->setDataService($serviceLocator->get('DataServiceManager')->get('Generic\Service\Data\Role'));
-        $this->setCache($serviceLocator->get('Cache'));
-        return $this;
+        $this->queryService = $queryService;
     }
 
     /**
@@ -80,15 +36,14 @@ class RoleProvider implements RoleProviderInterface, FactoryInterface
      */
     public function getRoles(array $roleNames)
     {
-        $success = false;
-        $result = $this->getCache()->getItem(self::CACHE_KEY, $success);
+        if (empty($this->roles)) {
+            $data = $this->queryService->send(RoleList::create([]));
 
-        if (!$success) {
+            if (!$data->isOk()) {
+                throw new \RuntimeException('Unable to retrieve roles');
+            }
 
-            $result = [];
-            $data = $this->getDataService()->fetchList(['limit' => self::MAX_ROLES]);
-
-            foreach ($data as $roleData) {
+            foreach ($data->getResult()['results'] as $roleData) {
                 $role = new Role($roleData['role']);
 
                 if (isset($roleData['rolePermissions'])) {
@@ -97,11 +52,10 @@ class RoleProvider implements RoleProviderInterface, FactoryInterface
                     }
                 }
 
-                $result[$roleData['role']] = $role;
+                $this->roles[$roleData['role']] = $role;
             }
-            $this->getCache()->setItem(self::CACHE_KEY, $result);
         }
 
-        return array_intersect_key($result, array_combine($roleNames, $roleNames));
+        return array_intersect_key($this->roles, array_combine($roleNames, $roleNames));
     }
 }

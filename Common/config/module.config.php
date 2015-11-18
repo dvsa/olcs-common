@@ -82,6 +82,16 @@ return array(
                     ),
                 )
             ),
+            'logout' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/logout',
+                    'defaults' => [
+                        'controller' => \Common\Controller\LogoutController::class,
+                        'action' => 'index'
+                    ]
+                ]
+            ]
         )
     ),
     'controllers' => array(
@@ -136,6 +146,7 @@ return array(
             'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
             \Common\Controller\ErrorController::class => \Common\Controller\ErrorController::class,
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
+            \Common\Controller\LogoutController::class => \Common\Controller\LogoutController::class
         )
     ),
     'controller_plugins' => array(
@@ -463,7 +474,6 @@ return array(
             'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
             'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
             'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
-            'currentUser' => 'Common\View\Helper\CurrentUser',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
             'licenceStatus' => 'Common\View\Helper\LicenceStatus',
             'address' => 'Common\View\Helper\Address',
@@ -472,6 +482,7 @@ return array(
         'factories' => array(
             'formRow' => 'Common\Form\View\Helper\FormRow',
             'languageLink' => \Common\View\Helper\LanguageLink::class,
+            'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
         )
     ),
     'view_manager' => array(
@@ -610,10 +621,10 @@ return array(
     ),
     'zfc_rbac' => [
         'identity_provider' => \Common\Rbac\IdentityProvider::class,
-        'role_provider' => ['Common\Rbac\Role\RoleProvider' => []],
+        'role_provider' => [\Common\Rbac\Role\RoleProvider::class => []],
         'role_provider_manager' => [
             'factories' => [
-                'Common\Rbac\Role\RoleProvider' => 'Common\Rbac\Role\RoleProvider'
+                \Common\Rbac\Role\RoleProvider::class => \Common\Rbac\Role\RoleProviderFactory::class
             ]
         ],
         'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
@@ -836,6 +847,6 @@ return array(
         'replacements' => include_once(__DIR__ . '/language/replacements.php')
     ],
     'cacheable_queries' => [
-        \Dvsa\Olcs\Transfer\Query\User\Roles::class => ['persistent' => true]
+        \Dvsa\Olcs\Transfer\Query\User\RoleList::class => ['persistent' => true]
     ]
 );

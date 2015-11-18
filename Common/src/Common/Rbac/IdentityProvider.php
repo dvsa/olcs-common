@@ -1,82 +1,121 @@
 <?php
 
+/**
+ * Identity Provider
+ */
 namespace Common\Rbac;
 
-use Common\Service\Cqrs\Query\QueryService;
+use Common\Service\Cqrs\Query\QuerySender;
+use Dvsa\Olcs\Transfer\Query\MyAccount\MyAccount;
+use Zend\Http\Header\GenericHeader;
+use Zend\Http\Request;
+use Zend\Session\Container;
 use ZfcRbac\Identity\IdentityInterface;
 use ZfcRbac\Identity\IdentityProviderInterface;
-use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 
+/**
+ * Identity Provider
+ */
 class IdentityProvider implements IdentityProviderInterface
 {
     /**
-     * @var QueryService
+     * @var QuerySender
      */
     private $queryService;
 
     /**
-     * @var TransferAnnotationBuilder
+     * @var Container
      */
-    private $annotationBuilder;
+    private $session;
 
     /**
-     * @var null
+     * @var Request
      */
-    private $anonIdentity = false;
+    private $request;
 
     /**
-     * @var null
+     * @param QuerySender $queryService
      */
-    private $identity = null;
-
-    /**
-     * @param TransferAnnotationBuilder $annotationBuilder
-     * @param QueryService $queryService
-     */
-    public function __construct(TransferAnnotationBuilder $annotationBuilder, QueryService $queryService)
+    public function __construct(QuerySender $queryService, Container $session, Request $request)
     {
         $this->queryService = $queryService;
-        $this->annotationBuilder = $annotationBuilder;
+        $this->session = $session;
+        $this->request = $request;
     }
 
     /**
      * Get the identity
      *
-     * @TODO map more of the incoming data...
      * @return null|IdentityInterface
      * @throws \Exception
      */
     public function getIdentity()
     {
-        if ($this->identity === null) {
-            $query = $this->annotationBuilder->createQuery(new \Dvsa\Olcs\Transfer\Query\MyAccount\MyAccount());
-            $response = $this->queryService->send($query);
-
-            if ($response->isNotFound()) {
-                $this->identity = $this->anonIdentity;
-                return $this->anonIdentity;
-            }
+        if ($this->hasIdentityChanged()) {
+            $response = $this->queryService->send(MyAccount::create([]));
 
             if (!$response->isOk()) {
-                \Doctrine\Common\Util\Debug::dump($response->getBody());
                 throw new \Exception('Unable to retrieve identity');
             }
 
             $data = $response->getResult();
-            $roles = [];
 
             $user = new User();
+            $user->setId($data['id']);
+            $user->setPid($data['pid']);
+            $user->setUserType($data['userType']);
+            $user->setUsername($data['loginId']);
             $user->setUserData($data);
 
+            $roles = [];
             foreach ($data['roles'] as $role) {
                 $roles[] = $role['role'];
             }
-
             $user->setRoles($roles);
 
-            $this->identity = $user;
+            $this->session->offsetSet('identity', $user);
         }
 
-        return $this->identity;
+        return $this->session->offsetGet('identity');
+    }
+
+    /**
+     * Checks if identity we have in session still matches the request
+     *
+     * @return bool
+     */
+    private function hasIdentityChanged()
+    {
+        if (!$this->session->offsetExists('identity')) {
+            // no identity in the session yet - refresh
+            return true;
+        }
+
+        $identity = $this->session->offsetGet('identity');
+
+        if (!($identity instanceof User)) {
+            // no identity in the session yet - refresh
+            return true;
+        }
+
+        $cookies = $this->request->getCookie();
+
+        $pid = $this->request->getHeader('X-Pid', new GenericHeader())->getFieldValue();
+
+        if (!empty($cookies['secureToken']) && !empty($pid)) {
+            // user authenticated
+            if ($identity->getPid() !== $pid) {
+                // but the one in session has different pid - refresh
+                return true;
+            }
+        } else {
+            // user not authenticated
+            if (!$identity->isAnonymous()) {
+                // but the one in session is not anonymous - refresh
+                return true;
+            }
+        }
+
+        return false;
     }
 }

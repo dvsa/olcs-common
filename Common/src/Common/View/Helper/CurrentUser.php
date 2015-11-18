@@ -8,20 +8,28 @@
 
 namespace Common\View\Helper;
 
+use Common\Rbac\User;
 use Zend\View\Helper\AbstractHelper;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Current User view helper
  *
- * @todo The implementation of this class is a temporary fix
- *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class CurrentUser extends AbstractHelper implements ServiceLocatorAwareInterface
+class CurrentUser extends AbstractHelper
 {
     protected $userData;
+
+    /**
+     * @var AuthorizationService
+     */
+    private $authService;
+
+    public function __construct(AuthorizationService $authService)
+    {
+        $this->authService = $authService;
+    }
 
     /**
      * Get full name
@@ -30,73 +38,69 @@ class CurrentUser extends AbstractHelper implements ServiceLocatorAwareInterface
      */
     public function getFullName()
     {
-        $data = $this->getData();
-
-        $name = $data['contactDetails']['person']['forename'] .' '.
-            $data['contactDetails']['person']['familyName'];
-        if (empty(trim($name))) {
-            $name = 'User ID '. $this->userData['id'];
+        if (!$this->isLoggedIn()) {
+            return 'Not Logged in';
         }
 
-        return $this->getView()->escapeHtml($name);
+        $userData = $this->getUserData();
+
+        $name = $this->view->personName($userData['contactDetails']['person'], ['forename', 'familyName']);
+
+        if (empty(trim($name))) {
+            $name = $userData['loginId'];
+        }
+
+        return $name;
     }
 
     /**
-     * Get Organisation name
-     *
      * @return string
      */
     public function getOrganisationName()
     {
-        $data = $this->getData();
-
-        if (isset($data['organisationUsers']) && is_array($data['organisationUsers'])) {
-            // use array_shift, as the first organisationUser is not always index 0
-            $organisationUser = array_shift($data['organisationUsers']);
-            $name = $organisationUser['organisation']['name'];
-            if (empty(trim($name))) {
-                $name = 'Organisation ID '.$organisationUser['organisation']['id'];
-            }
-        } else {
-            $name = 'NO ORGANISATION';
+        if (!$this->isLoggedIn()) {
+            return '';
         }
 
-        return $this->getView()->escapeHtml($name);
+        $userData = $this->getUserData();
+
+        switch ($userData['userType']) {
+            case User::USER_TYPE_OPERATOR:
+                return current($userData['organisationUsers'])['organisation']['name'];
+            case User::USER_TYPE_PARTNER:
+                return $userData['contactDetails']['description'];
+            case User::USER_TYPE_LOCAL_AUTHORITY:
+                return $userData['localAuthority']['description'];
+        }
+
+        return '';
     }
 
-    /**
-     * Get current user data
-     *
-     * @return array
-     */
-    private function getData()
+    public function isLoggedIn()
+    {
+        $userData = $this->getUserData();
+        return (!empty($userData['userType']) && ($userData['userType'] !== User::USER_TYPE_ANON));
+    }
+
+    public function getUniqueId()
+    {
+        if (!$this->isLoggedIn()) {
+            return '';
+        }
+
+        $userData = $this->getUserData();
+
+        return hash('sha256', $userData['pid']);
+    }
+
+    private function getUserData()
     {
         if (!$this->userData) {
-            $authService = $this->getServiceLocator()->getServiceLocator()
-                ->get(\ZfcRbac\Service\AuthorizationService::class);
-
-            if (!$authService->getIdentity()) {
-                return "Not logged in";
+            if ($this->authService->getIdentity()) {
+                $this->userData = $this->authService->getIdentity()->getUserData();
             }
-
-            $this->userData = $authService->getIdentity()->getUserData();
         }
 
         return $this->userData;
-    }
-
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    /**
-     * Get service locator
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
     }
 }

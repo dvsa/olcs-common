@@ -74,11 +74,12 @@ class AbstractFactory implements AbstractFactoryInterface
         }
 
         $userRequest = $serviceLocator->getServiceLocator()->get('Request');
+        $secureToken = new Cookie();
         if ($userRequest instanceof Request) {
             $cookies = $userRequest->getCookie();
-            $secureToken = new Cookie(['secureToken' => $cookies['secureToken']]);
-        } else {
-            $secureToken = new Cookie();
+            if (isset($cookies['secureToken'])) {
+                $secureToken = new Cookie(['secureToken' => $cookies['secureToken']]);
+            }
         }
 
         // options
