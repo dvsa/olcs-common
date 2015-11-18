@@ -8,8 +8,6 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Form\Elements\Validators\PrivateHireLicenceTrafficAreaValidator;
-
 /**
  * Shared logic between Taxi Phv controllers
  *
@@ -298,20 +296,6 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
         $trafficArea = $this->getTrafficArea();
 
-        if (!($mode === 'edit' && $this->getPrivateHireLicencesCount() === 1)) {
-            $trafficAreaValidator = new PrivateHireLicenceTrafficAreaValidator();
-            $trafficAreaValidator->setServiceLocator($this->getServiceLocator());
-
-            $trafficAreaValidator->setPrivateHireLicencesCount(
-                $this->getPrivateHireLicencesCount()
-            );
-
-            $trafficAreaValidator->setTrafficArea($trafficArea);
-
-            $postcodeValidatorChain = $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
-            $postcodeValidatorChain->attach($trafficAreaValidator);
-        }
-
         if (!$trafficArea && $form->get('form-actions')->has('addAnother')) {
             $form->get('form-actions')->remove('addAnother');
         }
@@ -437,6 +421,9 @@ abstract class AbstractTaxiPhvController extends AbstractController
     private function getTrafficAreaValidationMessage(array $message)
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
+        if (key($message) === 'PHL_INVALID_TA') {
+            return $message;
+        }
         return $translator->translateReplace(key($message) .'_'. strtoupper($this->location), current($message));
     }
 
