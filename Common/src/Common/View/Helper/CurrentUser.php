@@ -42,6 +42,7 @@ class CurrentUser extends AbstractHelper
             return 'Not Logged in';
         }
 
+
         $userData = $this->getUserData();
 
         $name = $this->view->personName($userData['contactDetails']['person'], ['forename', 'familyName']);
