@@ -227,8 +227,11 @@ abstract class AbstractSafetyController extends AbstractController
         $id = $this->params('child_id');
 
         if ($mode !== 'add') {
-
-            $response = $this->handleQuery(Workshop::create(['id' => $id]));
+            $dtoParams = [
+                $this->getIdentifierIndex() => $this->getIdentifier(),
+                'id' => $id
+            ];
+            $response = $this->handleQuery(Workshop::create($dtoParams));
 
             if (!$response->isOK()) {
                 return $this->notFoundAction();
