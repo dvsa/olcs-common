@@ -42,7 +42,6 @@ class CurrentUser extends AbstractHelper
             return 'Not Logged in';
         }
 
-
         $userData = $this->getUserData();
 
         $name = $this->view->personName($userData['contactDetails']['person'], ['forename', 'familyName']);
@@ -90,6 +89,17 @@ class CurrentUser extends AbstractHelper
         }
 
         $userData = $this->getUserData();
+
+        return hash('sha256', $userData['pid']);
+    }
+
+    public function getUniqueId()
+    {
+        $userData = $this->getUserData();
+
+        if (empty($userData)) {
+            return '';
+        }
 
         return hash('sha256', $userData['pid']);
     }
