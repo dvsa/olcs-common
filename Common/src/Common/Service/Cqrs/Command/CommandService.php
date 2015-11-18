@@ -10,6 +10,8 @@ namespace Common\Service\Cqrs\Command;
 use Common\Exception\ResourceConflictException;
 use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Common\Service\Cqrs\Response;
+use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
+use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
 use Zend\Http\Request;
@@ -74,8 +76,20 @@ class CommandService
         $this->request->setMethod($method);
         $this->request->setContent(json_encode($data));
 
+        /** @var ClientAdapterLoggingWrapper $adapter */
+        $adapter = $this->client->getAdapter();
+
         try {
+            if ($command->getDto() instanceof LoggerOmitContentInterface) {
+                $shouldLogContent = $adapter->getShouldLogData();
+                $adapter->setShouldLogData(false);
+            }
+
             $clientResponse = $this->client->send($this->request);
+
+            if ($command->getDto() instanceof LoggerOmitContentInterface) {
+                $adapter->setShouldLogData($shouldLogContent);
+            }
 
             if ($clientResponse->getStatusCode() === \Zend\Http\Response::STATUS_CODE_409) {
                 throw new ResourceConflictException('Resource conflict');
