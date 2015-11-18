@@ -723,7 +723,7 @@ return array(
             'lva-application-financial_history' => LvaFormService\FinancialHistory::class,
 
             // Financial Evidence form services
-            'lva-variation-financial_evidence' => LvaFormService\FinancialEvidence::class,
+            'lva-variation-financial_evidence' => LvaFormService\VariationFinancialEvidence::class,
             'lva-application-financial_evidence' => LvaFormService\FinancialEvidence::class,
 
             // Declarations (undertakings) form services

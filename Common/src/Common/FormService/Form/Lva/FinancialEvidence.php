@@ -7,14 +7,12 @@
  */
 namespace Common\FormService\Form\Lva;
 
-use Common\FormService\Form\AbstractFormService;
-
 /**
  * FinancialEvidence Form
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FinancialEvidence extends AbstractFormService
+class FinancialEvidence extends AbstractLvaFormService
 {
     public function getForm()
     {
