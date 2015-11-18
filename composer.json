@@ -38,7 +38,7 @@
         "major-caiger/munit": "~0.1.0",
         "mikey179/vfsStream": "~1.4.0",
         "olcs/olcs-testhelpers": "dev-develop",
-        "olcs/olcs-transfer": "dev-develop",
+        "olcs/olcs-transfer": "dev-auth",
         "olcs/olcs-utils": "dev-develop",
         "soflomo/purifier": "~0.1.0"
     },
