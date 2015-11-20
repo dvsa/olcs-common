@@ -58,7 +58,7 @@ class LicenceSelfserve extends InternalSearchAbstract
                 new Filter\EntityType(),
                 new Filter\LicenceType(),
                 new Filter\LicenceStatus(),
-                new Filter\TrafficArea(),
+                new Filter\LicenceTrafficArea(),
             ];
         }
 
