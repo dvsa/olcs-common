@@ -1844,6 +1844,8 @@ return array(
     'postcode.address.manual_entry' => 'Enter the address yourself',
     'postcode.error.no-addresses-found' => 'No addresses found for postcode',
     'postcode.error.not-available' => 'Address search unavailable. Please enter your address manually',
+    'postcode.validation.invalidPostcodeFormat' => 'Invalid postcode format',
+    'postcode.validation.postcodeBadLength' => 'Postcode must be between 5 and 8 characters long and start with a letter',
     'previous-history' => 'Previous history',
     'print-declaration-form' => 'Print declaration form',
     'print-sign-return-declaration-form' => 'Print, sign and return the declaration form',
