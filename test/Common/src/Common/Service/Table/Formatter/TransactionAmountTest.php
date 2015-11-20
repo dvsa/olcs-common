@@ -45,9 +45,7 @@ class TransactionAmountTest extends PHPUnit_Framework_TestCase
             [['amount' => 251.40],['name' => 'amount'], '£251.40'],
             [
                 [
-                    'transaction' => [
-                        'status' => ['id' => RefData::TRANSACTION_STATUS_CANCELLED],
-                    ],
+                    'status' => ['id' => RefData::TRANSACTION_STATUS_CANCELLED],
                     'amount' => 251.40
                 ],
                 ['name' => 'amount'],
