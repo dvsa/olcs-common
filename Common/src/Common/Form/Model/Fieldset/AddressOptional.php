@@ -82,7 +82,8 @@ class AddressOptional
      * @Form\Options({"label":"Postcode"})
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})
+     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
      */
     public $postcode = null;
 

@@ -70,8 +70,8 @@ class OperatorRegisteredAddress
      * @Form\Attributes({"id":""})
      * @Form\Options({"label":"Postcode"})
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":8}})
+     * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})
+     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
      */
     public $postcode = null;
 }

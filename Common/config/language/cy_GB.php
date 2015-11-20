@@ -1846,6 +1846,8 @@ return array(
     'postcode.address.manual_entry' => '{WELSH} Enter the address yourself',
     'postcode.error.no-addresses-found' => '{WELSH} No addresses found for postcode',
     'postcode.error.not-available' => '{WELSH} Address search unavailable. Please enter your address manually',
+    'postcode.validation.invalidPostcodeFormat' => '{WELSH} Invalid postcode format',
+    'postcode.validation.postcodeBadLength' => '{WELSH} Postcode must be either 6, 7 or 8 characters long and start with a letter',
     'previous-history' => '{WELSH} Previous history',
     'print-declaration-form' => '{WELSH} Print declaration form',
     'print-sign-return-declaration-form' => '{WELSH} Print, sign and return the declaration form',
