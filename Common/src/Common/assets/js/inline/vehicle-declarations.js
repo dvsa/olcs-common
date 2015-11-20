@@ -35,7 +35,7 @@ $(function() {
   {
     return $('input[name="psvVehicleSize[size]"]:checked').val();
   }
-  
+
   function isVehicleSizeSmall()
   {
      return getVehicleSize() === "psvvs_small";
@@ -74,10 +74,10 @@ $(function() {
       },
       "limousinesNoveltyVehicles": {
         "label:limousinesNoveltyVehicles\\[psvNoLimousineConfirmationLabel\\]": limoChecked("N"),
-        "parent:.js-no-confirmation": limoChecked("N"),
+        "date:limousinesNoveltyVehicles\\[psvNoLimousineConfirmation\\]": limoChecked("N"),
 
         "label:limousinesNoveltyVehicles\\[psvOnlyLimousinesConfirmationLabel\\]": show15g(),
-        "parent:.js-only-confirmation": show15g()
+        "date:limousinesNoveltyVehicles\\[psvOnlyLimousinesConfirmation\\]": show15g(),
       },
     }
   });
