@@ -159,8 +159,7 @@ class ContactOptional
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\EmailAddress"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":5,"max":255}})
+     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\EmailAddress"})
      */
     public $email = null;
 }
