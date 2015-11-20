@@ -30,7 +30,8 @@ trait LicenceSafetyControllerTrait
     protected function deleteWorkshops($ids)
     {
         $data = [
-            'ids' => $ids
+            'ids' => $ids,
+            'licence' => $this->getIdentifier()
         ];
 
         return $this->handleCommand(DeleteWorkshop::create($data));
