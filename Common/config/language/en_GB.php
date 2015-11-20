@@ -851,6 +851,7 @@ return array(
     'edit-condition' => 'Edit condition',
     'edit-conviction' => 'Edit Conviction',
     'edit-undertaking' => 'Edit undertaking',
+    'email-validator.error-message' => 'Email address should be less than 60 characters',
     'end-date' => 'End date',
     'entity-details' => 'Entity details',
     'entity-details-nav-back-to-operator-search' => 'Back to operator search',

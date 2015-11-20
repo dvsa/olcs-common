@@ -851,6 +851,7 @@ return array(
     'edit-condition' => '{WELSH} Edit condition',
     'edit-conviction' => '{WELSH} Edit Conviction',
     'edit-undertaking' => '{WELSH} Edit undertaking',
+    'email-validator.error-message' => '{WELSH} Email address should be less than 60 characters',
     'end-date' => '{WELSH} End date',
     'entity-details' => '{WELSH} Entity details',
     'entity-details-nav-back-to-operator-search' => '{WELSH} Back to operator search',
