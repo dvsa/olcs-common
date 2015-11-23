@@ -30,8 +30,8 @@ class TransactionAmount extends Money
     {
         $amount = parent::format($data, $column);
 
-        if (isset($data['transaction']['status']['id'])
-            && $data['transaction']['status']['id'] !== Ref::TRANSACTION_STATUS_COMPLETE
+        if (isset($data['status']['id'])
+            && $data['status']['id'] !== Ref::TRANSACTION_STATUS_COMPLETE
         ) {
             return sprintf('<span class="void">%s</span>', $amount);
         }
