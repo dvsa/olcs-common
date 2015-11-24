@@ -3,11 +3,10 @@
 /**
  * ZF2 Module
  */
-
 namespace Common;
 
+use Dvsa\Olcs\Utils\Auth\AuthHelper;
 use Zend\EventManager\EventManager;
-use Common\Exception\ResourceNotFoundException;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Model\ViewModel;
@@ -20,6 +19,11 @@ use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
  */
 class Module
 {
+    /**
+     * Initialize module
+     *
+     * @param $moduleManager
+     */
     public function init($moduleManager)
     {
         $events = $moduleManager->getEventManager();
@@ -66,22 +70,46 @@ class Module
 
         $this->setUpTranslator($sm, $events);
 
-        try {
-            $listener = $e->getApplication()->getServiceManager()->get('Common\Rbac\Navigation\IsAllowedListener');
+        $listener = $e->getApplication()->getServiceManager()->get('Common\Rbac\Navigation\IsAllowedListener');
 
-            $events->getSharedManager()
-                ->attach('Zend\View\Helper\Navigation\AbstractHelper', 'isAllowed', array($listener, 'accept'));
+        $events->getSharedManager()
+            ->attach('Zend\View\Helper\Navigation\AbstractHelper', 'isAllowed', array($listener, 'accept'));
+        $events->attach(
+            $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\UnauthorizedStrategy')
+        );
+        if (AuthHelper::isOpenAm() === false) {
             $events->attach(
-                $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\UnauthorizedStrategy')
+                $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\RedirectStrategy')
             );
-        } catch (\Exception $e) {
-            null;
         }
     }
 
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        $config = include __DIR__ . '/config/module.config.php';
+
+        if (AuthHelper::isOpenAm() === false) {
+            unset($config['zfc_rbac']['identity_provider']);
+            $config['zfc_rbac']['redirect_strategy'] = [
+                'redirect_when_connected'           => false,
+                'redirect_to_route_disconnected'    => 'zfcuser/login',
+                'append_previous_uri'               => true,
+                'previous_uri_query_key'            => 'redirectTo',
+            ];
+            $config['zfcuser']['auth_identity_fields'] = ['username'];
+            $config['service_manager']['delegators']['zfcuser_user_mapper'] = [
+                \Common\Rbac\UserProviderDelegatorFactory::class
+            ];
+            $config['view_manager']['template_path_stack']['zfcuser'] = __DIR__ . '/../../view';
+            $config['service_manager']['factories']['AnonQuerySender']
+                = \Common\Service\Cqrs\Query\AnonQuerySender::class;
+            $config['service_manager']['factories']['AnonCqrsRequest']
+                = \Common\Service\Cqrs\AnonRequestFactory::class;
+            $config['service_manager']['factories']['AnonQueryService']
+                = \Common\Service\Cqrs\Query\AnonQueryServiceFactory::class;
+        }
+
+        return $config;
     }
 
     protected function setUpTranslator(ServiceLocatorInterface $sm, $events)

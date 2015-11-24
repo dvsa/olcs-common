@@ -26,7 +26,7 @@ class QuerySender implements FactoryInterface
 
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $this->queryService = $serviceLocator->get('QueryService');
+        $this->queryService = $this->getQueryService($serviceLocator);
         $this->annotationBuilder = $serviceLocator->get('TransferAnnotationBuilder');
 
         return $this;
@@ -40,5 +40,16 @@ class QuerySender implements FactoryInterface
     {
         $query = $this->annotationBuilder->createQuery($query);
         return $this->queryService->send($query);
+    }
+
+    /**
+     * Grab the appropriate query service from the service locator
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return QueryService
+     */
+    protected function getQueryService(ServiceLocatorInterface $serviceLocator)
+    {
+        return $serviceLocator->get('QueryService');
     }
 }
