@@ -960,7 +960,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $form;
     }
-
+/*
+    @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
     public function processAdd($data, $entityName)
     {
         $data = $this->trimFormFields($data);
@@ -984,7 +985,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $result;
 
     }
-
+*/
     /**
      * Method to trigger generation of a document providing a generate checkbox
      * is found in $data
@@ -1265,9 +1266,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Delete
-     *
+     * @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
      * @return Response
      */
+    /*
     protected function delete($id = null, $service = null)
     {
         // @NOTE progressivly start to include the logic within a service
@@ -1289,14 +1291,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return false;
     }
-
+*/
     /**
      * Save data
      *
+     * @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
      * @param array $data
      * @param string $service
      * @return array
      */
+    /*
     protected function save($data, $service = null)
     {
         // @NOTE progressivly start to include the logic within a service
@@ -1317,13 +1321,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $this->makeRestCall($service, $method, $data);
     }
-
+*/
     /**
      * Complete section and save
-     *
+     * @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
      * @param array $data
      * @return array
      */
+    /*
     protected function processSave($data)
     {
         $data = $this->processDataMapForSave($data, $this->getDataMap());
@@ -1337,7 +1342,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $response;
     }
-
+*/
     /**
      * Get form tables
      *
@@ -1471,10 +1476,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * Load data for the form
      *
      * This method should be overridden
-     *
+     * @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
      * @param int $id
      * @return array
      */
+    /*
     protected function load($id)
     {
         // @NOTE progressivly start to include the logic within a service
@@ -1498,7 +1504,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $this->loadedData;
     }
-
+*/
     /**
      * Process the data map for saving
      *
