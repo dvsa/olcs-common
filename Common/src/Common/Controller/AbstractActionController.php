@@ -612,6 +612,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function getForm($type)
     {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm($type);
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        $formHelper->processAddressLookupForm($form, $this->getRequest());
+
+        return $form;
+        /*
         $form = $this->getFormClass($type);
 
         // The vast majority of forms thus far don't have actions, but
@@ -626,6 +633,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $form = $this->processPostcodeLookup($form);
 
         return $form;
+        */
     }
 
     /**
@@ -634,6 +642,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @param Form $form
      * @return Form
      */
+        /*
     protected function processPostcodeLookup($form)
     {
         $request = $this->getRequest();
@@ -724,22 +733,24 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $form;
     }
+    */
 
     protected function getAddressService()
     {
         return $this->getServiceLocator()->get('Helper\Address');
     }
-
+/*
     protected function getAddressForUprn($uprn)
     {
         return $this->sendGet('postcode\address', array('id' => $uprn), true);
     }
-
+*/
+    /*
     protected function getAddressesForPostcode($postcode)
     {
         return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
     }
-
+*/
     protected function alterFormBeforeValidation($form)
     {
         return $form;
@@ -983,47 +994,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $result;
 
-    }
-
-    /**
-     * Method to trigger generation of a document providing a generate checkbox
-     * is found in $data
-     *
-     * @param array $data
-     * @return array
-     * @throws \RuntimeException
-     */
-    protected function generateDocument($data = array())
-    {
-        $documentData = [];
-        if (isset($data['document']['generate']) && $data['document']['generate'] == '1') {
-
-            if (!method_exists($this, 'mapDocumentData')) {
-                throw new \RuntimeException('Controller requires mapDocumentData method');
-            }
-            $bookmarks = $this->mapDocumentData($data);
-
-            $documentData = $this->sendPost(
-                'Olcs\Document\GenerateRtf', [
-                    'data' => [
-                        'formName' => $data['document']['formName'],
-                        'licence' => $this->fromRoute('licence'),
-                        'case' => $this->fromRoute('case'),
-                        'id' => $data['id']
-                    ],
-                    'bookmarks' => $bookmarks,
-                    'country' =>
-                        isset($data['document']['country']) ?
-                        $data['document']['country'] : 'en_GB',
-                    'templateId' => $data['document']['templateId'],
-                    'format' =>
-                        isset($data['document']['format']) ?
-                        $data['document']['format'] : 'rtf'
-                    ]
-            );
-        }
-
-        return $documentData;
     }
 
     protected function trimFormFields($data)

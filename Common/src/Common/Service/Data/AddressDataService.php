@@ -21,6 +21,7 @@ class AddressDataService implements ServiceLocatorAwareInterface
 
     public function getAddressForUprn($uprn)
     {
+        die('uprn: ' . $uprn);
         return $this->getServiceLocator()->get('Helper\Rest')
             ->sendGet('postcode\address', array('id' => $uprn), true);
     }
