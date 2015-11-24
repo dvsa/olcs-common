@@ -960,32 +960,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $form;
     }
-/*
-    @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
-    public function processAdd($data, $entityName)
-    {
-        $data = $this->trimFormFields($data);
 
-        $result = $this->makeRestCall($entityName, 'POST', $data);
-
-        $data['id'] = $result['id'];
-        $this->generateDocument($data);
-
-        return $result;
-    }
-
-    public function processEdit($data, $entityName)
-    {
-        $data = $this->trimFormFields($data);
-
-        $result = $this->makeRestCall($entityName, 'PUT', $data);
-
-        $this->generateDocument($data);
-
-        return $result;
-
-    }
-*/
     /**
      * Method to trigger generation of a document providing a generate checkbox
      * is found in $data
@@ -1265,85 +1240,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Delete
-     * @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
-     * @return Response
-     */
-    /*
-    protected function delete($id = null, $service = null)
-    {
-        // @NOTE progressivly start to include the logic within a service
-        //  but maintain the old logic for backwards compatability
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->delete($id, $service);
-        }
-
-        if ($service === null) {
-            $service = $this->getService();
-        }
-
-        if (!empty($id) && !empty($service)) {
-
-            $this->makeRestCall($service, 'DELETE', array('id' => $id));
-
-            return true;
-        }
-
-        return false;
-    }
-*/
-    /**
-     * Save data
-     *
-     * @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
-     * @param array $data
-     * @param string $service
-     * @return array
-     */
-    /*
-    protected function save($data, $service = null)
-    {
-        // @NOTE progressivly start to include the logic within a service
-        //  but maintain the old logic for backwards compatability
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->save($data, $service);
-        }
-
-        $method = 'POST';
-
-        if (isset($data['id']) && !empty($data['id'])) {
-            $method = 'PUT';
-        }
-
-        if (empty($service)) {
-            $service = $this->getService();
-        }
-
-        return $this->makeRestCall($service, $method, $data);
-    }
-*/
-    /**
-     * Complete section and save
-     * @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
-     * @param array $data
-     * @return array
-     */
-    /*
-    protected function processSave($data)
-    {
-        $data = $this->processDataMapForSave($data, $this->getDataMap());
-
-        $response = $this->save($data);
-
-        if ($response instanceof Response || $response instanceof ViewModel) {
-            $this->setCaughtResponse($response);
-            return;
-        }
-
-        return $response;
-    }
-*/
-    /**
      * Get form tables
      *
      * @return array
@@ -1472,39 +1368,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $this->save($data);
     }
 
-    /**
-     * Load data for the form
-     *
-     * This method should be overridden
-     * @todo probably this method not in use anymore, if nothing is broken will remove on 1/12/2015.
-     * @param int $id
-     * @return array
-     */
-    /*
-    protected function load($id)
-    {
-        // @NOTE progressivly start to include the logic within a service
-        //  but maintain the old logic for backwards compatability
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->load($id);
-        }
-
-        if (empty($this->loadedData)) {
-            $service = $this->getService();
-
-            $result = $this->makeRestCall($service, 'GET', $id, $this->getDataBundle());
-
-            if (empty($result)) {
-                $this->setCaughtResponse($this->notFoundAction());
-                return;
-            }
-
-            $this->loadedData = $result;
-        }
-
-        return $this->loadedData;
-    }
-*/
     /**
      * Process the data map for saving
      *
