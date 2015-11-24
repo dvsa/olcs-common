@@ -74,6 +74,7 @@ return array(
     'N/A' => 'Not applicable',
     'NI-vehicle-operator-link' => '{{NI_VEHICLE_OPERATOR_LINK}}',
     'No' => 'No',
+    'Not logged in' => 'Not logged in',
     'OC_CANNOT_DELETE_HAS_S4' => 'Operating centres that are part of a schedule 4/1 action cannot be removed',
     'OperatingCentreNoOfOperatingCentres.required' => 'Please add an operating centre',
     'Please Select' => 'Please Select',

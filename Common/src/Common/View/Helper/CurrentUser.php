@@ -39,7 +39,7 @@ class CurrentUser extends AbstractHelper
     public function getFullName()
     {
         if (!$this->isLoggedIn()) {
-            return 'Not Logged in';
+            return 'Not logged in';
         }
 
         $userData = $this->getUserData();
