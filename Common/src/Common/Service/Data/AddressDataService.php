@@ -34,7 +34,14 @@ class AddressDataService extends AbstractDataService
 
     public function getAddressesForPostcode($postcode)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->sendGet('postcode\address', array('postcode' => $postcode), true);
+        $dtoData = GetList::create(['postcode' => $postcode]);
+
+        $response = $this->handleQuery($dtoData);
+
+        if ($response->isServerError() || $response->isClientError() || !$response->isOk() ||
+            !count($response->getResult()['results'])) {
+            throw new UnexpectedResponseException('unknown-error');
+        }
+        return $response->getResult()['results'];
     }
 }
