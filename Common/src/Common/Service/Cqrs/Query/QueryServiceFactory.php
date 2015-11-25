@@ -11,6 +11,7 @@ use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Http\Client;
+use Zend\Http\Request;
 
 /**
  * Query Service Factory
@@ -33,6 +34,17 @@ class QueryServiceFactory implements FactoryInterface
         $adapter = new ClientAdapterLoggingWrapper();
         $adapter->wrapAdapter($client);
 
-        return new QueryService($serviceLocator->get('ApiRouter'), $client, $serviceLocator->get('CqrsRequest'));
+        return new QueryService($serviceLocator->get('ApiRouter'), $client, $this->getRequest($serviceLocator));
+    }
+
+    /**
+     * Grab the appropriate request object
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return Request
+     */
+    protected function getRequest(ServiceLocatorInterface $serviceLocator)
+    {
+        return $serviceLocator->get('CqrsRequest');
     }
 }

@@ -1,25 +1,28 @@
 <?php
 
-namespace Common\Controller\Plugin;
+namespace Common\Rbac\Role;
 
+use Dvsa\Olcs\Utils\Auth\AuthHelper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class CurrentUserFactory
- * @package Common\Controller\Plugin
+ * Class RoleProviderFactory
+ * @package Common\Rbac\Role
  */
-final class CurrentUserFactory implements FactoryInterface
+class RoleProviderFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return CurrentUserInterface
+     * @return mixed
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        $qs = AuthHelper::isOpenAm() ? 'QuerySender' : 'AnonQuerySender';
+
         $serviceLocator = $serviceLocator->getServiceLocator();
-        return new CurrentUser($serviceLocator->get('ZfcRbac\Service\AuthorizationService'));
+        return new RoleProvider($serviceLocator->get($qs));
     }
 }

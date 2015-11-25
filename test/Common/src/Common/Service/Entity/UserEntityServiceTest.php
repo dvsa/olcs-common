@@ -23,28 +23,6 @@ class UserEntityServiceTest extends AbstractEntityServiceTestCase
         parent::setUp();
     }
 
-    public function testGetCurrentUserId()
-    {
-        $this->assertEquals(1, $this->sut->getCurrentUserId());
-    }
-
-    /**
-     * @group entity_services
-     *
-     * @NOTE For now we just want to ensure we get the stubbed user, until we implement auth
-     */
-    public function testGetCurrentUser()
-    {
-        $id = 1;
-
-        $response = array('RESPONSE');
-
-        $this->expectOneRestCall('User', 'GET', $id)
-            ->will($this->returnValue($response));
-
-        $this->assertEquals($response, $this->sut->getCurrentUser());
-    }
-
     public function testGetUserDetails()
     {
         $this->expectOneRestCall('User', 'GET', 111)

@@ -6,7 +6,7 @@ use Common\Controller\Plugin\CurrentUser;
 use Common\Rbac\User;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
-use Zend\Authentication\AuthenticationServiceInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Class CurrentUserTest
@@ -21,7 +21,7 @@ class CurrentUserTest extends TestCase
         $userObj = new User();
         $userObj->setUserData($data);
 
-        $mockAuth = m::mock(AuthenticationServiceInterface::class);
+        $mockAuth = m::mock(AuthorizationService::class);
         $mockAuth->shouldReceive('getIdentity')->andReturn($userObj);
 
         $sut = new CurrentUser($mockAuth);

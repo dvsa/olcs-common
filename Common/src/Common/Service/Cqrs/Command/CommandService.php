@@ -85,6 +85,7 @@ class CommandService
                 $adapter->setShouldLogData(false);
             }
 
+            $this->client->resetParameters(true);
             $clientResponse = $this->client->send($this->request);
 
             if ($command->getDto() instanceof LoggerOmitContentInterface) {

@@ -1,9 +1,9 @@
 <?php
 
-namespace CommonTest\Controller\Plugin;
+namespace CommonTest\View\Helper;
 
-use Common\Controller\Plugin\CurrentUserFactory;
-use Common\Controller\Plugin\CurrentUserInterface;
+use Common\View\Helper\CurrentUser;
+use Common\View\Helper\CurrentUserFactory;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -11,7 +11,7 @@ use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Class CurrentUserFactoryTest
- * @package CommonTest\Controller\Plugin
+ * @package CommonTest\View\Helper
  */
 class CurrentUserFactoryTest extends TestCase
 {
@@ -25,6 +25,6 @@ class CurrentUserFactoryTest extends TestCase
         $sut = new CurrentUserFactory();
         $service = $sut->createService($mockSl);
 
-        $this->assertInstanceOf(CurrentUserInterface::class, $service);
+        $this->assertInstanceOf(CurrentUser::class, $service);
     }
 }

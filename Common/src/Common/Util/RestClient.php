@@ -10,6 +10,7 @@ namespace Common\Util;
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Header\AcceptLanguage;
+use Zend\Http\Header\Cookie;
 use Zend\Http\Request;
 use Zend\Uri\Http as HttpUri;
 use Zend\Http\Header\Accept;
@@ -46,12 +47,17 @@ class RestClient
     protected $responseHelper;
 
     /**
+     * @var Cookie
+     */
+    private $cookie;
+
+    /**
      * @param \Zend\Uri\Http $url
      * @param array $options options passed to HttpClient
      * @param array $auth authentication username/password
      * @internal param \Common\Util\The $HttpUri URL of the resource that this client is meant to act on
      */
-    public function __construct(HttpUri $url, $options = [], $auth = [])
+    public function __construct(HttpUri $url, $options = [], $auth = [], Cookie $cookie = null)
     {
         $defaultOptions = [
             'keepalive' => true,
@@ -72,6 +78,12 @@ class RestClient
                 $auth['password']
             );
         }
+
+        if ($cookie === null) {
+            $cookie = new Cookie();
+        }
+
+        $this->cookie = $cookie;
     }
 
     /**
@@ -230,7 +242,6 @@ class RestClient
         $this->prepareRequest($method, $path, $params);
 
         $response = $this->client->send();
-
         $responseHelper = $this->getResponseHelper();
 
         $responseHelper->setMethod($method);
@@ -267,12 +278,12 @@ class RestClient
 
         $acceptLanguage = $this->getAcceptLanguage();
         $acceptLanguage->addLanguage($this->getLanguage());
-
+        $this->client->resetParameters(true);
         $this->client->setRequest($this->getClientRequest());
 
         $this->client->setUri($this->url->toString() . $path);
 
-        $this->client->setHeaders(array($accept, $acceptLanguage));
+        $this->client->setHeaders(array($accept, $acceptLanguage, $this->cookie));
 
         $this->client->setMethod($method);
 

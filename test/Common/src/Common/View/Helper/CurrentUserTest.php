@@ -8,36 +8,199 @@
 
 namespace CommonTest\View\Helper;
 
+use Common\Rbac\User;
 use \Common\View\Helper\CurrentUser;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
+use Zend\View\Renderer\RendererInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
  * Test TransportManagerApplicationStatus view helper
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class CurrentUserTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
+class CurrentUserTest extends MockeryTestCase
 {
-    /**
-     * Setup the view helper
-     */
-    public function setUp()
+    public function testGetFullNameEmpty()
     {
-        $this->sut = new CurrentUser();
+        $identity = new User();
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals('Not Logged in', $sut->getFullName());
+    }
+
+    public function testGetFullNameAnon()
+    {
+        $userData = [
+            'userType' => User::USER_TYPE_ANON
+        ];
+
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals('Not Logged in', $sut->getFullName());
     }
 
     public function testGetFullName()
     {
-        // Not tested as the helper is a temporary implemntation
-        $this->markTestIncomplete();
+        $person = ['forename' => 'Terry', 'familyName' => 'Barret-Edgecombe'];
 
-        $this->assertEquals('Terry Barret-Edgecombe', $this->sut->getFullName());
+        $userData = [
+            'userType' => User::USER_TYPE_OPERATOR,
+            'contactDetails' => [
+                'person' => $person
+            ]
+        ];
+
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $mockView = m::mock(RendererInterface::class);
+        $mockView->shouldReceive('personName')
+            ->with($person, ['forename', 'familyName'])
+            ->andReturn('Terry Barret-Edgecombe');
+
+        $sut = new CurrentUser($mockAuthService);
+        $sut->setView($mockView);
+
+        $this->assertEquals('Terry Barret-Edgecombe', $sut->getFullName());
     }
 
-    public function testGetOrganisationName()
+    public function testGetFullNameUsername()
     {
-        // Not tested as the helper is a temporary implemntation
-        $this->markTestIncomplete();
+        $userData = [
+            'userType' => User::USER_TYPE_OPERATOR,
+            'loginId' => 'username',
+            'contactDetails' => [
+                'person' => []
+            ]
+        ];
 
-        $this->assertEquals('John Smith Haulage Ltd', $this->sut->getOrganisationName());
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $mockView = m::mock(RendererInterface::class);
+        $mockView->shouldReceive('personName')
+            ->with([], ['forename', 'familyName'])
+            ->andReturn('');
+
+        $sut = new CurrentUser($mockAuthService);
+        $sut->setView($mockView);
+
+        $this->assertEquals('username', $sut->getFullName());
+    }
+
+    /**
+     * @dataProvider provideGetOperatorName
+     * @param $userData
+     * @param $expected
+     */
+    public function testGetOperatorName($userData, $expected)
+    {
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals($expected, $sut->getOrganisationName());
+    }
+
+    public function provideGetOperatorName()
+    {
+        $userdata = [
+            'userType' => '',
+            'organisationUsers' => [
+                [
+                    'organisation' => [
+                        'name' => 'Organisation Ltd'
+                    ]
+                ]
+            ],
+            'contactDetails' => [
+                'description' => 'Partner'
+            ],
+            'localAuthority' => [
+                'description' => 'Local Authority'
+            ]
+        ];
+        return [
+            [$userdata, ''],
+            [array_merge($userdata, ['userType' => User::USER_TYPE_ANON]), ''],
+            [array_merge($userdata, ['userType' => User::USER_TYPE_TRANSPORT_MANAGER]), ''],
+            [array_merge($userdata, ['userType' => User::USER_TYPE_OPERATOR]), 'Organisation Ltd'],
+            [array_merge($userdata, ['userType' => User::USER_TYPE_PARTNER]), 'Partner'],
+            [array_merge($userdata, ['userType' => User::USER_TYPE_LOCAL_AUTHORITY]), 'Local Authority'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideIsLoggedIn
+     * @param $userData
+     * @param $expected
+     */
+    public function testIsLoggedIn($userData, $expected)
+    {
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals($expected, $sut->isLoggedIn());
+    }
+
+    public function provideIsLoggedIn()
+    {
+        return [
+            [[], false],
+            [['userType' => User::USER_TYPE_ANON], false],
+            [['userType' => User::USER_TYPE_OPERATOR], true],
+        ];
+    }
+
+    /**
+     * @dataProvider provideGetUniqueId
+     * @param $userData
+     * @param $expected
+     */
+    public function testGetUniqueId($userData, $expected)
+    {
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals($expected, $sut->getUniqueId());
+    }
+
+    public function provideGetUniqueId()
+    {
+        return [
+            [[], ''],
+            [['userType' => User::USER_TYPE_ANON], ''],
+            [['userType' => User::USER_TYPE_OPERATOR, 'pid' => 'testing'], hash('sha256', 'testing')],
+        ];
     }
 }

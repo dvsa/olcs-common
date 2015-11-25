@@ -3,7 +3,7 @@
 namespace Common\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use Zend\Authentication\AuthenticationServiceInterface;
+use ZfcRbac\Service\AuthorizationServiceInterface;
 
 /**
  * Class CurrentUser
@@ -12,14 +12,14 @@ use Zend\Authentication\AuthenticationServiceInterface;
 final class CurrentUser extends AbstractPlugin implements CurrentUserInterface
 {
     /**
-     * @var AuthenticationServiceInterface
+     * @var AuthorizationServiceInterface
      */
     private $authService;
 
     /**
-     * @param AuthenticationServiceInterface $authService
+     * @param AuthorizationServiceInterface $authService
      */
-    public function __construct(AuthenticationServiceInterface $authService)
+    public function __construct(AuthorizationServiceInterface $authService)
     {
         $this->authService = $authService;
     }

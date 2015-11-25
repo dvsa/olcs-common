@@ -4,6 +4,8 @@ namespace Common\Service\Api;
 
 use Common\Util\RestClient;
 use Zend\Filter\Word\CamelCaseToDash;
+use Zend\Http\Header\Cookie;
+use Zend\Http\Request;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\Exception\InvalidServiceNameException;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -71,8 +73,17 @@ class AbstractFactory implements AbstractFactoryInterface
             $url =  $url->resolve($endpointConfig);
         }
 
+        $userRequest = $serviceLocator->getServiceLocator()->get('Request');
+        $secureToken = new Cookie();
+        if ($userRequest instanceof Request) {
+            $cookies = $userRequest->getCookie();
+            if (isset($cookies['secureToken'])) {
+                $secureToken = new Cookie(['secureToken' => $cookies['secureToken']]);
+            }
+        }
+
         // options
-        $rest = new RestClient($url, $options, $auth);
+        $rest = new RestClient($url, $options, $auth, $secureToken);
         $rest->setLanguage($translator->getLocale());
 
         return $rest;

@@ -6,6 +6,8 @@ namespace CommonTest\Service\Api;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Api\AbstractFactory;
 use Mockery as m;
+use Zend\Http\Header\Cookie;
+use Zend\Http\Request;
 
 /**
  * Class AbstractFactoryTest
@@ -28,10 +30,13 @@ class AbstractFactoryTest extends MockeryTestCase
 
         $translator = m::mock('stdClass');
         $translator->shouldReceive('getLocale')->withNoArgs()->andReturn('en-ts');
+        $mockRequest = m::mock(Request::class);
+        $mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
 
         $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
         $mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($translator);
+        $mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($mockRequest);
 
         $sut = new AbstractFactory();
         $client = $sut->createServiceWithName($mockSl, '', 'Olcs\RestService\TaskType');
@@ -80,9 +85,13 @@ class AbstractFactoryTest extends MockeryTestCase
         $translator = m::mock('stdClass');
         $translator->shouldReceive('getLocale')->withNoArgs()->andReturn('en-ts');
 
+        $mockRequest = m::mock(Request::class);
+        $mockRequest->shouldReceive('getCookie')->andReturn(new Cookie(['secureToken' => 'abad1dea']));
+
         $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
         $mockSl->shouldReceive('getServiceLocator->get')->with('Config')->andReturn($config);
         $mockSl->shouldReceive('getServiceLocator->get')->with('translator')->andReturn($translator);
+        $mockSl->shouldReceive('getServiceLocator->get')->with('Request')->andReturn($mockRequest);
 
         $sut = new AbstractFactory();
         $client = $sut->createServiceWithName($mockSl, '', 'myapi\\some-resource');

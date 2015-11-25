@@ -2,7 +2,9 @@
 
 namespace Common\Service\Cqrs;
 
+use Dvsa\Olcs\Utils\Auth\AuthHelper;
 use Zend\Http\Header\Authorization;
+use Zend\Http\Header\Cookie;
 use Zend\Http\Headers;
 use Zend\Http\Header\Accept;
 use Zend\Http\Header\ContentType;
@@ -30,7 +32,20 @@ class RequestFactory implements FactoryInterface
         $contentType->setMediaType('application/json');
 
         $headers = new Headers();
-        $headers->addHeaders([$accept, $contentType, $this->getAuthorizationHeader($serviceLocator)]);
+        $headers->addHeaders([$accept, $contentType]);
+
+        if (AuthHelper::isOpenAm()) {
+            $userRequest = $serviceLocator->get('Request');
+            if ($userRequest instanceof Request) {
+                $cookies = $userRequest->getCookie();
+                if (isset($cookies['secureToken'])) {
+                    $secureToken = new Cookie(['secureToken' => $cookies['secureToken']]);
+                    $headers->addHeader($secureToken);
+                }
+            }
+        } else {
+            $headers->addHeader($this->getAuthorizationHeader($serviceLocator));
+        }
 
         $request = new Request();
         $request->setHeaders($headers);
@@ -39,7 +54,7 @@ class RequestFactory implements FactoryInterface
     }
 
     /**
-     * @TODO replace this logic with the actual implementation of auth header
+     * @TODO Remove this logic when we are 100% using openAm
      */
     protected function getAuthorizationHeader($serviceLocator)
     {

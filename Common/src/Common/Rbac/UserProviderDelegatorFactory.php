@@ -4,9 +4,13 @@ namespace Common\Rbac;
 
 use Zend\ServiceManager\DelegatorFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Session\Container;
 
 /**
  * Class UserProviderDelegatorFactory
+ *
+ * @todo Remove this class when we are fully integrated with OpenAM
+ *
  * @package Common\Rbac
  */
 class UserProviderDelegatorFactory implements DelegatorFactoryInterface
@@ -23,8 +27,7 @@ class UserProviderDelegatorFactory implements DelegatorFactoryInterface
      */
     public function createDelegatorWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName, $callback)
     {
-        $service = new UserProvider();
-        $service->setUserEntityService($serviceLocator->get('Entity\User'));
+        $service = new UserProvider($serviceLocator->get('AnonQuerySender'), new Container('user_details'));
 
         return $service;
     }

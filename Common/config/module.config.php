@@ -82,6 +82,16 @@ return array(
                     ),
                 )
             ),
+            'logout' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/logout',
+                    'defaults' => [
+                        'controller' => \Common\Controller\LogoutController::class,
+                        'action' => 'index'
+                    ]
+                ]
+            ]
         )
     ),
     'controllers' => array(
@@ -136,6 +146,7 @@ return array(
             'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
             \Common\Controller\ErrorController::class => \Common\Controller\ErrorController::class,
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
+            \Common\Controller\LogoutController::class => \Common\Controller\LogoutController::class
         )
     ),
     'controller_plugins' => array(
@@ -176,9 +187,6 @@ return array(
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
         'delegators' => [
-            'zfcuser_user_mapper' => [
-                \Common\Rbac\UserProviderDelegatorFactory::class
-            ],
             'MvcTranslator' => [
                 \Common\Util\TranslatorDelegatorFactory::class,
             ]
@@ -295,6 +303,7 @@ return array(
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             'Common\Service\Data\Role' => 'Common\Service\Data\Role',
             'Common\Service\Data\Team' => 'Common\Service\Data\Team',
+            \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class
         )
     ),
     'publications' => array(
@@ -465,7 +474,6 @@ return array(
             'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
             'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
             'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
-            'currentUser' => 'Common\View\Helper\CurrentUser',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
             'licenceStatus' => 'Common\View\Helper\LicenceStatus',
             'address' => 'Common\View\Helper\Address',
@@ -474,12 +482,12 @@ return array(
         'factories' => array(
             'formRow' => 'Common\Form\View\Helper\FormRow',
             'languageLink' => \Common\View\Helper\LanguageLink::class,
+            'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
         )
     ),
     'view_manager' => array(
         'template_path_stack' => array(
             'partials/view' => __DIR__ . '/../view',
-            'zfcuser' => __DIR__ . '/../view',
             'translations' => __DIR__ . '/../config/language/partials'
         )
     ),
@@ -612,27 +620,19 @@ return array(
         )
     ),
     'zfc_rbac' => [
-        'role_provider' => ['Common\Rbac\Role\RoleProvider' => []],
+        'identity_provider' => \Common\Rbac\IdentityProvider::class,
+        'role_provider' => [\Common\Rbac\Role\RoleProvider::class => []],
         'role_provider_manager' => [
             'factories' => [
-                'Common\Rbac\Role\RoleProvider' => 'Common\Rbac\Role\RoleProvider'
+                \Common\Rbac\Role\RoleProvider::class => \Common\Rbac\Role\RoleProviderFactory::class
             ]
         ],
         'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
-        'redirect_strategy' => [
-            'redirect_when_connected'        => false,
-            'redirect_to_route_disconnected' => 'zfcuser/login',
-            'append_previous_uri'            => true,
-            'previous_uri_query_key'         => 'redirectTo'
-        ],
     ],
     'cache' => [
         'adapter' => [
             'name' => 'apc',
         ]
-    ],
-    'zfcuser' => [
-        'auth_identity_fields' => array('username')
     ],
     'form_service_manager' => [
         'invokables' => [
@@ -847,6 +847,6 @@ return array(
         'replacements' => include_once(__DIR__ . '/language/replacements.php')
     ],
     'cacheable_queries' => [
-        \Dvsa\Olcs\Transfer\Query\User\Roles::class => ['persistent' => true]
+        \Dvsa\Olcs\Transfer\Query\User\RoleList::class => ['persistent' => true]
     ]
 );

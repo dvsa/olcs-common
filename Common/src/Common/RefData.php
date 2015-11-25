@@ -141,6 +141,9 @@ class RefData
      */
     const PERMISSION_SELFSERVE_PARTNER_ADMIN = 'partner-admin';
     const PERMISSION_SELFSERVE_PARTNER_USER = 'partner-user';
+    const PERMISSION_SELFSERVE_LVA = 'selfserve-lva';
+    const PERMISSION_SELFSERVE_TM_DASHBOARD = 'selfserve-tm-dashboard';
+    const PERMISSION_SELFSERVE_DASHBOARD = 'selfserve-nav-dashboard';
 
     /**
      * Phone contact types

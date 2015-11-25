@@ -1,25 +1,26 @@
 <?php
 
-namespace Common\Controller\Plugin;
+/**
+ * Current User Factory
+ */
+namespace Common\View\Helper;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Service\AuthorizationService;
 
 /**
- * Class CurrentUserFactory
- * @package Common\Controller\Plugin
+ * Current User Factory
  */
-final class CurrentUserFactory implements FactoryInterface
+class CurrentUserFactory implements FactoryInterface
 {
     /**
-     * Create service
-     *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return CurrentUserInterface
+     * @return CurrentUser
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $serviceLocator = $serviceLocator->getServiceLocator();
-        return new CurrentUser($serviceLocator->get('ZfcRbac\Service\AuthorizationService'));
+        return new CurrentUser($serviceLocator->get(AuthorizationService::class));
     }
 }
