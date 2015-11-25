@@ -150,8 +150,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         $headers->addHeaderLine('Cache-Control', 'no-cache, must-revalidate');
         $headers->addHeaderLine('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
-
-        $this->setLoggedInUser(1);
     }
 
     /**
