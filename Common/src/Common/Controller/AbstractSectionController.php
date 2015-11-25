@@ -507,6 +507,44 @@ abstract class AbstractSectionController extends AbstractActionController
     }
 
     /**
+     * Get the form data
+     *
+     * This is not in the method above as it can be overridden independantly
+     *
+     * @return array
+     */
+    protected function getFormData()
+    {
+        if ($this->isBespokeAction()) {
+
+            $action = $this->getActionFromFullActionName();
+            $method = $action . 'Load';
+
+            if ($this->getSectionServiceName() !== null) {
+                return $this->getSectionService()->$method($this->getActionId());
+            }
+
+            return $this->$method($this->getActionId());
+        }
+
+        if ($this->isAction()) {
+
+            $action = $this->getActionFromFullActionName();
+
+            if ($action === 'edit') {
+
+                $data = $this->actionLoad($this->getActionId());
+            } else {
+                $data = $this->getFormDefaults();
+            }
+
+            return $this->processActionLoad($data);
+        }
+
+        return $this->processLoad($this->loadCurrent());
+    }
+
+    /**
      * Get the last part of the action from the action name
      *
      * @param string $action
@@ -619,6 +657,42 @@ abstract class AbstractSectionController extends AbstractActionController
     }
 
     /**
+     * Save the sub action
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function processActionSave($data, $form)
+    {
+        if ($this->isBespokeAction()) {
+            $action = $this->getActionFromFullActionName();
+
+            $method = $action . 'Save';
+        } else {
+            $data = $this->getServiceLocator()->get('Helper\Data')->processDataMap($data, $this->getActionDataMap());
+
+            $method = 'actionSave';
+        }
+
+        if ($this->shouldSkipActionSave($data, $form)) {
+            return;
+        }
+
+        if ($this->getSectionServiceName() !== null) {
+            $response = $this->getSectionService()->$method($data);
+        } else {
+            $response = $this->$method($data);
+        }
+
+        if ($response instanceof Response || $response instanceof ViewModel) {
+            $this->setCaughtResponse($response);
+            return;
+        }
+
+        $this->setCaughtResponse($this->postActionSave());
+    }
+
+    /**
      * Added a callback to call pre-actionSave
      *
      * @param array $data
@@ -645,6 +719,69 @@ abstract class AbstractSectionController extends AbstractActionController
         }
 
         return $data;
+    }
+
+    /**
+     * Load sub section data
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function actionLoad($id)
+    {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->actionLoad($id);
+        }
+
+        if (empty($this->actionData)) {
+
+            $this->actionData = $this->makeRestCall(
+                $this->getActionService(),
+                'GET',
+                $id,
+                $this->getActionDataBundle()
+            );
+        }
+
+        return $this->actionData;
+    }
+
+    /**
+     * Save sub action data
+     *
+     * @NOTE we no longer need the check for section service here, as we catch it slightly earlier
+     *
+     * @param array $data
+     */
+    protected function actionSave($data, $service = null)
+    {
+        $method = 'POST';
+
+        if (isset($data['id']) && !empty($data['id'])) {
+            $method = 'PUT';
+        }
+
+        if (is_null($service)) {
+            $service = $this->getActionService();
+        }
+
+        return $this->makeRestCall($service, $method, $data);
+    }
+
+    /**
+     * Post action save (Decide where to go)
+     *
+     * @return Response
+     */
+    protected function postActionSave()
+    {
+        if ($this->isButtonPressed('addAnother')) {
+            return $this->goBackToAddAnother();
+        }
+
+        return $this->goBackToSection();
     }
 
     /**
