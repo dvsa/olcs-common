@@ -9,6 +9,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Anon Query Sender
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @todo Remove this class when we are fully integrated with OpenAM
  */
 class AnonQuerySender extends QuerySender
 {

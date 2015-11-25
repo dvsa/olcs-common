@@ -9,7 +9,7 @@ use Zend\Session\Container;
 /**
  * Class UserProviderDelegatorFactory
  *
- * @todo this is a stop-gap to bridge between zfcuser and openam
+ * @todo Remove this class when we are fully integrated with OpenAM
  *
  * @package Common\Rbac
  */

@@ -15,6 +15,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Anon Request Factory
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @todo Remove this class when we are fully integrated with OpenAM
  */
 class AnonRequestFactory extends RequestFactory
 {
@@ -26,8 +27,6 @@ class AnonRequestFactory extends RequestFactory
      */
     protected function getAuthorizationHeader($serviceLocator)
     {
-        // @to-do CHANGE THIS BEFORE GO LIVE
-
         $auth = new Authorization(1);
         return $auth;
     }

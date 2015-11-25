@@ -14,6 +14,7 @@ use Zend\Http\Request;
  * Anon Query Service Factory
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @todo Remove this class when we are fully integrated with OpenAM
  */
 class AnonQueryServiceFactory extends QueryServiceFactory
 {

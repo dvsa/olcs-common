@@ -13,7 +13,7 @@ use ZfcUser\Mapper\UserInterface;
 /**
  * User Provider
  *
- * @NOTE This is temporary to help bridge between zfcuser and openam
+ * @todo Remove this class when we are fully integrated with OpenAM
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
