@@ -475,7 +475,7 @@ return array(
             'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
             'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
-            'licenceStatus' => 'Common\View\Helper\LicenceStatus',
+            'status' => 'Common\View\Helper\Status',
             'address' => 'Common\View\Helper\Address',
             'personName' => 'Common\View\Helper\PersonName'
         ),
