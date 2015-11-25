@@ -870,6 +870,47 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     }
 
+    /**
+     * Method to trigger generation of a document providing a generate checkbox
+     * is found in $data
+     *
+     * @param array $data
+     * @return array
+     * @throws \RuntimeException
+     */
+    protected function generateDocument($data = array())
+    {
+        $documentData = [];
+        if (isset($data['document']['generate']) && $data['document']['generate'] == '1') {
+
+            if (!method_exists($this, 'mapDocumentData')) {
+                throw new \RuntimeException('Controller requires mapDocumentData method');
+            }
+            $bookmarks = $this->mapDocumentData($data);
+
+            $documentData = $this->sendPost(
+                'Olcs\Document\GenerateRtf', [
+                    'data' => [
+                        'formName' => $data['document']['formName'],
+                        'licence' => $this->fromRoute('licence'),
+                        'case' => $this->fromRoute('case'),
+                        'id' => $data['id']
+                    ],
+                    'bookmarks' => $bookmarks,
+                    'country' =>
+                        isset($data['document']['country']) ?
+                            $data['document']['country'] : 'en_GB',
+                    'templateId' => $data['document']['templateId'],
+                    'format' =>
+                        isset($data['document']['format']) ?
+                            $data['document']['format'] : 'rtf'
+                ]
+            );
+        }
+
+        return $documentData;
+    }
+
     protected function trimFormFields($data)
     {
         return $this->trimFields($data, array('csrf', 'submit', 'fields', 'form-actions'));
