@@ -30,7 +30,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
         $sut = new CurrentUser($mockAuthService);
 
-        $this->assertEquals('Not Logged in', $sut->getFullName());
+        $this->assertEquals('Not logged in', $sut->getFullName());
     }
 
     public function testGetFullNameAnon()
@@ -46,7 +46,7 @@ class CurrentUserTest extends MockeryTestCase
         $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
         $sut = new CurrentUser($mockAuthService);
 
-        $this->assertEquals('Not Logged in', $sut->getFullName());
+        $this->assertEquals('Not logged in', $sut->getFullName());
     }
 
     public function testGetFullName()
