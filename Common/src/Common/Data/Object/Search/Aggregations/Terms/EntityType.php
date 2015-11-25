@@ -14,7 +14,7 @@ class EntityType extends TermsAbstract
      *
      * @var string
      */
-    protected $title = 'Entity / Organisation type';
+    protected $title = 'Organisation type';
 
     /**
      * The actual name of the field to ask for filter information for.
