@@ -4,18 +4,22 @@
  * Goods Vehicles Vehicle
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace CommonTest\Data\Mapper\Lva;
 
 use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
 
 /**
  * Goods Vehicles Vehicle
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class GoodsVehiclesVehicleTest extends PHPUnit_Framework_TestCase
+class GoodsVehiclesVehicleTest extends MockeryTestCase
 {
     public function testMapFromResult()
     {
@@ -47,5 +51,41 @@ class GoodsVehiclesVehicleTest extends PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($expected, $output);
+    }
+
+    public function testMapFromErrors()
+    {
+        $errors = [
+            'vrm' => [
+                'Error1'
+            ],
+            'receivedDate' => [
+                'Error2'
+            ],
+            'global' => [
+                'Error3'
+            ]
+        ];
+        $formMessages = [
+            'data' => [
+                'vrm' => ['Error1']
+            ],
+            'licenceVehicle' => [
+                'receivedDate' => ['Error2']
+            ]
+        ];
+        $expected = [
+            'global' => [
+                'Error3'
+            ]
+        ];
+
+        $mockForm = m::mock()
+            ->shouldReceive('setMessages')
+            ->with($formMessages)
+            ->once()
+            ->getMock();
+
+        $this->assertEquals($expected, GoodsVehiclesVehicle::mapFromErrors($errors, $mockForm));
     }
 }
