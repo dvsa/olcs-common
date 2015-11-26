@@ -198,33 +198,17 @@ abstract class AbstractTransportManagersController extends AbstractController im
         if ($request->isPost() && $form->isValid()) {
             $formData = $form->getData();
 
-            /**
-             * @todo We are making 2 calls here,
-             * we need to combine these into 1 command with side effects
-             */
-
-            // Update DOB
-            $command = Command\Person\Update::create(
+            // create TMA
+            $command = Command\TransportManagerApplication\Create::create(
                 [
-                    'id' => $userDetails['contactDetails']['person']['id'],
-                    'dob' => $formData['data']['birthDate']
+                    'application' => $this->getIdentifier(),
+                    'user' => $childId,
+                    'action' => 'A',
+                    'dob' => $formData['data']['birthDate'],
                 ]
             );
             /* @var $response \Common\Service\Cqrs\Response */
             $response = $this->handleCommand($command);
-
-            if ($response->isOk()) {
-                // create TMA
-                $command = Command\TransportManagerApplication\Create::create(
-                    [
-                        'application' => $this->getIdentifier(),
-                        'user' => $childId,
-                        'action' => 'A'
-                    ]
-                );
-                /* @var $response \Common\Service\Cqrs\Response */
-                $response = $this->handleCommand($command);
-            }
 
             if ($response->isServerError()) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
