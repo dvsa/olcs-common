@@ -137,7 +137,7 @@ class People extends InternalSearchAbstract
                 'title' => 'Disq?',
                 'name'=> 'disqualified',
                 'formatter' => function ($row) {
-                    return ($row['disqualified'] == 'Y') ? 'Yes' : 'No';
+                    return ($row['disqualified'] === 'Y') ? 'Yes' : 'No';
                 }
             ]
         ];
