@@ -235,14 +235,6 @@ abstract class AbstractDiscsController extends AbstractController
                 $this->formTableData[] = $disc;
             }
 
-            // sort discs so that "Pending" are at the top
-            uasort(
-                $this->formTableData,
-                function ($disc1, $disc2) {
-                    return ($disc1['discNo'] === 'Pending') ? -1 : 1;
-                }
-            );
-
             $this->formTableData = [
                 'results' => $this->formTableData,
                 'count' => $result['totalPsvDiscs'],
