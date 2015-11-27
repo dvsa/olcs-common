@@ -48,7 +48,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
 
         $form = $this->getFinancialHistoryForm()->setData($data);
 
-        $this->alterFormForLva($form);
+        $this->alterFormForLva($form, $data);
 
         $hasProcessedFiles = $this->processFiles(
             $form,
@@ -70,6 +70,16 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFile('financial-history');
 
         return $this->render('financial_history', $form);
+    }
+
+    protected function alterFormForLva($form, $data)
+    {
+        if (isset($data['data']['niFlag']) && $data['data']['niFlag'] === 'Y') {
+            $form->get('data')
+                ->get('insolvencyConfirmation')
+                ->setLabel('application_previous-history_financial-history.insolvencyConfirmation.title.ni');
+        }
+        return $form;
     }
 
     protected function getFinancialHistoryForm()
