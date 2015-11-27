@@ -1350,6 +1350,7 @@ return array(
     'internal.save.button' => 'Save',
     'internal.transaction-details.title-other' => 'Adjustment details',
     'internal.transaction-details.title-payment' => 'Payment details',
+    'internal.transaction-details.title-reversal' => 'Reversal details',
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
