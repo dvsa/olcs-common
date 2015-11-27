@@ -410,6 +410,7 @@ return array(
     'application_previous-history_financial-history.finance.liquidation' => 'involved with a company, or business, that has gone into (or is going into) liquidation, owing money?',
     'application_previous-history_financial-history.finance.receivership' => 'involved with a company, or business, that has gone into (or is going into) receivership?',
     'application_previous-history_financial-history.insolvencyConfirmation.title' => 'I\'ll tell the Traffic Commissioner immediately about any insolvency proceedings that take place between submitting this application and a decision being made',
+    'application_previous-history_financial-history.insolvencyConfirmation.title.ni' => 'I\'ll tell the DOE immediately about any insolvency proceedings that take place between submitting this application and a decision being made',
     'application_previous-history_financial-history.insolvencyDetails.hint' => 'Please provide additional information relating to any prior insolvency proceedings (Min. 200 characters). You may also upload evidence such as legal documents below.',
     'application_previous-history_financial-history.insolvencyDetails.placeholder' => 'Min 200 characters',
     'application_previous-history_financial-history.insolvencyDetails.title' => 'Additional information',
