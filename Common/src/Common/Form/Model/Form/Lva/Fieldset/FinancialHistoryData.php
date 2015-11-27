@@ -173,4 +173,10 @@ class FinancialHistoryData
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $insolvencyConfirmation = null;
+
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $niFlag = null;
 }
