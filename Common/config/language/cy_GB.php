@@ -1350,6 +1350,7 @@ return array(
     'internal.save.button' => '{WELSH} Save',
     'internal.transaction-details.title-other' => '{WELSH} Adjustment details',
     'internal.transaction-details.title-payment' => '{WELSH} Payment details',
+    'internal.transaction-details.title-reversal' => '{WELSH} Reversal details',
     'internal.transport_manager.responsibilities.other_licence' => '{WELSH} other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => '{WELSH} Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => '{WELSH} Edit other licence',
