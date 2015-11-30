@@ -113,7 +113,7 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function preDispatch()
     {
-        $this->setLoggedInUser(1);
+
     }
 
     /**
@@ -333,17 +333,6 @@ abstract class AbstractController extends AbstractActionController
         }
 
         return 'application';
-    }
-
-    public function getLoggedInUser()
-    {
-        return $this->loggedInUser;
-    }
-
-    public function setLoggedInUser($id)
-    {
-        $this->loggedInUser = $id;
-        return $this;
     }
 
     /**
