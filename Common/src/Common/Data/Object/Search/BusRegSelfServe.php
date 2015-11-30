@@ -71,7 +71,7 @@ class BusRegSelfServe extends InternalSearchAbstract
     {
         return [
             [
-                'title' => 'Registration no',
+                'title' => 'Registration number',
                 'name'=> 'regNo',
                 'formatter' => function ($data) {
 
@@ -89,7 +89,7 @@ class BusRegSelfServe extends InternalSearchAbstract
                     return $orgName;
                 }
             ],
-            ['title' => 'Service no', 'name'=> 'serviceNo'],
+            ['title' => 'Service number', 'name'=> 'serviceNo'],
             ['title' => 'Start point', 'name'=> 'startPoint'],
             ['title' => 'Finish point', 'name'=> 'finishPoint']
         ];

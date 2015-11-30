@@ -56,7 +56,7 @@ class BusReg extends InternalSearchAbstract
     {
         return [
             [
-                'title' => 'Registration no',
+                'title' => 'Registration number',
                 'name'=> 'regNo',
                 'formatter' => function ($data) {
 
@@ -82,7 +82,7 @@ class BusReg extends InternalSearchAbstract
                 'formatter' => 'Date',
                 'name'=> 'date_1stReg'
             ],
-            ['title' => 'Service no', 'name'=> 'serviceNo'],
+            ['title' => 'Service number', 'name'=> 'serviceNo'],
             ['title' => 'Start point', 'name'=> 'startPoint'],
             ['title' => 'Finish point', 'name'=> 'finishPoint']
         ];

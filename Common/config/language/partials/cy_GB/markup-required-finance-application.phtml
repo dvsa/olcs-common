@@ -1,12 +1,14 @@
 <p><b>Translated to Welsh</b></p><div class="article">
     <p>
-        As part of your application, you’ll need to show you have enough money to keep your vehicles and run your business.
-        <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">Read more about financial evidence</a>
+       To be granted a licence you need to prove you have enough money to keep your vehicles and run your business.
+    </p>
+    <p>
+        Read more about <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">how to provide financial evidence</a>
     </p>
 
     <h3>How much will you need?</h3>
 
-    <h2>&pound; <?php echo number_format($requiredFinance); ?></h2>
+    <h2 style="margin-top: 0;">&pound; <?php echo number_format($requiredFinance); ?></h2>
 
     <p>This figure’s based on:</p>
     <ul>
@@ -25,22 +27,22 @@
             How did we calculate this?
           </summary>
           <div class="help__text">
-            <p>
-                For standard national and international licences you must have:<br>
-                &pound;<?php echo number_format($standardFirst); ?> for the first vehicle<br>
-                &pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle
-            </p>
-            <p>
-                For restricted licences you must have:<br>
-                &pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle<br>
-                &pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle
-            </p>
+            <p>For standard national and international licences you must have:</p>
+            <ul>
+                <li>&pound;<?php echo number_format($standardFirst); ?> for the first vehicle</li>
+                <li>&pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle</li>
+            </ul>
+            <p>For restricted licences you must have:</p>
+            <ul>
+                <li>&pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle</li>
+                <li>&pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle</li>
+            </ul>
           </div>
         </details>
     </p>
 
     <h3>Send a copy to us</h3>
     <p>
-        Once you have your financial evidence, you should either upload or post a copy to us. See the <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">types of evidence we accept</a>.
+        Once you have your financial evidence, you can either upload or post a copy to us. See the <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">types of evidence we accept</a>.
     </p>
 </div>
