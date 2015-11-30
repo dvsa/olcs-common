@@ -619,9 +619,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected function mapVehicleErrors(\Zend\Form\Form $form, array $errors)
     {
 
-        $formMessages = [];
-
-        $form->setMessages($formMessages);
+        $errors = GoodsVehiclesVehicle::mapFromErrors($errors, $form);
 
         if (!empty($errors)) {
             $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');

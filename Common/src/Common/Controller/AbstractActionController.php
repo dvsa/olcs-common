@@ -612,115 +612,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function getForm($type)
     {
-        $form = $this->getFormClass($type);
-
-        // The vast majority of forms thus far don't have actions, but
-        // that means when rendered out of context (e.g. in a JS modal) they
-        // submit the parent page.
-        // Adding an explicit attribute should be completely backwards compatible
-        // because browsers interpret no action as submit the current page
-        if (!$form->hasAttribute('action')) {
-            $form->setAttribute('action', $this->getRequest()->getUri()->getPath());
-        }
-
-        $form = $this->processPostcodeLookup($form);
-
-        return $form;
-    }
-
-    /**
-     * Process the postcode lookup functionality
-     *
-     * @param Form $form
-     * @return Form
-     */
-    protected function processPostcodeLookup($form)
-    {
-        $request = $this->getRequest();
-
-        $post = array();
-
-        if ($request->isPost()) {
-
-            $post = (array)$request->getPost();
-        }
-
-        $fieldsets = $form->getFieldsets();
-
-        foreach ($fieldsets as $fieldset) {
-
-            if ($fieldset instanceof Address) {
-
-                $removeSelectFields = false;
-
-                $name = $fieldset->getName();
-
-                // If we haven't posted a form, or we haven't clicked find address
-                if (isset($post[$name]['searchPostcode']['search'])
-                    && !empty($post[$name]['searchPostcode']['search'])) {
-
-                    $this->persist = false;
-
-                    $postcode = trim($post[$name]['searchPostcode']['postcode']);
-
-                    if (empty($postcode)) {
-
-                        $removeSelectFields = true;
-
-                        $fieldset->get('searchPostcode')->setMessages(
-                            array('Please enter a postcode')
-                        );
-                    } else {
-
-                        try {
-                            $addressList = $this->getAddressesForPostcode($postcode);
-
-                            if (empty($addressList)) {
-
-                                $removeSelectFields = true;
-
-                                $fieldset->get('searchPostcode')->setMessages(
-                                    array('No addresses found for postcode')
-                                );
-
-                            } else {
-
-                                $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
-                                    $this->getAddressService()->formatAddressesForSelect($addressList)
-                                );
-                            }
-                        } catch (\Exception $e) {
-                            $fieldset->get('searchPostcode')->setMessages(
-                                array('postcode.error.not-available')
-                            );
-                            $removeSelectFields = true;
-                        }
-
-                    }
-                } elseif (isset($post[$name]['searchPostcode']['select'])
-                    && !empty($post[$name]['searchPostcode']['select'])) {
-
-                    $this->persist = false;
-
-                    $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
-
-                    $removeSelectFields = true;
-
-                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
-
-                    $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
-
-                } else {
-
-                    $removeSelectFields = true;
-                }
-
-                if ($removeSelectFields) {
-                    $fieldset->get('searchPostcode')->remove('addresses');
-                    $fieldset->get('searchPostcode')->remove('select');
-                }
-            }
-        }
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm($type);
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        $formHelper->processAddressLookupForm($form, $this->getRequest());
 
         return $form;
     }
@@ -728,16 +623,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected function getAddressService()
     {
         return $this->getServiceLocator()->get('Helper\Address');
-    }
-
-    protected function getAddressForUprn($uprn)
-    {
-        return $this->sendGet('postcode\address', array('id' => $uprn), true);
-    }
-
-    protected function getAddressesForPostcode($postcode)
-    {
-        return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
     }
 
     protected function alterFormBeforeValidation($form)
@@ -1014,12 +899,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                     'bookmarks' => $bookmarks,
                     'country' =>
                         isset($data['document']['country']) ?
-                        $data['document']['country'] : 'en_GB',
+                            $data['document']['country'] : 'en_GB',
                     'templateId' => $data['document']['templateId'],
                     'format' =>
                         isset($data['document']['format']) ?
-                        $data['document']['format'] : 'rtf'
-                    ]
+                            $data['document']['format'] : 'rtf'
+                ]
             );
         }
 
