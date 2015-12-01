@@ -78,12 +78,16 @@ class AddressOptional
     public $town = null;
 
     /**
-     * @Form\Attributes({"id":""})
      * @Form\Options({"label":"Postcode"})
-     * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})
-     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
+     * @Form\AllowEmpty(true)
+     * @Form\Required(true)
+     * @Form\Attributes({"id":"", "required":false})
+     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\Validator({
+     *      "name":"Dvsa\Olcs\Transfer\Validators\Postcode",
+     *      "options": {"allow_empty": true}
+     * });
      */
     public $postcode = null;
 

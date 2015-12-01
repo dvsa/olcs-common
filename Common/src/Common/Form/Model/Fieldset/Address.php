@@ -84,13 +84,15 @@ class Address
     public $town = null;
 
     /**
-     * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label":"Postcode",
      *     "short-label":"Postcode"
      * })
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})
+     * @Form\AllowEmpty(true)
+     * @Form\Required(true)
+     * @Form\Attributes({"id":"", "required":false})
+     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
      */
     public $postcode = null;
