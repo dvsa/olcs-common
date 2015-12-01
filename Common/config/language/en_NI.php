@@ -11,9 +11,9 @@ $ni = array_merge(
             operator\'s licence in GB or Northern Ireland?',
         'application_previous-history_licence-history_prevHadLicence' => 'previously held or applied for a goods or
             public service vehicle operator’s licence in Northern Ireland or GB?',
-        'application_previous-history_licence-history_prevBeenAtPi' => 'Ever attended a Public Inquiry before the DOE
+        'application_previous-history_licence-history_prevBeenAtPi' => 'ever attended a Public Inquiry before the DOE,
             or a GB traffic commissioner?',
-        'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'Been disqualified from holding or
+        'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'been disqualified from holding or
             obtaining an operator\'s licence by DOE, or a GB traffic commissioner?',
         'application_previous-history_licence-history_prevPurchasedAssets' => 'Within the last twelve months, have
             you, your company or organisation or your partners or directors purchased the assets or shareholding of any
