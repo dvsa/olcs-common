@@ -6,16 +6,16 @@ $ni = array_merge(
     $gb,
     [
         'TM1_FORM_LINK' => 'http://www.doeni.gov.uk/gv_ni_79___tm_ni_1___transport_manager_application_v_2.2.pdf',
-        'application_previous-history_licence-history_prevHasLicence' => '1. Does any person named in this application
+        'application_previous-history_licence-history_prevHasLicence' => 'Does any person named in this application
             (including partners, directors and Transport Managers) currently hold a goods or public service vehicle
             operator\'s licence in GB or Northern Ireland?',
-        'application_previous-history_licence-history_prevHadLicence' => 'a. previously held or applied for a goods or
+        'application_previous-history_licence-history_prevHadLicence' => 'previously held or applied for a goods or
             public service vehicle operator’s licence in Northern Ireland or GB?',
-        'application_previous-history_licence-history_prevBeenAtPi' => 'd. Ever attended a Public Inquiry before the DOE
+        'application_previous-history_licence-history_prevBeenAtPi' => 'Ever attended a Public Inquiry before the DOE
             or a GB traffic commissioner?',
-        'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'e. Been disqualified from holding or
+        'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'Been disqualified from holding or
             obtaining an operator\'s licence by DOE, or a GB traffic commissioner?',
-        'application_previous-history_licence-history_prevPurchasedAssets' => '3. Within the last twelve months, have
+        'application_previous-history_licence-history_prevPurchasedAssets' => 'Within the last twelve months, have
             you, your company or organisation or your partners or directors purchased the assets or shareholding of any
             company that, to your knowledge, currently holds or has previously held an operator\'s licence in Northern
             Ireland or GB?',
