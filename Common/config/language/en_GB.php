@@ -2394,6 +2394,7 @@ return array(
     'trailer' => 'Trailer',
     'trailer-count' => '%s trailers',
     'transfer.button' => 'Transfer',
+    'translate-to-welsh' => 'Send correspondence in Welsh',
     'transport-manager' => 'Transport Manager',
     'transport-manager-add' => 'Or add a new Transport Manager',
     'transport-manager-application.edit-form.confirmation' => 'Are you sure you want to edit this form?',

@@ -261,7 +261,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
                         'birthDate' => $data['data']['birthDate'],
                         'hasEmail' => $hasEmail,
                         'username' => $data['data']['username'],
-                        'emailAddress' => $data['data']['emailAddress']
+                        'emailAddress' => $data['data']['emailAddress'],
+                        'translateToWelsh' => $data['data']['translateToWelsh'],
                     ]
                 );
 
