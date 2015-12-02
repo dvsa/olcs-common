@@ -46,7 +46,9 @@ class AddressLinesTest extends \PHPUnit_Framework_TestCase
                 array('addressLine1' => 'foo', 'addressLine2' => 'bar'), array(), '<p>foo</p>'
             ),
             array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'town' => 'cake'), array(), '<p>foo,<br />cake</p>'
+                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'town' => 'cake'),
+                array(),
+                '<p>foo,<br />cake</p>'
             ),
             array(
                 array(
