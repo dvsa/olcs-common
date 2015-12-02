@@ -73,6 +73,17 @@ class Address implements FormatterInterface
             }
         }
 
+        return static::formatAddress($parts);
+    }
+
+    /**
+     * How to format the resulting address fields. Comma separated.
+     *
+     * @param $parts
+     * @return string
+     */
+    protected static function formatAddress($parts)
+    {
         return implode(', ', $parts);
     }
 }
