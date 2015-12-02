@@ -29,7 +29,6 @@ class InspectionRequestIdTest extends MockeryTestCase
      * @param string $expectedUrlParams
      * @param string $expectedUrl
      * @param string $expectedOutput
-     * @group test123
      */
     public function testFormat(
         $data,
