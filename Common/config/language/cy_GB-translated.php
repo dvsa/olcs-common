@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'privacy-and-cookies-title' => 'Preifatrwydd a ChwcisFFF',
+    'privacy-and-cookies-title' => 'Preifatrwydd a Chwcis',
 ];

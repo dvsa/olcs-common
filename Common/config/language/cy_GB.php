@@ -1858,7 +1858,7 @@ return [
     'print-sign-return-declaration-form' => '{WELSH} Print, sign and return the declaration form',
     'print-sign-return-declaration-form-text' => '{WELSH} A business owner or director must sign the declaration form and send it to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a>, if they haven’t already.',
     'priority' => '{WELSH} Priority',
-    'privacy-and-cookies-title' => 'Preifatrwydd a ChwcisFFF',
+    'privacy-and-cookies-title' => 'Preifatrwydd a Chwcis',
     'progress' => '{WELSH} Progress',
     'prohibition-history' => '{WELSH} Prohibition history',
     'propose-to-revoke' => '{WELSH} In-Office revocation',
