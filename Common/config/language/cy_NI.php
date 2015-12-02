@@ -5,16 +5,16 @@ $gb = include(__DIR__ . '/cy_GB.php');
 $ni = array_merge(
     $gb,
     [
-        'application_previous-history_licence-history_prevHasLicence' => '{WELSH} 1. Does any person named in this
+        'application_previous-history_licence-history_prevHasLicence' => '{WELSH} Does any person named in this
             application (including partners, directors and Transport Managers) currently hold a goods or public service
             vehicle operator\'s licence in GB or Northern Ireland?',
-        'application_previous-history_licence-history_prevHadLicence' => '{WELSH} a. previously held or applied for a
+        'application_previous-history_licence-history_prevHadLicence' => '{WELSH} previously held or applied for a
             goods or public service vehicle operator’s licence in Northern Ireland or GB?',
-        'application_previous-history_licence-history_prevBeenAtPi' => '{WELSH} d. Ever attended a Public Inquiry before
+        'application_previous-history_licence-history_prevBeenAtPi' => '{WELSH} ever attended a Public Inquiry before
             the DOE or a GB traffic commissioner?',
-        'application_previous-history_licence-history_prevBeenDisqualifiedTc' => '{WELSH} e. Been disqualified from
+        'application_previous-history_licence-history_prevBeenDisqualifiedTc' => '{WELSH} Been disqualified from
             holding or obtaining an operator\'s licence by DOE, or a GB traffic commissioner?',
-        'application_previous-history_licence-history_prevPurchasedAssets' => '{WELSH}  3. Within the last twelve
+        'application_previous-history_licence-history_prevPurchasedAssets' => '{WELSH} Within the last twelve
             months, have you, your company or organisation or your partners or directors purchased the assets or
             shareholding of any company that, to your knowledge, currently holds or has previously held an operator\'s
             licence in Northern Ireland or GB?',
