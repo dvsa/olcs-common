@@ -2,164 +2,297 @@
 <?php
 // @codingStandardsIgnoreFile
 
-$translationLocation = __DIR__ . '/../Common/config/language/';
+class Translator
+{
+    const EN = 'EN';
+    const EN_MARKUP = 'EN-MARKUP';
+    const CY = 'CY';
+    const CY_TRANSLATED = 'CY-TRANSLATED';
 
-$translations = include($translationLocation . 'en_GB.php');
+    private $translationLocation;
 
-$translated = include($translationLocation . 'google-translated.php');
+    private $enTranslations;
+    private $cyTranslations = [];
 
-//$directories = array(
-//    realpath(__DIR__ . '/../Common/config/list-data/'),
-//    realpath(__DIR__ . '/../Common/src/'),
-//    realpath(__DIR__ . '/../test/'),
-//    realpath(__DIR__ . '/../Common/view/'),
-//    realpath(__DIR__ . '/../../olcs-internal/module/'),
-//    realpath(__DIR__ . '/../../olcs-internal/test/'),
-//    realpath(__DIR__ . '/../../olcs-selfserve/module/'),
-//    realpath(__DIR__ . '/../../olcs-selfserve/test/')
-//);
+    private $usedTranslations = [];
 
-$unusedArray = $foundArray = array();
+    private $unusedTranslations = [];
 
-foreach ($translations as $key => $value) {
+    private $filenameMap = [
+        self::EN => 'en_GB.php',
+        self::CY => 'cy_GB.php',
+        self::CY_TRANSLATED => 'cy_GB-translated.php',
+        self::EN_MARKUP => 'partials/en_GB'
+    ];
 
-    $found = true;
-    /** Ignore the grep for now just to speed things up
-    $found = false;
+    public function __construct($translationLocation)
+    {
+        $this->translationLocation = $translationLocation;
+        $this->enTranslations = include($this->getFilename(self::EN));
+        $this->cyTranslations = include($this->getFilename(self::CY_TRANSLATED));
+    }
 
-    foreach ($directories as $directory) {
-        $response = shell_exec('grep -r "' . $key . '" ' . $directory);
+    /**
+     * Run the translator
+     */
+    public function run()
+    {
+        $this->translateTextTranslations();
 
-        if (!empty($response)) {
-            $found = true;
-            break;
+        $this->translateMarkupTranslations();
+    }
+
+    /**
+     * Translate Text Translations
+     */
+    protected function translateTextTranslations()
+    {
+        $this->organiseTranslations();
+        $this->outputEnContent();
+        $this->outputCyContent();
+    }
+
+    /**
+     * Translate Markup Translations
+     */
+    protected function translateMarkupTranslations()
+    {
+        $this->iterateAndTranslate($this->getFilename(self::EN_MARKUP));
+    }
+
+    /**
+     * Iterate a directory and translate the files
+     *
+     * @param $path
+     */
+    protected function iterateAndTranslate($path)
+    {
+        $partials = new DirectoryIterator($path);
+
+        // replicates file structure and nested partial includes
+        foreach ($partials as $file) {
+            if ($file->isDot()) {
+                continue;
+            }
+
+            if ($file->isDir()) {
+                $this->iterateAndTranslate($file->getPathname());
+                continue;
+            }
+
+            $this->translateMarkupFile($file->getPathname());
         }
     }
+
+    /**
+     * Translate markup file
+     *
+     * @param $source
      */
+    protected function translateMarkupFile($source)
+    {
+        $dest = str_replace('en_GB', 'cy_GB', $source);
+        $translatedDest = str_replace('en_GB', 'cy_GB-translated', $source);
 
-    $value = preg_replace('/(\s+)/', ' ', $value);
+        if (file_exists($translatedDest)) {
+            $content = file_get_contents($translatedDest);
+        } else {
+            $content = str_replace('en_GB', 'cy_GB', '<p><b>Translated to Welsh</b></p>'. file_get_contents($source));
+        }
 
-    // fix quotes in values
-    $value = str_replace("'", "\'", $value);
-
-    // fix quotes in keys
-    $key = str_replace("'", "\'", $key);
-
-    if ($found) {
-        $foundArray[$key] = $value;
-    } else {
-        $unusedArray[$key] = $value;
+        if (file_put_contents($dest, $content) === false) {
+            echo 'Failed to write to ' . $dest;
+        }
     }
-}
 
-ksort($foundArray);
-ksort($unusedArray);
+    /**
+     * Generate and output the english file
+     */
+    protected function outputEnContent()
+    {
+        $this->outputContent(self::EN, [$this, 'formatEnRow']);
+    }
 
-$cyGbContent = $enGbContent = $toBeContent = '<?php
-// @codingStandardsIgnoreFile
-return array(';
+    /**
+     * Generate and output the welsh file
+     */
+    protected function outputCyContent()
+    {
+        $this->outputContent(self::CY, [$this, 'formatCyRow']);
+    }
 
-function wrapLine($string) {
+    /**
+     * Format the english rows
+     *
+     * @param $key
+     * @param $value
+     * @return string
+     */
+    protected function formatEnRow($key, $value)
+    {
+        return "    '" . $this->formatKey($key) . "' => '" . $this->formatValue($value) . "',";
+    }
 
-    return $string;
-//    $newString = '';
-//
-//    $remainingString = $string;
-//
-//    if (strlen($remainingString) <= 120) {
-//        $newString = $remainingString;
-//    }
-//
-//    while (strlen($remainingString) > 120) {
-//
-//        $offset = 120 - strlen($remainingString);
-//
-//        $splitSpaceOffset = strrpos($remainingString, ' ', $offset);
-//
-//        $lines = substr_replace($remainingString, "\n", $splitSpaceOffset, 1);
-//
-//        list($trimedLine, $remainingString) = explode("\n", $lines);
-//
-//        $newString .= $trimedLine . "\n";
-//
-//        $remainingString = "        " . $remainingString;
-//
-//        if (strlen($remainingString) < 120) {
-//            $newString .= $remainingString;
-//        }
-//    }
-//
-//    return $newString;
-}
+    /**
+     * Format the welsh rows
+     *
+     * @param $key
+     * @param $value
+     * @return string
+     */
+    protected function formatCyRow($key, $value)
+    {
+        if (isset($this->cyTranslations[$key])) {
+            $value = $this->cyTranslations[$key];
+        } else {
+            $value = '{WELSH} ' . $value;
+        }
 
-$toBeTranslated = [];
+        return $this->formatEnRow($key, $value);
+    }
 
-foreach ($foundArray as $key => $value) {
+    /**
+     * Save the contents to the file
+     *
+     * @param $locale
+     * @param $callback
+     */
+    protected function outputContent($locale, $callback)
+    {
+        $content = $this->generateContent($callback);
 
-    $gbLine = wrapLine("    '" . $key . "' => '" . $value . "',");
+        file_put_contents($this->getFilename($locale), $content);
+    }
 
-//    if (isset($translated[$key])) {
-//        $welsh = str_replace("\n", '', $translated[$key]);
-//        $welsh = addslashes($welsh);
-//
-//    } else {
-//        $toBeTranslated[$key] = $value;
-//        $welsh = $value;
-//        $welsh = preg_replace('/[AU]/', 'Y', $welsh);
-//        $welsh = preg_replace('/[IO]/', 'E', $welsh);
-//        $welsh = preg_replace('/[au]/', 'y', $welsh);
-//        $welsh = preg_replace('/[io]/', 'e', $welsh);
-//
-//        $toBeContent .= "\n" . wrapLine("    '" . $key . "' => '" . $value . "',");
-//    }
+    /**
+     * Grab the appropriate filename
+     *
+     * @param $locale
+     * @return string
+     */
+    protected function getFilename($locale)
+    {
+        return $this->translationLocation . $this->filenameMap[$locale];
+    }
 
-    $welsh = '{WELSH} ' . $value;
+    /**
+     * Generate the content
+     *
+     * @param $callback
+     * @return string
+     */
+    protected function generateContent($callback)
+    {
+        $entries = [];
 
-    $cyLine = wrapLine("    '" . $key . "' => '" . $welsh . "',");
+        foreach ($this->usedTranslations as $key => $value) {
+            $entries[] = $callback($key, $value);
+        }
 
-    $enGbContent .= "\n" . $gbLine;
-    $cyGbContent .= "\n" . $cyLine;
-}
+        $entries[] = '    // Potentially unused translations';
 
-$enGbContent .= "\n    // Potentially unused (Not found with grep)";
-$cyGbContent .= "\n    // Potentially unused (Not found with grep)";
+        // Unused
+        foreach ($this->unusedTranslations as $key => $value) {
+            $entries[] = $callback($key, $value);
+        }
 
-foreach ($unusedArray as $key => $value) {
+        return sprintf(
+            '<?php' . "\n" . '// @codingStandardsIgnoreFile' . "\n" . 'return [' . "\n" . '%s' . "\n" . '];' . "\n",
+            implode("\n", $entries)
+        );
+    }
 
-    $gbLine = wrapLine("    '" . $key . "' => '" . $value . "',");
-    $cyLine = wrapLine("    '" . $key . "' => 'W " . $value . "',");
+    /**
+     * Standardise the translations
+     */
+    protected function organiseTranslations()
+    {
+        foreach ($this->enTranslations as $key => $value) {
 
-    $enGbContent .= "\n" . $gbLine;
-    $cyGbContent .= "\n" . $cyLine;
-}
-
-$enGbContent .= "\n);\n";
-$cyGbContent .= "\n);\n";
-$toBeContent .= "\n);\n";
-
-file_put_contents($translationLocation . 'en_GB.php', $enGbContent);
-file_put_contents($translationLocation . 'cy_GB.php', $cyGbContent);
-file_put_contents($translationLocation . 'to-be-translated.php', $toBeContent);
-
-
-// markup partial translations
-function translatePartials($partials) {
-    // replicates file structure and nested partial includes
-    foreach ($partials as $file) {
-        if (!$file->isDot()) {
-            if ($file->isDir()) {
-                $subDir = new DirectoryIterator($file->getPathname());
-                translatePartials($subDir);
+            if ($this->isUsed($key)) {
+                $this->usedTranslations[$key] = $value;
             } else {
-                $source = $file->getPathname();
-                $dest = str_replace('en_GB', 'cy_GB', $source);
-
-                $content = '<p><b>Translated to Welsh</b></p>'. file_get_contents($source);
-                file_put_contents($dest, str_replace('en_GB', 'cy_GB', $content));
+                $this->unusedTranslations[$key] = $value;
             }
         }
+
+        $this->sortTranslations($this->usedTranslations);
+        $this->sortTranslations($this->unusedTranslations);
+    }
+
+    /**
+     * Sort the translations alphabetically
+     *
+     * @param $translations
+     */
+    protected function sortTranslations(&$translations)
+    {
+        ksort($translations);
+    }
+
+    /**
+     * Format the values, remove duplicate whitespace and escape quotes
+     *
+     * @param $string
+     * @return string
+     */
+    protected function formatValue($string)
+    {
+        return $this->escapeQuotes(preg_replace('/(\s+)/', ' ', $string));
+    }
+
+    /**
+     * Format the keys
+     *
+     * @param $string
+     * @return string
+     */
+    protected function formatKey($string)
+    {
+        return $this->escapeQuotes($string);
+    }
+
+    /**
+     * Escape quotes
+     *
+     * @param $string
+     * @return string
+     */
+    protected function escapeQuotes($string)
+    {
+        return str_replace("'", "\'", $string);
+    }
+
+    /**
+     * Check if the translation is used
+     *
+     * @param $key
+     * @return bool
+     */
+    protected function isUsed($key)
+    {
+        // Tmp just return true
+        return true;
+
+//        $directories = [
+//            realpath(__DIR__ . '/../Common/config/list-data/'),
+//            realpath(__DIR__ . '/../Common/src/'),
+//            realpath(__DIR__ . '/../Common/view/'),
+//            realpath(__DIR__ . '/../../olcs-internal/module/'),
+//            realpath(__DIR__ . '/../../olcs-selfserve/module/'),
+//        ];
+//
+//        foreach ($directories as $directory) {
+//            $response = shell_exec('grep -r "' . $key . '" ' . $directory);
+//
+//            if (!empty($response)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
     }
 }
 
-$partials = new DirectoryIterator($translationLocation.'partials/en_GB');
-translatePartials($partials);
+$translations = new Translator(__DIR__ . '/../Common/config/language/');
+$translations->run();

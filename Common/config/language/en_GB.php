@@ -1,6 +1,6 @@
 <?php
 // @codingStandardsIgnoreFile
-return array(
+return [
     '404-title' => 'We can\'t find that page',
     '500-title' => 'This page isn\'t working at the moment',
     'ANY_TO_ST' => '<li>All people apart from the first one</li>',
@@ -2602,5 +2602,5 @@ return array(
     'west-of-england' => 'West of England',
     'withdraw-application' => 'Withdraw application',
     'your-business' => 'Your business',
-    // Potentially unused (Not found with grep)
-);
+    // Potentially unused translations
+];
