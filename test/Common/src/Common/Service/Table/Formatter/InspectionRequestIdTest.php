@@ -48,9 +48,33 @@ class InspectionRequestIdTest extends MockeryTestCase
             ->with($expectedRouteName, $expectedUrlParams)
             ->andReturn($expectedUrl);
 
+        $mockRequest = m::mock();
+
+        $mockRouter = m::mock()
+            ->shouldReceive('match')
+            ->with($mockRequest)
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getMatchedRouteName')
+                ->once()
+                ->andReturn($expectedRouteName)
+                ->getMock()
+            )
+            ->once()
+            ->getMock();
+
         $sm->shouldReceive('get')
             ->with('Helper\Url')
             ->andReturn($mockUrlHelper)
+            ->once()
+            ->shouldReceive('get')
+            ->with('router')
+            ->andReturn($mockRouter)
+            ->once()
+            ->shouldReceive('get')
+            ->with('request')
+            ->andReturn($mockRequest)
+            ->once()
             ->getMock();
 
         $this->assertEquals($expectedOutput, InspectionRequestId::format($data, [], $sm));
