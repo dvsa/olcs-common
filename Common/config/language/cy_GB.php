@@ -1,6 +1,6 @@
 <?php
 // @codingStandardsIgnoreFile
-return array(
+return [
     '404-title' => '{WELSH} We can\'t find that page',
     '500-title' => '{WELSH} This page isn\'t working at the moment',
     'ANY_TO_ST' => '{WELSH} <li>All people apart from the first one</li>',
@@ -814,7 +814,7 @@ return array(
     'description' => '{WELSH} Description',
     'director' => '{WELSH} Director',
     'disagree' => '{WELSH} Disagree',
-    'disqualification-column' => '{WELSH}  Disq.',
+    'disqualification-column' => '{WELSH} Disq.',
     'disqualified' => '{WELSH} Disqualified',
     'dob' => '{WELSH} Date of birth',
     'doc' => '{WELSH} DOC',
@@ -1858,7 +1858,7 @@ return array(
     'print-sign-return-declaration-form' => '{WELSH} Print, sign and return the declaration form',
     'print-sign-return-declaration-form-text' => '{WELSH} A business owner or director must sign the declaration form and send it to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a>, if they haven’t already.',
     'priority' => '{WELSH} Priority',
-    'privacy-and-cookies-title' => '{WELSH} Privacy and cookies',
+    'privacy-and-cookies-title' => 'Preifatrwydd a Chwcis',
     'progress' => '{WELSH} Progress',
     'prohibition-history' => '{WELSH} Prohibition history',
     'propose-to-revoke' => '{WELSH} In-Office revocation',
@@ -2382,10 +2382,10 @@ return array(
     'tm-quick-action-unmerge' => '{WELSH} Unmerge Transport Manager',
     'tm-responsibilities-applications' => '{WELSH} Applications',
     'tm-responsibilities-licences' => '{WELSH} Licences',
-    'tm_application.table.status.current' => '{WELSH}  (Current)',
-    'tm_application.table.status.new' => '{WELSH}  (New)',
-    'tm_application.table.status.removed' => '{WELSH}  (Removed)',
-    'tm_application.table.status.updated' => '{WELSH}  (Updated)',
+    'tm_application.table.status.current' => '{WELSH} (Current)',
+    'tm_application.table.status.new' => '{WELSH} (New)',
+    'tm_application.table.status.removed' => '{WELSH} (Removed)',
+    'tm_application.table.status.updated' => '{WELSH} (Updated)',
     'tol-no-changes-message' => '{WELSH} No changes to the type of licence detected',
     'totAuthTrailers' => '{WELSH} Total number of trailers',
     'totAuthVehicles' => '{WELSH} Total number of vehicles',
@@ -2602,5 +2602,5 @@ return array(
     'west-of-england' => '{WELSH} West of England',
     'withdraw-application' => '{WELSH} Withdraw application',
     'your-business' => '{WELSH} Your business',
-    // Potentially unused (Not found with grep)
-);
+    // Potentially unused translations
+];
