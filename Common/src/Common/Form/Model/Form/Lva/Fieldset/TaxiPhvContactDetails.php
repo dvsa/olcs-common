@@ -23,9 +23,9 @@ class TaxiPhvContactDetails
     public $version = null;
 
     /**
-     * @Form\Attributes({"class":"","id":""})
+     * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label": "application_taxi-phv_licence-sub-action.contactDetails.description"
+     *     "label": "application_taxi-phv_licence-sub-action.contactDetails.description",
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
