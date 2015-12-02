@@ -11,7 +11,7 @@ return array(
             'application_start' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/application_start_page'
+                    'route' => '/application_start_page[/]'
                 )
             ),
             'getfile' => array(
@@ -37,7 +37,7 @@ return array(
             'correspondence_inbox' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/correspondence'
+                    'route' => '/correspondence[/]'
                 )
             ),
             'not-found' => array(
@@ -85,7 +85,7 @@ return array(
             'logout' => [
                 'type' => 'segment',
                 'options' => [
-                    'route' => '/logout',
+                    'route' => '/logout[/]',
                     'defaults' => [
                         'controller' => \Common\Controller\LogoutController::class,
                         'action' => 'index'
