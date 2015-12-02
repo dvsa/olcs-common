@@ -28,8 +28,12 @@ class InspectionRequestId implements FormatterInterface
         unset($column); // parameter not used
 
         $urlHelper = $sm->get('Helper\Url');
+        $router     = $sm->get('router');
+        $request    = $sm->get('request');
+        $routeMatch = $router->match($request);
+        $matchedRouteName = $routeMatch->getMatchedRouteName();
 
-        if (empty($data['application'])) {
+        if (substr($matchedRouteName, 0, 7) === 'licence') {
             // licence inspection request
             $url = $urlHelper->fromRoute(
                 'licence/processing/inspection-request',
