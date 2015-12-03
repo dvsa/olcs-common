@@ -22,9 +22,9 @@ use Zend\Mvc\Router\Http\RouteMatch;
  */
 class PageId extends AbstractHelper implements FactoryInterface
 {
-    private $routeMatchName;
+    private $routeMatchName = 'unknown';
 
-    private $action;
+    private $action = 'unknown';
 
     /**
      * Create the view helper service
@@ -36,8 +36,11 @@ class PageId extends AbstractHelper implements FactoryInterface
     {
         /** @var RouteMatch $routeMatch */
         $routeMatch = $serviceLocator->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
-        $this->routeMatchName = $routeMatch->getMatchedRouteName();
-        $this->action = $routeMatch->getParam('action');
+
+        if ($routeMatch !== null) {
+            $this->routeMatchName = $routeMatch->getMatchedRouteName();
+            $this->action = $routeMatch->getParam('action');
+        }
 
         return $this;
     }
