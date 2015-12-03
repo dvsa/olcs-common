@@ -56,8 +56,8 @@ class Interim implements MapperInterface
             'reason' => $dataData['interimReason'],
             'startDate' => $dataData['interimStart'],
             'endDate' => $dataData['interimEnd'],
-            'authVehicles' => (int)$dataData['interimAuthVehicles'],
-            'authTrailers' => (int)$dataData['interimAuthTrailers'],
+            'authVehicles' => $dataData['interimAuthVehicles'],
+            'authTrailers' => $dataData['interimAuthTrailers'],
             'operatingCentres' => isset($data['operatingCentres']['id']) ? $data['operatingCentres']['id'] : null,
             'vehicles' => isset($data['vehicles']['id']) ? $data['vehicles']['id'] : null,
             'status' => isset($data['interimStatus']['status']) ? $data['interimStatus']['status'] : null
