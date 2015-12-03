@@ -480,6 +480,7 @@ return array(
             'personName' => 'Common\View\Helper\PersonName'
         ),
         'factories' => array(
+            'pageId' => \Common\View\Helper\PageId::class,
             'date' => \Common\View\Helper\Date::class,
             'formRow' => 'Common\Form\View\Helper\FormRow',
             'languageLink' => \Common\View\Helper\LanguageLink::class,
