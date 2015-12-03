@@ -72,4 +72,15 @@ trait GenericRenderView
         $this->placeholder()->setPlaceholder('pageSubtitle', $pageSubTitle);
         return $this;
     }
+
+    /**
+     * Gets a view model with optional params
+     *
+     * @param array $params
+     * @return ViewModel
+     */
+    public function getView(array $params = null)
+    {
+        return new ViewModel($params);
+    }
 }

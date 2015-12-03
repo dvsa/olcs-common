@@ -971,17 +971,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Gets a view model with optional params
-     *
-     * @param array $params
-     * @return ViewModel
-     */
-    public function getView(array $params = null)
-    {
-        return new ViewModel($params);
-    }
-
-    /**
      * Disable field validation
      *
      * @param \Zend\InputFilter\InputFilter $inputFilter
