@@ -145,6 +145,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
             $this->updateDateRangeValuesFromPost();
 
             $query = [
+                'q' => $this->getSearch(),
                 'limit' => $this->getLimit(),
                 'page' => $this->getPage(),
                 'filters' => $this->getFilterNames(),
@@ -152,12 +153,10 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
             ];
 
             $uri = sprintf(
-                '/%s/%s?%s',
-                urlencode($this->getSearch()),
+                '%s?%s',
                 $this->getDataClass()->getSearchIndices(),
                 http_build_query($query)
             );
-
             $data = $this->getRestClient()->get($uri);
 
             $this->setData('results', $data);

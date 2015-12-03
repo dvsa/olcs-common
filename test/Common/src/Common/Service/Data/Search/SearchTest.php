@@ -132,4 +132,46 @@ class SearchTest extends MockeryTestCase
 
         $this->assertEquals('table', $sut->fetchResultsTable());
     }
+
+    public function testFetchResults()
+    {
+        $index = 'INDEX_NAME';
+
+        $mockRestClient = m::mock(\Common\Util\RestClient::class);
+        $mockRestClient->shouldReceive('get')->once()->andReturnUsing(
+            function ($uri) {
+                // This is the main assertion that test the uri is generated correctly
+                $this->assertSame('INDEX_NAME?q=SEARCH&limit=10&page=1', $uri);
+                return ['Filters' => []];
+            }
+        );
+
+        $mockIndex = m::mock();
+        $mockIndex->shouldReceive('getFilters')->with()->andReturn([]);
+        $mockIndex->shouldReceive('getDateRanges')->with()->andReturn([]);
+        $mockIndex->shouldReceive('getSearchIndices')->with()->andReturn($index);
+
+        $mockSearchManager = $this->getMockSearchTypeManager();
+        $mockSearchManager->shouldReceive('get')->with($index)->andReturn($mockIndex);
+
+        $mockViewHelperManager = m::mock();
+        $mockViewHelperManager->shouldReceive('get->getContainer->getValue')->andReturn('FORM');
+
+        $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl->shouldReceive('get')->with(SearchTypeManager::class)->andReturn($mockSearchManager);
+        $mockSl->shouldReceive('get')->with('ViewHelperManager')->andReturn($mockViewHelperManager);
+
+        $mockRequest = m::mock(get_class(new HttpRequest));
+        $mockRequest->shouldReceive('getPost')->with()->andReturn([]);
+        $mockRequest->shouldReceive('getQuery')->with()->andReturn([]);
+
+        $sut = new Search();
+        $sut->setServiceLocator($mockSl);
+        $sut->setIndex($index);
+        $sut->setRequest($mockRequest);
+        $sut->setRestClient($mockRestClient);
+
+        $sut->setSearch('SEARCH');
+        $sut->fetchResults();
+    }
 }
