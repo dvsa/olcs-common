@@ -1907,6 +1907,7 @@ return [
     'role.operator-user' => 'Standard user',
     'role.partner-admin' => 'Administrator',
     'role.partner-user' => 'Standard user',
+    'rules_in_ni_link' => '{{RULES_IN_NI}}',
     'safety-inspection-providers.table.address' => 'Workshop address',
     'safety-inspection-providers.table.empty_message' => 'You haven\'t added any safety inspectors yet.',
     'safety-inspection-providers.table.empty_message-psv' => 'You haven\'t added any safety inspectors yet.',
