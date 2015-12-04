@@ -179,4 +179,54 @@ trait GenericMethods
 
         return $request->isPost() && isset($data['form-actions'][$button]);
     }
+
+    /**
+     * Get param from route
+     *
+     * @param string $name
+     * @return string
+     */
+    public function getFromRoute($name)
+    {
+        return $this->params()->fromRoute($name);
+    }
+
+    /**
+     * Generate a form with data
+     *
+     * @param string $name
+     * @param callable $callback
+     * @param mixed $data
+     * @param boolean $tables
+     * @return object
+     */
+    public function generateFormWithData($name, $callback, $data = null, $tables = false, $enableCsrf = true)
+    {
+        $form = $this->generateForm($name, $callback, $tables, $enableCsrf);
+
+        if (!$this->getRequest()->isPost() && is_array($data)) {
+            $form->setData($data);
+        }
+
+        return $form;
+    }
+
+    /**
+     * Generate a form with a callback
+     *
+     * @param string $name
+     * @param callable $callback
+     * @param boolean $tables
+     * @return object
+     */
+    protected function generateForm($name, $callback, $tables = false, $enableCsrf = true)
+    {
+        $form = $this->getForm($name);
+
+        if ($tables) {
+            return $form;
+        }
+
+        return $this->formPost($form, $callback, [], true, $enableCsrf);
+    }
 }
