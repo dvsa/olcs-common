@@ -1844,6 +1844,7 @@ return [
     'pi_t_other' => '{WELSH} Other',
     'please-select' => '{WELSH} Please select',
     'please-select-row' => '{WELSH} Please select a row',
+    'please_select_a_row' => '{WELSH} Please select a row',
     'points' => '{WELSH} Points',
     'position' => '{WELSH} Position',
     'postcode.address.manual_entry' => '{WELSH} Enter the address yourself',
