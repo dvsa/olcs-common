@@ -7,7 +7,7 @@
  */
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
-use Common\FormService\Form\AbstractFormService;
+use Common\FormService\Form\Lva\AbstractLvaFormService;
 use Zend\Form\Form;
 
 /**
@@ -15,7 +15,7 @@ use Zend\Form\Form;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractOperatingCentres extends AbstractFormService
+abstract class AbstractOperatingCentres extends AbstractLvaFormService
 {
     protected $mainTableConfigName = 'lva-operating-centres';
 
