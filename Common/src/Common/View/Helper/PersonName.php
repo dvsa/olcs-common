@@ -33,7 +33,7 @@ class PersonName extends AbstractHelper
      * @return string HTML
      */
     public function __invoke(
-        array $person,
+        $person = [],
         $fields = [
             'title',
             'forename',
