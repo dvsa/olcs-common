@@ -116,10 +116,6 @@ class User extends InternalSearchAbstract
                 'name' => 'entity'
             ),
             array(
-                'title' => 'Type',
-                'name' => 'userType'
-            ),
-            array(
                 'title' => 'Role',
                 'name' => 'role'
             ),
