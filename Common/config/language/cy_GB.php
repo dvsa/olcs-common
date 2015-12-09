@@ -660,6 +660,7 @@ return [
     'ch_alert_reason.invalid_company_number' => '{WELSH} Invalid company number',
     'choose-one' => '{WELSH} Choose one',
     'closed' => '{WELSH} Closed',
+    'comment-updated' => '{WELSH} Comment has been updated.',
     'community-licence-changes-contact-office' => '{WELSH} If you wish to request additional community licences, please contact the central office',
     'companies-house-alert.close.confirm' => '{WELSH} Are you sure you want to close the selected alert(s)?',
     'companies-house-alert.close.success' => '{WELSH} The selected change alert(s) have been closed',
