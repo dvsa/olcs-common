@@ -51,8 +51,14 @@ trait GenericMethods
      * @param bool $enableCsrf
      * @return \Zend\Form\Form
      */
-    public function formPost($form, $callback = null, $additionalParams = [], $validateForm = true, $enableCsrf = true)
-    {
+    public function formPost(
+        $form,
+        $callback = null,
+        $additionalParams = [],
+        $validateForm = true,
+        $enableCsrf = true,
+        $fieldValues = []
+    ) {
         if (!$enableCsrf) {
             $form->remove('csrf');
         }
@@ -63,7 +69,10 @@ trait GenericMethods
 
         if ($this->getRequest()->isPost()) {
 
-            $data = (array)$this->getRequest()->getPost();
+            $data = array_merge(
+                (array)$this->getRequest()->getPost(),
+                $fieldValues
+            );
             $form->setData($data);
 
             if (method_exists($this, 'postSetFormData')) {
@@ -200,9 +209,15 @@ trait GenericMethods
      * @param boolean $tables
      * @return object
      */
-    public function generateFormWithData($name, $callback, $data = null, $tables = false, $enableCsrf = true)
-    {
-        $form = $this->generateForm($name, $callback, $tables, $enableCsrf);
+    public function generateFormWithData(
+        $name,
+        $callback,
+        $data = null,
+        $tables = false,
+        $enableCsrf = true,
+        $fieldValues = []
+    ) {
+        $form = $this->generateForm($name, $callback, $tables, $enableCsrf, $fieldValues);
 
         if (!$this->getRequest()->isPost() && is_array($data)) {
             $form->setData($data);
@@ -219,7 +234,7 @@ trait GenericMethods
      * @param boolean $tables
      * @return object
      */
-    protected function generateForm($name, $callback, $tables = false, $enableCsrf = true)
+    protected function generateForm($name, $callback, $tables = false, $enableCsrf = true, $fieldValues = [])
     {
         $form = $this->getForm($name);
 
@@ -227,6 +242,6 @@ trait GenericMethods
             return $form;
         }
 
-        return $this->formPost($form, $callback, [], true, $enableCsrf);
+        return $this->formPost($form, $callback, [], true, $enableCsrf, $fieldValues);
     }
 }
