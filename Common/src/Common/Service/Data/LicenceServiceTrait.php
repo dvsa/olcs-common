@@ -44,6 +44,11 @@ trait LicenceServiceTrait
     {
         $licence = $this->getLicenceService()->fetchLicenceData();
 
+        //not ideal, but this is used by many data services, so this was the way requiring far fewer fixes elsewhere
+        if (!isset($licence['id'])) {
+            return [];
+        }
+
         return [
             'isNi' => $licence['niFlag'],
             'goodsOrPsv' => $licence['goodsOrPsv']['id'],
