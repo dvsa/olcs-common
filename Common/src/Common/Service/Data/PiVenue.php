@@ -58,7 +58,7 @@ class PiVenue extends AbstractData implements ListData
     public function fetchListData($params)
     {
         if (is_null($this->getData('PiVenue'))) {
-
+            $params['limit'] = 1000;
             $data = $this->getRestClient()->get('', $params);
 
             $this->setData('PiVenue', false);
