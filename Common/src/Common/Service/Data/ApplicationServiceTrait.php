@@ -53,7 +53,8 @@ trait ApplicationServiceTrait
         );
 
         return [
-            'goodsOrPsv' => $application['goodsOrPsv']['id']
+            'goodsOrPsv' => $application['goodsOrPsv']['id'],
+            'isNi' => $application['niFlag']
         ];
     }
 

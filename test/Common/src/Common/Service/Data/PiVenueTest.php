@@ -38,7 +38,14 @@ class PiVenueTest extends MockeryTestCase
         $mockLicenceService = $this->getMock('\Common\Service\Data\Licence');
         $mockLicenceService->expects($this->once())
             ->method('fetchLicenceData')
-            ->willReturn(['niFlag'=> true, 'goodsOrPsv' => ['id'=>'lcat_gv'], 'trafficArea' => ['id' => 'B']]);
+            ->willReturn(
+                [
+                    'id' => 7,
+                    'niFlag'=> true,
+                    'goodsOrPsv' => ['id'=>'lcat_gv'],
+                    'trafficArea' => ['id' => 'B']
+                ]
+            );
 
         $sut = new PiVenue();
         $sut->setLicenceService($mockLicenceService);
@@ -63,7 +70,7 @@ class PiVenueTest extends MockeryTestCase
      */
     public function testFetchListData($data, $expected)
     {
-        $params = ['trafficArea' => 'B'];
+        $params = ['trafficArea' => 'B', 'limit' => 1000];
 
         $mockRestClient = m::mock('Common\Util\RestClient');
         $mockRestClient->shouldReceive('get')->once()->with('', $params)->andReturn($data);
