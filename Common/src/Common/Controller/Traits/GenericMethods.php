@@ -49,6 +49,7 @@ trait GenericMethods
      * @param array $additionalParams
      * @param bool $validateForm
      * @param bool $enableCsrf
+     * @param array $fieldValues
      * @return \Zend\Form\Form
      */
     public function formPost(
