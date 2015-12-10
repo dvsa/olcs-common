@@ -13,12 +13,6 @@ use Zend\Form\Annotation as Form;
 class PsvDiscs
 {
     /**
-     * @Form\Name("data")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\PsvDiscsData")
-     */
-    public $data = null;
-
-    /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
      */
