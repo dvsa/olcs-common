@@ -82,16 +82,6 @@ return array(
                     ),
                 )
             ),
-            'logout' => [
-                'type' => 'segment',
-                'options' => [
-                    'route' => '/logout[/]',
-                    'defaults' => [
-                        'controller' => \Common\Controller\LogoutController::class,
-                        'action' => 'index'
-                    ]
-                ]
-            ]
         )
     ),
     'controllers' => array(
@@ -146,7 +136,6 @@ return array(
             'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
             \Common\Controller\ErrorController::class => \Common\Controller\ErrorController::class,
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
-            \Common\Controller\LogoutController::class => \Common\Controller\LogoutController::class
         )
     ),
     'controller_plugins' => array(
