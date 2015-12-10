@@ -41,7 +41,7 @@ class User extends InternalSearchAbstract
         if (empty($this->filters)) {
 
             $this->filters = [
-                new Filter\UserRole(),
+                new Filter\UserType(),
                 new Filter\Partner(),
                 new Filter\Team(),
                 new Filter\LocalAuthority(),
@@ -94,7 +94,7 @@ class User extends InternalSearchAbstract
     {
          return array(
             array(
-                'title' => 'Username',
+                'title' => 'User Id',
                 'formatter' => function ($data) {
                     return '<a href="/admin/user-management/users/edit/' . $data['userId']
                      . '">' . $data['userId'] . '</a>';
@@ -102,7 +102,7 @@ class User extends InternalSearchAbstract
             ),
             array(
                 'title' => 'Name',
-                'formatter' => function ($data, $column, $sm) {
+                'formatter' => function ($data) {
                     return $data['forename'] . ' ' .
                     $data['familyName'];
                 }
@@ -114,10 +114,6 @@ class User extends InternalSearchAbstract
             array(
                 'title' => 'Entity',
                 'name' => 'entity'
-            ),
-            array(
-                'title' => 'Role',
-                'name' => 'role'
             ),
             array(
                 'title' => '',
