@@ -70,7 +70,7 @@ abstract class AbstractDiscsController extends AbstractController
             return $this->completeSection('discs');
 
         } else {
-            $data = $this->getFormData();
+            $data = [];
         }
 
         $form = $this->getDiscsForm()->setData($data);
@@ -157,28 +157,6 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->getServiceLocator()
             ->get('Helper\Form')
             ->createFormWithRequest('GenericConfirmation', $this->getRequest());
-    }
-
-    protected function getFormData()
-    {
-        $discs = $this->getTableResults();
-
-        $data = array(
-            'data' => array(
-                'validDiscs' => 0,
-                'pendingDiscs' => 0
-            )
-        );
-
-        foreach ($discs as $disc) {
-            if (!empty($disc['issuedDate'])) {
-                $data['data']['validDiscs']++;
-            } else {
-                $data['data']['pendingDiscs']++;
-            }
-        }
-
-        return $data;
     }
 
     protected function getDiscsForm()
