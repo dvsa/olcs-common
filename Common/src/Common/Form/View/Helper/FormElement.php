@@ -42,6 +42,13 @@ class FormElement extends ZendFormElement
     private static $format = "%s \r\n <p class=\"hint\">%s</p>";
 
     /**
+     * The form row output format.
+     *
+     * @var string
+     */
+    private static $topFormat = "<p class=\"hint\">%s</p> \r\n %s";
+
+    /**
      * Render an element
      *
      * Introspects the element type and attributes to determine which
@@ -181,8 +188,13 @@ class FormElement extends ZendFormElement
 
             $view = $this->getView();
             $hint = $view->translate($element->getOption('hint'));
+            $position = $element->getOption('hint-position');
 
-            $markup = sprintf(self::$format, $markup, $hint);
+            if ($position == 'above') {
+                return sprintf(self::$topFormat, $hint, $markup);
+            }
+
+            return sprintf(self::$format, $markup, $hint);
         }
 
         return $markup;
