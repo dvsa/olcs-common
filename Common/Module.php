@@ -5,7 +5,6 @@
  */
 namespace Common;
 
-use Dvsa\Olcs\Utils\Auth\AuthHelper;
 use Zend\EventManager\EventManager;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -77,39 +76,11 @@ class Module
         $events->attach(
             $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\UnauthorizedStrategy')
         );
-        if (AuthHelper::isOpenAm() === false) {
-            $events->attach(
-                $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\RedirectStrategy')
-            );
-        }
     }
 
     public function getConfig()
     {
-        $config = include __DIR__ . '/config/module.config.php';
-
-        if (AuthHelper::isOpenAm() === false) {
-            unset($config['zfc_rbac']['identity_provider']);
-            $config['zfc_rbac']['redirect_strategy'] = [
-                'redirect_when_connected'           => false,
-                'redirect_to_route_disconnected'    => 'zfcuser/login',
-                'append_previous_uri'               => true,
-                'previous_uri_query_key'            => 'redirectTo',
-            ];
-            $config['zfcuser']['auth_identity_fields'] = ['username'];
-            $config['service_manager']['delegators']['zfcuser_user_mapper'] = [
-                \Common\Rbac\UserProviderDelegatorFactory::class
-            ];
-            $config['view_manager']['template_path_stack']['zfcuser'] = __DIR__ . '/../../view';
-            $config['service_manager']['factories']['AnonQuerySender']
-                = \Common\Service\Cqrs\Query\AnonQuerySender::class;
-            $config['service_manager']['factories']['AnonCqrsRequest']
-                = \Common\Service\Cqrs\AnonRequestFactory::class;
-            $config['service_manager']['factories']['AnonQueryService']
-                = \Common\Service\Cqrs\Query\AnonQueryServiceFactory::class;
-        }
-
-        return $config;
+        return include __DIR__ . '/config/module.config.php';
     }
 
     protected function setUpTranslator(ServiceLocatorInterface $sm, $events)
