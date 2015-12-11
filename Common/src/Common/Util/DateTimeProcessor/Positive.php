@@ -22,20 +22,8 @@ class Positive extends DateTimeProcessorAbstract
     public function processWorkingDays($endDate, $workingDays)
     {
         $endDate = $this->checkDate($endDate);
-
-        $workingWeeks = floor($workingDays / 5);
-
-        $totalDays = $workingWeeks * 7;
-
-        $daysLeft = $workingDays - ($workingWeeks * 5);
-
-        $this->dateAddDays($endDate, $totalDays, true);
-
-        while ($daysLeft) {
-
+        for ($i = 0; $i < $workingDays; $i++) {
             $this->dateAddDays($endDate, 1, true);
-
-            $daysLeft--;
         }
 
         return $endDate;
@@ -53,6 +41,14 @@ class Positive extends DateTimeProcessorAbstract
     public function processPublicHolidays(PHPDateTime $date, PHPDateTime $endDate, $we)
     {
         $publicHolidays = $this->getPublicHolidaysArray($date, $endDate);
+
+        // ensure in date order to avoid cross over missed dates
+        uasort($publicHolidays,
+            function ($a, $b) {
+                return strtotime($a) -
+                strtotime($b);
+            }
+        );
 
         foreach ($publicHolidays as $publicHoliday) {
 
