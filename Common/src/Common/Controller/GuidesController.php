@@ -24,6 +24,7 @@ class GuidesController extends AbstractActionController
     const GUIDE_PRIVACY_AND_COOKIES = 'privacy-and-cookies';
     const GUIDE_TERMS_AND_CONDITIONS = 'terms-and-conditions';
     const GUIDE_FINANCIAL_EVIDENCE = 'financial-evidence';
+    const GUIDE_TRAFFIC_AREA = 'traffic-area';
 
     protected $guideMap = [
         self::GUIDE_OC_ADV_GB_NEW => 'oc_advert',
@@ -33,6 +34,7 @@ class GuidesController extends AbstractActionController
         self::GUIDE_PRIVACY_AND_COOKIES => 'default',
         self::GUIDE_TERMS_AND_CONDITIONS => 'default',
         self::GUIDE_FINANCIAL_EVIDENCE => 'default',
+        self::GUIDE_TRAFFIC_AREA => 'default',
     ];
 
     public function indexAction()

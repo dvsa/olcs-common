@@ -2403,6 +2403,7 @@ return [
     'totAuthTrailers' => '{WELSH} Total number of trailers',
     'totAuthVehicles' => '{WELSH} Total number of vehicles',
     'traffic-area' => '{WELSH} Traffic area',
+    'traffic-area-title' => '{WELSH} Traffic areas',
     'trafficAreaSet.hint-operating-centres' => '{WELSH} Traffic areas are determined by where your operating centres are. <a href="%s">More information about traffic areas</a>.',
     'trafficAreaSet.hint-taxi-phv' => '{WELSH} Your traffic area is determined by the location of your operating centres. More information about <a href="%s">traffic areas</a>.',
     'trafficAreaSet.trafficArea' => '{WELSH} Traffic area',
