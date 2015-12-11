@@ -43,7 +43,8 @@ class Positive extends DateTimeProcessorAbstract
         $publicHolidays = $this->getPublicHolidaysArray($date, $endDate);
 
         // ensure in date order to avoid cross over missed dates
-        uasort($publicHolidays,
+        uasort(
+            $publicHolidays,
             function ($a, $b) {
                 return strtotime($a) -
                 strtotime($b);

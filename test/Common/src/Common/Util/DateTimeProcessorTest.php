@@ -107,7 +107,7 @@ class DateTimeProcessorTest extends MockeryTestCase
                 '-8',
                 false, // weekends
                 true, // public holidays
-                '2014-12-24',
+                '2014-12-23',
                 [
                     '2014-12-25',
                     '2014-12-26',
@@ -119,7 +119,7 @@ class DateTimeProcessorTest extends MockeryTestCase
                 '-6',
                 true, // weekends
                 true, // public holidays
-                '2014-12-10',
+                '2014-12-23',
                 [
                     '2014-12-25',
                     '2014-12-26',
@@ -172,9 +172,9 @@ class DateTimeProcessorTest extends MockeryTestCase
                     '2014-12-26'
                 ]
             ],
-            [ // easter sunday problem
+            [ // easter sunday problem (we need to go back 16 days to even hit Easter Sunday)
                 '2015-04-28',
-                '-14',
+                '-16',
                 true, // weekends
                 true, // public holidays
                 '2015-04-02',

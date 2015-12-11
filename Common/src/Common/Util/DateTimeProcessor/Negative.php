@@ -47,7 +47,8 @@ class Negative extends DateTimeProcessorAbstract
         // sort into reverse order to avoid missing any dates when the end date and bank holiday loop cross over
         // otherwise as end date moves backwards and public holiday loop goes forwards, dates can be missed. Sorting
         // ensures processing happens in the same direction.
-        uasort($publicHolidays,
+        uasort(
+            $publicHolidays,
             function ($a, $b) {
                 return strtotime($b) -
                     strtotime($a);
