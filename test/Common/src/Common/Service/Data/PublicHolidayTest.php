@@ -21,16 +21,18 @@ class PublicHolidayTest extends MockeryTestCase
         $this->assertEquals('PublicHoliday', $sut->getServiceName());
     }
 
-    public function testFecthPublicHolidaysArray()
+    public function testFecthPublicHolidaysArrayPositive()
     {
         $startDate = \DateTime::createFromFormat('Y-m-d', '2014-01-01');
         $endDate = \DateTime::createFromFormat('Y-m-d', '2014-01-14');
 
         $params = [
             'isEngland' => '1',
-            'publicHolidayDate' => '=>2014-01-01',
-            'publicHolidayDate' => '<=2014-01-28',
-            'limit' => '10000'
+            'limit' => '11',
+            'sort' => 'publicHolidayDate',
+            'publicHolidayDate' => '>=2014-01-01',
+            'order' => 'ASC',
+            'sort' => 'publicHolidayDate',
         ];
 
         $returnData = [
@@ -43,6 +45,61 @@ class PublicHolidayTest extends MockeryTestCase
         $finalData = [
             '2014-01-05',
             '2014-01-10'
+        ];
+
+        $licenceData = [
+            'id' => '1',
+            'trafficArea' => [
+                'isEngland' => '1',
+                'isWales' => '0',
+            ]
+        ];
+
+        $licence = m::mock('Common\Service\Data\Licence');
+        $licence
+            ->shouldReceive('fetchLicenceData')
+            ->once()
+            ->with()
+            ->andReturn($licenceData);
+
+        $mockRestClient = m::mock('Common\Util\RestClient');
+        $mockRestClient
+            ->shouldReceive('get')
+            ->once()
+            ->with('', $params)
+            ->andReturn($returnData);
+
+        $sut = new PublicHoliday();
+        $sut->setRestClient($mockRestClient);
+        $sut->setLicenceService($licence);
+
+        $this->assertEquals($finalData, $sut->fetchPublicHolidaysArray($startDate, $endDate));
+    }
+
+    public function testFecthPublicHolidaysArrayNegative()
+    {
+        $startDate = \DateTime::createFromFormat('Y-m-d', '2014-01-01');
+        $endDate = \DateTime::createFromFormat('Y-m-d', '2013-12-14');
+
+        $params = [
+            'isEngland' => '1',
+            'limit' => '11',
+            'sort' => 'publicHolidayDate',
+            'publicHolidayDate' => '<=2014-01-01',
+            'order' => 'DESC',
+            'sort' => 'publicHolidayDate',
+        ];
+
+        $returnData = [
+            'Results' => [
+                0 => ['publicHolidayDate' => '2013-12-25'],
+                1 => ['publicHolidayDate' => '2013-12-26']
+            ]
+        ];
+
+        $finalData = [
+            '2013-12-25',
+            '2013-12-26'
         ];
 
         $licenceData = [
