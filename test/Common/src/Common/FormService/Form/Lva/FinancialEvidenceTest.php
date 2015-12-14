@@ -36,14 +36,16 @@ class FinancialEvidenceTest extends MockeryTestCase
 
     public function testGetForm()
     {
+        $request = m::mock();
+
         // Mocks
         $mockForm = m::mock();
 
-        $this->formHelper->shouldReceive('createForm')
-            ->with('Lva\FinancialEvidence')
+        $this->formHelper->shouldReceive('createFormWithRequest')
+            ->with('Lva\FinancialEvidence', $request)
             ->andReturn($mockForm);
 
-        $form = $this->sut->getForm();
+        $form = $this->sut->getForm($request);
 
         $this->assertSame($mockForm, $form);
     }

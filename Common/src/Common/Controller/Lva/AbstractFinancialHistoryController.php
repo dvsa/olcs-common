@@ -87,7 +87,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         return $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-financial_history')
-            ->getForm();
+            ->getForm($this->getRequest());
     }
 
     protected function getFormData()

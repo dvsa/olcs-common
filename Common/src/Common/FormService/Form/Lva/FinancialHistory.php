@@ -16,9 +16,9 @@ use Common\FormService\Form\AbstractFormService;
  */
 class FinancialHistory extends AbstractFormService
 {
-    public function getForm()
+    public function getForm($request)
     {
-        $form = $this->getFormHelper()->createForm('Lva\FinancialHistory');
+        $form = $this->getFormHelper()->createFormWithRequest('Lva\FinancialHistory', $request);
 
         $this->alterForm($form);
 
