@@ -58,7 +58,6 @@ class PublicHoliday extends AbstractData
         if ($licence) {
 
             $trafficAreaArray = $licence['trafficArea'];
-
             foreach ($fields as $key) {
                 if (array_key_exists($key, $trafficAreaArray)) {
                     $fieldToSearch = $key;
@@ -66,14 +65,21 @@ class PublicHoliday extends AbstractData
             }
         }
 
-        $dateTo->add(\DateInterval::createFromDateString('14 Days'));
+        // define the limit as a reasonable multiple of number of days the original difference to ensure we cover
+        $limit = ceil(($dateTo->diff($dateFrom, true)->format('%a') * 0.04))+10 ;
 
         $params = [
             $fieldToSearch => '1',
-            'publicHolidayDate' => '=>' . $dateFrom->format('Y-m-d'),
-            'publicHolidayDate' => '<=' . $dateTo->format('Y-m-d'),
-            'limit' => '10000'
+            'limit' => $limit,
+            'sort' => 'publicHolidayDate'
         ];
+        if ($dateFrom < $dateTo) {
+            $params['publicHolidayDate'] = '>=' . $dateFrom->format('Y-m-d');
+            $params['order'] = 'ASC';
+        } else {
+            $params['publicHolidayDate'] = '<=' . $dateFrom->format('Y-m-d');
+            $params['order'] = 'DESC';
+        }
 
         $category = $fieldToSearch;
 
