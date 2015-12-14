@@ -3,11 +3,15 @@
         <h1><?php echo $this->translate($guide . '-title'); ?></h1>
     </div><!-- .page-header__wrapper -->
 </div>
-<div class="two-thirds">
-    <div class="article">
-        <?php echo $this->translate('markup-' . $guide); ?>
-    </div>
-</div>
-<div class="one-third sidebar">
-    <?php echo $this->translate('markup-support-contact-address'); ?>
+<div class="row">
+  <div class="two-thirds">
+      <div class="article">
+          <?php echo $this->translate('markup-' . $guide); ?>
+      </div>
+  </div>
+  <div class="one-third">
+      <div class="sidebar">
+        <?php echo $this->translate('markup-support-contact-address'); ?>
+      </div>
+  </div>
 </div>
