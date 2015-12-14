@@ -60,6 +60,8 @@ class CommonOperatingCentre extends AbstractFormService
                     ->setAttribute('data-current', $params['currentTrailersRequired']);
             }
         }
+
+        $form->get('address')->get('postcode')->setOption('shouldEscapeMessages', false);
     }
 
     protected function alterActionFormForPsv(Form $form, array $params)

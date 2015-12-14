@@ -70,7 +70,8 @@ class OperatingCentre implements MapperInterface
         array $errors,
         FlashMessengerHelperService $fm,
         TranslationHelperService $translator,
-        $location
+        $location,
+        $taGuidesUrl
     ) {
         $formMessages = [];
 
@@ -125,8 +126,7 @@ class OperatingCentre implements MapperInterface
 
                 foreach ($message as $k => $v) {
                     if ($k === 'ERR_OC_PC_TA_GB') {
-                        $data = json_decode($v, true);
-                        $message[$k] = $translator->translateReplace($k, [$data['oc'], $data['current']]);
+                        $message[$k] = $translator->translateReplace($k, [$taGuidesUrl]);
                     } elseif ($k === 'ERR_TA_GOODS' || $k === 'ERR_TA_PSV' || $k === 'ERR_TA_PSV_SR') {
                         $message[$k] = $translator->translateReplace($k .'_'. strtoupper($location), [$v]);
                     }

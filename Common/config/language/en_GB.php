@@ -35,7 +35,7 @@ return [
     'ERR_OC_AD_IN_1' => 'Please enter a newspaper name',
     'ERR_OC_CL_1' => 'The number of community licences must not exceed the the total number of vehicles',
     'ERR_OC_EA_EMPTY' => 'Please select an enforcement area',
-    'ERR_OC_PC_TA_GB' => 'Your operating centre is in %s traffic area, which differs to your first operating centre (%s). You will need to apply for more than one licence. <a href="#">Read more</a>',
+    'ERR_OC_PC_TA_GB' => 'This operating centre is in a different traffic area from your other centres. You’ll have to apply for a separate licence. <a href="%s" target="_blank">Read more about traffic areas</a>',
     'ERR_OC_PC_TA_NI' => 'Your Operating Centre must be located in Northern Ireland',
     'ERR_OC_PERMISSION' => 'You must check this box to continue',
     'ERR_OC_PSV_SUM_1A' => 'The sum of small, medium and large vehicles does not match the total number of vehicles',

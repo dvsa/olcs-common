@@ -376,13 +376,19 @@ abstract class AbstractOperatingCentresController extends AbstractController
             if ($response->isServerError()) {
                 $fm->addUnknownError();
             } else {
+                $taGuidesUrl = $this->url()->fromRoute(
+                    'guides/guide',
+                    ['guide' => 'traffic-area']
+                );
+
                 $translator = $this->getServiceLocator()->get('Helper\Translation');
                 OperatingCentre::mapFormErrors(
                     $form,
                     $response->getResult()['messages'],
                     $fm,
                     $translator,
-                    $this->location
+                    $this->location,
+                    $taGuidesUrl
                 );
             }
         }

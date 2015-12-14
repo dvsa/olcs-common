@@ -109,7 +109,7 @@ class OperatingCentreTest extends MockeryTestCase
         $fm = m::mock(FlashMessengerHelperService::class);
         $th = m::mock(TranslationHelperService::class);
         $th->shouldReceive('translateReplace')
-            ->with('ERR_OC_PC_TA_GB', ['Bar', 'Foo'])
+            ->with('ERR_OC_PC_TA_GB', ['url'])
             ->andReturn('translated');
         $th->shouldReceive('translateReplace')
             ->with('ERR_TA_PSV_SR_EXTERNAL', ['Foo'])
@@ -184,6 +184,6 @@ class OperatingCentreTest extends MockeryTestCase
             ->once()
             ->with('bar');
 
-        OperatingCentre::mapFormErrors($form, $errors, $fm, $th, $location);
+        OperatingCentre::mapFormErrors($form, $errors, $fm, $th, $location, 'url');
     }
 }

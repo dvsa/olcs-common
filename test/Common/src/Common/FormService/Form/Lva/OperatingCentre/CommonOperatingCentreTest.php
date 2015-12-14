@@ -72,6 +72,25 @@ class CommonOperatingCentreTest extends MockeryTestCase
                 ->getMock()
             );
 
+        $this->form->shouldReceive('get')
+            ->with('address')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('postcode')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setOption')
+                    ->with('shouldEscapeMessages', false)
+                    ->once()
+                    ->getMock()
+                )
+                ->once()
+                ->getMock()
+            )
+            ->once()
+            ->getMock();
+
         $this->form->shouldReceive('getInputFilter->get->get->setRequired')
             ->with(false);
 
@@ -133,6 +152,25 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('getInputFilter->get->get->setRequired')
             ->with(false);
 
+        $this->form->shouldReceive('get')
+            ->with('address')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('postcode')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('setOption')
+                            ->with('shouldEscapeMessages', false)
+                            ->once()
+                            ->getMock()
+                    )
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
+
         $form = $this->sut->getForm($params, $this->request);
         $this->assertSame($this->form, $form);
     }
@@ -167,6 +205,25 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('getInputFilter->get->get->setRequired')
             ->with(false);
 
+        $this->form->shouldReceive('get')
+            ->with('address')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('postcode')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('setOption')
+                            ->with('shouldEscapeMessages', false)
+                            ->once()
+                            ->getMock()
+                    )
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
+
         $form = $this->sut->getForm($params, $this->request);
         $this->assertSame($this->form, $form);
     }
@@ -195,7 +252,11 @@ class CommonOperatingCentreTest extends MockeryTestCase
             );
 
         $addressFilter = m::mock();
-        $elem = m::mock(Element::class);
+        $elem = m::mock(Element::class)
+            ->shouldReceive('setOption')
+            ->with('shouldEscapeMessages', false)
+            ->once()
+            ->getMock();
 
         $addressElement = m::mock();
         $addressElement->shouldReceive('remove')
@@ -283,6 +344,25 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $this->form->shouldReceive('get')
             ->with('data')
             ->andReturn($data);
+
+        $this->form->shouldReceive('get')
+            ->with('address')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('postcode')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('setOption')
+                            ->with('shouldEscapeMessages', false)
+                            ->once()
+                            ->getMock()
+                    )
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
 
         $form = $this->sut->getForm($params, $this->request);
         $this->assertSame($this->form, $form);
