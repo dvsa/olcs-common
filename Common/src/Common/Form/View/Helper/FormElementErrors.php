@@ -58,12 +58,14 @@ class FormElementErrors extends ZendFormElementErrors
 
         $renderer = $this->getView();
 
+        $elementShouldEscape = $element->getOption('shouldEscapeMessages');
+
         // Flatten message array
         $escapeHtml      = $this->getEscapeHtmlHelper();
         $messagesToPrint = array();
         array_walk_recursive(
             $messages,
-            function ($item) use (&$messagesToPrint, $escapeHtml, $renderer) {
+            function ($item) use (&$messagesToPrint, $escapeHtml, $renderer, $elementShouldEscape) {
 
                 $shouldTranslate = true;
                 $shouldEscape = true;
@@ -79,7 +81,7 @@ class FormElementErrors extends ZendFormElementErrors
                     $item = $renderer->translate($item);
                 }
 
-                if ($shouldEscape) {
+                if ($shouldEscape && $elementShouldEscape !== false) {
                     $item = $escapeHtml($item);
                 }
 
