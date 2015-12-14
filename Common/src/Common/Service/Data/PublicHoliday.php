@@ -66,7 +66,7 @@ class PublicHoliday extends AbstractData
         }
 
         // define the limit as a reasonable multiple of number of days the original difference to ensure we cover
-        $limit = ceil(($dateTo->diff($dateFrom, true)->format('%a') * 0.04))+10 ;
+        $limit = ceil(($dateTo->diff($dateFrom, true)->format('%a') * 0.04))+10;
 
         $params = [
             $fieldToSearch => '1',
