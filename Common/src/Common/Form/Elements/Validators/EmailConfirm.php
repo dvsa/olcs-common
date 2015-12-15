@@ -21,7 +21,7 @@ class EmailConfirm extends Identical
      * @var array
      */
     protected $messageTemplates = array(
-        self::NOT_SAME      => "Email addresses don't match",
-        self::MISSING_TOKEN => 'No email address was provided to match against',
+        self::NOT_SAME      => 'error.form-validator.email-confirm.not-same',
+        self::MISSING_TOKEN => 'error.form-validator.email-confirm.missing-token',
     );
 }
