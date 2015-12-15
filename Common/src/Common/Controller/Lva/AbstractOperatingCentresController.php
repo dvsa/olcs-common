@@ -170,12 +170,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 $this->displayCrudErrors($errors);
                 return $this->redirect()->refreshAjax();
             } else {
-                $taGuidesUrl = $this->url()->fromRoute(
-                    'guides/guide',
-                    ['guide' => 'traffic-area']
-                );
                 $translator = $this->getServiceLocator()->get('Helper\Translation');
-                OperatingCentres::mapFormErrors($form, $errors, $fm, $translator, $this->location, $taGuidesUrl);
+                OperatingCentres::mapFormErrors($form, $errors, $fm, $translator, $this->location);
             }
         }
     }
