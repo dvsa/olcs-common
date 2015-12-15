@@ -38,8 +38,7 @@ class AddressDataService extends AbstractDataService
 
         $response = $this->handleQuery($dtoData);
 
-        if ($response->isServerError() || $response->isClientError() || !$response->isOk() ||
-            !count($response->getResult()['results'])) {
+        if ($response->isServerError() || $response->isClientError() || !$response->isOk()) {
             throw new UnexpectedResponseException('unknown-error');
         }
         return $response->getResult()['results'];
