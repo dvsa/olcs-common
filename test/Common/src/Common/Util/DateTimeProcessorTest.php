@@ -109,9 +109,9 @@ class DateTimeProcessorTest extends MockeryTestCase
                 true, // public holidays
                 '2014-12-23',
                 [
-                    '2014-12-25',
-                    '2014-12-26',
                     '2015-01-01',
+                    '2014-12-26',
+                    '2014-12-25',
                 ]
             ],
             [ // negative, weekends and public holidays are skipped
@@ -121,9 +121,9 @@ class DateTimeProcessorTest extends MockeryTestCase
                 true, // public holidays
                 '2014-12-23',
                 [
-                    '2014-12-25',
-                    '2014-12-26',
                     '2015-01-01',
+                    '2014-12-26',
+                    '2014-12-25',
                 ]
             ],
             [ // negative, none are skipped
@@ -133,9 +133,9 @@ class DateTimeProcessorTest extends MockeryTestCase
                 false, // public holidays
                 '2014-12-14',
                 [
-                    '2014-12-25',
-                    '2014-12-26',
                     '2015-01-01',
+                    '2014-12-26',
+                    '2014-12-25',
                 ]
             ],
             [ // reproduces a bug
