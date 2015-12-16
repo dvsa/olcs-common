@@ -19,6 +19,11 @@ abstract class AbstractDataService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
+    /**
+     * @var array
+     */
+    protected $data = [];
+
     protected function handleQuery($dtoData)
     {
         $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
@@ -48,5 +53,28 @@ abstract class AbstractDataService implements ServiceLocatorAwareInterface
             'Results' => $result['results'],
             'Count' => $result['count']
         ];
+    }
+
+    /**
+     * @param $key
+     * @param $data
+     * @return $this
+     */
+    public function setData($key, $data)
+    {
+        $this->data[$key] = $data;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData($key)
+    {
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
+        }
+
+        return null;
     }
 }
