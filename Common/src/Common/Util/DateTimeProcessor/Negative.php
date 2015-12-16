@@ -24,9 +24,7 @@ class Negative extends DateTimeProcessorAbstract
         $endDate = $this->checkDate($endDate);
 
         for ($i = 0; $i > $workingDays; $i--) {
-
             $this->dateAddDays($endDate, 1, true);
-
         }
 
         return $endDate;
@@ -44,16 +42,6 @@ class Negative extends DateTimeProcessorAbstract
     public function processPublicHolidays(PHPDateTime $date, PHPDateTime $endDate, $we)
     {
         $publicHolidays = $this->getPublicHolidaysArray($date, $endDate);
-        // sort into reverse order to avoid missing any dates when the end date and bank holiday loop cross over
-        // otherwise as end date moves backwards and public holiday loop goes forwards, dates can be missed. Sorting
-        // ensures processing happens in the same direction.
-        uasort(
-            $publicHolidays,
-            function ($a, $b) {
-                return strtotime($b) -
-                    strtotime($a);
-            }
-        );
 
         foreach ($publicHolidays as $publicHoliday) {
 

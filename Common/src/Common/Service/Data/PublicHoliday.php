@@ -81,10 +81,11 @@ class PublicHoliday extends AbstractData
             $params['order'] = 'DESC';
         }
 
-        $category = $fieldToSearch;
+        // OLCS-11222-cache-fix
+        // set category to a unique string to reduce the number of DB calls
+        $category = $fieldToSearch . $params['publicHolidayDate'] . $params['order'];
 
         if ( (null === $this->getData($category)) && (null !== ($data = $this->getList($params))) ) {
-
             $this->setData($category, $data);
         }
 
