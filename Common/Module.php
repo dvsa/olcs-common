@@ -12,6 +12,7 @@ use Zend\View\Model\ViewModel;
 use Zend\I18n\Translator\Translator;
 use Common\Preference\LanguageListener;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
+use Olcs\Logging\Log\Logger;
 
 /**
  * ZF2 Module
@@ -76,6 +77,8 @@ class Module
         $events->attach(
             $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\UnauthorizedStrategy')
         );
+
+        $this->setupRequestForProxyHost($e->getApplication()->getRequest());
     }
 
     public function getConfig()
@@ -102,5 +105,23 @@ class Module
 
         $translator->enableEventManager();
         $translator->setEventManager($events);
+    }
+
+    /**
+     * If the request is coming through a proxy then update the host name on the request
+     *
+     * @param \Zend\Stdlib\RequestInterface $request
+     */
+    private function setupRequestForProxyHost(\Zend\Stdlib\RequestInterface $request)
+    {
+        if ($request->getHeaders()->get('xforwardedhost')) {
+            Logger::debug(
+                'Request host set from xforwardedhost header to '.
+                $request->getHeaders()->get('xforwardedhost')->getFieldValue()
+            );
+            $request->getUri()->setHost(
+                $request->getHeaders()->get('xforwardedhost')->getFieldValue()
+            );
+        }
     }
 }
