@@ -5,19 +5,15 @@ namespace CommonTest\Service\Data;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\Country;
 use Mockery as m;
+use Dvsa\Olcs\Transfer\Query\ContactDetail\CountryList as Qry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class Country Test
  * @package CommonTest\Service
  */
-class CountryTest extends MockeryTestCase
+class CountryTest extends AbstractDataServiceTestCase
 {
-    public function testGetServiceName()
-    {
-        $sut = new Country();
-        $this->assertEquals('Country', $sut->getServiceName());
-    }
-
     public function testFormatData()
     {
         $source = $this->getSingleSource();
@@ -49,34 +45,55 @@ class CountryTest extends MockeryTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideFetchListData
-     * @param $data
-     * @param $expected
-     */
-    public function testFetchListData($data, $expected)
+    public function testFetchListData()
     {
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient
-            ->shouldReceive('get')
+        $results = ['results' => 'results'];
+        $params = [
+            'sort' => 'countryDesc',
+            'order' => 'ASC',
+        ];
+        $dto = Qry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['sort'], $dto->getSort());
+                    $this->assertEquals($params['order'], $dto->getOrder());
+                    return 'query';
+                }
+            )
             ->once()
-            ->with('', ['limit' => 1000, 'sort' => 'countryDesc'])
-            ->andReturn($data);
+            ->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($results)
+            ->twice()
+            ->getMock();
 
         $sut = new Country();
-        $sut->setRestClient($mockRestClient);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
 
-        $this->assertEquals($expected, $sut->fetchListData());
-        $sut->fetchListData(); //ensure data is cached
+        $this->assertEquals($results['results'], $sut->fetchListData([]));
     }
 
-    public function provideFetchListData()
+    public function testFetchListDataWithException()
     {
-        return [
-            [false, false],
-            [['Results' => $this->getSingleSource()], $this->getSingleSource()],
-            [['some' => 'data'],  false]
-        ];
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new Country();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+
+        $sut->fetchListData([]);
     }
 
     /**
