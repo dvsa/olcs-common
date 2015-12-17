@@ -59,7 +59,7 @@ class PublicHoliday extends AbstractData
 
             $trafficAreaArray = $licence['trafficArea'];
             foreach ($fields as $key) {
-                if (array_key_exists($key, $trafficAreaArray)) {
+                if (array_key_exists($key, $trafficAreaArray) && $trafficAreaArray[$key] === true) {
                     $fieldToSearch = $key;
                 }
             }
