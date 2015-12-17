@@ -244,6 +244,8 @@ return array(
             'ApplicationTransportManagerAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter',
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
+            'country' => '\Common\Service\Data\Country',
+            'Common\Service\Data\Country' => 'Common\Service\Data\Country',
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -263,7 +265,6 @@ return array(
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
-            'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
@@ -280,7 +281,6 @@ return array(
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'category' => '\Common\Service\Data\CategoryDataService',
-            'country' => '\Common\Service\Data\Country',
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
