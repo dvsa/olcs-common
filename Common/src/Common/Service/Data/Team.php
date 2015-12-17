@@ -3,15 +3,16 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
+use Dvsa\Olcs\Transfer\Query\Team\TeamList;
+use Common\Service\Data\AbstractDataService;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class Team
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class Team extends AbstractData implements ListData
+class Team extends AbstractDataService implements ListData
 {
-    protected $serviceName = 'Team';
-
     /**
      * Format data!
      *
@@ -55,12 +56,22 @@ class Team extends AbstractData implements ListData
     {
         if (is_null($this->getData('Team'))) {
 
-            $data = $this->getRestClient()->get('', ['limit' => 1000]);
-
+            $params = [
+                'sort'  => 'name',
+                'order' => 'ASC',
+                'page'  => 1,
+                'limit' => 1000
+            ];
             $this->setData('Team', false);
+            $dtoData = TeamList::create($params);
 
-            if (isset($data['Results'])) {
-                $this->setData('Team', $data['Results']);
+            $response = $this->handleQuery($dtoData);
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
+            }
+            $this->setData('Team', false);
+            if (isset($response->getResult()['results'])) {
+                $this->setData('Team', $response->getResult()['results']);
             }
         }
 

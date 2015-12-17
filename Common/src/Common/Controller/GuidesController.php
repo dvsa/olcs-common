@@ -7,7 +7,7 @@
  */
 namespace Common\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -15,7 +15,7 @@ use Zend\View\Model\ViewModel;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GuidesController extends AbstractActionController
+class GuidesController extends ZendAbstractActionController
 {
     const GUIDE_OC_ADV_GB_NEW = 'advertising-your-operating-centre-gb-new';
     const GUIDE_OC_ADV_GB_VAR = 'advertising-your-operating-centre-gb-var';
