@@ -3,15 +3,16 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
+use Dvsa\Olcs\Transfer\Query\TrafficArea\TrafficAreaList;
+use Common\Service\Data\AbstractDataService;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class TrafficArea
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class TrafficArea extends AbstractData implements ListData
+class TrafficArea extends AbstractDataService implements ListData
 {
-    protected $serviceName = 'TrafficArea';
-
     /**
      * Format data!
      *
@@ -55,12 +56,20 @@ class TrafficArea extends AbstractData implements ListData
     {
         if (is_null($this->getData('TrafficArea'))) {
 
-            $data = $this->getRestClient()->get('', ['limit' => 1000]);
-
             $this->setData('TrafficArea', false);
+            $params = [
+                'sort'  => 'name',
+                'order' => 'ASC',
+            ];
+            $dtoData = TrafficAreaList::create($params);
 
-            if (isset($data['Results'])) {
-                $this->setData('TrafficArea', $data['Results']);
+            $response = $this->handleQuery($dtoData);
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
+            }
+            $this->setData('TrafficArea', false);
+            if (isset($response->getResult()['results'])) {
+                $this->setData('TrafficArea', $response->getResult()['results']);
             }
         }
 
