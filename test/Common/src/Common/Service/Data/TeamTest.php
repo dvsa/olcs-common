@@ -3,21 +3,16 @@
 namespace CommonTest\Service\Data;
 
 use Common\Service\Data\Team;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
+use Dvsa\Olcs\Transfer\Query\Team\TeamList as Qry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class TeamTest
  * @package CommonTest\Service
  */
-class TeamTest extends MockeryTestCase
+class TeamTest extends AbstractDataServiceTestCase
 {
-    public function testGetServiceName()
-    {
-        $sut = new Team();
-        $this->assertEquals('Team', $sut->getServiceName());
-    }
-
     public function testFormatData()
     {
         $source = $this->getSingleSource();
@@ -49,30 +44,59 @@ class TeamTest extends MockeryTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideFetchListData
-     * @param $data
-     * @param $expected
-     */
-    public function testFetchListData($data, $expected)
+    public function testFetchListData()
     {
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')->once()->with('', ['limit' => 1000])->andReturn($data);
+        $results = ['results' => 'results'];
+        $params = [
+            'sort'  => 'name',
+            'order' => 'ASC',
+            'page'  => 1,
+            'limit' => 1000
+        ];
+        $dto = Qry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['sort'], $dto->getSort());
+                    $this->assertEquals($params['order'], $dto->getOrder());
+                    $this->assertEquals($params['page'], $dto->getPage());
+                    $this->assertEquals($params['limit'], $dto->getLimit());
+                    return 'query';
+                }
+            )
+            ->once()
+            ->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($results)
+            ->twice()
+            ->getMock();
 
         $sut = new Team();
-        $sut->setRestClient($mockRestClient);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
 
-        $this->assertEquals($expected, $sut->fetchListData());
-        $sut->fetchListData(); //ensure data is cached
+        $this->assertEquals($results['results'], $sut->fetchListData([]));
     }
 
-    public function provideFetchListData()
+    public function testFetchListDataWithException()
     {
-        return [
-            [false, false],
-            [['Results' => $this->getSingleSource()], $this->getSingleSource()],
-            [['some' => 'data'],  false]
-        ];
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new Team();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+
+        $sut->fetchListData([]);
     }
 
     /**

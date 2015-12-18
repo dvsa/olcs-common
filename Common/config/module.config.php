@@ -246,6 +246,7 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
             'country' => '\Common\Service\Data\Country',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
+            'Common\Service\Data\Team' => 'Common\Service\Data\Team',
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -291,7 +292,6 @@ return array(
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             'Common\Service\Data\Role' => 'Common\Service\Data\Role',
-            'Common\Service\Data\Team' => 'Common\Service\Data\Team',
             \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class
         )
     ),
