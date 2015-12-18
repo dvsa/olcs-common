@@ -115,13 +115,22 @@ class Module
     private function setupRequestForProxyHost(\Zend\Stdlib\RequestInterface $request)
     {
         if ($request->getHeaders()->get('xforwardedhost')) {
+
+            $host = $request->getHeaders()->get('xforwardedhost')->getFieldValue();
+
+            $hosts = explode(',', $host);
+            if (!empty($hosts)) {
+                $host = trim($hosts[0]);
+            }
+
             Logger::debug(
-                'Request host set from xforwardedhost header to '.
-                $request->getHeaders()->get('xforwardedhost')->getFieldValue()
+                sprintf(
+                    'Request host set from xforwardedhost header to %s setting host to %s',
+                    $request->getHeaders()->get('xforwardedhost')->getFieldValue(),
+                    $host
+                )
             );
-            $request->getUri()->setHost(
-                $request->getHeaders()->get('xforwardedhost')->getFieldValue()
-            );
+            $request->getUri()->setHost($host);
         }
     }
 }
