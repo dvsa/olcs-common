@@ -1,11 +1,11 @@
 <?php
 // @codingStandardsIgnoreFile
 return [
-    '404-title' => 'We can\'t find that page',
     '404-lede' => 'Check that you\'ve used the right web address.',
     '404-report-broken-link' => 'If you think you\'ve found a broken link, email <a href="mailto:operatorlicensing@otc.gov.uk">operatorlicensing@otc.gov.uk</a>',
     '404-report-include-1' => 'Which page you were visiting',
     '404-report-include-2' => 'What you were trying to do',
+    '404-title' => 'We can\'t find that page',
     '500-title' => 'This page isn\'t working at the moment',
     'ANY_TO_ST' => '<li>All people apart from the first one</li>',
     'AP-TOL-1' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
@@ -1693,8 +1693,8 @@ return [
     'more-vehicles-than-small-authorisation' => 'There are currently more small vehicles than the small vehicle authority',
     'more-vehicles-than-total-auth-error' => 'You cannot have more vehicles than the total vehicle authority',
     'my-account.field.change-password.label' => '<a href="%s">Change your password</a>',
-    'my-account.form.security.label' => 'Security',
     'my-account.form.my-details.label' => 'My details',
+    'my-account.form.security.label' => 'Security',
     'my-account.page.title' => 'My account',
     'name' => 'Name',
     'name-defendant-type' => 'Name / Defendant type',
