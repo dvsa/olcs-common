@@ -1,9 +1,10 @@
 <?php
 
-namespace OlcsTest\Service\Data;
+namespace CommonTest\Service\Data;
 
 use Common\Service\Data\Role;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class RoleService
@@ -11,34 +12,90 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  *
  * @package Olcs\Service
  */
-class RoleTest extends MockeryTestCase
+class RoleTest extends AbstractDataServiceTestCase
 {
-    public function testFetchListOptions($context = null, $useGroups = false)
+    /**
+     * @dataProvider provideFetchListOptions
+     * @param $input
+     * @param $expected
+     */
+    public function testFetchListOptions($input, $expected)
     {
-        $roleData = [
-            'Results' => [
-                'role1' => ['id' => 1, 'role' => 'role1', 'description' => 'role1desc'],
-                'role2' => ['id' => 2, 'role' => 'role2', 'description' => 'role2desc']
-            ]
-        ];
+        $sut = new Role();
+        $sut->setData('Role', $input);
 
+        $this->assertEquals($expected, $sut->fetchListOptions(''));
+    }
+
+    public function provideFetchListOptions()
+    {
+        return [
+            [$this->getSingleSource(), $this->getSingleExpected()],
+            [[], []]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSingleExpected()
+    {
         $expected = [
             'role1' => 'role1desc',
             'role2' => 'role2desc'
         ];
+        return $expected;
+    }
 
-        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', false);
-        $mockRestClient->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo(''), $this->isType('array'))
-            ->willReturn($roleData);
+    /**
+     * @return array
+     */
+    protected function getSingleSource()
+    {
+        $source = [
+            ['id' => 1, 'role' => 'role1', 'description' => 'role1desc'],
+            ['id' => 2, 'role' => 'role2', 'description' => 'role2desc']
+        ];
+        return $source;
+    }
+
+    public function testFetchListData()
+    {
+        $results = ['results' => 'results'];
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')
+            ->once()
+            ->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($results)
+            ->twice()
+            ->getMock();
 
         $sut = new Role();
-        $sut->setRestClient($mockRestClient);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
 
-        $results = $sut->fetchListOptions(null);
+        $this->assertEquals($results['results'], $sut->fetchListData());
+    }
 
-        //test data is cached
-        $this->assertEquals($expected, $results);
+    public function testFetchListDataWithException()
+    {
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new Role();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+
+        $sut->fetchListData([]);
     }
 }
