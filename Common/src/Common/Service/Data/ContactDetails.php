@@ -3,17 +3,16 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
+use Dvsa\Olcs\Transfer\Query\ContactDetail\ContactDetailsList;
+use Common\Service\Data\AbstractDataService;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class ContactDetails
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class ContactDetails extends AbstractData implements ListData
+class ContactDetails extends AbstractDataService implements ListData
 {
-    protected $serviceName = 'ContactDetails';
-
-    protected $bundle = [];
-
     /**
      * Format data!
      *
@@ -58,17 +57,22 @@ class ContactDetails extends AbstractData implements ListData
         if (is_null($this->getData('ContactDetails'))) {
 
             $params = [
+                'sort'  => 'description',
+                'order' => 'ASC',
+                'page'  => 1,
                 'limit' => 1000,
-                'bundle' => $this->bundle,
                 'contactType' => $category
             ];
-
-            $data = $this->getRestClient()->get('', $params);
-
             $this->setData('ContactDetails', false);
+            $dtoData = ContactDetailsList::create($params);
 
-            if (isset($data['Results'])) {
-                $this->setData('ContactDetails', $data['Results']);
+            $response = $this->handleQuery($dtoData);
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
+            }
+            $this->setData('ContactDetails', false);
+            if (isset($response->getResult()['results'])) {
+                $this->setData('ContactDetails', $response->getResult()['results']);
             }
         }
 
