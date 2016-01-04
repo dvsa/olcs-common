@@ -5,19 +5,15 @@ namespace CommonTest\Service\Data;
 use Common\Service\Data\ContactDetails;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
+use Dvsa\Olcs\Transfer\Query\ContactDetail\ContactDetailsList as Qry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class ContactDetails Test
  * @package CommonTest\Service
  */
-class ContactDetailsTest extends MockeryTestCase
+class ContactDetailsTest extends AbstractDataServiceTestCase
 {
-    public function testGetServiceName()
-    {
-        $sut = new ContactDetails();
-        $this->assertEquals('ContactDetails', $sut->getServiceName());
-    }
-
     public function testFormatData()
     {
         $source = $this->getSingleSource();
@@ -48,35 +44,6 @@ class ContactDetailsTest extends MockeryTestCase
             [$this->getSingleSource(), $this->getSingleExpected(), false],
             [false, [], false],
             [$this->getSingleSource(), $this->getSingleExpected(), true],
-        ];
-    }
-
-    /**
-     * @dataProvider provideFetchListData
-     * @param $data
-     * @param $expected
-     */
-    public function testFetchListData($data, $expected)
-    {
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')
-            ->once()
-            ->with('', ['limit' => 1000, 'bundle' => [], 'contactType'=>'ct_partner'])
-            ->andReturn($data);
-
-        $sut = new ContactDetails();
-        $sut->setRestClient($mockRestClient);
-
-        $this->assertEquals($expected, $sut->fetchListData('ct_partner'));
-        $sut->fetchListData('ct_partner'); //ensure data is cached
-    }
-
-    public function provideFetchListData()
-    {
-        return [
-            [false, false],
-            [['Results' => $this->getSingleSource()], $this->getSingleSource()],
-            [['some' => 'data'],  false]
         ];
     }
 
@@ -132,5 +99,62 @@ class ContactDetailsTest extends MockeryTestCase
             ['id' => 'val-3', 'description' => 'Value 3']
         ];
         return $source;
+    }
+
+    public function testFetchListData()
+    {
+        $results = ['results' => 'results'];
+        $params = [
+            'sort'  => 'description',
+            'order' => 'ASC',
+            'page'  => 1,
+            'limit' => 1000,
+            'contactType' => 'ct_partner'
+        ];
+        $dto = Qry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['sort'], $dto->getSort());
+                    $this->assertEquals($params['order'], $dto->getOrder());
+                    $this->assertEquals($params['page'], $dto->getPage());
+                    $this->assertEquals($params['limit'], $dto->getLimit());
+                    $this->assertEquals($params['contactType'], $dto->getContactType());
+                    return 'query';
+                }
+            )
+            ->once()
+            ->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($results)
+            ->twice()
+            ->getMock();
+
+        $sut = new ContactDetails();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
+
+        $this->assertEquals($results['results'], $sut->fetchListData('ct_partner'));
+    }
+
+    public function testFetchListDataWithException()
+    {
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new ContactDetails();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+
+        $sut->fetchListData([]);
     }
 }
