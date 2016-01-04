@@ -247,6 +247,7 @@ return array(
             'country' => '\Common\Service\Data\Country',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Team' => 'Common\Service\Data\Team',
+            'Common\Service\Data\Role' => 'Common\Service\Data\Role',
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -291,7 +292,6 @@ return array(
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
-            'Common\Service\Data\Role' => 'Common\Service\Data\Role',
             \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class
         )
     ),

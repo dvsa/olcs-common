@@ -3,15 +3,16 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
+use Dvsa\Olcs\Transfer\Query\User\RoleList;
+use Common\Service\Data\AbstractDataService;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class Role
  * @package Common\Service
  */
-class Role extends AbstractData implements ListData
+class Role extends AbstractDataService implements ListData
 {
-    protected $serviceName = 'Role';
-
     /**
      * @param $context
      * @param bool $useGroups
@@ -37,17 +38,21 @@ class Role extends AbstractData implements ListData
      */
     public function fetchListData()
     {
-        if (is_null($this->getData($this->serviceName))) {
+        if (is_null($this->getData('Role'))) {
 
-            $data = $this->getRestClient()->get('', ['limit' => 1000,]);
+            $this->setData('Role', false);
+            $dtoData = RoleList::create([]);
 
-            $this->setData($this->serviceName, false);
-
-            if (isset($data['Results'])) {
-                $this->setData($this->serviceName, $data['Results']);
+            $response = $this->handleQuery($dtoData);
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
+            }
+            $this->setData('Role', false);
+            if (isset($response->getResult()['results'])) {
+                $this->setData('Role', $response->getResult()['results']);
             }
         }
 
-        return $this->getData($this->serviceName);
+        return $this->getData('Role');
     }
 }
