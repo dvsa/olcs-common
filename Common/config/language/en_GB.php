@@ -1,6 +1,10 @@
 <?php
 // @codingStandardsIgnoreFile
 return [
+    '404-lede' => 'Check that you\'ve used the right web address.',
+    '404-report-broken-link' => 'If you think you\'ve found a broken link, email <a href="mailto:operatorlicensing@otc.gov.uk">operatorlicensing@otc.gov.uk</a>',
+    '404-report-include-1' => 'Which page you were visiting',
+    '404-report-include-2' => 'What you were trying to do',
     '404-title' => 'We can\'t find that page',
     '500-title' => 'This page isn\'t working at the moment',
     'ANY_TO_ST' => '<li>All people apart from the first one</li>',

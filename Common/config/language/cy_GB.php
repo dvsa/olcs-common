@@ -1,6 +1,10 @@
 <?php
 // @codingStandardsIgnoreFile
 return [
+    '404-lede' => '{WELSH} Check that you\'ve used the right web address.',
+    '404-report-broken-link' => '{WELSH} If you think you\'ve found a broken link, email <a href="mailto:operatorlicensing@otc.gov.uk">operatorlicensing@otc.gov.uk</a>',
+    '404-report-include-1' => '{WELSH} Which page you were visiting',
+    '404-report-include-2' => '{WELSH} What you were trying to do',
     '404-title' => '{WELSH} We can\'t find that page',
     '500-title' => '{WELSH} This page isn\'t working at the moment',
     'ANY_TO_ST' => '{WELSH} <li>All people apart from the first one</li>',
