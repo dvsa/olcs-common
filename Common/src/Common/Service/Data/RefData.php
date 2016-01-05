@@ -30,7 +30,6 @@ class RefData extends AbstractDataService implements ListData
                 'refDataCategory' => $category,
                 'language' => $languagePreferenceService->getPreference()
             ];
-            $this->setData($category, false);
             $dtoData = RefDataList::create($params);
 
             $response = $this->handleQuery($dtoData);
