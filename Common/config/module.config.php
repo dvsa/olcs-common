@@ -248,6 +248,7 @@ return array(
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Team' => 'Common\Service\Data\Team',
             'Common\Service\Data\Role' => 'Common\Service\Data\Role',
+            'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -266,7 +267,6 @@ return array(
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
-            'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',

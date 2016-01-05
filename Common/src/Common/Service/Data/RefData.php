@@ -3,36 +3,17 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
+use Dvsa\Olcs\Transfer\Query\RefData\RefDataList;
+use Common\Service\Data\AbstractDataService;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class RefData
  * @package Common\Service
  */
-class RefData extends AbstractData implements ListData
+class RefData extends AbstractDataService implements ListData
 {
     use ListDataTrait;
-
-    protected $serviceName = 'RefData';
-
-    /**
-     * This method retrieves the description for a chosen
-     * ref data record by key.
-     *
-     * @param $key
-     * @return array
-     */
-    public function getDescription($key)
-    {
-        if (is_null($this->getData($key))) {
-
-            $data = $this->getRestClient()->get(sprintf('/%s', $key));
-            $data = reset($data);
-
-            $this->setData($key, $data['description']);
-        }
-
-        return $this->getData($key);
-    }
 
     /**
      * Ensures only a single call is made to the backend for each dataset
@@ -43,8 +24,23 @@ class RefData extends AbstractData implements ListData
     public function fetchListData($category)
     {
         if (is_null($this->getData($category))) {
-            $data = $this->getRestClient()->get(sprintf('/category/%s', $category));
-            $this->setData($category, $data);
+
+            $languagePreferenceService = $this->getServiceLocator()->get('LanguagePreference');
+            $params = [
+                'refDataCategory' => $category,
+                'language' => $languagePreferenceService->getPreference()
+            ];
+            $this->setData($category, false);
+            $dtoData = RefDataList::create($params);
+
+            $response = $this->handleQuery($dtoData);
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
+            }
+            $this->setData($category, false);
+            if (isset($response->getResult()['results'])) {
+                $this->setData($category, $response->getResult()['results']);
+            }
         }
 
         return $this->getData($category);

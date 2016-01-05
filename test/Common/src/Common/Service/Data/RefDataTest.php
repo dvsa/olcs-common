@@ -3,19 +3,16 @@
 namespace CommonTest\Service\Data;
 
 use Common\Service\Data\RefData;
+use Mockery as m;
+use Dvsa\Olcs\Transfer\Query\ContactDetail\ContactDetailsList as Qry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class RefDataTest
  * @package CommonTest\Service
  */
-class RefDataTest extends \PHPUnit_Framework_TestCase
+class RefDataTest extends AbstractDataServiceTestCase
 {
-    public function testGetServiceName()
-    {
-        $sut = new RefData();
-        $this->assertEquals('RefData', $sut->getServiceName());
-    }
-
     public function testFormatData()
     {
         $source = $this->getSingleSource();
@@ -34,67 +31,6 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
         $sut = new RefData();
 
         $this->assertEquals($expected, $sut->formatDataForGroups($source));
-    }
-
-    public function testGetDescription()
-    {
-        $key = 'key1';
-        $description = 'decription1';
-
-        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', 0);
-        $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/' . $key))->willReturn(
-            [['id' => $key, 'description' => $description]]
-        );
-
-        $sut = new RefData();
-        $sut->setRestClient($mockRestClient);
-
-        $this->assertEquals($description, $sut->getDescription($key));
-        $this->assertEquals($description, $sut->getDescription($key));
-        $this->assertEquals($description, $sut->getDescription($key));
-    }
-
-    public function testfetchListData()
-    {
-        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', 0);
-        $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/category/test'))->willReturn([]);
-
-        $sut = new RefData();
-        $sut->setRestClient($mockRestClient);
-
-        $this->assertEquals([], $sut->fetchListData('test'));
-    }
-
-    public function testCreateService()
-    {
-        $mockTranslator = $this->getMock('stdClass', ['getLocale']);
-        $mockTranslator->expects($this->once())->method('getLocale')->willReturn('en_GB');
-
-        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', 0);
-        $mockRestClient->expects($this->once())->method('setLanguage')->with($this->equalTo('en_GB'));
-
-        $mockApiResolver = $this->getMock('stdClass', ['getClient']);
-        $mockApiResolver
-            ->expects($this->once())
-            ->method('getClient')
-            ->with($this->equalTo('RefData'))
-            ->willReturn($mockRestClient);
-
-        $mockSl = $this->getMock('\Zend\ServiceManager\ServiceManager');
-        $mockSl->expects($this->any())
-               ->method('get')
-               ->willReturnMap(
-                   [
-                       ['translator', true, $mockTranslator],
-                       ['ServiceApiResolver', true, $mockApiResolver],
-                   ]
-               );
-
-        $sut = new RefData();
-        $service = $sut->createService($mockSl);
-
-        $this->assertInstanceOf('\Common\Service\Data\RefData', $service);
-        $this->assertSame($mockRestClient, $service->getRestClient());
     }
 
     /**
@@ -172,9 +108,6 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
         return $source;
     }
 
-    /**
-     * @return array
-     */
     protected function getGroupSource()
     {
         $source = [
@@ -184,5 +117,84 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
             ['id' => 'val-3', 'description' => 'Value 3', 'parent' => ['id'=>'p3', 'description'=>'d3']],
         ];
         return $source;
+    }
+
+    public function testFetchListData()
+    {
+        $results = ['results' => 'results'];
+        $params = [
+            'refDataCategory' => 'cat',
+            'language' => 'en'
+        ];
+
+        $dto = Qry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['refDataCategory'], $dto->getRefDataCategory());
+                    $this->assertEquals($params['language'], $dto->getLanguage());
+                    return 'query';
+                }
+            )
+            ->once()
+            ->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($results)
+            ->twice()
+            ->getMock();
+
+        $sut = new RefData();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
+        $this->mockServiceLocator
+            ->shouldReceive('get')
+            ->with('LanguagePreference')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('getPreference')
+                    ->andReturn('en')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
+
+        $this->assertEquals($results['results'], $sut->fetchListData('cat'));
+    }
+
+    /**
+     * @group test123
+     */
+    public function testFetchListDataWithException()
+    {
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new RefData();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+        $this->mockServiceLocator
+            ->shouldReceive('get')
+            ->with('LanguagePreference')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('getPreference')
+                    ->andReturn('en')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
+
+        $sut->fetchListData('cat');
     }
 }
