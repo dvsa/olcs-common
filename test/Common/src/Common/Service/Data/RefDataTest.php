@@ -166,9 +166,6 @@ class RefDataTest extends AbstractDataServiceTestCase
         $this->assertEquals($results['results'], $sut->fetchListData('cat'));
     }
 
-    /**
-     * @group test123
-     */
     public function testFetchListDataWithException()
     {
         $this->setExpectedException(UnexpectedResponseException::class);
