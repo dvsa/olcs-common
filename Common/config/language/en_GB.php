@@ -2,7 +2,7 @@
 // @codingStandardsIgnoreFile
 return [
     '404-lede' => 'Check that you\'ve used the right web address.',
-    '404-report-broken-link' => 'If you think you\'ve found a broken link, email <a href="mailto:operatorlicensing@otc.gov.uk">operatorlicensing@otc.gov.uk</a>',
+    '404-report-broken-link' => 'If you think you\'ve found a broken link, email <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>',
     '404-report-include-1' => 'Which page you were visiting',
     '404-report-include-2' => 'What you were trying to do',
     '404-title' => 'We can\'t find that page',
@@ -631,7 +631,7 @@ return [
     'business-details.name.locked' => 'Cannot change company name. Please contact Central Licensing Office for further advice',
     'business-type' => 'Business type',
     'business-type.locked' => 'Cannot change business type. Please contact Central Licensing Office for further advice.',
-    'business-type.locked.message' => 'To change your business type email <a href="mailto:operatorlicensing@otc.gov.uk">operatorlicensing@otc.gov.uk</a>.',
+    'business-type.locked.message' => 'To change your business type email <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
     'cannot-change-conditions-undertakings-guidance' => 'Cannot change conditions and undertakings. Please contact Central Licensing Office for further advice',
