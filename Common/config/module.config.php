@@ -187,8 +187,7 @@ return array(
             'CqrsRequest' => false
         ),
         'abstract_factories' => array(
-            'Common\Util\AbstractServiceFactory',
-            'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory',
+            'Common\Util\AbstractServiceFactory'
         ),
         'aliases' => array(
             'Cache' => 'Zend\Cache\Storage\StorageInterface',
@@ -269,7 +268,6 @@ return array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Application' => 'Common\Service\Data\Application',
-            'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\Data\ApplicationOperatingCentre' => 'Common\Service\Data\ApplicationOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
@@ -294,126 +292,6 @@ return array(
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class
         )
-    ),
-    'publications' => array(
-        'HearingPublicationFilter' => array(
-            'Common\Filter\Publication\Licence',
-            'Common\Filter\Publication\LicenceAddress',
-            'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\PublicationSection',
-            'Common\Filter\Publication\PiVenue',
-            'Common\Filter\Publication\HearingDateTime',
-            'Common\Filter\Publication\PreviousPublication',
-            'Common\Filter\Publication\PreviousHearing',
-            'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\HearingText1',
-            'Common\Filter\Publication\PoliceData',
-            'Common\Filter\Publication\Clean'
-        ),
-        'DecisionPublicationFilter' => array(
-            'Common\Filter\Publication\LastHearing',
-            'Common\Filter\Publication\Licence',
-            'Common\Filter\Publication\LicenceAddress',
-            'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\PublicationSection',
-            'Common\Filter\Publication\PiVenue',
-            'Common\Filter\Publication\HearingDateTime',
-            'Common\Filter\Publication\PreviousPublication',
-            'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\DecisionText1',
-            'Common\Filter\Publication\PoliceData',
-            'Common\Filter\Publication\Clean'
-        ),
-        'TmDecisionPublicationFilter' => array(
-            'Common\Filter\Publication\LastHearing',
-            'Common\Filter\Publication\TransportManager',
-            'Common\Filter\Publication\PiVenue',
-            'Common\Filter\Publication\HearingDateTime',
-            'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\PublicationSection',
-            'Common\Filter\Publication\PreviousPublication',
-            'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\TmDecisionText1',
-            'Common\Filter\Publication\TmDecisionText2',
-            'Common\Filter\Publication\PoliceData',
-            'Common\Filter\Publication\Clean'
-        ),
-        'TmHearingPublicationFilter' => array(
-            'Common\Filter\Publication\LastHearing',
-            'Common\Filter\Publication\TransportManager',
-            'Common\Filter\Publication\PiVenue',
-            'Common\Filter\Publication\HearingDateTime',
-            'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\PublicationSection',
-            'Common\Filter\Publication\PreviousPublication',
-            'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\TmHearingText1',
-            'Common\Filter\Publication\TmHearingText2',
-            'Common\Filter\Publication\PoliceData',
-            'Common\Filter\Publication\Clean'
-        ),
-        'BusRegGrantNewPublicationFilter' => array(
-            'Common\Filter\Publication\BusRegLicence',
-            'Common\Filter\Publication\LicenceAddress',
-            'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\BusReg',
-            'Common\Filter\Publication\BusRegPublicationSection',
-            'Common\Filter\Publication\PreviousUnpublishedBus',
-            'Common\Filter\Publication\BusRegServiceDesignation',
-            'Common\Filter\Publication\BusRegServiceTypes',
-            'Common\Filter\Publication\BusRegText1',
-            'Common\Filter\Publication\BusRegText2',
-            'Common\Filter\Publication\BusRegGrantNewText3',
-            'Common\Filter\Publication\PoliceData',
-            'Common\Filter\Publication\Clean'
-        ),
-        'BusRegGrantVarPublicationFilter' => array(
-            'Common\Filter\Publication\BusRegLicence',
-            'Common\Filter\Publication\LicenceAddress',
-            'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\BusReg',
-            'Common\Filter\Publication\BusRegPublicationSection',
-            'Common\Filter\Publication\PreviousUnpublishedBus',
-            'Common\Filter\Publication\BusRegServiceDesignation',
-            'Common\Filter\Publication\BusRegVarReason',
-            'Common\Filter\Publication\BusRegText1',
-            'Common\Filter\Publication\BusRegText2',
-            'Common\Filter\Publication\BusRegGrantVarText3',
-            'Common\Filter\Publication\PoliceData',
-            'Common\Filter\Publication\Clean'
-        ),
-        'BusRegGrantCancelPublicationFilter' => array(
-            'Common\Filter\Publication\BusRegLicence',
-            'Common\Filter\Publication\LicenceAddress',
-            'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\BusReg',
-            'Common\Filter\Publication\BusRegPublicationSection',
-            'Common\Filter\Publication\PreviousUnpublishedBus',
-            'Common\Filter\Publication\BusRegServiceDesignation',
-            'Common\Filter\Publication\BusRegText1',
-            'Common\Filter\Publication\BusRegText2',
-            'Common\Filter\Publication\BusRegGrantCancelText3',
-            'Common\Filter\Publication\PoliceData',
-            'Common\Filter\Publication\Clean'
-        ),
-        'ApplicationPublicationFilter' => array(
-            'Common\Filter\Publication\BusRegLicence',
-            'Common\Filter\Publication\LicenceAddress',
-            'Common\Filter\Publication\Application',
-            'Common\Filter\Publication\ApplicationPubType',
-            'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\PreviousApplicationPublication',
-            'Common\Filter\Publication\PreviousUnpublishedApplication',
-            'Common\Filter\Publication\ApplicationOperatingCentre',
-            'Common\Filter\Publication\ApplicationLicenceCancelled',
-            'Common\Filter\Publication\ApplicationBusNote',
-            'Common\Filter\Publication\ApplicationConditionUndertaking',
-            'Common\Filter\Publication\ApplicationTransportManager',
-            'Common\Filter\Publication\ApplicationText1',
-            'Common\Filter\Publication\ApplicationText2',
-            'Common\Filter\Publication\ApplicationText3',
-            'Common\Filter\Publication\Clean'
-        ),
     ),
     /*'search' => [
         'invokables' => [
@@ -531,19 +409,7 @@ return array(
             'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
             'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
             'Common\Filter\DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
-            'Common\Filter\DecompressToTmp' => 'Common\Filter\DecompressToTmp',
-            'Common\Filter\Publication\Licence' => 'Common\Filter\Publication\Licence',
-            'Common\Filter\Publication\LicenceAddress' => 'Common\Filter\Publication\LicenceAddress',
-            'Common\Filter\Publication\Publication' => 'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\PublicationSection' => 'Common\Filter\Publication\PublicationSection',
-            'Common\Filter\Publication\PiVenue' => 'Common\Filter\Publication\PiVenue',
-            'Common\Filter\Publication\HearingDateTime' => 'Common\Filter\Publication\HearingDateTime',
-            'Common\Filter\Publication\PreviousPublication' => 'Common\Filter\Publication\PreviousPublication',
-            'Common\Filter\Publication\PreviousHearing' => 'Common\Filter\Publication\PreviousHearing',
-            'Common\Filter\Publication\PreviousUnpublished' => 'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\HearingText1' => 'Common\Filter\Publication\HearingText1',
-            'Common\Filter\Publication\PoliceData' => 'Common\Filter\Publication\PoliceData',
-            'Common\Filter\Publication\Clean' => 'Common\Filter\Publication\Clean'
+            'Common\Filter\DecompressToTmp' => 'Common\Filter\DecompressToTmp'
         ],
         'delegators' => [
             'Common\Filter\DecompressUploadToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory'],
@@ -564,7 +430,6 @@ return array(
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
-            'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
             'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>
                 'Common\Service\Data\LicenceOperatingCentre',
