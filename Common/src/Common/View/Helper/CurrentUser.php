@@ -54,6 +54,8 @@ class CurrentUser extends AbstractHelper
     }
 
     /**
+     * Get organisation name
+     *
      * @return string
      */
     public function getOrganisationName()
@@ -66,9 +68,10 @@ class CurrentUser extends AbstractHelper
 
         switch ($userData['userType']) {
             case User::USER_TYPE_OPERATOR:
+            case User::USER_TYPE_TRANSPORT_MANAGER:
                 return current($userData['organisationUsers'])['organisation']['name'];
             case User::USER_TYPE_PARTNER:
-                return $userData['contactDetails']['description'];
+                return $userData['partnerContactDetails']['description'];
             case User::USER_TYPE_LOCAL_AUTHORITY:
                 return $userData['localAuthority']['description'];
         }
@@ -76,12 +79,22 @@ class CurrentUser extends AbstractHelper
         return '';
     }
 
+    /**
+     * Checks whether the current user is logged in
+     *
+     * @return bool
+     */
     public function isLoggedIn()
     {
         $userData = $this->getUserData();
         return (!empty($userData['userType']) && ($userData['userType'] !== User::USER_TYPE_ANON));
     }
 
+    /**
+     * Get the user's unique id
+     *
+     * @return string
+     */
     public function getUniqueId()
     {
         if (!$this->isLoggedIn()) {
@@ -93,6 +106,11 @@ class CurrentUser extends AbstractHelper
         return hash('sha256', $userData['pid']);
     }
 
+    /**
+     * Get user data
+     *
+     * @return array
+     */
     private function getUserData()
     {
         if (!$this->userData) {
