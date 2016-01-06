@@ -454,7 +454,7 @@ return [
     'application_previous-history_licence-history_prevBeenRefused' => 'ever had an application for a goods or a public service Vehicle Operator\'s Licence refused by any EU licensing authority?',
     'application_previous-history_licence-history_prevBeenRevoked' => 'ever had a goods or public service Vehicle Operator\'s Licence revoked, suspended or curtailed by any EU licensing authority?',
     'application_previous-history_licence-history_prevHadLicence' => 'previously held or applied for a goods or public service Vehicle Operator\'s Licence in any traffic area?',
-    'application_previous-history_licence-history_prevHasLicence' => 'Do you or anybody else named in this application (including partners, directors and Transport Managers) hold a Vehicle Operator\'s Licence in any traffic area?',
+    'application_previous-history_licence-history_prevHasLicence' => 'Does anyone you\'ve named already have an operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_prevPurchasedAssets' => 'Within the last 12 months, have you, your company or organisation or your partners or directors purchased the assets or shareholding of any company that, to your knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_publicInquiryLicence' => 'ever attended a Public Inquiry before a Traffic Commissioner?',
     'application_previous-history_licence-history_refusedLicence' => 'ever had an application for a goods or a public service Vehicle Operator\'s Licence refused by any EU licensing authority?',

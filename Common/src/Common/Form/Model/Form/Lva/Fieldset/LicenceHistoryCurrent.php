@@ -15,13 +15,15 @@ class LicenceHistoryCurrent
      */
     public $version = null;
 
+    //public $title
+
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *      "fieldset-attributes": {
      *          "class": "checkbox inline"
      *      },
-     *     "label": "application_previous-history_licence-history_prevHasLicence",
+     *     "label": "markup-application_previous-history_licence-history_prevHasLicence",
      *     "value_options": {"Y": "Yes", "N": "No"},
      * })
      * @Form\Type("radio")
