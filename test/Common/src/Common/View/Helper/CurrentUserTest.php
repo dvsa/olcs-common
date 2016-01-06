@@ -133,7 +133,7 @@ class CurrentUserTest extends MockeryTestCase
                     ]
                 ]
             ],
-            'contactDetails' => [
+            'partnerContactDetails' => [
                 'description' => 'Partner'
             ],
             'localAuthority' => [
@@ -143,7 +143,7 @@ class CurrentUserTest extends MockeryTestCase
         return [
             [$userdata, ''],
             [array_merge($userdata, ['userType' => User::USER_TYPE_ANON]), ''],
-            [array_merge($userdata, ['userType' => User::USER_TYPE_TRANSPORT_MANAGER]), ''],
+            [array_merge($userdata, ['userType' => User::USER_TYPE_TRANSPORT_MANAGER]), 'Organisation Ltd'],
             [array_merge($userdata, ['userType' => User::USER_TYPE_OPERATOR]), 'Organisation Ltd'],
             [array_merge($userdata, ['userType' => User::USER_TYPE_PARTNER]), 'Partner'],
             [array_merge($userdata, ['userType' => User::USER_TYPE_LOCAL_AUTHORITY]), 'Local Authority'],
