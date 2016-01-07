@@ -2,7 +2,7 @@
 // @codingStandardsIgnoreFile
 return [
     '404-lede' => '{WELSH} Check that you\'ve used the right web address.',
-    '404-report-broken-link' => '{WELSH} If you think you\'ve found a broken link, email <a href="mailto:operatorlicensing@otc.gov.uk">operatorlicensing@otc.gov.uk</a>',
+    '404-report-broken-link' => '{WELSH} If you think you\'ve found a broken link, email <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>',
     '404-report-include-1' => '{WELSH} Which page you were visiting',
     '404-report-include-2' => '{WELSH} What you were trying to do',
     '404-title' => '{WELSH} We can\'t find that page',
@@ -631,7 +631,7 @@ return [
     'business-details.name.locked' => '{WELSH} Cannot change company name. Please contact Central Licensing Office for further advice',
     'business-type' => '{WELSH} Business type',
     'business-type.locked' => '{WELSH} Cannot change business type. Please contact Central Licensing Office for further advice.',
-    'business-type.locked.message' => '{WELSH} To change your business type email <a href="mailto:operatorlicensing@otc.gov.uk">operatorlicensing@otc.gov.uk</a>.',
+    'business-type.locked.message' => '{WELSH} To change your business type email <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
     'cancel' => '{WELSH} Cancel',
     'cancel.button' => '{WELSH} Cancel',
     'cannot-change-conditions-undertakings-guidance' => '{WELSH} Cannot change conditions and undertakings. Please contact Central Licensing Office for further advice',
