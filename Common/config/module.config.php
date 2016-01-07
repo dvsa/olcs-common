@@ -284,7 +284,6 @@ return array(
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
-            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
             \Common\Service\Data\Search\SearchTypeManager::class =>
