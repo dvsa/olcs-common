@@ -43,6 +43,8 @@ class Address extends InternalSearchAbstract
 
             $this->filters = [
                 new Filter\AddressType(),
+                new Filter\AddressComplaint(),
+                new Filter\AddressOpposition(),
             ];
         }
 
@@ -85,7 +87,7 @@ class Address extends InternalSearchAbstract
                 }
             ],
             [
-                'title' => 'Compliant',
+                'title' => 'Complaint',
                 'formatter' => function ($row) {
 
                     if ($row['complaintCaseId']) {
