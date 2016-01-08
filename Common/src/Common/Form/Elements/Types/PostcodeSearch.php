@@ -46,7 +46,7 @@ class PostcodeSearch extends Fieldset
         $searchButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary large js-find',
+                'class' => 'action--primary js-find',
                 'data-container-class' => 'inline'
             )
         );
