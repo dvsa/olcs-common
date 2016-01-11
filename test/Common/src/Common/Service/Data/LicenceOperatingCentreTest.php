@@ -16,24 +16,6 @@ class LicenceOperatingCentreTest extends MockeryTestCase
     /**
      * @group licenceOperatingCentreTest
      */
-    public function testGetBundle()
-    {
-        $sut = new LicenceOperatingCentre();
-
-        $bundle = $sut->getBundle();
-        $this->assertArrayHasKey('operatingCentres', $bundle['children']);
-        $this->assertArrayHasKey(
-            'operatingCentre',
-            $bundle['children']['operatingCentres']['children']
-        );
-
-        $this->assertInternalType('array', $bundle);
-    }
-
-
-    /**
-     * @group licenceOperatingCentreTest
-     */
     public function testGetId()
     {
         $sut = new LicenceOperatingCentre();
@@ -86,7 +68,7 @@ class LicenceOperatingCentreTest extends MockeryTestCase
         $licenceService
             ->shouldReceive('fetchOperatingCentreData')
             ->once()
-            ->with($licenceId, m::type('array'))
+            ->with($licenceId)
             ->andReturn($licenceData);
 
         $sut->setLicenceService($licenceService);
