@@ -2026,6 +2026,7 @@ return [
     'search-result-section-transport-managers' => 'Transport Managers',
     'search-result-section-vehicles' => 'Vehicles',
     'search.bus' => 'Bus Registration',
+    'search.form.back' => 'Back to search',
     'search.form.filter.update_button' => 'Update results',
     'search.form.hint' => 'Can include operator name, licence number, person, postcode, town or city',
     'search.form.label' => 'Enter keywords',

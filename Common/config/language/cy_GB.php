@@ -2026,6 +2026,7 @@ return [
     'search-result-section-transport-managers' => '{WELSH} Transport Managers',
     'search-result-section-vehicles' => '{WELSH} Vehicles',
     'search.bus' => '{WELSH} Bus Registration',
+    'search.form.back' => '{WELSH} Back to search',
     'search.form.filter.update_button' => '{WELSH} Update results',
     'search.form.hint' => '{WELSH} Can include operator name, licence number, person, postcode, town or city',
     'search.form.label' => '{WELSH} Enter keywords',
