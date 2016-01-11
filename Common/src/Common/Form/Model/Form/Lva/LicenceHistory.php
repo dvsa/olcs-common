@@ -13,53 +13,37 @@ use Zend\Form\Annotation as Form;
 class LicenceHistory
 {
     /**
-     * Q1
-     * @Form\Name("current")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryCurrent")
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
      */
-    public $current = null;
+    public $version = null;
 
     /**
-     * Q2a
-     * @Form\Name("applied")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryApplied")
+     * @Form\Name("data")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryData")
      */
-    public $applied = null;
+    public $data;
 
     /**
-     * Q2b
-     * @Form\Name("refused")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryRefused")
+     * @Form\Name("eu")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryEu")
+     * @Form\Options({"label": "application_previous-history_licence-history_EU"})
      */
-    public $refused = null;
+    public $eu;
 
     /**
-     * Q2c
-     * @Form\Name("revoked")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryRevoked")
+     * @Form\Name("pi")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryPi")
+     * @Form\Options({"label": "application_previous-history_licence-history_PI"})
      */
-    public $revoked = null;
+    public $pi;
 
     /**
-     * Q2d
-     * @Form\Name("public-inquiry")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryPublicInquiry")
+     * @Form\Name("assets")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryAssets")
+     * @Form\Options({"label": "application_previous-history_licence-history_assets"})
      */
-    public $publicInquiry = null;
-
-    /**
-     * Q2e
-     * @Form\Name("disqualified")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryDisqualified")
-     */
-    public $disqualified = null;
-
-    /**
-     * Q3
-     * @Form\Name("held")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryHeld")
-     */
-    public $held = null;
+    public $assets;
 
     /**
      * @Form\Name("form-actions")

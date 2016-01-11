@@ -448,7 +448,6 @@ return [
     'application_previous-history_licence-history_currentLicence' => '{WELSH} Do you or anybody else named in this application (including partners, directors and Transport Managers) hold a Vehicle Operator\'s Licence in any traffic area?',
     'application_previous-history_licence-history_disqualifiedLicence' => '{WELSH} been disqualified from holding or obtaining an operator\'s licence by any traffic commissioner?',
     'application_previous-history_licence-history_heldLicence' => '{WELSH} Within the last 12 months, have you, your company or organisation or your partners or directors purchased the assets or shareholding of any company that, to your knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
-    'application_previous-history_licence-history_personsInformation' => '{WELSH} Has anybody named in this application (including partners, directors or Transport Managers):',
     'application_previous-history_licence-history_prevBeenAtPi' => '{WELSH} ever attended a public inquiry before a Traffic Commissioner?',
     'application_previous-history_licence-history_prevBeenDisqualifiedTc' => '{WELSH} been disqualified from holding or obtaining an operator\'s licence by any traffic commissioner?',
     'application_previous-history_licence-history_prevBeenRefused' => '{WELSH} ever had an application for a goods or a public service Vehicle Operator\'s Licence refused by any EU licensing authority?',

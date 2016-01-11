@@ -5,7 +5,7 @@ return array(
     'variables' => array(
         'title' => $prefix . 'tableHeader',
         'within_form' => true,
-        'empty_message' => $prefix . 'tableEmptyMessage'
+        'empty_message' => 'application_previous-history_licence-history_table_empty'
     ),
     'settings' => array(
         'crud' => array(
