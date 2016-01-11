@@ -2,36 +2,35 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\CrudAbstract;
-use Common\Service\Entity\ApplicationEntityService;
+use Common\RefData as CommonRefData;
+use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationQry;
+use Dvsa\Olcs\Transfer\Query\Application\OperatingCentres as OcQry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Zend\ServiceManager\FactoryInterface;
 
 /**
  * Service Class Task
  *
  * @package Common\Service\Data
  */
-class Application extends CrudAbstract
+class Application extends AbstractDataService implements FactoryInterface
 {
+    use LicenceServiceTrait;
+
     /**
      * @var integer
      */
     protected $id;
 
     /**
-     * @var string
-     */
-    protected $serviceName = 'Application';
-
-    /**
      * Wrapper method to match interface.
      *
      * @param int|null $id
-     * @param array|null $bundle
      * @return array
      */
-    public function fetchData($id = null, $bundle = null)
+    public function fetchData($id = null)
     {
-        return $this->fetchApplicationData($id, $bundle);
+        return $this->fetchApplicationData($id);
     }
 
     /**
@@ -41,48 +40,20 @@ class Application extends CrudAbstract
      * @param array|null $bundle
      * @return array
      */
-    public function fetchApplicationData($id = null, $bundle = null)
+    public function fetchApplicationData($id = null)
     {
         $id = is_null($id) ? $this->getId() : $id;
 
         if (is_null($this->getData($id))) {
-            $bundle = is_null($bundle) ? $this->getBundle() : $bundle;
-            $data =  $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
+            $dtoData = ApplicationQry::create(['id' => $id]);
+            $response = $this->handleQuery($dtoData);
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
+            }
+            $data = $response->getResult();
             $this->setData($id, $data);
         }
         return $this->getData($id);
-    }
-
-    /**
-     * @return array
-     */
-    public function getBundle()
-    {
-        $bundle = [
-            'children' => [
-                'licence',
-                'status'
-            ]
-        ];
-
-        return $bundle;
-    }
-
-    /**
-     * Bundle to fetch all operating centres for a application
-     * @return array
-     */
-    public function getOperatingCentreBundle()
-    {
-        return array(
-            'children' => array(
-                'operatingCentres' => array(
-                    'children' => array(
-                        'operatingCentre'
-                    )
-                )
-            )
-        );
     }
 
     /**
@@ -95,7 +66,8 @@ class Application extends CrudAbstract
         $application = $this->fetchApplicationData($id);
 
         if (empty($application['status'])
-            || ((is_array($application['status']) ? $application['status']['id'] : $application['status'])  == ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED)
+            || ((is_array($application['status']) ? $application['status']['id'] :
+                    $application['status']) === CommonRefData::APPLICATION_STATUS_NOT_SUBMITTED)
             || empty($application['licence']) || empty($application['licence']['licNo'])
         ) {
             return false;
@@ -107,18 +79,19 @@ class Application extends CrudAbstract
     /**
      * Fetches an array of OperatingCentres for the application.
      * @param null $id
-     * @param null $bundle
      * @return array
      */
-    public function fetchOperatingCentreData($id = null, $bundle = null)
+    public function fetchOperatingCentreData($id = null)
     {
         $id = is_null($id) ? $this->getId() : $id;
 
         if (is_null($this->getData('oc_' .$id))) {
-
-            $bundle = is_null($bundle) ? $this->getOperatingCentreBundle() : $bundle;
-            $data =  $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
-
+            $dtoData = OcQry::create(['id' => $id]);
+            $response = $this->handleQuery($dtoData);
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
+            }
+            $data = $response->getResult();
             $this->setData('oc_' .$id, $data);
         }
 

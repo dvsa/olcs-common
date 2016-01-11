@@ -43,14 +43,7 @@ trait ApplicationServiceTrait
     protected function getApplicationContext()
     {
         // fetch application with goods or psv details
-        $application = $this->getApplicationService()->fetchApplicationData(
-            null,
-            [
-                'children' => [
-                    'goodsOrPsv'
-                ]
-            ]
-        );
+        $application = $this->getApplicationService()->fetchApplicationData();
 
         return [
             'goodsOrPsv' => $application['goodsOrPsv']['id'],
