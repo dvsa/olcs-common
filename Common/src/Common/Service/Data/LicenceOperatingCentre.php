@@ -41,7 +41,7 @@ class LicenceOperatingCentre extends AbstractData implements FactoryInterface, L
 
         if (is_null($this->getData($id))) {
             $data = array();
-            $rawData =  $this->getLicenceService()->fetchOperatingCentreData($this->getId(), $this->getBundle());
+            $rawData =  $this->getLicenceService()->fetchOperatingCentreData($this->getId());
             if (is_array($rawData['operatingCentres'])) {
                 $outputType = $this->getOutputType();
                 foreach ($rawData['operatingCentres'] as $licenceOperatingCentre) {
@@ -72,28 +72,6 @@ class LicenceOperatingCentre extends AbstractData implements FactoryInterface, L
             $this->setData($id, $data);
         }
         return $this->getData($id);
-    }
-
-    /**
-     * @return array
-     */
-    public function getBundle()
-    {
-        $bundle = array(
-            'children' => array(
-                'operatingCentres' => array(
-                    'children' => array(
-                        'operatingCentre' => array(
-                            'children' => array(
-                                'address'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        return $bundle;
     }
 
     /**

@@ -3,19 +3,18 @@
 namespace OlcsTest\Service\Data;
 
 use Common\Service\Data\Licence;
+use Mockery as m;
+use Dvsa\Olcs\Transfer\Query\Licence\Licence as LicenceQry;
+use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as OcQry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use CommonTest\Service\Data\AbstractDataServiceTestCase;
 
 /**
  * Class LicenceTest
  * @package OlcsTest\Service\Data
  */
-class LicenceTest extends \PHPUnit_Framework_TestCase
+class LicenceTest extends AbstractDataServiceTestCase
 {
-    public function testGetBundle()
-    {
-        $sut = new Licence();
-        $this->assertInternalType('array', $sut->getBundle());
-    }
-
     public function testSetId()
     {
         $sut = new Licence();
@@ -36,7 +35,8 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
             'trafficArea' => [
                 'id' => 'B',
                 'isNi' => true
-            ]
+            ],
+            'niFlag' => 'Y'
         ];
 
         $expected = [
@@ -48,80 +48,111 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
             'niFlag' => 'Y',
         ];
 
-        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', false);
-        $mockRestClient->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/78'), $this->isType('array'))
-            ->willReturn($licence);
-
-        $sut = new Licence();
-        $sut->setRestClient($mockRestClient);
-
-        $this->assertEquals($expected, $sut->fetchLicenceData(78));
-        //test data is cached
-        $this->assertEquals($expected, $sut->fetchLicenceData(78));
-    }
-
-    public function testGetAddressBundle()
-    {
-        $sut = new Licence();
-        $addressBundle = $sut->getAddressBundle();
-        $this->assertArrayHasKey('correspondenceCd', $addressBundle['children']);
-        $this->assertArrayHasKey(
-            'address',
-            $addressBundle['children']['correspondenceCd']['children']
-        );
-
-        $this->assertInternalType('array', $addressBundle);
-    }
-
-    public function testFetchAddressListData()
-    {
-        $licence = [
-            'id' => 110,
-            'correspondenceCd' => [
-                'address' => 'c_address'
-            ],
-            'establishmentCd' => [
-                'address' => 'e_address'
-            ],
-            'transportConsultantCd' => [
-                'address' => 'tc_address'
-            ]
+        $params = [
+            'id' => 78
         ];
+        $dto = LicenceQry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['id'], $dto->getId());
+                    return 'query';
+                }
+            )
+            ->once()
+            ->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($licence)
+            ->once()
+            ->getMock();
 
         $sut = new Licence();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', false);
-        $mockRestClient->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/110'), $this->isType('array'))
-            ->willReturn($licence);
+        $this->assertEquals($expected, $sut->fetchLicenceData(78));
+    }
 
-        $sut->setRestClient($mockRestClient);
+    public function testFetchLicenceDataWithException()
+    {
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 
-        $result = $sut->fetchAddressListData(110);
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new Licence();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $this->assertCount(3, $result);
+        $sut->fetchLicenceData(78);
     }
 
     public function testFetchOperatingCentreData()
     {
         $licence = [
-            'id' => 110
+            'id' => 78,
+            'operatingCentres' => [
+                'operatingCentre' => 'oc',
+            ],
         ];
 
+        $expected = [
+            'id' => 78,
+            'operatingCentres' => [
+                'operatingCentre' => 'oc',
+            ],
+        ];
+
+        $params = [
+            'id' => 78
+        ];
+        $dto = OcQry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['id'], $dto->getId());
+                    return 'query';
+                }
+            )
+            ->once()
+            ->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($licence)
+            ->once()
+            ->getMock();
+
         $sut = new Licence();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', false);
-        $mockRestClient->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/110'), $this->isType('array'))
-            ->willReturn($licence);
+        $this->assertEquals($expected, $sut->fetchOperatingCentreData(78));
+    }
 
-        $sut->setRestClient($mockRestClient);
-        $result = $sut->fetchOperatingCentreData(110);
+    public function testFetchOperatingCentresDataWithException()
+    {
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 
-        $this->assertEquals($result, $licence);
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new Licence();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+
+        $sut->fetchOperatingCentreData(78);
     }
 }
