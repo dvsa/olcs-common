@@ -56,7 +56,8 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
             'addressLine3' => '',
             'addressLine4' => '',
             'town' => 'Some Town',
-            'postcode' => 'AB1 1AB'
+            'postcode' => 'AB1 1AB',
+            'countryCode' => 'GB'
         );
 
         $addressDetails = $this->service->formatPostalAddressFromBs7666($address);
@@ -96,7 +97,8 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
             'addressLine3' => '',
             'addressLine4' => '',
             'town' => 'Some Town',
-            'postcode' => 'AB1 1AB'
+            'postcode' => 'AB1 1AB',
+            'countryCode' => 'GB'
         );
 
         $addressDetails = $this->service->formatPostalAddressFromBs7666($address);
@@ -136,7 +138,8 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
             'addressLine3' => '',
             'addressLine4' => '',
             'town' => 'Some Town',
-            'postcode' => 'AB1 1AB'
+            'postcode' => 'AB1 1AB',
+            'countryCode' => 'GB'
         );
 
         $addressDetails = $this->service->formatPostalAddressFromBs7666($address);
@@ -202,13 +205,13 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
         );
 
         $expectedResult = array(
-            123 => 'My Company Ltd, Awesome House Street Name, Some T…',
             234 => '1a-22b Awesome House, 31 Some Street Street Name,…',
-            345 => '1a-22b Awesome House, 31 Some Street Street Name,…'
+            345 => '1a-22b Awesome House, 31 Some Street Street Name,…',
+            123 => 'My Company Ltd, Awesome House Street Name, Some T…',
         );
 
         $result = $this->service->formatAddressesForSelect($list);
 
-        $this->assertEquals($expectedResult, $result);
+        $this->assertSame($expectedResult, $result);
     }
 }
