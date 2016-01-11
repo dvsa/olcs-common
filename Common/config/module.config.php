@@ -249,6 +249,7 @@ return array(
             'Common\Service\Data\Role' => 'Common\Service\Data\Role',
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
+            'Common\Service\Data\Application' => 'Common\Service\Data\Application',
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -266,7 +267,6 @@ return array(
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
-            'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\Data\ApplicationOperatingCentre' => 'Common\Service\Data\ApplicationOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',

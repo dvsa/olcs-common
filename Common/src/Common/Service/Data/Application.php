@@ -6,17 +6,14 @@ use Common\RefData as CommonRefData;
 use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationQry;
 use Dvsa\Olcs\Transfer\Query\Application\OperatingCentres as OcQry;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
-use Zend\ServiceManager\FactoryInterface;
 
 /**
  * Service Class Task
  *
  * @package Common\Service\Data
  */
-class Application extends AbstractDataService implements FactoryInterface
+class Application extends AbstractDataService
 {
-    use LicenceServiceTrait;
-
     /**
      * @var integer
      */
