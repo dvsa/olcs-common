@@ -3,16 +3,19 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
+use Common\Service\Data\AbstractDataService;
+use Dvsa\Olcs\Transfer\Query\Cases\PiVenue\PiVenueList;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Zend\ServiceManager\FactoryInterface;
 
 /**
  * Class PiVenue
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class PiVenue extends AbstractData implements ListData
+class PiVenue extends AbstractDataService implements ListData, FactoryInterface
 {
     use LicenceServiceTrait;
-
-    protected $serviceName = 'PiVenue';
 
     /**
      * Format data!
@@ -58,33 +61,24 @@ class PiVenue extends AbstractData implements ListData
     public function fetchListData($params)
     {
         if (is_null($this->getData('PiVenue'))) {
-            $params['limit'] = 1000;
-            $data = $this->getRestClient()->get('', $params);
+            $params = [
+                'trafficArea' => $params['trafficArea'],
+                'page' => 1,
+                'limit' => 1000
+            ];
+            $dtoData = PiVenueList::create($params);
 
+            $response = $this->handleQuery($dtoData);
+
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
+            }
             $this->setData('PiVenue', false);
-
-            if (isset($data['Results'])) {
-                $this->setData('PiVenue', $data['Results']);
+            if (isset($response->getResult()['results'])) {
+                $this->setData('PiVenue', $response->getResult()['results']);
             }
         }
 
         return $this->getData('PiVenue');
-    }
-
-    public function fetchById($id)
-    {
-        return $this->getRestClient()->get('/'.$id, ['bundle' => json_encode($this->getBundle())]);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getBundle()
-    {
-        return [
-            'children' => array(
-                'address' => array()
-            )
-        ];
     }
 }
