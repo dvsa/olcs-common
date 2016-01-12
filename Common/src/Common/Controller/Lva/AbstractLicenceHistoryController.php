@@ -241,9 +241,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         foreach ($this->sections as $group => $sections) {
             foreach ($sections as $section) {
-                $formData[$group] = [
-                    $section => $data[$section]
-                ];
+                $formData[$group][$section] = $data[$section];
             }
         }
 
