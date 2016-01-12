@@ -109,7 +109,11 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
                     $action = $this->getActionFromCrudAction($data[$group][$section . '-table']);
 
-                    $data[$group][$section . '-table']['routeAction'] = $filter->filter($section) . '-' . strtolower($action);
+                    $data[$group][$section . '-table']['routeAction'] = sprintf(
+                        '%s-%s',
+                        $filter->filter($section),
+                        strtolower($action)
+                    );
 
                     return $data[$group][$section . '-table'];
                 }
