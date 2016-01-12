@@ -5,11 +5,11 @@ return array(
     'variables' => array(
         'title' => $prefix . 'tableHeader',
         'within_form' => true,
-        'empty_message' => $prefix . 'tableEmptyMessage'
+        'empty_message' => 'application_previous-history_licence-history_table_empty'
     ),
     'settings' => array(
         'crud' => array(
-            'formName' => 'refused',
+            'formName' => 'held',
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add licence'),
                 'edit' => array('requireRows' => true),
@@ -27,6 +27,11 @@ return array(
         array(
             'title' => $prefix . 'columnHolderName',
             'name' => 'holderName',
+        ),
+        array(
+            'title' => $prefix . 'columnPurchaseDate',
+            'name' => 'purchaseDate',
+            'formatter' => 'Date'
         ),
         array(
             'width' => 'checkbox',

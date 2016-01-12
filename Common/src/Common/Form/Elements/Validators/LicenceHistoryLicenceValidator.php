@@ -28,9 +28,13 @@ class LicenceHistoryLicenceValidator extends AbstractValidator
 
     private $name;
 
+    private $table;
+
     public function __construct($options = array())
     {
         $this->name = isset($options['name']) ? $options['name'] : 'noLicence';
+        $this->table = $options['table'];
+
         parent::__construct(array());
     }
 
@@ -43,7 +47,7 @@ class LicenceHistoryLicenceValidator extends AbstractValidator
      */
     public function isValid($value, $context = array())
     {
-        if ($context['table']['rows'] < 1 && $value == 'Y') {
+        if ($context[$this->table]['rows'] < 1 && $value == 'Y') {
 
             $this->error($this->name);
             return false;

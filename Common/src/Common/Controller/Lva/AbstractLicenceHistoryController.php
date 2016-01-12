@@ -16,6 +16,7 @@ use Dvsa\Olcs\Transfer\Query\OtherLicence\OtherLicence;
 use Common\Data\Mapper\Lva\OtherLicence as OtherLicenceMapper;
 use Common\Data\Mapper\Lva\LicenceHistory as LicenceHistoryMapper;
 use Dvsa\Olcs\Transfer\Query\Application\LicenceHistory;
+use Zend\Filter\Word\CamelCaseToDash;
 
 /**
  * Licence History Trait
@@ -27,15 +28,23 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 {
     use Traits\CrudTableTrait;
 
-    protected $sections = array(
-        'current' => 'prevHasLicence',
-        'applied' => 'prevHadLicence',
-        'refused' => 'prevBeenRefused',
-        'revoked' => 'prevBeenRevoked',
-        'public-inquiry' => 'prevBeenAtPi',
-        'disqualified' => 'prevBeenDisqualifiedTc',
-        'held' => 'prevPurchasedAssets'
-    );
+    protected $sections = [
+        'data' => [
+            'prevHasLicence',
+            'prevHadLicence',
+            'prevBeenDisqualifiedTc',
+        ],
+        'eu' => [
+            'prevBeenRefused',
+            'prevBeenRevoked',
+        ],
+        'pi' => [
+            'prevBeenAtPi',
+        ],
+        'assets' => [
+            'prevPurchasedAssets'
+        ]
+    ];
 
     protected $section = 'licence_history';
 
@@ -87,19 +96,27 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      * @param array $formTables
      * @return array
      */
-    protected function getCrudAction(array $formTables = array())
+    protected function getCrudAction(array $formTables = [])
     {
         $data = $formTables;
 
-        foreach (array_keys($this->sections) as $section) {
+        $filter = new CamelCaseToDash();
 
-            if (isset($data[$section]['table']['action'])) {
+        foreach ($this->sections as $group => $sections) {
 
-                $action = $this->getActionFromCrudAction($data[$section]['table']);
+            foreach ($sections as $section) {
+                if (isset($data[$group][$section . '-table']['action'])) {
 
-                $data[$section]['table']['routeAction'] = $section . '-' . strtolower($action);
+                    $action = $this->getActionFromCrudAction($data[$group][$section . '-table']);
 
-                return $data[$section]['table'];
+                    $data[$group][$section . '-table']['routeAction'] = sprintf(
+                        '%s-%s',
+                        $filter->filter($section),
+                        strtolower($action)
+                    );
+
+                    return $data[$group][$section . '-table'];
+                }
             }
         }
 
@@ -111,12 +128,9 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $saveData = [
             'ids' => explode(',', $this->params('child_id'))
         ];
-        $dto = DeleteOtherLicence::create($saveData);
-
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
 
         /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        $response = $this->handleCommand(DeleteOtherLicence::create($saveData));
         if ($response->isOk()) {
             return true;
         }
@@ -133,25 +147,14 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $data['id'] = $this->getApplicationId();
         $data['inProgress'] = $inProgress;
 
-        $dto = UpdateLicenceHistory::create($data);
+        $response = $this->handleCommand(UpdateLicenceHistory::create($data));
 
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
-
-        /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
         if ($response->isOk()) {
             return true;
         }
+
         if ($response->isClientError()) {
-            $fieldsets = [
-                'prevHasLicence' => 'current',
-                'prevHadLicence' => 'applied',
-                'prevBeenRefused' => 'refused',
-                'prevBeenRevoked' => 'revoked',
-                'prevBeenAtPi' => 'held',
-                'prevBeenDisqualifiedTc' => 'disqualified'
-            ];
-            $this->mapErrorsForLicenceHistory($form, $response->getResult()['messages'], $fieldsets);
+            $this->mapErrorsForLicenceHistory($form, $response->getResult()['messages']);
         }
 
         if ($response->isServerError()) {
@@ -161,17 +164,19 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return false;
     }
 
-    protected function mapErrorsForLicenceHistory($form, array $errors, array $fieldsets = [])
+    protected function mapErrorsForLicenceHistory($form, array $errors)
     {
         $formMessages = [];
 
-        foreach ($fieldsets as $errorKey => $fieldsetName) {
-            if (isset($errors[$errorKey])) {
-                foreach ($errors[$errorKey] as $key => $message) {
-                    $formMessages[$fieldsetName]['question'][] = $message;
-                }
+        foreach ($this->sections as $group => $sections) {
+            foreach ($sections as $section) {
+                if (isset($errors[$section])) {
+                    foreach ($errors[$section] as $key => $message) {
+                        $formMessages[$group][$section][] = $message;
+                    }
 
-                unset($errors[$key]);
+                    unset($errors[$section]);
+                }
             }
         }
 
@@ -187,15 +192,17 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function formatDataForSave($data)
     {
-        $saveData = array();
+        $saveData = [];
 
-        foreach ($this->sections as $reference => $actual) {
-            if (isset($data[$reference]['question'])) {
-                $saveData[$actual] = $data[$reference]['question'];
+        foreach ($this->sections as $group => $sections) {
+            foreach ($sections as $section) {
+                if (isset($data[$group][$section])) {
+                    $saveData[$section] = $data[$group][$section];
+                }
             }
         }
 
-        $saveData['version'] = $data['current']['version'];
+        $saveData['version'] = $data['version'];
 
         return $saveData;
     }
@@ -213,11 +220,13 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
 
         $mappedResults = [];
+
         if ($response->isOk()) {
             $mapper = new LicenceHistoryMapper();
             $mappedResults = $mapper->mapFromResult($response->getResult());
             $this->otherLicences = $mappedResults['data']['otherLicences'];
         }
+
         return $mappedResults;
     }
 
@@ -226,24 +235,21 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     protected function getLicenceHistory()
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(LicenceHistory::create(['id' => $this->getIdentifier()]));
-
-        return $this->getServiceLocator()->get('QueryService')->send($query);
+        return $this->handleQuery(LicenceHistory::create(['id' => $this->getIdentifier()]));
     }
 
     protected function formatDataForForm($data)
     {
         $data = $data['data'];
-        $formData = array();
+        $formData = [];
 
-        foreach ($this->sections as $reference => $actual) {
-            $formData[$reference] = array(
-                'question' => $data[$actual]
-            );
+        foreach ($this->sections as $group => $sections) {
+            foreach ($sections as $section) {
+                $formData[$group][$section] = $data[$section];
+            }
         }
 
-        $formData['current']['version'] = $data['version'];
+        $formData['version'] = $data['version'];
 
         return $formData;
     }
@@ -257,12 +263,14 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
-        foreach (array_keys($this->sections) as $section) {
-            $formHelper->populateFormTable(
-                $form->get($section)->get('table'),
-                $this->getTable($section),
-                $section . '[table]'
-            );
+        foreach ($this->sections as $group => $sections) {
+            foreach ($sections as $section) {
+                $formHelper->populateFormTable(
+                    $form->get($group)->get($section . '-table'),
+                    $this->getTable($section),
+                    $group . '[' . $section . '-table]'
+                );
+            }
         }
 
         return $form;
@@ -286,173 +294,173 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     {
         $stringHelper = $this->getServiceLocator()->get('Helper\String');
 
-        return $stringHelper->camelToUnderscore($this->sections[$section]);
+        return $stringHelper->camelToUnderscore($section);
     }
 
     /**
-     * Add current licence
+     * Add prevHasLicence licence
      */
-    public function currentAddAction()
+    public function prevHasLicenceAddAction()
     {
-        return $this->addOrEdit('add', 'current');
+        return $this->addOrEdit('add', 'prevHasLicence');
     }
 
     /**
-     * Edit current licence
+     * Edit prevHasLicence licence
      */
-    public function currentEditAction()
+    public function prevHasLicenceEditAction()
     {
-        return $this->addOrEdit('edit', 'current');
+        return $this->addOrEdit('edit', 'prevHasLicence');
     }
 
     /**
-     * Delete current licence
+     * Delete prevHasLicence licence
      */
-    public function currentDeleteAction()
-    {
-        return $this->deleteAction(false);
-    }
-
-    /**
-     * Add applied licence
-     */
-    public function appliedAddAction()
-    {
-        return $this->addOrEdit('add', 'applied');
-    }
-
-    /**
-     * Edit applied licence
-     */
-    public function appliedEditAction()
-    {
-        return $this->addOrEdit('edit', 'applied');
-    }
-
-    /**
-     * Delete applied licence
-     */
-    public function appliedDeleteAction()
+    public function prevHasLicenceDeleteAction()
     {
         return $this->deleteAction(false);
     }
 
     /**
-     * Add refused licence
+     * Add prevHadLicence licence
      */
-    public function refusedAddAction()
+    public function prevHadLicenceAddAction()
     {
-        return $this->addOrEdit('add', 'refused');
+        return $this->addOrEdit('add', 'prevHadLicence');
     }
 
     /**
-     * Edit refused licence
+     * Edit prevHadLicence licence
      */
-    public function refusedEditAction()
+    public function prevHadLicenceEditAction()
     {
-        return $this->addOrEdit('edit', 'refused');
+        return $this->addOrEdit('edit', 'prevHadLicence');
+    }
+
+    /**
+     * Delete prevHadLicence licence
+     */
+    public function prevHadLicenceDeleteAction()
+    {
+        return $this->deleteAction(false);
+    }
+
+    /**
+     * Add prevBeenRefused licence
+     */
+    public function prevBeenRefusedAddAction()
+    {
+        return $this->addOrEdit('add', 'prevBeenRefused');
+    }
+
+    /**
+     * Edit prevBeenRefused licence
+     */
+    public function prevBeenRefusedEditAction()
+    {
+        return $this->addOrEdit('edit', 'prevBeenRefused');
     }
 
     /**
      * Delete refused licence
      */
-    public function refusedDeleteAction()
+    public function prevBeenRefusedDeleteAction()
     {
         return $this->deleteAction(false);
     }
 
     /**
-     * Add revoked licence
+     * Add prevBeenRevoked licence
      */
-    public function revokedAddAction()
+    public function prevBeenRevokedAddAction()
     {
-        return $this->addOrEdit('add', 'revoked');
+        return $this->addOrEdit('add', 'prevBeenRevoked');
     }
 
     /**
-     * Edit revoked licence
+     * Edit prevBeenRevoked licence
      */
-    public function revokedEditAction()
+    public function prevBeenRevokedEditAction()
     {
-        return $this->addOrEdit('edit', 'revoked');
+        return $this->addOrEdit('edit', 'prevBeenRevoked');
     }
 
     /**
-     * Delete revoked licence
+     * Delete prevBeenRevoked licence
      */
-    public function revokedDeleteAction()
-    {
-        return $this->deleteAction(false);
-    }
-
-    /**
-     * Add disqualified licence
-     */
-    public function disqualifiedAddAction()
-    {
-        return $this->addOrEdit('add', 'disqualified');
-    }
-
-    /**
-     * Edit disqualified licence
-     */
-    public function disqualifiedEditAction()
-    {
-        return $this->addOrEdit('edit', 'disqualified');
-    }
-
-    /**
-     * Delete disqualified licence
-     */
-    public function disqualifiedDeleteAction()
+    public function prevBeenRevokedDeleteAction()
     {
         return $this->deleteAction(false);
     }
 
     /**
-     * Add held licence
+     * Add prevBeenDisqualifiedTc licence
      */
-    public function heldAddAction()
+    public function prevBeenDisqualifiedTcAddAction()
     {
-        return $this->addOrEdit('add', 'held');
+        return $this->addOrEdit('add', 'prevBeenDisqualifiedTc');
     }
 
     /**
-     * Edit held licence
+     * Edit prevBeenDisqualifiedTc licence
      */
-    public function heldEditAction()
+    public function prevBeenDisqualifiedTcEditAction()
     {
-        return $this->addOrEdit('edit', 'held');
+        return $this->addOrEdit('edit', 'prevBeenDisqualifiedTc');
     }
 
     /**
-     * Delete held licence
+     * Delete prevBeenDisqualifiedTc licence
      */
-    public function heldDeleteAction()
+    public function prevBeenDisqualifiedTcDeleteAction()
     {
         return $this->deleteAction(false);
     }
 
     /**
-     * Add public inquiry licence
+     * Add prevPurchasedAssets licence
      */
-    public function publicInquiryAddAction()
+    public function prevPurchasedAssetsAddAction()
     {
-        return $this->addOrEdit('add', 'public-inquiry');
+        return $this->addOrEdit('add', 'prevPurchasedAssets');
     }
 
     /**
-     * Edit public inquiry licence
+     * Edit prevPurchasedAssets licence
+     */
+    public function prevPurchasedAssetsEditAction()
+    {
+        return $this->addOrEdit('edit', 'prevPurchasedAssets');
+    }
+
+    /**
+     * Delete prevPurchasedAssets licence
+     */
+    public function prevPurchasedAssetsDeleteAction()
+    {
+        return $this->deleteAction(false);
+    }
+
+    /**
+     * Add prevBeenAtPi licence
+     */
+    public function prevBeenAtPiAddAction()
+    {
+        return $this->addOrEdit('add', 'prevBeenAtPi');
+    }
+
+    /**
+     * Edit prevBeenAtPi licence
      */
     public function publicInquiryEditAction()
     {
-        return $this->addOrEdit('edit', 'public-inquiry');
+        return $this->addOrEdit('edit', 'prevBeenAtPi');
     }
 
     /**
-     * Delete public inquiry licence
+     * Delete prevBeenAtPi licence
      */
-    public function publicInquiryDeleteAction()
+    public function prevBeenAtPiDeleteAction()
     {
         return $this->deleteAction(false);
     }
@@ -468,7 +476,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     {
         $request = $this->getRequest();
 
-        $data = array();
+        $data = [];
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
@@ -530,10 +538,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function getOtherLicenceData($id)
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(OtherLicence::create(['id' => $id]));
-
-        return $this->getServiceLocator()->get('QueryService')->send($query);
+        return $this->handleQuery(OtherLicence::create(['id' => $id]));
     }
 
     /**
@@ -559,16 +564,16 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        if ($which !== 'disqualified') {
+        if ($which !== 'prevBeenDisqualifiedTc') {
             $formHelper->remove($form, 'data->disqualificationDate');
             $formHelper->remove($form, 'data->disqualificationLength');
         }
 
-        if ($which !== 'current') {
+        if ($which !== 'prevHasLicence') {
             $formHelper->remove($form, 'data->willSurrender');
         }
 
-        if ($which !== 'held') {
+        if ($which !== 'prevPurchasedAssets') {
             $formHelper->remove($form, 'data->purchaseDate');
         }
 
@@ -584,9 +589,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     {
         $data['previousLicenceType'] = $this->getLicenceTypeFromSection($which);
 
-        return array(
-            'data' => $data
-        );
+        return ['data' => $data];
     }
 
     /**
@@ -600,18 +603,15 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $saveData = $formData['data'];
         $saveData['id'] = $this->params('child_id');
         $saveData['application'] = $this->getApplicationId();
+
         if (empty($saveData['id'])) {
-            unset($saveData['id']);
-            unset($saveData['version']);
             $dto = CreateOtherLicence::create($saveData);
         } else {
             $dto = UpdateOtherLicence::create($saveData);
         }
 
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+        $response = $this->handleCommand($dto);
 
-        /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
         if ($response->isOk()) {
             return true;
         }
