@@ -28,7 +28,8 @@ class AddressHelperService extends AbstractHelperService
         'addressLine3' => '',
         'addressLine4' => '',
         'town' => '',
-        'postcode' => ''
+        'postcode' => '',
+        'countryCode' => 'GB',
     );
 
     /**
@@ -93,6 +94,7 @@ class AddressHelperService extends AbstractHelperService
             }
 
             $options[$item['uprn']] = $str;
+            asort($options, SORT_NATURAL);
         }
 
         return $options;
