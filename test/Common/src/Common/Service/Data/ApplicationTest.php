@@ -2,16 +2,19 @@
 
 namespace OlcsTest\Service\Data;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use CommonTest\Service\Data\AbstractDataServiceTestCase;
 use Common\Service\Data\Application;
-use Common\Service\Entity\ApplicationEntityService;
+use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationQry;
+use Dvsa\Olcs\Transfer\Query\Application\OperatingCentres as OcQry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Common\RefData as CommonRefData;
 use Mockery as m;
 
 /**
  * Class Application Test
  * @package CommonTest\Service
  */
-class ApplicationTest extends MockeryTestCase
+class ApplicationTest extends AbstractDataServiceTestCase
 {
     /**
      * Holds the SUT
@@ -28,16 +31,6 @@ class ApplicationTest extends MockeryTestCase
         $this->sut = new Application();
     }
 
-    public function testGetServiceName()
-    {
-        $this->assertEquals('Application', $this->sut->getServiceName());
-    }
-
-    public function testGetBundle()
-    {
-        $this->assertInternalType('array', $this->sut->getBundle());
-    }
-
     public function testSetId()
     {
         $this->sut->setId(78);
@@ -52,20 +45,12 @@ class ApplicationTest extends MockeryTestCase
     public function testFetchData()
     {
         $id = 1;
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockData = ['id' => 99];
-
-        $mockRestClient
-            ->shouldReceive('get')
-            ->once()
-            ->with('/' . $id, m::type('array'))
-            ->andReturn($mockData);
-
-        $this->sut->setRestClient($mockRestClient);
+        $data = ['id' => 99];
+        $this->sut->setData(1, $data);
 
         $result = $this->sut->fetchData($id);
 
-        $this->assertEquals($mockData, $result);
+        $this->assertEquals($data, $result);
     }
 
     /**
@@ -83,21 +68,57 @@ class ApplicationTest extends MockeryTestCase
 
     public function testFetchOperatingCentreData()
     {
-        $id = 1;
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockData = ['id' => 99];
+        $application = [
+            'id' => 78,
+            'operatingCentres' => [
+                'operatingCentre' => 'oc',
+            ],
+        ];
 
-        $mockRestClient
-            ->shouldReceive('get')
+        $params = [
+            'id' => 78
+        ];
+        $dto = OcQry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['id'], $dto->getId());
+                    return 'query';
+                }
+            )
             ->once()
-            ->with('/' . $id, m::type('array'))
-            ->andReturn($mockData);
+            ->getMock();
 
-        $this->sut->setRestClient($mockRestClient);
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($application)
+            ->once()
+            ->getMock();
 
-        $result = $this->sut->fetchOperatingCentreData($id);
+        $sut = new Application();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $this->assertEquals($mockData, $result);
+        $this->assertEquals($application, $sut->fetchOperatingCentreData(78));
+    }
+
+    public function testFetchOperatingCentreDataWithException()
+    {
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new Application();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+
+        $sut->fetchOperatingCentreData(78);
     }
 
     /**
@@ -125,7 +146,7 @@ class ApplicationTest extends MockeryTestCase
             [
                 [
                     'id' => 100,
-                    'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED]
+                    'status' => ['id' => CommonRefData::APPLICATION_STATUS_NOT_SUBMITTED]
                 ],
                 false
             ],
@@ -133,11 +154,61 @@ class ApplicationTest extends MockeryTestCase
             [
                 [
                     'id' => 100,
-                    'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_GRANTED],
+                    'status' => ['id' => CommonRefData::APPLICATION_STATUS_GRANTED],
                     'licence' => ['licNo' => 'ABC']
                 ],
                 true
             ],
         ];
+    }
+
+    public function testFetchApplicationData()
+    {
+        $application = ['foo' => 'bar'];
+
+        $params = [
+            'id' => 78
+        ];
+        $dto = ApplicationQry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['id'], $dto->getId());
+                    return 'query';
+                }
+            )
+            ->once()
+            ->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($application)
+            ->once()
+            ->getMock();
+
+        $sut = new Application();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+
+        $this->assertEquals($application, $sut->fetchApplicationData(78));
+    }
+
+    public function testFetchApplicationDataWithException()
+    {
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new Application();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+
+        $sut->fetchApplicationData(78);
     }
 }
