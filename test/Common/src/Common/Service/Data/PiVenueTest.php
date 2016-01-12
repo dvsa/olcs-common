@@ -2,22 +2,18 @@
 
 namespace OlcsTest\Service\Data;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\PiVenue;
 use Mockery as m;
+use Dvsa\Olcs\Transfer\Query\Cases\PiVenue\PiVenueList as Qry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use CommonTest\Service\Data\AbstractDataServiceTestCase;
 
 /**
  * Class PiVenue Test
  * @package CommonTest\Service
  */
-class PiVenueTest extends MockeryTestCase
+class PiVenueTest extends AbstractDataServiceTestCase
 {
-    public function testGetServiceName()
-    {
-        $sut = new PiVenue();
-        $this->assertEquals('PiVenue', $sut->getServiceName());
-    }
-
     public function testFormatData()
     {
         $source = $this->getSingleSource();
@@ -35,17 +31,18 @@ class PiVenueTest extends MockeryTestCase
      */
     public function testFetchListOptions($input, $expected)
     {
-        $mockLicenceService = $this->getMock('\Common\Service\Data\Licence');
-        $mockLicenceService->expects($this->once())
-            ->method('fetchLicenceData')
-            ->willReturn(
+        $mockLicenceService = m::mock()
+            ->shouldReceive('fetchLicenceData')
+            ->andReturn(
                 [
                     'id' => 7,
                     'niFlag'=> true,
                     'goodsOrPsv' => ['id'=>'lcat_gv'],
                     'trafficArea' => ['id' => 'B']
                 ]
-            );
+            )
+            ->once()
+            ->getMock();
 
         $sut = new PiVenue();
         $sut->setLicenceService($mockLicenceService);
@@ -63,32 +60,57 @@ class PiVenueTest extends MockeryTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideFetchListData
-     * @param $data
-     * @param $expected
-     */
-    public function testFetchListData($data, $expected)
+    public function testFetchListData()
     {
-        $params = ['trafficArea' => 'B', 'limit' => 1000];
+        $results = ['results' => 'results'];
+        $params = [
+            'trafficArea' => 'B',
+            'limit' => 1000,
+            'page' => 1
+        ];
+        $dto = Qry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['limit'], $dto->getLimit());
+                    $this->assertEquals($params['page'], $dto->getPage());
+                    $this->assertEquals($params['trafficArea'], $dto->getTrafficArea());
+                    return 'query';
+                }
+            )
+            ->once()
+            ->getMock();
 
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')->once()->with('', $params)->andReturn($data);
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($results)
+            ->twice()
+            ->getMock();
 
         $sut = new PiVenue();
-        $sut->setRestClient($mockRestClient);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $this->assertEquals($expected, $sut->fetchListData($params));
-        $sut->fetchListData($params); //ensure data is cached
+        $this->assertEquals($results['results'], $sut->fetchListData($params));
     }
 
-    public function provideFetchListData()
+    public function testFetchLicenceDataWithException()
     {
-        return [
-            [false, false],
-            [['Results' => $this->getSingleSource()], $this->getSingleSource()],
-            [['some' => 'data'],  false]
-        ];
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new PiVenue();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+
+        $sut->fetchListData(['trafficArea' => 'B']);
     }
 
     /**
