@@ -82,8 +82,12 @@ class LocalAuthority extends AbstractDataService implements ListData
      */
     public function fetchListData()
     {
+        /*
+         * we had a restriction here, to fetch no more then 1000 records
+         * now it's removed as discussed with P.F., R.C, A.P.
+         */
         if (is_null($this->getData('LocalAuthority'))) {
-            $dtoData = LocalAuthorityQry::create(['limit' => 1000, 'page' => 1]);
+            $dtoData = LocalAuthorityQry::create([]);
             $response = $this->handleQuery($dtoData);
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');

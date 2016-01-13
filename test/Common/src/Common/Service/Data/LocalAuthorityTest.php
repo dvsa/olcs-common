@@ -58,26 +58,14 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
     }
 
     /**
-     * @dataProvider provideFetchListData
      * @param $data
      * @param $expected
      */
-    public function testFetchListData($data, $expected)
+    public function testFetchListData()
     {
         $results = ['results' => 'results'];
-        $params = [
-            'limit' => 1000,
-            'page' => 1
-        ];
-        $dto = Qry::create($params);
         $mockTransferAnnotationBuilder = m::mock()
-            ->shouldReceive('createQuery')->once()->andReturnUsing(
-                function ($dto) use ($params) {
-                    $this->assertEquals($params['limit'], $dto->getLimit());
-                    $this->assertEquals($params['page'], $dto->getPage());
-                    return 'query';
-                }
-            )
+            ->shouldReceive('createQuery')->once()->andReturn('query')
             ->once()
             ->getMock();
 
