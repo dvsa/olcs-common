@@ -52,15 +52,13 @@ class TableRequiredValidator extends AbstractValidator
     }
 
     /**
-     * Custom validation for tachograph analyser
+     * Custom validation for table rows
      *
      * @param mixed $value
      * @param array $context
      */
     public function isValid($value, $context = null)
     {
-        unset($value);
-
         if (empty($context['action']) && $context['rows'] < 1) {
 
             $this->error('required');

@@ -14,6 +14,9 @@ use Zend\Form\View\Helper\FormCollection as ZendFormCollection;
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\CompanyNumber;
 use Common\Form\Elements\Types\FileUploadList;
+use Common\Form\Elements\Types\FileUploadListItem;
+use Zend\Form\LabelAwareInterface;
+use Common\Form\Elements\Types\HoursPerWeek;
 
 /**
  * Form Collection wrapper
@@ -23,11 +26,35 @@ use Common\Form\Elements\Types\FileUploadList;
 class FormCollection extends ZendFormCollection
 {
     /**
+     * @var bool
+     */
+    protected $readOnly = false;
+
+    /**
      * Hint format
      *
      * @var string
      */
     private $hintFormat = "<p class=\"hint\">%s</p>";
+
+
+    /**
+     * @param boolean $readOnly
+     * @return $this
+     */
+    public function setReadOnly($readOnly)
+    {
+        $this->readOnly = $readOnly;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isReadOnly()
+    {
+        return $this->readOnly;
+    }
 
     /**
      * Render a collection by iterating through all fieldsets and elements
@@ -38,6 +65,22 @@ class FormCollection extends ZendFormCollection
     public function render(ElementInterface $element)
     {
         $messages = $element->getMessages();
+
+        if ($element instanceof HoursPerWeek) {
+
+            if (isset($messages['hoursPerWeekContent'])) {
+
+                $tmpMessages = [];
+                foreach ($messages['hoursPerWeekContent'] as $field => $fieldMessages) {
+                    foreach ($fieldMessages as $fieldMessage) {
+                        $tmpMessages[] = $fieldMessage;
+                    }
+                }
+                unset($messages['hoursPerWeekContent']);
+
+                $messages = array_merge($messages, $tmpMessages);
+            }
+        }
 
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {
@@ -55,8 +98,20 @@ class FormCollection extends ZendFormCollection
         $attributes       = $element->getAttributes();
         $markup           = '';
         $templateMarkup   = '';
-        $escapeHtmlHelper = $this->getEscapeHtmlHelper();
-        $elementHelper    = $this->getElementHelper();
+        $readOnly = $this->isReadOnly() || $element->getOption('readonly');
+
+        $elementHelper    = (
+            $readOnly ?
+            $this->getView()->plugin('readonlyformrow') :
+            $this->getElementHelper()
+        );
+
+        // hide readonly elements with additional option remove_if_readonly
+        // e.g. HtmlTranslatable elements where we don't know whether to hide or not
+        if ($readOnly && $element->getOption('remove_if_readonly')) {
+            return '';
+        }
+
         $fieldsetHelper   = $this->getFieldsetHelper();
 
         if ($element instanceof CollectionElement && $element->shouldCreateTemplate()) {
@@ -73,6 +128,13 @@ class FormCollection extends ZendFormCollection
             } elseif ($elementOrFieldset instanceof ElementInterface) {
                 $markup .= $elementHelper($elementOrFieldset);
             }
+        }
+
+        if ($readOnly) {
+            if ($markup == '') {
+                return '';
+            }
+            return '<ul class="definition-list">' . $markup . '</ul>';
         }
 
         // If $templateMarkup is not empty, use it for simplify adding new element in JavaScript
@@ -94,10 +156,20 @@ class FormCollection extends ZendFormCollection
                     );
                 }
 
-                $label = $escapeHtmlHelper($label);
+                if (! $element instanceof LabelAwareInterface || ! $element->getLabelOption('disable_html_escape')) {
+                    $escapeHtmlHelper = $this->getEscapeHtmlHelper();
+                    $label = $escapeHtmlHelper($label);
+                }
+
+                $legendAttributesString = $this->createAttributesString($element->getLabelAttributes());
+
+                if (!empty($legendAttributesString)) {
+                    $legendAttributesString = ' ' . $legendAttributesString;
+                }
 
                 $legend = sprintf(
-                    '<legend>%s</legend>',
+                    '<legend%s>%s</legend>',
+                    $legendAttributesString,
                     $label
                 );
             }
@@ -116,25 +188,33 @@ class FormCollection extends ZendFormCollection
 
             if ($element instanceof FileUploadList) {
 
-                $markup = sprintf('<div%s>%s%s</div>', $attributesString, $hint, $markup);
+                $markup = sprintf('<ul%s>%s%s</ul>', $attributesString, $hint, $markup);
 
+            } elseif ($element instanceof FileUploadListItem) {
+
+                $markup = sprintf('<li%s>%s%s</li>', $attributesString, $hint, $markup);
             } else {
 
-                $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $hint, $markup);
+                if ($element->getOption('hint_at_bottom') === true) {
+                    $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $markup, $hint);
+                } else {
+                    $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $hint, $markup);
+                }
             }
-        }
-
-        if (! ($element instanceof PostcodeSearch) && ! ($element instanceof CompanyNumber)) {
-
-            return $markup;
         }
 
         if (empty($messages)) {
             return $markup;
         }
 
-        $errorMessages = '<ul><li>' . implode('</li><li>', $messages) . '</li></ul>';
+        if (!($element instanceof PostcodeSearch)
+            && !($element instanceof CompanyNumber)
+            && !($element instanceof HoursPerWeek)) {
+            return $markup;
+        }
 
-        return sprintf('<div class="validation-wrapper">%s%s</div>', $errorMessages, $markup);
+        $elementErrors = $this->view->plugin('form_element_errors')->render($element);
+
+        return sprintf('<div class="validation-wrapper">%s%s</div>', $elementErrors, $markup);
     }
 }

@@ -1,0 +1,9 @@
+<div class="empty__wrapper table__empty"<?php
+  echo !empty($this->object->getVariable('id')) ?
+      ' id="' . $this->object->getVariable('id') .'"' : '' ?>>
+  <h4 class="empty__title">{{title}}</h4>
+  <div class="empty">
+    <p><?php echo $this->object->getEmptyMessage(); ?></p>
+    <?php echo $this->object->renderActions(); ?>
+  </div><!-- empty -->
+</div><!-- empty__wrapper -->

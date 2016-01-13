@@ -4,8 +4,8 @@
  * Checkbox type
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-
 namespace Common\Service\Table\Type;
 
 /**
@@ -15,5 +15,5 @@ namespace Common\Service\Table\Type;
  */
 class Checkbox extends Selector
 {
-    protected $format = '<input type="checkbox" name="%s[]" value="%s" />';
+    protected $format = '<input type="checkbox" name="%s[]" value="%s" %s />';
 }

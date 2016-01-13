@@ -1,0 +1,14 @@
+<?php
+foreach ($this->object->getColumns() as $column) {
+    echo $this->object->renderHeaderColumn($column);
+    echo ",";
+}
+echo "\n";
+?>
+<?php foreach ($this->object->getRows() as $row) {
+    foreach ($this->object->getColumns() as $column) {
+        echo $this->object->renderBodyColumn($row, $column);
+        echo ",";
+    }
+    echo "\n";
+}

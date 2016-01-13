@@ -15,8 +15,18 @@ namespace Common\Service\Table\Formatter;
  */
 class Address implements FormatterInterface
 {
+    protected static $allFields = [
+        'addressLine1',
+        'addressLine2',
+        'addressLine3',
+        'addressLine4',
+        'town',
+        'postcode',
+        'countryCode'
+    ];
+
     /**
-     * Format a address
+     * Format an address
      *
      * @param array $data
      * @param array $column
@@ -25,22 +35,25 @@ class Address implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        if (isset($column['name']) && isset($data[$column['name']])) {
-            $data = $data[$column['name']];
+        if (isset($column['name'])) {
+            if (strpos($column['name'], '->')) {
+                $data = $sm->get('Helper\Data')->fetchNestedData($data, $column['name']);
+            } elseif (isset($data[$column['name']])) {
+                $data = $data[$column['name']];
+            }
         }
 
         if (isset($column['addressFields'])) {
 
-            $fields = $column['addressFields'];
+            if ($column['addressFields'] == 'FULL') {
+                $fields = self::$allFields;
+            } else {
+                $fields = $column['addressFields'];
+            }
         } else {
             $fields = array(
                 'addressLine1',
-                'addressLine2',
-                'addressLine3',
-                'addressLine4',
-                'town',
-                'postcode',
-                'countryCode'
+                'town'
             );
         }
 
@@ -60,6 +73,17 @@ class Address implements FormatterInterface
             }
         }
 
+        return static::formatAddress($parts);
+    }
+
+    /**
+     * How to format the resulting address fields. Comma separated.
+     *
+     * @param $parts
+     * @return string
+     */
+    protected static function formatAddress($parts)
+    {
         return implode(', ', $parts);
     }
 }

@@ -9,6 +9,7 @@ namespace CommonTest\Controller\Util;
 
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\Uri\Http as HttpUri;
+use Common\Util\RestClient;
 
 /**
  * Test FlashMessengerTrait
@@ -194,7 +195,10 @@ class RestClientTest extends AbstractHttpControllerTestCase
 
         $client = $this->getMock(
             '\stdClass',
-            array('setRequest', 'setUri', 'setHeaders', 'setMethod', 'setEncType', 'setRawBody', 'getRequest')
+            array(
+                'setRequest', 'setUri', 'setHeaders', 'setMethod', 'setEncType', 'setRawBody', 'getRequest',
+                'resetParameters'
+            )
         );
         $client->expects($this->once())
             ->method('setRequest')
@@ -209,8 +213,7 @@ class RestClientTest extends AbstractHttpControllerTestCase
         $mock->url = $toString;
 
         $client->expects($this->once())
-            ->method('setHeaders')
-            ->with(array($accept, $acceptLanguage));
+            ->method('setHeaders');
         $client->expects($this->once())
             ->method('setMethod')
             ->with('POST');
@@ -226,7 +229,86 @@ class RestClientTest extends AbstractHttpControllerTestCase
             ->method('getClientRequest')
             ->will($this->returnValue('responseHelper'));
 
+        $client->expects($this->once())
+             ->method('resetParameters');
+
         $mock->prepareRequest('POST', 'licence', array('id' => 7));
+    }
+
+    /**
+     * @NOTE I duplicate most of the above method just to get the coverage,
+     *  These tests need attention, but that is out of scope in my story
+     */
+    public function testPrepareGetRequest()
+    {
+        $mock = $this->getSutMock(array('getClientRequest', 'getAccept', 'getAcceptLanguage'));
+
+        $accept = $this->getMock('\stdClass', array('addMediaType'));
+        $accept->expects($this->once())
+            ->method('addMediaType')
+            ->with('application/json');
+
+        $mock->expects($this->once())
+            ->method('getAccept')
+            ->will($this->returnValue($accept));
+
+        $acceptLanguage = $this->getMock('\stdClass', array('addLanguage'));
+        $acceptLanguage->expects($this->once())
+            ->method('addLanguage')
+            ->with('en-gb');
+
+        $mock->expects($this->once())
+            ->method('getAcceptLanguage')
+            ->will($this->returnValue($acceptLanguage));
+
+        $client = $this->getMock(
+            '\stdClass',
+            array(
+                'setRequest',
+                'setUri',
+                'setHeaders',
+                'setMethod',
+                'getRequest',
+                'getQuery',
+                'fromArray',
+                'resetParameters'
+            )
+        );
+        $client->expects($this->once())
+            ->method('setRequest')
+            ->with('responseHelper');
+        $client->expects($this->once())
+            ->method('setUri')
+            ->with('licence');
+
+        $toString = $this->getMock('\stdClass', array('toString'));
+        $toString->expects($this->once())
+            ->method('toString');
+        $mock->url = $toString;
+
+        $client->expects($this->once())
+            ->method('setHeaders');
+        $client->expects($this->once())
+            ->method('setMethod')
+            ->with('GET');
+
+        $client->expects($this->once())
+            ->method('getRequest')
+            ->will($this->returnSelf());
+        $client->expects($this->once())
+            ->method('getQuery')
+            ->will($this->returnSelf());
+        $client->expects($this->once())
+            ->method('fromArray')
+            ->with(array('id' => 7));
+
+        $mock->client = $client;
+
+        $mock->expects($this->once())
+            ->method('getClientRequest')
+            ->will($this->returnValue('responseHelper'));
+
+        $mock->prepareRequest('GET', 'licence', array('id' => 7));
     }
 
     public function testGetAccept()
@@ -252,5 +334,35 @@ class RestClientTest extends AbstractHttpControllerTestCase
         $mock = $this->getSutMock(null);
         $mock->setLanguage('cy_cy');
         $this->assertEquals('cy-cy', $mock->getLanguage());
+    }
+
+    public function testGetAcceptLanguage()
+    {
+        $sut = new RestClient(new HttpUri());
+        $acceptLanguage = $sut->getAcceptLanguage();
+
+        $this->assertInstanceOf('\Zend\Http\Header\AcceptLanguage', $acceptLanguage);
+    }
+
+    public function testConstructorWithParams()
+    {
+        $options = [
+            'foo' => 'bar',
+        ];
+        $auth = [
+            'username' => 'test',
+            'password' => 'secret',
+        ];
+
+        $sut = new RestClient(new HttpUri(), $options, $auth);
+
+        $config = $sut->client->getAdapter()->getConfig();
+
+        // check our config is set
+        $this->assertEquals('bar', $config['foo']);
+
+        // check previous default options are still set
+        $this->assertTrue($config['keepalive']);
+        $this->assertEquals(30, $config['timeout']);
     }
 }

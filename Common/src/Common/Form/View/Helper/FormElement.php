@@ -13,9 +13,13 @@ use Zend\Form\View\Helper\FormElement as ZendFormElement;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
+use Common\Form\Elements\Types\GuidanceTranslated;
+use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\InputFilters\ActionLink;
+use Common\Form\Elements\Types\TrafficAreaSet;
+use Common\Form\Elements\Types\AttachFilesButton;
 
 /**
  * Render form
@@ -25,6 +29,10 @@ use Common\Form\Elements\InputFilters\ActionLink;
  */
 class FormElement extends ZendFormElement
 {
+    const GUIDANCE_WRAPPER = '<div class="guidance">%s</div>';
+    const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
+    const FILE_CHOOSE_WRAPPER
+        = '<ul class="%s"><li class="%s"><label class="%s">%s %s</label><p class="%s">%s</p></li></ul>';
 
     /**
      * The form row output format.
@@ -32,6 +40,13 @@ class FormElement extends ZendFormElement
      * @var string
      */
     private static $format = "%s \r\n <p class=\"hint\">%s</p>";
+
+    /**
+     * The form row output format.
+     *
+     * @var string
+     */
+    private static $topFormat = "<p class=\"hint\">%s</p> \r\n %s";
 
     /**
      * Render an element
@@ -51,6 +66,17 @@ class FormElement extends ZendFormElement
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {
             return '';
+        }
+
+        if ($element instanceof TrafficAreaSet) {
+            $value = $element->getValue();
+            $view = $this->getView();
+
+            return sprintf(
+                '<p>%s</p><h4>%s</h4>',
+                $view->translate('trafficAreaSet.trafficArea'),
+                $view->translate($value)
+            );
         }
 
         if ($element instanceof PlainText) {
@@ -73,11 +99,53 @@ class FormElement extends ZendFormElement
                 $class = $element->getAttribute('class');
             }
 
-            return '<a href="' . $url . '" class="' . $class . '">' . $element->getLabel() . '</a>';
+            $label = $this->getView()->translate($element->getLabel());
+
+            return '<a href="' . $url . '" class="' . $class . '">' . $label . '</a>';
         }
 
         if ($element instanceof HtmlTranslated) {
-            return $this->getView()->translate($element->getValue());
+
+            if ($element instanceof GuidanceTranslated) {
+                $wrapper = self::GUIDANCE_WRAPPER;
+            } else {
+                $wrapper = '%s';
+            }
+
+            $tokens = $element->getTokens();
+
+            if (is_array($tokens) && count($tokens)) {
+
+                $translated = [];
+
+                foreach ($tokens as $token) {
+                    $translated[] = $this->getView()->translate($token);
+                }
+                return sprintf($wrapper, vsprintf($this->getView()->translate($element->getValue()), $translated));
+            }
+
+            $value = $element->getValue();
+
+            if (empty($value)) {
+                return '';
+            }
+
+            return sprintf($wrapper, $this->getView()->translate($element->getValue()));
+        }
+
+        if ($element instanceof TermsBox) {
+
+            $attributes = $element->getAttributes();
+
+            if (!isset($attributes['class'])) {
+                $attributes['class'] = '';
+            }
+
+            $attributes['class'] .= ' terms--box';
+
+            $attr = $renderer->form()->createAttributesString($attributes);
+
+            return sprintf(self::TERMS_BOX_WRAPPER, $attr, $this->getView()->translate($element->getValue()));
         }
 
         if ($element instanceof Html) {
@@ -88,14 +156,45 @@ class FormElement extends ZendFormElement
             return $element->render();
         }
 
+        if ($element instanceof AttachFilesButton) {
+
+            $attributes = $element->getAttributes();
+            if (!isset($attributes['class'])) {
+                $attributes['class'] = '';
+            }
+
+            $attributes['class'] .= ' attach-action__input';
+
+            $element->setAttributes($attributes);
+
+            $label = $element->getOption('value');
+            $hint = $element->getOption('hint');
+
+            return sprintf(
+                self::FILE_CHOOSE_WRAPPER,
+                'attach-action__list',
+                'attach-action',
+                'attach-action__label',
+                $label,
+                parent::render($element),
+                'attach-action__hint',
+                $hint
+            );
+        }
+
         $markup = parent::render($element);
 
         if ($element->getOption('hint')) {
 
             $view = $this->getView();
             $hint = $view->translate($element->getOption('hint'));
+            $position = $element->getOption('hint-position');
 
-            $markup = sprintf(self::$format, $markup, $hint);
+            if ($position == 'above') {
+                return sprintf(self::$topFormat, $hint, $markup);
+            }
+
+            return sprintf(self::$format, $markup, $hint);
         }
 
         return $markup;

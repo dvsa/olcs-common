@@ -46,8 +46,8 @@ class YesNoTest extends \PHPUnit_Framework_TestCase
     public function provider()
     {
         return array(
-            array(array('yesorno' => 1), array('name' => 'yesorno'), 'Y'),
-            array(array('yesorno' => 0), array('name' => 'yesorno'), 'N')
+            array(array('yesorno' => 1), array('name' => 'yesorno'), 'Yes'),
+            array(array('yesorno' => 0), array('name' => 'yesorno'), 'No')
         );
     }
 }

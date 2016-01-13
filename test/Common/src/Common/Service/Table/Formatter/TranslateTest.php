@@ -61,7 +61,8 @@ class TranslateTest extends \PHPUnit_Framework_TestCase
         return array(
             array(array('test' => 'foo'), array('name' => 'test'), 'FOO'),
             array(array('test' => 'foo'), array('content' => 'test'), 'TEST'),
-            array(array('test' => 'foo'), array(), '')
+            array(array('test' => 'foo'), array(), ''),
+            array(array('test' => ['foo' => 'bar']), array('name' => 'test->foo'), 'BAR')
         );
     }
 }

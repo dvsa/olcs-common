@@ -1,32 +1,30 @@
 <?php
 
 /**
- * Test VehicleUndertakingsOperateSmallVehiclesAgreementValidator
+ * Test Vehicle Undertakings Operate Small Vehicles Agreement Validator
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace CommonTest\Form\Elements\Validators;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator;
 
 /**
- * Test VehicleUndertakingsOperateSmallVehiclesAgreementValidator
+ * Test Vehicle Undertakings Operate Small Vehicles Agreement Validator
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHPUnit_Framework_TestCase
+class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * Set up the validator
-     */
     public function setUp()
     {
         $this->validator = new VehicleUndertakingsOperateSmallVehiclesAgreementValidator();
     }
 
     /**
-     * Test isValid
-     *
      * @dataProvider providerIsValid
      */
     public function testIsValid($value, $context, $expected)
@@ -34,26 +32,18 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }
 
-    /**
-     * Provider for isValid
-     *
-     * @return array
-     */
     public function providerIsValid()
     {
-        return array(
-            // psvSmallVehicles isn't set - comes back true
-            array(0, array(), true),
-            // psvSmallVehicles = Y, confirmation=blank - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => ''), true),
-            // psvSmallVehicles = Y, confirmation=1 - comes back true
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => '1'), true),
-            // psvSmallVehicles = Y, confirmation=0 - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => '0'), true),
-            // psvSmallVehicles = N, confirmation=0 - comes back false
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => '0'), false),
-            // psvSmallVehicles = N, confirmation=blank - comes back false
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => ''), false)
-        );
+        return [
+            // no context means scotland, therefore required
+            ['N', [], false],
+            ['Y', [], true],
+            // not scottish but agreed to the operate small vhl terms, not required
+            ['N', ['psvOperateSmallVhl' => 'Y'], true],
+            ['Y', ['psvOperateSmallVhl' => 'Y'], true],
+            // not scottish, not agreed to the operate small vhl terms, required
+            ['Y', ['psvOperateSmallVhl' => 'N'], true],
+            ['N', ['psvOperateSmallVhl' => 'N'], false]
+        ];
     }
 }

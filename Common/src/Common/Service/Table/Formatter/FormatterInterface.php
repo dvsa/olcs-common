@@ -20,11 +20,11 @@ interface FormatterInterface
 {
 
     /**
-     * Format an cell
+     * Format a cell
      *
      * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param array $column [OPTIONAL]
+     * @param \Zend\ServiceManager\ServiceManager $sm [OPTIONAL]
      */
-    public static function format($data, $column = array(), $sm = null);
+    public static function format($data/*, $column = array(), $sm = null*/);
 }

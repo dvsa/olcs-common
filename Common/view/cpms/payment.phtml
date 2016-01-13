@@ -1,0 +1,10 @@
+<p>Please wait&hellip;</p>
+
+<form id="payment" class="js-hidden" action="<?php echo $gateway ?>" method="post">
+  <button type="submit" class="js-submit">Proceed to payment</button>
+  <?php foreach ($data as $key => $value): ?>
+    <input type="hidden" name="<?php echo $key ?>" value="<?php echo $value ?>" />
+  <?php endforeach; ?>
+</form>
+
+<script>document.getElementById("payment").submit();</script>

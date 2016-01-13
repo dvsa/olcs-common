@@ -17,9 +17,8 @@ use Zend\View\Renderer\PhpRenderer;
  * @package CommonTest\Form\View\Helper
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-class FormElementErrors extends \PHPUnit_Framework_TestCase
+class FormElementErrorsTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $element;
 
     public function setUp()

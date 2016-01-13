@@ -5,7 +5,6 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace Common\Service\Table\Type;
 
 /**
@@ -15,16 +14,18 @@ namespace Common\Service\Table\Type;
  */
 class Selector extends AbstractType
 {
-    protected $format = '<input type="radio" name="%s" value="%s" />';
+    protected $format = '<input type="radio" name="%s" value="%s" %s />';
 
     /**
      * Render the selector
      *
      * @param array $data
      * @param array $column
+     * @param string $formattedContent
+     *
      * @return string
      */
-    public function render($data, $column)
+    public function render($data, $column, $formattedContent = null)
     {
         $fieldset = $this->getTable()->getFieldset();
 
@@ -34,6 +35,30 @@ class Selector extends AbstractType
             $name = $fieldset . '[id]';
         }
 
-        return sprintf($this->format, $name, $data['id']);
+        $attributes = [];
+
+        if (isset($column['data-attributes'])) {
+            foreach ($column['data-attributes'] as $attrName) {
+                if (isset($data[$attrName])) {
+                    if (is_array($data[$attrName]) && isset($data[$attrName]['id'])) {
+                        $attributes[] = 'data-' . $attrName . '="' . $data[$attrName]['id'] . '"';
+                    } else {
+                        $attributes[] = 'data-' . $attrName . '="' . $data[$attrName] . '"';
+                    }
+                }
+            }
+        }
+
+        if (isset($column['disableIfRowIsDisabled']) && $this->getTable()->isRowDisabled($data)) {
+            $attributes[] = 'disabled="disabled"';
+        }
+
+        // allow setting the data index name that contains the id value
+        $idx = 'id';
+        if (isset($column['idIndex'])) {
+            $idx = $column['idIndex'];
+        }
+
+        return sprintf($this->format, $name, $data[$idx], implode(' ', $attributes));
     }
 }

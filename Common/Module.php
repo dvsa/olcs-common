@@ -3,36 +3,82 @@
 /**
  * ZF2 Module
  */
-
 namespace Common;
 
 use Zend\EventManager\EventManager;
+use Zend\Mvc\MvcEvent;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\View\Model\ViewModel;
+use Zend\I18n\Translator\Translator;
+use Common\Preference\LanguageListener;
+use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
+use Olcs\Logging\Log\Logger;
 
 /**
  * ZF2 Module
  */
 class Module
 {
-
-    public function onBootstrap(\Zend\Mvc\MvcEvent $e)
+    /**
+     * Initialize module
+     *
+     * @param $moduleManager
+     */
+    public function init($moduleManager)
     {
-        $translator = $e->getApplication()->getServiceManager()->get('translator');
+        $events = $moduleManager->getEventManager();
+        $events->attach('loadModules.post', array($this, 'modulesLoaded'));
+    }
 
-        $translator->setLocale($this->getLanguageLocalePreference())
-            ->setFallbackLocale('en_GB');
+    public function modulesLoaded($e)
+    {
+        $moduleManager = $e->getTarget();
 
-        $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
-        $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/sic-codes/', 'sicCodes_%s.php');
+        if ($moduleManager->getModule('Olcs')) {
+            $config = $moduleManager->getModule('Olcs')->getConfig();
+        } else {
+            $config = [];
+        }
+        if (!defined('DATE_FORMAT')) {
+            define(
+                'DATE_FORMAT',
+                isset($config['date_settings']['date_format']) ?
+                $config['date_settings']['date_format'] : 'd/m/Y'
+            );
+        }
+        if (!defined('DATETIME_FORMAT')) {
+            define(
+                'DATETIME_FORMAT',
+                isset($config['date_settings']['datetime_format']) ?
+                $config['date_settings']['datetime_format'] : 'd/m/Y H:i'
+            );
+        }
+        if (!defined('DATETIMESEC_FORMAT')) {
+            define(
+                'DATETIMESEC_FORMAT',
+                isset($config['date_settings']['datetimesec_format']) ?
+                $config['date_settings']['datetimesec_format'] : 'd/m/Y H:i:s'
+            );
+        }
+    }
 
-        $events = new EventManager();
+    public function onBootstrap(MvcEvent $e)
+    {
+        $sm = $e->getApplication()->getServiceManager();
+
+        $events = $e->getApplication()->getEventManager();
+
+        $this->setUpTranslator($sm, $events);
+
+        $listener = $e->getApplication()->getServiceManager()->get('Common\Rbac\Navigation\IsAllowedListener');
+
+        $events->getSharedManager()
+            ->attach('Zend\View\Helper\Navigation\AbstractHelper', 'isAllowed', array($listener, 'accept'));
         $events->attach(
-            'missingTranslation',
-            '\Common\Service\Translator\MissingTranslationProcessor::processEvent'
+            $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\UnauthorizedStrategy')
         );
 
-        $translator->enableEventManager();
-
-        $translator->setEventManager($events);
+        $this->setupRequestForProxyHost($e->getApplication()->getRequest());
     }
 
     public function getConfig()
@@ -40,120 +86,51 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function getServiceConfig()
+    protected function setUpTranslator(ServiceLocatorInterface $sm, $events)
     {
-        return array(
-            'factories' => array(
-                'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
-                'Common\Service\Data\Country' => 'Common\Service\Data\Country',
-                'OlcsCustomForm' => function ($sm) {
-                    return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
-                },
-                'Script' => '\Common\Service\Script\ScriptFactory',
-                'Table' => '\Common\Service\Table\TableFactory',
-                'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
-                'FileUploader' => '\Common\Service\File\FileUploaderFactory',
-                'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
-                'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
-                'Zend\Log' => function ($sm) {
-                    $log = new \Zend\Log\Logger();
+        /** @var Translator $translator */
+        $translator = $sm->get('translator');
 
-                    /**
-                     * In development / integration - we log everything.
-                     * In production, our logging
-                     * is restricted to \Zend\Log\Logger::ERR and above.
-                     *
-                     * For logging priorities, see:
-                     * @see http://www.php.net/manual/en/function.syslog.php#refsect1-function.syslog-parameters
-                     */
-                    $filter = new \Zend\Log\Filter\Priority(LOG_DEBUG);
+        $translator->setLocale('en_GB')->setFallbackLocale('en_GB');
+        $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
+        $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/sic-codes/', 'sicCodes_%s.php');
 
-                    try {
-                        // Log file
-                        $fileWriter = new \Zend\Log\Writer\Stream('/tmp/olcsLogfile.log');
-                        $fileWriter->addFilter($filter);
-                        $log->addWriter($fileWriter);
-                        $hasWriter = true;
-                    } catch (\Exception $ex) {
-                        $hasWriter = false;
-                    }
+        /** @var LanguageListener $languagePrefListener */
+        $languagePrefListener = $sm->get('LanguageListener');
+        $languagePrefListener->attach($events, 1);
 
-                    try {
-                        // Log to sys log - useful if file logging is not working.
-                        $sysLogWriter = new \Zend\Log\Writer\Syslog();
-                        $sysLogWriter->addFilter($filter);
-                        $log->addWriter($sysLogWriter);
-                    } catch (\Exception $ex) {
-                        // Only throw this exception if we have no writers
-                        if ($hasWriter == false) {
-                            throw $ex;
-                        }
-                    }
+        /** @var  MissingTranslationProcessor $missingTranslationProcessor */
+        $missingTranslationProcessor = $sm->get('Utils\MissingTranslationProcessor');
+        $missingTranslationProcessor->attach($events);
 
-                    return $log;
-                }
-            ),
-            'invokables' => array(
-                'Document' => '\Common\Service\Document\Document',
-            ),
-            'aliases' => array(
-                'translator' => 'MvcTranslator',
-            ),
-        );
+        $translator->enableEventManager();
+        $translator->setEventManager($events);
     }
 
     /**
-     * Method to extract the language preference for a user.
-     * At the moment this is taken from a cookie, with a key of lang.
+     * If the request is coming through a proxy then update the host name on the request
      *
-     * @return string locale string (default en_GB)
+     * @param \Zend\Stdlib\RequestInterface $request
      */
-    protected function getLanguageLocalePreference()
+    private function setupRequestForProxyHost(\Zend\Stdlib\RequestInterface $request)
     {
-        $locale = filter_input(INPUT_COOKIE, 'lang');
+        if ($request->getHeaders()->get('xforwardedhost')) {
 
-        if (empty($locale)) {
+            $host = $request->getHeaders()->get('xforwardedhost')->getFieldValue();
 
-            $header = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
-
-            if (!empty($header)) {
-
-                $locale = $this->formatLanguage($header);
+            $hosts = explode(',', $host);
+            if (!empty($hosts)) {
+                $host = trim($hosts[0]);
             }
+
+            Logger::debug(
+                sprintf(
+                    'Request host set from xforwardedhost header to %s setting host to %s',
+                    $request->getHeaders()->get('xforwardedhost')->getFieldValue(),
+                    $host
+                )
+            );
+            $request->getUri()->setHost($host);
         }
-
-        if (!in_array($locale, array_keys($this->getSupportedLanguages()))) {
-            return 'en_GB';
-        }
-
-        return $locale;
-    }
-
-    /**
-     * Format an AcceptLanguage into a locale for our translations
-     *
-     * @param string $language
-     */
-    private function formatLanguage($language)
-    {
-        $locale = \Locale::acceptFromHttp($language);
-
-        if (strlen($locale) == 2) {
-            return strtolower($locale) . '_' . strtoupper($locale);
-        }
-    }
-
-    /**
-     * Method to return a list of supported languages, ensures the language cannot be set to one for which
-     * we have no translations for
-     *
-     * @return array of locales
-     */
-    protected function getSupportedLanguages()
-    {
-        return array(
-            'en_GB' => 'English',
-            'cy_CY' => 'Welsh'
-        );
     }
 }

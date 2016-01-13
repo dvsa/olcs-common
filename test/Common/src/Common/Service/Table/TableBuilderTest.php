@@ -7,15 +7,18 @@
  */
 namespace CommonTest\Service\Table;
 
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
+use CommonTest\Bootstrap;
 
 /**
  * Table Builder Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TableBuilderTest extends \PHPUnit_Framework_TestCase
+class TableBuilderTest extends MockeryTestCase
 {
 
     /**
@@ -28,21 +31,26 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
     private function getMockServiceLocator($config = true)
     {
-
         $mockTranslator = $this->getMock('\stdClass', array('translate'));
         $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
+        $mockControllerPluginManager = $this->getMock('\Zend\Mvc\Controller\PluginManager', array('get'));
+        $mockAuthService = $this->getMock('\stdClass', array('isGranted'));
 
         $servicesMap = [
             ['Config', true, ($config
                 ? array(
                     'tables' => array(
                         'config' => array(__DIR__ . '/TestResources/'),
-                        'partials' => ''
+                        'partials' => array(
+                            'html' => ''
+                        )
                     ),
                 )
                 : array())
             ],
             ['translator', true, $mockTranslator],
+            ['ControllerPluginManager', true, $mockControllerPluginManager],
+            ['ZfcRbac\Service\AuthorizationService', true, $mockAuthService],
         ];
 
         $mockSm
@@ -58,7 +66,6 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetContentHelper()
     {
-
         $table = new TableBuilder($this->getMockServiceLocator());
 
         $contentHelper = $table->getContentHelper();
@@ -78,6 +85,19 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     public function testGetContentHelperWithoutConfig()
     {
         $table = new TableBuilder($this->getMockServiceLocator(false));
+
+        $table->getContentHelper();
+    }
+    /**
+     * Test getContentHelper without configured partials for current content type
+     *
+     * @expectedException \Exception
+     */
+    public function testGetContentHelperWithoutConfigForType()
+    {
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $table->setContentType('csv');
 
         $table->getContentHelper();
     }
@@ -355,6 +375,37 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test loadData with 1 row of data
+     */
+    public function testLoadDataWithOneRow()
+    {
+        $data = array(
+            array('foo' => 'bar'),
+        );
+
+        $sl = $this->getMockServiceLocator();
+
+        $table = new TableBuilder($sl);
+
+        $sl->get('translator')
+            ->expects($this->any())
+            ->method('translate')
+            ->with('Thing')
+            ->will($this->returnValue('Translated Thing'));
+
+        $table->setVariable('title', 'Things');
+        $table->setVariable('titleSingular', 'Thing');
+
+        $table->loadData($data);
+
+        $this->assertEquals($data, $table->getRows());
+
+        $this->assertEquals(1, $table->getTotal());
+
+        $this->assertEquals('Translated Thing', $table->getVariable('title'));
+    }
+
+    /**
      * Test loadData with result data
      */
     public function testLoadDataWithResultData()
@@ -381,7 +432,6 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * Test loadParams Without Url
      *
-     * @expectedException \Exception
      */
     public function testLoadParamsWithoutUrl()
     {
@@ -536,6 +586,34 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test setupAction with action_route set
+     */
+    public function testSetupActionWithActionRouteSet()
+    {
+        $variables = array(
+            'action_route' => array('route' => 'someroute', 'params' => array('foo' => 'bar'))
+        );
+
+        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+
+        $mockUrl->expects($this->once())
+            ->method('fromRoute')
+            ->will($this->returnValue('/someaction'));
+
+        $table = $this->getMockTableBuilder(array('getVariables', 'getUrl'));
+
+        $table->expects($this->any())
+            ->method('getVariables')
+            ->will($this->returnValue($variables));
+
+        $table->expects($this->once())
+            ->method('getUrl')
+            ->will($this->returnValue($mockUrl));
+
+        $table->setupAction();
+    }
+
+    /**
      * Test render
      */
     public function testRender()
@@ -587,7 +665,8 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
                 'content' => 'foo',
                 'formatter' => function () {
                     return 'ABC';
-                }
+                },
+                'align' => 'right',
             ),
             array(
                 'format' => 'HTML'
@@ -664,6 +743,30 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $table->expects($this->once())
             ->method('renderLayout')
             ->with('crud');
+
+        $table->setSettings($settings);
+
+        $table->renderTable();
+    }
+
+    /**
+     * Test renderTable For SubmissionSection
+     */
+    public function testRenderTableForSubmissionSection()
+    {
+        $settings = array(
+            'submission_section' => 'foo'
+        );
+
+        $table = $this->getMockTableBuilder(array('setType', 'renderLayout'));
+
+        $table->expects($this->once())
+            ->method('setType')
+            ->with(TableBuilder::TYPE_DEFAULT);
+
+        $table->expects($this->once())
+            ->method('renderLayout')
+            ->with('submission-section');
 
         $table->setSettings($settings);
 
@@ -789,7 +892,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $total = 10;
 
-        $expectedTotal = $total . ' results';
+        $expectedTotal = 10;
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
 
@@ -798,13 +901,15 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
             ->will($this->returnValue($expectedTotal));
 
-        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'shouldPaginate'));
 
         $table->expects($this->once())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $table->setType(TableBuilder::TYPE_PAGINATE);
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(true));
 
         $table->setTotal($total);
 
@@ -816,9 +921,9 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderTotalWithPaginationWith1()
     {
-        $total = 1;
+        $total  = 1;
 
-        $expectedTotal = $total . ' result';
+        $expectedTotal = 1;
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
 
@@ -827,13 +932,15 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
             ->will($this->returnValue($expectedTotal));
 
-        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'shouldPaginate'));
 
         $table->expects($this->once())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $table->setType(TableBuilder::TYPE_PAGINATE);
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(true));
 
         $table->setTotal($total);
 
@@ -950,7 +1057,8 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
                     'edit' => array(),
                     'foo' => array(),
                     'bar' => array(),
-                    'cake' => array()
+                    'cake' => array(),
+                    'baz' => array()
                 )
             )
         );
@@ -973,6 +1081,56 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $table->expects($this->once())
             ->method('renderDropdownActions')
+            ->will($this->returnValue('DROPDOWN'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->setType(TableBuilder::TYPE_CRUD);
+
+        $table->setSettings($settings);
+
+        $this->assertEquals(array('content' => 'DROPDOWN'), $table->renderActions());
+    }
+
+    /**
+     * Test renderActions with format override
+     * (Default behaviour is dropdown for > 4 actions)
+     */
+    public function testRenderActionsWithFormatOverrideButtons()
+    {
+        $settings = array(
+            'crud' => array(
+                'actions' => array(
+                    'add' => array(),
+                    'edit' => array(),
+                    'foo' => array(),
+                    'bar' => array(),
+                    'cake' => array()
+                )
+            ),
+            'actionFormat' => 'buttons'
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->any())
+            ->method('replaceContent')
+            ->with('{{[elements/actionContainer]}}')
+            ->will(
+                $this->returnCallback(
+                    function ($content, $vars) {
+                        unset($content);
+                        return $vars;
+                    }
+                )
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'renderButtonActions'));
+
+        $table->expects($this->once())
+            ->method('renderButtonActions')
             ->will($this->returnValue('BUTTONS'));
 
         $table->expects($this->once())
@@ -984,6 +1142,53 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $table->setSettings($settings);
 
         $this->assertEquals(array('content' => 'BUTTONS'), $table->renderActions());
+    }
+
+    /**
+     * Test renderActions with format override
+     * (Default behaviour is buttons for <= 4 actions)
+     */
+    public function testRenderActionsWithFormatOverrideDropdown()
+    {
+        $settings = array(
+            'crud' => array(
+                'actions' => array(
+                    'foo' => array(),
+                    'bar' => array(),
+                )
+            ),
+            'actionFormat' => 'dropdown'
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->any())
+            ->method('replaceContent')
+            ->with('{{[elements/actionContainer]}}')
+            ->will(
+                $this->returnCallback(
+                    function ($content, $vars) {
+                        unset($content);
+                        return $vars;
+                    }
+                )
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'renderDropdownActions'));
+
+        $table->expects($this->once())
+            ->method('renderDropdownActions')
+            ->will($this->returnValue('DROPDOWN'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->setType(TableBuilder::TYPE_CRUD);
+
+        $table->setSettings($settings);
+
+        $this->assertEquals(array('content' => 'DROPDOWN'), $table->renderActions());
     }
 
     /**
@@ -1099,6 +1304,67 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test renderButtonActions with collapseAt value set
+     */
+    public function testRenderButtonActionsCollapse()
+    {
+        $actions = array(
+            array(
+                'foo' => 'bar'
+            ),
+            array(
+                'bar' => 'cake'
+            ),
+            array(
+                'more' => 'bar'
+            ),
+            array(
+                'more' => 'cake'
+            ),
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->at(0))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['foo' => 'bar'])
+            ->will($this->returnValue('foo bar'));
+
+        $mockContentHelper->expects($this->at(1))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['bar' => 'cake'])
+            ->will($this->returnValue('bar cake'));
+
+        $mockContentHelper->expects($this->at(2))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['more' => 'bar'])
+            ->will($this->returnValue('more bar '));
+
+        $mockContentHelper->expects($this->at(3))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}', ['more' => 'cake'])
+            ->will($this->returnValue('more cake '));
+
+        $mockContentHelper->expects($this->at(4))
+            ->method('replaceContent')
+            ->with(
+                '{{[elements/moreActions]}}',
+                [
+                    'content' => 'more bar more cake ',
+                    'label' => null,
+                ]
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderButtonActions($actions, 2);
+    }
+
+    /**
      * Test renderFooter Without pagination
      */
     public function testRenderFooterWithoutPagination()
@@ -1106,58 +1372,6 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setType(TableBuilder::TYPE_CRUD);
-
-        $this->assertEquals('', $table->renderFooter());
-    }
-
-    /**
-     * Test renderFooter without enough results
-     */
-    public function testRenderFooterWithoutEnoughResults()
-    {
-        $settings = array(
-            'paginate' => array(
-                'limit' => array(
-                    'options' => array(10, 20, 30)
-                )
-            )
-        );
-
-        $table = new TableBuilder($this->getMockServiceLocator());
-
-        $table->setSettings($settings);
-
-        $table->setType(TableBuilder::TYPE_PAGINATE);
-
-        $table->setLimit(10);
-
-        $table->setTotal(1);
-
-        $this->assertEquals('', $table->renderFooter());
-    }
-
-    /**
-     * Test renderFooter With a custom limit
-     */
-    public function testRenderFooterWithCustomLimit()
-    {
-        $settings = array(
-            'paginate' => array(
-                'limit' => array(
-                    'options' => array(10, 20, 30)
-                )
-            )
-        );
-
-        $table = new TableBuilder($this->getMockServiceLocator());
-
-        $table->setSettings($settings);
-
-        $table->setType(TableBuilder::TYPE_PAGINATE);
-
-        $table->setLimit(7);
-
-        $table->setTotal(1);
 
         $this->assertEquals('', $table->renderFooter());
     }
@@ -1309,13 +1523,17 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
 
-        $mockQuery = $this->getMock('\stdClass', array('toArray'));
-
-        $mockQuery->expects($this->any())
-            ->method('toArray')
-            ->will($this->returnValue(array('foo' => 'bar')));
+        //$mockQuery = $this->getMock('\stdClass', array('toArray'));
+        $mockQuery = [
+            'foo' => 'bar',
+            'page' => '1',
+            'limit' => '30'
+        ];
 
         $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl->expects($this->any())
+            ->method('fromRoute')
+            ->will($this->returnValue('?' . http_build_query($mockQuery)));
 
         $table = $this->getMockTableBuilder(array('getContentHelper', 'getQuery', 'getUrl'));
 
@@ -1666,6 +1884,82 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(null, $response);
     }
 
+
+    /**
+     * Test renderHeaderColumn with alignment
+     */
+    public function testRenderHeaderColumnWithAlign()
+    {
+        $column = array(
+            'align' => 'right',
+        );
+
+        $expectedColumn = array(
+            'class' => 'right',
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with('{{[elements/th]}}', $expectedColumn);
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderHeaderColumn($column);
+    }
+
+
+    /**
+     * Test renderHeaderColumn with sort and alignment
+     */
+    public function testRenderHeaderColumnWithSortAndAlign()
+    {
+        $column = [
+            'sort' => 'foo',
+            'align' => 'right',
+        ];
+
+        $expectedColumn = [
+            'class' => 'right sortable',
+            'sort' => 'foo',
+            'order' => 'ASC',
+            'link' => 'LINK',
+        ];
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->at(0))
+            ->method('replaceContent')
+            ->with('{{[elements/sortColumn]}}', $expectedColumn);
+
+        $mockContentHelper->expects($this->at(1))
+            ->method('replaceContent')
+            ->with('{{[elements/th]}}');
+
+        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+
+        $mockUrl->expects($this->once())
+            ->method('fromRoute')
+            ->will($this->returnValue('LINK'));
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'getUrl'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->expects($this->once())
+            ->method('getUrl')
+            ->will($this->returnValue($mockUrl));
+
+        $table->renderHeaderColumn($column);
+    }
+
     /**
      * Test renderBodyColumn when disabled
      */
@@ -1677,6 +1971,98 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
         $table->setDisabled(true);
+
+        $response = $table->renderBodyColumn([], $column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderHeaderColumn when incorrect permission set
+     */
+    public function testRenderHeaderColumnWhenPermissionWontAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['incorrectPermission']
+        );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $response = $table->renderHeaderColumn($column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderBodyColumn when incorrect permission set
+     */
+    public function testRenderBodyColumnWhenPermissionWontAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['incorrectPermission']
+        );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $response = $table->renderBodyColumn([], $column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderHeaderColumn when correct permission set
+     */
+    public function testRenderHeaderColumnWhenPermissionWillAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['correctPermission']
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent');
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $mockAuthService = $this->getMock('\StdClass', array('isGranted'));
+        $mockAuthService->expects($this->once())
+            ->method('isGranted')
+            ->willReturn(true);
+
+        $table->setAuthService($mockAuthService);
+
+        $response = $table->renderHeaderColumn($column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderBodyColumn when correct permission set
+     */
+    public function testRenderBodyColumnWhenPermissionWillAllow()
+    {
+        $column = array(
+            'permissionRequisites' => ['correctPermission']
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent');
+
+        $mockAuthService = $this->getMock('\StdClass', array('isGranted'));
+        $mockAuthService->expects($this->once())
+            ->method('isGranted')
+            ->willReturn(true);
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table->setAuthService($mockAuthService);
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
 
         $response = $table->renderBodyColumn([], $column);
 
@@ -1725,6 +2111,35 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
             ->with('{{[elements/td]}}', array('content' => 'bar'));
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderBodyColumn($row, $column);
+    }
+
+    /**
+     * Test renderBodyColumn With Align
+     */
+    public function testRenderBodyColumnWithAlign()
+    {
+        $row = array(
+            'foo' => 'bar'
+        );
+
+        $column = array(
+            'name' => 'foo',
+            'align' => 'right',
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' class="right"'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -1822,6 +2237,43 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test renderBodyColumn With Formatter And Action Type
+     */
+    public function testRenderBodyColumnWithFormatterAndActionType()
+    {
+        $row = array(
+            'id' => 1,
+            'date' => date('Y-m-d')
+        );
+
+        $column = array(
+            'type' => 'Action',
+            'class' => '',
+            'action' => 'edit',
+            'formatter' => 'Date',
+            'name' => 'date'
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $expected = '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '"  />';
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(
+                '{{[elements/td]}}',
+                array('content' => $expected)
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderBodyColumn($row, $column);
+    }
+
+    /**
      * Test renderBodyColumn With Invalid Formatter
      */
     public function testRenderBodyColumnWithInvalidFormatter()
@@ -1897,7 +2349,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="id" value="1" />'));
+            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="id" value="1"  />'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -1925,7 +2377,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="table[id]" value="1" />'));
+            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="table[id]" value="1"  />'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -1961,7 +2413,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                array('content' => '<input type="submit" class="" name="action[edit][1]" value="bar" />')
+                array('content' => '<input type="submit" class="" name="action[edit][1]" value="bar"  />')
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -1996,7 +2448,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                array('content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar" />')
+                array('content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar"  />')
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2211,15 +2663,19 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     public function testRemoveColumn()
     {
         $table = new TableBuilder($this->getMockServiceLocator());
+
         $columns = array(
             array('name' => 'name1'),
             array('name' => 'name2')
         );
+
         $table->setColumns($columns);
+
+        $this->assertTrue($table->hasColumn('name1'));
+
         $table->removeColumn('name1');
-        $newColumns = $table->getColumns();
-        $this->assertEquals(count($newColumns), 1);
-        $this->assertEquals($newColumns[0]['name'], 'name2');
+
+        $this->assertFalse($table->hasColumn('name1'));
     }
 
     /**
@@ -2248,5 +2704,207 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $table->setSettings(array('Foo' => 'Bar'));
 
         $this->assertEquals(array('Foo' => 'Bar'), $table->getSettings());
+    }
+
+    public function testIsRowDisabled()
+    {
+        // Stubbed data
+        $settings = [];
+        $row = [];
+
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with(m::type('string'))
+            ->andReturn(true);
+
+        // Setup
+        $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $sm->setAllowOverride(true);
+        $sm->setService('Config', array());
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
+        $sut = new TableBuilder($sm);
+
+        $sut->setSettings($settings);
+
+        $this->assertFalse($sut->isRowDisabled($row));
+    }
+
+    /**
+     * @dataProvider providerIsRowDisabled
+     */
+    public function testIsRowDisabledWithDisabled($disabled)
+    {
+        // Stubbed data
+        $settings = [
+            'row-disabled-callback' => function ($row) {
+                return $row['disabled'];
+            }
+        ];
+        $row = [
+            'disabled' => $disabled
+        ];
+
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with(m::type('string'))
+            ->andReturn(true);
+
+        // Setup
+        $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $sm->setAllowOverride(true);
+        $sm->setService('Config', array());
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
+        $sut = new TableBuilder($sm);
+
+        $sut->setSettings($settings);
+
+        $this->assertEquals($disabled, $sut->isRowDisabled($row));
+    }
+
+    public function providerIsRowDisabled()
+    {
+        return [
+            [true],
+            [false]
+        ];
+    }
+
+    public function testRemoveActions()
+    {
+        $tableConfig = array(
+            'settings' => array(
+                'paginate' => array(),
+                'crud' => array(
+                    'actions' => array(
+                        'foo' => array(),
+                        'bar' => array()
+                    )
+                )
+            )
+        );
+
+        $table = $this->getMockTableBuilder(array('getConfigFromFile', 'removeAction'));
+
+        $table->expects($this->once())
+            ->method('getConfigFromFile')
+            ->will($this->returnValue($tableConfig));
+
+        $table->loadConfig('test');
+
+        $table->expects($this->at(0))
+            ->method('removeAction')
+            ->with('foo');
+
+        $table->expects($this->at(1))
+            ->method('removeAction')
+            ->with('bar');
+
+        $table->removeActions();
+    }
+
+    public function testDisableAction()
+    {
+        $tableConfig = array(
+            'settings' => array(
+                'paginate' => array(),
+                'crud' => array(
+                    'actions' => array(
+                        'foo' => array(),
+                        'bar' => array()
+                    )
+                )
+            )
+        );
+
+        $table = $this->getMockTableBuilder(array('getConfigFromFile'));
+
+        $table->expects($this->once())
+            ->method('getConfigFromFile')
+            ->will($this->returnValue($tableConfig));
+
+        $table->loadConfig('test');
+
+        $table->disableAction('foo');
+
+        $this->assertEquals(
+            array(
+                'foo' => array('disabled' => 'disabled'),
+                'bar' => array(),
+            ),
+            $table->getSettings()['crud']['actions']
+        );
+    }
+
+    public function testGetEmptyMessage()
+    {
+        $message = 'foo';
+        $config = [
+            'tables' => [
+                'config' => [__DIR__ . '/TestResources/'],
+                'partials' => [
+                    'html' => '',
+                    'csv' => ''
+                ]
+            ]
+        ];
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with(m::type('string'))
+            ->andReturn(true);
+
+        $mockTranslator = m::mock();
+        $mockTranslator->shouldReceive('translate')
+            ->with($message)
+            ->andReturn($message);
+
+        $sm = Bootstrap::getServiceManager();
+        $sm->setService('Config', $config);
+        $sm->setService('translator', $mockTranslator);
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
+        $sut = new TableBuilder($sm);
+
+        $sut->setEmptyMessage($message);
+        $this->assertEquals($message, $sut->getEmptyMessage());
+    }
+
+    public function testAddAction()
+    {
+        $tableConfig = array(
+            'settings' => array(
+                'paginate' => array(),
+                'crud' => array(
+                    'actions' => array(
+                        'foo' => array(),
+                        'bar' => array()
+                    )
+                )
+            )
+        );
+
+        $table = $this->getMockTableBuilder(array('getConfigFromFile'));
+
+        $table->expects($this->once())
+            ->method('getConfigFromFile')
+            ->will($this->returnValue($tableConfig));
+
+        $table->loadConfig('test');
+
+        $table->addAction('new', ['key' => 'value']);
+
+        $settings = $table->getSetting('crud');
+
+        $this->assertEquals(
+            array(
+                'actions' => array(
+                    'foo' => array(),
+                    'bar' => array(),
+                    'new' => array('key' => 'value')
+                )
+            ),
+            $settings
+        );
     }
 }

@@ -1,0 +1,27 @@
+<?php
+
+namespace Common\Form\Model\Form;
+
+use Zend\Form\Annotation as Form;
+
+/**
+ * @Form\Options({"prefer_form_input_filter":true})
+ * @Form\Name("continuation")
+ * @Form\Attributes({"method":"post"})
+ * @Form\Type("Common\Form\Form")
+ */
+class GenerateContinuation
+{
+    /**
+     * @Form\Name("details")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\GenerateContinuationDetails")
+     */
+    public $details = null;
+
+    /**
+     * @Form\Name("form-actions")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\GenerateContinuationFormActions")
+     * @Form\Attributes({"class":"actions-container"})
+     */
+    public $formActions = null;
+}

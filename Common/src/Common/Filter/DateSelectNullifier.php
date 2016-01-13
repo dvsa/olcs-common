@@ -3,7 +3,6 @@
 namespace Common\Filter;
 
 use Zend\Filter\AbstractFilter;
-use Zend\Filter\Exception;
 
 /**
  * Class DateSelectNullifier

@@ -8,10 +8,22 @@
  */
 namespace CommonTest\Form\View\Helper;
 
+use Zend\Stdlib\PriorityQueue;
 use Zend\View\HelperPluginManager;
 use Zend\View\Renderer\JsonRenderer;
 use Zend\View\Renderer\PhpRenderer;
 use Zend\Form\View\Helper;
+use Common\Form\View\Helper\FormCollection as FormCollectionViewHelper;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Form\Element\Collection;
+use Zend\Form\Form;
+use Common\Form\Elements\Types\PostcodeSearch;
+use Common\Form\Elements\Types\FileUploadList;
+use Common\Form\Elements\Types\FileUploadListItem;
+use Common\Form\Elements\Types\HoursPerWeek;
+use Zend\I18n\View\Helper\Translate;
+use Zend\I18n\Translator\Translator;
 
 /**
  * FormCollection Test
@@ -19,14 +31,13 @@ use Zend\Form\View\Helper;
  * @package CommonTest\Form\View\Helper
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-class FormCollectionTest extends \PHPUnit_Framework_TestCase
+class FormCollectionTest extends MockeryTestCase
 {
-
     protected $element;
 
     private function prepareElement($targetElement = 'Text')
     {
-        $this->element = new \Zend\Form\Element\Collection('test');
+        $this->element = new Collection('test');
         $this->element->setOptions(
             array(
                 'count' => 1,
@@ -39,7 +50,7 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
             )
         );
         $this->element->setAttribute('class', 'class');
-        $this->element->prepareElement(new \Zend\Form\Form());
+        $this->element->prepareElement(new Form());
     }
 
     /**
@@ -50,13 +61,31 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
         $this->prepareElement();
         $view = new JsonRenderer();
 
-        $viewHelper = new \Common\Form\View\Helper\FormCollection();
+        $viewHelper = new FormCollectionViewHelper();
         $viewHelper->setView($view);
         $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputString('');
     }
 
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderWithHintAtBottom()
+    {
+        $this->prepareElement();
+
+        $viewHelper = $this->prepareViewHelper();
+
+        $this->element->setOption('hint_at_bottom', true);
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex(
+            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend>'
+            . '<span data-template="(.*)"><\/span><p class="hint">(.*)<\/p><\/fieldset>$/'
+        );
+    }
 
     /**
      * @outputBuffering disabled
@@ -97,7 +126,7 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderForPostCodeElement()
     {
-        $this->element = new \Common\Form\Elements\Types\PostcodeSearch('postcode');
+        $this->element = new PostcodeSearch('postcode');
 
         $viewHelper = $this->prepareViewHelper();
 
@@ -111,7 +140,7 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderForPostCodeElementWithMessages()
     {
-        $this->element = new \Common\Form\Elements\Types\PostcodeSearch('postcode');
+        $this->element = new PostcodeSearch('postcode');
         $this->element->setMessages(['Message']);
 
         $viewHelper = $this->prepareViewHelper();
@@ -126,20 +155,106 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
 
     private function prepareViewHelper()
     {
-        $translator = new \Zend\I18n\Translator\Translator();
-        $translateHelper = new \Zend\I18n\View\Helper\Translate();
+        $translator = new Translator();
+        $translateHelper = new Translate();
         $translateHelper->setTranslator($translator);
 
         $helpers = new HelperPluginManager();
         $helpers->setService('formRow', new Helper\FormRow());
+        $helpers->setService('form_element_errors', new Helper\FormElementErrors());
         $helpers->setService('translate', $translateHelper);
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 
-        $viewHelper = new \Common\Form\View\Helper\FormCollection();
+        $viewHelper = new FormCollectionViewHelper();
         $viewHelper->setView($view);
         $viewHelper->setTranslator($translator);
 
         return $viewHelper;
+    }
+
+    public function testReadOnly()
+    {
+        $mockElement = m::mock('Zend\Form\ElementInterface');
+        $mockElement->shouldReceive('getOption')->with('hint')->andReturnNull();
+        $mockElement->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
+
+        $mockHelper = m::mock('Common\Form\View\Helper\Readonly\FormRow');
+        $mockHelper->shouldReceive('__invoke')->with($mockElement)->andReturn('element');
+
+        $iterator = new PriorityQueue();
+        $iterator->insert($mockElement);
+
+        $mockFieldset = m::mock('Zend\Form\FieldsetInterface');
+        $mockFieldset->shouldReceive('getMessages')->andReturn([]);
+        $mockFieldset->shouldReceive('getAttributes')->andReturn([]);
+        $mockFieldset->shouldReceive('getIterator')->andReturn($iterator);
+        $mockFieldset->shouldReceive('getOption')->with('readonly')->andReturn(true);
+        $mockFieldset->shouldReceive('getOption')->with('hint')->andReturnNull();
+        $mockFieldset->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
+
+        $mockView = m::mock('Zend\View\Renderer\PhpRenderer');
+        $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
+        $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
+
+        $sut = new FormCollectionViewHelper();
+        $sut->setView($mockView);
+
+        $markup = $sut->__invoke($mockFieldset);
+        $this->assertEquals('<ul class="definition-list">element</ul>', $markup);
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForFileUploadListElement()
+    {
+        $this->element = new FileUploadList('files');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<ul data-group="files"><\/ul>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForFileUploadListItemElement()
+    {
+        $this->element = new FileUploadListItem('files');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<li data-group="files"><\/li>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForHoursWithMessages()
+    {
+        $this->element = new HoursPerWeek('hpw');
+        $this->element->setMessages(
+            [
+                'hoursPerWeekContent' => [
+                    'field' => [
+                        'MESSAGE'
+                    ]
+                ]
+            ]
+        );
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex(
+            '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
+            . '<fieldset data-group="hpw"><\/fieldset><\/div>$/'
+        );
     }
 }

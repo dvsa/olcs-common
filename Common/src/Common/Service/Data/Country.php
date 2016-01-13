@@ -2,16 +2,17 @@
 
 namespace Common\Service\Data;
 
-use Common\Util\RestClient;
+use Common\Service\Data\Interfaces\ListData;
+use Common\Service\Data\AbstractDataService;
+use Dvsa\Olcs\Transfer\Query\ContactDetail\CountryList;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
- * Class RefData
+ * Class Country
  * @package Common\Service
  */
-class Country extends AbstractData implements ListDataInterface
+class Country extends AbstractDataService implements ListData
 {
-    protected $serviceName = 'Country';
-
     /**
      * Format data!
      *
@@ -42,25 +43,49 @@ class Country extends AbstractData implements ListDataInterface
             return [];
         }
 
+        if ('isMemberState' == $category) {
+            $data = $this->removeNonMemberStates($data);
+        }
+
         return $this->formatData($data);
+    }
+
+    public function removeNonMemberStates($data)
+    {
+        $members = [];
+
+        foreach ($data as $state) {
+
+            if (trim($state['isMemberState']) == 'Y') {
+
+                $members[] = $state;
+            }
+        }
+
+        return $members;
     }
 
     /**
      * Ensures only a single call is made to the backend for each dataset
      *
-     * @internal param $category
      * @return array
      */
     public function fetchListData()
     {
         if (is_null($this->getData('Country'))) {
+            $params = [
+                'sort' => 'countryDesc',
+                'order' => 'ASC'
+            ];
+            $dtoData = CountryList::create($params);
 
-            $data = $this->getRestClient()->get('', ['limit' => 1000, 'sort' => 'countryDesc']);
-
+            $response = $this->handleQuery($dtoData);
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
+            }
             $this->setData('Country', false);
-
-            if (isset($data['Results'])) {
-                $this->setData('Country', $data['Results']);
+            if (isset($response->getResult()['results'])) {
+                $this->setData('Country', $response->getResult()['results']);
             }
         }
 

@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * Transport Manager Adapter Interface
+ *
+ * @author Mat Evans <mat.evans@valtech.co.uk>
+ */
+namespace Common\Controller\Lva\Interfaces;
+
+/**
+ * Transport Manager Adapter Interface
+ *
+ * @author Mat Evans <mat.evans@valtech.co.uk>
+ */
+interface TransportManagerAdapterInterface extends AdapterInterface
+{
+    public function getTable();
+
+    public function getTableData($applicationId, $licenceId);
+
+    public function mustHaveAtLeastOneTm();
+
+    public function delete(array $ids, $applicationId);
+
+    public function addMessages($licenceId);
+}

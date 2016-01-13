@@ -1,131 +1,534 @@
 <?php
 
 /**
- * FormErrors Test
+ * Form Errors Test
  *
- * @author Jakub Igla <jakub.igla@gmail.com>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace CommonTest\Form\View\Helper;
 
-use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\PhpRenderer;
-use Zend\Form;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Common\Form\View\Helper\FormErrors;
 
 /**
- * FormErrors Test
+ * Form Errors Test
  *
- * @author Jakub Igla <jakub.igla@gmail.com>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormErrorsTest extends \PHPUnit_Framework_TestCase
+class FormErrorsTest extends MockeryTestCase
 {
-    private function prepareForm($valid = false)
+    protected $sut;
+
+    protected $view;
+
+    public function setUp()
     {
-        $form = new Form\Form();
+        $this->view = m::mock('\Zend\View\Renderer\RendererInterface');
 
-        $element = new \Common\Form\Elements\InputFilters\TextRequired('test');
-        $element->setOptions(['label' => 'Label']);
-        $form->add($element);
+        $this->sut = new FormErrors();
+        $this->sut->setView($this->view);
+    }
 
-        $form->setData(
-            $valid
-            ? ['test' => 'test']
-            : ['test' => '']
-        );
+    public function testInvokeWithoutForm()
+    {
+        $form = null;
 
-        $form->isValid();
+        $sut = $this->sut;
 
-        return $form;
+        $this->assertSame($this->sut, $sut($form));
+    }
+
+    public function testInvokeRenderWithoutMessages()
+    {
+        $form = m::mock('\Zend\Form\Form');
+        $messages = [];
+        $expected = '';
+
+        $sut = $this->sut;
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages);
+
+        $this->assertEquals($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithMessagesWithoutLabelOrAnchor()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?Cake-translated(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn(null);
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithMessagesWithAnchor()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn('foo-id');
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithMessagesWithAnchor2()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(['id' => 'foo-id']);
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithMessagesWithAnchor3()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(['id' => 'foo-id']);
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithShortLabelAndAnchor()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?'
+            . '<a href="#foo-id">foo-label-translated\: bar-translated-translated<\/a>(\s+)?'
+            . '<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?'
+            . '<a href="#foo-id">foo-label-translated\: cake-translated-translated<\/a>(\s+)?'
+            . '<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn('foo-label')
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(['id' => 'foo-id']);
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithShortLabelWithoutAnchor()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?foo-label-translated\: bar-translated-translated(\s+)?'
+            . '<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?foo-label-translated\: cake-translated-translated(\s+)?'
+            . '<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn('foo-label')
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn(null);
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithMessageObjet()
+    {
+        $mockValidationMessage = m::mock('\Common\Form\Elements\Validators\Messages\ValidationMessageInterface');
+        $mockValidationMessage->shouldReceive('getMessage')
+            ->andReturn('bar')
+            ->shouldReceive('shouldTranslate')
+            ->andReturn(true);
+
+        $messages = [
+            'foo' => [
+                $mockValidationMessage
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?bar-translated(\s+)?'
+            . '<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn('foo-label')
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn(null);
+
+        $this->assertRegExp($expected, $sut($form));
     }
 
     /**
-     * @outputBuffering disabled
+     * Test when a form element has been setup as a fieldset
      */
-    public function testRenderWithNoForm()
+    public function testInvokeRenderWithMessageObjectElementAsFieldset()
     {
-        $helpers = new HelperPluginManager();
-        $view = new PhpRenderer();
-        $view->setHelperPluginManager($helpers);
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?Cake-translated(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
 
-        $viewHelper = new \Common\Form\View\Helper\FormErrors();
-        $viewHelper->setView($view);
-        $viewHelper();
+        $sut = $this->sut;
 
-        $this->expectOutputString('');
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('getOption')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->andReturn(null)
+            ->shouldReceive('has')
+            ->times(3)
+            ->andReturn(false);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn(null);
+
+        $this->assertRegExp($expected, $sut($form));
     }
 
-
-    /**
-     * @outputBuffering disabled
-     */
-    public function testRenderWithNoValid()
+    public function mockTranslate($text)
     {
-        $helpers = new HelperPluginManager();
-        $view = new PhpRenderer();
-        $view->setHelperPluginManager($helpers);
-
-        $viewHelper = new \Common\Form\View\Helper\FormErrors();
-        $viewHelper->setView($view);
-        echo $viewHelper($this->prepareForm(true));
-
-        $this->expectOutputString('');
-    }
-
-    /**
-     * @outputBuffering disabled
-     */
-    public function testRenderWithId()
-    {
-        $viewHelper = $this->prepareHelper();
-        $form = $this->prepareForm();
-        $form->get('test')->setAttribute('id', 'test');
-
-        echo $viewHelper($form);
-
-        $this->expectOutputRegex('/^<div class="validation-summary">(.*)<a href="#(.*)">(.*)<\/a>(.*)<\/div>$/s');
-    }
-
-    /**
-     * @outputBuffering disabled
-     */
-    public function testRender()
-    {
-        $viewHelper = $this->prepareHelper();
-        $form = $this->prepareForm();
-
-        echo $viewHelper($form);
-
-        $this->expectOutputRegex('/^<div class="validation-summary">(.*)<\/div>$/s');
-    }
-
-    /**
-     * @outputBuffering disabled
-     */
-    public function testRenderWithMoreMessages()
-    {
-        $viewHelper = $this->prepareHelper();
-        $form = $this->prepareForm();
-
-        $form->get('test')->setMessages([['Msg']]);
-
-        echo $viewHelper($form);
-
-        $this->expectOutputRegex('/^<div class="validation-summary">(.*)<\/div>$/s');
-    }
-
-    private function prepareHelper()
-    {
-        $translator = new \Zend\I18n\Translator\Translator();
-        $translateHelper = new \Zend\I18n\View\Helper\Translate();
-        $translateHelper->setTranslator($translator);
-
-        $helpers = new HelperPluginManager();
-        $helpers->setService('translate', $translateHelper);
-        $view = new PhpRenderer();
-        $view->setHelperPluginManager($helpers);
-
-        $viewHelper = new \Common\Form\View\Helper\FormErrors();
-        $viewHelper->setView($view);
-
-        return $viewHelper;
+        return $text . '-translated';
     }
 }

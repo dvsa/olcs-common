@@ -26,6 +26,7 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
             array(
                 'identifier' => 'hgafdjklhaldsf',
                 'filename' => 'someFile.png',
+                'description' => 'someFile',
                 'size' => 50,
                 'id' => 7,
                 'version' => 1
@@ -33,6 +34,7 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
             array(
                 'identifier' => 'hgafdjklhalsdgs',
                 'filename' => 'someOtherFile.png',
+                'description' => 'someOtherFile',
                 'size' => 5000,
                 'id' => 8,
                 'version' => 1
@@ -40,9 +42,18 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
             array(
                 'identifier' => 'hdsfgafdjklhalsdgs',
                 'filename' => 'anotherFile.png',
+                'description' => 'anotherFile',
                 'size' => 50000000,
                 'id' => 9,
                 'version' => 1
+            ),
+            array(
+                'identifier' => 'hdsfgafdjklhalsdgs',
+                'filename' => 'document.pdf',
+                'description' => 'A document that cant be previewed',
+                'size' => 20000000,
+                'id' => 10,
+                'version' => 3
             )
         );
 
@@ -52,6 +63,7 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue('url'));
 
         $element = new FileUploadList();
+        $element->setOption('preview_images', true);
         $element->setFiles($files, $mockUrl);
 
         $this->assertTrue($element->has('file-7'));
@@ -59,17 +71,28 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($element->get('file-7')->has('version'));
         $this->assertTrue($element->get('file-7')->has('link'));
         $this->assertTrue($element->get('file-7')->has('remove'));
+        $this->assertTrue($element->get('file-7')->has('preview'));
 
         $this->assertTrue($element->has('file-8'));
         $this->assertTrue($element->get('file-8')->has('id'));
         $this->assertTrue($element->get('file-8')->has('version'));
         $this->assertTrue($element->get('file-8')->has('link'));
         $this->assertTrue($element->get('file-8')->has('remove'));
+        $this->assertTrue($element->get('file-8')->has('preview'));
 
         $this->assertTrue($element->has('file-9'));
         $this->assertTrue($element->get('file-9')->has('id'));
         $this->assertTrue($element->get('file-9')->has('version'));
         $this->assertTrue($element->get('file-9')->has('link'));
         $this->assertTrue($element->get('file-9')->has('remove'));
+        $this->assertTrue($element->get('file-9')->has('preview'));
+
+        // test document doesnt have preview
+        $this->assertTrue($element->has('file-10'));
+        $this->assertTrue($element->get('file-10')->has('id'));
+        $this->assertTrue($element->get('file-10')->has('version'));
+        $this->assertTrue($element->get('file-10')->has('link'));
+        $this->assertTrue($element->get('file-10')->has('remove'));
+        $this->assertFalse($element->get('file-10')->has('preview'));
     }
 }

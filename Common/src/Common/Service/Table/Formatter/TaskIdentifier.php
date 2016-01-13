@@ -30,20 +30,41 @@ class TaskIdentifier implements FormatterInterface
         if ($identifier === 'Unlinked') {
             return 'Unlinked';
         }
-        $viewHelperManager = $sm->get('viewhelpermanager');
-        $urlHelper = $viewHelperManager->get('url');
+
+        $urlHelper = $sm->get('Helper\Url');
         $url = '#';
         switch ($data['linkType']) {
             case 'Licence':
-                $url = $urlHelper->__invoke('licence/details/overview', array('licence' => $data['linkId']));
+                $url = $urlHelper->fromRoute('lva-licence/overview', array('licence' => $data['linkId']));
+                break;
+            case 'Application':
+                $url = $urlHelper->fromRoute('lva-application/overview', array('application' => $data['linkId']));
+                break;
+            case 'Transport Manager':
+                $url = $urlHelper->fromRoute('transport-manager', array('transportManager' => $data['linkId']));
+                break;
+            case 'Case':
+                $url = $urlHelper->fromRoute('case', array('case' => $data['linkId']));
+                break;
+            case 'Bus Registration':
+                $url = $urlHelper->fromRoute(
+                    'licence/bus-details',
+                    array('busRegId' => $data['linkId'], 'licence' => $data['licenceId'])
+                );
+                break;
+            case 'IRFO Organisation':
+                $url = $urlHelper->fromRoute('operator/business-details', array('organisation' => $data['linkId']));
+                break;
+            case 'Submission':
+                $url = $urlHelper->fromRoute(
+                    'submission',
+                    array('case' => $data['caseId'], 'submission' => $data['linkId'], 'action' => 'details')
+                );
                 break;
             default:
                 break;
         }
         $value = '<a href="' . $url . '">' . $data['linkDisplay'] . '</a>';
-        if ($data['licenceCount'] > 1) {
-            $value .= ' (MLH)';
-        }
 
         return $value;
     }

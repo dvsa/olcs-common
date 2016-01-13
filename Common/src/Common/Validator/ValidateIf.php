@@ -3,7 +3,6 @@
 namespace Common\Validator;
 
 use Zend\Validator\AbstractValidator;
-use Zend\Validator\Exception;
 use Zend\Validator\ValidatorChain;
 use Zend\Validator\ValidatorPluginManagerAwareInterface;
 use Zend\Validator\ValidatorPluginManager;
@@ -248,7 +247,6 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
         if (isset($options['allow_empty'])) {
             $this->setAllowEmpty($options['allow_empty']);
         }
-
 
         return parent::setOptions($options);
     }

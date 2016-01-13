@@ -7,8 +7,10 @@
  */
 namespace Common\Util;
 
+use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Header\AcceptLanguage;
+use Zend\Http\Header\Cookie;
 use Zend\Http\Request;
 use Zend\Uri\Http as HttpUri;
 use Zend\Http\Header\Accept;
@@ -40,13 +42,48 @@ class RestClient
     public $language = 'en-gb';
 
     /**
+     * @var
+     */
+    protected $responseHelper;
+
+    /**
+     * @var Cookie
+     */
+    private $cookie;
+
+    /**
      * @param \Zend\Uri\Http $url
+     * @param array $options options passed to HttpClient
+     * @param array $auth authentication username/password
      * @internal param \Common\Util\The $HttpUri URL of the resource that this client is meant to act on
      */
-    public function __construct(HttpUri $url)
+    public function __construct(HttpUri $url, $options = [], $auth = [], Cookie $cookie = null)
     {
+        $defaultOptions = [
+            'keepalive' => true,
+            'timeout' => 30,
+        ];
+
+        $options = array_merge($defaultOptions, $options);
+
         $this->url = $url;
-        $this->client = new HttpClient();
+        $this->client = new HttpClient(null, $options);
+
+        $adapter = new ClientAdapterLoggingWrapper();
+        $adapter->wrapAdapter($this->client);
+
+        if (!empty($auth)) {
+            $this->client->setAuth(
+                $auth['username'],
+                $auth['password']
+            );
+        }
+
+        if ($cookie === null) {
+            $cookie = new Cookie();
+        }
+
+        $this->cookie = $cookie;
     }
 
     /**
@@ -205,7 +242,6 @@ class RestClient
         $this->prepareRequest($method, $path, $params);
 
         $response = $this->client->send();
-
         $responseHelper = $this->getResponseHelper();
 
         $responseHelper->setMethod($method);
@@ -214,9 +250,18 @@ class RestClient
         return $responseHelper->handleResponse();
     }
 
+    public function setResponseHelper($helper)
+    {
+        $this->responseHelper = $helper;
+        return $this;
+    }
+
     public function getResponseHelper()
     {
-        return new ResponseHelper();
+        if (null === $this->responseHelper) {
+            $this->setResponseHelper(new ResponseHelper());
+        }
+        return $this->responseHelper;
     }
 
     /**
@@ -233,12 +278,12 @@ class RestClient
 
         $acceptLanguage = $this->getAcceptLanguage();
         $acceptLanguage->addLanguage($this->getLanguage());
-
+        $this->client->resetParameters(true);
         $this->client->setRequest($this->getClientRequest());
 
         $this->client->setUri($this->url->toString() . $path);
 
-        $this->client->setHeaders(array($accept, $acceptLanguage));
+        $this->client->setHeaders(array($accept, $acceptLanguage, $this->cookie));
 
         $this->client->setMethod($method);
 
@@ -275,6 +320,7 @@ class RestClient
     protected function pathOrParams($path, array $params = null)
     {
         $args = func_get_args();
+
         if (is_array($args[0])) {
             array_unshift($args, '');
         } elseif (empty($args[0])) {

@@ -46,10 +46,12 @@ class VehicleUndertakingsOperateSmallVehiclesValidatorTest extends \PHPUnit_Fram
             array(0, array(), true),
             // psvSmallVehicles = Y, notes=blank - comes back false
             array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlNotes' => ''), false),
+            // psvSmallVehicles = Y, notes=something - comes back true
+            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlNotes' => 'blah blah'), true),
             // psvSmallVehicles = N, notes=blank - comes back true
             array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlNotes' => ''), true),
-            // psvSmallVehicles = Y, notes=something - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlNotes' => 'blah blah'), true)
+            // psvSmallVehicles = N, notes=something - comes back true (although irrelevant)
+            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlNotes' => 'foo bar'), true),
         );
     }
 }

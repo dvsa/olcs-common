@@ -1,0 +1,22 @@
+<?php
+/**
+ * @var $this->object \Common\Service\Table\TableBuilder
+ */
+?>
+<div class="traffic-commissioner-publication">
+    <?php foreach ($this->object->getRows() as $row): ?>
+        <h5><a href="/view-details/licence/<?php echo htmlentities($row['licId']); ?>"><?php echo htmlentities($row['licNo']); ?></a> <?php echo htmlentities($row['licTypeDesc']); ?></h5>
+
+        <p><?php echo htmlentities($row['pubType']); ?> <?php echo htmlentities($row['trafficArea']); ?> (<?php echo htmlentities($row['pubNo']); ?>)</p>
+
+        <p><?php echo htmlentities($row['orgName']); ?></p>
+        <p><?php echo htmlentities($row['text1']); ?></p>
+        <p><?php echo htmlentities($row['text2']); ?></p>
+        <p><?php echo htmlentities($row['text3']); ?></p>
+        <p><b>Section:</b> <?php echo htmlentities($row['pubSecDesc']); ?></p>
+        <p><b>Date:</b> <?php echo date(\DATE_FORMAT, strtotime($row['pubDate'])); ?></p>
+        <p><b>Status:</b> <?php echo htmlentities($row['pubStatusDesc']); ?></p>
+        <hr />
+    <?php endforeach; ?>
+<?php echo $this->object->renderFooter(); ?>
+</div>
