@@ -3,21 +3,17 @@
 namespace CommonTest\Service\Data;
 
 use Common\Service\Data\LocalAuthority;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
+use Dvsa\Olcs\Transfer\Query\LocalAuthority\LocalAuthorityList as Qry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use CommonTest\Service\Data\AbstractDataServiceTestCase;
 
 /**
  * Class LocalAuthority Test
  * @package CommonTest\Service
  */
-class LocalAuthorityTest extends MockeryTestCase
+class LocalAuthorityTest extends AbstractDataServiceTestCase
 {
-    public function testGetServiceName()
-    {
-        $sut = new LocalAuthority();
-        $this->assertEquals('LocalAuthority', $sut->getServiceName());
-    }
-
     public function testFormatData()
     {
         $source = $this->getSingleSource();
@@ -68,17 +64,53 @@ class LocalAuthorityTest extends MockeryTestCase
      */
     public function testFetchListData($data, $expected)
     {
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')
+        $results = ['results' => 'results'];
+        $params = [
+            'limit' => 1000,
+            'page' => 1
+        ];
+        $dto = Qry::create($params);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturnUsing(
+                function ($dto) use ($params) {
+                    $this->assertEquals($params['limit'], $dto->getLimit());
+                    $this->assertEquals($params['page'], $dto->getPage());
+                    return 'query';
+                }
+            )
             ->once()
-            ->with('', ['limit' => 1000, 'bundle' => '{"children":["trafficArea"]}'])
-            ->andReturn($data);
+            ->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('getResult')
+            ->andReturn($results)
+            ->once()
+            ->getMock();
 
         $sut = new LocalAuthority();
-        $sut->setRestClient($mockRestClient);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $this->assertEquals($expected, $sut->fetchListData());
-        $sut->fetchListData(); //ensure data is cached
+        $this->assertEquals($results['results'], $sut->fetchListData());
+    }
+
+    public function testFetchLicenceDataWithException()
+    {
+        $this->setExpectedException(UnexpectedResponseException::class);
+        $mockTransferAnnotationBuilder = m::mock()
+            ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
+
+        $mockResponse = m::mock()
+            ->shouldReceive('isOk')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+        $sut = new LocalAuthority();
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
+
+        $sut->fetchListData();
     }
 
     public function provideFetchListData()
