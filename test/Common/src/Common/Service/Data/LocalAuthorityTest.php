@@ -57,10 +57,6 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
         ];
     }
 
-    /**
-     * @param $data
-     * @param $expected
-     */
     public function testFetchListData()
     {
         $results = ['results' => 'results'];
@@ -82,6 +78,7 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
         $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $this->assertEquals($results['results'], $sut->fetchListData());
+        $this->assertEquals($results['results'], $sut->fetchListData()); //ensure data is cached
     }
 
     public function testFetchLicenceDataWithException()
