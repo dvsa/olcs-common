@@ -1,7 +1,7 @@
 <div class="table__header"<?php
     echo !empty($this->object->getVariable('id')) ?
     ' id="' . $this->object->getVariable('id') .'"' : '' ?>>
-    <h3><?php echo $this->object->renderTotal(); ?> {{title}}</h3>
+    <h4><?php echo $this->object->renderTotal(); ?> {{title}}</h4>
     <?php echo $this->object->renderActions(); ?>
 </div>
 <?php echo $this->object->renderLayout('table'); ?>
