@@ -3,10 +3,12 @@
 namespace Common\Data\Object\Search;
 
 /**
- * Class People
+ * Class Publications
+ * Used by Selfserve publication search
+ *
  * @package Common\Data\Object\Search
  */
-class TrafficCommissionerPublications extends InternalSearchAbstract
+class PublicationSelfserve extends InternalSearchAbstract
 {
     /**
      * @var string

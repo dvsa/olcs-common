@@ -8,7 +8,7 @@ use Common\Data\Object\Search\Aggregations\Terms as Filter;
  * Class Vehicle
  * @package Common\Data\Object\Search
  */
-class VehicleSelfServe extends InternalSearchAbstract
+class VehicleSelfserve extends InternalSearchAbstract
 {
     /**
      * @var string
