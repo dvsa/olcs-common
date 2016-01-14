@@ -425,7 +425,6 @@ return array(
             'Common\Service\Data\DataServiceAbstractFactory'
         ],
         'factories' => [
-            'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
             'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
