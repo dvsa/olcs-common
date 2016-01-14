@@ -88,10 +88,14 @@ class Address extends InternalSearchAbstract
             ],
             [
                 'title' => 'Complaint',
-                'formatter' => function ($row) {
+                'formatter' => function ($row, $column, $serviceLocator) {
 
                     if ($row['complaintCaseId']) {
-                        return '<a href="/case/details/' . $row['complaintCaseId'] . '">Yes</a>';
+                        $urlHelper  = $serviceLocator->get('Helper\Url');
+                        return sprintf(
+                            '<a href="%s">Yes</a>',
+                            $urlHelper->fromRoute('licence/opposition', ['licence' => $row['licId']])
+                        );
                     }
 
                     return 'No';
@@ -99,10 +103,14 @@ class Address extends InternalSearchAbstract
             ],
             [
                 'title' => 'Opposition',
-                'formatter' => function ($row) {
+                'formatter' => function ($row, $column, $serviceLocator) {
 
                     if ($row['oppositionCaseId']) {
-                        return '<a href="/case/details/' . $row['oppositionCaseId'] . '">Yes</a>';
+                        $urlHelper  = $serviceLocator->get('Helper\Url');
+                        return sprintf(
+                            '<a href="%s">Yes</a>',
+                            $urlHelper->fromRoute('licence/opposition', ['licence' => $row['licId']])
+                        );
                     }
 
                     return 'No';
