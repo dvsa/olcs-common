@@ -102,6 +102,7 @@ class PeopleSelfserve extends InternalSearchAbstract
                 }
             ],
             [
+                'permissionRequisites' => ['partner-user', 'partner-admin'],
                 'title' => 'Date of Birth',
                 'formatter' => 'Date',
                 'name' => 'personBirthDate'
