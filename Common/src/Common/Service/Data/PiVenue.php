@@ -63,8 +63,6 @@ class PiVenue extends AbstractDataService implements ListData, FactoryInterface
         if (is_null($this->getData('PiVenue'))) {
             $params = [
                 'trafficArea' => $params['trafficArea'],
-                'page' => 1,
-                'limit' => 1000
             ];
             $dtoData = PiVenueList::create($params);
 
