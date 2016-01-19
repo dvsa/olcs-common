@@ -192,6 +192,19 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return in_array($this->getOrganisationType(), $limitedTypes);
     }
 
+    /**
+     * Is the Organisation type other
+     *
+     * @return bool
+     */
+    public function isOrganisationOther()
+    {
+        $types = [
+            \Common\RefData::ORG_TYPE_OTHER,
+        ];
+        return in_array($this->getOrganisationType(), $types);
+    }
+
     public function useDeltas()
     {
         return (isset($this->data['useDeltas']) && $this->data['useDeltas']);
