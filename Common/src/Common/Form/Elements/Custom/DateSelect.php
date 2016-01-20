@@ -21,6 +21,7 @@ class DateSelect extends ZendElement\DateSelect
     public function getInputSpecification()
     {
         return array(
+            'type' => \Common\InputFilter\DateSelect::class,
             'name' => $this->getName(),
             'required' => $this->getOption('required'),
             'filters' => array(

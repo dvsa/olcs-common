@@ -65,15 +65,11 @@ class PiVenueTest extends AbstractDataServiceTestCase
         $results = ['results' => 'results'];
         $params = [
             'trafficArea' => 'B',
-            'limit' => 1000,
-            'page' => 1
         ];
         $dto = Qry::create($params);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturnUsing(
                 function ($dto) use ($params) {
-                    $this->assertEquals($params['limit'], $dto->getLimit());
-                    $this->assertEquals($params['page'], $dto->getPage());
                     $this->assertEquals($params['trafficArea'], $dto->getTrafficArea());
                     return 'query';
                 }

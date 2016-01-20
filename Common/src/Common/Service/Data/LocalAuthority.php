@@ -3,21 +3,17 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
+use Dvsa\Olcs\Transfer\Query\LocalAuthority\LocalAuthorityList as LocalAuthorityQry;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class LocalAuthority
+ *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class LocalAuthority extends AbstractData implements ListData
+class LocalAuthority extends AbstractDataService implements ListData
 {
-    protected $serviceName = 'LocalAuthority';
-
-    protected $bundle = [
-        'children' => [
-            'trafficArea'
-        ]
-    ];
-
     /**
      * Format data!
      *
@@ -82,27 +78,23 @@ class LocalAuthority extends AbstractData implements ListData
     /**
      * Ensures only a single call is made to the backend for each dataset
      *
-     * @internal param $category
      * @return array
      */
     public function fetchListData()
     {
+        /*
+         * we had a restriction here, to fetch no more then 1000 records
+         * now it's removed as discussed with P.F., R.C, A.P.
+         */
         if (is_null($this->getData('LocalAuthority'))) {
-
-            $params = [
-                'limit' => 1000,
-                'bundle' => json_encode($this->bundle)
-            ];
-
-            $data = $this->getRestClient()->get('', $params);
-
-            $this->setData('LocalAuthority', false);
-
-            if (isset($data['Results'])) {
-                $this->setData('LocalAuthority', $data['Results']);
+            $dtoData = LocalAuthorityQry::create([]);
+            $response = $this->handleQuery($dtoData);
+            if (!$response->isOk()) {
+                throw new UnexpectedResponseException('unknown-error');
             }
+            $data = $response->getResult()['results'];
+            $this->setData('LocalAuthority', $data);
         }
-
         return $this->getData('LocalAuthority');
     }
 }

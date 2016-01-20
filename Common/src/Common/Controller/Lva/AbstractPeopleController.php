@@ -227,6 +227,10 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $table->removeColumn('position');
         }
 
+        if ($this->isExternal() && $this->lva === 'licence' && $table->getTotal() == 0) {
+            $form->remove('table');
+        }
+
         $table->setVariable(
             'title',
             $translator->translate($tableHeader)
@@ -259,8 +263,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             }
         } else {
             if ($this->lva === 'licence' &&
-                $this->getAdapter()->isOrganisationLimited() &&
-                $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
+                ($this->getAdapter()->isOrganisationLimited() &&
+                $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
+                || ($this->getAdapter()->isOrganisationOther())
             ) {
                 $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId(), 'people');
             } else {
