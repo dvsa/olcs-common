@@ -39,14 +39,14 @@ class AccessedCorrespondence implements FormatterInterface
 
         $title = '';
         if ($data['correspondence']['accessed'] === 'N') {
-            $title .= '<span class="new">&#9679;</span> ';
+            $title .= '<span class="status green">New</span> ';
         }
 
         return sprintf(
-            '%s<a class="strong" href="%s"><b>%s</b></a>',
-            $title,
+            '<a class="strong" href="%s"><b>%s</b></a>%s',
             $url,
-            $data['correspondence']['document']['description']
+            $data['correspondence']['document']['description'],
+            $title
         );
     }
 }
