@@ -1,10 +1,11 @@
 <?php
 if (isset($items) && !empty($items)) {
-    ?>
-    <ul class="definition-list">
-        <?php foreach ($items as $item): ?>
-            <?php echo $this->render('partials/read-only/list-item', ['item' => $item]); ?>
-        <?php endforeach; ?>
-    </ul>
+    $markup = null;
+    foreach ($items as $item) {
+        $markup .= $this->render('partials/read-only/list-item', ['item' => $item]);
+    }
+    if (!empty($markup)): ?>
+        <ul class="definition-list"><?php echo $markup ?></ul>
     <?php
+    endif;
 }

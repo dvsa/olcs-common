@@ -53,7 +53,7 @@ class AccessedCorrespondenceTest extends \PHPUnit_Framework_TestCase
                         )
                     )
                 ),
-                '<span class="new">&#9679;</span> <a class="strong" href="LICENCE_URL"><b>Description</b></a>'
+                '<a class="strong" href="LICENCE_URL"><b>Description</b></a><span class="status green">New</span> '
             ),
             array(
                 array(
