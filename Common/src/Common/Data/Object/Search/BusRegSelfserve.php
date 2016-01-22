@@ -1,6 +1,7 @@
 <?php
 
 namespace Common\Data\Object\Search;
+
 use Common\Data\Object\Search\Aggregations\Terms\BusRegStatus;
 use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
 
@@ -8,7 +9,7 @@ use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
  * Class BusReg
  * @package Common\Data\Object\Search
  */
-class BusRegSelfServe extends InternalSearchAbstract
+class BusRegSelfserve extends InternalSearchAbstract
 {
     /**
      * @var string
