@@ -938,6 +938,8 @@ return [
     'fabs-reference' => 'Fabs Ref',
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
     'fee-details' => 'Fee Details',
+    'fee.not-outstanding.error' => 'You can only pay outstanding fees',
+    'fee.rule-before-invoiced-date.error' => 'You cannot pay this fee because the the accrual start date is before the fee date',
     'feeNotPaidError' => 'The fee was not paid, please try again',
     'fees' => 'Fees',
     'fees.adjust-transaction.cannotAdjust' => 'You cannot adjust a payment that has already been part or fully refunded',
