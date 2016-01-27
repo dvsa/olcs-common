@@ -1715,6 +1715,7 @@ return [
     'new-case-header' => '{WELSH} New case associated with %s, licence #%s',
     'new-case-next' => '{WELSH} Next',
     'nfas' => '{WELSH} NFAs',
+    'no-date-set' => '{WELSH} No date set',
     'no-files-uploaded' => '{WELSH} No files uploaded',
     'no-further-action' => '{WELSH} No further action',
     'noOfTrailersRequiredError' => '{WELSH} Total number of trailers cannot be zero if total number of vehicles is zero',
