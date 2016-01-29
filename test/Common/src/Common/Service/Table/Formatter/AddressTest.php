@@ -51,31 +51,75 @@ class AddressTest extends \PHPUnit_Framework_TestCase
                 array('addressLine1' => 'foo'), array(), 'foo'
             ),
             array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar'), array(), 'foo, bar'
+                array('addressLine1' => 'foo', 'addressLine2' => 'bar'), array(), 'foo'
             ),
             array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => ''), array(), 'foo, bar'
-            ),
-            array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
-                array(),
-                'foo, bar, cake'
+                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'town' => 'cake'), array(), 'foo, cake'
             ),
             array(
                 array(
                     'addressLine1' => 'foo',
                     'addressLine2' => 'bar',
                     'addressLine3' => 'cake',
-                    'addressLine4' => 'fourth'
+                    'town' => 'fourth'
                 ),
                 array(),
-                'foo, bar, cake, fourth'
+                'foo, fourth'
             ),
             array(
                 array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
-                array('addressFields' => array('addressLine1')),
-                'foo'
+                array('addressFields' => array('addressLine1', 'addressLine2')),
+                'foo, bar'
+            ),
+            array(
+                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
+                array('addressFields' => 'FULL'),
+                'foo, bar, cake'
+            ),
+            array(
+                array(
+                    'address' => array(
+                        'addressLine1' => 'foo',
+                        'addressLine2' => 'bar',
+                        'addressLine3' => 'cake',
+                        'town' => 'fourth'
+                    )
+                ),
+                array(
+                    'name' => 'address'
+                ),
+                'foo, fourth'
             )
         );
+    }
+
+    /**
+     * Test the format method with nested keys
+     *
+     * @group Formatters
+     * @group AddressFormatter
+     */
+    public function testFormatWithNestedKeys()
+    {
+        $mockHelper = $this->getMock('\stdClass', array('fetchNestedData'));
+
+        $mockHelper->expects($this->once())
+            ->method('fetchNestedData')
+            ->with(['foo' => 'bar'], 'bar->baz')
+            ->willReturn(['addressLine1' => 'address 1']);
+
+        $sm = $this->getMock('\stdClass', array('get'));
+        $sm->expects($this->any())
+            ->method('get')
+            ->with('Helper\Data')
+            ->will($this->returnValue($mockHelper));
+
+        $data = [
+            'foo' => 'bar'
+        ];
+        $columns = [
+            'name' => 'bar->baz'
+        ];
+        $this->assertEquals('address 1', Address::format($data, $columns, $sm));
     }
 }

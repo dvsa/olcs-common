@@ -33,17 +33,17 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidator extends Abstract
      */
     public function isValid($value, $context = null)
     {
-        unset($value);
+        // we can infer scottish rules based on whether or not the
+        // small vehicles field exists. isset isn't enough because
+        // it can exist but be null. If the field isn't present
+        // *at all* then we're Scottish
+        $isScotland = !array_key_exists('psvOperateSmallVhl', $context);
 
-        // This only gets used if psvOperateSmallVhl is shown
-        if ( isset($context['psvOperateSmallVhl']) ) {
-            if ($context['psvOperateSmallVhl'] === 'N'
-                && $context['psvSmallVhlConfirmation'] !== '1') {
-
-                $this->error('required');
-
-                return false;
-            }
+        if (($isScotland || $context['psvOperateSmallVhl'] === 'N')
+            && $value !== 'Y'
+        ) {
+            $this->error('required');
+            return false;
         }
 
         return true;

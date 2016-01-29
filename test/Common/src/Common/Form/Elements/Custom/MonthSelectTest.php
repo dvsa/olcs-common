@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * Month Select Test
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+namespace CommonTest\Form\Elements\Custom;
+
+use Common\Form\Elements\Custom\MonthSelect;
+
+/**
+ * Month Select Test
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+class MonthSelectTest extends \PHPUnit_Framework_TestCase
+{
+    protected $sut;
+
+    public function setUp()
+    {
+        $this->sut = new MonthSelect('foo');
+    }
+
+    public function testGetInputSpecification()
+    {
+        $spec = $this->sut->getInputSpecification();
+
+        $this->assertEquals('foo', $spec['name']);
+        $this->assertEquals(null, $spec['required']);
+        $this->assertCount(1, $spec['validators']);
+        $this->assertCount(1, $spec['filters']);
+        $this->assertInstanceOf('\Zend\Validator\Regex', $spec['validators'][0]);
+
+        // Test the filter
+        $this->assertNull($spec['filters'][0]['options']['callback']('foo'));
+        $this->assertNull($spec['filters'][0]['options']['callback'](['year' => '2015']));
+        $this->assertEquals('2015-02', $spec['filters'][0]['options']['callback'](['year' => '2015', 'month' => '02']));
+    }
+}

@@ -14,21 +14,23 @@ namespace CommonTest\Controller;
  */
 class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
 {
-    public function testOnDispatch()
+    /**
+     * Tests the getters and setters
+     */
+    public function testGettersAndSetters()
     {
-        $headers = $this->getMock('stdClass', ['addHeaderLine']);
+        $methods = [
+            'InlineScripts' => 'Inline Scripts',
+            'LoadedData' => ['id' => 1],
+            'EnabledCsrf' => true
+        ];
 
-        $response = $this->getMock('stdClass', ['getHeaders']);
-        $response->expects($this->once())
-                 ->method('getHeaders')
-                 ->will($this->returnValue($headers));
+        $sut = $this->getNewSut();
 
-        $sut = $this->getNewSut(['getResponse']);
-        $sut->expects($this->once())
-            ->method('getResponse')
-            ->will($this->returnValue($response));
-
-        $sut->preOnDispatch();
+        foreach ($methods as $methodName => $methodValue) {
+            $sut->{'set' . $methodName}($methodValue);
+            $this->assertSame($methodValue, $sut->{'get' . $methodName}());
+        }
     }
 
     public function testSetBreadcrumb()
@@ -207,6 +209,29 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($redirectMock));
 
         $this->assertSame($return, $sut->redirectToRoute($route, $params, $options, $reuse));
+    }
+
+    public function testRedirectToRouteAjax()
+    {
+        $route   = 'dan-route';
+        $params  = ['foo'=>'bar'];
+        $options = ['baz'=>'qux'];
+        $reuse   = true;
+
+        $return = 'yeah';
+
+        $redirectMock = $this->getMock('stdClass', ['toRouteAjax']);
+        $redirectMock->expects($this->once())
+                     ->method('toRouteAjax')
+                     ->with($route, $params, $options, $reuse)
+                     ->will($this->returnValue($return));
+
+        $sut = $this->getNewSut(['redirect']);
+        $sut->expects($this->once())
+            ->method('redirect')
+            ->will($this->returnValue($redirectMock));
+
+        $this->assertSame($return, $sut->redirectToRouteAjax($route, $params, $options, $reuse));
     }
 
     public function testGetFromRoute()

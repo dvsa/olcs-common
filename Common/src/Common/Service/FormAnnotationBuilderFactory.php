@@ -2,7 +2,7 @@
 
 namespace Common\Service;
 
-use Zend\Form\Annotation\AnnotationBuilder;
+use Common\Form\Annotation\CustomAnnotationBuilder;
 use Zend\Form\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -35,7 +35,7 @@ class FormAnnotationBuilderFactory implements FactoryInterface
             ->setPluginManager($serviceLocator->get('FilterManager'));
 
         //create service and set custom form factory
-        $annotationBuilder = new AnnotationBuilder();
+        $annotationBuilder = new CustomAnnotationBuilder();
         $annotationBuilder->setFormFactory($formFactory);
         return $annotationBuilder;
     }

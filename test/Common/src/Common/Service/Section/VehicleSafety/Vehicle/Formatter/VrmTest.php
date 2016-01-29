@@ -78,7 +78,7 @@ class VrmTest extends PHPUnit_Framework_TestCase
                     'vrm' => 'ABC123'
                 ),
                 array(),
-                '<a href="{"id":2,"action":"edit"}">ABC123</a>'
+                '<a href="{"child_id":2,"action":"edit"}">ABC123</a>'
             ),
             array(
                 array(
@@ -88,7 +88,7 @@ class VrmTest extends PHPUnit_Framework_TestCase
                 array(
                     'action-type' => 'large'
                 ),
-                '<a href="{"id":2,"action":"large-edit"}">ABC123</a>'
+                '<a href="{"child_id":2,"action":"large-edit"}">ABC123</a>'
             )
         );
     }

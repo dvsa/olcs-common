@@ -2,11 +2,10 @@
 
 BASE_BRANCH=${1-"origin/develop"}
 
-echo "{panel:title=TITLE|borderStyle=solid|borderColor=#000|titleBGColor=#75e069/dd4040/e29c22|bgColor=#efefef}"
+# this parses the 'project name' from the git remote url
+PROJECT=$(git remote -v | head -n1 | awk '{print $2}' | sed 's/.*\///' | sed 's/\.git//');
 
-echo "h2.Summary"
-
-echo "INSERT HERE"
+echo "{panel:title=$PROJECT|borderStyle=solid|borderColor=#000|titleBGColor=#75e069|bgColor=#efefef}"
 
 echo "h2.Check PHP syntax"
 
@@ -46,10 +45,17 @@ echo "h2.Run unit tests"
 
 echo "{code}"
 
-cd test && ../vendor/bin/phpunit
+cd test && ../vendor/bin/phpunit --coverage-php `pwd`/review/coverage.cov
+
+echo "{code}"
+
+echo "h2.Checking coverage of diff"
+
+echo "{code}"
+
+cd .. && git diff $BASE_BRANCH > test/review/patch.txt && vendor/phpunit/phpcov/phpcov patch-coverage --patch test/review/patch.txt --path-prefix `pwd`/ test/review/coverage.cov
 
 echo "{code}"
 
 echo "{panel}"
-
-git diff $BASE_BRANCH
+#git diff $BASE_BRANCH

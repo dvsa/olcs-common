@@ -77,7 +77,8 @@ return array(
         'org_t_st' => 'Sole Trader',
         'org_t_p' => 'Partnership',
         'org_t_llp' => 'Limited Liability Partnership',
-        'org_t_pa' => 'Other (e.g. public authority, charity, trust, university)',
+        'org_t_pa' => 'Other (eg public authority, charity, trust, university)',
+        'org_t_ir' => 'IRFO',
     ],
     'defendant_types' =>
     [
@@ -95,8 +96,8 @@ return array(
     ],
     'document_types' => [
         'all' => 'All',
-        'digital' => 'Digital only',
-        'nondigital' => 'Non-digital'
+        'external' => 'Selfserve',
+        'internal' => 'Internal'
     ],
     'vehicle_body_types' =>
     [
@@ -461,9 +462,9 @@ return array(
         'inspection_interval_trailer.0' => 'N/A'
     ],
     'tachograph_analyser' => [
-        'tach_internal' => 'tachographAnalyser-yourself',
-        'tach_external' => 'tachographAnalyser-external-contractor',
-        'tach_na' => 'N/A',
+        'tach_internal' => 'tachograph_analyser.tach_internal',
+        'tach_external' => 'tachograph_analyser.tach_external',
+        'tach_na' => 'tachograph_analyser.tach_na',
     ],
     'impounding_type' => [
         'impt_hearing' => 'Hearing',

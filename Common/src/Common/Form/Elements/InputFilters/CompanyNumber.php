@@ -11,6 +11,7 @@ use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Zend\I18n\Validator\Alnum;
+use Zend\Validator\StringLength;
 
 /**
  * Company Number
@@ -33,7 +34,16 @@ class CompanyNumber extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringTrim'],
             ],
             'validators' => [
-                ['name' => 'Zend\Validator\StringLength', 'options'=>['min' => 8, 'max' => 8]],
+                [
+                    'name' => 'Zend\Validator\StringLength',
+                    'options'=> [
+                        'min' => 1,
+                        'max' => 8,
+                        'messages' => [
+                            StringLength::TOO_LONG => 'The company number cannot be more than 8 characters'
+                        ]
+                    ]
+                ],
                 [
                     'name' => 'Alnum',
                     'options' => [

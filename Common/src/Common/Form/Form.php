@@ -1,47 +1,30 @@
 <?php
 
-/**
- * Form
- *
- * @author Someone <someone@valtech.co.uk>
- */
 namespace Common\Form;
 
 use Zend\Form as ZendForm;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
 
 /**
  * Form
- *
- * @author Someone <someone@valtech.co.uk>
  */
 class Form extends ZendForm\Form
 {
-    public function setData($data)
+    public function __toString()
     {
-        $data = $this->setEmptyDataselectArraysToNull($data);
-        return parent::setData($data);
+        return get_class($this);
     }
 
     /**
-     * Sets empty date select arrays to null.
+     * Prevent a form from being validated (and thus saved) if it is set read only
      *
-     * @param array $data
-     * @return array
+     * @return bool
      */
-    private function setEmptyDataselectArraysToNull($data)
+    public function isValid()
     {
-        foreach ($data as &$input) {
-            if (is_array($input)) {
-                if (!array_filter($input) && 3 == count($input)) {
-                    $input = null;
-                } else {
-                    $input = $this->setEmptyDataselectArraysToNull($input);
-                }
-            }
+        if ($this->getOption('readonly')) {
+            return false;
         }
 
-        return $data;
+        return parent::isValid();
     }
 }

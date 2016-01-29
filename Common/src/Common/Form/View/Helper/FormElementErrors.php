@@ -12,6 +12,7 @@ use Zend\Form\View\Helper\FormElementErrors as ZendFormElementErrors;
 use Traversable;
 use Zend\Form\ElementInterface;
 use Zend\Form\Exception;
+use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 
 /**
  * Render form element errors
@@ -57,14 +58,34 @@ class FormElementErrors extends ZendFormElementErrors
 
         $renderer = $this->getView();
 
+        $elementShouldEscape = $element->getOption('shouldEscapeMessages');
+
         // Flatten message array
         $escapeHtml      = $this->getEscapeHtmlHelper();
         $messagesToPrint = array();
         array_walk_recursive(
             $messages,
-            function ($item) use (&$messagesToPrint, $escapeHtml, $renderer) {
-                $item = $renderer->translate($item);
-                $messagesToPrint[] = $escapeHtml($item);
+            function ($item) use (&$messagesToPrint, $escapeHtml, $renderer, $elementShouldEscape) {
+
+                $shouldTranslate = true;
+                $shouldEscape = true;
+
+                if ($item instanceof ValidationMessageInterface) {
+
+                    $shouldTranslate = $item->shouldTranslate();
+                    $shouldEscape = $item->shouldEscape();
+                    $item = $item->getMessage();
+                }
+
+                if ($shouldTranslate) {
+                    $item = $renderer->translate($item);
+                }
+
+                if ($shouldEscape && $elementShouldEscape !== false) {
+                    $item = $escapeHtml($item);
+                }
+
+                $messagesToPrint[] = ucfirst($item);
             }
         );
 

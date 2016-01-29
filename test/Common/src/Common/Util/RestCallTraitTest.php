@@ -1,244 +1,125 @@
 <?php
 
 /**
- * Test FlashMessengerTrait
+ * Test rest call trait
  *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace CommonTest\Controller\Util;
+namespace CommonTest\Util;
 
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Test FlashMessengerTrait
+ * Test rest call trait
  *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-class RestCallTraitTest extends AbstractHttpControllerTestCase
+class RestCallTraitTest extends MockeryTestCase
 {
+    /**
+     * Subject under test
+     *
+     * @var \Common\Util\RestCallTrait
+     */
+    private $sut;
 
-    public $class = '\Common\Util\RestCallTrait';
+    private $mockHelperService;
 
-    public function getSutMock($class = null, $methods = null)
+    public function setUp()
     {
-        $class = !empty($class) ? $class : $this->class;
-        return $this->getMockForTrait($class, array(), '', true, true, true, $methods);
+        $this->mockHelperService = $this->getMock(
+            '\stdClass',
+            array('sendGet', 'sendPost', 'makeRestCall', 'getRestClient')
+        );
+
+        $mockServiceLocator = \Mockery::mock('\Zend\ServiceManager\ServiceManager');
+        $mockServiceLocator->shouldReceive('get')->andReturn($this->mockHelperService);
+
+        $this->sut = $this->getMockForTrait(
+            '\Common\Util\RestCallTrait',
+            array(),
+            '',
+            true,
+            true,
+            true,
+            array(
+                'getServiceLocator'
+            )
+        );
+
+        $this->sut->expects($this->any())
+            ->method('getServiceLocator')
+            ->will($this->returnValue($mockServiceLocator));
     }
 
+    /**
+     * @group util
+     * @group rest_call_trait_util
+     */
     public function testSendGet()
     {
-        $mock = $this->getSutMock(null, array('getRestClient'));
-        $restClient = $this->getMock('\stdClass', array('get'));
-        $restClient->expects($this->once())
-            ->method('get')
-            ->with('/1/7', array())
-            ->will($this->returnValue('restClient'));
+        $service = 'Service';
+        $data = array(
+            'foo' => 'bar'
+        );
+        $appendParamsToRoute = false;
 
-        $mock->expects($this->once())
-            ->method('getRestClient')
-            ->with('Licence')
-            ->will($this->returnValue($restClient));
-        $mock->sendGet('Licence', array('id' => 1, 'licence' => 7), true);
+        $this->mockHelperService->expects($this->once())
+            ->method('sendGet')
+            ->with($service, $data, $appendParamsToRoute);
+
+        $this->sut->sendGet($service, $data, $appendParamsToRoute);
     }
 
+    /**
+     * @group util
+     * @group rest_call_trait_util
+     */
     public function testSendPost()
     {
-        $mock = $this->getSutMock(null, array('getRestClient'));
-        $restClient = $this->getMock('\stdClass', array('post'));
-        $restClient->expects($this->once())
-            ->method('post')
-            ->with('', array('id' => 1))
-            ->will($this->returnValue('restClient'));
-
-        $mock->expects($this->once())
-            ->method('getRestClient')
-            ->with('Licence')
-            ->will($this->returnValue($restClient));
-        $mock->sendPost('Licence', array('id' => 1));
-    }
-
-    public function getRestClientAndResponseHandlerMocks($mock, $method, $reponseHandler, $data, $path = '')
-    {
-        $mock->expects($this->once())
-            ->method('getServiceRestClient')
-            ->with('Licence', $method, $path, $data)
-            ->will($this->returnValue('restClient'));
-
-        $mock->expects($this->once())
-            ->method('handleResponseMethod')
-            ->with($reponseHandler, 'Licence', 'restClient')
-            ->will($this->returnValue('response'));
-
-        return $mock;
-    }
-
-    public function testMakeRestCallGet()
-    {
-        $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock = $this->getRestClientAndResponseHandlerMocks(
-            $mock,
-            'get',
-            'handleGetResponse',
-            array('id' => 1, 'bundle' => '{"licence":[]}')
+        $service = 'Service';
+        $data = array(
+            'foo' => 'bar'
         );
-        $mock->makeRestCall('Licence', 'GET', array('id' => 1), array('licence' => array()));
+
+        $this->mockHelperService->expects($this->once())
+            ->method('sendPost')
+            ->with($service, $data);
+
+        $this->sut->sendPost($service, $data);
     }
 
-    public function testMakeRestCallGetList()
+    /**
+     * @group util
+     * @group rest_call_trait_util
+     */
+    public function testMakeRestCall()
     {
-        $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock = $this->getRestClientAndResponseHandlerMocks($mock, 'get', 'handleGetListResponse', array());
-        $mock->makeRestCall('Licence', 'GET', array(), null);
-    }
-
-    public function testMakeRestCallPost()
-    {
-        $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock = $this->getRestClientAndResponseHandlerMocks(
-            $mock,
-            'post',
-            'handlePostResponse',
-            array('data' => '{"id":1}')
+        $service = 'Service';
+        $method = 'GET';
+        $data = array(
+            'foo' => 'bar'
         );
-        $mock->makeRestCall('Licence', 'POST', array('id' => 1), null);
+
+        $this->mockHelperService->expects($this->once())
+            ->method('makeRestCall')
+            ->with($service, $method, $data);
+
+        $this->sut->makeRestCall($service, $method, $data);
     }
 
-    public function testMakeRestCallPut()
-    {
-        $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock = $this->getRestClientAndResponseHandlerMocks(
-            $mock,
-            'put',
-            'handlePutResponse',
-            array('data' => '[]'),
-            '/1'
-        );
-        $mock->makeRestCall('Licence', 'PUT', array('id' => 1), null);
-    }
-
-    public function testMakeRestCallDelete()
-    {
-        $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock = $this->getRestClientAndResponseHandlerMocks(
-            $mock,
-            'delete',
-            'handleDeleteResponse',
-            array('id' => 1, 'bundle' => '{"licence":[]}')
-        );
-        $mock->makeRestCall('Licence', 'DELETE', array('id' => 1), array('licence' => array()));
-    }
-
-    public function testMakeRestCallInvalid()
-    {
-        $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock->makeRestCall('Licence', 'BLAH', array('id' => 1), array('licence' => array()));
-    }
-
+    /**
+     * @group util
+     * @group rest_call_trait_util
+     */
     public function testGetRestClient()
     {
-        $mock = $this->getSutMock(null, array('getServiceLocator'));
+        $service = 'Service';
 
-        $serviceLocator = $this->getMock('\stdClass', array('get'));
-        $apiResolver = $this->getMock('\stdClass', array('getClient'));
+        $this->mockHelperService->expects($this->once())
+            ->method('getRestClient')
+            ->with($service);
 
-        $apiResolver->expects($this->once())
-            ->method('getClient')
-            ->with('Licence')
-            ->will($this->returnValue(true));
-
-        $serviceLocator->expects($this->once())
-            ->method('get')
-            ->with('ServiceApiResolver')
-            ->will($this->returnValue($apiResolver));
-
-        $mock->expects($this->once())
-            ->method('getServiceLocator')
-            ->will($this->returnValue($serviceLocator));
-
-        $mock->getRestClient('Licence');
-    }
-
-    public function testHandleGetResponse()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handleGetResponse('Licence', 'response');
-    }
-
-    public function testHandleGetListResponse()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handleGetListResponse('Licence', 'response');
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testHandleFailedGetListResponse()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handleGetListResponse('Licence', false);
-    }
-
-    public function testHandlePostResponse()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handlePostResponse('Licence', 'response');
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testHandleFailedPostResponse()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handlePostResponse('Licence', false);
-    }
-
-    public function testHandlePutResponse()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handlePutResponse('Licence', 'response');
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testHandlePutResponse400()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handlePutResponse('Licence', 400);
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testHandlePutResponse404()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handlePutResponse('Licence', 404);
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testHandlePutResponse409()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handlePutResponse('Licence', 409);
-    }
-
-    public function testHandleDeleteResponse()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handleDeleteResponse('Licence', 'response');
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testHandleFailedDeleteResponse()
-    {
-        $mock = $this->getSutMock(null, null);
-        $mock->handleDeleteResponse('Licence', false);
+        $this->sut->getRestClient($service);
     }
 }

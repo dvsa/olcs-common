@@ -7,13 +7,13 @@
  */
 namespace Db\Service\Acl;
 
-use Zend\Permissions\Acl;
+use Zend\Permissions\Acl\Resource\GenericResource;
 
 /**
  * Resource
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class Resource extends Acl\GenericResource
+class Resource extends GenericResource
 {
 }

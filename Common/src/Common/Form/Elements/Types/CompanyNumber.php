@@ -21,7 +21,7 @@ class CompanyNumber extends Fieldset
     {
         parent::__construct($name, $options);
 
-        $this->setAttribute('class', 'highlight-box');
+        $this->setAttribute('class', 'lookup');
 
         $this->add(
             array(
@@ -41,7 +41,7 @@ class CompanyNumber extends Fieldset
                     'label' => 'Find company',
                 ],
                 'attributes' => [
-                    'class' => 'action--secondary large',
+                    'class' => 'action--primary',
                     'data-container-class' => 'inline',
                     'type' => 'submit',
                 ],

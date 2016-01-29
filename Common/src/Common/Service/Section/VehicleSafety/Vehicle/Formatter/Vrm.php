@@ -36,7 +36,7 @@ class Vrm implements FormatterInterface
         return '<a href="' . $url(
             null,
             array(
-                'id' => $data['id'],
+                'child_id' => $data['id'],
                 'action' => $action
             ),
             array(),

@@ -31,7 +31,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     const DEFAULT_LIMIT = 10;
     const DEFAULT_PAGE = 1;
 
-    const MAX_FORM_ACTIONS = 4;
+    const MAX_FORM_ACTIONS = 5;
+
+    const ACTION_FORMAT_BUTTONS = 'buttons';
+    const ACTION_FORMAT_DROPDOWN = 'dropdown';
+
+    const CONTENT_TYPE_HTML = 'html';
+    const CONTENT_TYPE_CSV = 'csv';
 
     /**
      * Hold the pagination helper
@@ -46,6 +52,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @var object
      */
     private $contentHelper;
+
+    /**
+     * Hold the contentType
+     *
+     * @var string
+     */
+    private $contentType = self::CONTENT_TYPE_HTML;
 
     /**
      * Inject the application config from Zend
@@ -104,6 +117,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $total;
 
     /**
+     * Total of the unfiltered results
+     *
+     * @var int
+     */
+    private $unfilteredTotal;
+
+    /**
      * Data rows
      *
      * @var array
@@ -143,7 +163,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      *
      * @var object
      */
-    private $query;
+    private $query = [];
 
     /**
      * Current sort column
@@ -181,7 +201,29 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $isDisabled = false;
 
     /**
-     * Inject the service locator
+     * Authorisation service to allow columns/rows to be hidden depending on permission model
+     * @var \ZfcRbac\Service\AuthorizationService
+     */
+    private $authService;
+
+    /**
+     * @param \ZfcRbac\Service\AuthorizationService $authorisationService
+     */
+    public function setAuthService($authService)
+    {
+        $this->authService = $authService;
+    }
+
+    /**
+     * @return \ZfcRbac\Service\AuthorizationService
+     */
+    public function getAuthService()
+    {
+        return $this->authService;
+    }
+
+    /**
+     * Inject the service locator and auth service
      *
      * @param $sm
      */
@@ -189,6 +231,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $this->setServiceLocator($sm);
         $this->applicationConfig = $sm->get('Config');
+        $this->setAuthService($sm->get('ZfcRbac\Service\AuthorizationService'));
     }
 
     /**
@@ -298,6 +341,16 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
+     * Setter for unfilteredTotal
+     *
+     * @param int $unfilteredTotal
+     */
+    public function setUnfilteredTotal($unfilteredTotal)
+    {
+        $this->unfilteredTotal = $unfilteredTotal;
+    }
+
+    /**
      * Setter for rows
      *
      * @param array $rows
@@ -350,6 +403,30 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
     }
 
+    public function removeActions()
+    {
+        foreach ($this->settings['crud']['actions'] as $key => $config) {
+            $this->removeAction($key);
+        }
+    }
+
+    public function addAction($key, $settings = [])
+    {
+        $this->settings['crud']['actions'][$key] = $settings;
+    }
+
+    /**
+     * Disable an action
+     *
+     * @param string $name
+     */
+    public function disableAction($name)
+    {
+        if ($this->hasAction($name)) {
+            $this->settings['crud']['actions'][$name]['disabled'] = 'disabled';
+        }
+    }
+
     /**
      * Get the content helper
      *
@@ -359,15 +436,23 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function getContentHelper()
     {
         if (empty($this->contentHelper)) {
-            if (!isset($this->applicationConfig['tables']['partials'])) {
+            if (!isset($this->applicationConfig['tables']['partials'][$this->contentType])) {
 
                 throw new \Exception('Table partial location not defined in config');
             }
 
-            $this->contentHelper = new ContentHelper($this->applicationConfig['tables']['partials'], $this);
+            $this->contentHelper = new ContentHelper(
+                $this->applicationConfig['tables']['partials'][$this->contentType],
+                $this
+            );
         }
 
         return $this->contentHelper;
+    }
+
+    public function setContentType($type)
+    {
+        $this->contentType = $type;
     }
 
     /**
@@ -443,7 +528,23 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function setColumns($columns)
     {
-        $this->columns = $columns;
+        $this->columns = array();
+
+        foreach ($columns as $key => $column) {
+            if (!is_string($key)) {
+                if (isset($column['name'])) {
+                    $key = $column['name'];
+                } else {
+                    $key = null;
+                }
+            }
+
+            if ($key == null) {
+                $this->columns[] = $column;
+            } else {
+                $this->columns[$key] = $column;
+            }
+        }
     }
 
     /**
@@ -519,7 +620,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Getter for url
      *
-     * @return object
+     * @return \Zend\Mvc\Controller\Plugin\Url
      */
     public function getUrl()
     {
@@ -577,20 +678,40 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * Build a table from a config file
+     * Prepare the table
      *
-     * @param array $config
-     * @return string
+     * @param string|array $config
+     * @param array $data
+     * @param array $params
+     * @return \Common\Service\Table\TableBuilder
      */
-    public function buildTable($name, $data = array(), $params = array(), $render = true)
+    public function prepareTable($config, array $data = array(), array $params = array())
     {
-        $this->loadConfig($name);
+        $this->loadConfig($config);
 
         $this->loadData($data);
 
         $this->loadParams($params);
 
         $this->setupAction();
+
+        $this->setupDataAttributes();
+
+        return $this;
+    }
+
+    /**
+     * Build a table from a config file
+     *
+     * @param string|array $config
+     * @param array $data
+     * @param array $params
+     * @param boolean $render
+     * @return string
+     */
+    public function buildTable($config, $data = array(), $params = array(), $render = true)
+    {
+        $this->prepareTable($config, $data, $params);
 
         if ($render) {
             return $this->render();
@@ -602,14 +723,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Load the configuration if it exists
      *
-     * @param string $name
-     * @throws \Exception
+     * @param $config
+     * @return bool
      */
-    public function loadConfig($name)
+    public function loadConfig($config)
     {
-        if (!isset($this->applicationConfig['tables']['config'])
-            || empty($this->applicationConfig['tables']['config'])) {
-            throw new \Exception('Table config location not defined');
+        if (!is_array($config)) {
+            $config = $this->getConfigFromFile($config);
         }
 
         $config = array_merge(
@@ -619,7 +739,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 'columns' => array(),
                 'footer' => array()
             ),
-            $this->getConfigFromFile($name)
+            $config
         );
 
         $this->setSettings($config['settings']);
@@ -647,7 +767,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     private function setPaginationDefaults()
     {
-        if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
+        if ($this->shouldPaginate() && !isset($this->settings['paginate']['limit'])) {
             $this->settings['paginate']['limit'] = array(
                 'default' => 10,
                 'options' => array(10, 25, 50)
@@ -686,8 +806,27 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function loadData($data = array())
     {
-        $this->setRows(isset($data['Results']) ? $data['Results'] : $data);
-        $this->setTotal(isset($data['Count']) ? $data['Count'] : count($this->rows));
+        if (isset($data['Results'])) {
+            $data['results'] = $data['Results'];
+            unset($data['Results']);
+        }
+
+        if (isset($data['Count'])) {
+            $data['count'] = $data['Count'];
+            unset($data['Count']);
+        }
+
+        $this->setRows(isset($data['results']) ? $data['results'] : $data);
+        $this->setTotal(isset($data['count']) ? $data['count'] : count($this->rows));
+        $this->setUnfilteredTotal(isset($data['count-unfiltered']) ? $data['count-unfiltered'] : $this->getTotal());
+
+        // if there's only one row and we have a singular title, use it
+        $translator = $this->getServiceLocator()->get('translator');
+        if ($this->getTotal() == 1) {
+            if ($this->getVariable('titleSingular')) {
+                $this->setVariable('title', $translator->translate($this->getVariable('titleSingular')));
+            }
+        }
     }
 
     /**
@@ -698,13 +837,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function loadParams($array = array())
     {
         if (!isset($array['url'])) {
-            throw new \Exception('Table helper requires the URL helper');
+            $array['url'] = $this->getServiceLocator()->get('Helper\Url');
         }
 
         $defaults = array(
             'limit' => isset($this->settings['paginate']['limit']['default'])
                 ? $this->settings['paginate']['limit']['default']
-                : null,
+                : 10,
             'page' => self::DEFAULT_PAGE,
             'sort' => '',
             'order' => 'ASC'
@@ -734,8 +873,20 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function setupAction()
     {
-        if (!isset($this->getVariables()['action'])) {
-            $this->variables['action'] = $this->generateUrl();
+        $variables = $this->getVariables();
+        if (!isset($variables['action'])) {
+            if (isset($variables['action_route'])) {
+                $route = $variables['action_route']['route'];
+                $params = $variables['action_route']['params'];
+                $this->variables['action'] = $this->generateUrl(
+                    $params,
+                    $route,
+                    [],
+                    true
+                );
+            } else {
+                $this->variables['action'] = $this->generateUrl();
+            }
         }
     }
 
@@ -749,7 +900,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function __toString()
     {
-        return $this->render();
+        try {
+            return $this->render();
+        } catch (\Exception $ex) {
+            $content = $ex->getMessage();
+            $content .= $ex->getTraceAsString();
+
+            return $content;
+        }
     }
 
     /**
@@ -771,21 +929,27 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function getConfigFromFile($name)
     {
+        if (!isset($this->applicationConfig['tables']['config'])
+            || empty($this->applicationConfig['tables']['config'])) {
+            throw new \Exception('Table config location not defined');
+        }
+
         $found = false;
 
-        foreach ($this->applicationConfig['tables']['config'] as $location) {
+        // @NOTE Reverse the array so the internal/selfserve config locations are checked before common
+        $locations = array_reverse($this->applicationConfig['tables']['config']);
+
+        foreach ($locations as $location) {
 
             $configFile = $location . $name . '.table.php';
 
             if (file_exists($configFile)) {
-
                 $found = true;
                 break;
             }
         }
 
         if (!$found) {
-
             throw new \Exception('Table configuration not found');
         }
 
@@ -826,7 +990,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $column = array_merge(
             array(
                 'type' => 'td',
-                'colspan' => ''
+                'colspan' => '',
+                'align' => '',
             ),
             $column
         );
@@ -840,6 +1005,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $details['type'] = $column['type'];
 
         $details['colspan'] = $column['colspan'];
+
+        if ($column['align']) {
+            $details['class'] = $column['align'];
+        }
 
         if (isset($column['formatter'])) {
             $column['format'] = $this->callFormatter($column, $this->getRows());
@@ -878,10 +1047,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $this->setType($this->whichType());
 
+        if (isset($this->settings['submission_section'])) {
+            return $this->renderLayout('submission-section');
+        }
+
         if ((!isset($this->variables['within_form']) || $this->variables['within_form'] == false)
             && isset($this->settings['crud'])) {
 
             return $this->renderLayout('crud');
+        }
+
+        if (isset($this->settings['layout'])) {
+            return $this->renderLayout($this->settings['layout']);
         }
 
         return $this->renderLayout('default');
@@ -899,7 +1076,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return self::TYPE_FORM_TABLE;
         }
 
-        if (isset($this->settings['crud']) && isset($this->settings['paginate'])) {
+        if (isset($this->settings['crud']) && $this->shouldPaginate()) {
 
             return self::TYPE_HYBRID;
         }
@@ -909,7 +1086,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return self::TYPE_CRUD;
         }
 
-        if (isset($this->settings['paginate'])) {
+        if ($this->shouldPaginate()) {
 
             return self::TYPE_PAGINATE;
         }
@@ -925,6 +1102,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderLayout($name)
     {
+        if ($name === 'default' && (empty($this->unfilteredTotal) && empty($this->rows))) {
+            return $this->renderLayout('default_empty');
+        }
+
         return $this->getContentHelper()->renderLayout($name);
     }
 
@@ -935,12 +1116,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderTotal()
     {
-        if ($this->type !== self::TYPE_PAGINATE && $this->type !== self::TYPE_HYBRID) {
-
+        if (!$this->shouldPaginate()) {
             return '';
         }
 
-        $total = $this->total . ' result' . ($this->total !== 1 ? 's' : '');
+        $total = $this->total;
 
         return $this->replaceContent(' {{[elements/total]}}', array('total' => $total));
     }
@@ -969,13 +1149,22 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             isset($this->settings['crud']['actions']) ? $this->settings['crud']['actions'] : array()
         );
 
-        if (empty($actions)) {
+        $links = isset($this->settings['crud']['links']) ? $this->settings['crud']['links'] : array();
+
+        if (empty($actions) && empty($links)) {
             return '';
         }
 
         $newActions = $this->formatActions($actions);
 
-        $content = $this->formatActionContent($newActions);
+        $newLinks = $this->formatLinks($links);
+
+        $content = $this->formatActionContent(
+            $newActions,
+            $this->getSetting('actionFormat'),
+            $this->getSetting('collapseAt'),
+            $newLinks
+        );
 
         return $this->replaceContent('{{[elements/actionContainer]}}', array('content' => $content));
     }
@@ -986,7 +1175,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param array $actions
      * @return string
      */
-    public function renderDropdownActions($actions = array())
+    public function renderDropdownActions($actions = array(), $links = [])
     {
         $options = '';
 
@@ -995,25 +1184,82 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $options .= $this->replaceContent('{{[elements/actionOption]}}', $details);
         }
 
-        return $this->replaceContent(
+        $content = '';
+
+        if (!empty($links)) {
+            $content .= $this->renderLinks($links);
+        }
+
+        $content .= $this->replaceContent(
             '{{[elements/actionSelect]}}',
             array('option' => $options, 'action_field_name' => $this->getActionFieldName())
         );
+
+        return $content;
     }
 
     /**
      * Render the button version of the actions
      *
      * @param array $actions
+     * @param int $collapseAt number of buttons to show before they are 'collapsed' into
+     * a 'more actions' dropdown
      * @return string
      */
-    public function renderButtonActions($actions = array())
+    public function renderButtonActions($actions = array(), $collapseAt = 0, $links = [])
     {
         $content = '';
 
-        foreach ($actions as $details) {
+        if (!empty($links)) {
+            $content .= $this->renderLinks($links);
+        }
 
+        if ($collapseAt) {
+            $i = 0;
+            $max = count($actions);
+            while ($i < $max && $i < $collapseAt) {
+                $content .= $this->replaceContent('{{[elements/actionButton]}}', array_shift($actions));
+                $i++;
+            }
+            $content .= $this->renderMoreActions($actions);
+            return $content;
+        }
+
+        foreach ($actions as $details) {
             $content .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+        }
+
+        return $content;
+    }
+
+    public function renderLinks(array $links = [])
+    {
+        $content = '';
+
+        foreach ($links as $details) {
+
+            $content .= $this->replaceContent('{{[elements/link]}}', $details);
+        }
+
+        return $content;
+    }
+
+    private function renderMoreActions($actions)
+    {
+        $content = '';
+        if (!empty($actions)) {
+            $moreActions = '';
+            foreach ($actions as $details) {
+                $moreActions .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+            }
+            $translator = $this->getServiceLocator()->get('translator');
+            $content .= $this->replaceContent(
+                '{{[elements/moreActions]}}',
+                [
+                    'content' => $moreActions,
+                    'label' => $translator->translate('table_button_more_actions'),
+                ]
+            );
         }
 
         return $content;
@@ -1026,18 +1272,23 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderFooter()
     {
-        if ($this->type !== self::TYPE_PAGINATE && $this->type !== self::TYPE_HYBRID) {
+        if (!$this->shouldPaginate()) {
             return '';
         }
 
+        /**
+        Temporarily removed this, as if someone has set the limit to be more than the total, they would no longer see
+         the limit options to reduce
         if (!in_array($this->getLimit(), $this->settings['paginate']['limit']['options'])) {
             $this->settings['paginate']['limit']['options'][] = $this->getLimit();
             sort($this->settings['paginate']['limit']['options']);
         }
 
+
         if ($this->total <= min($this->settings['paginate']['limit']['options'])) {
             return '';
         }
+        */
 
         return $this->renderLayout('pagination');
     }
@@ -1121,9 +1372,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return;
         }
 
+        if (isset($column['align'])) {
+            $column['class'] = $column['align'];
+            unset($column['align']);
+        }
+
         if (isset($column['sort'])) {
 
-            $column['class'] = 'sortable';
+            if (isset($column['class'])) {
+                $column['class'] .= ' sortable';
+            } else {
+                $column['class'] = 'sortable';
+            }
 
             $column['order'] = 'ASC';
 
@@ -1181,12 +1441,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return;
         }
 
-        if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
-            $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
-            $type = new $typeClass($this);
-            $content = $type->render($row, $column);
-        }
-
         if (isset($column['formatter'])) {
 
             $return = $this->callFormatter($column, $row);
@@ -1199,15 +1453,36 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             }
         }
 
+        if (
+            $this->contentType === self::CONTENT_TYPE_HTML
+            && isset($column['type'])
+            && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])
+        ) {
+            $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
+            $type = new $typeClass($this);
+
+            // allow for the fact a formatter may have already set some content
+            // which the type should respect
+            $formattedContent = isset($row['content']) ? $row['content'] : null;
+            $content = $type->render($row, $column, $formattedContent);
+        }
+
         if (isset($column['format'])) {
             $content = $this->replaceContent($column['format'], $row);
         }
 
-        if (!isset($content) || empty($content)) {
-            $content =  isset($column['name']) && isset($row[$column['name']]) ? $row[$column['name']] : '';
+        if (!isset($content) || (empty($content) && !in_array($content, [0, 0.0, '0']))) {
+            $content =  isset($column['name']) && isset($row[$column['name']]) ?
+                $row[$column['name']] : '';
         }
 
-        return $this->replaceContent($wrapper, array('content' => $content));
+        $replacements = array('content' => $content);
+
+        if (isset($column['align'])) {
+            $replacements['attrs'] = ' class="'.$column['align'].'"';
+        }
+
+        return $this->replaceContent($wrapper, $replacements);
     }
 
     /**
@@ -1221,19 +1496,35 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $columns = $this->getColumns();
 
-            $message = isset($this->variables['empty_message'])
-                ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
-                : 'The table is empty';
+            if ($this->unfilteredTotal > 0) {
+                $message = 'There are no results matching your search';
+            } else {
+                $message = $this->getEmptyMessage();
+            }
 
             $vars = array(
                 'colspan' => count($columns),
-                'message' => $this->getServiceLocator()->get('translator')->translate($message)
+                'message' => $message
             );
 
             $content .= $this->replaceContent('{{[elements/emptyRow]}}', $vars);
         }
 
         return $content;
+    }
+
+    public function setEmptyMessage($message)
+    {
+        $this->variables['empty_message'] = $message;
+    }
+
+    public function getEmptyMessage()
+    {
+        $message = isset($this->variables['empty_message'])
+            ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
+            : 'The table is empty';
+
+        return $this->getServiceLocator()->get('translator')->translate($message);
     }
 
     /**
@@ -1247,7 +1538,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private function callFormatter($column, $data)
     {
         if (is_string($column['formatter'])
-                && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
+            && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
 
             $className =  '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
 
@@ -1284,7 +1575,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param array $vars
      * @return string
      */
-    private function replaceContent($content, $vars = array())
+    public function replaceContent($content, $vars = array())
     {
         return $this->getContentHelper()->replaceContent($content, $vars);
     }
@@ -1295,9 +1586,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param array $data
      * @return string
      */
-    private function generateUrl($data = array(), $route = null, $extendParams = true)
+    private function generateUrl($data = array(), $route = null, $options = [], $reuseMatchedParams = true)
     {
-        return $this->getUrl()->fromRoute($route, $data, array(), $extendParams);
+        if (is_bool($options)) {
+            $reuseMatchedParams = $options;
+            $options = [];
+        }
+
+        return $this->getUrl()->fromRoute($route, $data, $options, $reuseMatchedParams);
     }
 
     /**
@@ -1311,15 +1607,39 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
     {
-        $returnUrl = $this->generateUrl($data, $route, $extendParams);
 
-        // in query mode we want to manually append a query string to the base route
-        if ($this->getQuery()) {
-            $queryString = array_merge($this->getQuery()->toArray(), $data);
-            $returnUrl .= "?" . http_build_query($queryString);
+        /** @var \Zend\Mvc\Controller\Plugin\Url $url */
+        $url = $this->getUrl();
+
+        /** @var \Zend\Mvc\MvcEvent $event */
+        //$event = $url->getController()->getEvent();
+
+        /** @var \Zend\Mvc\Router\Http\TreeRouteStack $router */
+        //$router = $event->getRouter();
+
+        /** @var \Zend\Mvc\Router\Http\RouteMatch $routeMatch */
+        //$routeMatch = $event->getRouteMatch();
+
+        //$currentRouteName = $routeMatch->getMatchedRouteName();
+
+        /**
+         * This is the query information to add to the existing route/url.
+         */
+        $query = $this->getQuery();
+        if ($query && !is_array($query)) {
+            $query = $query->toArray();
         }
 
-        // strip out controller and action params
+        $params = array_merge($query, $data);
+
+        $params = array_diff_key($params, array_flip(['controller', 'action']));
+
+        $options = [];
+        $options['query'] = $params;
+
+        $returnUrl = $url->fromRoute($route, [], $options, true);
+
+        // strip out controller and action params - not sure if this is still needed.
         $returnUrl = preg_replace('/\/controller\/[a-zA-Z0-9\-_]+\/action\/[a-zA-Z0-9\-_]+/', '', $returnUrl);
 
         return $returnUrl;
@@ -1329,15 +1649,23 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Format action content
      *
      * @param array $actions
+     * @param string $overrideFormat
      * @return string
      */
-    private function formatActionContent($actions)
+    private function formatActionContent($actions, $overrideFormat, $collapseAt = 0, $newLinks = [])
     {
-        if (count($actions) > self::MAX_FORM_ACTIONS) {
-            return $this->renderDropdownActions($actions);
+        switch ($overrideFormat) {
+            case self::ACTION_FORMAT_DROPDOWN:
+                return $this->renderDropdownActions($actions, $newLinks);
+            case self::ACTION_FORMAT_BUTTONS:
+                return $this->renderButtonActions($actions, $collapseAt, $newLinks);
         }
 
-        return $this->renderButtonActions($actions);
+        if (count($actions) > self::MAX_FORM_ACTIONS) {
+            return $this->renderDropdownActions($actions, $newLinks);
+        }
+
+        return $this->renderButtonActions($actions, $collapseAt, $newLinks);
     }
 
     /**
@@ -1350,26 +1678,67 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $newActions = array();
 
+        $translator = $this->getServiceLocator()->get('translator');
+
         foreach ($actions as $name => $details) {
 
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
-            $label = isset($details['label']) ? $details['label'] : $value;
+            $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
 
             $class = isset($details['class']) ? $details['class'] : 'secondary';
+
+            $id = isset($details['id']) ? $details['id'] : $name;
+
+            $disabled = isset($details['disabled']) ? $details['disabled'] : '';
+            if ($disabled) {
+                $class .= ' js-force-disable';
+            }
 
             $actionFieldName = $this->getActionFieldName();
 
             $newActions[] = array(
                 'name' => $name,
+                'id' => $id,
                 'value' => $value,
                 'label' => $label,
                 'class' => $class,
-                'action_field_name' => $actionFieldName
+                'action_field_name' => $actionFieldName,
+                'disabled' => $disabled,
             );
         }
 
         return $newActions;
+    }
+
+    private function formatLinks($links)
+    {
+        $newLinks = array();
+
+        $translator = $this->getServiceLocator()->get('translator');
+
+        foreach ($links as $name => $details) {
+
+            $value = isset($details['value']) ? $details['value'] : ucwords($name);
+
+            $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
+
+            $class = isset($details['class']) ? $details['class'] : 'secondary';
+
+            $route = isset($details['route']['route']) ? $details['route']['route'] : null;
+            $params = isset($details['route']['params']) ? $details['route']['params'] : [];
+            $options = isset($details['route']['options']) ? $details['route']['options'] : [];
+            $reuse = isset($details['route']['reuse']) ? $details['route']['reuse'] : false;
+
+            $newLinks[] = array(
+                'href' => $this->getUrl()->fromRoute($route, $params, $options, $reuse),
+                'value' => $value,
+                'label' => $label,
+                'class' => $class
+            );
+        }
+
+        return $newLinks;
     }
 
     /**
@@ -1391,6 +1760,21 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         return $actions;
     }
 
+    public function getColumn($name)
+    {
+        return ($this->hasColumn($name) ? $this->columns[$name] : null);
+    }
+
+    public function setColumn($name, $column)
+    {
+        $this->columns[$name] = $column;
+    }
+
+    public function hasColumn($name)
+    {
+        return isset($this->columns[$name]);
+    }
+
     /**
      * Remove column on the fly
      *
@@ -1398,21 +1782,61 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function removeColumn($name = '')
     {
-        if ($name) {
-            $columns = $this->getColumns();
-            $newColumns = array();
-            foreach ($columns as $column) {
-                if ((array_key_exists('name', $column) === false) ||
-                    (array_key_exists('name', $column) && $column['name'] !== $name)) {
-                    $newColumns[] = $column;
+        if ($this->hasColumn($name)) {
+            unset($this->columns[$name]);
+        }
+    }
+
+    private function authorisedToView($column)
+    {
+        if (isset($column['permissionRequisites'])) {
+            foreach ((array) $column['permissionRequisites'] as $permission) {
+                if ($this->getAuthService()->isGranted($permission)) {
+                    return true;
                 }
             }
-            $this->setColumns($newColumns);
+            return false;
         }
+
+        // if option not set then default to visible
+        return true;
     }
 
     private function shouldHide($column)
     {
-        return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
+        return !($this->authorisedToView($column)) ||
+        ($this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled']);
+    }
+
+    public function isRowDisabled($row)
+    {
+        if (!isset($this->settings['row-disabled-callback'])) {
+            return false;
+        }
+
+        $callback = $this->settings['row-disabled-callback'];
+
+        return $callback($row);
+    }
+
+    protected function shouldPaginate()
+    {
+        return isset($this->settings['paginate']);
+    }
+
+    protected function setupDataAttributes()
+    {
+        if (isset($this->variables['dataAttributes']) && is_array($this->variables['dataAttributes'])) {
+
+            $attrs = [];
+            foreach ($this->variables['dataAttributes'] as $attribute => $value) {
+                $attrs[] = $attribute . '="' . (string)$value . '"';
+            }
+
+            $this->variables['dataAttributes'] = implode(' ', $attrs);
+            return;
+        }
+
+        $this->variables['dataAttributes'] = '';
     }
 }

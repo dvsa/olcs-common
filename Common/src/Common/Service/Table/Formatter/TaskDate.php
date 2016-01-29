@@ -28,8 +28,14 @@ class TaskDate implements FormatterInterface
         $date = Date::format($data, $column, $sm);
         if (isset($data['urgent']) && $data['urgent'] === 'Y') {
             // @TODO no AC for what the urgent marker looks like
+            // $date .= ' <span class="status orange">urgent</span>';
             $date .= ' (urgent)';
         }
+
+        if (isset($data['isClosed']) && $data['isClosed'] === 'Y') {
+            $date .= ' <span class="status red">closed</span>';
+        }
+
         return $date;
     }
 }

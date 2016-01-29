@@ -32,7 +32,8 @@ class Email extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringTrim'],
             ],
             'validators' => [
-                ['name' => 'Zend\Validator\EmailAddress'],
+                // @NOTE don't know if this is still used but I'll update it anyway
+                ['name' => 'Dvsa\Olcs\Transfer\Validators\EmailAddress'],
                 ['name' => 'Zend\Validator\StringLength', 'options'=> ['min' => 5, 'max' => 255]],
             ]
         ];

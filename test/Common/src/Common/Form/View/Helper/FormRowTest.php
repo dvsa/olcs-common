@@ -7,7 +7,7 @@
  */
 namespace CommonTest\Form\View\Helper;
 
-use Zend\Form\LabelAwareInterface;
+use Zend\Form\Element\DateSelect;
 use Zend\View\HelperPluginManager;
 use Zend\Form\View\Helper as ZendHelper;
 use Common\Form\View\Helper as CommonHelper;
@@ -24,7 +24,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
      * @param array $options
      * @return \Zend\Form\Element
      */
-    private function prepareElement($type = 'Text', $options = array())
+    private function prepareElement($type = 'Text', $options = array(), $attributes = array('class' => 'class'))
     {
         if (strpos($type, '\\') === false) {
             $type = '\Zend\Form\Element\\' . ucfirst($type);
@@ -41,7 +41,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         $element = new $type('test');
         $element->setOptions($options);
-        $element->setAttribute('class', 'class');
+        $element->setAttributes($attributes);
 
         return $element;
     }
@@ -60,7 +60,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><div class="field ">'.
-            '<ul><li>(.*)<\/li><\/ul><label><span>(.*)<\/span><\/label>(.*)<\/div><\/div>$/'
+            '<ul><li>(.*)<\/li><\/ul><label>(.*)<\/label>(.*)<\/div><\/div>$/'
         );
     }
 
@@ -169,13 +169,33 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="field "><label><span>(.*)<\/span><\/label>(.*)<\/div>$/');
+        $this->expectOutputRegex('/^<div class="field "><label>(.*)<\/label>(.*)<\/div>$/');
     }
 
     /**
      * @outputBuffering disabled
      */
-    public function testRenderRadio()
+    public function testRenderCheckbox()
+    {
+        $element = $this->prepareElement(
+            'Common\Form\Elements\InputFilters\Checkbox',
+            [
+                'label_options' => [
+                    'label_position' => 'append'
+                ]
+            ]
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<div class="field "><label for="test">(.*)<\/label>(.*)<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderRadioNoAttribute()
     {
         $element = $this->prepareElement('Radio');
 
@@ -183,6 +203,138 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($element);
 
         $this->expectOutputRegex('/^<fieldset><legend>(.*)<\/legend><\/fieldset>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderRadioLegendAttribute()
+    {
+        $element = $this->prepareElement(
+            'Radio',
+            [
+                "legend-attributes" => [
+                    'class' => 'A_CLASS'
+                ]
+            ]
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<fieldset><legend class="A_CLASS">(.*)<\/legend><\/fieldset>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderRadioWithDataGroupAttribute()
+    {
+        $element = $this->prepareElement(
+            'Radio',
+            [
+                "fieldset-data-group" => 'data-group'
+            ]
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<fieldset data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/');
+    }
+
+    public function testRenderRadioWithInlineAttribute()
+    {
+        $element = $this->prepareElement(
+            'Radio',
+            [
+                "fieldset-attributes" => [
+                    "class" => "inline",
+                    "data-group" => "data-group"
+                ]
+            ]
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex(
+            '/^<fieldset class="inline" data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/'
+        );
+    }
+
+    /**
+     * @outputBuffering disabled
+     * @group formRow
+     */
+    public function testRenderCsrfElement()
+    {
+        $element = $this->prepareElement(
+            'Csrf',
+            [
+                'csrf_options' => [
+                    'messageTemplates' => [
+                        'notSame' => 'csrf-message'
+                    ],
+                    'timeout' => 600
+                ],
+                'name' => 'security'
+            ],
+            ['id' => 'security']
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputString('<label for="security">Label</label>');
+    }
+
+    /**
+     * @outputBuffering disabled
+     * @group formRow
+     */
+    public function testRenderVisuallyHiddenElement()
+    {
+        $element = $this->prepareElement(
+            'Text',
+            [
+                'name' => 'text'
+            ],
+            ['class' => 'visually-hidden']
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<div class="field visually-hidden">(.*)<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     * @group formRow
+     */
+    public function testRenderHiddenElement()
+    {
+        $element = $this->prepareElement(
+            'Hidden',
+            [
+                'name' => 'hidden'
+            ],
+            ['class' => 'visually-hidden']
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputString('<label for="test">Label</label>');
+    }
+
+    public function renderRadioProvider()
+    {
+        return [
+            [null],
+            [["class" => ""]]
+        ];
     }
 
     private function prepareHelper()
@@ -210,5 +362,85 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper->setTranslator($translator);
 
         return $viewHelper;
+    }
+
+    public function testRenderWithRenderAsFieldset()
+    {
+        $element = $this->prepareElement();
+        $element->setOption('render_as_fieldset', true);
+
+        $viewHelper = $this->prepareHelper();
+        $markup = $viewHelper($element);
+
+        $this->assertEquals(
+            '<fieldset class="fieldset--primary"><legend>Label</legend><p class="hint">Hint</p></fieldset>',
+            $markup
+        );
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderReadonlyElement()
+    {
+        $element = $this->prepareElement(
+            'Common\Form\Elements\Types\Readonly',
+            [
+                'name' => 'readonly',
+                'label' => 'Foo'
+            ],
+            []
+        );
+
+        $element->setValue('Bar');
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputString('<div class="field read-only "><p>Foo<br><b>Bar</b></p></div>');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderDateSelectElement()
+    {
+        $element = $this->prepareElement(
+            'DateSelect',
+            [
+                'name' => 'date',
+                'label' => 'Foo'
+            ],
+            []
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $expected = '<div class="field "><fieldset><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>';
+
+        $this->expectOutputString($expected);
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderDateTimeSelectElement()
+    {
+        $element = $this->prepareElement(
+            'DateTimeSelect',
+            [
+                'name' => 'date',
+                'label' => 'Foo'
+            ],
+            []
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $expected = '<div class="field "><fieldset><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>';
+
+        $this->expectOutputString($expected);
     }
 }

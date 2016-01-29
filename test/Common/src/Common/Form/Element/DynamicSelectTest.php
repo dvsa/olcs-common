@@ -13,10 +13,11 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
     public function testSetOptions()
     {
         $sut =  new DynamicSelect();
-        $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'label' => 'Testing']);
+        $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'other_option'=>true, 'label' => 'Testing']);
 
         $this->assertEquals('testing', $sut->getContext());
         $this->assertTrue($sut->useGroups());
+        $this->assertTrue($sut->otherOption());
         $this->assertEquals('Testing', $sut->getLabel());
     }
 
@@ -45,6 +46,68 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
 
         //check that the values are only fetched once
         $sut->getValueOptions();
+    }
+
+    public function testGetValueOptionsWithOtherOption()
+    {
+        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService
+            ->expects($this->once())
+            ->method('fetchListOptions')
+            ->with($this->equalTo('category'), $this->equalTo(false))
+            ->willReturn(['key'=>'value']);
+
+        $sut = new DynamicSelect();
+        $sut->setOtherOption(true);
+        $sut->setDataService($mockRefDataService);
+        $sut->setContext('category');
+
+        $this->assertEquals(['key'=>'value', 'other' => 'Other'], $sut->getValueOptions());
+
+        //check that the values are only fetched once
+        $sut->getValueOptions();
+    }
+
+    public function testGetValueOptionsWithExclude()
+    {
+        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService
+            ->expects($this->once())
+            ->method('fetchListOptions')
+            ->with($this->equalTo('category'), $this->equalTo(false))
+            ->willReturn(['key' => 'value', 'exclude' => 'me', 'one_more' => 'one more value']);
+
+        $sut = new DynamicSelect();
+        $sut->setExclude(['exclude']);
+        $sut->setDataService($mockRefDataService);
+        $sut->setContext('category');
+
+        $this->assertEquals(['key'=>'value', 'one_more' => 'one more value'], $sut->getValueOptions());
+
+        //check that the values are only fetched once
+        $sut->getValueOptions();
+    }
+
+    public function testGetValueOptionsWithEmptyOption()
+    {
+        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService
+            ->expects($this->once())
+            ->method('fetchListOptions')
+            ->with($this->equalTo('category'), $this->equalTo(false))
+            ->willReturn(['key'=>'value']);
+
+        $sut = new DynamicSelect();
+        $sut->setOtherOption(false);
+        $sut->setEmptyOption('choose one');
+        $sut->setDataService($mockRefDataService);
+        $sut->setContext('category');
+
+        $this->assertEquals(['key'=>'value'], $sut->getValueOptions());
+
+        // empty option does not get returned from getValueOptions,
+        // it's appended in the view helper - @see Zend\Form\View\Helper\FormSelect::render
+        $this->assertEquals('choose one', $sut->getEmptyOption());
     }
 
     /**
@@ -112,5 +175,23 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue($thrown, 'Expected exception not thrown or message incorrect');
+    }
+
+    public function testAddValueOption()
+    {
+        $original = [
+            1 => 2,
+            2 => 3
+        ];
+
+        $additional = [
+            3 => 4
+        ];
+
+        $sut = new DynamicSelect();
+        $sut->setValueOptions($original);
+        $sut->addValueOption($additional);
+
+        $this->assertEquals($sut->getValueOptions(), array_merge($original, $additional));
     }
 }

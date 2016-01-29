@@ -20,7 +20,7 @@ class Action extends AbstractType
      *
      * @var string
      */
-    private $format = '<input type="submit" class="%s" name="%s" value="%s" />';
+    private $format = '<input type="submit" class="%s" name="%s" value="%s" %s />';
 
     /**
      * Render the selector
@@ -29,13 +29,19 @@ class Action extends AbstractType
      * @param array $column
      * @return string
      */
-    public function render($data, $column)
+    public function render($data, $column, $formattedContent = null)
     {
         $fieldset = $this->getTable()->getFieldset();
 
         $class = isset($column['class']) ? $column['class'] : '';
 
-        $value = (isset($column['name']) && isset($data[$column['name']]) ? $data[$column['name']] : '');
+        if ($formattedContent !== null) {
+            $value = $formattedContent;
+        } elseif (isset($column['value_format'])) {
+            $value = $this->getTable()->replaceContent($column['value_format'], $data);
+        } else {
+            $value = (isset($column['name']) && isset($data[$column['name']]) ? $data[$column['name']] : '');
+        }
 
         $name = 'action';
 
@@ -45,6 +51,8 @@ class Action extends AbstractType
 
         $name .= '[' . $column['action'] . '][' . $data['id'] . ']';
 
-        return sprintf($this->format, $class, $name, $value);
+        $attributes = isset($column['action-attributes']) ? $column['action-attributes'] : [];
+
+        return sprintf($this->format, $class, $name, $value, implode(' ', $attributes));
     }
 }

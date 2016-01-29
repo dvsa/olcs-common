@@ -29,11 +29,13 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
             'local_scripts_path' => [__DIR__ . '/TestResources/']
         ];
 
+        $this->inlineScript = new \Zend\View\Helper\InlineScript();
+
         $vhm = $this->getMock('\Zend\View\HelperPluginManager', ['get']);
         $vhm->expects($this->any())
             ->method('get')
             ->with('inlineScript')
-            ->will($this->returnValue(new \Zend\View\Helper\InlineScript()));
+            ->will($this->returnValue($this->inlineScript));
 
         $valueMap = array(
             array('ViewHelperManager', $vhm),
@@ -63,8 +65,19 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadFileWithExistentPath()
     {
-        $result = $this->service->loadFile('stub');
-        $this->assertEquals("alert(\"I am a dummy fixture!\");\n", $result);
+        $this->service->loadFile('stub');
+        $jsArray = [];
+
+        foreach ($this->inlineScript as $item) {
+            $jsArray[] = $item->source;
+        }
+
+        $this->assertEquals(
+            $jsArray,
+            [
+                "alert(\"I am a dummy fixture!\");\n"
+            ]
+        );
     }
 
     public function testLoadFilesWhereOneOrMoreDoesNotExist()
@@ -85,7 +98,7 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
 
         $jsArray = [];
 
-        foreach ($scripts->getViewHelperManager()->get('inlineScript') as $item) {
+        foreach ($this->inlineScript as $item) {
             $jsArray[] = $item->source;
         }
 

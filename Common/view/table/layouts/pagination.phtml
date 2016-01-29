@@ -1,4 +1,5 @@
 <div class="table__footer">
+    <?php if ($this->object->getTotal() > $this->object->getLimit()): ?>
     <div class="results-settings">
         <p>Showing:</p>
         <ul class="results-settings__list">
@@ -10,4 +11,5 @@
     <ul class="pagination right-aligned" role="navigation">
         <?php echo $this->object->renderPageOptions(); ?>
     </ul><!-- end .pagination.right-aligned -->
+    <?php endif; ?>
 </div>
