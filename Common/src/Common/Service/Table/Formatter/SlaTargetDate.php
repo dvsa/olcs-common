@@ -31,24 +31,24 @@ class SlaTargetDate implements FormatterInterface
         if (empty($data['slaTargetDate']))
         {
             $url = $urlHelper->fromRoute(
-                'case_licence_docs_attachments/sla-target',
+                'sla-target',
                 [
-                    'doc' => $data['id'],
+                    'entityType' => 'document',
+                    'entityId' => $data['id'],
                     'action' => 'add'
-                ],
-                [],
-                true
+                ]
             );
-            return '<a href="' . $url . '">Not set</a>';
+            return '<a href="' . $url . '" class="js-modal-ajax">Not set</a>';
         } else {
             $url = $urlHelper->fromRoute(
                 'case_licence_docs_attachments/sla-target',
                 [
-                    'doc' => $data['document']['id'],
+                    'entityType' => 'document',
+                    'entityId' => $data['id'],
                     'action' => 'edit'
                 ]
             );
-            return '<a href="' . $url . '">' . $data['slaTargetDate'] . '</a>';
+            return '<a href="/' . $url . '" class="js-modal-ajax">' . $data['slaTargetDate'] . '</a>';
         }
     }
 }
