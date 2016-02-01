@@ -28,7 +28,7 @@ class SlaTargetDate implements FormatterInterface
     {
         $urlHelper = $sm->get('Helper\Url');
 
-        if (empty($data['slaTargetDate']))
+        if (empty($data['targetDate']))
         {
             $url = $urlHelper->fromRoute(
                 'sla-target',
@@ -41,14 +41,21 @@ class SlaTargetDate implements FormatterInterface
             return '<a href="' . $url . '" class="js-modal-ajax">Not set</a>';
         } else {
             $url = $urlHelper->fromRoute(
-                'case_licence_docs_attachments/sla-target',
+                'sla-target',
                 [
                     'entityType' => 'document',
                     'entityId' => $data['id'],
                     'action' => 'edit'
                 ]
             );
-            return '<a href="/' . $url . '" class="js-modal-ajax">' . $data['slaTargetDate'] . '</a>';
+
+            $statusHtml = '<span class="status red">Fail</span>';
+            if ($data['targetDate'] >= $data['sentDate']) {
+                $statusHtml = '<span class="status green">Pass</span>';
+            }
+            $targetDate = Date::format($data, ['name' => 'targetDate'], $sm);
+
+            return '<a href="' . $url . '" class="js-modal-ajax">' . $targetDate . '</a> ' . $statusHtml;
         }
     }
 }
