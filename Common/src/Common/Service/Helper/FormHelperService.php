@@ -325,7 +325,7 @@ class FormHelperService extends AbstractHelperService
         $address = $this->getServiceLocator()->get('Data\Address')
             ->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
 
-        return $this->getServiceLocator()->get('Helper\Address')->formatPostalAddressFromBs7666($address);
+        return $this->getServiceLocator()->get('Helper\Address')->formatPostalAddress($address);
     }
 
     /**
