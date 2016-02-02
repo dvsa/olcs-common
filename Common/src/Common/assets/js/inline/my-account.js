@@ -2,23 +2,16 @@ OLCS.ready(function() {
   "use strict";
 
   var F = OLCS.formHelper;
-  var emailAddressChanged = false;
 
-  F.input("main", "emailAddress").change(function() {
-    emailAddressChanged = true;
-  });
+  if (!F.containsErrors(F.fieldset("main"))) {
+    var emailAddress = F.input("main", "emailAddress");
+    var emailConfirm = F.input("main", "emailConfirm").parent();
 
-  function showEmailConfirm() {
-    return emailAddressChanged || F.containsErrors(F.fieldset("main"));
+    emailConfirm.hide();
+
+    emailAddress.on('keypress', function() {
+      emailConfirm.show();
+      emailAddress.off('keypress');
+    });
   }
-
-  OLCS.cascadeForm({
-    form: "form[method=post]",
-    rulesets: {
-      "main": {
-        "*": true,
-        "emailConfirm": showEmailConfirm
-      }
-    }
-  });
 });
