@@ -9,11 +9,12 @@ namespace Common\Service\Cqrs\Command;
 
 use Common\Exception\ResourceConflictException;
 use Common\Util\FileContent;
-use Common\Util\JsonString;
 use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
+use Zend\Http\Header\ContentType;
+use Zend\Http\Headers;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
 use Zend\Http\Request;
@@ -75,6 +76,48 @@ class CommandService
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
         }
 
+        $this->client->resetParameters(true);
+        $this->client->setRequest($this->request);
+
+        /**
+         * Foreach file, we will upload separately, and then pass the tmp location with the original request
+         */
+        foreach ($data as $name => $value) {
+            if ($value instanceof FileContent) {
+
+                $fileUri = $this->router->assemble([], ['name' => 'api/backend/api/file-upload/POST']);
+                $fileRequest = clone $this->request;
+                $headers = $fileRequest->getHeaders();
+                $newHeaders = new Headers();
+                foreach ($headers as $header) {
+                    if (!($header instanceof ContentType)) {
+                        $newHeaders->addHeader($header);
+                    }
+                }
+                $fileRequest->setHeaders($newHeaders);
+
+                $fileRequest->setUri($fileUri);
+                $fileRequest->setMethod(Request::METHOD_POST);
+
+                $fileClient = new Client();
+                $fileClient->setRequest($fileRequest);
+                $fileClient->setFileUpload($value->getFileName(), 'file');
+                $fileResponse = $fileClient->send();
+
+                if ($fileResponse->isSuccess()) {
+                    $fileResponseData = json_decode($fileResponse->getContent(), true);
+
+                    if (json_last_error() !== JSON_ERROR_NONE || empty($fileResponseData['tmp_name'])) {
+                        return $this->invalidResponse(['Unexpected response from upload']);
+                    }
+
+                    $data[$name] = $fileResponseData['tmp_name'];
+                } else {
+                    return new Response($fileResponse);
+                }
+            }
+        }
+
         $this->request->setUri($uri);
         $this->request->setMethod($method);
         $this->request->setContent(json_encode($data));
@@ -82,21 +125,13 @@ class CommandService
         /** @var ClientAdapterLoggingWrapper $adapter */
         $adapter = $this->client->getAdapter();
 
-        $this->client->resetParameters(true);
-
-        foreach ($data as $name => $value) {
-            if ($value instanceof FileContent) {
-                $this->client->setFileUpload($value->getFileName(), $name);
-            }
-        }
-
         try {
             if ($command->getDto() instanceof LoggerOmitContentInterface) {
                 $shouldLogContent = $adapter->getShouldLogData();
                 $adapter->setShouldLogData(false);
             }
 
-            $clientResponse = $this->client->send($this->request);
+            $clientResponse = $this->client->send();
 
             if ($command->getDto() instanceof LoggerOmitContentInterface) {
                 $adapter->setShouldLogData($shouldLogContent);

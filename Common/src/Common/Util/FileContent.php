@@ -12,7 +12,7 @@ namespace Common\Util;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FileContent
+class FileContent implements \JsonSerializable
 {
     private $fileName;
 
@@ -22,6 +22,11 @@ class FileContent
     }
 
     public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    public function jsonSerialize()
     {
         return $this->fileName;
     }
