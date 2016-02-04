@@ -8,6 +8,7 @@
 namespace Common\Service\Cqrs\Command;
 
 use Common\Exception\ResourceConflictException;
+use Common\Util\JsonString;
 use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
@@ -62,6 +63,7 @@ class CommandService
 
         $routeName = $command->getRouteName();
         $method = $command->getMethod();
+
         $data = $command->getDto()->getArrayCopy();
 
         try {
@@ -72,9 +74,13 @@ class CommandService
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
         }
 
+        unset($data);
+        $content = new JsonString($command->getDto());
+
         $this->request->setUri($uri);
         $this->request->setMethod($method);
-        $this->request->setContent(json_encode($data));
+        $this->request->setContent($content);
+        $this->client->setFileUpload();
 
         /** @var ClientAdapterLoggingWrapper $adapter */
         $adapter = $this->client->getAdapter();

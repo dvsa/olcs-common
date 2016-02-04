@@ -8,6 +8,7 @@
 namespace Common\Controller\Traits;
 
 use Common\Exception\File\InvalidMimeException;
+use Common\Util\FileContent;
 use Dvsa\Olcs\Transfer\Command\Document\CreateDocument;
 use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
 use Dvsa\Olcs\Transfer\Command\Document\Upload;
@@ -72,13 +73,11 @@ trait GenericUpload
             }
         }
 
-        if (!isset($fileData['content']) && isset($fileData['tmp_name'])) {
-            $fileData['content'] = file_get_contents($fileData['tmp_name']);
-        }
+        $command = Upload::create($data);
+        // Set an object here for the content, to reduce duplicate of file contents in memory
+        $command->content = new FileContent(file_get_contents($fileData['tmp_name']));
 
-        $data['content'] = base64_encode($fileData['content']);
-
-        $response = $this->handleCommand(Upload::create($data));
+        $response = $this->handleCommand($command);
 
         if ($response->isClientError()) {
             $messages = $response->getResult()['messages'];
