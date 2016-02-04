@@ -73,11 +73,9 @@ trait GenericUpload
             }
         }
 
-        $command = Upload::create($data);
-        // Set an object here for the content, to reduce duplicate of file contents in memory
-        $command->content = new FileContent(file_get_contents($fileData['tmp_name']));
+        $data['file'] = new FileContent($fileData['tmp_name']);
 
-        $response = $this->handleCommand($command);
+        $response = $this->handleCommand(Upload::create($data));
 
         if ($response->isClientError()) {
             $messages = $response->getResult()['messages'];

@@ -8,6 +8,7 @@
 namespace Common\Service\Cqrs\Command;
 
 use Common\Exception\ResourceConflictException;
+use Common\Util\FileContent;
 use Common\Util\JsonString;
 use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Common\Service\Cqrs\Response;
@@ -74,16 +75,20 @@ class CommandService
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
         }
 
-        unset($data);
-        $content = new JsonString($command->getDto());
-
         $this->request->setUri($uri);
         $this->request->setMethod($method);
-        $this->request->setContent($content);
-        $this->client->setFileUpload();
+        $this->request->setContent(json_encode($data));
 
         /** @var ClientAdapterLoggingWrapper $adapter */
         $adapter = $this->client->getAdapter();
+
+        $this->client->resetParameters(true);
+
+        foreach ($data as $name => $value) {
+            if ($value instanceof FileContent) {
+                $this->client->setFileUpload($value->getFileName(), $name);
+            }
+        }
 
         try {
             if ($command->getDto() instanceof LoggerOmitContentInterface) {
@@ -91,7 +96,6 @@ class CommandService
                 $adapter->setShouldLogData(false);
             }
 
-            $this->client->resetParameters(true);
             $clientResponse = $this->client->send($this->request);
 
             if ($command->getDto() instanceof LoggerOmitContentInterface) {
