@@ -28,8 +28,7 @@ class SlaTargetDate implements FormatterInterface
     {
         $urlHelper = $sm->get('Helper\Url');
 
-        if (empty($data['targetDate']))
-        {
+        if (empty($data['targetDate'])) {
             $url = $urlHelper->fromRoute(
                 'case_licence_docs_attachments/add-sla',
                 [
