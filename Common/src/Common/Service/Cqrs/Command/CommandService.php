@@ -107,11 +107,11 @@ class CommandService
                 if ($fileResponse->isSuccess()) {
                     $fileResponseData = json_decode($fileResponse->getContent(), true);
 
-                    if (json_last_error() !== JSON_ERROR_NONE || empty($fileResponseData['tmp_name'])) {
+                    if (json_last_error() !== JSON_ERROR_NONE || empty($fileResponseData['identifier'])) {
                         return $this->invalidResponse(['Unexpected response from upload']);
                     }
 
-                    $data[$name] = $fileResponseData['tmp_name'];
+                    $data[$name] = $fileResponseData['identifier'];
                 } else {
                     return new Response($fileResponse);
                 }
