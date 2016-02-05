@@ -79,48 +79,38 @@ class CommandService
         $this->client->resetParameters(true);
         $this->client->setRequest($this->request);
 
+        $isMultipart = false;
+
         /**
-         * Foreach file, we will upload separately, and then pass the tmp location with the original request
+         * Check for FileContent, then we will send as multipart rather than JSON
          */
         foreach ($data as $name => $value) {
             if ($value instanceof FileContent) {
-
-                $fileUri = $this->router->assemble([], ['name' => 'api/backend/api/file-upload/POST']);
-                $fileRequest = clone $this->request;
-                $headers = $fileRequest->getHeaders();
-                $newHeaders = new Headers();
-                foreach ($headers as $header) {
-                    if (!($header instanceof ContentType)) {
-                        $newHeaders->addHeader($header);
-                    }
-                }
-                $fileRequest->setHeaders($newHeaders);
-
-                $fileRequest->setUri($fileUri);
-                $fileRequest->setMethod(Request::METHOD_POST);
-
-                $fileClient = new Client();
-                $fileClient->setRequest($fileRequest);
-                $fileClient->setFileUpload($value->getFileName(), 'file');
-                $fileResponse = $fileClient->send();
-
-                if ($fileResponse->isSuccess()) {
-                    $fileResponseData = json_decode($fileResponse->getContent(), true);
-
-                    if (json_last_error() !== JSON_ERROR_NONE || empty($fileResponseData['identifier'])) {
-                        return $this->invalidResponse(['Unexpected response from upload']);
-                    }
-
-                    $data[$name] = $fileResponseData['identifier'];
-                } else {
-                    return new Response($fileResponse);
-                }
+                $isMultipart = true;
+                $this->client->setFileUpload($value->getFileName(), $name);
             }
         }
 
         $this->request->setUri($uri);
         $this->request->setMethod($method);
-        $this->request->setContent(json_encode($data));
+
+        /**
+         * If we are sending multipart, we need to remove the application/json header, the multipart header will be
+         * added by ZF2s client
+         */
+        if ($isMultipart) {
+            $headers = $this->request->getHeaders();
+            $newHeaders = new Headers();
+            foreach ($headers as $header) {
+                if (!($header instanceof ContentType)) {
+                    $newHeaders->addHeader($header);
+                }
+            }
+            $this->request->setHeaders($newHeaders);
+            $this->client->setParameterPost($data);
+        } else {
+            $this->request->setContent(json_encode($data));
+        }
 
         /** @var ClientAdapterLoggingWrapper $adapter */
         $adapter = $this->client->getAdapter();
