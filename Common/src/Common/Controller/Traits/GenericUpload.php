@@ -73,7 +73,7 @@ trait GenericUpload
             }
         }
 
-        $data['file'] = new FileContent($fileData['tmp_name']);
+        $data['content'] = new FileContent($fileData['tmp_name']);
 
         $response = $this->handleCommand(Upload::create($data));
 
