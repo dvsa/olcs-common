@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Cqrs\Query;
 
+use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Common\Service\Cqrs\Response;
 use Zend\Http\Response as HttpResponse;
@@ -71,9 +72,24 @@ class QueryService implements QueryServiceInterface
         $this->request->setUri($uri);
         $this->request->setMethod('GET');
 
+        $adapter = $this->client->getAdapter();
+
         try {
             $this->client->resetParameters(true);
-            return new Response($this->client->send($this->request));
+
+            if ($query->getDto() instanceof LoggerOmitContentInterface) {
+                $shouldLogContent = $adapter->getShouldLogData();
+                $adapter->setShouldLogData(false);
+            }
+
+            $clientResponse = $this->client->send($this->request);
+
+            if ($query->getDto() instanceof LoggerOmitContentInterface) {
+                $adapter->setShouldLogData($shouldLogContent);
+            }
+
+            return new Response($clientResponse);
+
         } catch (HttpClientExceptionInterface $ex) {
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_500);
         }
