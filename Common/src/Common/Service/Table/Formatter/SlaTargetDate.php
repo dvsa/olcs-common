@@ -32,7 +32,10 @@ class SlaTargetDate implements FormatterInterface
         $routeMatch = $router->match($request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
-        if (empty($data['targetDate'])) {
+        // use agreedDate to determine if we have a record or not since mandatory field.
+        // then use target date to show 'Not set' link
+
+        if (empty($data['agreedDate'])) {
             $url = $urlHelper->fromRoute(
                 $matchedRouteName . '/add-sla',
                 [
@@ -44,7 +47,7 @@ class SlaTargetDate implements FormatterInterface
             );
             return '<a href="' . $url . '" class="js-modal-ajax">Not set</a>';
         } else {
-            $url = $urlHelper->fromRoute(
+                $url = $urlHelper->fromRoute(
                 $matchedRouteName . '/edit-sla',
                 [
                     'entityType' => 'document',
@@ -53,6 +56,11 @@ class SlaTargetDate implements FormatterInterface
                 [],
                 true
             );
+
+            // if target date is not set, show not set but link to the record to edit
+            if (empty($data['targetDate'])) {
+                return '<a href="' . $url . '" class="js-modal-ajax">Not set</a> ' . $statusHtml;
+            }
 
             $statusHtml = '<span class="status red">Fail</span>';
             if ($data['targetDate'] >= $data['sentDate']) {
