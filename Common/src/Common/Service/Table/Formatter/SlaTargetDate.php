@@ -26,11 +26,15 @@ class SlaTargetDate implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        $urlHelper = $sm->get('Helper\Url');
+        $router     = $sm->get('router');
+        $request    = $sm->get('request');
+        $urlHelper  = $sm->get('Helper\Url');
+        $routeMatch = $router->match($request);
+        $matchedRouteName = $routeMatch->getMatchedRouteName();
 
         if (empty($data['targetDate'])) {
             $url = $urlHelper->fromRoute(
-                'case_licence_docs_attachments/add-sla',
+                $matchedRouteName . '/add-sla',
                 [
                     'entityType' => 'document',
                     'entityId' => $data['id']
@@ -41,7 +45,7 @@ class SlaTargetDate implements FormatterInterface
             return '<a href="' . $url . '" class="js-modal-ajax">Not set</a>';
         } else {
             $url = $urlHelper->fromRoute(
-                'case_licence_docs_attachments/edit-sla',
+                $matchedRouteName . '/edit-sla',
                 [
                     'entityType' => 'document',
                     'entityId' => $data['id']
