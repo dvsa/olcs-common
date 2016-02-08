@@ -59,10 +59,11 @@ class SlaTargetDate implements FormatterInterface
 
             // if target date is not set, show not set but link to the record to edit
             if (empty($data['targetDate'])) {
-                return '<a href="' . $url . '" class="js-modal-ajax">Not set</a> ' . $statusHtml;
+                return '<a href="' . $url . '" class="js-modal-ajax">Not set</a> ';
             }
 
             $statusHtml = '<span class="status red">Fail</span>';
+
             if ($data['targetDate'] >= $data['sentDate']) {
                 $statusHtml = '<span class="status green">Pass</span>';
             }
