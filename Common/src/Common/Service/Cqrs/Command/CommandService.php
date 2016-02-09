@@ -99,14 +99,20 @@ class CommandService
          * added by ZF2s client
          */
         if ($isMultipart) {
-            $headers = $this->request->getHeaders();
+            /**
+             * Here we need to clone the request object, rather than update the current 1, as this service is a
+             * singleton, and subsequent calls to ->send would result in the headers being incorrectly modified.
+             */
+            $request = clone $this->request;
+            $headers = $request->getHeaders();
             $newHeaders = new Headers();
             foreach ($headers as $header) {
                 if (!($header instanceof ContentType)) {
                     $newHeaders->addHeader($header);
                 }
             }
-            $this->request->setHeaders($newHeaders);
+            $request->setHeaders($newHeaders);
+            $this->client->setRequest($request);
             $this->client->setParameterPost($data);
         } else {
             $this->request->setContent(json_encode($data));
