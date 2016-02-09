@@ -2636,5 +2636,6 @@ return [
     'west-of-england' => 'West of England',
     'withdraw-application' => 'Withdraw application',
     'your-business' => 'Your business',
+    'skip-content' => 'Skip to Main Content'
     // Potentially unused translations
 ];
