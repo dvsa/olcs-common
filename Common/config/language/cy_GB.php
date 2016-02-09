@@ -68,6 +68,7 @@ return [
     'ERR_UNLICENCED_ORG' => '{WELSH} The organisation is unlicenced',
     'ERR_USERNAME_EXISTS' => '{WELSH} Username is already taken',
     'ERR_USERNAME_REQUIRED' => '{WELSH} Username is required',
+    'ERR_USER_HAS_OPEN_TASK' => '{WELSH} The user could not be deleted due to tasks still being open',
     'FHAdditionalInfo.validation.is_empty' => '{WELSH} You selected \'yes\' in one of the provided questions, so value is required and can\'t be empty',
     'Find out more' => '{WELSH} Find out more',
     'Full name in block capitals' => '{WELSH} Full name in block capitals',
