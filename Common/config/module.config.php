@@ -390,6 +390,7 @@ return array(
             'Common\Validator\OneOf' => 'Common\Validator\OneOf',
             'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date',
             'Common\Validator\DateInFuture' => 'Common\Validator\DateInFuture',
+            'Common\Validator\DateCompareWithInterval' => 'Common\Validator\DateCompareWithInterval',
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
@@ -400,6 +401,7 @@ return array(
             'OneOf' => 'Common\Validator\OneOf',
             'Date' => 'Common\Form\Elements\Validators\Date',
             'DateInFuture' => 'Common\Validator\DateInFuture',
+            'DateCompareWithInterval' => 'Common\Validator\DateCompareWithInterval',
         ]
     ],
     'filters' => [

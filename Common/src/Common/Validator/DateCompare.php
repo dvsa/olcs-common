@@ -95,8 +95,12 @@ class DateCompare extends AbstractCompare
             return false;
         }
 
-        $compareDateValue = \DateTime::createFromFormat('Y-m-d', $compareToValue);
-        $compareDateValue->setTime(0, 0, 0);
+        $compareDateValue = $this->generateCompareDateValue($compareToValue);
+
+        if (!empty($this->error)) {
+            // process any errors from sub classes
+            return false;
+        }
 
         //if we're comparing a field which also has a time
         if ($this->getHasTime()) {
@@ -113,5 +117,19 @@ class DateCompare extends AbstractCompare
         $dateValue->setTime(0, 0, 0);
 
         return $this->isValidForOperator($dateValue, $compareDateValue);
+    }
+
+    /**
+     * Generate the compareDate value.
+     *
+     * @param $compareToValue
+     * @return \DateTime
+     */
+    protected function generateCompareDateValue($compareToValue)
+    {
+        $compareDateValue = \DateTime::createFromFormat('Y-m-d', $compareToValue);
+        $compareDateValue->setTime(0, 0, 0);
+
+        return $compareDateValue;
     }
 }
