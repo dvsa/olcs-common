@@ -47,7 +47,7 @@ class SlaTargetDate implements FormatterInterface
             );
             return '<a href="' . $url . '" class="js-modal-ajax">Not set</a>';
         } else {
-                $url = $urlHelper->fromRoute(
+            $url = $urlHelper->fromRoute(
                 $matchedRouteName . '/edit-sla',
                 [
                     'entityType' => 'document',
