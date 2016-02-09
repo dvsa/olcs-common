@@ -634,7 +634,7 @@ return [
     'business-details.name.locked' => 'Cannot change company name. Please contact Central Licensing Office for further advice',
     'business-type' => 'Business type',
     'business-type.locked' => 'Cannot change business type. Please contact Central Licensing Office for further advice.',
-    'business-type.locked.message' => 'To change your business type email <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
+    'business-type.locked.message' => 'To change your business type, email <a href="mailto:operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
     'cannot-change-conditions-undertakings-guidance' => 'Cannot change conditions and undertakings. Please contact Central Licensing Office for further advice',
