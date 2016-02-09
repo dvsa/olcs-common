@@ -97,8 +97,8 @@ class DateCompare extends AbstractCompare
 
         $compareDateValue = $this->generateCompareDateValue($compareToValue);
 
-        if (!empty($this->error)) {
-            // process any errors from sub classes
+        if (!empty($this->getMessages())) {
+            // process any errors from sub class
             return false;
         }
 

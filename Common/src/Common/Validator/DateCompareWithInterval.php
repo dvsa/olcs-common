@@ -27,7 +27,7 @@ class DateCompareWithInterval extends DateCompare
      */
     protected $messageTemplates = array(
         self::NOT_GT => "This date must be %interval_label% after the '%compare_to_label%'",
-        self::NOT_LT => "This date must be before '%compare_to_label%' %interval_label% ",
+        self::NOT_LT => "This date must be %interval_label% before '%compare_to_label%'",
         self::INVALID_OPERATOR => "Invalid operator",
         self::INVALID_INTERVAL => "Invalid interval",
         self::INVALID_FIELD => "Input field being compared to doesn't exist",
@@ -123,10 +123,15 @@ class DateCompareWithInterval extends DateCompare
         if (!empty($this->getDateInterval())) {
             try {
                 $dv = new \DateInterval($this->getDateInterval());
+                if (in_array($this->getOperator(), ['lt', 'lte'])) {
+                    $compareDateValue->sub($dv);
+                } else {
+                    $compareDateValue->add($dv);
+                }
             } catch (\Exception $e) {
                 $this->error(self::INVALID_INTERVAL); //@TO~DO~
+                return false;
             }
-            $compareDateValue->add($dv);
         }
 
         return $compareDateValue;
