@@ -96,7 +96,7 @@ class FormDateSelect extends ZendFormDateSelect
     }
 
     protected function renderYearInput($element)
-    {;
+    {
 
         return $this->wrap(
             $this->renderInput($element, 4),
