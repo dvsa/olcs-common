@@ -229,7 +229,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn('address_1234');
 
         $addressHelper = m::mock('\stdClass');
-        $addressHelper->shouldReceive('formatPostalAddressFromBs7666')
+        $addressHelper->shouldReceive('formatPostalAddress')
             ->with('address_1234')
             ->andReturn('formatted1');
 
@@ -298,7 +298,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn('address_1234');
 
         $addressHelper = m::mock('\stdClass');
-        $addressHelper->shouldReceive('formatPostalAddressFromBs7666')
+        $addressHelper->shouldReceive('formatPostalAddress')
             ->with('address_1234')
             ->andReturn('formatted1');
 

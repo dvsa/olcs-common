@@ -33,21 +33,20 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test formatPostalAddressFromBs7666 with simple parts
+     * Test formatPostalAddress with simple parts
      *
      * @group helper_service
      * @group address_helper_service
      */
-    public function testFormatPostalAddressFromBs7666WithSimpleParts()
+    public function testFormatPostalAddressWithSimpleParts()
     {
         $address = array(
-            'organisation_name' => 'My Company Ltd',
-            'building_name' => 'Awesome House',
-            'street_description' => 'STREET NAME',
-            'locality_name' => null,
+            'address_line1' => 'My Company Ltd',
+            'address_line2' => 'Awesome House Street Name',
+            'address_line3' => '',
+            'address_line4' => '',
             'post_town' => 'Some Town',
-            'administritive_area' => 'Some Area',
-            'postcode' => 'AB1 1AB'
+            'postcode' => 'AB1 1AB',
         );
 
         $expectedAddress = array(
@@ -60,89 +59,7 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
             'countryCode' => 'GB'
         );
 
-        $addressDetails = $this->service->formatPostalAddressFromBs7666($address);
-
-        $this->assertEquals($expectedAddress, $addressDetails);
-    }
-
-    /**
-     * Test formatPostalAddressFromBs7666
-     *
-     * @group helper_service
-     * @group address_helper_service
-     */
-    public function testFormatPostalAddressFromBs7666()
-    {
-        $address = array(
-            'sao_start_number' => '1',
-            'sao_start_prefix' => 'a',
-            'sao_end_number' => '22',
-            'sao_end_suffix' => 'b',
-            'sao_text' => 'Awesome house',
-            'pao_start_number' => '31',
-            'pao_start_prefix' => '',
-            'pao_end_number' => '',
-            'pao_end_suffix' => '',
-            'pao_text' => 'Some Street',
-            'street_description' => 'STREET NAME',
-            'locality_name' => null,
-            'post_town' => 'Some Town',
-            'administritive_area' => 'Some Area',
-            'postcode' => 'AB1 1AB'
-        );
-
-        $expectedAddress = array(
-            'addressLine1' => '1a-22b Awesome House',
-            'addressLine2' => '31 Some Street Street Name',
-            'addressLine3' => '',
-            'addressLine4' => '',
-            'town' => 'Some Town',
-            'postcode' => 'AB1 1AB',
-            'countryCode' => 'GB'
-        );
-
-        $addressDetails = $this->service->formatPostalAddressFromBs7666($address);
-
-        $this->assertEquals($expectedAddress, $addressDetails);
-    }
-
-    /**
-     * Test formatPostalAddressFromBs7666 With admin area same as post_town
-     *
-     * @group helper_service
-     * @group address_helper_service
-     */
-    public function testFormatPostalAddressFromBs7666WithSameAdminAndTown()
-    {
-        $address = array(
-            'sao_start_number' => '1',
-            'sao_start_prefix' => 'a',
-            'sao_end_number' => '22',
-            'sao_end_suffix' => 'b',
-            'sao_text' => 'Awesome house',
-            'pao_start_number' => '31',
-            'pao_start_prefix' => '',
-            'pao_end_number' => '',
-            'pao_end_suffix' => '',
-            'pao_text' => 'Some Street',
-            'street_description' => 'STREET NAME',
-            'locality_name' => null,
-            'post_town' => 'Some Town',
-            'administritive_area' => 'Some Town',
-            'postcode' => 'AB1 1AB'
-        );
-
-        $expectedAddress = array(
-            'addressLine1' => '1a-22b Awesome House',
-            'addressLine2' => '31 Some Street Street Name',
-            'addressLine3' => '',
-            'addressLine4' => '',
-            'town' => 'Some Town',
-            'postcode' => 'AB1 1AB',
-            'countryCode' => 'GB'
-        );
-
-        $addressDetails = $this->service->formatPostalAddressFromBs7666($address);
+        $addressDetails = $this->service->formatPostalAddress($address);
 
         $this->assertEquals($expectedAddress, $addressDetails);
     }
@@ -158,56 +75,37 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
         $list = array(
             array(
                 'uprn' => 123,
-                'organisation_name' => 'My Company Ltd',
-                'building_name' => 'Awesome House',
-                'street_description' => 'STREET NAME',
-                'locality_name' => null,
+                'address_line1' => 'My Company Ltd',
+                'address_line2' => '123 Really Awesome House Street Name',
+                'address_line3' => '',
+                'address_line4' => '',
                 'post_town' => 'Some Town',
-                'administritive_area' => 'Some Area',
-                'postcode' => 'AB1 1AB'
+                'postcode' => 'AB1 1AB',
             ),
             array(
                 'uprn' => 234,
-                'sao_start_number' => '1',
-                'sao_start_prefix' => 'a',
-                'sao_end_number' => '22',
-                'sao_end_suffix' => 'b',
-                'sao_text' => 'Awesome house',
-                'pao_start_number' => '31',
-                'pao_start_prefix' => '',
-                'pao_end_number' => '',
-                'pao_end_suffix' => '',
-                'pao_text' => 'Some Street',
-                'street_description' => 'STREET NAME',
-                'locality_name' => null,
+                'address_line1' => 'My Company Ltd',
+                'address_line2' => '234 Awesome House Street Name',
+                'address_line3' => '',
+                'address_line4' => '',
                 'post_town' => 'Some Town',
-                'administritive_area' => 'Some Area',
-                'postcode' => 'AB1 1AB'
+                'postcode' => 'AB1 1AB',
             ),
             array(
                 'uprn' => 345,
-                'sao_start_number' => '1',
-                'sao_start_prefix' => 'a',
-                'sao_end_number' => '22',
-                'sao_end_suffix' => 'b',
-                'sao_text' => 'Awesome house',
-                'pao_start_number' => '31',
-                'pao_start_prefix' => '',
-                'pao_end_number' => '',
-                'pao_end_suffix' => '',
-                'pao_text' => 'Some Street',
-                'street_description' => 'STREET NAME',
-                'locality_name' => null,
+                'address_line1' => 'My Company Ltd',
+                'address_line2' => '345 Awesome House Street Name',
+                'address_line3' => '',
+                'address_line4' => '',
                 'post_town' => 'Some Town',
-                'administritive_area' => 'Some Town',
-                'postcode' => 'AB1 1AB'
+                'postcode' => 'AB1 1AB',
             )
         );
 
         $expectedResult = array(
-            234 => '1a-22b Awesome House, 31 Some Street Street Name,…',
-            345 => '1a-22b Awesome House, 31 Some Street Street Name,…',
-            123 => 'My Company Ltd, Awesome House Street Name, Some T…',
+            123 => 'My Company Ltd, 123 Really Awesome House Street N…',
+            234 => 'My Company Ltd, 234 Awesome House Street Name, So…',
+            345 => 'My Company Ltd, 345 Awesome House Street Name, So…',
         );
 
         $result = $this->service->formatAddressesForSelect($list);

@@ -10,6 +10,8 @@ use Common\Data\Object\Search\Aggregations\Terms as Filter;
  */
 class People extends InternalSearchAbstract
 {
+    const FOUND_AS_HISTORICAL_TM = 'Historical TM';
+
     /**
      * @var string
      */
@@ -83,29 +85,48 @@ class People extends InternalSearchAbstract
             ['title' => 'Found As', 'name'=> 'foundAs'],
             [
                 'title' => 'Record',
-                'formatter' => function ($row) {
-
-                    if (!empty($row['tmId'])) {
-                        return '<a href="/transport-manager/' . $row['tmId'] . '">'
-                            . 'TM ' . $row['tmId']
-                            . '</a>';
+                'formatter' => function ($row, $column, $serviceLocator) {
+                    if (!empty($row['tmId']) && $row['foundAs'] !== self::FOUND_AS_HISTORICAL_TM) {
+                        $urlHelper  = $serviceLocator->get('Helper\Url');
+                        return sprintf(
+                            '<a href="%s">TM %s</a>',
+                            $urlHelper->fromRoute('transport-manager', ['transportManager' => $row['tmId']]),
+                            $row['tmId']
+                        );
+                    } elseif (!empty($row['licId'])) {
+                        $urlHelper  = $serviceLocator->get('Helper\Url');
+                        return sprintf(
+                            '<a href="%s">%s</a>, %s<br />%s',
+                            $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
+                            $row['licNo'],
+                            $row['licTypeDesc'],
+                            $row['licStatusDesc']
+                        );
+                    } elseif (!empty($row['licNo'])) {
+                        $urlHelper  = $serviceLocator->get('Helper\Url');
+                        return sprintf(
+                            '<a href="%s">%s</a>',
+                            $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),
+                            $row['licNo']
+                        );
                     }
-
-                    $licence = '<a href="/licence/' . $row['licId'] . '">'
-                             . $row['licNo']
-                             . '</a>, '
-                             . $row['licTypeDesc']
-                             . '<br />'
-                             . $row['licStatusDesc'];
-
-                    return $licence;
+                    return '';
                 }
             ],
             [
                 'title' => 'Name',
-                'formatter' => function ($row) {
-
-                    return $row['personForename'] . '  ' .$row['personFamilyName'];
+                'formatter' => function ($row, $column, $serviceLocator) {
+                    if ($row['foundAs'] === self::FOUND_AS_HISTORICAL_TM) {
+                        $urlHelper  = $serviceLocator->get('Helper\Url');
+                        return sprintf(
+                            '<a href="%s">%s %s</a>',
+                            $urlHelper->fromRoute('historic-tm', ['historicId' => $row['tmId']]),
+                            $row['personForename'],
+                            $row['personFamilyName']
+                        );
+                    } else {
+                        return $row['personForename'] . ' ' .$row['personFamilyName'];
+                    }
                 }
             ],
             [
@@ -137,6 +158,9 @@ class People extends InternalSearchAbstract
                 'title' => 'Disq?',
                 'name'=> 'disqualified',
                 'formatter' => function ($row) {
+                    if ($row['foundAs'] === self::FOUND_AS_HISTORICAL_TM) {
+                        return 'NA';
+                    }
                     return ($row['disqualified'] === 'Y') ? 'Yes' : 'No';
                 }
             ]
