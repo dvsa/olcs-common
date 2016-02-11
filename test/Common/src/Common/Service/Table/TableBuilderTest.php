@@ -948,6 +948,41 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
+     * Test renderTotal Without pagination but with showTotal setting
+     */
+    public function testRenderTotalWithoutPaginationWithShowTotal()
+    {
+        $total = 10;
+        $expectedTotal = 10;
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
+            ->will($this->returnValue($expectedTotal));
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'shouldPaginate', 'getSetting'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(false));
+
+        $table->expects($this->once())
+            ->method('getSetting')
+            ->with('showTotal', false)
+            ->will($this->returnValue(true));
+
+        $table->setTotal($total);
+
+        $this->assertEquals($expectedTotal, $table->renderTotal());
+    }
+
+    /**
      * Test renderActions With Pagination
      */
     public function testRenderActionsWithoutCrud()
