@@ -18,7 +18,7 @@ use Zend\Form\View\Helper\FormMonthSelect as FormMonthSelectHelper;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormDateSelect extends ZendFormDateSelect
+class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
 {
     private $inputHelper;
 

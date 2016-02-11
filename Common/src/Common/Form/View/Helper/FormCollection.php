@@ -23,7 +23,7 @@ use Common\Form\Elements\Types\HoursPerWeek;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormCollection extends ZendFormCollection
+class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
 {
     /**
      * @var bool

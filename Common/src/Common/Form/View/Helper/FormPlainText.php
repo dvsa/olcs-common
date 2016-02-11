@@ -18,7 +18,6 @@ use Zend\Form\ElementInterface;
  */
 class FormPlainText extends AbstractHelper
 {
-
     /**
      * @param ElementInterface $element
      * @return mixed
