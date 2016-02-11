@@ -18,7 +18,10 @@ class HoursOfWeekContentRequired
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
-     *     "label": "days-of-week-short-mon"
+     *     "label": "days-of-week-short-mon",
+     *     "label_attributes": {
+     *         "aria-label": "Monday"
+     *     }
      * })
      * @Form\Validator({"name": "Common\Form\Elements\Validators\SumContext", "options": {
      *     "min": 1,
@@ -48,7 +51,10 @@ class HoursOfWeekContentRequired
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
-     *     "label": "days-of-week-short-tue"
+     *     "label": "days-of-week-short-tue",
+     *     "label_attributes": {
+     *         "aria-label": "Tuesday"
+     *     }
      * })
      * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
      *     "messages": {
@@ -72,7 +78,10 @@ class HoursOfWeekContentRequired
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
-     *     "label": "days-of-week-short-wed"
+     *     "label": "days-of-week-short-wed",
+     *     "label_attributes": {
+     *         "aria-label": "Wednesday"
+     *     }
      * })
      * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
      *     "messages": {
@@ -96,7 +105,10 @@ class HoursOfWeekContentRequired
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
-     *     "label": "days-of-week-short-thu"
+     *     "label": "days-of-week-short-thu",
+     *     "label_attributes": {
+     *         "aria-label": "Thursday"
+     *     }
      * })
      * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
      *     "messages": {
@@ -120,7 +132,10 @@ class HoursOfWeekContentRequired
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
-     *     "label": "days-of-week-short-fri"
+     *     "label": "days-of-week-short-fri",
+     *     "label_attributes": {
+     *         "aria-label": "Friday"
+     *     }
      * })
      * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
      *     "messages": {
@@ -144,7 +159,10 @@ class HoursOfWeekContentRequired
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
-     *     "label": "days-of-week-short-sat"
+     *     "label": "days-of-week-short-sat",
+     *     "label_attributes": {
+     *         "aria-label": "Saturday"
+     *     }
      * })
      * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
      *     "messages": {
@@ -168,7 +186,10 @@ class HoursOfWeekContentRequired
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
-     *     "label": "days-of-week-short-sun"
+     *     "label": "days-of-week-short-sun",
+     *     "label_attributes": {
+     *         "aria-label": "Sunday"
+     *     }
      * })
      * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
      *     "messages": {
