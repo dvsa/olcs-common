@@ -22,8 +22,8 @@ class FinancialHistoryData
     public $version = null;
 
     /**
-     * @Form\Options({"label":"application_previous-history_financial-history.finance.hint"})
-     * @Form\Type("Common\Form\Elements\Types\PlainText")
+     * @Form\Attributes({"value":"markup-application_previous-history_financial-history-finance-hint"})
+     * @Form\Type("Common\Form\Elements\Types\HtmlTranslated")
      */
     public $hasAnyPerson = null;
 
@@ -39,7 +39,7 @@ class FinancialHistoryData
      *     },
      *     "fieldset-attributes" : {
      *         "id":"bankrupt",
-     *         "class":"subquestion checkbox inline"
+     *         "class":"checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -58,7 +58,7 @@ class FinancialHistoryData
      *     },
      *     "fieldset-attributes" : {
      *         "id":"liquidation",
-     *         "class":"subquestion checkbox inline"
+     *         "class":"checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -77,7 +77,7 @@ class FinancialHistoryData
      *     },
      *     "fieldset-attributes" : {
      *         "id": "receiversip",
-     *         "class":"subquestion checkbox inline"
+     *         "class":"checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -96,7 +96,7 @@ class FinancialHistoryData
      *     },
      *     "fieldset-attributes" : {
      *         "id":"administration",
-     *         "class":"subquestion checkbox inline"
+     *         "class":"checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -119,8 +119,10 @@ class FinancialHistoryData
     public $disqualified = null;
 
     /**
-     * @Form\Attributes({"value":"<h3 class=js-financial-history>%s</h3>", "data-container-class":"legend"})
-     * @Form\Options({"tokens":{"application_previous-history_financial-history.insolvencyDetails.title"}})
+     * @Form\Attributes({
+     *     "value":"markup-application_previous-history_financial-history-insolvencyDetails-hint",
+     *     "data-container-class":"legend"
+     * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $additionalInfoLabel = null;
@@ -137,7 +139,7 @@ class FinancialHistoryData
      * })
      * @Form\Options({
      *     "short-label": "short-label-financial-history-additional-information",
-     *     "label": "application_previous-history_financial-history.insolvencyDetails.hint",
+     *     "label": "",
      *     "label_attributes": {
      *         "id": "additional-information"
      *     }
