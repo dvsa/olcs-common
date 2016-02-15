@@ -10,6 +10,11 @@ return array(
         'within_form' => true
     ),
     'settings' => array(
+        'paginate' => array(
+            'limit' => array(
+                'options' => array(10, 25, 50)
+            )
+        ),
     ),
     'attributes' => array(
     ),
