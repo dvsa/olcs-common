@@ -77,6 +77,12 @@ class LicenceTest extends AbstractDataServiceTestCase
         $this->assertEquals($expected, $sut->fetchLicenceData(78));
     }
 
+    public function testFetchLicenceDataWithoutId()
+    {
+        $sut = new Licence();
+        $this->assertEquals([], $sut->fetchLicenceData());
+    }
+
     public function testFetchLicenceDataWithException()
     {
         $this->setExpectedException(UnexpectedResponseException::class);
