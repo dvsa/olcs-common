@@ -46,7 +46,7 @@ class AddressHelperService extends AbstractHelperService
         $details['addressLine2'] = $address['address_line2'];
         $details['addressLine3'] = $address['address_line3'];
         $details['addressLine4'] = $address['address_line4'];
-        $details['town'] = $this->formatString($address['post_town']);
+        $details['town'] = $address['post_town'];
         $details['postcode'] = $address['postcode'];
 
         return $details;
@@ -86,16 +86,5 @@ class AddressHelperService extends AbstractHelperService
         }
 
         return $options;
-    }
-
-    /**
-     * Format a string for the lines
-     *
-     * @param string $string
-     * @return string
-     */
-    private function formatString($string)
-    {
-        return ucwords(strtolower($string));
     }
 }

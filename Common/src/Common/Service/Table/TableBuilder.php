@@ -1116,7 +1116,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderTotal()
     {
-        if (!$this->shouldPaginate()) {
+        $showTotal = $this->getSetting('showTotal', false);
+        if (!$this->shouldPaginate() && !$showTotal) {
             return '';
         }
 

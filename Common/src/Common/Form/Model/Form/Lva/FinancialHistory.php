@@ -12,7 +12,6 @@ use Zend\Form\Annotation as Form;
  */
 class FinancialHistory
 {
-
     /**
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialHistoryData")

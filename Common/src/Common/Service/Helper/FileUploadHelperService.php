@@ -18,7 +18,7 @@ use Common\Exception\ConfigurationException;
  */
 class FileUploadHelperService extends AbstractHelperService
 {
-    const MAX_FILE_SIZE = '2MB';
+    const MAX_FILE_SIZE = '25MB';
 
     private $form;
 

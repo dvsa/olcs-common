@@ -20,7 +20,7 @@ use Zend\Form\View\Helper\FormDateSelect as FormDateSelectHelper;
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class FormDateTimeSelect extends ZendFormDateTimeSelect
+class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeSelect
 {
     private $inputHelper;
 

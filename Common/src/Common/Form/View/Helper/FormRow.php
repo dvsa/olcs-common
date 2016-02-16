@@ -31,7 +31,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormRow extends ZendFormRow implements FactoryInterface
+class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements FactoryInterface
 {
     private $config;
 

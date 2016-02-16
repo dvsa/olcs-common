@@ -8,10 +8,13 @@
 namespace Common\Service\Cqrs\Command;
 
 use Common\Exception\ResourceConflictException;
+use Common\Util\FileContent;
 use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
 use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
+use Zend\Http\Header\ContentType;
+use Zend\Http\Headers;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
 use Zend\Http\Request;
@@ -62,6 +65,7 @@ class CommandService
 
         $routeName = $command->getRouteName();
         $method = $command->getMethod();
+
         $data = $command->getDto()->getArrayCopy();
 
         try {
@@ -72,9 +76,47 @@ class CommandService
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
         }
 
+        $this->client->resetParameters(true);
+        $this->client->setRequest($this->request);
+
+        $isMultipart = false;
+
+        /**
+         * Check for FileContent, then we will send as multipart rather than JSON
+         */
+        foreach ($data as $name => $value) {
+            if ($value instanceof FileContent) {
+                $isMultipart = true;
+                $this->client->setFileUpload($value->getFileName(), $name);
+            }
+        }
+
         $this->request->setUri($uri);
         $this->request->setMethod($method);
-        $this->request->setContent(json_encode($data));
+
+        /**
+         * If we are sending multipart, we need to remove the application/json header, the multipart header will be
+         * added by ZF2s client
+         */
+        if ($isMultipart) {
+            /**
+             * Here we need to clone the request object, rather than update the current 1, as this service is a
+             * singleton, and subsequent calls to ->send would result in the headers being incorrectly modified.
+             */
+            $request = clone $this->request;
+            $headers = $request->getHeaders();
+            $newHeaders = new Headers();
+            foreach ($headers as $header) {
+                if (!($header instanceof ContentType)) {
+                    $newHeaders->addHeader($header);
+                }
+            }
+            $request->setHeaders($newHeaders);
+            $this->client->setRequest($request);
+            $this->client->setParameterPost($data);
+        } else {
+            $this->request->setContent(json_encode($data));
+        }
 
         /** @var ClientAdapterLoggingWrapper $adapter */
         $adapter = $this->client->getAdapter();
@@ -85,8 +127,7 @@ class CommandService
                 $adapter->setShouldLogData(false);
             }
 
-            $this->client->resetParameters(true);
-            $clientResponse = $this->client->send($this->request);
+            $clientResponse = $this->client->send();
 
             if ($command->getDto() instanceof LoggerOmitContentInterface) {
                 $adapter->setShouldLogData($shouldLogContent);

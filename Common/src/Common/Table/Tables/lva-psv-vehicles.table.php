@@ -43,6 +43,16 @@ return array(
             'formatter' => 'StackValue'
         ),
         array(
+            'title' => $translationPrefix . '.specified',
+            'name' => 'specifiedDate',
+            'formatter' => 'Date'
+        ),
+        array(
+            'title' => $translationPrefix . '.removed',
+            'name' => 'removalDate',
+            'formatter' => 'Date'
+        ),
+        array(
             'name' => 'action',
             'width' => 'checkbox',
             'type' => 'Checkbox',
