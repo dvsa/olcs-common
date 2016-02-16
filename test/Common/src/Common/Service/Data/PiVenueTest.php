@@ -60,17 +60,19 @@ class PiVenueTest extends AbstractDataServiceTestCase
         ];
     }
 
-    public function testFetchListData()
+    /**
+     * @dataProvider provideFetchListData
+     * @param $input
+     * @param $expectedTrafficArea
+     */
+    public function testFetchListData($input, $expectedTrafficArea)
     {
         $results = ['results' => 'results'];
-        $params = [
-            'trafficArea' => 'B',
-        ];
-        $dto = Qry::create($params);
+
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturnUsing(
-                function ($dto) use ($params) {
-                    $this->assertEquals($params['trafficArea'], $dto->getTrafficArea());
+                function ($dto) use ($expectedTrafficArea) {
+                    $this->assertEquals($expectedTrafficArea, $dto->getTrafficArea());
                     return 'query';
                 }
             )
@@ -89,7 +91,15 @@ class PiVenueTest extends AbstractDataServiceTestCase
         $sut = new PiVenue();
         $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
-        $this->assertEquals($results['results'], $sut->fetchListData($params));
+        $this->assertEquals($results['results'], $sut->fetchListData($input));
+    }
+
+    public function provideFetchListData()
+    {
+        return [
+            [['trafficArea' => 'B'], 'B'],
+            [[], null]
+        ];
     }
 
     public function testFetchLicenceDataWithException()
