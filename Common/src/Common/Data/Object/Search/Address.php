@@ -73,7 +73,7 @@ class Address extends InternalSearchAbstract
             ],
             [
                 'title' => 'Address',
-                'addressFields' => ['paonDesc', 'saonDesc', 'street', 'locality', 'town', 'postcode'],
+                'addressFields' => ['saonDesc', 'paonDesc', 'street', 'locality', 'town', 'postcode'],
                 'formatter' => 'Address'
             ],
             [
