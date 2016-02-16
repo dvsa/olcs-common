@@ -108,6 +108,7 @@ return [
     'What happens next?' => 'What happens next?',
     'Yes' => 'Yes',
     'account-balance' => 'Account balance',
+    'actions' => 'actions',
     'add' => 'Add',
     'add-another' => 'Add Another',
     'add-complaint' => 'Add complaint',
@@ -2315,6 +2316,7 @@ return [
     'sidebar-variation-public-service' => 'Public Service Vehicle operator licences',
     'sidebar-variation-safety-and-maintenance' => 'Vehicle safety and maintenance guides',
     'signin-or-register-text' => 'Sign in or <a href="%s">create an account</a> to get started.',
+    'skip-content' => 'Skip to Main Content',
     'skip-hire-waste-transfer-refuse' => 'Skip Hire / Waste Transfer / Refuse',
     'sole-trader' => 'Sole Trader',
     'sole-trader-details-header' => 'Sole trader details',
@@ -2637,6 +2639,5 @@ return [
     'west-of-england' => 'West of England',
     'withdraw-application' => 'Withdraw application',
     'your-business' => 'Your business',
-    'skip-content' => 'Skip to Main Content'
     // Potentially unused translations
 ];
