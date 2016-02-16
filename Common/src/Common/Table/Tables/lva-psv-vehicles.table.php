@@ -5,6 +5,7 @@ $translationPrefix = 'application_vehicle-safety_vehicle-psv.table';
 return array(
     'variables' => array(
         'title' => $translationPrefix . '.title',
+        'titleSingular' => $translationPrefix . '.titleSingular',
         'empty_message' => $translationPrefix . '.empty_message',
         'required_label' => 'vehicle',
         'within_form' => true
@@ -25,7 +26,12 @@ return array(
         ),
         'row-disabled-callback' => function ($row) {
             return $row['removalDate'] !== null;
-        }
+        },
+        'paginate' => array(
+            'limit' => array(
+                'options' => array(10, 25, 50)
+            )
+        ),
     ),
     'attributes' => array(
     ),
