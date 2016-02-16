@@ -73,18 +73,8 @@ class Address extends InternalSearchAbstract
             ],
             [
                 'title' => 'Address',
-                'formatter' => function ($row) {
-
-                    $address = [
-
-                        $row['street'],
-                        $row['locality'],
-                        $row['town'],
-                        $row['postcode']
-                    ];
-
-                    return implode(', ', $address);
-                }
+                'addressFields' => ['paonDesc', 'saonDesc', 'street', 'locality', 'town', 'postcode'],
+                'formatter' => 'Address'
             ],
             [
                 'title' => 'Complaint',
