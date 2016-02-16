@@ -139,8 +139,9 @@ class FinancialHistoryData
      * })
      * @Form\Options({
      *     "short-label": "short-label-financial-history-additional-information",
-     *     "label": "",
+     *     "label": "short-label-financial-history-additional-information",
      *     "label_attributes": {
+     *         "class": "visually-hidden",
      *         "id": "additional-information"
      *     }
      * })
