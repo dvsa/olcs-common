@@ -378,20 +378,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $table = $this->getTable($resultData['vehicles'], $removeActions);
+        $table = $this->getTable($resultData['licenceVehicles'], $removeActions);
 
         $formHelper->populateFormTable($form->get('vehicles'), $table, 'vehicles');
-
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-        $vehiclesCount = count($resultData['vehicles']);
-        $table->setVariable(
-            'title',
-            $vehiclesCount . ' ' .
-            $translator->translate(
-                'application_vehicle-safety_vehicle-psv.table.title' .
-                ($vehiclesCount == 1 ? '.singular' : '')
-            )
-        );
 
         if (!$removeActions && !$resultData['canTransfer']) {
             $table->removeAction('transfer');
@@ -499,8 +488,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         if ($readOnly) {
             $tableName .= '-readonly';
         }
-
-        return $this->getServiceLocator()->get('Table')->prepareTable($tableName, $tableData);
+        $query = $this->getRequest()->getQuery();
+        $params = array_merge((array)$query, ['query' => $query]);
+        return $this->getServiceLocator()->get('Table')->prepareTable($tableName, $tableData, $params);
     }
 
     private function renderForm($form)
@@ -589,6 +579,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     {
         $filters = [];
         $filters['includeRemoved'] = (isset($query['includeRemoved']) && $query['includeRemoved'] == '1');
+        $filters['page'] = isset($query['page']) ? $query['page'] : 1;
+        $filters['limit'] = isset($query['limit']) ? $query['limit'] : 10;
         return $filters;
     }
 }
