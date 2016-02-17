@@ -2316,7 +2316,7 @@ return [
     'sidebar-variation-public-service' => 'Public Service Vehicle operator licences',
     'sidebar-variation-safety-and-maintenance' => 'Vehicle safety and maintenance guides',
     'signin-or-register-text' => 'Sign in or <a href="%s">create an account</a> to get started.',
-    'skip-content' => 'Skip to Main Content',
+    'skip-content' => 'Skip to main content',
     'skip-hire-waste-transfer-refuse' => 'Skip Hire / Waste Transfer / Refuse',
     'sole-trader' => 'Sole Trader',
     'sole-trader-details-header' => 'Sole trader details',

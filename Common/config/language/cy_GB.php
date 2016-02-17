@@ -2316,7 +2316,7 @@ return [
     'sidebar-variation-public-service' => '{WELSH} Public Service Vehicle operator licences',
     'sidebar-variation-safety-and-maintenance' => '{WELSH} Vehicle safety and maintenance guides',
     'signin-or-register-text' => '{WELSH} Sign in or <a href="%s">create an account</a> to get started.',
-    'skip-content' => '{WELSH} Skip to Main Content',
+    'skip-content' => '{WELSH} Skip to main content',
     'skip-hire-waste-transfer-refuse' => '{WELSH} Skip Hire / Waste Transfer / Refuse',
     'sole-trader' => '{WELSH} Sole Trader',
     'sole-trader-details-header' => '{WELSH} Sole trader details',
