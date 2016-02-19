@@ -20,9 +20,18 @@ class TypeOfLicence
      *      },
      *      "fieldset-data-group": "operator-location",
      *      "label": "application_type-of-licence_operator-location.data.niFlag",
-     *      "value_options":{
-     *          "N":"Great Britain",
-     *          "Y":"Northern Ireland"
+     *      "value_options": {
+     *          {
+     *              "value": "N",
+     *              "label": "Great Britain",
+     *              "label_attributes": {
+     *                  "aria-label": "Where will you operate? Great Britain"
+     *              }
+     *          },
+     *          {
+     *              "value": "Y",
+     *              "label": "Northern Ireland"
+     *          }
      *      }
      * })
      * @Form\Type("Radio")
