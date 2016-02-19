@@ -459,7 +459,7 @@ return array(
             'Common\Service\Data\DataServiceAbstractFactory'
         ],
         'factories' => [
-            'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
+            'Common\Service\Data\Venue' => 'Common\Service\Data\Venue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
             'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>

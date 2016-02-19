@@ -2,24 +2,23 @@
 
 namespace OlcsTest\Service\Data;
 
-use Common\Service\Data\PiVenue;
+use Common\Service\Data\Venue;
 use Mockery as m;
-use Dvsa\Olcs\Transfer\Query\Cases\PiVenue\PiVenueList as Qry;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use CommonTest\Service\Data\AbstractDataServiceTestCase;
 
 /**
- * Class PiVenue Test
+ * Class Venue Test
  * @package CommonTest\Service
  */
-class PiVenueTest extends AbstractDataServiceTestCase
+class VenueTest extends AbstractDataServiceTestCase
 {
     public function testFormatData()
     {
         $source = $this->getSingleSource();
         $expected = $this->getSingleExpected();
 
-        $sut = new PiVenue();
+        $sut = new Venue();
 
         $this->assertEquals($expected, $sut->formatData($source));
     }
@@ -44,10 +43,10 @@ class PiVenueTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
 
-        $sut = new PiVenue();
+        $sut = new Venue();
         $sut->setLicenceService($mockLicenceService);
 
-        $sut->setData('PiVenue', $input);
+        $sut->setData('Venue', $input);
 
         $this->assertEquals($expected, $sut->fetchListOptions(''));
     }
@@ -88,7 +87,7 @@ class PiVenueTest extends AbstractDataServiceTestCase
             ->twice()
             ->getMock();
 
-        $sut = new PiVenue();
+        $sut = new Venue();
         $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $this->assertEquals($results['results'], $sut->fetchListData($input));
@@ -113,7 +112,7 @@ class PiVenueTest extends AbstractDataServiceTestCase
             ->andReturn(false)
             ->once()
             ->getMock();
-        $sut = new PiVenue();
+        $sut = new Venue();
         $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $sut->fetchListData(['trafficArea' => 'B']);
