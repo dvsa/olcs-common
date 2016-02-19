@@ -23,7 +23,7 @@ class PiHearing extends AbstractData
     {
         return [
             'children' => [
-                'piVenue' => [],
+                'venue' => [],
                 'presidingTc' => [],
                 'presidedByRole' => []
             ]
