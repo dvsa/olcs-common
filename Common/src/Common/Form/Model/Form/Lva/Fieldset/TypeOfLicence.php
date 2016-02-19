@@ -50,9 +50,15 @@ class TypeOfLicence
      *      },
      *      "fieldset-data-group": "operator-type",
      *      "label": "application_type-of-licence_operator-type.data.goodsOrPsv",
-     *      "value_options":{
-     *          "lcat_gv":"Goods vehicles",
-     *          "lcat_psv":"Public service vehicles"
+     *      "value_options": {
+     *          {
+     *              "value": "lcat_gv",
+     *              "label": "Goods vehicles",
+     *              "label_attributes": {
+     *                  "aria-label": "What types of vehicles will you be operating, goods vehicles"
+     *              }
+     *          },
+     *          "lcat_psv": "Public service vehicles"
      *      }
      * })
      * @Form\Type("Radio")
@@ -80,8 +86,14 @@ class TypeOfLicence
      *      "fieldset-data-group": "licence-type",
      *      "label": "application_type-of-licence_licence-type.data.licenceType",
      *      "hint": "application_type-of-licence_licence-type.data.licenceType-hint",
-     *      "value_options":{
-     *          "ltyp_r": "Restricted",
+     *      "value_options": {
+     *          {
+     *              "value": "ltyp_r",
+     *              "label": "Restricted",
+     *              "label_attributes": {
+     *                  "aria-label": "What type of licence do you want to apply for? Restricted"
+     *              }
+     *          },
      *          "ltyp_sn": "Standard National",
      *          "ltyp_si": "Standard International",
      *          "ltyp_sr": "Special Restricted"
