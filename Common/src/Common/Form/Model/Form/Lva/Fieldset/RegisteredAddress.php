@@ -65,7 +65,13 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Town/city","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({
+     *    "label":"Town/city",
+     *    "label_attributes":{
+     *        "class":"visually-hidden",
+     *        "aria-label": "Business town or city"
+     *    }
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      */
