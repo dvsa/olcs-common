@@ -188,7 +188,7 @@ return [
     'application-review-business-details-company-name' => 'Company name',
     'application-review-business-details-company-no' => 'Registered company number',
     'application-review-business-details-nature-of-business' => 'Nature of business',
-    'application-review-business-details-nature-of-business-hint' => 'See a <a target="_blank" href="{{SIC_CODES}}">list of business types</a>',
+    'application-review-business-details-nature-of-business-hint' => 'See a <a aria-label="Read a list of business types" target="_blank" href="{{SIC_CODES}}">list of business types</a>',
     'application-review-business-details-organisation-name' => 'Organisation name',
     'application-review-business-details-partnership-name' => 'Partnership name',
     'application-review-business-details-registered-address' => 'Registered address',

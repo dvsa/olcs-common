@@ -28,7 +28,12 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Address lines"})
+     * @Form\Options({
+     *     "label":"Address lines",
+     *     "label_attributes": {
+     *         "aria-label": "Enter address manually. Business address line one"
+     *     }
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
