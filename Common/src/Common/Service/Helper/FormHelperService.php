@@ -432,8 +432,9 @@ class FormHelperService extends AbstractHelperService
 
         if ($form instanceof Fieldset) {
             foreach ($form->getFieldsets() as $fieldset) {
-
-                $this->disableEmptyValidation($fieldset, $filter->get($fieldset->getName()));
+                if ($filter->has($fieldset->getName())) {
+                    $this->disableEmptyValidation($fieldset, $filter->get($fieldset->getName()));
+                }
             }
         }
     }
