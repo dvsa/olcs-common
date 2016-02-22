@@ -11,6 +11,7 @@ use Dvsa\Olcs\Transfer\Command\Application\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateSafety;
 use Dvsa\Olcs\Transfer\Query\Application\Safety;
 use Zend\Form\Form;
+use Common\Category;
 
 /**
  * Application Safety Controller Trait
@@ -43,22 +44,43 @@ trait ApplicationSafetyControllerTrait
     /**
      * Get Safety Data
      *
+     * @param bool $noCache
      * @return array
      */
-    protected function getSafetyData()
+    protected function getSafetyData($noCache = false)
     {
-        $response = $this->handleQuery(Safety::create(['id' => $this->getApplicationId()]));
+        if (is_null($this->safetyData) || $noCache) {
+            $response = $this->handleQuery(Safety::create(['id' => $this->getApplicationId()]));
 
-        if (!$response->isOk()) {
-            return $this->notFoundAction();
+            if (!$response->isOk()) {
+                return $this->notFoundAction();
+            }
+
+            $application = $response->getResult();
+            $this->safetyData = $application;
+
+            $this->canHaveTrailers = $application['canHaveTrailers'];
+            $this->hasTrailers = $application['hasTrailers'];
+            $this->workshops = $application['licence']['workshops'];
         }
+        return $this->safetyData;
+    }
 
-        $application = $response->getResult();
+    /**
+     * @param array $file
+     * @param int $applicationId
+     * @return array
+     */
+    public function getUploadMetaData($file, $applicationId)
+    {
+        $licenceId = $this->getSafetyData()['licence']['id'];
 
-        $this->canHaveTrailers = $application['canHaveTrailers'];
-        $this->hasTrailers = $application['hasTrailers'];
-        $this->workshops = $application['licence']['workshops'];
-
-        return $application;
+        return [
+            'application' => $applicationId,
+            'description' => $file['name'],
+            'category'    => Category::CATEGORY_APPLICATION,
+            'subCategory' => Category::DOC_SUB_CATEGORY_MAINT_OTHER_DIGITAL,
+            'licence'     => $licenceId,
+        ];
     }
 }
