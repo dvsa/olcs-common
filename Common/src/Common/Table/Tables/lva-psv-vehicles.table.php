@@ -42,6 +42,7 @@ return array(
             'formatter' => 'StackValue',
             'action' => 'edit',
             'type' => 'Action',
+            'sort' => 'v.vrm'
         ),
         array(
             'title' => $translationPrefix . '.make',
@@ -51,12 +52,14 @@ return array(
         array(
             'title' => $translationPrefix . '.specified',
             'name' => 'specifiedDate',
-            'formatter' => 'Date'
+            'formatter' => 'Date',
+            'sort' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.removed',
             'name' => 'removalDate',
-            'formatter' => 'Date'
+            'formatter' => 'Date',
+            'sort' => 'removalDate'
         ),
         array(
             'name' => 'action',

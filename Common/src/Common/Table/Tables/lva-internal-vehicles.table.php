@@ -13,7 +13,9 @@ return array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
                 'edit' => array('requireRows' => true, 'class' => 'secondary js-require--one'),
-                'delete' => array('label' => 'Remove', 'class' => 'secondary js-require--multiple', 'requireRows' => true),
+                'delete' => array(
+                    'label' => 'Remove', 'class' => 'secondary js-require--multiple', 'requireRows' => true
+                ),
             )
         ),
         'paginate' => array(
@@ -40,6 +42,7 @@ return array(
                 return $data['vehicle']['vrm'];
             },
             'type' => 'Action',
+            'sort' => 'v.vrm'
         ),
         array(
             'title' => $translationPrefix . '.weight',
@@ -49,12 +52,14 @@ return array(
         array(
             'title' => $translationPrefix . '.specified',
             'formatter' => 'Date',
-            'name' => 'specifiedDate'
+            'name' => 'specifiedDate',
+            'sort' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.removed',
             'formatter' => 'Date',
-            'name' => 'removalDate'
+            'name' => 'removalDate',
+            'sort' => 'removalDate'
         ),
         array(
             'title' => $translationPrefix . '.disc-no',

@@ -1378,6 +1378,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             unset($column['align']);
         }
 
+        if (isset($column['title'])) {
+            $translator = $this->getServiceLocator()->get('translator');
+            $column['title'] = $translator->translate($column['title']);
+        }
+
         if (isset($column['sort'])) {
 
             if (isset($column['class'])) {
@@ -1414,11 +1419,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         if (isset($column['width']) && isset($this->widths[$column['width']])) {
 
             $column['width'] = $this->widths[$column['width']];
-        }
-
-        if (isset($column['title'])) {
-            $translator = $this->getServiceLocator()->get('translator');
-            $column['title'] = $translator->translate($column['title']);
         }
 
         if (isset($column['type']) && $column['type'] == 'Checkbox') {
