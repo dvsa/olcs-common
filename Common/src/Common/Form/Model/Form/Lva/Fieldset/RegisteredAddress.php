@@ -79,7 +79,12 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({"id":""})
-     * @Form\Options({"label":"Postcode"})
+     * @Form\Options({
+     *    "label":"Postcode",
+     *    "label_attributes": {
+     *        "aria-label": "Business Postcode"
+     *    }
+     * })
      * @Form\Type("Text")
      * @Form\Required(false)
      * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})
