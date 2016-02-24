@@ -32,7 +32,19 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-bankrupt",
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Has anyone you've ever named ever been decalred bankrupt or had their estate seized? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -51,7 +63,19 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-liquidation",
      *     "label": "application_previous-history_financial-history.finance.liquidation",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Has anyone you've named ever been involved with a business that has gone or is going into liquidation, owing money? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -70,7 +94,19 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-receivership",
      *     "label": "application_previous-history_financial-history.finance.receivership",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Has anyone you've named ever been involved with a business that has gone or is going into receivership? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -89,7 +125,19 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-administration",
      *     "label": "application_previous-history_financial-history.finance.administration",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Has anyone you've named ever been involved with a business that has gone or is going into administration? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -112,7 +160,19 @@ class FinancialHistoryData
      *         "class": "question checkbox inline"
      *      },
      *     "label": "application_previous-history_financial-history.finance.disqualified",
-     *     "value_options": {"Y": "Yes", "N": "No"}
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Has anyone you've named ever been disqualified from acting as a company director or managing a company under the Company Directors Disqualification Act 1986? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      * })
      * @Form\Type("radio")
      */
@@ -154,6 +214,11 @@ class FinancialHistoryData
     /**
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Attributes({"id":"file"})
+     * @Form\Options({
+     *     "label_attributes": {
+     *         "aria-label": "insolvency"
+     *     }
+     * })
      */
     public $file = null;
 

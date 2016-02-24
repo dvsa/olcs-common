@@ -37,7 +37,7 @@ class Address
      * @Form\Options({
      *     "label":"Address lines",
      *     "label_attributes": {
-     *         "aria-label": "Enter address manually. Correspondence address line one"
+     *         "aria-label": "Enter address manually. Address line one"
      *     },
      *     "short-label":"Address line 1"
      * })
@@ -80,7 +80,7 @@ class Address
      *     "label":"Town/city",
      *     "short-label":"Town/city",
      *     "label_attributes": {
-     *         "aria-label": "Correspondence town/city"
+     *         "aria-label": "Town/city"
      *     }
      * })
      * @Form\Type("Text")
@@ -108,7 +108,7 @@ class Address
      * @Form\Options({
      *     "label": "Country",
      *     "label_attributes": {
-     *         "aria-label": "Choose correspondence country"
+     *         "aria-label": "Choose country"
      *     },
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,

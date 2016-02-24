@@ -13,7 +13,19 @@ class LicenceHistoryEu
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevBeenRefused",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Does anyone you've named already have an operator's licence in any traffic area? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "fieldset-attributes" : {
      *          "class":"checkbox inline"
      *     }
@@ -36,7 +48,19 @@ class LicenceHistoryEu
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevBeenRevoked",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Has anyone you've named ever had an operator's licence application revoked, suspended or curtailed in the European Union? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "fieldset-attributes" : {
      *          "class":"checkbox inline"
      *     }

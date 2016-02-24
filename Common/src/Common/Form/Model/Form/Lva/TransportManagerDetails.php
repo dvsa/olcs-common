@@ -21,14 +21,21 @@ class TransportManagerDetails
     /**
      * @Form\Name("homeAddress")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
-     * @Form\Options({"label":"lva-tm-details-details-homeAddress"})
+     * @Form\Options({
+     *     "label":"lva-tm-details-details-homeAddress",
+     *     "label_attributes": {
+     *         "aria-label": "Postcode search, enter home postcode"
+     *     }
+     * })
      */
     public $homeAddress = null;
 
     /**
      * @Form\Name("workAddress")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
-     * @Form\Options({"label":"lva-tm-details-details-workAddress"})
+     * @Form\Options({
+     *     "label":"lva-tm-details-details-workAddress"
+     * })
      */
     public $workAddress = null;
 

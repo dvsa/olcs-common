@@ -13,7 +13,19 @@ class LicenceHistoryPi
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevBeenAtPi",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Has anyone you've named ever taken part in a public inquiry held by a Traffic Commissioner? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "fieldset-attributes" : {
      *          "class":"checkbox inline"
      *     }

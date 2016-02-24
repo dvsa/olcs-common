@@ -20,7 +20,7 @@ class HoursOfWeekContentRequired
      * @Form\Options({
      *     "label": "days-of-week-short-mon",
      *     "label_attributes": {
-     *         "aria-label": "Monday"
+     *         "aria-label": "Enter your working hours, Monday"
      *     }
      * })
      * @Form\Validator({"name": "Common\Form\Elements\Validators\SumContext", "options": {

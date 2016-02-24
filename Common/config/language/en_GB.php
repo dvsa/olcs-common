@@ -397,6 +397,7 @@ return [
     'application_operating-centres_authorisation.data.hint.psv' => 'Indicate the number of each category of vehicle you intend to operate under the licence',
     'application_operating-centres_authorisation.data.totAuthTrailers' => 'Total number of trailers',
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'Total number of vehicles',
+    'application_operating-centres_authorisation.data.totAuthVehicles.audio' => 'Enter Total number of vehicles',
     'application_operating-centres_authorisation.data.totCommunityLicences' => 'Community licences',
     'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'How many community licences do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'Your traffic area is determined by your operating centre\'s location. <a href="#" target="_blank">More information about traffic areas</a>',
