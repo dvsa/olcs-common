@@ -23,7 +23,12 @@ class Correspondence
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"application_your-business_fao.label"})
+     * @Form\Options({
+     *    "label":"application_your-business_fao.label",
+     *    "label_attributes": {
+     *        "aria-label": "Add correspondent's name (optional)"
+     *    }
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      */
