@@ -106,6 +106,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $data = OperatingCentres::mapFromResult($resultData);
         }
 
+        $query = $this->getRequest()->getQuery();
+        $params = array_merge((array)$query, ['query' => $query]);
+        $resultData['query'] = $params;
+
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-operating_centres')
             ->getForm($resultData)
@@ -515,8 +519,19 @@ abstract class AbstractOperatingCentresController extends AbstractController
     protected function fetchOcData()
     {
         $queryDtoClass = $this->listQueryMap[$this->lva];
+        if ($this->getRequest()->isPost()) {
+            $query = $this->getRequest()->getPost('query');
+        } else {
+            $query = $this->getRequest()->getQuery();
+        }
+        $defaultSort = $this->lva == 'variation' ? 'lastModifiedOn' : 'createdOn';
+        $params = [
+            'id' => $this->getIdentifier(),
+            'sort'  => isset($query['sort']) ? $query['sort'] : $defaultSort,
+            'order' => isset($query['order']) ? $query['order'] : 'DESC',
+        ];
 
-        $response = $this->handleQuery($queryDtoClass::create(['id' => $this->getIdentifier()]));
+        $response = $this->handleQuery($queryDtoClass::create($params));
 
         return $response->getResult();
     }

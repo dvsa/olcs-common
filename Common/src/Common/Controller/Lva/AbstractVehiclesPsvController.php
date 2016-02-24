@@ -581,6 +581,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $filters['includeRemoved'] = (isset($query['includeRemoved']) && $query['includeRemoved'] == '1');
         $filters['page'] = isset($query['page']) ? $query['page'] : 1;
         $filters['limit'] = isset($query['limit']) ? $query['limit'] : 10;
+        $filters['sort'] = isset($query['sort']) ? $query['sort'] : 'createdOn';
+        $filters['order'] = isset($query['order']) ? $query['order'] : 'DESC';
         return $filters;
     }
 }

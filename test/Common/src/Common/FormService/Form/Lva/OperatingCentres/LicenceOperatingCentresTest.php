@@ -123,7 +123,7 @@ class LicenceOperatingCentresTest extends MockeryTestCase
             ->andReturn($tableElement);
 
         $this->tableBuilder->shouldReceive('prepareTable')
-            ->with('lva-operating-centres', $data)
+            ->with('lva-operating-centres', $data, [])
             ->andReturn($table);
 
         $this->mockFormHelper->shouldReceive('populateFormTable')
