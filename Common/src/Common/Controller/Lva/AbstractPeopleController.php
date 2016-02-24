@@ -263,9 +263,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             }
         } else {
             if ($this->lva === 'licence' &&
-                ($this->getAdapter()->isOrganisationLimited() &&
-                $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
-                || ($this->getAdapter()->isOrganisationOther())
+                (
+                    ($this->getAdapter()->isOrganisationLimited() &&
+                        $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
+                    || $this->getAdapter()->isOrganisationOther()
+                )
             ) {
                 $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId(), 'people');
             } else {

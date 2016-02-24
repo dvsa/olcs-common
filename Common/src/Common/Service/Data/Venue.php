@@ -4,16 +4,16 @@ namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\AbstractDataService;
-use Dvsa\Olcs\Transfer\Query\Cases\PiVenue\PiVenueList;
+use Dvsa\Olcs\Transfer\Query\Venue\VenueList;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Zend\ServiceManager\FactoryInterface;
 
 /**
- * Class PiVenue
+ * Class Venue
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class PiVenue extends AbstractDataService implements ListData, FactoryInterface
+class Venue extends AbstractDataService implements ListData, FactoryInterface
 {
     use LicenceServiceTrait;
 
@@ -60,8 +60,8 @@ class PiVenue extends AbstractDataService implements ListData, FactoryInterface
      */
     public function fetchListData($params)
     {
-        if (is_null($this->getData('PiVenue'))) {
-            $dtoData = PiVenueList::create(
+        if (is_null($this->getData('Venue'))) {
+            $dtoData = VenueList::create(
                 [
                     'trafficArea' => !empty($params['trafficArea']) ? $params['trafficArea'] : null
                 ]
@@ -72,12 +72,12 @@ class PiVenue extends AbstractDataService implements ListData, FactoryInterface
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
-            $this->setData('PiVenue', false);
+            $this->setData('Venue', false);
             if (isset($response->getResult()['results'])) {
-                $this->setData('PiVenue', $response->getResult()['results']);
+                $this->setData('Venue', $response->getResult()['results']);
             }
         }
 
-        return $this->getData('PiVenue');
+        return $this->getData('Venue');
     }
 }

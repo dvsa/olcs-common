@@ -47,6 +47,7 @@ return array(
             'formatter' => 'StackValue',
             'action' => 'edit',
             'type' => 'Action',
+            'sort' => 'v.vrm'
         ),
         array(
             'title' => $translationPrefix . '.weight',
@@ -56,12 +57,14 @@ return array(
         array(
             'title' => $translationPrefix . '.specified',
             'formatter' => 'Date',
-            'name' => 'specifiedDate'
+            'name' => 'specifiedDate',
+            'sort' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.removed',
             'formatter' => 'Date',
-            'name' => 'removalDate'
+            'name' => 'removalDate',
+            'sort' => 'removalDate'
         ),
         array(
             'title' => $translationPrefix . '.disc-no',

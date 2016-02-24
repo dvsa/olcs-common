@@ -192,4 +192,11 @@ class RefData
     const IRFO_PSV_AUTH_STATUS_REFUSED = 'irfo_auth_s_refused';
     const IRFO_PSV_AUTH_STATUS_RENEW = 'irfo_auth_s_renew';
     const IRFO_PSV_AUTH_STATUS_WITHDRAWN = 'irfo_auth_s_withdrawn';
+
+    /**
+     * Applied VIA
+     */
+    const APPLIED_VIA_POST = 'applied_via_post';
+    const APPLIED_VIA_PHONE = 'applied_via_phone';
+    const APPLIED_VIA_SELFSERVE = 'applied_via_selfserve';
 }

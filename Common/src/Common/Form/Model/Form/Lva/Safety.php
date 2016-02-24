@@ -25,6 +25,12 @@ class Safety
     public $table = null;
 
     /**
+     * @Form\Name("additional-documents")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyAdditionalDocuments")
+     */
+    public $additionalDocuments = null;
+
+    /**
      * @Form\Name("application")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyApplication")
      */
