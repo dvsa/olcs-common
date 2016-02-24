@@ -23,6 +23,7 @@ return array(
             'title' => $translationPrefix . '.vrm',
             'stack' => 'vehicle->vrm',
             'formatter' => 'StackValue',
+            'sort' => 'v.vrm'
         ),
         array(
             'title' => $translationPrefix . '.make',
@@ -32,12 +33,14 @@ return array(
         array(
             'title' => $translationPrefix . '.specified',
             'formatter' => 'Date',
-            'name' => 'specifiedDate'
+            'name' => 'specifiedDate',
+            'sort' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.removed',
             'formatter' => 'Date',
-            'name' => 'removalDate'
+            'name' => 'removalDate',
+            'sort' => 'removalDate'
         )
     )
 );

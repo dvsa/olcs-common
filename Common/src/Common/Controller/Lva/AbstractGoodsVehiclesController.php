@@ -557,8 +557,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected function formatFilters($query)
     {
         $filters = [
-            'page' => isset($query['page']) ? $query['page'] : 1,
+            'page'  => isset($query['page']) ? $query['page'] : 1,
             'limit' => isset($query['limit']) ? $query['limit'] : 10,
+            'sort'  => isset($query['sort']) ? $query['sort'] : 'createdOn',
+            'order' => isset($query['order']) ? $query['order'] : 'DESC',
         ];
 
         if (isset($query['vrm']) && $query['vrm'] !== 'All') {
@@ -660,9 +662,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected function getVehicleSectionData()
     {
         $dtoData = [
-            'id' => $this->getIdentifier(),
-            'page' => 1,
-            'limit' => 1
+            'id'    => $this->getIdentifier(),
+            'page'  => 1,
+            'limit' => 1,
+            'sort'  => 'createdOn',
+            'order' => 'DESC'
         ];
         $dtoClass = $this->loadDataMap[$this->lva];
         $response = $this->handleQuery($dtoClass::create($dtoData));
