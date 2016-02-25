@@ -23,7 +23,19 @@ class ConvictionsPenaltiesData
      *      },
      *     "label":
      * "selfserve-app-subSection-previous-history-criminal-conviction-hasConv",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Have you, any person at your company or any of your employees been convicted of a relevant offence? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      * @Form\Validator({"name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
