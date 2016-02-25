@@ -13,8 +13,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add safety inspector'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove')
             )
         )
     ),
@@ -37,8 +35,7 @@ return array(
             'name' => 'contactDetails->address'
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
+            'type' => 'ActionLinks',
+        ),
     )
 );

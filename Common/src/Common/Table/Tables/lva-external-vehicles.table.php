@@ -15,10 +15,6 @@ return array(
                     'label' => 'vehicle_table_action.add.label',
                     'class' => 'primary'
                 ),
-                'edit' => array(
-                    'label' => 'vehicle_table_action.edit.label',
-                    'requireRows' => true
-                ),
                 'delete' => array(
                     'label' => 'vehicle_table_action.delete.label',
                     'class' => 'secondary',
@@ -35,7 +31,7 @@ return array(
             )
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
-        'collapseAt' => 3, // this will collapse remaining actions into a 'More Actions' dropdown
+        'collapseAt' => 1, // this will collapse remaining actions into a 'More Actions' dropdown
         'row-disabled-callback' => function ($row) {
             return $row['removalDate'] !== null;
         }
@@ -70,6 +66,12 @@ return array(
             'title' => $translationPrefix . '.disc-no',
             'name' => 'discNo',
             'formatter' => 'VehicleDiscNo'
+        ),
+        array(
+            'type' => 'ActionLinks',
+            'isRemoveVisible' => function ($data) {
+                return empty($data['removalDate']);
+            }
         ),
         array(
             'name' => 'action',

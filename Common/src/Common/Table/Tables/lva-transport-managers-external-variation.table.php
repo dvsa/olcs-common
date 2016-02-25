@@ -10,8 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add Transport Manager'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove'),
-                'restore' => array('class' => 'secondary', 'requireRows' => true),
             )
         ),
         'row-disabled-callback' => function ($row) {
@@ -37,11 +35,7 @@ return array(
             'formatter' => 'Date',
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox',
-            'data-attributes' => array(
-                'action'
-            )
-        )
+            'type' => 'DeltaActionLinks'
+        ),
     )
 );

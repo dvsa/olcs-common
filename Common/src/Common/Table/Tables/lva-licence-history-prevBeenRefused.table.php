@@ -12,8 +12,6 @@ return array(
             'formName' => 'refused',
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add licence'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove')
             )
         )
     ),
@@ -29,8 +27,8 @@ return array(
             'name' => 'holderName',
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
+            'type' => 'ActionLinks',
+            'deleteInputName' => 'eu[prevBeenRefused-table][action][delete][%d]'
         )
     )
 );

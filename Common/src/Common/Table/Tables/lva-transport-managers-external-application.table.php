@@ -10,7 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add Transport Manager'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove')
             )
         ),
     ),
@@ -33,8 +32,7 @@ return array(
             'formatter' => 'Date',
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
+            'type' => 'ActionLinks'
+        ),
     )
 );

@@ -10,9 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add-previous-conviction' => array('label' => 'Add', 'class' => 'primary'),
-                'edit-previous-conviction' => array('label' => 'Edit', 'class' => 'secondary', 'requireRows' => true),
-                'delete-previous-conviction' =>
-                    array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
     ),
@@ -37,9 +34,8 @@ return array(
             'name' => 'penalty',
         ),
         array(
-            'title' => '',
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        ),
+            'type' => 'ActionLinks',
+            'deleteInputName' => 'convictions[action][delete-previous-conviction][%d]'
+        )
     )
 );

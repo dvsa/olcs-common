@@ -40,9 +40,8 @@ return array(
             'name' => 'penalty',
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox',
-            'hideWhenDisabled' => true
+            'type' => 'ActionLinks',
+            'deleteInputName' => 'data[table][action][delete][%d]',
         )
     )
 );

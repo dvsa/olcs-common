@@ -31,5 +31,9 @@ return array(
             'width' => 'checkbox',
             'type' => 'Checkbox'
         ),
+        array(
+            'type' => 'ActionLinks',
+            'deleteInputName' => 'previousLicences[action][delete-previous-licence][%d]'
+        )
     )
 );
