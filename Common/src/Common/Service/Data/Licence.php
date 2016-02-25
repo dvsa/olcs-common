@@ -25,6 +25,10 @@ class Licence extends AbstractDataService
     {
         $id = is_null($id) ? $this->getId() : $id;
 
+        if (empty($id)) {
+            return [];
+        }
+
         if (is_null($this->getData($id))) {
             $dtoData = LicenceQry::create(['id' => $id]);
             $response = $this->handleQuery($dtoData);

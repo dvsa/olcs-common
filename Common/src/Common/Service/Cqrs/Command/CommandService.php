@@ -76,8 +76,13 @@ class CommandService
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
         }
 
+        /**
+         * Always use a clone, to prevent leakage
+         */
+        $request = clone $this->request;
+
         $this->client->resetParameters(true);
-        $this->client->setRequest($this->request);
+        $this->client->setRequest($request);
 
         $isMultipart = false;
 
@@ -91,19 +96,14 @@ class CommandService
             }
         }
 
-        $this->request->setUri($uri);
-        $this->request->setMethod($method);
+        $request->setUri($uri);
+        $request->setMethod($method);
 
         /**
          * If we are sending multipart, we need to remove the application/json header, the multipart header will be
          * added by ZF2s client
          */
         if ($isMultipart) {
-            /**
-             * Here we need to clone the request object, rather than update the current 1, as this service is a
-             * singleton, and subsequent calls to ->send would result in the headers being incorrectly modified.
-             */
-            $request = clone $this->request;
             $headers = $request->getHeaders();
             $newHeaders = new Headers();
             foreach ($headers as $header) {
@@ -115,7 +115,7 @@ class CommandService
             $this->client->setRequest($request);
             $this->client->setParameterPost($data);
         } else {
-            $this->request->setContent(json_encode($data));
+            $request->setContent(json_encode($data));
         }
 
         /** @var ClientAdapterLoggingWrapper $adapter */

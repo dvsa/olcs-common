@@ -114,6 +114,7 @@ class Module
      */
     private function setupRequestForProxyHost(\Zend\Stdlib\RequestInterface $request)
     {
+        /* @var $request \Zend\Http\PhpEnvironment\Request */
         if ($request->getHeaders()->get('xforwardedhost')) {
 
             $host = $request->getHeaders()->get('xforwardedhost')->getFieldValue();
@@ -131,6 +132,21 @@ class Module
                 )
             );
             $request->getUri()->setHost($host);
+        }
+
+        // if X-Forwarded-Proto Header exists (ie from AWS ELB) then set the request as this so that route
+        // generated URLS will have the correct scheme
+        if ($request->getHeaders()->get('xforwardedproto')) {
+
+            $proto = $request->getHeaders()->get('xforwardedproto')->getFieldValue();
+
+            Logger::debug(
+                sprintf(
+                    'Request scheme set from xforwardedproto header to %s',
+                    $proto
+                )
+            );
+            $request->getUri()->setScheme($proto);
         }
     }
 }
