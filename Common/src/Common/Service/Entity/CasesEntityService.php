@@ -29,7 +29,7 @@ class CasesEntityService extends AbstractEntityService
     ];
 
     private $openForLicenceBundle = [
-        'children' => ['publicInquirys']
+        'children' => ['publicInquiry']
     ];
 
     private $tableBundle = [
