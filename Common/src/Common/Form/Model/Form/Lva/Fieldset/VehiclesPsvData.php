@@ -24,7 +24,19 @@ class VehiclesPsvData
      *         "class": "checkbox inline"
      *     },
      *     "label": "application_vehicle-safety_vehicle-psv.hasEnteredReg",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Do you want to submit vehicle details? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"

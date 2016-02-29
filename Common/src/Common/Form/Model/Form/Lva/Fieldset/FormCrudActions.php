@@ -11,7 +11,11 @@ use Zend\Form\Annotation as Form;
 class FormCrudActions
 {
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
+     * @Form\Attributes({
+     *     "type":"submit",
+     *     "class":"action--primary large",
+     *     "aria-label": "Save and Continue"
+     * })
      * @Form\Options({
      *     "label": "Save",
      *     "label_attributes": {

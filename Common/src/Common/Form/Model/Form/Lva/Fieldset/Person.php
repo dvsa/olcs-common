@@ -26,6 +26,9 @@ class Person
      * @Form\Options({
      *     "empty_option": "Please Select",
      *     "label": "application_your-business_people-sub-action-formTitle",
+     *     "label_attributes": {
+     *         "aria-label": "Select title"
+     *     },
      *     "category":"person_title",
      * })
      * @Form\Type("DynamicSelect")
@@ -35,7 +38,12 @@ class Person
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"application_your-business_people-sub-action-formFirstName"})
+     * @Form\Options({
+     *     "label":"application_your-business_people-sub-action-formFirstName",
+     *     "label_attributes": {
+     *         "aria-label": "Enter first names"
+     *     }
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})
@@ -44,7 +52,12 @@ class Person
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"application_your-business_people-sub-action-formSurname"})
+     * @Form\Options({
+     *    "label":"application_your-business_people-sub-action-formSurname",
+     *     "label_attributes": {
+     *         "aria-label": "Enter last name"
+     *     }
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})
@@ -53,7 +66,12 @@ class Person
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"application_your-business_people-sub-action-formOtherNames"})
+     * @Form\Options({
+     *    "label":"application_your-business_people-sub-action-formOtherNames",
+     *     "label_attributes": {
+     *         "aria-label": "Enter other names (optional)"
+     *     }
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})

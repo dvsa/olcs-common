@@ -43,7 +43,12 @@ class AddTransportManagerDetails
 
     /**
      * @Form\Attributes({"class":"medium", "disabled":"disabled"})
-     * @Form\Options({"label":"lva-tm-details-email"})
+     * @Form\Options({
+     *     "label":"lva-tm-details-email",
+     *     "label_attributes": {
+     *         "aria-label": "Enter their email address"
+     *     }
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\EmailAddress"})

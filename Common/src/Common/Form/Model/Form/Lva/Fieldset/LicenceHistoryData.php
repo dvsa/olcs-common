@@ -19,7 +19,19 @@ class LicenceHistoryData
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevHasLicence",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Does anyone you've named already have an operator's licence in any traffic area? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "fieldset-attributes" : {
      *          "class":"checkbox inline"
      *     }
@@ -42,7 +54,19 @@ class LicenceHistoryData
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevHadLicence",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Has anyone you've named ever had or applied for an operator's licence in any traffic area? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "fieldset-attributes" : {
      *          "class":"checkbox inline"
      *     }
@@ -65,7 +89,19 @@ class LicenceHistoryData
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevBeenDisqualifiedTc",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Has anyone you've named ever been disqualified from having an operator's licence in any traffic area? Yes"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "fieldset-attributes" : {
      *          "class":"checkbox inline"
      *     }

@@ -8,7 +8,8 @@ use Zend\Form\Annotation as Form;
  * @Form\Name("address")
  * @Form\Type("\Common\Form\Elements\Types\Address")
  * @Form\Attributes({
- *     "class": "address js-postcode-search"
+ *     "class": "address js-postcode-search",
+ *     "aria-live":"assertive"
  * })
  */
 class AddressOptional
@@ -36,6 +37,9 @@ class AddressOptional
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label":"Address lines",
+     *     "label_attributes": {
+     *         "aria-label": "Enter address manually. Establishment address line 1"
+     *     },
      *     "short-label":"Address line 1"
      * })
      * @Form\Required(false)
@@ -70,7 +74,12 @@ class AddressOptional
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Town/city"})
+     * @Form\Options({
+     *    "label":"Town/city",
+     *    "label_attributes": {
+     *        "aria-label": "Establishment town/city"
+     *    }
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -79,6 +88,12 @@ class AddressOptional
 
     /**
      * @Form\Options({"label":"Postcode"})
+     * @Form\Options({
+     *     "label":"Postcode",
+     *     "label_attributes": {
+     *         "aria-label": "Establishment postcode"
+     *     }
+     * })
      * @Form\Type("Text")
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
@@ -96,6 +111,9 @@ class AddressOptional
      * @Form\Required(false)
      * @Form\Options({
      *     "label": "Country",
+     *     "label_attributes": {
+     *         "aria-label": "Choose establishment country"
+     *     },
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      *     "help-block": "Please select a category",
