@@ -8,10 +8,7 @@ return array(
     ),
     'settings' => array(
         'crud' => array(
-            'actions' => array(
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove'),
-                'restore' => array('class' => 'secondary', 'requireRows' => true),
-            )
+            'actions' => array()
         ),
         'row-disabled-callback' => function ($row) {
             return isset($row['action']) && in_array($row['action'], ['D', 'C']);
@@ -36,11 +33,7 @@ return array(
             'formatter' => 'Date',
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox',
-            'data-attributes' => array(
-                'action'
-            )
-        )
+            'type' => 'DeltaActionLinks',
+        ),
     )
 );

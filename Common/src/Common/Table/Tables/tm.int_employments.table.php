@@ -3,7 +3,6 @@
 return array(
     'variables' => array(
         'title' => 'transport-manager.employments.table',
-        //'within_form' => true,
         'empty_message' => 'transport-manager.employments.table.empty',
     ),
     'data-group' => 'otherEmployment',
@@ -11,10 +10,9 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('label' => 'Add', 'class' => 'primary'),
-                'edit' => array('label' => 'Edit', 'class' => 'secondary', 'requireRows' => true),
-                'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
+        'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
     ),
     'columns' => array(
         array(
@@ -37,9 +35,8 @@ return array(
             'name' => 'hoursPerWeek',
         ),
         array(
-            'title' => '',
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
+            'type' => 'ActionLinks',
+            'deleteInputName' => 'action[delete][%d]'
         ),
     )
 );

@@ -8,9 +8,7 @@ return array(
     ),
     'settings' => array(
         'crud' => array(
-            'actions' => array(
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
-            )
+            'actions' => array()
         ),
     ),
     'attributes' => array(
@@ -32,8 +30,7 @@ return array(
             'formatter' => 'Date',
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
+            'type' => 'ActionLinks',
+        ),
     )
 );

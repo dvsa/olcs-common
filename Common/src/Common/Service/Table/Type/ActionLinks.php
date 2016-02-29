@@ -6,45 +6,77 @@ namespace Common\Service\Table\Type;
  * Checkbox type
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 class ActionLinks extends Selector
 {
-    public function render($data, $column, $formattedContent = null)
-    {
-        // @todo translate Remove, Restore
-
-        if ($this->isRemoveVisible($data, $column)) {
-            $inputName = sprintf($this->getInputName($column), $data['id']);
-            return sprintf('<input type="submit" class="" name="%s" value="Remove">', $inputName);
-        }
-    }
-
-    private function getInputName($column)
-    {
-        if (isset($column['deleteInputName'])) {
-            return $column['deleteInputName'];
-        }
-
-        return 'table[action][delete][%d]';
-    }
-
-
+    const DEFAULT_INPUT_NAME = 'table[action][delete][%d]';
 
     /**
-     * Is the Remove link visible
+     * Render
      *
      * @param array $data
      * @param array $column
+     * @param string $formattedContent
+     *
+     * @return string
+     */
+    public function render($data, $column, $formattedContent = null)
+    {
+        $translator = $this->getTable()->getServiceLocator()->get('translator');
+        $remove = $translator->translate('action_links.remove');
+        $replace = $translator->translate('action_links.replace');
+
+        $content = '';
+
+        if ($this->isLinkVisible($data, $column, 'Remove')) {
+            $inputName = sprintf($this->getInputName($column, 'deleteInputName'), $data['id']);
+            $content .= sprintf(
+                '<input type="submit" class="" name="%s" value="' . $remove . '">', $inputName
+            );
+        }
+        if ($this->isLinkVisible($data, $column, 'Replace', false)) {
+            $inputName = sprintf($this->getInputName($column, 'replaceInputName'), $data['id']);
+            $content .= sprintf(
+                ' <input type="submit" class="" name="%s" value="' . $replace . '">', $inputName
+            );
+        }
+        return $content;
+    }
+
+    /**
+     * Get input name
+     *
+     * @param array $column
+     * @param string $setting
+     *
+     * @return string
+     */
+    private function getInputName($column, $setting)
+    {
+        if (isset($column[$setting])) {
+            return $column[$setting];
+        }
+
+        return self::DEFAULT_INPUT_NAME;
+    }
+
+    /**
+     * Is the link visible
+     *
+     * @param array $data
+     * @param array $column
+     * @param string $link
      *
      * @return bool
      */
-    private function isRemoveVisible($data, $column)
+    private function isLinkVisible($data, $column, $link, $default = true)
     {
-        if (isset($column['isRemoveVisible']) && is_callable($column['isRemoveVisible'])) {
-            return $column['isRemoveVisible']($data);
+        $setting = 'is' . $link . 'Visible';
+        if (isset($column[$setting]) && is_callable($column[$setting])) {
+            return $column[$setting]($data);
         }
 
-        // Default to show it
-        return true;
+        return $default;
     }
 }

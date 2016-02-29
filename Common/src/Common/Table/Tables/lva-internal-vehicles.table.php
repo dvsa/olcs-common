@@ -12,7 +12,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'edit' => array('requireRows' => true, 'class' => 'secondary js-require--one'),
                 'delete' => array(
                     'label' => 'Remove', 'class' => 'secondary js-require--multiple', 'requireRows' => true
                 ),
@@ -24,7 +23,7 @@ return array(
             )
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
-        'collapseAt' => 3,
+        'collapseAt' => 1,
         'row-disabled-callback' => function ($row) {
             return $row['removalDate'] !== null;
         }
@@ -65,6 +64,12 @@ return array(
             'title' => $translationPrefix . '.disc-no',
             'name' => 'discNo',
             'formatter' => 'VehicleDiscNo'
+        ),
+        array(
+            'type' => 'ActionLinks',
+            'isRemoveVisible' => function ($data) {
+                return empty($data['removalDate']);
+            }
         ),
         array(
             'name' => 'action',

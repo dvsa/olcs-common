@@ -10,8 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add-previous-licence' => array('label' => 'Add', 'class' => 'primary'),
-                'edit-previous-licence' => array('label' => 'Edit', 'class' => 'secondary', 'requireRows' => true),
-                'delete-previous-licence' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
     ),
@@ -25,11 +23,6 @@ return array(
         array(
             'title' => 'transport-manager.previouslicences.table.holderName',
             'name' => 'holderName',
-        ),
-        array(
-            'title' => '',
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
         ),
         array(
             'type' => 'ActionLinks',

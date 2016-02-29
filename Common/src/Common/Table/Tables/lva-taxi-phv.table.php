@@ -13,8 +13,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add a Taxi/PHV licence'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
             )
         )
     ),
@@ -35,8 +33,7 @@ return array(
             'name' => 'address'
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
+            'type' => 'ActionLinks',
+        ),
     )
 );

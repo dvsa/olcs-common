@@ -38,7 +38,7 @@ return array(
         ),
         array(
             'type' => 'ActionLinks',
-            'deleteInputName' => 'convictions[action][delete-other-licence-applications][%d]'
+            'deleteInputName' => 'table[action][delete-other-licence-applications][%d]'
         )
     )
 );
