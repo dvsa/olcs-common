@@ -34,7 +34,6 @@ class DeltaActionLinksTest extends MockeryTestCase
     }
 
     /**
-     * @group test123
      * @dataProvider tableDataProvider
      */
     public function testRender($data, $expected)
