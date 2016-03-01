@@ -264,7 +264,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
         if (isset($label) && '' !== $label) {
 
             // @NOTE commented this out, we need to be able to add HTML to a label, can't see that commenting this out
-            //  will affect anything
+            // will affect anything
             //$label = $escapeHtmlHelper($label);
             $labelAttributes = $element->getLabelAttributes();
 

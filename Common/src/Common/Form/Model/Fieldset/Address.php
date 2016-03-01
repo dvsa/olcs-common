@@ -36,6 +36,9 @@ class Address
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label":"Address lines",
+     *     "label_attributes": {
+     *         "aria-label": "Enter address manually. Address line one"
+     *     },
      *     "short-label":"Address line 1"
      * })
      * @Form\Type("Text")
@@ -75,7 +78,10 @@ class Address
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label":"Town/city",
-     *     "short-label":"Town/city"
+     *     "short-label":"Town/city",
+     *     "label_attributes": {
+     *         "aria-label": "Town/city"
+     *     }
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -101,6 +107,9 @@ class Address
      * @Form\Attributes({"id":"","placeholder":"","value":"GB"})
      * @Form\Options({
      *     "label": "Country",
+     *     "label_attributes": {
+     *         "aria-label": "Choose country"
+     *     },
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      *     "help-block": "Please select a category",

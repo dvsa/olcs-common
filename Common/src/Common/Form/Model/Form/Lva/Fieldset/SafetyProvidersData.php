@@ -23,10 +23,17 @@ class SafetyProvidersData
      *      },
      *     "label": "application_vehicle-safety_safety-sub-action.data.isExternal",
      *     "value_options": {
-     *         "N":
-     * "application_vehicle-safety_safety-sub-action.data.isExternal.option.no",
-     *         "Y":
-     * "application_vehicle-safety_safety-sub-action.data.isExternal.option.yes"
+     *         {
+     *             "value": "N",
+     *             "label": "application_vehicle-safety_safety-sub-action.data.isExternal.option.no",
+     *             "label_attributes": {
+     *                 "aria-label": "Who'll carry out the safety inspections? An owner or employee of the business"
+     *             }
+     *         },
+     *         {
+     *             "value": "Y",
+     *             "label": "application_vehicle-safety_safety-sub-action.data.isExternal.option.yes"
+     *         }
      *     },
      *     "help-block": "Please choose"
      * })

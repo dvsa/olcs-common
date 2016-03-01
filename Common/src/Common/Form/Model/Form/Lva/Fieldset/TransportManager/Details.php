@@ -46,8 +46,11 @@ class Details
     /**
      * @Form\Attributes({"id":"","class":"medium"})
      * @Form\Options({
-     *     "label":"lva-tm-details-details-birthPlace",
-     *     "short-label": "lva-tm-details-details-birthPlace"
+     *     "label": "lva-tm-details-details-birthPlace",
+     *     "short-label": "lva-tm-details-details-birthPlace",
+     *     "label_attributes": {
+     *         "aria-label": "Enter their place of birth"
+     *     }
      * })
      * @Form\Type("Text")
      * @Form\Validator({"name": "\Zend\Validator\NotEmpty"})
@@ -57,7 +60,12 @@ class Details
     /**
      * @Form\Attributes({"id":"certificate", "class": "file-upload"})
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
-     * @Form\Options({"label":"lva-tm-details-details-certificate"})
+     * @Form\Options({
+     *    "label":"lva-tm-details-details-certificate",
+     *    "label-attributes": {
+     *         "aria-label": "Certificate of professional competence, attach file(s) for upload"
+     *     }
+     * })
      */
     public $certificate = null;
 }

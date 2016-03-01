@@ -22,7 +22,19 @@ class VehiclesData
      *         "class": "checkbox inline"
      *     },
      *     "label": "application_vehicle-safety_vehicle-psv.hasEnteredReg",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {
+     *         {
+     *             "value": "Y",
+     *             "label": "Yes",
+     *             "label_attributes": {
+     *                 "aria-label": "Are some of your vehicles or trailers inspected more often than this? No"
+     *             }
+     *         },
+     *         {
+     *             "value": "N",
+     *             "label": "No"
+     *         }
+     *     },
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
