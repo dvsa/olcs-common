@@ -60,15 +60,34 @@ class Address extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
-                'formatter' => function ($data) {
-                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                'formatter' => function ($data, $column, $serviceLocator) {
+                    $urlHelper  = $serviceLocator->get('Helper\Url');
+                    if (isset($data['appId'])) {
+                        return sprintf(
+                            '<a href="%s">%s / %s</a>',
+                            $urlHelper->fromRoute('lva-application', ['application' => $data['appId']]),
+                            $data['licNo'],
+                            $data['appId']
+                        );
+                    }
+
+                    return sprintf(
+                        '<a href="%s">%s</a>',
+                        $urlHelper->fromRoute('licence', ['licence' => $data['licId']]),
+                        $data['licNo']
+                    );
                 }
             ],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
-                'formatter' => function ($data) {
-                    return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
+                'formatter' => function ($data, $column, $serviceLocator) {
+                    $urlHelper  = $serviceLocator->get('Helper\Url');
+                    return sprintf(
+                        '<a href="%s">%s</a>',
+                        $urlHelper->fromRoute('operator', ['organisation' => $data['orgId']]),
+                        $data['orgName']
+                    );
                 }
             ],
             [
