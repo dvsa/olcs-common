@@ -932,7 +932,7 @@ return [
     'external.cancel_application.confirm.back_button' => 'Back',
     'external.cancel_application.confirm.cancel_message' => 'Application cancelled',
     'external.cancel_application.confirm.confirm_button' => 'Cancel application',
-    'external.cancel_application.confirm.message' => 'Are you sure you want to cancel this application? It will be removed from your list and you will not be able to access it again.',
+    'external.cancel_application.confirm.message' => 'Are you sure you want to cancel this application? It will be removed from your list and you won\'t be able to access it again.',
     'external.withdraw_application.confirm.back_button' => 'Back',
     'external.withdraw_application.confirm.cancel_message' => 'Application withdrawn',
     'external.withdraw_application.confirm.confirm_button' => 'Withdraw application',
