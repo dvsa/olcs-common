@@ -59,6 +59,7 @@ return [
     'ERR_OC_V_4' => '{WELSH} Please add an operating centre before setting the total number of vehicles',
     'ERR_OR_R_TOO_MANY' => '{WELSH} 2 is the maximum number of vehicles on a PSV Restricted licence',
     'ERR_PSV_VE_NO_ROWS' => '{WELSH} Please add at least one vehicle',
+    'ERR_RESET_PASS_BY_POST_NO_ADDRESS' => '{WELSH} Password reset unsuccessful. A letter couldn\'t be generated because there\'s no correspondence address.',
     'ERR_TA_GOODS_EXTERNAL' => '{WELSH} You already have a Goods application or licence within the %s traffic area',
     'ERR_TA_GOODS_INTERNAL' => '{WELSH} The operator already has a Goods application or licence within the %s traffic area',
     'ERR_TA_PSV_EXTERNAL' => '{WELSH} You already have a PSV application or licence within the %s traffic area',
