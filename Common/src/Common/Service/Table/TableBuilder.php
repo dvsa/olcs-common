@@ -1844,7 +1844,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * Returns if the current internal user has read only permissions
+     * Return true if the current internal user has read only permissions
      *
      * @return bool
      */

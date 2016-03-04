@@ -2943,9 +2943,6 @@ class TableBuilderTest extends MockeryTestCase
         );
     }
 
-    /**
-     * @group test123
-     */
     public function testCheckForActionLinks()
     {
         $tableConfig = [
