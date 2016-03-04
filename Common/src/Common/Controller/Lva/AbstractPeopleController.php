@@ -84,7 +84,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $this->getAdapter()->alterFormForOrganisation($form, $table);
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
+        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud-delta', 'more-actions']);
 
         return $this->render('people', $form);
     }

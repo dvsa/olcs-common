@@ -81,7 +81,7 @@ abstract class AbstractDiscsController extends AbstractController
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-discs-than-authorisation');
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'more-actions']);
         return $this->render('discs', $form, ['filterForm' => $filterForm]);
     }
 

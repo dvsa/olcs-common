@@ -10,9 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true),
-                'restore' => array('class' => 'secondary', 'requireRows' => true)
             )
         )
     ),
@@ -31,8 +28,7 @@ return array(
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-type',
-            'formatter' => 'Translate',
-            'name' => 'conditionType->description'
+            'formatter' => 'ConditionsUndertakingsType',
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-added-via',
@@ -65,18 +61,13 @@ return array(
             }
         ),
         array(
-            'title' => 'lva-conditions-undertakings-table-s4',
-            'format' => 'Todo'
-        ),
-        array(
             'title' => 'lva-conditions-undertakings-table-description',
             'name' => 'notes',
             'maxlength' => 30,
             'formatter' => 'Comment'
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
+            'type' => 'ActionLinks',
+        ),
     )
 );

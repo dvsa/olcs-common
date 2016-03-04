@@ -11,14 +11,10 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add person'),
-                'edit' => array('requireRows' => true),
-                'delete' => array(
-                    'label' => 'people_table_action.delete.label',
-                    'class' => 'secondary',
-                    'requireRows' => true,
-                ),
             )
-        )
+        ),
+        'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
+        'collapseAt' => 1
     ),
     'columns' => array(
         array(
@@ -53,6 +49,9 @@ return array(
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnPosition',
             'name' => 'position',
+        ),
+        array(
+            'type' => 'ActionLinks',
         ),
         array(
             'name' => 'select',

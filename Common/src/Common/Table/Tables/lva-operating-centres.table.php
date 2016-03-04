@@ -10,8 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add operating centre'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true),
                 'schedule41' => array(
                     'class' => 'secondary',
                     'value' => 'Add schedule 4/1',
@@ -46,9 +44,8 @@ return array(
             'formatter' => 'OcComplaints'
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
+            'type' => 'ActionLinks'
+        ),
     ),
     'footer' => array(
         'total' => array(

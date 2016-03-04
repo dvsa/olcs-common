@@ -10,8 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary','label' => 'Add subsidiary'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
             )
         )
     ),
@@ -27,8 +25,7 @@ return array(
             'name' => 'companyNo',
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
+            'type' => 'ActionLinks',
+        ),
     )
 );

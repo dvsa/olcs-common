@@ -10,8 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add-employment' => array('label' => 'Add', 'class' => 'primary'),
-                'edit-employment' => array('label' => 'Edit', 'class' => 'secondary', 'requireRows' => true),
-                'delete-employment' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
     ),
@@ -36,9 +34,8 @@ return array(
             'name' => 'hoursPerWeek',
         ),
         array(
-            'title' => '',
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        ),
+            'type' => 'ActionLinks',
+            'deleteInputName' => 'employment[action][delete-employment][%d]'
+        )
     )
 );

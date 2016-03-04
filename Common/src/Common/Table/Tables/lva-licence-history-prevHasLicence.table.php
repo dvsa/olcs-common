@@ -12,8 +12,6 @@ return array(
             'formName' => 'current',
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add licence'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove')
             )
         )
     ),
@@ -34,8 +32,8 @@ return array(
             'formatter' => 'YesNo'
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
+            'type' => 'ActionLinks',
+            'deleteInputName' => 'data[prevHasLicence-table][action][delete][%d]'
         )
     )
 );

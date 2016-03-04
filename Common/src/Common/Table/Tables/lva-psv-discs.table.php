@@ -17,7 +17,7 @@ return array(
                     'requireRows' => true
                 ),
                 'void' => array(
-                    'label' => 'Void',
+                    'label' => 'Remove',
                     'class' => 'secondary js-require--multiple',
                     'requireRows' => true
                 ),
@@ -28,7 +28,9 @@ return array(
                 'default' => 10,
                 'options' => array(10, 25, 50)
             )
-        )
+        ),
+        'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
+        'collapseAt' => 1
     ),
     'columns' => array(
         array(
@@ -49,6 +51,17 @@ return array(
             'title' => $translationPrefix . '.replacement',
             'name' => 'isCopy',
             'formatter' => 'YesNo'
+        ),
+        array(
+            'type' => 'ActionLinks',
+            'isRemoveVisible' => function ($data) {
+                return empty($data['ceasedDate']);
+            },
+            'isReplaceVisible' => function ($data) {
+                return empty($data['ceasedDate']);
+            },
+            'deleteInputName' => 'table[action][void][%d]',
+            'replaceInputName' => 'table[action][replace][%d]'
         ),
         array(
             'width' => 'checkbox',

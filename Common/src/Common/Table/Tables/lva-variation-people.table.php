@@ -11,13 +11,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add person'),
-                'edit' => array('requireRows' => true),
-                'delete' => array(
-                    'label' => 'people_table_action.delete.label',
-                    'class' => 'secondary',
-                    'requireRows' => true
-                ),
-                'restore' => array('class' => 'secondary', 'requireRows' => true)
             )
         ),
         'row-disabled-callback' => function ($row) {
@@ -59,12 +52,7 @@ return array(
             'name' => 'position',
         ),
         array(
-            'name' => 'select',
-            'width' => 'checkbox',
-            'type' => 'Checkbox',
-            'data-attributes' => array(
-                'action'
-            )
-        )
+            'type' => 'DeltaActionLinks',
+        ),
     )
 );
