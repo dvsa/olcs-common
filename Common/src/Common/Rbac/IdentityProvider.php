@@ -7,9 +7,6 @@ namespace Common\Rbac;
 
 use Common\Service\Cqrs\Query\QuerySender;
 use Dvsa\Olcs\Transfer\Query\MyAccount\MyAccount;
-use Zend\Http\Header\GenericHeader;
-use Zend\Http\Request;
-use Zend\Session\Container;
 use ZfcRbac\Identity\IdentityInterface;
 use ZfcRbac\Identity\IdentityProviderInterface;
 
@@ -24,23 +21,16 @@ class IdentityProvider implements IdentityProviderInterface
     private $queryService;
 
     /**
-     * @var Container
+     * @var Identity;
      */
-    private $session;
-
-    /**
-     * @var Request
-     */
-    private $request;
+    private $identity;
 
     /**
      * @param QuerySender $queryService
      */
-    public function __construct(QuerySender $queryService, Container $session, Request $request)
+    public function __construct(QuerySender $queryService)
     {
         $this->queryService = $queryService;
-        $this->session = $session;
-        $this->request = $request;
     }
 
     /**
@@ -51,7 +41,7 @@ class IdentityProvider implements IdentityProviderInterface
      */
     public function getIdentity()
     {
-        if ($this->hasIdentityChanged()) {
+        if ($this->identity === null) {
             $response = $this->queryService->send(MyAccount::create([]));
 
             if (!$response->isOk()) {
@@ -73,49 +63,9 @@ class IdentityProvider implements IdentityProviderInterface
             }
             $user->setRoles($roles);
 
-            $this->session->offsetSet('identity', $user);
+            $this->identity = $user;
         }
 
-        return $this->session->offsetGet('identity');
-    }
-
-    /**
-     * Checks if identity we have in session still matches the request
-     *
-     * @return bool
-     */
-    private function hasIdentityChanged()
-    {
-        if (!$this->session->offsetExists('identity')) {
-            // no identity in the session yet - refresh
-            return true;
-        }
-
-        $identity = $this->session->offsetGet('identity');
-
-        if (!($identity instanceof User)) {
-            // no identity in the session yet - refresh
-            return true;
-        }
-
-        $cookies = $this->request->getCookie();
-
-        $pid = $this->request->getHeader('X-Pid', new GenericHeader())->getFieldValue();
-
-        if (!empty($cookies['secureToken']) && !empty($pid)) {
-            // user authenticated
-            if ($identity->getPid() !== $pid) {
-                // but the one in session has different pid - refresh
-                return true;
-            }
-        } else {
-            // user not authenticated
-            if (!$identity->isAnonymous()) {
-                // but the one in session is not anonymous - refresh
-                return true;
-            }
-        }
-
-        return false;
+        return $this->identity;
     }
 }
