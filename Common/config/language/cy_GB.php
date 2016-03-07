@@ -127,6 +127,7 @@ return [
     'additional-psv-discs-validator-too-many' => '{WELSH} The number of discs exceeds the total vehicle authority',
     'address' => '{WELSH} Address',
     'admin-continuations-checklist-reminders-title' => '{WELSH} Checklist reminders',
+    'admin-continuations-irfo-psv-auth-title' => '{WELSH} IRFO PSV Authorisations',
     'admin-continuations-list-title' => '{WELSH} Time period: %s Traffic area: %s',
     'admin-continuations-no-licences-found' => '{WELSH} No licences were found',
     'admin-continuations-title' => '{WELSH} Continuations',
