@@ -9,6 +9,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\TransferVehiclesTrait;
+use Common\Controller\Lva\Traits\VehicleSearchTrait;
 use Common\Data\Mapper\Lva\GoodsVehicles;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Common\RefData;
@@ -35,8 +36,11 @@ use Dvsa\Olcs\Transfer\Query\Variation\GoodsVehicles as VariationGoodsVehicles;
  */
 abstract class AbstractGoodsVehiclesController extends AbstractController
 {
+    const SEARCH_VEHICLES_COUNT = 20;
+
     use Traits\CrudTableTrait,
-        TransferVehiclesTrait;
+        TransferVehiclesTrait,
+        VehicleSearchTrait;
 
     protected $section = 'vehicles';
     protected $totalAuthorisedVehicles = [];
@@ -114,7 +118,12 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                     return $alternativeCrudResponse;
                 }
 
-                return $this->handleCrudAction($crudAction, ['add', 'print-vehicles']);
+                return $this->handleCrudAction(
+                    $crudAction,
+                    [
+                        'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
+                    ]
+                );
             }
 
             return $this->completeSection('vehicles');
@@ -454,22 +463,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         $files = ['lva-crud', 'vehicle-goods'];
         $params = [];
-
-        $filterForm = $this->getServiceLocator()->get('FormServiceManager')
-            ->get('lva-' . $this->lva . '-goods-' . $this->section . '-filters')
-            ->getForm();
-
-        if ($filterForm !== null) {
-            $files[] = 'forms/filter';
-            $params['filterForm'] = $filterForm;
-
-            $query = (array)$this->getRequest()->getQuery();
-
-            if (!isset($query['limit']) || !is_numeric($query['limit'])) {
-                $query['limit'] = 10;
-            }
-
-            $filterForm->setData($query);
+        $searchForm = $this->getVehcileSearchForm($headerData);
+        if ($searchForm) {
+            $params['searchForm'] = $searchForm;
+            $files[] = 'forms/vehicle-search';
         }
 
         $this->getServiceLocator()->get('Script')->loadFiles($files);
@@ -477,22 +474,24 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->render('vehicles', $form, $params);
     }
 
-    protected function getTable($headerData)
+    protected function getTable($headerData, $filters)
     {
-        $query = $this->getRequest()->getQuery();
-        $params = array_merge((array)$query, ['query' => $query]);
+        $query = $this->removeUnusedParametersFromQuery(
+            (array) $this->getRequest()->getQuery()
+        );
+        $params = array_merge($query, ['query' => $query]);
 
         $tableName = 'lva-' . $this->location . '-vehicles';
 
         $table = $this->getServiceLocator()->get('Table')
             ->prepareTable($tableName, $headerData['licenceVehicles'], $params);
 
-        $this->makeTableAlterations($table, $headerData);
+        $this->makeTableAlterations($table, $headerData, $filters);
 
         return $table;
     }
 
-    protected function makeTableAlterations($table, $params)
+    protected function makeTableAlterations($table, $params, $filters)
     {
         if ($params['canReprint']) {
             $table->addAction(
@@ -535,6 +534,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 ]
             );
         }
+        $this->addRemovedVehiclesActions($filters, $table);
     }
 
     protected function getConfirmationForm($request)
@@ -563,8 +563,8 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             'order' => isset($query['order']) ? $query['order'] : 'DESC',
         ];
 
-        if (isset($query['vrm']) && $query['vrm'] !== 'All') {
-            $filters['vrm'] = $query['vrm'];
+        if (isset($query['vehicleSearch']['vrm']) && !isset($query['vehicleSearch']['clearSearch'])) {
+            $filters['vrm'] = $query['vehicleSearch']['vrm'];
         }
 
         if (isset($query['specified']) && in_array($query['specified'], ['Y', 'N'])) {
@@ -590,7 +590,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-goods-' . $this->section)
-            ->getForm($this->getTable($headerData))
+            ->getForm($this->getTable($headerData, $this->getFilters()))
             ->setData($formData);
     }
 
