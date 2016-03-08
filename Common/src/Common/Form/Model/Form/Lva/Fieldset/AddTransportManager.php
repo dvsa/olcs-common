@@ -21,7 +21,7 @@ class AddTransportManager
     public $registeredUser = null;
 
     /**
-     * @Form\Attributes({"id":"addUser","type":"submit","class":"action--tertiary"})
+     * @Form\Attributes({"id":"addUser","type":"submit","class":""})
      * @Form\Options({"label": "transport-manager-add"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
