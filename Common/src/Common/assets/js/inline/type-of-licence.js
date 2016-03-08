@@ -68,4 +68,9 @@ OLCS.ready(function() {
   }
 
   setupCascade();
+
+  OLCS.eventEmitter.on("render", function() {
+    setupCascade();
+  });
+
 });
