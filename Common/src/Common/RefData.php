@@ -200,9 +200,14 @@ class RefData
     const APPLIED_VIA_PHONE = 'applied_via_phone';
     const APPLIED_VIA_SELFSERVE = 'applied_via_selfserve';
 
-    /*
+    /**
      * Impounding types
      */
     const IMPOUNDING_TYPE_HEARING = 'impt_hearing';
     const IMPOUNDING_TYPE_PAPER = 'impt_paper';
+
+    /**
+     * Convictions
+     */
+    const CONVICTION_CATEGORY_USER_DEFINED = 'conv_c_cat_1144';
 }
