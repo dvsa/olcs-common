@@ -10,8 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add operating centre'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true),
                 'schedule41' => array(
                     'class' => 'secondary',
                     'value' => 'Add schedule 4/1',
@@ -28,14 +26,17 @@ return array(
             'action' => 'edit',
             'name' => 'operatingCentre->address',
             'formatter' => 'Address',
+            'sort' => 'adr'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',
-            'name' => 'noOfVehiclesRequired'
+            'name' => 'noOfVehiclesRequired',
+            'sort' => 'noOfVehiclesRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.trailers',
-            'name' => 'noOfTrailersRequired'
+            'name' => 'noOfTrailersRequired',
+            'sort' => 'noOfTrailersRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.complaints',
@@ -43,9 +44,8 @@ return array(
             'formatter' => 'OcComplaints'
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
+            'type' => 'ActionLinks'
+        ),
     ),
     'footer' => array(
         'total' => array(

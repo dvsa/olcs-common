@@ -29,7 +29,9 @@ class BusinessDetails
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TradingNames")
      * @Form\Attributes({"class": "add-another"})
-     * @Form\Options({"label": "application_your-business_business-details.data.trading_names_optional"})
+     * @Form\Options({
+     *     "label": "application_your-business_business-details.data.trading_names_optional"
+     * })
      */
     public $tradingNames = null;
 
@@ -37,6 +39,9 @@ class BusinessDetails
      * @Form\Attributes({"id":"","placeholder":"","class":"extra-long"})
      * @Form\Options({
      *     "label": "Nature of business",
+     *     "label_attributes": {
+     *         "aria-label": "Enter the nature of your business"
+     *     },
      *     "help-block": "Please select a nature of business",
      *     "hint":"application-review-business-details-nature-of-business-hint"
      * })

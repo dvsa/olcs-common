@@ -759,6 +759,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->setVariables($config['variables']);
         $this->setFooter($config['footer']);
 
+        $this->checkForActionLinks();
+
         return true;
     }
 
@@ -1142,7 +1144,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             )
         );
 
-        if ($this->isDisabled || !$hasActions) {
+        if ($this->isDisabled || !$hasActions || $this->isInternalReadOnly()) {
             return '';
         }
 
@@ -1378,6 +1380,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             unset($column['align']);
         }
 
+        if (isset($column['title'])) {
+            $translator = $this->getServiceLocator()->get('translator');
+            $column['title'] = $translator->translate($column['title']);
+        }
+
         if (isset($column['sort'])) {
 
             if (isset($column['class'])) {
@@ -1414,11 +1421,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         if (isset($column['width']) && isset($this->widths[$column['width']])) {
 
             $column['width'] = $this->widths[$column['width']];
-        }
-
-        if (isset($column['title'])) {
-            $translator = $this->getServiceLocator()->get('translator');
-            $column['title'] = $translator->translate($column['title']);
         }
 
         if (isset($column['type']) && $column['type'] == 'Checkbox') {
@@ -1839,5 +1841,38 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         $this->variables['dataAttributes'] = '';
+    }
+
+    /**
+     * Return true if the current internal user has read only permissions
+     *
+     * @return bool
+     */
+    protected function isInternalReadOnly()
+    {
+        $authService = $this->getAuthService();
+        if ($authService->isGranted('internal-user') && !$authService->isGranted('internal-edit')) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * If internal user has read only permissions remove columns with particular types
+     */
+    protected function checkForActionLinks()
+    {
+        if ($this->isInternalReadOnly()) {
+            $typesToRemove = ['ActionLinks', 'DeltaActionLinks'];
+            $columns = $this->getColumns();
+            $updatedColumns = [];
+            foreach ($columns as $column) {
+                if (isset($column['type']) && in_array($column['type'], $typesToRemove)) {
+                    continue;
+                }
+                $updatedColumns[] = $column;
+            }
+            $this->setColumns($updatedColumns);
+        }
     }
 }

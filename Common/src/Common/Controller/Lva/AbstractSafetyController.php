@@ -70,9 +70,10 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Get Safety Data
      *
+     * @param bool $noCache
      * @return array
      */
-    abstract protected function getSafetyData();
+    abstract protected function getSafetyData($noCache = false);
 
     protected $canHaveTrailers;
     protected $hasTrailers;
@@ -90,6 +91,8 @@ abstract class AbstractSafetyController extends AbstractController
         'application' => ApplicationUpdateWorkshop::class,
         'variation' => ApplicationUpdateWorkshop::class,
     ];
+
+    protected $safetyData = null;
 
     /**
      * Redirect to the first section
@@ -114,7 +117,15 @@ abstract class AbstractSafetyController extends AbstractController
 
         $form = $this->alterForm($this->getSafetyForm())->setData($data);
 
-        if ($request->isPost()) {
+        $hasProcessedFiles = $this->processFiles(
+            $form,
+            'additional-documents->files',
+            array($this, 'processSafetyAdditionalDocumentsFileUpload'),
+            array($this, 'deleteFile'),
+            array($this, 'getDocuments')
+        );
+
+        if (!$hasProcessedFiles && $request->isPost()) {
 
             $crudAction = $this->getCrudAction([$data['table']]);
 
@@ -148,6 +159,38 @@ abstract class AbstractSafetyController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFiles(['vehicle-safety', 'lva-crud']);
 
         return $this->render('safety', $form);
+    }
+
+    /**
+     * Callback to handle the file upload
+     *
+     * @param array $file
+     */
+    public function processSafetyAdditionalDocumentsFileUpload($file)
+    {
+        $id = $this->getIdentifier();
+
+        $data = array_merge(
+            $this->getUploadMetaData($file, $id),
+            [
+                'isExternal' => $this->isExternal()
+            ]
+        );
+
+        $this->uploadFile($file, $data);
+
+        $this->getSafetyData(true);
+    }
+
+    /**
+     * Callback to get list of documents
+     *
+     * @return array
+     */
+    public function getDocuments()
+    {
+        $data = $this->getSafetyData();
+        return isset($data['safetyDocuments']) ? $data['safetyDocuments'] : [];
     }
 
     protected function mapErrors(Form $form, array $errors)

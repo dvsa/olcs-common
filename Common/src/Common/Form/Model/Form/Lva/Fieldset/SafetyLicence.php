@@ -93,6 +93,23 @@ class SafetyLicence
      *          "class": "checkbox"
      *      },
      *     "label": "application_vehicle-safety_safety.licence.tachographAnalyser",
+     *     "value_options": {
+     *         {
+     *             "value": "tach_internal",
+     *             "label": "tachograph_analyser.tach_internal",
+     *             "label_attributes": {
+     *                 "aria-label": "Who analyses the tachograph records? An owner or employee of the business"
+     *             }
+     *         },
+     *         {
+     *             "value": "tach_external",
+     *             "label": "tachograph_analyser.tach_external"
+     *         },
+     *         {
+     *             "value": "tach_na",
+     *             "label": "tachograph_analyser.tach_na"
+     *         }
+     *     },
      *     "help-block": "Please choose",
      *     "category": "tachograph_analyser",
      *     "service_name": "StaticList"

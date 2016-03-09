@@ -7,7 +7,6 @@ namespace Common\Rbac;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Session\Container;
 
 /**
  * Identity Provider Factory
@@ -23,9 +22,7 @@ class IdentityProviderFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new IdentityProvider(
-            $serviceLocator->get('QuerySender'),
-            new Container('user_details'),
-            $serviceLocator->get('Request')
+            $serviceLocator->get('QuerySender')
         );
     }
 }

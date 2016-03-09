@@ -10,8 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'label' => 'Add offence'),
-                'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'label' => 'Remove')
             )
         )
     ),
@@ -40,9 +38,8 @@ return array(
             'name' => 'penalty',
         ),
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox',
-            'hideWhenDisabled' => true
+            'type' => 'ActionLinks',
+            'deleteInputName' => 'data[table][action][delete][%d]',
         )
     )
 );

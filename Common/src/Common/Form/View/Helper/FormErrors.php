@@ -69,7 +69,7 @@ class FormErrors extends AbstractHelper
         }
 
         $messagesOpenFormat = '
-<div class="validation-summary">
+<div class="validation-summary" role="alert" id="validationSummary">
     <h3>%s</h3>
     <ol class="validation-summary__list">
         <li class="validation-summary__item">

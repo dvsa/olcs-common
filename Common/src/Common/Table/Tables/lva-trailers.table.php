@@ -12,7 +12,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'edit' => array('requireRows' => true),
                 'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         )
@@ -28,6 +27,9 @@ return array(
             'title' => $translationPrefix . '.specified',
             'formatter' => 'Date',
             'name' => 'specifiedDate'
+        ),
+        array(
+            'type' => 'ActionLinks',
         ),
         array(
             'width' => 'checkbox',

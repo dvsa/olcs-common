@@ -11,6 +11,7 @@ use Dvsa\Olcs\Transfer\Command\Licence\UpdateSafety;
 use Dvsa\Olcs\Transfer\Command\Workshop\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Query\Licence\Safety;
 use Zend\Form\Form;
+use Common\Category;
 
 /**
  * Licence Safety Controller Trait
@@ -40,28 +41,47 @@ trait LicenceSafetyControllerTrait
     /**
      * Get Safety Data
      *
+     * @param bool $noCache
      * @return array
      */
-    protected function getSafetyData()
+    protected function getSafetyData($noCache = false)
     {
-        $response = $this->handleQuery(Safety::create(['id' => $this->getLicenceId()]));
+        if (is_null($this->safetyData) || $noCache) {
+            $response = $this->handleQuery(Safety::create(['id' => $this->getLicenceId()]));
+            if (!$response->isOk()) {
+                return $this->notFoundAction();
+            }
 
-        if (!$response->isOk()) {
-            return $this->notFoundAction();
+            $licence = $response->getResult();
+
+            $this->canHaveTrailers = $licence['canHaveTrailers'];
+            $this->hasTrailers = $licence['hasTrailers'];
+            $this->workshops = $licence['workshops'];
+
+            $this->safetyData = [
+                'version' => null,
+                'safetyConfirmation' => null,
+                'isMaintenanceSuitable' => $licence['isMaintenanceSuitable'],
+                'licence' => $licence,
+                'safetyDocuments' => $licence['safetyDocuments']
+            ];
         }
+        return $this->safetyData;
+    }
 
-        $licence = $response->getResult();
-
-        $this->canHaveTrailers = $licence['canHaveTrailers'];
-        $this->hasTrailers = $licence['hasTrailers'];
-        $this->workshops = $licence['workshops'];
-
-        return array(
-            'version' => null,
-            'safetyConfirmation' => null,
-            'isMaintenanceSuitable' => $licence['isMaintenanceSuitable'],
-            'licence' => $licence
-        );
+    /**
+     * @param array $file
+     * @param int $licenceId
+     * @return array
+     */
+    public function getUploadMetaData($file, $licenceId)
+    {
+        return [
+            'description' => $file['name'],
+            'category'    => Category::CATEGORY_APPLICATION,
+            'subCategory' => Category::DOC_SUB_CATEGORY_MAINT_OTHER_DIGITAL,
+            'licence'     => $licenceId,
+        ];
     }
 
     /**

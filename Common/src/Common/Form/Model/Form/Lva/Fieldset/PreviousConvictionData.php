@@ -29,7 +29,10 @@ class PreviousConvictionData
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formFirstName"
+     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formFirstName",
+     *     "label_attributes": {
+     *         "aria-label": "Enter first names"
+     *     }
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -39,7 +42,10 @@ class PreviousConvictionData
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formLastName"
+     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formLastName",
+     *     "label_attributes": {
+     *         "aria-label": "Enter family names"
+     *     }
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -65,7 +71,10 @@ class PreviousConvictionData
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formOffence"
+     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formOffence",
+     *     "label_attributes": {
+     *         "aria-label": "Enter your offence"
+     *     }
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -77,7 +86,8 @@ class PreviousConvictionData
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetails",
      *     "label_attributes": {
-     *         "class": "col-sm-2"
+     *         "class": "col-sm-2",
+     *         "aria-label": "Give details of the offence"
      *     },
      *     "column-size": "sm-6",
      *     "help-block": "selfserve-app-subSection-previous-history-criminal-conviction-helpBlock",
@@ -91,7 +101,10 @@ class PreviousConvictionData
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formNameOfCourt"
+     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formNameOfCourt",
+     *     "label_attributes": {
+     *         "aria-label": "Enter the name of the court"
+     *     }
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -101,7 +114,10 @@ class PreviousConvictionData
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formPenalty"
+     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formPenalty",
+     *     "label_attributes": {
+     *         "aria-label": "Enter the penalty"
+     *     }
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})

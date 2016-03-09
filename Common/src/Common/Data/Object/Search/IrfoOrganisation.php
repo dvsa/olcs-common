@@ -31,23 +31,6 @@ class IrfoOrganisation extends InternalSearchAbstract
     protected $filters = [];
 
     /**
-     * Returns an array of filters for this index
-     *
-     * @return array
-     */
-    public function getFilters()
-    {
-        if (empty($this->filters)) {
-
-            $this->filters = [
-                new Filter\IrfoAuthStatus(),
-            ];
-        }
-
-        return $this->filters;
-    }
-
-    /**
      * @return array
      */
     public function getSettings()
@@ -76,26 +59,6 @@ class IrfoOrganisation extends InternalSearchAbstract
                 }
             ],
             ['title' => 'Operator name', 'name'=> 'orgName'],
-            ['title' => 'Irfo auth status', 'name'=> 'irfoStatusDesc'],
-            ['title' => 'Related licence number', 'formatter' => function ($data, $column, $serviceLocator) {
-                $urlHelper  = $serviceLocator->get('Helper\Url');
-                if (trim($data['relatedLicNum']) === '') {
-                    return '';
-                }
-                $licNos = explode(',', $data['relatedLicNum']);
-                foreach ($licNos as $licNo) {
-                    $licNo = trim($licNo);
-                    $url =
-                    $links[] = sprintf(
-                        '<a href="%s">%s</a>',
-                        $urlHelper->fromRoute('licence-no', ['licNo' => $licNo]),
-                        $licNo
-                    );
-                }
-                return implode(', ', $links);
-            }],
-            ['title' => 'Service route from', 'name'=> 'serviceRouteFrom'],
-            ['title' => 'Service route to', 'name'=> 'serviceRouteTo'],
         ];
     }
 }

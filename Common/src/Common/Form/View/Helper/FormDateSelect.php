@@ -79,7 +79,6 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
 
     protected function renderDayInput($element)
     {
-        $element->setAttribute('placeholder', 'dd');
 
         return $this->wrap(
             $this->renderInput($element, 2),
@@ -89,7 +88,6 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
 
     protected function renderMonthInput($element)
     {
-        $element->setAttribute('placeholder', 'mm');
 
         return $this->wrap(
             $this->renderInput($element, 2),
@@ -99,7 +97,6 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
 
     protected function renderYearInput($element)
     {
-        $element->setAttribute('placeholder', 'yyyy');
 
         return $this->wrap(
             $this->renderInput($element, 4),

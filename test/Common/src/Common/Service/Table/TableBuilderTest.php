@@ -2942,4 +2942,51 @@ class TableBuilderTest extends MockeryTestCase
             $settings
         );
     }
+
+    public function testCheckForActionLinks()
+    {
+        $tableConfig = [
+            'settings' => [
+                'paginate' => [],
+                'crud' => [
+                    'actions' => []
+                ]
+            ],
+            'columns' => [
+                ['bar'],
+                [
+                    'type' => 'ActionLinks'
+                ],
+                [
+                    'type' => 'DeltaActionLinks'
+                ]
+            ]
+        ];
+
+        $mockTranslator = m::mock();
+        $mockTranslator->shouldReceive('translate')
+            ->with(m::type('string'))
+            ->andReturn('foo');
+
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with('internal-user')
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('isGranted')
+            ->with('internal-edit')
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+
+        $sm = Bootstrap::getServiceManager();
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+        $sm->setService('Config', m::mock());
+        $sm->setService('translator', $mockTranslator);
+
+        $sut = new TableBuilder($sm);
+
+        $sut->loadConfig($tableConfig);
+        $this->assertEquals([['bar']], $sut->getColumns());
+    }
 }

@@ -84,7 +84,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $this->getAdapter()->alterFormForOrganisation($form, $table);
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
+        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud-delta', 'more-actions']);
 
         return $this->render('people', $form);
     }
@@ -263,9 +263,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             }
         } else {
             if ($this->lva === 'licence' &&
-                ($this->getAdapter()->isOrganisationLimited() &&
-                $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
-                || ($this->getAdapter()->isOrganisationOther())
+                (
+                    ($this->getAdapter()->isOrganisationLimited() &&
+                        $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
+                    || $this->getAdapter()->isOrganisationOther()
+                )
             ) {
                 $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($this->getLicenceId(), 'people');
             } else {

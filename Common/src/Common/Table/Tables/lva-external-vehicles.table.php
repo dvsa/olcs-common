@@ -15,10 +15,6 @@ return array(
                     'label' => 'vehicle_table_action.add.label',
                     'class' => 'primary'
                 ),
-                'edit' => array(
-                    'label' => 'vehicle_table_action.edit.label',
-                    'requireRows' => true
-                ),
                 'delete' => array(
                     'label' => 'vehicle_table_action.delete.label',
                     'class' => 'secondary',
@@ -35,7 +31,7 @@ return array(
             )
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
-        'collapseAt' => 3, // this will collapse remaining actions into a 'More Actions' dropdown
+        'collapseAt' => 1, // this will collapse remaining actions into a 'More Actions' dropdown
         'row-disabled-callback' => function ($row) {
             return $row['removalDate'] !== null;
         }
@@ -47,6 +43,7 @@ return array(
             'formatter' => 'StackValue',
             'action' => 'edit',
             'type' => 'Action',
+            'sort' => 'v.vrm'
         ),
         array(
             'title' => $translationPrefix . '.weight',
@@ -56,17 +53,25 @@ return array(
         array(
             'title' => $translationPrefix . '.specified',
             'formatter' => 'Date',
-            'name' => 'specifiedDate'
+            'name' => 'specifiedDate',
+            'sort' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.removed',
             'formatter' => 'Date',
-            'name' => 'removalDate'
+            'name' => 'removalDate',
+            'sort' => 'removalDate'
         ),
         array(
             'title' => $translationPrefix . '.disc-no',
             'name' => 'discNo',
             'formatter' => 'VehicleDiscNo'
+        ),
+        array(
+            'type' => 'ActionLinks',
+            'isRemoveVisible' => function ($data) {
+                return empty($data['removalDate']);
+            }
         ),
         array(
             'name' => 'action',

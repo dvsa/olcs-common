@@ -9,16 +9,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add-other-licence-applications' => array('label' => 'Add', 'class' => 'primary'),
-                'edit-other-licence-applications' => array(
-                    'label' => 'Edit',
-                    'class' => 'secondary js-require--one',
-                    'requireRows' => true
-                ),
-                'delete-other-licence-applications' => array(
-                    'label' => 'Remove',
-                    'class' => 'secondary js-require--multiple',
-                    'requireRows' => true
-                )
             ),
         ),
     ),
@@ -47,9 +37,8 @@ return array(
             'name' => 'hoursPerWeek',
         ),
         array(
-            'title' => '',
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        ),
+            'type' => 'ActionLinks',
+            'deleteInputName' => 'table[action][delete-other-licence-applications][%d]'
+        )
     )
 );

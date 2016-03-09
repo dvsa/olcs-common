@@ -176,7 +176,12 @@ class Contact
 
     /**
      * @Form\Attributes({"class":"medium"})
-     * @Form\Options({"label":"application_your-business_business-type.contact-details.email"})
+     * @Form\Options({
+     *    "label":"application_your-business_business-type.contact-details.email",
+     *    "label_attributes": {
+     *        "aria-label": "Business email address"
+     *    }
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\EmailAddress"})

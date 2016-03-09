@@ -15,7 +15,7 @@ class GenerateContinuationDetails
      *     "label": "Type",
      *     "value_options": {
      *         "operator": "Operator licences",
-     *         "irfo": "IRFO licences"
+     *         "irfo": "IRFO PSV Authorisations"
      *     }
      * })
      * @Form\Type("Select")

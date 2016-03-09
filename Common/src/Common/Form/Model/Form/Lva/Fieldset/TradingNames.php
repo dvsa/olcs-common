@@ -12,7 +12,7 @@ class TradingNames
     /**
      * @Form\Attributes({"id":"", "class":"add-another"})
      * @Form\Options({
-     *      "hint":"<input type='submit' name='data[tradingNames][submit_add_trading_name]' value='Add another' />",
+     *      "hint":"<input aria-label='Add another trading name' type='submit' name='data[tradingNames][submit_add_trading_name]' value='Add another' />",
      *      "hint_at_bottom":true,
      *      "count":1,
      *      "wrapElements":false,

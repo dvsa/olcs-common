@@ -28,7 +28,12 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Address lines"})
+     * @Form\Options({
+     *     "label":"Address lines",
+     *     "label_attributes": {
+     *         "aria-label": "Enter address manually. Business address line one"
+     *     }
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
@@ -60,7 +65,13 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Town/city","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({
+     *    "label":"Town/city",
+     *    "label_attributes":{
+     *        "class":"visually-hidden",
+     *        "aria-label": "Business town or city"
+     *    }
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -68,7 +79,12 @@ class RegisteredAddress
 
     /**
      * @Form\Attributes({"id":""})
-     * @Form\Options({"label":"Postcode"})
+     * @Form\Options({
+     *    "label":"Postcode",
+     *    "label_attributes": {
+     *        "aria-label": "Business Postcode"
+     *    }
+     * })
      * @Form\Type("Text")
      * @Form\Required(false)
      * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})

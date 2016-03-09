@@ -918,6 +918,9 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('foo')
             ->andReturn($input)
             ->getMock()
+            ->shouldReceive('has')
+            ->andReturn(true)
+            ->once()
             ->shouldReceive('get')
             ->with('fieldset')
             ->andReturnSelf();

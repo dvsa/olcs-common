@@ -12,8 +12,9 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'edit' => array('requireRows' => true, 'class' => 'secondary js-require--one'),
-                'delete' => array('label' => 'Remove', 'class' => 'secondary js-require--multiple', 'requireRows' => true),
+                'delete' => array(
+                    'label' => 'Remove', 'class' => 'secondary js-require--multiple', 'requireRows' => true
+                ),
             )
         ),
         'paginate' => array(
@@ -22,7 +23,7 @@ return array(
             )
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
-        'collapseAt' => 3,
+        'collapseAt' => 1,
         'row-disabled-callback' => function ($row) {
             return $row['removalDate'] !== null;
         }
@@ -40,6 +41,7 @@ return array(
                 return $data['vehicle']['vrm'];
             },
             'type' => 'Action',
+            'sort' => 'v.vrm'
         ),
         array(
             'title' => $translationPrefix . '.weight',
@@ -49,17 +51,25 @@ return array(
         array(
             'title' => $translationPrefix . '.specified',
             'formatter' => 'Date',
-            'name' => 'specifiedDate'
+            'name' => 'specifiedDate',
+            'sort' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.removed',
             'formatter' => 'Date',
-            'name' => 'removalDate'
+            'name' => 'removalDate',
+            'sort' => 'removalDate'
         ),
         array(
             'title' => $translationPrefix . '.disc-no',
             'name' => 'discNo',
             'formatter' => 'VehicleDiscNo'
+        ),
+        array(
+            'type' => 'ActionLinks',
+            'isRemoveVisible' => function ($data) {
+                return empty($data['removalDate']);
+            }
         ),
         array(
             'name' => 'action',

@@ -5,7 +5,7 @@ $translationPrefix = 'application_vehicle-safety_vehicle-psv.table';
 return array(
     'variables' => array(
         'title' => $translationPrefix . '.title',
-        'titleSingular' => $translationPrefix . '.titleSingular',
+        'titleSingular' => $translationPrefix . '.title.singular',
         'empty_message' => $translationPrefix . '.empty_message',
         'required_label' => 'vehicle',
         'within_form' => true
@@ -14,8 +14,7 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'id' => 'addSmall'),
-                'edit' => array('requireRows' => true, 'id' => 'editSmall'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true, 'id' => 'deleteSmall'),
+                'delete' => array('class' => 'secondary', 'requireRows' => true),
                 'transfer' => array(
                     'label' => 'Transfer',
                     'class' => 'secondary js-require--multiple',
@@ -32,6 +31,8 @@ return array(
                 'options' => array(10, 25, 50)
             )
         ),
+        'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
+        'collapseAt' => 1
     ),
     'attributes' => array(
     ),
@@ -42,6 +43,7 @@ return array(
             'formatter' => 'StackValue',
             'action' => 'edit',
             'type' => 'Action',
+            'sort' => 'v.vrm'
         ),
         array(
             'title' => $translationPrefix . '.make',
@@ -51,12 +53,21 @@ return array(
         array(
             'title' => $translationPrefix . '.specified',
             'name' => 'specifiedDate',
-            'formatter' => 'Date'
+            'formatter' => 'Date',
+            'sort' => 'specifiedDate'
         ),
         array(
             'title' => $translationPrefix . '.removed',
             'name' => 'removalDate',
-            'formatter' => 'Date'
+            'formatter' => 'Date',
+            'sort' => 'removalDate'
+        ),
+        array(
+            'type' => 'ActionLinks',
+            'isRemoveVisible' => function ($data) {
+                return empty($data['removalDate']);
+            },
+            'deleteInputName' => 'vehicles[action][delete][%d]'
         ),
         array(
             'name' => 'action',
