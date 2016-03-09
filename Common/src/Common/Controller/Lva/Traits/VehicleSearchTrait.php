@@ -52,26 +52,23 @@ trait VehicleSearchTrait
                 ->get('lva-vehicles-search')
                 ->getForm();
 
-            if ($searchForm !== null) {
+            $query = (array)$this->getRequest()->getQuery();
 
-                $query = (array)$this->getRequest()->getQuery();
-
-                if (!isset($query['limit']) || !is_numeric($query['limit'])) {
-                    $query['limit'] = 10;
-                }
-                if (isset($query['vehicleSearch']['clearSearch'])) {
-                    unset($query['vehicleSearch']);
-                }
-                $searchForm->setData($query);
-                if (isset($query['vehicleSearch']['filter']) && !$searchForm->isValid()) {
-                    $translator = $this->getServiceLocator()->get('Helper\Translation');
-                    $message = [
-                        'vehicleSearch' => [
-                            'vrm' => [$translator->translate('vehicle-table.search.message')]
-                        ]
-                    ];
-                    $searchForm->setMessages($message);
-                }
+            if (!isset($query['limit']) || !is_numeric($query['limit'])) {
+                $query['limit'] = 10;
+            }
+            if (isset($query['vehicleSearch']['clearSearch'])) {
+                unset($query['vehicleSearch']);
+            }
+            $searchForm->setData($query);
+            if (isset($query['vehicleSearch']['filter']) && !$searchForm->isValid()) {
+                $translator = $this->getServiceLocator()->get('Helper\Translation');
+                $message = [
+                    'vehicleSearch' => [
+                        'vrm' => [$translator->translate('vehicle-table.search.message')]
+                    ]
+                ];
+                $searchForm->setMessages($message);
             }
         }
         return $searchForm;
