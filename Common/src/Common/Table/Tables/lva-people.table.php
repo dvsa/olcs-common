@@ -52,6 +52,7 @@ return array(
         ),
         array(
             'type' => 'ActionLinks',
+            'name' => 'actionLinks'
         ),
         array(
             'name' => 'select',
