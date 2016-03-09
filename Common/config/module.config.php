@@ -568,6 +568,9 @@ return array(
             // PSV filter form services
             'lva-psv-vehicles-filters' => LvaFormService\CommonPsvVehiclesFilters::class,
 
+            // Vehicle search form services
+            'lva-vehicles-search' => LvaFormService\CommonVehiclesSearch::class,
+
             // Common vehicle services
             'lva-licence-variation-vehicles' => LvaFormService\LicenceVariationVehicles::class,
             'lva-generic-vehicles-vehicle' => LvaFormService\GenericVehiclesVehicle::class,
