@@ -92,7 +92,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $haveCrudAction = $crudAction !== null;
         } elseif ($this->lva === 'application') {
             $formData = GoodsVehicles::mapFromResult($headerData);
-        } elseif ($this->lva === 'licence' && $this->location === 'external') {
+        } elseif ($this->lva === 'licence') {
             $formData = \Common\Data\Mapper\Lva\LicenceGoodsVehicles::mapFromResult($headerData);
         }
 
@@ -158,7 +158,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             }
         }
 
-        if ($this->lva === 'licence' && $this->location === 'external') {
+        if ($this->lva === 'licence') {
 
             $shareInfo = $form->getData()['shareInfo']['shareInfo'];
 
