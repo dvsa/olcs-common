@@ -58,10 +58,7 @@ class LicenceGoodsVehiclesTest extends MockeryTestCase
             ->with('Lva\GoodsVehicles')
             ->andReturn($mockForm)
             ->shouldReceive('populateFormTable')
-            ->with($mockTableElement, $mockTable)
-            ->shouldReceive('remove')
-            ->once()
-            ->with($mockForm, 'shareInfo');
+            ->with($mockTableElement, $mockTable);
 
         $mockForm->shouldReceive('get')
             ->with('table')

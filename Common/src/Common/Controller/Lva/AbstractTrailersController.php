@@ -49,10 +49,7 @@ abstract class AbstractTrailersController extends AbstractController
             $data = \Common\Data\Mapper\Lva\Trailers::mapFromResult($result);
         }
 
-        $form = $this->getForm($request);
-        $table = $this->getTable($result['trailers']);
-        $this->alterForm($form, $table);
-
+        $form = $this->getForm($request, $this->getTable($result['trailers']));
         $form->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
@@ -196,24 +193,15 @@ abstract class AbstractTrailersController extends AbstractController
      * Return the trailer form.
      *
      * @param RequestInterface $request The request
+     * @param Table $table The table to add to the form.
      *
      * @return \Zend\Form\Form $form The form
      */
-    protected function getForm(RequestInterface $request)
+    protected function getForm(RequestInterface $request, $table)
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createFormWithRequest('Lva\Trailers', $request);
-    }
-
-    /**
-     * Alter the form to add the table and set the guidance.
-     *
-     * @param FormInterface $form The form.
-     * @param Table $table The table to add to the form.
-     */
-    protected function alterForm(FormInterface $form, $table)
-    {
-        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'form-actions->saveAndContinue');
-
-        $form->get('table')->get('table')->setTable($table);
+        return $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-licence-trailers')
+            ->getForm($request, $table);
     }
 }

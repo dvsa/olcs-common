@@ -143,7 +143,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             }
         }
 
-        if ($this->lva === 'licence' && $this->location === 'external') {
+        if ($this->lva === 'licence') {
 
             $shareInfo = $form->getData()['shareInfo']['shareInfo'];
 
