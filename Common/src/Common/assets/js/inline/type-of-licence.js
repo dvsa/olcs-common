@@ -12,7 +12,9 @@ OLCS.ready(function() {
   if (history.pushState) {
     $(window).on('unload',function () {
       var targetLocation = $("body").data("target");
-      history.replaceState(null, null, targetLocation+"type-of-licence");
+      if (targetLocation) {
+        history.replaceState(null, null, targetLocation+"type-of-licence");
+      }
     });
   }
 
