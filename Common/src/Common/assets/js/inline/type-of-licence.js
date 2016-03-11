@@ -7,6 +7,15 @@ OLCS.ready(function() {
   // get a nicer alias for our form helper
   var F = OLCS.formHelper;
 
+  // change the URL in the browsers history so that they can't get back
+  // to 'application/create' using the browser's back button
+  if (history.pushState) {
+    $(window).on('unload',function () {
+      var targetLocation = $("body").data("target");
+      history.replaceState(null, null, targetLocation+"type-of-licence");
+    });
+  }
+
   // @todo Make the cascadeForm component use event delegation and remove this setup function afterwards
   function setupCascade() {
 
