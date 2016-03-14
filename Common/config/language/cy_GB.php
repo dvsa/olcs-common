@@ -1330,6 +1330,8 @@ return [
     'internal.community_licence.restore_not_allowed' => '{WELSH} You cannot restore these licences without restoring the office copy',
     'internal.community_licence.stop_not_allowed' => '{WELSH} Please annul, withdraw or suspend the other pending/active licences before the office copy',
     'internal.community_licence.void_not_allowed' => '{WELSH} You cannot annul the office copy without annulling all the licences',
+    'internal.confirm-merge.button' => '{WELSH} Continue',
+    'internal.confirm-merge.message' => '{WELSH} Both transport managers have linked user accounts. Would you like to continue?',
     'internal.create-fee.irfo-required' => '{WELSH} Either GV Permit or PSV Authorisation is required',
     'internal.delete-action-trait.title' => '{WELSH} Delete',
     'internal.documents.delete.delete_message' => '{WELSH} Are you sure you want to remove the selected record(s)?',
