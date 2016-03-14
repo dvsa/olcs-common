@@ -71,6 +71,7 @@ class VersionTest extends PHPUnit_Framework_TestCase
         $config = [
             'version' => [
                 'environment' => 'Unit Test',
+                'description' => 'DESCRIPTION',
                 'release' => '1.0'
             ]
         ];
@@ -92,6 +93,7 @@ class VersionTest extends PHPUnit_Framework_TestCase
 
         $expected = '<div class="version-header">
     <p class="environment">Environment: <span class="environment-marker">Unit Test</span></p>
+    <p class="version">Description: <span>DESCRIPTION</span></p>
     <p class="version">Version: <span>1.0</span></p>
 </div>';
 
@@ -127,6 +129,7 @@ class VersionTest extends PHPUnit_Framework_TestCase
 
         $expected = '<div class="version-header">
     <p class="environment">Environment: <span class="environment-marker">unknown</span></p>
+    <p class="version">Description: <span>NA</span></p>
     <p class="version">Version: <span>unknown</span></p>
 </div>';
 
