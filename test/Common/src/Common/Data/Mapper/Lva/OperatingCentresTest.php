@@ -137,6 +137,7 @@ class OperatingCentresTest extends MockeryTestCase
                         ]
                     ],
                     'dataTrafficArea' => [
+                        'trafficArea' => null,
                         'enforcementArea' => 123
                     ]
                 ]
@@ -146,6 +147,9 @@ class OperatingCentresTest extends MockeryTestCase
                     'foo' => 'bar',
                     'enforcementArea' => [
                         'id' => 123
+                    ],
+                    'licence' => [
+                        'trafficArea' => ['id' => 'X']
                     ]
                 ],
                 [
@@ -153,9 +157,13 @@ class OperatingCentresTest extends MockeryTestCase
                         'foo' => 'bar',
                         'enforcementArea' => [
                             'id' => 123
+                        ],
+                        'licence' => [
+                            'trafficArea' => ['id' => 'X']
                         ]
                     ],
                     'dataTrafficArea' => [
+                        'trafficArea' => 'X',
                         'enforcementArea' => 123
                     ]
                 ]
