@@ -12,6 +12,8 @@ use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Common\Controller\Lva;
 use Zend\Http\Response;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
+use Zend\View\Helper\ViewModel;
+use Common\FormService\Form\Lva\TypeOfLicence\AbstractTypeOfLicence as TypeOfLicenceFormService;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -33,33 +35,29 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         if ($prg instanceof Response) {
             return $prg;
         }
+        $tolFormService = $this->getServiceLocator()->get('FormServiceManager')->get('lva-application-type-of-licence');
+        $form = $tolFormService->getForm();
 
-        $form = $this->getServiceLocator()->get('FormServiceManager')
-            ->get('lva-application-type-of-licence')
-            ->getForm();
+        // always fetch Application data to check operator location
+        $applicationData = $this->getApplicationData($this->getIdentifier());
+        if (!$applicationData) {
+            return $this->notFoundAction();
+        }
 
         // If we have no data (not posted)
         if ($prg === false) {
-
-            $response = $this->handleQuery(Application::create(['id' => $this->getIdentifier()]));
-
-            if ($response->isNotFound()) {
-                return $this->notFoundAction();
+            $form->setData(TypeOfLicenceMapper::mapFromResult($applicationData));
+            if (isset($applicationData['allowedOperatorLocation'])) {
+                $tolFormService->setAndLockOperatorLocation($form, $applicationData['allowedOperatorLocation']);
             }
-
-            if ($response->isClientError() || $response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
-            }
-
-            if ($response->isOk()) {
-                $form->setData(TypeOfLicenceMapper::mapFromResult($response->getResult()));
-            }
-
             return $this->renderIndex($form);
         }
 
         // If we have posted and have data
         $form->setData($prg);
+        if (isset($applicationData['allowedOperatorLocation'])) {
+            $tolFormService->setAndLockOperatorLocation($form, $applicationData['allowedOperatorLocation']);
+        }
 
         // If the form is invalid, render the errors
         if (!$form->isValid()) {
@@ -74,7 +72,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
                 'version' => $formData['version'],
                 'operatorType' => $formData['type-of-licence']['operator-type'],
                 'licenceType' => $formData['type-of-licence']['licence-type'],
-                'niFlag' => $formData['type-of-licence']['operator-location']
+                'niFlag' => $this->getOperatorLocation($applicationData, $formData)
             ]
         );
 
@@ -91,6 +89,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             if (isset($response->getResult()['messages']['AP-TOL-5'])) {
 
                 $query = $formData['type-of-licence'];
+                $query['operator-location'] = $this->getOperatorLocation($applicationData, $formData);
                 $query['version'] = $formData['version'];
 
                 return $this->redirect()->toRoute(
@@ -109,6 +108,26 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         return $this->renderIndex($form);
+    }
+
+    /**
+     * Get operator location
+     *
+     * @param array $data Application or Organisation data
+     * @param array $formData
+     * @return string
+     */
+    protected function getOperatorLocation($data, $formData)
+    {
+        if (isset($data['allowedOperatorLocation'])) {
+            if ($data['allowedOperatorLocation'] === TypeOfLicenceFormService::ALLOWED_OPERATOR_LOCATION_NI) {
+                $operatorLocation ='Y';
+            } elseif ($data['allowedOperatorLocation'] === TypeOfLicenceFormService::ALLOWED_OPERATOR_LOCATION_GB) {
+                $operatorLocation ='N';
+            }
+            return $operatorLocation;
+        }
+        return $formData['type-of-licence']['operator-location'];
     }
 
     public function confirmationAction()
