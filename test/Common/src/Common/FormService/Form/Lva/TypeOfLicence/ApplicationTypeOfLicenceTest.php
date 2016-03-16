@@ -54,4 +54,57 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
 
         $this->assertSame($mockForm, $form);
     }
+
+    /**
+     * Test set and lock operator location
+     *
+     * @dataProvider lockOperatorLocationProvider
+     * @param string $message
+     * @param string $locationValue
+     * @param string $location
+     */
+    public function testSetAndLockOperatorLocation($message, $location, $locationValue)
+    {
+        $mockOperatorLocation = m::mock(\Zend\Form\Element::class)
+            ->shouldReceive('setValue')
+            ->with($locationValue)
+            ->once()
+            ->getMock();
+
+
+        $mockForm = m::mock(Form::class)
+            ->shouldReceive('get')
+            ->with('type-of-licence')
+            ->once()
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('operator-location')
+                ->twice()
+                ->andReturn($mockOperatorLocation)
+                ->getMock()
+            )
+            ->getMock();
+
+        $this->fh->shouldReceive('disableElement')
+            ->with($mockForm, 'type-of-licence->operator-location')
+            ->once()
+            ->shouldReceive('lockElement')
+            ->with($mockOperatorLocation, $message)
+            ->once()
+            ->getMock();
+
+        $this->sut->setAndLockOperatorLocation($mockForm, $location);
+    }
+
+    /**
+     * Lock operator location provider
+     */
+    public function lockOperatorLocationProvider()
+    {
+        return [
+            ['alternative-operator-location-lock-message-ni', 'NI', 'Y'],
+            ['alternative-operator-location-lock-message-gb', 'GB', 'N']
+        ];
+    }
 }
