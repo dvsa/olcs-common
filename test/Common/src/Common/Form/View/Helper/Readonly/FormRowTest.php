@@ -3,6 +3,7 @@
 
 namespace CommonTest\Form\View\Helper\Readonly;
 
+use Common\Form\Elements\Types\HtmlTranslated;
 use PHPUnit_Framework_TestCase as TestCase;
 use Common\Form\View\Helper\Readonly\FormRow;
 use Mockery as m;
@@ -44,6 +45,11 @@ class FormRowTest extends TestCase
         $mockView->shouldReceive('plugin')->with('readonlyformselect')->andReturn($mockElementHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformtable')->andReturn($mockTableHelper);
 
+        if ($element instanceof HtmlTranslated) {
+            $mockFormElement = m::mock()->shouldReceive('render')->once()->andReturn('translated')->getMock();
+            $mockView->shouldReceive('plugin')->with('FormElement')->once()->andReturn($mockFormElement);
+        }
+
         $sut = new FormRow();
 
         $sut->setView($mockView);
@@ -78,6 +84,13 @@ class FormRowTest extends TestCase
         $mockSelect->shouldReceive('getAttribute')->andReturn(false);
         $mockSelect->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
+        $mockHtmlTranslated = m::mock('Common\Form\Elements\Types\HtmlTranslated');
+        $mockHtmlTranslated->shouldReceive('getValue')->andReturn('<b>text</b>');
+        $mockHtmlTranslated->shouldReceive('getAttribute')->andReturn('html-translated');
+        $mockHtmlTranslated->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
+        $mockHtmlTranslated->shouldReceive('getLabel')->andReturn('');
+        $mockHtmlTranslated->shouldReceive('getLabelOption')->andReturn(false);
+
         $columns = [
             0 => [
                 'name' => 'foo',
@@ -110,8 +123,8 @@ class FormRowTest extends TestCase
             [$mockRemoveIfReadOnly, ''],
             [$mockText, '<li class="definition-list__item full-width"><dt>Label</dt><dd>Value</dd></li>'],
             [$mockSelect, '<li class="definition-list__item"><dt>Label</dt><dd>Value</dd></li>'],
-            [$mockTable, '<table></table>']
-
+            [$mockTable, '<table></table>'],
+            [$mockHtmlTranslated, '<li class="definition-list__item"><dt></dt><dd>translated</dd></li>']
         ];
     }
 }

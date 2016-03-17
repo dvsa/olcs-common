@@ -51,6 +51,7 @@ class VehiclesData
      *      "<p id=""notice"">If you don’t have vehicle details yet, you must
      *      tell the Central Licensing Office as soon as they’re available.</p>"
      * })
+     * @Form\Options({"disable_html_escape": true})
      */
     public $notice = null;
 }
