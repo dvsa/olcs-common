@@ -165,7 +165,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     protected function renderForm($form)
     {
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud','business-details']);
         return $this->render('business_details', $form);
     }
 
