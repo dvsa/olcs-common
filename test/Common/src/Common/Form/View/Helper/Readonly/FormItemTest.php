@@ -17,7 +17,8 @@ class FormItemTest extends TestCase
     {
         $sut = new FormItem();
         $element = m::mock('Zend\Form\ElementInterface');
-        $element->shouldReceive('getValue')->andReturn('test');
+        $element->shouldReceive('getValue')->andReturn('test')->once();
+        $element->shouldReceive('getOption')->with('disable_html_escape')->andReturnNull()->once();
 
         $markup = $sut($element);
 
@@ -27,9 +28,19 @@ class FormItemTest extends TestCase
     public function testRender()
     {
         $element = new \Zend\Form\Element();
-        $element->setValue('foo');
+        $element->setValue('foo<br />');
 
         $sut = new FormItem();
-        $this->assertSame('foo', $sut->render($element));
+        $this->assertSame('foo&lt;br /&gt;', $sut->render($element));
+    }
+
+    public function testRenderNoEscape()
+    {
+        $element = new \Zend\Form\Element();
+        $element->setValue('foo<br />');
+        $element->setOption('disable_html_escape', true);
+
+        $sut = new FormItem();
+        $this->assertSame('foo<br />', $sut->render($element));
     }
 }

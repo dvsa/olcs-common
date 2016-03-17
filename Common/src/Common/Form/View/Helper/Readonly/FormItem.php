@@ -61,6 +61,9 @@ class FormItem extends AbstractHelper
      */
     public function render(ElementInterface $element)
     {
+        if ($element->getOption('disable_html_escape')) {
+            return $element->getValue();
+        }
         $escapeHelper = $this->getEscapeHtmlHelper();
         return $escapeHelper($element->getValue());
     }
