@@ -49,6 +49,7 @@ class GuidesController extends ZendAbstractActionController
 
         $view = new ViewModel(['guide' => $guide]);
         $view->setTemplate('pages/guides/' . $partial);
+        $this->placeholder()->setPlaceholder('pageTitle', $guide . '-title');
 
         return $view;
     }
