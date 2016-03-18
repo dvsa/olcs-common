@@ -378,6 +378,7 @@ return array(
         ),
         'factories' => array(
             'pageId' => \Common\View\Helper\PageId::class,
+            'pageTitle' => \Common\View\Helper\PageTitle::class,
             'date' => \Common\View\Helper\Date::class,
             'formRow' => 'Common\Form\View\Helper\FormRow',
             'languageLink' => \Common\View\Helper\LanguageLink::class,
