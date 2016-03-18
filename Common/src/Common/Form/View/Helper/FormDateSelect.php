@@ -22,7 +22,7 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
 {
     private $inputHelper;
 
-    private $format = '<div class="field inline-text"><label>%s</label>%s</div>';
+    private $format = '<div class="field inline-text"><label for="%s">%s</label>%s</div>';
 
     /**
      * Render a date element that is composed of three selects
@@ -59,6 +59,11 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
         $monthElement = $element->getMonthElement();
         $yearElement  = $element->getYearElement();
 
+        // set ids on each input field
+        $dayElement->setAttribute('id', $element->getAttribute('id') . '_day');
+        $monthElement->setAttribute('id', $element->getAttribute('id') . '_month');
+        $yearElement->setAttribute('id', $element->getAttribute('id') . '_year');
+
         $data = array();
         $data[$pattern['day']]   = $this->renderDayInput($dayElement);
         $data[$pattern['month']] = $this->renderMonthInput($monthElement);
@@ -82,7 +87,8 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
 
         return $this->wrap(
             $this->renderInput($element, 2),
-            'Day'
+            'Day',
+            $element->getAttribute('id')
         );
     }
 
@@ -91,7 +97,8 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
 
         return $this->wrap(
             $this->renderInput($element, 2),
-            'Month'
+            'Month',
+            $element->getAttribute('id')
         );
     }
 
@@ -100,21 +107,21 @@ class FormDateSelect extends \Common\Form\View\Helper\Extended\FormDateSelect
 
         return $this->wrap(
             $this->renderInput($element, 4),
-            'Year'
+            'Year',
+            $element->getAttribute('id')
         );
     }
 
-    protected function wrap($content, $label)
+    protected function wrap($content, $label, $id)
     {
         $label = $this->getTranslator()->translate('date-' . $label);
 
-        return sprintf($this->format, $label, $content);
+        return sprintf($this->format, $id, $label, $content);
     }
 
     protected function renderInput($element, $maxLength)
     {
         $inputHelper = $this->getInputHelper();
-
         $element->setAttribute('maxlength', $maxLength);
 
         return $inputHelper->render($element);
