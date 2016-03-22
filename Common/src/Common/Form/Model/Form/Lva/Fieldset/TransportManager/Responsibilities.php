@@ -75,9 +75,6 @@ class Responsibilities
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekRequired")
-     * @Form\Options({
-     *     "label": "transport-manager.responsibilities.hours-per-week"
-     * })
      */
     public $hoursOfWeek = null;
 
@@ -90,7 +87,8 @@ class Responsibilities
     /**
      * @Form\Type("TextArea")
      * @Form\Attributes({
-     *      "class":"long"
+     *      "class":"long",
+     *      "label": "transport-manager.responsibilities.additional-information.title"
      * })
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.additional-information",
