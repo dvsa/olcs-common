@@ -54,4 +54,12 @@ class VehiclesData
      * @Form\Options({"disable_html_escape": true})
      */
     public $notice = null;
+
+    /**
+     * @Form\Attributes({
+     *  "value": "markup-about-vehicle-authorisation"
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $aboutAuthorisation = null;
 }
