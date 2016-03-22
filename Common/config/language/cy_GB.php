@@ -2533,6 +2533,7 @@ return [
     'transport-manager.other-licence.form.operating-centres' => '{WELSH} Operating centres',
     'transport-manager.other-licence.form.role' => '{WELSH} Role',
     'transport-manager.other-licence.form.total-auth-vehicles' => '{WELSH} Vehicles',
+    'transport-manager.otherlicences.empty_table' => '{WELSH} Add any other licences you either hold or have applied for.',
     'transport-manager.otherlicences.table' => '{WELSH} Other Licences',
     'transport-manager.otherlicences.table.hours_per_week' => '{WELSH} Hours per Week',
     'transport-manager.otherlicences.table.lic_no' => '{WELSH} Licence Number',
