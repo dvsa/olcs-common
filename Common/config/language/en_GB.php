@@ -2219,7 +2219,7 @@ return [
     'section.name.transport_managers' => 'Transport Managers',
     'section.name.transport_managers.details' => 'Details',
     'section.name.type_of_licence' => 'Type of licence',
-    'section.name.undertakings' => 'Declarations',
+    'section.name.undertakings' => 'Review & Declarations',
     'section.name.vehicles' => 'Vehicles',
     'section.name.vehicles_declarations' => 'Vehicle declarations',
     'section.name.vehicles_psv' => 'Vehicles',

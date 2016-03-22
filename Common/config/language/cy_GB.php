@@ -2219,7 +2219,7 @@ return [
     'section.name.transport_managers' => '{WELSH} Transport Managers',
     'section.name.transport_managers.details' => '{WELSH} Details',
     'section.name.type_of_licence' => '{WELSH} Type of licence',
-    'section.name.undertakings' => '{WELSH} Declarations',
+    'section.name.undertakings' => '{WELSH} Review & Declarations',
     'section.name.vehicles' => '{WELSH} Vehicles',
     'section.name.vehicles_declarations' => '{WELSH} Vehicle declarations',
     'section.name.vehicles_psv' => '{WELSH} Vehicles',
