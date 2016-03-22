@@ -651,7 +651,7 @@ return [
     'business-type.locked.message' => 'To change your business type, email <a href="mailto:operatorlicensing@otc.gsi.gov.uk" aria-label="To change your business type, email operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
-    'cannot-change-conditions-undertakings-guidance' => 'Cannot change conditions and undertakings. Please contact Central Licensing Office for further advice',
+    'cannot-change-conditions-undertakings-guidance' => 'You can\'t change conditions and undertakings.<br />For more advice email <a href="mailto:operatorlicensing@otc.gsi.gov.uk" aria-label="operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
     'cannot-perform-action' => 'You cannot perform this action',
     'cant-edit-removed-vehicle' => 'You cannot edit a removed vehicle',
     'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must <a href="%s">create a variation application</a>',
