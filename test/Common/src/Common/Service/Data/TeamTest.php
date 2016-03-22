@@ -51,7 +51,7 @@ class TeamTest extends AbstractDataServiceTestCase
             'sort'  => 'name',
             'order' => 'ASC',
             'page'  => 1,
-            'limit' => 1000
+            'limit' => 100
         ];
         $dto = Qry::create($params);
         $mockTransferAnnotationBuilder = m::mock()
