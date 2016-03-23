@@ -432,7 +432,7 @@ return [
     'application_previous-history_financial-history.finance.disqualified' => '{WELSH} Has anyone you\'ve named ever been disqualified from acting as a company director or managing a company under the Company Directors Disqualification Act 1986?',
     'application_previous-history_financial-history.finance.liquidation' => '{WELSH} Has anyone you\'ve named ever been involved with a business that has gone or is going into liquidation, owing money?',
     'application_previous-history_financial-history.finance.receivership' => '{WELSH} Has anyone you\'ve named ever been involved with a business that has gone or is going into receivership?',
-    'application_previous-history_financial-history.insolvencyConfirmation.title' => '{WELSH} I\'ll tell the Traffic Commissioner straight away if anyone\'s involved in an insolvency between applying for this licence and a decision being made',
+    'application_previous-history_financial-history.insolvencyConfirmation.title' => '{WELSH} I\'ll tell the Traffic Commissioner immediately about any insolvency proceedings that take place between submitting this application and a decision being made',
     'application_previous-history_financial-history.insolvencyConfirmation.title.ni' => '{WELSH} I\'ll tell DOE Northern Ireland straight away if anyone\'s involved in an insolvency between applying for this licence and a decision being made',
     'application_previous-history_financial-history.insolvencyDetails.placeholder' => '{WELSH} Min 200 characters',
     'application_previous-history_licence-history-table-licences-applied-add' => '{WELSH} Add licence',
