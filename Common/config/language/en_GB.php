@@ -2533,6 +2533,7 @@ return [
     'transport-manager.other-licence.form.operating-centres' => 'Operating centres',
     'transport-manager.other-licence.form.role' => 'Role',
     'transport-manager.other-licence.form.total-auth-vehicles' => 'Vehicles',
+    'transport-manager.otherlicences.empty_table' => 'Add any other licences you either hold or have applied for.',
     'transport-manager.otherlicences.table' => 'Other Licences',
     'transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
     'transport-manager.otherlicences.table.lic_no' => 'Licence Number',
