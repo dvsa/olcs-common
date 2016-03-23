@@ -62,14 +62,14 @@ class DeltaActionLinksTest extends MockeryTestCase
                     'id' => 123,
                     'action' => 'A'
                 ],
-                '<input type="submit" class="" name="table[action][delete][123]" value="Remove">'
+                '<input type="submit" class="right-aligned" name="table[action][delete][123]" value="Remove">'
             ],
             [
                 [
                     'id' => 456,
                     'action' => 'D'
                 ],
-                '<input type="submit" class="" name="table[action][restore][456]" value="Restore">'
+                '<input type="submit" class="right-aligned" name="table[action][restore][456]" value="Restore">'
             ],
             [
                 [

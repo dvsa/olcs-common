@@ -86,7 +86,7 @@ class ActionLinks extends Selector
         if ($this->isLinkVisible($data, $column, 'Remove')) {
             $inputName = sprintf($this->getInputName($column, 'deleteInputName'), $data['id']);
             $content .= sprintf(
-                '<input type="submit" class="" name="%s" value="' . $remove . '">', $inputName
+                '<input type="submit" class="right-aligned" name="%s" value="' . $remove . '">', $inputName
             );
         }
         return $content;
@@ -107,7 +107,7 @@ class ActionLinks extends Selector
         if ($this->isLinkVisible($data, $column, 'Replace', false)) {
             $inputName = sprintf($this->getInputName($column, 'replaceInputName'), $data['id']);
             $content .= sprintf(
-                ' <input type="submit" class="" name="%s" value="' . $replace . '">', $inputName
+                ' <input type="submit" class="right-aligned" name="%s" value="' . $replace . '">', $inputName
             );
         }
         return $content;
