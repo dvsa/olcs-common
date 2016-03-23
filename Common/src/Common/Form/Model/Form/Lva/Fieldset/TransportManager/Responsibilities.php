@@ -94,10 +94,9 @@ class Responsibilities
      *     "label": "transport-manager.responsibilities.additional-information",
      *     "help-block": "Please provide additional information relating to any prior insolvency proceedings.
      You may also upload evidence such as a legal documents.",
-     *     "label_attributes": {
-     *         "class": "long"
-     *     },
-     *     "column-size": "",
+     *     "label_options": {
+     *         "disable_html_escape": "true"
+     *     }
      * })
      *
      * @Form\Required(false)
