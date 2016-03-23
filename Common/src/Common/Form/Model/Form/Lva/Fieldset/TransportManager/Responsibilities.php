@@ -75,9 +75,6 @@ class Responsibilities
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekRequired")
-     * @Form\Options({
-     *     "label": "transport-manager.responsibilities.hours-per-week"
-     * })
      */
     public $hoursOfWeek = null;
 
@@ -90,16 +87,14 @@ class Responsibilities
     /**
      * @Form\Type("TextArea")
      * @Form\Attributes({
-     *      "class":"long"
+     *      "class":"long",
+     *      "label": "transport-manager.responsibilities.additional-information.title"
      * })
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.additional-information",
-     *     "help-block": "Please provide additional information relating to any prior insolvency proceedings. You may also upload evidence such as a legal documents.",
-     *     "hint": "You can provide additional information (such as relevant skills and knowledge or details of training, monitoring and auditing) below. You can also upload documents, eg vehicle administration records.",
-     *     "label_attributes": {
-     *         "class": "long"
-     *     },
-     *     "column-size": "",
+     *     "label_options": {
+     *         "disable_html_escape": "true"
+     *     }
      * })
      * @Form\Required(false)
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})

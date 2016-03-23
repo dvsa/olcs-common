@@ -9,7 +9,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('label' => 'Add', 'class' => 'primary'),
+                'add' => array('label' => 'transport-manager.employments.table.add', 'class' => 'primary'),
             )
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
@@ -29,10 +29,6 @@ return array(
         array(
             'title' => 'Position',
             'name' => 'position',
-        ),
-        array(
-            'title' => 'Hours / days',
-            'name' => 'hoursPerWeek',
         ),
         array(
             'type' => 'ActionLinks',
