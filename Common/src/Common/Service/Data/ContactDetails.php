@@ -60,7 +60,7 @@ class ContactDetails extends AbstractDataService implements ListData
                 'sort'  => 'description',
                 'order' => 'ASC',
                 'page'  => 1,
-                'limit' => 1000,
+                'limit' => 100,
                 'contactType' => $category
             ];
             $this->setData('ContactDetails', false);

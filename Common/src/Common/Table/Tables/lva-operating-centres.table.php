@@ -18,7 +18,6 @@ return array(
             )
         )
     ),
-    'attributes' => array(),
     'columns' => array(
         array(
             'title' => 'application_operating-centres_authorisation.table.address',
@@ -26,7 +25,8 @@ return array(
             'action' => 'edit',
             'name' => 'operatingCentre->address',
             'formatter' => 'Address',
-            'sort' => 'adr'
+            'sort' => 'adr',
+            'width' => '60%'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',
