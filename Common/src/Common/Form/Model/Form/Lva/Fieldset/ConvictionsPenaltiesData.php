@@ -28,7 +28,7 @@ class ConvictionsPenaltiesData
      *             "value": "Y",
      *             "label": "Yes",
      *             "label_attributes": {
-     *                 "aria-label": "Have you, any person at your company or any of your employees been convicted of a relevant offence? Yes"
+     *                 "aria-label": "Have you, any person at your company or any of your employees been convicted of a relevant offence?"
      *             }
      *         },
      *         {
