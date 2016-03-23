@@ -35,7 +35,7 @@ class TmOtherLicenceDetails
     public $redirectId = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":"licNo"})
+     * @Form\Attributes({"class":"medium","id":"licNo"})
      * @Form\Options({"label":"transport-manager.other-licence.form.lic-no"})
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      * @Form\Type("Text")
@@ -59,12 +59,12 @@ class TmOtherLicenceDetails
      * @Form\Attributes({"class":"long","id":"operatingCentres"})
      * @Form\Options({"label":"transport-manager.other-licence.form.operating-centres"})
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
-     * @Form\Type("Text")
+     * @Form\Type("Textarea")
      */
     public $operatingCentres = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":"totalAuthVehicles"})
+     * @Form\Attributes({"class":"short","id":"totalAuthVehicles"})
      * @Form\Options({"label":"transport-manager.other-licence.form.total-auth-vehicles"})
      * @Form\Required(false)
      * @Form\Validator({"name":"Digits"})
@@ -73,7 +73,7 @@ class TmOtherLicenceDetails
     public $totalAuthVehicles = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":"hoursPerWeek"})
+     * @Form\Attributes({"class":"short","id":"hoursPerWeek"})
      * @Form\Options({"label":"transport-manager.other-licence.form.hours-per-week"})
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      * @Form\Validator({"name":"Digits"})
