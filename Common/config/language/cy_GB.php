@@ -1026,6 +1026,7 @@ return [
     'form.tm-merge.to-tm-id' => '{WELSH} To Transport Manager ID',
     'form.tm-merge.to-tm-id.validation.TM_MERGE_BOTH_HAVE_USER_ACCOUNTS' => '{WELSH} Both Transport Managers have linked user accounts. You must remove one of the user accounts prior to merge.',
     'form.tm-merge.to-tm-id.validation.TM_MERGE_DONAR_RECIPIENT_SAME' => '{WELSH} Cannot be the same as the from transport manager',
+    'form.tm-merge.to-tm-id.validation.TM_MERGE_RECIPIENT_REMOVED' => '{WELSH} Recipient Transport Manager has already been removed',
     'form.tm-merge.to-tm-id.validation.not-found' => '{WELSH} Transport Manager not found',
     'form.tm-unmerge.confirm.action' => '{WELSH} Unmerge',
     'form.tm-unmerge.message' => '{WELSH} Are you sure you want to unmerge this Transport Manager: %1$d %2$s from: %3$d %4$s?',
