@@ -245,7 +245,6 @@ return array(
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
             'country' => '\Common\Service\Data\Country',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
-            'Common\Service\Data\Team' => 'Common\Service\Data\Team',
             'Common\Service\Data\Role' => 'Common\Service\Data\Role',
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
