@@ -387,6 +387,7 @@ return [
     'application.your-business.business-type' => '{WELSH} Business type',
     'application.your-business.people' => '{WELSH} People',
     'application.your-business.sole-trader' => '{WELSH} People',
+    'application_business-details_allow-email.label' => '{WELSH} How would you like to receive your correspondence?',
     'application_community_licence_total_community_licences' => '{WELSH} Total community licences',
     'application_operating-centres_authorisation-sub-action.advertisements' => '{WELSH} Newspaper advert',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlaced' => '{WELSH} Has the operator advertised the operating centre?',

@@ -34,6 +34,12 @@ class BusinessDetails
     public $table = null;
 
     /**
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\BusinessDetailsAllowEmail")
+     * @Form\Name("allow-email")
+     */
+    public $allowEmail = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})
