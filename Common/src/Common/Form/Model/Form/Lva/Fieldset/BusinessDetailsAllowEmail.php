@@ -15,7 +15,7 @@ class BusinessDetailsAllowEmail
     /**
      * @Form\Type("Radio")
      * @Form\Options({
-     *      "label": "How would you like to receive your correspondence?",
+     *      "label": "application_business-details_allow-email.label",
      *      "value_options":{
      *          "N":"Post",
      *          "Y":"Email"
