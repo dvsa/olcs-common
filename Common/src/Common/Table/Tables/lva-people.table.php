@@ -54,10 +54,5 @@ return array(
             'type' => 'ActionLinks',
             'name' => 'actionLinks'
         ),
-        array(
-            'name' => 'select',
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        )
     )
 );
