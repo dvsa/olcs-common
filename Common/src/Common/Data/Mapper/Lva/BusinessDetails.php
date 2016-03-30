@@ -37,6 +37,9 @@ class BusinessDetails implements MapperInterface
                 'natureOfBusiness' => $data['natureOfBusiness']
             ),
             'registeredAddress' => $data['contactDetails']['address'],
+            'allow-email' => [
+                'allowEmail' => $data['allowEmail']
+            ]
         );
     }
 }

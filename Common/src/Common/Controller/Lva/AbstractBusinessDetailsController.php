@@ -111,7 +111,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
                     ? $data['data']['companyNumber']['company_number'] : null,
                 'registeredAddress' => isset($data['registeredAddress']) ? $data['registeredAddress'] : null,
-                'partial' => $crudAction !== null
+                'partial' => $crudAction !== null,
+                'allowEmail' => isset($data['allow-email']['allowEmail'])
+                    ? $data['allow-email']['allowEmail'] : null,
             ];
 
             $response = $this->handleCommand(UpdateBusinessDetails::create($dtoData));

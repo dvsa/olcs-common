@@ -35,7 +35,8 @@ class BusinessDetailsTest extends PHPUnit_Framework_TestCase
                 'address' => [
                     'foo' => 'bar'
                 ]
-            ]
+            ],
+            'allowEmail' => 'Y'
         ];
 
         $output = BusinessDetails::mapFromResult($input);
@@ -58,6 +59,9 @@ class BusinessDetailsTest extends PHPUnit_Framework_TestCase
             ],
             'registeredAddress' => [
                 'foo' => 'bar'
+            ],
+            'allow-email' => [
+                'allowEmail' => 'Y'
             ]
         ];
 
