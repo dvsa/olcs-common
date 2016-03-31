@@ -45,11 +45,12 @@ class InspectionRequestId implements FormatterInterface
             );
         } else {
             $route = 'lva-application/processing/inspection-request';
+            $params = $routeMatch->getParams();
             $url = $urlHelper->fromRoute(
                 $route,
                 [
                     'action' => 'edit',
-                    'application' => $data['application']['id'],
+                    'application' => $params['application'],
                     'id' => $data['id'],
                 ]
             );

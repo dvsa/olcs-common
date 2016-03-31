@@ -58,6 +58,8 @@ class InspectionRequestIdTest extends MockeryTestCase
                 ->shouldReceive('getMatchedRouteName')
                 ->once()
                 ->andReturn($expectedRouteName)
+                ->shouldReceive('getParams')
+                ->andReturn(['application' => 3])
                 ->getMock()
             )
             ->once()
