@@ -45,7 +45,7 @@ class TransportConsultant
 
     /**
      * @Form\Type("Text")
-     * @Form\Attributes({"class":"medium"})
+     * @Form\Attributes({"class":"long"})
      * @Form\Options({"label":"application_your-business_business-type.consultant-name.label"})
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
