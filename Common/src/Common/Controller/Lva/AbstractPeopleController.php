@@ -8,7 +8,7 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Service\Entity\OrganisationEntityService;
+use Common\RefData;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
 /**
@@ -194,22 +194,20 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $tableHeader = 'selfserve-app-subSection-your-business-people-tableHeader';
 
-        // needed in here?
-        $translator = $this->getServiceLocator()->get('translator');
         switch ($organisationTypeId) {
-            case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
+            case RefData::ORG_TYPE_REGISTERED_COMPANY:
                 $tableHeader .= 'Directors';
                 break;
 
-            case OrganisationEntityService::ORG_TYPE_LLP:
+            case RefData::ORG_TYPE_LLP:
+                $tableHeader .= 'PartnersMembers';
+                break;
+
+            case RefData::ORG_TYPE_PARTNERSHIP:
                 $tableHeader .= 'Partners';
                 break;
 
-            case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
-                $tableHeader .= 'Partners';
-                break;
-
-            case OrganisationEntityService::ORG_TYPE_OTHER:
+            case RefData::ORG_TYPE_OTHER:
                 $tableHeader .= 'People';
                 break;
 
@@ -223,7 +221,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
 
         // a separate if saves repeating this three times in the switch...
-        if ($organisationTypeId !== OrganisationEntityService::ORG_TYPE_OTHER) {
+        if ($organisationTypeId !== RefData::ORG_TYPE_OTHER) {
             $table->removeColumn('position');
         }
 
@@ -233,7 +231,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $table->setVariable(
             'title',
-            $translator->translate($tableHeader)
+            $this->getServiceLocator()->get('translator')->translate($tableHeader)
         );
     }
 
@@ -241,16 +239,16 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     {
         $guidanceLabel = 'selfserve-app-subSection-your-business-people-guidance';
         switch ($this->getAdapter()->getOrganisationType()) {
-            case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
+            case RefData::ORG_TYPE_REGISTERED_COMPANY:
                 $guidanceLabel .= 'LC';
                 break;
-            case OrganisationEntityService::ORG_TYPE_LLP:
+            case RefData::ORG_TYPE_LLP:
                 $guidanceLabel .= 'LLP';
                 break;
-            case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
+            case RefData::ORG_TYPE_PARTNERSHIP:
                 $guidanceLabel .= 'P';
                 break;
-            case OrganisationEntityService::ORG_TYPE_OTHER:
+            case RefData::ORG_TYPE_OTHER:
                 $guidanceLabel .= 'O';
                 break;
             default:
@@ -303,7 +301,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             );
         }
 
-        if ($orgData['type']['id'] !== OrganisationEntityService::ORG_TYPE_OTHER) {
+        if ($orgData['type']['id'] !== RefData::ORG_TYPE_OTHER) {
             // otherwise we're not interested in position at all, bin it off
             $this->getServiceLocator()->get('Helper\Form')
                 ->remove($form, 'data->position');
