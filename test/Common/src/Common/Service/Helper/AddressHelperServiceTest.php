@@ -41,7 +41,8 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
     public function testFormatPostalAddressWithSimpleParts()
     {
         $address = array(
-            'address_line1' => 'My Company Ltd',
+            'organisation_name' => 'My Company Ltd',
+            'address_line1' => '60 Burley Road',
             'address_line2' => 'Awesome House Street Name',
             'address_line3' => '',
             'address_line4' => '',
@@ -50,7 +51,8 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
         );
 
         $expectedAddress = array(
-            'addressLine1' => 'My Company Ltd',
+            'organisationName' => 'My Company Ltd',
+            'addressLine1' => '60 Burley Road',
             'addressLine2' => 'Awesome House Street Name',
             'addressLine3' => '',
             'addressLine4' => '',
@@ -75,8 +77,9 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
         $list = array(
             array(
                 'uprn' => 123,
-                'address_line1' => 'My Company Ltd',
-                'address_line2' => '123 Really Awesome House Street Name',
+                'organisation_name' => 'My Company Ltd',
+                'address_line1' => '123 Really Awesome House Street Name',
+                'address_line2' => '',
                 'address_line3' => '',
                 'address_line4' => '',
                 'post_town' => 'Some Town',
@@ -84,6 +87,7 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
             ),
             array(
                 'uprn' => 234,
+                'organisation_name' => '',
                 'address_line1' => 'My Company Ltd',
                 'address_line2' => '234 Awesome House Street Name',
                 'address_line3' => '',
@@ -93,6 +97,7 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
             ),
             array(
                 'uprn' => 345,
+                'organisation_name' => '',
                 'address_line1' => 'My Company Ltd',
                 'address_line2' => '345 Awesome House Street Name',
                 'address_line3' => '',
