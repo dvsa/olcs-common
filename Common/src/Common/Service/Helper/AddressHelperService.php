@@ -30,6 +30,7 @@ class AddressHelperService extends AbstractHelperService
         'town' => '',
         'postcode' => '',
         'countryCode' => 'GB',
+        'organisationName' => ''
     );
 
     /**
@@ -48,6 +49,7 @@ class AddressHelperService extends AbstractHelperService
         $details['addressLine4'] = $address['address_line4'];
         $details['town'] = $address['post_town'];
         $details['postcode'] = $address['postcode'];
+        $details['organisationName'] = $address['organisation_name'];
 
         return $details;
     }
@@ -65,12 +67,12 @@ class AddressHelperService extends AbstractHelperService
 
             $address = $this->formatPostalAddress($item);
 
-            $allowedParts = array('addressLine1', 'addressLine2', 'addressLine3', 'town');
+            $allowedParts = array('organisationName', 'addressLine1', 'addressLine2', 'addressLine3', 'town');
             $parts = array();
 
-            foreach ($address as $key => $val) {
-                if (in_array($key, $allowedParts) && !empty($val)) {
-                    $parts[] = $val;
+            foreach ($allowedParts as $part) {
+                if (array_key_exists($part, $address) && !empty($address[$part])) {
+                    $parts[] = $address[$part];
                 }
             }
 
