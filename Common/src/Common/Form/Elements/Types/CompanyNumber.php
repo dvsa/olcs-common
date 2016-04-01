@@ -52,6 +52,9 @@ class CompanyNumber extends Fieldset
             array(
                 'type' => 'Common\Form\Elements\Types\PlainText',
                 'name' => 'description',
+                'attributes' => [
+                    'data-container-class' => 'hint hint--small',
+                ],
                 'options' => [
                     'value' => 'selfserve-business-registered-company-description'
                 ]
