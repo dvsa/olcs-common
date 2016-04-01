@@ -24,7 +24,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
 {
     private $inputHelper;
 
-    private $format = '<div class="field inline-text"><label>%s</label>%s</div>';
+    private $format = '<div class="field inline-text"><label for="%s">%s</label>%s</div>';
 
     /**
      * Render a date element that is composed of six selects
@@ -72,6 +72,14 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
         $minuteElement = $element->getMinuteElement()->setValueOptions($minuteOptions);
         $secondElement = $element->getSecondElement()->setValueOptions($secondOptions);
 
+        // set ids on each input field
+        $dayElement->setAttribute('id', $element->getAttribute('id') . '_day');
+        $monthElement->setAttribute('id', $element->getAttribute('id') . '_month');
+        $yearElement->setAttribute('id', $element->getAttribute('id') . '_year');
+        $hourElement->setAttribute('id', $element->getAttribute('id') . '_hour');
+        $minuteElement->setAttribute('id', $element->getAttribute('id') . '_minute');
+        $secondElement->setAttribute('id', $element->getAttribute('id') . '_second');
+
         if ($element->shouldCreateEmptyOption()) {
             $hourElement->setEmptyOption('');
             $minuteElement->setEmptyOption('');
@@ -111,7 +119,8 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
     {
         return $this->wrap(
             $this->renderInput($element, 2),
-            'Day'
+            'Day',
+            $element->getAttribute('id')
         );
     }
 
@@ -119,7 +128,8 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
     {
         return $this->wrap(
             $this->renderInput($element, 2),
-            'Month'
+            'Month',
+            $element->getAttribute('id')
         );
     }
 
@@ -127,15 +137,16 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
     {
         return $this->wrap(
             $this->renderInput($element, 4),
-            'Year'
+            'Year',
+            $element->getAttribute('id')
         );
     }
 
-    protected function wrap($content, $label)
+    protected function wrap($content, $label, $id)
     {
         $label = $this->getTranslator()->translate('date-' . $label);
 
-        return sprintf($this->format, $label, $content);
+        return sprintf($this->format, $id, $label, $content);
     }
 
     protected function renderInput($element, $maxLength)

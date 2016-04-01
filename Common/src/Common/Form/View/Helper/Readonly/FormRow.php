@@ -7,6 +7,8 @@ use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\View\Helper\AbstractHelper;
 use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\Types\HtmlTranslated;
+use Common\Form\Elements\Types\Html;
 
 /**
  * Class FormRow
@@ -92,13 +94,9 @@ class FormRow extends AbstractHelper
         $elementHelper = $this->getElementHelper($element);
         $label = $element->getLabel();
 
-        if (isset($label) && '' !== $label) {
-            // Translate the label
-            if (null !== ($translator = $this->getTranslator())) {
-                $label = $translator->translate(
-                    $label, $this->getTranslatorTextDomain()
-                );
-            }
+        $translator = $this->getTranslator();
+        if ($translator !== null && !empty($label)) {
+            $label = $translator->translate($label, $this->getTranslatorTextDomain());
         }
 
         if (! $element instanceof LabelAwareInterface || ! $element->getLabelOption('disable_html_escape')) {
@@ -106,6 +104,13 @@ class FormRow extends AbstractHelper
         }
 
         $value = $elementHelper($element);
+        if ($translator !== null) {
+            if ($element instanceof HtmlTranslated) {
+                $value = $this->getView()->plugin('FormElement')->render($element);
+            } elseif (is_string($value) && !($element instanceof Html)) {
+                $value = $translator->translate($value);
+            }
+        }
         $class = $this->getClass($element);
 
         return sprintf($this->format, $class, $label, $value);

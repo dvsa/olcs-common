@@ -51,12 +51,14 @@ class Licence extends AbstractDataService
         $id = is_null($id) ? $this->getId() : $id;
 
         if (is_null($this->getData('oc_' .$id))) {
-            $dtoData = OcQry::create(['id' => $id]);
+            $dtoData = OcQry::create(['id' => $id, 'sort' => 'id', 'order' => 'ASC']);
             $response = $this->handleQuery($dtoData);
+
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
             $data = $response->getResult();
+
             $this->setData('oc_' .$id, $data);
         }
 

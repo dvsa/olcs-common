@@ -77,25 +77,32 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficAreaHelp');
         }
 
-        if (!empty($trafficAreaId)) {
-
-            $dataTrafficAreaFieldset->get('enforcementArea')
-                ->setValueOptions($params['possibleEnforcementAreas']);
-
+        if (empty($trafficAreaId) || $this->allowChangingTrafficArea()) {
+            $dataTrafficAreaFieldset->get('trafficArea')->setValueOptions($params['possibleTrafficAreas']);
+        } else {
             $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficArea');
-
-            $dataTrafficAreaFieldset->get('trafficAreaSet')
-                ->setValue($trafficArea['name']);
-
-            return $form;
+            $dataTrafficAreaFieldset->get('trafficAreaSet')->setValue($trafficArea['name']);
         }
 
-        $dataTrafficAreaFieldset->remove('trafficAreaSet')
-            ->remove('enforcementArea')
-            ->get('trafficArea')
-            ->setValueOptions($params['possibleTrafficAreas']);
+        if (!empty($trafficAreaId)) {
+            $dataTrafficAreaFieldset->get('enforcementArea')
+                ->setValueOptions($params['possibleEnforcementAreas']);
+        } else {
+            $dataTrafficAreaFieldset->remove('trafficAreaSet')
+                ->remove('enforcementArea');
+        }
 
         return $form;
+    }
+
+    /**
+     * Can the traffic aread be changed
+     *
+     * @return boolean
+     */
+    protected function allowChangingTrafficArea()
+    {
+        return false;
     }
 
     protected function alterFormForPsvLicences(Form $form, array $params)

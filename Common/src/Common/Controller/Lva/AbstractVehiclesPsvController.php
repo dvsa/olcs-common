@@ -8,6 +8,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\TransferVehiclesTrait;
+use Common\Controller\Lva\Traits\VehicleSearchTrait;
 use Common\Data\Mapper\Lva\PsvVehicles;
 use Common\Data\Mapper\Lva\PsvVehiclesVehicle;
 use Common\RefData;
@@ -27,8 +28,11 @@ use Dvsa\Olcs\Transfer\Command\Licence\CreatePsvVehicle as LicenceCreatePsvVehic
  */
 abstract class AbstractVehiclesPsvController extends AbstractController
 {
+    const SEARCH_VEHICLES_COUNT = 20;
+
     use Traits\CrudTableTrait,
-        TransferVehiclesTrait;
+        TransferVehiclesTrait,
+        VehicleSearchTrait;
 
     protected $section = 'vehicles_psv';
 
@@ -80,7 +84,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
             $crudAction = $this->getCrudAction($data);
 
-            $response = $this->updateVehiclesSection($form, $crudAction);
+            $response = $this->updateVehiclesSection($form, $crudAction, $resultData);
 
             if ($response !== null) {
                 return $response;
@@ -94,7 +98,10 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 }
 
                 // handle the original action as planned
-                return $this->handleCrudAction($data['vehicles']);
+                return $this->handleCrudAction(
+                    $data['vehicles'],
+                    ['add', 'show-removed-vehicles', 'hide-removed-vehicles']
+                );
             }
 
             return $this->completeSection('vehicles_psv');
@@ -102,7 +109,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $this->maybeWarnAboutTotalAuth($resultData);
 
-        return $this->renderForm($form, 'vehicles_psv');
+        return $this->renderForm($form, 'vehicles_psv', $resultData);
     }
 
     protected function updateVehiclesSection($form, $crudAction)
@@ -127,16 +134,16 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                     $response->getResult()['messages'],
                     $this->getServiceLocator()->get('Helper\FlashMessenger')
                 );
-                return $this->renderForm($form, 'vehicles_psv');
+                return $this->renderForm($form, 'vehicles_psv', $resultData);
             }
 
             if ($response->isServerError()) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
-                return $this->renderForm($form, 'vehicles_psv');
+                return $this->renderForm($form, 'vehicles_psv', $resultData);
             }
         }
 
-        if ($this->lva === 'licence' && $this->location === 'external') {
+        if ($this->lva === 'licence') {
 
             $shareInfo = $form->getData()['shareInfo']['shareInfo'];
 
@@ -149,7 +156,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
             if (!$response->isOk()) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
-                return $this->renderForm($form, 'vehicles_psv');
+                return $this->renderForm($form, 'vehicles_psv', $resultData);
             }
         }
     }
@@ -352,7 +359,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         }
     }
 
-    private function alterTable($table)
+    private function alterTable($table, $filters = [])
     {
         // if licence on external then add an "Export" action
         if ($this->lva === 'licence' && $this->location === 'external') {
@@ -364,6 +371,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 ]
             );
         }
+        $this->addRemovedVehiclesActions($filters, $table);
 
         return $table;
     }
@@ -471,7 +479,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      */
     private function getTable($tableData, $readOnly = false)
     {
-        return $this->alterTable($this->getTableBasic($tableData, $readOnly));
+        return $this->alterTable($this->getTableBasic($tableData, $readOnly), $this->getFilters());
     }
 
     /**
@@ -488,33 +496,26 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         if ($readOnly) {
             $tableName .= '-readonly';
         }
-        $query = $this->getRequest()->getQuery();
-        $params = array_merge((array)$query, ['query' => $query]);
+        $query = $this->removeUnusedParametersFromQuery(
+            (array) $this->getRequest()->getQuery()
+        );
+        $params = array_merge($query, ['query' => $query]);
         return $this->getServiceLocator()->get('Table')->prepareTable($tableName, $tableData, $params);
     }
 
-    private function renderForm($form)
+    private function renderForm($form, $section, $headerData)
     {
         $params = [];
 
         $files = ['lva-crud', 'vehicle-psv'];
 
-        if (!($this->lva === 'application' && $this->location === 'external')) {
-            $filterForm = $this->getServiceLocator()->get('FormServiceManager')
-                ->get('lva-psv-vehicles-filters')
-                ->getForm();
-
-            if ($filterForm !== null) {
-                $files[] = 'forms/filter';
-                $params['filterForm'] = $filterForm;
-
-                $query = (array)$this->getRequest()->getQuery();
-
-                $filterForm->setData($query);
-            }
+        $searchForm = $this->getVehcileSearchForm($headerData);
+        if ($searchForm) {
+            $params['searchForm'] = $searchForm;
+            $files[] = 'forms/vehicle-search';
         }
         $this->getServiceLocator()->get('Script')->loadFiles($files);
-        return $this->render('vehicles_psv', $form, $params);
+        return $this->render($section, $form, $params);
     }
 
     /**
@@ -583,6 +584,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $filters['limit'] = isset($query['limit']) ? $query['limit'] : 10;
         $filters['sort'] = isset($query['sort']) ? $query['sort'] : 'createdOn';
         $filters['order'] = isset($query['order']) ? $query['order'] : 'DESC';
+        if (isset($query['vehicleSearch']['vrm']) && !isset($query['vehicleSearch']['clearSearch'])) {
+            $filters['vrm'] = $query['vehicleSearch']['vrm'];
+        }
         return $filters;
     }
 }

@@ -6,7 +6,10 @@ $(function() {
   }
 
   function showNotice() {
-    return OLCS.formHelper.findInput("data", "hasEnteredReg").length && !OLCS.formHelper.isChecked("data", "hasEnteredReg");
+    if (!OLCS.formHelper.findInput("data", "hasEnteredReg").length) {
+      return true;
+    }
+    return !OLCS.formHelper.isChecked("data", "hasEnteredReg");
   }
 
   OLCS.cascadeForm({

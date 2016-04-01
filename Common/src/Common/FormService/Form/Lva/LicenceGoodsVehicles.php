@@ -18,5 +18,6 @@ class LicenceGoodsVehicles extends AbstractGoodsVehicles
     {
         $this->getFormServiceLocator()->get('lva-licence')->alterForm($form);
         $this->getFormServiceLocator()->get('lva-licence-variation-vehicles')->alterForm($form);
+        $this->showShareInfo = true;
     }
 }

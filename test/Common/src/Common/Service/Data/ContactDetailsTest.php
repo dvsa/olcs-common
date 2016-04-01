@@ -108,7 +108,7 @@ class ContactDetailsTest extends AbstractDataServiceTestCase
             'sort'  => 'description',
             'order' => 'ASC',
             'page'  => 1,
-            'limit' => 1000,
+            'limit' => 100,
             'contactType' => 'ct_partner'
         ];
         $dto = Qry::create($params);

@@ -3,12 +3,13 @@
 return array(
     'variables' => array(
         'title' => 'transport-manager.otherlicences.table',
-        'within_form' => true
+        'within_form' => true,
+        'empty_message' => 'transport-manager.otherlicences.table.empty',
     ),
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add-other-licence-applications' => array('label' => 'Add', 'class' => 'primary'),
+                'add-other-licence-applications' => array('label' => 'transport-manager.otherlicences.table.add', 'class' => 'primary'),
             ),
         ),
     ),
@@ -23,10 +24,6 @@ return array(
             'title' => 'transport-manager.otherlicences.table.role',
             'name' => 'role',
             'formatter' => 'RefData'
-        ),
-        array(
-            'title' => 'transport-manager.otherlicences.table.operating_centres',
-            'name' => 'operatingCentres',
         ),
         array(
             'title' => 'transport-manager.otherlicences.table.total_auth_vehicles',

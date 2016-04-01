@@ -39,7 +39,7 @@ class EmploymentDetails
      *     "label":"transport-manager.employment.form.hoursPerWeek",
      *     "short-label":"transport-manager.employment.form.hoursPerWeek"
      * })
-     * @Form\Type("Text")
+     * @Form\Type("Textarea")
      * @Form\Validator({"name": "\Zend\Validator\NotEmpty"})
      */
     public $hoursPerWeek = null;

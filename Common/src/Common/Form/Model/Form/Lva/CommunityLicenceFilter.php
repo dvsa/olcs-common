@@ -5,7 +5,7 @@ namespace Common\Form\Model\Form\Lva;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Options({"prefer_form_input_filter":true})
+ * @Form\Options({"prefer_form_input_filter":true,"bypass_auth":true})
  * @Form\Name("lva-community-licence-filter")
  * @Form\Attributes({"method":"get", "class":"form__filter"})
  * @Form\Type("Common\Form\Form")

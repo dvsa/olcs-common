@@ -60,7 +60,7 @@ class Team extends AbstractDataService implements ListData
                 'sort'  => 'name',
                 'order' => 'ASC',
                 'page'  => 1,
-                'limit' => 1000
+                'limit' => 100
             ];
             $this->setData('Team', false);
             $dtoData = TeamList::create($params);

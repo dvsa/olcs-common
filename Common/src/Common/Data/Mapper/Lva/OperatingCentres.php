@@ -31,6 +31,9 @@ class OperatingCentres implements MapperInterface
         return [
             'data' => $data,
             'dataTrafficArea' => [
+                'trafficArea' => isset($data['licence']['trafficArea']['id']) ?
+                    $data['licence']['trafficArea']['id'] :
+                    null,
                 'enforcementArea' => $enforcementArea,
             ]
         ];

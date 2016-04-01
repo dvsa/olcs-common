@@ -9,7 +9,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add-previous-conviction' => array('label' => 'Add', 'class' => 'primary'),
+                'add-previous-conviction' => array('label' => 'transport-manager.convictionsandpenalties.table.add', 'class' => 'primary'),
             )
         ),
     ),

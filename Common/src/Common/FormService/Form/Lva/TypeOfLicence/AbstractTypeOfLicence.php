@@ -18,6 +18,9 @@ use Common\RefData;
  */
 abstract class AbstractTypeOfLicence extends AbstractLvaFormService
 {
+    const ALLOWED_OPERATOR_LOCATION_NI = 'NI';
+    const ALLOWED_OPERATOR_LOCATION_GB = 'GB';
+
     public function getForm($params = [])
     {
         $form = $this->getFormHelper()->createForm('Lva\TypeOfLicence');
@@ -78,5 +81,26 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
                 RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             );
         }
+    }
+
+    /**
+     * Set and lock operator location
+     *
+     * @param Form $form
+     * @param string $location
+     */
+    public function setAndLockOperatorLocation($form, $location)
+    {
+        $typeOfLicenceFieldset = $form->get('type-of-licence');
+        if ($location === self::ALLOWED_OPERATOR_LOCATION_NI) {
+            $typeOfLicenceFieldset->get('operator-location')->setValue('Y');
+            $message = 'alternative-operator-location-lock-message-ni';
+        } elseif ($location === self::ALLOWED_OPERATOR_LOCATION_GB) {
+            $typeOfLicenceFieldset->get('operator-location')->setValue('N');
+            $message = 'alternative-operator-location-lock-message-gb';
+        }
+        $formHelper = $this->getFormHelper();
+        $formHelper->disableElement($form, 'type-of-licence->operator-location');
+        $formHelper->lockElement($typeOfLicenceFieldset->get('operator-location'), $message);
     }
 }

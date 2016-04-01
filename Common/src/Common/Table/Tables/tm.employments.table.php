@@ -9,7 +9,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add-employment' => array('label' => 'Add', 'class' => 'primary'),
+                'add-employment' => array('label' => 'transport-manager.employments.table.add', 'class' => 'primary'),
             )
         ),
     ),
@@ -28,10 +28,6 @@ return array(
         array(
             'title' => 'Position',
             'name' => 'position',
-        ),
-        array(
-            'title' => 'Hours / days',
-            'name' => 'hoursPerWeek',
         ),
         array(
             'type' => 'ActionLinks',

@@ -57,16 +57,16 @@ class FormDateSelectTest extends MockeryTestCase
         $markup = $this->sut->render($element);
 
         $expected = '<div class="field inline-text">'
-            . '<label>translated-date-Day</label>'
-            . '<input type="select" name="day" maxlength="2" value="">'
+            . '<label for="_day">translated-date-Day</label>'
+            . '<input type="select" name="day" id="_day" maxlength="2" value="">'
         . '</div> '
         . '<div class="field inline-text">'
-            . '<label>translated-date-Month</label>'
-            . '<input type="select" name="month" maxlength="2" value="">'
+            . '<label for="_month">translated-date-Month</label>'
+            . '<input type="select" name="month" id="_month" maxlength="2" value="">'
         . '</div> '
         . '<div class="field inline-text">'
-            . '<label>translated-date-Year</label>'
-            . '<input type="select" name="year" maxlength="4" value="">'
+            . '<label for="_year">translated-date-Year</label>'
+            . '<input type="select" name="year" id="_year" maxlength="4" value="">'
         . '</div>';
 
         $this->assertEquals($expected, $markup);
