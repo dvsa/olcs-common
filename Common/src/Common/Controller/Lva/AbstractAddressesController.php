@@ -77,10 +77,24 @@ abstract class AbstractAddressesController extends AbstractController
                     ->disableValidation(
                         $form->getInputFilter()->get('consultant')
                     );
+                $this->getServiceLocator()->get('Helper\Form')
+                    ->disableValidation(
+                        $form->getInputFilter()->get('consultantAddress')
+                    );
             }
 
             if ($form->isValid()) {
 
+                $consultant = null;
+                if (isset($data['consultant'])) {
+                    $consultant = $data['consultant'];
+                }
+                if (isset($data['consultantAddress'])) {
+                    $consultant['address'] = $data['consultantAddress'];
+                }
+                if (isset($data['consultantContact'])) {
+                    $consultant['contact'] = $data['consultantContact'];
+                }
                 $dtoData = [
                     'id' => $this->getIdentifier(),
                     'correspondence' => $data['correspondence'],
@@ -89,7 +103,7 @@ abstract class AbstractAddressesController extends AbstractController
                     'establishment' => isset($data['establishment']) ? $data['establishment'] : null,
                     'establishmentAddress' => isset($data['establishment_address']) ?
                         $data['establishment_address'] : null,
-                    'consultant' => isset($data['consultant']) ? $data['consultant'] : null
+                    'consultant' => $consultant
                 ];
 
                 // @TODO de-switch?
@@ -160,6 +174,10 @@ abstract class AbstractAddressesController extends AbstractController
 
         if (!empty($data['transportConsultantCd'])) {
             $returnData['consultant'] = $this->formatConsultantDataForForm($data);
+            $returnData['consultantAddress'] = $returnData['consultant']['address'];
+            $returnData['consultantContact'] = $returnData['consultant']['contact'];
+            unset($returnData['consultant']['contact']);
+            unset($returnData['consultant']['address']);
         }
 
         return $returnData;

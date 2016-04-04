@@ -58,6 +58,18 @@ class Addresses
     public $transportConsultant = null;
 
     /**
+     * @Form\Name("consultantAddress")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
+     */
+    public $transportConsultantAddress = null;
+
+    /**
+     * @Form\Name("consultantContact")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\ContactOptional")
+     */
+    public $transportConsultantContact = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})
