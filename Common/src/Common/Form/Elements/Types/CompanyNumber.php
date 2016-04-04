@@ -53,7 +53,7 @@ class CompanyNumber extends Fieldset
                 'type' => 'Common\Form\Elements\Types\PlainText',
                 'name' => 'description',
                 'attributes' => [
-                    'data-container-class' => 'hint hint--small',
+                    'data-container-class' => 'hint',
                 ],
                 'options' => [
                     'value' => 'selfserve-business-registered-company-description'

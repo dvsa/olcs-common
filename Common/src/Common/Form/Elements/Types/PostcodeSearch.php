@@ -76,7 +76,7 @@ class PostcodeSearch extends Fieldset
         $this->add($selectButton);
 
         $manualLink = new HtmlTranslated('manual-link');
-        $manualLink->setValue('<p class="hint--small"><a href=#>%s</a></p>');
+        $manualLink->setValue('<p class="hint"><a href=#>%s</a></p>');
         $manualLink->setTokens(['postcode.address.manual_entry' ]);
         $manualLink->setAttributes(
             array(
