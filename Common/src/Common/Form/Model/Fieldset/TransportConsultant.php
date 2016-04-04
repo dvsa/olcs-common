@@ -50,14 +50,4 @@ class TransportConsultant
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
     public $transportConsultantName = null;
-
-    /**
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
-     */
-    public $address = null;
-
-    /**
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\ContactOptional")
-     */
-    public $contact = null;
 }
