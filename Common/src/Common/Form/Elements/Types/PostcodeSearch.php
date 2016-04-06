@@ -57,7 +57,7 @@ class PostcodeSearch extends Fieldset
         $selectAddress = new Select('addresses', array('label' => '', 'empty_option' => 'Please select'));
         $selectAddress->setAttributes(
             array(
-                'data-container-class' => 'address__select'
+                'data-container-class' => 'compound address__select'
             )
         );
 

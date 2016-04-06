@@ -18,12 +18,16 @@ class LicenceHistoryAssets
      *             "value": "Y",
      *             "label": "Yes",
      *             "label_attributes": {
-     *                 "aria-label": "In the past 12 months, has anyone you've named bought assets or shares in a company that holds or has held an operator's licence in any traffic area? Yes"
+     *                 "aria-label": "In the past 12 months, has anyone you've named bought assets or shares in a company that holds or has held an operator's licence in any traffic area? Yes",
+     *                 "class" : "inline"
      *             }
      *         },
      *         {
      *             "value": "N",
-     *             "label": "No"
+     *             "label": "No",
+     *             "label_attributes": {
+     *                 "class" : "inline"
+     *             }
      *         }
      *     },
      *     "fieldset-attributes" : {
