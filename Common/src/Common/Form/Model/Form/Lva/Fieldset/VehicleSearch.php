@@ -20,20 +20,16 @@ class VehicleSearch
     public $vrm = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary inline-search__button"})
+     * @Form\Attributes({"type":"submit","class":"action--primary inline-search__submit"})
      * @Form\Options({
      *     "label": "vehicle-search-search",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10"
      * })
      * @Form\Type("\Zend\Form\Element\Button")
      */
     public $filter = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"inline-search__hint","id":"clearSearch"})
+     * @Form\Attributes({"type":"submit","class":"inline-search__clear","id":"clearSearch"})
      * @Form\Options({
      *     "label": "vehicle-search-clear-search"
      * })
