@@ -13,14 +13,28 @@ class BusinessDetailsAllowEmail
 {
 
     /**
-     * @Form\Type("Radio")
+     * @Form\Attributes({"id":"","placeholder":"","class":"js-enabled"})
      * @Form\Options({
-     *      "label": "application_business-details_allow-email.label",
-     *      "value_options":{
-     *          "N":"Post",
-     *          "Y":"Email"
-     *      },
+     *     "fieldset-attributes": {
+     *         "class": "checkbox inline"
+     *     },
+     *     "label": "application_business-details_allow-email.label",
+     *     "value_options": {
+     *         {
+     *             "value": "N",
+     *             "label": "Post"
+     *         },
+     *         {
+     *             "value": "Y",
+     *             "label": "Email",
+     *         },
+     *     },
+     *     "help-block": "Please choose",
+     *     "label_attributes": {
+     *         "class": "inline"
+     *     }
      * })
+     * @Form\Type("\Zend\Form\Element\Radio")
      */
     public $allowEmail;
 }
