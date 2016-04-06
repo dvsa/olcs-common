@@ -45,19 +45,9 @@ class TransportConsultant
 
     /**
      * @Form\Type("Text")
-     * @Form\Attributes({"class":"medium"})
+     * @Form\Attributes({"class":"long"})
      * @Form\Options({"label":"application_your-business_business-type.consultant-name.label"})
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
     public $transportConsultantName = null;
-
-    /**
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
-     */
-    public $address = null;
-
-    /**
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\ContactOptional")
-     */
-    public $contact = null;
 }
