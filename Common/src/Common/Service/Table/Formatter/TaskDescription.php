@@ -30,6 +30,8 @@ class TaskDescription implements FormatterInterface
         $request    = $serviceLocator->get('request');
         $routeMatch = $router->match($request);
         $params     = $routeMatch->getParams();
+        $query      = $request->getQuery()->toArray();
+        unset($query['security']);
 
         // the edit URL should pass the context of the page we're on,
         // rather than the type of each task
@@ -64,7 +66,6 @@ class TaskDescription implements FormatterInterface
                 $routeParams = [];
                 break;
         }
-
         $url = $serviceLocator->get('Helper\Url')->fromRoute(
             'task_action',
             array_merge(
@@ -73,7 +74,10 @@ class TaskDescription implements FormatterInterface
                     'action' => 'edit',
                 ],
                 $routeParams
-            )
+            ),
+            [
+                'query' => $query
+            ]
         );
         return '<a href="'
             . $url
