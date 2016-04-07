@@ -2305,7 +2305,7 @@ return [
     'selfserve-app-subSection-your-business-people-columnName' => 'Name',
     'selfserve-app-subSection-your-business-people-columnPosition' => 'Position',
     'selfserve-app-subSection-your-business-people-guidance-disabled' => 'You can\'t make changes to this section',
-    'selfserve-app-subSection-your-business-people-guidanceLC' => '<p>Your list of directors should match the one you registered with Companies House.</p>',
+    'selfserve-app-subSection-your-business-people-guidanceLC' => 'Your list of directors should match the one you registered with Companies House.',
     'selfserve-app-subSection-your-business-people-guidanceLLP' => 'Please provide details of the members. This must be the same as the details that are on the companies house register',
     'selfserve-app-subSection-your-business-people-guidanceO' => 'Please provide details of the persons responsible for your organisation',
     'selfserve-app-subSection-your-business-people-guidanceP' => 'Please give details below of the partners in the business. You must include details of all partners, even if they are not primarily responsible for the operation of goods vehicles',
