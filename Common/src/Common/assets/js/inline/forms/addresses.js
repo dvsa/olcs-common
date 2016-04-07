@@ -13,8 +13,8 @@ $(function() {
       "consultant": {
         "writtenPermissionToEngage": showForm,
         "transportConsultantName": showForm,
-        "selector:fieldset[data-group='consultant[contact]']": showForm,
-        "selector:fieldset[data-group='consultant[address]']": showForm
+        "selector:fieldset[data-group='consultantContact']": showForm,
+        "selector:fieldset[data-group='consultantAddress']": showForm
       }
     }
   });
