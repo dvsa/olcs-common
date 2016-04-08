@@ -13,10 +13,10 @@ OLCS.ready(function() {
     // make sure the primary submit button is hidden
     hideSubmit: true,
     // where we'll render any response data to
-    container: ".table__form",
+    container: ".js-body",
     // filter the data returned from the server to only
     // contain content *within* this element, not including
     // the filter wrapper itself
-    filter: ".table__form"
+    filter: ".js-body"
   });
 });
