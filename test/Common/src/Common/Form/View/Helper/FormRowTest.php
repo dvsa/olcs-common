@@ -425,6 +425,29 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
+    public function testRenderDateSelectWithFieldsetClass()
+    {
+        $element = $this->prepareElement(
+            'DateSelect',
+            [
+                'name' => 'date',
+                'label' => 'Foo',
+                'fieldsetClass' => 'user'
+            ],
+            []
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputString(
+            '<div class="field "><fieldset class="user"><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>'
+        );
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
     public function testRenderDateTimeSelectElement()
     {
         $element = $this->prepareElement(
