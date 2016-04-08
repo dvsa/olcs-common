@@ -73,6 +73,13 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         return $this->render('financial_history', $form);
     }
 
+    /**
+     * Alter form for LVA form
+     *
+     * @param Form $form
+     * @param array $data
+     * @return Form
+     */
     protected function alterFormForLvaForm(Form $form, $data)
     {
         if (isset($data['data']['niFlag']) && $data['data']['niFlag'] === 'Y') {
