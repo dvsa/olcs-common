@@ -95,10 +95,13 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
 
             $element->setOption('hint-position', 'end');
 
+            if ($element->getOption('fieldsetClass') === null) {
+                $element->setOption('fieldsetClass', 'date');
+            }
+
             // This isn't ideal, but for pragmatism we add the hint here, so it shows on all
             // date select elements (unless internal)
             if (!empty($this->config['render_date_hint']) && !($element instanceof DateTimeSelect)) {
-
                 $hint = $element->getOption('hint');
 
                 if (empty($hint)) {
@@ -210,12 +213,18 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             );
         }
 
+        if ($element->getOption('fieldsetClass') !== null) {
+            $fieldsetClass = $element->getOption('fieldsetClass');
+        } elseif ($primary) {
+            $fieldsetClass = 'fieldset--primary';
+        }
+
         return sprintf(
             $this->fieldsetWrapper,
             $markup,
             $legend,
             '',
-            $primary ? ' class="fieldset--primary"' : ''
+            isset($fieldsetClass) ? ' class="' . $fieldsetClass . '"' : ''
         );
     }
 
