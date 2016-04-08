@@ -45,6 +45,10 @@ class Form extends \Zend\Form\View\Helper\Form
         foreach ($form as $element) {
 
             if ($element instanceof FieldsetInterface) {
+                // do not display empty fieldsets as per OLCS-12318
+                if (!$element->count()) {
+                    continue;
+                }
                 $fieldsets[] = $this->getView()->addTags(
                     $this->getView()->formCollection($element)
                 );
