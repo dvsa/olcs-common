@@ -12,6 +12,7 @@ use Common\Service\Data\CategoryDataService;
 use Common\Data\Mapper\Lva\FinancialHistory as FinancialHistoryMapper;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialHistory;
 use Dvsa\Olcs\Transfer\Query\Application\FinancialHistory;
+use Zend\Form\Form;
 
 /**
  * Financial History Controller
@@ -72,7 +73,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         return $this->render('financial_history', $form);
     }
 
-    protected function alterFormForLva($form, $data)
+    protected function alterFormForLvaForm(Form $form, $data)
     {
         if (isset($data['data']['niFlag']) && $data['data']['niFlag'] === 'Y') {
             $form->get('data')
