@@ -417,9 +417,9 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $expected = '<div class="field "><fieldset><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>';
-
-        $this->expectOutputString($expected);
+        $this->expectOutputString(
+            '<div class="field "><fieldset class="date"><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>'
+        );
     }
 
     /**
@@ -439,8 +439,8 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $expected = '<div class="field "><fieldset><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>';
-
-        $this->expectOutputString($expected);
+        $this->expectOutputString(
+            '<div class="field "><fieldset class="date"><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>'
+        );
     }
 }
