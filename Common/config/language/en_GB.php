@@ -315,7 +315,7 @@ return [
     'application-search-subsidiary-header' => 'Subsidiary Company',
     'application-submitted-successfully' => 'Application %s has been submitted',
     'application-summary-complete-what-next-text' => 'The Central Licensing Office aims to process your application as soon as possible. The information provided will be checked and further information may be requested.',
-    'application-summary-important-goods-app' => 'You can\'t lawfully operate goods vehicles until your application has been granted, you\'ve paid any grant fees and we\'ve issued your licence documents, or until we\'ve issued an interim authority. If you do your application could be refused.',
+    'application-summary-important-goods-app' => 'You can\'t lawfully operate goods vehicles until your application has been granted, you\'ve paid any grant fees and we\'ve issued your licence documents, or until we\'ve issued an interim licence. If you do your application could be refused.',
     'application-summary-important-goods-var' => 'You must follow the terms and conditions of your current licence until we\'ve granted either:<ul><li>your variation application</li><li>an interim authorisation</li></ul>',
     'application-summary-important-psv-app' => 'Until your licence has been issued, you can\'t operate PSVs for hire or reward or as part of a trade or business.',
     'application-summary-important-psv-app-sr' => 'Until your licence has been issued, you can\'t use your taxi to operate a local bus-type service.',
