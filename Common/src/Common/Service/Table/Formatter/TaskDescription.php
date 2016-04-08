@@ -64,7 +64,6 @@ class TaskDescription implements FormatterInterface
                 $routeParams = [];
                 break;
         }
-
         $url = $serviceLocator->get('Helper\Url')->fromRoute(
             'task_action',
             array_merge(
@@ -73,7 +72,10 @@ class TaskDescription implements FormatterInterface
                     'action' => 'edit',
                 ],
                 $routeParams
-            )
+            ),
+            [
+                'query' => $request->getQuery()->toArray()
+            ]
         );
         return '<a href="'
             . $url

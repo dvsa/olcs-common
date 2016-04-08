@@ -942,6 +942,7 @@ return [
     'error.form-validator.email-confirm.not-same' => 'Email addresses don\'t match',
     'error.form-validator.password-confirm.missing-token' => 'No password was provided to match against',
     'error.form-validator.password-confirm.not-same' => 'Password don\'t match',
+    'error.form-validator.username.invalid' => 'You can use letters (a-z), numbers and only these special characters: + - _ . @',
     'error.vehicle.vrm-exists-on-application' => 'A vehicle with this registration number already exists on this application',
     'error.vehicle.vrm-exists-on-licence' => 'A vehicle with this registration number already exists on this licence',
     'error.vrm.invalid' => 'Invalid registration number',
