@@ -118,7 +118,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      *
      * @param \Dvsa\Olcs\Transfer\Query\QueryInterface $command
-     * @return
+     * @return \Common\Service\Cqrs\Response
      */
     protected function handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $command)
     {
@@ -131,7 +131,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      *
      * @param \Dvsa\Olcs\Transfer\Command\CommandInterface $command
-     * @return
+     * @return \Common\Service\Cqrs\Response
      */
     protected function handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $command)
     {
@@ -189,7 +189,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             \Common\RefData::ORG_TYPE_LLP,
             \Common\RefData::ORG_TYPE_RC,
         ];
-        return in_array($this->getOrganisationType(), $limitedTypes);
+        return in_array($this->getOrganisationType(), $limitedTypes, false);
     }
 
     /**
@@ -202,7 +202,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         $types = [
             \Common\RefData::ORG_TYPE_OTHER,
         ];
-        return in_array($this->getOrganisationType(), $types);
+        return in_array($this->getOrganisationType(), $types, false);
     }
 
     public function useDeltas()

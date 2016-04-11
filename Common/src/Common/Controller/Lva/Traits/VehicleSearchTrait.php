@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Traits;
 
+use Common\Service\Table\TableBuilder;
+
 /**
  * Vehicle Search Trait
  *
@@ -42,12 +44,13 @@ trait VehicleSearchTrait
      * Get vehicle search form
      *
      * @param array $headerData
-     * @return Form|null
+     * @return \Zend\Form\FormInterface|null
      */
     protected function getVehcileSearchForm($headerData)
     {
         $searchForm = null;
         if (($headerData['allVehicleCount'] > self::SEARCH_VEHICLES_COUNT) && ($this->lva !== 'application')) {
+            /** @var \Zend\Form\FormInterface $searchForm */
             $searchForm = $this->getServiceLocator()->get('FormServiceManager')
                 ->get('lva-vehicles-search')
                 ->getForm();
@@ -99,7 +102,7 @@ trait VehicleSearchTrait
      * @param array $filters
      * @param TableBuilder $table
      */
-    protected function addRemovedVehiclesActions($filters, $table)
+    protected function addRemovedVehiclesActions($filters, TableBuilder $table)
     {
         if (isset($filters['includeRemoved']) && $filters['includeRemoved'] == '1') {
             $table->addAction(
