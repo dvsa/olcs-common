@@ -100,7 +100,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      *
      * @return boolean
      */
-    protected function allowChangingTrafficArea()
+    protected function allowChangingTrafficArea($trafficAreaId)
     {
         return false;
     }
