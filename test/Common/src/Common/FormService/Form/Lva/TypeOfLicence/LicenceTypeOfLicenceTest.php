@@ -122,7 +122,7 @@ class LicenceTypeOfLicenceTest extends MockeryTestCase
             ->once()
             ->with('operator-type');
 
-        $mockLt = m::mock(Element::class);
+        $mockLt = m::mock(Element\Select::class);
         $mockLt->shouldReceive('setLabel')
             ->once()
             ->with('licence-type');

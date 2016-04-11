@@ -57,6 +57,8 @@ class TableFactory implements FactoryInterface
      * @param string $name
      * @param array $data
      * @param array $params
+     *
+     * @return TableBuilder
      */
     public function prepareTable($name, array $data = array(), array $params = array())
     {

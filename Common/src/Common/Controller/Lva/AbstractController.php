@@ -7,20 +7,25 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Controller\Traits\GenericUpload;
+use Common\Exception\ResourceConflictException;
+use Common\Util;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence;
 use Zend\Form\Form;
-use Common\Util;
+use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Exception;
 use Zend\Mvc\MvcEvent;
-use Common\Exception\ResourceConflictException;
-use Common\Controller\Traits\GenericUpload;
 
 /**
  * Lva Abstract Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ *
+ * @method \Common\Service\Cqrs\Response handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $query)
+ * @method \Common\Service\Cqrs\Response handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $query)
+ * @method \Common\Controller\Plugin\Redirect redirect()
  */
 abstract class AbstractController extends AbstractActionController
 {
@@ -53,8 +58,6 @@ abstract class AbstractController extends AbstractActionController
         'warning' => [],
         'success' => []
     ];
-
-    private $loggedInUser;
 
     protected $defaultBundles = [
         'licence' => Licence::class,
@@ -124,6 +127,7 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function isButtonPressed($button, $data = [])
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -227,7 +231,7 @@ abstract class AbstractController extends AbstractActionController
     {
         $sections = $this->getAccessibleSections();
 
-        $index = array_search($currentSection, $sections);
+        $index = array_search($currentSection, $sections, false);
 
         // If there is no next section
         if (!isset($sections[$index + 1])) {
@@ -250,7 +254,7 @@ abstract class AbstractController extends AbstractActionController
     protected function checkForRedirect($lvaId)
     {
         if (!$this->isButtonPressed('cancel')) {
-            return;
+            return null;
         }
 
         // If we are on a sub-section, we need to go back to the section

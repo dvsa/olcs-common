@@ -10,23 +10,24 @@ namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\TransferVehiclesTrait;
 use Common\Controller\Lva\Traits\VehicleSearchTrait;
-use Common\Data\Mapper\Lva\GoodsVehicles;
-use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
+use Common\Data\Mapper;
 use Common\RefData;
+use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
-use Dvsa\Olcs\Transfer\Command\Licence\CreateGoodsVehicle as LicenceCreateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateGoodsVehicle as ApplicationUpdateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicles as AppUpdateVehicles;
+use Dvsa\Olcs\Transfer\Command\Licence\CreateGoodsVehicle as LicenceCreateGoodsVehicle;
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateVehicles as LicUpdateVehicles;
+use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteLicenceVehicle as LicenceDeleteLicenceVehicle;
 use Dvsa\Olcs\Transfer\Command\Vehicle\ReprintDisc;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
-use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
-use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteLicenceVehicle as LicenceDeleteLicenceVehicle;
-use Dvsa\Olcs\Transfer\Command\Application\UpdateVehicles as AppUpdateVehicles;
-use Dvsa\Olcs\Transfer\Command\Licence\UpdateVehicles as LicUpdateVehicles;
-use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
-use Zend\Form\Element\Checkbox;
-use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
 use Dvsa\Olcs\Transfer\Query\Application\GoodsVehicles as ApplicationGoodsVehicles;
+use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
+use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
 use Dvsa\Olcs\Transfer\Query\Variation\GoodsVehicles as VariationGoodsVehicles;
+use Zend\Form\Element\Checkbox;
+use Zend\Form\FormInterface;
 
 /**
  * Goods Vehicles
@@ -36,6 +37,9 @@ use Dvsa\Olcs\Transfer\Query\Variation\GoodsVehicles as VariationGoodsVehicles;
  */
 abstract class AbstractGoodsVehiclesController extends AbstractController
 {
+    const DEF_TABLE_FIRST_PAGE_NR = 1;
+    const DEF_TABLE_ITEMS_COUNT = 25;
+
     const SEARCH_VEHICLES_COUNT = 20;
 
     use Traits\CrudTableTrait,
@@ -79,37 +83,36 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $headerData = $this->getHeaderData();
 
         $formData = [];
-        $haveCrudAction = false;
+        $crudAction = null;
 
         if ($request->isPost()) {
             $formData = (array)$request->getPost();
             $crudAction = $this->getCrudAction([$formData['table']]);
-            $haveCrudAction = $crudAction !== null;
         } elseif ($this->lva === 'application') {
-            $formData = GoodsVehicles::mapFromResult($headerData);
+            $formData = Mapper\Lva\GoodsVehicles::mapFromResult($headerData);
         } elseif ($this->lva === 'licence') {
-            $formData = \Common\Data\Mapper\Lva\LicenceGoodsVehicles::mapFromResult($headerData);
+            $formData = Mapper\Lva\LicenceGoodsVehicles::mapFromResult($headerData);
         }
+
+        $haveCrudAction = ($crudAction !== null);
 
         $formData = array_merge($formData, ['query' => (array)$request->getQuery()]);
 
         $form = $this->getForm($headerData, $formData);
 
         if ($request->isPost() && $form->isValid()) {
-
             $response = $this->updateVehiclesSection($form, $haveCrudAction, $headerData);
-
             if ($response !== null) {
                 return $response;
             }
 
             if ($haveCrudAction) {
-
                 $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
                     $this->getActionFromCrudAction($crudAction)
                 );
@@ -132,10 +135,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->renderForm($form, $headerData);
     }
 
-    protected function updateVehiclesSection($form, $haveCrudAction, $headerData)
+    protected function updateVehiclesSection(FormInterface $form, $haveCrudAction, $headerData)
     {
         if ($this->lva === 'application') {
-
             $data = $form->getData()['data'];
 
             $dtoData = [
@@ -159,7 +161,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         if ($this->lva === 'licence') {
-
             $shareInfo = $form->getData()['shareInfo']['shareInfo'];
 
             $dtoData = [
@@ -174,6 +175,8 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 return $this->renderForm($form, $headerData);
             }
         }
+
+        return null;
     }
 
     protected function getHeaderData()
@@ -184,6 +187,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
             $dtoClass = $this->loadDataMap[$this->lva];
 
+            /** @var \Common\Service\Cqrs\Response $response */
             $response = $this->handleQuery($dtoClass::create($dtoData));
             $this->headerData = $response->getResult();
         }
@@ -196,9 +200,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $result = $this->getVehicleSectionData();
 
         if ($result['spacesRemaining'] < 1) {
-
             if ($this->lva === 'variation') {
-
                 $message = $this->getServiceLocator()->get('Helper\Translation')
                     ->translateReplace(
                         'markup-more-vehicles-than-total-auth-error-variation',
@@ -227,6 +229,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
         }
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
         $data = [];
 
@@ -237,6 +240,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $params = [];
         $params['spacesRemaining'] = $result['spacesRemaining'];
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-goods-vehicles-add-vehicle')
@@ -244,7 +248,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             ->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
-
             $formData = $form->getData();
 
             $dtoData = [
@@ -263,7 +266,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $response = $this->handleCommand($dtoClass::create($dtoData));
 
             if ($response->isOk()) {
-                return $this->handlePostSave(null, false);
+                return $this->handlePostSave(null);
             }
 
             if ($response->isServerError()) {
@@ -294,6 +297,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     public function editAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
         $id = $this->params('child_id');
 
@@ -304,13 +308,14 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = GoodsVehiclesVehicle::mapFromResult($vehicleData);
+            $data = Mapper\Lva\GoodsVehiclesVehicle::mapFromResult($vehicleData);
         }
 
         $params = [
             'isRemoved' => !is_null($vehicleData['removalDate'])
         ];
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-goods-vehicles-edit-vehicle')
@@ -366,7 +371,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             }
 
             if ($response->isOk()) {
-                return $this->handlePostSave(null, false);
+                return $this->handlePostSave(null);
             }
 
             if ($response->isServerError()) {
@@ -411,7 +416,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
         ];
 
-        if (!in_array($result['licenceType']['id'], $acceptedLicenceTypes)) {
+        if (!in_array($result['licenceType']['id'], $acceptedLicenceTypes, false)) {
             return 'delete.confirmation.text';
         }
 
@@ -424,6 +429,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     public function reprintAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -491,7 +497,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $table;
     }
 
-    protected function makeTableAlterations($table, $params, $filters)
+    protected function makeTableAlterations(TableBuilder $table, $params, $filters)
     {
         if ($params['canReprint']) {
             $table->addAction(
@@ -545,10 +551,13 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     protected function getFilters()
     {
-        if ($this->getRequest()->isPost()) {
-            $query = $this->getRequest()->getPost('query');
+        /** @var \Zend\Http\Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $query = $request->getPost('query');
         } else {
-            $query = $this->getRequest()->getQuery();
+            $query = $request->getQuery();
         }
 
         return $this->formatFilters((array)$query);
@@ -557,8 +566,8 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected function formatFilters($query)
     {
         $filters = [
-            'page'  => isset($query['page']) ? $query['page'] : 1,
-            'limit' => isset($query['limit']) ? $query['limit'] : 10,
+            'page'  => (isset($query['page']) ? $query['page'] : self::DEF_TABLE_FIRST_PAGE_NR),
+            'limit' => (isset($query['limit']) ? $query['limit'] : self::DEF_TABLE_ITEMS_COUNT),
             'sort'  => isset($query['sort']) ? $query['sort'] : 'createdOn',
             'order' => isset($query['order']) ? $query['order'] : 'DESC',
         ];
@@ -567,13 +576,13 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $filters['vrm'] = $query['vehicleSearch']['vrm'];
         }
 
-        if (isset($query['specified']) && in_array($query['specified'], ['Y', 'N'])) {
+        if (isset($query['specified']) && in_array($query['specified'], ['Y', 'N'], false)) {
             $filters['specified'] = $query['specified'];
         }
 
         $filters['includeRemoved'] = (isset($query['includeRemoved']) && $query['includeRemoved'] == '1');
 
-        if (isset($query['disc']) && in_array($query['disc'], ['Y', 'N'])) {
+        if (isset($query['disc']) && in_array($query['disc'], ['Y', 'N'], false)) {
             $filters['disc'] = $query['disc'];
         }
 
@@ -594,12 +603,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             ->setData($formData);
     }
 
-    protected function mapErrors(\Zend\Form\Form $form, array $errors)
+    protected function mapErrors(\Zend\Form\FormInterface $form, array $errors)
     {
         $formMessages = [];
 
         if (isset($errors['vehicles'])) {
-
             foreach ($errors['vehicles'] as $key => $message) {
                 $formMessages['table']['table'][] = $key;
             }
@@ -618,10 +626,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
     }
 
-    protected function mapVehicleErrors(\Zend\Form\Form $form, array $errors)
+    protected function mapVehicleErrors(\Zend\Form\FormInterface $form, array $errors)
     {
-
-        $errors = GoodsVehiclesVehicle::mapFromErrors($errors, $form);
+        $errors = Mapper\Lva\GoodsVehiclesVehicle::mapFromErrors($errors, $form);
 
         if (!empty($errors)) {
             $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');

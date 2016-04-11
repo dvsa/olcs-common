@@ -11,6 +11,8 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Zend\Form\Element\Select;
+use Zend\Form\FormInterface;
+use Zend\InputFilter\InputFilterInterface;
 
 /**
  * Form Helper Service Test
@@ -1463,7 +1465,8 @@ class FormHelperServiceTest extends MockeryTestCase
             'bar' => 'baz'
         ];
 
-        $element = m::mock();
+        /** @var Select|\Mockery\MockInterface $element */
+        $element = m::mock(Select::class);
         $element->shouldReceive('getValueOptions')
             ->andReturn($options);
 
@@ -1481,7 +1484,8 @@ class FormHelperServiceTest extends MockeryTestCase
             'bar' => 'baz'
         ];
 
-        $element = m::mock();
+        /** @var Select|\Mockery\MockInterface $element */
+        $element = m::mock(Select::class);
         $element->shouldReceive('getValueOptions')
             ->andReturn($options)
             ->shouldReceive('setValueOptions')
@@ -1501,7 +1505,8 @@ class FormHelperServiceTest extends MockeryTestCase
             'bar' => 'baz'
         ];
 
-        $element = m::mock();
+        /** @var Select|\Mockery\MockInterface $element */
+        $element = m::mock(Select::class);
         $element->shouldReceive('getValueOptions')
             ->andReturn($options);
 
@@ -1529,7 +1534,8 @@ class FormHelperServiceTest extends MockeryTestCase
             'bar' => 'baz'
         ];
 
-        $element = m::mock();
+        /** @var Select|\Mockery\MockInterface $element */
+        $element = m::mock(Select::class);
         $element->shouldReceive('getValueOptions')
             ->andReturn($options)
             ->shouldReceive('setValueOptions')
@@ -1612,8 +1618,10 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testAttachValidator()
     {
-        $mockForm = m::mock();
-        $mockInputFilter = m::mock();
+        /** @var FormInterface|\Mockery\MockInterface $mockForm */
+        $mockForm = m::mock(FormInterface::class);
+        /** @var InputFilterInterface|\Mockery\MockInterface $mockForm */
+        $mockInputFilter = m::mock(InputFilterInterface::class);
         $mockValidator = m::mock();
         $mockValidatorChain = m::mock();
 
