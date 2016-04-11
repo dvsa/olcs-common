@@ -31,6 +31,7 @@ class FeeUrl implements FormatterInterface
         $urlHelper  = $serviceLocator->get('Helper\Url');
         $routeMatch = $router->match($request);
         $matchedRouteName = $routeMatch->getMatchedRouteName();
+        $query      = $request->getQuery()->toArray();
 
         switch ($matchedRouteName) {
             case 'operator/fees':
@@ -40,18 +41,18 @@ class FeeUrl implements FormatterInterface
                 $url = $urlHelper->fromRoute(
                     $matchedRouteName.'/fee_action',
                     ['fee' => $row['id'], 'action' => 'edit-fee'],
-                    [],
+                    ['query' => $query],
                     true
                 );
                 break;
             case 'fees':
-                $url = $urlHelper->fromRoute('fees/pay', ['fee' => $row['id']], [], true);
+                $url = $urlHelper->fromRoute('fees/pay', ['fee' => $row['id']], ['query' => $query], true);
                 break;
             default:
                 $url = $urlHelper->fromRoute(
                     'admin-dashboard/admin-payment-processing/misc-fees/fee_action',
                     ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'Admin\PaymentProcessingController'],
-                    [],
+                    ['query' => $query],
                     true
                 );
                 break;
