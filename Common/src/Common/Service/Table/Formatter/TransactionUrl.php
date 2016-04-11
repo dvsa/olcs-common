@@ -33,9 +33,9 @@ class TransactionUrl implements FormatterInterface
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
         $url = $urlHelper->fromRoute(
-            $matchedRouteName.'/transaction',
+            $matchedRouteName . '/transaction',
             ['transaction' => $row['transactionId']],
-            [],
+            ['query' => $request->getQuery()->toArray()],
             true
         );
 
