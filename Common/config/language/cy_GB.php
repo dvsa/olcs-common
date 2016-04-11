@@ -560,7 +560,7 @@ return [
     'application_vehicle-safety_vehicle-psv.table.title.singular' => '{WELSH} Vehicle',
     'application_vehicle-safety_vehicle-psv.table.vrm' => '{WELSH} Vehicle registration mark',
     'application_vehicle-safety_vehicle-reprint' => '{WELSH} Replace disc(s)',
-    'application_vehicle-safety_vehicle-sub-action.data.vrm' => '{WELSH} Vehicle registration mark',
+    'application_vehicle-safety_vehicle-sub-action.data.vrm' => '{WELSH} Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => '{WELSH} Gross plated weight (kg)',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo' => '{WELSH} Disc No.',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate' => '{WELSH} Received date',
