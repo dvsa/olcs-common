@@ -60,6 +60,9 @@ class Module
                 $config['date_settings']['datetimesec_format'] : 'd/m/Y H:i:s'
             );
         }
+        if (!defined('DB_DATE_FORMAT')) {
+            define('DB_DATE_FORMAT', 'Y-m-d');
+        }
     }
 
     public function onBootstrap(MvcEvent $e)
