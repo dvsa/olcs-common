@@ -77,7 +77,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficAreaHelp');
         }
 
-        if (empty($trafficAreaId) || $this->allowChangingTrafficArea()) {
+        if (empty($trafficAreaId) || $this->allowChangingTrafficArea($trafficAreaId)) {
             $dataTrafficAreaFieldset->get('trafficArea')->setValueOptions($params['possibleTrafficAreas']);
         } else {
             $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficArea');
