@@ -33,7 +33,18 @@ class FeeUrlTest extends MockeryTestCase
 
         $this->mockRouteMatch = m::mock('\Zend\Mvc\Router\RouteMatch');
         $this->mockUrlHelper = m::mock();
-        $mockRequest = m::mock('\Zend\Stdlib\RequestInterface');
+        $mockRequest = m::mock('\Zend\Stdlib\RequestInterface')
+            ->shouldReceive('getQuery')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('toArray')
+                ->once()
+                ->andReturn(['foo' => 'bar'])
+                ->getMock()
+            )
+            ->once()
+            ->getMock();
+
         $mockRouter = m::mock()
             ->shouldReceive('match')
             ->with($mockRequest)
@@ -61,7 +72,7 @@ class FeeUrlTest extends MockeryTestCase
 
         $this->mockUrlHelper
             ->shouldReceive('fromRoute')
-            ->with($expectedRoute, $expectedRouteParams, [], true)
+            ->with($expectedRoute, $expectedRouteParams, ['query' => ['foo' => 'bar']], true)
             ->andReturn('the_url');
 
         $this->assertEquals($expectedLink, FeeUrl::format($data, [], $this->sm));

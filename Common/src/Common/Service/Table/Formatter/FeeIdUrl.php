@@ -38,7 +38,7 @@ class FeeIdUrl implements FormatterInterface
         $url = $urlHelper->fromRoute(
             $route,
             ['fee' => $row['id'], 'action' => 'edit-fee'],
-            [],
+            ['query' => $request->getQuery()->toArray()],
             true
         );
 
