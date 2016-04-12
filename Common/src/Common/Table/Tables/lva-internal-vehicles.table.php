@@ -1,5 +1,7 @@
 <?php
 
+use Common\Controller\Lva\AbstractGoodsVehiclesController;
+
 $translationPrefix = 'application_vehicle-safety_vehicle.table';
 
 return array(
@@ -18,11 +20,12 @@ return array(
                 ),
             )
         ),
-        'paginate' => array(
-            'limit' => array(
-                'options' => array(10, 25, 50)
-            )
-        ),
+        'paginate' => [
+            'limit' => [
+                'default' => AbstractGoodsVehiclesController::DEF_TABLE_ITEMS_COUNT,
+                'options' => [10, 25, 50],
+            ],
+        ],
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
         'collapseAt' => 1,
         'row-disabled-callback' => function ($row) {

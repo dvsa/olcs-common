@@ -15,6 +15,7 @@ class HoursOfWeekContentRequired
      * @Form\AllowEmpty(true)
      * @Form\Attributes({
      *     "class": "short",
+     *     "pattern": "\d*",
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
@@ -48,6 +49,7 @@ class HoursOfWeekContentRequired
      * @Form\AllowEmpty(true)
      * @Form\Attributes({
      *     "class": "short",
+     *     "pattern": "\d*",
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
@@ -75,6 +77,7 @@ class HoursOfWeekContentRequired
      * @Form\AllowEmpty(true)
      * @Form\Attributes({
      *     "class": "short",
+     *     "pattern": "\d*",
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
@@ -102,6 +105,7 @@ class HoursOfWeekContentRequired
      * @Form\AllowEmpty(true)
      * @Form\Attributes({
      *     "class": "short",
+     *     "pattern": "\d*",
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
@@ -129,6 +133,7 @@ class HoursOfWeekContentRequired
      * @Form\AllowEmpty(true)
      * @Form\Attributes({
      *     "class": "short",
+     *     "pattern": "\d*",
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
@@ -156,6 +161,7 @@ class HoursOfWeekContentRequired
      * @Form\AllowEmpty(true)
      * @Form\Attributes({
      *     "class": "short",
+     *     "pattern": "\d*",
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({
@@ -183,6 +189,7 @@ class HoursOfWeekContentRequired
      * @Form\AllowEmpty(true)
      * @Form\Attributes({
      *     "class": "short",
+     *     "pattern": "\d*",
      *     "data-container-class": "inline-text"
      * })
      * @Form\Options({

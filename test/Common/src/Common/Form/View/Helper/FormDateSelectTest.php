@@ -58,15 +58,15 @@ class FormDateSelectTest extends MockeryTestCase
 
         $expected = '<div class="field inline-text">'
             . '<label for="_day">translated-date-Day</label>'
-            . '<input type="select" name="day" id="_day" maxlength="2" value="">'
+            . '<input type="select" name="day" id="_day" pattern="&#x5C;d&#x2A;" maxlength="2" value="">'
         . '</div> '
         . '<div class="field inline-text">'
             . '<label for="_month">translated-date-Month</label>'
-            . '<input type="select" name="month" id="_month" maxlength="2" value="">'
+            . '<input type="select" name="month" id="_month" pattern="&#x5C;d&#x2A;" maxlength="2" value="">'
         . '</div> '
         . '<div class="field inline-text">'
             . '<label for="_year">translated-date-Year</label>'
-            . '<input type="select" name="year" id="_year" maxlength="4" value="">'
+            . '<input type="select" name="year" id="_year" pattern="&#x5C;d&#x2A;" maxlength="4" value="">'
         . '</div>';
 
         $this->assertEquals($expected, $markup);

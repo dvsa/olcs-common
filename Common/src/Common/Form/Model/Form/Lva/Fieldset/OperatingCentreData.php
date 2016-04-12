@@ -10,6 +10,7 @@ use Zend\Form\Annotation as Form;
 class OperatingCentreData
 {
     /**
+     * @Form\Attributes({"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired"
      * })
@@ -18,6 +19,7 @@ class OperatingCentreData
     public $noOfVehiclesRequired = null;
 
     /**
+     * @Form\Attributes({"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.data.noOfTrailersRequired"
      * })

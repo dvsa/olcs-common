@@ -10,6 +10,7 @@ namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
 use Common\Service\Table\Formatter\VehicleDiscNo;
+use Zend\Form\FormInterface;
 
 /**
  * Goods Vehicles Vehicle
@@ -19,6 +20,9 @@ use Common\Service\Table\Formatter\VehicleDiscNo;
  */
 class GoodsVehiclesVehicle implements MapperInterface
 {
+    /**
+     * @return array
+     */
     public static function mapFromResult(array $data)
     {
         $licenceVehicle = $data;
@@ -36,19 +40,22 @@ class GoodsVehiclesVehicle implements MapperInterface
         ];
     }
 
-    public static function mapFromErrors($errors, $form)
+    /**
+     * @return array
+     */
+    public static function mapFromErrors($errors, FormInterface $form)
     {
         $dataFields = ['vrm', 'platedWeight'];
         $licenceVehicleFields = ['receivedDate', 'specifiedDate', 'removalDate', 'warningLetterSeedDate', 'discNo'];
         $formMessages = [];
         foreach ($errors as $key => $error) {
-            if (in_array($key, $dataFields)) {
+            if (in_array($key, $dataFields, false)) {
                 foreach ($error as $subKey => $subError) {
                     $formMessages['data'][$key][] = $subError;
                 }
                 unset($errors[$key]);
             }
-            if (in_array($key, $licenceVehicleFields)) {
+            if (in_array($key, $licenceVehicleFields, false)) {
                 foreach ($error as $subKey => $subError) {
                     $formMessages['licenceVehicle'][$key][] = $subError;
                 }

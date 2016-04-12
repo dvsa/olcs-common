@@ -27,7 +27,7 @@ class SubsidiaryCompany
     public $name = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"long","id":"","pattern":"\d*"})
      * @Form\Options({"label":"application_your-business_business-details-formCompanyNo"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})

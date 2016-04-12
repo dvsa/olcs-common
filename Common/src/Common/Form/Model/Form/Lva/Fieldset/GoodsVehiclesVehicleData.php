@@ -36,7 +36,7 @@ class GoodsVehiclesVehicleData
     public $vrm = null;
 
     /**
-     * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":""})
+     * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":"","pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight",
      *     "label_attributes": {
