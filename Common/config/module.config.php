@@ -423,6 +423,7 @@ return array(
             'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date',
             'Common\Validator\DateInFuture' => 'Common\Validator\DateInFuture',
             'Common\Validator\DateCompareWithInterval' => 'Common\Validator\DateCompareWithInterval',
+            'Common\Validator\FileUploadCount' => 'Common\Validator\FileUploadCount',
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
