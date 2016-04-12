@@ -64,7 +64,11 @@ class TmOtherLicenceDetails
     public $operatingCentres = null;
 
     /**
-     * @Form\Attributes({"class":"short","id":"totalAuthVehicles"})
+     * @Form\Attributes({
+     *     "class":"short",
+     *     "pattern":"\d*",
+     *     "id":"totalAuthVehicles"
+     * })
      * @Form\Options({"label":"transport-manager.other-licence.form.total-auth-vehicles"})
      * @Form\Required(false)
      * @Form\Validator({"name":"Digits"})
@@ -73,7 +77,11 @@ class TmOtherLicenceDetails
     public $totalAuthVehicles = null;
 
     /**
-     * @Form\Attributes({"class":"short","id":"hoursPerWeek"})
+     * @Form\Attributes({
+     *     "class":"short",
+     *     "pattern":"\d*",
+     *     "id":"hoursPerWeek"
+     * })
      * @Form\Options({"label":"transport-manager.other-licence.form.hours-per-week"})
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      * @Form\Validator({"name":"Digits"})
