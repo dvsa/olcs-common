@@ -50,6 +50,7 @@ class TypeOfLicence
      *      },
      *      "fieldset-data-group": "operator-type",
      *      "label": "application_type-of-licence_operator-type.data.goodsOrPsv",
+     *      "hint": "markup-type-of-licence-difference",
      *      "value_options": {
      *          {
      *              "value": "lcat_gv",
@@ -64,15 +65,6 @@ class TypeOfLicence
      * @Form\Type("Radio")
      */
     public $operatorType = null;
-
-    /**
-     * @Form\Attributes({
-     *  "value": "markup-type-of-licence-difference",
-     *  "data-container-class":"js-difference-guidance"
-     * })
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $difference = null;
 
     /**
      * @Form\Name("licence-type")
