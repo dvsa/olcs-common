@@ -7,19 +7,22 @@
  */
 namespace Common\Service\Helper;
 
-use Zend\Http\Request;
-use Zend\Form\Form;
-use Zend\Form\Fieldset;
-use Zend\Form\Element\Checkbox;
-use Zend\InputFilter\InputFilter;
-use Zend\Validator\ValidatorChain;
 use Common\Form\Elements\Types\Address;
 use Common\Service\Table\TableBuilder;
 use Zend\Form\Element;
+use Zend\Form\Element\Checkbox;
 use Zend\Form\Element\DateSelect;
-use Zend\InputFilter\Input;
-use Zend\View\Model\ViewModel;
+use Zend\Form\Element\Select;
+use Zend\Form\Fieldset;
+use Zend\Form\Form;
+use Zend\Form\FormInterface;
+use Zend\Http\Request;
 use Zend\I18n\Validator\PostCode as PostcodeValidator;
+use Zend\InputFilter\Input;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterInterface;
+use Zend\Validator\ValidatorChain;
+use Zend\View\Model\ViewModel;
 
 /**
  * Form Helper Service
@@ -57,6 +60,7 @@ class FormHelperService extends AbstractHelperService
 
         $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $annotationBuilder->createForm($class);
 
         if ($addCsrf) {
@@ -94,7 +98,7 @@ class FormHelperService extends AbstractHelperService
             $form->add($config);
         }
 
-        $authService = $this->getServiceLocator()->get('ZfcRbac\Service\AuthorizationService');
+        $authService = $this->getServiceLocator()->get(\ZfcRbac\Service\AuthorizationService::class);
 
         if ($authService->isGranted('internal-user')) {
             if (!$authService->isGranted('internal-edit') && !$form->getOption('bypass_auth')) {
@@ -107,25 +111,21 @@ class FormHelperService extends AbstractHelperService
 
     /**
      * @param \Zend\Form\Form $form
-     * @param $request
+     * @param \Zend\Http\Request $request
      */
     public function setFormActionFromRequest($form, $request)
     {
         if (!$form->hasAttribute('action')) {
-
             $url = $request->getUri()->getPath();
-
             $query = $request->getUri()->getQuery();
 
             if ($query !== '') {
                 $url .= '?' . $query;
-            } elseif (substr($url, -1) == '/') {
-
+            } elseif (substr($url, -1) === '/') {
                 // @NOTE Had to add the following check in, as the trailing space hack was breaking filter forms
                 if (strtoupper($form->getAttribute('method')) === 'GET') {
                     $url .= '?i=e';
                 } else {
-
                     // WARNING: As rubbish as this looks, do *not* remove
                     // the trailing space. When rendering forms in modals,
                     // IE strips quote marks off attributes wherever possible.
@@ -224,6 +224,7 @@ class FormHelperService extends AbstractHelperService
             $processed = false;
             $modified  = false;
 
+            //  #TODO possible bug :: Variable $fieldset is introduced as a method parameter and overridden here
             foreach ($fieldset->getFieldsets() as $fieldset) {
                 if ($result = $this->processAddressLookupFieldset($fieldset, $data, $form)) {
                     $processed = true;
@@ -348,7 +349,7 @@ class FormHelperService extends AbstractHelperService
      */
     public function alterElementLabel($element, $label, $type = self::ALTER_LABEL_RESET)
     {
-        if (in_array($type, array(self::ALTER_LABEL_APPEND, self::ALTER_LABEL_PREPEND))) {
+        if (in_array($type, array(self::ALTER_LABEL_APPEND, self::ALTER_LABEL_PREPEND), false)) {
             $oldLabel = $element->getLabel();
 
             if ($type == self::ALTER_LABEL_APPEND) {
@@ -377,7 +378,7 @@ class FormHelperService extends AbstractHelperService
         return $this;
     }
 
-    private function removeElement($form, $filter, $elementReference)
+    private function removeElement($form, InputFilterInterface $filter, $elementReference)
     {
         list($form, $filter, $name) = $this->getElementAndInputParents($form, $filter, $elementReference);
 
@@ -389,9 +390,9 @@ class FormHelperService extends AbstractHelperService
      * Grab the parent input filter and fieldset from the top level form and input filter using the -> notation
      * i.e. data->field would return the data fieldset, data input filter and the string field
      */
-    public function getElementAndInputParents($form, $filter, $elementReference)
+    public function getElementAndInputParents($form, InputFilterInterface $filter, $elementReference)
     {
-        if (strstr($elementReference, '->')) {
+        if (false !== strpos($elementReference, '->')) {
             list($container, $elementReference) = explode('->', $elementReference, 2);
 
             return $this->getElementAndInputParents(
@@ -448,7 +449,8 @@ class FormHelperService extends AbstractHelperService
      */
     public function disableEmptyValidationOnElement($form, $reference)
     {
-        list($form, $filter, $name) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        /** @var InputFilterInterface $filter */
+        list(, $filter, $name) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
         $filter->get($name)->setAllowEmpty(true);
         $filter->get($name)->setRequired(false);
     }
@@ -479,7 +481,7 @@ class FormHelperService extends AbstractHelperService
             $filter = $form->getInputFilter();
         }
 
-        if (strstr($reference, '->')) {
+        if (false !== strpos($reference, '->')) {
             list($index, $reference) = explode('->', $reference, 2);
 
             return $this->disableElement($form->get($index), $reference, $filter->get($index));
@@ -495,6 +497,8 @@ class FormHelperService extends AbstractHelperService
 
         $filter->get($reference)->setAllowEmpty(true);
         $filter->get($reference)->setRequired(false);
+
+        return null;
     }
 
     /**
@@ -730,10 +734,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove a value option from an element
      *
-     * @param \Zend\Form\Element $element
+     * @param Select $element
      * @param string $index
      */
-    public function removeOption($element, $index)
+    public function removeOption(Select $element, $index)
     {
         $options = $element->getValueOptions();
 
@@ -743,12 +747,11 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
-    public function setCurrentOption($element, $index)
+    public function setCurrentOption(Select $element, $index)
     {
         $options = $element->getValueOptions();
 
         if (isset($options[$index])) {
-
             $translator = $this->getServiceLocator()->get('Helper\Translation');
 
             $options[$index] .= ' ' . $translator->translate('current.option.suffix');
@@ -757,10 +760,12 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
-    public function removeValidator($form, $reference, $validatorClass)
+    public function removeValidator(FormInterface $form, $reference, $validatorClass)
     {
-        list($fieldset, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        /** @var InputFilterInterface $filter */
+        list(, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
 
+        /** @var ValidatorChain $validatorChain */
         $validatorChain = $filter->get($field)->getValidatorChain();
         $newValidatorChain = new ValidatorChain();
 
@@ -773,19 +778,23 @@ class FormHelperService extends AbstractHelperService
         $filter->get($field)->setValidatorChain($newValidatorChain);
     }
 
-    public function attachValidator($form, $reference, $validator)
+    public function attachValidator(FormInterface $form, $reference, $validator)
     {
-        list($fieldset, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        /** @var InputFilterInterface $filter */
+        list(, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
 
+        /** @var ValidatorChain $validatorChain */
         $validatorChain = $filter->get($field)->getValidatorChain();
 
         $validatorChain->attach($validator);
     }
 
-    public function getValidator($form, $reference, $validatorClass)
+    public function getValidator(FormInterface $form, $reference, $validatorClass)
     {
-        list($fieldset, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+        /** @var InputFilterInterface $filter */
+        list(, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
 
+        /** @var ValidatorChain $validatorChain */
         $validatorChain = $filter->get($field)->getValidatorChain();
 
         foreach ($validatorChain->getValidators() as $validator) {
@@ -793,14 +802,16 @@ class FormHelperService extends AbstractHelperService
                 return $validator['instance'];
             }
         }
+
+        return null;
     }
 
     /**
      * Set appropriate default values on date fields
      *
-     * @param Zend\Form\Element $field
-     * @param DateTime $currentDate
-     * @return Zend\Form\Element
+     * @param \Zend\Form\Element $field
+     * @param \DateTime $currentDate
+     * @return \Zend\Form\Element
      */
     public function setDefaultDate($field)
     {
@@ -818,9 +829,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Populate an address fieldset using Companies House address data
      *
-     * @param Zend\Form\Fieldset $fieldset address fieldset
+     * @param \Zend\Form\Fieldset $fieldset address fieldset
      * @param array $data Companies House 'AddressLine' data
-     * @return Zend\Form\Fieldset
+     * @return \Zend\Form\Fieldset
      */
     public function populateRegisteredAddressFieldset($fieldset, $data)
     {
@@ -873,7 +884,7 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
-    public function removeValueOption(Element\Select $element, $key)
+    public function removeValueOption(Select $element, $key)
     {
         $options = $element->getValueOptions();
 

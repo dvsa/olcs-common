@@ -12,6 +12,7 @@ use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
+use Zend\Form\FormInterface;
 
 /**
  * Goods Vehicles Vehicle
@@ -80,12 +81,13 @@ class GoodsVehiclesVehicleTest extends MockeryTestCase
             ]
         ];
 
-        $mockForm = m::mock()
+        /** @var FormInterface $mockForm */
+        $mockForm = m::mock(FormInterface::class)
             ->shouldReceive('setMessages')
             ->with($formMessages)
             ->once()
             ->getMock();
 
-        $this->assertEquals($expected, GoodsVehiclesVehicle::mapFromErrors($errors, $mockForm));
+        static::assertEquals($expected, GoodsVehiclesVehicle::mapFromErrors($errors, $mockForm));
     }
 }

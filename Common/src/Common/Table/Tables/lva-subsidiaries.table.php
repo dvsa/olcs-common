@@ -22,7 +22,7 @@ return array(
         ),
         array(
             'title' => 'application_your-business_business_details-subsidiaries-columnCompanyNo',
-            'name' => 'companyNo',
+            'name' => 'companyNo'
         ),
         array(
             'type' => 'ActionLinks',
