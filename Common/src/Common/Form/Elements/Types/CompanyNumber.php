@@ -28,7 +28,8 @@ class CompanyNumber extends Fieldset
                 'type' => 'Common\Form\Elements\InputFilters\CompanyNumber',
                 'name' => 'company_number',
                 'attributes' => [
-                    'data-container-class' => 'inline'
+                    'data-container-class' => 'inline',
+                    'pattern' => '\d*'
                 ],
             )
         );

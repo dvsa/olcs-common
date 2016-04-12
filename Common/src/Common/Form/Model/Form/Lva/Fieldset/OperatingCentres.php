@@ -23,7 +23,7 @@ class OperatingCentres
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
-     * @Form\Attributes({"class":"short","id":"","required":false})
+     * @Form\Attributes({"class":"short","id":"","required":false,"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthVehicles",
      *     "short-label": "totAuthVehicles",
@@ -42,7 +42,7 @@ class OperatingCentres
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
-     * @Form\Attributes({"class":"short","id":"","required":false})
+     * @Form\Attributes({"class":"short","id":"","required":false,"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthTrailers",
      *     "short-label": "totAuthTrailers",
