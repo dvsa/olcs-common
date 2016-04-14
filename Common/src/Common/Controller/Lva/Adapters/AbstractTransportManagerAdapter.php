@@ -1,14 +1,11 @@
 <?php
 
-/**
- * Abstract Transport Manager Adapter
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Controller\Lva\Adapters\AbstractControllerAwareAdapter;
 use Common\Controller\Lva\Interfaces\TransportManagerAdapterInterface;
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\CachingQueryService;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 
 /**
  * Abstract Transport Manager Adapter
@@ -18,6 +15,28 @@ use Common\Controller\Lva\Interfaces\TransportManagerAdapterInterface;
 abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAdapter implements
     TransportManagerAdapterInterface
 {
+    const SORT_LAST_FIRST_NAME = 1;
+    const SORT_LAST_FIRST_NAME_NEW_AT_END = 2;
+
+    /** @var TransferAnnotationBuilder */
+    protected $transferAnnotationBuilder;
+    /** @var CachingQueryService */
+    protected $querySrv;
+    /** @var CommandService */
+    protected $commandSrv;
+
+    protected $tableSortMethod = self::SORT_LAST_FIRST_NAME;
+
+    public function __construct(
+        TransferAnnotationBuilder $transferAnnotationBuilder,
+        CachingQueryService $querySrv,
+        CommandService $commandSrv
+    ) {
+        $this->transferAnnotationBuilder = $transferAnnotationBuilder;
+        $this->querySrv = $querySrv;
+        $this->commandSrv = $commandSrv;
+    }
+
     /**
      * Get the table
      *
@@ -59,45 +78,100 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
 
         // add each TM from the licence
         foreach ($licenceTms as $tml) {
-            $mappedData[$tml['transportManager']['id']] = [
+            $mng = $tml['transportManager'];
+
+            $homeCd = $mng['homeCd'];
+
+            $mappedData[$mng['id']] = [
                 // Transport Manager Licence ID
-                'id' => 'L'. $tml['id'],
-                'name' => $tml['transportManager']['homeCd']['person'],
+                'id' => 'L' . $tml['id'],
+                'name' => $homeCd['person'],
                 'status' => null,
-                'email' => $tml['transportManager']['homeCd']['emailAddress'],
-                'dob' => $tml['transportManager']['homeCd']['person']['birthDate'],
-                'transportManager' => $tml['transportManager'],
+                'email' => $homeCd['emailAddress'],
+                'dob' => $homeCd['person']['birthDate'],
+                'transportManager' => $mng,
                 'action' => 'E',
             ];
         }
 
         // add each TM from the application/variation
         foreach ($applicationTms as $tma) {
-            $mappedData[$tma['transportManager']['id'].'a'] = [
+            $mng = $tma['transportManager'];
+
+            $id = $mng['id'];
+            $homeCd = $mng['homeCd'];
+
+            $mappedData[$id . 'a'] = [
                 'id' => $tma['id'],
-                'name' => $tma['transportManager']['homeCd']['person'],
+                'name' => $homeCd['person'],
                 'status' => $tma['tmApplicationStatus'],
-                'email' => $tma['transportManager']['homeCd']['emailAddress'],
-                'dob' => $tma['transportManager']['homeCd']['person']['birthDate'],
-                'transportManager' => $tma['transportManager'],
+                'email' => $homeCd['emailAddress'],
+                'dob' => $homeCd['person']['birthDate'],
+                'transportManager' => $mng,
                 'action' => $tma['action'],
             ];
+
             // update the licence TM's if they have been updated
             switch ($tma['action']) {
                 case 'U':
                     // Mark original as the current
-                    $mappedData[$tma['transportManager']['id']]['action'] = 'C';
+                    $mappedData[$id]['action'] = 'C';
                     break;
                 case 'D':
                     // Remove the original so that just the Delete version appears
-                    unset($mappedData[$tma['transportManager']['id']]);
+                    unset($mappedData[$id]);
                     break;
             }
         }
 
-        // sort the data by TM ID (created order)
-        ksort($mappedData);
+        return $this->sortResultForTable($mappedData, $this->tableSortMethod);
+    }
 
-        return $mappedData;
+    protected function sortResultForTable(array $data, $method = null)
+    {
+        if ($method === self::SORT_LAST_FIRST_NAME) {
+            usort($data, [$this, 'sortCmpByName']);
+
+            return $data;
+        }
+
+        if ($method === self::SORT_LAST_FIRST_NAME_NEW_AT_END) {
+            usort($data, [$this, 'sortCmpByNameAndNewAtEnd']);
+
+            return $data;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Comparition function for sorting a table by Last and First name
+     *
+     * @return int
+     */
+    private static function sortCmpByName($a, $b)
+    {
+        $keyA = strtolower($a['name']['familyName'] . $a['name']['forename']);
+        $keyB = strtolower($b['name']['familyName'] . $b['name']['forename']);
+
+        return strnatcmp($keyA, $keyB);
+    }
+
+    /**
+     * Comparition function for sorting a table by Last and First name,
+     * and all new items to the end
+     *
+     * @return int
+     */
+    private static function sortCmpByNameAndNewAtEnd($a, $b)
+    {
+        $isNewA = (int)($a['action'] === 'A');
+        $isNewB = (int)($b['action'] === 'A');
+
+        if ($isNewA != $isNewB) {
+            return ($isNewA < $isNewB ? -1 : 1);
+        }
+
+        return static::sortCmpByName($a, $b);
     }
 }

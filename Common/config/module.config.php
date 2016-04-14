@@ -2,6 +2,7 @@
 
 use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
+use Common\Controller\Lva\Adapters as LvaAdapters;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -117,26 +118,26 @@ return array(
             'LvaApplication/People' => array(
                 'Common\Controller\Lva\Delegators\ApplicationPeopleDelegator'
             ),
-            'LvaLicence/TransportManagers' => array(
-                'Common\Controller\Lva\Delegators\LicenceTransportManagerDelegator'
-            ),
-            'LvaVariation/TransportManagers' => array(
-                'Common\Controller\Lva\Delegators\VariationTransportManagerDelegator'
-            ),
-            'LvaApplication/TransportManagers' => array(
-                'Common\Controller\Lva\Delegators\ApplicationTransportManagerDelegator'
-            ),
+            'LvaLicence/TransportManagers' => [
+                Common\Controller\Lva\Delegators\LicenceTransportManagerDelegator::class,
+            ],
+            'LvaVariation/TransportManagers' => [
+                Common\Controller\Lva\Delegators\VariationTransportManagerDelegator::class,
+            ],
+            'LvaApplication/TransportManagers' => [
+                Common\Controller\Lva\Delegators\ApplicationTransportManagerDelegator::class,
+            ],
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
         ),
-        'invokables' => array(
+        'invokables' => [
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
             'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
             \Common\Controller\ErrorController::class => \Common\Controller\ErrorController::class,
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
-        )
+        ],
     ),
     'controller_plugins' => array(
         'invokables' => array(
@@ -235,13 +236,6 @@ return array(
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider',
-
-            'LicenceTransportManagerAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceTransportManagerAdapter',
-            'VariationTransportManagerAdapter'
-                => 'Common\Controller\Lva\Adapters\VariationTransportManagerAdapter',
-            'ApplicationTransportManagerAdapter'
-                => 'Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter',
             'DataMapper\DashboardTmApplications' => 'Common\Service\Table\DataMapper\DashboardTmApplications',
             'country' => '\Common\Service\Data\Country',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
@@ -266,6 +260,12 @@ return array(
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
+            'LicenceTransportManagerAdapter' =>
+                Common\Controller\Lva\Factories\Adapter\LicenceTransportManagerAdapterFactory::class,
+            'ApplicationTransportManagerAdapter' =>
+                Common\Controller\Lva\Factories\Adapter\ApplicationTransportManagerAdapterFactory::class,
+            'VariationTransportManagerAdapter' =>
+                Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\Data\ApplicationOperatingCentre' => 'Common\Service\Data\ApplicationOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',

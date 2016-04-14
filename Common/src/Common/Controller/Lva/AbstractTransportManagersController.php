@@ -7,7 +7,9 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Controller\Lva\Adapters\AbstractTransportManagerAdapter;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Common\Controller\Lva\Interfaces\AdapterInterface;
 use Dvsa\Olcs\Transfer\Command;
 use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
 use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
@@ -20,12 +22,27 @@ use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
  */
 abstract class AbstractTransportManagersController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\CrudTableTrait,
-        Traits\AdapterAwareTrait;
+    use Traits\CrudTableTrait;
 
     protected $section = 'transport_managers';
     protected $lva = 'application';
     protected $location = 'external';
+
+    /** @var  AbstractTransportManagerAdapter */
+    protected $adapter;
+
+    /**
+     * @return AbstractTransportManagerAdapter
+     */
+    public function getAdapter()
+    {
+        return $this->adapter;
+    }
+
+    public function setAdapter(AdapterInterface $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 
     /**
      * Transport Managers section
@@ -34,7 +51,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     {
         $this->getAdapter()->addMessages($this->getLicenceId());
 
-        /* @var $form \Zend\Form\Form */
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-transport_managers')
@@ -49,6 +66,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             ->get('Lva\\'. ucfirst($this->lva))
             ->alterForm($form);
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if (!$request->isPost()) {
@@ -69,7 +87,6 @@ abstract class AbstractTransportManagersController extends AbstractController im
         }
 
         if ($form->isValid()) {
-
             if ($this->lva !== 'licence') {
                 $data = ['id' => $this->getIdentifier(), 'section' => 'transportManagers'];
                 $this->handleCommand(Command\Application\UpdateCompletion::create($data));
@@ -90,11 +107,13 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     public function addAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
+
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getAddForm();
 
         if ($request->isPost()) {
-
             $formData = (array)$request->getPost();
 
             if (isset($formData['data']['addUser'])) {
@@ -168,6 +187,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             );
         }
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
@@ -177,6 +197,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $response = $this->getServiceLocator()->get('QueryService')->send($query);
         $userDetails = $response->getResult();
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getTmDetailsForm($userDetails['contactDetails']['emailAddress']);
         $formData = [
             'data' => [
@@ -242,11 +263,15 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     public function addNewUserAction()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createFormWithRequest('Lva\NewTmUser', $this->getRequest());
+        /** @var \Zend\Http\Request $request */
+        $request = $this->getRequest();
 
-        if ($this->getRequest()->isPost()) {
-            $form->setData((array)$this->getRequest()->getPost());
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        /** @var \Zend\Form\FormInterface $form */
+        $form = $formHelper->createFormWithRequest('Lva\NewTmUser', $request);
+
+        if ($request->isPost()) {
+            $form->setData((array)$request->getPost());
 
             if ($form->isValid()) {
                 $data = $form->getData();
@@ -271,7 +296,6 @@ abstract class AbstractTransportManagersController extends AbstractController im
                 $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
 
                 if ($response->isOk()) {
-
                     if ($hasEmail === 'Y') {
                         $successMessage = 'tm-add-user-success-message';
                     } else {
@@ -286,7 +310,6 @@ abstract class AbstractTransportManagersController extends AbstractController im
                 if ($response->isServerError()) {
                     $fm->addCurrentUnknownError();
                 } else {
-
                     $messages = $response->getResult()['messages'];
 
                     NewTmUserMapper::mapFormErrors($form, $messages, $fm);
@@ -301,6 +324,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     protected function getTmDetailsForm($email)
     {
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\AddTransportManagerDetails', $this->getRequest());
 
@@ -311,6 +335,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     protected function getAddForm()
     {
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\AddTransportManager', $this->getRequest());
 

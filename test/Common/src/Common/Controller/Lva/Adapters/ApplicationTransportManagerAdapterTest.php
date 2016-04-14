@@ -2,10 +2,13 @@
 
 namespace CommonTest\Controller\Lva\Adapters;
 
+use Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter;
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\CachingQueryService;
+use Common\Service\Entity\LicenceEntityService;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Application Transport Manager Adapter Test
@@ -14,18 +17,30 @@ use Common\Service\Entity\LicenceEntityService;
  */
 class ApplicationTransportManagerAdapterTest extends MockeryTestCase
 {
+    /** @var  ApplicationTransportManagerAdapter */
     protected $sut;
+    /** @var \Zend\ServiceManager\ServiceManager|\Mockery\MockInterface */
     protected $sm;
+    /** @var  \Zend\Mvc\Controller\AbstractController */
     protected $controller;
 
     public function setUp()
     {
-        $this->sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $this->sm = m::mock(\Zend\ServiceManager\ServiceManager::class)->makePartial();
         $this->sm->setAllowOverride(true);
 
-        $this->controller = m::mock('\Zend\Mvc\Controller\AbstractController');
+        $this->controller = m::mock(\Zend\Mvc\Controller\AbstractController::class);
 
-        $this->sut = new ApplicationTransportManagerAdapter();
+        /** @var TransferAnnotationBuilder $mockAnnotationBuilder */
+        $mockAnnotationBuilder = m::mock(TransferAnnotationBuilder::class);
+        /** @var CachingQueryService $mockQuerySrv */
+        $mockQuerySrv = m::mock(CachingQueryService::class);
+        /** @var CommandService $mockCommandSrv */
+        $mockCommandSrv = m::mock(CommandService::class);
+
+        $this->sut = new ApplicationTransportManagerAdapter(
+            $mockAnnotationBuilder, $mockQuerySrv, $mockCommandSrv
+        );
         $this->sut->setServiceLocator($this->sm);
         $this->sut->setController($this->controller);
     }
@@ -104,7 +119,7 @@ class ApplicationTransportManagerAdapterTest extends MockeryTestCase
         $applicationData['licenceType']['id'] = $licenceType;
         $mockApplicationEntityService->shouldReceive('getLicenceType')->once()->with(44)->andReturn($applicationData);
 
-        $this->assertEquals($expected, $this->sut->mustHaveAtLeastOneTm(44));
+        $this->assertEquals($expected, $this->sut->mustHaveAtLeastOneTm());
     }
 
     public function mustHaveAtLeastOneTmData()
