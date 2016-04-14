@@ -79,7 +79,7 @@ class TmOtherLicenceDetails
     /**
      * @Form\Attributes({
      *     "class":"short",
-     *     "pattern":"\d*",
+     *     "pattern":"\d(\.)*",
      *     "id":"hoursPerWeek"
      * })
      * @Form\Options({"label":"transport-manager.other-licence.form.hours-per-week"})
