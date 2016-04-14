@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Element;
 
 use Common\Form\Element\DynamicSelect;
+use Mockery as m;
 
 /**
  * Class DynamicSelectTest
@@ -193,5 +194,28 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $sut->addValueOption($additional);
 
         $this->assertEquals($sut->getValueOptions(), array_merge($original, $additional));
+    }
+
+    public function testExtraOption()
+    {
+        $mockDataService = m::mock();
+        $mockDataService->shouldReceive('fetchListOptions')->once()->andReturn(['foo' => 'bar']);
+
+        $sut = new DynamicSelect();
+        $sut->setDataService($mockDataService);
+
+        $sut->setExtraOption(['an' => 'option']);
+
+        $this->assertSame(['an' => 'option', 'foo' => 'bar'], $sut->getValueOptions());
+    }
+
+    public function testExtraSetOption()
+    {
+        $sut = new DynamicSelect();
+        $sut->setOptions(['extra_option' => ['an' => 'option']]);
+
+        $sut->getExtraOption(['an' => 'option']);
+
+        $this->assertSame(['an' => 'option'], $sut->getExtraOption());
     }
 }
