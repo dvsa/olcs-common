@@ -12,7 +12,7 @@ namespace Common\Service\Table\Formatter;
 class VenueAddress implements FormatterInterface
 {
     /**
-     * Format a date
+     * Format a venue address
      *
      * @param array $data
      * @return string
