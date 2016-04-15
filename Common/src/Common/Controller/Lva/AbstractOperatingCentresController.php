@@ -138,6 +138,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         } else {
             $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
         }
+        $this->getServiceLocator()->get('Script')->loadFile('application-oc');
 
         return $this->render('operating_centres', $form);
     }
