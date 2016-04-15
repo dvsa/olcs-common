@@ -7,6 +7,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Abstract Factory to create Transport Manager Adapters
+ *
+ * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
 abstract class AbstractTransportManagerAdapterFactory implements FactoryInterface
 {

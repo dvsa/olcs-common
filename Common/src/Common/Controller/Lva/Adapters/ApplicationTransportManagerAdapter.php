@@ -8,6 +8,7 @@ use Common\Service\Entity\LicenceEntityService;
  * Application Transport Manager Adapter
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
 class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {

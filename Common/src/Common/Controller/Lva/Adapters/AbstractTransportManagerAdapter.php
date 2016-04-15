@@ -11,11 +11,13 @@ use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBu
  * Abstract Transport Manager Adapter
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
 abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAdapter implements
     TransportManagerAdapterInterface
 {
     const SORT_LAST_FIRST_NAME = 1;
+    //  sort: Last, First Name, 'A' action (ASC)
     const SORT_LAST_FIRST_NAME_NEW_AT_END = 2;
 
     /** @var TransferAnnotationBuilder */
@@ -127,6 +129,14 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
         return $this->sortResultForTable($mappedData, $this->tableSortMethod);
     }
 
+    /**
+     * Method sort a table data with specified method
+     *
+     * @param array $data   Array of Transport Managers
+     * @param null  $method Sort method
+     *
+     * @return array
+     */
     protected function sortResultForTable(array $data, $method = null)
     {
         if ($method === self::SORT_LAST_FIRST_NAME) {
@@ -145,7 +155,7 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     }
 
     /**
-     * Comparition function for sorting a table by Last and First name
+     * Comparition function for sorting a table by Last and First name (ASC)
      *
      * @return int
      */
@@ -158,8 +168,9 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     }
 
     /**
-     * Comparition function for sorting a table by Last and First name,
-     * and all new items to the end
+     * Comparition function to provider sort:
+     *  - new items (action ='A') located at the end;
+     *  - all item sorted by Last and First name (ASC),
      *
      * @return int
      */

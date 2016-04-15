@@ -6,6 +6,8 @@ use Common\Controller\Lva\Adapters\ApplicationTransportManagerAdapter;
 
 /**
  * Factory Class to create instance of Application TMs
+ *
+ * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
 class ApplicationTransportManagerAdapterFactory extends AbstractTransportManagerAdapterFactory
 {

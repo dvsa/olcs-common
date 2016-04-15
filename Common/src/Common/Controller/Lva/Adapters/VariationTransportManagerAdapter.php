@@ -8,6 +8,7 @@ use Dvsa\Olcs\Transfer\Command;
  * Variation Transport Manager Adapter
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
 class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
