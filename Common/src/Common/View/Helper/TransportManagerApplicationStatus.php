@@ -37,8 +37,10 @@ class TransportManagerApplicationStatus extends AbstractHelper
     public function render($statusId, $description)
     {
         $statusClass = (isset($this->statusColors[$statusId])) ? ' '. $this->statusColors[$statusId] : '';
-
-        return sprintf('<span class="status%s">%s</span>', $statusClass, $description);
+        
+        if ($description && $description !== '') {
+            return sprintf('<span class="status%s">%s</span>', $statusClass, $description);
+        }
     }
 
     /**
