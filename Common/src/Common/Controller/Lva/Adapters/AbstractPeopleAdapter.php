@@ -48,27 +48,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         } else {
             $this->loadPeopleDataForApplication($id);
         }
-
-        if (count($this->getPeople()) === 0 &&
-            ($this->getOrganisationType() == OrganisationEntityService::ORG_TYPE_LLP ||
-            $this->getOrganisationType() == OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY)
-            ) {
-            $response = $this->handleCommand(
-                \Dvsa\Olcs\Transfer\Command\OrganisationPerson\PopulateFromCompaniesHouse::create(
-                    ['id' => $this->getOrganisationId()]
-                )
-            );
-            if (!$response->isOk()) {
-                return false;
-            }
-            // reload data after populate from companies house
-            if ($lva === 'licence') {
-                $this->loadPeopleDataForLicence($id);
-            } else {
-                $this->loadPeopleDataForApplication($id);
-            }
-        }
-
         return true;
     }
 
