@@ -1299,7 +1299,6 @@ return [
     'internal-operator-profile-name' => 'Operator name',
     'internal-operator-profile-nature-of-business' => 'Nature of business',
     'internal-operator-quick-actions' => 'Quick actions',
-    'internal-operator-unlicensed-redirect' => 'You have been redirected to the Operator Profile for this unlicensed operator',
     'internal-operator-unlicensed-vehicles.table.type' => 'Type',
     'internal-operator-unlicensed-vehicles.table.vrm' => 'Vehicle registration mark',
     'internal-operator-unlicensed-vehicles.table.weight' => 'Gross plated weight (kg)',
