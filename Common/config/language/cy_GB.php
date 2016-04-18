@@ -1299,7 +1299,6 @@ return [
     'internal-operator-profile-name' => '{WELSH} Operator name',
     'internal-operator-profile-nature-of-business' => '{WELSH} Nature of business',
     'internal-operator-quick-actions' => '{WELSH} Quick actions',
-    'internal-operator-unlicensed-redirect' => '{WELSH} You have been redirected to the Operator Profile for this unlicensed operator',
     'internal-operator-unlicensed-vehicles.table.type' => '{WELSH} Type',
     'internal-operator-unlicensed-vehicles.table.vrm' => '{WELSH} Vehicle registration mark',
     'internal-operator-unlicensed-vehicles.table.weight' => '{WELSH} Gross plated weight (kg)',
