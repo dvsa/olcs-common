@@ -34,6 +34,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     public function indexAction()
     {
+        /* @var $adapter Adapters\AbstractPeopleAdapter */
+        $this->getAdapter()->loadPeopleData($this->lva, $this->getIdentifier());
+
         if ($this->location === 'external') {
             $this->addGuidanceMessage();
         }
@@ -310,7 +313,10 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     public function addAction()
     {
-        if (!$this->getAdapter()->canModify()) {
+        /* @var $adapter Adapters\AbstractPeopleAdapter */
+        $adapter = $this->getAdapter();
+        $adapter->loadPeopleData($this->lva, $this->getIdentifier());
+        if (!$adapter->canModify()) {
             return $this->redirectWithoutPermission();
         }
 
@@ -322,6 +328,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     public function editAction()
     {
+        /* @var $adapter Adapters\AbstractPeopleAdapter */
+        $adapter = $this->getAdapter();
+        $adapter->loadPeopleData($this->lva, $this->getIdentifier());
         return $this->addOrEdit('edit');
     }
 
@@ -386,10 +395,13 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     protected function delete()
     {
+        /* @var $adapter Adapters\AbstractPeopleAdapter */
+        $adapter = $this->getAdapter();
+        $adapter->loadPeopleData($this->lva, $this->getIdentifier());
         $id = $this->params('child_id');
         $ids = explode(',', $id);
 
-        $this->getAdapter()->delete($ids);
+        $adapter->delete($ids);
     }
 
     /**
@@ -415,9 +427,12 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     public function restoreAction()
     {
+        /* @var $adapter Adapters\AbstractPeopleAdapter */
+        $adapter = $this->getAdapter();
+        $adapter->loadPeopleData($this->lva, $this->getIdentifier());
         $id = $this->params('child_id');
         $ids = explode(',', $id);
-        $this->getAdapter()->restore($ids);
+        $adapter->restore($ids);
 
         return $this->redirect()->toRouteAjax(
             null,
