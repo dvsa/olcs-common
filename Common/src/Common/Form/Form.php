@@ -9,6 +9,16 @@ use Zend\Form as ZendForm;
  */
 class Form extends ZendForm\Form
 {
+
+    /*
+     * Prevents browser HTML5 form validations
+     */
+    public function __construct($name = null)
+    {
+        parent::__construct($name);
+        $this->setAttribute('novalidate', 'novalidate');
+    }
+
     public function __toString()
     {
         return get_class($this);

@@ -4,15 +4,15 @@ namespace CommonTest\Controller\Plugin;
 
 use Common\Controller\Plugin\CurrentUser;
 use Common\Rbac\User;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
-use ZfcRbac\Service\AuthorizationService;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use ZfcRbac\Service\AuthorizationServiceInterface;
 
 /**
  * Class CurrentUserTest
  * @package CommonTest\Controller\Plugin
  */
-class CurrentUserTest extends TestCase
+class CurrentUserTest extends MockeryTestCase
 {
     public function testGetUserData()
     {
@@ -21,11 +21,12 @@ class CurrentUserTest extends TestCase
         $userObj = new User();
         $userObj->setUserData($data);
 
-        $mockAuth = m::mock(AuthorizationService::class);
+        /** @var AuthorizationServiceInterface|\Mockery\MockInterface $mockAuth */
+        $mockAuth = m::mock(AuthorizationServiceInterface::class);
         $mockAuth->shouldReceive('getIdentity')->andReturn($userObj);
 
         $sut = new CurrentUser($mockAuth);
 
-        $this->assertEquals($data, $sut->getUserData());
+        static::assertEquals($data, $sut->getUserData());
     }
 }

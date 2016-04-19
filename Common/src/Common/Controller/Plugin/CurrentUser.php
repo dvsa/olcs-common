@@ -12,7 +12,7 @@ use ZfcRbac\Service\AuthorizationServiceInterface;
 final class CurrentUser extends AbstractPlugin implements CurrentUserInterface
 {
     /**
-     * @var AuthorizationServiceInterface
+     * @var \ZfcRbac\Service\AuthorizationService
      */
     private $authService;
 
@@ -25,9 +25,9 @@ final class CurrentUser extends AbstractPlugin implements CurrentUserInterface
     }
 
     /**
-     * @return mixed|null
+     * @return \Common\Rbac\User
      */
-    private function getIdentity()
+    public function getIdentity()
     {
         return $this->authService->getIdentity();
     }

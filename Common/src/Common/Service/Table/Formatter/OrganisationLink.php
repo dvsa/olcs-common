@@ -5,8 +5,6 @@
  */
 namespace Common\Service\Table\Formatter;
 
-use Common\Service\Entity\LicenceEntityService;
-
 /**
  * Class OrganisationLink
  *
@@ -21,7 +19,7 @@ class OrganisationLink implements FormatterInterface
      *
      * @param array $data The row data.
      * @param array $column The column
-     * @param null $sm The service manager
+     * @param \Zend\ServiceManager\ServiceManager $sm
      * @inheritdoc
      *
      * @return string

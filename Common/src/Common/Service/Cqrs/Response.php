@@ -66,4 +66,18 @@ class Response
 
         return $this->result;
     }
+
+    /**
+     * For debugging, view a simple version of this this object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return sprintf(
+            "Status = %s\nResponse = %s",
+            $this->httpResponse->getStatusCode() .' '. $this->httpResponse->getReasonPhrase(),
+            print_r($this->getResult(), true)
+        );
+    }
 }
