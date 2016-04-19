@@ -27,17 +27,9 @@ class TrafficArea
     public $trafficArea = null;
 
     /**
-     *
      * @Form\Type("Common\Form\Elements\Types\TrafficAreaSet")
      */
     public $trafficAreaSet = null;
-
-    /**
-     * @Form\Attributes({"value": "markup-traffic-area-help"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $trafficAreaHelp = null;
-
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})

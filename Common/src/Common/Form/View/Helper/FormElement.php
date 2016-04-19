@@ -73,9 +73,10 @@ class FormElement extends ZendFormElement
             $view = $this->getView();
 
             return sprintf(
-                '<p>%s</p><h4>%s</h4>',
+                '<p>%s</p><h4>%s</h4><div class="hint">%s</div>',
                 $view->translate('trafficAreaSet.trafficArea'),
-                $view->translate($value)
+                $view->translate($value),
+                $view->translate('markup-traffic-area-help')
             );
         }
 
