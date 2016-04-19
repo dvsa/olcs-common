@@ -200,13 +200,15 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $result = $this->getVehicleSectionData();
 
         if ($result['spacesRemaining'] < 1) {
-            if ($this->lva === 'variation') {
+            if ($this->lva === 'variation' || $this->lva === 'application') {
                 $message = $this->getServiceLocator()->get('Helper\Translation')
                     ->translateReplace(
                         'markup-more-vehicles-than-total-auth-error-variation',
                         [
                             $result['totAuthVehicles'],
-                            $this->url()->fromRoute('lva-variation/operating_centres', ['action' => null], [], true)
+                            $this->url()->fromRoute(
+                                'lva-' . $this->lva . '/operating_centres', ['action' => null], [], true
+                            )
                         ]
                     );
 
