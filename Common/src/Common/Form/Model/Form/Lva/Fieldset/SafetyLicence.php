@@ -98,7 +98,7 @@ class SafetyLicence
      *             "value": "tach_internal",
      *             "label": "tachograph_analyser.tach_internal",
      *             "label_attributes": {
-     *                 "aria-label": "Who analyses the tachograph records? An owner or employee of the business"
+     *                 "aria-label": "Who analyses your tachograph data? An owner or employee of the business"
      *             }
      *         },
      *         {
