@@ -16,6 +16,7 @@ class TrafficArea
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.dataTrafficArea.label.new",
+     *     "hint" : "markup-traffic-area-help",
      *     "value_options": {
      *
      *     },
@@ -25,11 +26,6 @@ class TrafficArea
      * @Form\Type("\Zend\Form\Element\Select")
      */
     public $trafficArea = null;
-
-    /**
-     * @Form\Type("Common\Form\Elements\Types\TrafficAreaSet")
-     */
-    public $trafficAreaSet = null;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
