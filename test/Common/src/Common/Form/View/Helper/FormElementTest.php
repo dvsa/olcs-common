@@ -71,7 +71,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputRegex(
-            '/^<input type="text" name="(.*)" class="(.*)" value="(.*)"> \\r\\n <p class="hint">(.*)<\/p>$/'
+            '/^<input type="text" name="(.*)" class="(.*)" id="(.*)" value="(.*)"> \\r\\n <div class="hint">(.*)<\/div>$/'
         );
     }
 
@@ -87,7 +87,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<p class="hint">(.*)<\/p>$/');
+        $this->expectOutputRegex('/^plain$/');
     }
 
     /**
