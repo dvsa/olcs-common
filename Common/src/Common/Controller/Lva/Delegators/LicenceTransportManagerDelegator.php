@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Licence Transport Manager Delegator
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 namespace Common\Controller\Lva\Delegators;
 
 /**

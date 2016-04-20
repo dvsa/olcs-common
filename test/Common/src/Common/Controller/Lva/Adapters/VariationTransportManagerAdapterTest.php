@@ -2,10 +2,12 @@
 
 namespace CommonTest\Controller\Lva\Adapters;
 
+use Common\Controller\Lva\Adapters\VariationTransportManagerAdapter;
+use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Query\CachingQueryService;
+use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Controller\Lva\Adapters\VariationTransportManagerAdapter;
-use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Variation Transport Manager Adapter Test
@@ -14,18 +16,30 @@ use Common\Service\Entity\LicenceEntityService;
  */
 class VariationTransportManagerAdapterTest extends MockeryTestCase
 {
+    /** @var  VariationTransportManagerAdapter */
     protected $sut;
+    /** @var \Zend\ServiceManager\ServiceManager|\Mockery\MockInterface */
     protected $sm;
+    /** @var  \Zend\Mvc\Controller\AbstractController */
     protected $controller;
 
     public function setUp()
     {
-        $this->sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $this->sm = m::mock(\Zend\ServiceManager\ServiceManager::class)->makePartial();
         $this->sm->setAllowOverride(true);
 
-        $this->controller = m::mock('\Zend\Mvc\Controller\AbstractController');
+        $this->controller = m::mock(\Zend\Mvc\Controller\AbstractController::class);
 
-        $this->sut = new VariationTransportManagerAdapter();
+        /** @var TransferAnnotationBuilder $mockAnnotationBuilder */
+        $mockAnnotationBuilder = m::mock(TransferAnnotationBuilder::class);
+        /** @var CachingQueryService $mockQuerySrv */
+        $mockQuerySrv = m::mock(CachingQueryService::class);
+        /** @var CommandService $mockCommandSrv */
+        $mockCommandSrv = m::mock(CommandService::class);
+
+        $this->sut = new VariationTransportManagerAdapter(
+            $mockAnnotationBuilder, $mockQuerySrv, $mockCommandSrv
+        );
         $this->sut->setServiceLocator($this->sm);
         $this->sut->setController($this->controller);
     }
@@ -329,6 +343,6 @@ class VariationTransportManagerAdapterTest extends MockeryTestCase
             ->once()
             ->with(['ids' => [3]]);
 
-        $this->sut->delete([3,'L5'], 66);
+        $this->sut->delete([3, 'L5'], 66);
     }
 }

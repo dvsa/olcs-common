@@ -52,6 +52,15 @@ trait DynamicTrait
     protected $serviceName = 'Common\Service\Data\RefData';
 
     /**
+     * Extra options to include in the dropdown
+     * Eg 'unassigned' => 'Unassigned", 'not-set' => 'Not set', 'all' =>
+     *
+     * @var array
+     */
+    protected $extraOption;
+
+
+    /**
      * @param string $context
      * @return $this
      */
@@ -191,6 +200,26 @@ trait DynamicTrait
     }
 
     /**
+     * Get extra options
+     *
+     * @return mixed
+     */
+    function getExtraOption()
+    {
+        return $this->extraOption;
+    }
+
+    /**
+     * Set extra options to appear in the drop down (eg 'unassigned' => 'Unassigned')
+     *
+     * @param array $extraOption
+     */
+    function setExtraOption($extraOption)
+    {
+        $this->extraOption = $extraOption;
+    }
+
+    /**
      * @param array|\Traversable $options
      * @return $this
      */
@@ -220,6 +249,10 @@ trait DynamicTrait
         if (isset($this->options['exclude'])) {
             $this->setExclude($this->options['exclude']);
         }
+
+        if (isset($this->options['extra_option'])) {
+            $this->setExtraOption($this->options['extra_option']);
+        }
         return $this;
     }
 
@@ -233,6 +266,10 @@ trait DynamicTrait
         if (empty($this->valueOptions)) {
             $refDataService = $this->getDataService();
             $this->valueOptions = $refDataService->fetchListOptions($this->getContext(), $this->useGroups());
+
+            if (!empty($this->extraOption)) {
+                $this->valueOptions = $this->extraOption + $this->valueOptions;
+            }
         }
 
         if (!empty($this->getExclude())) {

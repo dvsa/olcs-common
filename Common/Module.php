@@ -82,6 +82,8 @@ class Module
         );
 
         $this->setupRequestForProxyHost($e->getApplication()->getRequest());
+
+        $this->setLoggerUser($e->getApplication()->getServiceManager());
     }
 
     public function getConfig()
@@ -151,5 +153,17 @@ class Module
             );
             $request->getUri()->setScheme($proto);
         }
+    }
+
+    /**
+     * Set the user ID in the log processor so that it can be included in the log files
+     * 
+     * @param type $serviceManager
+     */
+    private function setLoggerUser(\Zend\ServiceManager\ServiceManager $serviceManager)
+    {
+        $authService = $serviceManager->get(\ZfcRbac\Service\AuthorizationService::class);
+        $serviceManager->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\UserId::class)
+            ->setUserId($authService->getIdentity()->getUsername());
     }
 }
