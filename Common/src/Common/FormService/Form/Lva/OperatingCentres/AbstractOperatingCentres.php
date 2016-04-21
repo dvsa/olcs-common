@@ -84,13 +84,8 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $dataTrafficAreaFieldset->get('trafficAreaSet')->setValue($trafficArea['name']);
         }
 
-        if (!empty($trafficAreaId)) {
-            $dataTrafficAreaFieldset->get('enforcementArea')
-                ->setValueOptions($params['possibleEnforcementAreas']);
-        } else {
-            $dataTrafficAreaFieldset->remove('trafficAreaSet')
-                ->remove('enforcementArea');
-        }
+        $dataTrafficAreaFieldset->get('enforcementArea')
+            ->setValueOptions($params['possibleEnforcementAreas']);
 
         return $form;
     }
