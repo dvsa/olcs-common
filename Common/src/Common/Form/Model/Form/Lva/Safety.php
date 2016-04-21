@@ -21,6 +21,10 @@ class Safety
     /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
+     * @Form\Options({
+     *     "label" : "safety-inspection-providers.table.title",
+     *     "hint" : "safety-inspection-providers.table.hint"
+     * })
      */
     public $table = null;
 

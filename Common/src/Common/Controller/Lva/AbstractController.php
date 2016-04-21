@@ -21,6 +21,7 @@ use Zend\Mvc\MvcEvent;
  * @method \Common\Service\Cqrs\Response handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $query)
  * @method \Common\Service\Cqrs\Response handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $query)
  * @method \Common\Service\Cqrs\Response handleCancelRedirect($lvaId)
+ * @method \Zend\Http\Response handlePostSave($prefix = null)
  * @method \Common\Controller\Plugin\Redirect redirect()
  * @method boolean isGranted(string $permission)
  * @method \Common\Controller\Plugin\CurrentUser currentUser()
