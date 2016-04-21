@@ -69,7 +69,8 @@ class AbstractOperatingCentresTest extends MockeryTestCase
             'operatingCentres' => ['XX'],
             'trafficArea' => null,
             'niFlag' => 'N',
-            'possibleTrafficAreas' => ['A', 'B']
+            'possibleTrafficAreas' => ['A', 'B'],
+            'possibleEnforcementAreas' => ['A', 'B']
         ];
 
         $mockFormHelper = m::mock();
@@ -83,8 +84,9 @@ class AbstractOperatingCentresTest extends MockeryTestCase
         $mockFieldSet->shouldReceive('get')->with('trafficArea')->once()->andReturn(
             m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
         );
-        $mockFieldSet->shouldReceive('remove')->with('trafficAreaSet')->once()->andReturnSelf();
-        $mockFieldSet->shouldReceive('remove')->with('enforcementArea')->once()->andReturnSelf();
+        $mockFieldSet->shouldReceive('get')->with('enforcementArea')->once()->andReturn(
+            m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
+        );
 
         $this->sut->alterForm($mockForm, $params);
     }
