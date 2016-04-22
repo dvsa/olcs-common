@@ -80,6 +80,7 @@ class AbstractOperatingCentresTest extends MockeryTestCase
 
         $mockFieldSet = m::mock();
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);
+        $mockFieldSet->shouldReceive('remove')->with('trafficAreaSet')->once();
 
         $mockFieldSet->shouldReceive('get')->with('trafficArea')->once()->andReturn(
             m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
