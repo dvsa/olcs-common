@@ -2626,6 +2626,7 @@ return [
     'user-registration.field.licenceNumber.label' => '{WELSH} Licence number (for existing licence holders only)',
     'user-registration.field.organisationName.label' => '{WELSH} Organisation name',
     'user-registration.field.termsAgreed.label' => '{WELSH} I agree to the <a href="%s" target="_blank">terms and conditions</a>',
+    'user-registration.field.username.hint' => '{WELSH} Your username must be between 2 and 40 characters long. You can use letters (a-z), numbers and only these special characters: + . - _ @',
     'user-registration.form-actions.create-account.label' => '{WELSH} Create account',
     'user-registration.form-actions.post-account.label' => '{WELSH} Post account details to this address',
     'user-registration.form.label' => '{WELSH} Your details',

@@ -2626,6 +2626,7 @@ return [
     'user-registration.field.licenceNumber.label' => 'Licence number (for existing licence holders only)',
     'user-registration.field.organisationName.label' => 'Organisation name',
     'user-registration.field.termsAgreed.label' => 'I agree to the <a href="%s" target="_blank">terms and conditions</a>',
+    'user-registration.field.username.hint' => 'Your username must be between 2 and 40 characters long. You can use letters (a-z), numbers and only these special characters: + . - _ @',
     'user-registration.form-actions.create-account.label' => 'Create account',
     'user-registration.form-actions.post-account.label' => 'Post account details to this address',
     'user-registration.form.label' => 'Your details',
