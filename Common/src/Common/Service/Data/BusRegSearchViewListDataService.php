@@ -4,7 +4,7 @@ namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\AbstractDataService;
-use Dvsa\Olcs\Transfer\Query\BusRegSearchView\BusRegSearchViewList;
+use Dvsa\Olcs\Transfer\Query\BusRegSearchView\BusRegSearchViewContextList;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Zend\ServiceManager\FactoryInterface;
 
@@ -59,7 +59,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
     {
         $cacheId = 'BusRegSearchView' . ucfirst($context);
         if (is_null($this->getData($cacheId))) {
-            $dtoData = BusRegSearchViewList::create(
+            $dtoData = BusRegSearchViewContextList::create(
                 [
                     'context' => $context,
                     'sort' => $context,
