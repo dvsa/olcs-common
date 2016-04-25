@@ -76,7 +76,8 @@ trait CrudActionTrait
 
             $routeParams[$childIdParamName] = $data['id'];
         }
+        $options = ['query' => $this->getRequest()->getQuery()->toArray()];
 
-        return $this->redirect()->toRoute($route, $routeParams, array(), true);
+        return $this->redirect()->toRoute($route, $routeParams, $options, true);
     }
 }

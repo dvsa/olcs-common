@@ -63,7 +63,7 @@ class CrudActionTraitTest extends MockeryTestCase
 
         $this->sut->shouldReceive('redirect->toRoute')
             ->once()
-            ->with(null, ['action' => 'add'], [], true)
+            ->with(null, ['action' => 'add'], ['query' => null], true)
             ->andReturn('RESPONSE');
 
         $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
@@ -108,7 +108,7 @@ class CrudActionTraitTest extends MockeryTestCase
 
         $this->sut->shouldReceive('redirect->toRoute')
             ->once()
-            ->with(null, ['action' => 'edit', 'child_id' => 111], [], true)
+            ->with(null, ['action' => 'edit', 'child_id' => 111], ['query' => null], true)
             ->andReturn('RESPONSE');
 
         $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
@@ -127,7 +127,7 @@ class CrudActionTraitTest extends MockeryTestCase
 
         $this->sut->shouldReceive('redirect->toRoute')
             ->once()
-            ->with(null, ['action' => 'edit', 'child_id' => 111], [], true)
+            ->with(null, ['action' => 'edit', 'child_id' => 111], ['query' => null], true)
             ->andReturn('RESPONSE');
 
         $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
@@ -147,7 +147,7 @@ class CrudActionTraitTest extends MockeryTestCase
 
         $this->sut->shouldReceive('redirect->toRoute')
             ->once()
-            ->with(null, ['action' => 'edit', 'child_id' => '111,222'], [], true)
+            ->with(null, ['action' => 'edit', 'child_id' => '111,222'], ['query' => null], true)
             ->andReturn('RESPONSE');
 
         $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
@@ -167,7 +167,7 @@ class CrudActionTraitTest extends MockeryTestCase
 
         $this->sut->shouldReceive('redirect->toRoute')
             ->once()
-            ->with(null, ['action' => 'add'], [], true)
+            ->with(null, ['action' => 'add'], ['query' => null], true)
             ->andReturn('RESPONSE');
 
         $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
@@ -187,7 +187,7 @@ class CrudActionTraitTest extends MockeryTestCase
 
         $this->sut->shouldReceive('redirect->toRoute')
             ->once()
-            ->with('foo/bar', ['action' => 'edit', 'some_other_id' => 111], [], true)
+            ->with('foo/bar', ['action' => 'edit', 'some_other_id' => 111], ['query' => null], true)
             ->andReturn('RESPONSE');
 
         $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
