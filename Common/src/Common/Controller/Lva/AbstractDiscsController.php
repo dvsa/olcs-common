@@ -169,6 +169,7 @@ abstract class AbstractDiscsController extends AbstractController
             ->getForm();
 
         $formHelper->populateFormTable($form->get('table'), $this->getDiscsTable());
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
 
         return $form;
     }
@@ -270,7 +271,11 @@ abstract class AbstractDiscsController extends AbstractController
 
         if ($request->isPost()) {
             $this->commonSave($commandKey);
-            return $this->redirect()->toRouteAjax(null, [$this->getIdentifierIndex() => $this->getIdentifier()]);
+            return $this->redirect()->toRouteAjax(
+                null,
+                [$this->getIdentifierIndex() => $this->getIdentifier()],
+                ['query' => $this->getRequest()->getQuery()->toArray()]
+            );
         }
 
         $form = $this->getGenericConfirmationForm();
