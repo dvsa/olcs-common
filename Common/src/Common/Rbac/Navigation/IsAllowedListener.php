@@ -80,18 +80,22 @@ class IsAllowedListener implements FactoryInterface
                 break;
             }
         }
+
         // If no rules apply, it is considered as granted or not based on the protection policy
         if (null === $allowedPermissions) {
             return $this->protectionPolicy === GuardInterface::POLICY_ALLOW;
         }
-        if (in_array('*', $allowedPermissions)) {
+
+        if (in_array('*', $allowedPermissions, true)) {
             return true;
         }
+
         foreach ($allowedPermissions as $permission) {
             if (!$this->authorizationService->isGranted($permission)) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -101,19 +105,14 @@ class IsAllowedListener implements FactoryInterface
      */
     public function accept(Event $event)
     {
-        $event->stopPropagation();
-
-        $accepted = true;
-
-        $params = $event->getParams();
-        /** @var \Zend\Navigation\Page\Mvc $page */
-        $page = $params['page'];
-
-        if ($page instanceof Mvc) {
-            $accepted = $this->isGranted($page);
+        $page = $event->getParam('page');
+        if (! $page instanceof Mvc) {
+            return true;
         }
 
-        return $accepted;
+        $event->stopPropagation();
+
+        return $this->isGranted($page);
     }
 
     /**

@@ -26,11 +26,12 @@ class Module
      */
     public function init($moduleManager)
     {
+        /** @var EventManager $events */
         $events = $moduleManager->getEventManager();
         $events->attach('loadModules.post', array($this, 'modulesLoaded'));
     }
 
-    public function modulesLoaded($e)
+    public function modulesLoaded(MvcEvent $e)
     {
         $moduleManager = $e->getTarget();
 
@@ -67,23 +68,27 @@ class Module
 
     public function onBootstrap(MvcEvent $e)
     {
-        $sm = $e->getApplication()->getServiceManager();
-
-        $events = $e->getApplication()->getEventManager();
+        $app = $e->getApplication();
+        $sm = $app->getServiceManager();
+        $events = $app->getEventManager();
 
         $this->setUpTranslator($sm, $events);
 
-        $listener = $e->getApplication()->getServiceManager()->get('Common\Rbac\Navigation\IsAllowedListener');
+        //  Navigation:Check ability to access an item
+        $listener = $sm->get(\Common\Rbac\Navigation\IsAllowedListener::class);
 
-        $events->getSharedManager()
-            ->attach('Zend\View\Helper\Navigation\AbstractHelper', 'isAllowed', array($listener, 'accept'));
-        $events->attach(
-            $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\UnauthorizedStrategy')
+        $events->getSharedManager()->attach(
+            \Zend\View\Helper\Navigation\AbstractHelper::class,
+            'isAllowed',
+            [$listener, 'accept']
         );
 
-        $this->setupRequestForProxyHost($e->getApplication()->getRequest());
+        //  RBAC behaviour if user not authorised
+        $events->attach($sm->get(\ZfcRbac\View\Strategy\UnauthorizedStrategy::class));
 
-        $this->setLoggerUser($e->getApplication()->getServiceManager());
+        $this->setupRequestForProxyHost($app->getRequest());
+
+        $this->setLoggerUser($sm);
     }
 
     public function getConfig()
@@ -157,10 +162,8 @@ class Module
 
     /**
      * Set the user ID in the log processor so that it can be included in the log files
-     * 
-     * @param type $serviceManager
      */
-    private function setLoggerUser(\Zend\ServiceManager\ServiceManager $serviceManager)
+    private function setLoggerUser(ServiceLocatorInterface $serviceManager)
     {
         $authService = $serviceManager->get(\ZfcRbac\Service\AuthorizationService::class);
         $serviceManager->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\UserId::class)
