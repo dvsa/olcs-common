@@ -12,6 +12,9 @@ use ZfcRbac\Guard\GuardInterface;
 use ZfcRbac\Options\ModuleOptions;
 use ZfcRbac\Service\AuthorizationService;
 
+/**
+ * @covers \Common\Rbac\Navigation\IsAllowedListener
+ */
 class IsAllowedListenerTest extends MockeryTestCase
 {
     /** @var  m\MockInterface|ModuleOptions */
@@ -80,9 +83,11 @@ class IsAllowedListenerTest extends MockeryTestCase
             ->andReturn($policy)
             //
             ->shouldReceive('getGuards')
-            ->andReturn([
-                'ZfcRbac\Guard\RoutePermissionsGuard' => $rules,
-            ])
+            ->andReturn(
+                [
+                    'ZfcRbac\Guard\RoutePermissionsGuard' => $rules,
+                ]
+            )
             ->getMock();
 
         /** @var Navigation\Page\Mvc $mockPage */
@@ -151,15 +156,18 @@ class IsAllowedListenerTest extends MockeryTestCase
      */
     private function mockServiceLocator()
     {
+        $closure = function ($class) {
+            $map = [
+                AuthorizationService::class => $this->mockAuthSrv,
+                ModuleOptions::class => $this->mockModuleOptions,
+            ];
+
+            return $map[$class];
+        };
+
         return m::mock(ServiceLocatorInterface::class)
             ->shouldReceive('get')
-            ->andReturnUsing(function ($class) {
-                $map = [
-                    AuthorizationService::class => $this->mockAuthSrv,
-                    ModuleOptions::class => $this->mockModuleOptions,
-                ];
-                return $map[$class];
-            })
+            ->andReturnUsing($closure)
             ->getMock();
     }
 }

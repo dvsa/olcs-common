@@ -6,6 +6,7 @@
 namespace Common;
 
 use Zend\EventManager\EventManager;
+use Zend\ModuleManager\ModuleEvent;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Model\ViewModel;
@@ -31,7 +32,7 @@ class Module
         $events->attach('loadModules.post', array($this, 'modulesLoaded'));
     }
 
-    public function modulesLoaded(MvcEvent $e)
+    public function modulesLoaded(ModuleEvent $e)
     {
         $moduleManager = $e->getTarget();
 
