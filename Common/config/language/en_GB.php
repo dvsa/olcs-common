@@ -2290,7 +2290,7 @@ return [
     'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMs' => 'Ms',
     'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => '<div class="article"><p>Does anyone you’ve named in your application have a conviction that the Traffic Commissioner must be told about?</p><p>This question applies to:</p><ul><li>Directors, Partners and Transport Managers</li><li>companies that are (or have been) directed by anybody you’ve named</li><li>your parent company, if you’re a limited company</li><li>your employees and agents</li></ul></div>',
     'selfserve-app-subSection-previous-history-criminal-conviction-helpBlock' => 'Please provide full details of the background circumstances of this offence.',
-    'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' => 'I\'ll tell the Traffic Commissioner immediately about any relevant offences that take place between submitting this application and a decision being made.',
+    'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' => 'I\'ll tell the Traffic Commissioner immediately about any relevant offences that take place in the period between submitting this application and a decision being made.',
     'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'Offence Details',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'Please add any relevant offences which must be declared to the Traffic Commissioner.',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'Convictions and penalties (if applicable)',
