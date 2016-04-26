@@ -959,7 +959,7 @@ return [
     'external.withdraw_application.confirm.back_button' => '{WELSH} Back',
     'external.withdraw_application.confirm.cancel_message' => '{WELSH} Application withdrawn',
     'external.withdraw_application.confirm.confirm_button' => '{WELSH} Withdraw application',
-    'external.withdraw_application.confirm.message' => '{WELSH} Are you sure you want to withdraw this application? It will be removed from your list and you will not be able to access it again. A refund will not be given. ',
+    'external.withdraw_application.confirm.message' => '{WELSH} Are you sure you want to withdraw this application? It will be removed from your list and you won’t be able to access it again. You won’t receive a refund.',
     'fabs-reference' => '{WELSH} Fabs Ref',
     'farmers-livestock-carriers' => '{WELSH} Farmers / Livestock Carriers',
     'fee-details' => '{WELSH} Fee Details',
