@@ -2446,6 +2446,7 @@ return [
     'tm-add-user-success-message' => 'The user account has been created and form has been emailed to the transport manager',
     'tm-add-user-success-message-no-email' => 'The Transport Manager has been added to the application',
     'tm-add-user-username' => 'Username',
+    'tm-add-user-username.hint' => 'Choose a unique username for your Transport Manager. They will need to use it when they sign in.',
     'tm-details-edit-form-link-text' => 'Edit form',
     'tm-details-heading' => 'Transport Manager form',
     'tm-details-licence-application-no' => 'Application number',
