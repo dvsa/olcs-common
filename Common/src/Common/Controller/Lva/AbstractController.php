@@ -258,7 +258,11 @@ abstract class AbstractController extends AbstractActionController
 
         // If we are on a sub-section, we need to go back to the section
         if ($this->params('action') !== 'index') {
-            return $this->redirect()->toRoute(null, [$this->getIdentifierIndex() => $lvaId]);
+            return $this->redirect()->toRoute(
+                null,
+                [$this->getIdentifierIndex() => $lvaId],
+                ['query' => $this->getRequest()->getQuery()->toArray()]
+            );
         }
 
         return $this->handleCancelRedirect($lvaId);

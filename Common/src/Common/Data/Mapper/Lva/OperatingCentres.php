@@ -28,12 +28,17 @@ class OperatingCentres implements MapperInterface
             $enforcementArea = $data['enforcementArea']['id'];
         }
 
+        $trafficArea = null;
+        if (isset($data['licence']['trafficArea']['id'])) {
+            $trafficArea = $data['licence']['trafficArea']['id'];
+        } elseif (isset($data['trafficArea']['id'])) {
+            $trafficArea = $data['trafficArea']['id'];
+        }
+
         return [
             'data' => $data,
             'dataTrafficArea' => [
-                'trafficArea' => isset($data['licence']['trafficArea']['id']) ?
-                    $data['licence']['trafficArea']['id'] :
-                    null,
+                'trafficArea' => $trafficArea,
                 'enforcementArea' => $enforcementArea,
             ]
         ];

@@ -210,4 +210,6 @@ class RefData
      * Convictions
      */
     const CONVICTION_CATEGORY_USER_DEFINED = 'conv_c_cat_1144';
+
+    const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
 }
