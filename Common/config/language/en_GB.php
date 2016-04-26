@@ -959,7 +959,7 @@ return [
     'external.withdraw_application.confirm.back_button' => 'Back',
     'external.withdraw_application.confirm.cancel_message' => 'Application withdrawn',
     'external.withdraw_application.confirm.confirm_button' => 'Withdraw application',
-    'external.withdraw_application.confirm.message' => 'Are you sure you want to withdraw this application? It will be removed from your list and you will not be able to access it again. A refund will not be given. ',
+    'external.withdraw_application.confirm.message' => 'Are you sure you want to withdraw this application? It will be removed from your list and you won’t be able to access it again. You won’t receive a refund.',
     'fabs-reference' => 'Fabs Ref',
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
     'fee-details' => 'Fee Details',
