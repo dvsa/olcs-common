@@ -6,6 +6,7 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("evidence")
+ * @Form\Attributes({"class":"last"})
  */
 class FinancialEvidenceEvidence
 {

@@ -15,7 +15,9 @@ use Zend\Form\Annotation as Form;
 class RegisteredAddress
 {
     /**
-     * @Form\Attributes({"value":""})
+     * @Form\Attributes({
+     *   "value":""
+     * })
      * @Form\Type("Hidden")
      */
     public $id = null;
@@ -27,7 +29,11 @@ class RegisteredAddress
     public $version = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({
+     *   "class" : "long", 
+     *   "id" : "",
+     *   "data-container-class" : "compound"
+     * })
      * @Form\Options({
      *     "label":"Address lines",
      *     "label_attributes": {
@@ -40,7 +46,11 @@ class RegisteredAddress
     public $addressLine1 = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({
+     *   "class" : "long", 
+     *   "id" : "",
+     *   "data-container-class" : "compound"
+     * })
      * @Form\Options({"label":"Address line 2","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -48,7 +58,11 @@ class RegisteredAddress
     public $addressLine2 = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({
+     *   "class" : "long", 
+     *   "id" : "",
+     *   "data-container-class" : "compound"
+     * })
      * @Form\Options({"label":"Address line 3","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -56,7 +70,11 @@ class RegisteredAddress
     public $addressLine3 = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({
+     *   "class" : "long", 
+     *   "id" : "",
+     *   "data-container-class" : "compound"
+     * })
      * @Form\Options({"label":"Address line 4","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -64,7 +82,10 @@ class RegisteredAddress
     public $addressLine4 = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({
+     *   "class" : "long", 
+     *   "id" : ""
+     * })
      * @Form\Options({
      *    "label":"Town/city",
      *    "label_attributes":{

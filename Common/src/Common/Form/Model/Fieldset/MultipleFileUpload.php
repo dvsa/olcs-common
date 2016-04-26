@@ -42,7 +42,7 @@ class MultipleFileUpload
     public $messages = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"inline-upload js-upload", "value": "Upload"})
+     * @Form\Attributes({"type":"submit","class":"inline-upload action--primary js-upload", "value": "Upload"})
      * @Form\Options({
      *     "label": "Upload"
      * })

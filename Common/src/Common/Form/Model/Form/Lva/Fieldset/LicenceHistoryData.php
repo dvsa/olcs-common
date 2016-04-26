@@ -24,12 +24,16 @@ class LicenceHistoryData
      *             "value": "Y",
      *             "label": "Yes",
      *             "label_attributes": {
-     *                 "aria-label": "Does anyone you've named already have an operator's licence in any traffic area? Yes"
+     *                 "aria-label": "Does anyone you've named already have an operator's licence in any traffic area? Yes",
+     *                 "class" : "inline"
      *             }
      *         },
      *         {
      *             "value": "N",
-     *             "label": "No"
+     *             "label": "No",
+     *             "label_attributes": {
+     *                 "class" : "inline"
+     *             }
      *         }
      *     },
      *     "fieldset-attributes" : {
@@ -59,12 +63,16 @@ class LicenceHistoryData
      *             "value": "Y",
      *             "label": "Yes",
      *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever had or applied for an operator's licence in any traffic area? Yes"
+     *                 "aria-label": "Has anyone you've named ever had or applied for an operator's licence in any traffic area? Yes",
+     *                 "class" : "inline"
      *             }
      *         },
      *         {
      *             "value": "N",
-     *             "label": "No"
+     *             "label": "No",
+     *             "label_attributes": {
+     *                 "class" : "inline"
+     *             }
      *         }
      *     },
      *     "fieldset-attributes" : {
@@ -94,12 +102,16 @@ class LicenceHistoryData
      *             "value": "Y",
      *             "label": "Yes",
      *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever been disqualified from having an operator's licence in any traffic area? Yes"
+     *                 "aria-label": "Has anyone you've named ever been disqualified from having an operator's licence in any traffic area? Yes",
+     *                 "class" : "inline"
      *             }
      *         },
      *         {
      *             "value": "N",
-     *             "label": "No"
+     *             "label": "No",
+     *             "label_attributes": {
+     *                 "class" : "inline"
+     *             }
      *         }
      *     },
      *     "fieldset-attributes" : {

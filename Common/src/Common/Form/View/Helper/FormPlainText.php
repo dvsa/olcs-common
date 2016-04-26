@@ -34,6 +34,6 @@ class FormPlainText extends AbstractHelper
     public function render(ElementInterface $element)
     {
         return $element->getValue() ?
-            '<p class="hint">' . $this->getView()->translate($element->getValue()) . '</p>' : '';
+            $this->getView()->translate($element->getValue()) : '';
     }
 }

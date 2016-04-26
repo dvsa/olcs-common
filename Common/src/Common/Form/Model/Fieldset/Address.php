@@ -33,7 +33,11 @@ class Address
     public $searchPostcode = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({
+     *   "class" : "long", 
+     *   "id" : "",
+     *   "data-container-class" : "compound"
+     * })
      * @Form\Options({
      *     "label":"Address lines",
      *     "label_attributes": {
@@ -48,7 +52,11 @@ class Address
     public $addressLine1 = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({
+     *   "class" : "long", 
+     *   "id" : "",
+     *   "data-container-class" : "compound"
+     * })
      * @Form\Options({"label":"Address line 2","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -57,7 +65,11 @@ class Address
     public $addressLine2 = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({
+     *   "class" : "long", 
+     *   "id" : "",
+     *   "data-container-class" : "compound"
+     * })
      * @Form\Options({"label":"Address line 3","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")

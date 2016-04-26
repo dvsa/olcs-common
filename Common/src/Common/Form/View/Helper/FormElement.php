@@ -39,7 +39,7 @@ class FormElement extends ZendFormElement
      *
      * @var string
      */
-    private static $format = "%s \r\n <p class=\"hint\">%s</p>";
+    private static $format = "%s \r\n <div class=\"hint\">%s</div>";
 
     /**
      * The form row output format.

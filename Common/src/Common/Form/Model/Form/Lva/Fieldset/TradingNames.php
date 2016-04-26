@@ -10,7 +10,10 @@ use Zend\Form\Annotation as Form;
 class TradingNames
 {
     /**
-     * @Form\Attributes({"id":"", "class":"add-another"})
+     * @Form\Attributes({
+     *   "id":"", 
+     *   "class":"add-another"
+     * })
      * @Form\Options({
      *      "hint":"<input aria-label='Add another trading name' type='submit' name='data[tradingNames][submit_add_trading_name]' value='Add another' />",
      *      "hint_at_bottom":true,
@@ -21,7 +24,8 @@ class TradingNames
      *      "target_element": {
      *          "type":"Text",
      *          "attributes": {
-     *              "class": "medium"
+     *              "class": "medium",
+     *              "data-container-class" : "compound"
      *          },
      *          "options": {
      *              "wrapElements":false
