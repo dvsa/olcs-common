@@ -72,11 +72,16 @@ class FormElement extends ZendFormElement
             $value = $element->getValue();
             $view = $this->getView();
 
-            return sprintf(
+            $markup = sprintf(
                 '<p>%s</p><h4>%s</h4>',
                 $view->translate('trafficAreaSet.trafficArea'),
                 $view->translate($value)
             );
+
+            if ($element->getOption('hint')) {
+                $markup .= sprintf('<p class="hint">%s</p>', $view->translate($element->getOption('hint')));
+            }
+            return $markup;
         }
 
         if ($element instanceof PlainText) {

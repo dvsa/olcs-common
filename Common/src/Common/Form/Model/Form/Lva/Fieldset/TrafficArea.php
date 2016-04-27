@@ -28,6 +28,15 @@ class TrafficArea
     public $trafficArea = null;
 
     /**
+     *
+     * @Form\Type("Common\Form\Elements\Types\TrafficAreaSet")
+     * @Form\Options({
+     *     "hint" : "markup-traffic-area-help",
+     * })
+     */
+    public $trafficAreaSet = null;
+
+    /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Required(false)
      * @Form\Options({
