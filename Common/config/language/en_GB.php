@@ -499,7 +499,7 @@ return [
     'application_type-of-licence_operator-location.data.niFlag' => 'Where will you operate your vehicles?',
     'application_type-of-licence_operator-type.data' => 'Operator type',
     'application_type-of-licence_operator-type.data.goodsOrPsv' => 'What type of vehicles will you be operating?',
-    'application_type_of_licence_confirmation_subtitle' => 'The application will be reset and all the information entered will be lost!',
+    'application_type_of_licence_confirmation_subtitle' => 'Doing this will reset your application. You will lose all the information you\'ve entered so far.',
     'application_vehicle-safety_discs-psv-replace-label' => 'Are you sure you want to reprint these discs?',
     'application_vehicle-safety_discs-psv-sub-action.additionalDiscs' => 'How many additional discs are required?',
     'application_vehicle-safety_discs-psv-void-label' => 'Are you sure you want to void these discs?',

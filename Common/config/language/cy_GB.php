@@ -499,7 +499,7 @@ return [
     'application_type-of-licence_operator-location.data.niFlag' => '{WELSH} Where will you operate your vehicles?',
     'application_type-of-licence_operator-type.data' => '{WELSH} Operator type',
     'application_type-of-licence_operator-type.data.goodsOrPsv' => '{WELSH} What type of vehicles will you be operating?',
-    'application_type_of_licence_confirmation_subtitle' => '{WELSH} The application will be reset and all the information entered will be lost!',
+    'application_type_of_licence_confirmation_subtitle' => '{WELSH} Doing this will reset your application. You will lose all the information you\'ve entered so far.',
     'application_vehicle-safety_discs-psv-replace-label' => '{WELSH} Are you sure you want to reprint these discs?',
     'application_vehicle-safety_discs-psv-sub-action.additionalDiscs' => '{WELSH} How many additional discs are required?',
     'application_vehicle-safety_discs-psv-void-label' => '{WELSH} Are you sure you want to void these discs?',
