@@ -71,10 +71,18 @@ class EventHistoryDescription implements FormatterInterface
             true
         );
 
+        if (isset($data['eventDescription'])) {
+            $href = $data['eventDescription'];
+        } elseif (isset($data['eventHistoryType']['description'])) {
+            $href = $data['eventHistoryType']['description'];
+        } else {
+            $href = '';
+        }
+
         return sprintf(
             '<a class="js-modal-ajax" href="%s">%s</a>',
             $url,
-            $data['eventDescription']
+            $href
         );
     }
 }
