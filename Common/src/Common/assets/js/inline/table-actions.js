@@ -5,7 +5,8 @@ OLCS.ready(function() {
     form: ".table__form",
     isModal: true,
     onChange: false,
-    success: OLCS.modalResponse(".js-body")
+    success: OLCS.modalResponse(".js-body"),
+    container: ".js-body"
   });
 
   OLCS.tableSorter({
