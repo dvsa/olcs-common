@@ -74,7 +74,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
 
         // if application/licence is NI then don't show trafficArea help
         if ($params['niFlag'] === 'Y') {
-            $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficAreaHelp');
+            $form->get('dataTrafficArea')->get('trafficAreaSet')->setOption('hint', null);
         }
 
         if (empty($trafficAreaId) || $this->allowChangingTrafficArea($trafficAreaId)) {

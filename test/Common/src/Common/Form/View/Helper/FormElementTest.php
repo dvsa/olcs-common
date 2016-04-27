@@ -71,7 +71,8 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputRegex(
-            '/^<input type="text" name="(.*)" class="(.*)" id="(.*)" value="(.*)"> \\r\\n <div class="hint">(.*)<\/div>$/'
+            '/^<input type="text" name="(.*)" class="(.*)" id="(.*)" '.
+            'value="(.*)"> \\r\\n <div class="hint">(.*)<\/div>$/'
         );
     }
 
@@ -307,6 +308,23 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertEquals(
+            '<p>trafficAreaSet.trafficArea</p><h4>ABC</h4><p class="hint">Hint</p>',
+            $markup
+        );
+    }
+
+    public function testRenderForTrafficAreaSetWithoutHint()
+    {
+        $this->prepareElement('\\Common\Form\Elements\Types\TrafficAreaSet');
+
+        $this->element->setValue('ABC');
+        $this->element->setOption('hint', null);
+
+        $viewHelper = $this->prepareViewHelper();
+
+        $markup = $viewHelper($this->element, 'formCollection', '/');
+
+        $this->assertEquals(
             '<p>trafficAreaSet.trafficArea</p><h4>ABC</h4>',
             $markup
         );
@@ -324,7 +342,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertEquals(
-            '<p>trafficAreaSet.trafficArea</p><h4>ABC</h4>',
+            '<p>trafficAreaSet.trafficArea</p><h4>ABC</h4><p class="hint">Hint</p>',
             $markup
         );
     }
