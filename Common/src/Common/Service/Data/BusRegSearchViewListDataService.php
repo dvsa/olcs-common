@@ -29,7 +29,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
             return [];
         }
 
-        return $this->formatData($data);
+        return $this->formatData($data, $context);
     }
 
     /**
@@ -38,12 +38,12 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      * @param array $data
      * @return array
      */
-    public function formatData(array $data)
+    public function formatData(array $data, $context)
     {
         $optionData = [];
 
         foreach ($data as $datum) {
-            $optionData[$datum] = $datum;
+            $optionData[$datum[$this->getKeyField($context)]] = $datum[$this->getValueField($context)];
         }
 
         return $optionData;
@@ -59,11 +59,12 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
     {
         $cacheId = 'BusRegSearchView' . ucfirst($context);
         if (is_null($this->getData($cacheId))) {
+            $order = 'ASC';
             $dtoData = BusRegSearchViewContextList::create(
                 [
                     'context' => $context,
-                    'sort' => $context,
-                    'order' => 'ASC'
+                    'sort' => $this->getValueField($context),
+                    'order' => $order
                 ]
             );
 
@@ -80,5 +81,43 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
         }
 
         return $this->getData($cacheId);
+    }
+
+    /**
+     * Get the Value field to use in the drop downs based on context
+     *
+     * @param $context
+     * @return string
+     */
+    private function getValueField($context)
+    {
+        switch($context)
+        {
+            case 'licence':
+                return 'licNo';
+            case 'organisation':
+                return 'organisationName';
+            case 'busRegStatus':
+                return 'busRegStatusDesc';
+        }
+    }
+
+    /**
+     * Get the Key field to use in the drop downs based on context
+     *
+     * @param $context
+     * @return string
+     */
+    private function getKeyField($context)
+    {
+        switch($context)
+        {
+            case 'licence':
+                return 'licId';
+            case 'organisation':
+                return 'organisationId';
+            case 'busRegStatus':
+                return 'busRegStatus';
+        }
     }
 }
