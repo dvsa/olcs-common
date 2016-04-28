@@ -284,7 +284,7 @@ return array(
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
-            'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
+            \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class
