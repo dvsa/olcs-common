@@ -90,6 +90,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      *
      * @param $context
      * @return string
+     * @throws DataServiceException
      */
     private function getValueField($context)
     {
@@ -110,6 +111,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      *
      * @param $context
      * @return string
+     * @throws DataServiceException
      */
     private function getKeyField($context)
     {
