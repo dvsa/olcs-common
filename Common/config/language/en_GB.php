@@ -650,6 +650,8 @@ return [
     'business-type' => 'Business type',
     'business-type.locked' => 'Cannot change business type. Please contact Central Licensing Office for further advice.',
     'business-type.locked.message' => 'To change your business type, email <a href="mailto:operatorlicensing@otc.gsi.gov.uk" aria-label="To change your business type, email operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
+    'busreg-tab-title-applications' => 'Applications',
+    'busreg-tab-title-registrations' => 'Registrations',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
     'cannot-change-conditions-undertakings-guidance' => 'You can\'t change conditions and undertakings.<br />For more advice email <a href="mailto:operatorlicensing@otc.gsi.gov.uk" aria-label="operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
