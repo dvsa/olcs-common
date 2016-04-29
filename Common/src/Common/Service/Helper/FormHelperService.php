@@ -12,7 +12,6 @@ use Common\Service\Table\TableBuilder;
 use Zend\Form\Element;
 use Zend\Form\Element\Checkbox;
 use Zend\Form\Element\DateSelect;
-use Zend\Form\Element\Select;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
@@ -734,10 +733,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove a value option from an element
      *
-     * @param Select $element
-     * @param string $index
+     * @param Element $element Select element or a Radio group
+     * @param string  $index
      */
-    public function removeOption(Select $element, $index)
+    public function removeOption(Element $element, $index)
     {
         $options = $element->getValueOptions();
 
@@ -747,7 +746,7 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
-    public function setCurrentOption(Select $element, $index)
+    public function setCurrentOption(Element $element, $index)
     {
         $options = $element->getValueOptions();
 
@@ -884,7 +883,7 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
-    public function removeValueOption(Select $element, $key)
+    public function removeValueOption(Element $element, $key)
     {
         $options = $element->getValueOptions();
 
