@@ -28,6 +28,17 @@ class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
     }
 
     /**
+     * @expectedException \Common\Exception\DataServiceException
+     */
+    public function testFetchListOptionsInvalidContext()
+    {
+        $context = 'invalid';
+        $sut = new BusRegSearchViewListDataService();
+
+        $sut->fetchListOptions($context);
+    }
+
+    /**
      * @dataProvider provideFetchListData
      * @param $context
      * @param $expected
