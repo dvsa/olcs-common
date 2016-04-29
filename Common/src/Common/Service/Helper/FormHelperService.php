@@ -734,10 +734,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove a value option from an element
      *
-     * @param Select $element
-     * @param string $index
+     * @param Element $element Select element or a Radio group
+     * @param string  $index
      */
-    public function removeOption(Select $element, $index)
+    public function removeOption(Element $element, $index)
     {
         $options = $element->getValueOptions();
 
