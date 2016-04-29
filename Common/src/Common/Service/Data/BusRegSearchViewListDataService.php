@@ -2,6 +2,7 @@
 
 namespace Common\Service\Data;
 
+use Common\Exception\DataServiceException;
 use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\AbstractDataService;
 use Dvsa\Olcs\Transfer\Query\BusRegSearchView\BusRegSearchViewContextList;
@@ -58,7 +59,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
     public function fetchListData($context)
     {
         $cacheId = 'BusRegSearchView' . ucfirst($context);
-        if (is_null($this->getData($cacheId))) {
+        if ($this->getData($cacheId) === null) {
             $order = 'ASC';
             $dtoData = BusRegSearchViewContextList::create(
                 [
@@ -75,8 +76,9 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
             }
 
             $this->setData($cacheId, false);
-            if (isset($response->getResult()['results'])) {
-                $this->setData($cacheId, $response->getResult()['results']);
+            $result = $response->getResult();
+            if (isset($result['results'])) {
+                $this->setData($cacheId, $result['results']);
             }
         }
 
@@ -91,14 +93,15 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      */
     private function getValueField($context)
     {
-        switch($context)
-        {
+        switch($context) {
             case 'licence':
                 return 'licNo';
             case 'organisation':
                 return 'organisationName';
             case 'busRegStatus':
                 return 'busRegStatusDesc';
+            default:
+                throw new DataServiceException('Invalid context value used in data service');
         }
     }
 
@@ -110,14 +113,15 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
      */
     private function getKeyField($context)
     {
-        switch($context)
-        {
+        switch($context) {
             case 'licence':
                 return 'licId';
             case 'organisation':
                 return 'organisationId';
             case 'busRegStatus':
                 return 'busRegStatus';
+            default:
+                throw new DataServiceException('Invalid context key used in data service');
         }
     }
 }
