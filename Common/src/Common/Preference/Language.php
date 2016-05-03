@@ -41,7 +41,12 @@ class Language implements FactoryInterface
 
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $cookie = $serviceLocator->get('Request')->getCookie();
+        $request = $serviceLocator->get('Request');
+        if (!$request instanceof Request) {
+            return $this;
+        }
+
+        $cookie = $request->getCookie();
 
         $this->preference = self::OPTION_EN;
 

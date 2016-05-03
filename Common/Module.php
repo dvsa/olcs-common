@@ -114,6 +114,11 @@ class Module
         $missingTranslationProcessor = $sm->get('Utils\MissingTranslationProcessor');
         $missingTranslationProcessor->attach($events);
 
+        //$translator->addTranslationFile('phparray', __DIR__ . '/config/language/cy_GB-translated.php');
+        //$missingTranslationLogger = $sm->get('Utils\MissingTranslationLogger');
+        //$missingTranslationLogger->setLogName('/tmp/corr.log');
+        //$missingTranslationLogger->attach($events);
+
         $translator->enableEventManager();
         $translator->setEventManager($events);
     }
@@ -125,6 +130,11 @@ class Module
      */
     private function setupRequestForProxyHost(\Zend\Stdlib\RequestInterface $request)
     {
+        if (!$request instanceof \Zend\Http\PhpEnvironment\Request) {
+            // if request is not \Zend\Http\PhpEnvironment\Request we must be running from CLI so do nothing
+            return;
+        }
+
         /* @var $request \Zend\Http\PhpEnvironment\Request */
         if ($request->getHeaders()->get('xforwardedhost')) {
 
