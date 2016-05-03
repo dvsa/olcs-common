@@ -57,7 +57,7 @@ class EventHistoryDescription implements FormatterInterface
                 $entity = 'case';
                 $id = $data['case']['id'];
                 break;
-            default;
+            default:
                 throw new \Exception('Not implemented');
         }
         $url = $urlHelper->fromRoute(
@@ -72,17 +72,17 @@ class EventHistoryDescription implements FormatterInterface
         );
 
         if (isset($data['eventDescription'])) {
-            $href = $data['eventDescription'];
+            $text = $data['eventDescription'];
         } elseif (isset($data['eventHistoryType']['description'])) {
-            $href = $data['eventHistoryType']['description'];
+            $text = $data['eventHistoryType']['description'];
         } else {
-            $href = '';
+            $text = '';
         }
 
         return sprintf(
             '<a class="js-modal-ajax" href="%s">%s</a>',
             $url,
-            $href
+            $text
         );
     }
 }
