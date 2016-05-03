@@ -35,6 +35,9 @@ class Responsibilities
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.tm-type",
      *     "category": "tm_type",
+     *     "label_attributes": {
+     *         "class": "inline"
+     *     },
      *     "fieldset-attributes": {
      *         "class": "checkbox inline"
      *     }
@@ -64,6 +67,9 @@ class Responsibilities
      *     "value_options":{
      *         "Y":"Yes",
      *         "N":"No"
+     *     },
+     *     "label_attributes": {
+     *         "class": "inline"
      *     },
      *     "fieldset-attributes": {
      *         "class": "checkbox inline"

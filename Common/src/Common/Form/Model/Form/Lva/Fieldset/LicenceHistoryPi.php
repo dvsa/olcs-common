@@ -18,12 +18,16 @@ class LicenceHistoryPi
      *             "value": "Y",
      *             "label": "Yes",
      *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever taken part in a public inquiry held by a Traffic Commissioner? Yes"
+     *                 "aria-label": "Has anyone you've named ever taken part in a public inquiry held by a Traffic Commissioner? Yes",
+     *                 "class" : "inline"
      *             }
      *         },
      *         {
      *             "value": "N",
-     *             "label": "No"
+     *             "label": "No",
+     *             "label_attributes": {
+     *                 "class" : "inline"
+     *             }
      *         }
      *     },
      *     "fieldset-attributes" : {

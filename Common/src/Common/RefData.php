@@ -144,6 +144,13 @@ class RefData
     const PERMISSION_SELFSERVE_LVA = 'selfserve-lva';
     const PERMISSION_SELFSERVE_TM_DASHBOARD = 'selfserve-tm-dashboard';
     const PERMISSION_SELFSERVE_DASHBOARD = 'selfserve-nav-dashboard';
+    const PERMISSION_INTERNAL_ADMIN = 'internal-admin';
+    const PERMISSION_INTERNAL_EDIT = 'internal-edit';
+    const PERMISSION_INTERNAL_VIEW = 'internal-view';
+    const PERMISSION_INTERNAL_CASE = 'internal-case';
+    const PERMISSION_INTERNAL_DOCUMENTS = 'internal-documents';
+    const PERMISSION_INTERNAL_NOTES = 'internal-notes';
+    const PERMISSION_CAN_MANAGE_USER_INTERNAL = 'can-manage-user-internal';
 
     /**
      * Phone contact types

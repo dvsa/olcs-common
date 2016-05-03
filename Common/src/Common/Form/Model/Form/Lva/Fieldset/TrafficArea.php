@@ -16,6 +16,7 @@ class TrafficArea
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.dataTrafficArea.label.new",
+     *     "hint" : "markup-traffic-area-help",
      *     "value_options": {
      *
      *     },
@@ -29,15 +30,11 @@ class TrafficArea
     /**
      *
      * @Form\Type("Common\Form\Elements\Types\TrafficAreaSet")
+     * @Form\Options({
+     *     "hint" : "markup-traffic-area-help",
+     * })
      */
     public $trafficAreaSet = null;
-
-    /**
-     * @Form\Attributes({"value": "markup-traffic-area-help"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $trafficAreaHelp = null;
-
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})

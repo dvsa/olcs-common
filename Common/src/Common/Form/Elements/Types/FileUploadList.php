@@ -64,8 +64,8 @@ class FileUploadList extends Fieldset
             $html = new Html('link', array('render-container' => false));
             $html->setAttribute('data-container-class', 'file-upload');
             $html->setValue(
-                '<p><a href="' . $file['url'] . '">'
-                . $file['description'] . '</a> <span>' . $file['size'] . '</span></p>'
+                '<a href="' . $file['url'] . '">'
+                . $file['description'] . '</a> <span>' . $file['size'] . '</span>'
             );
 
             $remove = new Submit('remove', array('render-container' => false));
@@ -83,7 +83,7 @@ class FileUploadList extends Fieldset
 
                 $imagePreview = new Html('preview', array('render-container' => false));
                 $imagePreview->setValue(
-                    '<p><img src="' . $file['url'] . '" /></p>'
+                    '<img src="' . $file['url'] . '" />'
                 );
                 $fileItem->add($imagePreview);
 

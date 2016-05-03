@@ -58,6 +58,42 @@ class AbstractOperatingCentresTest extends MockeryTestCase
         $this->sut->alterForm($mockForm, $params);
     }
 
+    public function testAlterFormWithTrafficAreaNi()
+    {
+        $mockForm = m::mock(\Common\Form\Form::class);
+
+        $params = [
+            'canHaveSchedule41' => true,
+            'canHaveCommunityLicences' => true,
+            'isPsv' => false,
+            'operatingCentres' => ['XX'],
+            'trafficArea' => ['id' => 'A', 'name' => 'THE NORTH'],
+            'niFlag' => 'Y',
+            'possibleEnforcementAreas' => ['A', 'B']
+        ];
+
+        $mockFormHelper = m::mock();
+        $this->sut->shouldReceive('getFormHelper')->andReturn($mockFormHelper);
+
+        $mockFormHelper->shouldReceive('getValidator->setMessage');
+
+        $mockFieldSet = m::mock();
+        $mockForm->shouldReceive('get')->with('dataTrafficArea')->twice()->andReturn($mockFieldSet);
+
+        $mockFormHelper->shouldReceive('remove')->with($mockForm, 'dataTrafficArea->trafficArea')->once();
+        $mockFieldSet->shouldReceive('get')->with('trafficAreaSet')->twice()->andReturn(
+            m::mock()
+                ->shouldReceive('setValue')->with('THE NORTH')->once()
+                ->shouldReceive('setOption')->with('hint', null)->once()
+                ->getMock()
+        );
+        $mockFieldSet->shouldReceive('get')->with('enforcementArea')->once()->andReturn(
+            m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
+        );
+
+        $this->sut->alterForm($mockForm, $params);
+    }
+
     public function testAlterFormWithOutTrafficArea()
     {
         $mockForm = m::mock(\Common\Form\Form::class);
@@ -80,6 +116,7 @@ class AbstractOperatingCentresTest extends MockeryTestCase
 
         $mockFieldSet = m::mock();
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);
+        $mockFieldSet->shouldReceive('remove')->with('trafficAreaSet')->once();
 
         $mockFieldSet->shouldReceive('get')->with('trafficArea')->once()->andReturn(
             m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
