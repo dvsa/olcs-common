@@ -42,6 +42,8 @@ class Language implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $request = $serviceLocator->get('Request');
+        // if not an Http request (eg Console request) then don't do anything as
+        // methods below only exists on Http Requests
         if (!$request instanceof Request) {
             return $this;
         }
