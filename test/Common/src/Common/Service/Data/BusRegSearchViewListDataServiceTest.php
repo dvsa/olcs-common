@@ -40,8 +40,6 @@ class BusRegSearchViewListDataServiceTest extends AbstractDataServiceTestCase
 
     /**
      * @dataProvider provideFetchListData
-     * @param $context
-     * @param $expected
      */
     public function testFetchListData($context, $expected)
     {
