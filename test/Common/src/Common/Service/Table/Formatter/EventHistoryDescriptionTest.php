@@ -185,7 +185,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
     }
 
     /**
-     * Test format with exception
+     * Test format with exception12
      */
     public function testFormatWithException()
     {
