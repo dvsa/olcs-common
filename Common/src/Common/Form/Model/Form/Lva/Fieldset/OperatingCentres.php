@@ -29,7 +29,8 @@ class OperatingCentres
      *     "short-label": "totAuthVehicles",
      *     "label_attributes": {
      *         "aria-label": "Enter total number of vehicles"
-     *     }
+     *     },
+     *     "hint": "markup-operating-centres-authorisation"
      * })
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":1, "max": 1000000}})
