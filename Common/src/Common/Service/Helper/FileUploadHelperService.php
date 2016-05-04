@@ -254,38 +254,21 @@ class FileUploadHelperService extends AbstractHelperService
             $error = UPLOAD_ERR_INI_SIZE;
         }
 
-        switch ($error) {
-            case UPLOAD_ERR_OK:
-                try {
-                    call_user_func(
-                        $callback,
-                        $fileData['file-controls']['file']
-                    );
-                } catch (InvalidMimeException $ex) {
-                    $this->invalidMime();
-                    return false;
-                } catch (\Exception $ex) {
-                    $this->failedUpload();
-                    return false;
-                }
-                break;
-            case UPLOAD_ERR_PARTIAL:
-                $this->getForm()->setMessages($this->formatErrorMessageForForm('File was only partially uploaded'));
-                break;
-            case UPLOAD_ERR_NO_FILE:
-                $this->getForm()->setMessages($this->formatErrorMessageForForm('Please select a file to upload'));
-                break;
-            case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-                $this->getForm()->setMessages($this->formatErrorMessageForForm('The file was too large to upload'));
-                break;
-            case UPLOAD_ERR_NO_TMP_DIR:
-            case UPLOAD_ERR_CANT_WRITE:
-            case UPLOAD_ERR_EXTENSION:
-                $this->getForm()->setMessages(
-                    $this->formatErrorMessageForForm('An unexpected error occurred while uploading the file')
+        if ($error === UPLOAD_ERR_OK) {
+            try {
+                call_user_func(
+                    $callback,
+                    $fileData['file-controls']['file']
                 );
-                break;
+            } catch (InvalidMimeException $ex) {
+                $this->invalidMime();
+                return false;
+            } catch (\Exception $ex) {
+                $this->failedUpload();
+                return false;
+            }
+        } else {
+            $this->getForm()->setMessages($this->formatErrorMessageForForm('message.file-upload-error.'. $error));
         }
 
         return true;

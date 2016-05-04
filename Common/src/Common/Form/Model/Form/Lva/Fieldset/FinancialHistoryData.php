@@ -165,12 +165,16 @@ class FinancialHistoryData
      *             "value": "Y",
      *             "label": "Yes",
      *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever been disqualified from acting as a company director or managing a company under the Company Directors Disqualification Act 1986? Yes"
+     *                 "aria-label": "Has anyone you've named ever been disqualified from acting as a company director or managing a company under the Company Directors Disqualification Act 1986? Yes",
+     *                 "class" : "inline"
      *             }
      *         },
      *         {
      *             "value": "N",
-     *             "label": "No"
+     *             "label": "No",
+     *             "label_attributes": {
+     *                 "class" : "inline"
+     *             }
      *         }
      *     },
      * })

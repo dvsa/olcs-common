@@ -18,12 +18,16 @@ class LicenceHistoryEu
      *             "value": "Y",
      *             "label": "Yes",
      *             "label_attributes": {
-     *                 "aria-label": "Does anyone you've named already have an operator's licence in any traffic area? Yes"
+     *                 "aria-label": "Does anyone you've named already have an operator's licence in any traffic area? Yes",
+     *                 "class" : "inline"
      *             }
      *         },
      *         {
      *             "value": "N",
-     *             "label": "No"
+     *             "label": "No",
+     *             "label_attributes": {
+     *                 "class" : "inline"
+     *             }
      *         }
      *     },
      *     "fieldset-attributes" : {
@@ -53,12 +57,16 @@ class LicenceHistoryEu
      *             "value": "Y",
      *             "label": "Yes",
      *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever had an operator's licence application revoked, suspended or curtailed in the European Union? Yes"
+     *                 "aria-label": "Has anyone you've named ever had an operator's licence application revoked, suspended or curtailed in the European Union? Yes",
+     *                 "class" : "inline"
      *             }
      *         },
      *         {
      *             "value": "N",
-     *             "label": "No"
+     *             "label": "No",
+     *             "label_attributes": {
+     *                 "class" : "inline"
+     *             }
      *         }
      *     },
      *     "fieldset-attributes" : {

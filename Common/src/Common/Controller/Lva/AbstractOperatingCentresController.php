@@ -11,6 +11,7 @@ namespace Common\Controller\Lva;
 use Common\Category;
 use Common\Data\Mapper\Lva\OperatingCentres;
 use Common\Data\Mapper\Lva\OperatingCentre;
+use Common\Form\View\Helper\Form;
 use Dvsa\Olcs\Transfer\Command\ApplicationOperatingCentre\Update as AppUpdate;
 use Dvsa\Olcs\Transfer\Command\LicenceOperatingCentre\Update as LicUpdate;
 use Dvsa\Olcs\Transfer\Command\VariationOperatingCentre\Update as VarUpdate;
@@ -137,6 +138,15 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
         } else {
             $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        }
+
+        // if traffic area dropdown and enforement area dropdown exists, then add JS to popoulate enforcement
+        // area when traffic area is changed
+        if ($form->has('dataTrafficArea') &&
+            $form->get('dataTrafficArea')->has('trafficArea') &&
+            $form->get('dataTrafficArea')->has('enforcementArea')
+        ) {
+            $this->getServiceLocator()->get('Script')->loadFile('application-oc');
         }
 
         return $this->render('operating_centres', $form);

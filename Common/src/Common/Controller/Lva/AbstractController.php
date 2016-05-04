@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Lva Abstract Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Controller\Traits\GenericUpload;
@@ -25,7 +20,11 @@ use Zend\Mvc\MvcEvent;
  *
  * @method \Common\Service\Cqrs\Response handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $query)
  * @method \Common\Service\Cqrs\Response handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $query)
+ * @method \Common\Service\Cqrs\Response handleCancelRedirect($lvaId)
+ * @method \Zend\Http\Response handlePostSave($prefix = null)
  * @method \Common\Controller\Plugin\Redirect redirect()
+ * @method boolean isGranted(string $permission)
+ * @method \Common\Controller\Plugin\CurrentUser currentUser()
  */
 abstract class AbstractController extends AbstractActionController
 {
@@ -259,7 +258,11 @@ abstract class AbstractController extends AbstractActionController
 
         // If we are on a sub-section, we need to go back to the section
         if ($this->params('action') !== 'index') {
-            return $this->redirect()->toRoute(null, [$this->getIdentifierIndex() => $lvaId]);
+            return $this->redirect()->toRoute(
+                null,
+                [$this->getIdentifierIndex() => $lvaId],
+                ['query' => $this->getRequest()->getQuery()->toArray()]
+            );
         }
 
         return $this->handleCancelRedirect($lvaId);

@@ -119,6 +119,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         $table = $this->alterTable($this->getTable());
         $formHelper->populateFormTable($form->get('table'), $table);
+        $this->getServiceLocator()->get('Helper\Form')->setFormActionFromRequest($form, $this->getRequest());
 
         return $form;
     }
@@ -128,7 +129,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function getTable()
     {
-        return $this->getServiceLocator()->get('Table')->prepareTable('lva-community-licences', $this->getTableData());
+        $table = $this->getServiceLocator()->get('Table')->prepareTable(
+            'lva-community-licences', $this->getTableData()
+        );
+        return $table;
     }
 
     /**
@@ -282,7 +286,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     {
         return $this->redirect()->toRouteAjax(
             null,
-            ['action' => 'index', $this->getIdentifierIndex() => $this->getIdentifier()]
+            ['action' => 'index', $this->getIdentifierIndex() => $this->getIdentifier()],
+            ['query' => $this->getRequest()->getQuery()->toArray()]
         );
     }
 
@@ -302,6 +307,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $form = $formHelper->createForm('Lva\CommunityLicencesAdd');
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
 
         $view = new ViewModel(['form' => $form]);
         $view->setTemplate('partials/form');
@@ -344,7 +350,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         $ids = explode(',', $this->params('child_id'));
         if (!$request->isPost()) {
-            $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicencesVoid');
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $form = $formHelper->createForm('Lva\CommunityLicencesVoid');
+            $formHelper->setFormActionFromRequest($form, $this->getRequest());
             $view = new ViewModel(['form' => $form]);
             $view->setTemplate('partials/form');
             return $this->render($view);
@@ -375,7 +383,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $request = $this->getRequest();
 
         if (!$request->isPost()) {
-            $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicencesRestore');
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $form = $formHelper->createForm('Lva\CommunityLicencesRestore');
+            $formHelper->setFormActionFromRequest($form, $this->getRequest());
             $view = new ViewModel(['form' => $form]);
             $view->setTemplate('partials/form');
             return $this->render($view);
@@ -401,7 +411,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         }
         $request = $this->getRequest();
 
-        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicencesStop');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('Lva\CommunityLicencesStop');
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
         $view = new ViewModel(['form' => $form]);
         $view->setTemplate('partials/form');
         $this->getServiceLocator()->get('Script')->loadFile('community-licence-stop');

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Application Transport Manager Adapter
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Service\Entity\LicenceEntityService;
@@ -13,6 +8,7 @@ use Common\Service\Entity\LicenceEntityService;
  * Application Transport Manager Adapter
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
 class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
@@ -23,12 +19,12 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
      */
     public function getTableData($applicationId, $licenceId)
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(\Dvsa\Olcs\Transfer\Query\Application\TransportManagers::create(['id' => $applicationId]));
+        $query = $this->transferAnnotationBuilder->createQuery(
+            \Dvsa\Olcs\Transfer\Query\Application\TransportManagers::create(['id' => $applicationId])
+        );
 
-        /* @var $response \Common\Service\Cqrs\Response */
-        $response = $this->getServiceLocator()->get('QueryService')->send($query);
-        $data = $response->getResult();
+        $data = $this->querySrv->send($query)->getResult();
+
         $this->applicationData = $data;
 
         return $this->mapResultForTable($data['transportManagers']);
@@ -52,7 +48,7 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
             LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
         ];
 
-        return in_array($this->applicationData['licenceType']['id'], $mustHaveTypes);
+        return in_array($this->applicationData['licenceType']['id'], $mustHaveTypes, true);
     }
 
     /**
@@ -64,12 +60,10 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
      */
     public function delete(array $ids, $applicationId)
     {
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createCommand(\Dvsa\Olcs\Transfer\Command\TransportManagerApplication\Delete::create(['ids' => $ids]));
+        $command = $this->transferAnnotationBuilder->createCommand(
+            \Dvsa\Olcs\Transfer\Command\TransportManagerApplication\Delete::create(['ids' => $ids])
+        );
 
-        /* @var $response \Common\Service\Cqrs\Response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
-
-        return $response->isOk();
+        return $this->commandSrv->send($command)->isOk();
     }
 }

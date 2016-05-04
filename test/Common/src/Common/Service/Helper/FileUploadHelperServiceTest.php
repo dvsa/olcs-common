@@ -325,10 +325,10 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     public function fileUploadProvider()
     {
         return [
-            [UPLOAD_ERR_PARTIAL, 'File was only partially uploaded'],
-            [UPLOAD_ERR_NO_FILE, 'Please select a file to upload'],
-            [UPLOAD_ERR_INI_SIZE, 'The file was too large to upload'],
-            [UPLOAD_ERR_NO_TMP_DIR, 'An unexpected error occurred while uploading the file']
+            [UPLOAD_ERR_PARTIAL, 'message.file-upload-error.'. UPLOAD_ERR_PARTIAL],
+            [UPLOAD_ERR_NO_FILE, 'message.file-upload-error.'. UPLOAD_ERR_NO_FILE],
+            [UPLOAD_ERR_INI_SIZE, 'message.file-upload-error.'. UPLOAD_ERR_INI_SIZE],
+            [UPLOAD_ERR_NO_TMP_DIR, 'message.file-upload-error.'. UPLOAD_ERR_NO_TMP_DIR],
         ];
     }
 

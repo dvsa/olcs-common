@@ -31,12 +31,12 @@ class GoodsVehiclesVehicleData
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Common\Filter\Vrm"})
-     * @Form\Validator({"name":"Common\Form\Elements\Validators\Vrm"})
+     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Vrm"})
      */
     public $vrm = null;
 
     /**
-     * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":"","pattern":"\d*"})
+     * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":"","pattern":"\d(\.)*"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight",
      *     "label_attributes": {

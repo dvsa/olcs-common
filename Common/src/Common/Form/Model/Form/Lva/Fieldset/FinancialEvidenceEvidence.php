@@ -6,6 +6,7 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("evidence")
+ * @Form\Attributes({"class":"last"})
  */
 class FinancialEvidenceEvidence
 {
@@ -49,9 +50,9 @@ class FinancialEvidenceEvidence
      *          "context_values": {"Y"},
      *          "validators": {
      *              {
-     *                  "name": "\Zend\Validator\GreaterThan",
+     *                  "name": "\Common\Validator\FileUploadCount",
      *                  "options": {
-     *                      "min": 0,
+     *                      "min": 1,
      *                      "message": "lva-financial-evidence-upload.required"
      *                  }
      *              }

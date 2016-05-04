@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Variation Transport Manager Adapter
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 namespace Common\Controller\Lva\Adapters;
 
 use Dvsa\Olcs\Transfer\Command;
@@ -13,6 +8,7 @@ use Dvsa\Olcs\Transfer\Command;
  * Variation Transport Manager Adapter
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
 class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
 {
@@ -21,12 +17,12 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
      */
     public function getTableData($variationId, $licenceId)
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(\Dvsa\Olcs\Transfer\Query\Application\TransportManagers::create(['id' => $variationId]));
+        $query = $this->transferAnnotationBuilder->createQuery(
+            \Dvsa\Olcs\Transfer\Query\Application\TransportManagers::create(['id' => $variationId])
+        );
 
         /* @var $response \Common\Service\Cqrs\Response */
-        $response = $this->getServiceLocator()->get('QueryService')->send($query);
-        $data = $response->getResult();
+        $data = $this->querySrv->send($query)->getResult();
 
         return $this->mapResultForTable($data['transportManagers'], $data['licence']['tmLicences']);
     }
@@ -49,22 +45,20 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
             }
         }
 
-        if (!empty($tmaIds)) {
-            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-                ->createCommand(Command\TransportManagerApplication\Delete::create(['ids' => $tmaIds]));
-            /* @var $response \Common\Service\Cqrs\Response */
-            $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        if (count($tmaIds) !== 0) {
+            $command = $this->transferAnnotationBuilder->createCommand(
+                Command\TransportManagerApplication\Delete::create(['ids' => $tmaIds])
+            );
+            $this->commandSrv->send($command);
         }
 
-        if (!empty($tmlIds)) {
-            $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-                ->createCommand(
-                    Command\Variation\TransportManagerDeleteDelta::create(
-                        ['id' => $applicationId, 'transportManagerLicenceIds' => $tmlIds]
-                    )
-                );
-            /* @var $response \Common\Service\Cqrs\Response */
-            $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        if (count($tmlIds) !== 0) {
+            $command = $this->transferAnnotationBuilder->createCommand(
+                Command\Variation\TransportManagerDeleteDelta::create(
+                    ['id' => $applicationId, 'transportManagerLicenceIds' => $tmlIds]
+                )
+            );
+            $this->commandSrv->send($command);
         }
     }
 }

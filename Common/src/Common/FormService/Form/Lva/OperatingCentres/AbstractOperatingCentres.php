@@ -56,7 +56,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             ->getValidator($form, 'table->table', 'Common\Form\Elements\Validators\TableRequiredValidator')
             ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
 
-        if (empty($params['operatingCentres'])) {
+        if ($this->removeTrafficAreaElements($params)) {
             $this->getFormHelper()->remove($form, 'dataTrafficArea');
 
             return $form;
@@ -74,23 +74,19 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
 
         // if application/licence is NI then don't show trafficArea help
         if ($params['niFlag'] === 'Y') {
-            $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficAreaHelp');
+            $form->get('dataTrafficArea')->get('trafficAreaSet')->setOption('hint', null);
         }
 
-        if (empty($trafficAreaId) || $this->allowChangingTrafficArea()) {
+        if (empty($trafficAreaId) || $this->allowChangingTrafficArea($trafficAreaId)) {
             $dataTrafficAreaFieldset->get('trafficArea')->setValueOptions($params['possibleTrafficAreas']);
+            $dataTrafficAreaFieldset->remove('trafficAreaSet');
         } else {
             $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficArea');
             $dataTrafficAreaFieldset->get('trafficAreaSet')->setValue($trafficArea['name']);
         }
 
-        if (!empty($trafficAreaId)) {
-            $dataTrafficAreaFieldset->get('enforcementArea')
-                ->setValueOptions($params['possibleEnforcementAreas']);
-        } else {
-            $dataTrafficAreaFieldset->remove('trafficAreaSet')
-                ->remove('enforcementArea');
-        }
+        $dataTrafficAreaFieldset->get('enforcementArea')
+            ->setValueOptions($params['possibleEnforcementAreas']);
 
         return $form;
     }
@@ -100,9 +96,21 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
      *
      * @return boolean
      */
-    protected function allowChangingTrafficArea()
+    protected function allowChangingTrafficArea($trafficAreaId)
     {
         return false;
+    }
+
+    /**
+     * Should the Traffic Area elements be removed from the Form
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
+    protected function removeTrafficAreaElements($data)
+    {
+        return empty($data['operatingCentres']);
     }
 
     protected function alterFormForPsvLicences(Form $form, array $params)

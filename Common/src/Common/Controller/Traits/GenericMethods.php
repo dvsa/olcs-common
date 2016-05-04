@@ -70,6 +70,14 @@ trait GenericMethods
 
         if ($this->getRequest()->isPost()) {
 
+            /* @var Request $request */
+            $request = $this->getRequest();
+            // if Files and Post are empty this is as symptom that the PHP ini post_max_size has been exceeded
+            if (empty($request->getFiles()->toArray()) && empty($request->getPost()->toArray())) {
+                $this->addErrorMessage('message.post_max_size_exceeded');
+                return $form;
+            }
+
             $data = array_merge(
                 (array)$this->getRequest()->getPost(),
                 $fieldValues
@@ -204,11 +212,12 @@ trait GenericMethods
     /**
      * Generate a form with data
      *
-     * @param string $name
-     * @param callable $callback
-     * @param mixed $data
-     * @param boolean $tables
-     * @return object
+     * @param string    $name     Form name
+     * @param callable  $callback Method to call to process
+     * @param mixed     $data
+     * @param boolean   $tables
+     *
+     * @return \Common\Form\Form
      */
     public function generateFormWithData(
         $name,
@@ -230,10 +239,13 @@ trait GenericMethods
     /**
      * Generate a form with a callback
      *
-     * @param string $name
+     * @param string   $name
      * @param callable $callback
-     * @param boolean $tables
-     * @return object
+     * @param bool     $tables
+     * @param bool     $enableCsrf
+     * @param array    $fieldValues
+     *
+     * @return \Common\Form\Form
      */
     protected function generateForm($name, $callback, $tables = false, $enableCsrf = true, $fieldValues = [])
     {
