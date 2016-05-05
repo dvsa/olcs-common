@@ -2707,7 +2707,7 @@ return [
     'auth.login.title' => 'Mewngofnodi',
     'auth.login.username' => 'Enw defnyddiwr',
     'auth.login.password' => 'Cyfrinair',
-    'auth.login.termsAgreed' => 'By using the site you agree to the <a href="%s">terms and conditions</a>.',
+    'auth.login.termsAgreed' => 'Trwy ddefnyddio’r safle hwn rydych yn cytuno ar y <a href="%s">telerau ac amodau</a>.',
     'auth.login.button' => 'Mewngofnodi',
     'auth.forgot-username.label' => 'Wedi anghofio’ch enw defnyddiwr?',
     'auth.forgot-password.label' => 'Wedi anghofio’ch cyfrinair?',
