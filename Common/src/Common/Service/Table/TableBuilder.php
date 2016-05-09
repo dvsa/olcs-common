@@ -1863,7 +1863,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     protected function checkForActionLinks()
     {
         if ($this->isInternalReadOnly()) {
-            $typesToRemove = ['ActionLinks', 'DeltaActionLinks'];
+            $typesToRemove = ['Action', 'ActionLinks', 'DeltaActionLinks'];
             $columns = $this->getColumns();
             $updatedColumns = [];
             foreach ($columns as $column) {
