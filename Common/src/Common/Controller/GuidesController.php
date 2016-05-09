@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Guides Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
@@ -14,6 +9,8 @@ use Zend\View\Model\ViewModel;
  * Guides Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ *
+ * @method \Olcs\Mvc\Controller\Plugin\Placeholder placeholder()
  */
 class GuidesController extends ZendAbstractActionController
 {
@@ -39,7 +36,7 @@ class GuidesController extends ZendAbstractActionController
 
     public function indexAction()
     {
-        $guide = $this->params('guide');
+        $guide = (string) $this->params('guide');
 
         if (!isset($this->guideMap[$guide])) {
             return $this->notFoundAction();
@@ -49,6 +46,7 @@ class GuidesController extends ZendAbstractActionController
 
         $view = new ViewModel(['guide' => $guide]);
         $view->setTemplate('pages/guides/' . $partial);
+
         $this->placeholder()->setPlaceholder('pageTitle', $guide . '-title');
 
         return $view;
