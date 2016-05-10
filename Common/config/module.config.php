@@ -520,6 +520,9 @@ return array(
     'cache' => [
         'adapter' => [
             'name' => 'apc',
+            'options' => [
+                'ttl' => 600,
+            ],
         ]
     ],
     'form_service_manager' => [
@@ -737,7 +740,4 @@ return array(
     'translator' => [
         'replacements' => include_once(__DIR__ . '/language/replacements.php')
     ],
-    'cacheable_queries' => [
-        \Dvsa\Olcs\Transfer\Query\User\RoleList::class => ['persistent' => true]
-    ]
 );

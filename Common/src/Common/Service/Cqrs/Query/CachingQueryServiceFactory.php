@@ -17,8 +17,13 @@ class CachingQueryServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $config = $serviceLocator->get('Config');
-        $conf = isset($config['cacheable_queries']) ? $config['cacheable_queries'] : [];
-        return new CachingQueryService($serviceLocator->get(QueryService::class), $serviceLocator->get('Cache'), $conf);
+        $service = new CachingQueryService(
+            $serviceLocator->get(QueryService::class),
+            $serviceLocator->get('Cache')
+        );
+
+        $service->setLogger($serviceLocator->get('Logger'));
+
+        return $service;
     }
 }
