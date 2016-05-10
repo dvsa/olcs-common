@@ -521,7 +521,7 @@ return array(
         'adapter' => [
             'name' => 'apc',
             'options' => [
-                'ttl' => 600,
+                'ttl' => 3600,
             ],
         ]
     ],
