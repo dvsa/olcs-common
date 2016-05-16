@@ -382,7 +382,8 @@ return array(
             'formRow' => 'Common\Form\View\Helper\FormRow',
             'languageLink' => \Common\View\Helper\LanguageLink::class,
             'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
-        )
+            'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
+        ),
     ),
     'view_manager' => array(
         'template_path_stack' => array(
