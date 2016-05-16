@@ -71,9 +71,7 @@ class EventHistoryDescription implements FormatterInterface
             true
         );
 
-        if (isset($data['eventDescription'])) {
-            $text = $data['eventDescription'];
-        } elseif (isset($data['eventHistoryType']['description'])) {
+        if (isset($data['eventHistoryType']['description'])) {
             $text = $data['eventHistoryType']['description'];
         } else {
             $text = '';
