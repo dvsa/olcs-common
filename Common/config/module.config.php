@@ -331,7 +331,6 @@ return array(
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
             'flashMessengerAll' => 'Common\View\Helper\FlashMessenger',
-            'assetPath' => 'Common\View\Helper\AssetPath',
             'addTags' => 'Common\View\Helper\AddTags',
             'readonlyformitem' => 'Common\Form\View\Helper\Readonly\FormItem',
             'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
