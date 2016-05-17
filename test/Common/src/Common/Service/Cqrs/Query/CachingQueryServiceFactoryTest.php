@@ -19,7 +19,7 @@ class CachingQueryServiceFactoryTest extends MockeryTestCase
     public function testCreateService()
     {
         $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->shouldReceive('get')->with('Config')->andReturn([]);
+        $mockSl->shouldReceive('get')->with('Logger')->andReturn(m::mock(\Zend\Log\LoggerInterface::class));
         $mockSl->shouldReceive('get')->with(QueryService::class)->andReturn(m::mock(QueryService::class));
         $mockSl->shouldReceive('get')->with('Cache')->andReturn(m::mock(StorageInterface::class));
 

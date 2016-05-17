@@ -3,15 +3,5 @@
         <h1><?php echo $this->pageTitle(); ?></h1>
     </div><!-- .page-header__wrapper -->
 </div>
-<div class="row">
-  <div class="two-thirds">
-      <div class="article">
-          <?php echo $this->translate('markup-' . $guide); ?>
-      </div>
-  </div>
-  <div class="one-third">
-      <div class="sidebar">
-        <?php echo $this->translate('markup-support-contact-address'); ?>
-      </div>
-  </div>
-</div>
+
+<?php echo $this->render('pages/guides/partial/body.phtml');

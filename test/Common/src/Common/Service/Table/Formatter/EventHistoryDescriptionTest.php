@@ -81,7 +81,9 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                 [
                     'application' => ['id' => 2],
                     'id' => 1,
-                    'eventDescription' => 'foo'
+                    'eventHistoryType' => [
+                        'description' => 'foo'
+                    ]
                 ],
                 'lva-application/processing/event-history',
                 [
@@ -125,7 +127,9 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                 [
                     'busReg' => 2,
                     'id' => 1,
-                    'eventDescription' => 'foo'
+                    'eventHistoryType' => [
+                        'description' => 'foo'
+                    ]
                 ],
                 'licence/bus-processing/event-history',
                 [
@@ -140,7 +144,9 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                 [
                     'transportManager' => ['id' => 2],
                     'id' => 1,
-                    'eventDescription' => 'foo'
+                    'eventHistoryType' => [
+                        'description' => 'foo'
+                    ]
                 ],
                 'transport-manager/processing/event-history',
                 [
@@ -155,7 +161,9 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                 [
                     'organisation' => ['id' => 2],
                     'id' => 1,
-                    'eventDescription' => 'foo'
+                    'eventHistoryType' => [
+                        'description' => 'foo'
+                    ]
                 ],
                 'operator/processing/history',
                 [
@@ -170,7 +178,9 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                 [
                     'case' => ['id' => 2],
                     'id' => 1,
-                    'eventDescription' => 'foo'
+                    'eventHistoryType' => [
+                        'description' => 'foo'
+                    ]
                 ],
                 'processing_history',
                 [
@@ -185,7 +195,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
     }
 
     /**
-     * Test format with exception12
+     * Test format with exception
      */
     public function testFormatWithException()
     {

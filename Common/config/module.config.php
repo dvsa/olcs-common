@@ -382,7 +382,8 @@ return array(
             'formRow' => 'Common\Form\View\Helper\FormRow',
             'languageLink' => \Common\View\Helper\LanguageLink::class,
             'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
-        )
+            'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
+        ),
     ),
     'view_manager' => array(
         'template_path_stack' => array(
@@ -520,6 +521,9 @@ return array(
     'cache' => [
         'adapter' => [
             'name' => 'apc',
+            'options' => [
+                'ttl' => 3600,
+            ],
         ]
     ],
     'form_service_manager' => [
@@ -737,7 +741,4 @@ return array(
     'translator' => [
         'replacements' => include_once(__DIR__ . '/language/replacements.php')
     ],
-    'cacheable_queries' => [
-        \Dvsa\Olcs\Transfer\Query\User\RoleList::class => ['persistent' => true]
-    ]
 );

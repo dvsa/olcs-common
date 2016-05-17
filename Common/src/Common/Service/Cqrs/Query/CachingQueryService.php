@@ -9,17 +9,14 @@ use Zend\Cache\Storage\StorageInterface as CacheInterface;
  * Class CachingQueryService
  * @package Common\Service\Cqrs\Query
  */
-class CachingQueryService implements QueryServiceInterface
+class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwareInterface
 {
+    use \Zend\Log\LoggerAwareTrait;
+
     /**
      * @var QueryServiceInterface
      */
     private $queryService;
-
-    /**
-     * @var array
-     */
-    private $config = [];
 
     /**
      * @var
@@ -34,13 +31,11 @@ class CachingQueryService implements QueryServiceInterface
     /**
      * @param QueryServiceInterface $queryService
      * @param CacheInterface $cache
-     * @param array $config
      */
-    public function __construct(QueryServiceInterface $queryService, CacheInterface $cache, array $config)
+    public function __construct(QueryServiceInterface $queryService, CacheInterface $cache)
     {
         $this->queryService = $queryService;
         $this->cacheService = $cache;
-        $this->config = $config;
     }
 
     /**
@@ -49,17 +44,15 @@ class CachingQueryService implements QueryServiceInterface
      */
     public function send(QueryContainerInterface $query)
     {
-        if (!$query->isCachable()) {
-            return $this->queryService->send($query);
-        }
-
-        $queryClass = get_class($query->getDto());
-
-        if (isset($this->config[$queryClass]['persistent']) && $this->config[$queryClass]['persistent'] === true) {
+        if ($query->isMediumTermCachable()) {
             return $this->handlePersistentCache($query);
         }
 
-        return $this->handleLocalCache($query);
+        if ($query->isShortTermCachable()) {
+            return $this->handleLocalCache($query);
+        }
+
+        return $this->queryService->send($query);
     }
 
     /**
@@ -72,6 +65,8 @@ class CachingQueryService implements QueryServiceInterface
 
         if (!isset($this->localCache[$cacheIdentifier])) {
             $this->localCache[$cacheIdentifier] = $this->queryService->send($query);
+        } else {
+            $this->logMessage('Get from local cache '. get_class($query->getDto()));
         }
 
         return $this->localCache[$cacheIdentifier];
@@ -89,9 +84,22 @@ class CachingQueryService implements QueryServiceInterface
             $result = $this->queryService->send($query);
             $this->cacheService->setItem($query->getCacheIdentifier(), $result);
         } else {
+            $this->logMessage('Get from presistent cache '. get_class($query->getDto()));
             $result = $this->cacheService->getItem($query->getCacheIdentifier());
         }
 
         return $result;
+    }
+
+    /**
+     * Log a message to the injected logger
+     *
+     * @param string $message
+     */
+    private function logMessage($message)
+    {
+        if ($this->getLogger()) {
+            $this->getLogger()->debug($message);
+        }
     }
 }

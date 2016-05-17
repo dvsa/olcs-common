@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Action type
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Service\Table\Type;
 
 /**
@@ -31,12 +24,12 @@ class Action extends AbstractType
      */
     public function render($data, $column, $formattedContent = null)
     {
-        $fieldset = $this->getTable()->getFieldset();
-
         $class = isset($column['class']) ? $column['class'] : '';
 
         if ($formattedContent !== null) {
             $value = $formattedContent;
+        } elseif (isset($column['text'])) {
+            $value = $column['text'];
         } elseif (isset($column['value_format'])) {
             $value = $this->getTable()->replaceContent($column['value_format'], $data);
         } else {
@@ -45,6 +38,7 @@ class Action extends AbstractType
 
         $name = 'action';
 
+        $fieldset = $this->getTable()->getFieldset();
         if (!empty($fieldset)) {
             $name = $fieldset . '[action]';
         }
