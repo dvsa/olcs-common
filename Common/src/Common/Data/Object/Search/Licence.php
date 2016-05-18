@@ -109,7 +109,13 @@ class Licence extends InternalSearchAbstract
                     return '<a href="/operator/' . $data['orgId'] . '">' .$orgName . '</a>';
                 }
             ],
-            ['title' => 'Trading name', 'name'=> 'tradingName'],
+            [
+                'title' => 'Trading name',
+                'name'=> 'licenceTradingNames',
+                'formatter' => function ($data) {
+                    return nl2br(str_replace('|', ", \n\r", $data['licenceTradingNames']));
+                }
+            ],
             ['title' => 'Entity type', 'name'=> 'orgTypeDesc'],
             ['title' => 'Licence type', 'name'=> 'licTypeDesc'],
             ['title' => 'FABS Reference', 'name'=> 'fabsReference'],
