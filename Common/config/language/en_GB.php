@@ -2704,5 +2704,6 @@ return [
     'west-of-england' => 'West of England',
     'withdraw-application' => 'Withdraw application',
     'your-business' => 'Your business',
+    'traffic-commissioner-agreement-legislation' => 'TC/DTC/HTRU/DHTRU agreement and legislation',
     // Potentially unused translations
 ];
