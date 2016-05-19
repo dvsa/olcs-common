@@ -113,7 +113,7 @@ class Licence extends InternalSearchAbstract
                 'title' => 'Trading name',
                 'name'=> 'licenceTradingNames',
                 'formatter' => function ($data) {
-                    return nl2br(str_replace('|', ", \n\r", $data['licenceTradingNames']));
+                    return str_replace('|', ', <br />', $data['licenceTradingNames']);
                 }
             ],
             ['title' => 'Entity type', 'name'=> 'orgTypeDesc'],
