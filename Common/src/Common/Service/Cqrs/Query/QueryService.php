@@ -16,6 +16,7 @@ use Zend\Http\Request;
 use Zend\Http\Client;
 use Zend\Mvc\Router\Exception\ExceptionInterface;
 use Zend\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
+use Common\Service\Cqrs\CqrsTrait;
 
 /**
  * Query
@@ -24,6 +25,8 @@ use Zend\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterfac
  */
 class QueryService implements QueryServiceInterface
 {
+    use CqrsTrait;
+
     /**
      * @var RouteInterface
      */
@@ -39,11 +42,18 @@ class QueryService implements QueryServiceInterface
      */
     protected $request;
 
-    public function __construct(RouteInterface $router, Client $client, Request $request)
-    {
+    public function __construct(
+        RouteInterface $router,
+        Client $client,
+        Request $request,
+        $showApiMessages,
+        $flashMessenger
+    ) {
         $this->router = $router;
         $this->client = $client;
         $this->request = $request;
+        $this->showApiMessages = $showApiMessages;
+        $this->flashMessenger = $flashMessenger;
     }
 
     /**
@@ -88,20 +98,16 @@ class QueryService implements QueryServiceInterface
                 $adapter->setShouldLogData($shouldLogContent);
             }
 
-            return new Response($clientResponse);
+            $response = new Response($clientResponse);
+
+            if ($this->showApiMessages) {
+                $this->showApiMessagesFromResponse($response);
+            }
+
+            return $response;
 
         } catch (HttpClientExceptionInterface $ex) {
             return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_500);
         }
-    }
-
-    protected function invalidResponse(array $messages = [], $statusCode = HttpResponse::STATUS_CODE_500)
-    {
-        $httpResponse = new HttpResponse();
-        $httpResponse->setStatusCode($statusCode);
-        $response = new Response($httpResponse);
-        $response->setResult(['messages' => $messages]);
-
-        return $response;
     }
 }

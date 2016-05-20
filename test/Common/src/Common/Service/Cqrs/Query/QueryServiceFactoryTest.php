@@ -38,16 +38,21 @@ class QueryServiceFactoryTest extends MockeryTestCase
         $config = [
             'cqrs_client' => [
                 'adapter' => $adapter
+            ],
+            'debug' => [
+                'showApiMessages' => true
             ]
         ];
 
         $router = m::mock(\Zend\Mvc\Router\RouteInterface::class);
         $request = m::mock(\Zend\Http\Request::class);
+        $flashMessenger = m::mock(\Common\Service\Helper\FlashMessengerService::class);
 
         $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get')->with('Config')->andReturn($config);
         $sm->shouldReceive('get')->with('CqrsRequest')->andReturn($request);
         $sm->shouldReceive('get')->with('ApiRouter')->andReturn($router);
+        $sm->shouldReceive('get')->with('Helper\FlashMessenger')->andReturn($flashMessenger)->once();
 
         $commandService = $this->sut->createService($sm);
 
