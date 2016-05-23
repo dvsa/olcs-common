@@ -37,7 +37,6 @@ class QuerySenderTest extends MockeryTestCase
     /**
      * @param QueryInterface $query
      * @return \Common\Service\Cqrs\Response
-     * @group test123
      */
     public function testSend()
     {
