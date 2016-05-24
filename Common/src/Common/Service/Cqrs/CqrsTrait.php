@@ -68,7 +68,7 @@ trait CqrsTrait
     {
         $result = $response->getResult();
 
-        if (json_last_error()) {
+        if (json_last_error() && $response->getStatusCode() !== 302) {
             $this->showApiMessages(['Error decoding json response: ' . $response->getBody()]);
         }
 
