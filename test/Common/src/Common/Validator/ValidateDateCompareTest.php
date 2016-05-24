@@ -2,13 +2,12 @@
 
 namespace CommonTest\Validator;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Validator\DateCompare;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Class ValidateDateCompare
- * @package CommonTest\Validator
+ * @covers Common\Validator\DateCompare
  */
 class ValidateDateCompareTest extends MockeryTestCase
 {
@@ -21,38 +20,32 @@ class ValidateDateCompareTest extends MockeryTestCase
         $sut->setOptions(
             [
                 'compare_to' =>'test',
-                'operator' => false,
                 'compare_to_label' => [null],
                 'operator' => 'lt',
-                'has_time' => false
+                'has_time' => false,
             ]
         );
 
-        $this->assertEquals('test', $sut->getCompareTo());
-        $this->assertEquals([null], $sut->getCompareToLabel());
-        $this->assertEquals('lt', $sut->getOperator());
-        $this->assertEquals(false, $sut->getHasTime());
+        static::assertEquals('test', $sut->getCompareTo());
+        static::assertEquals([null], $sut->getCompareToLabel());
+        static::assertEquals('lt', $sut->getOperator());
+        static::assertEquals(false, $sut->hasTime());
 
     }
 
     /**
      * @dataProvider provideIsValid
-     * @param $expected
-     * @param $options
-     * @param $context
-     * @param $chainValid
-     * @param array $errorMessages
      */
-    public function testIsValid($expected, $options, $value, $context, $errorMessages = [])
+    public function testIsValid($expected, $options, $value, $context, array $errorMessages = [])
     {
-        $errorMessages = empty($errorMessages) ? ['error' => 'message'] : $errorMessages;
+        $errorMessages = (count($errorMessages) === 0 ? ['error' => 'message'] : $errorMessages);
 
         $sut = new DateCompare();
         $sut->setOptions($options);
-        $this->assertEquals($expected, $sut->isValid($value, $context));
+        static::assertEquals($expected, $sut->isValid($value, $context));
 
         if (!$expected) {
-            $this->assertEquals($errorMessages, $sut->getMessages());
+            static::assertEquals($errorMessages, $sut->getMessages());
         }
     }
 
@@ -67,9 +60,9 @@ class ValidateDateCompareTest extends MockeryTestCase
                 true,
                 ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
-                ['other_field'=>
-                    ['day' => '09', 'month' => '01', 'year' => '2014'], true],
-                true
+                [
+                    'other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014'],
+                ],
             ],
             //context matches, field is invalid
             [
@@ -117,20 +110,6 @@ class ValidateDateCompareTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'gte', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
                 ['other_field'=> ['day' => '10', 'month' => '01', 'year' => '2014']],
-                true
-            ],
-            //context matches, field has time and is valid gte
-            [
-                true,
-                [
-                    'compare_to' => 'other_field',
-                    'operator' => 'gte',
-                    'compare_to_label' => 'Other field',
-                    'has_time' => true
-                ],
-                '2014-01-10 10:00:00',
-                ['other_field'=> ['day' => '10', 'month' => '01', 'year' => '2014']],
-                true
             ],
             //context matches, field is invalid gte
             [
@@ -146,7 +125,6 @@ class ValidateDateCompareTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'lt', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
                 ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
-                true
             ],
             //context matches, field is invalid lt
             [
@@ -162,7 +140,26 @@ class ValidateDateCompareTest extends MockeryTestCase
                 ['compare_to' => 'other_field', 'operator' => 'lte', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
                 ['other_field'=> ['day' => '10', 'month' => '01', 'year' => '2014']],
-                true
+            ],
+            //context matches, field has time and is valid gte
+            [
+                true,
+                [
+                    'compare_to' => 'other_field',
+                    'operator' => 'gte',
+                    'compare_to_label' => 'Other field',
+                    'has_time' => true,
+                ],
+                '2014-01-10 09:10:00',
+                [
+                    'other_field' => [
+                        'day' => '10',
+                        'month' => '01',
+                        'year' => '2014',
+                        'hour' => '09',
+                        'minute' => '01',
+                    ],
+                ],
             ],
             //context matches, field has time and is valid lte
             [
@@ -171,11 +168,39 @@ class ValidateDateCompareTest extends MockeryTestCase
                     'compare_to' => 'other_field',
                     'operator' => 'lte',
                     'compare_to_label' => 'Other field',
-                    'has_time' => true
+                    'has_time' => true,
                 ],
-                '2014-01-10 10:00:00',
-                ['other_field'=> ['day' => '10', 'month' => '01', 'year' => '2014']],
-                true
+                '2014-01-10 9:00:00',
+                [
+                    'other_field' => [
+                        'day' => '10',
+                        'month' => '01',
+                        'year' => '2014',
+                        'hour' => '09',
+                        'minute' => '01',
+                    ],
+                ],
+            ],
+            //  field has time and is NOT valid lte
+            [
+                false,
+                [
+                    'compare_to' => 'other_field',
+                    'operator' => 'lt',
+                    'compare_to_label' => 'Other field',
+                    'has_time' => true,
+                ],
+                '2014-01-10 10:01:00',
+                [
+                    'other_field' => [
+                        'year' => '2014',
+                        'month' => '01',
+                        'day' => '10',
+                        'hour' => '10',
+                        'minute' => '01',
+                    ],
+                ],
+                [DateCompare::NOT_LT => 'This date must be before \'Other field\''],
             ],
             //context matches, field is invalid lte
             [

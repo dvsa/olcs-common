@@ -2,8 +2,6 @@
 
 namespace Common\Validator;
 
-use Common\Filter\DateSelectNullifier;
-
 /**
  * Class DateCompareSla - used to validate two dates via a legal operator:
  * 'gt' -> greater than
@@ -117,13 +115,13 @@ class DateCompareWithInterval extends DateCompare
      */
     protected function generateCompareDateValue($compareToValue)
     {
-        $compareDateValue = \DateTime::createFromFormat('Y-m-d', $compareToValue);
+        $compareDateValue = parent::generateCompareDateValue($compareToValue);
         $compareDateValue->setTime(0, 0, 0);
 
         if (!empty($this->getDateInterval())) {
             try {
                 $dv = new \DateInterval($this->getDateInterval());
-                if (in_array($this->getOperator(), ['lt', 'lte'])) {
+                if (in_array($this->getOperator(), ['lt', 'lte'], true)) {
                     $compareDateValue->sub($dv);
                 } else {
                     $compareDateValue->add($dv);

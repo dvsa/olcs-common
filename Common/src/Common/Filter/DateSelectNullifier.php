@@ -13,7 +13,7 @@ class DateSelectNullifier extends AbstractFilter
     /**
      * Returns the result of filtering $value
      *
-     * @param  mixed $date
+     * @param  array $date
      * @return mixed
      */
     public function filter($date)
