@@ -27,6 +27,8 @@ class Translator
 
     public function __construct($translationLocation)
     {
+        die('Not required anymore' . PHP_EOL);
+
         $this->translationLocation = $translationLocation;
         $this->enTranslations = include($this->getFilename(self::EN));
         $this->cyTranslations = include($this->getFilename(self::CY_TRANSLATED));
