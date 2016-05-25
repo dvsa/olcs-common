@@ -30,7 +30,6 @@ class ValidateDateCompareTest extends MockeryTestCase
         static::assertEquals([null], $sut->getCompareToLabel());
         static::assertEquals('lt', $sut->getOperator());
         static::assertEquals(false, $sut->hasTime());
-
     }
 
     /**
@@ -225,6 +224,47 @@ class ValidateDateCompareTest extends MockeryTestCase
                 '2014-01-',
                 ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
                 [DateCompare::NO_COMPARE => "Unable to compare with 'Other field'"]
+            ],
+            //  compare DateTime against Date object
+            [
+                false,
+                [
+                    'compare_to' => 'other_field',
+                    'operator' => 'gt',
+                    'compare_to_label' => 'Other field',
+                    'has_time' => true,
+                ],
+                '2014-01-10 00:00:00',
+                [
+                    'other_field' => [
+                        'year' => '2014',
+                        'month' => '01',
+                        'day' => '10',
+                    ],
+                ],
+                [DateCompare::NOT_GT => 'This date must be after \'Other field\''],
+            ],
+
+            //  compare Date against DateTime object
+            [
+                false,
+                [
+                    'compare_to' => 'other_field',
+                    'operator' => 'lte',
+                    'compare_to_label' => 'Other field',
+                    'has_time' => false,
+                ],
+                '2014-01-10',
+                [
+                    'other_field' => [
+                        'year' => '2014',
+                        'month' => '01',
+                        'day' => '09',
+                        'hour' => '23',
+                        'minute' => '59',
+                    ],
+                ],
+                [DateCompare::NOT_LTE => 'This date must be before or the same as \'Other field\''],
             ],
         ];
     }

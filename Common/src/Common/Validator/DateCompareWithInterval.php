@@ -110,13 +110,15 @@ class DateCompareWithInterval extends DateCompare
     /**
      * Override to add additional date interval
      *
-     * @param $compareToValue
+     * @param array $context
      * @return \DateTime
      */
-    protected function generateCompareDateValue($compareToValue)
+    protected function getCompareToDate($context)
     {
-        $compareDateValue = parent::generateCompareDateValue($compareToValue);
-        $compareDateValue->setTime(0, 0, 0);
+        $compareDateValue = parent::getCompareToDate($context);
+        if ($compareDateValue === false) {
+            return false;
+        }
 
         if (!empty($this->getDateInterval())) {
             try {

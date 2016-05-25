@@ -2,7 +2,6 @@
 
 namespace Common\Validator;
 
-use Common\Filter\DateSelectNullifier;
 use Common\Filter\DateTimeSelectNullifier;
 
 /**
@@ -86,46 +85,27 @@ class DateCompare extends AbstractCompare
             return false;
         }
 
-        if (!isset($context[$this->getCompareTo()])) {
-            $this->error(self::INVALID_FIELD); //@TO~DO~
-            return false;
-        }
-
-        //  get compare to value
-        if ($this->hasTime()) {
-            $dateFilter = new DateTimeSelectNullifier();
-            $dateFormat = self::DATETIME_FORMAT;
-        } else {
-            $dateFilter = new DateSelectNullifier();
-            $dateFormat = self::DATE_FORMAT;
-        }
-
-        $compareToValue = $dateFilter->filter($context[$this->getCompareTo()]);
-
-        if ($compareToValue === null) {
-            $this->error(self::INVALID_FIELD); //@TO~DO~
-            return false;
-        }
-
-        $compareDateValue = $this->generateCompareDateValue($compareToValue);
-
-        if (count($this->getMessages()) !== 0) {
+        //  get compare To date(time) value
+        $compareToDate = $this->getCompareToDate($context);
+        if ($compareToDate === false) {
             // process any errors from sub class
             return false;
         }
 
-        //  get date (time) value
-        $dateValue = \DateTime::createFromFormat($dateFormat, $value);
-        if (!$dateValue) {
+        //  get date(time) value
+        $dateFormat = ($this->hasTime() ? self::DATETIME_FORMAT : self::DATE_FORMAT);
+
+        $valueDate = \DateTime::createFromFormat($dateFormat, $value);
+        if ($valueDate === false) {
             $this->error(self::NO_COMPARE); //@TO~DO~
             return false;
         }
 
         if (! $this->hasTime()) {
-            $dateValue->setTime(0, 0, 0);
+            $valueDate->setTime(0, 0, 0);
         }
 
-        return $this->isValidForOperator($dateValue, $compareDateValue);
+        return $this->isValidForOperator($valueDate, $compareToDate);
     }
 
     /**
@@ -134,15 +114,30 @@ class DateCompare extends AbstractCompare
      * @param $compareToValue
      * @return \DateTime
      */
-    protected function generateCompareDateValue($compareToValue)
+    protected function getCompareToDate($context)
     {
-        $dateFormat = ($this->hasTime() ? self::DATETIME_FORMAT : self::DATE_FORMAT);
-        $compareDateValue = \DateTime::createFromFormat($dateFormat, $compareToValue);
+        $fieldName = $this->getCompareTo();
 
-        if (!$this->hasTime()) {
-            $compareDateValue->setTime(0, 0, 0);
+        if (!isset($context[$fieldName])) {
+            $this->error(self::INVALID_FIELD);
+            return false;
         }
 
-        return $compareDateValue;
+        //  because we can't recognise type of CompareTo, is it Date or DateTime,
+        //  we take the bigger object DateTime and prepare field value for this object
+        $fieldValue = $context[$fieldName] +
+            [
+                'hour' => '00',
+                'minute' => '00',
+            ];
+
+        $value = (new DateTimeSelectNullifier())->filter($fieldValue);
+
+        $date = \DateTime::createFromFormat(self::DATETIME_FORMAT, $value);
+        if ($date === false) {
+            $this->error(self::INVALID_FIELD);
+        }
+
+        return $date;
     }
 }
