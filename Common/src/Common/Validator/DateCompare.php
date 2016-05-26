@@ -88,7 +88,6 @@ class DateCompare extends AbstractCompare
         //  get compare To date(time) value
         $compareToDate = $this->getCompareToDate($context);
         if ($compareToDate === false) {
-            // process any errors from sub class
             return false;
         }
 
