@@ -68,6 +68,16 @@ class Response
     }
 
     /**
+     * Get status code
+     *
+     * @return int
+     */
+    public function getStatusCode()
+    {
+        return $this->httpResponse->getStatusCode();
+    }
+
+    /**
      * For debugging, view a simple version of this this object
      *
      * @return string

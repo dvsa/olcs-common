@@ -37,6 +37,12 @@ class CommandServiceFactory implements FactoryInterface
         $adapter = new ClientAdapterLoggingWrapper();
         $adapter->wrapAdapter($client);
 
-        return new CommandService($serviceLocator->get('ApiRouter'), $client, $serviceLocator->get('CqrsRequest'));
+        return new CommandService(
+            $serviceLocator->get('ApiRouter'),
+            $client,
+            $serviceLocator->get('CqrsRequest'),
+            isset($config['debug']['showApiMessages']) && $config['debug']['showApiMessages'] ? true : false,
+            $serviceLocator->get('Helper\FlashMessenger')
+        );
     }
 }

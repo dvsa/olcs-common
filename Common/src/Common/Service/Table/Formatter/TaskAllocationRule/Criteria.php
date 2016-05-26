@@ -10,23 +10,20 @@ namespace Common\Service\Table\Formatter\TaskAllocationRule;
 class Criteria implements \Common\Service\Table\Formatter\FormatterInterface
 {
     /**
-     * Comment value
+     * Format Criteria string
      *
      * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
     public static function format($data)
     {
-        if (
-            isset($data['goodsOrPsv']['id']) &&
-            $data['goodsOrPsv']['id'] === \Common\RefData::LICENCE_CATEGORY_GOODS_VEHICLE
-        ) {
-            $content = ($data['isMlh'] === true) ? 'Goods, MLH' : 'Goods, Non-MLH';
-        } else {
-            $content = 'N/A';
-
+        $content = 'N/A';
+        if (isset($data['goodsOrPsv']['id'])) {
+            if ($data['goodsOrPsv']['id'] === \Common\RefData::LICENCE_CATEGORY_GOODS_VEHICLE) {
+                $content = ($data['isMlh'] === true) ? 'Goods, MLH' : 'Goods, Non-MLH';
+            } elseif ($data['goodsOrPsv']['id'] === \Common\RefData::LICENCE_CATEGORY_PSV) {
+                $content = 'PSV';
+            }
         }
 
         return $content;

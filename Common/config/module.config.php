@@ -243,6 +243,7 @@ return array(
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Application' => 'Common\Service\Data\Application',
+            Common\Service\Data\SiCategoryType::class => Common\Service\Data\SiCategoryType::class,
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -331,7 +332,6 @@ return array(
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
             'flashMessengerAll' => 'Common\View\Helper\FlashMessenger',
-            'assetPath' => 'Common\View\Helper\AssetPath',
             'addTags' => 'Common\View\Helper\AddTags',
             'readonlyformitem' => 'Common\Form\View\Helper\Readonly\FormItem',
             'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',

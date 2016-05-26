@@ -14,13 +14,18 @@ class DateTimeSelectNullifier extends AbstractFilter
     /**
      * Returns the result of filtering $value
      *
-     * @param  mixed $date
-     * @return mixed
+     * @param  array $date
+     *
+     * @return string|null
      */
     public function filter($date)
     {
-        if (!is_array($date) || (empty($date['year']) && empty($date['month']) && empty($date['day'])
-            && empty($date['hour']) && empty($date['minute']))) {
+        if (!is_array($date)
+            || (
+                empty($date['year']) && empty($date['month']) && empty($date['day'])
+                && empty($date['hour']) && empty($date['minute'])
+            )
+        ) {
             return null;
         }
 

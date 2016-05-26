@@ -34,8 +34,9 @@ class CriteriaTest extends \PHPUnit_Framework_TestCase
             // expected, data
             ['Goods, MLH', ['goodsOrPsv' => ['id' => 'lcat_gv'], 'isMlh' => true]],
             ['Goods, Non-MLH', ['goodsOrPsv' => ['id' => 'lcat_gv'], 'isMlh' => false]],
-            ['N/A', ['goodsOrPsv' => ['id' => 'lcat_psv'], 'isMlh' => true]],
+            ['PSV', ['goodsOrPsv' => ['id' => 'lcat_psv']]],
             ['N/A', ['goodsOrPsv' => ['id' => 'XXXX'], 'isMlh' => true]],
+            ['N/A', ['goodsOrPsv' => null]],
         ];
     }
 }

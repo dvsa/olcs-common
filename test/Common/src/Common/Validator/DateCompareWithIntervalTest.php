@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Date Compare With Interval Validator Test
- *
- * @author Shaun Lizzio <shaun@lizzio.co.uk>
- */
 namespace CommonTest\Validator;
 
 use Common\Validator\DateCompareWithInterval;
@@ -26,7 +21,6 @@ class DateCompareWithIntervalTest extends MockeryTestCase
         $sut->setOptions(
             [
                 'compare_to' =>'test',
-                'operator' => false,
                 'compare_to_label' => [null],
                 'interval_label' => 'X days',
                 'date_interval' => 'P5D',
@@ -35,21 +29,16 @@ class DateCompareWithIntervalTest extends MockeryTestCase
             ]
         );
 
-        $this->assertEquals('test', $sut->getCompareTo());
-        $this->assertEquals([null], $sut->getCompareToLabel());
-        $this->assertEquals('lt', $sut->getOperator());
-        $this->assertEquals(false, $sut->getHasTime());
-        $this->assertEquals('P5D', $sut->getDateInterval());
-        $this->assertEquals('X days', $sut->getIntervalLabel());
+        static::assertEquals('test', $sut->getCompareTo());
+        static::assertEquals([null], $sut->getCompareToLabel());
+        static::assertEquals('lt', $sut->getOperator());
+        static::assertEquals(false, $sut->hasTime());
+        static::assertEquals('P5D', $sut->getDateInterval());
+        static::assertEquals('X days', $sut->getIntervalLabel());
     }
 
     /**
      * @dataProvider provideIsValid
-     * @param $expected
-     * @param $options
-     * @param $context
-     * @param $chainValid
-     * @param array $errorMessages
      */
     public function testIsValid($expected, $options, $value, $context, $errorMessages = [])
     {
@@ -57,10 +46,10 @@ class DateCompareWithIntervalTest extends MockeryTestCase
 
         $sut = new DateCompareWithInterval();
         $sut->setOptions($options);
-        $this->assertEquals($expected, $sut->isValid($value, $context));
+        static::assertEquals($expected, $sut->isValid($value, $context));
 
         if (!$expected) {
-            $this->assertEquals($errorMessages, $sut->getMessages());
+            static::assertEquals($errorMessages, $sut->getMessages());
         }
     }
 
@@ -142,11 +131,20 @@ class DateCompareWithIntervalTest extends MockeryTestCase
                     'operator' => 'gt',
                     'compare_to_label' => 'Other field',
                     'has_time' => true,
-                    'date_interval' => 'P2D', 'interval_label' => '2 days'
+                    'date_interval' => 'P2D',
+                    'interval_label' => '2 days',
                 ],
                 '2014-01-12 10:00:00',
-                ['other_field'=> ['day' => '10', 'month' => '01', 'year' => '2014']],
-                true
+                [
+                    'other_field' => [
+                        'day' => '10',
+                        'month' => '01',
+                        'year' => '2014',
+                        'hour' => '09',
+                        'minute' => '10',
+                    ],
+                ],
+                true,
             ],
             //context matches, field is invalid gt
             [

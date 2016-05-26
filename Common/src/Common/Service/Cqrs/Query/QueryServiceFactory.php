@@ -34,7 +34,13 @@ class QueryServiceFactory implements FactoryInterface
         $adapter = new ClientAdapterLoggingWrapper();
         $adapter->wrapAdapter($client);
 
-        return new QueryService($serviceLocator->get('ApiRouter'), $client, $this->getRequest($serviceLocator));
+        return new QueryService(
+            $serviceLocator->get('ApiRouter'),
+            $client,
+            $this->getRequest($serviceLocator),
+            isset($config['debug']['showApiMessages']) && $config['debug']['showApiMessages'] ? true : false,
+            $serviceLocator->get('Helper\FlashMessenger')
+        );
     }
 
     /**

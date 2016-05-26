@@ -92,7 +92,13 @@ class LicenceSelfserve extends InternalSearchAbstract
                     return $orgName;
                 }
             ],
-            ['title' => 'Trading name', 'name'=> 'tradingName']
+            [
+                'title' => 'Trading name',
+                'name'=> 'licenceTradingNames',
+                'formatter' => function ($data) {
+                    return str_replace('|', ', <br />', $data['licenceTradingNames']);
+                }
+            ]
         ];
     }
 }

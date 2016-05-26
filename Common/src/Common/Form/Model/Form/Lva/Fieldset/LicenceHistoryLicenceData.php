@@ -43,10 +43,12 @@ class LicenceHistoryLicenceData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label":
-     * "selfserve-app-subSection-previous-history-licence-history-willSurrender",
+     *     "label": "selfserve-app-subSection-previous-history-licence-history-willSurrender",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
+     *      "fieldset-attributes": {
+     *          "class": "checkbox inline"
+     *      },
      *     "label_attributes": {
      *         "class": "inline"
      *     }
