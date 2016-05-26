@@ -2351,7 +2351,7 @@ return [
     'selfserve-dashboard-target-start-date' => '{WELSH} Start date',
     'selfserve-dashboard-topnav-home' => 'Hafan',
     'selfserve-dashboard-topnav-bus-registrations' => 'Cofrestriadau Bws',
-    'selfserve-topnav-my-account' => 'Fy nghyfrif',
+    'selfserve-dashboard-topnav-my-account' => 'Fy nghyfrif',
     'selfserve-fees-table-fee-number' => 'Rhif y ffi',
     'selfserve-fees-table-fee-description' => 'Disgrifiad',
     'selfserve-fees-table-fee-licence-number' => 'Rhif y drwydded',
