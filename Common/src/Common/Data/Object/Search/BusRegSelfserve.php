@@ -4,6 +4,7 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms\BusRegStatus;
 use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
+use Common\Util\Escape;
 
 /**
  * Class BusReg
@@ -54,8 +55,7 @@ class BusRegSelfserve extends InternalSearchAbstract
      */
     public function getFilters()
     {
-        if (empty($this->filters)) {
-
+        if (count($this->filters) === 0) {
             $this->filters = [
                 new TrafficArea(),
                 new BusRegStatus(),
@@ -75,24 +75,23 @@ class BusRegSelfserve extends InternalSearchAbstract
                 'title' => 'Registration number',
                 'name'=> 'regNo',
                 'formatter' => function ($data) {
-
-                    return '<a href="/bus-registration/details/busreg/'
-                    . $data['busregId'] . '">' . $data['regNo'] . '</a> <br>' . $data['busRegStatus'];
-                }
+                    return
+                        '<a href="/search/bus/details/' . $data['busregId'] . '">' .
+                            Escape::html($data['regNo']) .
+                        '</a>' .
+                        '<br>' . $data['busRegStatus'];
+                },
             ],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
                 'formatter' => function ($data) {
-
-                    $orgName = $data['orgName'];
-
-                    return $orgName;
-                }
+                    return Escape::html($data['orgName']);
+                },
             ],
             ['title' => 'Service number', 'name'=> 'serviceNo'],
             ['title' => 'Start point', 'name'=> 'startPoint'],
-            ['title' => 'Finish point', 'name'=> 'finishPoint']
+            ['title' => 'Finish point', 'name'=> 'finishPoint'],
         ];
     }
 }

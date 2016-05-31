@@ -282,7 +282,7 @@ return array(
             'category' => '\Common\Service\Data\CategoryDataService',
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
-            'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
+            'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
             \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
