@@ -222,7 +222,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * @param \Zend\Mvc\I18n\Translator $translator
      */
-    public function setTranslator(\Zend\Mvc\I18n\Translator $translator)
+    public function setTranslator($translator)
     {
         $this->translator = $translator;
     }
@@ -811,8 +811,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private function translateTitle(&$config)
     {
         if (isset($config['variables']['title'])) {
-            $config['variables']['title'] = $this->getServiceLocator()
-                ->get('translator')
+            $config['variables']['title'] = $this->getTranslator()
                 ->translate($config['variables']['title']);
         }
     }
