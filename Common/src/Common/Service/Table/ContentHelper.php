@@ -42,6 +42,11 @@ class ContentHelper
     private $partials = array();
 
     /**
+     * @var \Zend\Mvc\I18n\Translator
+     */
+    private $translator;
+
+    /**
      * Pass in the location of the partials
      *
      * @param string $location
@@ -52,6 +57,25 @@ class ContentHelper
         $this->location = rtrim($location, '/') . '/';
 
         $this->object = $object;
+        if (method_exists('getTranslator', $object)) {
+            $this->setTranslator($object->getTranslator());
+        }
+    }
+
+    /**
+     * @return \Zend\Mvc\I18n\Translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
+     * @param \Zend\Mvc\I18n\Translator $translator
+     */
+    public function setTranslator($translator)
+    {
+        $this->translator = $translator;
     }
 
     /**

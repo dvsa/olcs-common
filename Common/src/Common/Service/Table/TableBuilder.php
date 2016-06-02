@@ -207,6 +207,27 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $authService;
 
     /**
+     * @var \Zend\Mvc\I18n\Translator
+     */
+    private $translator;
+
+    /**
+     * @return \Zend\Mvc\I18n\Translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
+     * @param \Zend\Mvc\I18n\Translator $translator
+     */
+    public function setTranslator($translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
      * @param \ZfcRbac\Service\AuthorizationService $authorisationService
      */
     public function setAuthService($authService)

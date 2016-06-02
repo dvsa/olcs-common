@@ -32,6 +32,12 @@ class TableBuilderFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new TableBuilder($serviceLocator);
+        $tableBuilder =  new TableBuilder($serviceLocator);
+
+        /** @var \Zend\Mvc\I18n\Translator $translator */
+        $translator  = $serviceLocator->get('translator');
+        $tableBuilder->setTranslator($translator);
+
+        return $tableBuilder;
     }
 }
