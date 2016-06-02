@@ -848,7 +848,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->setUnfilteredTotal(isset($data['count-unfiltered']) ? $data['count-unfiltered'] : $this->getTotal());
 
         // if there's only one row and we have a singular title, use it
-        $translator = $this->getServiceLocator()->get('translator');
+        $translator = $this->getTranslator();
         if ($this->getTotal() == 1) {
             if ($this->getVariable('titleSingular')) {
                 $this->setVariable('title', $translator->translate($this->getVariable('titleSingular')));

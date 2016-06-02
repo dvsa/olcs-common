@@ -31,7 +31,8 @@ class TableBuilderTest extends MockeryTestCase
 
     private function getMockServiceLocator($config = true)
     {
-        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+        $mockTranslator = m::mock(\Zend\Mvc\I18n\Translator::class);
+
         $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
         $mockControllerPluginManager = $this->getMock('\Zend\Mvc\Controller\PluginManager', array('get'));
         $mockAuthService = $this->getMock('\stdClass', array('isGranted'));
