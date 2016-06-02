@@ -57,7 +57,8 @@ class ContentHelper
         $this->location = rtrim($location, '/') . '/';
 
         $this->object = $object;
-        if (method_exists('getTranslator', $object)) {
+
+        if (method_exists($object, 'getTranslator')) {
             $this->setTranslator($object->getTranslator());
         }
     }
@@ -76,6 +77,19 @@ class ContentHelper
     public function setTranslator($translator)
     {
         $this->translator = $translator;
+    }
+
+    /**
+     * Wrapper method to call main translator. Translate a message using the given text domain and locale.
+     *
+     * @param $message
+     * @param string $textDomain
+     * @param null $locale
+     * @return string
+     */
+    public function translate($message, $textDomain = 'default', $locale = null)
+    {
+        return $this->getTranslator()->translate($message, $textDomain, $locale);
     }
 
     /**

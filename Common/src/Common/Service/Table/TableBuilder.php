@@ -222,7 +222,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * @param \Zend\Mvc\I18n\Translator $translator
      */
-    public function setTranslator($translator)
+    public function setTranslator(\Zend\Mvc\I18n\Translator $translator)
     {
         $this->translator = $translator;
     }
@@ -253,6 +253,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->setServiceLocator($sm);
         $this->applicationConfig = $sm->get('Config');
         $this->setAuthService($sm->get('ZfcRbac\Service\AuthorizationService'));
+
+        /** @var \Zend\Mvc\I18n\Translator $translator */
+        $translator  = $sm->get('translator');
+        $this->setTranslator($translator);
     }
 
     /**

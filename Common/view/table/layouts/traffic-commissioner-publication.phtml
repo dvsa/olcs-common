@@ -21,11 +21,9 @@
         </div>
         <?php } ?>
         <div class="search-result__meta">
-            <p><b><?php echo $this->translate('search.result.publication');?>:</b><?php echo htmlentities
-                ($row['pubType']); ?> <?php
-                    echo
-                    htmlentities
-                ($row['trafficArea']); ?> (<?php echo htmlentities($row['pubNo']); ?>), <?php echo htmlentities($row['pubSecDesc']); ?></p>
+            <p><b><?php echo $this->translate('search.result.publication');?>:</b> <?php
+                    echo htmlentities($row['pubType'] . ' ' . $row['trafficArea'] . '(' . $row['pubNo'] . '), ' .
+                $row['pubSecDesc']); ?></p>
             <p><b><?php echo $this->translate('search.result.date');?>:</b> <?php echo date(\DATE_FORMAT, strtotime($row['pubDate']));
                 ?></p>
             <p><b><?php echo $this->translate('search.result.status');?>:</b> <?php echo htmlentities($row['pubStatusDesc']); ?></p>
