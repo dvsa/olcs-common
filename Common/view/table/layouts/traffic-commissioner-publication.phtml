@@ -3,20 +3,12 @@
 /**
  * @var $this->object \Common\Service\Table\TableBuilder
  */
+
 ?>
 
-<?php
-// @todo: Replace hardcoded value with dynamic count.
-// The .content__header div shoudl also only show on
-// the internal app
-?>
-<div class="content__header">
-    <h3 class="title">88 Publications</h3>
-</div>
-
-<ul class="search-results foo">
+<ul class="search-results">
     <?php foreach ($this->object->getRows() as $row): ?>
-        <li class="search-result">
+    <li class="search-result">
         <div class="search-result__header">
             <h4><a href="/view-details/licence/<?php echo htmlentities($row['licId']); ?>"><?php echo htmlentities($row['licNo']); ?></a> <?php echo htmlentities($row['licTypeDesc']); ?></h4>
             <p><?php echo htmlentities($row['orgName']); ?></p>
@@ -29,11 +21,16 @@
         </div>
         <?php } ?>
         <div class="search-result__meta">
-            <p><b>Publication:</b><?php echo htmlentities($row['pubType']); ?> <?php echo htmlentities($row['trafficArea']); ?> (<?php echo htmlentities($row['pubNo']); ?>), <?php echo htmlentities($row['pubSecDesc']); ?></p>
-            <p><b>Date:</b> <?php echo date(\DATE_FORMAT, strtotime($row['pubDate'])); ?></p>
-            <p><b>Status:</b> <?php echo htmlentities($row['pubStatusDesc']); ?></p>
-            </div>
-        </li>
+            <p><b><?php echo $this->translate('search.result.publication');?>:</b><?php echo htmlentities
+                ($row['pubType']); ?> <?php
+                    echo
+                    htmlentities
+                ($row['trafficArea']); ?> (<?php echo htmlentities($row['pubNo']); ?>), <?php echo htmlentities($row['pubSecDesc']); ?></p>
+            <p><b><?php echo $this->translate('search.result.date');?>:</b> <?php echo date(\DATE_FORMAT, strtotime($row['pubDate']));
+                ?></p>
+            <p><b><?php echo $this->translate('search.result.status');?>:</b> <?php echo htmlentities($row['pubStatusDesc']); ?></p>
+        </div>
+    </li>
     <?php endforeach; ?>
 <?php echo $this->object->renderFooter(); ?>
 </ul>
