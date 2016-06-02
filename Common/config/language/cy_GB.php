@@ -2123,6 +2123,7 @@ return [
     'search.result.subtitle.publication.download' => '{WELSH} You can download copies of these publications for <a href="https://www.gov.uk/government/latest?departments%5B%5D=traffic-commissioners">Great Britain</a> and <a href="https://www.infrastructure-ni.gov.uk/publications/transport-regulation-unit-applications-and-decisions-2016">Northern Ireland</a>',
     'search.result.subtitle.vehicle-external' => '{WELSH} We\'ve found <b>%s</b> vehicle search results.',
     'search.result.publication' => '{WELSH} Publication',
+    'search.result.publications' => '{WELSH} Publications',
     'search.result.status' => '{WELSH} Status',
     'search.result.date' => '{WELSH} Date',
     'search.result.title.bus' => '{WELSH} Search results',
