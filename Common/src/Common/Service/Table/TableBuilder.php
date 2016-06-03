@@ -207,6 +207,27 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $authService;
 
     /**
+     * @var \Zend\Mvc\I18n\Translator
+     */
+    private $translator;
+
+    /**
+     * @return \Zend\Mvc\I18n\Translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
+     * @param \Zend\Mvc\I18n\Translator $translator
+     */
+    public function setTranslator($translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
      * @param \ZfcRbac\Service\AuthorizationService $authorisationService
      */
     public function setAuthService($authService)
@@ -232,6 +253,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->setServiceLocator($sm);
         $this->applicationConfig = $sm->get('Config');
         $this->setAuthService($sm->get('ZfcRbac\Service\AuthorizationService'));
+
+        /** @var \Zend\Mvc\I18n\Translator $translator */
+        $translator  = $sm->get('translator');
+        $this->setTranslator($translator);
     }
 
     /**
@@ -786,8 +811,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private function translateTitle(&$config)
     {
         if (isset($config['variables']['title'])) {
-            $config['variables']['title'] = $this->getServiceLocator()
-                ->get('translator')
+            $config['variables']['title'] = $this->getTranslator()
                 ->translate($config['variables']['title']);
         }
     }
@@ -823,7 +847,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->setUnfilteredTotal(isset($data['count-unfiltered']) ? $data['count-unfiltered'] : $this->getTotal());
 
         // if there's only one row and we have a singular title, use it
-        $translator = $this->getServiceLocator()->get('translator');
+        $translator = $this->getTranslator();
         if ($this->getTotal() == 1) {
             if ($this->getVariable('titleSingular')) {
                 $this->setVariable('title', $translator->translate($this->getVariable('titleSingular')));

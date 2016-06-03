@@ -42,6 +42,11 @@ class ContentHelper
     private $partials = array();
 
     /**
+     * @var \Zend\Mvc\I18n\Translator
+     */
+    private $translator;
+
+    /**
      * Pass in the location of the partials
      *
      * @param string $location
@@ -52,6 +57,39 @@ class ContentHelper
         $this->location = rtrim($location, '/') . '/';
 
         $this->object = $object;
+
+        if (method_exists($object, 'getTranslator')) {
+            $this->setTranslator($object->getTranslator());
+        }
+    }
+
+    /**
+     * @return \Zend\Mvc\I18n\Translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
+     * @param \Zend\Mvc\I18n\Translator $translator
+     */
+    public function setTranslator($translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * Wrapper method to call main translator. Translate a message using the given text domain and locale.
+     *
+     * @param string $message
+     * @param string $textDomain
+     * @param string $locale
+     * @return string
+     */
+    public function translate($message, $textDomain = 'default', $locale = null)
+    {
+        return $this->getTranslator()->translate($message, $textDomain, $locale);
     }
 
     /**

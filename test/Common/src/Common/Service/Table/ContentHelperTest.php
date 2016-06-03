@@ -9,6 +9,7 @@
 namespace CommonTest\Service\Table;
 
 use Common\Service\Table\ContentHelper;
+use Mockery as m;
 
 /**
  * Content Helper Test
@@ -25,6 +26,22 @@ class ContentHelperTest extends \PHPUnit_Framework_TestCase
     public function getContentHelper($mock)
     {
         return new ContentHelper(__DIR__ . '/TestResources', $mock);
+    }
+
+    /**
+     * Test translator set correctly
+     */
+    public function testTranslatorSet()
+    {
+        $translatorMock = $this->getMock(\Zend\Mvc\I18n\TranslatorInterface::class);
+
+        $mock = $this->getMock('\stdClass', array('getTranslator'));
+
+        $mock->expects($this->once())
+            ->method('getTranslator')
+            ->willReturn($translatorMock);
+
+        $this->assertSame($translatorMock, $this->getContentHelper($mock)->getTranslator());
     }
 
     /**

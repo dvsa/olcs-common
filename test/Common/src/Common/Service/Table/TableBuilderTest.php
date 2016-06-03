@@ -31,7 +31,8 @@ class TableBuilderTest extends MockeryTestCase
 
     private function getMockServiceLocator($config = true)
     {
-        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+        $mockTranslator = $this->getMock('\Zend\Mvc\I18n\TranslatorInterface', array('translate'));
+
         $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
         $mockControllerPluginManager = $this->getMock('\Zend\Mvc\Controller\PluginManager', array('get'));
         $mockAuthService = $this->getMock('\stdClass', array('isGranted'));
@@ -2751,12 +2752,14 @@ class TableBuilderTest extends MockeryTestCase
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
+        $mockTranslatorService = m::mock(\Zend\Mvc\I18n\Translator::class);
 
         // Setup
         $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());
         $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+        $sm->setService('translator', $mockTranslatorService);
 
         $sut = new TableBuilder($sm);
 
@@ -2784,12 +2787,14 @@ class TableBuilderTest extends MockeryTestCase
         $mockAuthService->shouldReceive('isGranted')
             ->with(m::type('string'))
             ->andReturn(true);
+        $mockTranslatorService = m::mock(\Zend\Mvc\I18n\Translator::class);
 
         // Setup
         $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());
         $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+        $sm->setService('translator', $mockTranslatorService);
 
         $sut = new TableBuilder($sm);
 

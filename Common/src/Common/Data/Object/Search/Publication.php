@@ -89,7 +89,8 @@ class Publication extends InternalSearchAbstract
                     'default' => 25,
                     'options' => array(10, 25, 50)
                 ]
-            ]
+            ],
+            'layout' => 'traffic-commissioner-publication',
         ];
     }
 
