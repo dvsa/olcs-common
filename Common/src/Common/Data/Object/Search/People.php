@@ -3,6 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Data\Object\Search\Aggregations\DateRange as DateRange;
 
 /**
  * Class People
@@ -28,6 +29,13 @@ class People extends InternalSearchAbstract
     protected $searchIndices = 'person';
 
     /**
+     * Contains an array of the instantiated Date Ranges classes.
+     *
+     * @var array
+     */
+    protected $dateRanges = [];
+
+    /**
      * Contains an array of the instantiated filters classes.
      *
      * @var array
@@ -49,6 +57,24 @@ class People extends InternalSearchAbstract
         }
 
         return $this->filters;
+    }
+
+    /**
+     * Returns an array of date ranges for this index
+     *
+     * @return array
+     */
+    public function getDateRanges()
+    {
+        if (empty($this->dateRanges)) {
+
+            $this->dateRanges = [
+                new DateRange\BirthDateFrom(),
+                new DateRange\BirthDateTo(),
+            ];
+        }
+
+        return $this->dateRanges;
     }
 
     /**
