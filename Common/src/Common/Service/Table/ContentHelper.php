@@ -82,9 +82,9 @@ class ContentHelper
     /**
      * Wrapper method to call main translator. Translate a message using the given text domain and locale.
      *
-     * @param $message
+     * @param string $message
      * @param string $textDomain
-     * @param null $locale
+     * @param string $locale
      * @return string
      */
     public function translate($message, $textDomain = 'default', $locale = null)
