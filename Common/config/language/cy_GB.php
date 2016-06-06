@@ -888,6 +888,8 @@ return [
     'ebsr-paper' => '{WELSH} You can also register, change or cancel bus services using the <a href="{{EBSR_PAPER_FORMS_LINK}}">paper forms</a>.',
     'ebsr-upload-type' => '{WELSH} What type of application are you making?',
     'ebsr-upload-type-select' => '{WELSH} Please select an upload type',
+    'ebsr-upload-success' => '{WELSH} EBSR packs were submitted for processing',
+    'ebsr-upload-fail' => '{WELSH} No EBSR packs could be submitted',
     'ecms-number' => '{WELSH} ECMS #',
     'ecmsNo' => '{WELSH} ECMS',
     'edit' => '{WELSH} Edit',
