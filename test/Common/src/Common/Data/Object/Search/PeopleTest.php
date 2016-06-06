@@ -100,6 +100,16 @@ class PeopleTest extends SearchAbstractTest
         $this->assertSame($expected, $columns[6]['formatter']($row));
     }
 
+    public function testGetDateRanges()
+    {
+        $dateRanges = $this->sut->getDateRanges();
+
+        $this->assertCount(2, $dateRanges);
+
+        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\DateRange\BirthDateFrom', $dateRanges[0]);
+        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\DateRange\BirthDateTo', $dateRanges[1]);
+    }
+
     public function dataProviderTestDisqualifiedFormatter()
     {
         return [
