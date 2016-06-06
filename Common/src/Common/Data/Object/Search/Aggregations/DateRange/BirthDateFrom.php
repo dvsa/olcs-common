@@ -21,5 +21,5 @@ class BirthDateFrom extends DateRangeAbstract
      *
      * @var string
      */
-    protected $key = 'personBirthDate';
+    protected $key = 'personBirthDateFrom';
 }
