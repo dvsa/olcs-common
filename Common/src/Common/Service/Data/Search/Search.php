@@ -339,6 +339,16 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Returns an array of order options relevant to this index.
+     *
+     * @return mixed
+     */
+    public function getOrderOptions()
+    {
+        return $this->getDataClass()->getOrderOptions();
+    }
+
+    /**
      * Sets the available filter values into the filters.
      *
      * @param array $filters

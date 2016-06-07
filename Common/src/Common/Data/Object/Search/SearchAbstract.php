@@ -28,6 +28,12 @@ abstract class SearchAbstract
     protected $displayGroup = 'all';
 
     /**
+     * Order/sorting options
+     * @var array
+     */
+    protected $orderOptions = [];
+
+    /**
      * @return mixed
      */
     public function getSearchIndices()
@@ -95,6 +101,14 @@ abstract class SearchAbstract
     public function getFilters()
     {
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getOrderOptions()
+    {
+        return $this->orderOptions;
     }
 
     /**
