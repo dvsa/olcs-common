@@ -133,6 +133,32 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     }
 
     /**
+     * @return string
+     */
+    public function getSort()
+    {
+        $sortOrder = ($this->getQuery() === null || empty($this->getQuery()->sort['order'])) ?
+            '' : $this->getQuery()->sort['order'];
+        if (strpos($sortOrder, '-')) {
+            return explode('-', $sortOrder)[0];
+        }
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrder()
+    {
+        $sortOrder = ($this->getQuery() === null || empty($this->getQuery()->sort['order'])) ?
+            '' : $this->getQuery()->sort['order'];
+        if (strpos($sortOrder, '-')) {
+            return explode('-', $sortOrder)[1];
+        }
+        return '';
+    }
+
+    /**
      * @TODO needs to check RBAC for permission to access the specified search index
      * @return array
      */
@@ -149,7 +175,9 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
                 'limit' => $this->getLimit(),
                 'page' => $this->getPage(),
                 'filters' => $this->getFilterNames(),
-                'dateRanges' => $this->getDateRangeKvp()
+                'dateRanges' => $this->getDateRangeKvp(),
+                'sort' => $this->getSort(),
+                'order' => $this->getOrder()
             ];
 
             $uri = sprintf(

@@ -49,14 +49,14 @@ class PublicationSelfserve extends InternalSearchAbstract
      */
     protected $orderOptions = [
         0 => [
-            'field' => 'pubDate',
+            'field' => 'pub_date',
             'field_label' => 'Most recent publication',
-            'order' => 'ASC'
+            'order' => 'desc'
         ],
         1 => [
-            'field' => 'pubDate',
+            'field' => 'pub_date',
             'field_label' => 'Oldest publication',
-            'order' => 'DESC'
+            'order' => 'asc'
         ],
     ];
 
