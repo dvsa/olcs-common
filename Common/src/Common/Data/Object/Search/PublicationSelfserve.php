@@ -43,6 +43,24 @@ class PublicationSelfserve extends InternalSearchAbstract
     protected $filters = [];
 
     /**
+     * Contains an array of required results order
+     *
+     * @var array
+     */
+    protected $orderOptions = [
+        0 => [
+            'field' => 'pubDate',
+            'field_label' => 'Most recent publication',
+            'order' => 'ASC'
+        ],
+        1 => [
+            'field' => 'pubDate',
+            'field_label' => 'Oldest publication',
+            'order' => 'DESC'
+        ],
+    ];
+
+    /**
      * Returns an array of date ranges for this index
      *
      * @return array
