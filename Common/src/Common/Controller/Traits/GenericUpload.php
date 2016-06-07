@@ -61,6 +61,9 @@ trait GenericUpload
      *
      * @param array $fileData
      * @param array $data
+     * @throws InvalidMimeException
+     * @throws \Exception
+     *
      * @return array
      */
     protected function uploadFile($fileData, $data)
@@ -79,6 +82,10 @@ trait GenericUpload
 
         if ($response->isClientError()) {
             $messages = $response->getResult()['messages'];
+
+            if (isset($messages['ERR_EBSR_MIME'])) {
+                throw new InvalidMimeException($messages['ERR_EBSR_MIME']);
+            }
 
             if (isset($messages['ERR_MIME'])) {
                 throw new InvalidMimeException();
