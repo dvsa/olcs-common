@@ -28,6 +28,22 @@ abstract class SearchAbstract
     protected $displayGroup = 'all';
 
     /**
+     * Order/sorting options
+     * Contains an array of required results order. This will generate a Select list with value of <field>-<order> and
+     * against the label. Then gets split on '-' into sort and order params for the backend query.
+     * 
+     * E.g. [
+     *   0 => [
+     *       'field' => 'pub_date',
+     *       'field_label' => 'Most recent publication',
+     *       'order' => 'desc'
+     *       ]
+     * ]
+     * @var array
+     */
+    protected $orderOptions = [];
+
+    /**
      * @return mixed
      */
     public function getSearchIndices()
@@ -95,6 +111,14 @@ abstract class SearchAbstract
     public function getFilters()
     {
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getOrderOptions()
+    {
+        return $this->orderOptions;
     }
 
     /**
