@@ -91,7 +91,6 @@ class PublicationSelfserve extends InternalSearchAbstract
                 new Filter\LicenceType(),
                 new Filter\TrafficArea(),
                 new Filter\PublicationType(),
-                new Filter\DocumentStatus(),
                 new Filter\PublicationSection()
             ];
         }
