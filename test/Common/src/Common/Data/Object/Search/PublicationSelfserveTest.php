@@ -33,13 +33,12 @@ class PublicationSelfserveTest extends SearchAbstractTest
     {
         $filters = $this->sut->getFilters();
 
-        $this->assertCount(5, $filters);
+        $this->assertCount(4, $filters);
 
         $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\LicenceType', $filters[0]);
         $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\TrafficArea', $filters[1]);
         $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\PublicationType', $filters[2]);
-        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\DocumentStatus', $filters[3]);
-        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\PublicationSection', $filters[4]);
+        $this->assertInstanceOf('Common\Data\Object\Search\Aggregations\Terms\PublicationSection', $filters[3]);
 
     }
 }
