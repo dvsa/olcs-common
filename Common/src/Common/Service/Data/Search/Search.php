@@ -133,12 +133,15 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Returns the field portion from the string of the format <field>-<order>
+     *
      * @return string
      */
     public function getSort()
     {
         $sortOrder = ($this->getQuery() === null || empty($this->getQuery()->sort['order'])) ?
             '' : $this->getQuery()->sort['order'];
+
         if (strpos($sortOrder, '-')) {
             return explode('-', $sortOrder)[0];
         }
@@ -146,6 +149,8 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Returns the order portion from the string of the format <field>-<order>
+     *
      * @return string
      */
     public function getOrder()
