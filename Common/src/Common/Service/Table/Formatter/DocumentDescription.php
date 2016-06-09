@@ -17,13 +17,15 @@ class DocumentDescription implements FormatterInterface
     /**
      * Format a cell
      *
-     * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param array                               $data   Row data
+     * @param array                               $column Column data
+     * @param \Zend\ServiceManager\ServiceManager $sm     Service manager
+     *
+     * @return string
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        if (!isset($data['filename'])) {
+        if (!isset($data['documentStoreIdentifier'])) {
             return $data['description'];
         }
 
@@ -38,7 +40,7 @@ class DocumentDescription implements FormatterInterface
 
         $attr = '';
 
-        if (preg_match('/\.html$/', $data['filename'])) {
+        if (preg_match('/\.html$/', $data['documentStoreIdentifier'])) {
             $attr = 'target="_blank"';
         }
 
