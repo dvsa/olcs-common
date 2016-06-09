@@ -2745,5 +2745,7 @@ return [
     'west-of-england' => 'West of England',
     'withdraw-application' => 'Withdraw application',
     'your-business' => 'Your business',
+    'email-address' => 'Email address',
+    'confirm-email-address' => 'Confirm email address',
     // Potentially unused translations
 ];
