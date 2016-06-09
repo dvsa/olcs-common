@@ -17,7 +17,6 @@ use Common\Service\Table\Formatter\FileExtension;
  */
 class FileExtensionTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test the format method
      *
@@ -40,13 +39,13 @@ class FileExtensionTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                array('filename' => 'foo'), array(), ''
+                array('documentStoreIdentifier' => 'foo'), array(), ''
             ),
             array(
-                array('filename' => 'foo.txt'), array(), 'TXT'
+                array('documentStoreIdentifier' => 'foo.txt'), array(), 'TXT'
             ),
             array(
-                array('filename' => 'foo.bar.zip'), array(), 'ZIP'
+                array('documentStoreIdentifier' => 'foo.bar.zip'), array(), 'ZIP'
             ),
         );
     }

@@ -22,8 +22,7 @@ class DocumentDescriptionTest extends MockeryTestCase
     {
         // Params
         $data = [
-            'documentStoreIdentifier' => 'foo',
-            'filename' => 'foo.pdf',
+            'documentStoreIdentifier' => 'olbs/tanres01/OLBS02/TanBsDocStore7/2014/08/foo.rtf',
             'description' => 'Foo file'
         ];
         $column = [];
@@ -38,10 +37,25 @@ class DocumentDescriptionTest extends MockeryTestCase
             ->andReturn($mockUrlHelper);
 
         $mockUrlHelper->shouldReceive('fromRoute')
-            ->with('getfile', ['identifier' => base64_encode('foo')])
+            ->with('getfile', ['identifier' => base64_encode($data['documentStoreIdentifier'])])
             ->andReturn('URL');
 
         $expected = '<a href="URL" >Foo file</a>';
+        $this->assertEquals($expected, DocumentDescription::format($data, $column, $sm));
+    }
+
+    public function testFormatNoIdentifier()
+    {
+        // Params
+        $data = [
+            'description' => 'Foo file'
+        ];
+        $column = [];
+
+        // Mocks
+        $sm = m::mock();
+
+        $expected = 'Foo file';
         $this->assertEquals($expected, DocumentDescription::format($data, $column, $sm));
     }
 
@@ -49,8 +63,7 @@ class DocumentDescriptionTest extends MockeryTestCase
     {
         // Params
         $data = [
-            'documentStoreIdentifier' => 'foo',
-            'filename' => 'foo.html',
+            'documentStoreIdentifier' => 'olbs/tanres01/OLBS02/TanBsDocStore7/2014/08/foo.html',
             'description' => 'Foo file'
         ];
         $column = [];
@@ -65,7 +78,7 @@ class DocumentDescriptionTest extends MockeryTestCase
             ->andReturn($mockUrlHelper);
 
         $mockUrlHelper->shouldReceive('fromRoute')
-            ->with('getfile', ['identifier' => base64_encode('foo')])
+            ->with('getfile', ['identifier' => base64_encode($data['documentStoreIdentifier'])])
             ->andReturn('URL');
 
         $expected = '<a href="URL" target="_blank">Foo file</a>';
