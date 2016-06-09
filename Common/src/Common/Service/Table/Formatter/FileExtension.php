@@ -18,20 +18,19 @@ class FileExtension implements FormatterInterface
     /**
      * Format a address
      *
-     * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param array $data Row data
+     *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public static function format($data)
     {
-        $extPos = strrpos($data['filename'], '.');
+        $extPos = strrpos($data['documentStoreIdentifier'], '.');
 
         if ($extPos === false) {
             return '';
         }
 
-        $extension = substr($data['filename'], $extPos + 1);
+        $extension = substr($data['documentStoreIdentifier'], $extPos + 1);
         return strtoupper($extension);
     }
 }
