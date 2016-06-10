@@ -1,21 +1,15 @@
 <?php
 
-/**
- * Licence History Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Controller\Lva;
 
+use Common\Data\Mapper\Lva\LicenceHistory as LicenceHistoryMapper;
+use Common\Data\Mapper\Lva\OtherLicence as OtherLicenceMapper;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateLicenceHistory;
-use Dvsa\Olcs\Transfer\Command\OtherLicence\UpdateOtherLicence;
 use Dvsa\Olcs\Transfer\Command\OtherLicence\CreateOtherLicence;
 use Dvsa\Olcs\Transfer\Command\OtherLicence\DeleteOtherLicence;
-use Dvsa\Olcs\Transfer\Query\OtherLicence\OtherLicence;
-use Common\Data\Mapper\Lva\OtherLicence as OtherLicenceMapper;
-use Common\Data\Mapper\Lva\LicenceHistory as LicenceHistoryMapper;
+use Dvsa\Olcs\Transfer\Command\OtherLicence\UpdateOtherLicence;
 use Dvsa\Olcs\Transfer\Query\Application\LicenceHistory;
+use Dvsa\Olcs\Transfer\Query\OtherLicence\OtherLicence;
 use Zend\Filter\Word\CamelCaseToDash;
 
 /**
@@ -52,6 +46,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -65,7 +60,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $this->alterFormForLva($form);
 
         if ($request->isPost()) {
-
             $crudAction = $this->getCrudAction($data);
 
             $inProgress = false;
@@ -75,9 +69,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             }
 
             if ($form->isValid() && $this->saveLicenceHistory($form, $data, $inProgress)) {
-
                 if ($crudAction !== null) {
-
                     return $this->handleCrudAction($crudAction);
                 }
 
@@ -103,10 +95,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $filter = new CamelCaseToDash();
 
         foreach ($this->sections as $group => $sections) {
-
             foreach ($sections as $section) {
                 if (isset($data[$group][$section . '-table']['action'])) {
-
                     $action = $this->getActionFromCrudAction($data[$group][$section . '-table']);
 
                     $data[$group][$section . '-table']['routeAction'] = sprintf(
@@ -138,6 +128,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         if ($response->isServerError() || $response->isClientError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
+
+        return false;
     }
 
     protected function saveLicenceHistory($form, $data, $inProgress)
@@ -164,6 +156,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return false;
     }
 
+    /**
+     * @param \Common\Form\Form $form
+     * @param array $errors
+     */
     protected function mapErrorsForLicenceHistory($form, array $errors)
     {
         $formMessages = [];
@@ -171,7 +167,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         foreach ($this->sections as $group => $sections) {
             foreach ($sections as $section) {
                 if (isset($errors[$section])) {
-                    foreach ($errors[$section] as $key => $message) {
+                    foreach ($errors[$section] as $message) {
                         $formMessages[$group][$section][] = $message;
                     }
 
@@ -222,8 +218,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $mappedResults = [];
 
         if ($response->isOk()) {
-            $mapper = new LicenceHistoryMapper();
-            $mappedResults = $mapper->mapFromResult($response->getResult());
+            $mappedResults = LicenceHistoryMapper::mapFromResult($response->getResult());
             $this->otherLicences = $mappedResults['data']['otherLicences'];
         }
 
@@ -254,6 +249,9 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return $formData;
     }
 
+    /**
+     * @return \Common\Form\Form
+     */
     protected function getLicenceHistoryForm()
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
@@ -318,7 +316,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function prevHasLicenceDeleteAction()
     {
-        return $this->deleteAction(false);
+        return $this->deleteAction();
     }
 
     /**
@@ -342,7 +340,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function prevHadLicenceDeleteAction()
     {
-        return $this->deleteAction(false);
+        return $this->deleteAction();
     }
 
     /**
@@ -366,7 +364,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function prevBeenRefusedDeleteAction()
     {
-        return $this->deleteAction(false);
+        return $this->deleteAction();
     }
 
     /**
@@ -390,7 +388,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function prevBeenRevokedDeleteAction()
     {
-        return $this->deleteAction(false);
+        return $this->deleteAction();
     }
 
     /**
@@ -414,7 +412,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function prevBeenDisqualifiedTcDeleteAction()
     {
-        return $this->deleteAction(false);
+        return $this->deleteAction();
     }
 
     /**
@@ -438,7 +436,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function prevPurchasedAssetsDeleteAction()
     {
-        return $this->deleteAction(false);
+        return $this->deleteAction();
     }
 
     /**
@@ -462,7 +460,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     public function prevBeenAtPiDeleteAction()
     {
-        return $this->deleteAction(false);
+        return $this->deleteAction();
     }
 
     /**
@@ -474,6 +472,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     protected function addOrEdit($mode, $which)
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $data = [];
@@ -494,6 +493,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             $data = $this->formatDataForLicenceForm($data, $which);
         }
 
+        /** @var \Common\Form\Form $form */
         $form = $this->alterActionForm($this->getLicenceForm(), $which)->setData($data);
 
         if ($mode !== 'add') {
@@ -501,10 +501,11 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
 
         if ($request->isPost() && $form->isValid()) {
-
             $this->saveLicence($form, $form->getData());
 
-            return $this->handlePostSave($which, false);
+            return $this->handlePostSave(
+                (new CamelCaseToDash())->filter($which)
+            );
         }
 
         return $this->render($mode . '_licence_history', $form);
@@ -530,8 +531,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         $mappedResults = [];
         if ($response->isOk()) {
-            $mapper = new OtherLicenceMapper();
-            $mappedResults = $mapper->mapFromResult($response->getResult());
+            $mappedResults = OtherLicenceMapper::mapFromResult($response->getResult());
         }
         return $mappedResults;
     }
@@ -595,7 +595,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Save licence
      *
-     * @param Olcs\Common\Form $form
+     * @param \Common\Form\Form $form
      * @param array $formData
      */
     protected function saveLicence($form, $formData)
@@ -634,17 +634,17 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return false;
     }
 
-    protected function mapErrors($form, array $errors, array $fields = [], $fieldsetName = '')
+    protected function mapErrors(\Common\Form\Form $form, array $errors, array $fields = [], $fieldsetName = '')
     {
         $formMessages = [];
 
         foreach ($fields as $errorKey => $fieldName) {
             if (isset($errors[$errorKey])) {
-                foreach ($errors[$errorKey] as $key => $message) {
+                foreach ($errors[$errorKey] as $message) {
                     $formMessages[$fieldsetName][$fieldName][] = $message;
                 }
 
-                unset($errors[$key]);
+                unset($errors[$errorKey]);
             }
         }
 
