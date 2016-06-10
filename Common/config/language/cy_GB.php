@@ -2111,6 +2111,7 @@ return [
     'search.result.subtitle.operator' => '{WELSH} We\'ve found <b>%s</b> vehicle operators that match your search.',
     'search.result.subtitle.person' => '{WELSH} We\'ve found <b>%s</b> people that match your search.',
     'search.result.subtitle.publication' => '{WELSH} We\'ve found <b>%s</b> publications that match your search.',
+    'search.result.subtitle.publication.download' => '{WELSH} You can download copies of these publications for <a href="https://www.gov.uk/government/latest?departments%5B%5D=traffic-commissioners">Great Britain</a> and <a href="https://www.infrastructure-ni.gov.uk/publications/transport-regulation-unit-applications-and-decisions-2016">Northern Ireland</a>',
     'search.result.subtitle.vehicle-external' => '{WELSH} We\'ve found <b>%s</b> vehicle search results.',
     'search.result.title.bus' => '{WELSH} Search results',
     'search.result.title.operating-centre' => '{WELSH} Search results',
