@@ -24,7 +24,7 @@ class Date extends ZendDate
      */
     protected $messageTemplates = array(
         self::INVALID        => "Please select a date",
-        self::INVALID_DATE   => "The input does not appear to be a valid date",
+        self::INVALID_DATE   => "The input does not appear to be a valid value",
         self::FALSEFORMAT    => "The input does not fit the date format '%format%'",
     );
 
@@ -32,7 +32,8 @@ class Date extends ZendDate
      * Returns true if $value is a DateTime instance or can be converted into one.
      * Returns false if $value is empty of invalid  and gives an error message
      *
-     * @param  string|array|int|DateTime $value
+     * @param string|array|int|DateTime $value Value
+     *
      * @return bool
      */
     public function isValid($value)

@@ -57,18 +57,18 @@ class DateTest extends \PHPUnit_Framework_TestCase
             'impossible date' => [
                 false,
                 '2014-02-30',
-                [Date::INVALID_DATE => 'The input does not appear to be a valid date']
+                [Date::INVALID_DATE => 'The input does not appear to be a valid value']
             ],
             'invalid string date' => [
                 false,
                 'invalidinputstring',
-                [Date::INVALID_DATE => 'The input does not appear to be a valid date']
+                [Date::INVALID_DATE => 'The input does not appear to be a valid value']
             ],
             // the existing behaviour from ZendDate is 'invalid date' for other data types
             'invalid object' => [
                 false,
                 new \StdClass(),
-                [Date::INVALID_DATE => 'The input does not appear to be a valid date']
+                [Date::INVALID_DATE => 'The input does not appear to be a valid value']
             ],
         ];
     }
