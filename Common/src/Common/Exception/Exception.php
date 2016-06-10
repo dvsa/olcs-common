@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Exception class
- *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
- */
 namespace Common\Exception;
 
 /**
