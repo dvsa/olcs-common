@@ -1,22 +1,16 @@
 <?php
 
-/**
- * Checkbox element
- *
- * @author Someone <someone@valtech.co.uk>
- */
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * Checkbox element
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
+class Checkbox extends ZendElement\Checkbox
 {
     public function __construct($name = null, $options = array())
     {
@@ -50,7 +44,7 @@ class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
                             ZendValidator\Identical::NOT_SAME =>
                                 isset($this->getOptions()['not_checked_message'])
                                     ? $this->getOptions()['not_checked_message']
-                                    : 'You must check this box to continue',
+                                    : 'common.form.validation.checkbox.not_same',
                         ),
                     ),
                 ]

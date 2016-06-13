@@ -2746,5 +2746,8 @@ return [
     'auth.forgot-password.label' => 'Wedi anghofio’ch cyfrinair?',
     'email-address' => 'Cyfeiriad e-bost',
     'confirm-email-address' => 'Cadarnhau’r cyfeiriad e-bost',
+    'common.form.validation.checkbox.not_same' => 'Rhaid nodi’r blwch hwn i barhau',
+    'common.form.validation.company_number.too_long' => '{WELSH} The company number cannot be more than 8 characters',
+    'common.form.validation.company_number.not_alnum' => '{WELSH} Must be 8 digits; alpha-numeric characters allowed; no special characters; mandatory when displayed',
     // Potentially unused translations
 ];

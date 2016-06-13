@@ -1,16 +1,9 @@
 <?php
 
-/**
- * Company Number
- *
- * @author Someone <someone@valtech.co.uk>
- */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Zend\I18n\Validator\Alnum;
+use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\StringLength;
 
 /**
@@ -18,7 +11,7 @@ use Zend\Validator\StringLength;
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class CompanyNumber extends ZendElement implements InputProviderInterface
+class CompanyNumber extends \Zend\Form\Element implements InputProviderInterface
 {
     /**
      * Provide default input rules for this element.
@@ -40,7 +33,7 @@ class CompanyNumber extends ZendElement implements InputProviderInterface
                         'min' => 1,
                         'max' => 8,
                         'messages' => [
-                            StringLength::TOO_LONG => 'The company number cannot be more than 8 characters'
+                            StringLength::TOO_LONG => 'common.form.validation.company_number.too_long',
                         ]
                     ]
                 ],
@@ -48,9 +41,7 @@ class CompanyNumber extends ZendElement implements InputProviderInterface
                     'name' => 'Alnum',
                     'options' => [
                         'messages' => [
-                             Alnum::NOT_ALNUM =>
-                                'Must be 8 digits; alpha-numeric characters allowed; ' .
-                                'no special characters; mandatory when displayed'
+                             Alnum::NOT_ALNUM => 'common.form.validation.company_number.not_alnum',
                         ],
                     ],
                 ]
