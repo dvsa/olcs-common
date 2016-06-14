@@ -96,6 +96,19 @@ class DateTimeSelect extends ZendElement\DateTimeSelect
             $this->minuteElement->setValue(null);
             $this->secondElement->setValue(null);
         } else {
+            // value could have a timezone offset in it, therefore convert time to app local time
+            if (is_string($value)) {
+                try {
+                    $value = new \DateTime($value);
+                } catch (Exception $e) {
+                    throw new InvalidArgumentException('Value should be a parsable string or an instance of \DateTime');
+                }
+            }
+
+            if ($value instanceof \DateTime) {
+                $value->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+            }
+
             parent::setValue($value);
         }
     }

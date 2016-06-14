@@ -342,6 +342,7 @@ return array(
             'status' => 'Common\View\Helper\Status',
             'address' => 'Common\View\Helper\Address',
             'personName' => 'Common\View\Helper\PersonName',
+            'dateTime' => \Common\View\Helper\DateTime::class,
 
             // Extended form view helpers, to allow us to use alternative attributes that are not in ZF2's whitelist
             'formbutton'              => \Common\Form\View\Helper\Extended\FormButton::class,
