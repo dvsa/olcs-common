@@ -23,7 +23,7 @@ class DateTime extends AbstractHelper
         $localDateTime = clone $dateTime;
         // change the timezone to whatever the app is running
         $localDateTime->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-        
+
         return $localDateTime->format($dateFormat);
     }
 }

@@ -83,7 +83,8 @@ class DateTimeSelect extends ZendElement\DateTimeSelect
     /**
      * Overrides the default zend behaviour if the value is null
      *
-     * @param mixed $value
+     * @param mixed $value Date time value to set
+     *
      * @return void|\Zend\Form\Element
      */
     public function setValue($value)
@@ -100,7 +101,7 @@ class DateTimeSelect extends ZendElement\DateTimeSelect
             if (is_string($value)) {
                 try {
                     $value = new \DateTime($value);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     throw new InvalidArgumentException('Value should be a parsable string or an instance of \DateTime');
                 }
             }

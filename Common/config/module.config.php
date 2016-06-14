@@ -486,7 +486,6 @@ return array(
     'sic_codes_path' => __DIR__ . '/../../Common/config/sic-codes',
     'fieldsets_path' => __DIR__ . '/../../Common/src/Common/Form/Fieldsets/',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
-    // @todo I *think* we can remove this now
     'form' => array(),
     'rest_services' => [
         'abstract_factories' => [
