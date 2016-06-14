@@ -91,6 +91,7 @@ class Publication extends InternalSearchAbstract
                 ]
             ],
             'layout' => 'traffic-commissioner-publication',
+            'show-status' => true
         ];
     }
 

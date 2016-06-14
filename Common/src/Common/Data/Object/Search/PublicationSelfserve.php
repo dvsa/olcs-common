@@ -121,6 +121,7 @@ class PublicationSelfserve extends InternalSearchAbstract
                 ]
             ],
             'layout' => 'traffic-commissioner-publication',
+            'show-status' => false
         ];
     }
 }

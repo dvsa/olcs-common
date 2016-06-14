@@ -3,7 +3,8 @@
 /**
  * @var $this->object \Common\Service\Table\TableBuilder
  */
-
+$settings = $this->object->getSettings();
+$showStatus = isset($settings['show-status']) ? $settings['show-status'] : true;
 ?>
 
 <ul class="search-results">
@@ -26,7 +27,14 @@
                 $row['pubSecDesc']); ?></p>
             <p><b><?php echo $this->translate('search.result.date');?>:</b> <?php echo date(\DATE_FORMAT, strtotime($row['pubDate']));
                 ?></p>
+            <?php
+
+            if ($showStatus) {
+            ?>
             <p><b><?php echo $this->translate('search.result.status');?>:</b> <?php echo htmlentities($row['pubStatusDesc']); ?></p>
+            <?php
+            }
+            ?>
         </div>
     </li>
     <?php endforeach; ?>
