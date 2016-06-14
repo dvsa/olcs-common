@@ -2752,5 +2752,8 @@ return [
     'your-business' => 'Your business',
     'email-address' => 'Email address',
     'confirm-email-address' => 'Confirm email address',
+    'common.form.validation.checkbox.not_same' => 'You must check this box to continue',
+    'common.form.validation.company_number.too_long' => 'The company number cannot be more than 8 characters',
+    'common.form.validation.company_number.not_alnum' => 'Must be 8 digits; alpha-numeric characters allowed; no special characters; mandatory when displayed',
     // Potentially unused translations
 ];
