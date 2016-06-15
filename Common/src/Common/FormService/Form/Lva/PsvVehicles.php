@@ -1,10 +1,5 @@
 <?php
 
-/**
- * PSV Vehicles Form
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\FormService\Form\Lva;
 
 /**

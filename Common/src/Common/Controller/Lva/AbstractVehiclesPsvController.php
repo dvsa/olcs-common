@@ -1,25 +1,20 @@
 <?php
 
-/**
- * Vehicles PSV Controller
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\TransferVehiclesTrait;
 use Common\Controller\Lva\Traits\VehicleSearchTrait;
 use Common\Data\Mapper\Lva\PsvVehicles;
 use Common\Data\Mapper\Lva\PsvVehiclesVehicle;
-use Common\RefData;
 use Common\Service\Entity\LicenceEntityService;
-use Dvsa\Olcs\Transfer\Command\Application\UpdatePsvVehicles;
-use Zend\Form\Form;
-use Zend\Form\Element\Checkbox;
-use Dvsa\Olcs\Transfer\Query as QueryDto;
 use Dvsa\Olcs\Transfer\Command as CommandDto;
 use Dvsa\Olcs\Transfer\Command\Application\CreatePsvVehicle as ApplicationCreatePsvVehicle;
+use Dvsa\Olcs\Transfer\Command\Application\UpdatePsvVehicles;
 use Dvsa\Olcs\Transfer\Command\Licence\CreatePsvVehicle as LicenceCreatePsvVehicle;
+use Dvsa\Olcs\Transfer\Query as QueryDto;
+use Zend\Form\Element\Checkbox;
+use Zend\Form\Form;
+use Zend\Form\FormInterface;
 
 /**
  * Vehicles PSV Controller
@@ -56,6 +51,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $resultData = $this->fetchResultData();
@@ -73,18 +69,17 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             ->setData($data);
 
         $removeActions = false;
-        if (!$resultData['hasBreakdown'] && in_array($this->lva, ['licence', 'variation'])) {
+        if (!$resultData['hasBreakdown'] && in_array($this->lva, ['licence', 'variation'], true)) {
             $removeActions = true;
-            $this->addGuidance($resultData);
+            $this->addGuidance();
         }
 
         $form = $this->alterForm($form, $resultData, $removeActions);
 
         if ($request->isPost() && $form->isValid()) {
-
             $crudAction = $this->getCrudAction($data);
 
-            $response = $this->updateVehiclesSection($form, $crudAction, $resultData);
+            $response = $this->updateVehiclesSection($form, $crudAction);
 
             if ($response !== null) {
                 return $response;
@@ -112,8 +107,18 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $this->renderForm($form, 'vehicles_psv', $resultData);
     }
 
-    protected function updateVehiclesSection($form, $crudAction)
+    /**
+     * @param \Common\Form\Form $form
+     * @param $crudAction
+     * @return mixed
+     */
+    protected function updateVehiclesSection(FormInterface $form, $crudAction)
     {
+        /** @var \Common\Service\Helper\FlashMessengerHelperService $flashMssgr */
+        $flashMssgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+        $resultData = [];
+
         if ($this->lva === 'application') {
             $formData = $form->getData();
 
@@ -132,19 +137,18 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 PsvVehicles::mapFormErrors(
                     $form,
                     $response->getResult()['messages'],
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    $flashMssgr
                 );
                 return $this->renderForm($form, 'vehicles_psv', $resultData);
             }
 
             if ($response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+                $flashMssgr->addUnknownError();
                 return $this->renderForm($form, 'vehicles_psv', $resultData);
             }
         }
 
         if ($this->lva === 'licence') {
-
             $shareInfo = $form->getData()['shareInfo']['shareInfo'];
 
             $dtoData = [
@@ -155,10 +159,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             $response = $this->handleCommand(CommandDto\Licence\UpdateVehicles::create($dtoData));
 
             if (!$response->isOk()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                $flashMssgr->addCurrentErrorMessage('unknown-error');
                 return $this->renderForm($form, 'vehicles_psv', $resultData);
             }
         }
+
+        return null;
     }
 
     /**
@@ -182,7 +188,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
         ];
 
-        if (in_array($resultData['licenceType']['id'], $acceptedLicenceTypes) && $total == $toDelete) {
+        if (in_array($resultData['licenceType']['id'], $acceptedLicenceTypes, true)
+            && $total === $toDelete
+        ) {
             return 'deleting.all.vehicles.message';
         }
 
@@ -200,17 +208,17 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Add a vehicle action
      *
-     * @return type
+     * @return \Zend\View\Model\ViewModel
      */
     public function addAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
         $resultData = $this->fetchResultData();
 
+        $data = [];
         if ($request->isPost()) {
             $data = (array)$request->getPost();
-        } else {
-            $data = [];
         }
 
         $params = [
@@ -220,6 +228,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             'isRemoved' => false
         ];
 
+        /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section . '-vehicle')
@@ -227,7 +236,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             ->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
-
             $formData = $form->getData();
 
             $dtoClass = $this->createVehicleMap[$this->lva];
@@ -241,6 +249,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 return $this->handlePostSave();
             }
 
+            /** @var \Common\Service\Helper\FlashMessengerHelperService $fm */
             $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
 
             if ($response->isClientError()) {
@@ -258,10 +267,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Edit action
      *
-     * @return type
+     * @return \Zend\View\Model\ViewModel
      */
     public function editAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $id = $this->params('child_id');
@@ -285,6 +295,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             'location' => $this->location
         ];
 
+        /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section . '-vehicle')
@@ -292,9 +303,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             ->setData($data);
 
         if ($resultData['showHistory']) {
+            /** @var \Common\Service\Table\TableBuilder $table */
             $table = $this->getServiceLocator()->get('Table')
                 ->prepareTable('lva-psv-vehicles-history', $resultData['history']);
+
             $table->removeColumn('discNo');
+
             $this->getServiceLocator()->get('Helper\Form')->populateFormTable(
                 $form->get('vehicle-history-table'),
                 $table
@@ -302,7 +316,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         }
 
         if ($request->isPost() && $form->isValid()) {
-
             $formData = $form->getData();
 
             $dtoData = PsvVehiclesVehicle::mapFromForm($formData);
@@ -315,6 +328,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 return $this->handlePostSave();
             }
 
+            /** @var \Common\Service\Helper\FlashMessengerHelperService $fm */
             $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
 
             if ($response->isClientError()) {
@@ -333,6 +347,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      * Hijack the crud action check so we can validate the add button
      *
      * @param string $action
+     *
+     * @return null|\Zend\Http\Response
      */
     protected function checkForAlternativeCrudAction($action)
     {
@@ -357,9 +373,16 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 return $this->reload();
             }
         }
+
+        return null;
     }
 
-    private function alterTable($table, $filters = [])
+    /**
+     * @param \Common\Service\Table\TableBuilder $table
+     * @param array $filters
+     * @return mixed
+     */
+    private function alterTable($table, array $filters = [])
     {
         // if licence on external then add an "Export" action
         if ($this->lva === 'licence' && $this->location === 'external') {
@@ -394,7 +417,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             $table->removeAction('transfer');
         }
 
-        if (in_array($this->lva, ['licence', 'variation'])) {
+        if (in_array($this->lva, ['licence', 'variation'], true)) {
             $this->getServiceLocator()->get('FormServiceManager')
                 ->get('lva-licence-variation-vehicles')->alterForm($form);
         }
@@ -402,7 +425,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $form;
     }
 
-    private function addGuidance($resultData)
+    private function addGuidance()
     {
         $message = 'psv-vehicles-' . $this->lva . '-missing-breakdown';
 
@@ -529,9 +552,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $data = $formTables;
 
         if (isset($data['vehicles']['action'])) {
-            $action = $this->getActionFromCrudAction($data['vehicles']);
-
-            return $action;
+            return $this->getActionFromCrudAction($data['vehicles']);
         }
 
         return null;
@@ -567,10 +588,13 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     protected function getFilters()
     {
-        if ($this->getRequest()->isPost()) {
-            $query = $this->getRequest()->getPost('query');
+        /** @var \Zend\Http\Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $query = $request->getPost('query');
         } else {
-            $query = $this->getRequest()->getQuery();
+            $query = $request->getQuery();
         }
 
         return $this->formatFilters((array)$query);
