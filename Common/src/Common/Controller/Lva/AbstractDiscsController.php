@@ -50,6 +50,9 @@ abstract class AbstractDiscsController extends AbstractController
         ]
     ];
 
+    /**
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function indexAction()
     {
         /** @var \Zend\Http\Request $request */
@@ -83,6 +86,9 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->render('discs', $form);
     }
 
+    /**
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function addAction()
     {
         /** @var \Zend\Http\Request $request */
@@ -141,6 +147,11 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->commonConfirmCommand(self::CMD_VOID_DISCS);
     }
 
+    /**
+     * Hidden action. Used to change status of visibility of ceased discs in table
+     *
+     * @return \Zend\Http\Response
+     */
     public function ceasedShowHideAction()
     {
         $isIncluded = ($this->params()->fromQuery('includeCeased', 0) === '1');
@@ -203,6 +214,11 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->alterTable($table, $tableParams);
     }
 
+    /**
+     * Get table parameters
+     *
+     * @return array
+     */
     private function getFilters()
     {
         $params = $this->params();
@@ -274,7 +290,7 @@ abstract class AbstractDiscsController extends AbstractController
             unset($errors['amount']);
         }
 
-        if (count($errors) !== 0) {
+        if (!empty($errors)) {
             $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
 
             foreach ($errors as $error) {
@@ -283,6 +299,13 @@ abstract class AbstractDiscsController extends AbstractController
         }
     }
 
+    /**
+     * Show confirmation form and execute command by key
+     *
+     * @param string $commandKey
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     protected function commonConfirmCommand($commandKey)
     {
         /** @var \Zend\Http\Request $request */
@@ -312,7 +335,13 @@ abstract class AbstractDiscsController extends AbstractController
         $this->commonCommand($commandKey, $dtoData);
     }
 
-    protected function commonCommand($commandKey, $dtoData)
+    /**
+     * Execute command by key with specified parameters
+     *
+     * @param string $commandKey
+     * @param array $dtoData
+     */
+    protected function commonCommand($commandKey, array $dtoData)
     {
         /** @var AbstractCommand $commandClass */
         $commandClass = $this->commandMap[$commandKey][$this->lva];
@@ -327,8 +356,15 @@ abstract class AbstractDiscsController extends AbstractController
         }
     }
 
-
-    private function alterTable(TableBuilder $table, $filters = [])
+    /**
+     * Set additional setting for table
+     *
+     * @param TableBuilder $table
+     * @param array $filters
+     *
+     * @return TableBuilder
+     */
+    private function alterTable(TableBuilder $table, array $filters = [])
     {
         $isIncluded = (isset($filters['includeCeased']) && $filters['includeCeased'] === '1');
 

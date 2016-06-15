@@ -586,6 +586,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $response->getResult();
     }
 
+    /**
+     * Get table filter parameter
+     * 
+     * @return array
+     */
     protected function getFilters()
     {
         /** @var \Zend\Http\Request $request */
