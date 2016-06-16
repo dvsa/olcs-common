@@ -221,4 +221,11 @@ class RefData
     const CONVICTION_CATEGORY_USER_DEFINED = 'conv_c_cat_1144';
 
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
+
+    /**
+     * Erru
+     */
+    const ERRU_RESPONSE_SENT = 'erru_case_t_msirs';
+    const ERRU_RESPONSE_SENDING_FAILED = 'erru_case_t_msirsf';
+    const ERRU_RESPONSE_QUEUED = 'erru_case_t_msirnys';
 }
