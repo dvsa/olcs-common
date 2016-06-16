@@ -1,12 +1,9 @@
 <?php
 
-/**
- * Abstract Discs Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
+use Common\Service\Table\TableBuilder;
+use Dvsa\Olcs\Transfer\Command\AbstractCommand;
 use Dvsa\Olcs\Transfer\Query\Licence\PsvDiscs;
 use Zend\Form\Form;
 
@@ -30,6 +27,9 @@ abstract class AbstractDiscsController extends AbstractController
 
     protected $spacesRemaining = null;
 
+    //  actions
+    const ACTION_CEASED_SHOW_HIDE = 'ceased-show-hide';
+
     // Command keys
     const CMD_REQUEST_DISCS = 'requested';
     const CMD_VOID_DISCS = 'voided';
@@ -50,43 +50,48 @@ abstract class AbstractDiscsController extends AbstractController
         ]
     ];
 
+    /**
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
-        $filterForm = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\DiscFilter');
-        $filterForm->setData($this->getFilters());
-
         if ($request->isPost()) {
-
             $data = (array)$request->getPost();
 
             $crudAction = $this->getCrudAction([$data['table']]);
 
             if ($crudAction !== null) {
-                return $this->handleCrudAction($crudAction);
+                return $this->handleCrudAction($crudAction, ['add', self::ACTION_CEASED_SHOW_HIDE]);
             }
 
             return $this->completeSection('discs');
-
         } else {
             $data = [];
         }
 
         $form = $this->getDiscsForm()->setData($data);
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['forms/filter']);
+        /** @var \Common\Service\Script\ScriptFactory $scriptSrv */
+        $scriptSrv = $this->getServiceLocator()->get('Script');
+        $scriptSrv->loadFiles(['forms/filter']);
+        $scriptSrv->loadFiles(['lva-crud', 'more-actions']);
 
-        if (!is_null($this->spacesRemaining) && $this->spacesRemaining < 0) {
+        if ((int) $this->spacesRemaining < 0) {
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-discs-than-authorisation');
         }
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'more-actions']);
-        return $this->render('discs', $form, ['filterForm' => $filterForm]);
+        return $this->render('discs', $form);
     }
 
+    /**
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function addAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $form = $this->getRequestForm();
@@ -100,16 +105,16 @@ abstract class AbstractDiscsController extends AbstractController
         if ($request->isPost() && $form->isValid()) {
             $response = $this->processRequestDiscs($form->getData());
 
+            $flashMssgrHelper = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
             if ($response->isOk()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addSuccessMessage('psv-discs-' . self::CMD_REQUEST_DISCS . '-successfully');
+                $flashMssgrHelper->addSuccessMessage('psv-discs-' . self::CMD_REQUEST_DISCS . '-successfully');
 
                 return $this->redirect()->toRouteAjax(null, [$this->getIdentifierIndex() => $this->getIdentifier()]);
             }
 
             if ($response->isServerError()) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addCurrentErrorMessage('unknown-error');
+                $flashMssgrHelper->addCurrentErrorMessage('unknown-error');
             } else {
                 $this->mapErrors($form, $response->getResult()['messages']);
             }
@@ -127,10 +132,9 @@ abstract class AbstractDiscsController extends AbstractController
             'amount' => $amount
         ];
 
+        /** @var AbstractCommand $commandClass */
         $commandClass = $this->commandMap[self::CMD_REQUEST_DISCS][$this->lva];
-        $response = $this->handleCommand($commandClass::create($dtoData));
-
-        return $response;
+        return $this->handleCommand($commandClass::create($dtoData));
     }
 
     public function replaceAction()
@@ -143,8 +147,26 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->commonConfirmCommand(self::CMD_VOID_DISCS);
     }
 
+    /**
+     * Hidden action. Used to change status of visibility of ceased discs in table
+     *
+     * @return \Zend\Http\Response
+     */
+    public function ceasedShowHideAction()
+    {
+        $isIncluded = ($this->params()->fromQuery('includeCeased', 0) === '1');
+
+        return $this->redirect()->toRouteAjax(
+            null,
+            ['action' => 'index'],
+            ['query' => (!$isIncluded ? ['includeCeased' => '1'] : [])],
+            true
+        );
+    }
+
     protected function getRequestForm()
     {
+        /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\PsvDiscsRequest');
 
         $form->get('form-actions')->remove('addAnother');
@@ -159,10 +181,14 @@ abstract class AbstractDiscsController extends AbstractController
             ->createFormWithRequest('GenericConfirmation', $this->getRequest());
     }
 
+    /**
+     * @return \Common\Form\Form
+     */
     protected function getDiscsForm()
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
+        /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
@@ -177,21 +203,30 @@ abstract class AbstractDiscsController extends AbstractController
     protected function getDiscsTable()
     {
         $tableParams = $this->getFilters();
-        $tableParams['query'] = $this->getFilters();
+        $tableParams['query'] = $tableParams;
 
-        return $this->getServiceLocator()->get('Table')->prepareTable(
+        $table = $this->getServiceLocator()->get('Table')->prepareTable(
             'lva-psv-discs',
             $this->getTableData(),
             $tableParams
         );
+
+        return $this->alterTable($table, $tableParams);
     }
 
-    protected function getFilters()
+    /**
+     * Get table parameters
+     *
+     * @return array
+     */
+    private function getFilters()
     {
+        $params = $this->params();
+
         return [
-            'includeCeased' => $this->params()->fromQuery('includeCeased', 0),
-            'limit' => $this->params()->fromQuery('limit', 10),
-            'page' => $this->params()->fromQuery('page', 1),
+            'includeCeased' => $params->fromQuery('includeCeased', 0),
+            'limit' => $params->fromQuery('limit', 10),
+            'page' => $params->fromQuery('page', 1),
         ];
     }
 
@@ -199,7 +234,6 @@ abstract class AbstractDiscsController extends AbstractController
     protected function getTableData()
     {
         if ($this->formTableData === null) {
-
             $data = $this->getFilters();
             $data['id'] = $this->getLicenceId();
 
@@ -265,8 +299,16 @@ abstract class AbstractDiscsController extends AbstractController
         }
     }
 
+    /**
+     * Show confirmation form and execute command by key
+     *
+     * @param string $commandKey
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     protected function commonConfirmCommand($commandKey)
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -274,7 +316,7 @@ abstract class AbstractDiscsController extends AbstractController
             return $this->redirect()->toRouteAjax(
                 null,
                 [$this->getIdentifierIndex() => $this->getIdentifier()],
-                ['query' => $this->getRequest()->getQuery()->toArray()]
+                ['query' => $request->getQuery()->toArray()]
             );
         }
 
@@ -293,17 +335,48 @@ abstract class AbstractDiscsController extends AbstractController
         $this->commonCommand($commandKey, $dtoData);
     }
 
-    protected function commonCommand($commandKey, $dtoData)
+    /**
+     * Execute command by key with specified parameters
+     *
+     * @param string $commandKey
+     * @param array $dtoData
+     */
+    protected function commonCommand($commandKey, array $dtoData)
     {
+        /** @var AbstractCommand $commandClass */
         $commandClass = $this->commandMap[$commandKey][$this->lva];
         $response = $this->handleCommand($commandClass::create($dtoData));
 
+        $flashMssgrHelper = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
         if ($response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')
-                ->addSuccessMessage('psv-discs-' . $commandKey . '-successfully');
+            $flashMssgrHelper->addSuccessMessage('psv-discs-' . $commandKey . '-successfully');
         } else {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')
-                ->addErrorMessage('unknown-error');
+            $flashMssgrHelper->addErrorMessage('unknown-error');
         }
+    }
+
+    /**
+     * Set additional setting for table
+     *
+     * @param TableBuilder $table
+     * @param array $filters
+     *
+     * @return TableBuilder
+     */
+    private function alterTable(TableBuilder $table, array $filters = [])
+    {
+        $isIncluded = (isset($filters['includeCeased']) && $filters['includeCeased'] === '1');
+
+        $table->addAction(
+            self::ACTION_CEASED_SHOW_HIDE,
+            [
+                'label' => 'internal-psv-discs-filter-ceased-' . ($isIncluded ? 'hide' : 'show') . '-discs',
+                'class' => 'secondary js-disable-crud',
+                'requireRows' => true,
+            ]
+        );
+
+        return $table;
     }
 }

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Crud action trait
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 /**
@@ -62,10 +56,8 @@ trait CrudActionTrait
 
         $routeParams = array('action' => isset($data['routeAction']) ? $data['routeAction'] : $action);
 
-        if (!in_array($action, $rowsNotRequired)) {
-
+        if (!in_array($action, $rowsNotRequired, true)) {
             if (!isset($data['id'])) {
-
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please-select-row');
                 return $this->redirect()->refresh();
             }

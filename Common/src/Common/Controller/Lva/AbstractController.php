@@ -25,6 +25,10 @@ use Zend\Mvc\MvcEvent;
  * @method \Common\Controller\Plugin\Redirect redirect()
  * @method boolean isGranted(string $permission)
  * @method \Common\Controller\Plugin\CurrentUser currentUser()
+ * @method \Zend\Http\Response completeSection($section, $prg = [])
+ * 
+ * @see   \Olcs\Controller\Lva\Traits\ApplicationControllerTrait::render
+ * @method \Common\View\Model\Section render($titleSuffix, Form $form = null, $variables = [])
  */
 abstract class AbstractController extends AbstractActionController
 {

@@ -65,7 +65,7 @@ return array(
         ),
         array(
             'width' => 'checkbox',
-            'type' => 'Checkbox'
+            'type' => 'Checkbox',
         )
     )
 );
