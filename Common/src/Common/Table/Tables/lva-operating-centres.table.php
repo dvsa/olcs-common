@@ -44,6 +44,7 @@ return array(
             'formatter' => 'OcComplaints'
         ),
         array(
+            'title' => 'markup-table-th-remove',
             'type' => 'ActionLinks'
         ),
     ),

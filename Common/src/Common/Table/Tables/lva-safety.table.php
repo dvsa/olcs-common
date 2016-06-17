@@ -34,6 +34,7 @@ return array(
             'name' => 'contactDetails->address'
         ),
         array(
+            'title' => 'markup-table-th-remove',
             'type' => 'ActionLinks',
         ),
     )
