@@ -495,7 +495,7 @@ return [
     'application_taxi-phv_licence.trafficArea.labelasahint.exists' => '<p class="hint">Your traffic area has been determined from your council address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
     'application_type-of-licence_licence-type.data' => 'Licence type',
     'application_type-of-licence_licence-type.data.licenceType' => 'What type of licence do you want to apply for?',
-    'application_type-of-licence_licence-type.data.licenceType-hint' => 'Read more about <a href="https://www.gov.uk/being-a-goods-vehicle-operator/types-of-licence" target="_blank" aria-label="Read more about types of licence">types of licence</a>.',
+    'application_type-of-licence_licence-type.data.licenceType-hint' => 'Read more about <a href="https://www.gov.uk/being-a-goods-vehicle-operator/types-of-licence" id="typesOfLicenseLink" target="_blank" aria-label="Read more about types of licence">types of licence</a>.',
     'application_type-of-licence_operator-location.data' => 'Operator location',
     'application_type-of-licence_operator-location.data.niFlag' => 'Where will you operate your vehicles?',
     'application_type-of-licence_operator-type.data' => 'Operator type',
