@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Traits;
 
+use Common\Service\Helper\FormHelperService;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -29,11 +30,12 @@ trait GenericMethods
 
     /**
      * Gets a from from either a built or custom form config.
-     * @param type $type
-     * @return type
+     * @param string $type
+     * @return \Common\Form\Form
      */
     public function getForm($type)
     {
+        /** @var FormHelperService $formHelper */
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $form = $formHelper->createForm($type);
         $formHelper->setFormActionFromRequest($form, $this->getRequest());
@@ -44,8 +46,8 @@ trait GenericMethods
 
     /**
      * Method to process posted form data and validate it and process a callback
-     * @param type $form
-     * @param type $callback
+     * @param \Common\Form\Form $form
+     * @param callable $callback
      * @param array $additionalParams
      * @param bool $validateForm
      * @param bool $enableCsrf
@@ -68,20 +70,17 @@ trait GenericMethods
             $form = $this->alterFormBeforeValidation($form);
         }
 
-        if ($this->getRequest()->isPost()) {
+        /* @var \Zend\Http\Request $request */
+        $request = $this->getRequest();
 
-            /* @var Request $request */
-            $request = $this->getRequest();
+        if ($request->isPost()) {
             // if Files and Post are empty this is as symptom that the PHP ini post_max_size has been exceeded
             if (empty($request->getFiles()->toArray()) && empty($request->getPost()->toArray())) {
                 $this->addErrorMessage('message.post_max_size_exceeded');
                 return $form;
             }
 
-            $data = array_merge(
-                (array)$this->getRequest()->getPost(),
-                $fieldValues
-            );
+            $data = array_merge((array) $request->getPost(), $fieldValues);
             $form->setData($data);
 
             if (method_exists($this, 'postSetFormData')) {
@@ -93,7 +92,6 @@ trait GenericMethods
              * validation.
              */
             if (!$validateForm || $form->isValid()) {
-
                 if ($validateForm) {
                     $validatedData = $form->getData();
                 } else {
@@ -120,8 +118,9 @@ trait GenericMethods
     /**
      * Calls the callback function/method if exists.
      *
-     * @param unknown_type $callback
-     * @param unknown_type $params
+     * @param callable $callback
+     * @param array $params
+     *
      * @throws \Exception
      */
     public function callCallbackIfExists($callback, $params)
@@ -189,6 +188,7 @@ trait GenericMethods
      */
     public function isButtonPressed($button, $data = null)
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if (is_null($data)) {
