@@ -38,6 +38,12 @@ class DateCompare extends AbstractCompare
     protected $hasTime = false;
 
     /**
+     * Whether the date can be empty
+     * @var bool
+     */
+    protected $allowEmpty = false;
+
+    /**
      * @param bool $hasTime
      * @return $this
      */
@@ -56,6 +62,24 @@ class DateCompare extends AbstractCompare
     }
 
     /**
+     * @param bool $allowEmpty allow empty
+     * @return $this
+     */
+    public function setAllowEmpty($allowEmpty)
+    {
+        $this->allowEmpty = (boolean) $allowEmpty;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAllowEmpty()
+    {
+        return $this->allowEmpty;
+    }
+
+    /**
      * Sets options
      *
      * @param  array $options
@@ -66,6 +90,9 @@ class DateCompare extends AbstractCompare
         if (isset($options['has_time'])) {
             $this->setHasTime($options['has_time']);
         }
+        if (isset($options['allow_empty'])) {
+            $this->setAllowEmpty($options['allow_empty']);
+        }
 
         return parent::setOptions($options);
     }
@@ -73,6 +100,8 @@ class DateCompare extends AbstractCompare
     /**
      * Returns true if and only if a token has been set and the provided value
      * matches that token.
+     * NB: if allow_empty option set to true, isValid will return true if original date
+     * or compareTo date is empty
      *
      * @param  mixed $value
      * @param  array $context
@@ -80,6 +109,9 @@ class DateCompare extends AbstractCompare
      */
     public function isValid($value, array $context = null)
     {
+        if (empty($value) && $this->getAllowEmpty()) {
+            return true;
+        }
         if (empty($value)) {
             $this->error(self::INVALID_FIELD); //@TO~DO~
             return false;
@@ -87,6 +119,9 @@ class DateCompare extends AbstractCompare
 
         //  get compare To date(time) value
         $compareToDate = $this->getCompareToDate($context);
+        if (empty($compareToDate) && $this->getAllowEmpty()) {
+            return true;
+        }
         if ($compareToDate === false) {
             return false;
         }

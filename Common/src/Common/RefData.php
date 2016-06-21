@@ -221,4 +221,12 @@ class RefData
     const CONVICTION_CATEGORY_USER_DEFINED = 'conv_c_cat_1144';
 
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
+
+    const COMMUNITY_LICENCE_STATUS_PENDING = 'cl_sts_pending';
+    const COMMUNITY_LICENCE_STATUS_ACTIVE = 'cl_sts_active';
+    const COMMUNITY_LICENCE_STATUS_EXPIRED = 'cl_sts_expired';
+    const COMMUNITY_LICENCE_STATUS_WITHDRAWN = 'cl_sts_withdrawn';
+    const COMMUNITY_LICENCE_STATUS_SUSPENDED = 'cl_sts_suspended';
+    const COMMUNITY_LICENCE_STATUS_VOID = 'cl_sts_annulled';
+    const COMMUNITY_LICENCE_STATUS_RETURNDED = 'cl_sts_returned';
 }

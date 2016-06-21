@@ -10,18 +10,18 @@ use Zend\Form\Annotation as Form;
  * @Form\Attributes({"method":"post", "class":"table__form"})
  * @Form\Type("Common\Form\Form")
  */
-class CommunityLicencesStop
+class CommunityLicencesEditSuspension
 {
     /**
      * @Form\Name("data")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesStop")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesEditSuspension")
      */
     public $data = null;
 
     /**
      * @Form\Attributes({"id":"dates"})
      * @Form\Name("dates")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesStopDates")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesEditSuspensionDates")
      */
     public $dates = null;
 
