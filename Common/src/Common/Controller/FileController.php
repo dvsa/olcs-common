@@ -19,10 +19,12 @@ class FileController extends \Zend\Mvc\Controller\AbstractActionController
 {
     /**
      * Download a file
+     *
+     * @return void
      */
     public function downloadAction()
     {
-        $identifier = base64_decode($this->params()->fromRoute('identifier'));
+        $identifier = $this->params()->fromRoute('identifier');
 
         /** @var Response $downloadResponse */
         $downloadResponse = $this->handleQuery(Download::create(['identifier' => $identifier]));
@@ -66,6 +68,13 @@ class FileController extends \Zend\Mvc\Controller\AbstractActionController
         return $response;
     }
 
+    /**
+     * ???
+     *
+     * @param string $name Filename
+     *
+     * @return bool
+     */
     protected function forceDownload($name)
     {
         if (preg_match('/\.html$/', $name)) {
