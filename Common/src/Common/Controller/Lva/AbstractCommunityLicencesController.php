@@ -568,7 +568,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      *
      * @return Lva\CommunityLicencesStop
      */
-    public function getStopForm()
+    protected function getStopForm()
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $form = $formHelper->createForm('Lva\CommunityLicencesStop');
@@ -583,7 +583,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      *
      * @return void
      */
-    public function alterStopForm($form)
+    protected function alterStopForm($form)
     {
         if ($form->get('data')->get('type')->getValue() === 'N') {
             $this->getServiceLocator()->get('Helper\Form')
