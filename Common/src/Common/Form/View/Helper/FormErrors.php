@@ -83,7 +83,7 @@ class FormErrors extends AbstractHelper
 
         return sprintf($messagesOpenFormat, $this->translate('form-errors-missing-details'))
             . implode($messageSeparatorString, $this->getFlatMessages($messages, $form))
-            . $messageCloseString;    
+            . $messageCloseString;
     }
 
     /**
