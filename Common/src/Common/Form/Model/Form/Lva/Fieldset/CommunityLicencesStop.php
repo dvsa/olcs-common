@@ -5,9 +5,9 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Name("community-licences-data-stop")
+ * @Form\Name("community-licences-stop")
  */
-class CommunityLicencesDataStop
+class CommunityLicencesStop
 {
     /**
      * @Form\Annotations({"id":""})

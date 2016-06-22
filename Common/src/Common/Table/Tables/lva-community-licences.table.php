@@ -38,11 +38,6 @@ return array(
             'name' => 'serialNoPrefix',
         ),
         array(
-            'title' => 'lva-community-licences-table-column-status',
-            'name' => 'status',
-            'formatter' => 'RefData'
-        ),
-        array(
             'title' => 'lva-community-licences-table-column-issue-date',
             'name' => 'specifiedDate',
             'formatter' => 'Date'
@@ -53,9 +48,9 @@ return array(
             'formatter' => 'CommunityLicenceIssueNo'
         ),
         array(
-            'title' => 'lva-community-licences-table-column-ceased-date',
-            'name' => 'expiredDate',
-            'formatter' => 'Date'
+            'title' => 'lva-community-licences-table-column-status',
+            'name' => 'status',
+            'formatter' => 'CommunityLicenceStatus'
         ),
         array(
             'title' => '',
