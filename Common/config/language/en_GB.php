@@ -2661,6 +2661,7 @@ return [
     'transport_managers-details-PreviousConvictions-delete-success' => 'Previous conviction(s) removed successfully',
     'transport_managers-details-PreviousLicences-delete-success' => 'Previous licence(s) removed successfully',
     'type-of-licence' => 'Type of licence',
+    'type-of-licence-error' => 'What type of licence do you need?',
     'undertakings' => 'Undertakings',
     'undertakings_declaration_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',
     'undertakings_summary_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',

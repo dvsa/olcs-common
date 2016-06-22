@@ -160,6 +160,8 @@ class FormErrors extends AbstractHelper
         // If there is a specified custom error message, use that
         if ($this->getCustomErrorMessage($element)) {
             $message = $this->getCustomErrorMessage($element);
+            // Translate the message since we have now got new untranslated content
+            $message = $this->translate($message);
         }
 
         // Try and find an element to link to

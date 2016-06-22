@@ -71,6 +71,7 @@ class TypeOfLicence
      * @Form\Attributes({"id": ""})
      * @Form\Options({
      *      "short-label": "short-label-tol-licence-type",
+     *      "error-message": "type-of-licence-error",
      *      "fieldset-attributes": {
      *          "id": "licence-type",
      *          "class": "checkbox"

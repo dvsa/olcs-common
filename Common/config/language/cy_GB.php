@@ -2648,6 +2648,7 @@ return [
     'transport_managers-details-PreviousConvictions-delete-success' => '{WELSH} Previous conviction(s) removed successfully',
     'transport_managers-details-PreviousLicences-delete-success' => '{WELSH} Previous licence(s) removed successfully',
     'type-of-licence' => '{WELSH} Type of licence',
+    'type-of-licence-error' => '{WELSH} What type of licence do you need?',
     'undertakings' => '{WELSH} Undertakings',
     'undertakings_declaration_download' => '{WELSH} <p><a href="%s" target="_blank" class="download">%s</a></p>',
     'undertakings_summary_download' => '{WELSH} <p><a href="%s" target="_blank" class="download">%s</a></p>',
