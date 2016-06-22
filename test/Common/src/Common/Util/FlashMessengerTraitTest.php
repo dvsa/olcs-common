@@ -16,11 +16,11 @@ namespace CommonTest\Controller\Util;
  */
 class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
 {
-    private $trait;
+    private $sut;
 
     public function setUp()
     {
-        $this->trait = $this->getMockForTrait(
+        $this->sut = $this->getMockForTrait(
             '\Common\Util\FlashMessengerTrait', array(), '', true, true, true, array(
                 'getFlashMessenger'
             )
@@ -33,7 +33,7 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFlashMessenger()
     {
-        $this->trait = $this->getMockForTrait(
+        $this->sut = $this->getMockForTrait(
             '\Common\Util\FlashMessengerTrait', array(), '', true, true, true, array(
                 'plugin'
             )
@@ -41,11 +41,11 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
 
         $pluginManager = $this->getMock('\stdClass', array('getNamespace'));
 
-        $this->trait->expects($this->once())
+        $this->sut->expects($this->once())
             ->method('plugin')
             ->will($this->returnValue($pluginManager));
 
-        $this->trait->getFlashMessenger();
+        $this->sut->getFlashMessenger();
     }
 
     /**
@@ -61,11 +61,11 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
             ->method('addInfoMessage')
             ->with($message);
 
-        $this->trait->expects($this->once())
+        $this->sut->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
 
-        $this->trait->addInfoMessage($message);
+        $this->sut->addInfoMessage($message);
     }
 
     /**
@@ -81,11 +81,11 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
             ->method('addErrorMessage')
             ->with($message);
 
-        $this->trait->expects($this->once())
+        $this->sut->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
 
-        $this->trait->addErrorMessage($message);
+        $this->sut->addErrorMessage($message);
     }
 
     /**
@@ -101,11 +101,11 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
             ->method('addSuccessMessage')
             ->with($message);
 
-        $this->trait->expects($this->once())
+        $this->sut->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
 
-        $this->trait->addSuccessMessage($message);
+        $this->sut->addSuccessMessage($message);
     }
 
     /**
@@ -121,11 +121,11 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
             ->method('addWarningMessage')
             ->with($message);
 
-        $this->trait->expects($this->once())
+        $this->sut->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
 
-        $this->trait->addWarningMessage($message);
+        $this->sut->addWarningMessage($message);
     }
 
     /**
@@ -151,10 +151,10 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
             ->with('default')
             ->will($this->returnSelf());
 
-        $this->trait->expects($this->once())
+        $this->sut->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
 
-        $this->trait->addMessage($message, $namespace);
+        $this->sut->addMessage($message, $namespace);
     }
 }

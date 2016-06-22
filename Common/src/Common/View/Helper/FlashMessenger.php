@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Flash messenger view helper (Extends zends flash messenger)
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\View\Helper;
 
 use Zend\View\Helper\FlashMessenger as ZendFlashMessenger;
@@ -40,6 +35,13 @@ class FlashMessenger extends ZendFlashMessenger
      */
     private $wrapper = '<div class="notice-container">%s</div>';
 
+    /**
+     * Invoke
+     *
+     * @param string $namespace Namespace
+     *
+     * @return string
+     */
     public function __invoke($namespace = null)
     {
         if ($namespace === 'norender') {
@@ -49,6 +51,13 @@ class FlashMessenger extends ZendFlashMessenger
         return $this->render();
     }
 
+    /**
+     * Get messages from namespace
+     *
+     * @param string $namespace Namespace
+     *
+     * @return array
+     */
     public function getMessagesFromNamespace($namespace)
     {
         $fm = $this->getPluginFlashMessenger();
@@ -56,22 +65,35 @@ class FlashMessenger extends ZendFlashMessenger
         return $fm->getMessagesFromNamespace($namespace);
     }
 
+    /**
+     * Set isRendered
+     *
+     * @param bool $isRendered Is rendered
+     *
+     * @return FlashMessenger
+     */
     public function setIsRendered($isRendered)
     {
         $this->isRendered = $isRendered;
         return $this;
     }
 
+    /**
+     * Get isRendered
+     *
+     * @return bool
+     */
     public function getIsRendered()
     {
         return $this->isRendered;
     }
 
     /**
-     * Render Messages
+     * Render messages
      *
-     * @param  string $namespace
-     * @param  array  $classes
+     * @param string $namespace Namespace
+     * @param array  $classes   Classes
+     *
      * @return string
      */
     public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = array())
@@ -98,8 +120,9 @@ class FlashMessenger extends ZendFlashMessenger
     /**
      * Render all from namespace
      *
-     * @param string $namespace
-     * @param array $classes
+     * @param string $namespace Namespace
+     * @param array  $classes   Classes
+     *
      * @return string
      */
     protected function renderAllFromNamespace($namespace, $classes)
@@ -108,10 +131,11 @@ class FlashMessenger extends ZendFlashMessenger
     }
 
     /**
-     * Render Current Messages
+     * Render current messages
      *
-     * @param  string $namespace
-     * @param  array  $classes
+     * @param string $namespace Namespace
+     * @param array  $classes   Classes
+     *
      * @return string
      */
     public function renderCurrent($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = array())
@@ -127,11 +151,13 @@ class FlashMessenger extends ZendFlashMessenger
 
     /**
      * Majority of this is copied from Zend's however I have removed the code to escape html, as we need to display HTML
-     *  in our flash messengers, and we shouldn't ever need to escape it as our messages will never contain user entered
-     *  info
+     * in our flash messengers, and we shouldn't ever need to escape it as our messages will never contain user entered
+     * info
      *
-     * @param  array $messages
-     * @param  array $classes
+     * @param string $namespace Namespace
+     * @param array  $messages  Messages
+     * @param array  $classes   Classes
+     *
      * @return string
      */
     protected function renderMessages(
