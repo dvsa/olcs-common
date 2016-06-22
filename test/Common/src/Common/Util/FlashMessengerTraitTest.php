@@ -8,15 +8,13 @@
  */
 namespace CommonTest\Controller\Util;
 
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
-
 /**
  * Test FlashMessengerTrait
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FlashMessengerTraitTest extends AbstractHttpControllerTestCase
+class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
 {
     private $trait;
 
