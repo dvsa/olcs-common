@@ -229,4 +229,11 @@ class RefData
     const COMMUNITY_LICENCE_STATUS_SUSPENDED = 'cl_sts_suspended';
     const COMMUNITY_LICENCE_STATUS_VOID = 'cl_sts_annulled';
     const COMMUNITY_LICENCE_STATUS_RETURNDED = 'cl_sts_returned';
+
+    /**
+     * Erru
+     */
+    const ERRU_RESPONSE_SENT = 'erru_case_t_msirs';
+    const ERRU_RESPONSE_SENDING_FAILED = 'erru_case_t_msirsf';
+    const ERRU_RESPONSE_QUEUED = 'erru_case_t_msirnys';
 }

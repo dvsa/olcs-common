@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Checkbox element
- *
- * @author Someone <someone@valtech.co.uk>
- */
 namespace Common\Form\Elements\Custom;
 
 use Zend\Form\Element as ZendElement;
