@@ -1027,6 +1027,7 @@ return [
     'flash-discarded-changes' => 'Your changes have been discarded',
     'form-case-number' => 'Case number',
     'form-errors' => 'Please correct the following errors',
+    'form-errors-missing-details' => 'Some details are missing',
     'form.disqualify.is-disqualified' => 'Is disqualified',
     'form.disqualify.is-disqualified.validation' => 'Must be checked',
     'form.disqualify.name' => 'Name',

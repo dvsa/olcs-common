@@ -72,22 +72,18 @@ class FormErrors extends AbstractHelper
 <div class="validation-summary" role="alert" id="validationSummary">
     <h3>%s</h3>
     <ol class="validation-summary__list">
-        <li class="validation-summary__item">
-            ';
-
-        $messageSeparatorString = '
+        <li class="validation-summary__item">';
+            $messageSeparatorString = '
         </li>
-        <li class="validation-summary__item">
-            ';
-
-        $messageCloseString = '
+        <li class="validation-summary__item">';
+            $messageCloseString = '
         </li>
     </ol>
 </div>';
 
-        return sprintf($messagesOpenFormat, $this->translate('form-errors'))
+        return sprintf($messagesOpenFormat, $this->translate('form-errors-missing-details'))
             . implode($messageSeparatorString, $this->getFlatMessages($messages, $form))
-            . $messageCloseString;
+            . $messageCloseString;    
     }
 
     /**
@@ -161,6 +157,11 @@ class FormErrors extends AbstractHelper
             $message = $this->translate($label . $message);
         }
 
+        // If there is a specified custom error message, use that
+        if ($this->getCustomErrorMessage($element)) {
+            $message = $this->getCustomErrorMessage($element);
+        }
+
         // Try and find an element to link to
         $anchor = $this->getNamedAnchor($element);
 
@@ -213,6 +214,23 @@ class FormErrors extends AbstractHelper
 
         if ($label) {
             return $label;
+        }
+
+        return '';
+    }
+
+    /**
+     * Grab the custom error message if it exists
+     *
+     * @param string $element
+     * @return string
+     */
+    protected function getCustomErrorMessage($element)
+    {
+        $errorMessage = $element->getOption('error-message');
+
+        if ($errorMessage) {
+            return $errorMessage;
         }
 
         return '';
