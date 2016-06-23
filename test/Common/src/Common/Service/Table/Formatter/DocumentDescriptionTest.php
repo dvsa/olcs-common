@@ -23,7 +23,8 @@ class DocumentDescriptionTest extends MockeryTestCase
         // Params
         $data = [
             'documentStoreIdentifier' => 'olbs/tanres01/OLBS02/TanBsDocStore7/2014/08/foo.rtf',
-            'description' => 'Foo file'
+            'description' => 'Foo file',
+            'id' => 666,
         ];
         $column = [];
 
@@ -37,7 +38,7 @@ class DocumentDescriptionTest extends MockeryTestCase
             ->andReturn($mockUrlHelper);
 
         $mockUrlHelper->shouldReceive('fromRoute')
-            ->with('getfile', ['identifier' => base64_encode($data['documentStoreIdentifier'])])
+            ->with('getfile', ['identifier' => 666])
             ->andReturn('URL');
 
         $expected = '<a href="URL" >Foo file</a>';
@@ -64,7 +65,8 @@ class DocumentDescriptionTest extends MockeryTestCase
         // Params
         $data = [
             'documentStoreIdentifier' => 'olbs/tanres01/OLBS02/TanBsDocStore7/2014/08/foo.html',
-            'description' => 'Foo file'
+            'description' => 'Foo file',
+            'id' => 666,
         ];
         $column = [];
 
@@ -78,7 +80,7 @@ class DocumentDescriptionTest extends MockeryTestCase
             ->andReturn($mockUrlHelper);
 
         $mockUrlHelper->shouldReceive('fromRoute')
-            ->with('getfile', ['identifier' => base64_encode($data['documentStoreIdentifier'])])
+            ->with('getfile', ['identifier' => 666])
             ->andReturn('URL');
 
         $expected = '<a href="URL" target="_blank">Foo file</a>';
