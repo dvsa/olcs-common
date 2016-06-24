@@ -637,6 +637,7 @@ return [
     'back-to-application-overview' => '{WELSH} Back to application overview',
     'back-to-fees' => '{WELSH} Back to fees',
     'back-to-home' => 'Yn ôl i’r hafan',
+    'back-to-ebsr-uploads' => '{WELSH} Back to EBSR uploads',
     'back-to-licence-overview' => '{WELSH} Back to licence overview',
     'back-to-sign-in' => '{WELSH} Back to sign in',
     'back-to-variation-overview' => '{WELSH} Back to application overview',

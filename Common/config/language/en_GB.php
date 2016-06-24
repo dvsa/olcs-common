@@ -637,6 +637,7 @@ return [
     'back-to-application-overview' => 'Back to application overview',
     'back-to-fees' => 'Back to fees',
     'back-to-home' => 'Back to home',
+    'back-to-ebsr-uploads' => 'Back to EBSR uploads',
     'back-to-licence-overview' => 'Back to licence overview',
     'back-to-sign-in' => 'Back to sign in',
     'back-to-variation-overview' => 'Back to application overview',
