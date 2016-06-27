@@ -5,15 +5,15 @@
  */
 namespace Common;
 
+use Common\Preference\LanguageListener;
+use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
+use Olcs\Logging\Log\Logger;
 use Zend\EventManager\EventManager;
+use Zend\I18n\Translator\Translator;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Model\ViewModel;
-use Zend\I18n\Translator\Translator;
-use Common\Preference\LanguageListener;
-use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
-use Olcs\Logging\Log\Logger;
 
 /**
  * ZF2 Module
@@ -99,7 +99,7 @@ class Module
 
     protected function setUpTranslator(ServiceLocatorInterface $sm, $events)
     {
-        /** @var Translator $translator */
+        /** @var \Common\Util\TranslatorDelegator $translator */
         $translator = $sm->get('translator');
 
         $translator->setLocale('en_GB')->setFallbackLocale('en_GB');
@@ -114,7 +114,16 @@ class Module
         $missingTranslationProcessor = $sm->get('Utils\MissingTranslationProcessor');
         $missingTranslationProcessor->attach($events);
 
-        //$translator->addTranslationFile('phparray', __DIR__ . '/config/language/cy_GB-translated.php');
+        $request = $sm->get('Request');
+        if ($request instanceof \Zend\Http\PhpEnvironment\Request) {
+            /* @var \Zend\Http\PhpEnvironment\Request $request */
+            // Enable the line below to capture all the transations that are performed
+            // ONLY enable on local dev boxes
+            // $translator->enabledLogging(__DIR__ .'/../../translations.csv', $request);
+        }
+
+        // in the future we will need this to capture any translation that have been missed
+        //$translator->addTranslationFile('phparray', __DIR__ . '/config/language/cy_GB.php');
         //$missingTranslationLogger = $sm->get('Utils\MissingTranslationLogger');
         //$missingTranslationLogger->setLogName('/tmp/corr.log');
         //$missingTranslationLogger->attach($events);

@@ -7,14 +7,12 @@
  */
 namespace CommonTest\Controller\Util;
 
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
-
 /**
  * Test ResponseHelperTest
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
-class ResponseHelperTest extends AbstractHttpControllerTestCase
+class ResponseHelperTest extends \PHPUnit_Framework_TestCase
 {
 
     public $handleReponseMethods = array(

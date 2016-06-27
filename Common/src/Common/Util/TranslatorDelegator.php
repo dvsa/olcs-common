@@ -30,6 +30,11 @@ class TranslatorDelegator extends Translator
      */
     private $replacements;
 
+    /**
+     * @var TranslatorLogger
+     */
+    private $translationLogger;
+
     public function __construct(TranslatorInterface $translator, array $replacements)
     {
         $this->translator = $translator;
@@ -43,11 +48,32 @@ class TranslatorDelegator extends Translator
 
     public function translate($message, $textDomain = 'default', $locale = null)
     {
+        if ($this->translationLogger !== null) {
+            $this->translationLogger->logTranslations(
+                $message,
+                $this->translator->translate($message, $textDomain, 'en_GB'),
+                $this->translator->translate($message, $textDomain, 'cy_GB')
+            );
+        }
+
         return $this->replaceVariables($this->translator->translate($message, $textDomain, $locale));
     }
 
     protected function replaceVariables($message)
     {
         return str_replace(array_keys($this->replacements), array_values($this->replacements), $message);
+    }
+
+    /**
+     * Enable logging translations
+     *
+     * @param string                            $logFileName File name to write to
+     * @param \Zend\Http\PhpEnvironment\Request $request     Request
+     *
+     * @return void
+     */
+    public function enabledLogging($logFileName, \Zend\Http\PhpEnvironment\Request $request)
+    {
+        $this->translationLogger = new TranslatorLogger($logFileName, $request);
     }
 }

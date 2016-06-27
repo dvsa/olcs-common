@@ -28,8 +28,10 @@ class FileUploadList extends Fieldset
     /**
      * Set the files in the file list
      *
-     * @param array $fileData
-     * @param object $url
+     * @param array  $fileData Array of file data
+     * @param object $url      UrlHelperService
+     *
+     * @return void
      */
     public function setFiles($fileData = array(), $url = null)
     {
@@ -39,7 +41,7 @@ class FileUploadList extends Fieldset
 
             $file['url'] = $url->fromRoute(
                 'getfile',
-                array('identifier' => base64_encode($file['identifier']))
+                array('identifier' => $file['id'])
             );
 
             $size = $file['size'];
@@ -96,7 +98,8 @@ class FileUploadList extends Fieldset
     /**
      * Is this file an image we can preview?
      *
-     * @param $file
+     * @param array $file File data
+     *
      * @return bool
      */
     private function isPreviewableImage($file)
@@ -114,6 +117,7 @@ class FileUploadList extends Fieldset
 
     /**
      * Return list of image extensions we can preview
+     * 
      * @return mixed
      */
     public function getPreviewableExtensions()
