@@ -38,7 +38,8 @@ class RegisteredAddress
      *     "label":"Address lines",
      *     "label_attributes": {
      *         "aria-label": "Enter address manually. Business address line one"
-     *     }
+     *     },
+     *     "error-message" : "registeredAddress_addressLine1-error", 
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
