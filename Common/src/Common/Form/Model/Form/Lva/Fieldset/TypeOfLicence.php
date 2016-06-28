@@ -44,6 +44,7 @@ class TypeOfLicence
      * @Form\Required(false)
      * @Form\Options({
      *      "short-label": "short-label-tol-operator-type",
+     *      "error-message": "operator-type-error",
      *      "fieldset-attributes": {
      *          "id": "operator-type",
      *          "class": "checkbox"

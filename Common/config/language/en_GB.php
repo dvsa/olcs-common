@@ -2661,6 +2661,7 @@ return [
     'transport_managers-details-PreviousLicences-delete-success' => 'Previous licence(s) removed successfully',
     'type-of-licence' => 'Type of licence',
     'type-of-licence-error' => 'What type of licence do you need?',
+    'operator-type-error' => 'What type of vehicles will you be operating?',
     'undertakings' => 'Undertakings',
     'undertakings_declaration_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',
     'undertakings_summary_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',
