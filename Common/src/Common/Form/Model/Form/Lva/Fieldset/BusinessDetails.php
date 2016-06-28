@@ -39,6 +39,7 @@ class BusinessDetails
      * @Form\Attributes({"id":"","placeholder":"","class":"extra-long"})
      * @Form\Options({
      *     "label": "Nature of business",
+     *     "error-message" : "businessDetails_natureOfBusiness-error",
      *     "label_attributes": {
      *         "aria-label": "Enter the nature of your business"
      *     },

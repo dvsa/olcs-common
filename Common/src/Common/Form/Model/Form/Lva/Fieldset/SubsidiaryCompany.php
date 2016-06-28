@@ -20,7 +20,10 @@ class SubsidiaryCompany
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"application_your-business_business-details-formName"})
+     * @Form\Options({
+     *     "label":"application_your-business_business-details-formName",
+     *     "error-message": "subsidiary-company-name-error"
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
@@ -28,7 +31,10 @@ class SubsidiaryCompany
 
     /**
      * @Form\Attributes({"class":"long","id":"","pattern":"\d*"})
-     * @Form\Options({"label":"application_your-business_business-details-formCompanyNo"})
+     * @Form\Options({
+     *     "label":"application_your-business_business-details-formCompanyNo",
+     *     "error-message": "subsidiary-company-number-error"
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":8,"max":8}})
@@ -36,8 +42,7 @@ class SubsidiaryCompany
      *     "name": "Alnum",
      *     "options": {
      *         "messages": {
-     *             "notAlnum": "Must be 8 digits; alpha-numeric characters allowed; no
-     * special characters; mandatory when displayed"
+     *             "notAlnum": "Must be 8 digits; alpha-numeric characters allowed; no special characters; mandatory when displayed"
      *         }
      *     }
      * })
