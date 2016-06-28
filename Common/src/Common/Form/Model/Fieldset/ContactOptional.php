@@ -155,7 +155,10 @@ class ContactOptional
 
     /**
      * @Form\Attributes({"class":"medium"})
-     * @Form\Options({"label":"E-mail address"})
+     * @Form\Options({
+     *     "label":"E-mail address",
+     *     "error-message": "contactOptional_email-error"
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})

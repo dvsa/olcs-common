@@ -180,7 +180,8 @@ class Contact
      *    "label":"application_your-business_business-type.contact-details.email",
      *    "label_attributes": {
      *        "aria-label": "Business email address"
-     *    }
+     *    },
+     *     "error-message": "contact_email-error"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
