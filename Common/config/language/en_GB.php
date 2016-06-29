@@ -1076,6 +1076,8 @@ return [
     'gv_interim_direction_fee_request' => 'GV Interim direction fee request',
     'gv_interim_licence_fee_request' => 'GV Interim licence fee request',
     'header-correspondence-details' => 'Correspondence details',
+    'goodsVehiclesVehicleData_vrm-error' => 'Enter the vehicle VRM',
+    'goodsVehiclesVehicleData_platedWeight-error' => 'Enter the vehicle weight',
     'header-establishment-address' => 'Establishment address',
     'header-vehicle-operator-licensing' => 'Vehicle Operator Licensing',
     'helpdesk' => 'Helpdesk',
