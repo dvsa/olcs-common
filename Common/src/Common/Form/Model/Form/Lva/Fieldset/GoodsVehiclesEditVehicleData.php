@@ -24,7 +24,8 @@ class GoodsVehiclesEditVehicleData
     /**
      * @Form\Attributes({"class":"medium","id":"vrm","placeholder":"","disabled":"disabled"})
      * @Form\Options({
-     *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm"
+     *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm",
+     *     "error-message": "Enter the vehicle VRM"
      * })
      * @Form\Type("Text")
      */
@@ -34,6 +35,7 @@ class GoodsVehiclesEditVehicleData
      * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":"","pattern":"\d(\.)*"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight",
+     *     "error-message": "Enter the vehicle weight"
      *     "label_attributes": {
      *         "aria-label": "Enter the gross plated weight in kilograms"
      *     }

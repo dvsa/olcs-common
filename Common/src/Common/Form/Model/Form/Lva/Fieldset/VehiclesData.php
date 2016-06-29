@@ -21,6 +21,7 @@ class VehiclesData
      *     "fieldset-attributes": {
      *         "class": "checkbox inline"
      *     },
+     *     "error-message": "vehiclesDate_hasEnteredReg-error",
      *     "label": "application_vehicle-safety_vehicle-psv.hasEnteredReg",
      *     "value_options": {
      *         {
