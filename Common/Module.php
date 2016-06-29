@@ -23,7 +23,9 @@ class Module
     /**
      * Initialize module
      *
-     * @param $moduleManager
+     * @param \Zend\ModuleManager\ModuleManager $moduleManager Module manager
+     *
+     * @return void
      */
     public function init($moduleManager)
     {
@@ -32,6 +34,13 @@ class Module
         $events->attach('loadModules.post', array($this, 'modulesLoaded'));
     }
 
+    /**
+     * Modules loaded event
+     *
+     * @param ModuleEvent $e Module event
+     *
+     * @return void
+     */
     public function modulesLoaded(ModuleEvent $e)
     {
         $moduleManager = $e->getTarget();
@@ -67,6 +76,13 @@ class Module
         }
     }
 
+    /**
+     * Bootstrap
+     *
+     * @param MvcEvent $e MVC Event
+     *
+     * @return void
+     */
     public function onBootstrap(MvcEvent $e)
     {
         $app = $e->getApplication();
@@ -92,12 +108,25 @@ class Module
         $this->setLoggerUser($sm);
     }
 
+    /**
+     * Get config
+     *
+     * @return array
+     */
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
     }
 
-    protected function setUpTranslator(ServiceLocatorInterface $sm, $events)
+    /**
+     * Setup the translator service
+     *
+     * @param ServiceLocatorInterface         $sm           Service manager
+     * @param \Zend\EventManager\EventManager $eventManager Event manager
+     *
+     * @return void
+     */
+    protected function setUpTranslator(ServiceLocatorInterface $sm, $eventManager)
     {
         /** @var \Common\Util\TranslatorDelegator $translator */
         $translator = $sm->get('translator');
@@ -105,14 +134,15 @@ class Module
         $translator->setLocale('en_GB')->setFallbackLocale('en_GB');
         $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
         $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/sic-codes/', 'sicCodes_%s.php');
+        $translator->addTranslationFile('phparray', __DIR__ . '/config/language/cy_GB_refdata.php', 'default', 'cy_GB');
 
         /** @var LanguageListener $languagePrefListener */
         $languagePrefListener = $sm->get('LanguageListener');
-        $languagePrefListener->attach($events, 1);
+        $languagePrefListener->attach($eventManager, 1);
 
         /** @var  MissingTranslationProcessor $missingTranslationProcessor */
         $missingTranslationProcessor = $sm->get('Utils\MissingTranslationProcessor');
-        $missingTranslationProcessor->attach($events);
+        $missingTranslationProcessor->attach($eventManager);
 
         $request = $sm->get('Request');
         if ($request instanceof \Zend\Http\PhpEnvironment\Request) {
@@ -129,13 +159,15 @@ class Module
         //$missingTranslationLogger->attach($events);
 
         $translator->enableEventManager();
-        $translator->setEventManager($events);
+        $translator->setEventManager($eventManager);
     }
 
     /**
      * If the request is coming through a proxy then update the host name on the request
      *
-     * @param \Zend\Stdlib\RequestInterface $request
+     * @param \Zend\Stdlib\RequestInterface $request Request
+     *
+     * @return void
      */
     private function setupRequestForProxyHost(\Zend\Stdlib\RequestInterface $request)
     {
@@ -182,6 +214,10 @@ class Module
 
     /**
      * Set the user ID in the log processor so that it can be included in the log files
+     *
+     * @param ServiceLocatorInterface $serviceManager Service manager
+     *
+     * @return void
      */
     private function setLoggerUser(ServiceLocatorInterface $serviceManager)
     {
