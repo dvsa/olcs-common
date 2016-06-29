@@ -11,7 +11,10 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary', 'label' => 'Add safety inspector'),
+                'add' => array(
+                    'class' => 'primary', 
+                    'label' => 'Add safety inspector'
+                ),
             )
         )
     ),
