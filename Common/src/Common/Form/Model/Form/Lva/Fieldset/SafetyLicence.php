@@ -21,6 +21,7 @@ class SafetyLicence
      *     "label": "application_vehicle-safety_safety.licence.vehicleInspectionInterval",
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
+     *     "error-message": "safetyLicence_safetyInsVehicles-error",
      *     "value_options": {
      *         "1": "1 {Week}",
      *         "2": "2 {Weeks}",

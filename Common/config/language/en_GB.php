@@ -2032,6 +2032,7 @@ return [
     'role.partner-admin' => 'Administrator',
     'role.partner-user' => 'Standard user',
     'rules_in_ni_link' => '{{RULES_IN_NI}}',
+    'safetyLicence_safetyInsVehicles-error' => 'Enter the time between vehicle inspections',
     'safetyLicence_tachographsIns-error' => 'Tell us who analyses the tachograph records',
     'safety_table-error' => 'You must add at least one safety inspector',
     'safety-inspection-providers.table.address' => 'Workshop address',
