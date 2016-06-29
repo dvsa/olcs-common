@@ -7,7 +7,7 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("advertisements")
  * @Form\Options({
- *     "label": "application_operating-centres_authorisation-sub-action.advertisements",
+ *     "label": "application_operating-centres_authorisation-sub-action.advertisements"
  * })
  */
 class Advertisements
