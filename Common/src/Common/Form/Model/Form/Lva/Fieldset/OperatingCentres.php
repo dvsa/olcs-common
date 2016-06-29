@@ -30,7 +30,7 @@ class OperatingCentres
      *     "label_attributes": {
      *         "aria-label": "Enter total number of vehicles"
      *     },
-     *     "error-message": "operatinCentres_totAuthVehicles-error",
+     *     "error-message": "operatingCentres_totAuthVehicles-error",
      *     "hint": "markup-operating-centres-authorisation"
      * })
      * @Form\Validator({"name": "Digits"})
@@ -51,7 +51,7 @@ class OperatingCentres
      *     "label_attributes": {
      *         "aria-label": "Enter total number of Trailers"
      *     },
-     *     "error-message": "operatinCentres_totAuthTrailers-error"
+     *     "error-message": "operatingCentres_totAuthTrailers-error"
      * })
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
