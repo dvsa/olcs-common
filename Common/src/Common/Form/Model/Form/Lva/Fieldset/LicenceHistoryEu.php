@@ -13,6 +13,7 @@ class LicenceHistoryEu
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevBeenRefused",
+     *     "error-message": "licenceHistoryEu_prevBeenRefused-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
@@ -52,6 +53,7 @@ class LicenceHistoryEu
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevBeenRevoked",
+     *     "error-message": "licenceHistoryEu_prevBeenRevoked-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
