@@ -20,6 +20,7 @@ class PreviousConvictionData
      * @Form\Options({
      *     "empty_option": "Please Select",
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formTitle",
+     *     "error-message": "previousConvictionData_title-error",
      *     "category":"person_title",
      * })
      * @Form\Type("DynamicSelect")
@@ -32,7 +33,8 @@ class PreviousConvictionData
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formFirstName",
      *     "label_attributes": {
      *         "aria-label": "Enter first names"
-     *     }
+     *     },
+     *     "error-message": "previousConvictionData_forename-error"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -45,7 +47,8 @@ class PreviousConvictionData
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formLastName",
      *     "label_attributes": {
      *         "aria-label": "Enter family names"
-     *     }
+     *     },
+     *     "error-message": "previousConvictionData_familyName-error"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -58,7 +61,8 @@ class PreviousConvictionData
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formDateOfConviction",
      *     "create_empty_option": true,
-     *     "render_delimiters": false
+     *     "render_delimiters": false,
+     *     "error-message": "previousConvictionData_convictionDate-error"
      * })
      * @Form\Type("DateSelect")
      * @Form\Filter({"name": "DateSelectNullifier"})
@@ -89,6 +93,7 @@ class PreviousConvictionData
      *         "class": "col-sm-2",
      *         "aria-label": "Give details of the offence"
      *     },
+     *     "error-message": "previousConvictionData_notes-error",
      *     "column-size": "sm-6",
      *     "help-block": "selfserve-app-subSection-previous-history-criminal-conviction-helpBlock",
      *     "hint": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetaisHelpBlock"
@@ -104,7 +109,8 @@ class PreviousConvictionData
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formNameOfCourt",
      *     "label_attributes": {
      *         "aria-label": "Enter the name of the court"
-     *     }
+     *     },
+     *     "error-message": "previousConvictionData_courtFpn-error"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -117,7 +123,8 @@ class PreviousConvictionData
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formPenalty",
      *     "label_attributes": {
      *         "aria-label": "Enter the penalty"
-     *     }
+     *     },
+     *     "error-message": "previousConvictionData_penalty-error"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
