@@ -980,7 +980,7 @@ return [
     'external.withdraw_application.confirm.message' => 'Are you sure you want to withdraw this application? It will be removed from your list and you won’t be able to access it again. You won’t receive a refund.',
     'fabs-reference' => 'Fabs Ref',
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
-    'financialEvidence_uploadNow-error' => 'Tell us how you would like to send your evidence',
+    'financialEvidence_uploadNow-error' => 'Tell us how you\'d like to send your evidence',
     'fee-details' => 'Fee Details',
     'fee.not-outstanding.error' => 'You can only pay outstanding fees',
     'fee.rule-before-invoiced-date.error' => 'You cannot pay this fee because the the accrual start date is before the fee date',
