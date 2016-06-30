@@ -107,6 +107,10 @@ class User extends InternalSearchAbstract
                     $data['familyName'];
                 }
             ),
+             array(
+                 'title' => 'Login ID',
+                 'name' => 'loginId'
+             ),
             array(
                 'title' => 'Email address',
                 'name' => 'emailAddress'
