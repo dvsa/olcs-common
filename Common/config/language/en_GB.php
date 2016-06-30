@@ -896,6 +896,7 @@ return [
     'ebsr-upload-type-select' => 'Please select an upload type',
     'ebsr-upload-success' => 'EBSR packs were submitted for processing',
     'ebsr-upload-fail' => 'No EBSR packs could be submitted',
+    'ebsr-variation-short-notice' => 'short notice',
     'ecms-number' => 'ECMS #',
     'ecmsNo' => 'ECMS',
     'edit' => 'Edit',
