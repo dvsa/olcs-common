@@ -21,6 +21,7 @@ class SafetyLicence
      *     "label": "application_vehicle-safety_safety.licence.vehicleInspectionInterval",
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
+     *     "error-message": "safetyLicence_safetyInsVehicles-error",
      *     "value_options": {
      *         "1": "1 {Week}",
      *         "2": "2 {Weeks}",
@@ -92,6 +93,7 @@ class SafetyLicence
      *      "fieldset-attributes": {
      *          "class": "checkbox"
      *      },
+     *     "error-message": "safetyLicence_tachographsIns-error",
      *     "label": "application_vehicle-safety_safety.licence.tachographAnalyser",
      *     "value_options": {
      *         {
@@ -124,8 +126,8 @@ class SafetyLicence
      * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Attributes({"class":"medium","id":"", "required": false})
      * @Form\Options({
-     *     "label":
-     * "application_vehicle-safety_safety.licence.tachographAnalyserContractor"
+     *     "label": "application_vehicle-safety_safety.licence.tachographAnalyserContractor",
+     *     "error-message": "You must add at least one safety inspector"
      * })
      * @Form\Type("Text")
      * @Form\Validator({

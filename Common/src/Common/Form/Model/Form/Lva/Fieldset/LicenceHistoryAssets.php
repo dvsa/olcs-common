@@ -13,6 +13,7 @@ class LicenceHistoryAssets
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevPurchasedAssets",
+     *     "error-message": "licenceHistoryAssets_prevPurchasedAssets-error",
      *     "value_options": {
      *         {
      *             "value": "Y",

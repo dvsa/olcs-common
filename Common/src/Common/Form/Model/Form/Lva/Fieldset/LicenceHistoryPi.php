@@ -13,6 +13,7 @@ class LicenceHistoryPi
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevBeenAtPi",
+     *     "error-message": "licenceHistoryPi_prevBeenAtPi-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
