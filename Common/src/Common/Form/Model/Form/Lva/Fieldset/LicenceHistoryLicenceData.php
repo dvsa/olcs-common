@@ -23,7 +23,10 @@ class LicenceHistoryLicenceData
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"selfserve-app-subSection-previous-history-licence-history-licNo"})
+     * @Form\Options({
+     *     "label":"selfserve-app-subSection-previous-history-licence-history-licNo",
+     *     "error-message": "licenceHistoryLicenceData_licNo-error"
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
@@ -32,8 +35,8 @@ class LicenceHistoryLicenceData
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label":
-     * "selfserve-app-subSection-previous-history-licence-history-holderName"
+     *     "label": "selfserve-app-subSection-previous-history-licence-history-holderName",
+     *     "error-message": "licenceHistoryLicenceData_holderName-error"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -44,6 +47,7 @@ class LicenceHistoryLicenceData
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-licence-history-willSurrender",
+     *     "error-message": "licenceHistoryLicenceData_willSurrender-error",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *      "fieldset-attributes": {
@@ -61,8 +65,7 @@ class LicenceHistoryLicenceData
      * @Form\Required(true)
      * @Form\Attributes({"id":"dob","required":false})
      * @Form\Options({
-     *     "label":
-     * "selfserve-app-subSection-previous-history-licence-history-disqualificationDate",
+     *     "label": "selfserve-app-subSection-previous-history-licence-history-disqualificationDate",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })
@@ -77,8 +80,7 @@ class LicenceHistoryLicenceData
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label":
-     * "selfserve-app-subSection-previous-history-licence-history-disqualificationLength"
+     *     "label": "selfserve-app-subSection-previous-history-licence-history-disqualificationLength"
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -89,8 +91,7 @@ class LicenceHistoryLicenceData
      * @Form\Required(true)
      * @Form\Attributes({"id":"dob","required":false})
      * @Form\Options({
-     *     "label":
-     * "selfserve-app-subSection-previous-history-licence-history-purchaseDate",
+     *     "label": "selfserve-app-subSection-previous-history-licence-history-purchaseDate",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })

@@ -19,6 +19,7 @@ class LicenceHistoryData
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevHasLicence",
+     *     "error-message": "licenceHistoryData_prevHasLicence-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
@@ -58,6 +59,7 @@ class LicenceHistoryData
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevHadLicence",
+     *     "error-message": "licenceHistoryData_prevHadLicence-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
@@ -97,6 +99,7 @@ class LicenceHistoryData
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevBeenDisqualifiedTc",
+     *     "error-message": "licenceHistoryData_prevBeenDisqualifiedTc-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
