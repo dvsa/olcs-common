@@ -9,7 +9,7 @@ use Common\RefData;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class DashboardTmActionLinkTest
+ * Class EbsrDocumentLinkTest
  *
  * @package CommonTest\Service\Table\Formatter
  */

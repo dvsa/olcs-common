@@ -12,13 +12,13 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class EbsrVariationNumber implements FormatterInterface
 {
     const SN_TRANSLATION_KEY = 'ebsr-variation-short-notice';
-    
+
     /**
      * Formats the ebsr variation number
      *
-     * @param array                        $data
-     * @param array                        $column
-     * @param null|ServiceLocatorInterface $sm
+     * @param array                        $data   data array
+     * @param array                        $column column info
+     * @param null|ServiceLocatorInterface $sm     service locator
      *
      * @return string
      */
@@ -38,7 +38,7 @@ class EbsrVariationNumber implements FormatterInterface
                 'colour' => 'orange',
                 'value' => $sm->get('translator')->translate(self::SN_TRANSLATION_KEY)
             ];
-            
+
             return $data['busReg']['variationNo'] . $statusHelper->__invoke($status);
         }
 

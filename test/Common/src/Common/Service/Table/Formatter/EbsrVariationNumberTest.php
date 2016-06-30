@@ -57,7 +57,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
                 'variationNo' => $variationNumber
             ]
         ];
-        
+
         $statusArray = [
             'colour' => 'orange',
             'value' => $statusLabel

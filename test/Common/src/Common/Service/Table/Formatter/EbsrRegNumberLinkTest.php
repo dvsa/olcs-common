@@ -73,7 +73,7 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
         $regStatusDesc = 'status description';
         $id = 1234;
         $regNo = 5678;
-        
+
         $busSearchViewFormat = [
             'id' => $id,
             'regNo' => $regNo,

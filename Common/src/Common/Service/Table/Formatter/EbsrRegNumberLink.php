@@ -17,9 +17,9 @@ class EbsrRegNumberLink implements FormatterInterface
     /**
      * Formats the ebsr registration number
      *
-     * @param array                        $data
-     * @param array                        $column
-     * @param null|ServiceLocatorInterface $sm
+     * @param array                        $data   data array
+     * @param array                        $column column info
+     * @param null|ServiceLocatorInterface $sm     service locator
      *
      * @return string
      */
