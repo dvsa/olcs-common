@@ -3,6 +3,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * EBSR document link
@@ -11,10 +12,20 @@ use Common\RefData;
  */
 class EbsrDocumentLink implements FormatterInterface
 {
-    const LINK_PATTERN = '<a href="%s">%s</a><span class="status %s">%s</span>';
+    const LINK_PATTERN = '<a href="%s">%s</a>';
 
+    /**
+     * Formats the link to an EBSR document
+     *
+     * @param array $data
+     * @param array $column
+     * @param null|ServiceLocatorInterface $sm
+     *
+     * @return string
+     */
     public static function format($data, $column = array(), $sm = null)
     {
+        /** @var \Common\Service\Helper\UrlHelperService $statusHelper */
         $urlHelper = $sm->get('Helper\Url');
 
         $url = $urlHelper->fromRoute(
@@ -24,22 +35,37 @@ class EbsrDocumentLink implements FormatterInterface
             ]
         );
 
+        /**
+         * @todo
+         *
+         * Once the EBSR status data has been cleansed, this can be simplified and moved to the
+         * Common\View\Helper\Status helper
+         */
         switch($data['ebsrSubmissionStatus']['id']) {
             case RefData::EBSR_STATUS_PROCESSING:
             case RefData::EBSR_STATUS_VALIDATING:
             case RefData::EBSR_STATUS_SUBMITTED:
-                $colour = 'orange';
-                $label = 'processing';
+                $status = [
+                    'colour' => 'orange',
+                    'value' => 'processing'
+                ];
                 break;
             case RefData::EBSR_STATUS_PROCESSED:
-                $colour = 'green';
-                $label = 'successful';
+                $status = [
+                    'colour' => 'green',
+                    'value' => 'successful'
+                ];
                 break;
             default:
-                $colour = 'red';
-                $label = 'failed';
+                $status = [
+                    'colour' => 'red',
+                    'value' => 'failed'
+                ];
         }
 
-        return sprintf(self::LINK_PATTERN, $url, $data['document']['description'], $colour, $label);
+        /** @var \Common\View\Helper\Status $statusHelper */
+        $statusHelper = $sm->get('ViewHelperManager')->get('status');
+
+        return sprintf(self::LINK_PATTERN, $url, $data['document']['description']) . $statusHelper->__invoke($status);
     }
 }

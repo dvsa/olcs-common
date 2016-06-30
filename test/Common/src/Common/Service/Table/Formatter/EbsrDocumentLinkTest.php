@@ -6,6 +6,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Formatter\EbsrDocumentLink;
 use Common\RefData;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class DashboardTmActionLinkTest
@@ -32,13 +33,23 @@ class EbsrDocumentLinkTest extends MockeryTestCase
         $documentId = 123;
         $documentDescription = 'description';
         $url = 'http://url.com';
+        $statusLabel = 'status label';
+        $statusArray = [
+            'colour' => $colour,
+            'value' => $label
+        ];
 
-        $sm = m::mock('StdClass');
+        $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get->fromRoute')
             ->once()
             ->with('getfile', ['identifier' => $documentId])
             ->andReturn($url);
-        
+
+        $sm->shouldReceive('get->get->__invoke')
+            ->once()
+            ->with($statusArray)
+            ->andReturn($statusLabel);
+
         $data = [
             'document' => [
                 'id' => $documentId,
@@ -49,7 +60,7 @@ class EbsrDocumentLinkTest extends MockeryTestCase
             ]
         ];
 
-        $expected = sprintf(EbsrDocumentLink::LINK_PATTERN, $url, $documentDescription, $colour, $label);
+        $expected = sprintf(EbsrDocumentLink::LINK_PATTERN, $url, $documentDescription) . $statusLabel;
 
         $this->assertEquals($expected, $sut->format($data, [], $sm));
     }
