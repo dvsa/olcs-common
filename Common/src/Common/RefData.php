@@ -137,6 +137,15 @@ class RefData
     const BUSREG_STATUS_CANCELLED = 'breg_s_cancelled';
 
     /**
+     * EBSR Status
+     */
+    const EBSR_STATUS_PROCESSED = 'ebsrs_processed';
+    const EBSR_STATUS_PROCESSING = 'ebsrs_processing';
+    const EBSR_STATUS_VALIDATING = 'ebsrs_validating';
+    const EBSR_STATUS_SUBMITTED = 'ebsrs_submitted';
+    const EBSR_STATUS_FAILED = 'ebsrs_failed';
+
+    /**
      * Role permissions
      */
     const PERMISSION_SELFSERVE_PARTNER_ADMIN = 'partner-admin';
