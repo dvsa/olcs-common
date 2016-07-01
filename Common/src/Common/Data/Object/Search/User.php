@@ -94,7 +94,7 @@ class User extends InternalSearchAbstract
     {
          return array(
             array(
-                'title' => 'Login ID',
+                'title' => 'Username',
                 'formatter' => function ($data) {
                     return '<a href="/admin/user-management/users/edit/' . $data['userId']
                      . '">' . $data['loginId'] . '</a>';
