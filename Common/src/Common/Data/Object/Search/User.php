@@ -94,10 +94,10 @@ class User extends InternalSearchAbstract
     {
          return array(
             array(
-                'title' => 'User Id',
+                'title' => 'Login ID',
                 'formatter' => function ($data) {
                     return '<a href="/admin/user-management/users/edit/' . $data['userId']
-                     . '">' . $data['userId'] . '</a>';
+                     . '">' . $data['loginId'] . '</a>';
                 }
             ),
             array(
@@ -107,10 +107,6 @@ class User extends InternalSearchAbstract
                     $data['familyName'];
                 }
             ),
-             array(
-                 'title' => 'Login ID',
-                 'name' => 'loginId'
-             ),
             array(
                 'title' => 'Email address',
                 'name' => 'emailAddress'
