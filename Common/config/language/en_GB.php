@@ -2688,7 +2688,7 @@ return [
     'operator-type-error' => 'What type of vehicles will you be operating?',
     'userDetails_loginId-error' => 'Enter a username',
     'userDetails_emailAddress-error' => 'Enter an email address',
-    'userDetails_emailConfirm-error' => 'Please confirm email address',
+    'userDetails_emailConfirm-error' => 'Confirm email address',
     'undertakings' => 'Undertakings',
     'undertakings_declaration_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',
     'undertakings_summary_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',
