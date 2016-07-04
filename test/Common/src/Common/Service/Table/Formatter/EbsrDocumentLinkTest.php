@@ -30,7 +30,7 @@ class EbsrDocumentLinkTest extends MockeryTestCase
     {
         $sut = new EbsrDocumentLink();
 
-        $documentId = 123;
+        $submissionId = 123;
         $documentDescription = 'description';
         $url = 'http://url.com';
         $statusLabel = 'status label';
@@ -42,7 +42,7 @@ class EbsrDocumentLinkTest extends MockeryTestCase
         $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get->fromRoute')
             ->once()
-            ->with('getfile', ['identifier' => $documentId])
+            ->with(EbsrDocumentLink::URL_ROUTE, ['id' => $submissionId, 'action' => EbsrDocumentLink::URL_ACTION])
             ->andReturn($url);
 
         $sm->shouldReceive('get->get->__invoke')
@@ -52,12 +52,12 @@ class EbsrDocumentLinkTest extends MockeryTestCase
 
         $data = [
             'document' => [
-                'id' => $documentId,
                 'description' => $documentDescription
             ],
             'ebsrSubmissionStatus' => [
                 'id' => $ebsrStatus,
-            ]
+            ],
+            'id' => $submissionId
         ];
 
         $expected = sprintf(EbsrDocumentLink::LINK_PATTERN, $url, $documentDescription) . $statusLabel;
