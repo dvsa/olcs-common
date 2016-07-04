@@ -69,8 +69,7 @@ class People extends InternalSearchAbstract
         if (empty($this->dateRanges)) {
 
             $this->dateRanges = [
-                new DateRange\BirthDateFrom(),
-                new DateRange\BirthDateTo(),
+                new DateRange\DateOfBirth()
             ];
         }
 
