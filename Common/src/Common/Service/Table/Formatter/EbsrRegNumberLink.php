@@ -26,7 +26,8 @@ class EbsrRegNumberLink implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         //standardise the format of the data, so this can be used by multiple tables
-        if (isset($data['busReg'])) {
+        //we set the data even if the busReg key is blank
+        if (array_key_exists('busReg', $data)) {
             $data = $data['busReg'];
         }
 
