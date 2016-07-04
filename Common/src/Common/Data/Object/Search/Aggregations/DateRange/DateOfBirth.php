@@ -2,19 +2,19 @@
 namespace Common\Data\Object\Search\Aggregations\DateRange;
 
 /**
- * Date Range class.
+ * Birth Date range class. Used as a date filter rather than a range.
  *
  * @package Common\Data\Object\Search\DateRange
- * @author Valtech <uk@valtech.co.uk>
+ * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class BirthDateFrom extends DateRangeAbstract
+class DateOfBirth extends DateRangeAbstract
 {
     /**
      * The human readable title of this filter. This may also be used in the front-end (not sure yet).
      *
      * @var string
      */
-    protected $title = 'Birth date from';
+    protected $title = 'Date of birth';
 
     /**
      * The actual name of the field to ask for filter information for. SUFFIX with "From"
