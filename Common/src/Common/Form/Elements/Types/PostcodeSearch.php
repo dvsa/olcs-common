@@ -76,8 +76,8 @@ class PostcodeSearch extends Fieldset
         $this->add($selectButton);
 
         $manualLink = new HtmlTranslated('manual-link');
-        $manualLink->setValue('<p class="hint"><a href=#>%s</a></p>');
-        $manualLink->setTokens(['postcode.address.manual_entry' ]);
+        $manualLink->setValue('<p class="visually-hidden hint postcode-connectionLost">%s</p><p class="hint"><a href=#>%s</a></p>');
+        $manualLink->setTokens(['postcode.error.not-available', 'postcode.address.manual_entry']);
         $manualLink->setAttributes(
             array(
                 'data-container-class' => 'js-visible'
