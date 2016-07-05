@@ -13,6 +13,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class EbsrDocumentLink implements FormatterInterface
 {
     const LINK_PATTERN = '<a href="%s">%s</a>';
+    const URL_ROUTE = 'bus-registration/ebsr';
+    const URL_ACTION = 'detail';
 
     /**
      * Formats the link to an EBSR document
@@ -29,9 +31,10 @@ class EbsrDocumentLink implements FormatterInterface
         $urlHelper = $sm->get('Helper\Url');
 
         $url = $urlHelper->fromRoute(
-            'getfile',
+            self::URL_ROUTE,
             [
-                'identifier' => $data['document']['id']
+                'id' => $data['id'],
+                'action' => self::URL_ACTION
             ]
         );
 
