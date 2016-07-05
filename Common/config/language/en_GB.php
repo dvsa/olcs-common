@@ -36,7 +36,7 @@ return [
     'ERR_MIME' => 'The type of file you attempted to upload is not allowed',
     'ERR_EBSR_MIME' => 'EBSR pack files must be in ZIP format',
     'ERR_FORGOT_USERNAME_NOT_FOUND' => 'Email address not valid for the licence number',
-    'ERR_OC_AD_DT_1' => 'When the advert was placed',
+    'ERR_OC_AD_DT_1' => 'When was the advert was placed',
     'ERR_OC_AD_FI_1' => 'Upload the advert',
     'ERR_OC_AD_IN_1' => 'Enter a newspaper name',
     'ERR_OC_CL_1' => 'The number of community licences must not exceed the the total number of vehicles',
