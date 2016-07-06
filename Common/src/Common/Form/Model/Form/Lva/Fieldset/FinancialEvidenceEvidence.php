@@ -26,7 +26,8 @@ class FinancialEvidenceEvidence
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
-     *     }
+     *     },
+     *    "error-message": "financialEvidence_uploadNow-error"
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
