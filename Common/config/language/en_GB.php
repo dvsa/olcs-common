@@ -1113,7 +1113,7 @@ return [
     'interim-start-date' => 'Interim start date',
     'interim-status' => 'Interim status',
     'interim.application.undertakings.form.checkbox.label' => 'Do you want to apply for an interim authority? There\'s an additional charge for this',
-    'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your interim application.',
+    'interim.application.undertakings.form.textarea.error.message.empty' => 'Tell us why you want an interim application',
     'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim authority.',
     'internal' => 'Internal',
     'internal-application-ntu-confirm' => 'Are you sure you want to set this application to Not taken up?',
