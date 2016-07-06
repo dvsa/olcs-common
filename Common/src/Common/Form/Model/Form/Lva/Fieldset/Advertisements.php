@@ -15,9 +15,10 @@ class Advertisements
     /**
      * @Form\Attributes({"id":"adPlaced","placeholder":""})
      * @Form\Options({
-     *      "fieldset-attributes": {
-     *          "class": "checkbox"
-     *      },
+     *     "fieldset-attributes": {
+     *         "class": "checkbox"
+     *     },
+     *     "error-message": "advertisements_adPlaced-error",
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "help-block": "Please choose",
