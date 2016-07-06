@@ -25,6 +25,7 @@ class GoodsVehiclesVehicleData
      * @Form\Attributes({"class":"medium","id":"vrm","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm",
+     *     "error-message": "goodsVehiclesVehicleData_vrm-error",
      *     "label_attributes": {
      *         "aria-label": "Enter your vehicle registration number"
      *     }
@@ -39,6 +40,7 @@ class GoodsVehiclesVehicleData
      * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":"","pattern":"\d(\.)*"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight",
+     *     "error-message": "goodsVehiclesVehicleData_platedWeight-error",
      *     "label_attributes": {
      *         "aria-label": "Enter the gross plated weight in kilograms"
      *     }
