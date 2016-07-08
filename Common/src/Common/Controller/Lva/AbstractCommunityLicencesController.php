@@ -448,6 +448,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             }
         }
 
+        $this->placeholder()->setPlaceholder('contentTitle', 'Stop community licence');
         $this->getServiceLocator()->get('Script')->loadFile('community-licence-stop');
         return $this->render($view);
     }
@@ -497,6 +498,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
             $this->displayErrors($response);
         }
+        $this->placeholder()->setPlaceholder('contentTitle', 'Community licence suspension details');
 
         return $this->render($view);
     }
