@@ -115,6 +115,10 @@ class User extends InternalSearchAbstract
                 'title' => 'Entity',
                 'name' => 'entity'
             ),
+             array(
+                 'title' => 'Licences',
+                 'name' => 'licNos'
+             ),
             array(
                 'title' => '',
                 'width' => 'checkbox',
