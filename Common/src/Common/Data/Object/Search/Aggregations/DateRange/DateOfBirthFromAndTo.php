@@ -7,7 +7,7 @@ namespace Common\Data\Object\Search\Aggregations\DateRange;
  * @package Common\Data\Object\Search\DateRange
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class DateOfBirth extends DateRangeAbstract
+class DateOfBirthFromAndTo extends DateRangeAbstract
 {
     /**
      * The human readable title of this filter. This may also be used in the front-end (not sure yet).
@@ -21,5 +21,5 @@ class DateOfBirth extends DateRangeAbstract
      *
      * @var string
      */
-    protected $key = 'personBirthDateFrom';
+    protected $key = 'personBirthDateFromAndTo';
 }
