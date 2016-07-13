@@ -1,19 +1,16 @@
 <?php
 
-/**
- * Shared logic between Business Details Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\CrudTableTrait;
 use Common\Data\Mapper\Lva\BusinessDetails as Mapper;
-use Dvsa\Olcs\Transfer\Command\Licence\UpdateBusinessDetails;
+use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
+use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateBusinessDetails as ApplicationUpdateBusinessDetails;
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateBusinessDetails;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
-use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
+use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Zend\Form\Form;
 
 /**
@@ -29,9 +26,12 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
     /**
      * Business details section
+     *
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
      */
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $response = $this->handleQuery(BusinessDetails::create(['id' => $this->getLicenceId()]));
@@ -50,6 +50,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         // Gets a fully configured/altered form for any version of this section
+        /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
@@ -67,7 +68,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         // If we are performing a company number lookup
         if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
-
             $this->getServiceLocator()->get('Helper\Form')
                 ->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
 
@@ -79,7 +79,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         // If we are interacting with the trading names collection element
         if (isset($tradingNames['submit_add_trading_name'])) {
-
             $this->processTradingNames($tradingNames, $form);
             return $this->renderForm($form);
         }
@@ -136,7 +135,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         if (!$response->isOk()) {
-
             $this->mapErrors($form, $response->getResult()['messages']);
 
             return $this->renderForm($form);
@@ -149,11 +147,21 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         return $this->completeSection('business_details');
     }
 
+    /**
+     * Add Action
+     *
+     * @return \Common\View\Model\Section
+     */
     public function addAction()
     {
         return $this->addOrEdit('add');
     }
 
+    /**
+     * Edit action
+     *
+     * @return \Common\View\Model\Section
+     */
     public function editAction()
     {
         return $this->addOrEdit('edit');
@@ -162,19 +170,21 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     /**
      * Method used to render the indexAction form
      *
-     * @param Zend\Form\Form $form
-     * @return Zend\View\Model\ViewModel
+     * @param \Zend\Form\Form $form Form
+     *
+     * @return \Zend\View\Model\ViewModel
      */
     protected function renderForm($form)
     {
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud','business-details']);
+        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'business-details']);
         return $this->render('business_details', $form);
     }
 
     /**
      * Grabs the data from the post, and set's some defaults in-case there are disabled fields
      *
-     * @param array $orgData
+     * @param array $orgData Organisation data
+     *
      * @return array
      */
     protected function getFormPostData($orgData)
@@ -197,13 +207,17 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     /**
      * User has pressed 'Add another' on trading names
      * So we need to duplicate the trading names field to produce another input
+     *
+     * @param string[]          $tradingNames Trading names
+     * @param \Common\Form\Form $form         Form
+     *
+     * @return void
      */
     protected function processTradingNames($tradingNames, $form)
     {
         $form->setValidationGroup(array('data' => ['tradingNames']));
 
         if ($form->isValid()) {
-
             // remove existing entries from collection and check for empty entries
             $names = [];
             foreach ($tradingNames['trading_name'] as $val) {
@@ -218,8 +232,16 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
     }
 
+    /**
+     * Add|edit functionality
+     *
+     * @param string $mode Mode
+     *
+     * @return \Common\View\Model\Section
+     */
     protected function addOrEdit($mode)
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $id = $this->params('child_id');
@@ -229,7 +251,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-
             $entity = ($this->lva === 'licence' ? 'licence' : 'application');
 
             $query = CompanySubsidiary::create(['id' => $id, $entity => $this->getIdentifier()]);
@@ -244,6 +265,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         // @todo Move this into a form service
+        /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\BusinessDetailsSubsidiaryCompany', $request)
             ->setData($data);
@@ -254,32 +276,42 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         if ($request->isPost() && $form->isValid()) {
-
             $dtoData = [
-                $this->getIdentifierIndex() => $this->getIdentifier(),
                 'name' => $data['data']['name'],
                 'companyNo' => $data['data']['companyNo'],
             ];
 
-            if ($this->lva === 'licence') {
-                $lvaNamespace = 'Licence';
-            } else {
-                $lvaNamespace = 'Application';
-            }
-
             // Creating
-            if ($id !== null) {
+            $isCreate = ($id === null);
+
+            if (!$isCreate) {
                 $dtoData['id'] = $id;
                 $dtoData['version'] = $data['data']['version'];
-                $dtoClass = sprintf('\Dvsa\Olcs\Transfer\Command\%s\UpdateCompanySubsidiary', $lvaNamespace);
+            }
+
+            /** @var QueryInterface $dtoClass */
+            if ($this->lva === 'licence') {
+                $dtoData['licence'] = $this->getIdentifier();
+
+                if ($isCreate) {
+                    $dtoClass = TransferCmd\Licence\CreateCompanySubsidiary::class;
+                } else {
+                    $dtoClass = TransferCmd\Licence\UpdateCompanySubsidiary::class;
+                }
             } else {
-                $dtoClass = sprintf('\Dvsa\Olcs\Transfer\Command\%s\CreateCompanySubsidiary', $lvaNamespace);
+                $dtoData['application'] = $this->getIdentifier();
+
+                if ($isCreate) {
+                    $dtoClass = TransferCmd\Application\CreateCompanySubsidiary::class;
+                } else {
+                    $dtoClass = TransferCmd\Application\UpdateCompanySubsidiary::class;
+                }
             }
 
             $response = $this->handleCommand($dtoClass::create($dtoData));
 
             if ($response->isOk()) {
-                return $this->handlePostSave(null, false);
+                return $this->handlePostSave();
             }
 
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
@@ -288,6 +320,14 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         return $this->render($mode . '_subsidiary_company', $form);
     }
 
+    /**
+     * Populate tables
+     *
+     * @param \Common\Form\Form $form    Form
+     * @param array             $orgData Data
+     *
+     * @return void
+     */
     protected function populateTable($form, $orgData)
     {
         $table = $this->getServiceLocator()->get('Table')
@@ -298,6 +338,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
     /**
      * Mechanism to *actually* delete a subsidiary, invoked by the underlying delete action
+     *
+     * @return void
      */
     protected function delete()
     {
@@ -309,13 +351,12 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $this->getIdentifierIndex() => $this->getIdentifier()
         ];
 
+        /** @var QueryInterface $dtoClass */
         if ($this->lva === 'licence') {
-            $lvaNamespace = 'Licence';
+            $dtoClass = TransferCmd\Licence\DeleteCompanySubsidiary::class;
         } else {
-            $lvaNamespace = 'Application';
+            $dtoClass = TransferCmd\Application\DeleteCompanySubsidiary::class;
         }
-
-        $dtoClass = sprintf('\Dvsa\Olcs\Transfer\Command\%s\DeleteCompanySubsidiary', $lvaNamespace);
 
         $response = $this->handleCommand($dtoClass::create($data));
 
@@ -324,6 +365,14 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
     }
 
+    /**
+     * Map errors
+     *
+     * @param Form  $form   Form
+     * @param array $errors Errors
+     *
+     * @return void
+     */
     protected function mapErrors(Form $form, array $errors)
     {
         $formMessages = [];
