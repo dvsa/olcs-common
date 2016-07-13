@@ -107,7 +107,7 @@ class PeopleTest extends SearchAbstractTest
         $this->assertCount(1, $dateRanges);
 
         $this->assertInstanceOf(
-            'Common\Data\Object\Search\Aggregations\DateRange\DateOfBirthFromAndTo',
+            \Common\Data\Object\Search\Aggregations\DateRange\DateOfBirthFromAndTo::class,
             $dateRanges[0]
         );
     }
