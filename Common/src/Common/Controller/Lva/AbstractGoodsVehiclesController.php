@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Goods Vehicles
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\TransferVehiclesTrait;
@@ -76,11 +70,20 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     protected $headerData = null;
 
-    protected function checkForAlternativeCrudAction($action)
-    {
-        return null;
-    }
+    /**
+     * Additional functionality for action
+     *
+     * @param string $action Action
+     *
+     * @return \Zend\Http\Response
+     */
+    abstract protected function checkForAlternativeCrudAction($action);
 
+    /**
+     * Process Index action
+     *
+     * @return \Common\View\Model\Section|null|\Zend\Http\Response
+     */
     public function indexAction()
     {
         /** @var \Zend\Http\Request $request */
@@ -135,6 +138,15 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->renderForm($form, $headerData);
     }
 
+    /**
+     * Update Vehicle Section
+     *
+     * @param \Common\Form\Form $form           Form
+     * @param string            $haveCrudAction Action
+     * @param array             $headerData     Data from db
+     *
+     * @return \Common\View\Model\Section|null
+     */
     protected function updateVehiclesSection(FormInterface $form, $haveCrudAction, $headerData)
     {
         if ($this->lva === 'application') {
@@ -179,9 +191,16 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return null;
     }
 
-    protected function getHeaderData()
+    /**
+     * Request data from API
+     *
+     * @param bool $useCache False for fresh request to API
+     *
+     * @return array|null
+     */
+    protected function getHeaderData($useCache = true)
     {
-        if ($this->headerData === null) {
+        if ($this->headerData === null || $useCache === false) {
             $dtoData = $this->getFilters();
             $dtoData['id'] = $this->getIdentifier();
 
@@ -195,6 +214,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->headerData;
     }
 
+    /**
+     * Process Add action
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function addAction()
     {
         $result = $this->getVehicleSectionData();
@@ -297,6 +321,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->render('add_vehicles', $form);
     }
 
+    /**
+     * Process Edit Action
+     *
+     * @return \Common\View\Model\Section
+     */
     public function editAction()
     {
         /** @var \Zend\Http\Request $request */
@@ -386,6 +415,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->render('edit_vehicles', $form);
     }
 
+    /**
+     * Delete vehicles
+     *
+     * @return bool
+     */
     protected function delete()
     {
         $ids = explode(',', $this->params('child_id'));
@@ -429,6 +463,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return 'deleting.all.vehicles.message';
     }
 
+    /**
+     * Process Reprint action
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function reprintAction()
     {
         /** @var \Zend\Http\Request $request */
@@ -457,12 +496,22 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     /**
      * Transfer vehicles action
+     *
+     * @return mixed
      */
     public function transferAction()
     {
         return $this->transferVehicles();
     }
 
+    /**
+     * Render Form
+     *
+     * @param \Common\Form\Form $form       Form
+     * @param array             $headerData Data from Api
+     *
+     * @return \Common\View\Model\Section
+     */
     protected function renderForm($form, $headerData)
     {
         if ($headerData['spacesRemaining'] < 0) {
@@ -482,6 +531,14 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->render('vehicles', $form, $params);
     }
 
+    /**
+     * Build table
+     *
+     * @param array $headerData Data from Api
+     * @param array $filters    Route parameters
+     *
+     * @return mixed
+     */
     protected function getTable($headerData, $filters)
     {
         $query = $this->removeUnusedParametersFromQuery(
@@ -499,6 +556,15 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $table;
     }
 
+    /**
+     * Make table alter
+     *
+     * @param TableBuilder $table   Table
+     * @param array        $params  Changes parameters
+     * @param array        $filters Route parameters
+     *
+     * @return void
+     */
     protected function makeTableAlterations(TableBuilder $table, $params, $filters)
     {
         if ($params['canReprint']) {
@@ -545,12 +611,24 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $this->addRemovedVehiclesActions($filters, $table);
     }
 
-    protected function getConfirmationForm($request)
+    /**
+     * Show confirmation
+     *
+     * @param \Zend\Http\Request $request Htt Request
+     *
+     * @return mixed
+     */
+    protected function getConfirmationForm(\Zend\Http\Request $request)
     {
         return $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('GenericConfirmation', $request);
     }
 
+    /**
+     * Define filters (query/route parameters)
+     *
+     * @return array
+     */
     protected function getFilters()
     {
         /** @var \Zend\Http\Request $request */
@@ -565,6 +643,13 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->formatFilters((array)$query);
     }
 
+    /**
+     * Format filters (query/route parameters)
+     *
+     * @param array $query parameters
+     *
+     * @return array
+     */
     protected function formatFilters($query)
     {
         $filters = [
@@ -594,7 +679,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     /**
      * Get pre-configured form
      *
-     * @return \Zend\Form\Form
+     * @param array $headerData Data from Api
+     * @param array $formData   Data from Post
+     *
+     * @return mixed
      */
     protected function getForm($headerData, $formData)
     {
@@ -605,6 +693,14 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             ->setData($formData);
     }
 
+    /**
+     * Map errors
+     *
+     * @param FormInterface $form   Form
+     * @param array         $errors Error messages
+     *
+     * @return void
+     */
     protected function mapErrors(\Zend\Form\FormInterface $form, array $errors)
     {
         $formMessages = [];
@@ -628,6 +724,14 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
     }
 
+    /**
+     * Map vehicle errors
+     *
+     * @param FormInterface $form   Form
+     * @param array         $errors Error messages
+     *
+     * @return void
+     */
     protected function mapVehicleErrors(\Zend\Form\FormInterface $form, array $errors)
     {
         $errors = Mapper\Lva\GoodsVehiclesVehicle::mapFromErrors($errors, $form);
@@ -643,6 +747,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     /**
      * Format the confirmation message
+     *
+     * @param string $message Json message
+     *
+     * @return string
      */
     protected function formatConfirmationMessage($message)
     {
@@ -657,17 +765,29 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             }
 
             return $translator->translateReplace($message, [implode(', ', $decoded)]);
-        } else {
-            return $translator->translate('vehicle-belongs-to-another-licence-message-external');
         }
+
+        return $translator->translate('vehicle-belongs-to-another-licence-message-external');
     }
 
+    /**
+     * Post save
+     *
+     * @param \Common\View\Model\Section $section Section
+     *
+     * @return void
+     */
     protected function postSave($section)
     {
         // @NOTE Prevents postSave from doing anything as this section has been migrated
         // @todo remove me once all sections have been migrated
     }
 
+    /**
+     * Get vehicle section data
+     *
+     * @return mixed
+     */
     protected function getVehicleSectionData()
     {
         $dtoData = [
