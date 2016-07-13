@@ -108,7 +108,8 @@ trait VehicleSearchTrait
             $table->addAction(
                 'hide-removed-vehicles',
                 [
-                    'label' => 'label-hide-removed-vehciles', 'class' => 'secondary',
+                    'label' => 'label-hide-removed-vehciles', 
+                    'class' => ' more-actions__item',
                     'requireRows' => true,
                 ]
             );
@@ -116,7 +117,8 @@ trait VehicleSearchTrait
             $table->addAction(
                 'show-removed-vehicles',
                 [
-                    'label' => 'label-show-removed-vehciles', 'class' => 'secondary',
+                    'label' => 'label-show-removed-vehciles',
+                    'class' => ' more-actions__item',
                     'requireRows' => true,
                 ]
             );
