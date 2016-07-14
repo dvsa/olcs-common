@@ -71,7 +71,6 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
             ->once()
             ->getMock();
 
-
         $mockForm = m::mock(Form::class)
             ->shouldReceive('get')
             ->with('type-of-licence')
