@@ -1,14 +1,17 @@
 <?php
+//  header
+$line = [];
 foreach ($this->object->getColumns() as $column) {
-    echo $this->object->renderHeaderColumn($column);
-    echo ",";
+    $line[] = $this->object->renderHeaderColumn($column);
 }
-echo "\n";
-?>
-<?php foreach ($this->object->getRows() as $row) {
+echo implode(', ', $line) . "\n";
+
+//  body
+foreach ($this->object->getRows() as $row) {
+    $line = [];
     foreach ($this->object->getColumns() as $column) {
-        echo strip_tags($this->object->renderBodyColumn($row, $column));
-        echo ",";
+        $line[] = $this->object->renderBodyColumn($row, $column);
     }
-    echo "\n";
+
+    echo implode(', ', $line) . "\n";
 }
