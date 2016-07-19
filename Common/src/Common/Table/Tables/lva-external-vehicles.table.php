@@ -72,6 +72,7 @@ return array(
             'formatter' => 'VehicleDiscNo'
         ),
         array(
+            'name' => 'actionRemove',
             'type' => 'ActionLinks',
             'isRemoveVisible' => function ($data) {
                 return empty($data['removalDate']);

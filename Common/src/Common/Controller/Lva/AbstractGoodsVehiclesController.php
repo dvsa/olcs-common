@@ -77,7 +77,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      *
      * @return \Zend\Http\Response
      */
-    abstract protected function checkForAlternativeCrudAction($action);
+    protected function checkForAlternativeCrudAction($action)
+    {
+        return null;
+    }
 
     /**
      * Process Index action
@@ -194,13 +197,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     /**
      * Request data from API
      *
-     * @param bool $useCache False for fresh request to API
-     *
      * @return array|null
      */
-    protected function getHeaderData($useCache = true)
+    protected function getHeaderData()
     {
-        if ($this->headerData === null || $useCache === false) {
+        if ($this->headerData === null) {
             $dtoData = $this->getFilters();
             $dtoData['id'] = $this->getIdentifier();
 
@@ -208,6 +209,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
             /** @var \Common\Service\Cqrs\Response $response */
             $response = $this->handleQuery($dtoClass::create($dtoData));
+
             $this->headerData = $response->getResult();
         }
 
@@ -567,7 +569,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      */
     protected function makeTableAlterations(TableBuilder $table, $params, $filters)
     {
-        if ($params['canReprint']) {
+        if (isset($params['canReprint']) && $params['canReprint']) {
             $table->addAction(
                 'reprint',
                 [
@@ -577,7 +579,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             );
         }
 
-        if ($params['canTransfer']) {
+        if (isset($params['canTransfer']) && $params['canTransfer']) {
             $table->addAction(
                 'transfer',
                 [
@@ -588,7 +590,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             );
         }
 
-        if ($params['canExport']) {
+        if (isset($params['canExport']) && $params['canExport']) {
             $table->addAction(
                 'export',
                 [
@@ -599,7 +601,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             );
         }
 
-        if ($params['canPrintVehicle']) {
+        if (isset($params['canPrintVehicle']) && $params['canPrintVehicle']) {
             $table->addAction(
                 'print-vehicles',
                 [
