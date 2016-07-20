@@ -8,6 +8,16 @@ $showStatus = isset($settings['show-status']) ? $settings['show-status'] : true;
 ?>
 
 <ul class="search-results">
+    <h3>
+        <?php
+        // OLCS-13312
+        if ($this->object->renderTotal()) {
+            echo $this->object->renderTotal();
+        }
+        echo ' ' . strtolower($this->translate('publications'));;
+        ?>
+
+    </h3>
     <?php foreach ($this->object->getRows() as $row): ?>
     <li class="search-result">
         <div class="search-result__header">
