@@ -47,6 +47,11 @@ class ContentHelper
     private $translator;
 
     /**
+     * @var \Zend\Escaper\Escaper
+     */
+    private $escaper;
+
+    /**
      * Pass in the location of the partials
      *
      * @param string $location
@@ -61,6 +66,30 @@ class ContentHelper
         if (method_exists($object, 'getTranslator')) {
             $this->setTranslator($object->getTranslator());
         }
+
+        $escaper = new \Zend\Escaper\Escaper('utf-8');
+        $this->setEscaper($escaper);
+    }
+
+    /**
+     * Get the escaper
+     *
+     * @return \Zend\Escaper\Escaper
+     */
+    public function getEscaper()
+    {
+        return $this->escaper;
+    }
+
+    /**
+     * Set the escaper
+     *
+     * @param \Zend\Escaper\Escaper $escaper
+     */
+    public function setEscaper($escaper)
+    {
+        $this->escaper = $escaper;
+        return $this;
     }
 
     /**
@@ -108,8 +137,8 @@ class ContentHelper
         }
 
         ob_start();
-            require($partialFile);
-            $content = ob_get_contents();
+        require($partialFile);
+        $content = ob_get_contents();
         ob_end_clean();
 
         return $content;
@@ -174,7 +203,7 @@ class ContentHelper
 
             foreach ($partials as $partial) {
 
-                $content = str_replace('{{[' . $partial .']}}', $this->getPartial($partial), $content);
+                $content = str_replace('{{[' . $partial . ']}}', $this->getPartial($partial), $content);
             }
         }
 
