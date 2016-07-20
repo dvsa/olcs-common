@@ -7,7 +7,7 @@
             echo $this->object->renderTotal();
         }
         ?>
-        {{title}}
+        <?php echo strtolower($this->object->getVariable('title')); ?>
     </h3>
     <?php echo $this->object->renderActions(); ?>
 </div>
