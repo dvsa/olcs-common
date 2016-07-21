@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Crud table trait
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Zend\Http\Response;
@@ -24,6 +18,8 @@ trait CrudTableTrait
      * Once the CRUD entity has been saved, handle the necessary redirect
      *
      * @param string $prefix - if our actions aren't just 'add', 'edit', provide a prefix
+     *
+     * @return \Zend\Http\Response
      */
     protected function handlePostSave($prefix = null)
     {
@@ -52,13 +48,15 @@ trait CrudTableTrait
     /**
      * Generic delete functionality; usually does the trick but
      * can be overridden if not
+     *
+     * @return \Zend\Http\Response\
      */
     public function deleteAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $response = $this->delete();
 
             if ($response instanceof Response) {
@@ -90,6 +88,8 @@ trait CrudTableTrait
     /**
      * Called when delete fails, eg to display a flash error message
      * Override in controller for specific messages
+     *
+     * @return void
      */
     protected function deleteFailed()
     {
@@ -103,6 +103,7 @@ trait CrudTableTrait
      * abstract as it's not always required, so by default we throw an exception
      *
      * @throws \BadMethodCallException
+     * @return void
      */
     protected function delete()
     {

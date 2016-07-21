@@ -1,10 +1,5 @@
 <?php
 
-/**
- * CRUD Table Trait Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Controller\Lva\Traits;
 
 use CommonTest\Bootstrap;
@@ -18,6 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CrudTableTraitTest extends MockeryTestCase
 {
+    /** @var  Stubs\CrudTableTraitStub|m\MockInterface */
     protected $sut;
 
     protected $sm;
@@ -26,7 +22,7 @@ class CrudTableTraitTest extends MockeryTestCase
     {
         $this->sm = Bootstrap::getServiceManager();
 
-        $this->sut = m::mock('CommonTest\Controller\Lva\Traits\Stubs\CrudTableTraitStub')
+        $this->sut = m::mock(Stubs\CrudTableTraitStub::class)
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
 
@@ -120,8 +116,8 @@ class CrudTableTraitTest extends MockeryTestCase
 
         $form = m::mock();
 
-        $this->sut->shouldReceive('getRequest')
-            ->andReturn($request)
+        $this->sut
+            ->shouldReceive('getRequest')->once()->andReturn($request)
             ->shouldReceive('render')
             ->with('delete', $form, ['sectionText' => 'delete.confirmation.text'])
             ->andReturn('render');

@@ -339,16 +339,13 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     /**
      * Mechanism to *actually* delete a subsidiary, invoked by the underlying delete action
      *
-     * @return void
+     * @return boolean
      */
     protected function delete()
     {
-        $id = $this->params('child_id');
-        $ids = explode(',', $id);
-
         $data = [
-            'ids' => $ids,
-            $this->getIdentifierIndex() => $this->getIdentifier()
+            'ids' => explode(',', $this->params('child_id')),
+            $this->getIdentifierIndex() => $this->getIdentifier(),
         ];
 
         /** @var QueryInterface $dtoClass */
@@ -360,9 +357,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         $response = $this->handleCommand($dtoClass::create($data));
 
-        if (!$response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
-        }
+        return $response->isOk();
     }
 
     /**
