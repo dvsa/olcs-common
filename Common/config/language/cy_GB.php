@@ -2569,7 +2569,7 @@ return [
     'transport-manager-hours-per-week-validation-message' => '{WELSH} You must enter the hours per week you will spend on your duties',
     'transport-manager-remove' => '{WELSH} Remove Transport Manager',
     'transport-manager-remove-are-you-sure' => '{WELSH} Are you sure you want to remove this Transport Manager?',
-    'transport-manager-remove-has-users-error' => '{WELSH} This Transport Manager is linked to user account: ',
+    'transport-manager-remove-has-users-error' => '{WELSH} This Transport Manager is linked to user accounts',
     'transport-manager-remove-not-detached-error' => '{WELSH} You cannot remove a Transport Manager that has associated licences, applications or cases',
     'transport-manager-removed' => '{WELSH} Transport Manager removed.',
     'transport-manager-undo-disqualification-are-you-sure' => '{WELSH} Are you sure you want to remove the disqualification from this transport manger?',
