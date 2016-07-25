@@ -162,7 +162,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkId' => 1,
                 ),
                 array(),
-                'transport-manager',
+                'transport-manager/details',
                 'transportManager',
                 '<a href="correctUrl">1234</a>'
             ),
@@ -173,7 +173,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkId' => 1,
                 ),
                 array(),
-                'transport-manager',
+                'transport-manager/details',
                 'transportManager',
                 '<a href="#">1234</a>'
             ),

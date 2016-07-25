@@ -108,17 +108,24 @@ class Cases extends InternalSearchAbstract
             ],
             [
                 'title' => 'Name',
-                'formatter' => function ($data) {
+                'formatter' => function ($data, $column, $sl) {
+                    $urlHelper = $sl->get('Helper\Url');
                     if (!empty($data['tmId'])) {
-                        return '<a href="/transport-manager/' . $data['tmId'] . '">'
+                        $url = $urlHelper->fromRoute(
+                            'transport-manager/details',
+                            ['transportManager' => $data['tmId']]
+                        );
+                        return '<a href="' . $url . '">'
                                . $data['tmForename'] . ' '
                                . $data['tmFamilyName']
                                . '</a>';
 
                     } else {
-
-                        return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
-
+                        $url = $urlHelper->fromRoute(
+                            'operator/business-details',
+                            ['organisation' => $data['orgId']]
+                        );
+                        return '<a href="' . $url . '">' . $data['orgName'] . '</a>';
                     }
                 }
             ],

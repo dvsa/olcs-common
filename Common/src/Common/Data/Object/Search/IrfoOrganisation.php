@@ -53,8 +53,10 @@ class IrfoOrganisation extends InternalSearchAbstract
             [
                 'title' => 'Operator no',
                 'formatter' => function ($data, $column, $serviceLocator) {
-                    $urlHelper  = $serviceLocator->get('Helper\Url');
-                    $url =  $urlHelper->fromRoute('operator', ['organisation' => $data['orgId']]);
+                    $url = $serviceLocator->get('Helper\Url')->fromRoute(
+                        'operator/business-details',
+                        ['organisation' => $data['orgId']]
+                    );
                     return sprintf('<a href="%s">%d</a>', $url, $data['orgId']);
                 }
             ],

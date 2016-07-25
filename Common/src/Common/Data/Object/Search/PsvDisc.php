@@ -54,7 +54,6 @@ class PsvDisc extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            //['title' => 'Licence number', 'name'=> 'licNo'],
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
@@ -66,8 +65,12 @@ class PsvDisc extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
-                'formatter' => function ($data) {
-                    return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
+                'formatter' => function ($data, $column, $sl) {
+                    $url = $sl->get('Helper\Url')->fromRoute(
+                        'operator/business-details',
+                        ['organisation' => $data['orgId']]
+                    );
+                    return '<a href="' . $url . '">' . $data['orgName'] . '</a>';
                 }
             ],
             ['title' => 'Disc Number', 'name'=> 'discNo'],

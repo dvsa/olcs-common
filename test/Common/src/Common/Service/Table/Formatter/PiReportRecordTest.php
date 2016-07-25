@@ -38,7 +38,7 @@ class PiReportRecordTest extends \PHPUnit_Framework_TestCase
                     ->andReturn('LIC_URL')
                     ->shouldReceive('fromRoute')
                     ->with(
-                        'transport-manager',
+                        'transport-manager/details',
                         [
                             'transportManager' => 3,
                         ]

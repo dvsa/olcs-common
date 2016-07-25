@@ -30,7 +30,7 @@ class PiReportNameTest extends \PHPUnit_Framework_TestCase
                 m::mock()
                     ->shouldReceive('fromRoute')
                     ->with(
-                        'operator',
+                        'operator/business-details',
                         [
                             'organisation' => 456,
                         ]

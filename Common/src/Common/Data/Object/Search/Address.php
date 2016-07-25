@@ -85,7 +85,7 @@ class Address extends InternalSearchAbstract
                     $urlHelper  = $serviceLocator->get('Helper\Url');
                     return sprintf(
                         '<a href="%s">%s</a>',
-                        $urlHelper->fromRoute('operator', ['organisation' => $data['orgId']]),
+                        $urlHelper->fromRoute('operator/business-details', ['organisation' => $data['orgId']]),
                         $data['orgName']
                     );
                 }

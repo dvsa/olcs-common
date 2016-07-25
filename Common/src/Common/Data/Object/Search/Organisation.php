@@ -81,14 +81,18 @@ class Organisation extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
-                'formatter' => function ($data) {
+                'formatter' => function ($data, $column, $sl) {
 
                     $orgName = $data['orgName'];
                     if ($data['noOfLicencesHeld'] > 1) {
                         $orgName .= ' (MLH)';
                     }
+                    $url =  $sl->get('Helper\Url')->fromRoute(
+                        'operator/business-details',
+                        ['organisation' => $data['orgId'], 'action' => 'business-details']
+                    );
 
-                    return '<a href="/operator/' . $data['orgId'] . '">' .$orgName . '</a>';
+                    return '<a href="' . $url . '">' .$orgName . '</a>';
                 }
             ],
             ['title' => 'Trading name', 'name'=> 'tradingName'],

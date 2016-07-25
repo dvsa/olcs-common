@@ -90,8 +90,12 @@ class Vehicle extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
-                'formatter' => function ($data) {
-                    return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
+                'formatter' => function ($data, $column, $sl) {
+                    $url = $sl->get('Helper\Url')->fromRoute(
+                        'operator/business-details',
+                        ['organisation' => $data['orgId']]
+                    );
+                    return '<a href="' . $url . '">' . $data['orgName'] . '</a>';
                 }
             ],
             [
