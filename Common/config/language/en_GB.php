@@ -2457,6 +2457,7 @@ return [
     'selfserve-licence-transport_managers' => 'Transport Managers',
     'selfserve-licence-vehicle_safety' => 'Vehicles and safety',
     'selfserve-licence-your_business' => 'Your business',
+    'selfserve-ebsr-busreg-status-filter' => 'Registration status',
     'send-form.button' => 'Send form',
     'send-to' => 'Send to',
     'short-label-financial-history-additional-information' => 'Additional information',

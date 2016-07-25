@@ -2396,6 +2396,7 @@ return [
     'selfserve-licence-transport_managers' => '{WELSH} Transport Managers',
     'selfserve-licence-vehicle_safety' => '{WELSH} Vehicles and safety',
     'selfserve-licence-your_business' => '{WELSH} Your business',
+    'selfserve-ebsr-busreg-status-filter' => '{WELSH} Registration status',
     'send-form.button' => '{WELSH} Send form',
     'send-to' => '{WELSH} Send to',
     'short-label-financial-history-additional-information' => '{WELSH} Additional information',
