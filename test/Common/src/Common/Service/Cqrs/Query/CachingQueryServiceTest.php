@@ -39,8 +39,11 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockQuery->shouldReceive('getDto')->andReturn(new \StdClass);
         $mockQuery->shouldReceive('getCacheIdentifier')->andReturn('cache_key');
 
+        $mockResult = m::mock(\Dvsa\Olcs\Api\Domain\Command\Result::class);
+        $mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
+
         $mockQS = m::mock(QueryServiceInterface::class);
-        $mockQS->shouldReceive('send')->with($mockQuery)->once()->andReturn('value');
+        $mockQS->shouldReceive('send')->with($mockQuery)->once()->andReturn($mockResult);
 
         $mockCache = m::mock(StorageInterface::class);
 
@@ -58,13 +61,16 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockQuery->shouldReceive('getDto')->andReturn(new \stdClass);
         $mockQuery->shouldReceive('getCacheIdentifier')->andReturn('cache_key');
 
+        $mockResult = m::mock(\Dvsa\Olcs\Api\Domain\Command\Result::class);
+        $mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
+
         $mockQS = m::mock(QueryServiceInterface::class);
-        $mockQS->shouldReceive('send')->with($mockQuery)->once()->andReturn('value');
+        $mockQS->shouldReceive('send')->with($mockQuery)->once()->andReturn($mockResult);
 
         $mockCache = m::mock(StorageInterface::class);
         $mockCache->shouldReceive('hasItem')->with('cache_key')->andReturnValues([false, true]);
-        $mockCache->shouldReceive('setItem')->with('cache_key', 'value')->once();
-        $mockCache->shouldReceive('getItem')->with('cache_key')->once()->andReturn('value');
+        $mockCache->shouldReceive('setItem')->with('cache_key', $mockResult)->once();
+        $mockCache->shouldReceive('getItem')->with('cache_key')->once()->andReturn($mockResult);
 
         $sut = new CachingQueryService($mockQS, $mockCache);
 
@@ -80,13 +86,16 @@ class CachingQueryServiceTest extends MockeryTestCase
         $mockQuery->shouldReceive('getDto')->andReturn(new \stdClass);
         $mockQuery->shouldReceive('getCacheIdentifier')->andReturn('cache_key');
 
+        $mockResult = m::mock(\Dvsa\Olcs\Api\Domain\Command\Result::class);
+        $mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
+
         $mockQS = m::mock(QueryServiceInterface::class);
-        $mockQS->shouldReceive('send')->with($mockQuery)->once()->andReturn('value');
+        $mockQS->shouldReceive('send')->with($mockQuery)->once()->andReturn($mockResult);
 
         $mockCache = m::mock(StorageInterface::class);
         $mockCache->shouldReceive('hasItem')->with('cache_key')->andReturnValues([false, true]);
-        $mockCache->shouldReceive('setItem')->with('cache_key', 'value')->once();
-        $mockCache->shouldReceive('getItem')->with('cache_key')->once()->andReturn('value');
+        $mockCache->shouldReceive('setItem')->with('cache_key', $mockResult)->once();
+        $mockCache->shouldReceive('getItem')->with('cache_key')->once()->andReturn($mockResult);
 
         $mockLogger = m::mock(\Zend\Log\LoggerInterface::class);
         $mockLogger->shouldReceive('debug')->with('Get from presistent cache '. \stdClass::class)->once();
