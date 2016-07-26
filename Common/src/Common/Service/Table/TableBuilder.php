@@ -1899,4 +1899,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $this->setColumns($updatedColumns);
         }
     }
+
+    /**
+     * Set setting
+     *
+     * @param string $key   key
+     * @param string $value value
+     *
+     * @return TableBuilder
+     */
+    public function setSetting($key, $value)
+    {
+        $this->settings[$key] = $value;
+        return $this;
+    }
 }
