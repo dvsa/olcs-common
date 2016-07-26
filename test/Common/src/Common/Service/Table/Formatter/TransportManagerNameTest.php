@@ -73,7 +73,7 @@ class TransportManagerNameTest extends MockeryTestCase
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->with('transport-manager', ['transportManager' => 432], [], true)
+            ->with('transport-manager/details', ['transportManager' => 432], [], true)
             ->andReturn('a-url');
 
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
@@ -158,7 +158,7 @@ class TransportManagerNameTest extends MockeryTestCase
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->with('transport-manager', ['transportManager' => 432], [], true)
+            ->with('transport-manager/details', ['transportManager' => 432], [], true)
             ->andReturn('a-url');
 
         $mockTranslator = m::mock();
@@ -196,7 +196,7 @@ class TransportManagerNameTest extends MockeryTestCase
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->with('transport-manager', ['transportManager' => 432], [], true)
+            ->with('transport-manager/details', ['transportManager' => 432], [], true)
             ->andReturn('a-url');
 
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
@@ -296,7 +296,7 @@ class TransportManagerNameTest extends MockeryTestCase
 
         $this->mockUrlHelper->shouldReceive('fromRoute')
             ->once()
-            ->with('transport-manager', ['transportManager' => 432], [], true)
+            ->with('transport-manager/details', ['transportManager' => 432], [], true)
             ->andReturn('a-url');
 
         $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));

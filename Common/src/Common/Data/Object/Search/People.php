@@ -4,6 +4,7 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Data\Object\Search\Aggregations\DateRange as DateRange;
+use Common\Util\Escape;
 
 /**
  * Class People
@@ -111,15 +112,14 @@ class People extends InternalSearchAbstract
             [
                 'title' => 'Record',
                 'formatter' => function ($row, $column, $serviceLocator) {
+                    $urlHelper  = $serviceLocator->get('Helper\Url');
                     if (!empty($row['tmId']) && $row['foundAs'] !== self::FOUND_AS_HISTORICAL_TM) {
-                        $urlHelper  = $serviceLocator->get('Helper\Url');
                         return sprintf(
                             '<a href="%s">TM %s</a>',
-                            $urlHelper->fromRoute('transport-manager', ['transportManager' => $row['tmId']]),
+                            $urlHelper->fromRoute('transport-manager/details', ['transportManager' => $row['tmId']]),
                             $row['tmId']
                         );
                     } elseif (!empty($row['licId'])) {
-                        $urlHelper  = $serviceLocator->get('Helper\Url');
                         return sprintf(
                             '<a href="%s">%s</a>, %s<br />%s',
                             $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
@@ -128,7 +128,6 @@ class People extends InternalSearchAbstract
                             $row['licStatusDesc']
                         );
                     } elseif (!empty($row['licNo'])) {
-                        $urlHelper  = $serviceLocator->get('Helper\Url');
                         return sprintf(
                             '<a href="%s">%s</a>',
                             $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),

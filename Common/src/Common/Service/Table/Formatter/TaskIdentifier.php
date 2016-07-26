@@ -41,7 +41,7 @@ class TaskIdentifier implements FormatterInterface
                 $url = $urlHelper->fromRoute('lva-application/overview', array('application' => $data['linkId']));
                 break;
             case 'Transport Manager':
-                $url = $urlHelper->fromRoute('transport-manager', array('transportManager' => $data['linkId']));
+                $url = $urlHelper->fromRoute('transport-manager/details', array('transportManager' => $data['linkId']));
                 break;
             case 'Case':
                 $url = $urlHelper->fromRoute('case', array('case' => $data['linkId']));

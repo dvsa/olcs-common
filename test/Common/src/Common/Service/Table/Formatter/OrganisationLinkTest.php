@@ -32,7 +32,7 @@ class OrganisationLinkTest extends \PHPUnit_Framework_TestCase
                 m::mock()
                     ->shouldReceive('fromRoute')
                     ->with(
-                        'operator',
+                        'operator/business-details',
                         [
                             'organisation' => $data['organisation']['id'],
                         ]

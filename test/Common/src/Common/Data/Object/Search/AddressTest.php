@@ -84,7 +84,7 @@ class AddressTest extends SearchAbstractTest
 
         return [
             // expected, row, route, routeParams
-            ['<a href="http://URL">ACME Ltd</a>', $data, 'operator', ['organisation' => 452]],
+            ['<a href="http://URL">ACME Ltd</a>', $data, 'operator/business-details', ['organisation' => 452]],
         ];
     }
 }

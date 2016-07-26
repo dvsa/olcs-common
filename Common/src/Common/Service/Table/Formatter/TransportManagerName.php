@@ -121,7 +121,9 @@ class TransportManagerName extends Name
     {
         $transportManagerId = $data['transportManager']['id'];
         $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute('transport-manager', ['transportManager' => $transportManagerId], [], true);
+        $url = $urlHelper->fromRoute(
+            'transport-manager/details', ['transportManager' => $transportManagerId], [], true
+        );
 
         return $url;
     }
