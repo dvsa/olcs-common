@@ -1906,10 +1906,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param string $key   key
      * @param string $value value
      *
-     * @return void
+     * @return TableBuilder
      */
     public function setSetting($key, $value)
     {
         $this->settings[$key] = $value;
+        return $this;
     }
 }

@@ -108,14 +108,16 @@ trait VehicleSearchTrait
             $table->addAction(
                 'hide-removed-vehicles',
                 [
-                    'label' => 'label-hide-removed-vehciles', 'class' => 'secondary'
+                    'label' => 'label-hide-removed-vehciles',
+                    'class' => 'secondary',
                 ]
             );
         } else {
             $table->addAction(
                 'show-removed-vehicles',
                 [
-                    'label' => 'label-show-removed-vehciles', 'class' => 'secondary'
+                    'label' => 'label-show-removed-vehciles',
+                    'class' => 'secondary',
                 ]
             );
         }
