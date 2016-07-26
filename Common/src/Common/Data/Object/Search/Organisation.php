@@ -2,6 +2,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Util\Escape;
 
 /**
  * Class Organisation
@@ -89,10 +90,10 @@ class Organisation extends InternalSearchAbstract
                     }
                     $url =  $sl->get('Helper\Url')->fromRoute(
                         'operator/business-details',
-                        ['organisation' => $data['orgId'], 'action' => 'business-details']
+                        ['organisation' => $data['orgId']]
                     );
 
-                    return '<a href="' . $url . '">' .$orgName . '</a>';
+                    return '<a href="' . $url . '">' . Escape::html($orgName) . '</a>';
                 }
             ],
             ['title' => 'Trading name', 'name'=> 'tradingName'],

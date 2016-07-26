@@ -4,6 +4,7 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Data\Object\Search\Aggregations\DateRange as DateRange;
+use Common\Util\Escape;
 
 /**
  * Class People

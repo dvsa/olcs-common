@@ -3,6 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Util\Escape;
 
 /**
  * Class Vehicle
@@ -95,7 +96,7 @@ class Vehicle extends InternalSearchAbstract
                         'operator/business-details',
                         ['organisation' => $data['orgId']]
                     );
-                    return '<a href="' . $url . '">' . $data['orgName'] . '</a>';
+                    return '<a href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
                 }
             ],
             [

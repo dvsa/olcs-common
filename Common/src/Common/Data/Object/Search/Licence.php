@@ -2,6 +2,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Util\Escape;
 
 /**
  * Class Licence
@@ -110,7 +111,7 @@ class Licence extends InternalSearchAbstract
                         ['organisation' => $data['orgId']]
                     );
 
-                    return '<a href="' . $url . '">' .$orgName . '</a>';
+                    return '<a href="' . $url . '">' . Escape::html($orgName) . '</a>';
                 }
             ],
             [
