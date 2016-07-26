@@ -25,10 +25,7 @@ class CommunityLicenceIssueNo implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        if ($data[$column['name']] != '0') {
-            return str_pad($data[$column['name']], 5, '0', STR_PAD_LEFT);
-        } else {
-            return str_pad($data[$column['name']], 5, '0', STR_PAD_LEFT) . ' (Office copy)';
-        }
+        return str_pad($data[$column['name']], 5, '0', STR_PAD_LEFT) .
+            ($data[$column['name']] === 0 ? ' (Office copy)' : '');
     }
 }
