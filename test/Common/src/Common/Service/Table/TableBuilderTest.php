@@ -2995,7 +2995,7 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals([['bar']], $sut->getColumns());
     }
 
-g    public function testSetSetting()
+    public function testSetSetting()
     {
         $table = new TableBuilder($this->getMockServiceLocator());
         $table->setSetting('collapseAt', 2);
