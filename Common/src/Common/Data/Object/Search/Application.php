@@ -87,7 +87,7 @@ class Application extends InternalSearchAbstract
                         'operator/business-details',
                         ['organisation' => $data['orgId']]
                     );
-                    return '<a href="' . Escape::html($url) . '">' . $data['orgName'] . '</a>';
+                    return '<a href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
                 }
             ],
             ['title' => 'Authorisation vehicles', 'name'=> 'totAuthVehicles'],
