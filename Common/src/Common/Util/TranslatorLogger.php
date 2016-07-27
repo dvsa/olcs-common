@@ -11,8 +11,10 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 /**
  * Log all the translation used by a Request
  */
-class TranslatorLogger extends Translator
+class TranslatorLogger
 {
+    const CACHE_KEY = 'TranslatorLogger_messagesWritten';
+
     /**
      * @var File
      */
@@ -28,6 +30,7 @@ class TranslatorLogger extends Translator
      */
     private $request;
 
+
     /**
      * TranslatorLogger constructor.
      *
@@ -38,7 +41,11 @@ class TranslatorLogger extends Translator
     {
         $this->logFilePointer = fopen($logFileName, 'a');
         $this->request = $request;
-        fputcsv($this->logFilePointer, ['URL', 'Message', 'English', 'Welsh']);
+
+        if (apcu_exists(self::CACHE_KEY)) {
+            $this->messagesWritten = apcu_fetch(self::CACHE_KEY);
+        }
+        //fputcsv($this->logFilePointer, ['URL', 'Message', 'English', 'Welsh']);
     }
 
     /**
@@ -46,6 +53,7 @@ class TranslatorLogger extends Translator
      */
     public function __destruct()
     {
+        apc_store(self::CACHE_KEY, $this->messagesWritten, 60 * 60 * 72);
         fclose($this->logFilePointer);
     }
 
@@ -58,7 +66,7 @@ class TranslatorLogger extends Translator
      *
      * @return void
      */
-    public function logTranslations($message, $english, $welsh)
+    public function logTranslations($message, $translator)
     {
         if (in_array($message, $this->messagesWritten)) {
             return;
@@ -66,6 +74,9 @@ class TranslatorLogger extends Translator
 
         $this->messagesWritten[] = $message;
 
-        fputcsv($this->logFilePointer, [$this->request->getRequestUri(), $message, $english, $welsh]);
+        fputcsv(
+            $this->logFilePointer,
+            [$this->request->getRequestUri(), $message, $translator->translate($message)]
+        );
     }
 }

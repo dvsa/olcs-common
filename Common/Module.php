@@ -128,7 +128,7 @@ class Module
      */
     protected function setUpTranslator(ServiceLocatorInterface $sm, $eventManager)
     {
-        /** @var \Zend\I18n\Translator\Translator $translator */
+        /** @var \Common\Util\TranslatorDelegator $translator */
         $translator = $sm->get('translator');
 
         $translator->setLocale('en_GB')->setFallbackLocale('en_GB');
@@ -144,19 +144,13 @@ class Module
         $missingTranslationProcessor = $sm->get('Utils\MissingTranslationProcessor');
         $missingTranslationProcessor->attach($eventManager);
 
-        $request = $sm->get('Request');
-        if ($request instanceof \Zend\Http\PhpEnvironment\Request) {
-            /* @var \Zend\Http\PhpEnvironment\Request $request */
-            // Enable the line below to capture all the transations that are performed
-            // ONLY enable on local dev boxes
-            // $translator->enabledLogging(__DIR__ .'/../../translations.csv', $request);
-        }
-
-        // in the future we will need this to capture any translation that have been missed
-        //$translator->addTranslationFile('phparray', __DIR__ . '/config/language/cy_GB.php');
-        //$missingTranslationLogger = $sm->get('Utils\MissingTranslationLogger');
-        //$missingTranslationLogger->setLogName('/tmp/corr.log');
-        //$missingTranslationLogger->attach($events);
+        // Log all messages where the translation is missing, only use these lines in dev environments
+        //$request = $sm->get('Request');
+        //if ($request instanceof \Zend\Http\PhpEnvironment\Request) {
+        //    $missingTranslationProcessor->setTranslationLogger(
+        //        new \Common\Util\TranslatorLogger('/tmp/missing-translations.csv', $request)
+        //    );
+        //}
 
         $translator->enableEventManager();
         $translator->setEventManager($eventManager);
