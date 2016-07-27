@@ -148,7 +148,7 @@ class Module
         //$request = $sm->get('Request');
         //if ($request instanceof \Zend\Http\PhpEnvironment\Request) {
         //    $missingTranslationProcessor->setTranslationLogger(
-        //        new \Common\Util\TranslatorLogger('/tmp/missing-translations.csv', $request)
+        //        new \Dvsa\Olcs\Utils\Translation\TranslatorLogger('/tmp/missing-translations.csv', $request)
         //    );
         //}
 
