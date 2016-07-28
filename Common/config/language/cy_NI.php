@@ -11,9 +11,9 @@ $ni = array_merge(
         'application_previous-history_licence-history_prevHadLicence' => '{WELSH} previously held or applied for a
             goods or public service vehicle operator’s licence in Northern Ireland or GB?',
         'application_previous-history_licence-history_prevBeenAtPi' => '{WELSH} ever attended a Public Inquiry before
-            the DOE or a GB traffic commissioner?',
+            the Dfl or a GB traffic commissioner?',
         'application_previous-history_licence-history_prevBeenDisqualifiedTc' => '{WELSH} Been disqualified from
-            holding or obtaining an operator\'s licence by DOE, or a GB traffic commissioner?',
+            holding or obtaining an operator\'s licence by Dfl, or a GB traffic commissioner?',
         'application_previous-history_licence-history_prevPurchasedAssets' => '{WELSH} Within the last twelve
             months, have you, your company or organisation or your partners or directors purchased the assets or
             shareholding of any company that, to your knowledge, currently holds or has previously held an operator\'s
@@ -23,9 +23,9 @@ $ni = array_merge(
             this application is or has been a director; any parent company if you are a limited company; received any
             penalties or have currently any unspent convictions?',
         'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => '{WELSH} Please add any
-            relevant offences which must be declared to the DOE.',
+            relevant offences which must be declared to the Dfl.',
         'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' => '{WELSH} Please tick to confirm
-            that you are aware that you must tell the DOE immediately of any relevant convictions that occur between the
+            that you are aware that you must tell the Dfl immediately of any relevant convictions that occur between the
             submission of your application and a decision being made on this application.',
     ]
 );
