@@ -1,39 +1,49 @@
 <?php
 
-/**
- * File controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller;
 
 use Dvsa\Olcs\Transfer\Query\Document\Download;
 use Dvsa\Olcs\Transfer\Query\Document\DownloadGuide;
-use Common\Service\Cqrs\Response;
+use Zend\Http\Response;
+use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 
 /**
  * File controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FileController extends \Zend\Mvc\Controller\AbstractActionController
+class FileController extends ZendAbstractActionController
 {
     /**
      * Download a file
      *
-     * @return void
+     * @return Response\Stream|\Zend\View\Model\ViewModel
      */
     public function downloadAction()
     {
         $identifier = $this->params()->fromRoute('identifier');
-        /** @var Response $downloadResponse */
+        $isInline = (bool)$this->params()->fromQuery('inline');
+
         if (is_numeric($identifier)) {
-            $downloadResponse = $this->handleQuery(Download::create(['identifier' => $identifier]));
+            $query = Download::create(
+                [
+                    'identifier' => $identifier,
+                    'isInline' => $isInline,
+                ]
+            );
+
         } else {
             // if not a number then we assume it must be a guide document
-            $file = base64_decode($identifier);
-            $downloadResponse = $this->handleQuery(DownloadGuide::create(['identifier' => $file]));
+            $query = DownloadGuide::create(
+                [
+                    'identifier' => base64_decode($identifier),
+                    'isInline' => $isInline,
+                ]
+            );
         }
+
+        /** @var \Common\Service\Cqrs\Response $downloadResponse */
+        $downloadResponse = $this->handleQuery($query);
 
         if ($downloadResponse->isNotFound()) {
             return $this->notFoundAction();
@@ -43,50 +53,6 @@ class FileController extends \Zend\Mvc\Controller\AbstractActionController
             throw new \RuntimeException('Error downloading file');
         }
 
-        $result = $downloadResponse->getResult();
-
-        $download = !$this->params()->fromQuery('inline', false);
-
-        $response = new \Zend\Http\Response();
-
-        if ($download && $this->forceDownload($result['fileName'])) {
-            $headers = ['Content-Disposition: attachment; filename="' . $result['fileName'] . '"'];
-        }
-
-        $content = base64_decode($result['content']);
-
-        $headers['Content-Length'] = strlen($content);
-
-        $finfo = new \finfo(FILEINFO_MIME_TYPE);
-        $mime = $finfo->buffer($content);
-
-        if ($mime !== null) {
-            $headers['Content-Type'] = $mime;
-        } else {
-            $headers['Content-Type'] = 'application/octet-stream';
-        }
-
-        $response->setStatusCode(200);
-        $response->getHeaders()->addHeaders($headers);
-
-        $response->setContent($content);
-
-        return $response;
-    }
-
-    /**
-     * ???
-     *
-     * @param string $name Filename
-     *
-     * @return bool
-     */
-    protected function forceDownload($name)
-    {
-        if (preg_match('/\.html$/', $name)) {
-            return false;
-        }
-
-        return true;
+        return $downloadResponse->getHttpResponse();
     }
 }

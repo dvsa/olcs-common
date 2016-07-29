@@ -1,110 +1,132 @@
 <?php
 
-/**
- * Test FileControllerTest
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller;
 
 use Common\Controller\FileController;
+use Common\Service\Cqrs\Response;
+use Dvsa\Olcs\Transfer\Query as TransferQry;
+use Mockery as m;
+use Zend\Mvc\Controller\Plugin;
 
 /**
- * Test FileControllerTest
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers Common\Controller\FileController
  */
 class FileControllerTest extends \PHPUnit_Framework_TestCase
 {
-    private $file;
-    private $name;
-    private $response;
+    /** @var  m\MockInterface */
+    private $mockParams;
+
+    /** @var  m\MockInterface */
+    private $sut;
 
     public function setUp()
     {
-        $this->markTestSkipped();
+        $this->mockParams = m::mock(Plugin\Params::class . '[fromRoute, fromQuery]');
+
+        $this->sut = m::mock(FileController::class . '[handleQuery, params, notFoundAction]');
+        $this->sut->shouldReceive('params')->andReturn($this->mockParams);
     }
 
-    public function testDownloadAction()
+    public function testDownloadOk()
     {
-        $this->file = 'ksdhglkagljksdfg';
-        $this->name = 'SomeFile.png';
+        $id = '99999';
 
-        $mockServiceLocator = $this->getMockServiceLocator();
-        $mockPluginManager = $this->getMockPluginManager();
+        $this->mockParams
+            ->shouldReceive('fromRoute')->once()->with('identifier')->andReturn($id)
+            ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(1);
 
-        $controller = new FileController();
-        $controller->setServiceLocator($mockServiceLocator);
-        $controller->setPluginManager($mockPluginManager);
+        $mockResp = m::mock(Response::class)
+            ->shouldReceive('isNotFound')->once()->andReturn(false)
+            ->shouldReceive('isOk')->once()->andReturn(true)
+            ->shouldReceive('getHttpResponse')->once()->andReturn('EXPECTED')
+            ->getMock();
 
-        $this->assertSame($this->getMockResponse(), $controller->downloadAction());
-    }
+        $this->sut
+            ->shouldReceive('handleQuery')
+            ->once()
+            ->andReturnUsing(
+                function ($arg) use ($id, $mockResp) {
+                    static::assertInstanceOf(TransferQry\Document\Download ::class, $arg);
 
-    private function getMockResponse()
-    {
-        if (empty($this->response)) {
-            $this->response = $this->getMock('Zend\Http\Response');
-        }
-        return $this->response;
-    }
+                    /** @var TransferQry\Document\Download $arg */
+                    static::assertEquals($id, $arg->getIdentifier());
+                    static::assertTrue($arg->isInline());
 
-    private function getMockFileUploader()
-    {
-        $mockFileUploader = $this->getMock('\stdClass', array('download'));
-        $mockFileUploader->expects($this->once())
-            ->method('download')
-            ->with($this->file, $this->name)
-            ->will($this->returnValue($this->getMockResponse()));
-
-        return $mockFileUploader;
-    }
-
-    private function getMockServiceLocator()
-    {
-        $mockServiceLocator = $this->getMock('Zend\ServiceManager\ServiceManager', array('get'));
-        $mockServiceLocator->expects($this->any())
-            ->method('get')
-            ->with('FileUploader')
-            ->will($this->returnValue($this->getMockFileUploader()));
-
-        return $mockServiceLocator;
-    }
-
-    private function getMockPluginManager()
-    {
-        $mockPluginManager = $this->getMock('Zend\Mvc\Controller\PluginManager', array('get'));
-        $mockPluginManager->expects($this->any())
-            ->method('get')
-            ->with('params')
-            ->will($this->returnValue($this->getMockParams()));
-
-        return $mockPluginManager;
-    }
-
-    private function getMockParams()
-    {
-        $mockParams = $this->getMock('\stdClass', array('fromRoute', 'fromQuery'));
-        $mockParams->expects($this->any())
-            ->method('fromRoute')
-            ->will(
-                $this->returnValueMap(
-                    array(
-                        array('file', $this->file),
-                        array('name', $this->name)
-                    )
-                )
+                    return $mockResp;
+                }
             );
 
-        $mockParams->expects($this->any())
-            ->method('fromQuery')
-            ->will(
-                $this->returnValueMap(
-                    array(
-                        array('inline', false)
-                    )
-                )
+        static::assertEquals('EXPECTED', $this->sut->downloadAction());
+    }
+
+    public function testDownloadGuideOk()
+    {
+        $identifier = 'ABCDE12345';
+
+        $this->mockParams
+            ->shouldReceive('fromRoute')->once()->with('identifier')->andReturn(base64_encode($identifier))
+            ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(0);
+
+        $mockResp = m::mock(Response::class)
+            ->shouldReceive('isNotFound')->once()->andReturn(false)
+            ->shouldReceive('isOk')->once()->andReturn(true)
+            ->shouldReceive('getHttpResponse')->once()->andReturn('EXPECTED')
+            ->getMock();
+
+        $this->sut
+            ->shouldReceive('handleQuery')
+            ->once()
+            ->andReturnUsing(
+                function ($arg) use ($identifier, $mockResp) {
+                    static::assertInstanceOf(TransferQry\Document\DownloadGuide::class, $arg);
+
+                    /** @var TransferQry\Document\Download $arg */
+                    static::assertEquals($identifier, $arg->getIdentifier());
+                    static::assertFalse($arg->isInline());
+
+                    return $mockResp;
+                }
             );
 
-        return $mockParams;
+        static::assertEquals('EXPECTED', $this->sut->downloadAction());
+    }
+
+    public function testFailNotFound()
+    {
+        $identifier = '8999';
+
+        $this->mockParams
+            ->shouldReceive('fromRoute')->once()->with('identifier')->andReturn($identifier)
+            ->shouldReceive('fromQuery')->andReturn(null);
+
+        $mockResp = m::mock(Response::class)
+            ->shouldReceive('isNotFound')->once()->andReturn(true)
+            ->getMock();
+
+        $this->sut
+            ->shouldReceive('handleQuery')->once()->andReturn($mockResp)
+            ->shouldReceive('notFoundAction')->once()->andReturn('EXPECTED_ERR_NOT_FOUND');
+
+        static::assertEquals('EXPECTED_ERR_NOT_FOUND', $this->sut->downloadAction());
+    }
+
+    public function testFailExceptionErrDownload()
+    {
+        $identifier = '8999';
+
+        $this->mockParams
+            ->shouldReceive('fromRoute')->once()->with('identifier')->andReturn($identifier)
+            ->shouldReceive('fromQuery')->andReturn(null);
+
+        $mockResp = m::mock(Response::class)
+            ->shouldReceive('isNotFound')->once()->andReturn(false)
+            ->shouldReceive('isOk')->once()->andReturn(false)
+            ->getMock();
+
+        $this->sut->shouldReceive('handleQuery')->once()->andReturn($mockResp);
+
+        static::setExpectedException(\RuntimeException::class, 'Error downloading file');
+
+        static::assertEquals('EXPECTED_ERR_NOT_FOUND', $this->sut->downloadAction());
     }
 }
