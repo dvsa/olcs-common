@@ -245,4 +245,6 @@ class RefData
     const ERRU_RESPONSE_SENT = 'erru_case_t_msirs';
     const ERRU_RESPONSE_SENDING_FAILED = 'erru_case_t_msirsf';
     const ERRU_RESPONSE_QUEUED = 'erru_case_t_msirnys';
+
+    const ERROR_FEE_NOT_CREATED = 'AP-FEE-NOT-CREATED';
 }
