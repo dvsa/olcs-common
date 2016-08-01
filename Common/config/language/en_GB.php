@@ -443,7 +443,7 @@ return [
     'application_previous-history_financial-history.finance.liquidation' => 'Has anyone you\'ve named ever been involved with a business that has gone or is going into liquidation, owing money?',
     'application_previous-history_financial-history.finance.receivership' => 'Has anyone you\'ve named ever been involved with a business that has gone or is going into receivership?',
     'application_previous-history_financial-history.insolvencyConfirmation.title' => 'I\'ll tell the Traffic Commissioner immediately about any insolvency proceedings that take place between submitting this application and a decision being made',
-    'application_previous-history_financial-history.insolvencyConfirmation.title.ni' => 'I\'ll tell Dfl Northern Ireland straight away if anyone\'s involved in an insolvency between applying for this licence and a decision being made',
+    'application_previous-history_financial-history.insolvencyConfirmation.title.ni' => 'I\'ll tell DfI Northern Ireland straight away if anyone\'s involved in an insolvency between applying for this licence and a decision being made',
     'application_previous-history_financial-history.insolvencyDetails.placeholder' => 'Min 200 characters',
     'application_previous-history_licence-history-table-licences-applied-add' => 'Add licence',
     'application_previous-history_licence-history-table-licences-applied-delete' => 'Delete licence',
