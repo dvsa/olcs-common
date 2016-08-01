@@ -290,6 +290,7 @@ abstract class AbstractSafetyController extends AbstractController
         }
 
         $form = $this->getSafetyProviderForm()->setData($data);
+        $this->alterExternalHint($form);
 
         if ($mode !== 'add') {
             $form->get('form-actions')->remove('addAnother');
@@ -326,7 +327,44 @@ abstract class AbstractSafetyController extends AbstractController
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
         }
 
+        $this->getServiceLocator()->get('Script')->loadFiles(['safety-inspector-add']);
+
         return $this->render($mode . '_safety', $form);
+    }
+
+    /**
+     * Alter the hint for the isExternal form element
+     *
+     * @param Form $form The add/edit form
+     *
+     * @return void
+     */
+    protected function alterExternalHint(Form $form)
+    {
+        $data = null;
+        if ($this->lva === 'licence') {
+            // load licence data
+            $dto = \Dvsa\Olcs\Transfer\Query\Licence\Licence::create(['id' => $this->getIdentifier()]);
+        } else {
+            // load application/variation data
+            $dto = \Dvsa\Olcs\Transfer\Query\Application\Application::create(['id' => $this->getIdentifier()]);
+        }
+        // load application/variation data
+        $response = $this->handleQuery($dto);
+        if ($response->isOk()) {
+            $data = $response->getResult();
+            $ref = $data['niFlag'] . '-' . $data['goodsOrPsv']['id'];
+            $hints = [
+                'N-' . \Common\RefData::LICENCE_CATEGORY_GOODS_VEHICLE => 'safety-inspector-external-hint-GB-goods',
+                'N-' . \Common\RefData::LICENCE_CATEGORY_PSV => 'safety-inspector-external-hint-GB-psv',
+                'Y-' . \Common\RefData::LICENCE_CATEGORY_GOODS_VEHICLE => 'safety-inspector-external-hint-NI-goods',
+            ];
+
+            // Add a hint to the external radio
+            /** @var \Zend\Form\Element\Radio $ee */
+            $externalElement = $form->get('data')->get('isExternal');
+            $externalElement->setOption('hint', $hints[$ref]);
+        }
     }
 
     /**
