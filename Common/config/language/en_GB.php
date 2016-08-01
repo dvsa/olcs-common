@@ -1910,7 +1910,7 @@ return [
     'page.title.search-operating-centre.index' => 'Find an operating centre',
     'page.title.search-operator.index' => 'Find a vehicle operator',
     'page.title.search-person.index' => 'Find a person',
-    'page.title.search-publication.index' => 'Find a publication entries',
+    'page.title.search-publication.index' => 'Find a publication entry',
     'page.title.search-vehicle-external.index' => 'Find a vehicle',
     'page.title.search-vehicle.index' => 'Find a vehicle',
     'page.title.search.index' => 'Search',
