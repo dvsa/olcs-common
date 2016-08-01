@@ -75,9 +75,11 @@ OLCS.ready(function() {
 
     $('#operator-type').find('[type="radio"]').change(function() {
       if (operatorType.filter(':checked').val() === 'lcat_psv') {
-        $('#typesOfLicenseLink').attr('href', 'https://www.gov.uk/psv-operator-licences');
+        $('#typeOfLicence-hint-goods').hide();
+        $('#typeOfLicence-hint-psv').show();
       } else if (operatorType.filter(':checked').val() === 'lcat_gv') {
-        $('#typesOfLicenseLink').attr('href', 'https://www.gov.uk/being-a-goods-vehicle-operator/types-of-licence');
+        $('#typeOfLicence-hint-psv').hide();
+        $('#typeOfLicence-hint-goods').show();
       }
     });
 

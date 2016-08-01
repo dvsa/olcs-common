@@ -79,7 +79,7 @@ class TypeOfLicence
      *      },
      *      "fieldset-data-group": "licence-type",
      *      "label": "application_type-of-licence_licence-type.data.licenceType",
-     *      "hint": "application_type-of-licence_licence-type.data.licenceType-hint",
+     *      "hint": "markup-typeOfLicence_licenceType-hint",
      *      "value_options": {
      *          {
      *              "value": "ltyp_r",
