@@ -42,7 +42,8 @@ class Person
      *     "label":"application_your-business_people-sub-action-formFirstName",
      *     "label_attributes": {
      *         "aria-label": "Enter first names"
-     *     }
+     *     },
+     *     "error-message": "person_forename-error"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -56,7 +57,8 @@ class Person
      *    "label":"application_your-business_people-sub-action-formSurname",
      *     "label_attributes": {
      *         "aria-label": "Enter last name"
-     *     }
+     *     },
+     *     "error-message": "person_familyName-error"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -92,7 +94,8 @@ class Person
      * @Form\Options({
      *     "label": "application_your-business_people-sub-action-formDateOfBirth",
      *     "create_empty_option": false,
-     *     "render_delimiters": "d m y"
+     *     "render_delimiters": "d m y",
+     *     "error-message": "person_birthDate-error"
      * })
      * @Form\Type("\Zend\Form\Element\DateSelect")
      * @Form\Filter({"name": "DateSelectNullifier"})

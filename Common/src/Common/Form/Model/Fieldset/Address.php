@@ -40,6 +40,7 @@ class Address
      * })
      * @Form\Options({
      *     "label":"Address lines",
+     *     "error-message" : "address_addressLine1-error", 
      *     "label_attributes": {
      *         "aria-label": "Enter address manually. Address line one"
      *     },
@@ -93,7 +94,8 @@ class Address
      *     "short-label":"Town/city",
      *     "label_attributes": {
      *         "aria-label": "Town/city"
-     *     }
+     *     },
+     *     "error-message" : "address_town-error",
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -104,7 +106,8 @@ class Address
     /**
      * @Form\Options({
      *     "label":"Postcode",
-     *     "short-label":"Postcode"
+     *     "short-label":"Postcode",
+     *     "error-message" : "address_postcode-error",
      * })
      * @Form\Type("Text")
      * @Form\AllowEmpty(true)
@@ -122,6 +125,7 @@ class Address
      *     "label_attributes": {
      *         "aria-label": "Choose country"
      *     },
+     *     "error-message" : "address_country-error",
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      *     "help-block": "Please select a category",

@@ -39,7 +39,7 @@ class CommunityLicenceIssueNoTest extends MockeryTestCase
                 [
                     'name' => 'issueNo'
                 ],
-                '0 (Office copy)'
+                '00000 (Office copy)'
             ],
             [
                 [
@@ -48,7 +48,7 @@ class CommunityLicenceIssueNoTest extends MockeryTestCase
                 [
                     'name' => 'issueNo'
                 ],
-                '1'
+                '00001'
             ],
             [
                 [
@@ -57,7 +57,7 @@ class CommunityLicenceIssueNoTest extends MockeryTestCase
                 [
                     'name' => 'foo'
                 ],
-                '0 (Office copy)'
+                '00000 (Office copy)'
             ]
         ];
     }

@@ -32,6 +32,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-bankrupt",
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
+     *     "error-message": "financialHistoryData_bankrupt-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
@@ -63,6 +64,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-liquidation",
      *     "label": "application_previous-history_financial-history.finance.liquidation",
+     *     "error-message": "financialHistoryData_liquidation-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
@@ -94,6 +96,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-receivership",
      *     "label": "application_previous-history_financial-history.finance.receivership",
+     *     "error-message": "financialHistoryData_receivership-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
@@ -125,6 +128,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-administration",
      *     "label": "application_previous-history_financial-history.finance.administration",
+     *     "error-message": "financialHistoryData_administration-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
@@ -160,6 +164,7 @@ class FinancialHistoryData
      *         "class": "question checkbox inline"
      *      },
      *     "label": "application_previous-history_financial-history.finance.disqualified",
+     *     "error-message": "financialHistoryData_disqualified-error",
      *     "value_options": {
      *         {
      *             "value": "Y",
@@ -204,6 +209,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-additional-information",
      *     "label": "short-label-financial-history-additional-information",
+     *     "error-message": "financialHistoryData_insolvencyDetails-error",
      *     "label_attributes": {
      *         "class": "visually-hidden",
      *         "id": "additional-information"

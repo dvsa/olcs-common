@@ -1,23 +1,18 @@
 <?php
 
-/**
- * Response Helper Service Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Helper;
 
+use Common\Service\Helper\ResponseHelperService;
+use Common\Service\Table\TableBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Helper\ResponseHelperService;
 
 /**
- * Response Helper Service Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @covers Common\Service\Helper\ResponseHelperService
  */
 class ResponseHelperServiceTest extends MockeryTestCase
 {
+    /** @var  ResponseHelperService */
     protected $sut;
 
     public function setUp()
@@ -27,35 +22,44 @@ class ResponseHelperServiceTest extends MockeryTestCase
 
     public function testTableToCsv()
     {
-        $response = m::mock('Zend\Http\Response');
-        $table = m::mock('Common\Service\Table\TableBuilder');
+        $body = 'unit_body';
 
-        $table->shouldReceive('setContentType')
-            ->with('csv')
-            ->shouldReceive('removeColumn')
-            ->with('action')
-            ->shouldReceive('render')
-            ->andReturn('body here');
+        $dummyColumns = [
+            [
+                'name' => 'action',
+            ],
+            [
+                'name' => 'action2',
+                'type' => 'ActionLinks',
+            ],
+        ];
 
-        $response->shouldReceive('getHeaders')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('addHeaderLine')
-                ->with('Content-Type', 'text/csv')
-                ->andReturnSelf()
-                ->shouldReceive('addHeaderLine')
-                ->with('Content-Disposition', 'attachment; filename="foo.csv"')
-                ->andReturnSelf()
-                ->shouldReceive('addHeaderLine')
-                ->with('Content-Length', 9)
-                ->andReturnSelf()
-                ->getMock()
-            )
-            ->shouldReceive('setContent')
-            ->with('body here');
+        /** @var TableBuilder $table */
+        $table = m::mock(TableBuilder::class)
+            ->shouldReceive('getColumns')->once()->andReturn($dummyColumns)
+            ->shouldReceive('removeColumn')->once()->with('action')
+            ->shouldReceive('removeColumn')->once()->with('action2')
+            ->shouldReceive('setContentType')->once()->with(TableBuilder::CONTENT_TYPE_CSV)
+            ->shouldReceive('render')->once()->andReturn($body)
+            ->getMock();
+
+        $mockHeaders = m::mock()
+            ->shouldReceive('addHeaderLine')->with('Content-Type', 'text/csv')->andReturnSelf()
+            ->shouldReceive('addHeaderLine')
+            ->once()
+            ->with('Content-Disposition', 'attachment; filename="foo.csv"')
+            ->andReturnSelf()
+            ->shouldReceive('addHeaderLine')->with('Content-Length', 9)->andReturnSelf()
+            ->getMock();
+
+        /** @var \Zend\Http\Response|m\MockInterface $response */
+        $response = m::mock(\Zend\Http\Response::class)
+            ->shouldReceive('getHeaders')->once()->andReturn($mockHeaders)
+            ->shouldReceive('setContent')->with($body)
+            ->getMock();
 
         $result = $this->sut->tableToCsv($response, $table, 'foo');
 
-        $this->assertSame($response, $result);
+        static::assertSame($response, $result);
     }
 }

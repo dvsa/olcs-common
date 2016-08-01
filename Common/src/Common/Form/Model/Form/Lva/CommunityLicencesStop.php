@@ -14,14 +14,14 @@ class CommunityLicencesStop
 {
     /**
      * @Form\Name("data")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesDataStop")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesStop")
      */
     public $data = null;
 
     /**
      * @Form\Attributes({"id":"dates"})
      * @Form\Name("dates")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesDataStopDates")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesStopDates")
      */
     public $dates = null;
 

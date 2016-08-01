@@ -34,7 +34,7 @@ class DocumentDescription implements FormatterInterface
         $url = $urlHelper->fromRoute(
             'getfile',
             [
-                'identifier' => base64_encode($data['documentStoreIdentifier'])
+                'identifier' => $data['id']
             ]
         );
 

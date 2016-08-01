@@ -8,11 +8,13 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\RefData;
 use Common\Service\Entity\CommunityLicEntityService;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Zend\View\Model\ViewModel;
-use Common\Data\Mapper\Lva\CommunityLic as CommunityLicMapper;
-use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLic;
+use Common\Data\Mapper\Lva\CommunityLicence as CommunityLicMapper;
+use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicences;
+use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicence;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\Create as ApplicationCreateCommunityLic;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\Create as LicenceCreateCommunityLic;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
@@ -21,6 +23,7 @@ use Dvsa\Olcs\Transfer\Command\CommunityLic\Reprint as ReprintDto;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Restore as RestoreDto;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Stop as StopDto;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Void as VoidDto;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\EditSuspension as EditSuspensionDto;
 
 /**
  * Shared logic between Community Licences controllers
@@ -147,7 +150,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             'order' => 'DESC'
         ];
 
-        $response = $this->handleQuery(CommunityLic::create($query));
+        $response = $this->handleQuery(CommunityLicences::create($query));
 
         if ($response->isNotFound()) {
             return $this->notFoundAction();
@@ -411,16 +414,15 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         }
         $request = $this->getRequest();
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('Lva\CommunityLicencesStop');
-        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        $form = $this->getStopForm();
         $view = new ViewModel(['form' => $form]);
         $view->setTemplate('partials/form');
-        $this->getServiceLocator()->get('Script')->loadFile('community-licence-stop');
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
             $form->setData($data);
+            $this->alterStopForm($form);
+
             if ($form->isValid()) {
                 $formattedData = $form->getData();
                 $type = $formattedData['data']['type'] === 'N' ? 'withdrawal' : 'suspension';
@@ -446,7 +448,151 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             }
         }
 
+        $this->placeholder()->setPlaceholder('contentTitle', 'Stop community licence');
+        $this->getServiceLocator()->get('Script')->loadFile('community-licence-stop');
         return $this->render($view);
+    }
+
+    /**
+     * Edit action
+     *
+     * @return mixed
+     */
+    public function editAction()
+    {
+        if ($this->isButtonPressed('cancel')) {
+            return $this->redirectToIndex();
+        }
+
+        $request = $this->getRequest();
+
+        $form = $this->getEditSuspensionForm();
+        $view = new ViewModel(['form' => $form]);
+        $view->setTemplate('partials/form');
+
+        if ($request->isPost()) {
+            $data = (array) $request->getPost();
+        } else {
+            $data = $this->getCommunityLicenceData();
+            if ($data instanceof Response) {
+                return $data;
+            }
+        }
+
+        $form->setData($data);
+        $this->alterEditSuspensionForm($form);
+
+        if ($request->isPost() && $form->isValid()) {
+
+            $dtoData = CommunityLicMapper::mapFromForm($data, $this->params('child_id'));
+            $response = $this->sendCommand(EditSuspensionDto::create($dtoData));
+
+            if ($response->isOk()) {
+                $result = $response->getResult();
+                if (isset($result['messages']) && count($result['messages'])) {
+                    $successMessage = $result['messages'][0];
+                    $this->addSuccessMessage($successMessage);
+                }
+                return $this->redirectToIndex();
+            }
+
+            $this->displayErrors($response);
+        }
+        $this->placeholder()->setPlaceholder('contentTitle', 'Community licence suspension details');
+
+        return $this->render($view);
+    }
+
+    /**
+     * Get edit suspension form
+     *
+     * @return Lva\CommunityLicencesStop
+     */
+    protected function getEditSuspensionForm()
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('Lva\CommunityLicencesEditSuspension');
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        return $form;
+    }
+
+    /**
+     * Alter edit suspension form
+     *
+     * @param Lva\CommunityLicencesStop $form form
+     *
+     * @return void
+     */
+    protected function alterEditSuspensionForm($form)
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $status = $form->get('data')->get('status')->getValue();
+
+        if ($status === RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED) {
+            $startDate = $form->get('dates')->get('startDate');
+            $startDate->getDayElement()->setAttribute('readonly', 'readonly');
+            $startDate->getMonthElement()->setAttribute('readonly', 'readonly');
+            $startDate->getYearElement()->setAttribute('readonly', 'readonly');
+            $formHelper->removeValidator(
+                $form,
+                'dates->startDate',
+                \Dvsa\Olcs\Transfer\Validators\DateInFuture::class
+            );
+        }
+    }
+
+    /**
+     * Get community licence data
+     *
+     * @return array
+     */
+    protected function getCommunityLicenceData()
+    {
+        $response = $this->handleQuery(CommunityLicence::create(['id' => $this->params('child_id')]));
+
+        if ($response->isNotFound()) {
+            return $this->notFoundAction();
+        }
+
+        if ($response->isClientError() || $response->isServerError()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+        }
+
+        $result = [];
+        if ($response->isOk()) {
+            $result = CommunityLicMapper::mapFromResult($response->getResult());
+        }
+        return $result;
+    }
+
+    /**
+     * Get stop form
+     *
+     * @return Lva\CommunityLicencesStop
+     */
+    protected function getStopForm()
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('Lva\CommunityLicencesStop');
+        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        return $form;
+    }
+
+    /**
+     * Alter stop form
+     *
+     * @param Lva\CommunityLicencesStop $form form
+     *
+     * @return void
+     */
+    protected function alterStopForm($form)
+    {
+        if ($form->get('data')->get('type')->getValue() === 'N') {
+            $this->getServiceLocator()->get('Helper\Form')
+                ->disableValidation(
+                    $form->getInputFilter()->get('dates')->get('startDate')
+                );
+        }
     }
 
     public function reprintAction()
@@ -479,24 +625,59 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         return $this->render($view);
     }
 
+    /**
+     * Process dto
+     *
+     * @param array  $dto            dto
+     * @param string $successMessage success message
+     * @return Zend\Http\Redirect
+     */
     protected function processDto($dto, $successMessage)
     {
-        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
         /** @var \Common\Service\Cqrs\Response $response */
-        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+        $response = $this->sendCommand($dto);
+
         if ($response->isOk()) {
             $this->addSuccessMessage($successMessage);
             return $this->redirectToIndex();
         }
+
+        $this->displayErrors($response);
+        return $this->redirectToIndex();
+    }
+
+    /**
+     * Send command
+     *
+     * @param array $dto dto
+     *
+     * @return \Common\Service\Cqrs\Response
+     */
+    protected function sendCommand($dto)
+    {
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
+        /** @var \Common\Service\Cqrs\Response $response */
+        return $this->getServiceLocator()->get('CommandService')->send($command);
+    }
+
+    /**
+     * Display errors
+     *
+     * @param \Common\Service\Cqrs\Response $response response
+     *
+     * @return void
+     */
+    protected function displayErrors($response)
+    {
         if ($response->isClientError()) {
             $errors = $response->getResult()['messages'];
             foreach ($errors as $error) {
                 $this->addErrorMessage($error);
             }
         }
+
         if ($response->isServerError()) {
             $this->addErrorMessage('unknown-error');
         }
-        return $this->redirectToIndex();
     }
 }

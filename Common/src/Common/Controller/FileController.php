@@ -8,6 +8,7 @@
 namespace Common\Controller;
 
 use Dvsa\Olcs\Transfer\Query\Document\Download;
+use Dvsa\Olcs\Transfer\Query\Document\DownloadGuide;
 use Common\Service\Cqrs\Response;
 
 /**
@@ -19,13 +20,20 @@ class FileController extends \Zend\Mvc\Controller\AbstractActionController
 {
     /**
      * Download a file
+     *
+     * @return void
      */
     public function downloadAction()
     {
-        $identifier = base64_decode($this->params()->fromRoute('identifier'));
-
+        $identifier = $this->params()->fromRoute('identifier');
         /** @var Response $downloadResponse */
-        $downloadResponse = $this->handleQuery(Download::create(['identifier' => $identifier]));
+        if (is_numeric($identifier)) {
+            $downloadResponse = $this->handleQuery(Download::create(['identifier' => $identifier]));
+        } else {
+            // if not a number then we assume it must be a guide document
+            $file = base64_decode($identifier);
+            $downloadResponse = $this->handleQuery(DownloadGuide::create(['identifier' => $file]));
+        }
 
         if ($downloadResponse->isNotFound()) {
             return $this->notFoundAction();
@@ -66,6 +74,13 @@ class FileController extends \Zend\Mvc\Controller\AbstractActionController
         return $response;
     }
 
+    /**
+     * ???
+     *
+     * @param string $name Filename
+     *
+     * @return bool
+     */
     protected function forceDownload($name)
     {
         if (preg_match('/\.html$/', $name)) {

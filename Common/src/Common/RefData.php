@@ -137,6 +137,15 @@ class RefData
     const BUSREG_STATUS_CANCELLED = 'breg_s_cancelled';
 
     /**
+     * EBSR Status
+     */
+    const EBSR_STATUS_PROCESSED = 'ebsrs_processed';
+    const EBSR_STATUS_PROCESSING = 'ebsrs_processing';
+    const EBSR_STATUS_VALIDATING = 'ebsrs_validating';
+    const EBSR_STATUS_SUBMITTED = 'ebsrs_submitted';
+    const EBSR_STATUS_FAILED = 'ebsrs_failed';
+
+    /**
      * Role permissions
      */
     const PERMISSION_SELFSERVE_PARTNER_ADMIN = 'partner-admin';
@@ -221,4 +230,21 @@ class RefData
     const CONVICTION_CATEGORY_USER_DEFINED = 'conv_c_cat_1144';
 
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
+
+    const COMMUNITY_LICENCE_STATUS_PENDING = 'cl_sts_pending';
+    const COMMUNITY_LICENCE_STATUS_ACTIVE = 'cl_sts_active';
+    const COMMUNITY_LICENCE_STATUS_EXPIRED = 'cl_sts_expired';
+    const COMMUNITY_LICENCE_STATUS_WITHDRAWN = 'cl_sts_withdrawn';
+    const COMMUNITY_LICENCE_STATUS_SUSPENDED = 'cl_sts_suspended';
+    const COMMUNITY_LICENCE_STATUS_VOID = 'cl_sts_annulled';
+    const COMMUNITY_LICENCE_STATUS_RETURNDED = 'cl_sts_returned';
+
+    /**
+     * Erru
+     */
+    const ERRU_RESPONSE_SENT = 'erru_case_t_msirs';
+    const ERRU_RESPONSE_SENDING_FAILED = 'erru_case_t_msirsf';
+    const ERRU_RESPONSE_QUEUED = 'erru_case_t_msirnys';
+
+    const ERROR_FEE_NOT_CREATED = 'AP-FEE-NOT-CREATED';
 }

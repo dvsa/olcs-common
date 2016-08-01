@@ -1524,6 +1524,9 @@ class FormHelperServiceTest extends MockeryTestCase
         $mockTranslator->shouldReceive('translate')
             ->with('current.option.suffix')
             ->andReturn('(current)');
+        $mockTranslator->shouldReceive('translate')
+            ->with('baz')
+            ->andReturn('baz-translated');
 
         $sm->setService('Helper\Translation', $mockTranslator);
 
@@ -1539,7 +1542,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $element->shouldReceive('getValueOptions')
             ->andReturn($options)
             ->shouldReceive('setValueOptions')
-            ->with(['foo' => 'bar', 'bar' => 'baz (current)']);
+            ->with(['foo' => 'bar', 'bar' => 'baz-translated (current)']);
 
         $helper->setCurrentOption($element, $index);
     }

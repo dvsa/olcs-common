@@ -5,6 +5,8 @@
  */
 namespace Common\Service\Table\Formatter;
 
+use Common\Util\Escape;
+
 /**
  * Class OrganisationLink
  *
@@ -27,8 +29,8 @@ class OrganisationLink implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         $urlHelper = $sm->get('Helper\Url');
-        $url = $urlHelper->fromRoute('operator', ['organisation' => $data['organisation']['id']]);
+        $url = $urlHelper->fromRoute('operator/business-details', ['organisation' => $data['organisation']['id']]);
 
-        return '<a href="' . $url . '">' . $data['organisation']['name'] . '</a>';
+        return '<a href="' . $url . '">' . Escape::html($data['organisation']['name']) . '</a>';
     }
 }

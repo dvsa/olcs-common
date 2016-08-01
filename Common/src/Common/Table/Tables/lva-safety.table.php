@@ -11,7 +11,10 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary', 'label' => 'Add safety inspector'),
+                'add' => array(
+                    'class' => 'primary', 
+                    'label' => 'Add safety inspector'
+                ),
             )
         )
     ),
@@ -34,6 +37,7 @@ return array(
             'name' => 'contactDetails->address'
         ),
         array(
+            'title' => 'markup-table-th-remove',
             'type' => 'ActionLinks',
         ),
     )

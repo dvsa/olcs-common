@@ -51,6 +51,8 @@ abstract class AbstractDiscsController extends AbstractController
     ];
 
     /**
+     * Process action Index
+     *
      * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function indexAction()
@@ -87,6 +89,8 @@ abstract class AbstractDiscsController extends AbstractController
     }
 
     /**
+     * Process action Add
+     *
      * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function addAction()
@@ -94,8 +98,12 @@ abstract class AbstractDiscsController extends AbstractController
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
-        $form = $this->getRequestForm();
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        /** @var \Common\Form\Form $form */
+        $form = $formHelper->createForm('Lva\PsvDiscsRequest');
+        $form->get('form-actions')->remove('addAnother');
+
         $formHelper->setFormActionFromRequest($form, $request);
 
         if ($request->isPost()) {
@@ -123,6 +131,13 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->render('add_discs', $form);
     }
 
+    /**
+     * Make request to API to create a disks
+     *
+     * @param array $data Command parameters
+     *
+     * @return \Common\Service\Cqrs\Response
+     */
     protected function processRequestDiscs($data)
     {
         $amount = $data['data']['additionalDiscs'];
@@ -137,11 +152,21 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->handleCommand($commandClass::create($dtoData));
     }
 
+    /**
+     * Process action Replace 
+     * 
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function replaceAction()
     {
         return $this->commonConfirmCommand(self::CMD_REPLACE_DISCS);
     }
 
+    /**
+     * Process action Void
+     * 
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function voidAction()
     {
         return $this->commonConfirmCommand(self::CMD_VOID_DISCS);
@@ -164,24 +189,9 @@ abstract class AbstractDiscsController extends AbstractController
         );
     }
 
-    protected function getRequestForm()
-    {
-        /** @var \Common\Form\Form $form */
-        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\PsvDiscsRequest');
-
-        $form->get('form-actions')->remove('addAnother');
-
-        return $form;
-    }
-
-    protected function getGenericConfirmationForm()
-    {
-        return $this->getServiceLocator()
-            ->get('Helper\Form')
-            ->createFormWithRequest('GenericConfirmation', $this->getRequest());
-    }
-
     /**
+     * Get Table of disks form 
+     * 
      * @return \Common\Form\Form
      */
     protected function getDiscsForm()
@@ -200,6 +210,11 @@ abstract class AbstractDiscsController extends AbstractController
         return $form;
     }
 
+    /**
+     * Get disks table
+     * 
+     * @return TableBuilder
+     */
     protected function getDiscsTable()
     {
         $tableParams = $this->getFilters();
@@ -230,7 +245,11 @@ abstract class AbstractDiscsController extends AbstractController
         ];
     }
 
-
+    /**
+     * Make call to Api to get data of Table of Disks
+     *
+     * @return array|null
+     */
     protected function getTableData()
     {
         if ($this->formTableData === null) {
@@ -257,14 +276,16 @@ abstract class AbstractDiscsController extends AbstractController
         return $this->formTableData;
     }
 
-    protected function getTableResults()
-    {
-        return $this->getTableData()['results'];
-    }
-
+    /**
+     * Format disk number
+     * 
+     * @param string $disc Disk number
+     *
+     * @return string
+     */
     protected function getDiscNumberFromDisc($disc)
     {
-        if (isset($disc['discNo']) && !empty($disc['discNo'])) {
+        if (isset($disc['discNo'])) {
             return $disc['discNo'];
         }
 
@@ -275,6 +296,14 @@ abstract class AbstractDiscsController extends AbstractController
         return '';
     }
 
+    /**
+     * Map errors
+     *
+     * @param Form  $form   Form
+     * @param array $errors Error messages
+     *
+     * @return void
+     */
     protected function mapErrors(Form $form, array $errors)
     {
         if (isset($errors['amount']['LIC-PSVDISC-1'])) {
@@ -302,7 +331,7 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Show confirmation form and execute command by key
      *
-     * @param string $commandKey
+     * @param string $commandKey Name of command
      *
      * @return \Common\View\Model\Section|\Zend\Http\Response
      */
@@ -312,7 +341,13 @@ abstract class AbstractDiscsController extends AbstractController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $this->commonSave($commandKey);
+            //  save
+            $dtoData = [
+                $this->getIdentifierIndex() => $this->getIdentifier(),
+                'ids' => explode(',', $this->params('child_id')),
+            ];
+            $this->commonCommand($commandKey, $dtoData);
+
             return $this->redirect()->toRouteAjax(
                 null,
                 [$this->getIdentifierIndex() => $this->getIdentifier()],
@@ -320,26 +355,20 @@ abstract class AbstractDiscsController extends AbstractController
             );
         }
 
-        $form = $this->getGenericConfirmationForm();
+        $form = $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createFormWithRequest('GenericConfirmation', $this->getRequest());
 
         return $this->render($commandKey . '_discs', $form);
-    }
-
-    protected function commonSave($commandKey)
-    {
-        $dtoData = [
-            $this->getIdentifierIndex() => $this->getIdentifier(),
-            'ids' => explode(',', $this->params('child_id'))
-        ];
-
-        $this->commonCommand($commandKey, $dtoData);
     }
 
     /**
      * Execute command by key with specified parameters
      *
-     * @param string $commandKey
-     * @param array $dtoData
+     * @param string $commandKey Name of command
+     * @param array  $dtoData    Command parameters
+     *
+     * @return void
      */
     protected function commonCommand($commandKey, array $dtoData)
     {
@@ -359,8 +388,8 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Set additional setting for table
      *
-     * @param TableBuilder $table
-     * @param array $filters
+     * @param TableBuilder $table   Table
+     * @param array        $filters Table parameters
      *
      * @return TableBuilder
      */

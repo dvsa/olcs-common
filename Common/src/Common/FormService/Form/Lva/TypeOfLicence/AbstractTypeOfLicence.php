@@ -1,15 +1,10 @@
 <?php
 
-/**
- * Abstract Type Of Licence Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\TypeOfLicence;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
-use Zend\Form\Form;
 use Common\RefData;
+use Zend\Form\Form;
 
 /**
  * Abstract Type Of Licence Form
@@ -21,6 +16,13 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
     const ALLOWED_OPERATOR_LOCATION_NI = 'NI';
     const ALLOWED_OPERATOR_LOCATION_GB = 'GB';
 
+    /**
+     * Get Form
+     *
+     * @param array $params parameters
+     *
+     * @return Form
+     */
     public function getForm($params = [])
     {
         $form = $this->getFormHelper()->createForm('Lva\TypeOfLicence');
@@ -30,18 +32,42 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         return $form;
     }
 
+    /**
+     * Make changed in form 
+     *
+     * @param Form  $form   Form
+     * @param array $params parameters
+     *
+     * @return void
+     */
     protected function alterForm(Form $form, $params = [])
     {
         // no op
     }
 
+    /**
+     * Make action when all elements are locked
+     *
+     * @param Form $form Form
+     *
+     * @return void
+     */
     protected function allElementsLocked(Form $form)
     {
         // no op
     }
 
+    /**
+     * Lock Elements
+     *
+     * @param Form  $form   Form
+     * @param array $params parameters
+     *
+     * @return void
+     */
     protected function lockElements(Form $form, $params = [])
     {
+        /** @var \Zend\Form\Fieldset $typeOfLicenceFieldset */
         $typeOfLicenceFieldset = $form->get('type-of-licence');
 
         // Change labels
@@ -86,21 +112,30 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
     /**
      * Set and lock operator location
      *
-     * @param Form $form
-     * @param string $location
+     * @param Form   $form     Form
+     * @param string $location Operator Location Code
+     *
+     * @return void
      */
     public function setAndLockOperatorLocation($form, $location)
     {
+        /** @var \Zend\Form\Fieldset $typeOfLicenceFieldset */
         $typeOfLicenceFieldset = $form->get('type-of-licence');
+
+        $elmOperLoc = $typeOfLicenceFieldset->get('operator-location');
+
+        $message = null;
         if ($location === self::ALLOWED_OPERATOR_LOCATION_NI) {
-            $typeOfLicenceFieldset->get('operator-location')->setValue('Y');
+            $elmOperLoc->setValue('Y');
             $message = 'alternative-operator-location-lock-message-ni';
+
         } elseif ($location === self::ALLOWED_OPERATOR_LOCATION_GB) {
-            $typeOfLicenceFieldset->get('operator-location')->setValue('N');
+            $elmOperLoc->setValue('N');
             $message = 'alternative-operator-location-lock-message-gb';
         }
+
         $formHelper = $this->getFormHelper();
         $formHelper->disableElement($form, 'type-of-licence->operator-location');
-        $formHelper->lockElement($typeOfLicenceFieldset->get('operator-location'), $message);
+        $formHelper->lockElement($elmOperLoc, $message);
     }
 }

@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Controller\Util;
 
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Zend\Uri\Http as HttpUri;
 use Common\Util\RestClient;
 
@@ -16,7 +15,7 @@ use Common\Util\RestClient;
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
-class RestClientTest extends AbstractHttpControllerTestCase
+class RestClientTest extends \PHPUnit_Framework_TestCase
 {
 
     public $handleReponseMethods = array(

@@ -70,7 +70,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h3>form-errors-missing-details-translated<\/h3>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Cake-translated(\s+)?<\/li>(\s+)?'
@@ -107,6 +107,9 @@ class FormErrorsTest extends MockeryTestCase
             ->with('short-label')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->with('error-message')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
             ->with('fieldset-attributes')
             ->andReturn(null)
             ->shouldReceive('getOption')
@@ -128,7 +131,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h3>form-errors-missing-details-translated<\/h3>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -163,6 +166,9 @@ class FormErrorsTest extends MockeryTestCase
         $mockFoo
             ->shouldReceive('getOption')
             ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('error-message')
             ->andReturn(null)
             ->shouldReceive('getOption')
             ->with('fieldset-attributes')
@@ -186,7 +192,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h3>form-errors-missing-details-translated<\/h3>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -221,6 +227,9 @@ class FormErrorsTest extends MockeryTestCase
         $mockFoo
             ->shouldReceive('getOption')
             ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('error-message')
             ->andReturn(null)
             ->shouldReceive('getOption')
             ->with('fieldset-attributes')
@@ -241,7 +250,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h3>form-errors-missing-details-translated<\/h3>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -278,8 +287,77 @@ class FormErrorsTest extends MockeryTestCase
             ->with('short-label')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->with('error-message')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
             ->with('fieldset-attributes')
             ->andReturn(['id' => 'foo-id']);
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    /**
+     * Test when a form element has been setup with a custom error message
+     */
+    public function testInvokeRenderWithCustomErrorMessage()
+    {
+        $messages = [
+            'foo' => [
+                'foo-error'
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
+            . '<h3>form-errors-missing-details-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?foo-error-translated(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('getOption')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->andReturn(null)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('error-message')
+            ->andReturn('foo-error')
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn(null);
 
         $this->assertRegExp($expected, $sut($form));
     }
@@ -293,7 +371,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h3>form-errors-missing-details-translated<\/h3>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?'
             . '<a href="#foo-id">foo-label-translated\: bar-translated-translated<\/a>(\s+)?'
@@ -334,6 +412,9 @@ class FormErrorsTest extends MockeryTestCase
             ->with('short-label')
             ->andReturn('foo-label')
             ->shouldReceive('getOption')
+            ->with('error-message')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
             ->with('fieldset-attributes')
             ->andReturn(['id' => 'foo-id']);
 
@@ -349,7 +430,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h3>form-errors-missing-details-translated<\/h3>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?foo-label-translated\: bar-translated-translated(\s+)?'
             . '<\/li>(\s+)?'
@@ -388,6 +469,9 @@ class FormErrorsTest extends MockeryTestCase
             ->with('short-label')
             ->andReturn('foo-label')
             ->shouldReceive('getOption')
+            ->with('error-message')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
             ->with('fieldset-attributes')
             ->andReturn(null)
             ->shouldReceive('getOption')
@@ -414,7 +498,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h3>form-errors-missing-details-translated<\/h3>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?bar-translated(\s+)?'
             . '<\/li>(\s+)?'
@@ -475,7 +559,7 @@ class FormErrorsTest extends MockeryTestCase
             ]
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
-            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<h3>form-errors-missing-details-translated<\/h3>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Cake-translated(\s+)?<\/li>(\s+)?'

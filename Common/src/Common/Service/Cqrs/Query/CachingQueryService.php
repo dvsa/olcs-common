@@ -29,8 +29,10 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     private $cacheService;
 
     /**
-     * @param QueryServiceInterface $queryService
-     * @param CacheInterface $cache
+     * Constructor
+     *
+     * @param QueryServiceInterface $queryService Query service
+     * @param CacheInterface        $cache        Cache storage
      */
     public function __construct(QueryServiceInterface $queryService, CacheInterface $cache)
     {
@@ -39,7 +41,10 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     }
 
     /**
-     * @param QueryContainerInterface $query
+     * Send a query to the backend
+     *
+     * @param QueryContainerInterface $query Query container
+     *
      * @return \Common\Service\Cqrs\Response
      */
     public function send(QueryContainerInterface $query)
@@ -56,15 +61,21 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     }
 
     /**
-     * @param QueryContainerInterface $query
-     * @return mixed
+     * Handle a query using a local cache, cache is a class property, therefore cache is valid only for current request
+     *
+     * @param QueryContainerInterface $query Query continer
+     *
+     * @return \Common\Service\Cqrs\Response
      */
     private function handleLocalCache(QueryContainerInterface $query)
     {
         $cacheIdentifier = $query->getCacheIdentifier();
 
         if (!isset($this->localCache[$cacheIdentifier])) {
-            $this->localCache[$cacheIdentifier] = $this->queryService->send($query);
+            $result = $this->queryService->send($query);
+            if ($result->isOk()) {
+                $this->localCache[$cacheIdentifier] = $result;
+            }
         } else {
             $this->logMessage('Get from local cache '. get_class($query->getDto()));
         }
@@ -73,7 +84,10 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     }
 
     /**
-     * @param QueryContainerInterface $query
+     * Handle a query using cache storage, lifetime of cache is from settings
+     *
+     * @param QueryContainerInterface $query Query continer
+     *
      * @return \Common\Service\Cqrs\Response
      */
     private function handlePersistentCache(QueryContainerInterface $query)
@@ -82,7 +96,9 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
 
         if (!$success) {
             $result = $this->queryService->send($query);
-            $this->cacheService->setItem($query->getCacheIdentifier(), $result);
+            if ($result->isOk()) {
+                $this->cacheService->setItem($query->getCacheIdentifier(), $result);
+            }
         } else {
             $this->logMessage('Get from presistent cache '. get_class($query->getDto()));
             $result = $this->cacheService->getItem($query->getCacheIdentifier());
@@ -94,7 +110,9 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     /**
      * Log a message to the injected logger
      *
-     * @param string $message
+     * @param string $message Message to log
+     *
+     * @return void
      */
     private function logMessage($message)
     {

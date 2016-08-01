@@ -3,6 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Util\Escape;
 
 /**
  * Class Licence
@@ -108,17 +109,22 @@ class Cases extends InternalSearchAbstract
             ],
             [
                 'title' => 'Name',
-                'formatter' => function ($data) {
+                'formatter' => function ($data, $column, $sl) {
+                    $urlHelper = $sl->get('Helper\Url');
                     if (!empty($data['tmId'])) {
-                        return '<a href="/transport-manager/' . $data['tmId'] . '">'
-                               . $data['tmForename'] . ' '
-                               . $data['tmFamilyName']
-                               . '</a>';
+                        $url = $urlHelper->fromRoute(
+                            'transport-manager/details',
+                            ['transportManager' => $data['tmId']]
+                        );
+                        $link = Escape::html($data['tmForename'] . ' ' . $data['tmFamilyName']);
+                        return '<a href="' . $url . '">' . $link . '</a>';
 
                     } else {
-
-                        return '<a href="/operator/' . $data['orgId'] . '">' . $data['orgName'] . '</a>';
-
+                        $url = $urlHelper->fromRoute(
+                            'operator/business-details',
+                            ['organisation' => $data['orgId']]
+                        );
+                        return '<a href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
                     }
                 }
             ],

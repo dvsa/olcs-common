@@ -11,7 +11,6 @@ namespace Common\Form\View\Helper;
 use Zend\Form\Element\DateSelect;
 use Zend\Form\Element\DateTimeSelect;
 use Zend\Form\LabelAwareInterface;
-use Zend\Form\View\Helper\FormRow as ZendFormRow;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Button;
@@ -47,6 +46,13 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
     protected $fieldsetLabelWrapper = '<legend>%s</legend>';
     protected $fieldsetHintFormat = "<p class=\"hint\">%s</p>";
 
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
+     * @return FormRow
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $sm = $serviceLocator->getServiceLocator();
@@ -61,7 +67,8 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
     /**
      * Utility form helper that renders a label (if it exists), an element and errors
      *
-     * @param  ZendElementInterface $element
+     * @param ZendElementInterface $element Element
+     *
      * @throws \Zend\Form\Exception\DomainException
      * @return string
      */
@@ -170,6 +177,14 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
         return $markup;
     }
 
+    /**
+     * Render fieldset
+     *
+     * @param ElementInterface $element Element
+     * @param bool             $primary Is primary
+     *
+     * @return string
+     */
     protected function renderFieldset(ElementInterface $element, $primary = true)
     {
         $hintText = $element->getOption('hint');
@@ -230,6 +245,10 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
 
     /**
      * Override the parent some more
+     *
+     * @param ElementInterface $element Element
+     *
+     * @return string
      */
     protected function renderRow(ElementInterface $element)
     {

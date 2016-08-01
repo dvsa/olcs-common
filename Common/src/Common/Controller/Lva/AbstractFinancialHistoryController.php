@@ -80,7 +80,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
      * @param array $data
      * @return Form
      */
-    protected function alterFormForLvaForm(Form $form, $data)
+    protected function alterFormForLva(Form $form, $data)
     {
         if (isset($data['data']['niFlag']) && $data['data']['niFlag'] === 'Y') {
             $form->get('data')

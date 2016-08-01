@@ -1,8 +1,10 @@
 <?php
 
 namespace Common\Data\Object\Search;
+
 use Common\Data\Object\Search\Aggregations\Terms\BusRegStatus;
 use Common\Data\Object\Search\Aggregations\Terms\TrafficArea;
+use Common\Util\Escape;
 
 /**
  * Class BusReg
@@ -68,11 +70,12 @@ class BusReg extends InternalSearchAbstract
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
-                'formatter' => function ($data) {
-
-                    $orgName = $data['orgName'];
-
-                    return '<a href="/operator/' . $data['orgId'] . '">' .$orgName . '</a>';
+                'formatter' => function ($data, $column, $sl) {
+                    $url = $sl->get('Helper\Url')->fromRoute(
+                        'operator/business-details',
+                        ['organisation' => $data['orgId']]
+                    );
+                    return '<a href="' . $url . '">' . Escape::html($data['orgName']) . '</a>';
                 }
             ],
             ['title' => 'Variation number', 'name'=> 'variationNo'],

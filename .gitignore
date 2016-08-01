@@ -17,3 +17,4 @@ config/autoload/local.php
 coverage/
 node_modules
 Common/data
+.vscode

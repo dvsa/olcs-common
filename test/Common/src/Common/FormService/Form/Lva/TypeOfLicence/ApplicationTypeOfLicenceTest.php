@@ -10,17 +10,16 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Form;
 
 /**
- * Application Type Of Licence Test
+ * @covers \Common\FormService\Form\Lva\TypeOfLicence\ApplicationTypeOfLicence
  */
 class ApplicationTypeOfLicenceTest extends MockeryTestCase
 {
-    /**
-     * @var ApplicationTypeOfLicence
-     */
+    /** @var ApplicationTypeOfLicence */
     protected $sut;
 
+    /** @var  m\MockInterface|FormServiceManager */
     protected $fsm;
-
+    /** @var  m\MockInterface|FormHelperService */
     protected $fh;
 
     public function setUp()
@@ -71,7 +70,6 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
             ->once()
             ->getMock();
 
-
         $mockForm = m::mock(Form::class)
             ->shouldReceive('get')
             ->with('type-of-licence')
@@ -80,7 +78,7 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
                 m::mock()
                 ->shouldReceive('get')
                 ->with('operator-location')
-                ->twice()
+                ->once()
                 ->andReturn($mockOperatorLocation)
                 ->getMock()
             )

@@ -3,6 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Util\Escape;
 
 /**
  * Class Address
@@ -85,8 +86,8 @@ class Address extends InternalSearchAbstract
                     $urlHelper  = $serviceLocator->get('Helper\Url');
                     return sprintf(
                         '<a href="%s">%s</a>',
-                        $urlHelper->fromRoute('operator', ['organisation' => $data['orgId']]),
-                        $data['orgName']
+                        $urlHelper->fromRoute('operator/business-details', ['organisation' => $data['orgId']]),
+                        Escape::html($data['orgName'])
                     );
                 }
             ],

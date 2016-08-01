@@ -38,7 +38,7 @@ class PiReportRecord implements FormatterInterface
             return sprintf(
                 '<a href="%s">TM %s</a> (%s)',
                 $sm->get('Helper\Url')->fromRoute(
-                    'transport-manager',
+                    'transport-manager/details',
                     [
                         'transportManager' => $data['pi']['case']['transportManager']['id']
                     ]
