@@ -20,9 +20,7 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 abstract class AbstractPeopleController extends AbstractController implements AdapterAwareInterface
 {
     use Traits\AdapterAwareTrait,
-        Traits\CrudTableTrait {
-        Traits\CrudTableTrait::deleteAction as originalDeleteAction;
-    }
+        Traits\CrudTableTrait;
 
     /**
      * Needed by the Crud Table Trait
@@ -398,22 +396,13 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         $adapter = $this->getAdapter();
         $adapter->loadPeopleData($this->lva, $this->getIdentifier());
+        if (!$adapter->canModify()) {
+            return $this->redirectWithoutPermission();
+        }
         $id = $this->params('child_id');
         $ids = explode(',', $id);
 
         $adapter->delete($ids);
-    }
-
-    /**
-     * Delete person action
-     */
-    public function deleteAction()
-    {
-        if (!$this->getAdapter()->canModify()) {
-            return $this->redirectWithoutPermission();
-        }
-
-        return $this->originalDeleteAction();
     }
 
     private function redirectWithoutPermission()
