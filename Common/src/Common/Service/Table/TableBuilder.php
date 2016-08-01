@@ -433,6 +433,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         foreach ($this->settings['crud']['actions'] as $key => $config) {
             $this->removeAction($key);
         }
+        // remove any actions that are in the table
+        $this->removeColumn('actionLinks');
     }
 
     public function addAction($key, $settings = [])
