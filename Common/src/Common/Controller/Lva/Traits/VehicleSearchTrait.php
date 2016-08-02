@@ -43,7 +43,8 @@ trait VehicleSearchTrait
     /**
      * Get vehicle search form
      *
-     * @param array $headerData
+     * @param array $headerData Data from Api
+     *
      * @return \Zend\Form\FormInterface|null
      */
     protected function getVehcileSearchForm($headerData)
@@ -80,7 +81,8 @@ trait VehicleSearchTrait
     /**
      * Remove unused parameters from query
      *
-     * @param array $query
+     * @param array $query Query
+     *
      * @return array
      */
     protected function removeUnusedParametersFromQuery($query)
@@ -99,8 +101,10 @@ trait VehicleSearchTrait
     /**
      * Add removed vehicles actions
      *
-     * @param array $filters
-     * @param TableBuilder $table
+     * @param array        $filters Query parameters
+     * @param TableBuilder $table   Table builder object
+     *
+     * @return void
      */
     protected function addRemovedVehiclesActions($filters, TableBuilder $table)
     {
@@ -110,6 +114,7 @@ trait VehicleSearchTrait
                 [
                     'label' => 'label-hide-removed-vehciles',
                     'class' => 'secondary',
+                    'requireRows' => true,
                 ]
             );
         } else {
@@ -118,6 +123,7 @@ trait VehicleSearchTrait
                 [
                     'label' => 'label-show-removed-vehciles',
                     'class' => 'secondary',
+                    'requireRows' => true,
                 ]
             );
         }
