@@ -43,8 +43,7 @@ class BusinessDetails
      *     "label_attributes": {
      *         "aria-label": "Enter the nature of your business"
      *     },
-     *     "help-block": "Please select a nature of business",
-     *     "hint":"application-review-business-details-nature-of-business-hint"
+     *     "help-block": "Please select a nature of business"
      * })
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      */
