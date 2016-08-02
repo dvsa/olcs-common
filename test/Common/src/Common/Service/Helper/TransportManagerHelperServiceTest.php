@@ -22,11 +22,21 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 {
     protected $sut;
 
+    protected $tab;
+
+    protected $qs;
+
     protected $sm;
 
     public function setUp()
     {
         $this->sm = Bootstrap::getServiceManager();
+
+        $this->tab = m::mock();
+        $this->sm->setService('TransferAnnotationBuilder', $this->tab);
+
+        $this->qs = m::mock();
+        $this->sm->setService('QueryService', $this->qs);
 
         $this->sut = new TransportManagerHelperService();
 
@@ -154,8 +164,6 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
     public function testGetConvictionsAndPenaltiesTable()
     {
-        $this->markTestSkipped();
-
         $tmId = 111;
 
         $mockTableBuilder = m::mock();
@@ -168,8 +176,6 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
     public function testGetPreviousLicencesTable()
     {
-        $this->markTestSkipped();
-
         $tmId = 111;
 
         $mockTableBuilder = m::mock();
@@ -182,8 +188,6 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
     public function testAlterPreviousHistoryFieldset()
     {
-        $this->markTestSkipped();
-
         $convictionElement = m::mock();
         $licenceElement = m::mock();
         $fieldset = m::mock();
@@ -191,6 +195,22 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         $mockTableBuilder = m::mock();
         $this->sm->setService('Table', $mockTableBuilder);
+
+        $mockResponse = m::mock();
+
+        // Expectations
+        $this->tab->shouldReceive('createQuery')
+            ->with(\Dvsa\Olcs\Transfer\Query\Tm\TransportManager::class)
+            ->andReturn('TmQuery');
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+        $mockResponse->shouldReceive('getResult')
+            ->andReturn(['id' => $tmId, 'removedDate' => null]);
+
+        $this->qs->shouldReceive('send')
+            ->with('TmQuery')
+            ->andReturn($mockResponse);
 
         $fieldset->shouldReceive('get')
             ->with('convictions')
@@ -248,18 +268,24 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
      */
     public function testGetOtherEmploymentData($stubbedData, $expectedData)
     {
-        $this->markTestIncomplete();
-
         $id = 111;
 
         // Mocks
-        $mockTmEmployment = m::mock();
-        $this->sm->setService('Entity\TmEmployment', $mockTmEmployment);
+        $mockResponse = m::mock();
 
         // Expectations
-        $mockTmEmployment->shouldReceive('getEmployment')
-            ->with($id)
+        $this->tab->shouldReceive('createQuery')
+            ->with(\Dvsa\Olcs\Transfer\Query\TmEmployment\GetSingle::class)
+            ->andReturn('TmEmploymentQuery');
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+        $mockResponse->shouldReceive('getResult')
             ->andReturn($stubbedData);
+
+        $this->qs->shouldReceive('send')
+            ->with('TmEmploymentQuery')
+            ->andReturn($mockResponse);
 
         $this->assertEquals($expectedData, $this->sut->getOtherEmploymentData($id));
     }
@@ -354,15 +380,22 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         // Mocks
         $mockTable = m::mock();
-        $mockPrevConviction = m::mock();
 
-        $this->sm->setService('Entity\PreviousConviction', $mockPrevConviction);
+        $mockResponse = m::mock();
 
         // Expectations
-        $mockPrevConviction->shouldReceive('getDataForTransportManager')
-            ->once()
-            ->with(111)
-            ->andReturn($tableData);
+        $this->tab->shouldReceive('createQuery')
+            ->with(\Dvsa\Olcs\Transfer\Query\PreviousConviction\GetList::class)
+            ->andReturn('PreviousConvictionQuery');
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+        $mockResponse->shouldReceive('getResult')
+            ->andReturn(['results' => $tableData]);
+
+        $this->qs->shouldReceive('send')
+            ->with('PreviousConvictionQuery')
+            ->andReturn($mockResponse);
 
         $mockTableBuilder->shouldReceive('prepareTable')
             ->once()
@@ -380,15 +413,22 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         // Mocks
         $mockTable = m::mock();
-        $mockOtherLicence = m::mock();
 
-        $this->sm->setService('Entity\OtherLicence', $mockOtherLicence);
+        $mockResponse = m::mock();
 
         // Expectations
-        $mockOtherLicence->shouldReceive('getDataForTransportManager')
-            ->once()
-            ->with(111)
-            ->andReturn($tableData);
+        $this->tab->shouldReceive('createQuery')
+            ->with(\Dvsa\Olcs\Transfer\Query\OtherLicence\GetList::class)
+            ->andReturn('query');
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+        $mockResponse->shouldReceive('getResult')
+            ->andReturn(['results' => $tableData]);
+
+        $this->qs->shouldReceive('send')
+            ->with('query')
+            ->andReturn($mockResponse);
 
         $mockTableBuilder->shouldReceive('prepareTable')
             ->once()
