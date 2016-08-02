@@ -2534,7 +2534,7 @@ return [
     'summary-overview.button' => 'View my application summary',
     'supply-supporting-evidence' => 'Add your supporting evidence',
     'supply-supporting-evidence-text-1' => 'You haven\'t sent:',
-    'supply-supporting-evidence-text-2' => 'Upload or post these documents to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a>, along with your application reference number.',
+    'supply-supporting-evidence-text-2' => 'Post these documents to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a>, along with your application reference number.',
     'surname' => 'Surname',
     't-auth' => 'T-auth',
     'table_button_more_actions' => 'More actions',
