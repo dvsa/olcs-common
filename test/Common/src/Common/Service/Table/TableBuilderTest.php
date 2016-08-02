@@ -22,6 +22,19 @@ class TableBuilderTest extends MockeryTestCase
 {
 
     /**
+     * @todo the Date formatter now appears to rely on global constants defined
+     * in the Common\Module::modulesLoaded method which can cause this test to
+     * fail :(
+     */
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+        if (!defined('DATE_FORMAT')) {
+            define('DATE_FORMAT', 'd/m/Y');
+        }
+    }
+
+    /**
      * Get Mock Table Builder
      */
     private function getMockTableBuilder($methods = array())
@@ -2825,7 +2838,7 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $table = $this->getMockTableBuilder(array('getConfigFromFile', 'removeAction'));
+        $table = $this->getMockTableBuilder(array('getConfigFromFile', 'removeAction', 'removeColumn'));
 
         $table->expects($this->once())
             ->method('getConfigFromFile')
@@ -2840,6 +2853,10 @@ class TableBuilderTest extends MockeryTestCase
         $table->expects($this->at(1))
             ->method('removeAction')
             ->with('bar');
+
+        $table->expects($this->once())
+            ->method('removeColumn')
+            ->with('actionLinks');
 
         $table->removeActions();
     }
