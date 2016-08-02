@@ -132,7 +132,7 @@ return [
     'address' => 'Address',
     'address_addressLine1-error' => 'Enter the first line of your address',
     'address_town-error' => 'Enter your town/city',
-    'address_postcode-error' => 'Enter your postcode (UK only)',
+    'address_postcode-error' => 'Enter a valid postcode',
     'address_country-error' => 'Enter your country',
     'admin-continuations-checklist-reminders-title' => 'Checklist reminders',
     'admin-continuations-irfo-psv-auth-title' => 'IRFO PSV Authorisations',
