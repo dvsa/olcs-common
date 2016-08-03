@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Response
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Cqrs;
 
 use Zend\Http\Response as HttpResponse;
@@ -16,48 +11,90 @@ use Zend\Http\Response as HttpResponse;
  */
 class Response
 {
+    /** @var  array */
     protected $result;
 
-    /**
-     * @var HttpResponse
-     */
+    /** @var HttpResponse */
     protected $httpResponse;
 
+    /**
+     * Response constructor.
+     *
+     * @param HttpResponse $httpResponse Native Http response
+     */
     public function __construct(HttpResponse $httpResponse)
     {
         $this->httpResponse = $httpResponse;
     }
 
+    /**
+     * Is response has client error
+     * 
+     * @return bool
+     */
     public function isClientError()
     {
         return $this->httpResponse->isClientError();
     }
 
+    /**
+     * Is not found
+     * 
+     * @return bool
+     */
     public function isNotFound()
     {
         return $this->httpResponse->isNotFound();
     }
 
+    /**
+     * Is Success
+     * 
+     * @return bool
+     */
     public function isOk()
     {
         return $this->httpResponse->isSuccess();
     }
 
+    /**
+     * Is response has server error
+     * 
+     * @return bool
+     */
     public function isServerError()
     {
         return $this->httpResponse->isServerError();
     }
 
+    /**
+     * Set result
+     * 
+     * @param mixed $result Result
+     *
+     * @return $this
+     */
     public function setResult($result)
     {
         $this->result = $result;
+        return $this;
     }
 
+    /**
+     * Returns body of native response
+     *
+     * @return string
+     */
     public function getBody()
     {
         return $this->httpResponse->getBody();
     }
 
+    /**
+     * Returns result
+     *
+     * @return array|mixed
+     */
     public function getResult()
     {
         if ($this->result === null) {
@@ -75,6 +112,16 @@ class Response
     public function getStatusCode()
     {
         return $this->httpResponse->getStatusCode();
+    }
+
+    /**
+     * Return navite http response object
+     * 
+     * @return HttpResponse
+     */
+    public function getHttpResponse()
+    {
+        return $this->httpResponse;
     }
 
     /**

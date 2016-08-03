@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Query Service Factory Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Service\Cqrs\Query;
 
 use Common\Service\Cqrs\Query\QueryService;
@@ -13,6 +8,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Http\Client\Adapter\Curl;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * Query Service Factory Test
@@ -46,8 +42,9 @@ class QueryServiceFactoryTest extends MockeryTestCase
 
         $router = m::mock(\Zend\Mvc\Router\RouteInterface::class);
         $request = m::mock(\Zend\Http\Request::class);
-        $flashMessenger = m::mock(\Common\Service\Helper\FlashMessengerService::class);
+        $flashMessenger = m::mock(\Common\Service\Helper\FlashMessengerHelperService::class);
 
+        /** @var ServiceManager|m\MockInterface $sm */
         $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get')->with('Config')->andReturn($config);
         $sm->shouldReceive('get')->with('CqrsRequest')->andReturn($request);

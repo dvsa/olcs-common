@@ -7,6 +7,7 @@ use Common\Controller\Lva\Traits\VehicleSearchTrait;
 use Common\Data\Mapper;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
+use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateGoodsVehicle as ApplicationUpdateGoodsVehicle;
@@ -16,10 +17,8 @@ use Dvsa\Olcs\Transfer\Command\Licence\UpdateVehicles as LicUpdateVehicles;
 use Dvsa\Olcs\Transfer\Command\Vehicle\DeleteLicenceVehicle as LicenceDeleteLicenceVehicle;
 use Dvsa\Olcs\Transfer\Command\Vehicle\ReprintDisc;
 use Dvsa\Olcs\Transfer\Command\Vehicle\UpdateGoodsVehicle as LicenceUpdateGoodsVehicle;
-use Dvsa\Olcs\Transfer\Query\Application\GoodsVehicles as ApplicationGoodsVehicles;
-use Dvsa\Olcs\Transfer\Query\Licence\GoodsVehicles as LicenceGoodsVehicles;
+use Dvsa\Olcs\Transfer\Query as TransferQry;
 use Dvsa\Olcs\Transfer\Query\LicenceVehicle\LicenceVehicle;
-use Dvsa\Olcs\Transfer\Query\Variation\GoodsVehicles as VariationGoodsVehicles;
 use Zend\Form\Element\Checkbox;
 use Zend\Form\FormInterface;
 
@@ -45,9 +44,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected $totalVehicles = [];
 
     protected $loadDataMap = [
-        'licence' => LicenceGoodsVehicles::class,
-        'variation' => VariationGoodsVehicles::class,
-        'application' => ApplicationGoodsVehicles::class
+        'licence' => TransferQry\Licence\GoodsVehicles::class,
+        'variation' => TransferQry\Variation\GoodsVehicles::class,
+        'application' => TransferQry\Application\GoodsVehicles::class,
     ];
 
     protected $createVehicleMap = [
