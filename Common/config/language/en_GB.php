@@ -2707,7 +2707,7 @@ return [
     'transport-manager.previouslicences.table.lic-no' => 'Licence number',
     'transport-manager.processing.notes.add.title' => 'Add note',
     'transport-manager.processing.notes.modify.title' => 'Edit note',
-    'transport-manager.responsibilities.additional-information' => 'If you will spend less than the <a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/369246/tm1g-guidance-on-adding-a-transport-manager-to-a-licence.pdf " target="black" rel="external">recommended amount of time</a> on your Transport Manager duties for this licence, you need to tell us why. Your explanation should include details of driver, vehicle and licence administration, management and operations, compliance systems, and any relevant knowledge and skills you possess. If you have a document prepared you can upload it below.',
+    'transport-manager.responsibilities.additional-information' => 'If you will spend less than the <a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/369246/tm1g-guidance-on-adding-a-transport-manager-to-a-licence.pdf " target="black" rel="external">recommended amount of time</a> on your Transport Manager duties for the relevant licence(s) you need to tell us why. Your explanation should include details of driver, vehicle and licence administration, management and operations, compliance systems, and any relevant knowledge and skills you possess. If you have a document prepared you can upload it below.',
     'transport-manager.responsibilities.additional-information.title' => 'Additional information',
     'transport-manager.responsibilities.application-id' => 'Application ID',
     'transport-manager.responsibilities.cancel' => 'Cancel',
