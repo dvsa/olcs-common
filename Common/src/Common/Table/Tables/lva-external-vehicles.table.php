@@ -20,7 +20,7 @@ return array(
                 ),
                 'delete' => array(
                     'label' => 'vehicle_table_action.delete.label',
-                    'class' => 'secondary',
+                    'class' => ' more-actions__item',
                     'requireRows' => true
                 ),
                 // @note other actions may be added dynamically,

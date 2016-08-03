@@ -113,7 +113,7 @@ trait VehicleSearchTrait
                 'hide-removed-vehicles',
                 [
                     'label' => 'label-hide-removed-vehciles',
-                    'class' => 'secondary',
+                    'class' => ' more-actions__item',
                     'requireRows' => true,
                 ]
             );
@@ -122,7 +122,7 @@ trait VehicleSearchTrait
                 'show-removed-vehicles',
                 [
                     'label' => 'label-show-removed-vehciles',
-                    'class' => 'secondary',
+                    'class' => ' more-actions__item',
                     'requireRows' => true,
                 ]
             );
