@@ -37,13 +37,11 @@ OLCS.ready(function() {
         },
         // operator location is *always* shown
         "operator-location": true,
-
         // operator type only shown when location has been completed
         // and value is great britain
         "operator-type": function() {
           return niFlag.filter(":checked").val() === "N";
         },
-
         // licence type is nested; the first rule defines when to show the fieldset
         // (in this case if the licence is NI or the user has chosen an operator type)
         "licence-type": {
@@ -55,7 +53,6 @@ OLCS.ready(function() {
               niFlag.filter(":checked").length && operatorType.filter(":checked").length
             );
           },
-
           // this rule relates to an element within the fieldset
           "licence-type=ltyp_sr": function() {
             return operatorType.filter(":checked").val() === "lcat_psv";
@@ -68,7 +65,6 @@ OLCS.ready(function() {
         if (F("operator-type").is(":hidden")) {
           operatorType.first().prop("checked", true);
         }
-
         // ditto licence type; what we set here doesn't matter since as soon as the user
         // interacts with the form again we clear these fields
         if (F("licence-type").is(":hidden")) {
@@ -76,6 +72,17 @@ OLCS.ready(function() {
         }
       }
     });
+
+    $('#operator-type').find('[type="radio"]').change(function() {
+      if (operatorType.filter(':checked').val() === 'lcat_psv') {
+        $('#typeOfLicence-hint-goods').hide();
+        $('#typeOfLicence-hint-psv').show();
+      } else if (operatorType.filter(':checked').val() === 'lcat_gv') {
+        $('#typeOfLicence-hint-psv').hide();
+        $('#typeOfLicence-hint-goods').show();
+      }
+    });
+
   }
 
   setupCascade();
