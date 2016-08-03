@@ -219,11 +219,13 @@ class TransportManagerHelperService extends AbstractHelperService
 
     public function getOtherEmploymentData($id)
     {
-        $query = $this->getServiceLocator()->get('TransferAnnotationBuilder')
-            ->createQuery(\Dvsa\Olcs\Transfer\Query\TmEmployment\GetSingle::create(['id' => $id]));
-        /* @var $response \Common\Service\Cqrs\Response */
-        $response = $this->getServiceLocator()->get('QueryService')->send($query);
-        $employment = $response->getResult();
+        $employment = $this->handleQuery(
+            \Dvsa\Olcs\Transfer\Query\TmEmployment\GetSingle::create(
+                [
+                    'id' => $id
+                ]
+            )
+        );
 
         $data = [
             'tm-employment-details' => [

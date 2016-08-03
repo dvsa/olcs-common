@@ -709,8 +709,6 @@ return array(
                 'Common\BusinessService\Service\Lva\DeleteOtherLicence',
             'Lva\DeletePreviousConviction' =>
                 'Common\BusinessService\Service\Lva\DeletePreviousConviction',
-            'Lva\TransferVehicles' =>
-                'Common\BusinessService\Service\Lva\TransferVehicles',
             'Lva\DeleteOtherEmployment' =>
                 'Common\BusinessService\Service\Lva\DeleteOtherEmployment',
             'Lva\Address' =>
