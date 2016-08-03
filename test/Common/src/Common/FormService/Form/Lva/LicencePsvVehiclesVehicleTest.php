@@ -26,7 +26,6 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
     public function setUp()
     {
-        $this->markTestSkipped();
         $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
         $this->formService = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 
@@ -40,7 +39,8 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
         $mockRequest = m::mock();
         $params = [
             'mode' => 'add',
-            'action' => 'small-add'
+            'location' => 'internal',
+            'isRemoved' => false,
         ];
 
         // Mocks
@@ -68,7 +68,24 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
         // <<-- START SUT::alterForm
 
+        $mockLicenceVehicle = m::mock();
+        $mockSpecifiedDate = m::mock();
+
+        $mockForm->shouldReceive('get')
+            ->with('licence-vehicle')
+            ->andReturn($mockLicenceVehicle);
+
+        $mockLicenceVehicle->shouldReceive('get')
+            ->with('specifiedDate')
+            ->andReturn($mockSpecifiedDate);
+
+        $this->formHelper->shouldReceive('enableDateElement')
+            ->with($mockSpecifiedDate);
+
         // <<-- END SUT::alterForm
+
+        $this->formHelper->shouldReceive('remove')
+            ->with($mockForm, 'vehicle-history-table');
 
         $form = $this->sut->getForm($mockRequest, $params);
 
@@ -80,7 +97,8 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
         $mockRequest = m::mock();
         $params = [
             'mode' => 'edit',
-            'action' => 'small-add'
+            'location' => 'internal',
+            'isRemoved' => false,
         ];
 
         // Mocks
@@ -108,22 +126,111 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
         // <<-- START SUT::alterForm
 
+        $mockLicenceVehicle = m::mock();
+        $mockSpecifiedDate = m::mock();
+
         $mockForm->shouldReceive('get')
             ->with('licence-vehicle')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('get')
-                ->with('specifiedDate')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('setShouldCreateEmptyOption')
-                    ->with(false)
-                    ->getMock()
-                )
-                ->getMock()
-            );
+            ->andReturn($mockLicenceVehicle);
+
+        $mockSpecifiedDate->shouldReceive('setShouldCreateEmptyOption')
+            ->with(false)
+            ->once();
+
+        $mockLicenceVehicle->shouldReceive('get')
+            ->with('specifiedDate')
+            ->andReturn($mockSpecifiedDate);
+
+        $this->formHelper->shouldReceive('enableDateElement')
+            ->with($mockSpecifiedDate);
 
         // <<-- END SUT::alterForm
+
+        $form = $this->sut->getForm($mockRequest, $params);
+
+        $this->assertSame($mockForm, $form);
+    }
+
+    public function testGetFormRemoved()
+    {
+        $mockRequest = m::mock();
+        $params = [
+            'mode' => 'edit',
+            'location' => 'internal',
+            'isRemoved' => true,
+        ];
+
+        // Mocks
+        $mockForm = m::mock();
+        $mockPsvVehiclesVehicle = m::mock('\Common\FormService\FormServiceInterface');
+        $mockGenericVehiclesVehicle = m::mock('\Common\FormService\FormServiceInterface');
+
+        $this->formService->setService('lva-psv-vehicles-vehicle', $mockPsvVehiclesVehicle);
+        $this->formService->setService('lva-generic-vehicles-vehicle', $mockGenericVehiclesVehicle);
+
+        // Expectations
+        $this->formHelper->shouldReceive('createFormWithRequest')
+            ->with('Lva\PsvVehiclesVehicle', $mockRequest)
+            ->andReturn($mockForm)
+            ->shouldReceive('remove')
+            ->with($mockForm, 'licence-vehicle->discNo');
+
+        $mockPsvVehiclesVehicle->shouldReceive('alterForm')
+            ->once()
+            ->with($mockForm);
+
+        $mockGenericVehiclesVehicle->shouldReceive('alterForm')
+            ->once()
+            ->with($mockForm, $params);
+
+        // <<-- START SUT::alterForm
+
+        $mockLicenceVehicle = m::mock();
+        $mockSpecifiedDate = m::mock();
+        $mockRemovalDate = m::mock();
+
+        $mockForm->shouldReceive('get')
+            ->with('licence-vehicle')
+            ->andReturn($mockLicenceVehicle);
+
+        $mockSpecifiedDate->shouldReceive('setShouldCreateEmptyOption')
+            ->with(false)
+            ->once();
+
+        $mockRemovalDate->shouldReceive('setShouldCreateEmptyOption')
+            ->with(false)
+            ->once();
+
+        $mockLicenceVehicle->shouldReceive('get')
+            ->with('specifiedDate')
+            ->andReturn($mockSpecifiedDate)
+            ->shouldReceive('get')
+            ->with('removalDate')
+            ->andReturn($mockRemovalDate);
+
+        $this->formHelper->shouldReceive('enableDateElement')
+            ->with($mockSpecifiedDate);
+
+        // <<-- END SUT::alterForm
+
+        $mockData = m::mock();
+
+        $mockForm->shouldReceive('get')
+            ->with('data')
+            ->andReturn($mockData);
+
+        $mockData->shouldReceive('has')
+            ->with('makeModel')
+            ->andReturn(true);
+
+        $this->formHelper->shouldReceive('disableElement')
+            ->with($mockForm, 'data->vrm')
+            ->shouldReceive('disableElement')
+            ->with($mockForm, 'data->makeModel')
+            ->shouldReceive('disableElements')
+            ->with($mockLicenceVehicle)
+            ->shouldReceive('enableDateElement')
+            ->with($mockRemovalDate);
 
         $form = $this->sut->getForm($mockRequest, $params);
 
