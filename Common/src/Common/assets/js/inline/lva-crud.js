@@ -38,5 +38,7 @@ OLCS.ready(function() {
     }
   });
 
-  OLCS.crudTableHandler();
+  // Disabled in response to OLCS-13403
+  // OLCS.crudTableHandler();
+
 });
