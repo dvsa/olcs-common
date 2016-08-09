@@ -205,7 +205,6 @@ return [
     'selfserve-dashboard-topnav-bus-registrations' => 'Cofrestriadau Bws',
     'selfserve-dashboard-topnav-my-account' => 'Fy nghyfrif',
     'selfserve-fees-table-fee-description' => 'Disgrifiad',
-    'selfserve-fees-table-fee-licence-number' => 'Rhif y drwydded',
     'selfserve-fees-table-fee-licence-outstanding' => 'Dros ben',
     'sidebar-variation-being-an-operator' => 'Bod yn weithredwr cerbyd nwyddau',
     'sidebar-variation-financial-evidence' => 'Sut mae darparu tystiolaeth ariannol',
