@@ -6,8 +6,7 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Options({
- *     "label": "application_operating-centres_authorisation.data",
- *     "hint": "application_operating-centres_authorisation.data.hint"
+ *     "label": "application_operating-centres_authorisation.data"
  * })
  */
 class OperatingCentres
