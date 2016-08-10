@@ -1935,7 +1935,7 @@ return [
     'pay-fees.created' => 'Created',
     'pay-fees.description' => 'Description',
     'pay-fees.fee-no' => 'Fee No.',
-    'pay-fees.lic-no' => 'Licence number',
+    'pay-fees.reference' => 'Reference',
     'pay-fees.outstanding' => 'Outstanding',
     'pay-fees.success.amount' => 'Amount received',
     'pay-fees.success.header' => 'Details',

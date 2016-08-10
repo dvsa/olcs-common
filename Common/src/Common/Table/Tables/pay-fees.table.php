@@ -10,23 +10,14 @@ return array(
     ),
     'columns' => array(
         array(
-            'title' => 'pay-fees.fee-no',
-            'name' => 'id',
-        ),
-        array(
             'title' => 'pay-fees.description',
             'name' => 'description',
         ),
         array(
-            'title' => 'pay-fees.lic-no',
+            'title' => 'pay-fees.reference',
             'formatter' => function ($row, $col, $sm) {
                 return $row['licence']['licNo'];
             },
-        ),
-        array(
-            'title' => 'pay-fees.created',
-            'name' => 'invoicedDate',
-            'formatter' => 'Date',
         ),
         array(
             'title' => 'pay-fees.amount',
@@ -46,7 +37,7 @@ return array(
             'type' => 'th',
             'content' => 'dashboard-fees-total',
             'formatter' => 'Translate',
-            'colspan' => 5,
+            'colspan' => 3,
         ),
         array(
             'type' => 'th',
