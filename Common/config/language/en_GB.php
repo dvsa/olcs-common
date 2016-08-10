@@ -597,7 +597,7 @@ return [
     'application_your-business_business-type.consultant-name.label' => 'Transport consultant name',
     'application_your-business_business-type.contact-details.business-phone' => 'Business telephone number',
     'application_your-business_business-type.contact-details.email' => 'Email address',
-    'application_your-business_business-type.contact-details.fax-phone' => 'Fax number',
+    'application_your-business_business-type.contact-details.fax-phone' => 'Fax number (optional)',
     'application_your-business_business-type.contact-details.hint' => 'Please enter at least one telephone number',
     'application_your-business_business-type.contact-details.home-phone' => 'Home telephone number',
     'application_your-business_business-type.contact-details.label' => 'Contact details',
