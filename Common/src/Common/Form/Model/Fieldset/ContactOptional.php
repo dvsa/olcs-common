@@ -120,7 +120,7 @@ class ContactOptional
     /**
      * @Form\Attributes({"class":"medium"})
      * @Form\Options({
-     *     "label": "Fax telephone No."
+     *     "label": "Fax telephone No. (optional)"
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
