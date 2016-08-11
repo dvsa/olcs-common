@@ -172,7 +172,6 @@ return [
     'partnership-form-label-isllp' => 'PAC?',
     'pay-fees.back-to-home' => 'Yn ôl i’r hafan',
     'pay-fees.created' => 'Crëwyd',
-    'pay-fees.lic-no' => 'Rhif y drwydded',
     'pi_t_other' => 'Arall',
     'privacy-and-cookies-title' => 'Preifatrwydd a Chwcis',
     'public-authority' => 'Awdurdod Cyhoeddus',
