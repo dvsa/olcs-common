@@ -127,4 +127,34 @@ class AbstractOperatingCentresTest extends MockeryTestCase
 
         $this->sut->alterForm($mockForm, $params);
     }
+
+    public function testAlterFormForPsvLicences()
+    {
+        $dataOptions = ['hint' => 'foo'];
+        $dataOptionsModified = ['hint' => 'foo.psv'];
+        $mockForm = m::mock(\Common\Form\Form::class)
+            ->shouldReceive('get')
+            ->with('data')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('getOptions')
+                    ->andReturn($dataOptions)
+                    ->once()
+                    ->shouldReceive('setOptions')
+                    ->with($dataOptionsModified)
+                    ->once()
+                    ->getMock()
+            )
+            ->getMock();
+
+        $mockFormHelper = m::mock()
+            ->shouldReceive('removeFieldList')
+            ->with($mockForm, 'data', ['totAuthTrailers'])
+            ->once()
+            ->getMock();
+
+        $this->sut->shouldReceive('getFormHelper')->andReturn($mockFormHelper);
+
+        $this->sut->alterFormForPsvLicences($mockForm, []);
+    }
 }
