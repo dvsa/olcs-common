@@ -36,7 +36,8 @@ OLCS.ready(function() {
     return;
   }
 
-  // Disabled in response to OLCS-13403
-  // OLCS.crudTableHandler();
+  OLCS.crudTableHandler({
+      selector : '.trigger-modal'
+  });
 
 });
