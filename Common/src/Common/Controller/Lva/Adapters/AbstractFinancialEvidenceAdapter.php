@@ -1,14 +1,8 @@
 <?php
 
-/**
- * Abstract Financial Evidence Adapter
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Interfaces\FinancialEvidenceAdapterInterface;
-use Common\Service\Entity\LicenceEntityService as Licence;
 
 /**
  * Abstract Financial Evidence Adapter
@@ -19,27 +13,49 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
     FinancialEvidenceAdapterInterface
 {
     /**
-     * @param int $id
+     * Get form data by Id
+     *
+     * @param int $id Lva object identifier
+     *
      * @return array
      */
     abstract public function getFormData($id);
 
     /**
-     * @param int $id
+     * Get documents from application data
+     *
+     * @param int $id Lva object identifier
+     *
      * @return array
      */
     abstract public function getDocuments($id);
 
     /**
-     * @param array $file
-     * @param int $id
+     * Prepare Meta data for uploading file
+     *
+     * @param array $file File post data
+     * @param int   $id   Lva object identifier
+     *
      * @return array
      */
     abstract public function getUploadMetaData($file, $id);
 
     /**
-     * @param Common\Form\Form
+     * Alter Form
+     *
+     * @param \Common\Form\Form $form Form
+     *
      * @return void
      */
     abstract public function alterFormForLva($form);
+
+    /**
+     * Get Lva subject data
+     *
+     * @param int  $applicationId Lva object identifier
+     * @param bool $noCache       True if need fresh data
+     *
+     * @return array
+     */
+    abstract public function getData($applicationId, $noCache = false);
 }
