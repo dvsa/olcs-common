@@ -30,7 +30,7 @@ return array(
                 'options' => array(
                     'route' => '/transport-manager-application/review/:id[/]',
                     'defaults' => array(
-                        'controller' => 'TransportManagerReview',
+                        'controller' => Common\Controller\TransportManagerReviewController::class,
                         'action' => 'index'
                     )
                 )
@@ -104,10 +104,10 @@ return array(
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
             ),
             'LvaApplication/FinancialEvidence' => array(
-                'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
+                Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator::class,
             ),
             'LvaVariation/FinancialEvidence' => array(
-                'Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator'
+                Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator::class,
             ),
             'LvaLicence/People' => array(
                 'Common\Controller\Lva\Delegators\LicencePeopleDelegator'
@@ -134,7 +134,8 @@ return array(
         'invokables' => [
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
-            'TransportManagerReview' => 'Common\Controller\TransportManagerReviewController',
+            Common\Controller\TransportManagerReviewController::class =>
+                Common\Controller\TransportManagerReviewController::class,
             \Common\Controller\ErrorController::class => \Common\Controller\ErrorController::class,
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
         ],
@@ -737,6 +738,6 @@ return array(
         ]
     ],
     'translator' => [
-        'replacements' => include_once(__DIR__ . '/language/replacements.php')
+        'replacements' => include(__DIR__ . '/language/replacements.php'),
     ],
 );
