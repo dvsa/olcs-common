@@ -18,12 +18,18 @@ class RequestFactoryTest extends TestCase
     {
         $cookies = [];
 
+        $mockLogProcessor = m::mock();
+        $mockLogProcessor->shouldReceive('get')->with(\Olcs\Logging\Log\Processor\RequestId::class)->once()->andReturn(
+            m::mock()->shouldReceive('getIdentifier')->with()->once()->andReturn('IDENT1')->getMock()
+        );
+
         $mockRequest = m::mock(Request::class);
         $mockRequest->shouldReceive('getCookie')->andReturn($cookies);
 
         $mockSl = m::mock(ServiceLocatorInterface::class);
         $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
         $mockSl->shouldReceive('get')->with('Request')->andReturn($mockRequest);
+        $mockSl->shouldReceive('get')->with('LogProcessorManager')->andReturn($mockLogProcessor);
         $sut = new RequestFactory();
         $service = $sut->createService($mockSl);
 
@@ -31,7 +37,8 @@ class RequestFactoryTest extends TestCase
         $this->assertEquals(
             [
                 'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
+                'X-Correlation-Id' => 'IDENT1',
             ],
             $service->getHeaders()->toArray()
         );
@@ -41,12 +48,18 @@ class RequestFactoryTest extends TestCase
     {
         $cookies = ['secureToken' => 'myToken'];
 
+        $mockLogProcessor = m::mock();
+        $mockLogProcessor->shouldReceive('get')->with(\Olcs\Logging\Log\Processor\RequestId::class)->once()->andReturn(
+            m::mock()->shouldReceive('getIdentifier')->with()->once()->andReturn('IDENT1')->getMock()
+        );
+
         $mockRequest = m::mock(Request::class);
         $mockRequest->shouldReceive('getCookie')->andReturn($cookies);
 
         $mockSl = m::mock(ServiceLocatorInterface::class);
         $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
         $mockSl->shouldReceive('get')->with('Request')->andReturn($mockRequest);
+        $mockSl->shouldReceive('get')->with('LogProcessorManager')->andReturn($mockLogProcessor);
         $sut = new RequestFactory();
         $service = $sut->createService($mockSl);
 
@@ -55,7 +68,8 @@ class RequestFactoryTest extends TestCase
             [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-                'Cookie' => 'secureToken=myToken'
+                'Cookie' => 'secureToken=myToken',
+                'X-Correlation-Id' => 'IDENT1',
             ],
             $service->getHeaders()->toArray()
         );
