@@ -7,6 +7,7 @@
  */
 namespace Common\Form\View\Helper;
 
+use Zend\Form\Element\Hidden;
 use Zend\Form\FormInterface as ZendFormInterface;
 use Zend\Form\FieldsetInterface;
 
@@ -51,6 +52,19 @@ class Form extends \Zend\Form\View\Helper\Form
                 if (!$element->count() && !$keepEmptyFieldset) {
                     continue;
                 }
+
+                $innerElements = $element->getElements();
+                $allHidden = true;
+                foreach ($innerElements as $innerElement) {
+                    if (!$innerElement instanceof Hidden) {
+                        $allHidden = false;
+                        break;
+                    }
+                }
+                if ($allHidden) {
+                    $element->setAttribute('class', 'hidden');
+                }
+
                 $fieldsets[] = $this->getView()->addTags(
                     $this->getView()->formCollection($element)
                 );
