@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Abstract Financial Evidence Controller
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\Controller\Lva;
 
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
+use Dvsa\Olcs\Utils\Helper\ValueHelper;
+use Olcs\View\Helper\ReturnToAddress;
 
 /**
  * Abstract Financial Evidence Controller
@@ -19,23 +16,32 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     use Traits\AdapterAwareTrait;
 
     /**
-     * Financial evidence section
+     * Application create : Financial evidence section
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
         $id      = $this->getIdentifier();
+        /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
         $adapter = $this->getAdapter();
 
         // get data
         if ($request->isPost()) {
-            $data = (array)$request->getPost();
+            $formData = (array)$request->getPost();
         } else {
-            $data = $adapter->getFormData($id);
+            $formData = $adapter->getFormData($id);
         }
 
         // set up form
-        $form = $this->getFinancialEvidenceForm()->setData($data);
+        /** @var \Common\Form\Form $form */
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-financial_evidence')
+            ->getForm($this->getRequest())
+            ->setData($formData);
         $adapter->alterFormForLva($form);
 
         // handle files
@@ -50,7 +56,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
             // update application record and redirect
-            if ($this->saveFinancialEvidence($data)) {
+            if ($this->saveFinancialEvidence($formData)) {
                 return $this->completeSection('financial_evidence');
             }
         }
@@ -59,9 +65,13 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFiles(['financial-evidence']);
 
         // render view
-        $financialEvidenceData = $adapter->getData($id);
-        $variables = $financialEvidenceData['financialEvidence'];
-        $variables['applicationReference'] = $financialEvidenceData['applicationReference'];
+        $lvaData = $adapter->getData($id);
+
+        $variables = $lvaData['financialEvidence'] +
+            [
+                'applicationReference' => $lvaData['applicationReference'],
+                'sendToAddress' => ReturnToAddress::getAddress($this->isNi($lvaData), '</br>'),
+            ];
 
         return $this->render('financial_evidence', $form, $variables);
     }
@@ -69,14 +79,21 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     /**
      * Callback to handle the file upload
      *
-     * @param array $file
+     * @param array $file File data
+     *
+     * @return void
+     * @throws \Common\Exception\File\InvalidMimeException
+     * @throws \Exception
      */
     public function processFinancialEvidenceFileUpload($file)
     {
+        /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
+        $adapter = $this->getAdapter();
+
         $id = $this->getIdentifier();
 
         $data = array_merge(
-            $this->getAdapter()->getUploadMetaData($file, $id),
+            $adapter->getUploadMetaData($file, $id),
             [
                 'isExternal' => $this->isExternal()
             ]
@@ -85,7 +102,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $this->uploadFile($file, $data);
 
         // force reload of data with new document included
-        $this->getAdapter()->getData($id, true);
+        $adapter->getData($id, true);
     }
 
     /**
@@ -95,10 +112,21 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
      */
     public function getDocuments()
     {
-        $id = $this->getIdentifier();
-        return $this->getAdapter()->getDocuments($id);
+        /** @var \Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter $adapter */
+        $adapter = $this->getAdapter();
+
+        return $adapter->getDocuments(
+            $this->getIdentifier()
+        );
     }
 
+    /**
+     * Save financial evidence
+     *
+     * @param array $formData Form Data
+     *
+     * @return bool
+     */
     protected function saveFinancialEvidence($formData)
     {
         $dto = UpdateFinancialEvidence::create(
@@ -123,15 +151,26 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     }
 
     /**
-     * Prepare the financial evidence form
+     * Define is Nothern Ireland application
      *
-     * @return \Zend\Form\Form
+     * @param array $lvaData LVA object data
+     *
+     * @return bool
      */
-    protected function getFinancialEvidenceForm()
+    private function isNi(array $lvaData)
     {
-        return $this->getServiceLocator()
-            ->get('FormServiceManager')
-            ->get('lva-' . $this->lva . '-financial_evidence')
-            ->getForm($this->getRequest());
+        if (isset($lvaData['niFlag'])) {
+            return ValueHelper::isOn($lvaData['niFlag']);
+        }
+
+        if (isset($lvaData['trafficArea']['isNi'])) {
+            return (bool)$lvaData['trafficArea']['isNi'];
+        }
+
+        if (isset($lvaData['licence']['trafficArea']['isNi'])) {
+            return (bool)$lvaData['licence']['trafficArea']['isNi'];
+        }
+
+        return false;
     }
 }

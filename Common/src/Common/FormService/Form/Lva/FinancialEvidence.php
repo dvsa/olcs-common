@@ -1,10 +1,5 @@
 <?php
 
-/**
- * FinancialEvidence Form
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\FormService\Form\Lva;
 
 /**
@@ -14,7 +9,14 @@ namespace Common\FormService\Form\Lva;
  */
 class FinancialEvidence extends AbstractLvaFormService
 {
-    public function getForm($request)
+    /**
+     * Get Form
+     *
+     * @param \Zend\Http\Request $request Request
+     *
+     * @return \Zend\Form\Form
+     */
+    public function getForm(\Zend\Http\Request $request)
     {
         $form = $this->getFormHelper()->createFormWithRequest('Lva\FinancialEvidence', $request);
 
@@ -26,7 +28,8 @@ class FinancialEvidence extends AbstractLvaFormService
     /**
      * Make form alterations
      *
-     * @param \Zend\Form\Form $form
+     * @param \Zend\Form\Form $form Form
+     *
      * @return \Zend\Form\Form
      */
     protected function alterForm($form)
