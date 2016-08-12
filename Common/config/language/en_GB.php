@@ -109,7 +109,7 @@ return [
     'View details' => 'View details',
     'Week' => 'Week',
     'Weeks' => 'Weeks',
-    'What do I need to do next?' => 'What do you need to do next?',
+    'What do I need to do next?' => 'What you need to do next',
     'What happens next?' => 'What happens next?',
     'Yes' => 'Yes',
     'account-balance' => 'Account balance',
