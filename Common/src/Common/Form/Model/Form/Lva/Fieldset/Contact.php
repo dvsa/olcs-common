@@ -175,7 +175,7 @@ class Contact
     public $phoneFaxVersion = null;
 
     /**
-     * @Form\Attributes({"class":"medium"})
+     * @Form\Attributes({"class":"long"})
      * @Form\Options({
      *    "label":"application_your-business_business-type.contact-details.email",
      *    "label_attributes": {
