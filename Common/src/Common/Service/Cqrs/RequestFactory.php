@@ -19,7 +19,8 @@ class RequestFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service Locator
+     *
      * @return mixed
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -30,8 +31,12 @@ class RequestFactory implements FactoryInterface
         $contentType = new ContentType();
         $contentType->setMediaType('application/json');
 
+        $identifier = $serviceLocator->get('LogProcessorManager')->get(\Olcs\Logging\Log\Processor\RequestId::class)
+            ->getIdentifier();
+        $correlationHeader = new \Zend\Http\Header\GenericHeader('X-Correlation-Id', $identifier);
+
         $headers = new Headers();
-        $headers->addHeaders([$accept, $contentType]);
+        $headers->addHeaders([$accept, $contentType, $correlationHeader]);
 
         $userRequest = $serviceLocator->get('Request');
         if ($userRequest instanceof Request) {

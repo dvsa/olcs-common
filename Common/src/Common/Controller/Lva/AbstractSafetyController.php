@@ -434,9 +434,7 @@ abstract class AbstractSafetyController extends AbstractController
 
             $form->get('table')->get('table')->setTable($table);
         } elseif (!$this->hasTrailers) {
-            $formHelper->disableElement($form, 'licence->safetyInsTrailers');
-        } else {
-            $formHelper->removeValueOption($form->get('licence')->get('safetyInsTrailers'), 0);
+            $formHelper->remove($form, 'licence->safetyInsTrailers');
         }
 
         $this->alterFormForLva($form);
@@ -451,10 +449,6 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function formatDataForForm($data)
     {
-        if (!$this->hasTrailers) {
-            $data['licence']['safetyInsTrailers'] = '0';
-        }
-
         if (isset($data['licence']['tachographIns']['id'])) {
             $data['licence']['tachographIns'] = $data['licence']['tachographIns']['id'];
         }

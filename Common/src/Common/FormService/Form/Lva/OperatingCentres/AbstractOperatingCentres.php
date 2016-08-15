@@ -116,7 +116,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     protected function alterFormForPsvLicences(Form $form, array $params)
     {
         $dataOptions = $form->get('data')->getOptions();
-        $dataOptions['hint'] .= '.psv';
+        $dataOptions['hint'] .= !empty($dataOptions['hint']) ? '.psv' : '';
         $form->get('data')->setOptions($dataOptions);
 
         $removeFields = [
