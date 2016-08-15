@@ -1,17 +1,11 @@
 <?php
 
-/**
- * Generic receipt functionality
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Controller\Traits;
 
-use Common\View\Model\ReceiptViewModel;
-use Dvsa\Olcs\Transfer\Query\Transaction\TransactionByReference as PaymentByReference;
 use Common\Exception\ResourceNotFoundException;
 use Common\RefData;
+use Common\View\Model\ReceiptViewModel;
+use Dvsa\Olcs\Transfer\Query;
 
 /**
  * Generic receipt functionality
@@ -21,21 +15,34 @@ use Common\RefData;
  */
 trait GenericReceipt
 {
+    /**
+     * Process action - Print
+     *
+     * @return ReceiptViewModel
+     * @throws ResourceNotFoundException
+     */
     public function printAction()
     {
         $paymentRef = $this->params()->fromRoute('reference');
 
         $viewData = $this->getReceiptData($paymentRef);
 
-        $view = new ReceiptViewModel($viewData);
-
-        return $view;
+        return new ReceiptViewModel($viewData);
     }
 
-
+    /**
+     * Request from API receip data by reference
+     *
+     * @param string $paymentRef Payment Reference
+     *
+     * @return array
+     * @throws ResourceNotFoundException
+     */
     protected function getReceiptData($paymentRef)
     {
-        $query = PaymentByReference::create(['reference' => $paymentRef]);
+        $query = Query\Transaction\TransactionByReference::create(['reference' => $paymentRef]);
+
+        /** @var \Common\Service\Cqrs\Response $response */
         $response = $this->handleQuery($query);
         if ($response->isOk()) {
             $payment = $response->getResult();
@@ -49,21 +56,35 @@ trait GenericReceipt
             throw new ResourceNotFoundException('Payment not found');
         }
 
-        $table = $this->getServiceLocator()->get('Table')
+        /** @var \Zend\ServiceManager\ServiceLocatorInterface $sl */
+        $sl = $this->getServiceLocator();
+
+        /** @var \Common\Service\Table\TableBuilder $table */
+        $table = $sl->get('Table')
             ->buildTable('pay-fees', $fees, [], false);
 
         // override table title
-        $tableTitle = $this->getServiceLocator()->get('Helper\Translation')
-            ->translate('pay-fees.success.table.title');
-        $table->setVariable('title', $tableTitle);
+        $table->setVariable('title', $sl->get('Helper\Translation')->translate('pay-fees.success.table.title'));
 
         // get operator name from the first fee
         $operatorName = $fees[0]['licence']['organisation']['name'];
-        $hasContinuation = $this->hasContinuationFee($fees);
 
-        return compact('payment', 'fees', 'operatorName', 'table', 'hasContinuation');
+        return [
+            'payment' => $payment,
+            'fees' => $fees,
+            'table' => $table,
+            'operatorName' => $operatorName,
+            'hasContinuation' => $this->hasContinuationFee($fees),
+        ];
     }
 
+    /**
+     * Define have a continuation fee in list of fees
+     *
+     * @param array $fees List of fees
+     *
+     * @return bool
+     */
     protected function hasContinuationFee($fees)
     {
         foreach ($fees as $fee) {
