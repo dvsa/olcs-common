@@ -55,7 +55,7 @@ trait LicenceSafetyControllerTrait
             $licence = $response->getResult();
 
             $this->canHaveTrailers = $licence['canHaveTrailers'];
-            $this->hasTrailers = $licence['hasTrailers'];
+            $this->showTrailers = $licence['showTrailers'];
             $this->workshops = $licence['workshops'];
 
             $this->safetyData = [
