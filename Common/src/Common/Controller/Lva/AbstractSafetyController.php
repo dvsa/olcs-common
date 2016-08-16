@@ -76,7 +76,7 @@ abstract class AbstractSafetyController extends AbstractController
     abstract protected function getSafetyData($noCache = false);
 
     protected $canHaveTrailers;
-    protected $showTrailers;
+    protected $isShowTrailers;
 
     protected $workshops;
 
@@ -433,7 +433,7 @@ abstract class AbstractSafetyController extends AbstractController
             $table->setVariable('empty_message', $emptyMessage . '-psv');
 
             $form->get('table')->get('table')->setTable($table);
-        } elseif (!$this->showTrailers) {
+        } elseif (!$this->isShowTrailers) {
             $formHelper->remove($form, 'licence->safetyInsTrailers');
         }
 
