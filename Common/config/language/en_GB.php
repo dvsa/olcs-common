@@ -2839,5 +2839,6 @@ return [
     'common.form.validation.checkbox.not_same' => 'Check box to continue',
     'common.form.validation.company_number.too_long' => 'The company number cannot be more than 8 characters',
     'common.form.validation.company_number.not_alnum' => 'Must be 8 digits; alpha-numeric characters allowed; no special characters; mandatory when displayed',
+    'tasks.search.error.filter.needed' => 'Please filter by either a team or a category.',
     // Potentially unused translations
 ];
