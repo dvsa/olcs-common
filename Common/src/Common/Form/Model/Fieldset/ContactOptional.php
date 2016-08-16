@@ -154,9 +154,9 @@ class ContactOptional
     public $phoneFaxVersion = null;
 
     /**
-     * @Form\Attributes({"class":"medium"})
+     * @Form\Attributes({"class":"long"})
      * @Form\Options({
-     *     "label":"E-mail address",
+     *     "label": "email-address",
      *     "error-message": "contactOptional_email-error"
      * })
      * @Form\Required(false)
