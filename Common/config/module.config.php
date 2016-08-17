@@ -323,7 +323,7 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'form' => 'Common\Form\View\Helper\Form',
-            'formCollection' => 'Common\Form\View\Helper\FormCollection',
+            'formCollection' => Common\Form\View\Helper\FormCollection::class,
             'formElement' => 'Common\Form\View\Helper\FormElement',
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
