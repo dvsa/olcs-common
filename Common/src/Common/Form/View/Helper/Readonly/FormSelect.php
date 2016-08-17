@@ -45,7 +45,8 @@ class FormSelect extends AbstractHelper
      *
      * Proxies to {@link render()}.
      *
-     * @param  ElementInterface|null $element
+     * @param ElementInterface|null $element the element
+     *
      * @return string|FormElement
      */
     public function __invoke(ElementInterface $element = null)
@@ -58,7 +59,10 @@ class FormSelect extends AbstractHelper
     }
 
     /**
-     * @param $input
+     * Process options
+     *
+     * @param array $input the input
+     *
      * @return array
      */
     public function processOptions($input)
@@ -68,7 +72,7 @@ class FormSelect extends AbstractHelper
         foreach ($input as $key => $options) {
             if (is_array($options)) {
                 if (isset($options['options'])) {
-                    $return = array_merge($return, $this->processOptions($options['options']));
+                    $return += $this->processOptions($options['options']);
                 } else {
                     $return[$options['value']] = $options['label'];
                 }
@@ -81,7 +85,10 @@ class FormSelect extends AbstractHelper
     }
 
     /**
-     * @param ElementInterface $element
+     * Renders the element
+     *
+     * @param ElementInterface $element the element
+     *
      * @return string
      */
     public function render(ElementInterface $element)
