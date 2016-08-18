@@ -5,6 +5,10 @@
   <?php if (!empty($this->object->getVariable('title'))) { ?>
     <h3 class="empty__title">{{title}}</h3>
   <?php } ?>
-  
+
+  <div class="empty">
+    <p><?php echo $this->object->getEmptyMessage(); ?></p>
+  </div>
+
   <?php echo $this->object->renderActions(); ?>
-</div><!-- empty__wrapper -->
+</div>
