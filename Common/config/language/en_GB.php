@@ -809,7 +809,7 @@ return [
     'dashboard-table-applications-licNo' => 'Licence number',
     'dashboard-table-applications-status' => 'Status',
     'dashboard-table-applications-submittedDate' => 'Submitted',
-    'dashboard-table-licences' => 'Licences',
+    'dashboard-table-licences' => 'Current licences',
     'dashboard-table-licences-area' => 'Area',
     'dashboard-table-licences-licNo' => 'Licence number',
     'dashboard-table-licences-licType' => 'Licence type',
