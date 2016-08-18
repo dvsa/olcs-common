@@ -92,16 +92,17 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
      */
     private function handlePersistentCache(QueryContainerInterface $query)
     {
-        $success = $this->cacheService->hasItem($query->getCacheIdentifier());
+        $cacheIdentifier = $query->getCacheIdentifier();
+        $success = $this->cacheService->hasItem($cacheIdentifier);
 
         if (!$success) {
             $result = $this->queryService->send($query);
             if ($result->isOk()) {
-                $this->cacheService->setItem($query->getCacheIdentifier(), $result);
+                $this->cacheService->setItem($cacheIdentifier, $result);
             }
         } else {
             $this->logMessage('Get from presistent cache '. get_class($query->getDto()));
-            $result = $this->cacheService->getItem($query->getCacheIdentifier());
+            $result = $this->cacheService->getItem($cacheIdentifier);
         }
 
         return $result;
