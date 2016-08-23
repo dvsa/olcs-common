@@ -39,12 +39,12 @@ class Address
      *   "data-container-class" : "compound"
      * })
      * @Form\Options({
-     *     "label":"Address lines",
+     *     "label":"address_addressLines",
      *     "error-message" : "address_addressLine1-error", 
      *     "label_attributes": {
      *         "aria-label": "Enter address manually. Address line one"
      *     },
-     *     "short-label":"Address line 1"
+     *     "short-label":"address_addressLine1"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -58,7 +58,7 @@ class Address
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 2","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine2","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":90}})
@@ -71,7 +71,7 @@ class Address
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 3","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine3","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":100}})
@@ -80,7 +80,7 @@ class Address
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Address line 4","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine4","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})
@@ -90,10 +90,10 @@ class Address
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label":"Town/city",
-     *     "short-label":"Town/city",
+     *     "label":"address_townCity",
+     *     "short-label":"address_townCity",
      *     "label_attributes": {
-     *         "aria-label": "Town/city"
+     *         "aria-label": "address_townCity"
      *     },
      *     "error-message" : "address_town-error",
      * })
@@ -105,8 +105,8 @@ class Address
 
     /**
      * @Form\Options({
-     *     "label":"Postcode",
-     *     "short-label":"Postcode",
+     *     "label":"address_postcode",
+     *     "short-label":"address_postcode",
      *     "error-message" : "address_postcode-error",
      * })
      * @Form\Type("Text")
@@ -121,7 +121,7 @@ class Address
     /**
      * @Form\Attributes({"id":"","placeholder":"","value":"GB"})
      * @Form\Options({
-     *     "label": "Country",
+     *     "label": "address_country",
      *     "label_attributes": {
      *         "aria-label": "Choose country"
      *     },

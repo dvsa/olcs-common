@@ -1,9 +1,20 @@
 <?php
+// @codingStandardsIgnoreFile
 
+/**
+ * Class to process welsh translations from csv file
+ */
 class ProcessTranslations
 {
     private $csvFile;
 
+    /**
+     * Set path to csv file
+     *
+     * @param string $file Path to csv file
+     *
+     * @return $this
+     */
     public function setSourceCsvFile($file)
     {
         $this->csvFile = $file;
@@ -11,6 +22,11 @@ class ProcessTranslations
         return $this;
     }
 
+    /**
+     * Process parse csv file and add/update new translations
+     *
+     * @return void
+     */
     public function exec()
     {
         $path = __DIR__ . '/../Common/config/language/';
@@ -193,12 +209,16 @@ class ProcessTranslations
         $header = $csv[0];
         array_shift($csv); # remove column header
 
+        //  create array with key as message key
         $result = [];
 
-        array_walk($csv, function (&$a) use ($header, &$result) {
-            $tmp = array_combine($header, $a);
-            $result[$tmp['message']] = $tmp;
-        });
+        array_walk(
+            $csv,
+            function (&$a) use ($header, &$result) {
+                $tmp = array_combine($header, $a);
+                $result[$tmp['message']] = $tmp;
+            }
+        );
 
         return $result;
     }
