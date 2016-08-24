@@ -40,11 +40,11 @@ class AddressOptional
      *   "data-container-class" : "compound"
      * })
      * @Form\Options({
-     *     "label":"Address lines",
+     *     "label":"address_addressLines",
      *     "label_attributes": {
      *         "aria-label": "Enter address manually. Establishment address line 1"
      *     },
-     *     "short-label":"Address line 1"
+     *     "short-label":"address_addressLine1"
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
@@ -58,7 +58,7 @@ class AddressOptional
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 2","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine2","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -70,7 +70,7 @@ class AddressOptional
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 3","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine3","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -78,7 +78,7 @@ class AddressOptional
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Address line 4","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine4","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -87,7 +87,7 @@ class AddressOptional
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *    "label":"Town/city",
+     *    "label":"address_townCity",
      *    "label_attributes": {
      *        "aria-label": "Establishment town/city"
      *    }
@@ -99,9 +99,8 @@ class AddressOptional
     public $town = null;
 
     /**
-     * @Form\Options({"label":"Postcode"})
      * @Form\Options({
-     *     "label":"Postcode",
+     *     "label":"address_postcode",
      *     "label_attributes": {
      *         "aria-label": "Establishment postcode"
      *     }
@@ -122,11 +121,11 @@ class AddressOptional
      * @Form\Attributes({"id":"","placeholder":"","value":"GB", "class":"chosen-select-fixed"})
      * @Form\Required(false)
      * @Form\Options({
-     *     "label": "Country",
+     *     "label": "address_country",
      *     "label_attributes": {
      *         "aria-label": "Choose establishment country"
      *     },
-     *     "empty_option": "Please Select",
+     *     "empty_option": "address_pleaseSelect",
      *     "disable_inarray_validator": false,
      *     "help-block": "Please select a category",
      *     "service_name": "Common\Service\Data\Country"
