@@ -2,14 +2,19 @@
 
 namespace CommonTest\Controller\Plugin;
 
+use Common\Controller\Traits\ViewHelperManagerAware;
+use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
+
 /**
  * Class TestController
  * Provuides a controlled and consistent environment with which to test the plugin.
  *
  * @package OlcsTest\Controller\Plugin
  */
-class ControllerStub extends \Common\Controller\AbstractActionController
+class ControllerStub extends ZendAbstractActionController
 {
+    use ViewHelperManagerAware;
+
     /**
      * Method to test the invoking of the plugin with array of options
      * @param $options
