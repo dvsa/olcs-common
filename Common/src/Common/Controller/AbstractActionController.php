@@ -502,14 +502,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $this;
     }
 
-    protected function attachDefaultListeners()
-    {
-        parent::attachDefaultListeners();
-        if ($this instanceof CrudInterface) {
-            $this->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, array($this, 'cancelButtonListener'), 100);
-        }
-    }
-
     /**
      * Allow csrf to be enabled and disabled
      */
@@ -941,16 +933,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         return $request->isPost() && isset($data['form-actions'][$button]);
-    }
-
-    public function cancelButtonListener(MvcEvent $event)
-    {
-        $this->setupIndexRoute($event);
-        $cancelResponse = $this->checkForCancelButton('cancel');
-        if (!is_null($cancelResponse)) {
-            $event->setResult($cancelResponse);
-            return $cancelResponse;
-        }
     }
 
     /**
