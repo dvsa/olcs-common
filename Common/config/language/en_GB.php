@@ -2584,7 +2584,7 @@ return [
     'tm-details-heading' => 'Transport Manager form',
     'tm-details-licence-application-no' => 'Application number',
     'tm-details-reference-no' => 'Reference No.',
-    'tm-details-save.button' => 'Save and return later',
+    'tm-details-save.button' => 'Save and return',
     'tm-details-status' => 'Status',
     'tm-details-submit.button' => 'Continue',
     'tm-details-view-form-link-text' => 'View details',
