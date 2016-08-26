@@ -1,26 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<project name="OLCS Common" default="build">
 
-<project name="olcs-internal" default="build">
- <target name="build"
-   depends="prepare,lint"/>
+    <target name="composer-init" description="Perform syntax check of sourcecode files">
+        <condition property="composer.url" value="http://getcomposer.org">
+            <isreachable host="getcomposer.org" timeout="2" />
+        </condition>
+        <condition property="composer.url" value="http://satis.inf.mgt.mtpdvsa">
+            <isreachable host="satis.inf.mgt.mtpdvsa" timeout="2" />
+        </condition>
+        <!--For AWS-->
+        <!--<condition property="composer.url" value="http://satis.inf.mgt.mtpdvsa">-->
+            <!--<isreachable host="satis.inf.mgt.mtpdvsa" timeout="2" />-->
+        <!--</condition>-->
+        <get src="${composer.url}/composer.phar" dest="composer.phar"/>
+    </target>
 
- <target name="clean" description="Cleanup build artifacts">
-  <delete dir="${basedir}/build/logs"/>
- </target>
+    <target name="lint" description="Perform syntax check of sourcecode files">
+        <apply executable="php" failonerror="true">
+            <arg value="-l"/>
 
- <target name="prepare" depends="clean" description="Prepare for build">
-  <mkdir dir="${basedir}/build/logs"/>
- </target>
+            <fileset dir=".">
+                <include name="**/*.php"/>
+                <exclude name="vendor/**"/>
+            </fileset>
+        </apply>
+    </target>
 
- <target name="lint" description="Perform syntax check of sourcecode files">
-  <apply executable="php" failonerror="true">
-   <arg value="-l" />
+    <target name="clean" description="Clean (remove) temporary files">
+    </target>
 
-   <fileset dir="${basedir}/Common">
-    <include name="**/*.php" />
-    <modified />
-   </fileset>
-  </apply>
- </target>
+    <target name="unittest" description="Run unit tests">
+        <exec executable="vendor/bin/phpunit" dir="." failonerror="true">
+            <arg value="-ctest/phpunit.xml"/>
+        </exec>
+    </target>
 
+    <target name="composer-install" depends="composer-init" description="Install composer dependencies">
+        <exec executable="php" failonerror="true">
+            <arg value="composer.phar"/>
+            <arg value="install"/>
+            <arg value="--optimize-autoloader"/>
+            <arg value="--no-interaction"/>
+        </exec>
+    </target>
+
+    <target name="build" description="Build for production" depends="clean, lint, composer-install, unittest" />
 </project>
