@@ -34,14 +34,14 @@
         </exec>
     </target>
 
-    <target name="composer-install" depends="composer-init" description="Install composer dependencies">
+    <target name="composer-update" depends="composer-init" description="Install composer dependencies">
         <exec executable="php" failonerror="true">
             <arg value="composer.phar"/>
-            <arg value="install"/>
+            <arg value="update"/>
             <arg value="--optimize-autoloader"/>
             <arg value="--no-interaction"/>
         </exec>
     </target>
 
-    <target name="build" description="Build for production" depends="clean, lint, composer-install, unittest" />
+    <target name="build" description="Build for production" depends="clean, lint, composer-update, unittest" />
 </project>
