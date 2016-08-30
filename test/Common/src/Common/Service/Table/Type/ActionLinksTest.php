@@ -62,7 +62,7 @@ class ActionLinksTest extends MockeryTestCase
             'id' => 123
         ];
 
-        $expected = '<input type="submit" class="right-aligned" name="table[action][delete][123]" value="Remove">' .
+        $expected = '<input type="submit" class="right-aligned trigger-modal" name="table[action][delete][123]" value="Remove">' .
             ' <input type="submit" class="right-aligned" name="table[action][replace][123]" value="Replace">';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
@@ -90,7 +90,7 @@ class ActionLinksTest extends MockeryTestCase
             'id' => 123
         ];
 
-        $expected = '<input type="submit" class="right-aligned" name="table[action][delete][123]" value="Remove">';
+        $expected = '<input type="submit" class="right-aligned trigger-modal" name="table[action][delete][123]" value="Remove">';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
     }
