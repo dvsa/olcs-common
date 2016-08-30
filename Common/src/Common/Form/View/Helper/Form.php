@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Checkbox element
- *
- * @author Someone <someone@valtech.co.uk>
- */
 namespace Common\Form\View\Helper;
 
 use Zend\Form\Element\Hidden;
@@ -12,7 +7,7 @@ use Zend\Form\FormInterface as ZendFormInterface;
 use Zend\Form\FieldsetInterface;
 
 /**
- * Checkbox element
+ * Form element
  *
  * @author Someone <someone@valtech.co.uk>
  */
@@ -24,7 +19,9 @@ class Form extends \Zend\Form\View\Helper\Form
      *   a. Add logging
      *   b. Ensure fieldsets come before elements
      *
-     * @param  ZendFormInterface $form
+     * @param ZendFormInterface $form            Form
+     * @param bool              $includeFormTags Is include form tags
+     *
      * @return string
      */
     public function render(ZendFormInterface $form, $includeFormTags = true)
@@ -36,39 +33,38 @@ class Form extends \Zend\Form\View\Helper\Form
         $fieldsets = $elements = array();
         $hiddenSubmitElement = '';
 
-        $this->getView()->formCollection()->setReadOnly($form->getOption('readonly'));
+        /** @var \Zend\View\Renderer\PhpRenderer $view */
+        $view = $this->getView();
+
+        $view->formCollection()->setReadOnly($form->getOption('readonly'));
+
+        /** @var callable $rowHelper */
         $rowHelper = (
             $form->getOption('readonly') ?
-            $this->getView()->plugin('readonlyformrow') :
-            $this->getView()->plugin('formrow')
+            $view->plugin('readonlyformrow') :
+            $view->plugin('formrow')
         );
 
+        /** @var \Zend\Form\ElementInterface|FieldsetInterface $element */
         foreach ($form as $element) {
-
             if ($element instanceof FieldsetInterface) {
-                $keepEmptyFieldset = $element->hasAttribute('keepEmptyFieldset') ?
-                    $element->getAttribute('keepEmptyFieldset') : false;
+                $canKeepEmptyFieldset = $element->hasAttribute('keepEmptyFieldset')
+                    ? (bool) $element->getAttribute('keepEmptyFieldset')
+                    : false;
+
                 // do not display empty fieldsets as per OLCS-12318
-                if (!$element->count() && !$keepEmptyFieldset) {
+                if (!$element->count() && !$canKeepEmptyFieldset) {
                     continue;
                 }
 
-                $innerElements = $element->getElements();
-                $allHidden = true;
-                foreach ($innerElements as $innerElement) {
-                    if (!$innerElement instanceof Hidden) {
-                        $allHidden = false;
-                        break;
-                    }
-                }
-                if ($allHidden) {
+                if ($this->isAllChildsHidden($element) === true) {
                     $element->setAttribute('class', 'hidden');
                 }
 
-                $fieldsets[] = $this->getView()->addTags(
-                    $this->getView()->formCollection($element)
+                $fieldsets[] = $view->addTags(
+                    $view->formCollection($element)
                 );
-            } elseif ($element->getName() == 'form-actions[continue]') {
+            } elseif ($element->getName() === 'form-actions[continue]') {
                 $hiddenSubmitElement = $rowHelper($element);
             } else {
                 $elements[] = $rowHelper($element);
@@ -83,5 +79,33 @@ class Form extends \Zend\Form\View\Helper\Form
             implode("\n", $elements),
             $includeFormTags ? $this->closeTag() : ''
         );
+    }
+
+    /**
+     * Check is all children (and their children) is hidden
+     *
+     * @param FieldsetInterface $fieldset Checked fieldset elemen
+     *
+     * @return bool
+     */
+    private function isAllChildsHidden(\Zend\Form\FieldsetInterface $fieldset)
+    {
+        //  iterate by elements
+        /** @var \Zend\Form\Element $element */
+        foreach ($fieldset->getElements() as $element) {
+            if (!$element instanceof Hidden) {
+                return false;
+            }
+        }
+
+        //  iterate by child fieldsets
+        /** @var \Zend\Form\FieldsetInterface $child */
+        foreach ($fieldset->getFieldsets() as $child) {
+            if ($this->isAllChildsHidden($child) === false) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

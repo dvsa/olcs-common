@@ -40,7 +40,7 @@ class ApplicationDeclarationsAndUndertakings
      *     "short-label": "application.review-declarations.confirm-short-label",
      *     "label_attributes": {"id": "label-declarationConfirmation"}
      * })
-     * @Form\Attributes({"data-container-class": "confirm"})
+     * @Form\Attributes({"data-container-class": "confirm callout"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $declarationConfirmation = null;

@@ -1,29 +1,23 @@
 <?php
 
-/**
- * FormTest
- *
- * @package CommonTest\Form\View\Helper
- * @author Jakub Igla <jakub.igla@gmail.com>
- */
 namespace CommonTest\Form\View\Helper;
 
-use Zend\Stdlib\PriorityQueue;
-use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\PhpRenderer;
 use Common\Form\View\Helper;
 use Common\Form\View\Helper\Form as FormViewHelper;
 use Mockery as m;
+use Zend\Form\Element;
+use Zend\Form\ElementInterface;
+use Zend\Form\FieldsetInterface;
+use Zend\Stdlib\PriorityQueue;
+use Zend\View\HelperPluginManager;
+use Zend\View\Renderer\PhpRenderer;
 
 /**
- * FormTest
- *
- * @package CommonTest\Form\View\Helper
- * @author Jakub Igla <jakub.igla@gmail.com>
+ * @covers \Common\Form\View\Helper\Form
  */
 class FormTest extends m\Adapter\Phpunit\MockeryTestCase
 {
-
+    /** @var \Zend\Form\Form */
     protected $form;
 
     public function setUp()
@@ -42,10 +36,11 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
         $helpers->setService('formRow', new Helper\FormRow());
         $helpers->setService('formCollection', new Helper\FormCollection());
         $helpers->setService('addTags', new \Common\View\Helper\AddTags());
+
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 
-        $viewHelper = new \Common\Form\View\Helper\Form();
+        $viewHelper = new FormViewHelper();
         $viewHelper->setView($view);
         echo $viewHelper($this->form, 'form', '/');
 
@@ -68,7 +63,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 
-        $viewHelper = new \Common\Form\View\Helper\Form();
+        $viewHelper = new FormViewHelper();
         $viewHelper->setView($view);
         echo $viewHelper($this->form, 'form', '/');
 
@@ -100,25 +95,75 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
         $sut = new FormViewHelper();
         $sut->setView($mockView);
 
-        $sut->__invoke($mockForm);
+        $sut($mockForm);
     }
 
-    public function testHiddenFieldset()
+    public function testRenderKeepEmptyFields()
     {
-        $mockFieldset = m::mock('Zend\Form\FieldsetInterface')
-            ->shouldReceive('hasAttribute')
-            ->with('keepEmptyFieldset')
-            ->andReturn(false)
-            ->once()
-            ->shouldReceive('getElements')
-            ->andReturn([m::mock('Zend\Form\Element\Hidden')])
-            ->once()
-            ->shouldReceive('setAttribute')
-            ->with('class', 'hidden')
-            ->once()
-            ->shouldReceive('count')
-            ->andReturn(1)
-            ->once()
+        //  check keepEmptyFieldset element
+        $mockFieldsetKeepEmpty = m::mock(FieldsetInterface::class)
+            ->shouldReceive('hasAttribute')->once()->with('keepEmptyFieldset')->andReturn(true)
+            ->shouldReceive('getAttribute')->once()->with('keepEmptyFieldset')->andReturn(false)
+            ->shouldReceive('count')->once()->andReturn(0)
+            ->getMock();
+
+        $mockHelper = m::mock(\Common\Form\View\Helper\FormCollection::class)
+            ->shouldReceive('setReadOnly')->with(false)->once()->getMock();
+
+        $iterator = new PriorityQueue();
+        $iterator->insert($mockFieldsetKeepEmpty);
+
+        $mockForm = m::mock(\Zend\Form\Form::class)
+            ->shouldReceive('prepare')->once()->andReturnNull()
+            ->shouldReceive('getIterator')->once()->andReturn($iterator)
+            ->shouldReceive('getOption')->twice()->with('readonly')->andReturn(false)
+            ->shouldReceive('getAttributes')->once()->andReturn([])
+            ->getMock();
+
+        /** @var \Zend\View\Renderer\RendererInterface|m\MockInterface $mockView */
+        $mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+            ->shouldReceive('formCollection')->once()->andReturn($mockHelper)
+            ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
+            ->shouldReceive('addTags')->never()
+            ->getMock();
+
+        $sut = new FormViewHelper();
+        $sut->setView($mockView);
+
+        $sut($mockForm);
+    }
+
+    public function testRenderFieldsetsWithHidden()
+    {
+        $mockElmHidden = m::mock(Element\Hidden::class);
+        $mockElm = m::mock(ElementInterface::class);
+
+        //  check Fieldset with usual element
+        $mockFsWithElement = m::mock(FieldsetInterface::class)
+            ->shouldReceive('hasAttribute')->once()->with('keepEmptyFieldset')->andReturn(false)
+            ->shouldReceive('count')->once()->andReturn(1)
+            ->shouldReceive('getElements')->once()->with()->andReturn([$mockElm])
+            ->getMock();
+
+        //  check Fieldset with Fieldse with usual element
+        $mockSubFs = m::mock(FieldsetInterface::class)
+            ->shouldReceive('getElements')->once()->with()->andReturn([$mockElm])
+            ->getMock();
+
+        $mockFsWithSubFs = m::mock(FieldsetInterface::class)
+            ->shouldReceive('getElements')->once()->with()->andReturn([])
+            ->shouldReceive('hasAttribute')->once()->with('keepEmptyFieldset')->andReturn(false)
+            ->shouldReceive('count')->once()->andReturn(1)
+            ->shouldReceive('getFieldsets')->once()->with()->andReturn([$mockSubFs])
+            ->getMock();
+
+        //  check Fieldset with Hidden element
+        $mockFsWithHiddenElement = m::mock(FieldsetInterface::class)
+            ->shouldReceive('hasAttribute')->once()->with('keepEmptyFieldset')->andReturn(false)
+            ->shouldReceive('count')->once()->andReturn(1)
+            ->shouldReceive('getElements')->once()->with()->andReturn([$mockElmHidden])
+            ->shouldReceive('setAttribute')->once()->with('class', 'hidden')
+            ->shouldReceive('getFieldsets')->once()->with()->andReturn([])
             ->getMock();
 
         $mockHelper = m::mock('Common\Form\View\Helper\FormCollection')
@@ -128,95 +173,27 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
             ->getMock();
 
         $iterator = new PriorityQueue();
-        $iterator->insert($mockFieldset);
+        $iterator->insert($mockFsWithElement);
+        $iterator->insert($mockFsWithSubFs);
+        $iterator->insert($mockFsWithHiddenElement);
 
-        $mockForm = m::mock('Zend\Form\Form')
-            ->shouldReceive('prepare')
-            ->once()
-            ->shouldReceive('getIterator')
-            ->andReturn($iterator)
-            ->once()
-            ->shouldReceive('getOption')
-            ->with('readonly')
-            ->andReturn(false)
-            ->twice()
-            ->shouldReceive('getAttributes')
-            ->andReturn([])
-            ->once()
+        $mockForm = m::mock(\Zend\Form\Form::class)
+            ->shouldReceive('prepare')->once()->andReturnNull()
+            ->shouldReceive('getIterator')->once()->andReturn($iterator)
+            ->shouldReceive('getOption')->twice()->with('readonly')->andReturn(false)
+            ->shouldReceive('getAttributes')->once()->andReturn([])
             ->getMock();
 
-        $mockView = m::mock('Zend\View\Renderer\RendererInterface')
-            ->shouldReceive('formCollection')
-            ->andReturn($mockHelper)
-            ->twice()
-            ->shouldReceive('plugin')
-            ->with('formrow')
-            ->andReturn($mockHelper)
-            ->once()
-            ->shouldReceive('addTags')
-            ->once()
+        /** @var \Zend\View\Renderer\RendererInterface|m\MockInterface $mockView */
+        $mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+            ->shouldReceive('formCollection')->times(4)->andReturn($mockHelper)
+            ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
+            ->shouldReceive('addTags')->times(3)
             ->getMock();
 
         $sut = new FormViewHelper();
         $sut->setView($mockView);
 
-        $sut->__invoke($mockForm);
-    }
-
-    public function testNonHiddenFieldset()
-    {
-        $mockFieldset = m::mock('Zend\Form\FieldsetInterface')
-            ->shouldReceive('hasAttribute')
-            ->with('keepEmptyFieldset')
-            ->andReturn(false)
-            ->once()
-            ->shouldReceive('getElements')
-            ->andReturn([m::mock('Zend\Form\Element\Text')])
-            ->once()
-            ->shouldReceive('count')
-            ->andReturn(1)
-            ->once()
-            ->getMock();
-
-        $mockHelper = m::mock('Common\Form\View\Helper\FormCollection')
-            ->shouldReceive('setReadOnly')
-            ->with(false)
-            ->once()
-            ->getMock();
-
-        $iterator = new PriorityQueue();
-        $iterator->insert($mockFieldset);
-
-        $mockForm = m::mock('Zend\Form\Form')
-            ->shouldReceive('prepare')
-            ->once()
-            ->shouldReceive('getIterator')
-            ->andReturn($iterator)
-            ->once()
-            ->shouldReceive('getOption')
-            ->with('readonly')
-            ->andReturn(false)
-            ->twice()
-            ->shouldReceive('getAttributes')
-            ->andReturn([])
-            ->once()
-            ->getMock();
-
-        $mockView = m::mock('Zend\View\Renderer\RendererInterface')
-            ->shouldReceive('formCollection')
-            ->andReturn($mockHelper)
-            ->twice()
-            ->shouldReceive('plugin')
-            ->with('formrow')
-            ->andReturn($mockHelper)
-            ->once()
-            ->shouldReceive('addTags')
-            ->once()
-            ->getMock();
-
-        $sut = new FormViewHelper();
-        $sut->setView($mockView);
-
-        $sut->__invoke($mockForm);
+        $sut($mockForm);
     }
 }

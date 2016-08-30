@@ -14,19 +14,7 @@ class ContactOptional
      * @Form\Options({
      *     "label": "Business telephone No."
      * })
-     * @Form\Required(false)
-     * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({
-     *     "name": "Zend\Validator\Regex",
-     *     "options": {
-     *         "pattern": "/^[0-9 \(\)\-\+]+$/",
-     *         "messages": {
-     *             "regexNotMatch": "The input must contain only digits or spaces"
-     *         }
-     *     }
-     * })
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":5,"max":20}})
+     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
      * @Form\Name("phone_business")
      */
     public $phoneBusiness = null;
@@ -50,19 +38,7 @@ class ContactOptional
      * @Form\Options({
      *     "label": "Home telephone No."
      * })
-     * @Form\Required(false)
-     * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({
-     *     "name": "Zend\Validator\Regex",
-     *     "options": {
-     *         "pattern": "/^[0-9 \(\)\-\+]+$/",
-     *         "messages": {
-     *             "regexNotMatch": "The input must contain only digits or spaces"
-     *         }
-     *     }
-     * })
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":5,"max":20}})
+     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
      * @Form\Name("phone_home")
      */
     public $phoneHome = null;
@@ -86,19 +62,7 @@ class ContactOptional
      * @Form\Options({
      *     "label": "Mobile telephone No."
      * })
-     * @Form\Required(false)
-     * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({
-     *     "name": "Zend\Validator\Regex",
-     *     "options": {
-     *         "pattern": "/^[0-9 \(\)\-\+]+$/",
-     *         "messages": {
-     *             "regexNotMatch": "The input must contain only digits or spaces"
-     *         }
-     *     }
-     * })
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":5,"max":20}})
+     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
      * @Form\Name("phone_mobile")
      */
     public $phoneMobile = null;
@@ -122,19 +86,7 @@ class ContactOptional
      * @Form\Options({
      *     "label": "Fax telephone No. (optional)"
      * })
-     * @Form\Required(false)
-     * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({
-     *     "name": "Zend\Validator\Regex",
-     *     "options": {
-     *         "pattern": "/^[0-9 \(\)\-\+]+$/",
-     *         "messages": {
-     *             "regexNotMatch": "The input must contain only digits or spaces"
-     *         }
-     *     }
-     * })
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":5,"max":20}})
+     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
      * @Form\Name("phone_fax")
      */
     public $phoneFax = null;
@@ -154,9 +106,9 @@ class ContactOptional
     public $phoneFaxVersion = null;
 
     /**
-     * @Form\Attributes({"class":"medium"})
+     * @Form\Attributes({"class":"long"})
      * @Form\Options({
-     *     "label":"E-mail address",
+     *     "label": "email-address",
      *     "error-message": "contactOptional_email-error"
      * })
      * @Form\Required(false)

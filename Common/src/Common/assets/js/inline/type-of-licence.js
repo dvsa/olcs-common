@@ -81,7 +81,7 @@ OLCS.ready(function() {
         $('#typeOfLicence-hint-psv').hide();
         $('#typeOfLicence-hint-goods').show();
       }
-    });
+    }).change();
 
   }
 
