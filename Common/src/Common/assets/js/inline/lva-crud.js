@@ -38,5 +38,8 @@ OLCS.ready(function() {
     }
   });
 
-  OLCS.crudTableHandler();
+  OLCS.crudTableHandler({
+      selector : '.trigger-modal'
+  });
+
 });
