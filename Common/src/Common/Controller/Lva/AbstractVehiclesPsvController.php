@@ -390,7 +390,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 'export',
                 [
                     'requireRows' => true,
-                    'class' => 'secondary js-disable-crud'
+                    'class' => ' more-actions__item js-disable-crud'
                 ]
             );
         }
