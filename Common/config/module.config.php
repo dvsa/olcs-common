@@ -717,10 +717,6 @@ return array(
                 'Common\BusinessService\Service\Lva\Address',
             'TmEmployment' =>
                 'Common\BusinessService\Service\TmEmployment',
-            // Cases business services
-            'Cases\Submission\SubmissionAssignmentTask'
-            => 'Common\BusinessService\Service\Cases\Submission\SubmissionAssignmentTask',
-            'Cases\Submission\Submission' => 'Common\BusinessService\Service\Cases\Submission\Submission',
             // Bus business services
             'Bus\BusReg'
                 => 'Common\BusinessService\Service\Bus\BusReg',
