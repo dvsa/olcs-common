@@ -210,6 +210,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $file = tempnam(sys_get_temp_dir(), "fuhs");
         touch($file);
+        $helper->setServiceLocator($this->setupScan($file, true));
 
         $request = m::mock('Zend\Http\Request');
         $request->shouldReceive('isPost')->andReturn(true);
@@ -255,15 +256,28 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         unlink($file);
     }
 
+    private function setupScan($file, $isClean)
+    {
+        $mockScan = m::mock(\Common\Service\AntiVirus\Scan::class);
+        $mockScan->shouldReceive('isEnabled')->with()->once()->andReturn(true);
+        $mockScan->shouldReceive('isClean')->with($file)->once()->andReturn($isClean);
+
+        $mockServiceManager = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockServiceManager->shouldReceive('get')->with(\Common\Service\AntiVirus\Scan::class)->once()
+            ->andReturn($mockScan);
+
+        return $mockServiceManager;
+    }
+
     /**
      * @dataProvider fileUploadProvider
      */
     public function testProcessWithPostAndInvalidFileUpload($error, $message)
     {
-        $helper = new FileUploadHelperService();
-
         $file = tempnam("/tmp", "fuhs");
         touch($file);
+
+        $helper = new FileUploadHelperService();
 
         $request = m::mock('Zend\Http\Request');
         $request->shouldReceive('isPost')->andReturn(true);
@@ -320,6 +334,121 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->assertEquals(true, $helper->process());
 
         unlink($file);
+    }
+
+    public function testProcessWithPostFileMissing()
+    {
+        $file = 'foo';
+
+        $helper = new FileUploadHelperService();
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('isPost')->andReturn(true);
+
+        $form = m::mock('Zend\Form\Form');
+        $form->shouldReceive('setMessages')
+            ->once()
+            ->with(
+                [
+                    'my-file' => [
+                        '__messages__' => ['message.file-upload-error.missing']
+                    ]
+
+                ]
+            );
+
+        $postData = [
+            'my-file' => [
+                'file-controls' => [
+                    'upload' => true
+                ]
+            ]
+        ];
+        $fileData = [
+            'my-file' => [
+                'file-controls' => [
+                    'file' => [
+                        'error' => UPLOAD_ERR_OK,
+                        'tmp_name' => $file
+                    ]
+                ]
+            ]
+        ];
+        $request->shouldReceive('getPost')->andReturn($postData);
+        $request->shouldReceive('getFiles')->andReturn($fileData);
+
+        $helper->setRequest($request);
+        $helper->setSelector('my-file');
+        $helper->setForm($form);
+        $helper->setUploadCallback(
+            function ($data) use ($file) {
+                $expected = [
+                    'error' => 0,
+                    'tmp_name' => $file
+                ];
+                $this->assertEquals($expected, $data);
+            }
+        );
+
+        $this->assertEquals(false, $helper->process());
+    }
+
+    public function testProcessWithPostFileWithVirus()
+    {
+        $file = __FILE__;
+
+        $helper = new FileUploadHelperService();
+        $helper->setServiceLocator($this->setupScan($file, false));
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('isPost')->andReturn(true);
+
+        $form = m::mock('Zend\Form\Form');
+        $form->shouldReceive('setMessages')
+            ->once()
+            ->with(
+                [
+                    'my-file' => [
+                        '__messages__' => ['message.file-upload-error.virus']
+                    ]
+
+                ]
+            );
+
+        $postData = [
+            'my-file' => [
+                'file-controls' => [
+                    'upload' => true
+                ]
+            ]
+        ];
+        $fileData = [
+            'my-file' => [
+                'file-controls' => [
+                    'file' => [
+                        'error' => UPLOAD_ERR_OK,
+                        'tmp_name' => $file
+                    ]
+                ]
+            ]
+        ];
+        $request->shouldReceive('getPost')->andReturn($postData);
+        $request->shouldReceive('getFiles')->andReturn($fileData);
+
+        $helper->setRequest($request);
+        $helper->setSelector('my-file');
+        $helper->setForm($form);
+        $helper->setUploadCallback(
+            function ($data) use ($file) {
+                $expected = [
+                    'error' => 0,
+                    'tmp_name' => $file
+                ];
+                $this->assertEquals($expected, $data);
+            }
+        );
+
+        $this->assertEquals(false, $helper->process());
     }
 
     public function fileUploadProvider()
