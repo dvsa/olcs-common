@@ -102,7 +102,7 @@ class PublicationSelfserve extends InternalSearchAbstract
                     'options' => [10, 25, 50]
                 ]
             ],
-            'layout' => 'traffic-commissioner-publication',
+            'layout' => 'traffic-commissioner-publication-selfserve',
             'show-status' => false
         ];
     }
