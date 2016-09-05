@@ -289,7 +289,8 @@ return array(
             \Common\Rbac\Navigation\IsAllowedListener::class => Common\Rbac\Navigation\IsAllowedListener::class,
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
-            \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class
+            \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class,
+            \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
         )
     ),
     /*'search' => [

@@ -250,11 +250,26 @@ class FileUploadHelperService extends AbstractHelperService
 
         $validator = new FilesSize(self::MAX_FILE_SIZE);
 
+        $file = $fileData['file-controls']['file'];
+        // eg onAccess anti-virus removed it
+        if (!file_exists($file['tmp_name'])) {
+            $this->getForm()->setMessages($this->formatErrorMessageForForm('message.file-upload-error.' . 'missing'));
+
+            return false;
+        }
+
         if ($error == UPLOAD_ERR_OK && !$validator->isValid($fileData['file-controls']['file']['tmp_name'])) {
             $error = UPLOAD_ERR_INI_SIZE;
         }
 
         if ($error === UPLOAD_ERR_OK) {
+            // Run virus scan on file
+            $scanner = $this->getServiceLocator()->get(\Common\Service\AntiVirus\Scan::class);
+            if ($scanner->isEnabled() && !$scanner->isClean($file['tmp_name'])) {
+                $this->getForm()->setMessages($this->formatErrorMessageForForm('message.file-upload-error.' . 'virus'));
+
+                return false;
+            }
             try {
                 call_user_func(
                     $callback,
