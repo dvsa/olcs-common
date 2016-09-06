@@ -2110,6 +2110,7 @@ return [
     'scanning.error.entity.7' => 'The licence number is invalid',
     'scanning.error.entity.8' => 'The IRFO ID is invalid',
     'scanning.error.entity.9' => 'The licence number is invalid',
+    'scanning.error.description' => 'Please provide description',
     'scanning.message.success' => 'The separator sheet has been generated',
     'schedule41.approve.application.message' => 'Are you sure you want to approve this schedule 4/1?',
     'schedule41.operating-centre.table.address' => 'Address',
