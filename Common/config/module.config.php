@@ -229,7 +229,6 @@ return array(
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'postcode' => 'Common\Service\Postcode\Postcode',
-            'email' => 'Common\Service\Email\Email',
             'CompaniesHouseApi' => 'Common\Service\CompaniesHouse\Api',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
@@ -500,7 +499,6 @@ return array(
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
             'postcode' => 'http://postcode.cit.olcs.mgt.mtpdvsa/',
-            'email' => 'http://olcs-email/',
         )
     ),
     'caches'=> array(
@@ -694,8 +692,6 @@ return array(
                 'Common\BusinessService\Service\Lva\TransportManagerApplicationForUser',
             'Lva\TransportManagerApplication' =>
                 'Common\BusinessService\Service\Lva\TransportManagerApplication',
-            'Lva\SendTransportManagerApplication' =>
-                'Common\BusinessService\Service\Lva\SendTransportManagerApplication',
             'Lva\TransportManager' =>
                 'Common\BusinessService\Service\Lva\TransportManager',
             'Lva\DeltaDeleteTransportManagerLicence' =>
@@ -727,12 +723,6 @@ return array(
             'Lva\TransportConsultant' => 'Common\BusinessService\Service\Lva\TransportConsultant',
             'Lva\ContinueLicence'
                 => 'Common\BusinessService\Service\Lva\ContinueLicence',
-        ]
-    ],
-    'email' => [
-        'default' => [
-            'from_address' => 'donotreply@otc.gsi.gov.uk',
-            'from_name'  => 'OLCS do not reply'
         ]
     ],
     'translator' => [
