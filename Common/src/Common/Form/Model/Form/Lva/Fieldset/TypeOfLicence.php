@@ -51,7 +51,6 @@ class TypeOfLicence
      *      },
      *      "fieldset-data-group": "operator-type",
      *      "label": "application_type-of-licence_operator-type.data.goodsOrPsv",
-     *      "hint": "markup-type-of-licence-difference",
      *      "value_options": {
      *          {
      *              "value": "lcat_gv",
