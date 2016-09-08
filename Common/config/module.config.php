@@ -256,8 +256,6 @@ return array(
             \Common\Service\Cqrs\Query\QueryService::class => \Common\Service\Cqrs\Query\QueryServiceFactory::class,
             'CommandService' => \Common\Service\Cqrs\Command\CommandServiceFactory::class,
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
-            'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
-            'BusinessRuleManager' => 'Common\BusinessRule\BusinessRuleManagerFactory',
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
@@ -654,75 +652,6 @@ return array(
             'lva-licence-transport_managers' => LvaFormService\TransportManager\LicenceTransportManager::class,
             'lva-variation-transport_managers' => LvaFormService\TransportManager\VariationTransportManager::class,
             'lva-application-transport_managers' => LvaFormService\TransportManager\ApplicationTransportManager::class,
-        ]
-    ],
-    'business_rule_manager' => [
-        'invokables' => [
-            'Task' => 'Common\BusinessRule\Rule\Task',
-            'Fee' => 'Common\BusinessRule\Rule\Fee',
-            'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
-            'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
-            'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
-        ]
-    ],
-    'business_service_manager' => [
-        'invokables' => [
-            'Task' => 'Common\BusinessService\Service\Task',
-            'Fee' => 'Common\BusinessService\Service\Fee',
-            // Some of these LVA services may be re-usable outside of LVA, if so please move them from the LVA namespace
-            'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames',
-            'Lva\ContactDetails' => 'Common\BusinessService\Service\Lva\ContactDetails',
-            'Lva\LicenceAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
-            'Lva\VariationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
-            'Lva\ApplicationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
-            'Lva\DirtyAddresses' => 'Common\BusinessService\Service\Lva\DirtyAddresses',
-            'Lva\PhoneContact' => 'Common\BusinessService\Service\Lva\PhoneContact',
-            'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
-            // Lva
-            'Lva\Application' => 'Common\BusinessService\Service\Lva\Application',
-            'Lva\ApplicationRevive' => 'Common\BusinessService\Service\Lva\ApplicationRevive',
-            'Lva\Licence' => 'Common\BusinessService\Service\Lva\Licence',
-            // Psv Vehicles business services
-            'Lva\LicencePsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
-            'Lva\VariationPsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
-            'Lva\ApplicationPsvVehicles' => 'Common\BusinessService\Service\Lva\ApplicationPsvVehicles',
-            'Lva\DeleteTransportManagerApplication' =>
-                'Common\BusinessService\Service\Lva\DeleteTransportManagerApplication',
-            'Lva\TransportManagerApplicationForUser' =>
-                'Common\BusinessService\Service\Lva\TransportManagerApplicationForUser',
-            'Lva\TransportManagerApplication' =>
-                'Common\BusinessService\Service\Lva\TransportManagerApplication',
-            'Lva\TransportManager' =>
-                'Common\BusinessService\Service\Lva\TransportManager',
-            'Lva\DeltaDeleteTransportManagerLicence' =>
-                'Common\BusinessService\Service\Lva\DeltaDeleteTransportManagerLicence',
-            'Lva\TransportManagerDetails' =>
-                'Common\BusinessService\Service\Lva\TransportManagerDetails',
-            'Lva\Person' =>
-                'Common\BusinessService\Service\Lva\Person',
-            'Lva\OtherLicence' =>
-                'Common\BusinessService\Service\Lva\OtherLicence',
-            'Lva\PreviousConviction' =>
-                'Common\BusinessService\Service\Lva\PreviousConviction',
-            'Lva\DeleteOtherLicence' =>
-                'Common\BusinessService\Service\Lva\DeleteOtherLicence',
-            'Lva\DeletePreviousConviction' =>
-                'Common\BusinessService\Service\Lva\DeletePreviousConviction',
-            'Lva\DeleteOtherEmployment' =>
-                'Common\BusinessService\Service\Lva\DeleteOtherEmployment',
-            'Lva\Address' =>
-                'Common\BusinessService\Service\Lva\Address',
-            'TmEmployment' =>
-                'Common\BusinessService\Service\TmEmployment',
-            // Bus business services
-            'Bus\BusReg'
-                => 'Common\BusinessService\Service\Bus\BusReg',
-            'CreateSeparatorSheet' => 'Common\BusinessService\Service\CreateSeparatorSheet',
-            'Lva\AccessCorrespondence' => 'Common\BusinessService\Service\Lva\AccessCorrespondence',
-            // Operator services
-            'Lva\TransportConsultant' => 'Common\BusinessService\Service\Lva\TransportConsultant',
-            'Lva\ContinueLicence'
-                => 'Common\BusinessService\Service\Lva\ContinueLicence',
         ]
     ],
     'translator' => [

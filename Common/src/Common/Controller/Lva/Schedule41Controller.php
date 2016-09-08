@@ -8,12 +8,8 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Entity\LicenceEntityService;
-use Common\BusinessService\BusinessServiceAwareInterface;
-use Common\BusinessService\BusinessServiceAwareTrait;
-use Common\BusinessService\Response;
 
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Reset;
-use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\LicenceByNumber;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Approve;
