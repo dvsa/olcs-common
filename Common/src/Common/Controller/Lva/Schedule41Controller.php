@@ -1,20 +1,13 @@
 <?php
 
-/**
- * Schedule41Controller.php
- *
- * @author Joshua Curtis <josh.curtis@valtech.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Service\Entity\LicenceEntityService;
-
-use Dvsa\Olcs\Transfer\Command\Application\Schedule41Reset;
-use Dvsa\Olcs\Transfer\Query\Licence\LicenceByNumber;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Approve;
 use Dvsa\Olcs\Transfer\Command\Application\Schedule41Refuse;
-
+use Dvsa\Olcs\Transfer\Command\Application\Schedule41Reset;
+use Dvsa\Olcs\Transfer\Query\Licence\LicenceByNumber;
 use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
 
@@ -216,7 +209,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * Get a form with the cannot publish validation messages
      *
-     * @param array $errors
+     * @param array $errors Errors
      *
      * @return \Zend\View\Helper\ViewModel
      */
@@ -330,7 +323,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * Is the licence valid according to the Ac.
      *
-     * @param $licenceNumber
+     * @param string $licenceNumber Licence number
      *
      * @return array|bool
      */
@@ -379,7 +372,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * Return a redirect response with an error message.
      *
-     * @param $message
+     * @param string $message Message
      *
      * @return \Zend\Http\Response
      */
@@ -399,7 +392,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * Get the operating centres table for transferring.
      *
-     * @param $data
+     * @param array $data Data
      *
      * @return mixed
      */
@@ -418,7 +411,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * Format the operating centre data for the table.
      *
-     * @param $data
+     * @param array $data Data
      *
      * @return array
      */
@@ -442,6 +435,14 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
         return $operatingCentres;
     }
 
+    /**
+     * Map licence search errors
+     *
+     * @param Form  $form   Form
+     * @param array $errors Errors
+     *
+     * @return void
+     */
     public function mapLicenceSearchErrors(Form $form, array $errors)
     {
         $formMessages = [];
@@ -487,9 +488,9 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
     /**
      * No-op.
      *
-     * @param $lvaId
+     * @param int $lvaId Lva id
      *
-     * @return bool
+     * @return void
      */
     public function checkForRedirect($lvaId)
     {
