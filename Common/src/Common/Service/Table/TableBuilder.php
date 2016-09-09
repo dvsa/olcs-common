@@ -1397,7 +1397,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderHeaderColumn($column, $wrapper = '{{[elements/th]}}')
     {
-        if ($this->shouldHide($column)) {
+        if ($this->shouldHide($column) || $this->getVariable('hide_column_headers')) {
             return;
         }
 
