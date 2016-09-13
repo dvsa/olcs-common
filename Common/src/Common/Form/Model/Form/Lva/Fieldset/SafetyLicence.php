@@ -16,7 +16,10 @@ class SafetyLicence
     public $version = null;
 
     /**
-     * @Form\Attributes({"class":"short","id":""})
+     * @Form\Attributes({
+     *    "class":"tiny",
+     *    "id":""
+     * })
      * @Form\Options({
      *     "label":"application_vehicle-safety_safety.licence.vehicleInspectionInterval",
      *     "error-message": "safetyLicence_safetyInsVehicles-error"
@@ -34,7 +37,10 @@ class SafetyLicence
     public $safetyInsVehicles = null;
 
     /**
-     * @Form\Attributes({"class":"short","id":""})
+     * @Form\Attributes({
+     *    "class":"tiny",
+     *    "id":""
+     * })
      * @Form\Options({
      *     "label":"application_vehicle-safety_safety.licence.trailerInspectionInterval",
      *     "error-message": "safetyLicence_safetyInsTrailers-error"

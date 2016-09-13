@@ -14,10 +14,13 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary', 'id' => 'addSmall'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true),
+                'delete' => array(
+                    'class' => ' more-actions__item', 
+                    'requireRows' => true
+                ),
                 'transfer' => array(
                     'label' => 'Transfer',
-                    'class' => 'secondary js-require--multiple',
+                    'class' => ' more-actions__item js-require--multiple',
                     'requireRows' => true,
                     'id' => 'transferSmall'
                 )

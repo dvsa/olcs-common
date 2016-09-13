@@ -131,8 +131,6 @@ class OrganisationEntityService extends AbstractEntityService
     /**
      * Determine is an organisation isMlh (has at least one valid licence)
      *
-     * @note used in  Olcs\Filter\SubmissionSection\CaseSummary
-     *
      * @param $id
      * @return bool
      */

@@ -100,7 +100,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             $markup = $element->render();
         } elseif ($element instanceof DateSelect ) {
 
-            $element->setOption('hint-position', 'end');
+            $element->setOption('hint-position', 'start');
 
             if ($element->getOption('fieldsetClass') === null) {
                 $element->setOption('fieldsetClass', 'date');

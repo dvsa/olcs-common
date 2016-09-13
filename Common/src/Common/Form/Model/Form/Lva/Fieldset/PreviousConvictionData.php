@@ -80,7 +80,7 @@ class PreviousConvictionData
      *         "aria-label": "Enter your offence"
      *     }
      * })
-     * @Form\Required(false)
+     * @Form\Required(true)
      * @Form\Type("Text")
      */
     public $categoryText = null;

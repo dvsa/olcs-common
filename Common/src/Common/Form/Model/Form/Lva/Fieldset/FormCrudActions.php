@@ -28,7 +28,10 @@ class FormCrudActions
     public $submit = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
+     * @Form\Attributes({
+     *    "type":"submit",
+     *    "class":"action--primary large"
+     * })
      * @Form\Options({
      *     "label": "Save and add another",
      *     "label_attributes": {
@@ -41,7 +44,11 @@ class FormCrudActions
     public $addAnother = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--secondary large", "id": "cancel"})
+     * @Form\Attributes({
+     *     "type":"submit",
+     *     "class":"action--secondary large", 
+     *     "id": "cancel"
+     * })
      * @Form\Options({
      *     "label": "Cancel",
      *     "label_attributes": {
