@@ -1,17 +1,11 @@
 <?php
 
-/**
- * Shared logic between Addresses controllers
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
-use Dvsa\Olcs\Transfer\Command\Licence\UpdateAddresses as LicenceUpdateAddresses;
-use Dvsa\Olcs\Transfer\Command\Application\UpdateAddresses as ApplicationUpdateAddresses;
-use Dvsa\Olcs\Transfer\Command\Variation\UpdateAddresses as VariationUpdateAddresses;
-
-use Dvsa\Olcs\Transfer\Query\Licence\Addresses;
+use Common\Data\Mapper;
+use Dvsa\Olcs\Transfer\Command as TransferCmd;
+use Dvsa\Olcs\Transfer\Query as TransferQry;
+use Zend\Form\Form;
 
 /**
  * Shared logic between Addresses controllers
@@ -20,226 +14,163 @@ use Dvsa\Olcs\Transfer\Query\Licence\Addresses;
  */
 abstract class AbstractAddressesController extends AbstractController
 {
-    /**
-     * Type map
-     *
-     * @var array
-     */
-    protected $typeMap = array(
-        'phone_t_tel' => 'phone_business',
-        'phone_t_home' => 'phone_home',
-        'phone_t_mobile' => 'phone_mobile',
-        'phone_t_fax' => 'phone_fax'
-    );
+    protected static $mapCmdUpdateAddress = [
+        'licence' => TransferCmd\Licence\UpdateAddresses::class,
+        'application' => TransferCmd\Application\UpdateAddresses::class,
+        'variation' => TransferCmd\Variation\UpdateAddresses::class,
+    ];
 
     protected $section = 'addresses';
 
+    /** @var  \Common\Service\Helper\FormHelperService */
+    protected $hlpForm;
+    /** @var  \Common\Service\Helper\FlashMessengerHelperService */
+    protected $hlpFlashMsgr;
+
     /**
-     * Addresses section
+     * Process action - Index
+     *
+     * @return \Common\Service\Cqrs\Response|\Common\View\Model\Section
      */
     public function indexAction()
     {
+        $this->initHelpers();
+
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
+        //  get api data
         $response = $this->handleQuery(
-            Addresses::create(['id' => $this->getLicenceId()])
+            TransferQry\Licence\Addresses::create(['id' => $this->getLicenceId()])
         );
 
-        if ($response->isNotFound()) {
+        if (!$response->isOk()) {
             return $this->notFoundAction();
         }
 
-        $rawAddressData = $response->getResult();
+        $apiData = $response->getResult();
 
-        $addressData = $this->formatDataForForm($rawAddressData);
-
+        //  prepare form data
         if ($request->isPost()) {
-            $data = (array)$request->getPost();
+            $formData = (array)$request->getPost();
         } else {
-            $data = $addressData;
+            $formData = Mapper\Lva\Addresses::mapFromResult($apiData);
         }
 
-        $typeOfLicence = $this->getTypeOfLicenceData();
-
+        /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
-            ->getForm($typeOfLicence['licenceType'])
-            ->setData($data);
+            ->getForm(
+                [
+                    'typeOfLicence' => $this->getTypeOfLicenceData(),
+                    'apiData' => $apiData,
+                ]
+            )
+            ->setData($formData);
 
         $this->alterFormForLva($form);
 
-        $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
+        $hasProcessed = $this->hlpForm->processAddressLookupForm($form, $request);
 
         if (!$hasProcessed && $request->isPost()) {
-            if (isset($data['consultant']) && $data['consultant']['add-transport-consultant'] === 'N') {
-                $this->getServiceLocator()->get('Helper\Form')
-                    ->disableValidation(
-                        $form->getInputFilter()->get('consultant')
-                    );
-                $this->getServiceLocator()->get('Helper\Form')
-                    ->disableValidation(
-                        $form->getInputFilter()->get('consultantAddress')
-                    );
-            }
+            if ($this->isValid($form, $formData)) {
+                $response = $this->save($formData);
 
-            if ($form->isValid()) {
+                if ($response !== null) {
+                    if ($response === true) {
+                        return $this->completeSection('addresses');
+                    }
 
-                $consultant = null;
-                if (isset($data['consultant'])) {
-                    $consultant = $data['consultant'];
-                }
-                if (isset($data['consultantAddress'])) {
-                    $consultant['address'] = $data['consultantAddress'];
-                }
-                if (isset($data['consultantContact'])) {
-                    $consultant['contact'] = $data['consultantContact'];
-                }
-                $dtoData = [
-                    'id' => $this->getIdentifier(),
-                    'correspondence' => $data['correspondence'],
-                    'correspondenceAddress' => $data['correspondence_address'],
-                    'contact' => $data['contact'],
-                    'establishment' => isset($data['establishment']) ? $data['establishment'] : null,
-                    'establishmentAddress' => isset($data['establishment_address']) ?
-                        $data['establishment_address'] : null,
-                    'consultant' => $consultant
-                ];
-
-                // @TODO de-switch?
-                switch ($this->lva) {
-                    case "licence":
-                        $response = $this->handleCommand(LicenceUpdateAddresses::create($dtoData));
-                        break;
-
-                    case "application":
-                        $response = $this->handleCommand(ApplicationUpdateAddresses::create($dtoData));
-                        break;
-
-                    case "variation":
-                        $response = $this->handleCommand(VariationUpdateAddresses::create($dtoData));
-                        break;
-                }
-
-                if ($response->isOk()) {
-                    return $this->completeSection('addresses');
-                }
-
-                if ($response->isNotFound()) {
-                    return $this->notFoundAction();
-                }
-
-                if ($response->isClientError() || $response->isServerError()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+                    return $response;
                 }
             }
         }
 
         $this->getServiceLocator()->get('Script')->loadFiles(['forms/addresses']);
 
-        return $this->renderForm($form);
-    }
-
-    /**
-     * Format data for form
-     *
-     * @param array $data
-     * @return array
-     */
-    private function formatDataForForm($data)
-    {
-        $returnData = array(
-            'contact' => array(
-                'phone-validator' => true
-            )
-        );
-
-        if (!empty($data['correspondenceCd'])) {
-            $returnData = $this->formatAddressDataForForm($returnData, $data, 'correspondence');
-            $returnData['contact']['email'] = $data['correspondenceCd']['emailAddress'];
-
-            foreach ($data['correspondenceCd']['phoneContacts'] as $phoneContact) {
-
-                $phoneType = $this->mapFormTypeFromDbType($phoneContact['phoneContactType']['id']);
-
-                $returnData['contact'][$phoneType] = $phoneContact['phoneNumber'];
-                $returnData['contact'][$phoneType . '_id'] = $phoneContact['id'];
-                $returnData['contact'][$phoneType . '_version'] = $phoneContact['version'];
-            }
-        }
-
-        if (!empty($data['establishmentCd'])) {
-            $returnData = $this->formatAddressDataForForm($returnData, $data, 'establishment');
-        }
-
-        if (!empty($data['transportConsultantCd'])) {
-            $returnData['consultant'] = $this->formatConsultantDataForForm($data);
-            $returnData['consultantAddress'] = $returnData['consultant']['address'];
-            $returnData['consultantContact'] = $returnData['consultant']['contact'];
-            unset($returnData['consultant']['contact']);
-            unset($returnData['consultant']['address']);
-        }
-
-        return $returnData;
-    }
-
-    protected function formatAddressDataForForm($returnData, $data, $type)
-    {
-        $address = $data[$type . 'Cd'];
-
-        $returnData[$type] = array(
-            'id' => $address['id'],
-            'version' => $address['version'],
-            'fao' => $address['fao']
-        );
-
-        $returnData[$type . '_address'] = $address['address'];
-        $returnData[$type . '_address']['countryCode'] = $address['address']['countryCode']['id'];
-
-        return $returnData;
-    }
-
-    /**
-     * Format the consultant data for display within the form.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function formatConsultantDataForForm(array $data)
-    {
-        $data = $data['transportConsultantCd'];
-
-        $returnData['add-transport-consultant'] = 'Y';
-        $returnData['writtenPermissionToEngage'] = $data['writtenPermissionToEngage'];
-        $returnData['transportConsultantName'] = $data['fao'];
-        $returnData['address'] = $data['address'];
-
-        foreach ($data['phoneContacts'] as $phoneContact) {
-            $phoneType = $this->mapFormTypeFromDbType($phoneContact['phoneContactType']['id']);
-
-            $returnData['contact'][$phoneType] = $phoneContact['phoneNumber'];
-            $returnData['contact'][$phoneType . '_id'] = $phoneContact['id'];
-            $returnData['contact'][$phoneType . '_version'] = $phoneContact['version'];
-        }
-
-        $returnData['contact']['email'] = $data['emailAddress'];
-
-        return $returnData;
-    }
-
-    /**
-     * Map form type from db type
-     *
-     * @param string $type
-     */
-    private function mapFormTypeFromDbType($type)
-    {
-        return (isset($this->typeMap[$type]) ? $this->typeMap[$type] : '');
-    }
-
-    protected function renderForm($form)
-    {
         return $this->render('addresses', $form);
+    }
+
+    /**
+     * Check is form valid
+     *
+     * @param Form  $form     Form
+     * @param array $formData Form data
+     *
+     * @return bool
+     */
+    protected function isValid(Form $form, array $formData)
+    {
+        $this->disableConsultantValidation($form, $formData);
+
+        return $form->isValid();
+    }
+
+    /**
+     * Save form
+     *
+     * @param array $formData Form Data
+     *
+     * @return array|bool|null
+     */
+    protected function save(array $formData)
+    {
+        $dtoData =
+            [
+                'id' => $this->getIdentifier(),
+                'partial' => false,
+            ] +
+            Mapper\Lva\Addresses::mapFromForm($formData);
+
+        $cmdClass = static::$mapCmdUpdateAddress[$this->lva];
+        $response = $this->handleCommand($cmdClass::create($dtoData));
+
+        if ($response->isOk()) {
+            return true;
+        }
+
+        if ($response->isNotFound()) {
+            return $this->notFoundAction();
+        }
+
+        if ($response->isClientError() || $response->isServerError()) {
+            $this->hlpFlashMsgr->addUnknownError();
+        }
+
+        return null;
+    }
+
+    /**
+     * Initialize helpers and services
+     *
+     * @return void
+     */
+    protected function initHelpers()
+    {
+        $this->hlpForm = $this->getServiceLocator()->get('Helper\Form');
+        $this->hlpFlashMsgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
+    }
+
+    /**
+     * Disable consultant fields validation
+     *
+     * @param Form  $form Form
+     * @param array $data Data
+     *
+     * @return void
+     */
+    private function disableConsultantValidation(Form $form, array $data)
+    {
+        if (!isset($data['consultant']) || $data['consultant']['add-transport-consultant'] !== 'N') {
+            return;
+        }
+
+        $this->hlpForm->disableValidation(
+            $form->getInputFilter()->get('consultant')
+        );
+        $this->hlpForm->disableValidation(
+            $form->getInputFilter()->get('consultantAddress')
+        );
     }
 }

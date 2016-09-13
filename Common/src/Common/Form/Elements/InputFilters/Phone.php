@@ -36,7 +36,13 @@ class Phone extends ZendElement implements InputProviderInterface
                         ],
                     ],
                 ],
-                ['name' => \Zend\Validator\StringLength::class, 'options' => ['min' => 5, 'max' => 20]]
+                [
+                    'name' => \Zend\Validator\StringLength::class,
+                    'options' => [
+                        'min' => 5,
+                        'max' => 45,
+                    ],
+                ],
             ],
         ];
 

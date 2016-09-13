@@ -25,6 +25,7 @@ class Contact
      * })
      * @Form\Name("phone-validator")
      * @Form\Type("Hidden")
+     * @Form\Attributes({"value":"1"})
      */
     public $phoneValidator = null;
 

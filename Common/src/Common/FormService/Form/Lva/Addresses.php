@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Addresses Form
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
@@ -17,11 +12,23 @@ use Common\Service\Entity\LicenceEntityService;
  */
 class Addresses extends AbstractFormService
 {
-    public function getForm($licenceType)
+    private static $establishmentAllowedLicTypes = [
+        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+    ];
+
+    /**
+     * Return form
+     *
+     * @param array $params Parameters
+     *
+     * @return \Zend\Form\Form
+     */
+    public function getForm(array $params)
     {
         $form = $this->getFormHelper()->createForm('Lva\Addresses');
 
-        $this->alterForm($form, $licenceType);
+        $this->alterForm($form, $params);
 
         return $form;
     }
@@ -29,21 +36,33 @@ class Addresses extends AbstractFormService
     /**
      * Make form alterations
      *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
+     * @param \Zend\Form\Form $form   Form
+     * @param array           $params Parameters
+     *
+     * @return void
      */
-    protected function alterForm($form, $licenceType)
+    protected function alterForm(\Zend\Form\Form $form, array $params)
     {
-        $allowedLicTypes = array(
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
-        );
+        $this->removeEstablishment($form, $params['typeOfLicence']['licenceType']);
 
-        if (!in_array($licenceType, $allowedLicTypes)) {
-            $this->getFormHelper()->remove($form, 'establishment')
+        //  remove phone fields
+        $this->getFormHelper()->remove($form, 'phoneContactsTable');
+    }
+
+    /**
+     * Remove Establishment Fields
+     *
+     * @param \Zend\Form\Form $form        Form
+     * @param string          $licenceType Licence type
+     *                                       
+     * @return void                                       
+     */
+    protected function removeEstablishment(\Zend\Form\Form $form, $licenceType)
+    {
+        if (!in_array($licenceType, self::$establishmentAllowedLicTypes, true)) {
+            $this->getFormHelper()
+                ->remove($form, 'establishment')
                 ->remove($form, 'establishment_address');
         }
-
-        return $form;
     }
 }
