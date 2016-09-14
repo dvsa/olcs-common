@@ -25,11 +25,13 @@ abstract class AbstractVariationController extends AbstractController
         if (! ($form instanceof Form)) {
             return $form;
         }
+        
+        $translator = $this->getServiceLocator()->get('translator');
 
         return $this->render(
             'create-variation-confirmation',
             $form,
-            ['sectionText' => 'licence.variation.confirmation.text']
+            ['sectionText' => $translator->translate('markup-licence-changes-confirmation-text')]
         );
     }
 }
