@@ -18,6 +18,11 @@ abstract class AbstractVariationController extends AbstractController
 {
     use Traits\CreateVariationTrait;
 
+    /**
+     * Index action
+     *
+     * @return \Common\View\Model\Section
+     */
     public function indexAction()
     {
         $form = $this->processForm();
@@ -25,8 +30,8 @@ abstract class AbstractVariationController extends AbstractController
         if (! ($form instanceof Form)) {
             return $form;
         }
-        
-        $translator = $this->getServiceLocator()->get('translator');
+
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
 
         return $this->render(
             'create-variation-confirmation',

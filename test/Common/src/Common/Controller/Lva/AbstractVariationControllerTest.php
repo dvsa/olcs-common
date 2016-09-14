@@ -39,7 +39,14 @@ class AbstractVariationControllerTest extends MockeryTestCase
     {
         // Mocks
         $mockProcessingService = m::mock();
+        $mockTranslator = m::mock();
+
+        $mockTranslator->shouldReceive('translate')
+            ->andReturn('sometext');
+
         $this->sm->setService('Processing\CreateVariation', $mockProcessingService);
+        $this->sm->setService('Helper\Translation', $mockTranslator);
+
         $mockRequest = m::mock();
         $mockForm = m::mock('\Zend\Form\Form');
 
@@ -50,7 +57,7 @@ class AbstractVariationControllerTest extends MockeryTestCase
             ->with(
                 'create-variation-confirmation',
                 $mockForm,
-                ['sectionText' => 'licence.variation.confirmation.text']
+                ['sectionText' => 'sometext']
             )
             ->andReturn('RENDER');
 
