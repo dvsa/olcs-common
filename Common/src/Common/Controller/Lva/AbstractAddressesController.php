@@ -6,6 +6,7 @@ use Common\Data\Mapper;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
 use Zend\Form\Form;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Shared logic between Addresses controllers
@@ -28,33 +29,51 @@ abstract class AbstractAddressesController extends AbstractController
     protected $hlpFlashMsgr;
 
     /**
+     * Add functionality (use like factory)
+     *
+     * @param MvcEvent $e Mvc Event
+     *
+     * @inheritdoc
+     * @return mixed
+     */
+    public function onDispatch(MvcEvent $e)
+    {
+        $this->hlpForm = $this->getServiceLocator()->get('Helper\Form');
+        $this->hlpFlashMsgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+        return parent::onDispatch($e);
+    }
+
+    /**
      * Process action - Index
      *
      * @return \Common\Service\Cqrs\Response|\Common\View\Model\Section
      */
     public function indexAction()
     {
-        $this->initHelpers();
-
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
-
-        //  get api data
-        $response = $this->handleQuery(
-            TransferQry\Licence\Addresses::create(['id' => $this->getLicenceId()])
-        );
-
-        if (!$response->isOk()) {
-            return $this->notFoundAction();
-        }
-
-        $apiData = $response->getResult();
 
         //  prepare form data
         if ($request->isPost()) {
             $formData = (array)$request->getPost();
         } else {
-            $formData = Mapper\Lva\Addresses::mapFromResult($apiData);
+            //  get api data
+            $response = $this->handleQuery(
+                TransferQry\Licence\Addresses::create(['id' => $this->getLicenceId()])
+            );
+
+            if (!$response->isOk()) {
+                return $this->notFoundAction();
+            }
+
+            $formData = Mapper\Lva\Addresses::mapFromResult($response->getResult());
+        }
+
+        //  get phone contacts from api
+        $apiPhoneContactsData = [];
+        if (isset($formData['correspondence']['id'])) {
+            $apiPhoneContactsData = $this->getPhoneContacts($formData['correspondence']['id']);
         }
 
         /** @var \Common\Form\Form $form */
@@ -64,7 +83,7 @@ abstract class AbstractAddressesController extends AbstractController
             ->getForm(
                 [
                     'typeOfLicence' => $this->getTypeOfLicenceData(),
-                    'apiData' => $apiData,
+                    'corrPhoneContacts' => $apiPhoneContactsData,
                 ]
             )
             ->setData($formData);
@@ -90,6 +109,18 @@ abstract class AbstractAddressesController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFiles(['forms/addresses']);
 
         return $this->render('addresses', $form);
+    }
+
+    /**
+     * Get Correspondence Phone contacts
+     *
+     * @param int $contactDetailsId Contact Details Id
+     *
+     * @return array
+     */
+    protected function getPhoneContacts($contactDetailsId = null)
+    {
+        return [];
     }
 
     /**
@@ -139,17 +170,6 @@ abstract class AbstractAddressesController extends AbstractController
         }
 
         return null;
-    }
-
-    /**
-     * Initialize helpers and services
-     *
-     * @return void
-     */
-    protected function initHelpers()
-    {
-        $this->hlpForm = $this->getServiceLocator()->get('Helper\Form');
-        $this->hlpFlashMsgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
     }
 
     /**
