@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Translate formatter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Table\Formatter;
 
 /**
@@ -17,23 +12,19 @@ class Translate implements FormatterInterface
     /**
      * Translate value
      *
-     * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param array                               $data   Data
+     * @param array                               $column Column parameters
+     * @param \Zend\ServiceManager\ServiceManager $sm     Service manager
+     *
      * @return string
      */
     public static function format($data, $column = array(), $sm = null)
     {
         if (isset($column['name'])) {
-
-            $name = $column['name'];
-            while (strstr($name, '->')) {
-                list($index, $name) = explode('->', $name, 2);
-
-                $data = $data[$index];
-            }
-
-            return $sm->get('translator')->translate($data[$name]);
+            return $sm->get('translator')->translate(
+                $sm->get('Helper\Data')
+                    ->fetchNestedData($data, $column['name'])
+            );
         }
 
         if (isset($column['content'])) {
