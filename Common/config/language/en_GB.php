@@ -2858,5 +2858,7 @@ return [
     'Community-licence-changes-contact-office' => 'If you wish to request additional community licences, please contact the central office',
     'tm-review-return-address' => 'Office of the Traffic Commissioner, The Central Licensing Office, Hillcrest House, 386 Harehills Lane, Leeds, LS9 6NF',
     'selfserve-app-overview-status-cant-start' => 'Can\'t start yet',
+    'interim.status.title' => 'Interim status',
+    'interim.start.title' => 'Interim start date',
     // Potentially unused translations
 ];
