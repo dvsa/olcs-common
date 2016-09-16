@@ -122,8 +122,6 @@ trait CommonApplicationControllerTrait
      */
     protected function completeSection($section, $prg = [])
     {
-        $this->addSectionUpdatedMessage($section);
-
         if ($this->isButtonPressed('saveAndContinue', $prg)) {
             return $this->goToNextSection($section);
         }
