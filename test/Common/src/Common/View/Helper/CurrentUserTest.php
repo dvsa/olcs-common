@@ -178,6 +178,35 @@ class CurrentUserTest extends MockeryTestCase
     }
 
     /**
+     * @dataProvider provideIsOperator
+     * @param $userData
+     * @param $expected
+     */
+    public function testIsOperator($userData, $expected)
+    {
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals($expected, $sut->isOperator());
+    }
+
+    public function provideIsOperator()
+    {
+        return [
+            [[], false],
+            [['userType' => User::USER_TYPE_ANON], false],
+            [['userType' => User::USER_TYPE_OPERATOR], true],
+            [['userType' => User::USER_TYPE_LOCAL_AUTHORITY], false],
+            [['userType' => User::USER_TYPE_PARTNER], false],
+        ];
+    }
+
+    /**
      * @dataProvider provideGetUniqueId
      * @param $userData
      * @param $expected
