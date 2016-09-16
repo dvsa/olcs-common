@@ -688,6 +688,7 @@ return [
     'selfserve-dashboard-target-start-date' => 'Dyddiad cychwyn',
     'selfserve-dashboard-topnav-home' => 'Hafan',
     'selfserve-dashboard-topnav-bus-registrations' => 'Cofrestriadau Bws',
+    'selfserve-dashboard-topnav-sign-out' => 'Allgofnodi',
     'selfserve-fees-table-fee-description' => 'Disgrifiad',
     'selfserve-fees-table-fee-licence-outstanding' => 'Dros ben',
     'short-label-financial-history-additional-information' => 'Gwybodaeth ychwanegol',
