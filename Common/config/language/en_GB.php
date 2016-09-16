@@ -2855,7 +2855,7 @@ return [
     'confirm-email-address' => 'Confirm email address',
     'common.form.validation.checkbox.not_same' => 'Check box to continue',
     'common.form.validation.company_number.too_long' => 'The company number cannot be more than 8 characters',
-    'common.form.validation.company_number.not_alnum' => 'Must be 8 digits; alpha-numeric characters allowed; no special characters; mandatory when displayed',
+    'common.form.validation.company_number.not_alnum' => 'Must be a valid companies house number and can only include letters or numbers',
     'tasks.search.error.filter.needed' => 'Please filter by either a team or a category.',
     'Section-updated-successfully-message-suffix' => 'section has been updated',
     'Selfserve-business-registered-company-description' => 'If you don\'t have your company number, or you\'re having problems retrieving your company details, enter them below.',
