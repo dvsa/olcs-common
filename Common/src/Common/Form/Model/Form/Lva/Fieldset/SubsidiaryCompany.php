@@ -30,22 +30,16 @@ class SubsidiaryCompany
     public $name = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":"","pattern":"\d*"})
+     * @Form\Attributes({
+     *     "class":"long",
+     *     "id":"",
+     *     "pattern":"\d*"
+     * })
      * @Form\Options({
      *     "label":"application_your-business_business-details-formCompanyNo",
      *     "error-message": "subsidiary-company-number-error"
      * })
-     * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":8,"max":8}})
-     * @Form\Validator({
-     *     "name": "Alnum",
-     *     "options": {
-     *         "messages": {
-     *             "notAlnum": "Must be 8 digits; alpha-numeric characters allowed; no special characters; mandatory when displayed"
-     *         }
-     *     }
-     * })
+     * @Form\Type("Common\Form\Elements\InputFilters\CompanyNumber")
      */
     public $companyNo = null;
 }
