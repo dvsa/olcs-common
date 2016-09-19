@@ -463,7 +463,6 @@ return array(
         'factories' => [
             'Common\Service\Data\Venue' => 'Common\Service\Data\Venue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
-            'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>
                 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\Data\ApplicationOperatingCentre' =>
