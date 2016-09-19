@@ -84,18 +84,10 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
             ],
             [
                 'title' => 'Address',
-                'formatter' => function ($row) {
-
-                    $address = [
-
-                        $row['street'],
-                        $row['locality'],
-                        '<br />' . $row['town'],
-                        $row['postcode']
-                    ];
-
-                    return implode(', ', $address);
-                }
+                'formatter' => 'Address',
+                'addressFields' => [
+                    'street', 'locality', 'town', 'postcode'
+                ]
             ],
         ];
     }
