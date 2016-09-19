@@ -53,6 +53,19 @@ class FileController extends ZendAbstractActionController
             throw new \RuntimeException('Error downloading file');
         }
 
-        return $downloadResponse->getHttpResponse();
+        $response = $downloadResponse->getHttpResponse();
+
+        // Construct a new response from the one from api
+        $newResponse = new Response();
+        $newResponse->setContent($response->getContent());
+
+        $headers = new \Zend\Http\Headers();
+        $newResponse->setContent($response->getContent());
+        $headers->addHeader($response->getHeaders()->get('contentlength'));
+        $headers->addHeader($response->getHeaders()->get('contentdisposition'));
+        $headers->addHeader($response->getHeaders()->get('contenttype'));
+        $newResponse->setHeaders($headers);
+
+        return $newResponse;
     }
 }
