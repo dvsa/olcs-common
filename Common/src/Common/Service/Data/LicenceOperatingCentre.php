@@ -8,7 +8,7 @@ use Zend\ServiceManager\FactoryInterface;
  * Class LicenceOperatingCentre
  * @package Olcs\Service
  */
-class LicenceOperatingCentre extends AbstractData implements FactoryInterface, ListDataInterface
+class LicenceOperatingCentre extends AbstractDataService implements FactoryInterface, ListDataInterface
 {
     use LicenceServiceTrait;
 
@@ -24,11 +24,6 @@ class LicenceOperatingCentre extends AbstractData implements FactoryInterface, L
      * @var int
      */
     protected $outputType = self::OUTPUT_TYPE_FULL;
-
-    /**
-     * @var string
-     */
-    protected $serviceName = 'LicenceOperatingCentre';
 
     /**
      * @param integer|null $id

@@ -11,10 +11,7 @@ use Zend\ServiceManager\FactoryInterface;
  * Class OcContextListDataService
  * @package Olcs\Service
  */
-class OcContextListDataService extends AbstractData implements
-    FactoryInterface,
-    ListDataInterface,
-    ServiceLocatorAwareInterface
+class OcContextListDataService implements FactoryInterface, ListDataInterface, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 

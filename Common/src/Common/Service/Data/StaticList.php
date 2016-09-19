@@ -11,7 +11,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * Class StaticList
  * @package Common\Service
  */
-class StaticList extends AbstractData implements ListData, ServiceLocatorAwareInterface
+class StaticList implements ListData, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 

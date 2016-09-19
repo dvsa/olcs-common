@@ -5,7 +5,6 @@ namespace OlcsTest\Service\Data;
 use CommonTest\Bootstrap;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\ApplicationOperatingCentre;
-use Common\Service\Entity\ApplicationEntityService;
 use Mockery as m;
 
 /**
@@ -29,18 +28,6 @@ class ApplicationOperatingCentreTest extends MockeryTestCase
         $this->serviceManager = Bootstrap::getServiceManager();
         $this->sut = new ApplicationOperatingCentre();
 
-    }
-
-    public function testGetServiceName()
-    {
-        $this->assertEquals('ApplicationOperatingCentre', $this->sut->getServiceName());
-    }
-
-    public function testGetBundle()
-    {
-        $bundle = $this->sut->getBundle();
-        $this->assertInternalType('array', $bundle);
-        $this->assertArrayHasKey('operatingCentres', $bundle['children']);
     }
 
     public function testGetId()
@@ -89,7 +76,7 @@ class ApplicationOperatingCentreTest extends MockeryTestCase
 
         $mockApplicationService
             ->shouldReceive('fetchOperatingCentreData')
-            ->with($id, m::type('array'))
+            ->with($id)
             ->andReturn($mockData);
 
         $this->sut->setApplicationService($mockApplicationService);
@@ -132,7 +119,7 @@ class ApplicationOperatingCentreTest extends MockeryTestCase
 
         $mockApplicationService
             ->shouldReceive('fetchOperatingCentreData')
-            ->with($id, m::type('array'))
+            ->with($id)
             ->andReturn($mockData);
 
         $this->sut->setApplicationService($mockApplicationService);

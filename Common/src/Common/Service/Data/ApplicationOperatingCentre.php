@@ -8,7 +8,7 @@ use Zend\ServiceManager\FactoryInterface;
  * Class ApplicationOperatingCentre
  * @package Olcs\Service
  */
-class ApplicationOperatingCentre extends AbstractData implements FactoryInterface, ListDataInterface
+class ApplicationOperatingCentre extends AbstractDataService implements FactoryInterface, ListDataInterface
 {
     use ApplicationServiceTrait;
 
@@ -26,11 +26,6 @@ class ApplicationOperatingCentre extends AbstractData implements FactoryInterfac
     protected $outputType = self::OUTPUT_TYPE_FULL;
 
     /**
-     * @var string
-     */
-    protected $serviceName = 'ApplicationOperatingCentre';
-
-    /**
      * @param integer|null $id
      * @param array|null $bundle
      * @return array
@@ -40,7 +35,7 @@ class ApplicationOperatingCentre extends AbstractData implements FactoryInterfac
         $id = $this->getId();
         if (is_null($this->getData($id))) {
             $data = array();
-            $rawData =  $this->getApplicationService()->fetchOperatingCentreData($this->getId(), $this->getBundle());
+            $rawData =  $this->getApplicationService()->fetchOperatingCentreData($this->getId());
 
             if (is_array($rawData['operatingCentres'])) {
                 $outputType = $this->getOutputType();
@@ -71,29 +66,6 @@ class ApplicationOperatingCentre extends AbstractData implements FactoryInterfac
             $this->setData($id, $data);
         }
         return $this->getData($id);
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getBundle()
-    {
-        $bundle = array(
-            'children' => array(
-                'operatingCentres' => array(
-                    'children' => array(
-                        'operatingCentre' => array(
-                            'children' => array(
-                                'address'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        return $bundle;
     }
 
     /**
