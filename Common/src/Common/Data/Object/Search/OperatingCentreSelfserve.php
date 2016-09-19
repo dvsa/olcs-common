@@ -33,6 +33,8 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
     protected $filters = [];
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -65,6 +67,8 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     * 
      * @return array
      */
     public function getColumns()
