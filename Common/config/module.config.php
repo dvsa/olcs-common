@@ -244,6 +244,7 @@ return array(
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             Common\Service\Data\SiCategoryType::class => Common\Service\Data\SiCategoryType::class,
+            'staticList' => Common\Service\Data\StaticList::class,
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -277,7 +278,6 @@ return array(
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'category' => '\Common\Service\Data\CategoryDataService',
-            'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
