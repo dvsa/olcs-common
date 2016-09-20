@@ -268,7 +268,6 @@ return array(
                 Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\Data\ApplicationOperatingCentre' => 'Common\Service\Data\ApplicationOperatingCentre',
-            'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
             'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
@@ -457,9 +456,6 @@ return array(
         ]
     ],
     'data_services' => [
-        'abstract_factories' => [
-            'Common\Service\Data\DataServiceAbstractFactory'
-        ],
         'factories' => [
             'Common\Service\Data\Venue' => 'Common\Service\Data\Venue',
             'Common\Service\Data\LicenceOperatingCentre' =>
