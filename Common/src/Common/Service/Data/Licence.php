@@ -2,13 +2,14 @@
 
 namespace Common\Service\Data;
 
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence as LicenceQry;
 use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as OcQry;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Class Licence
- * @package Olcs\Service
+ *
+ * @package Olcs\Service\Data
  */
 class Licence extends AbstractDataService
 {
@@ -18,8 +19,12 @@ class Licence extends AbstractDataService
     protected $id;
 
     /**
-     * @param integer|null $id
+     * Fetch licence data
+     *
+     * @param int|null $id Id
+     *
      * @return array
+     * @throw UnexpectedResponseException
      */
     public function fetchLicenceData($id = null)
     {
@@ -32,18 +37,23 @@ class Licence extends AbstractDataService
         if (is_null($this->getData($id))) {
             $dtoData = LicenceQry::create(['id' => $id]);
             $response = $this->handleQuery($dtoData);
+
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $data = $response->getResult();
             $this->setData($id, $data);
         }
+
         return $this->getData($id);
     }
 
     /**
      * Fetches an array of OperatingCentres for the licence.
-     * @param null $id
+     *
+     * @param int|null $id Id
+     *
      * @return array
      */
     public function fetchOperatingCentreData($id = null)
@@ -57,6 +67,7 @@ class Licence extends AbstractDataService
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $data = $response->getResult();
 
             $this->setData('oc_' .$id, $data);
@@ -66,17 +77,23 @@ class Licence extends AbstractDataService
     }
 
     /**
-     * @param integer $id
+     * Set id
+     *
+     * @param int $id Id
+     *
      * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
     /**
-     * @return integer
+     * Get id
+     *
+     * @return int
      */
     public function getId()
     {

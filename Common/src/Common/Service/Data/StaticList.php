@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
@@ -9,15 +8,19 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Class StaticList
- * @package Common\Service
+ *
+ * @package Common\Service\Data
  */
 class StaticList implements ListData, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
     /**
-     * @param $context
-     * @param bool $useGroups
+     * Fetch list options
+     *
+     * @param string $context   Context
+     * @param bool   $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($context, $useGroups = false)
@@ -34,7 +37,8 @@ class StaticList implements ListData, ServiceLocatorAwareInterface
     /**
      * Get static list data from config
      *
-     * @param string $context
+     * @param string $context Context
+     *
      * @return array
      */
     public function fetchListData($context)

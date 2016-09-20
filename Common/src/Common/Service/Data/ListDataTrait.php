@@ -12,7 +12,10 @@ namespace Common\Service\Data;
 trait ListDataTrait
 {
     /**
-     * @param $data
+     * Format data for groups
+     *
+     * @param array $data Data
+     *
      * @return array
      */
     public function formatDataForGroups($data)
@@ -37,7 +40,10 @@ trait ListDataTrait
     }
 
     /**
-     * @param array $data
+     * Format data
+     *
+     * @param array $data Data
+     *
      * @return array
      */
     public function formatData(array $data)
@@ -52,8 +58,11 @@ trait ListDataTrait
     }
 
     /**
-     * @param $context
-     * @param bool $useGroups
+     * Fetch list options
+     *
+     * @param array|string $context   Context
+     * @param bool         $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($context, $useGroups = false)
@@ -74,11 +83,11 @@ trait ListDataTrait
     /**
      * Look up a property based on a key with a known value
      *
-     * @param string $key
-     * @param string $property
-     * @param mixed  $value
+     * @param string $key      Key
+     * @param string $property Property
+     * @param mixed  $value    Value
      *
-     * @return mixed
+     * @return mixed|null
      */
     private function getPropertyFromKey($key, $property, $value)
     {
@@ -93,7 +102,10 @@ trait ListDataTrait
     }
 
     /**
-     * @param $context
+     * Fetch list data
+     *
+     * @param array|string $context Context
+     *
      * @return array
      */
     abstract public function fetchListData($context);

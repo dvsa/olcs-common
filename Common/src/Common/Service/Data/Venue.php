@@ -2,14 +2,15 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\AbstractDataService;
-use Dvsa\Olcs\Transfer\Query\Venue\VenueList;
+use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Dvsa\Olcs\Transfer\Query\Venue\VenueList;
 use Zend\ServiceManager\FactoryInterface;
 
 /**
  * Class Venue
+ *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
@@ -18,9 +19,10 @@ class Venue extends AbstractDataService implements ListData, FactoryInterface
     use LicenceServiceTrait;
 
     /**
-     * Format data!
+     * Format data
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     public function formatData(array $data)
@@ -35,8 +37,11 @@ class Venue extends AbstractDataService implements ListData, FactoryInterface
     }
 
     /**
-     * @param $category
-     * @param bool $useGroups
+     * Fetch list options
+     *
+     * @param string $category  Category
+     * @param bool   $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($category, $useGroups = false)
@@ -53,9 +58,10 @@ class Venue extends AbstractDataService implements ListData, FactoryInterface
     }
 
     /**
-     * Ensures only a single call is made to the backend for each dataset
+     * Fetch list data
      *
-     * @internal param $category
+     * @param array $params Params
+     *
      * @return array
      */
     public function fetchListData($params)
@@ -72,7 +78,9 @@ class Venue extends AbstractDataService implements ListData, FactoryInterface
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $this->setData('Venue', false);
+
             if (isset($response->getResult()['results'])) {
                 $this->setData('Venue', $response->getResult()['results']);
             }

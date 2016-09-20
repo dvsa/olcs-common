@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Category Data Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Data;
 
 /**

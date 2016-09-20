@@ -2,14 +2,15 @@
 
 namespace Common\Service\Data;
 
+use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\FactoryInterface;
 
 /**
  * Class OcContextListDataService
- * @package Olcs\Service
+ *
+ * @package Olcs\Service\Data
  */
 class OcContextListDataService implements FactoryInterface, ListDataInterface, ServiceLocatorAwareInterface
 {
@@ -18,8 +19,9 @@ class OcContextListDataService implements FactoryInterface, ListDataInterface, S
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
+     * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -32,18 +34,21 @@ class OcContextListDataService implements FactoryInterface, ListDataInterface, S
      * Calls either the LicenceOperatingCentre List data service or  the ApplicationOperatingCentre list data service
      * to return a list of OCs associated with either the licence or application
      *
-     * @param null $context
-     * @param bool $useGroups
+     * @param array|string $context   Context
+     * @param bool         $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($context, $useGroups = false)
     {
         if ($context == 'licence') {
             return $this->getServiceLocator('DataServiceManager')
-                ->get('Common\Service\Data\LicenceOperatingCentre')->fetchListOptions($context, $useGroups);
+                ->get('Common\Service\Data\LicenceOperatingCentre')
+                ->fetchListOptions($context, $useGroups);
         } elseif ($context == 'application') {
             return $this->getServiceLocator('DataServiceManager')
-                ->get('Common\Service\Data\ApplicationOperatingCentre')->fetchListOptions($context, $useGroups);
+                ->get('Common\Service\Data\ApplicationOperatingCentre')
+                ->fetchListOptions($context, $useGroups);
         }
 
         return [];

@@ -9,22 +9,23 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Class UserTypesListDataService
  * Provides list options for user types
  *
- * @package Olcs\Service
+ * @package Olcs\Service\Data
  */
 class UserTypesListDataService implements FactoryInterface, ListDataInterface
 {
-
     /**
      * RefData Service
+     *
      * @var string
      */
     protected $refDataService;
 
     /**
-     * Filters out all options but those allowable / implemented
+     * Fetch list options
      *
-     * @param null $context
-     * @param bool $useGroups
+     * @param array|string $context   Context
+     * @param bool         $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($context = null, $useGroups = false)
@@ -41,8 +42,9 @@ class UserTypesListDataService implements FactoryInterface, ListDataInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
+     * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -52,15 +54,23 @@ class UserTypesListDataService implements FactoryInterface, ListDataInterface
     }
 
     /**
-     * @param string $refDataService
+     * Set RefData service
+     *
+     * @param \Common\Service\Data\RefData $refDataService RefData service
+     *
+     * @return $this
      */
     public function setRefDataService($refDataService)
     {
         $this->refDataService = $refDataService;
+
+        return $this;
     }
 
     /**
-     * @return string
+     * Get RefData service
+     *
+     * @return \Common\Service\Data\RefData
      */
     public function getRefDataService()
     {

@@ -14,8 +14,9 @@ interface ListData
      * data as a multi dimensioned array suitable for display in opt-groups. It is permissible for the method to ignore
      * this flag if the data doesn't allow for option groups to be constructed.
      *
-     * @param mixed $context
-     * @param bool $useGroups
+     * @param array|string $context   Context
+     * @param bool         $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($context, $useGroups = false);

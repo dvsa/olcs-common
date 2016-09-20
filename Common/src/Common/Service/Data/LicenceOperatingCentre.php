@@ -6,7 +6,8 @@ use Zend\ServiceManager\FactoryInterface;
 
 /**
  * Class LicenceOperatingCentre
- * @package Olcs\Service
+ *
+ * @package Olcs\Service\Data
  */
 class LicenceOperatingCentre extends AbstractDataService implements FactoryInterface, ListDataInterface
 {
@@ -16,7 +17,7 @@ class LicenceOperatingCentre extends AbstractDataService implements FactoryInter
     const OUTPUT_TYPE_PARTIAL = 2;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -26,8 +27,11 @@ class LicenceOperatingCentre extends AbstractDataService implements FactoryInter
     protected $outputType = self::OUTPUT_TYPE_FULL;
 
     /**
-     * @param integer|null $id
-     * @param array|null $bundle
+     * Fetch list options
+     *
+     * @param array|string $context   Context
+     * @param bool         $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($context = null, $useGroups = false)
@@ -37,40 +41,36 @@ class LicenceOperatingCentre extends AbstractDataService implements FactoryInter
         if (is_null($this->getData($id))) {
             $data = array();
             $rawData =  $this->getLicenceService()->fetchOperatingCentreData($this->getId());
+
             if (is_array($rawData['operatingCentres'])) {
                 $outputType = $this->getOutputType();
-                foreach ($rawData['operatingCentres'] as $licenceOperatingCentre) {
 
-                    if ($outputType == self::OUTPUT_TYPE_PARTIAL) {
-                        $fields = [
-                            'addressLine1',
-                            'town'
-                        ];
-                    } else {
-                        $fields = [
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'town',
-                            'postcode',
-                        ];
-                    }
+                $fields = ($outputType == self::OUTPUT_TYPE_PARTIAL)
+                    ? ['addressLine1', 'town']
+                    : ['addressLine1', 'addressLine2', 'addressLine3', 'addressLine4', 'town', 'postcode'];
+
+                foreach ($rawData['operatingCentres'] as $licenceOperatingCentre) {
                     $addressString = '';
+
                     foreach ($fields as $field) {
                         $addressString .= !empty($licenceOperatingCentre['operatingCentre']['address'][$field]) ?
                             $licenceOperatingCentre['operatingCentre']['address'][$field] . ', ' : '';
                     }
+
                     $data[$licenceOperatingCentre['operatingCentre']['id']] = substr($addressString, 0, -2);
                 }
             }
+
             $this->setData($id, $data);
         }
+
         return $this->getData($id);
     }
 
     /**
-     * @return integer
+     * Get id
+     *
+     * @return int
      */
     public function getId()
     {
@@ -78,6 +78,8 @@ class LicenceOperatingCentre extends AbstractDataService implements FactoryInter
     }
 
     /**
+     * Get output type
+     *
      * @return int
      */
     public function getOutputType()
@@ -86,10 +88,16 @@ class LicenceOperatingCentre extends AbstractDataService implements FactoryInter
     }
 
     /**
-     * @param int $outputType
+     * Set output type
+     *
+     * @param int $outputType Output type
+     *
+     * @return $this
      */
     public function setOutputType($outputType)
     {
         $this->outputType = $outputType;
+
+        return $this;
     }
 }
