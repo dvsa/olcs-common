@@ -7,18 +7,24 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Type\OperatingCentreVariationRecordAction;
 
 /**
- * OperatingCentreVariationRecordActionTest
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @covers Common\Service\Table\Type\OperatingCentreVariationRecordAction
  */
 class OperatingCentreVariationRecordActionTest extends MockeryTestCase
 {
+    /** @var  OperatingCentreVariationRecordAction */
     protected $sut;
+    /** @var  m\MockInterface */
     protected $table;
 
     public function setUp()
     {
-        $this->table = m::mock();
+        $mockTranslator = m::mock(\Zend\I18n\Translator\TranslatorInterface::class);
+
+        $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockSm->shouldReceive('get')->once()->with('translator')->andReturn($mockTranslator);
+
+        $this->table = m::mock(\Common\Service\Table\TableBuilder::class);
+        $this->table->shouldReceive('getServiceLocator')->once()->andReturn($mockSm);
 
         $this->sut = new OperatingCentreVariationRecordAction($this->table);
     }

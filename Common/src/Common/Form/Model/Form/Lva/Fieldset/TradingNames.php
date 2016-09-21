@@ -15,8 +15,7 @@ class TradingNames
      *   "class":"add-another"
      * })
      * @Form\Options({
-     *      "hint":"<input aria-label='business-details.trading-name.add.hint' type='submit'
-     *                     name='data[tradingNames][submit_add_trading_name]' value='Add another' />",
+     *      "hint":"markup-trading-name-hint",
      *      "hint_at_bottom":true,
      *      "count":1,
      *      "wrapElements":false,

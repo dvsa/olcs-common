@@ -17,8 +17,8 @@ class MultipleFileUpload
      *   "class": "js-visually-hidden"
      * })
      * @Form\Options({
-     *     "value": "Attach file(s)",
-     *     "hint": "PDF, DOC, JPG, PNG or GIF"
+     *     "value": "common.file-upload.browse.title",
+     *     "hint": "common.file-upload.browse.hint"
      * })
      * @Form\Type("\Common\Form\Elements\Types\AttachFilesButton")
      */
@@ -42,7 +42,11 @@ class MultipleFileUpload
     public $messages = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"inline-upload action--primary js-upload", "value": "Upload"})
+     * @Form\Attributes({
+     *     "type":"submit",
+     *     "class":"inline-upload action--primary js-upload",
+     *     "value": "Upload",
+     * })
      * @Form\Options({
      *     "label": "Upload"
      * })

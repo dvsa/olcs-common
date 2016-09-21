@@ -1,13 +1,8 @@
 <?php
 
-/**
- * TransportManagerName Formatter
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 namespace Common\Service\Table\Formatter;
 
-use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * TransportManagerName Formatter
@@ -16,7 +11,16 @@ use Common\Service\Entity\TransportManagerApplicationEntityService;
  */
 class TransportManagerName extends Name
 {
-    public static function format($data, $column = array(), $sm = null)
+    /**
+     * Format
+     *
+     * @param array                   $data   Row Data
+     * @param array                   $column Col params
+     * @param ServiceLocatorInterface $sm     Service manager
+     *
+     * @return string
+     */
+    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
     {
         $name = parent::format($data['name'], $column, $sm);
 
@@ -95,9 +99,10 @@ class TransportManagerName extends Name
     /**
      * Get URL for the Transport Managers name
      *
-     * @param array $data
-     * @param \Zend\ServiceManager\ServiceManager $sm
-     * @param string $lva
+     * @param array                   $data Row Data
+     * @param ServiceLocatorInterface $sm   Service manager
+     * @param string                  $lva  Type (Lic|Var|App)
+     *
      * @return string
      */
     protected static function getExternalUrl($data, $sm, $lva)
@@ -113,8 +118,9 @@ class TransportManagerName extends Name
     /**
      * Get URL for the Transport Managers name
      *
-     * @param array $data
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param array                   $data Row Data
+     * @param ServiceLocatorInterface $sm   Service manager
+     *
      * @return string
      */
     protected static function getInternalUrl($data, $sm)
@@ -131,8 +137,9 @@ class TransportManagerName extends Name
     /**
      * Convert action eg "U" into its description
      *
-     * @param string $data
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param string                  $data Row Data
+     * @param ServiceLocatorInterface $sm   Service Manager
+     *
      * @return string Description
      */
     protected static function getActionName($data, $sm)
@@ -156,7 +163,9 @@ class TransportManagerName extends Name
     /**
      * Get the html for the status
      *
-     * @param array $data
+     * @param array                   $data Row Data
+     * @param ServiceLocatorInterface $sm   Service Manager
+     *
      * @return string HTML
      */
     protected static function getStatusHtml($data, $sm)

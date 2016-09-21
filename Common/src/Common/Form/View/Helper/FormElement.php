@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Render form
- *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\FormElement as ZendFormElement;
@@ -54,7 +47,8 @@ class FormElement extends ZendFormElement
      * Introspects the element type and attributes to determine which
      * helper to utilize when rendering.
      *
-     * @param  ZendElementInterface $element
+     * @param ZendElementInterface $element Form Element
+     *
      * @return string
      */
     public function render(ZendElementInterface $element)
@@ -63,6 +57,7 @@ class FormElement extends ZendFormElement
             $element->setAttribute('id', $element->getName());
         }
 
+        /** @var \Zend\View\Renderer\PhpRenderer $renderer */
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {
             return '';
@@ -85,6 +80,7 @@ class FormElement extends ZendFormElement
         }
 
         if ($element instanceof PlainText) {
+            /** @var callable $helper */
             $helper = $renderer->plugin('form_plain_text');
             return $helper($element);
         }
@@ -162,7 +158,6 @@ class FormElement extends ZendFormElement
         }
 
         if ($element instanceof AttachFilesButton) {
-
             $attributes = $element->getAttributes();
             if (!isset($attributes['class'])) {
                 $attributes['class'] = '';
@@ -172,8 +167,8 @@ class FormElement extends ZendFormElement
 
             $element->setAttributes($attributes);
 
-            $label = $element->getOption('value');
-            $hint = $element->getOption('hint');
+            $label = $renderer->translate($element->getOption('value'));
+            $hint = $renderer->translate($element->getOption('hint'));
 
             return sprintf(
                 self::FILE_CHOOSE_WRAPPER,
@@ -190,12 +185,10 @@ class FormElement extends ZendFormElement
         $markup = parent::render($element);
 
         if ($element->getOption('hint')) {
-
-            $view = $this->getView();
-            $hint = $view->translate($element->getOption('hint'));
+            $hint = $renderer->translate($element->getOption('hint'));
             $position = $element->getOption('hint-position');
 
-            if ($position == 'above') {
+            if ($position === 'above') {
                 return sprintf(self::$topFormat, $hint, $markup);
             }
 

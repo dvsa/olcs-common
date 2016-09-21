@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Data\Object\Search\Aggregations\Terms;
 
 /**
@@ -14,7 +15,7 @@ class TrafficArea extends TermsAbstract
      *
      * @var string
      */
-    protected $title = 'Traffic area';
+    protected $title = 'search.form.filter.traffic-area';
 
     /**
      * The actual name of the field to ask for filter information for.

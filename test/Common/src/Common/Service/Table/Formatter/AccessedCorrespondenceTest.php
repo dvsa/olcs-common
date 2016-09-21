@@ -1,72 +1,68 @@
 <?php
 
-/**
- * AccessedCorrespondenceTest.php
- */
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery as m;
-
 use Common\Service\Table\Formatter\AccessedCorrespondence;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Class AccessedCorrespondenceTest
- *
- * @package CommonTest\Service\Table\Formatter
+ * @covers Common\Service\Table\Formatter\AccessedCorrespondence
  */
-class AccessedCorrespondenceTest extends \PHPUnit_Framework_TestCase
+class AccessedCorrespondenceTest extends MockeryTestCase
 {
     /**
      * @dataProvider formatProvider
      */
-    public function testFormat($data, $expected)
+    public function testFormat($data, $isNew, $expected)
     {
-        $sm = m::mock()
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with(
-                        'correspondence/access',
-                        array(
-                            'correspondenceId' => $data['correspondence']['id']
-                        )
-                    )
-                    ->andReturn('LICENCE_URL')
-                    ->getMock()
-            );
+        $sm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $sm->shouldReceive('get->fromRoute')
+            ->with(
+                'correspondence/access',
+                array(
+                    'correspondenceId' => $data['correspondence']['id'],
+                )
+            )
+            ->andReturn('LICENCE_URL');
 
-        $this->assertEquals($expected, AccessedCorrespondence::format($data, array(), $sm->getMock()));
+        if ($isNew) {
+            $sm->shouldReceive('get->translate')->once()->andReturn('unit_New');
+        }
+
+        static::assertEquals($expected, AccessedCorrespondence::format($data, array(), $sm));
     }
 
     public function formatProvider()
     {
-        return array(
-            array(
-                array(
-                    'correspondence' => array(
+        return [
+            [
+                'data' => [
+                    'correspondence' => [
                         'id' => 1,
                         'accessed' => 'N',
-                        'document' => array(
-                            'description' => 'Description'
-                        )
-                    )
-                ),
-                '<a class="strong" href="LICENCE_URL"><b>Description</b></a><span class="status green">New</span> '
-            ),
-            array(
-                array(
-                    'correspondence' => array(
+                        'document' => [
+                            'description' => 'Description',
+                        ],
+                    ],
+                ],
+                'isNew' => true,
+                'expect' => '<a class="strong" href="LICENCE_URL"><b>Description</b></a>' .
+                    '<span class="status green">unit_New</span> ',
+            ],
+            [
+                'data' => [
+                    'correspondence' => [
                         'id' => 1,
                         'accessed' => 'Y',
-                        'document' => array(
-                            'description' => 'Description'
-                        )
-                    )
-                ),
-                '<a class="strong" href="LICENCE_URL"><b>Description</b></a>'
-            )
-        );
+                        'document' => [
+                            'description' => 'Description',
+                        ],
+                    ],
+                ],
+                'isNew' => false,
+                'expect' => '<a class="strong" href="LICENCE_URL"><b>Description</b></a>',
+            ],
+        ];
     }
 }

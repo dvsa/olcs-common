@@ -1,25 +1,35 @@
 <?php
 
-
 namespace CommonTest\Service\Table\Formatter;
 
-use PHPUnit_Framework_TestCase as TestCase;
 use Common\Service\Table\Formatter\RefData;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Class RefDataTest
- * @package CommonTest\Service\Table\Formatter
+ * @covers Common\Service\Table\Formatter\RefData
  */
-class RefDataTest extends TestCase
+class RefDataTest extends MockeryTestCase
 {
     public function testFormat()
     {
-        $sut = new RefData();
-        $result = $sut->format(
-            ['statusField' => ['id' => 'status_unknown', 'description' => 'Unknown']],
-            ['name' => 'statusField', 'formatter' => 'RefData']
+        $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockSm->shouldReceive('get->translate')->with('unit_TextKey')->andReturn('EXPECT');
+
+        $result = RefData::format(
+            [
+                'statusField' => [
+                    'id' => 'status_unknown',
+                    'description' => 'unit_TextKey',
+                ],
+            ],
+            [
+                'name' => 'statusField',
+                'formatter' => 'RefData',
+            ],
+            $mockSm
         );
 
-        $this->assertEquals('Unknown', $result);
+        static::assertEquals('EXPECT', $result);
     }
 }
