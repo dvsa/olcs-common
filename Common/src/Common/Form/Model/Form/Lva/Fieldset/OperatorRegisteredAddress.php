@@ -28,11 +28,11 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address lines"})
+     * @Form\Options({"label":"address_addressLines"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
@@ -40,11 +40,11 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 2","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine2","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -56,7 +56,7 @@ class OperatorRegisteredAddress
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 3","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine3","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -68,7 +68,7 @@ class OperatorRegisteredAddress
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 4","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_addressLine4","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -76,7 +76,7 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Town/city","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"address_townCity","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -84,7 +84,7 @@ class OperatorRegisteredAddress
 
     /**
      * @Form\Attributes({"id":""})
-     * @Form\Options({"label":"Postcode"})
+     * @Form\Options({"label":"address_postcode"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Dvsa\Olcs\Transfer\Filter\Postcode"})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});

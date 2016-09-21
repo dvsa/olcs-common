@@ -1,12 +1,8 @@
 <?php
 
-/**
- * YesNo formatter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Service\Table\Formatter;
+
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * YesNo formatter
@@ -18,12 +14,13 @@ class YesNo implements FormatterInterface
     /**
      * Format a address
      *
-     * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param array                   $data   Data
+     * @param array                   $column Column parameterd
+     * @param ServiceLocatorInterface $sm     Service Manager
+     *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
     {
         if (isset($column['stack'])) {
             if (is_string($column['stack'])) {
@@ -35,6 +32,10 @@ class YesNo implements FormatterInterface
             $value = $data[$column['name']];
         }
 
-        return ($value == 1 || $value === 'Y' ? 'Yes' : 'No');
+        return $sm->get('translator')->translate(
+            $value === 1 || $value === 'Y'
+            ? 'common.table.Yes'
+            : 'common.table.No'
+        );
     }
 }

@@ -35,7 +35,7 @@ class RegisteredAddress
      *   "data-container-class" : "compound"
      * })
      * @Form\Options({
-     *     "label":"Address lines",
+     *     "label":"address_addressLines",
      *     "label_attributes": {
      *         "aria-label": "Enter address manually. Business address line one"
      *     },
@@ -52,7 +52,10 @@ class RegisteredAddress
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 2","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({
+     *     "label":"address_addressLine2",
+     *     "label_attributes":{"class":"visually-hidden"}
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -64,7 +67,10 @@ class RegisteredAddress
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 3","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({
+     *     "label":"address_addressLine3",
+     *     "label_attributes":{"class":"visually-hidden"}
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -76,7 +82,10 @@ class RegisteredAddress
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
-     * @Form\Options({"label":"Address line 4","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({
+     *     "label":"address_addressLine4",
+     *     "label_attributes":{"class":"visually-hidden"}
+     * })
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -88,7 +97,7 @@ class RegisteredAddress
      *   "id" : ""
      * })
      * @Form\Options({
-     *    "label":"Town/city",
+     *    "label":"address_townCity",
      *    "label_attributes":{
      *        "class":"visually-hidden",
      *        "aria-label": "Business town or city"
@@ -102,7 +111,7 @@ class RegisteredAddress
     /**
      * @Form\Attributes({"id":""})
      * @Form\Options({
-     *    "label":"Postcode",
+     *    "label":"address_postcode",
      *    "label_attributes": {
      *        "aria-label": "Business Postcode"
      *    }

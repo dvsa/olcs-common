@@ -1,25 +1,19 @@
 <?php
 
-/**
- * Table Builder Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Service\Table;
 
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
 use CommonTest\Bootstrap;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Table Builder Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers Common\Service\Table\TableBuilder
  */
 class TableBuilderTest extends MockeryTestCase
 {
+    const TRANSLATED = '_TRSLTD_';
 
     /**
      * @todo the Date formatter now appears to rely on global constants defined
@@ -45,6 +39,17 @@ class TableBuilderTest extends MockeryTestCase
     private function getMockServiceLocator($config = true)
     {
         $mockTranslator = $this->getMock('\Zend\Mvc\I18n\TranslatorInterface', array('translate'));
+        $mockTranslator->expects(static::any())
+            ->method('translate')
+            ->willReturnCallback(
+                function ($desc) {
+                    if (!is_string($desc)) {
+                        return $desc;
+                    }
+
+                    return self::TRANSLATED . $desc;
+                }
+            );
 
         $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
         $mockControllerPluginManager = $this->getMock('\Zend\Mvc\Controller\PluginManager', array('get'));
@@ -401,12 +406,6 @@ class TableBuilderTest extends MockeryTestCase
 
         $table = new TableBuilder($sl);
 
-        $sl->get('translator')
-            ->expects($this->any())
-            ->method('translate')
-            ->with('Thing')
-            ->will($this->returnValue('Translated Thing'));
-
         $table->setVariable('title', 'Things');
         $table->setVariable('titleSingular', 'Thing');
 
@@ -415,8 +414,7 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals($data, $table->getRows());
 
         $this->assertEquals(1, $table->getTotal());
-
-        $this->assertEquals('Translated Thing', $table->getVariable('title'));
+        self::assertEquals(self::TRANSLATED . 'Thing', $table->getVariable('title'));
     }
 
     /**
@@ -507,7 +505,7 @@ class TableBuilderTest extends MockeryTestCase
         $expectedVariables = $params;
 
         $expectedVariables['foo'] = 'bar';
-        $expectedVariables['title'] = null;
+        $expectedVariables['title'] = self::TRANSLATED . 'Test';
 
         $expectedVariables['hidden'] = 'default';
         $expectedVariables['limit'] = 10;
@@ -1400,7 +1398,7 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/moreActions]}}',
                 [
                     'content' => 'more bar more cake ',
-                    'label' => null,
+                    'label' => self::TRANSLATED . 'table_button_more_actions',
                 ]
             );
 
@@ -1898,7 +1896,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $expectedColumn = array(
             'width' => '20px',
-            'title' => null,
+            'title' => self::TRANSLATED . 'Title',
         );
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));

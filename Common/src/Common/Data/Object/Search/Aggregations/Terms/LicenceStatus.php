@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Data\Object\Search\Aggregations\Terms;
 
 /**
@@ -14,7 +15,7 @@ class LicenceStatus extends TermsAbstract
      *
      * @var string
      */
-    protected $title = 'Licence status';
+    protected $title = 'search.form.filter.licence-status';
 
     /**
      * The actual name of the field to ask for filter information for.

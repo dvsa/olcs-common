@@ -1,29 +1,32 @@
 <?php
 
-/**
- * VariationRecordAction Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Service\Table\Type;
 
+use Common\Service\Table\Type\VariationRecordAction;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Type\VariationRecordAction;
 
 /**
- * VariationRecordAction Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers Common\Service\Table\Type\VariationRecordAction
  */
 class VariationRecordActionTest extends MockeryTestCase
 {
+    /** @var  VariationRecordAction */
     protected $sut;
+    /** @var  m\MockInterface */
     protected $table;
+    /** @var  m\MockInterface */
+    private $mockTranslator;
 
     public function setUp()
     {
-        $this->table = m::mock();
+        $this->mockTranslator = m::mock(\Zend\I18n\Translator\TranslatorInterface::class);
+
+        $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockSm->shouldReceive('get')->once()->with('translator')->andReturn($this->mockTranslator);
+
+        $this->table = m::mock(\Common\Service\Table\TableBuilder::class);
+        $this->table->shouldReceive('getServiceLocator')->once()->andReturn($mockSm);
 
         $this->sut = new VariationRecordAction($this->table);
     }
@@ -31,19 +34,27 @@ class VariationRecordActionTest extends MockeryTestCase
     /**
      * @dataProvider provider
      */
-    public function testRender($action, $expected)
+    public function testRender($action, $prefix, $expected)
     {
+        if ($prefix !== null) {
+            $this->mockTranslator
+                ->shouldReceive('translate')
+                ->once()
+                ->with('common.table.status.' . $prefix)
+                ->andReturn('TRSLTD_STATUS');
+        }
+
         $this->table->shouldReceive('getFieldset')
             ->andReturn('table');
 
         $data = [
             'id' => 7,
             'link' => 'link-text',
-            'action' => $action
+            'action' => $action,
         ];
         $column = [
             'action' => 'foo',
-            'name' => 'link'
+            'name' => 'link',
         ];
 
         $response = $this->sut->render($data, $column);
@@ -59,26 +70,33 @@ class VariationRecordActionTest extends MockeryTestCase
         return [
             [
                 'action' => 'A',
-                '(New) <input type="submit" class="" name="table[action][foo][7]" value="link-text"  />'
+                'expectPrefix' => 'new',
+                'expect' => '(TRSLTD_STATUS) <input type="submit" class="" name="table[action][foo][7]" ' .
+                    'value="link-text"  />',
             ],
             [
                 'action' => 'U',
-                '(Updated) <input type="submit" class="" name="table[action][foo][7]" value="link-text"  />'
+                'expectPrefix' => 'updated',
+                'expect' => '(TRSLTD_STATUS) <input type="submit" class="" name="table[action][foo][7]" '.
+                    'value="link-text"  />',
             ],
             [
                 'action' => 'C',
-                '(Current) <input type="submit" class="" name="table[action][foo][7]"'
-                    . ' value="link-text" disabled="disabled" />'
+                'expectPrefix' => 'current',
+                'expect' => '(TRSLTD_STATUS) <input type="submit" class="" name="table[action][foo][7]" ' .
+                    'value="link-text" disabled="disabled" />',
             ],
             [
                 'action' => 'D',
-                '(Removed) <input type="submit" class="" name="table[action][foo][7]"'
-                    . ' value="link-text" disabled="disabled" />'
+                'expectPrefix' => 'removed',
+                'expect' => '(TRSLTD_STATUS) <input type="submit" class="" name="table[action][foo][7]" ' .
+                    'value="link-text" disabled="disabled" />',
             ],
             [
                 'action' => 'ABC',
-                '<input type="submit" class="" name="table[action][foo][7]" value="link-text"  />'
-            ]
+                'expectPrefix' => null,
+                'expect' => '<input type="submit" class="" name="table[action][foo][7]" value="link-text"  />',
+            ],
         ];
     }
 }

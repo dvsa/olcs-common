@@ -2,18 +2,17 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Entity\TransportManagerApplicationEntityService;
 use Common\Service\Table\Formatter\TransportManagerName;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Class TransportManagerNameTest
- *
- * @package CommonTest\Service\Table\Formatter
+ * @covers Common\Service\Table\Formatter\TransportManagerName
  */
 class TransportManagerNameTest extends MockeryTestCase
 {
+    /** @var TransportManagerName */
     private $sut;
 
     /* @var \Mockery\MockInterface */
@@ -28,10 +27,8 @@ class TransportManagerNameTest extends MockeryTestCase
 
         $this->mockUrlHelper = m::mock();
 
-        $this->sm = m::mock('StdClass');
-        $this->sm->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn($this->mockUrlHelper);
+        $this->sm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->sm->shouldReceive('get')->with('Helper\Url')->andReturn($this->mockUrlHelper);
     }
 
     public function testFormatNoLvaLocation()

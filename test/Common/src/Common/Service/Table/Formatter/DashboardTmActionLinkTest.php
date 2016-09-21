@@ -2,66 +2,99 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\Service\Table\Formatter\DashboardTmActionLink;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Formatter\DashboardTmActionLink;
-use Common\Service\Entity\TransportManagerApplicationEntityService;
 
 /**
- * Class DashboardTmActionLinkTest
- *
- * @package CommonTest\Service\Table\Formatter
+ * @covers Common\Service\Table\Formatter\DashboardTmActionLink
  */
 class DashboardTmActionLinkTest extends MockeryTestCase
 {
-    private $sut;
-
     /* @var \Mockery\MockInterface */
-    private $sm;
-
-    /* @var \Mockery\MockInterface */
-    private $mockViewHelper;
+    private $mockSm;
 
     public function setUp()
     {
-        $this->sut = new DashboardTmActionLink();
-
-        $this->mockViewHelper = m::mock();
-
-        $this->sm = m::mock('StdClass');
-        $this->sm->shouldReceive('get->fromRoute')
-            ->once()
-            ->andReturn('http://url.com');
+        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
     }
 
     public function dataProviderFormat()
     {
         return [
-            ['Provide details', TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE],
-            ['Provide details', TransportManagerApplicationEntityService::STATUS_INCOMPLETE],
-            ['View details', TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED],
-            ['View details', TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION],
-            ['View details', TransportManagerApplicationEntityService::STATUS_TM_SIGNED],
+            [
+                'statusId' => TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE,
+                'isVariation' => true,
+                'expectTextKey' => 'provide-details',
+            ],
+            [
+                TransportManagerApplicationEntityService::STATUS_INCOMPLETE,
+                'isVariation' => false,
+                'provide-details',
+            ],
+            [
+                TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED,
+                'isVariation' => false,
+                'view-details',
+            ],
+            [
+                TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                'isVariation' => false,
+                'view-details',
+            ],
+            [
+                TransportManagerApplicationEntityService::STATUS_TM_SIGNED,
+                'isVariation' => false,
+                'view-details',
+            ],
         ];
     }
 
     /**
      * @dataProvider dataProviderFormat
      */
-    public function testFormat($expectedLinkText, $status)
+    public function testFormat($statusId, $isVariation, $expectTextKey)
     {
+        $this->mockSm
+            ->shouldReceive('get->translate')
+            ->once()
+            ->with('dashboard.tm-applications.table.action.' . $expectTextKey)
+            ->andReturn('EXPECT');
+
+        $this->mockSm
+            ->shouldReceive('get->fromRoute')
+            ->once()
+            ->with(
+                (
+                    $isVariation
+                    ? 'lva-variation/transport_manager_details'
+                    : 'lva-application/transport_manager_details'
+                ),
+                [
+                    'action' => null,
+                    'application' => 323,
+                    'child_id' => 12.,
+                ],
+                [],
+                true
+            )
+            ->andReturn('http://url.com');
+
         $data = [
             'applicationId' => 323,
             'transportManagerApplicationStatus' => [
-                'id' => $status,
+                'id' => $statusId,
                 'description' => 'FooBar',
             ],
             'transportManagerApplicationId' => 12,
-            'isVariation' => 1,
+            'isVariation' => $isVariation,
         ];
         $column = [];
-        $expected = '<b><a href="http://url.com">'. $expectedLinkText .'</a></b>';
 
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        static::assertEquals(
+            '<b><a href="http://url.com">EXPECT</a></b>',
+            DashboardTmActionLink::format($data, $column, $this->mockSm)
+        );
     }
 }

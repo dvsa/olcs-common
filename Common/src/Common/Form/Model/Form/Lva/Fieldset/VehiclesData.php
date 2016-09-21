@@ -46,13 +46,8 @@ class VehiclesData
     public $hasEnteredReg = null;
 
     /**
-     * @Form\Type("Common\Form\Elements\Types\Html")
-     * @Form\Attributes({
-     *      "value":
-     *      "<p id=""notice"">If you don’t have vehicle details yet, you must
-     *      tell the Central Licensing Office as soon as they’re available.</p>"
-     * })
-     * @Form\Options({"disable_html_escape": true})
+     * @Form\Attributes({"value":"markup-application_vehicle-notice"})
+     * @Form\Type("Common\Form\Elements\Types\HtmlTranslated")
      */
     public $notice = null;
 }
