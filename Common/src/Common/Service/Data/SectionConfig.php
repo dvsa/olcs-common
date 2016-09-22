@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Section Config
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Data;
 
 use Common\Service\Entity\LicenceEntityService;
@@ -17,8 +12,6 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * Section Config
  *
  * @author Rob Caiger <rob@clocal.co.uk>
- *
- * @NOTE The parts of this that are used for section accessibility have been migrated
  */
 class SectionConfig implements ServiceLocatorAwareInterface
 {
@@ -279,8 +272,16 @@ class SectionConfig implements ServiceLocatorAwareInterface
         ],
     );
 
+    /**
+     * @var bool
+     */
     protected $init = false;
 
+    /**
+     * Init sections
+     *
+     * @return void
+     */
     protected function initSections()
     {
         if ($this->init === false) {

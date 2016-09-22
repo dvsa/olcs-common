@@ -6,9 +6,10 @@ use Zend\ServiceManager\FactoryInterface;
 
 /**
  * Class ApplicationOperatingCentre
- * @package Olcs\Service
+ *
+ * @package Olcs\Service\Data
  */
-class ApplicationOperatingCentre extends AbstractData implements FactoryInterface, ListDataInterface
+class ApplicationOperatingCentre extends AbstractDataService implements FactoryInterface, ListDataInterface
 {
     use ApplicationServiceTrait;
 
@@ -26,77 +27,49 @@ class ApplicationOperatingCentre extends AbstractData implements FactoryInterfac
     protected $outputType = self::OUTPUT_TYPE_FULL;
 
     /**
-     * @var string
-     */
-    protected $serviceName = 'ApplicationOperatingCentre';
-
-    /**
-     * @param integer|null $id
-     * @param array|null $bundle
+     * Fetch list options
+     *
+     * @param array|string $context   Context
+     * @param bool         $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($context = null, $useGroups = false)
     {
         $id = $this->getId();
+
         if (is_null($this->getData($id))) {
             $data = array();
-            $rawData =  $this->getApplicationService()->fetchOperatingCentreData($this->getId(), $this->getBundle());
+            $rawData =  $this->getApplicationService()->fetchOperatingCentreData($this->getId());
 
             if (is_array($rawData['operatingCentres'])) {
                 $outputType = $this->getOutputType();
+
+                $fields = ($outputType == self::OUTPUT_TYPE_PARTIAL)
+                    ? ['addressLine1', 'town']
+                    : ['addressLine1', 'addressLine2', 'addressLine3', 'addressLine4', 'town', 'postcode'];
+
                 foreach ($rawData['operatingCentres'] as $applicationOperatingCentre) {
-                    if ($outputType == self::OUTPUT_TYPE_PARTIAL) {
-                        $fields = [
-                            'addressLine1',
-                            'town'
-                        ];
-                    } else {
-                        $fields = [
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'town',
-                            'postcode',
-                        ];
-                    }
                     $addressString = '';
+
                     foreach ($fields as $field) {
                         $addressString .= !empty($applicationOperatingCentre['operatingCentre']['address'][$field]) ?
                             $applicationOperatingCentre['operatingCentre']['address'][$field] . ', ' : '';
                     }
+
                     $data[$applicationOperatingCentre['operatingCentre']['id']] = substr($addressString, 0, -2);
                 }
             }
+
             $this->setData($id, $data);
         }
+
         return $this->getData($id);
     }
 
-
     /**
-     * @return array
-     */
-    public function getBundle()
-    {
-        $bundle = array(
-            'children' => array(
-                'operatingCentres' => array(
-                    'children' => array(
-                        'operatingCentre' => array(
-                            'children' => array(
-                                'address'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        return $bundle;
-    }
-
-    /**
+     * Get id
+     *
      * @return integer
      */
     public function getId()
@@ -105,6 +78,8 @@ class ApplicationOperatingCentre extends AbstractData implements FactoryInterfac
     }
 
     /**
+     * Get output type
+     *
      * @return int
      */
     public function getOutputType()
@@ -113,10 +88,16 @@ class ApplicationOperatingCentre extends AbstractData implements FactoryInterfac
     }
 
     /**
-     * @param int $outputType
+     * Set output type
+     *
+     * @param int $outputType Output type
+     *
+     * @return $this
      */
     public function setOutputType($outputType)
     {
         $this->outputType = $outputType;
+
+        return $this;
     }
 }

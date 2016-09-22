@@ -244,6 +244,7 @@ return array(
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             Common\Service\Data\SiCategoryType::class => Common\Service\Data\SiCategoryType::class,
+            'staticList' => Common\Service\Data\StaticList::class,
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -267,8 +268,6 @@ return array(
                 Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory::class,
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\Data\ApplicationOperatingCentre' => 'Common\Service\Data\ApplicationOperatingCentre',
-            'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
-            'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
             'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
@@ -278,7 +277,6 @@ return array(
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'category' => '\Common\Service\Data\CategoryDataService',
-            'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => Common\Service\Data\PluginManagerFactory::class,
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
@@ -458,13 +456,8 @@ return array(
         ]
     ],
     'data_services' => [
-        'abstract_factories' => [
-            'Common\Service\Data\DataServiceAbstractFactory'
-        ],
         'factories' => [
             'Common\Service\Data\Venue' => 'Common\Service\Data\Venue',
-            'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
-            'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>
                 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\Data\ApplicationOperatingCentre' =>

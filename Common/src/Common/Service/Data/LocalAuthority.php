@@ -3,8 +3,8 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
-use Dvsa\Olcs\Transfer\Query\LocalAuthority\LocalAuthorityList as LocalAuthorityQry;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Dvsa\Olcs\Transfer\Query\LocalAuthority\LocalAuthorityList as LocalAuthorityQry;
 
 /**
  * Class LocalAuthority
@@ -15,9 +15,10 @@ use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 class LocalAuthority extends AbstractDataService implements ListData
 {
     /**
-     * Format data!
+     * Format data
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     public function formatData(array $data)
@@ -34,7 +35,8 @@ class LocalAuthority extends AbstractDataService implements ListData
     /**
      * Format for groups
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     public function formatDataForGroups(array $data)
@@ -43,12 +45,14 @@ class LocalAuthority extends AbstractDataService implements ListData
 
         foreach ($data as $datum) {
             $taId = $datum['txcName'];
+
             if (!isset($optionData[$taId])) {
                 $optionData[$taId] = [
                     'label' => $datum['trafficArea']['name'],
                     'options' => []
                 ];
             }
+
             $optionData[$taId]['options'][$datum['id']] = $datum['description'];
         }
 
@@ -56,11 +60,14 @@ class LocalAuthority extends AbstractDataService implements ListData
     }
 
     /**
-     * @param $category
-     * @param bool $useGroups
+     * Fetch list options
+     *
+     * @param array|string $context   Context
+     * @param bool         $useGroups Use groups
+     *
      * @return array
      */
-    public function fetchListOptions($category, $useGroups = false)
+    public function fetchListOptions($context, $useGroups = false)
     {
         $data = $this->fetchListData();
 
@@ -76,9 +83,10 @@ class LocalAuthority extends AbstractDataService implements ListData
     }
 
     /**
-     * Ensures only a single call is made to the backend for each dataset
+     * Fetch list data
      *
      * @return array
+     * @throw UnexpectedResponseException
      */
     public function fetchListData()
     {
@@ -89,12 +97,15 @@ class LocalAuthority extends AbstractDataService implements ListData
         if (is_null($this->getData('LocalAuthority'))) {
             $dtoData = LocalAuthorityQry::create([]);
             $response = $this->handleQuery($dtoData);
+
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $data = $response->getResult()['results'];
             $this->setData('LocalAuthority', $data);
         }
+
         return $this->getData('LocalAuthority');
     }
 }

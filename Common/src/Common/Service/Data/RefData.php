@@ -2,24 +2,27 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\Interfaces\ListData;
-use Dvsa\Olcs\Transfer\Query\RefData\RefDataList;
 use Common\Service\Data\AbstractDataService;
+use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Dvsa\Olcs\Transfer\Query\RefData\RefDataList;
 
 /**
  * Class RefData
- * @package Common\Service
+ *
+ * @package Common\Service\Data
  */
 class RefData extends AbstractDataService implements ListData
 {
     use ListDataTrait;
 
     /**
-     * Ensures only a single call is made to the backend for each dataset
+     * Fetch list data
      *
-     * @param $category
+     * @param string $category Category
+     *
      * @return array
+     * @throw UnexpectedResponseException
      */
     public function fetchListData($category)
     {
@@ -31,12 +34,14 @@ class RefData extends AbstractDataService implements ListData
                 'language' => $languagePreferenceService->getPreference()
             ];
             $dtoData = RefDataList::create($params);
-
             $response = $this->handleQuery($dtoData);
+
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $this->setData($category, false);
+
             if (isset($response->getResult()['results'])) {
                 $this->setData($category, $response->getResult()['results']);
             }

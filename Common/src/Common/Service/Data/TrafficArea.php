@@ -2,21 +2,23 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\Interfaces\ListData;
-use Dvsa\Olcs\Transfer\Query\TrafficArea\TrafficAreaList;
 use Common\Service\Data\AbstractDataService;
+use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Dvsa\Olcs\Transfer\Query\TrafficArea\TrafficAreaList;
 
 /**
  * Class TrafficArea
+ *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
 class TrafficArea extends AbstractDataService implements ListData
 {
     /**
-     * Format data!
+     * Format data
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     public function formatData(array $data)
@@ -31,8 +33,11 @@ class TrafficArea extends AbstractDataService implements ListData
     }
 
     /**
-     * @param $category
-     * @param bool $useGroups
+     * Fetch list options
+     *
+     * @param string $category  Category
+     * @param bool   $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($category, $useGroups = false)
@@ -47,9 +52,8 @@ class TrafficArea extends AbstractDataService implements ListData
     }
 
     /**
-     * Ensures only a single call is made to the backend for each dataset
+     * Fetch list data
      *
-     * @internal param $category
      * @return array
      */
     public function fetchListData()
@@ -62,12 +66,14 @@ class TrafficArea extends AbstractDataService implements ListData
                 'order' => 'ASC',
             ];
             $dtoData = TrafficAreaList::create($params);
-
             $response = $this->handleQuery($dtoData);
+
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $this->setData('TrafficArea', false);
+
             if (isset($response->getResult()['results'])) {
                 $this->setData('TrafficArea', $response->getResult()['results']);
             }

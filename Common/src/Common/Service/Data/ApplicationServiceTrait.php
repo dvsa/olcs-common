@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Application Service Trait
- */
 namespace Common\Service\Data;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -18,16 +15,22 @@ trait ApplicationServiceTrait
     protected $applicationService;
 
     /**
-     * @param \Common\Service\Data\Application $applicationService
+     * Set application service
+     *
+     * @param \Common\Service\Data\Application $applicationService Application service
+     *
      * @return $this
      */
     public function setApplicationService($applicationService)
     {
         $this->applicationService = $applicationService;
+
         return $this;
     }
 
     /**
+     * Get application service
+     *
      * @return \Common\Service\Data\Application
      */
     public function getApplicationService()
@@ -54,8 +57,9 @@ trait ApplicationServiceTrait
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
+     * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

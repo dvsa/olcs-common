@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Abstract data service class
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Service\Data;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -24,31 +19,48 @@ abstract class AbstractDataService implements ServiceLocatorAwareInterface
      */
     protected $data = [];
 
+    /**
+     * Handle query
+     *
+     * @param string $dtoData Query dto
+     *
+     * @return \Common\Service\Cqrs\Response
+     */
     protected function handleQuery($dtoData)
     {
-        $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
-        $queryService = $this->getServiceLocator()->get('QueryService');
+        $serviceLocator = $this->getServiceLocator();
 
-        $query = $annotationBuilder->createQuery($dtoData);
-        return $queryService->send($query);
+        $query = $serviceLocator->get('TransferAnnotationBuilder')->createQuery($dtoData);
+
+        return $serviceLocator->get('QueryService')->send($query);
     }
 
+    /**
+     * Handle command
+     *
+     * @param string $dtoData Command dto
+     *
+     * @return \Common\Service\Cqrs\Response
+     */
     protected function handleCommand($dtoData)
     {
-        $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
-        $commandService = $this->getServiceLocator()->get('CommandService');
+        $serviceLocator = $this->getServiceLocator();
 
-        $command = $annotationBuilder->createCommand($dtoData);
-        return $commandService->send($command);
+        $command = $serviceLocator->get('TransferAnnotationBuilder')->createCommand($dtoData);
+
+        return $serviceLocator->get('CommandService')->send($command);
     }
 
-    /*
+    /**
      * Format result
      *
-     * @note for backwards compatibility we need to return result with keys starting with uppercase letters
+     * @param array $result Result
+     *
+     * @return array
      */
     protected function formatResult($result)
     {
+        // For backwards compatibility we need to return result with keys starting with uppercase letters
         return [
             'Results' => $result['results'],
             'Count' => $result['count']
@@ -56,18 +68,26 @@ abstract class AbstractDataService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * @param $key
-     * @param $data
+     * Set data
+     *
+     * @param string $key  Key
+     * @param mixed  $data Data
+     *
      * @return $this
      */
     public function setData($key, $data)
     {
         $this->data[$key] = $data;
+
         return $this;
     }
 
     /**
-     * @return array
+     * Get data
+     *
+     * @param string $key Key
+     *
+     * @return mixed|null
      */
     public function getData($key)
     {

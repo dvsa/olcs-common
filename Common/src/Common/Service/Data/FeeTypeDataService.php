@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Fee Type Data Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Service\Data;
 
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
@@ -43,6 +37,17 @@ class FeeTypeDataService extends AbstractDataService
     const ACCRUAL_RULE_CONTINUATION  = 'acr_continuation';
     const ACCRUAL_RULE_IMMEDIATE     = 'acr_immediate';
 
+    /**
+     * Get latest fee types
+     *
+     * @param string $feeType     Fee type
+     * @param string $goodsOrPsv  Goods or psv
+     * @param string $licenceType Licence type
+     * @param string $date        Date
+     * @param string $trafficArea Traffic area
+     *
+     * @return array
+     */
     public function getLatest($feeType, $goodsOrPsv, $licenceType = null, $date = null, $trafficArea = null)
     {
         $dtoData = GetLatestFeeType::create(
@@ -56,9 +61,11 @@ class FeeTypeDataService extends AbstractDataService
         );
 
         $response = $this->handleQuery($dtoData);
+
         if ($response->isServerError() || $response->isClientError() || !$response->isOk()) {
             throw new UnexpectedResponseException('unknown-error');
         }
+
         return $this->formatResult($response->getResult());
     }
 }
