@@ -78,6 +78,8 @@ class People extends InternalSearchAbstract
     }
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -103,6 +105,8 @@ class People extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     * 
      * @return array
      */
     public function getColumns()
