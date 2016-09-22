@@ -8,7 +8,7 @@ use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationQry;
 use Dvsa\Olcs\Transfer\Query\Application\OperatingCentres as OcQry;
 
 /**
- * Service Class Task
+ * Service Class Application
  *
  * @package Common\Service\Data
  */
