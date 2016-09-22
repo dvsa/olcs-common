@@ -112,8 +112,16 @@ class People extends InternalSearchAbstract
             [
                 'title' => 'Record',
                 'formatter' => function ($row, $column, $serviceLocator) {
-                    $urlHelper  = $serviceLocator->get('Helper\Url');
-                    if (!empty($row['tmId']) && $row['foundAs'] !== self::FOUND_AS_HISTORICAL_TM) {
+                    $urlHelper = $serviceLocator->get('Helper\Url');
+                    if (!empty($row['applicationId']) && !empty($row['licNo'])) {
+                        return sprintf(
+                            '<a href="/licence/%s">%s </a> / <a href="/application/%s">%s</a>',
+                            $row['licId'],
+                            $row['licNo'],
+                            $row['applicationId'],
+                            $row['applicationId']
+                        );
+                    } elseif (!empty($row['tmId']) && $row['foundAs'] !== self::FOUND_AS_HISTORICAL_TM) {
                         return sprintf(
                             '<a href="%s">TM %s</a>',
                             $urlHelper->fromRoute('transport-manager/details', ['transportManager' => $row['tmId']]),

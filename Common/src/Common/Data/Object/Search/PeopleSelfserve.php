@@ -80,7 +80,6 @@ class PeopleSelfserve extends InternalSearchAbstract
                 }
             ],
             ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
-            ['title' => 'Application status', 'name'=> 'appStatusDesc'],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
