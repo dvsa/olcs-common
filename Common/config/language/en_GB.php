@@ -781,7 +781,7 @@ return [
     'create-new-case' => 'Create new case',
     'create-variation' => 'create a variation application',
     'create-variation-application-received-date' => 'Application received',
-    'create-variation-button' => 'Create variation',
+    'create-variation-button' => 'Continue',
     'create-variation-fee-required' => 'Is a variation fee required?',
     'created' => 'Created',
     'created-on' => 'Created on',
