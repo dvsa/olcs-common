@@ -60,6 +60,15 @@ class PeopleTest extends SearchAbstractTest
                     'licNo' => 'LIC_NO',
                 ]
             ],
+            [
+                '<a href="http://URL">OB123</a> / <a href="http://URL">456</a>',
+                [
+                    'licId' => 123,
+                    'licNo' => 'OB123',
+                    'applicationId' => 456
+                ]
+            ],
+
         ];
     }
 

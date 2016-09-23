@@ -78,6 +78,8 @@ class People extends InternalSearchAbstract
     }
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -103,6 +105,8 @@ class People extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()
@@ -112,8 +116,16 @@ class People extends InternalSearchAbstract
             [
                 'title' => 'Record',
                 'formatter' => function ($row, $column, $serviceLocator) {
-                    $urlHelper  = $serviceLocator->get('Helper\Url');
-                    if (!empty($row['tmId']) && $row['foundAs'] !== self::FOUND_AS_HISTORICAL_TM) {
+                    $urlHelper = $serviceLocator->get('Helper\Url');
+                    if (!empty($row['applicationId']) && !empty($row['licNo'])) {
+                        return sprintf(
+                            '<a href="%s">%s</a> / <a href="%s">%s</a>',
+                            $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
+                            $row['licNo'],
+                            $urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
+                            $row['applicationId']
+                        );
+                    } elseif (!empty($row['tmId']) && $row['foundAs'] !== self::FOUND_AS_HISTORICAL_TM) {
                         return sprintf(
                             '<a href="%s">TM %s</a>',
                             $urlHelper->fromRoute('transport-manager/details', ['transportManager' => $row['tmId']]),
