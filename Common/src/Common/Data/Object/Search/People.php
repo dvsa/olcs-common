@@ -106,7 +106,7 @@ class People extends InternalSearchAbstract
 
     /**
      * Get columns
-     * 
+     *
      * @return array
      */
     public function getColumns()
@@ -119,10 +119,10 @@ class People extends InternalSearchAbstract
                     $urlHelper = $serviceLocator->get('Helper\Url');
                     if (!empty($row['applicationId']) && !empty($row['licNo'])) {
                         return sprintf(
-                            '<a href="/licence/%s">%s </a> / <a href="/application/%s">%s</a>',
-                            $row['licId'],
+                            '<a href="%s">%s</a> / <a href="%s">%s</a>',
+                            $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
                             $row['licNo'],
-                            $row['applicationId'],
+                            $urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
                             $row['applicationId']
                         );
                     } elseif (!empty($row['tmId']) && $row['foundAs'] !== self::FOUND_AS_HISTORICAL_TM) {
