@@ -1936,6 +1936,8 @@ return [
     'page.title.user-registration.add' => 'Create an account',
     'page.title.dashboard.index' => 'Vehicle Operator Licensing - Home',
     'page.title.manage-user.index' => 'Manage users',
+    'page.title.manage-user.add' => 'User details',
+    'page.title.manage-user.edit' => 'User details',
     'page.title.busreg-registrations.index' => 'Bus registrations',
     'page.title.fees.index' => 'Fees',
     'page.title.correspondence.index' => 'Documents',
