@@ -8,7 +8,7 @@ use Common\Form\Model\Form\Traits\VersionTrait;
 /**
  * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("application_your-business_business-type")
- * @Form\Attributes({"method":"post", "class": "js-form-ajax-submit"})
+ * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */
 class BusinessType
