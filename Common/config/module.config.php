@@ -382,6 +382,7 @@ return array(
             'languageLink' => \Common\View\Helper\LanguageLink::class,
             'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
             'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
+            'readOnlyActions' => \Common\View\Helper\ReadOnlyActions::class,
         ),
     ),
     'view_manager' => array(
