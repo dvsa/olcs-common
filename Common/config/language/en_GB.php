@@ -806,7 +806,7 @@ return [
     'dashboard-documents.table.title' => 'Documents',
     'dashboard-correspondence.table.column.title' => 'Title',
     'dashboard-correspondence.table.column.reference' => 'Reference',
-    'dashboard-correspondence.table.status.new' => 'Newydd',
+    'dashboard-correspondence.table.status.new' => 'New',
     'dashboard-fees-empty-message' => 'There are currently no outstanding fees to pay',
     'dashboard-fees-total' => 'Total',
     'dashboard-fees.table.title' => 'Outstanding fees',
