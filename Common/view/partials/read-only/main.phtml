@@ -1,6 +1,6 @@
-<?php $id = isset($id) ? 'id="' . $id . '"' : ''?>
+<?php $id = (isset($id) ? 'id="' . $id . '"' : ''); ?>
 
-<div class="read-only" <?php echo $id ?> >
+<div class="read-only" <?php echo $id ;?> >
 
     <?php
         if (isset($header) || isset($actions)) {
