@@ -9,9 +9,6 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Form;
 
-/**
- * @covers \Common\FormService\Form\Lva\TypeOfLicence\ApplicationTypeOfLicence
- */
 class ApplicationTypeOfLicenceTest extends MockeryTestCase
 {
     /** @var ApplicationTypeOfLicence */
@@ -104,5 +101,53 @@ class ApplicationTypeOfLicenceTest extends MockeryTestCase
             ['alternative-operator-location-lock-message-ni', 'NI', 'Y'],
             ['alternative-operator-location-lock-message-gb', 'GB', 'N']
         ];
+    }
+
+    public function testMaybeAlterFormForNi()
+    {
+        $mockOperatorLocation = m::mock(\Zend\Form\Element::class)
+            ->shouldReceive('getValue')
+            ->andReturn('Y')
+            ->once()
+            ->getMock();
+
+        $mockForm = m::mock(Form::class)
+            ->shouldReceive('get')
+            ->with('type-of-licence')
+            ->once()
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('operator-location')
+                    ->once()
+                    ->andReturn($mockOperatorLocation)
+                    ->getMock()
+            )
+            ->shouldReceive('getInputFilter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('type-of-licence')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('get')
+                    ->with('operator-type')
+                    ->andReturn(
+                        m::mock()
+                        ->shouldReceive('setRequired')
+                        ->with(false)
+                        ->once()
+                        ->getMock()
+                    )
+                    ->once()
+                    ->getMock()
+                )
+                ->once()
+                ->getMock()
+            )
+            ->once()
+            ->getMock();
+
+        $this->sut->maybeAlterFormForNi($mockForm);
     }
 }

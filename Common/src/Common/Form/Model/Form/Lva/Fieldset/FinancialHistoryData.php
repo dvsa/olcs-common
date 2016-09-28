@@ -189,8 +189,7 @@ class FinancialHistoryData
 
     /**
      * @Form\Attributes({
-     *     "value":"markup-application_previous-history_financial-history-insolvencyDetails-hint",
-     *     "data-container-class":"legend"
+     *     "value":"markup-application_previous-history_financial-history-insolvencyDetails-hint"
      * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
