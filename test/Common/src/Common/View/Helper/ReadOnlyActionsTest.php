@@ -6,7 +6,6 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\View\Helper\ReadOnlyActions;
 use Zend\I18n\View\Helper\Translate;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\RendererInterface;
 
 /**
@@ -27,40 +26,19 @@ class ReadOnlyActionsTest extends MockeryTestCase
 
     private $mockView;
 
-    /**
-     * Setup the view helper
-     */
     public function setUp()
     {
-        $mockTranslator = m::mock(Translate::class);
-        $mockTranslator->shouldReceive('__invoke')
+        $this->mockView = m::mock(RendererInterface::class)
+            ->shouldReceive('translate')
             ->andReturnUsing(
                 function ($text) {
                     return $text . '-translated';
                 }
-            );
-
-        $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get')->with('translate')->andReturn($mockTranslator);
-
-        $this->mockView = m::mock(RendererInterface::class);
+            )
+            ->getMock();
 
         $this->sut = new ReadOnlyActions();
-        $this->sut->createService($sm);
         $this->sut->setView($this->mockView);
-    }
-
-    public function testCreateService()
-    {
-        $mockTranslate = m::mock(Translate::class);
-
-        $mockSl = m::mock(ServiceLocatorInterface::class);
-        $mockSl->shouldReceive('getServiceLocator')->andReturnSelf();
-        $mockSl->shouldReceive('get')->with('translate')->andReturn($mockTranslate);
-        $sut = new ReadOnlyActions();
-        $service = $sut->createService($mockSl);
-
-        $this->assertInstanceOf(ReadOnlyActions::class, $service);
     }
 
     public function testInvokeWithUrl()
