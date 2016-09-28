@@ -26,6 +26,13 @@ class CurrentUser extends AbstractHelper
      */
     private $authService;
 
+    /**
+     * Construct
+     *
+     * @param AuthorizationService $authService Authorization service
+     *
+     * @return void
+     */
     public function __construct(AuthorizationService $authService)
     {
         $this->authService = $authService;
@@ -88,6 +95,17 @@ class CurrentUser extends AbstractHelper
     {
         $userData = $this->getUserData();
         return (!empty($userData['userType']) && ($userData['userType'] !== User::USER_TYPE_ANON));
+    }
+
+    /**
+     * Checks whether the current user is an operator
+     *
+     * @return bool
+     */
+    public function isOperator()
+    {
+        $userData = $this->getUserData();
+        return (!empty($userData['userType']) && ($userData['userType'] === User::USER_TYPE_OPERATOR));
     }
 
     /**

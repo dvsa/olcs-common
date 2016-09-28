@@ -41,7 +41,6 @@ class TypeOfLicence
     /**
      * @Form\Name("operator-type")
      * @Form\Attributes({"id": ""})
-     * @Form\Required(false)
      * @Form\Options({
      *      "short-label": "short-label-tol-operator-type",
      *      "error-message": "operator-type-error",

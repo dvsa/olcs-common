@@ -20,6 +20,7 @@ class Bootstrap
 
     public static function init()
     {
+        ini_set('intl.default_locale', 'en_GB');
         ini_set('memory_limit', '1G');
         // Setup the autloader
         $loader = static::initAutoloader();

@@ -33,6 +33,8 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
     protected $filters = [];
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -65,6 +67,8 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     * 
      * @return array
      */
     public function getColumns()
@@ -84,18 +88,10 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
             ],
             [
                 'title' => 'Address',
-                'formatter' => function ($row) {
-
-                    $address = [
-
-                        $row['street'],
-                        $row['locality'],
-                        '<br />' . $row['town'],
-                        $row['postcode']
-                    ];
-
-                    return implode(', ', $address);
-                }
+                'formatter' => 'Address',
+                'addressFields' => [
+                    'street', 'locality', 'town', 'postcode'
+                ]
             ],
         ];
     }

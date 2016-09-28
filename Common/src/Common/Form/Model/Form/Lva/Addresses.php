@@ -25,6 +25,12 @@ class Addresses
     public $correspondenceAddress = null;
 
     /**
+     * @Form\Name("phoneContactsTable")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
+     */
+    public $phoneContactsTable = null;
+
+    /**
      * @Form\Name("contact")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Contact")
      * @Form\Options({

@@ -2,21 +2,23 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\Interfaces\ListData;
-use Dvsa\Olcs\Transfer\Query\ContactDetail\ContactDetailsList;
 use Common\Service\Data\AbstractDataService;
+use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Dvsa\Olcs\Transfer\Query\ContactDetail\ContactDetailsList;
 
 /**
  * Class ContactDetails
+ *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
 class ContactDetails extends AbstractDataService implements ListData
 {
     /**
-     * Format data!
+     * Format data
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     public function formatData(array $data)
@@ -31,8 +33,11 @@ class ContactDetails extends AbstractDataService implements ListData
     }
 
     /**
-     * @param $category
-     * @param bool $useGroups
+     * Fetch list options
+     *
+     * @param string $category  Category
+     * @param bool   $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($category, $useGroups = false)
@@ -47,10 +52,12 @@ class ContactDetails extends AbstractDataService implements ListData
     }
 
     /**
-     * Ensures only a single call is made to the backend
+     * Fetch list data
      *
-     * @param param $category
+     * @param string $category Category
+     *
      * @return array
+     * @throw UnexpectedResponseException
      */
     public function fetchListData($category)
     {
@@ -63,14 +70,15 @@ class ContactDetails extends AbstractDataService implements ListData
                 'limit' => 100,
                 'contactType' => $category
             ];
-            $this->setData('ContactDetails', false);
             $dtoData = ContactDetailsList::create($params);
-
             $response = $this->handleQuery($dtoData);
+
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $this->setData('ContactDetails', false);
+
             if (isset($response->getResult()['results'])) {
                 $this->setData('ContactDetails', $response->getResult()['results']);
             }

@@ -6,14 +6,14 @@ use Zend\Form\Annotation as Form;
 
 /**
  * Vehicle Search
+ * @Form\Options({
+ *     "label": "vehicle-search-vrm",
+ * })
  */
 class VehicleSearch
 {
     /**
      * @Form\Attributes({"id":"vrm","placeholder":"","class":"inline-search__input"})
-     * @Form\Options({
-     *     "label": "vehicle-search-vrm",
-     * })
      * @Form\Type("\Zend\Form\Element\Text")
      * @Form\Required(true)
      */

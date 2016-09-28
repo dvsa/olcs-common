@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Licence Service Trait
- */
 namespace Common\Service\Data;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -18,16 +15,22 @@ trait LicenceServiceTrait
     protected $licenceService;
 
     /**
-     * @param \Common\Service\Data\Licence $licenceService
+     * Set licence service
+     *
+     * @param \Common\Service\Data\Licence $licenceService Licence service
+     *
      * @return $this
      */
     public function setLicenceService($licenceService)
     {
         $this->licenceService = $licenceService;
+
         return $this;
     }
 
     /**
+     * Get licence service
+     *
      * @return \Common\Service\Data\Licence
      */
     public function getLicenceService()
@@ -59,8 +62,9 @@ trait LicenceServiceTrait
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @param ServiceLocatorInterface $serviceLocator Service locator
+     *
+     * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

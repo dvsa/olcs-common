@@ -5,9 +5,8 @@ namespace Common\Service\Data;
 use Common\Exception\DataServiceException;
 use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\AbstractDataService;
-use Dvsa\Olcs\Transfer\Query\BusRegSearchView\BusRegSearchViewContextList;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
-use Zend\ServiceManager\FactoryInterface;
+use Dvsa\Olcs\Transfer\Query\BusRegSearchView\BusRegSearchViewContextList;
 
 /**
  * BusRegSearchView List data service.
@@ -18,8 +17,11 @@ use Zend\ServiceManager\FactoryInterface;
 class BusRegSearchViewListDataService extends AbstractDataService implements ListData
 {
     /**
-     * @param $category
-     * @param bool $useGroups
+     * Fetch list options
+     *
+     * @param array|string $context   Context
+     * @param bool         $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($context, $useGroups = false)
@@ -34,9 +36,11 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
     }
 
     /**
-     * Format data!
+     * Format data
      *
-     * @param array $data
+     * @param array  $data    Data
+     * @param string $context Context
+     *
      * @return array
      */
     public function formatData(array $data, $context)
@@ -51,21 +55,23 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
     }
 
     /**
-     * Ensures only a single call is made to the backend for each dataset
+     * Fetch list data
      *
-     * @internal param $context
+     * @param string $context Context
+     *
      * @return array
+     * @throw UnexpectedResponseException
      */
     public function fetchListData($context)
     {
         $cacheId = 'BusRegSearchView' . ucfirst($context);
+
         if ($this->getData($cacheId) === null) {
-            $order = 'ASC';
             $dtoData = BusRegSearchViewContextList::create(
                 [
                     'context' => $context,
                     'sort' => $this->getValueField($context),
-                    'order' => $order
+                    'order' => 'ASC'
                 ]
             );
 
@@ -77,6 +83,7 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
 
             $this->setData($cacheId, false);
             $result = $response->getResult();
+
             if (isset($result['results'])) {
                 $this->setData($cacheId, $result['results']);
             }
@@ -88,7 +95,8 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
     /**
      * Get the Value field to use in the drop downs based on context
      *
-     * @param $context
+     * @param string $context Context
+     *
      * @return string
      * @throws DataServiceException
      */
@@ -109,7 +117,8 @@ class BusRegSearchViewListDataService extends AbstractDataService implements Lis
     /**
      * Get the Key field to use in the drop downs based on context
      *
-     * @param $context
+     * @param string $context Context
+     *
      * @return string
      * @throws DataServiceException
      */

@@ -574,6 +574,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 [
                     'label' => 'vehicle_table_action.reprint.label',
                     'requireRows' => true,
+                    'class' => ' more-actions__item',
                 ]
             );
         }
@@ -583,7 +584,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 'transfer',
                 [
                     'label' => 'vehicle_table_action.transfer.label',
-                    'class' => 'secondary js-require--multiple',
+                    'class' => ' more-actions__item js-require--multiple',
                     'requireRows' => true,
                 ]
             );
@@ -595,7 +596,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 [
                     'label' => 'vehicle_table_action.export.label',
                     'requireRows' => true,
-                    'class' => 'secondary js-disable-crud',
+                    'class' => ' more-actions__item js-disable-crud',
                 ]
             );
         }

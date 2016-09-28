@@ -2,8 +2,8 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\AbstractDataService;
+use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Si\SiCategoryTypeListData;
 
@@ -15,7 +15,8 @@ class SiCategoryType extends AbstractDataService implements ListData
     /**
      * Format data
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     public function formatData(array $data)
@@ -30,8 +31,11 @@ class SiCategoryType extends AbstractDataService implements ListData
     }
 
     /**
-     * @param mixed $category
-     * @param bool $useGroups
+     * Fetch list options
+     *
+     * @param string $category  Category
+     * @param bool   $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($category, $useGroups = false)
@@ -46,7 +50,7 @@ class SiCategoryType extends AbstractDataService implements ListData
     }
 
     /**
-     * Ensures only a single call is made to the backend for each dataset
+     * Fetch list data
      *
      * @return array
      */

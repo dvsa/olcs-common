@@ -1,14 +1,10 @@
 <?php
 
-/**
- * Dashboard Application Link
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Service\Table\Formatter;
 
 use Common\RefData;
+use Zend\Di\ServiceLocator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Dashboard Application Link
@@ -18,7 +14,16 @@ use Common\RefData;
  */
 class DashboardApplicationLink implements FormatterInterface
 {
-    public static function format($data, $column = array(), $sm = null)
+    /**
+     * Format column value
+     *
+     * @param array                   $data   Row data
+     * @param array                   $column Column Parameters
+     * @param ServiceLocatorInterface $sm     Service Manager
+     *
+     * @return string
+     */
+    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
     {
         if ($data['status']['id'] !== RefData::APPLICATION_STATUS_NOT_SUBMITTED) {
             $route = 'lva-' . $column['lva'] . '/submission-summary';
@@ -52,13 +57,14 @@ class DashboardApplicationLink implements FormatterInterface
                 $statusClass .= ' grey';
                 break;
         }
+
         return vsprintf(
             '<b><a href="%s">%s</a></b> <span class="%s">%s</span>',
             [
                 $url,
                 isset($data['licNo']) ? $data['licNo'] . '/' . $data['id'] : $data['id'],
                 $statusClass,
-                $data['status']['description']
+                $sm->get('translator')->translate($data['status']['description'])
             ]
         );
     }

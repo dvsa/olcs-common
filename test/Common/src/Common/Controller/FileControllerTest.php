@@ -35,10 +35,18 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('fromRoute')->once()->with('identifier')->andReturn($id)
             ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(1);
 
+        $origResponse = new \Zend\Http\Response();
+        $origResponse->getHeaders()->addHeaderLine('should', 'not-appear');
+        $origResponse->getHeaders()->addHeaderLine('Content-Length', 'CONTENT_LENGTH');
+        $origResponse->getHeaders()->addHeaderLine('Content-Disposition', 'CONTENT_DISPOSITION');
+        $origResponse->getHeaders()->addHeaderLine('Content-Type', 'CONTENT_TYPE');
+        $origResponse->getHeaders()->addHeaderLine('foo', 'bar');
+        $origResponse->setContent('CONTENT');
+
         $mockResp = m::mock(Response::class)
             ->shouldReceive('isNotFound')->once()->andReturn(false)
             ->shouldReceive('isOk')->once()->andReturn(true)
-            ->shouldReceive('getHttpResponse')->once()->andReturn('EXPECTED')
+            ->shouldReceive('getHttpResponse')->once()->andReturn($origResponse)
             ->getMock();
 
         $this->sut
@@ -56,7 +64,14 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
                 }
             );
 
-        static::assertEquals('EXPECTED', $this->sut->downloadAction());
+        /** @var \Zend\Http\Response $response */
+        $response = $this->sut->downloadAction();
+
+        static::assertCount(3, $response->getHeaders());
+        static::assertSame('CONTENT_LENGTH', $response->getHeaders()->get('Content-Length')->getFieldValue());
+        static::assertSame('CONTENT_DISPOSITION', $response->getHeaders()->get('Content-Disposition')->getFieldValue());
+        static::assertSame('CONTENT_TYPE', $response->getHeaders()->get('Content-Type')->getFieldValue());
+        static::assertSame('CONTENT', $response->getContent());
     }
 
     public function testDownloadGuideOk()
@@ -67,10 +82,18 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('fromRoute')->once()->with('identifier')->andReturn(base64_encode($identifier))
             ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(0);
 
+        $origResponse = new \Zend\Http\Response();
+        $origResponse->getHeaders()->addHeaderLine('should', 'not-appear');
+        $origResponse->getHeaders()->addHeaderLine('Content-Length', 'CONTENT_LENGTH');
+        $origResponse->getHeaders()->addHeaderLine('Content-Disposition', 'CONTENT_DISPOSITION');
+        $origResponse->getHeaders()->addHeaderLine('Content-Type', 'CONTENT_TYPE');
+        $origResponse->getHeaders()->addHeaderLine('foo', 'bar');
+        $origResponse->setContent('CONTENT');
+
         $mockResp = m::mock(Response::class)
             ->shouldReceive('isNotFound')->once()->andReturn(false)
             ->shouldReceive('isOk')->once()->andReturn(true)
-            ->shouldReceive('getHttpResponse')->once()->andReturn('EXPECTED')
+            ->shouldReceive('getHttpResponse')->once()->andReturn($origResponse)
             ->getMock();
 
         $this->sut
@@ -88,7 +111,14 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
                 }
             );
 
-        static::assertEquals('EXPECTED', $this->sut->downloadAction());
+        /** @var \Zend\Http\Response $response */
+        $response = $this->sut->downloadAction();
+
+        static::assertCount(3, $response->getHeaders());
+        static::assertSame('CONTENT_LENGTH', $response->getHeaders()->get('Content-Length')->getFieldValue());
+        static::assertSame('CONTENT_DISPOSITION', $response->getHeaders()->get('Content-Disposition')->getFieldValue());
+        static::assertSame('CONTENT_TYPE', $response->getHeaders()->get('Content-Type')->getFieldValue());
+        static::assertSame('CONTENT', $response->getContent());
     }
 
     public function testFailNotFound()

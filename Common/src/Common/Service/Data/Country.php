@@ -4,19 +4,21 @@ namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Data\AbstractDataService;
-use Dvsa\Olcs\Transfer\Query\ContactDetail\CountryList;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
+use Dvsa\Olcs\Transfer\Query\ContactDetail\CountryList;
 
 /**
  * Class Country
- * @package Common\Service
+ *
+ * @package Common\Service\Data
  */
 class Country extends AbstractDataService implements ListData
 {
     /**
-     * Format data!
+     * Format data
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     public function formatData(array $data)
@@ -31,8 +33,11 @@ class Country extends AbstractDataService implements ListData
     }
 
     /**
-     * @param $category
-     * @param bool $useGroups
+     * Fetch list options
+     *
+     * @param string $category  Category
+     * @param bool   $useGroups Use groups
+     *
      * @return array
      */
     public function fetchListOptions($category, $useGroups = false)
@@ -50,6 +55,13 @@ class Country extends AbstractDataService implements ListData
         return $this->formatData($data);
     }
 
+    /**
+     * Remove non-member states
+     *
+     * @param array $data Data
+     *
+     * @return array
+     */
     public function removeNonMemberStates($data)
     {
         $members = [];
@@ -66,7 +78,7 @@ class Country extends AbstractDataService implements ListData
     }
 
     /**
-     * Ensures only a single call is made to the backend for each dataset
+     * Fetch list data
      *
      * @return array
      */
@@ -78,12 +90,14 @@ class Country extends AbstractDataService implements ListData
                 'order' => 'ASC'
             ];
             $dtoData = CountryList::create($params);
-
             $response = $this->handleQuery($dtoData);
+
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $this->setData('Country', false);
+
             if (isset($response->getResult()['results'])) {
                 $this->setData('Country', $response->getResult()['results']);
             }

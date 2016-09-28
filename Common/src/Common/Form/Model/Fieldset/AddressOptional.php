@@ -125,7 +125,7 @@ class AddressOptional
      *     "label_attributes": {
      *         "aria-label": "Choose establishment country"
      *     },
-     *     "empty_option": "address_pleaseSelect",
+     *     "empty_option": "Please select",
      *     "disable_inarray_validator": false,
      *     "help-block": "Please select a category",
      *     "service_name": "Common\Service\Data\Country"

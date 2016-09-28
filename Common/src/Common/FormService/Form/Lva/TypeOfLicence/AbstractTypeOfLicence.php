@@ -138,4 +138,18 @@ abstract class AbstractTypeOfLicence extends AbstractLvaFormService
         $formHelper->disableElement($form, 'type-of-licence->operator-location');
         $formHelper->lockElement($elmOperLoc, $message);
     }
+
+    /**
+     * Alter form for NI applications
+     *
+     * @param Form $form Form
+     *
+     * @return void
+     */
+    public function maybeAlterFormForNi($form)
+    {
+        if ($form->get('type-of-licence')->get('operator-location')->getValue() === 'Y') {
+            $form->getInputFilter()->get('type-of-licence')->get('operator-type')->setRequired(false);
+        }
+    }
 }

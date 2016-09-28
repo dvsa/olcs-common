@@ -1,35 +1,26 @@
 <?php
 
-/**
- * FormCollection Test
- *
- * @package CommonTest\Form\View\Helper
- * @author Jakub Igla <jakub.igla@gmail.com>
- */
 namespace CommonTest\Form\View\Helper;
 
-use Zend\Stdlib\PriorityQueue;
-use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\JsonRenderer;
-use Zend\View\Renderer\PhpRenderer;
-use Zend\Form\View\Helper;
+use Common\Form\Elements\Types\FileUploadList;
+use Common\Form\Elements\Types\FileUploadListItem;
+use Common\Form\Elements\Types\HoursPerWeek;
+use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\View\Helper\FormCollection as FormCollectionViewHelper;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Element\Collection;
 use Zend\Form\Form;
-use Common\Form\Elements\Types\PostcodeSearch;
-use Common\Form\Elements\Types\FileUploadList;
-use Common\Form\Elements\Types\FileUploadListItem;
-use Common\Form\Elements\Types\HoursPerWeek;
-use Zend\I18n\View\Helper\Translate;
+use Zend\Form\View\Helper;
 use Zend\I18n\Translator\Translator;
+use Zend\I18n\View\Helper\Translate;
+use Zend\Stdlib\PriorityQueue;
+use Zend\View\HelperPluginManager;
+use Zend\View\Renderer\JsonRenderer;
+use Zend\View\Renderer\PhpRenderer;
 
 /**
- * FormCollection Test
- *
- * @package CommonTest\Form\View\Helper
- * @author Jakub Igla <jakub.igla@gmail.com>
+ * @covers Common\Form\View\Helper\FormCollection
  */
 class FormCollectionTest extends MockeryTestCase
 {
@@ -191,6 +182,7 @@ class FormCollectionTest extends MockeryTestCase
         $mockFieldset->shouldReceive('getIterator')->andReturn($iterator);
         $mockFieldset->shouldReceive('getOption')->with('readonly')->andReturn(true);
         $mockFieldset->shouldReceive('getOption')->with('hint')->andReturnNull();
+        $mockFieldset->shouldReceive('getOption')->with('hintFormat')->andReturnNull();
         $mockFieldset->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
         $mockView = m::mock('Zend\View\Renderer\PhpRenderer');

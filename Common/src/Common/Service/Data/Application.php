@@ -3,12 +3,12 @@
 namespace Common\Service\Data;
 
 use Common\RefData as CommonRefData;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Application\Application as ApplicationQry;
 use Dvsa\Olcs\Transfer\Query\Application\OperatingCentres as OcQry;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
- * Service Class Task
+ * Service Class Application
  *
  * @package Common\Service\Data
  */
@@ -22,7 +22,8 @@ class Application extends AbstractDataService
     /**
      * Wrapper method to match interface.
      *
-     * @param int|null $id
+     * @param int|null $id Id
+     *
      * @return array
      */
     public function fetchData($id = null)
@@ -33,8 +34,8 @@ class Application extends AbstractDataService
     /**
      * Fetches application data
      *
-     * @param int|null $id
-     * @param array|null $bundle
+     * @param int|null $id Id
+     *
      * @return array
      */
     public function fetchApplicationData($id = null)
@@ -44,18 +45,23 @@ class Application extends AbstractDataService
         if (is_null($this->getData($id))) {
             $dtoData = ApplicationQry::create(['id' => $id]);
             $response = $this->handleQuery($dtoData);
+
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $data = $response->getResult();
             $this->setData($id, $data);
         }
+
         return $this->getData($id);
     }
 
     /**
      * Can this entity have cases
-     * @param $id
+     *
+     * @param int $id Id
+     *
      * @return bool
      */
     public function canHaveCases($id)
@@ -75,7 +81,9 @@ class Application extends AbstractDataService
 
     /**
      * Fetches an array of OperatingCentres for the application.
-     * @param null $id
+     *
+     * @param int|null $id Id
+     *
      * @return array
      */
     public function fetchOperatingCentreData($id = null)
@@ -85,9 +93,11 @@ class Application extends AbstractDataService
         if (is_null($this->getData('oc_' .$id))) {
             $dtoData = OcQry::create(['id' => $id, 'sort' => 'id', 'order' => 'ASC']);
             $response = $this->handleQuery($dtoData);
+
             if (!$response->isOk()) {
                 throw new UnexpectedResponseException('unknown-error');
             }
+
             $data = $response->getResult();
             $this->setData('oc_' .$id, $data);
         }
@@ -96,16 +106,22 @@ class Application extends AbstractDataService
     }
 
     /**
-     * @param integer $id
+     * Set Id
+     *
+     * @param int $id Id
+     *
      * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
     /**
+     * Get id
+     *
      * @return integer
      */
     public function getId()

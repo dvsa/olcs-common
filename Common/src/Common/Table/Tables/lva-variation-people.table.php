@@ -14,7 +14,7 @@ return array(
             )
         ),
         'row-disabled-callback' => function ($row) {
-            return in_array($row['action'], ['D', 'C']);
+            return in_array($row['action'], ['D', 'C'], true);
         }
     ),
     'columns' => array(
@@ -27,9 +27,7 @@ return array(
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnHasOtherNames',
             'name' => 'otherName',
-            'formatter' => function ($row) {
-                return ($row['otherName'] ? 'Yes' : 'No');
-            }
+            'formatter' => 'YesNo',
         ),
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnDate',

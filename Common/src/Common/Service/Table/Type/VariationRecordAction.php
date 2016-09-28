@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Variation Record Action type
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Table\Type;
 
 /**
@@ -17,35 +12,42 @@ class VariationRecordAction extends Action
     /**
      * Render the selector
      *
-     * @param array $data
-     * @param array $column
+     * @param array  $data             Row data
+     * @param array  $column           Colunm params
+     * @param string $formattedContent Content
+     *
      * @return string
      */
     public function render($data, $column, $formattedContent = null)
     {
-        $prefix = '';
+        $prefix = null;
+
+        /** @var \Zend\I18n\Translator\Translator $translator */
+        $translator = $this->getTable()->getServiceLocator()->get('translator');
 
         if (isset($data['action'])) {
             switch ($data['action']) {
                 case 'A':
-                    $prefix = '(New)';
+                    $prefix = 'common.table.status.new';
                     break;
                 case 'U':
-                    $prefix = '(Updated)';
+                    $prefix = 'common.table.status.updated';
                     break;
                 case 'C':
-                    $prefix = '(Current)';
+                    $prefix = 'common.table.status.current';
                     $column['action-attributes'][] = 'disabled="disabled"';
                     break;
                 case 'D':
-                    $prefix = '(Removed)';
+                    $prefix = 'common.table.status.removed';
                     $column['action-attributes'][] = 'disabled="disabled"';
                     break;
             }
         }
 
+        $prefix = ($prefix !== null ? '(' . $translator->translate($prefix) . ') ' : '');
+
         $content = parent::render($data, $column, $formattedContent);
 
-        return trim($prefix . ' ' . $content);
+        return $prefix . trim($content);
     }
 }

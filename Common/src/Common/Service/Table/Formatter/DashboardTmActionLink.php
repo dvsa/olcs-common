@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Dashboard Transport Manager Action Link
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
 namespace Common\Service\Table\Formatter;
 
 use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Dashboard Transport Manager Action Link
@@ -19,22 +15,23 @@ class DashboardTmActionLink implements FormatterInterface
     /**
      * Generate the HTML to display the Action link
      *
-     * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param array                   $data   Row data
+     * @param array                   $column Column parameters
+     * @param ServiceLocatorInterface $sm     Service manager
+     * 
      * @return string HTML
      */
-    public static function format($data, $column = array(), $sm = null)
+    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
     {
         $provideStatuses = [
             TransportManagerApplicationEntityService::STATUS_INCOMPLETE,
             TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE,
         ];
 
-        if (in_array($data['transportManagerApplicationStatus']['id'], $provideStatuses)) {
-            $linkText = 'Provide details';
+        if (in_array($data['transportManagerApplicationStatus']['id'], $provideStatuses, true)) {
+            $linkText = 'dashboard.tm-applications.table.action.provide-details';
         } else {
-            $linkText = 'View details';
+            $linkText = 'dashboard.tm-applications.table.action.view-details';
         }
 
         return sprintf(
@@ -45,18 +42,18 @@ class DashboardTmActionLink implements FormatterInterface
                 $data['transportManagerApplicationId'],
                 $data['isVariation']
             ),
-            $linkText
+            $sm->get('translator')->translate($linkText)
         );
-
     }
 
     /**
      * Get the hyperlink for the application number
      *
-     * @param \Zend\ServiceManager\ServiceManager $sm
-     * @param int  $applicationId
-     * @param int  $transportManagerApplicationId
-     * @param bool $isVariation Is this application a variation
+     * @param ServiceLocatorInterface $sm                            Service Manager
+     * @param int                     $applicationId                 Application id
+     * @param int                     $transportManagerApplicationId TM Application Id
+     * @param bool                    $isVariation                   Is this application a variation
+     *
      * @return string URL
      */
     protected static function getApplicationUrl($sm, $applicationId, $transportManagerApplicationId, $isVariation)

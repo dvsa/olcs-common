@@ -1,29 +1,32 @@
 <?php
 
-/**
- * Test TransportManagerApplicationStatus view helper
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
- */
-
 namespace CommonTest\View\Helper;
 
-use \Common\View\Helper\TransportManagerApplicationStatus;
 use Common\Service\Entity\TransportManagerApplicationEntityService;
+use Common\View\Helper\TransportManagerApplicationStatus;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\View\Renderer\RendererInterface;
 
 /**
- * Test TransportManagerApplicationStatus view helper
- *
- * @author Mat Evans <mat.evans@valtech.co.uk>
+ * @covers Common\View\Helper\TransportManagerApplicationStatus
  */
-class TransportManagerApplicationStatusTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
+class TransportManagerApplicationStatusTest extends MockeryTestCase
 {
+    /** @var TransportManagerApplicationStatus */
+    private $sut;
+    /** @var  m\MockInterface */
+    private $mockView;
+
     /**
      * Setup the view helper
      */
     public function setUp()
     {
+        $this->mockView = m::mock(RendererInterface::class);
+
         $this->sut = new TransportManagerApplicationStatus();
+        $this->sut->setView($this->mockView);
     }
 
     public function dataProviderRender()
@@ -41,25 +44,28 @@ class TransportManagerApplicationStatusTest extends \Mockery\Adapter\Phpunit\Moc
 
     /**
      * @dataProvider dataProviderRender
-     * @param type $expectedClass
-     * @param type $status
-     */
-    public function testRender($expectedClass, $status)
-    {
-        $html = $this->sut->render($status, $status);
-
-        $this->assertEquals('<span class="status'. $expectedClass .'">'. $status .'</span>', $html);
-    }
-
-    /**
-     * @dataProvider dataProviderRender
-     * @param type $expectedClass
-     * @param type $status
      */
     public function testInvoke($expectedClass, $status)
     {
-        $html = $this->sut->__invoke($status, $status);
+        $this->mockView
+            ->shouldReceive('translate')
+            ->once()
+            ->andReturnUsing(
+                function ($desciption) {
+                    return '_TRANSL_' . $desciption;
+                }
+            );
 
-        $this->assertEquals('<span class="status'. $expectedClass .'">'. $status .'</span>', $html);
+        static::assertEquals(
+            '<span class="status' . $expectedClass . '">_TRANSL_' . $status . '</span>',
+            $this->sut->__invoke($status, $status)
+        );
+    }
+
+    public function testRenderDescEmpty()
+    {
+        $sut = new TransportManagerApplicationStatus();
+
+        static::assertEquals('', $sut->render(null, ''));
     }
 }

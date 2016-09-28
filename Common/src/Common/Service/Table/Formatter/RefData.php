@@ -1,10 +1,8 @@
 <?php
 
-/**
- * RefData formatter
- */
-
 namespace Common\Service\Table\Formatter;
+
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * RefData formatter
@@ -14,13 +12,14 @@ class RefData implements FormatterInterface
     /**
      * Format a address
      *
-     * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param array                   $data   Row data
+     * @param array                   $column Column params
+     * @param ServiceLocatorInterface $sm     Service Manager
+     *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
     {
-        return $data[$column['name']]['description'];
+        return $sm->get('translator')->translate($data[$column['name']]['description']);
     }
 }

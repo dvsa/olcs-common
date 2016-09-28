@@ -3,9 +3,9 @@
 namespace Common\Service\Data;
 
 use Common\Service\Cqrs\Response;
+use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Address\GetAddress;
 use Dvsa\Olcs\Transfer\Query\Address\GetList;
-use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
  * Address Data Service
@@ -20,7 +20,7 @@ class AddressDataService extends AbstractDataService
      *
      * @param string $uprn Uprn
      *
-     * @return mixed
+     * @return array
      * @throws UnexpectedResponseException
      */
     public function getAddressForUprn($uprn)
@@ -29,10 +29,11 @@ class AddressDataService extends AbstractDataService
 
         /** @var Response $response */
         $response = $this->handleQuery($dtoData);
-        if ($response->isServerError() || $response->isClientError() || !$response->isOk() ||
-            !count($response->getResult()['results'])) {
+
+        if (!$response->isOk() || !count($response->getResult()['results'])) {
             throw new UnexpectedResponseException('unknown-error');
         }
+
         return $response->getResult()['results'][0];
     }
 
@@ -51,9 +52,10 @@ class AddressDataService extends AbstractDataService
         /** @var Response $response */
         $response = $this->handleQuery($dtoData);
 
-        if ($response->isServerError() || $response->isClientError() || !$response->isOk()) {
+        if (!$response->isOk()) {
             throw new UnexpectedResponseException('unknown-error');
         }
+
         return $response->getResult()['results'];
     }
 }
