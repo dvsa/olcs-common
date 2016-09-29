@@ -102,8 +102,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             return $this->completeSection('vehicles_psv');
         }
 
-        $this->maybeWarnAboutTotalAuth($resultData);
-
         return $this->renderForm($form, 'vehicles_psv', $resultData);
     }
 
@@ -223,7 +221,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $params = [
             'mode' => 'add',
-            'canAddAnother' => $resultData['availableSpaces'] > 1,
+            'canAddAnother' => true,
             'action' => $this->params('action'),
             'isRemoved' => false
         ];
@@ -362,18 +360,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 ->tableToCsv($this->getResponse(), $this->getTableBasic($data), 'psv-vehicles');
         }
 
-        // if adding check that we haven't exceeded the to the totAuthVehicles
-        if ($action === 'add') {
-            $resultData = $this->fetchResultData();
-            if ($resultData['availableSpaces'] < 1) {
-
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addErrorMessage('more-vehicles-than-total-auth-error');
-
-                return $this->reload();
-            }
-        }
-
         return null;
     }
 
@@ -454,25 +440,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     private function getTotalNumberOfVehicles($resultData)
     {
         return $resultData['total'];
-    }
-
-    /**
-     * Add a Flash messenger warning if the total vehicles has been exceeded
-     *
-     * @param array $resultData
-     * @param bool  $current
-     */
-    private function maybeWarnAboutTotalAuth($resultData, $current = true)
-    {
-        if ($this->lva !== 'licence' && $resultData['hasEnteredReg'] === 'Y') {
-
-            $method = $current ? 'addCurrentWarningMessage' : 'addWarningMessage';
-            if ((int) $resultData['availableSpaces'] < 0) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->$method(
-                    'more-vehicles-than-authorisation'
-                );
-            }
-        }
     }
 
     /**
