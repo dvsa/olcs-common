@@ -203,6 +203,63 @@ class CurrentUserTest extends MockeryTestCase
             [['userType' => User::USER_TYPE_OPERATOR], true],
             [['userType' => User::USER_TYPE_LOCAL_AUTHORITY], false],
             [['userType' => User::USER_TYPE_PARTNER], false],
+            [['userType' => User::USER_TYPE_TRANSPORT_MANAGER], false],
+        ];
+    }
+
+    /**
+     * @dataProvider provideIsLocalAuthority
+     */
+    public function testIsLocalAuthority($userData, $expected)
+    {
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals($expected, $sut->isLocalAuthority());
+    }
+
+    public function provideIsLocalAuthority()
+    {
+        return [
+            [[], false],
+            [['userType' => User::USER_TYPE_ANON], false],
+            [['userType' => User::USER_TYPE_OPERATOR], false],
+            [['userType' => User::USER_TYPE_LOCAL_AUTHORITY], true],
+            [['userType' => User::USER_TYPE_PARTNER], false],
+            [['userType' => User::USER_TYPE_TRANSPORT_MANAGER], false],
+        ];
+    }
+
+    /**
+     * @dataProvider provideIsPartner
+     */
+    public function testIsPartner($userData, $expected)
+    {
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals($expected, $sut->isPartner());
+    }
+
+    public function provideIsPartner()
+    {
+        return [
+            [[], false],
+            [['userType' => User::USER_TYPE_ANON], false],
+            [['userType' => User::USER_TYPE_OPERATOR], false],
+            [['userType' => User::USER_TYPE_LOCAL_AUTHORITY], false],
+            [['userType' => User::USER_TYPE_PARTNER], true],
+            [['userType' => User::USER_TYPE_TRANSPORT_MANAGER], false],
         ];
     }
 
