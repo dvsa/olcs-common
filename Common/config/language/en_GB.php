@@ -2156,6 +2156,7 @@ return [
     'search-no-results-internal' => 'There were no results for your search.<p>Try using different keywords, or picking another category.</p><p>You can look for every result in a category by choosing "all" from the dropdown lists.</p>',
     'search-no-results-operator' => '<div class="article js-no-results"><p>There were no results for your search.</p><p>Try using different keywords, or picking another:</p><ul><li>licence type</li><li>licence status</li><li>traffic area</li></ul><p>You can look for every result in a category by choosing "all" from the dropdown lists.</p></div>',
     'search-no-results-traffic-commissioner-publication' => '<div class="article js-no-results"><p>There were no results for your search, try using different keywords.</p></div>',
+    'search-no-results-operating-centre' => '<div class="article js-no-results"><p>There were no results for your search, try using different keywords.</p></div>',
     'search-result-label-address' => 'Address',
     'search-result-label-business-type' => 'Business type',
     'search-result-label-continuation-date' => 'Continuation date',
@@ -2215,7 +2216,6 @@ return [
     'search-result-section-transport-managers' => 'Transport Managers',
     'search-result-section-vehicles' => 'Vehicles',
     'search.bus' => 'Bus Registration',
-    'search.form.back' => 'Back to search',
     'search.form.title' => 'Edit search',
     'search.form.hint.publication' => 'Can include operator name, licence number, publication number, street, town or postcode',
     'search.form.hint.operator' => 'Can include operator name, licence number or trading name',
@@ -2909,6 +2909,7 @@ return [
     'common.table.No' => 'No',
     'common.file-upload.browse.title' => 'Attach file(s)',
     'common.file-upload.browse.hint' => 'PDF, DOC, JPG, PNG or GIF',
+    'common.link.back.label' => 'Back',
     'submitandpay.button' => 'Submit and pay',
     'submitapplication.button' => 'Submit application',
     'change.button' => 'I want to change something else',
@@ -2919,9 +2920,5 @@ return [
     'auth.change-password.old-password.error' => 'Current password can\'t be blank',
     'auth.change-password.new-password.error' => 'Enter a new password',
     'auth.change-password.confirm-password.error' => 'Re-enter your new password',
-    'submitandpay.button' => 'Submit and pay',
-    'submitapplication.button' => 'Submit application',
-    'change.button' => 'I want to change something else',
-    'invalid-payment-request.error' => 'Invalid payment submission request',
     // Potentially unused translations
 ];

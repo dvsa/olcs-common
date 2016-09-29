@@ -31,10 +31,11 @@ trait CrudTableTrait
         );
 
         if ($this->isButtonPressed('addAnother')) {
-            $action = $prefix !== null ? $prefix . '-add' : 'add';
-            $routeParams['action'] = $action;
+            $routeParams['action'] = ($prefix !== null ? $prefix . '-add' : 'add');
+            $route = null;
             $method = 'toRoute';
         } else {
+            $route = $this->getBaseRoute();
             $method = 'toRouteAjax';
         }
 
@@ -42,7 +43,7 @@ trait CrudTableTrait
             'section.' . $this->params('action') . '.' . $this->section
         );
 
-        return $this->redirect()->$method(null, $routeParams);
+        return $this->redirect()->$method($route, $routeParams);
     }
 
     /**
@@ -72,7 +73,7 @@ trait CrudTableTrait
             }
 
             return $this->redirect()->toRouteAjax(
-                null,
+                $this->getBaseRoute(),
                 array($this->getIdentifierIndex() => $this->getIdentifier())
             );
         }

@@ -40,6 +40,8 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         VehicleSearchTrait;
 
     protected $section = 'vehicles';
+    protected $baseRoute = 'lva-%s/vehicles';
+
     protected $totalAuthorisedVehicles = [];
     protected $totalVehicles = [];
 
@@ -253,7 +255,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $this->getServiceLocator()->get('Helper\FlashMessenger')
                 ->addProminentErrorMessage($message);
 
-            return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+            return $this->redirect()->toRouteAjax($this->getBaseRoute(), ['action' => null], [], true);
         }
 
         /** @var \Zend\Http\Request $request */

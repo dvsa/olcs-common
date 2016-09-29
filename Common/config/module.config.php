@@ -342,6 +342,7 @@ return array(
             'dateTime' => \Common\View\Helper\DateTime::class,
             'returnToAddress' => Common\View\Helper\ReturnToAddress::class,
             'readOnlyActions' => \Common\View\Helper\ReadOnlyActions::class,
+            'navigationParentPage' => Common\View\Helper\NavigationParentPage::class,
 
             // Extended form view helpers, to allow us to use alternative attributes that are not in ZF2's whitelist
             'formbutton'              => \Common\Form\View\Helper\Extended\FormButton::class,
@@ -383,6 +384,7 @@ return array(
             'languageLink' => \Common\View\Helper\LanguageLink::class,
             'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
             'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
+            'linkBack' => Common\View\Helper\LinkBack::class,
         ),
     ),
     'view_manager' => array(

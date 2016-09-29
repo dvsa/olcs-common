@@ -13,7 +13,8 @@ trait CrudActionTrait
     /**
      * Check if we have a crud action in the form table data, if so return the table data, if not return null
      *
-     * @param array $formTables
+     * @param array $formTables Tables
+     *                          
      * @return array
      */
     protected function getCrudAction(array $formTables = array())
@@ -27,6 +28,13 @@ trait CrudActionTrait
         return null;
     }
 
+    /**
+     * Return selected CRUD action
+     *
+     * @param array $data Post Data
+     *
+     * @return string
+     */
     protected function getActionFromCrudAction($data)
     {
         if (is_array($data['action'])) {
@@ -39,7 +47,11 @@ trait CrudActionTrait
     /**
      * Redirect to the most appropriate CRUD action
      *
-     * @param array $data
+     * @param array  $data             Data
+     * @param array  $rowsNotRequired  Action
+     * @param string $childIdParamName Child route identifier
+     * @param string $route            Route
+     *
      * @return \Zend\Http\Response
      */
     protected function handleCrudAction(
@@ -69,6 +81,10 @@ trait CrudActionTrait
             $routeParams[$childIdParamName] = $data['id'];
         }
         $options = ['query' => $this->getRequest()->getQuery()->toArray()];
+
+        if ($route === null) {
+            $route = ($this->getBaseRoute() ? $this->getBaseRoute() . '/action' : null);
+        }
 
         return $this->redirect()->toRoute($route, $routeParams, $options, true);
     }

@@ -1,18 +1,13 @@
 <?php
 
-/**
- * Abstract Transport Managers Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Adapters\AbstractTransportManagerAdapter;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Controller\Lva\Interfaces\AdapterInterface;
-use Dvsa\Olcs\Transfer\Command;
-use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
 use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
+use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
+use Dvsa\Olcs\Transfer\Command;
 use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
 
 /**
@@ -30,6 +25,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     /** @var  AbstractTransportManagerAdapter */
     protected $adapter;
+    protected $baseRoute = 'lva-%s/transport_managers';
 
     /**
      * @return AbstractTransportManagerAdapter
@@ -248,7 +244,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
                     ->addSuccessMessage('lva-tm-sent-success');
 
                 return $this->redirect()->toRouteAjax(
-                    null,
+                    $this->getBaseRoute(),
                     [
                         'action' => null
                     ],
@@ -304,7 +300,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
                     $fm->addSuccessMessage($successMessage);
 
-                    return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+                    return $this->redirect()->toRouteAjax($this->getBaseRoute(), ['action' => null], [], true);
                 }
 
                 if ($response->isServerError()) {

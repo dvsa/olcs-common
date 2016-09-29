@@ -73,11 +73,15 @@ class CrudTableTraitTest extends MockeryTestCase
 
     public function testHandlePostSave()
     {
+        $route = 'unit_Route';
+
         $redirectMock = m::mock()
             ->shouldReceive('toRouteAjax')
-            ->with(null, ['application' => 123])
+            ->with($route, ['application' => 123])
             ->andReturn('redirect')
             ->getMock();
+
+        $this->sut->shouldReceive('getBaseRoute')->once()->andReturn($route);
 
         $this->sut->shouldReceive('postSave')
             ->shouldReceive('getIdentifierIndex')
@@ -139,6 +143,8 @@ class CrudTableTraitTest extends MockeryTestCase
 
     public function testDeleteActionWithPost()
     {
+        $route = 'unit_Route';
+
         $mockFlashMessenger = m::mock();
         $mockFlashMessenger->shouldReceive('addSuccessMessage');
         $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
@@ -146,7 +152,7 @@ class CrudTableTraitTest extends MockeryTestCase
         $redirectMock = m::mock()
             ->shouldReceive('toRouteAjax')
             ->with(
-                null,
+                $route,
                 [
                     'application' => 123
                 ]
@@ -154,7 +160,9 @@ class CrudTableTraitTest extends MockeryTestCase
             ->andReturn('redirect')
             ->getMock();
 
-        $this->sut->shouldReceive('getRequest')
+        $this->sut
+            ->shouldReceive('getBaseRoute')->once()->andReturn($route)
+            ->shouldReceive('getRequest')
             ->andReturn(
                 m::mock()
                 ->shouldReceive('isPost')

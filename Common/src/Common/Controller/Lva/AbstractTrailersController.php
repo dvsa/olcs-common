@@ -1,21 +1,16 @@
 <?php
 
-/**
- * Abstract Trailers Controller
- *
- * @author Josh Curtis <josh.curtis@valtech.co.uk>
- */
 namespace Common\Controller\Lva;
 
+use Common\Service\Table\TableBuilder as Table;
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateTrailers;
+use Dvsa\Olcs\Transfer\Command\Trailer\CreateTrailer;
+use Dvsa\Olcs\Transfer\Command\Trailer\DeleteTrailer;
+use Dvsa\Olcs\Transfer\Command\Trailer\UpdateTrailer;
+use Dvsa\Olcs\Transfer\Query\Licence\Trailers;
+use Dvsa\Olcs\Transfer\Query\Trailer\Trailer;
 use Zend\Form\FormInterface;
 use Zend\Stdlib\RequestInterface;
-use Dvsa\Olcs\Transfer\Query\Trailer\Trailer;
-use Dvsa\Olcs\Transfer\Query\Licence\Trailers;
-use Dvsa\Olcs\Transfer\Command\Trailer\CreateTrailer;
-use Dvsa\Olcs\Transfer\Command\Trailer\UpdateTrailer;
-use Dvsa\Olcs\Transfer\Command\Trailer\DeleteTrailer;
-use Common\Service\Table\TableBuilder as Table;
 
 /**
  * Abstract Trailers Controller
@@ -35,12 +30,19 @@ abstract class AbstractTrailersController extends AbstractController
      * @var string $section
      */
     protected $section = 'trailers';
+    protected $baseRoute = 'lva-%s/trailers';
 
+    /**
+     * Process Action - Index
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function indexAction()
     {
         $request = $this->getRequest();
 
         $response = $this->handleQuery(Trailers::create(['id' => $this->getIdentifier()]));
+        /** @var \Zend\Http\Request $request */
         $result = $response->getResult();
 
         if ($request->isPost()) {
@@ -89,6 +91,7 @@ abstract class AbstractTrailersController extends AbstractController
      */
     public function addAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $form = $this->getServiceLocator()->get('Helper\Form')
@@ -123,6 +126,7 @@ abstract class AbstractTrailersController extends AbstractController
      */
     public function editAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $form = $this->getServiceLocator()->get('Helper\Form')
@@ -182,6 +186,8 @@ abstract class AbstractTrailersController extends AbstractController
     /**
      * Prepare and return the form with the form data.
      *
+     * @param array $tableData Table data
+     *
      * @return Table The trailers table.
      */
     protected function getTable($tableData)
@@ -193,7 +199,7 @@ abstract class AbstractTrailersController extends AbstractController
      * Return the trailer form.
      *
      * @param RequestInterface $request The request
-     * @param Table $table The table to add to the form.
+     * @param Table            $table   The table to add to the form.
      *
      * @return \Zend\Form\Form $form The form
      */
