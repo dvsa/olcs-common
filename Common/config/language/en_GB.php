@@ -2909,5 +2909,9 @@ return [
     'auth.change-password.old-password.error' => 'Current password can\'t be blank',
     'auth.change-password.new-password.error' => 'Enter a new password',
     'auth.change-password.confirm-password.error' => 'Re-enter your new password',
+    'submitandpay.button' => 'Submit and pay',
+    'submitapplication.button' => 'Submit application',
+    'change.button' => 'I want to change something else',
+    'invalid-payment-request.error' => 'Invalid payment submission request',
     // Potentially unused translations
 ];
