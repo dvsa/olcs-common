@@ -42,6 +42,8 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             ->get('lva-' . $this->lva . '-financial_evidence')
             ->getForm($this->getRequest())
             ->setData($formData);
+
+        $this->alterFormForLva($form);
         $adapter->alterFormForLva($form);
 
         // handle files
