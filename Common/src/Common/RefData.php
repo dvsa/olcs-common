@@ -247,4 +247,6 @@ class RefData
     const ERRU_RESPONSE_QUEUED = 'erru_case_t_msirnys';
 
     const ERROR_FEE_NOT_CREATED = 'AP-FEE-NOT-CREATED';
+
+    const UNDERTAKINGS_KEY = 'undertakings';
 }

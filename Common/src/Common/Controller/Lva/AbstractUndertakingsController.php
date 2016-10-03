@@ -11,6 +11,7 @@ namespace Common\Controller\Lva;
 use Common\RefData;
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService as Licence;
+use Common\Controller\Lva\Traits\EnabledSectionTrait;
 
 /**
  * Abstract Undertakings Controller
@@ -20,6 +21,8 @@ use Common\Service\Entity\LicenceEntityService as Licence;
  */
 abstract class AbstractUndertakingsController extends AbstractController
 {
+    use EnabledSectionTrait;
+
     /**
      *  Undertakings section
      */
