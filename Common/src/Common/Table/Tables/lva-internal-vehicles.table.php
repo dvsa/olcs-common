@@ -16,7 +16,9 @@ return array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
                 'delete' => array(
-                    'label' => 'Remove', 'class' => 'secondary js-require--multiple', 'requireRows' => true
+                    'label' => 'Remove', 
+                    'class' => ' more-actions__item js-require--multiple', 
+                    'requireRows' => true
                 ),
             )
         ),
