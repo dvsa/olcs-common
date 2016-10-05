@@ -36,7 +36,7 @@ class TransactionStatus implements FormatterInterface
                 $statusClass .= ' red';
 
                 // if transaction is failed and it was migrated then change the status message
-                if (isset($row['migratedFromOlbs']) && $row['migratedFromOlbs']) {
+                if (isset($row['migratedFromOlbs']) && $row['migratedFromOlbs'] === true) {
                     $row['status']['description'] = 'Migrated';
                 }
                 break;
