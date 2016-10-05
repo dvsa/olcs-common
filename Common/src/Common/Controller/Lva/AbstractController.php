@@ -275,7 +275,7 @@ abstract class AbstractController extends AbstractActionController
     /**
      * No-op but extended
      */
-    protected function alterFormForLva(Form $form)
+    protected function alterFormForLva(Form $form, $data = null)
     {
 
     }

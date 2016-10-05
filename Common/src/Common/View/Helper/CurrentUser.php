@@ -109,6 +109,30 @@ class CurrentUser extends AbstractHelper
     }
 
     /**
+     * Checks whether the current user is a local authority
+     *
+     * @return bool
+     */
+    public function isLocalAuthority()
+    {
+        $userData = $this->getUserData();
+
+        return (!empty($userData['userType']) && ($userData['userType'] === User::USER_TYPE_LOCAL_AUTHORITY));
+    }
+
+    /**
+     * Checks whether the current user is a partner
+     *
+     * @return bool
+     */
+    public function isPartner()
+    {
+        $userData = $this->getUserData();
+
+        return (!empty($userData['userType']) && ($userData['userType'] === User::USER_TYPE_PARTNER));
+    }
+
+    /**
      * Get the user's unique id
      *
      * @return string
