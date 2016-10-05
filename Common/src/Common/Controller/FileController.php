@@ -60,10 +60,12 @@ class FileController extends ZendAbstractActionController
         $newResponse->setContent($response->getContent());
 
         $headers = new \Zend\Http\Headers();
-        $newResponse->setContent($response->getContent());
-        $headers->addHeader($response->getHeaders()->get('contentlength'));
-        $headers->addHeader($response->getHeaders()->get('contentdisposition'));
-        $headers->addHeader($response->getHeaders()->get('contenttype'));
+        $allowedHeaders = ['Content-Disposition', 'Content-Encoding', 'Content-Type', 'Content-Length'];
+        foreach ($response->getHeaders() as $header) {
+            if (in_array($header->getFieldName(), $allowedHeaders)) {
+                $headers->addHeader($header);
+            }
+        }
         $newResponse->setHeaders($headers);
 
         return $newResponse;
