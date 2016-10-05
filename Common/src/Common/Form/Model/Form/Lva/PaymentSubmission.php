@@ -21,6 +21,11 @@ class PaymentSubmission
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
+    public $description = null;
+
+    /**
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
     public $amount = null;
 
     /**
