@@ -34,6 +34,11 @@ class TransactionStatus implements FormatterInterface
             case Ref::TRANSACTION_STATUS_FAILED:
             case Ref::TRANSACTION_STATUS_CANCELLED:
                 $statusClass .= ' red';
+
+                // if transaction is failed and it was migrated then change the status message
+                if (isset($row['migratedFromOlbs']) && $row['migratedFromOlbs']) {
+                    $row['status']['description'] = 'Migrated';
+                }
                 break;
             case Ref::TRANSACTION_STATUS_PAID:
             case Ref::TRANSACTION_STATUS_COMPLETE:
@@ -46,6 +51,7 @@ class TransactionStatus implements FormatterInterface
                 $statusClass .= ' grey';
                 break;
         }
+
         return sprintf(
             '<span class="%s">%s</span>',
             $statusClass,

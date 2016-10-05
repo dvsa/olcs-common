@@ -85,6 +85,16 @@ class TransactionStatusTest extends PHPUnit_Framework_TestCase
                 ],
                 '<span class="status grey">bar</span>',
             ],
+            'migrated' => [
+                [
+                    'status' => [
+                        'id' => RefData::TRANSACTION_STATUS_FAILED,
+                        'description' => 'failed',
+                    ],
+                    'migratedFromOlbs' => true,
+                ],
+                '<span class="status red">Migrated</span>',
+            ],
         ];
     }
 }
