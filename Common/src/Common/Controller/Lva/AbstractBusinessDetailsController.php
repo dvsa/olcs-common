@@ -312,7 +312,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $response = $this->handleCommand($dtoClass::create($dtoData));
 
             if ($response->isOk()) {
-                return $this->handlePostSave();
+                return $this->handlePostSave(null, ['fragment' => 'table']);
             }
 
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');

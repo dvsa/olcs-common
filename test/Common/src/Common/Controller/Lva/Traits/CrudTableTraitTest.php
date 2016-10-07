@@ -38,7 +38,8 @@ class CrudTableTraitTest extends MockeryTestCase
                 [
                     'application' => 123,
                     'action' => 'add'
-                ]
+                ],
+                []
             )
             ->andReturn('redirect')
             ->getMock();
@@ -77,7 +78,7 @@ class CrudTableTraitTest extends MockeryTestCase
 
         $redirectMock = m::mock()
             ->shouldReceive('toRouteAjax')
-            ->with($route, ['application' => 123])
+            ->with($route, ['application' => 123], [])
             ->andReturn('redirect')
             ->getMock();
 

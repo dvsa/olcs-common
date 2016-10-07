@@ -505,7 +505,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             $this->saveLicence($form, $form->getData());
 
             return $this->handlePostSave(
-                (new CamelCaseToDash())->filter($which)
+                (new CamelCaseToDash())->filter($which),
+                ['fragment' => $which]
             );
         }
 

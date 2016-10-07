@@ -46,6 +46,7 @@ class LicenceHistoryPi
     /**
      * @Form\Name("prevBeenAtPi-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"prevBeenAtPi"})
      */
     public $prevBeenAtPiTable = null;
 }
