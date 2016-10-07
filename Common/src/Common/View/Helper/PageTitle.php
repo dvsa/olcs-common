@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Page Title
- */
 namespace Common\View\Helper;
 
 use Zend\I18n\View\Helper\Translate;
@@ -41,7 +38,9 @@ class PageTitle extends AbstractHelper implements FactoryInterface
     /**
      * Inject services
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator Service Manager
+     *
+     * @return $this
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -87,6 +86,6 @@ class PageTitle extends AbstractHelper implements FactoryInterface
             $pageTitle = 'header-vehicle-operator-licensing';
         }
 
-        return strip_tags($this->translator->__invoke($pageTitle));
+        return $this->view->escapeHtml($this->translator->__invoke($pageTitle));
     }
 }
