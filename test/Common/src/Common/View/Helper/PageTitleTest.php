@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Page Title Test
- */
 namespace CommonTest\View\Helper;
 
 use Common\View\Helper\PageTitle;
@@ -12,10 +9,11 @@ use Zend\I18n\View\Helper\Translate;
 use Zend\Mvc\Router\Http\RouteMatch;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\Placeholder;
+use Zend\View\Helper\ViewModel;
 use Zend\View\HelperPluginManager;
 
 /**
- * Page Title Test
+ * @covers Common\View\Helper\PageTitle
  */
 class PageTitleTest extends MockeryTestCase
 {
@@ -47,17 +45,31 @@ class PageTitleTest extends MockeryTestCase
         $app = m::mock();
         $app->shouldReceive('getMvcEvent->getRouteMatch')->andReturn($routeMatch);
 
+        /** @var ServiceLocatorInterface | m\MockInterface $sm */
         $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get')->with('Application')->andReturn($app);
 
+        /** @var HelperPluginManager | m\MockInterface $vhm */
         $vhm = m::mock(HelperPluginManager::class)->makePartial();
         $vhm->setServiceLocator($sm);
         $vhm->shouldReceive('get')->with('translate')->andReturn($translate);
         $vhm->shouldReceive('get')->with('placeholder')->andReturn($placeholder);
 
+        /** @var \Zend\View\Renderer\RendererInterface $mockView */
+        $mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+            ->shouldReceive('escapeHtml')
+            ->once()
+            ->andReturnUsing(
+                function ($text) {
+                    return '_ESCAPED_'.$text;
+                }
+            )
+            ->getMock();
+
+        $this->sut->setView($mockView);
         $sut = $this->sut->createService($vhm);
 
-        $this->assertEquals('translated', $sut());
+        $this->assertEquals('_ESCAPED_translated', $sut->__invoke());
     }
 
     public function providerInvoke()
