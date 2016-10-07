@@ -263,7 +263,7 @@ abstract class AbstractController extends AbstractActionController
         // If we are on a sub-section, we need to go back to the section
         if ($this->params('action') !== 'index') {
             return $this->redirect()->toRoute(
-                null,
+                $this->getBaseRoute(),
                 [$this->getIdentifierIndex() => $lvaId],
                 ['query' => $this->getRequest()->getQuery()->toArray()]
             );
@@ -335,6 +335,11 @@ abstract class AbstractController extends AbstractActionController
     protected function getIdentifier()
     {
         return $this->params($this->getIdentifierIndex());
+    }
+
+    protected function getBaseRoute()
+    {
+        return empty($this->baseRoute) ? null : sprintf($this->baseRoute, $this->lva);
     }
 
     protected function getIdentifierIndex()

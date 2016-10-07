@@ -41,6 +41,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     ];
 
     protected $section = 'licence_history';
+    protected $baseRoute = 'lva-%s/licence_history';
 
     protected $otherLicences = [];
 

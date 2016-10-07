@@ -1,7 +1,11 @@
-<div class="page-header">
-    <div class="page-header__wrapper">
-        <h1><?php echo $this->pageTitle(); ?></h1>
-    </div><!-- .page-header__wrapper -->
-</div>
+<?php
+echo $this->partial(
+    'partials/page-header-simple',
+    [
+        'pageTitle' => $this->pageTitle(),
+        'backUrl' => true,
+    ]
+);
+?>
 
 <?php echo $this->render('pages/guides/partial/body.phtml');

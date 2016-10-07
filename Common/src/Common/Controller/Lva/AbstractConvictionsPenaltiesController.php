@@ -1,18 +1,13 @@
 <?php
 
-/**
- * Shared logic between Convictions Penalties controllers
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
-use Dvsa\Olcs\Transfer\Query\Application\PreviousConvictions;
 use Dvsa\Olcs\Transfer\Command\Application\UpdatePreviousConvictions;
-use Dvsa\Olcs\Transfer\Query\PreviousConviction\PreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\CreatePreviousConviction;
-use Dvsa\Olcs\Transfer\Command\PreviousConviction\UpdatePreviousConviction;
 use Dvsa\Olcs\Transfer\Command\PreviousConviction\DeletePreviousConviction;
+use Dvsa\Olcs\Transfer\Command\PreviousConviction\UpdatePreviousConviction;
+use Dvsa\Olcs\Transfer\Query\Application\PreviousConvictions;
+use Dvsa\Olcs\Transfer\Query\PreviousConviction\PreviousConviction;
 
 /**
  * Shared logic between Convictions Penalties controllers
@@ -24,6 +19,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     use Traits\CrudTableTrait;
 
     protected $section = 'convictions_penalties';
+    protected $baseRoute = 'lva-%s/convictions_penalties';
 
     public function indexAction()
     {

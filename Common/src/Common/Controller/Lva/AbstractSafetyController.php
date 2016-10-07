@@ -1,17 +1,12 @@
 <?php
 
-/**
- * Safety Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Service\Helper\FormHelperService;
-use Dvsa\Olcs\Transfer\Command\Workshop\CreateWorkshop as LicenceCreateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\CreateWorkshop as ApplicationCreateWorkshop;
-use Dvsa\Olcs\Transfer\Command\Workshop\UpdateWorkshop as LicenceUpdateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateWorkshop as ApplicationUpdateWorkshop;
+use Dvsa\Olcs\Transfer\Command\Workshop\CreateWorkshop as LicenceCreateWorkshop;
+use Dvsa\Olcs\Transfer\Command\Workshop\UpdateWorkshop as LicenceUpdateWorkshop;
 use Dvsa\Olcs\Transfer\Query\Workshop\Workshop;
 use Zend\Form\Form;
 use Zend\Http\Response;
@@ -27,6 +22,7 @@ abstract class AbstractSafetyController extends AbstractController
     use Traits\CrudTableTrait;
 
     protected $section = 'safety';
+    protected $baseRoute = 'lva-%s/safety';
 
     /**
      * Shared action data map
@@ -101,6 +97,7 @@ abstract class AbstractSafetyController extends AbstractController
      */
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         // We always want to get the result
@@ -264,6 +261,7 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function addOrEdit($mode)
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
         $safetyProviderData = array();
         $data = array();
@@ -376,7 +374,7 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function formatCrudDataForForm($data, $mode)
     {
-        if ($mode == 'edit') {
+        if ($mode === 'edit') {
             $data['data'] = array(
                 'version' => $data['version'],
                 'isExternal' => $data['isExternal']

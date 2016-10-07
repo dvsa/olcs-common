@@ -1,15 +1,9 @@
 <?php
 
-/**
- * Shared logic between People controllers
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
-use Common\RefData;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Common\RefData;
 
 /**
  * Shared logic between People controllers
@@ -26,6 +20,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      * Needed by the Crud Table Trait
      */
     protected $section = 'people';
+    protected $baseRoute = 'lva-%s/people';
 
     /**
      * Index action
@@ -51,6 +46,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     private function handleNonSoleTrader()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -95,7 +91,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         $adapter = $this->getAdapter();
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
+        /** @var array $personData */
         $personData = $adapter->getFirstPersonData();
         if ($request->isPost()) {
             $data = (array) $request->getPost();
@@ -342,6 +340,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         $adapter = $this->getAdapter();
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $data = array();

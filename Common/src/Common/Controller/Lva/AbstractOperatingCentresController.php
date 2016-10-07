@@ -1,30 +1,23 @@
 <?php
 
-/**
- * Shared logic between Operating Centres controllers
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\Category;
-use Common\Data\Mapper\Lva\OperatingCentres;
 use Common\Data\Mapper\Lva\OperatingCentre;
-use Common\Form\View\Helper\Form;
-use Dvsa\Olcs\Transfer\Command\ApplicationOperatingCentre\Update as AppUpdate;
-use Dvsa\Olcs\Transfer\Command\LicenceOperatingCentre\Update as LicUpdate;
-use Dvsa\Olcs\Transfer\Command\VariationOperatingCentre\Update as VarUpdate;
-use Dvsa\Olcs\Transfer\Command\Licence\CreateOperatingCentre as LicCreateOperatingCentre;
+use Common\Data\Mapper\Lva\OperatingCentres;
 use Dvsa\Olcs\Transfer\Command\Application\CreateOperatingCentre as AppCreateOperatingCentre;
-use Dvsa\Olcs\Transfer\Command\Licence\DeleteOperatingCentres as LicDeleteOperatingCentres;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteOperatingCentres as AppDeleteOperatingCentres;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateOperatingCentres as AppUpdateOperatingCentres;
+use Dvsa\Olcs\Transfer\Command\ApplicationOperatingCentre\Update as AppUpdate;
+use Dvsa\Olcs\Transfer\Command\Licence\CreateOperatingCentre as LicCreateOperatingCentre;
+use Dvsa\Olcs\Transfer\Command\Licence\DeleteOperatingCentres as LicDeleteOperatingCentres;
+use Dvsa\Olcs\Transfer\Command\Licence\UpdateOperatingCentres as LicUpdateOperatingCentres;
+use Dvsa\Olcs\Transfer\Command\LicenceOperatingCentre\Update as LicUpdate;
 use Dvsa\Olcs\Transfer\Command\Variation\DeleteOperatingCentre as VarDeleteOperatingCentre;
+use Dvsa\Olcs\Transfer\Command\VariationOperatingCentre\Update as VarUpdate;
 use Dvsa\Olcs\Transfer\Query\Application\OperatingCentres as AppOperatingCentres;
 use Dvsa\Olcs\Transfer\Query\ApplicationOperatingCentre\ApplicationOperatingCentre;
 use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as LicOperatingCentres;
-use Dvsa\Olcs\Transfer\Command\Application\UpdateOperatingCentres as AppUpdateOperatingCentres;
-use Dvsa\Olcs\Transfer\Command\Licence\UpdateOperatingCentres as LicUpdateOperatingCentres;
 use Dvsa\Olcs\Transfer\Query\LicenceOperatingCentre\LicenceOperatingCentre;
 use Dvsa\Olcs\Transfer\Query\VariationOperatingCentre\VariationOperatingCentre;
 
@@ -41,6 +34,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     }
 
     protected $section = 'operating_centres';
+    protected $baseRoute = 'lva-%s/operating_centres';
 
     protected $listQueryMap = [
         'licence' => LicOperatingCentres::class,
@@ -89,6 +83,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     /**
      * Operating centre list action
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function indexAction()
     {
@@ -152,6 +148,14 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $this->render('operating_centres', $form);
     }
 
+    /**
+     * Process Update Operation Center
+     *
+     * @param \Zend\Form\FormInterface $form       Form
+     * @param array                    $crudAction Table parameters
+     *
+     * @return \Zend\Http\Response
+     */
     protected function processUpdateOc($form, $crudAction)
     {
         $dtoData = OperatingCentres::mapFromForm($form->getData());
@@ -193,7 +197,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * Display error from updating OC page after a CRUD action
      *
-     * @param array $errors
+     * @param array $errors Errors
+     *
+     * @return void
      */
     private function displayCrudErrors($errors)
     {
@@ -228,6 +234,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     /**
      * Create Operating centre action
+     *
+     * @return void
      */
     public function addAction()
     {
@@ -316,6 +324,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     /**
      * Update Operating centre action
+     *
+     * @return void
      */
     public function editAction()
     {
@@ -416,6 +426,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $this->render('edit_operating_centre', $form);
     }
 
+    /**
+     * Get Documents
+     *
+     * @return array
+     */
     public function getDocuments()
     {
         if ($this->documents === null) {
@@ -429,6 +444,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $this->documents;
     }
 
+    /**
+     * Delete
+     *
+     * @return bool
+     */
     protected function delete()
     {
         $id = $this->params('child_id');
@@ -465,6 +485,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $fm->addUnknownError();
     }
 
+    /**
+     * Override method to turn off parent befaviour
+     *
+     * @return void
+     */
     protected function deleteFailed()
     {
         // do nothing as message already display in delete method
@@ -473,7 +498,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * Handle the file upload
      *
-     * @param array $file
+     * @param array $file File
+     *
+     * @return void
      */
     public function processAdvertisementFileUpload($file)
     {
@@ -498,16 +525,37 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $this->uploadFile($file, $data);
     }
 
+    /**
+     * Delete message text key
+     *
+     * @return string
+     */
     protected function getDeleteMessage()
     {
         return 'lva.section.operating_centres_delete';
     }
 
+    /**
+     * Delete message title key
+     *
+     * @return string
+     */
     protected function getDeleteTitle()
     {
         return 'delete-oc';
     }
 
+    /**
+     * Redirect to the most appropriate CRUD action
+     *
+     * @param array  $data             Data
+     * @param array  $rowsNotRequired  Action
+     * @param string $childIdParamName Child route identifier
+     * @param string $route            Route
+     *
+     * @return \Zend\Http\Response
+     * @overridden
+     */
     protected function handleCrudAction(
         $data,
         $rowsNotRequired = ['add'],
