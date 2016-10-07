@@ -22,13 +22,21 @@ trait PrepareAttributesTrait
      *
      * Removes any invalid attributes
      *
-     * @param  array $attributes
+     * @param array $attributes Attributes
+     *
      * @return array
      */
     protected function prepareAttributes(array $attributes)
     {
         foreach ($attributes as $key => $value) {
             $attribute = strtolower($key);
+
+            if (
+                0 === strpos($attribute, 'aria-')
+                || 0 === strpos($attribute, 'x-')
+            ) {
+                $this->translatableAttributes += [$attribute => true];
+            }
 
             if (!isset($this->validGlobalAttributes[$attribute])
                 && !isset($this->validTagAttributes[$attribute])
