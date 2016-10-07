@@ -30,6 +30,7 @@ class BusinessDetails
     /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"table"})
      */
     public $table = null;
 

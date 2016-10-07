@@ -17,11 +17,12 @@ trait CrudTableTrait
     /**
      * Once the CRUD entity has been saved, handle the necessary redirect
      *
-     * @param string $prefix - if our actions aren't just 'add', 'edit', provide a prefix
+     * @param string $prefix  if our actions aren't just 'add', 'edit', provide a prefix
+     * @param array  $options options to pass to assemble the route, eg ['fragment' => 'hash-ref']
      *
      * @return \Zend\Http\Response
      */
-    protected function handlePostSave($prefix = null)
+    protected function handlePostSave($prefix = null, $options = [])
     {
         // we can't just opt-in to all existing route params because
         // we might have a child ID if we're editing; if so we *don't*
@@ -43,7 +44,7 @@ trait CrudTableTrait
             'section.' . $this->params('action') . '.' . $this->section
         );
 
-        return $this->redirect()->$method($route, $routeParams);
+        return $this->redirect()->$method($route, $routeParams, $options);
     }
 
     /**

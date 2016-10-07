@@ -46,6 +46,7 @@ class LicenceHistoryAssets
     /**
      * @Form\Name("prevPurchasedAssets-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"prevPurchasedAssets"})
      */
     public $prevPurchasedAssetsTable = null;
 }

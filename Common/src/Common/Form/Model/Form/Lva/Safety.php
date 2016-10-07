@@ -26,6 +26,7 @@ class Safety
      *     "label" : "safety-inspection-providers.table.title",
      *     "hint" : "safety-inspection-providers.table.hint"
      * })
+     * @Form\Attributes({"id":"table"})
      */
     public $table = null;
 
@@ -34,7 +35,7 @@ class Safety
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyAdditionalDocuments")
      */
     public $additionalDocuments = null;
-    
+
     /**
      * @Form\Name("application")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyApplication")
