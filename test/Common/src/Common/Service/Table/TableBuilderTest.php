@@ -3016,4 +3016,13 @@ class TableBuilderTest extends MockeryTestCase
         $table->setSetting('collapseAt', 2);
         $this->assertEquals(2, $table->getSetting('collapseAt'));
     }
+
+    public function testGetAction()
+    {
+        $table = new TableBuilder($this->getMockServiceLocator());
+        $table->setSetting('crud', ['actions' => []]);
+        $action = ['foo', 'bar'];
+        $table->addAction('add', $action);
+        $this->assertEquals($table->getAction('add'), $action);
+    }
 }

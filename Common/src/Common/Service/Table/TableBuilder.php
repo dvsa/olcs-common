@@ -443,6 +443,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
+     * Get action
+     *
+     * @param string $key key
+     *
+     * @return string
+     */
+    public function getAction($key)
+    {
+        return $this->settings['crud']['actions'][$key];
+    }
+
+    /**
      * Disable an action
      *
      * @param string $name
