@@ -1,10 +1,5 @@
 <?php
 
-/**
- * CRUD Action Trait Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Lva\Traits;
 
 use CommonTest\Bootstrap;
@@ -18,8 +13,9 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class CrudActionTraitTest extends MockeryTestCase
 {
+    const ID = 9999;
     /**
-     * @var \CommonTest\Controller\Lva\Traits\Stubs\CrudActionTraitStub
+     * @var Stubs\CrudActionTraitStub
      */
     protected $sut;
 
@@ -29,7 +25,7 @@ class CrudActionTraitTest extends MockeryTestCase
     {
         $this->sm = Bootstrap::getServiceManager();
 
-        $this->sut = m::mock('CommonTest\Controller\Lva\Traits\Stubs\CrudActionTraitStub')
+        $this->sut = m::mock(Stubs\CrudActionTraitStub::class)
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
 
@@ -50,149 +46,6 @@ class CrudActionTraitTest extends MockeryTestCase
     public function testGetActionFromCrudAction($input, $expected)
     {
         $this->assertEquals($expected, $this->sut->callGetActionFromCrudAction($input));
-    }
-
-    public function testHandleCrudActionWithoutIdWhenNotRequired()
-    {
-        $data = [
-            'action' => 'add'
-        ];
-        $rowsNotRequired = ['add'];
-        $childIdParamName = 'child_id';
-        $route = null;
-
-        $this->sut->shouldReceive('redirect->toRoute')
-            ->once()
-            ->with(null, ['action' => 'add'], ['query' => null], true)
-            ->andReturn('RESPONSE');
-
-        $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
-
-        $this->assertEquals('RESPONSE', $response);
-    }
-
-    public function testHandleCrudActionWithoutIdWhenIdRequired()
-    {
-        $data = [
-            'action' => 'edit'
-        ];
-        $rowsNotRequired = ['add'];
-        $childIdParamName = 'child_id';
-        $route = null;
-
-        $mockFm = m::mock();
-        $this->sm->setService('Helper\FlashMessenger', $mockFm);
-
-        $mockFm->shouldReceive('addWarningMessage')
-            ->once()
-            ->with('please-select-row');
-
-        $this->sut->shouldReceive('redirect->refresh')
-            ->once()
-            ->andReturn('RESPONSE');
-
-        $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
-
-        $this->assertEquals('RESPONSE', $response);
-    }
-
-    public function testHandleCrudActionWithIdWhenIdRequired()
-    {
-        $data = [
-            'id' => 111,
-            'action' => 'edit'
-        ];
-        $rowsNotRequired = ['add'];
-        $childIdParamName = 'child_id';
-        $route = null;
-
-        $this->sut->shouldReceive('redirect->toRoute')
-            ->once()
-            ->with(null, ['action' => 'edit', 'child_id' => 111], ['query' => null], true)
-            ->andReturn('RESPONSE');
-
-        $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
-
-        $this->assertEquals('RESPONSE', $response);
-    }
-
-    public function testHandleCrudActionWithIdWhenIdRequiredAlternativeDataFormat()
-    {
-        $data = [
-            'action' => ['edit' => [111 => 'foo']]
-        ];
-        $rowsNotRequired = ['add'];
-        $childIdParamName = 'child_id';
-        $route = null;
-
-        $this->sut->shouldReceive('redirect->toRoute')
-            ->once()
-            ->with(null, ['action' => 'edit', 'child_id' => 111], ['query' => null], true)
-            ->andReturn('RESPONSE');
-
-        $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
-
-        $this->assertEquals('RESPONSE', $response);
-    }
-
-    public function testHandleCrudActionWithMultipleIdsWhenIdRequired()
-    {
-        $data = [
-            'id' => [111, 222],
-            'action' => 'edit'
-        ];
-        $rowsNotRequired = ['add'];
-        $childIdParamName = 'child_id';
-        $route = null;
-
-        $this->sut->shouldReceive('redirect->toRoute')
-            ->once()
-            ->with(null, ['action' => 'edit', 'child_id' => '111,222'], ['query' => null], true)
-            ->andReturn('RESPONSE');
-
-        $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
-
-        $this->assertEquals('RESPONSE', $response);
-    }
-
-    public function testHandleCrudActionWithIdWhenNotRequired()
-    {
-        $data = [
-            'id' => 111,
-            'action' => 'add'
-        ];
-        $rowsNotRequired = ['add'];
-        $childIdParamName = 'child_id';
-        $route = null;
-
-        $this->sut->shouldReceive('redirect->toRoute')
-            ->once()
-            ->with(null, ['action' => 'add'], ['query' => null], true)
-            ->andReturn('RESPONSE');
-
-        $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
-
-        $this->assertEquals('RESPONSE', $response);
-    }
-
-    public function testHandleCrudActionWithIdWhenIdRequiredWithCustomParams()
-    {
-        $data = [
-            'id' => 111,
-            'action' => 'edit'
-        ];
-        $rowsNotRequired = ['add'];
-        $childIdParamName = 'some_other_id';
-        $route = 'foo/bar';
-
-        $this->sut->shouldReceive('redirect->toRoute')
-            ->once()
-            ->with('foo/bar', ['action' => 'edit', 'some_other_id' => 111], ['query' => null], true)
-            ->andReturn('RESPONSE');
-
-        $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
-
-        $this->assertEquals('RESPONSE', $response);
     }
 
     public function providerGetCrudAction()
@@ -255,5 +108,140 @@ class CrudActionTraitTest extends MockeryTestCase
                 'bar'
             ]
         ];
+    }
+
+    /**
+     * @dataProvider dpTestHandleCrudAction
+     */
+    public function testHandleCrudAction($route, $data, $childIdPrmName, $baseRoute, $expectRoute, $expectRoutePrms)
+    {
+        $rowsNotRequired = ['add'];
+        $childIdPrmName = $childIdPrmName ?: 'child_id';
+
+        $this->sut
+            ->shouldReceive('getBaseRoute')
+            ->times(
+                $route !== null
+                ? 0
+                : (
+                    $baseRoute !== null
+                    ? 2
+                    : 1
+                )
+            )
+            ->andReturn($baseRoute)
+            //
+            ->shouldReceive('redirect->toRoute')
+            ->once()
+            ->with($expectRoute, $expectRoutePrms, ['query' => null], true)
+            ->andReturn('RESPONSE');
+
+        $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdPrmName, $route);
+
+        self::assertEquals('RESPONSE', $response);
+    }
+
+    public function dpTestHandleCrudAction()
+    {
+        return [
+            //  test WithIdWhenNotRequired
+            [
+                'route' => null,
+                'data' => [
+                    'id' => self::ID,
+                    'action' => 'add'
+                ],
+                'childIdPrmName' => null,
+                'baseRoute' => null,
+                'expectRoute' => null,
+                'expectRouteParams' => ['action' => 'add'],
+            ],
+            //  test WithIdWhenIdRequiredWithCustomParams
+            [
+                'route' => 'foo/bar',
+                'data' => [
+                    'id' => self::ID,
+                    'action' => 'edit',
+                ],
+                'childIdPrmName' => 'some_other_id',
+                'baseRoute' => null,
+                'expectRoute' => 'foo/bar',
+                'expectRouteParams' => [
+                    'action' => 'edit',
+                    'some_other_id' => self::ID,
+                ],
+            ],
+            //  test WithMultipleIdsWhenIdRequired
+            [
+                'route' => null,
+                'data' => [
+                    'id' => [self::ID, 222],
+                    'action' => 'edit',
+                ],
+                'childIdPrmName' => null,
+                'baseRoute' => null,
+                'expectRoute' => null,
+                'expectRouteParams' => [
+                    'action' => 'edit',
+                    'child_id' => self::ID . ',222',
+                ],
+            ],
+            //  test WithIdWhenIdRequiredAlternativeDataFormat
+            [
+                'route' => null,
+                'data' => [
+                    'action' => [
+                        'edit' => [
+                            self::ID => 'foo',
+                        ],
+                    ],
+                ],
+                'childIdPrmName' => null,
+                'baseRoute' => null,
+                'expectRoute' => null,
+                'expectRouteParams' => [
+                    'action' => 'edit',
+                    'child_id' => self::ID,
+                ],
+            ],
+            //  test WithoutIdWhenNotRequired
+            [
+                'route' => null,
+                'data' => [
+                    'action' => 'add'
+                ],
+                'childIdPrmName' => null,
+                'baseRoute' => 'unit_BaseRoute',
+                'expectRoute' => 'unit_BaseRoute/action',
+                'expectRouteParams' => [
+                    'action' => 'add',
+                ],
+            ],
+        ];
+    }
+
+    public function testHandleCrudActionWithoutIdWhenIdRequired()
+    {
+        $data = [
+            'action' => 'edit'
+        ];
+        $rowsNotRequired = ['add'];
+        $childIdParamName = 'child_id';
+        $route = null;
+
+        $mockFm = m::mock();
+        $this->sm->setService('Helper\FlashMessenger', $mockFm);
+
+        $mockFm->shouldReceive('addWarningMessage')
+            ->once()
+            ->with('please-select-row');
+
+        $this->sut->shouldReceive('redirect->refresh')
+            ->once()
+            ->andReturn('RESPONSE');
+
+        $response = $this->sut->callHandleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
+
+        $this->assertEquals('RESPONSE', $response);
     }
 }

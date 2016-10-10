@@ -26,7 +26,7 @@ class Addresses
 
     /**
      * @Form\Name("phoneContactsTable")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
      */
     public $phoneContactsTable = null;
 

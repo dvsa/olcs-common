@@ -23,6 +23,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     use CrudTableTrait;
 
     protected $section = 'business_details';
+    protected $baseRoute = 'lva-%s/business_details';
 
     /**
      * Business details section
@@ -208,7 +209,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      * User has pressed 'Add another' on trading names
      * So we need to duplicate the trading names field to produce another input
      *
-     * @param string[]          $tradingNames Trading names
+     * @param array             $tradingNames Trading names
      * @param \Common\Form\Form $form         Form
      *
      * @return void
@@ -311,7 +312,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $response = $this->handleCommand($dtoClass::create($dtoData));
 
             if ($response->isOk()) {
-                return $this->handlePostSave();
+                return $this->handlePostSave(null, ['fragment' => 'table']);
             }
 
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');

@@ -46,6 +46,7 @@ class LicenceHistoryEu
     /**
      * @Form\Name("prevBeenRefused-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"prevBeenRefused"})
      */
     public $prevBeenRefusedTable = null;
 
@@ -86,6 +87,7 @@ class LicenceHistoryEu
     /**
      * @Form\Name("prevBeenRevoked-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"prevBeenRevoked"})
      */
     public $prevBeenRevokedTable = null;
 }

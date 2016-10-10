@@ -30,6 +30,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         VehicleSearchTrait;
 
     protected $section = 'vehicles_psv';
+    protected $baseRoute = 'lva-%s/vehicles_psv';
 
     private $queryMap = [
         'licence' => QueryDto\Licence\PsvVehicles::class,

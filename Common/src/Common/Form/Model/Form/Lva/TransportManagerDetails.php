@@ -49,6 +49,7 @@ class TransportManagerDetails
     /**
      * @Form\Name("otherEmployment")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"otherEmployments"})
      */
     public $otherEmployment = null;
 

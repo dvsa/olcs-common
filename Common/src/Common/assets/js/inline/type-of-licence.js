@@ -73,16 +73,23 @@ OLCS.ready(function() {
       }
     });
 
-    $('#operator-type').find('[type="radio"]').change(function() {
-      if (operatorType.filter(':checked').val() === 'lcat_psv') {
-        $('#typeOfLicence-hint-goods').hide();
-        $('#typeOfLicence-hint-psv').show();
-      } else if (operatorType.filter(':checked').val() === 'lcat_gv') {
+    // @todo - integrate below code into above cascadeForm component
+    $('#operator-location, #operator-type').find('[type="radio"]').change(function() {
+      if (niFlag.filter(':checked').val() === 'N') {
+        if (operatorType.filter(':checked').val() === 'lcat_psv') {
+            $('#typeOfLicence-hint-goods').hide();
+            $('#typeOfLicence-hint-psv').show();
+        } 
+        else if (operatorType.filter(':checked').val() === 'lcat_gv') {
+            $('#typeOfLicence-hint-psv').hide();
+            $('#typeOfLicence-hint-goods').show();
+        }
+      } else {
         $('#typeOfLicence-hint-psv').hide();
         $('#typeOfLicence-hint-goods').show();
       }
     }).change();
-
+    
   }
 
   setupCascade();

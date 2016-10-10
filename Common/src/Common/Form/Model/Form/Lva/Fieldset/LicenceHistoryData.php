@@ -52,6 +52,7 @@ class LicenceHistoryData
     /**
      * @Form\Name("prevHasLicence-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"prevHasLicence"})
      */
     public $prevHasLicenceTable = null;
 
@@ -92,6 +93,7 @@ class LicenceHistoryData
     /**
      * @Form\Name("prevHadLicence-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"prevHadLicence"})
      */
     public $prevHadLicenceTable = null;
 
@@ -132,6 +134,7 @@ class LicenceHistoryData
     /**
      * @Form\Name("prevBeenDisqualifiedTc-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"prevBeenDisqualifiedTc"})
      */
     public $prevBeenDisqualifiedTcTable = null;
 }

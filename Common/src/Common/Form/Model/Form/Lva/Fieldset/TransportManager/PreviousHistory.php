@@ -13,12 +13,14 @@ class PreviousHistory
     /**
      * @Form\Name("convictions")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"previousConvictions"})
      */
     public $convictions = null;
 
     /**
      * @Form\Name("previousLicences")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"previousLicences"})
      */
     public $previousLicences = null;
 }

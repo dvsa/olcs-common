@@ -7,19 +7,19 @@
             "packagist": false
         },
         {
-            "url": "http://satis.inf.mgt.mtpdvsa",
+            "url": "http://devrepo.shd.ci.nonprod.dvsa.aws",
             "type": "composer"
         },
         {
             "type": "vcs",
-            "url": "git@gitlab.inf.mgt.mtpdvsa:olcs/olcs-testhelpers.git"
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-testhelpers.git"
         },
         {
-            "url": "git@gitlab.inf.mgt.mtpdvsa:olcs/olcs-transfer.git",
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
             "type": "vcs"
         },
         {
-            "url": "git@gitlab.inf.mgt.mtpdvsa:olcs/olcs-utils.git",
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-utils.git",
             "type": "vcs"
         }
     ],
@@ -50,9 +50,6 @@
     },
     "config": {
         "preferred-install": "dist",
-        "github-oauth": {
-            "github.com": "9d28c36d14775b5d8c4a5ffeee6172eecbd8c9f4"
-        },
         "secure-http": false
     }
 }

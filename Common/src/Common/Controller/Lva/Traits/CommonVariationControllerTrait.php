@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Variation Controller Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Zend\Form\Form;
@@ -18,6 +13,8 @@ trait CommonVariationControllerTrait
 {
     /**
      * Hook into the dispatch before the controller action is executed
+     *
+     * @return \Zend\View\Model\ViewModel|null|\Zend\Http\Response
      */
     protected function preDispatch()
     {
@@ -28,6 +25,13 @@ trait CommonVariationControllerTrait
         return $this->checkForRedirect($this->getApplicationId());
     }
 
+    /**
+     * Post Save
+     *
+     * @param string $section Section
+     *
+     * @return void
+     */
     protected function postSave($section)
     {
         $this->getServiceLocator()->get('Processing\VariationSection')
@@ -39,7 +43,9 @@ trait CommonVariationControllerTrait
     /**
      * Redirect to the next section
      *
-     * @param string $currentSection
+     * @param string $currentSection Current Section
+     *
+     * @return \Zend\Http\Response
      */
     protected function goToNextSection($currentSection)
     {
@@ -57,7 +63,15 @@ trait CommonVariationControllerTrait
         }
     }
 
-    protected function alterFormForLva(Form $form)
+    /**
+     * Alter Table
+     *
+     * @param Form  $form Form
+     * @param array $data Form Data
+     *
+     * @return mixed
+     */
+    protected function alterFormForLva(Form $form, $data = null)
     {
         return $this->getServiceLocator()->get('FormServiceManager')->get('lva-variation')->alterForm($form);
     }

@@ -87,6 +87,7 @@ class Responsibilities
     /**
      * @Form\Name("otherLicences")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Attributes({"id":"otherLicences"})
      */
     public $otherLicences = null;
 
