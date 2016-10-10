@@ -33,7 +33,6 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             ->once()
             ->getMock();
 
-
         $sut->shouldReceive('isOrganisationLimitedCompany')
             ->andReturn(false)
             ->once()
