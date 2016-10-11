@@ -358,7 +358,7 @@ return [
     'application.apply-to-change-licence.title' => 'Apply to change a licence',
     'application.apply-to-change-licence.guide.text' => 'Update any sections you need to change.',
     'application.payment-submission' => 'Payment & submission',
-    'application.payment-submission.amount.value' => '<div>Your fee is <h2>£%s</h2></div>',
+    'application.payment-submission.amount.value' => '<p>Your fee is<br ><b>£%s</b></p>',
     'application.payment-submission.payment' => 'Payment',
     'application.payment-submission.summary.subtitle' => 'Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'Thank you',
