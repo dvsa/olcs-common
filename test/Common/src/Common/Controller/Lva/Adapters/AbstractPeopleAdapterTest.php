@@ -15,7 +15,10 @@ use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
  */
 class AbstractPeopleAdapterTest extends MockeryTestCase
 {
-    public function testAlterFormForOrganisation()
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testAlterFormForOrganisation($type, $expected)
     {
         $sut = m::mock(AbstractPeopleAdapter::class)
             ->makePartial();
@@ -29,24 +32,37 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             ->with('add')
             ->once()
             ->shouldReceive('addAction')
-            ->with('add', ['label' => 'lva.section.title.add_person'])
+            ->with('add', ['label' => $expected])
             ->once()
             ->getMock();
 
-        $sut->shouldReceive('isOrganisationLimitedCompany')
-            ->andReturn(false)
-            ->once()
-            ->shouldReceive('isOrganisationLlp')
-            ->andReturn(false)
-            ->once()
-            ->shouldReceive('isOrganisationPartnership')
-            ->andReturn(false)
-            ->once()
-            ->shouldReceive('getOrganisationType')
-            ->andReturn(\Common\RefData::ORG_TYPE_OTHER)
+        $sut->shouldReceive('getOrganisationType')
+            ->andReturn($type)
             ->twice()
             ->getMock();
 
         $sut->alterFormForOrganisation(m::mock(Form::class), $mockTable);
+    }
+
+    public function dataProvider()
+    {
+        return [
+            'ltd' => [
+                \Common\RefData::ORG_TYPE_RC,
+                'lva.section.title.add_director'
+            ],
+            'llp' => [
+                \Common\RefData::ORG_TYPE_LLP,
+                'lva.section.title.add_partner'
+            ],
+            'partnership' => [
+                \Common\RefData::ORG_TYPE_PARTNERSHIP,
+                'lva.section.title.add_partner'
+            ],
+            'other' => [
+                \Common\RefData::ORG_TYPE_OTHER,
+                'lva.section.title.add_person'
+            ]
+        ];
     }
 }
