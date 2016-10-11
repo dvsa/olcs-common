@@ -33,7 +33,7 @@ class YesNo implements FormatterInterface
         }
 
         return $sm->get('translator')->translate(
-            $value === 1 || $value === 'Y'
+            $value !== 'N' && !empty($value)
             ? 'common.table.Yes'
             : 'common.table.No'
         );
