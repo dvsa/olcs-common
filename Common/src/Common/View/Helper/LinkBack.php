@@ -14,7 +14,7 @@ use Zend\View\Helper\Placeholder;
 
 /**
  * Create a link '< Back'
- * 
+ *
  * @author Dmitry Golubev <dmitrij.golubev@valtech.co.uk>
  */
 class LinkBack extends AbstractHelper implements FactoryInterface
@@ -65,7 +65,7 @@ class LinkBack extends AbstractHelper implements FactoryInterface
         }
 
         return
-            '<a href="' . $url . '" class="link-back">' .
+            '<a href="' . $url . '" class="back-link">' .
                 ($isNeedEscape ? $this->view->escapeHtml($label) : $label).
             '</a>';
     }
