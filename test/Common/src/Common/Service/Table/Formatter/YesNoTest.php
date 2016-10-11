@@ -64,11 +64,15 @@ class YesNoTest extends MockeryTestCase
                 'expect' => 'Yes',
             ],
             [
-                'data' => ['yesorno' => 'Not-Y'],
+                'data' => ['yesorno' => 'N'],
                 'column' => ['name' => 'yesorno'],
                 'expect' => 'No',
             ],
-
+            [
+                'data' => ['yesorno' => 'something'],
+                'column' => ['name' => 'yesorno'],
+                'expect' => 'Yes',
+            ],
         ];
     }
 
