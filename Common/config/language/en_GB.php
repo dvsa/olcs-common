@@ -2920,5 +2920,8 @@ return [
     'auth.change-password.old-password.error' => 'Current password can\'t be blank',
     'auth.change-password.new-password.error' => 'Enter a new password',
     'auth.change-password.confirm-password.error' => 'Re-enter your new password',
+    'lva.section.title.add_director' => 'Add director',
+    'lva.section.title.add_partner' => 'Add partner',
+    'lva.section.title.add_person' => 'Add person',
     // Potentially unused translations
 ];

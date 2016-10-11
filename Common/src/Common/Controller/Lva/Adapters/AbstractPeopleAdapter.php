@@ -239,8 +239,26 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     {
     }
 
+    /**
+     * Alter form for organisation
+     *
+     * @param Form                              $form  form
+     * @param \Common\Service\TableTableBuilder $table table
+     */
     public function alterFormForOrganisation(Form $form, $table)
     {
+        $type = [
+            \Common\RefData::ORG_TYPE_RC => 'lva.section.title.add_director',
+            \Common\RefData::ORG_TYPE_LLP => 'lva.section.title.add_partner',
+            \Common\RefData::ORG_TYPE_PARTNERSHIP => 'lva.section.title.add_partner',
+            \Common\RefData::ORG_TYPE_OTHER => 'lva.section.title.add_person',
+        ];
+        if (isset($type[$this->getOrganisationType()])) {
+            $action = $table->getAction('add');
+            $table->removeAction('add');
+            $action['label'] = $type[$this->getOrganisationType()];
+            $table->addAction('add', $action);
+        }
     }
 
     public function alterAddOrEditFormForOrganisation(Form $form)
