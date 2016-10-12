@@ -106,6 +106,16 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
                 $element->setOption('fieldsetClass', 'date');
             }
 
+            // This isn't ideal, but for pragmatism we add the hint here, so it shows on all
+            // date select elements (unless internal)
+            if (!empty($this->config['render_date_hint']) && !($element instanceof DateTimeSelect)) {
+                $hint = $element->getOption('hint');
+
+                if (empty($hint)) {
+                    $element->setOption('hint', 'date-hint');
+                }
+            }
+
             $markup = $this->renderFieldset($element, false);
         } else {
 
