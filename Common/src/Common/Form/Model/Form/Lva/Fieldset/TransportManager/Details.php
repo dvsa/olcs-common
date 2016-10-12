@@ -19,7 +19,7 @@ class Details
      * @Form\Required(true)
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
-     *     "label": "lva-tm-details-details-birthDate",
+     *     "label": "dob",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })
