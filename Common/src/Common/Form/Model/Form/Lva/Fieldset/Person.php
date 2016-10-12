@@ -92,7 +92,7 @@ class Person
     /**
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
-     *     "label": "application_your-business_people-sub-action-formDateOfBirth",
+     *     "label": "Date of birth",
      *     "create_empty_option": false,
      *     "render_delimiters": "d m y",
      *     "error-message": "person_birthDate-error"

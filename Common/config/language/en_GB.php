@@ -628,7 +628,6 @@ return [
     'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'If you have any subsidiary companies, add them here',
     'application_your-business_business_details-subsidiaries-tableHeader' => 'Subsidiary companies (optional)',
     'application_your-business_fao.label' => 'For the attention of (optional)',
-    'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
     'application_your-business_people-sub-action-formFirstName' => 'First name(s)',
     'application_your-business_people-sub-action-formOtherNames' => 'Other names (optional)',
     'application_your-business_people-sub-action-formOtherNames-hint' => 'Other names you\'ve been known by since you were 18',
