@@ -203,7 +203,8 @@ class FinancialHistoryData
      *     "required": false,
      *     "id": "",
      *     "class": "long js-financial-history",
-     *     "placeholder": "application_previous-history_financial-history.insolvencyDetails.placeholder"
+     *     "placeholder": "application_previous-history_financial-history.insolvencyDetails.placeholder",
+     *     "x-js-hint-chars-count": "application_previous-history_financial-history.insolvencyDetails.count-hint",
      * })
      * @Form\Options({
      *     "short-label": "short-label-financial-history-additional-information",
