@@ -30,7 +30,7 @@ class AddTransportManagerDetails
     /**
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
-     *     "label": "lva-tm-details-dob",
+     *     "label": "dob",
      *     "create_empty_option": false,
      *     "render_delimiters": "d m y"
      * })
