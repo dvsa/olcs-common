@@ -1,16 +1,8 @@
 <?php
 
-/**
- * Application Completion Entity Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Entity;
 
 use Common\Service\Data\SectionConfig;
-use Common\Service\Entity\OrganisationEntityService;
-use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Entity\VehicleEntityService;
 
 /**
  * Application Completion Entity Service
@@ -593,7 +585,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      *
      * @NOTE This functionality has been replicated in the API [ApplicationCompletion/UpdateFinancialHistoryStatus]
      *
-     * @param array $applicationData
+     * @param array $applicationData Application Data
+     * 
      * @return int
      */
     protected function getFinancialHistoryStatus($applicationData)
@@ -614,8 +607,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
         foreach ($ynVars as $var) {
             if ($applicationData[$var] === 'Y') {
-                $requiredVars[] = !empty($applicationData['insolvencyDetails'])
-                    && strlen($applicationData['insolvencyDetails']) >= 200;
+                $requiredVars[] = (strlen(preg_replace('/\s+/', '', $applicationData['insolvencyDetails'])) >= 150);
+
                 break;
             }
         }

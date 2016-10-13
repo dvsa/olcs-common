@@ -73,6 +73,8 @@ return [
     'ERR_USERNAME_EXISTS' => 'Username is already taken',
     'ERR_USERNAME_REQUIRED' => 'Username is required',
     'ERR_USER_HAS_OPEN_TASK' => 'The user could not be deleted due to tasks still being open',
+    'FHAdditionalInfo.api-validation.too_short' => 'You selected \'yes\' in one of the provided questions, so the input has to be at least %s characters long',
+    'FHAdditionalInfo.validation.too_short' => 'You selected \'yes\' in one of the provided questions, so the input has to be at least %min% characters long',
     'FHAdditionalInfo.validation.is_empty' => 'You selected \'yes\' in one of the provided questions, so value is required and can\'t be empty',
     'Find out more' => 'Find out more',
     'Full name in block capitals' => 'Full name in block capitals',

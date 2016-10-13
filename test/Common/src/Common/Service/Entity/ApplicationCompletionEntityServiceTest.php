@@ -1,26 +1,21 @@
 <?php
 
-/**
- * Application Completion Entity Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\ApplicationCompletionEntityService;
-use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Entity\ContactDetailsEntityService;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Entity\VehicleEntityService;
-use CommonTest\Bootstrap;
 
 /**
- * Application Completion Entity Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers Common\Service\Entity\ApplicationCompletionEntityService
  */
 class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCase
 {
+    /** @var  ApplicationCompletionEntityService */
+    protected $sut;
+
     protected function setUp()
     {
         $this->sut = new ApplicationCompletionEntityService();
@@ -2501,7 +2496,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'administration' => 'N',
                     'disqualified' => 'N',
                     'insolvencyConfirmation' => 'Y',
-                    'insolvencyDetails' => str_repeat('a', 199)
+                    'insolvencyDetails' => str_repeat('a', 149)
                 ),
                 // Expected completion data
                 array(
@@ -2544,7 +2539,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'administration' => 'N',
                     'disqualified' => 'N',
                     'insolvencyConfirmation' => 'Y',
-                    'insolvencyDetails' => str_repeat('a', 200)
+                    'insolvencyDetails' => str_repeat('a', 150)
                 ),
                 // Expected completion data
                 array(
@@ -2587,7 +2582,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'administration' => 'N',
                     'disqualified' => 'N',
                     'insolvencyConfirmation' => 'Y',
-                    'insolvencyDetails' => str_repeat('a', 300)
+                    'insolvencyDetails' => str_repeat('a', 151)
                 ),
                 // Expected completion data
                 array(

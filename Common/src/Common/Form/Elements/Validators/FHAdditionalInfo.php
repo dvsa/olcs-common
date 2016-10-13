@@ -25,22 +25,23 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
     const TOO_SHORT = 'stringLengthTooShort';
     const IS_EMPTY  = 'isEmpty';
 
+    const TEXT_MIN_LEN = 150;
+
     /**
      * Validation failure message template definitions
      *
      * @var array
      */
     protected $messageTemplates = array(
-        self::TOO_SHORT => 'You selected \'yes\' in one of the provided questions, so the input has to be at least %min%
-            characters long',
-        self::IS_EMPTY => 'FHAdditionalInfo.validation.is_empty'
+        self::TOO_SHORT => 'FHAdditionalInfo.validation.too_short',
+        self::IS_EMPTY => 'FHAdditionalInfo.validation.is_empty',
     );
 
     /**
      * @var array
      */
     protected $options = array(
-        'min' => 200
+        'min' => self::TEXT_MIN_LEN,
     );
 
     /**
@@ -52,6 +53,14 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
 
     private $validationContextFields = ['bankrupt', 'liquidation', 'receivership', 'administration', 'disqualified'];
 
+    /**
+     * Check is valid
+     *
+     * @param string $value   Field Value
+     * @param null   $context Context
+     *
+     * @return bool
+     */
     public function isValid($value, $context = null)
     {
         $this->setValue($value);
@@ -61,7 +70,7 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
 
         // iterate selected fields to check if yes value was selected
         foreach ($elementsToCheck as $element) {
-            if ($element == 'Y') {
+            if ($element === 'Y') {
                 $foundYes = true;
                 break;
             }
@@ -79,8 +88,8 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
             return false;
         }
 
-        // check if value length is at least 200
-        $strLenValidator = new ZendValidator\StringLength(array('min' => 200));
+        // check if value length is at least 150
+        $strLenValidator = new ZendValidator\Regex('/^(\S\s?){'.self::TEXT_MIN_LEN.',}$/m');
         if (!$strLenValidator->isValid($value)) {
             $this->error(self::TOO_SHORT);
             return false;
