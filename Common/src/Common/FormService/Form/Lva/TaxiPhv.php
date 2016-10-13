@@ -31,7 +31,6 @@ class TaxiPhv extends AbstractLvaFormService
      */
     protected function alterForm($form)
     {
-        $this->removeFormAction($form, 'save');
         $this->removeFormAction($form, 'cancel');
         return $form;
     }

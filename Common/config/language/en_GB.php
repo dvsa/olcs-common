@@ -2923,5 +2923,8 @@ return [
     'lva.section.title.add_director' => 'Add director',
     'lva.section.title.add_partner' => 'Add partner',
     'lva.section.title.add_person' => 'Add person',
+    'lva.external.save_and_continue.button' => 'Save and continue',
+    'lva.external.save_and_return.link' => 'Save and return to overview',
+    'lva.external.return.link' => 'Return to overview',
     // Potentially unused translations
 ];
