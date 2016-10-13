@@ -120,7 +120,7 @@ class People extends InternalSearchAbstract
                     if (!empty($row['applicationId']) && !empty($row['licNo'])) {
                         return sprintf(
                             '<a href="%s">%s</a> / <a href="%s">%s</a>',
-                            $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
+                            $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),
                             $row['licNo'],
                             $urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
                             $row['applicationId']
