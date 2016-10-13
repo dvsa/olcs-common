@@ -609,6 +609,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 [
                     'label' => 'vehicle_table_action.print-vehicles.label',
                     'requireRows' => true,
+                    'class' => ' more-actions__item',
                 ]
             );
         }
