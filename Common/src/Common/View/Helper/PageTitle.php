@@ -86,6 +86,6 @@ class PageTitle extends AbstractHelper implements FactoryInterface
             $pageTitle = 'header-vehicle-operator-licensing';
         }
 
-        return $this->view->escapeHtml($this->translator->__invoke($pageTitle));
+        return $this->translator->__invoke($pageTitle);
     }
 }
