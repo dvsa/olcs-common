@@ -24,6 +24,7 @@ abstract class AbstractEntityServiceTestCase extends MockeryTestCase
 
     protected $sm;
 
+    /** @var  \PHPUnit_Framework_MockObject_MockObject */
     protected $restHelper;
 
     protected $restCallOrder = 0;
@@ -47,6 +48,9 @@ abstract class AbstractEntityServiceTestCase extends MockeryTestCase
         return Bootstrap::getServiceManager();
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_Builder_InvocationMocker
+     */
     protected function expectOneRestCall($entity, $method, $data, $bundle = null)
     {
         $expectation = $this->restHelper->expects($this->once())->method('makeRestCall');
