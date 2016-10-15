@@ -89,7 +89,7 @@ trait LicenceSafetyControllerTrait
      *
      * @param \Zend\Form\Form
      */
-    protected function alterFormForLva(Form $form)
+    protected function alterFormForLva(Form $form, $data = null)
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $formHelper->remove($form, 'application->safetyConfirmation');
