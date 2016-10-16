@@ -125,7 +125,8 @@ class Module
     {
         /** @var \Zend\Http\PhpEnvironment\Request $request */
         $request = $e->getRequest();
-        if ($request->isPost()) {
+        // if request is a POST and 'form-actions" present, then valvalidate the CSFR token
+        if ($request->isPost() && $request->getPost('form-actions')) {
             $name = 'security';
             $token = $request->getPost($name);
             $validator = new \Zend\Validator\Csrf(['name' => $name]);
