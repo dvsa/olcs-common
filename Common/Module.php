@@ -103,9 +103,48 @@ class Module
         //  RBAC behaviour if user not authorised
         $events->attach($sm->get(\ZfcRbac\View\Strategy\UnauthorizedStrategy::class));
 
+        $events->attach(
+            MvcEvent::EVENT_DISPATCH,
+            array($this, 'validateCsfrToken'),
+            100
+        );
+
         $this->setupRequestForProxyHost($app->getRequest());
 
         $this->setLoggerUser($sm);
+    }
+
+    /**
+     * Validate the CSFR token
+     *
+     * @param MvcEvent $e MVC event
+     *
+     * @return ViewModel
+     */
+    public function validateCsfrToken(MvcEvent $e)
+    {
+        /** @var \Zend\Http\PhpEnvironment\Request $request */
+        $request = $e->getRequest();
+        // if request is a POST and 'form-actions" present, then valvalidate the CSFR token
+        if ($request->isPost() && $request->getPost('form-actions')) {
+            $name = 'security';
+            $token = $request->getPost($name);
+            $validator = new \Zend\Validator\Csrf(['name' => $name]);
+            if (!$validator->isValid($token)) {
+                $model = new ViewModel(
+                    [
+                        'message'   => 'CSFR error',
+                        'reason'    => 'error-csfr-failed',
+                    ]
+                );
+                $model->setTemplate('error/404');
+                $e->getViewModel()->addChild($model);
+                $e->getResponse()->setStatusCode(403);
+                $e->stopPropagation();
+                return $model;
+            }
+        }
+
     }
 
     /**

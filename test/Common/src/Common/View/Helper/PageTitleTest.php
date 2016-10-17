@@ -55,21 +55,9 @@ class PageTitleTest extends MockeryTestCase
         $vhm->shouldReceive('get')->with('translate')->andReturn($translate);
         $vhm->shouldReceive('get')->with('placeholder')->andReturn($placeholder);
 
-        /** @var \Zend\View\Renderer\RendererInterface $mockView */
-        $mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
-            ->shouldReceive('escapeHtml')
-            ->once()
-            ->andReturnUsing(
-                function ($text) {
-                    return '_ESCAPED_'.$text;
-                }
-            )
-            ->getMock();
-
-        $this->sut->setView($mockView);
         $sut = $this->sut->createService($vhm);
 
-        $this->assertEquals('_ESCAPED_translated', $sut->__invoke());
+        $this->assertEquals('translated', $sut->__invoke());
     }
 
     public function providerInvoke()
