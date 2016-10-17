@@ -25,6 +25,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     protected $tableData;
 
     protected $section = 'taxi_phv';
+    protected $baseRoute = 'lva-%s/taxi_phv';
 
     public function indexAction()
     {
