@@ -235,7 +235,7 @@ class FinancialHistoryData
     /**
      * @Form\Attributes({
      *     "id":"",
-     *     "data-container-class": "confirm"
+     *     "data-container-class": "confirm checkbox"
      * })
      * @Form\Options({
      *     "short-label": "short-label-financial-history-insolvency",
