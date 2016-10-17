@@ -36,8 +36,8 @@ class SectionConfigTest extends MockeryTestCase
     public function testGetAllRoutes()
     {
         $sections = [
-            'unit_test_route' => array(),
-            'unit_second_route' => array(),
+            'unit_test_route' => [],
+            'unit_second_route' => [],
         ];
 
         /** @var SectionConfig | m\MockInterface $sut */
@@ -125,9 +125,6 @@ class SectionConfigTest extends MockeryTestCase
                         'type' => \Zend\Mvc\Router\Http\Segment::class,
                         'options' => [
                             'route' => ':action[/:child_id][/]',
-                            'constraints' => [
-                                'child_id' => '[0-9]+',
-                            ],
                         ],
                     ],
                 ],

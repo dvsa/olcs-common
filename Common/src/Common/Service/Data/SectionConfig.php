@@ -407,9 +407,6 @@ class SectionConfig implements ServiceLocatorAwareInterface
                             'type' => \Zend\Mvc\Router\Http\Segment::class,
                             'options' => [
                                 'route' => ':action[/:child_id][/]',
-                                'constraints' => [
-                                    'child_id' => '[0-9]+',
-                                ],
                             ],
                         ],
                     ],
