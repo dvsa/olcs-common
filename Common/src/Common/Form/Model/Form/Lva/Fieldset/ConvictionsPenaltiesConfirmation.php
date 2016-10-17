@@ -12,7 +12,7 @@ class ConvictionsPenaltiesConfirmation
     /**
      * @Form\Attributes({
      *     "id":"",
-     *     "data-container-class": "confirm"
+     *     "data-container-class": "confirm checkbox"
      * })
      * @Form\Options({
      *     "checked_value": "Y",
