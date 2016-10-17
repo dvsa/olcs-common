@@ -22,6 +22,7 @@ abstract class AbstractAddressesController extends AbstractController
     ];
 
     protected $section = 'addresses';
+    protected $baseRoute = 'lva-%s/addresses';
 
     /** @var  \Common\Service\Helper\FormHelperService */
     protected $hlpForm;

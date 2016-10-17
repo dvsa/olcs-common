@@ -20,6 +20,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         Traits\CrudTableTrait;
 
     protected $section = 'conditions_undertakings';
+    protected $baseRoute = 'lva-%s/conditions_undertakings';
 
     /**
      * Conditions Undertakings section

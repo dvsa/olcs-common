@@ -36,6 +36,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         Traits\AdapterAwareTrait;
 
     protected $section = 'community_licences';
+    protected $baseRoute = 'lva-%s/community_licences';
 
     protected $officeCopy = null;
 

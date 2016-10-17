@@ -392,16 +392,25 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 $routeKey = $dashFilter->filter($section);
                 $sectionController = $camelFilter($section);
 
-                $childRoutes[$section] = array(
-                    'type' => 'Common\Util\LvaRoute',
-                    'options' => array(
-                        'route' => $routeKey . '[/:action[/:child_id]][/]',
-                        'defaults' => array(
+                $childRoutes[$section] = [
+                    'type' => \Common\Util\LvaRoute::class,
+                    'options' => [
+                        'route' => $routeKey . '[/]',
+                        'defaults' => [
                             'controller' => $typeController . '/' . $sectionController,
-                            'action' => 'index'
-                        )
-                    )
-                );
+                            'action' => 'index',
+                        ],
+                    ],
+                    'may_terminate' => true,
+                    'child_routes' => [
+                        'action' => [
+                            'type' => \Zend\Mvc\Router\Http\Segment::class,
+                            'options' => [
+                                'route' => ':action[/:child_id][/]',
+                            ],
+                        ],
+                    ],
+                ];
             }
             $routes[$baseRouteName]['child_routes'] = $childRoutes;
         }
