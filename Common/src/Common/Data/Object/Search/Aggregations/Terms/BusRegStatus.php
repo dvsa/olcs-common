@@ -14,7 +14,7 @@ class BusRegStatus extends TermsAbstract
      *
      * @var string
      */
-    protected $title = 'Status';
+    protected $title = 'search.form.filter.bus-reg-status';
 
     /**
      * The actual name of the field to ask for filter information for.

@@ -14,7 +14,7 @@ class OrgType extends TermsAbstract
      *
      * @var string
      */
-    protected $title = 'Organisation type';
+    protected $title = 'search.form.filter.organisation-type';
 
     /**
      * The actual name of the field to ask for filter information for.

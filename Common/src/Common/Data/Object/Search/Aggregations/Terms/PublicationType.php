@@ -14,7 +14,7 @@ class PublicationType extends TermsAbstract
      *
      * @var string
      */
-    protected $title = 'Publication type';
+    protected $title = 'search.form.filter.publication-type';
 
     /**
      * The actual name of the field to ask for filter information for.

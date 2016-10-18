@@ -14,7 +14,7 @@ class PublicationSection extends TermsAbstract
      *
      * @var string
      */
-    protected $title = 'Publication section';
+    protected $title = 'search.form.filter.publication-section';
 
     /**
      * The actual name of the field to ask for filter information for.
