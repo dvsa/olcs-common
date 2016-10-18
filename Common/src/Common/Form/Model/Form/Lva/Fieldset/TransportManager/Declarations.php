@@ -48,7 +48,7 @@ class Declarations
      *     "unchecked_value": "N",
      *     "must_be_value": "Y"
      * })
-     * @Form\Attributes({"data-container-class": "confirm"})
+     * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $confirmation = null;

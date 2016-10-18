@@ -22,6 +22,7 @@ abstract class AbstractDiscsController extends AbstractController
      * @var string
      */
     protected $section = 'discs';
+    protected $baseRoute = 'lva-%s/discs';
 
     protected $formTableData;
 
@@ -118,7 +119,9 @@ abstract class AbstractDiscsController extends AbstractController
             if ($response->isOk()) {
                 $flashMssgrHelper->addSuccessMessage('psv-discs-' . self::CMD_REQUEST_DISCS . '-successfully');
 
-                return $this->redirect()->toRouteAjax(null, [$this->getIdentifierIndex() => $this->getIdentifier()]);
+                return $this->redirect()->toRouteAjax(
+                    $this->getBaseRoute(), [$this->getIdentifierIndex() => $this->getIdentifier()]
+                );
             }
 
             if ($response->isServerError()) {
@@ -349,7 +352,7 @@ abstract class AbstractDiscsController extends AbstractController
             $this->commonCommand($commandKey, $dtoData);
 
             return $this->redirect()->toRouteAjax(
-                null,
+                $this->getBaseRoute(),
                 [$this->getIdentifierIndex() => $this->getIdentifier()],
                 ['query' => $request->getQuery()->toArray()]
             );

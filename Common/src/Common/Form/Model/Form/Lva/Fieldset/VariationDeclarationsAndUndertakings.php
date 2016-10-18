@@ -29,7 +29,7 @@ class VariationDeclarationsAndUndertakings
      *     "short-label": "variation.review-declarations.confirm-short-label",
      *     "label_attributes": {"id": "label-declarationConfirmation"}
      * })
-     * @Form\Attributes({"data-container-class": "confirm"})
+     * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $declarationConfirmation = null;

@@ -46,7 +46,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      *     "checked_value": "Y",
      *     "unchecked_value": "N"
      * })
-     * @Form\Attributes({"data-container-class": "confirm"})
+     * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      * @Form\Validator({
      *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
@@ -73,7 +73,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      *     "checked_value": "Y",
      *     "unchecked_value": "N"
      * })
-     * @Form\Attributes({"data-container-class": "confirm"})
+     * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      * @Form\Validator({
      *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
