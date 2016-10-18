@@ -2113,7 +2113,7 @@ return [
     'safety-inspection-providers.table.empty_message' => 'You haven\'t added any safety inspectors yet.',
     'safety-inspection-providers.table.empty_message-psv' => 'You haven\'t added any safety inspectors yet.',
     'safety-inspection-providers.table.external' => 'External?',
-    'safety-inspection-providers.table.hint' => 'The safety inspector is the person or company responsible for carrying out regular vehicle examinations, diagnosis and reporting. They are not required to do repair or servicing work.',
+    'safety-inspection-providers.table.hint' => 'The safety inspector is the person or company responsible for carrying out regular vehicle examinations, diagnosis and reporting. See <a href="https://www.gov.uk/government/collections/vehicle-safety-and-maintenance-guides" target="_blank">vehicle safety and maintenance guides</a> for more information.',
     'safety-inspection-providers.table.providerName' => 'Name',
     'safety-inspection-providers.table.title' => 'Safety inspectors',
     'safety-inspector-external-hint-GB-goods' => 'You must have a contract if you use an external safety inspector. See <a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/341126/gv79-annex-d-maintenance-contract.pdf" target="_blank">sample contract</a>',
