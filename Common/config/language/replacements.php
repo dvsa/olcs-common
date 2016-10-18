@@ -21,5 +21,5 @@ return [
     '{{EBSR_SUPPORT_NUMBER}}' => '0113 254 3200',
     '{{EBSR_SUPPORT_EMAIL}}' => 'ebsr@vosa.gov.uk',
     '{{EBSR_PAPER_FORMS_LINK}}' => 'https://www.gov.uk/government/collections/local-bus-service-registration-forms',
-    '{{EBSR_TRANSXCHANGE_LINK}}' => 'https://www.gov.uk/government/publications/transxchange-downloads-and-schema'
+    '{{EBSR_TRANSXCHANGE_LINK}}' => 'https://www.gov.uk/government/publications/transxchange-downloads-and-schema',
 ];
