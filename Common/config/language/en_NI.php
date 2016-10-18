@@ -20,6 +20,7 @@ $ni = array_merge(
         'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'Has anyone you\'ve named ever been disqualified from having an operator\'s licence in Great Britain or Northern Ireland?',
         'application_previous-history_licence-history_prevBeenAtPi' => 'Has anyone you\'ve named ever taken part in a public inquiry held by the DfI Northern Ireland or a GB Traffic Commissioner?',
         'application_previous-history_licence-history_prevPurchasedAssets' => 'In the past 12 months, has anyone you\'ve named bought assets or shares in a company that holds or has held an operator\'s licence in Great Britain or Northern Ireland?',
+        'safety-inspection-providers.table.hint' => 'See the <a href="https://www.infrastructure-ni.gov.uk/sites/default/files/publications/doe/driver-vehicle-agency-safe-operators-guide-march-2016.pdf" target="_blank">safe operator\'s</a> guide for more information.',
     ]
 );
 

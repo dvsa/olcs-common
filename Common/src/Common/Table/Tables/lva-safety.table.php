@@ -4,7 +4,7 @@ $translationPrefix = 'safety-inspection-providers.table';
 
 return array(
     'variables' => array(
-        'empty_message' => $translationPrefix . '.empty_message',
+        'empty_message' => $translationPrefix . '.hint',
         'required_label' => 'safety inspection provider',
         'within_form' => true
     ),
@@ -12,7 +12,7 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array(
-                    'class' => 'primary', 
+                    'class' => 'primary',
                     'label' => 'Add safety inspector'
                 ),
             )
