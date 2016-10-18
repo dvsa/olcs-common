@@ -2478,7 +2478,7 @@ return [
     'selfserve-app-subSection-your-business-people-guidanceLLP' => 'Please provide details of the members. This must be the same as the details that are on the companies house register',
     'selfserve-app-subSection-your-business-people-guidanceO' => 'Please provide details of the persons responsible for your organisation',
     'selfserve-app-subSection-your-business-people-guidanceP' => 'Please give details below of the partners in the business. You must include details of all partners, even if they are not primarily responsible for the operation of goods vehicles',
-    'selfserve-app-subSection-your-business-people-tableEmptyMessage' => 'Please add to this table',
+    'selfserve-app-subSection-your-business-people-tableEmptyMessage' => 'You haven\'t added any Directors yet',
     'selfserve-app-subSection-your-business-people-tableHeader' => 'People',
     'selfserve-app-subSection-your-business-people-tableHeaderDirectors' => 'Directors',
     'selfserve-app-subSection-your-business-people-tableHeaderPartners' => 'Partners',
