@@ -2225,7 +2225,7 @@ return [
     'search.form.filter.licence-type' => 'Licence type',
     'search.form.filter.organisation-type' => 'Organisation type',
     'search.form.filter.licence-status' => 'Licence status',
-    'search.form.filter.traffic-area' => 'A Traffic area',
+    'search.form.filter.traffic-area' => 'Traffic area',
     'search.form.restart' => 'Start again',
     'search.operating-centre' => 'Operating Centre',
     'search.operator' => 'Vehicle Operator',
