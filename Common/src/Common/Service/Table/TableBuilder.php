@@ -1519,9 +1519,15 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         $replacements = array('content' => $content);
 
+        $replacements['attrs'] = '';
         if (isset($column['align'])) {
             $replacements['attrs'] = ' class="'.$column['align'].'"';
         }
+
+        $dataHeading = isset($column['title'])
+            ? $this->getServiceLocator()->get('translator')->translate($column['title'])
+            : '';
+        $replacements['attrs'] .= ' data-heading="' . $dataHeading . '"';
 
         return $this->replaceContent($wrapper, $replacements);
     }
