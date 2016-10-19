@@ -244,4 +244,41 @@ class CrudActionTraitTest extends MockeryTestCase
 
         $this->assertEquals('RESPONSE', $response);
     }
+
+    /**
+     * @dataProvider dpTestGetBaseRoute
+     */
+    public function testGetBaseRoute($baseRoute, $lva, $expect)
+    {
+        $this->sut->baseRoute = $baseRoute;
+        $this->sut->lva = $lva;
+
+        static::assertEquals($expect, $this->sut->callGetBaseRoute());
+    }
+
+    public function dpTestGetBaseRoute()
+    {
+        return [
+            [
+                'baseRoute' => null,
+                'lva' => null,
+                'expect' => null,
+            ],
+            [
+                'baseRoute' => '',
+                'lva' => null,
+                'expect' => null,
+            ],
+            [
+                'baseRoute' => 'unit base %s route',
+                'lva' => 'unit_Lva',
+                'expect' => 'unit base unit_Lva route',
+            ],
+            [
+                'baseRoute' => 'unit_BaseRoute',
+                'lva' => null,
+                'expect' => 'unit_BaseRoute',
+            ],
+        ];
+    }
 }

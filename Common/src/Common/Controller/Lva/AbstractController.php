@@ -337,11 +337,6 @@ abstract class AbstractController extends AbstractActionController
         return $this->params($this->getIdentifierIndex());
     }
 
-    protected function getBaseRoute()
-    {
-        return empty($this->baseRoute) ? null : sprintf($this->baseRoute, $this->lva);
-    }
-
     protected function getIdentifierIndex()
     {
         if ($this->lva === 'licence') {
