@@ -341,6 +341,7 @@ return array(
             'personName' => 'Common\View\Helper\PersonName',
             'dateTime' => \Common\View\Helper\DateTime::class,
             'returnToAddress' => Common\View\Helper\ReturnToAddress::class,
+            'config' => Common\View\Helper\Config::class,
             'readOnlyActions' => \Common\View\Helper\ReadOnlyActions::class,
             'navigationParentPage' => Common\View\Helper\NavigationParentPage::class,
 
