@@ -296,6 +296,8 @@ return [
     'entity-view-table-conditions-undertakings.table.status' => 'Statws',
     'entity-view-table-conditions-undertakings.table.type' => 'Math',
     'error.form-validator.email-confirm.not-same' => 'Nid yw’r cyfeiriadau e-bost yn cyd-fynd',
+    'error.form-validator.password-confirm.not-same' => 'Nid yw eich cyfrineiriau newydd yn cyd-fynd. Rhowch gynnig arall arno.',
+    'error.vrm.invalid' => 'Rhif cofrestru annilys',
     'external.cancel_application.confirm.back_button' => 'Yn ôl',
     'external.cancel_application.confirm.confirm_button' => 'Dileu\'r cais',
     'external.cancel_application.confirm.message' => 'A ydych yn sicr eich bod am ddileu\'r cais hwn? Caiff ei ddileu oddi ar eich rhestr ac ni fyddwch yn gallu ei gyrchu eto.',
@@ -552,8 +554,8 @@ return [
     'save.button' => 'Cadw a dychwelyd',
     'save.continue.button' => 'Parhau',
     'search' => 'Chwilio',
-    'search-result-label-organisation-type' => 'Math o sefydliad',
-    'search-result-label-licence-status' => 'Statws y drwydded',
+    'search-no-results' => '<div class="article js-no-results"><p>Nid oedd unrhyw ganlyniadau ar gyfer eich chwiliad.</p><p>Ceisiwch ddefnyddio allweddeiriau gwahanol.</p></div>',
+    'search-result-lMath o drwyddedabel-licence-status' => 'Statws y drwydded',
     'search-result-label-licence-type' => 'Math o drwydded',
     'search-result-label-traffic-area' => 'Ardal draffig',
     'search-result-label-business-type' => 'Math o fusnes',
@@ -1012,6 +1014,7 @@ return [
     'The input does not appear to be a float' => 'Rhaid ichi nodi rhif',
     'Please enter all 4 digits of the year' => 'Nodwch bob un o 4 digid y flwyddyn',
     'This date is not allowed to be in the future' => 'Ni chaniateir i’r dyddiad hwn fod yn y dyfodol',
+    'The input is less than %min% characters long' => 'Mae’r mewnbwn yn llai nag %min% nod o hyd',
     //  AUTH MIRROR
     'auth.forgot-username.label' => 'Wedi anghofio’ch enw defnyddiwr?',
     'auth.forgot-username.label.audio' => 'Adfer eich enw defnyddiwr',
@@ -1034,5 +1037,6 @@ return [
     'auth.change-password.failed.title' => 'Ni allem ddiweddaru’ch cyfrinair',
     'auth.expired-password.title' => 'Newid eich cyfrinair',
     'auth.expired-password.failed.title' => 'Ni allem ddiweddaru’ch cyfrinair',
+    'auth.expired-password.failed.reason.New password does not meet the password policy requirements.' => 'Dylai’ch cyfrinair gynnwys o leiaf 8 nod. Rhaid iddo gynnwys o leiaf un llythyren fechan, un briflythyren ac un rhif. Ni all eich cyfrinair newydd fod yr un peth â’ch 5 cyfrinair diwethaf.<br><br>Peidiwch byth â rhannu’ch cyfrinair gydag unrhyw un.',
     // Potentially unused translations
 ];
