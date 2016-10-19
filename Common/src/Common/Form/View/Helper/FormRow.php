@@ -1,26 +1,19 @@
 <?php
 
-/**
- * Render form row
- *
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Form\View\Helper;
 
-use Zend\Form\Element\DateSelect;
-use Zend\Form\Element\DateTimeSelect;
-use Zend\Form\LabelAwareInterface;
-use Zend\Form\ElementInterface as ZendElementInterface;
-use Zend\Form\Element\Hidden;
-use Zend\Form\Element\Button;
-use Zend\Form\ElementInterface;
-use Common\Form\Elements\InputFilters\SingleCheckbox;
-use Common\Form\Elements\Types\Table;
-use Common\Form\Elements\InputFilters\NoRender;
 use Common\Form\Elements\InputFilters\ActionButton;
 use Common\Form\Elements\InputFilters\ActionLink;
+use Common\Form\Elements\InputFilters\NoRender;
+use Common\Form\Elements\InputFilters\SingleCheckbox;
 use Common\Form\Elements\Types\Readonly;
+use Common\Form\Elements\Types\Table;
+use Zend\Form\Element\Button;
+use Zend\Form\Element\DateSelect;
+use Zend\Form\Element\DateTimeSelect;
+use Zend\Form\Element\Hidden;
+use Zend\Form\ElementInterface;
+use Zend\Form\LabelAwareInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -49,7 +42,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator Service locator
+     * @param \Zend\View\HelperPluginManager $serviceLocator Service locator
      *
      * @return FormRow
      */
@@ -67,12 +60,12 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
     /**
      * Utility form helper that renders a label (if it exists), an element and errors
      *
-     * @param ZendElementInterface $element Element
+     * @param ElementInterface $element Element
      *
      * @throws \Zend\Form\Exception\DomainException
      * @return string
      */
-    public function render(ZendElementInterface $element)
+    public function render(ElementInterface $element)
     {
         if ($element instanceof Readonly) {
             $class = $element->getAttribute('data-container-class');
@@ -98,27 +91,17 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
 
         if ($element instanceof Table) {
             $markup = $element->render();
-        } elseif ($element instanceof DateSelect ) {
 
+        } elseif ($element instanceof DateSelect ) {
             $element->setOption('hint-position', 'start');
 
             if ($element->getOption('fieldsetClass') === null) {
                 $element->setOption('fieldsetClass', 'date');
             }
 
-            // This isn't ideal, but for pragmatism we add the hint here, so it shows on all
-            // date select elements (unless internal)
-            if (!empty($this->config['render_date_hint']) && !($element instanceof DateTimeSelect)) {
-                $hint = $element->getOption('hint');
-
-                if (empty($hint)) {
-                    $element->setOption('hint', 'date-hint');
-                }
-            }
-
             $markup = $this->renderFieldset($element, false);
-        } else {
 
+        } else {
             if ($element instanceof SingleCheckbox) {
                 $this->labelPosition = self::LABEL_APPEND;
             }
@@ -140,7 +123,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
 
         $type = $element->getAttribute('type');
         if ($type === 'multi_checkbox' || $type === 'radio'
-            || $element->getAttribute('id') == 'security') {
+            || $element->getAttribute('id') === 'security') {
             $wrap = false;
         }
 
