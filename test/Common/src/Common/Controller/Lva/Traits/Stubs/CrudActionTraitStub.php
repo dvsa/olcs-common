@@ -1,10 +1,5 @@
 <?php
 
-/**
- * CRUD Action Trait Stub
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Lva\Traits\Stubs;
 
 use Common\Controller\Lva\Traits\CrudActionTrait;
@@ -18,6 +13,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 class CrudActionTraitStub extends AbstractActionController
 {
     use CrudActionTrait;
+
+    public $baseRoute;
+    public $lva;
 
     public function callGetCrudAction(array $formTables = array())
     {
@@ -36,5 +34,10 @@ class CrudActionTraitStub extends AbstractActionController
         $route = null
     ) {
         return $this->handleCrudAction($data, $rowsNotRequired, $childIdParamName, $route);
+    }
+
+    public function callGetBaseRoute()
+    {
+        return $this->getBaseRoute();
     }
 }

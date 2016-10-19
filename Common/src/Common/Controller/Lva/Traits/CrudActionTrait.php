@@ -88,4 +88,22 @@ trait CrudActionTrait
 
         return $this->redirect()->toRoute($route, $routeParams, $options, true);
     }
+
+    /**
+     * Return base route
+     *
+     * @return null|string
+     */
+    protected function getBaseRoute()
+    {
+        if (empty($this->baseRoute)) {
+            return null;
+        }
+
+        if (isset($this->lva)) {
+            return sprintf($this->baseRoute, $this->lva);
+        }
+
+        return $this->baseRoute;
+    }
 }
