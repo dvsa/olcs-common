@@ -1524,12 +1524,30 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $replacements['attrs'] = ' class="'.$column['align'].'"';
         }
 
-        $dataHeading = isset($column['title'])
-            ? $this->getServiceLocator()->get('translator')->translate($column['title'])
-            : '';
-        $replacements['attrs'] .= ' data-heading="' . $dataHeading . '"';
+        if ($this->hasAnyTitle()) {
+            $dataHeading = isset($column['title'])
+                ? $this->getServiceLocator()->get('translator')->translate($column['title'])
+                : '';
+            $replacements['attrs'] .= ' data-heading="' . strip_tags($dataHeading) . '"';
+        }
 
         return $this->replaceContent($wrapper, $replacements);
+    }
+
+    /**
+     * Does any of table columns has the title
+     *
+     * @return bool
+     */
+    public function hasAnyTitle()
+    {
+        $columns = $this->getColumns();
+        foreach ($columns as $column) {
+            if (isset($column['title'])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

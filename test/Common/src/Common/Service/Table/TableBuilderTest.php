@@ -2129,7 +2129,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '', 'attrs' => ' data-heading=""'));
+            ->with('{{[elements/td]}}', array('content' => '', 'attrs' => ''));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2157,7 +2157,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' data-heading=""'));
+            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ''));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2186,7 +2186,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' class="right" data-heading=""'));
+            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' class="right"'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2208,7 +2208,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $column = array(
             'name' => 'foo',
-            'title' => 'Foo',
+            'title' => '<div>Foo</div>',
         );
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
@@ -2217,11 +2217,15 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' data-heading="_TRSLTD_Foo"'));
 
-        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'getColumns'));
 
         $table->expects($this->any())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
+
+        $table->expects($this->once())
+            ->method('getColumns')
+            ->will($this->returnValue([$column]));
 
         $table->renderBodyColumn($row, $column);
     }
@@ -2239,7 +2243,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/foo]}}', array('content' => '', 'attrs' => ' data-heading=""'));
+            ->with('{{[elements/foo]}}', array('content' => '', 'attrs' => ''));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2272,7 +2276,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->at(1))
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'FOOBAR', 'attrs' => ' data-heading=""'));
+            ->with('{{[elements/td]}}', array('content' => 'FOOBAR', 'attrs' => ''));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2301,7 +2305,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => date('d/m/Y'), 'attrs' => ' data-heading=""'));
+            ->with('{{[elements/td]}}', array('content' => date('d/m/Y'), 'attrs' => ''));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2337,7 +2341,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                array('content' => $expected, 'attrs' => ' data-heading=""')
+                array('content' => $expected, 'attrs' => '')
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2366,7 +2370,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '', 'attrs' => ' data-heading=""'));
+            ->with('{{[elements/td]}}', array('content' => '', 'attrs' => ''));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2397,7 +2401,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => 'Something Else', 'attrs' => ' data-heading=""'));
+            ->with('{{[elements/td]}}', array('content' => 'Something Else', 'attrs' => ''));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2427,7 +2431,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                ['content' => '<input type="radio" name="id" value="1"  />', 'attrs' => ' data-heading=""']
+                ['content' => '<input type="radio" name="id" value="1"  />', 'attrs' => '']
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2458,7 +2462,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                ['content' => '<input type="radio" name="table[id]" value="1"  />', 'attrs' => ' data-heading=""']
+                ['content' => '<input type="radio" name="table[id]" value="1"  />', 'attrs' => '']
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2497,7 +2501,7 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/td]}}',
                 [
                     'content' => '<input type="submit" class="" name="action[edit][1]" value="bar"  />',
-                    'attrs' => ' data-heading=""'
+                    'attrs' => ''
                 ]
             );
 
@@ -2535,7 +2539,7 @@ class TableBuilderTest extends MockeryTestCase
                 '{{[elements/td]}}',
                 [
                     'content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar"  />',
-                    'attrs' => ' data-heading=""'
+                    'attrs' => ''
                 ]
             );
 
