@@ -1535,7 +1535,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * Has title for one of columns
+     * Does any of table columns has the title
      *
      * @return bool
      */
