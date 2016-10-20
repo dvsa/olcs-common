@@ -1,11 +1,8 @@
 <?php
 
-/**
- * Application People
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\People;
+
+use Common\Form\Form;
 
 /**
  * Application People
@@ -14,12 +11,17 @@ namespace Common\FormService\Form\Lva\People;
  */
 class ApplicationPeople extends AbstractPeople
 {
+    /**
+     * Alter form
+     *
+     * @param Form $form form
+     *
+     * @return Form
+     */
     protected function alterForm($form)
     {
         $form = parent::alterForm($form);
 
-        // Always remove these 2 buttons
-        $this->removeFormAction($form, 'save');
         $this->removeFormAction($form, 'cancel');
 
         return $form;
