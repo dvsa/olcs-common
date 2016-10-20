@@ -6,7 +6,7 @@ $(function() {
     form: "#lva-safety-providers",
     rulesets: {
       'not-applicable' : {
-        ".hint": function() {
+        "selector:.checkbox > .hint": function() {
           return OLCS.formHelper.isChecked("data", "isExternal");
         }
       },
