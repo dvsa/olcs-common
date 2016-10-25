@@ -1,10 +1,5 @@
 <?php
 
-/**
- * FormRow Test
- *
- * @author Jakub Igla <jakub.igla@gmail.com>
- */
 namespace CommonTest\Form\View\Helper;
 
 use Zend\Form\Element\DateSelect;
@@ -13,9 +8,8 @@ use Zend\Form\View\Helper as ZendHelper;
 use Common\Form\View\Helper as CommonHelper;
 
 /**
- * FormRow Test
- *
- * @author Jakub Igla <jakub.igla@gmail.com>
+ * @covers Common\Form\View\Helper\FormRow
+ * @covers Common\Form\View\Helper\Extended\FormRow
  */
 class FormRowTest extends \PHPUnit_Framework_TestCase
 {
@@ -387,7 +381,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             'Common\Form\Elements\Types\Readonly',
             [
                 'name' => 'readonly',
-                'label' => 'Foo'
+                'label' => 'Foo',
             ],
             []
         );
@@ -409,7 +403,8 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             'DateSelect',
             [
                 'name' => 'date',
-                'label' => 'Foo'
+                'label' => 'Foo',
+                'label-suffix' => 'unit_LabelSfx',
             ],
             []
         );
@@ -418,7 +413,12 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($element);
 
         $this->expectOutputString(
-            '<div class="field "><fieldset class="date"><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>'
+            '<div class="field ">' .
+                '<fieldset class="date">' .
+                    '<legend>Foo unit_LabelSfx</legend>' .
+                    '<p class="hint">Hint</p>' .
+                '</fieldset>' .
+            '</div>'
         );
     }
 
@@ -432,7 +432,8 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             [
                 'name' => 'date',
                 'label' => 'Foo',
-                'fieldsetClass' => 'user'
+                'fieldsetClass' => 'user',
+                'hint' => null,
             ],
             []
         );
@@ -441,7 +442,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($element);
 
         $this->expectOutputString(
-            '<div class="field "><fieldset class="user"><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>'
+            '<div class="field "><fieldset class="user"><legend>Foo</legend></fieldset></div>'
         );
     }
 
@@ -454,7 +455,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             'DateTimeSelect',
             [
                 'name' => 'date',
-                'label' => 'Foo'
+                'label' => 'Foo',
             ],
             []
         );

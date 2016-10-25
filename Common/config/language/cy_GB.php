@@ -1008,6 +1008,7 @@ return [
     'common.table.No' => 'Na',
     'common.file-upload.browse.title' => 'Atodi ffeili(iau)',
     'common.file-upload.browse.hint' => 'PDF, DOC, JPG, PNG neu GIF',
+    'date-label-hint' => '(e.g. 12, 6, 2014)',
     //  Zend Error Messages
     'The input is not a valid email address.' => 'Nid yw’r mewnbwn yn gyfeiriad e-bost dilys.',
     'The input does not appear to be a valid value' => 'Ymddengys nad yw’r mewnbwn yn werth dilys',

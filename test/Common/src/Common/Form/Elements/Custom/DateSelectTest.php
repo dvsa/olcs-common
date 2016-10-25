@@ -1,22 +1,16 @@
 <?php
 
-/**
- * Date Select Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Form\Elements\Custom;
 
 use Common\Form\Elements\Custom\DateSelect;
 
 /**
- * Date Select Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers Common\Form\Elements\Custom\DateSelect
  */
 class DateSelectTest extends \PHPUnit_Framework_TestCase
 {
-    protected $sut;
+    /** @var  DateSelect */
+    private $sut;
 
     public function setUp()
     {
@@ -89,12 +83,14 @@ class DateSelectTest extends \PHPUnit_Framework_TestCase
     public function testSetOptionsDefaultDateNow()
     {
         $options = [
-            'default_date' => 'now'
+            'label-suffix' => 'unit_LabelSfx',
+            'default_date' => 'now',
         ];
 
         $this->sut->setOptions($options);
 
         $this->assertEquals(date('Y-m-d'), $this->sut->getValue());
+        static::assertEquals('unit_LabelSfx', $this->sut->getOption('label-suffix'));
     }
 
     public function testSetOptionsDefaultDate()

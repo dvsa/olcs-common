@@ -1,10 +1,5 @@
 <?php
 
-/**
- * DateSelect
- *
- * @author Someone <someone@valtech.co.uk>
- */
 namespace Common\Form\Elements\Custom;
 
 use Zend\Form\Element as ZendElement;
@@ -16,8 +11,33 @@ use Zend\Form\Element as ZendElement;
  */
 class DateSelect extends ZendElement\DateSelect
 {
-    use Traits\YearDelta;
+    use Traits\YearDelta {
+        setOptions as trait_setOptions;
+    }
 
+    /**
+     * Set Options
+     *
+     * @param array|\Traversable $options Options
+     *
+     * @return $this
+     */
+    public function setOptions($options)
+    {
+        if (!isset($options['label-suffix'])) {
+            $options['label-suffix'] = 'date-label-hint';
+        }
+
+        $this->trait_setOptions($options);
+
+        return $this;
+    }
+
+    /**
+     * Get Input Specification
+     *
+     * @return array
+     */
     public function getInputSpecification()
     {
         return array(
