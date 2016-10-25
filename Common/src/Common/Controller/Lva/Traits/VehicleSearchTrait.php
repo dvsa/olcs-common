@@ -123,12 +123,9 @@ trait VehicleSearchTrait
                 [
                     'label' => 'label-show-removed-vehciles',
                     'class' => ' more-actions__item',
-                    'requireRows' => true,
+                    'requireRows' => false,
                 ]
             );
-        }
-        if (count($table->getRows()) === 0) {
-            $table->setSetting('collapseAt', null);
         }
     }
 }

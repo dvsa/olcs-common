@@ -10,100 +10,112 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Cache\Storage\StorageInterface;
 
 /**
- * Class CachingQueryServiceTest
- * @package CommonTest\Service\Cqrs\Query
+ * @covers Common\Service\Cqrs\Query\CachingQueryService
  */
 class CachingQueryServiceTest extends MockeryTestCase
 {
+    /** @var  CachingQueryService */
+    private $sut;
+
+    /** @var  QueryContainerInterface | m\MockInterface */
+    private $mockQuery;
+    /** @var  QueryServiceInterface | m\MockInterface */
+    private $mockQS;
+    /** @var  StorageInterface | m\MockInterface */
+    private $mockCache;
+    /** @var  m\MockInterface */
+    private $mockResult;
+
+    public function setUp()
+    {
+        $this->mockQuery = m::mock(QueryContainerInterface::class);
+        $this->mockCache = m::mock(StorageInterface::class);
+
+        $this->mockResult = m::mock(\Dvsa\Olcs\Api\Domain\Command\Result::class);
+
+        $this->mockQS = m::mock(QueryServiceInterface::class);
+        $this->mockQS->shouldReceive('send')->with($this->mockQuery)->once()->andReturn($this->mockResult);
+
+        $this->sut = new CachingQueryService($this->mockQS, $this->mockCache);
+    }
+
     public function testSendWithNoCache()
     {
-        $mockQuery = m::mock(QueryContainerInterface::class);
-        $mockQuery->shouldReceive('isMediumTermCachable')->andReturn(false);
-        $mockQuery->shouldReceive('isShortTermCachable')->andReturn(false);
+        $this->mockQuery
+            ->shouldReceive('isMediumTermCachable')->once()->andReturn(false)
+            ->shouldReceive('isShortTermCachable')->once()->andReturn(false);
 
-        $mockQS = m::mock(QueryServiceInterface::class);
-        $mockQS->shouldReceive('send')->with($mockQuery)->andReturn('value');
-
-        $mockCache = m::mock(StorageInterface::class);
-
-        $sut = new CachingQueryService($mockQS, $mockCache);
-
-        $sut->send($mockQuery);
+        static::assertSame($this->mockResult, $this->sut->send($this->mockQuery));
     }
 
-    public function testSendWithLocalCache()
+    public function testSendWithShortCacheNull()
     {
-        $mockQuery = m::mock(QueryContainerInterface::class);
-        $mockQuery->shouldReceive('isMediumTermCachable')->andReturn(false);
-        $mockQuery->shouldReceive('isShortTermCachable')->andReturn(true);
-        $mockQuery->shouldReceive('getDto')->andReturn(new \StdClass);
-        $mockQuery->shouldReceive('getCacheIdentifier')->andReturn('cache_key');
+        $this->mockQuery
+            ->shouldReceive('isMediumTermCachable')->once()->andReturn(false)
+            ->shouldReceive('isShortTermCachable')->once()->andReturn(true)
+            ->shouldReceive('getCacheIdentifier')->once()->andReturn('cache_key');
 
-        $mockResult = m::mock(\Dvsa\Olcs\Api\Domain\Command\Result::class);
-        $mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
+        $this->mockResult->shouldReceive('isOk')->with()->once()->andReturn(false);
 
-        $mockQS = m::mock(QueryServiceInterface::class);
-        $mockQS->shouldReceive('send')->with($mockQuery)->once()->andReturn($mockResult);
-
-        $mockCache = m::mock(StorageInterface::class);
-
-        $sut = new CachingQueryService($mockQS, $mockCache);
-
-        $sut->send($mockQuery);
-        $sut->send($mockQuery);
+        static::assertNull($this->sut->send($this->mockQuery));
     }
 
-    public function testSendWithCache()
+    public function testSendWithShortCache()
     {
-        $mockQuery = m::mock(QueryContainerInterface::class);
-        $mockQuery->shouldReceive('isMediumTermCachable')->andReturn(true);
-        $mockQuery->shouldReceive('isShortTermCachable')->andReturn(true);
-        $mockQuery->shouldReceive('getDto')->andReturn(new \stdClass);
-        $mockQuery->shouldReceive('getCacheIdentifier')->andReturn('cache_key');
+        $this->mockQuery
+            ->shouldReceive('isMediumTermCachable')->times(2)->andReturn(false)
+            ->shouldReceive('isShortTermCachable')->times(2)->andReturn(true)
+            ->shouldReceive('getDto')->once()->andReturn(new \stdClass)
+            ->shouldReceive('getCacheIdentifier')->times(2)->andReturn('cache_key');
 
-        $mockResult = m::mock(\Dvsa\Olcs\Api\Domain\Command\Result::class);
-        $mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
+        $this->mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
 
-        $mockQS = m::mock(QueryServiceInterface::class);
-        $mockQS->shouldReceive('send')->with($mockQuery)->once()->andReturn($mockResult);
-
-        $mockCache = m::mock(StorageInterface::class);
-        $mockCache->shouldReceive('hasItem')->with('cache_key')->andReturnValues([false, true]);
-        $mockCache->shouldReceive('setItem')->with('cache_key', $mockResult)->once();
-        $mockCache->shouldReceive('getItem')->with('cache_key')->once()->andReturn($mockResult);
-
-        $sut = new CachingQueryService($mockQS, $mockCache);
-
-        $sut->send($mockQuery);
-        $sut->send($mockQuery);
+        $this->sut->send($this->mockQuery);
+        $this->sut->send($this->mockQuery);
     }
 
-    public function testSendWithCacheAndLog()
+    public function testSendWithMediumCache()
     {
-        $mockQuery = m::mock(QueryContainerInterface::class);
-        $mockQuery->shouldReceive('isMediumTermCachable')->andReturn(true);
-        $mockQuery->shouldReceive('isShortTermCachable')->andReturn(true);
-        $mockQuery->shouldReceive('getDto')->andReturn(new \stdClass);
-        $mockQuery->shouldReceive('getCacheIdentifier')->andReturn('cache_key');
+        $this->mockQuery
+            ->shouldReceive('isMediumTermCachable')->times(2)->andReturn(true)
+            ->shouldReceive('isShortTermCachable')->never()
+            ->shouldReceive('getDto')->once()->andReturn(new \stdClass)
+            ->shouldReceive('getCacheIdentifier')->times(2)->andReturn('cache_key');
 
-        $mockResult = m::mock(\Dvsa\Olcs\Api\Domain\Command\Result::class);
-        $mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
+        $this->mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
 
-        $mockQS = m::mock(QueryServiceInterface::class);
-        $mockQS->shouldReceive('send')->with($mockQuery)->once()->andReturn($mockResult);
+        $this->mockCache
+            ->shouldReceive('hasItem')->with('cache_key')->andReturnValues([false, true])
+            ->shouldReceive('setItem')->with('cache_key', $this->mockResult)->once()
+            ->shouldReceive('getItem')->with('cache_key')->once()->andReturn($this->mockResult);
 
-        $mockCache = m::mock(StorageInterface::class);
-        $mockCache->shouldReceive('hasItem')->with('cache_key')->andReturnValues([false, true]);
-        $mockCache->shouldReceive('setItem')->with('cache_key', $mockResult)->once();
-        $mockCache->shouldReceive('getItem')->with('cache_key')->once()->andReturn($mockResult);
+        $this->sut->send($this->mockQuery);
+        $this->sut->send($this->mockQuery);
+    }
 
-        $mockLogger = m::mock(\Zend\Log\LoggerInterface::class);
-        $mockLogger->shouldReceive('debug')->with('Get from presistent cache '. \stdClass::class)->once();
+    public function testSendWithMediumCacheAndLog()
+    {
+        $this->mockQuery
+            ->shouldReceive('isMediumTermCachable')->times(2)->andReturn(true)
+            ->shouldReceive('isShortTermCachable')->never()
+            ->shouldReceive('getDto')->once()->andReturn(new \stdClass)
+            ->shouldReceive('getCacheIdentifier')->times(2)->andReturn('cache_key');
 
-        $sut = new CachingQueryService($mockQS, $mockCache);
-        $sut->setLogger($mockLogger);
+        $this->mockResult->shouldReceive('isOk')->with()->once()->andReturn(true);
 
-        $sut->send($mockQuery);
-        $sut->send($mockQuery);
+        $this->mockCache
+            ->shouldReceive('hasItem')->with('cache_key')->andReturnValues([false, true])
+            ->shouldReceive('setItem')->with('cache_key', $this->mockResult)->once()
+            ->shouldReceive('getItem')->with('cache_key')->once()->andReturn($this->mockResult);
+
+        /** @var \Zend\Log\LoggerInterface $mockLogger */
+        $mockLogger = m::mock(\Zend\Log\LoggerInterface::class)
+            ->shouldReceive('debug')->with('Get from presistent cache ' . \stdClass::class)->once()
+            ->getMock();
+
+        $this->sut->setLogger($mockLogger);
+
+        $this->sut->send($this->mockQuery);
+        $this->sut->send($this->mockQuery);
     }
 }

@@ -381,7 +381,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 ]
             );
         }
-        $this->addRemovedVehiclesActions($filters, $table);
 
         return $table;
     }
@@ -402,6 +401,10 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         if (!$removeActions && !$resultData['canTransfer']) {
             $table->removeAction('transfer');
+        }
+
+        if ((int)$resultData['allVehicleCount'] > (int)$resultData['activeVehicleCount']) {
+            $this->addRemovedVehiclesActions($this->getFilters(), $table);
         }
 
         if (in_array($this->lva, ['licence', 'variation'], true)) {
