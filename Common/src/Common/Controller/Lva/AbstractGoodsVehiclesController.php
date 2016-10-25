@@ -610,7 +610,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 ]
             );
         }
-        $this->addRemovedVehiclesActions($filters, $table);
+
+        if ((int)$params['allVehicleCount'] > (int)$params['activeVehicleCount']) {
+            $this->addRemovedVehiclesActions($filters, $table);
+        }
     }
 
     /**
