@@ -71,16 +71,18 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
     {
         $cacheIdentifier = $query->getCacheIdentifier();
 
-        if (!isset($this->localCache[$cacheIdentifier])) {
-            $result = $this->queryService->send($query);
-            if ($result->isOk()) {
-                $this->localCache[$cacheIdentifier] = $result;
-            }
-        } else {
-            $this->logMessage('Get from local cache '. get_class($query->getDto()));
+        if (isset($this->localCache[$cacheIdentifier])) {
+            $this->logMessage('Get from local cache ' . get_class($query->getDto()));
+
+            return $this->localCache[$cacheIdentifier];
         }
 
-        return $this->localCache[$cacheIdentifier];
+        $result = $this->queryService->send($query);
+        if (!$result->isOk()) {
+            return null;
+        }
+
+        return $this->localCache[$cacheIdentifier] = $result;
     }
 
     /**
