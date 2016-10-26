@@ -174,7 +174,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
         $legend = '';
         $label = $element->getLabel();
 
-        if (!empty($hintText)) {
+        if (isset($hintText) && '' !== $hintText) {
             $hint = sprintf($this->fieldsetHintFormat, $this->getView()->translate($hintText));
         } else {
             $hint = '';
@@ -203,6 +203,11 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             if (! $element instanceof LabelAwareInterface || ! $element->getLabelOption('disable_html_escape')) {
                 $escapeHtmlHelper = $this->getEscapeHtmlHelper();
                 $label = $escapeHtmlHelper($label);
+            }
+
+            $labelSfx = (string) $element->getOption('label-suffix');
+            if (isset($label) && '' !== $labelSfx) {
+                $label .= ' ' . $translator->translate($labelSfx, $this->getTranslatorTextDomain());
             }
 
             $legend = sprintf(
