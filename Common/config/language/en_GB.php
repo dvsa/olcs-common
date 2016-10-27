@@ -2119,7 +2119,7 @@ return [
     'safety-inspection-providers.table.title' => 'Safety inspectors',
     'safety-inspector-external-hint-GB-goods' => 'You must have a contract if you use an external safety inspector. See <a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/341126/gv79-annex-d-maintenance-contract.pdf" target="_blank">sample contract</a>',
     'safety-inspector-external-hint-GB-psv' => 'You must have a contract if you use an external safety inspector. See <a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/341138/psv421-annex-c-maintenance-contract.pdf" target="_blank">sample contract</a>',
-    'safety-inspector-external-hint-NI-goods' => 'You must have a contract if you use an external safety inspector. See <a href="https://www.infrastructure-ni.gov.uk/sites/default/files/publications/doe/goods-vehicle-operator-licence-maintenance-contract-%28gv%28ni%2979-annex-d%29.PDF" target="_blank">sample contract</a>',
+    'safety-inspector-external-hint-NI-goods' => 'You must have a contract if you use an external safety inspector. See <a href="https://www.infrastructure-ni.gov.uk/sites/default/files/publications/doe/goods-vehicle-operator%27s-licence-maintenance-contract.pdf" target="_blank">sample contract</a>',
     'save' => 'Save',
     'save-and-add-another' => 'Save and add another',
     'save.button' => 'Save and return',
