@@ -29,14 +29,23 @@ class ProcessTranslations
      */
     public function exec()
     {
+        //  snapshot
+        $pathSnapshot = __DIR__ . '/../../olcs-backend/module/Snapshot/config/language/';
+        $cyGbFileSnapshot = $pathSnapshot . 'cy_GB.php';
+        $enGbFileSnapshot = $pathSnapshot . 'en_GB.php';
+
+        $cyGb['snapshot'] = include $cyGbFileSnapshot;
+        $enGb['snapshot'] = include $enGbFileSnapshot;
+
+        //  common
         $path = __DIR__ . '/../Common/config/language/';
         $pathToPartials = __DIR__ . '/../Common/config/language/partials/';
         $cyGbFile = $path . 'cy_GB.php';
         $enGbFile = $path . 'en_GB.php';
         $cyGbRefFile = $path . 'cy_GB_refdata.php';
 
-        $cyGb = include $cyGbFile;
-        $enGb = include $enGbFile;
+        $cyGb['common'] = include $cyGbFile;
+        $enGb['common'] = include $enGbFile;
         $cyGbRef = include $cyGbRefFile;
 
         //  process items
@@ -57,18 +66,30 @@ class ProcessTranslations
             }
 
             if ($tbt === 'YES') {
+                //  define in which translation file located this message
+                $inModule = null;
+
+                foreach ($enGb as $module => $body) {
+                    if (isset($body[$key])) {
+                        $inModule = $module;
+                        break;
+                    }
+                }
+
+                $inModule = ($inModule ?: 'common');
+
                 //  add or set values
                 $val = trim($value['English']);
                 if (
                     $val !== ''
-                    && !isset($enGb[$key])      //  set value only for new translations (do not update exists)
+                    && !isset($enGb[$inModule][$key])      //  set value only for new translations (do not update exists)
                 ) {
-                    $enGb[$key] = $val;
+                    $enGb[$inModule][$key] = $val;
                 }
 
                 $val = trim($value['Welsh']);
                 if ($val !== '') {
-                    $cyGb[$key] = $val;
+                    $cyGb[$inModule][$key] = $val;
                 }
 
                 continue;
@@ -119,13 +140,22 @@ class ProcessTranslations
         }
 
         //  rearange items in CY to match position in EN
-        $cyGb = $this->rearrangeCy($enGb, $cyGb);
+        echo PHP_EOL . PHP_EOL . 'Rearange items in CY array';
+        foreach (['common', 'snapshot'] as $module) {
+            echo PHP_EOL . ' - ' . $module;
+            $cyGb[$module] = $this->rearrangeCy($enGb[$module], $cyGb[$module]);
+        }
 
         //  save to files
         echo PHP_EOL . PHP_EOL . 'Save to files:';
-        $this->saveArrayToFile($cyGb, $cyGbFile);
-        $this->saveArrayToFile($enGb, $enGbFile);
+        echo PHP_EOL . ' - common:';
+        $this->saveArrayToFile($cyGb['common'], $cyGbFile);
+        $this->saveArrayToFile($enGb['common'], $enGbFile);
         $this->saveArrayToFile($cyGbRef, $cyGbRefFile);
+
+        echo PHP_EOL . PHP_EOL . ' - API/snapshot:';
+        $this->saveArrayToFile($cyGb['snapshot'], $cyGbFileSnapshot);
+        $this->saveArrayToFile($enGb['snapshot'], $enGbFileSnapshot);
 
         echo PHP_EOL . PHP_EOL . 'done!' . PHP_EOL;
     }
@@ -141,8 +171,6 @@ class ProcessTranslations
     private function rearrangeCy(array $enGb, array $cyGb)
     {
         //  rearange items in CY to match position in EN
-        echo PHP_EOL . PHP_EOL . 'Rearange items in CY array';
-
         $rearranged = [];
         foreach ($enGb as $key => $value) {
             if (!isset($cyGb[$key])) {
@@ -190,7 +218,6 @@ class ProcessTranslations
 
             fwrite($fh, $result);
             fclose($fh);
-
         } catch (\Exception $e) {
             echo PHP_EOL . 'ERR: Cant store translation file ' . $file . '; ' . $e->getMessage();
         }
@@ -215,8 +242,12 @@ class ProcessTranslations
         array_walk(
             $csv,
             function (&$a) use ($header, &$result) {
-                $tmp = array_combine($header, $a);
-                $result[$tmp['message']] = $tmp;
+                try {
+                    $tmp = array_combine($header, $a);
+                    $result[$tmp['message']] = $tmp;
+                } catch (\Exception $e) {
+                    echo PHP_EOL . 'something wrong with key: ' . var_export($a, 1);
+                }
             }
         );
 
