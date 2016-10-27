@@ -13,6 +13,7 @@ use Common\Data\Mapper\Lva\FinancialHistory as FinancialHistoryMapper;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialHistory;
 use Dvsa\Olcs\Transfer\Query\Application\FinancialHistory;
 use Zend\Form\Form;
+use Zend\Form\FormInterface;
 
 /**
  * Financial History Controller
@@ -37,8 +38,14 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         )
     );
 
+    /**
+     * Process Action - Index
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -76,11 +83,12 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     /**
      * Alter form for LVA form
      *
-     * @param Form $form
-     * @param array $data
+     * @param Form  $form Form
+     * @param array $data Api/Form Data
+     *
      * @return Form
      */
-    protected function alterFormForLva(Form $form, $data)
+    protected function alterFormForLva(Form $form, $data = null)
     {
         if (isset($data['data']['niFlag']) && $data['data']['niFlag'] === 'Y') {
             $form->get('data')
@@ -90,6 +98,11 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         return $form;
     }
 
+    /**
+     * Get Financial History Form
+     *
+     * @return FormInterface
+     */
     protected function getFinancialHistoryForm()
     {
         return $this->getServiceLocator()
@@ -98,6 +111,11 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             ->getForm($this->getRequest());
     }
 
+    /**
+     * Get Form Data
+     *
+     * @return array
+     */
     protected function getFormData()
     {
         $response = $this->getFinancialHistory();
@@ -120,6 +138,8 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     }
 
     /**
+     * Get Hinancial History
+     *
      * @return \Common\Service\Cqrs\Response
      */
     protected function getFinancialHistory()
@@ -127,6 +147,11 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         return $this->handleQuery(FinancialHistory::create(['id' => $this->getIdentifier()]));
     }
 
+    /**
+     * Get Documents
+     *
+     * @return array
+     */
     public function getDocuments()
     {
         if (!$this->financialHistoryDocuments) {
@@ -139,7 +164,9 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     /**
      * Handle the file upload
      *
-     * @param array $file
+     * @param array $file File
+     *
+     * @return void
      */
     public function processFinancialFileUpload($file)
     {
@@ -156,6 +183,14 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         );
     }
 
+    /**
+     * Save Financial History
+     *
+     * @param Form  $form     Form
+     * @param array $formData Form Data
+     *
+     * @return bool
+     */
     protected function saveFinancialHistory($form, $formData)
     {
         $dtoData = [
@@ -186,6 +221,14 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         return false;
     }
 
+    /**
+     * Map Errors
+     *
+     * @param Form  $form   Form
+     * @param array $errors Errors
+     *
+     * @return void
+     */
     protected function mapErrors($form, array $errors)
     {
         $formMessages = [];
