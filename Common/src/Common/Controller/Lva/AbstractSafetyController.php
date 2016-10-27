@@ -427,9 +427,6 @@ abstract class AbstractSafetyController extends AbstractController
 
             $table = $form->get('table')->get('table')->getTable();
 
-            $emptyMessage = $table->getVariable('empty_message');
-            $table->setVariable('empty_message', $emptyMessage . '-psv');
-
             $form->get('table')->get('table')->setTable($table);
         } elseif (!$this->isShowTrailers) {
             $formHelper->remove($form, 'licence->safetyInsTrailers');
