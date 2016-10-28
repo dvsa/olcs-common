@@ -82,11 +82,15 @@ abstract class AbstractDiscsController extends AbstractController
         $scriptSrv->loadFiles(['forms/filter']);
         $scriptSrv->loadFiles(['lva-crud', 'more-actions']);
 
-        if ((int) $this->spacesRemaining < 0) {
+        if ((int)$this->spacesRemaining < 0) {
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-discs-than-authorisation');
         }
 
-        return $this->render('discs', $form);
+        $params = [
+            'mainWrapperCssClass' => 'full-width',
+        ];
+
+        return $this->render('discs', $form, $params);
     }
 
     /**

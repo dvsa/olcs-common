@@ -522,7 +522,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         $files = ['lva-crud', 'vehicle-goods'];
-        $params = [];
+        $params = [
+            'mainWrapperCssClass' => 'full-width',
+        ];
+
         $searchForm = $this->getVehcileSearchForm($headerData);
         if ($searchForm) {
             $params['searchForm'] = $searchForm;
@@ -545,7 +548,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected function getTable($headerData, $filters)
     {
         $query = $this->removeUnusedParametersFromQuery(
-            (array) $this->getRequest()->getQuery()
+            (array)$this->getRequest()->getQuery()
         );
         $params = array_merge($query, ['query' => $query]);
 
