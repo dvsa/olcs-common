@@ -2152,6 +2152,7 @@ return [
     'search-list-publications' => 'Vehicle operator decisions and applications',
     'search-list-vehicles' => 'Vehicles',
     'search-no-results' => '<div class="article js-no-results"><p>There were no results for your search.</p><p>Try using different keywords.</p></div>',
+    'search-no-results-internal' => '<div class="article js-no-results"><p>There were no results for your search.</p><p>Try using different keywords.</p></div>',
     'search-no-results-traffic-commissioner-publication' => '<div class="article js-no-results"><p>There were no results for your search, try using different keywords.</p></div>',
     'search-result-label-address' => 'Address',
     'search-result-label-business-type' => 'Business type',
