@@ -2,6 +2,7 @@
 
 namespace Common\Service\AntiVirus;
 
+use Olcs\Logging\Log\Logger;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -60,7 +61,40 @@ class Scan implements ServiceLocatorAwareInterface, \Zend\ServiceManager\Factory
             throw new \InvalidArgumentException("Cannot scan '$file' as it does not exist");
         }
 
-        $result = $this->shell->execute($this->getCliCommandFile($file));
+        $existingFilePerms = $this->shell->fileperms($file);
+
+        try {
+            // change the file's permissions to let scanning to run
+            $this->shell->chmod($file, 0660);
+
+            $result = $this->shell->execute($this->getCliCommandFile($file));
+
+        } catch (\Exception $ex) {
+            $result = -1;
+
+            Logger::notice(
+                sprintf(
+                    'Unable to scan the file. File: %s, Error: %s',
+                    $file,
+                    $ex->getMessage()
+                )
+            );
+        }
+
+        try {
+            // revert back the file's permissions
+            $this->shell->chmod($file, $existingFilePerms);
+
+        } catch (\Exception $ex) {
+            Logger::warn(
+                sprintf(
+                    'Unable to revert the file permissions. File: %s, Perms: %s, Error: %s',
+                    $file,
+                    substr(decoct($existingFilePerms), -4),
+                    $ex->getMessage()
+                )
+            );
+        }
 
         return $result === 0;
     }
