@@ -28,6 +28,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
     protected $baseRoute = 'lva-%s/transport_managers';
 
     /**
+     * Get Adapter
+     *
      * @return AbstractTransportManagerAdapter
      */
     public function getAdapter()
@@ -35,6 +37,13 @@ abstract class AbstractTransportManagersController extends AbstractController im
         return $this->adapter;
     }
 
+    /**
+     * Set Adapter
+     *
+     * @param AdapterInterface $adapter Adapter
+     *
+     * @return void
+     */
     public function setAdapter(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
@@ -42,6 +51,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     /**
      * Transport Managers section
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function indexAction()
     {
@@ -69,7 +80,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             return $this->renderForm($form);
         }
 
-        $data = (array) $request->getPost();
+        $data = (array)$request->getPost();
         $form->setData($data);
 
         // if is it not required to have at least one TM, then remove the validator
@@ -94,6 +105,13 @@ abstract class AbstractTransportManagersController extends AbstractController im
         return $this->renderForm($form);
     }
 
+    /**
+     * Render Form
+     *
+     * @param \Zend\Form\FormInterface $form Form
+     *
+     * @return \Common\View\Model\Section
+     */
     protected function renderForm($form)
     {
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
@@ -101,6 +119,11 @@ abstract class AbstractTransportManagersController extends AbstractController im
         return $this->render('transport_managers', $form);
     }
 
+    /**
+     * Process action - add
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function addAction()
     {
         /** @var \Zend\Http\Request $request */
@@ -132,6 +155,11 @@ abstract class AbstractTransportManagersController extends AbstractController im
         return $this->render('add-transport_managers', $form);
     }
 
+    /**
+     * Process Action - addTm
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function addTmAction()
     {
         $childId = $this->params('child_id');
@@ -177,7 +205,10 @@ abstract class AbstractTransportManagersController extends AbstractController im
             }
             return $this->redirect()->toRoute(
                 null,
-                ['action' => 'add'],
+                [
+                    'action' => 'add',
+                    'child_id' => null,
+                ],
                 [],
                 true
             );
@@ -257,6 +288,11 @@ abstract class AbstractTransportManagersController extends AbstractController im
         return $this->render('addTm-transport_managers', $form);
     }
 
+    /**
+     * Process action - addNewUser
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function addNewUserAction()
     {
         /** @var \Zend\Http\Request $request */
@@ -318,6 +354,13 @@ abstract class AbstractTransportManagersController extends AbstractController im
         return $this->render('add-transport_managers', $form);
     }
 
+    /**
+     * Get Transport Manager Details Form
+     *
+     * @param string $email E-mail
+     *
+     * @return \Zend\Form\FormInterface
+     */
     protected function getTmDetailsForm($email)
     {
         /** @var \Zend\Form\FormInterface $form */
@@ -329,6 +372,11 @@ abstract class AbstractTransportManagersController extends AbstractController im
         return $form;
     }
 
+    /**
+     * Get Add Form
+     *
+     * @return \Zend\Form\FormInterface
+     */
     protected function getAddForm()
     {
         /** @var \Zend\Form\FormInterface $form */
@@ -348,7 +396,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Get users in organisation for use in a select element
      *
-     * @param int $organisationId
+     * @param int $organisationId Organisation Id
      *
      * @return array
      */
@@ -373,6 +421,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     /**
      * Handle CrudTableTrait delete
+     *
+     * @return void
      */
     protected function delete()
     {
@@ -404,6 +454,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
 
     /**
      * Restore Transport Managers
+     *
+     * @return \Zend\Http\Response
      */
     public function restoreAction()
     {
@@ -439,9 +491,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Find the Transport Manager application ID that is linked to Transport Manager application ID
      *
-     * @param array  $data
+     * @param array  $data  Data
      * @param string $tmlId This is the TML ID prefixed with an "L"
-     * @param int    $applicationId
      *
      * @return int|false The TMA ID or false if not found
      */
