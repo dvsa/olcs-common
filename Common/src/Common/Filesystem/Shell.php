@@ -2,9 +2,6 @@
 
 namespace Common\Filesystem;
 
-use Symfony\Component\Filesystem\Filesystem as BaseFileSystem;
-use Symfony\Component\Filesystem\LockHandler;
-
 /**
  * Wraps PHP shell functions
  *
@@ -16,7 +13,7 @@ class Shell
      * Execute a system command
      *
      * @param string $command Command to execute
-     * @param array  &$output Reference variable, if present will contain command output
+     * @param array  $output  Reference variable, if present will contain command output
      *
      * @return int $result
      */
@@ -25,6 +22,37 @@ class Shell
         $output = null;
         $result = null;
         exec($command, $output, $result);
+
+        return $result;
+    }
+
+    /**
+     * Get file permissions
+     *
+     * @param string $file File
+     *
+     * @return int
+     */
+    public function fileperms($file)
+    {
+        return fileperms($file);
+    }
+
+    /**
+     * Change file permissions
+     *
+     * @param string $file File
+     * @param int    $mode Permissions
+     *
+     * @return bool
+     */
+    public function chmod($file, $mode)
+    {
+        $result = chmod($file, $mode);
+
+        if ($result) {
+            clearstatcache();
+        }
 
         return $result;
     }
