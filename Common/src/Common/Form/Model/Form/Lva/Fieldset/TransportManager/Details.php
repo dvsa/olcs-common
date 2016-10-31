@@ -62,9 +62,10 @@ class Details
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Options({
      *    "label":"lva-tm-details-details-certificate",
-     *    "label-attributes": {
-     *         "aria-label": "Certificate of professional competence, attach file(s) for upload"
-     *     }
+     *    "label_attributes": {
+     *        "class": "legend",
+     *        "aria-label": "Certificate of professional competence, attach file(s) for upload",
+     *    },
      * })
      */
     public $certificate = null;
