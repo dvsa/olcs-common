@@ -664,7 +664,6 @@ return [
     'back-to-home' => 'Back to home',
     'back-to-ebsr-uploads' => 'Back to EBSR uploads',
     'back-to-licence-overview' => 'Back to licence overview',
-    'back-to-sign-in' => 'Back to sign in',
     'back-to-variation-overview' => 'Back to application overview',
     'being-an-operator-link' => '{{BEING_AN_OPERATOR}}',
     'both' => 'Both',
