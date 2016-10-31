@@ -51,7 +51,7 @@ class Schedule41Controller extends AbstractController implements Interfaces\Adap
                 $valid = $this->isLicenceValid($request->getPost()['licence-number']['licenceNumber']);
 
                 if ($valid === true) {
-                    $this->redirect()->toRoute(
+                    return $this->redirect()->toRoute(
                         'lva-application/schedule41/transfer',
                         array(
                             'application' => $this->params('application'),
