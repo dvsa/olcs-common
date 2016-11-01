@@ -59,14 +59,18 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Save the form data
      *
-     * @param array $data
+     * @param array   $data    Data
+     * @param boolean $partial Partial
+     *
+     * @return \Common\Service\Cqrs\Response
      */
     abstract protected function save($data, $partial);
 
     /**
      * Get Safety Data
      *
-     * @param bool $noCache
+     * @param bool $noCache No Cache
+     *
      * @return array
      */
     abstract protected function getSafetyData($noCache = false);
@@ -89,6 +93,25 @@ abstract class AbstractSafetyController extends AbstractController
     ];
 
     protected $safetyData = null;
+
+    /**
+     * Delete Workshops
+     *
+     * @param array $ids Identifiers
+     *
+     * @return \Common\Service\Cqrs\Response
+     */
+    abstract protected function deleteWorkshops($ids);
+
+    /**
+     * Upload Meta Data
+     *
+     * @param array $file          File Data
+     * @param int   $applicationId Application id
+     *
+     * @return array
+     */
+    abstract protected function getUploadMetaData($file, $applicationId);
 
     /**
      * Redirect to the first section
@@ -161,7 +184,9 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Callback to handle the file upload
      *
-     * @param array $file
+     * @param array $file File
+     *
+     * @return void
      */
     public function processSafetyAdditionalDocumentsFileUpload($file)
     {
@@ -190,6 +215,14 @@ abstract class AbstractSafetyController extends AbstractController
         return isset($data['safetyDocuments']) ? $data['safetyDocuments'] : [];
     }
 
+    /**
+     * Map Errors
+     *
+     * @param Form  $form   Form
+     * @param array $errors Errors
+     *
+     * @return void
+     */
     protected function mapErrors(Form $form, array $errors)
     {
         $formMessages = [];
@@ -225,6 +258,8 @@ abstract class AbstractSafetyController extends AbstractController
 
     /**
      * Add person action
+     *
+     * @return \Common\View\Model\Section|Response
      */
     public function addAction()
     {
@@ -233,6 +268,8 @@ abstract class AbstractSafetyController extends AbstractController
 
     /**
      * Edit person action
+     *
+     * @return \Common\View\Model\Section|Response
      */
     public function editAction()
     {
@@ -241,6 +278,8 @@ abstract class AbstractSafetyController extends AbstractController
 
     /**
      * Delete
+     *
+     * @return void
      */
     protected function delete()
     {
@@ -257,7 +296,9 @@ abstract class AbstractSafetyController extends AbstractController
      * Helper method as both add and edit pretty
      * much do the same thing
      *
-     * @param string $mode
+     * @param string $mode Mode
+     *
+     * @return \Common\View\Model\Section|Response
      */
     protected function addOrEdit($mode)
     {
@@ -274,7 +315,7 @@ abstract class AbstractSafetyController extends AbstractController
             ];
             $response = $this->handleQuery(Workshop::create($dtoParams));
 
-            if (!$response->isOK()) {
+            if (!$response->isOk()) {
                 return $this->notFoundAction();
             }
 
@@ -368,8 +409,9 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Format data for the safety providers table
      *
-     * @param array $data
-     * @param string $mode
+     * @param array  $data Data
+     * @param string $mode Mode
+     *
      * @return array
      */
     protected function formatCrudDataForForm($data, $mode)
@@ -405,7 +447,9 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Alter form
      *
-     * @param \Zend\Form\Form $form
+     * @param \Zend\Form\FormInterface $form Form
+     *
+     * @return \Zend\Form\FormInterface
      */
     protected function alterForm($form)
     {
@@ -440,7 +484,9 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Format data for form
      *
-     * @param array $data
+     * @param array $data Data
+     *
+     * @return array
      */
     protected function formatDataForForm($data)
     {
@@ -464,11 +510,16 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Get safety form
      *
-     * @return \Zend\Form\Form
+     * @return \Zend\Form\FormInterface
      */
     protected function getSafetyForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        /** @var \Common\Service\Table\TableBuilder $table */
+        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-safety', $this->workshops);
+
+        if ($this->location === 'external') {
+            $table->removeColumn('isExternal');
+        }
 
         /** @var \Zend\Form\Form $form */
         $form = $this->getServiceLocator()
@@ -476,10 +527,8 @@ abstract class AbstractSafetyController extends AbstractController
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
-        $formHelper->populateFormTable(
-            $form->get('table'),
-            $this->getServiceLocator()->get('Table')->prepareTable('lva-safety', $this->workshops)
-        );
+        $this->getServiceLocator()->get('Helper\Form')
+            ->populateFormTable($form->get('table'), $table);
 
         return $form;
     }
