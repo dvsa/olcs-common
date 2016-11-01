@@ -55,7 +55,6 @@ abstract class AbstractTrailersController extends AbstractController
         $form->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
-
             $formData = (array)$form->getData();
 
             $dtoData = [
@@ -81,7 +80,11 @@ abstract class AbstractTrailersController extends AbstractController
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
-        return $this->render('trailer', $form);
+        $params = [
+            'mainWrapperCssClass' => 'full-width',
+        ];
+
+        return $this->render('trailer', $form, $params);
     }
 
     /**
@@ -94,6 +97,7 @@ abstract class AbstractTrailersController extends AbstractController
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Trailer', $request);
 
@@ -129,6 +133,7 @@ abstract class AbstractTrailersController extends AbstractController
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Trailer', $request);
 
