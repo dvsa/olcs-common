@@ -2943,5 +2943,6 @@ return [
     'auth.change-password.old-password.error' => 'Current password can\'t be blank',
     'auth.change-password.new-password.error' => 'Enter a new password',
     'auth.change-password.confirm-password.error' => 'Re-enter your new password',
+    'internal.document-description.formatter.no-description' => 'Document name missing',
     // Potentially unused translations
 ];
