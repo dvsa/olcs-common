@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Safety Form
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
@@ -16,23 +11,13 @@ use Common\FormService\Form\AbstractFormService;
  */
 class Safety extends AbstractFormService
 {
-    public function getForm()
-    {
-        $form = $this->getFormHelper()->createForm('Lva\Safety');
-
-        $this->alterForm($form);
-
-        return $form;
-    }
-
     /**
-     * Make form alterations
+     * Returns form
      *
-     * @param \Zend\Form\Form $form
      * @return \Zend\Form\Form
      */
-    protected function alterForm($form)
+    public function getForm()
     {
-        return $form;
+        return $this->getFormHelper()->createForm('Lva\Safety');
     }
 }

@@ -12,7 +12,6 @@ use Zend\Form\Annotation as Form;
  */
 class Safety
 {
-
     /**
      * @Form\Name("licence")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyLicence")
@@ -28,12 +27,6 @@ class Safety
      * @Form\Attributes({"id":"table"})
      */
     public $table = null;
-
-    /**
-     * @Form\Name("additional-documents")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyAdditionalDocuments")
-     */
-    public $additionalDocuments = null;
 
     /**
      * @Form\Name("application")

@@ -1,17 +1,10 @@
 <?php
 
-/**
- * Application Safety Controller Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Dvsa\Olcs\Transfer\Command\Application\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateSafety;
 use Dvsa\Olcs\Transfer\Query\Application\Safety;
-use Zend\Form\Form;
-use Common\Category;
 
 /**
  * Application Safety Controller Trait
@@ -20,6 +13,15 @@ use Common\Category;
  */
 trait ApplicationSafetyControllerTrait
 {
+    /**
+     * Save
+     *
+     * @param array $data    Form Data
+     * @param bool  $partial Is partial post
+     *
+     * @return \Common\Service\Cqrs\Response
+     * @inheritdoc
+     */
     protected function save($data, $partial)
     {
         $dtoData = $data['application'];
@@ -31,6 +33,14 @@ trait ApplicationSafetyControllerTrait
         return $this->handleCommand(UpdateSafety::create($dtoData));
     }
 
+    /**
+     * Delete selected workshops
+     *
+     * @param array $ids Identifiers
+     *
+     * @return \Common\Service\Cqrs\Response
+     * @inheritdoc
+     */
     protected function deleteWorkshops($ids)
     {
         $data = [
@@ -44,7 +54,8 @@ trait ApplicationSafetyControllerTrait
     /**
      * Get Safety Data
      *
-     * @param bool $noCache
+     * @param bool $noCache No Cache
+     *
      * @return array
      */
     protected function getSafetyData($noCache = false)
@@ -64,23 +75,5 @@ trait ApplicationSafetyControllerTrait
             $this->workshops = $application['licence']['workshops'];
         }
         return $this->safetyData;
-    }
-
-    /**
-     * @param array $file
-     * @param int $applicationId
-     * @return array
-     */
-    public function getUploadMetaData($file, $applicationId)
-    {
-        $licenceId = $this->getSafetyData()['licence']['id'];
-
-        return [
-            'application' => $applicationId,
-            'description' => $file['name'],
-            'category'    => Category::CATEGORY_APPLICATION,
-            'subCategory' => Category::DOC_SUB_CATEGORY_MAINT_OTHER_DIGITAL,
-            'licence'     => $licenceId,
-        ];
     }
 }

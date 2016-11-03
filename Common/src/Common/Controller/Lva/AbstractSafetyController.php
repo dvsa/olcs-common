@@ -56,25 +56,6 @@ abstract class AbstractSafetyController extends AbstractController
         )
     );
 
-    /**
-     * Save the form data
-     *
-     * @param array   $data    Data
-     * @param boolean $partial Partial
-     *
-     * @return \Common\Service\Cqrs\Response
-     */
-    abstract protected function save($data, $partial);
-
-    /**
-     * Get Safety Data
-     *
-     * @param bool $noCache No Cache
-     *
-     * @return array
-     */
-    abstract protected function getSafetyData($noCache = false);
-
     protected $canHaveTrailers;
     protected $isShowTrailers;
 
@@ -104,19 +85,28 @@ abstract class AbstractSafetyController extends AbstractController
     abstract protected function deleteWorkshops($ids);
 
     /**
-     * Upload Meta Data
+     * Save the form data
      *
-     * @param array $file          File Data
-     * @param int   $applicationId Application id
+     * @param array $data    Form Data
+     * @param bool  $partial Is partial post
+     *
+     * @return \Common\Service\Cqrs\Response
+     */
+    abstract protected function save($data, $partial);
+
+    /**
+     * Get Safety Data
+     *
+     * @param bool $noCache No Cache
      *
      * @return array
      */
-    abstract protected function getUploadMetaData($file, $applicationId);
+    abstract protected function getSafetyData($noCache = false);
 
     /**
      * Redirect to the first section
      *
-     * @return Response
+     * @return array|\Common\View\Model\Section|Response
      */
     public function indexAction()
     {
@@ -137,16 +127,7 @@ abstract class AbstractSafetyController extends AbstractController
 
         $form = $this->alterForm($this->getSafetyForm())->setData($data);
 
-        $hasProcessedFiles = $this->processFiles(
-            $form,
-            'additional-documents->files',
-            array($this, 'processSafetyAdditionalDocumentsFileUpload'),
-            array($this, 'deleteFile'),
-            array($this, 'getDocuments')
-        );
-
-        if (!$hasProcessedFiles && $request->isPost()) {
-
+        if ($request->isPost()) {
             $crudAction = $this->getCrudAction([$data['table']]);
 
             $partial = false;
@@ -157,7 +138,6 @@ abstract class AbstractSafetyController extends AbstractController
             }
 
             if ($form->isValid()) {
-
                 $response = $this->save($data, $partial);
 
                 if ($response->isOk()) {
@@ -179,40 +159,6 @@ abstract class AbstractSafetyController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFiles(['vehicle-safety', 'lva-crud']);
 
         return $this->render('safety', $form);
-    }
-
-    /**
-     * Callback to handle the file upload
-     *
-     * @param array $file File
-     *
-     * @return void
-     */
-    public function processSafetyAdditionalDocumentsFileUpload($file)
-    {
-        $id = $this->getIdentifier();
-
-        $data = array_merge(
-            $this->getUploadMetaData($file, $id),
-            [
-                'isExternal' => $this->isExternal()
-            ]
-        );
-
-        $this->uploadFile($file, $data);
-
-        $this->getSafetyData(true);
-    }
-
-    /**
-     * Callback to get list of documents
-     *
-     * @return array
-     */
-    public function getDocuments()
-    {
-        $data = $this->getSafetyData();
-        return isset($data['safetyDocuments']) ? $data['safetyDocuments'] : [];
     }
 
     /**
@@ -460,7 +406,6 @@ abstract class AbstractSafetyController extends AbstractController
         $formHelper->remove($form, 'application->isMaintenanceSuitable');
 
         if (!$this->canHaveTrailers) {
-
             $formHelper->remove($form, 'licence->safetyInsTrailers');
 
             $formHelper->alterElementLabel(
