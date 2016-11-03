@@ -1458,6 +1458,7 @@ return [
     'internal.interim.generation_success' => 'The interim document has been generated',
     'internal.interim.interim_details_saved' => 'Interim details saved',
     'internal.interim.interim_granted_fee_requested' => 'The interim has been granted and a fee request letter has been generated',
+    'internal.interim.interim_granted' => 'The interim has been granted',
     'internal.interim.interim_updated' => 'Interim updated',
     'internal.interim.operatingcentres.table.address' => 'Operating centre address',
     'internal.interim.operatingcentres.table.header' => 'Operating centres',
