@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Document Description Formatter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Table\Formatter;
 
 /**
@@ -25,8 +20,9 @@ class DocumentDescription implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
+        $translator = $sm->get('translator');
         if (!isset($data['documentStoreIdentifier'])) {
-            return $data['description'];
+            return self::getAnchor($data, $translator);
         }
 
         $urlHelper = $sm->get('Helper\Url');
@@ -44,6 +40,26 @@ class DocumentDescription implements FormatterInterface
             $attr = 'target="_blank"';
         }
 
-        return '<a href="' . $url . '" ' . $attr . '>' . $data['description'] . '</a>';
+        return '<a href="' . $url . '" ' . $attr . '>' . self::getAnchor($data, $translator) . '</a>';
+    }
+
+    /**
+     * Get anchor
+     *
+     * @param array $data data
+     * @param \Zend\I18n\Translator\Translator $translator
+     *
+     * @return string
+     */
+    private static function getAnchor($data, $translator)
+    {
+        if (isset($data['description'])) {
+            return $data['description'];
+        }
+        if (isset($data['filename'])) {
+            return basename($data['filename']);
+        }
+
+        return $translator->translate('internal.document-description.formatter.no-description');
     }
 }
