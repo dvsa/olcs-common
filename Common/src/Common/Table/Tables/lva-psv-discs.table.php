@@ -30,7 +30,10 @@ return array(
             )
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
-        'collapseAt' => 1
+        'collapseAt' => 1,
+        'row-disabled-callback' => function ($row) {
+            return $row['ceasedDate'] !== null;
+        }
     ),
     'columns' => array(
         array(
@@ -66,6 +69,7 @@ return array(
         array(
             'width' => 'checkbox',
             'type' => 'Checkbox',
+            'disableIfRowIsDisabled' => true
         )
     )
 );
