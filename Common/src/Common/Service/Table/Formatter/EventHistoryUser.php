@@ -26,11 +26,7 @@ class EventHistoryUser implements FormatterInterface
 
         if (isset($data['user']['contactDetails']['person'])) {
             $person = $data['user']['contactDetails']['person'];
-            if (isset($person['forename'])
-                && isset($person['familyName'])
-                && !empty($person['forename'])
-                && !empty($person['familyName'])
-            ) {
+            if (!empty($person['forename']) && !empty($person['familyName'])) {
                 return $person['forename'] . ' ' . $person['familyName'] . $internalMarker;
             }
         }

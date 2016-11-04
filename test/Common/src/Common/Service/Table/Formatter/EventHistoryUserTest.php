@@ -15,7 +15,7 @@ class EventHistoryUserTest extends MockeryTestCase
 {
     /**
      * Test the format method
-     *
+     * @group test123
      * @dataProvider provider
      */
     public function testFormat($data, $expectedOutput)
