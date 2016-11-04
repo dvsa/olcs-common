@@ -18,8 +18,8 @@ class EventHistoryUserTest extends MockeryTestCase
      *
      * @dataProvider provider
      */
-    public function testFormat($data, $expectedOutput) {
-
+    public function testFormat($data, $expectedOutput)
+    {
         $sm = m::mock();
 
         if (isset($data['user']['team'])) {
