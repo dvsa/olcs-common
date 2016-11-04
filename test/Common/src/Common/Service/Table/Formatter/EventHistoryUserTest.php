@@ -92,6 +92,18 @@ class EventHistoryUserTest extends MockeryTestCase
                 ],
                 'cake (internal)',
             ],
+            'internal with error' => [
+                [
+                    'user' => [
+                        'contactDetails' => [
+                            'person' => 'something wrong here'
+                        ],
+                        'team' => 'some team',
+                        'loginId' => 'cake'
+                    ]
+                ],
+                'cake (internal)',
+            ],
         ];
     }
 }
