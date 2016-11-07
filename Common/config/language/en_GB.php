@@ -1326,6 +1326,8 @@ return [
     'internal-navigation-operator-cases' => 'Cases',
     'internal-navigation-operator-documents' => 'Docs & attachments',
     'internal-navigation-operator-fees' => 'Fees',
+    'internal-navigation-operator-irfo-fees' => 'IRFO Fees',
+    'internal-navigation-operator-irfo-fees-singular' => 'IRFO Fee',
     'internal-navigation-operator-history' => 'History',
     'internal-navigation-operator-irfo' => 'IRFO',
     'internal-navigation-operator-irfo-details' => 'Details',
