@@ -2938,6 +2938,7 @@ return [
     'lva.section.title.add_person' => 'Add person',
     'lva.external.save_and_continue.button' => 'Save and continue',
     'lva.external.save_and_return.link' => 'Save and return to overview',
+    'lva.external.save_and_return_to_tm.link' => 'Save and return to transport managers',
     'lva.external.return.link' => 'Return to overview',
     'date-label-hint' => '(e.g. 12, 6, 2014)',
     //  AUTH MIRROR
