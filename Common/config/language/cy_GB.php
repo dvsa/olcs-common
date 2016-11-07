@@ -222,7 +222,6 @@ return [
     'apsts_consideration' => 'O dan ystyriaeth',
     'apsts_curtailed' => 'Wedi’i chwtogi',
     'apsts_not_submitted' => 'Ni chyflwynwyd',
-    'apsts_valid' => 'Dilys',
     'back-to-application-overview' => 'Yn ôl i drosolwg y cais',
     'back-to-home' => 'Yn ôl i’r hafan',
     'back-to-licence-overview' => 'Yn ôl i drosolwg y drwydded',
