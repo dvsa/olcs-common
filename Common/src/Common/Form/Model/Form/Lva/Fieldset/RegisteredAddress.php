@@ -31,7 +31,7 @@ class RegisteredAddress
     /**
      * @Form\Attributes({
      *   "class" : "long", 
-     *   "id" : "",
+     *   "id" : "addressLine1",
      *   "data-container-class" : "compound"
      * })
      * @Form\Options({

@@ -21,7 +21,8 @@ class Details
      * @Form\Options({
      *     "label": "dob",
      *     "create_empty_option": true,
-     *     "render_delimiters": false
+     *     "render_delimiters": false,
+     *     "fieldset_attributes":{"id":"details[birthDate]"}
      * })
      * @Form\Type("DateSelect")
      * @Form\Filter({"name":"DateSelectNullifier"})
@@ -32,7 +33,7 @@ class Details
     public $birthDate = null;
 
     /**
-     * @Form\Attributes({"class":"extra-long"})
+     * @Form\Attributes({"class":"extra-long","id":"emailAddress"})
      * @Form\Options({
      *     "label":"lva-tm-details-details-email",
      *     "short-label": "lva-tm-details-details-email"
@@ -44,7 +45,7 @@ class Details
     public $emailAddress = null;
 
     /**
-     * @Form\Attributes({"id":"","class":"medium"})
+     * @Form\Attributes({"id":"birthPlace","class":"medium"})
      * @Form\Options({
      *     "label": "lva-tm-details-details-birthPlace",
      *     "short-label": "lva-tm-details-details-birthPlace",

@@ -25,12 +25,17 @@ class Contact
      * })
      * @Form\Name("phone-validator")
      * @Form\Type("Hidden")
+     * @Form\Options({
+     *     "fieldset-attributes": {
+     *          "id":"contact[phone_business]"
+     *     }
+     * })
      * @Form\Attributes({"value":"1"})
      */
     public $phoneValidator = null;
 
     /**
-     * @Form\Attributes({"class":"medium", "pattern":"\d(\+|\-|\(|\))*"})
+     * @Form\Attributes({"class":"medium", "pattern":"\d(\+|\-|\(|\))*","id":"phoneBusiness"})
      * @Form\Options({
      *     "label": "application_your-business_business-type.contact-details.business-phone"
      * })
@@ -54,7 +59,7 @@ class Contact
     public $phoneBusinessVersion = null;
 
     /**
-     * @Form\Attributes({"class":"medium","pattern":"\d(\+|\-|\(|\))*"})
+     * @Form\Attributes({"class":"medium","pattern":"\d(\+|\-|\(|\))*","id":"phoneHome"})
      * @Form\Options({
      *     "label": "application_your-business_business-type.contact-details.home-phone"
      * })
@@ -78,7 +83,7 @@ class Contact
     public $phoneHomeVersion = null;
 
     /**
-     * @Form\Attributes({"class":"medium","pattern":"\d(\+|\-|\(|\))*"})
+     * @Form\Attributes({"class":"medium","pattern":"\d(\+|\-|\(|\))*","id":"phoneMobile"})
      * @Form\Options({
      *     "label": "application_your-business_business-type.contact-details.mobile-phone"
      * })
@@ -102,7 +107,7 @@ class Contact
     public $phoneMobileVersion = null;
 
     /**
-     * @Form\Attributes({"class":"medium", "pattern":"\d(\+|\-|\(|\))*"})
+     * @Form\Attributes({"class":"medium", "pattern":"\d(\+|\-|\(|\))*","id":"phoneFax"})
      * @Form\Options({
      *     "label": "application_your-business_business-type.contact-details.fax-phone"
      * })
@@ -126,7 +131,7 @@ class Contact
     public $phoneFaxVersion = null;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"long","id":"email"})
      * @Form\Options({
      *    "label":"application_your-business_business-type.contact-details.email",
      *    "label_attributes": {

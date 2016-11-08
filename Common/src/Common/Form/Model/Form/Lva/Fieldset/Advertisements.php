@@ -46,7 +46,10 @@ class Advertisements
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate",
      *     "create_empty_option": true,
-     *     "render_delimiters": false
+     *     "render_delimiters": false,
+     *     "fieldset-attributes":{
+     *          "id":"adPlacedDate_day"
+     *      }
      * })
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("DateSelect")
@@ -57,12 +60,42 @@ class Advertisements
 
     /**
      * @Form\Name("file")
+     * @Form\Attributes({"id":"file"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.file"
      * })
      */
     public $file = null;
+
+    /**
+     * @Form\AllowEmpty(true)
+     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\Options({
+     *     "fieldset-attributes": {
+     *          "id": "advertisements[file][file]",
+     *     },
+     * })
+     * @Form\Required(true)
+     * @Form\Attributes({"required":false, "id":"uploadedFileCount"})
+     * @Form\Type("Hidden")
+     * @Form\Validator({"name": "ValidateIf",
+     *      "options":{
+     *          "context_field": "adPlaced",
+     *          "context_values": {"Y"},
+     *          "validators": {
+     *              {
+     *                  "name": "\Common\Validator\FileUploadCount",
+     *                  "options": {
+     *                      "min": 1,
+     *                      "message": "ERR_OC_AD_FI_1"
+     *                  }
+     *              }
+     *          }
+     *      }
+     * })
+     */
+    public $uploadedFileCount = null;
 
     /**
      * @Form\Attributes({"data-container-class":"ad-send-by-post"})

@@ -42,6 +42,11 @@ class FinancialEvidenceEvidence
     /**
      * @Form\AllowEmpty(true)
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\Options({
+     *     "fieldset-attributes": {
+     *          "id": "files",
+     *     },
+     * })
      * @Form\Required(true)
      * @Form\Attributes({"required":false, "id":"uploadedFileCount"})
      * @Form\Type("Hidden")

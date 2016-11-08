@@ -24,7 +24,8 @@ class TransportManagerDetails
      * @Form\Options({
      *     "label":"lva-tm-details-details-homeAddress",
      *     "label_attributes": {
-     *         "aria-label": "Postcode search, enter home postcode"
+     *         "aria-label": "Postcode search, enter home postcode",
+     *         "id":"homeAddress"
      *     }
      * })
      */

@@ -108,7 +108,7 @@ class AddressOptional
      * @Form\Type("Text")
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
-     * @Form\Attributes({"id":"", "required":false})
+     * @Form\Attributes({"id":"postcodeOptional", "required":false})
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Validator({
      *      "name":"Dvsa\Olcs\Transfer\Validators\Postcode",

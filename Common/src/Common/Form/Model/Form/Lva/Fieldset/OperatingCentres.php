@@ -22,7 +22,7 @@ class OperatingCentres
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
-     * @Form\Attributes({"class":"short","id":"","required":false,"pattern":"\d*"})
+     * @Form\Attributes({"class":"short","id":"totAuthVehicles","required":false,"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthVehicles",
      *     "short-label": "totAuthVehicles",
@@ -43,7 +43,7 @@ class OperatingCentres
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
-     * @Form\Attributes({"class":"short","id":"","required":false,"pattern":"\d*"})
+     * @Form\Attributes({"class":"short","id":"totAuthTrailers","required":false,"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthTrailers",
      *     "short-label": "totAuthTrailers",
@@ -59,7 +59,7 @@ class OperatingCentres
     public $totAuthTrailers = null;
 
     /**
-     * @Form\Attributes({"class":"short","id":""})
+     * @Form\Attributes({"class":"short","id":"totCommunityLicences"})
      * @Form\Options({"label": "application_operating-centres_authorisation.data.totCommunityLicences"})
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})

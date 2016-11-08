@@ -13,7 +13,7 @@ use Zend\Form\Annotation as Form;
 class TrafficArea
 {
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"trafficArea","placeholder":""})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.dataTrafficArea.label.new",
      *     "hint" : "markup-traffic-area-help",

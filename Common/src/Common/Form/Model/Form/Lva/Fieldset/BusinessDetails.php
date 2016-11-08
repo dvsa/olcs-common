@@ -14,12 +14,13 @@ class BusinessDetails
 
     /**
      * @Form\Options({"label":"application_your-business_business-details.data.company_number"})
+     * @Form\Attributes({"id": "companyNumber"})
      * @Form\Type("Common\Form\Elements\Types\CompanyNumber")
      */
     public $companyNumber = null;
 
     /**
-     * @Form\Attributes({"class":"medium"})
+     * @Form\Attributes({"class":"medium","id":"companyName"})
      * @Form\Options({"label":"application_your-business_business-details.data.company_name"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -36,7 +37,7 @@ class BusinessDetails
     public $tradingNames = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":"","class":"extra-long"})
+     * @Form\Attributes({"id":"natureOfBusiness","placeholder":"","class":"extra-long"})
      * @Form\Options({
      *     "label": "Nature of business",
      *     "error-message" : "businessDetails_natureOfBusiness-error",

@@ -10,7 +10,7 @@ use Zend\Form\Annotation as Form;
 class OperatingCentreData
 {
     /**
-     * @Form\Attributes({"class":"tiny","pattern":"\d*"})
+     * @Form\Attributes({"class":"tiny","pattern":"\d*","id":"noOfVehiclesRequired"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired",
      *     "error-message": "Your total number of vehicles"
@@ -20,7 +20,7 @@ class OperatingCentreData
     public $noOfVehiclesRequired = null;
 
     /**
-     * @Form\Attributes({"class":"tiny","pattern":"\d*"})
+     * @Form\Attributes({"class":"tiny","pattern":"\d*","id":"noOfTrailersRequired"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.data.noOfTrailersRequired",
      *     "error-message": "Your total number of trailers"
@@ -30,7 +30,7 @@ class OperatingCentreData
     public $noOfTrailersRequired = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"sufficientParking","placeholder":""})
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
@@ -43,7 +43,7 @@ class OperatingCentreData
     public $sufficientParking = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"permission","placeholder":""})
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
