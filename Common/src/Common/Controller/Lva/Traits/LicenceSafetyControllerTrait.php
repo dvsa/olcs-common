@@ -1,17 +1,11 @@
 <?php
 
-/**
- * Licence Safety Controller Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateSafety;
 use Dvsa\Olcs\Transfer\Command\Workshop\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Query\Licence\Safety;
 use Zend\Form\Form;
-use Common\Category;
 
 /**
  * Licence Safety Controller Trait
@@ -20,6 +14,15 @@ use Common\Category;
  */
 trait LicenceSafetyControllerTrait
 {
+    /**
+     * Save
+     *
+     * @param array $data    Form Data
+     * @param bool  $partial Is partial post
+     *
+     * @return \Common\Service\Cqrs\Response
+     * @inheritdoc
+     */
     protected function save($data, $partial)
     {
         $dtoData = $data['licence'];
@@ -28,6 +31,14 @@ trait LicenceSafetyControllerTrait
         return $this->handleCommand(UpdateSafety::create($dtoData));
     }
 
+    /**
+     * Delete selected workshops
+     *
+     * @param array $ids Identifiers
+     *
+     * @return \Common\Service\Cqrs\Response
+     * @inheritdoc
+     */
     protected function deleteWorkshops($ids)
     {
         $data = [
@@ -41,7 +52,8 @@ trait LicenceSafetyControllerTrait
     /**
      * Get Safety Data
      *
-     * @param bool $noCache
+     * @param bool $noCache No Cache
+     *
      * @return array
      */
     protected function getSafetyData($noCache = false)
@@ -70,24 +82,12 @@ trait LicenceSafetyControllerTrait
     }
 
     /**
-     * @param array $file
-     * @param int $licenceId
-     * @return array
-     */
-    public function getUploadMetaData($file, $licenceId)
-    {
-        return [
-            'description' => $file['name'],
-            'category'    => Category::CATEGORY_APPLICATION,
-            'subCategory' => Category::DOC_SUB_CATEGORY_MAINT_OTHER_DIGITAL,
-            'licence'     => $licenceId,
-        ];
-    }
-
-    /**
      * Alter the form depending on the LVA type
      *
-     * @param \Zend\Form\Form
+     * @param \Zend\Form\FormInterface $form Form
+     * @param array                    $data Api/Form data
+     *
+     * @return void
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
