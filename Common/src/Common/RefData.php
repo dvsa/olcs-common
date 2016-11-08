@@ -176,9 +176,9 @@ class RefData
     /**
      * Operator CPID.
      */
-    const OPERATOR_CPID_CENTRAL = 'op_cpid_central';
-    const OPERATOR_CPID_LOCAL = 'op_cpid_local';
-    const OPERATOR_CPID_CORPORATION = 'op_cpid_corporation';
+    const OPERATOR_CPID_CENTRAL = 'op_cpid_central_government';
+    const OPERATOR_CPID_LOCAL = 'op_cpid_local_government';
+    const OPERATOR_CPID_CORPORATION = 'op_cpid_public_corporation';
     const OPERATOR_CPID_DEFAULT = 'op_cpid_default';
     const OPERATOR_CPID_ALL = 'op_cpid_all';
 
