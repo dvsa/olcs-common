@@ -2278,6 +2278,7 @@ return [
     'search.traffic-commissioner' => 'Traffic Commissioner',
     'search.vehicle-external' => 'Vehicle',
     'search.what-are-you-looking-for' => 'What would you like to search for?',
+    'search.bus-reg.details.title' => 'Bus registration details',
     'section-updated-successfully-message-suffix' => 'section has been updated',
     'section.add.business_details' => 'Subsidiary company added',
     'section.add.conditions_undertakings' => 'Condition / undertaking added successfully',
