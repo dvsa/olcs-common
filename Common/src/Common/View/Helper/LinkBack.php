@@ -39,15 +39,7 @@ class LinkBack extends AbstractHelper implements FactoryInterface
      */
     public function __invoke(array $params = null)
     {
-        $label = (isset($params['label']) ? $params['label'] : null);
-        $isNeedEscape = (!isset($params['escape']) || $params['escape'] !== false);
-        $url = (!empty($params['url']) ? $params['url'] : null);
-
-        if (null === $label) {
-            $label = 'common.link.back.label';
-        }
-
-        if (null === $url) {
+        if (empty($params['url'])) {
             /** @var \Zend\Http\Header\Referer $header */
             $header = $this->request->getHeader('referer');
 
@@ -56,7 +48,12 @@ class LinkBack extends AbstractHelper implements FactoryInterface
             }
 
             $url = $header->uri()->getPath();
+        } else {
+            $url = $params['url'];
         }
+
+        $label = (isset($params['label']) ? $params['label'] : 'common.link.back.label');
+        $isNeedEscape = (!isset($params['escape']) || $params['escape'] !== false);
 
         $label = $this->view->translate($label);
 
