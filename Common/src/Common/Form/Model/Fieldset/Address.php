@@ -35,7 +35,7 @@ class Address
     /**
      * @Form\Attributes({
      *   "class" : "long", 
-     *   "id" : "",
+     *   "id" : "addressLine1",
      *   "data-container-class" : "compound"
      * })
      * @Form\Options({
@@ -88,7 +88,7 @@ class Address
     public $addressLine4 = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"long","id":"addressTown"})
      * @Form\Options({
      *     "label":"address_townCity",
      *     "short-label":"address_townCity",
@@ -112,7 +112,7 @@ class Address
      * @Form\Type("Text")
      * @Form\AllowEmpty(true)
      * @Form\Required(true)
-     * @Form\Attributes({"id":"", "required":false})
+     * @Form\Attributes({"id":"postcode", "required":false})
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
      */

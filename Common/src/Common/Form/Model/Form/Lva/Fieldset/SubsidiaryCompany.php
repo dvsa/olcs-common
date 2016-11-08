@@ -19,7 +19,7 @@ class SubsidiaryCompany
     public $id = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"long","id":"name"})
      * @Form\Options({
      *     "label":"application_your-business_business-details-formName",
      *     "error-message": "subsidiary-company-name-error"
@@ -32,7 +32,7 @@ class SubsidiaryCompany
     /**
      * @Form\Attributes({
      *     "class":"long",
-     *     "id":"",
+     *     "id":"companyNo",
      *     "pattern":"\d*"
      * })
      * @Form\Options({

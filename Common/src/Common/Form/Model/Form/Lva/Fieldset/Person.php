@@ -22,7 +22,7 @@ class Person
     public $version = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"title","placeholder":""})
      * @Form\Options({
      *     "empty_option": "Please Select",
      *     "label": "application_your-business_people-sub-action-formTitle",
@@ -37,7 +37,7 @@ class Person
     public $title = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"long","id":"forename"})
      * @Form\Options({
      *     "label":"application_your-business_people-sub-action-formFirstName",
      *     "label_attributes": {
@@ -52,7 +52,7 @@ class Person
     public $forename = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"class":"long","id":"familyname"})
      * @Form\Options({
      *    "label":"application_your-business_people-sub-action-formSurname",
      *     "label_attributes": {
@@ -95,7 +95,8 @@ class Person
      *     "label": "dob",
      *     "create_empty_option": false,
      *     "render_delimiters": "d m y",
-     *     "error-message": "person_birthDate-error"
+     *     "error-message": "person_birthDate-error",
+     *     "fieldset-attributes": {"id":"dob_day"}
      * })
      * @Form\Type("\Zend\Form\Element\DateSelect")
      * @Form\Filter({"name": "DateSelectNullifier"})
