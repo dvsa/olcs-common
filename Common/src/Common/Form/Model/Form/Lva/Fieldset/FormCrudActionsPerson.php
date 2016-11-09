@@ -28,19 +28,6 @@ class FormCrudActionsPerson
     public $submit = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
-     * @Form\Options({
-     *     "label": "Save and add another",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10"
-     * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
-     */
-    public $addAnother = null;
-
-    /**
      * @Form\Attributes({"type":"submit","class":"action--secondary large", "id": "cancel"})
      * @Form\Options({
      *     "label": "Cancel",
@@ -65,4 +52,17 @@ class FormCrudActionsPerson
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
     public $disqualify = null;
+
+    /**
+     * @Form\Attributes({"type":"submit","class":"action--tertiary large"})
+     * @Form\Options({
+     *     "label": "Save and add another",
+     *     "label_attributes": {
+     *         "class": "col-sm-2"
+     *     },
+     *     "column-size": "sm-10"
+     * })
+     * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
+     */
+    public $addAnother = null;
 }
