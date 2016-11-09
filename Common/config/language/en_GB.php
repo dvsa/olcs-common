@@ -2073,6 +2073,7 @@ return [
     'psv_discs.table.issuedDate' => 'Issued date',
     'psv_discs.table.replacement' => 'Replacement',
     'psv_discs.table.title' => 'Discs',
+    'psv_discs.table.emptyMessage' => 'You haven\'t added any taxi or PHV licences yet',
     'public-authority' => 'Public Authority',
     'public-inquiry' => 'Public inquiry',
     'public-services-link' => '{{PUBLIC_SERVICES_LICENCE}}',
