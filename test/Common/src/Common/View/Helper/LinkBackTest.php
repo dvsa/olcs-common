@@ -96,7 +96,7 @@ class LinkBackTest extends MockeryTestCase
                     'escape' => false,
                 ],
                 'referer' => null,
-                'expect' => '<a href="unit_PrmUrl2" class="back-link">unit_PrmLbl</a>',
+                'expect' => '<a href="unit_PrmUrl2" class="back-link">_TRLTD_unit_PrmLbl</a>',
             ],
         ];
     }
