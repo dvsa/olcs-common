@@ -57,6 +57,8 @@ class OperatingCentre extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()
@@ -67,7 +69,7 @@ class OperatingCentre extends InternalSearchAbstract
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
                     return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>/'
-                    . '<br />' . $data['licStatus'];
+                    . '<br />' . $data['licStatusDesc'];
                 }
             ],
             [
