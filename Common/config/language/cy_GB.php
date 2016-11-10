@@ -140,7 +140,7 @@ return [
     'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'A yw rhai o\'ch cerbyydau neu ôl-gerbydau\'n cael eu harchwilio\'n amlach na hyn?',
     'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'A yw rhai o\'ch cerbydau neu ôl-gerbydau\'n cael eu harchwilio\'n amlach na hyn?',
     'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'Weithiau gall hyn fod yn wir gyda cherbydau henach',
-    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'Pwy sy\'n dadansoddi\'ch data tacograff?',
+    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'How do you analyse the information from your digital tachographs?',
     'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'Rhowch enw llawn y cwmni neu gontractwr allanol sy\'n dadansoddi\'ch data tacograff (os yn gymwys)',
     'application_vehicle-safety_safety.licence.trailerInspectionInterval' => 'Beth yw\'r amser mwyaf rhwng archwiliadau diogelwch ar eich ôl-gerbydau?',
     'application_vehicle-safety_safety.licence.vehicleInspectionInterval' => 'Beth yw\'r amser mwyaf rhwng archwiliadau diogelwch ar eich cerbydau?',

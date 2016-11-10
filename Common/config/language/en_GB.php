@@ -534,7 +534,7 @@ return [
     'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'Are some of your vehicles or trailers inspected more often than this?',
     'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'Are some of your vehicles inspected more often than this?',
     'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'This can sometimes be the case with older vehicles',
-    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'Who analyses your tachograph data?',
+    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'How do you analyse the information from your digital tachographs?',
     'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'Please give the full name of the company or external contractor who analyses your tachograph data (if applicable)',
     'application_vehicle-safety_safety.licence.trailerInspectionInterval' => 'Maximum number of weeks between safety inspections on your trailers',
     'application_vehicle-safety_safety.licence.vehicleInspectionInterval' => 'Maximum number of weeks between safety inspections on your vehicles',
