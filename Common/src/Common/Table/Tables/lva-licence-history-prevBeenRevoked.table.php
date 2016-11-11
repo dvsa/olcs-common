@@ -11,7 +11,7 @@ return array(
         'crud' => array(
             'formName' => 'revoked',
             'actions' => array(
-                'add' => array('class' => 'primary', 'label' => 'Add licence'),
+                'add' => array('class' => 'tertiary large', 'label' => 'Add licence'),
             )
         )
     ),

@@ -9,7 +9,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary','label' => 'Add subsidiary'),
+                'add' => array('class' => 'tertiary large','label' => 'Add subsidiary'),
             )
         )
     ),

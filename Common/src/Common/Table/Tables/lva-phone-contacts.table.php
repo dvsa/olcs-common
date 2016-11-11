@@ -10,7 +10,7 @@ return [
         'crud' => [
             'actions' => [
                 'add' => [
-                    'class' => 'primary',
+                    'class' => 'tertiary large',
                     'label' => 'lva.contact-details.phone-contact.table.action.add'
                 ],
             ],

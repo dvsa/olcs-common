@@ -12,7 +12,7 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array(
-                    'class' => 'primary',
+                    'class' => 'tertiary large',
                     'label' => 'Add safety inspector'
                 ),
             )

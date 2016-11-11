@@ -10,7 +10,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary', 'label' => 'Add person'),
+                'add' => array('class' => 'tertiary large', 'label' => 'Add person'),
             )
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
