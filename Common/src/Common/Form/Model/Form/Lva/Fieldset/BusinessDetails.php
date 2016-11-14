@@ -19,7 +19,7 @@ class BusinessDetails
     public $companyNumber = null;
 
     /**
-     * @Form\Attributes({"class":"medium"})
+     * @Form\Attributes({"class":"long"})
      * @Form\Options({"label":"application_your-business_business-details.data.company_name"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
