@@ -62,7 +62,9 @@ class VehicleDiscNoTest extends PHPUnit_Framework_TestCase
                     'removalDate' => null,
                     'goodsDiscs' => [
                         [
-                            'discNo' => '123456'
+                            'id' => 551,
+                            'discNo' => '123456',
+                            'ceasedDate' => null,
                         ]
                     ]
                 ],
@@ -74,12 +76,18 @@ class VehicleDiscNoTest extends PHPUnit_Framework_TestCase
                     'removalDate' => null,
                     'goodsDiscs' => [
                         [
+                            'id' => 55,
+                            'discNo' => '123456',
+                            'ceasedDate' => '2016-11-15',
+                        ],
+                        [
+                            'id' => 4,
                             'ceasedDate' => '2015-01-01',
-                            'discNo' => '123456'
+                            'discNo' => 'X111'
                         ]
                     ]
                 ],
-                '123456'
+                ''
             ],
             [
                 [
@@ -87,13 +95,38 @@ class VehicleDiscNoTest extends PHPUnit_Framework_TestCase
                     'removalDate' => null,
                     'goodsDiscs' => [
                         [
+                            'id' => 55,
                             'ceasedDate' => null,
                             'discNo' => null
+                        ],
+                        [
+                            'id' => 4,
+                            'ceasedDate' => '2015-01-01',
+                            'discNo' => 'X111'
                         ]
                     ]
                 ],
                 'Pending'
-            ]
+            ],
+            [
+                [
+                    'specifiedDate' => '2015-01-01',
+                    'removalDate' => null,
+                    'goodsDiscs' => [
+                        [
+                            'id' => 55,
+                            'ceasedDate' => null,
+                            'discNo' => 'XX9999'
+                        ],
+                        [
+                            'id' => 4,
+                            'ceasedDate' => '2016-11-15',
+                            'discNo' => 'XX1123'
+                        ],
+                    ]
+                ],
+                'XX9999'
+            ],
         ];
     }
 }
