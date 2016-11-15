@@ -70,6 +70,19 @@ class DocumentDescriptionTest extends MockeryTestCase
         $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
     }
 
+    public function testFormatEmptyIdentifier()
+    {
+        // Params
+        $data = [
+            'description' => 'Foo file',
+            'document_store_id' => '',
+        ];
+        $column = [];
+
+        $expected = 'Foo file';
+        $this->assertEquals($expected, DocumentDescription::format($data, $column, $this->mockSm));
+    }
+
     public function testFormatWithFilename()
     {
         $data = [
