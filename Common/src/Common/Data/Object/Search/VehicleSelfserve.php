@@ -58,6 +58,7 @@ class VehicleSelfserve extends InternalSearchAbstract
             $this->filters = [
                 new Filter\LicenceStatus(),
                 new Filter\LicenceType(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 

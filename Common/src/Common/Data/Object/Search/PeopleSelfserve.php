@@ -60,6 +60,7 @@ class PeopleSelfserve extends InternalSearchAbstract
                 new Filter\OrgType(),
                 new Filter\LicenceType(),
                 new Filter\LicenceStatus(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 

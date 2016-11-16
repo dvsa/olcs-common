@@ -59,6 +59,7 @@ class LicenceSelfserve extends InternalSearchAbstract
                 new Filter\LicenceType(),
                 new Filter\LicenceStatus(),
                 new Filter\LicenceTrafficArea(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 
