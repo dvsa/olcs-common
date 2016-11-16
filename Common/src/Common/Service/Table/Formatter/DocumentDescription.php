@@ -21,7 +21,7 @@ class DocumentDescription implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         $translator = $sm->get('translator');
-        if (!isset($data['documentStoreIdentifier'])) {
+        if (!isset($data['documentStoreIdentifier']) || empty($data['documentStoreIdentifier'])) {
             return self::getAnchor($data, $translator);
         }
 
@@ -46,8 +46,8 @@ class DocumentDescription implements FormatterInterface
     /**
      * Get anchor
      *
-     * @param array $data data
-     * @param \Zend\I18n\Translator\Translator $translator
+     * @param array                            $data       Data
+     * @param \Zend\I18n\Translator\Translator $translator Translator service
      *
      * @return string
      */

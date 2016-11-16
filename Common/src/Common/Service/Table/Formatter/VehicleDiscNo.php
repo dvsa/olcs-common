@@ -1,55 +1,65 @@
 <?php
 
-/**
- * Vehicle Disc No
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Table\Formatter;
 
 /**
  * Vehicle Disc No
- *
- * @author Rob Caiger <rob@clocal.co.uk>
  */
 class VehicleDiscNo implements FormatterInterface
 {
+    const PENDING = 'Pending';
+
+    /**
+     * Format Goods disc no
+     *
+     * @param array $data   Date
+     * @param array $column Column data
+     * @param null  $sm     Service Manager
+     *
+     * @return string '', 'Pending' or a Disc no
+     */
     public static function format($data, $column = array(), $sm = null)
     {
-        if (self::isDiscPending($data)) {
-            return 'Pending';
+        // if no specified date AND no removal date, then pending
+        if (empty($data['specifiedDate']) && empty($data['removalDate'])) {
+            return self::PENDING;
         }
 
-        if (isset($data['goodsDiscs']) && !empty($data['goodsDiscs'])) {
-            $currentDisc = $data['goodsDiscs'][0];
+        // if has some goods discs
+        if (isset($data['goodsDiscs']) && is_array($data['goodsDiscs'])) {
+            // get the latest disc
+            $newestDisc = self::getNewestDisc($data['goodsDiscs']);
 
-            return $currentDisc['discNo'];
+            // if not ceased
+            if (empty($newestDisc['ceasedDate'])) {
+                // if has a disc no
+                if (!empty($newestDisc['discNo'])) {
+                    return $newestDisc['discNo'];
+                }
+
+                return self::PENDING;
+            }
         }
 
         return '';
     }
 
     /**
-     * Check if the disc is pending
+     * Get the newest Goods disc
      *
-     * @param array $licenceVehicleData
-     * @return boolean
+     * @param array $discs array of all goods discs
+     *
+     * @return array Newist disc array data
      */
-    public static function isDiscPending($licenceVehicleData)
+    private static function getNewestDisc(array $discs)
     {
-        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['removalDate'])) {
-            return true;
-        }
-
-        if (isset($licenceVehicleData['goodsDiscs']) && !empty($licenceVehicleData['goodsDiscs'])) {
-            $currentDisc = $licenceVehicleData['goodsDiscs'][0];
-
-            if (empty($currentDisc['ceasedDate']) && empty($currentDisc['discNo'])) {
-
-                return true;
+        $latestDisc = null;
+        foreach ($discs as $disc) {
+            if ($latestDisc === null || $disc['id'] > $latestDisc['id']) {
+                $latestDisc = $disc;
             }
         }
 
-        return false;
+        return $latestDisc;
     }
 }
