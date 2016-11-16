@@ -31,6 +31,8 @@ class LicenceSelfserve extends InternalSearchAbstract
     protected $filters = [];
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -67,6 +69,8 @@ class LicenceSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()

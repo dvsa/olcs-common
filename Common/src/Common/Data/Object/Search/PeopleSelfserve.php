@@ -33,6 +33,8 @@ class PeopleSelfserve extends InternalSearchAbstract
     protected $filters = [];
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -68,6 +70,8 @@ class PeopleSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()

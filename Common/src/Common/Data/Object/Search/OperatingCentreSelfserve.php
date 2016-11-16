@@ -69,7 +69,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
 
     /**
      * Get columns
-     * 
+     *
      * @return array
      */
     public function getColumns()

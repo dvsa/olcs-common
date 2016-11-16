@@ -32,6 +32,8 @@ class VehicleSelfserve extends InternalSearchAbstract
     protected $filters = [];
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -66,6 +68,8 @@ class VehicleSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()

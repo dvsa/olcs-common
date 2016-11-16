@@ -82,6 +82,8 @@ class PublicationSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()
@@ -93,6 +95,8 @@ class PublicationSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
