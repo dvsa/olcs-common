@@ -2952,5 +2952,6 @@ return [
     'auth.change-password.confirm-password.error' => 'Re-enter your new password',
     'internal.document-description.formatter.no-description' => 'Document name missing',
     'internal.marker' => '(internal)',
+    'internal.granting.email-error' => 'Unable to send an email, no valid email addresses found',
     // Potentially unused translations
 ];
