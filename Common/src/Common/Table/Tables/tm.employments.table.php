@@ -9,7 +9,10 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add-employment' => array('label' => 'transport-manager.employments.table.add', 'class' => 'primary'),
+                'add-employment' => array(
+                    'label' => 'transport-manager.employments.table.add',
+                    'class' => 'primary'
+                ),
             )
         ),
     ),

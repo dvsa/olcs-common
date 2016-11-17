@@ -9,7 +9,10 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add-previous-licence' => array('label' => 'transport-manager.previouslicences.table.add', 'class' => 'primary'),
+                'add-previous-licence' => array(
+                    'label' => 'transport-manager.previouslicences.table.add',
+                    'class' => 'primary'
+                ),
             )
         ),
     ),

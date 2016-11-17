@@ -9,7 +9,10 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary', 'label' => 'Add offence'),
+                'add' => array(
+                    'class' => 'tertiary large',
+                    'label' => 'Add offence'
+                ),
             )
         )
     ),

@@ -13,9 +13,12 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary', 'id' => 'addSmall'),
+                'add' => array(
+                    'class' => 'primary',
+                    'id' => 'addSmall'
+                ),
                 'delete' => array(
-                    'class' => ' more-actions__item', 
+                    'class' => ' more-actions__item',
                     'requireRows' => true
                 ),
                 'transfer' => array(
