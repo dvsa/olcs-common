@@ -34,7 +34,7 @@ class TransportManagerName extends Name
             switch ($column['lva']) {
                 case 'licence':
                     $html = sprintf(
-                        '<a href="%s">%s</a><',
+                        '<a href="%s">%s</a>',
                         static::getInternalUrl($data, $sm),
                         $name
                     );
