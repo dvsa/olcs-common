@@ -30,7 +30,12 @@ class ErrorController extends ZendAbstractActionController
 
     public function serverErrorAction()
     {
-        $view = new ViewModel(['stopRedirect' => true]);
+        $view = new ViewModel(
+            [
+                'id' => $this->params()->fromQuery('id'),
+                'stopRedirect' => true,
+            ]
+        );
         $view->setTemplate('error/index');
 
         $this->getResponse()->setStatusCode(Response::STATUS_CODE_500);

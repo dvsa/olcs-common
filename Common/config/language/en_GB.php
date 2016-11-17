@@ -534,7 +534,7 @@ return [
     'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'Are some of your vehicles or trailers inspected more often than this?',
     'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'Are some of your vehicles inspected more often than this?',
     'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'This can sometimes be the case with older vehicles',
-    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'Who analyses your tachograph data?',
+    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'How do you analyse the information from your digital tachographs?',
     'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'Please give the full name of the company or external contractor who analyses your tachograph data (if applicable)',
     'application_vehicle-safety_safety.licence.trailerInspectionInterval' => 'Maximum number of weeks between safety inspections on your trailers',
     'application_vehicle-safety_safety.licence.vehicleInspectionInterval' => 'Maximum number of weeks between safety inspections on your vehicles',
@@ -2073,6 +2073,7 @@ return [
     'psv_discs.table.issuedDate' => 'Issued date',
     'psv_discs.table.replacement' => 'Replacement',
     'psv_discs.table.title' => 'Discs',
+    'psv_discs.table.emptyMessage' => 'You haven\'t added any taxi or PHV licences yet',
     'public-authority' => 'Public Authority',
     'public-inquiry' => 'Public inquiry',
     'public-services-link' => '{{PUBLIC_SERVICES_LICENCE}}',
@@ -2951,5 +2952,6 @@ return [
     'auth.change-password.confirm-password.error' => 'Re-enter your new password',
     'internal.document-description.formatter.no-description' => 'Document name missing',
     'internal.marker' => '(internal)',
+    'internal.granting.email-error' => 'Unable to send an email, no valid email addresses found',
     // Potentially unused translations
 ];

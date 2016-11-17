@@ -6,6 +6,7 @@ return array(
     'variables' => array(
         'title' => $translationPrefix . '.title',
         'within_form' => true,
+        'empty_message' => 'psv_discs.table.emptyMessage'
     ),
     'settings' => array(
         'crud' => array(
