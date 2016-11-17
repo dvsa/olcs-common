@@ -12,7 +12,11 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
+                'delete' => array(
+                    'label' => 'Remove',
+                    'class' => 'secondary',
+                    'requireRows' => true
+                )
             )
         )
     ),

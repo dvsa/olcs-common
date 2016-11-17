@@ -9,7 +9,10 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add-other-licence-applications' => array('label' => 'transport-manager.otherlicences.table.add', 'class' => 'primary'),
+                'add-other-licence-applications' => array(
+                    'label' => 'transport-manager.otherlicences.table.add',
+                    'class' => 'primary'
+                ),
             ),
         ),
     ),

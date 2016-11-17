@@ -9,7 +9,10 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
+                'delete' => array(
+                    'class' => 'secondary',
+                    'requireRows' => true
+                )
             )
         ),
     ),

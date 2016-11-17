@@ -11,15 +11,18 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('label' => 'Request new discs', 'class' => 'primary'),
+                'add' => array(
+                    'label' => 'Request new discs',
+                    'class' => 'primary'
+                ),
                 'replace' => array(
                     'label' => 'Replace',
-                    'class' => 'secondary js-require--multiple',
+                    'class' => ' more-actions__item',
                     'requireRows' => true
                 ),
                 'void' => array(
                     'label' => 'Remove',
-                    'class' => 'secondary js-require--multiple',
+                    'class' => ' more-actions__item',
                     'requireRows' => true
                 ),
             )
