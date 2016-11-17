@@ -2223,6 +2223,7 @@ return [
     'search.form.label.person' => 'Enter a licence number, forename or family name',
     'search.form.label.vehicle-external' => 'Enter an operator name, licence number, disc number, or VRM',
     'search.form.filter.update_button' => 'Update results',
+    'search.form.filter.goods-or-psv' => 'Goods or PSV',
     'search.form.filter.licence-type' => 'Licence type',
     'search.form.filter.organisation-type' => 'Organisation type',
     'search.form.filter.licence-status' => 'Licence status',

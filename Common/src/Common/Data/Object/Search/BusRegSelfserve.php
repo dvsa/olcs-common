@@ -27,6 +27,8 @@ class BusRegSelfserve extends InternalSearchAbstract
     protected $searchIndices = 'busreg';
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -66,6 +68,8 @@ class BusRegSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()
