@@ -8,7 +8,7 @@ use Mockery as m;
 use Zend\Http\Response as HttpResponse;
 
 /**
- * @covers Common\Service\Cqrs\Response
+ * @covers \Common\Service\Cqrs\Response
  */
 class ResponseTest extends MockeryTestCase
 {
@@ -35,8 +35,8 @@ class ResponseTest extends MockeryTestCase
             ->shouldReceive('isServerError')->once()->andReturn('unit_isSrvError')
             ->shouldReceive('isNotFound')->once()->andReturn('unit_IsNotFnd')
             ->shouldReceive('isSuccess')->once()->andReturn('unit_isOk')
-            ->shouldReceive('getStatusCode')->twice()->andReturn('unit_Code')
-            ->shouldReceive('getBody')->twice()->andReturn($expectBody)
+            ->shouldReceive('getStatusCode')->times(2)->andReturn('unit_Code')
+            ->shouldReceive('getBody')->times(2)->andReturn($expectBody)
             ->shouldReceive('getReasonPhrase')->once()->andReturn('unit_Phrase');
 
         static::assertEquals('unit_IsCliErr', $this->sut->isClientError());
@@ -57,7 +57,32 @@ class ResponseTest extends MockeryTestCase
         static::assertEquals(
             "Status = unit_Code unit_Phrase\n" .
             "Response = unit_Result",
-            (string) $this->sut
+            (string)$this->sut
         );
+    }
+
+    /**
+     * @dataProvider dpTestGetResult
+     */
+    public function testGetResult($body, $expect)
+    {
+        $this->mockHttpResp
+            ->shouldReceive('getBody')->once()->andReturn($body);
+
+        static::assertSame($expect, $this->sut->getResult());
+    }
+
+    public function dpTestGetResult()
+    {
+        return [
+            [
+                'body' => '{"unit_Key": "unit_Value"}',
+                'expect' => ['unit_Key' => 'unit_Value'],
+            ],
+            [
+                'body' => 'not Json or broken',
+                'expect' => [],
+            ],
+        ];
     }
 }
