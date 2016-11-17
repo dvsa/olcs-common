@@ -34,14 +34,14 @@ class TransportManagerName extends Name
             switch ($column['lva']) {
                 case 'licence':
                     $html = sprintf(
-                        '<b><a href="%s">%s</a></b>',
+                        '<a href="%s">%s</a><',
                         static::getInternalUrl($data, $sm),
                         $name
                     );
                     break;
                 case 'variation':
                     $html = sprintf(
-                        '%s <b><a href="%s">%s</a></b> %s',
+                        '%s <a href="%s">%s</a> %s',
                         static::getActionName($data, $sm),
                         static::getInternalUrl($data, $sm),
                         $name,
@@ -50,7 +50,7 @@ class TransportManagerName extends Name
                     break;
                 case 'application':
                     $html = sprintf(
-                        '<b><a href="%s">%s</a></b> %s',
+                        '<a href="%s">%s</a> %s',
                         static::getInternalUrl($data, $sm),
                         $name,
                         static::getStatusHtml($data, $sm)
@@ -67,7 +67,7 @@ class TransportManagerName extends Name
                     // only hyperlink if Added or Updated
                     if (isset($data['action']) && ($data['action'] == 'A' || $data['action'] == 'U')) {
                         $html = sprintf(
-                            '%s <b><a href="%s">%s</a></b> %s',
+                            '%s <a href="%s">%s</a> %s',
                             static::getActionName($data, $sm),
                             static::getExternalUrl($data, $sm, $column['lva']),
                             $name,
@@ -75,7 +75,7 @@ class TransportManagerName extends Name
                         );
                     } else {
                         $html = sprintf(
-                            '%s <b>%s</b> %s',
+                            '%s %s %s',
                             static::getActionName($data, $sm),
                             $name,
                             static::getStatusHtml($data, $sm)
@@ -84,7 +84,7 @@ class TransportManagerName extends Name
                     break;
                 case 'application':
                     $html = sprintf(
-                        '<b><a href="%s">%s</a></b> %s',
+                        '<a href="%s">%s</a> %s',
                         static::getExternalUrl($data, $sm, $column['lva']),
                         $name,
                         static::getStatusHtml($data, $sm)
