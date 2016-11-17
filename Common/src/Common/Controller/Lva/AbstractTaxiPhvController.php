@@ -424,7 +424,11 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if (key($message) === 'PHL_INVALID_TA') {
             return $message;
         }
-        return $translator->translateReplace(key($message) .'_'. strtoupper($this->location), current($message));
+        $result = current($message);
+        if (!is_array($result)) {
+            $result = [$result];
+        }
+        return $translator->translateReplace(key($message) .'_'. strtoupper($this->location), $result);
     }
 
     /**
