@@ -72,8 +72,9 @@ class PublicationSelfserve extends InternalSearchAbstract
             $this->filters = [
                 new Filter\LicenceType(),
                 new Filter\TrafficArea(),
+                new Filter\GoodsOrPsv(),
                 new Filter\PublicationType(),
-                new Filter\PublicationSection()
+                new Filter\PublicationSection(),
             ];
         }
 
@@ -81,6 +82,8 @@ class PublicationSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()
@@ -92,6 +95,8 @@ class PublicationSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()

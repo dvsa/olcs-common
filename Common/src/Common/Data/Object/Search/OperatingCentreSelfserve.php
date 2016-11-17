@@ -59,7 +59,8 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
         if (empty($this->filters)) {
 
             $this->filters = [
-                new Filter\LicenceStatus()
+                new Filter\LicenceStatus(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 
@@ -68,7 +69,7 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
 
     /**
      * Get columns
-     * 
+     *
      * @return array
      */
     public function getColumns()
