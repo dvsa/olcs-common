@@ -901,7 +901,7 @@ return [
     'documents.data.sub_category' => 'Subcategory',
     'documents.data.template' => 'Template',
     'documents.details' => 'Details',
-    'documents.unknown-file-description' => 'Unknown file',
+    'documents.unknown-file-description' => 'Document',
     'doo' => 'DOO',
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
