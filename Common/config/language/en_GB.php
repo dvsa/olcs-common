@@ -901,6 +901,7 @@ return [
     'documents.data.sub_category' => 'Subcategory',
     'documents.data.template' => 'Template',
     'documents.details' => 'Details',
+    'documents.unknown-file-description' => 'Unknown file',
     'doo' => 'DOO',
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
@@ -2223,6 +2224,7 @@ return [
     'search.form.label.person' => 'Enter a licence number, forename or family name',
     'search.form.label.vehicle-external' => 'Enter an operator name, licence number, disc number, or VRM',
     'search.form.filter.update_button' => 'Update results',
+    'search.form.filter.goods-or-psv' => 'Goods or PSV',
     'search.form.filter.licence-type' => 'Licence type',
     'search.form.filter.organisation-type' => 'Organisation type',
     'search.form.filter.licence-status' => 'Licence status',
@@ -2911,5 +2913,6 @@ return [
     'auth.change-password.new-password.error' => 'Enter a new password',
     'auth.change-password.confirm-password.error' => 'Re-enter your new password',
     'internal.document-description.formatter.no-description' => 'Document name missing',
+    'internal.granting.email-error' => 'Unable to send an email, no valid email addresses found',
     // Potentially unused translations
 ];
