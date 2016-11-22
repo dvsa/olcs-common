@@ -33,6 +33,8 @@ class PeopleSelfserve extends InternalSearchAbstract
     protected $filters = [];
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -60,6 +62,7 @@ class PeopleSelfserve extends InternalSearchAbstract
                 new Filter\OrgType(),
                 new Filter\LicenceType(),
                 new Filter\LicenceStatus(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 
@@ -67,6 +70,8 @@ class PeopleSelfserve extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()

@@ -125,7 +125,17 @@ class Address extends InternalSearchAbstract
 
                     return 'No';
                 }
-            ]
+            ],
+            [
+                'title' => 'Date added',
+                'formatter' => 'Date',
+                'name'=> 'createdOn'
+            ],
+            [
+                'title' => 'Date removed',
+                'formatter' => 'Date',
+                'name'=> 'deletedDate'
+            ],
         ];
     }
 }
