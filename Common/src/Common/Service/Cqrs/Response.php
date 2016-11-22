@@ -97,11 +97,18 @@ class Response
      */
     public function getResult()
     {
-        if ($this->result === null) {
-            $this->result = json_decode($this->httpResponse->getBody(), true);
+        if ($this->result !== null) {
+            return $this->result;
         }
 
-        return $this->result;
+        $body = $this->httpResponse->getBody();
+
+        $this->result = json_decode($body, true);
+        if ($this->result !== null) {
+            return $this->result;
+        }
+
+        return $this->result = [];
     }
 
     /**
