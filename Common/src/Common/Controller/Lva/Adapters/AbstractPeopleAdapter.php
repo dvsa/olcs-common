@@ -157,6 +157,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->data['isSoleTrader'];
     }
 
+    public function hasMoreThanOneValidCurtailedOrSuspendedLicences()
+    {
+        return $this->data['hasMoreThanOneValidCurtailedOrSuspendedLicences'];
+    }
+
     /**
      * Is the Organisation an LLP or LTD company
      *
