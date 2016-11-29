@@ -2470,8 +2470,7 @@ return [
     'selfserve-app-subSection-your-business-people-guidanceLLP' => 'Please provide details of the members. This must be the same as the details that are on the companies house register',
     'selfserve-app-subSection-your-business-people-guidanceO' => 'Please provide details of the persons responsible for your organisation',
     'selfserve-app-subSection-your-business-people-guidanceP' => 'Please give details below of the partners in the business. You must include details of all partners, even if they are not primarily responsible for the operation of goods vehicles',
-    'selfserve-app-subSection-your-business-people-guidanceAdditional' =>
-        'You only need to apply once. Your changes will be applied to all of your licences.',
+    'selfserve-app-subSection-your-business-people-guidanceAdditional' => 'You only need to apply once. Your changes will be applied to all of your licences.',
     'selfserve-app-subSection-your-business-people-tableEmptyMessage' => 'Please add to this table',
     'selfserve-app-subSection-your-business-people-tableHeader' => 'People',
     'selfserve-app-subSection-your-business-people-tableHeaderDirectors' => 'Directors',
