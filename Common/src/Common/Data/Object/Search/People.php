@@ -53,7 +53,8 @@ class People extends InternalSearchAbstract
         if (empty($this->filters)) {
 
             $this->filters = [
-                new Filter\FoundBy()
+                new Filter\FoundBy(),
+                new Filter\LicenceStatus(),
             ];
         }
 
