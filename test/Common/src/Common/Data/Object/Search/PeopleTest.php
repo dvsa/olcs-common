@@ -44,6 +44,9 @@ class PeopleTest extends SearchAbstractTest
             ['', []],
             ['<a href="http://URL">TM 123</a>', ['tmId' => 123, 'foundAs' => 'XX']],
             [
+                '<a href="http://URL">TM 123</a> / <a href="http://URL">OB123</a>',
+                ['tmId' => 123, 'licNo' => 'OB123', 'foundAs' => 'XX']],
+            [
                 '<a href="http://URL">LIC_NO</a>, LT_DESC<br />LS_DESC',
                 [
                     'licId' => 123,

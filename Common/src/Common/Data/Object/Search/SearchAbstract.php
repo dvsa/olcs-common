@@ -2,6 +2,8 @@
 
 namespace Common\Data\Object\Search;
 
+use Common\Service\Helper\UrlHelperService;
+
 /**
  * Class SearchAbstract
  * @package Common\Data\Object\Search
@@ -44,6 +46,8 @@ abstract class SearchAbstract
     protected $orderOptions = [];
 
     /**
+     * Get searchIndices
+     *
      * @return mixed
      */
     public function getSearchIndices()
@@ -52,6 +56,8 @@ abstract class SearchAbstract
     }
 
     /**
+     * get key
+     *
      * @return mixed
      */
     public function getKey()
@@ -60,6 +66,8 @@ abstract class SearchAbstract
     }
 
     /**
+     * get title
+     *
      * @return mixed
      */
     public function getTitle()
@@ -68,6 +76,8 @@ abstract class SearchAbstract
     }
 
     /**
+     * get variables
+     *
      * @return array
      */
     public function getVariables()
@@ -76,6 +86,8 @@ abstract class SearchAbstract
     }
 
     /**
+     * get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -90,6 +102,8 @@ abstract class SearchAbstract
     }
 
     /**
+     * get attributes
+     *
      * @return array
      */
     public function getAttributes()
@@ -98,6 +112,8 @@ abstract class SearchAbstract
     }
 
     /**
+     * get date ranges
+     *
      * @return array
      */
     public function getDateRanges()
@@ -106,6 +122,8 @@ abstract class SearchAbstract
     }
 
     /**
+     * get filters
+     *
      * @return array
      */
     public function getFilters()
@@ -114,6 +132,8 @@ abstract class SearchAbstract
     }
 
     /**
+     * get order options
+     *
      * @return array
      */
     public function getOrderOptions()
@@ -122,11 +142,15 @@ abstract class SearchAbstract
     }
 
     /**
+     * get columns
+     *
      * @return array
      */
     abstract public function getColumns();
 
     /**
+     * get table config
+     *
      * @return array
      */
     public function getTableConfig()
@@ -140,8 +164,10 @@ abstract class SearchAbstract
     }
 
     /**
+     * get navigation
      *
-     * @param array $queryParams
+     * @param array $queryParams query parameters
+     *
      * @return array
      */
     public function getNavigation(array $queryParams = [])
@@ -156,10 +182,29 @@ abstract class SearchAbstract
     }
 
     /**
+     * get display group
+     *
      * @return string
      */
     public function getDisplayGroup()
     {
         return $this->displayGroup;
+    }
+
+    /**
+     * Formats a cell with a licence link based on licNo
+     *
+     * @param array            $row       data row
+     * @param UrlHelperService $urlHelper url helper
+     *
+     * @return string
+     */
+    public function formatCellLicNo($row, $urlHelper)
+    {
+        return sprintf(
+            '<a href="%s">%s</a>',
+            $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),
+            $row['licNo']
+        );
     }
 }
