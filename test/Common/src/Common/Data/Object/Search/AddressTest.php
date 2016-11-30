@@ -73,7 +73,7 @@ class AddressTest extends SearchAbstractTest
         );
 
         $columns = $this->sut->getColumns();
-        $this->assertSame($expected, $columns[1]['formatter']($row, $column, $serviceLocator));
+        $this->assertSame($expected, $columns[2]['formatter']($row, $column, $serviceLocator));
     }
 
     public function dpTestOperatorFormatter()

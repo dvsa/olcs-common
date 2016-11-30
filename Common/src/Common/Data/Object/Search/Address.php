@@ -46,6 +46,7 @@ class Address extends InternalSearchAbstract
                 new Filter\AddressType(),
                 new Filter\AddressComplaint(),
                 new Filter\AddressOpposition(),
+                new Filter\LicenceStatus(),
             ];
         }
 
@@ -85,6 +86,7 @@ class Address extends InternalSearchAbstract
                     return $licenceLink;
                 }
             ],
+            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
