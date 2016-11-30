@@ -53,6 +53,8 @@ class Address extends InternalSearchAbstract
     }
 
     /**
+     * Gets columns
+     *
      * @return array
      */
     public function getColumns()
@@ -63,20 +65,24 @@ class Address extends InternalSearchAbstract
                 'name'=> 'licNo',
                 'formatter' => function ($data, $column, $serviceLocator) {
                     $urlHelper  = $serviceLocator->get('Helper\Url');
-                    if (isset($data['appId'])) {
-                        return sprintf(
-                            '<a href="%s">%s / %s</a>',
-                            $urlHelper->fromRoute('lva-application', ['application' => $data['appId']]),
-                            $data['licNo'],
-                            $data['appId']
-                        );
-                    }
 
-                    return sprintf(
+                    $licenceLink = sprintf(
                         '<a href="%s">%s</a>',
                         $urlHelper->fromRoute('licence', ['licence' => $data['licId']]),
                         $data['licNo']
                     );
+
+                    if (isset($data['appId'])) {
+                        $appLink = sprintf(
+                            '<a href="%s">%s</a>',
+                            $urlHelper->fromRoute('lva-application', ['application' => $data['appId']]),
+                            $data['appId']
+                        );
+
+                        return $licenceLink . ' / ' . $appLink;
+                    }
+
+                    return $licenceLink;
                 }
             ],
             [

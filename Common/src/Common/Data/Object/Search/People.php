@@ -53,7 +53,8 @@ class People extends InternalSearchAbstract
         if (empty($this->filters)) {
 
             $this->filters = [
-                new Filter\FoundBy()
+                new Filter\FoundBy(),
+                new Filter\LicenceStatus(),
             ];
         }
 
@@ -119,18 +120,24 @@ class People extends InternalSearchAbstract
                     $urlHelper = $serviceLocator->get('Helper\Url');
                     if (!empty($row['applicationId']) && !empty($row['licNo'])) {
                         return sprintf(
-                            '<a href="%s">%s</a> / <a href="%s">%s</a>',
-                            $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),
-                            $row['licNo'],
+                            '%s / <a href="%s">%s</a>',
+                            $this->formatCellLicNo($row, $urlHelper),
                             $urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
                             $row['applicationId']
                         );
                     } elseif (!empty($row['tmId']) && $row['foundAs'] !== self::FOUND_AS_HISTORICAL_TM) {
-                        return sprintf(
+                        $tmLink = sprintf(
                             '<a href="%s">TM %s</a>',
                             $urlHelper->fromRoute('transport-manager/details', ['transportManager' => $row['tmId']]),
                             $row['tmId']
                         );
+
+                        if (!empty($row['licNo'])) {
+                            $licenceLink = $this->formatCellLicNo($row, $urlHelper);
+                            return $tmLink . ' / ' . $licenceLink;
+                        }
+
+                        return $tmLink;
                     } elseif (!empty($row['licId'])) {
                         return sprintf(
                             '<a href="%s">%s</a>, %s<br />%s',
@@ -140,11 +147,7 @@ class People extends InternalSearchAbstract
                             $row['licStatusDesc']
                         );
                     } elseif (!empty($row['licNo'])) {
-                        return sprintf(
-                            '<a href="%s">%s</a>',
-                            $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),
-                            $row['licNo']
-                        );
+                        return $this->formatCellLicNo($row, $urlHelper);
                     }
                     return '';
                 }
