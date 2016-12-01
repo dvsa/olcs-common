@@ -1807,7 +1807,7 @@ return [
     'manage-users.create.success' => 'User successfully created',
     'manage-users.delete.error' => 'The user could not be deleted, possibly due to some tasks still being open',
     'manage-users.delete.success' => 'User successfully deleted',
-    'manage-users.field.permission.admin.label' => '<strong>Administrator</strong>Has access to all licences and can manage users',
+    'manage-users.field.permission.admin.label' => '<strong>Administrator</strong>Has access to all licence, can manage users and receives email correspondence',
     'manage-users.field.permission.label' => 'Permission',
     'manage-users.field.permission.tm.label' => '<strong>Transport manager</strong>Can only access their own information',
     'manage-users.field.permission.user.label' => '<strong>Standard</strong>Has access to all licences',
