@@ -2516,7 +2516,7 @@ return [
     'selfserve-table-ebsr-submissions-uploaded' => 'Uploaded',
     'send-form.button' => 'Send form',
     'selfserve.search.busreg.browse.form.acceptedDate.label' => 'Accepted date',
-    'selfserve.search.busreg.browse.form.hint' => 'Browse registrations, variations and cancellation accepted by the Traffic Commissioners.',
+    'selfserve.search.busreg.browse.form.hint' => 'Download an Excel file of registrations.',
     'selfserve.search.busreg.browse.form.status.label' => 'Registration status',
     'selfserve.search.busreg.browse.form.submit.label' => 'Export',
     'selfserve.search.busreg.browse.no-results' => 'There were no results for your search.',
