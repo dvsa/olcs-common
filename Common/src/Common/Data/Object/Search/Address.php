@@ -47,6 +47,7 @@ class Address extends InternalSearchAbstract
                 new Filter\AddressComplaint(),
                 new Filter\AddressOpposition(),
                 new Filter\LicenceStatus(),
+                new Filter\ApplicationStatus(),
             ];
         }
 
