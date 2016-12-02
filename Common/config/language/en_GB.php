@@ -2956,5 +2956,17 @@ return [
     'internal.document-description.formatter.no-description' => 'Document name missing',
     'internal.marker' => '(internal)',
     'internal.granting.email-error' => 'Unable to send an email, no valid email addresses found',
+    'application.signature.options.label' => '<strong>How would you like to sign the declaration?</strong>',
+    'application.signature.options.verify' => '<strong>Sign online using GOV.UK Verify</strong>To use GOV.UK Verify you must be a UK resident with a valid passport.',
+    'application.signature.options.sign' => '<strong>Print, sign and return</strong>You\'ll need to return the signed declaration to the Central Licensing Office',
+    'application.review-declarations.confirm-verify-text' => 'I declare that the statemens in this application ' .
+        'are true and the supporting evidence is correct and understand that it\'s an offence to make a false ' .
+        'declaration. I agree to Vehicle Operator Licensing using my name, address and date of birth ' .
+        'provided by GOV.UK Verify.',
+    'application.review-declarations.sign-button' => 'Save and continue to GOV.UK Verify',
+    'application.review-declarations.review.business-owner' => 'the business owner',
+    'application.review-declarations.review.director' => 'a director',
+    'application.review-declarations.review.person' => 'a responsible person of the business',
+    'application.review-declarations.review.partner' => 'a partner',
     // Potentially unused translations
 ];
