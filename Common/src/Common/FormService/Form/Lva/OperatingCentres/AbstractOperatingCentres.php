@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Abstract Operating Centres
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva\OperatingCentres;
 
 use Common\FormService\Form\Lva\AbstractLvaFormService;
@@ -19,6 +14,13 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
 {
     protected $mainTableConfigName = 'lva-operating-centres';
 
+    /**
+     * Get Form
+     *
+     * @param array $params Parameters
+     *
+     * @return Form
+     */
     public function getForm($params)
     {
         $form = $this->getFormHelper()->createForm('Lva\OperatingCentres');
@@ -34,6 +36,14 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         return $form;
     }
 
+    /**
+     * Alter form
+     *
+     * @param Form  $form   Form
+     * @param array $params Parameters
+     *
+     * @return Form
+     */
     protected function alterForm(Form $form, array $params)
     {
         if (!$params['canHaveSchedule41']) {
@@ -94,6 +104,8 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     /**
      * Can the traffic aread be changed
      *
+     * @param int $trafficAreaId Traffic area id
+     *
      * @return boolean
      */
     protected function allowChangingTrafficArea($trafficAreaId)
@@ -104,7 +116,7 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
     /**
      * Should the Traffic Area elements be removed from the Form
      *
-     * @param array $data
+     * @param array $data Data
      *
      * @return bool
      */
@@ -113,10 +125,20 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         return empty($data['operatingCentres']);
     }
 
+    /**
+     * Alter Form For Psv Licences
+     *
+     * @param Form  $form   Form
+     * @param array $params Parameters
+     *
+     * @return void
+     */
     protected function alterFormForPsvLicences(Form $form, array $params)
     {
         $dataOptions = $form->get('data')->getOptions();
-        $dataOptions['hint'] .= !empty($dataOptions['hint']) ? '.psv' : '';
+        if (isset($dataOptions['hint'])) {
+            $dataOptions['hint'] .= isset($dataOptions['hint']) ? '.psv' : '';
+        }
         $form->get('data')->setOptions($dataOptions);
 
         $removeFields = [
@@ -126,8 +148,16 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         $this->getFormHelper()->removeFieldList($form, 'data', $removeFields);
     }
 
+    /**
+     * Alter Form Table For Psv
+     *
+     * @param Form $form Form
+     *
+     * @return void
+     */
     protected function alterFormTableForPsv(Form $form)
     {
+        /** @var \Common\Service\Table\TableBuilder $table */
         $table = $form->get('table')->get('table')->getTable();
 
         $table->removeColumn('noOfTrailersRequired');
@@ -140,6 +170,13 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         }
     }
 
+    /**
+     * Alter Form For Goods Licences
+     *
+     * @param Form $form Form
+     *
+     * @return void
+     */
     protected function alterFormForGoodsLicences(Form $form)
     {
     }
