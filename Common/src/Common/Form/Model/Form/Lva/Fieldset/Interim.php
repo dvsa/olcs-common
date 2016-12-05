@@ -13,7 +13,7 @@ class Interim
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *      "fieldset-attributes": {
-     *          "class": "checkbox inline"
+     *          "class": "checkbox"
      *      },
      *     "label":
      * "interim.application.undertakings.form.checkbox.label",
