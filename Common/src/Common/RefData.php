@@ -164,6 +164,13 @@ class RefData
     const PERMISSION_SELFSERVE_EBSR_DOCUMENTS = 'selfserve-ebsr-documents';
 
     /**
+     * User types
+     */
+    const USER_TYPE_INTERNAL = 'internal';
+    const USER_TYPE_LOCAL_AUTHORITY = 'local-authority';
+    const USER_TYPE_PARTNER = 'partner';
+
+    /**
      * Phone contact types
      */
     const TYPE_BUSINESS = 'phone_t_tel';
