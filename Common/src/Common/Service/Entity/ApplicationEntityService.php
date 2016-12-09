@@ -18,6 +18,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const APPLICATION_TYPE_VARIATION = 1;
 
     const APPLICATION_STATUS_NOT_SUBMITTED = 'apsts_not_submitted';
+    // this status will be displayed everywhere as Awaiting grant fee as per OLCS-12606
     const APPLICATION_STATUS_GRANTED = 'apsts_granted';
     const APPLICATION_STATUS_UNDER_CONSIDERATION = 'apsts_consideration';
     const APPLICATION_STATUS_VALID = 'apsts_valid';
