@@ -648,7 +648,7 @@ return [
     'apsts_cancelled' => 'Cancelled',
     'apsts_consideration' => 'Under consideration',
     'apsts_curtailed' => 'Curtailed',
-    'apsts_granted' => 'Granted',
+    'apsts_granted' => 'Awaiting grant fee',
     'apsts_not_submitted' => 'Not submitted',
     'apsts_ntu' => 'Not taken up',
     'apsts_refused' => 'Refused',
