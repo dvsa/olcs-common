@@ -327,7 +327,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     /**
      * Process Edit Action
      *
-     * @return \Common\View\Model\Section
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function editAction()
     {
@@ -487,7 +487,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             }
 
             return $this->redirect()->toRouteAjax(
-                null,
+                $this->getBaseRoute(),
                 array($this->getIdentifierIndex() => $this->getIdentifier())
             );
         }
