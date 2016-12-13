@@ -14,6 +14,8 @@ use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController
  */
 class FileController extends ZendAbstractActionController
 {
+    private static $allowedHeaders = ['Content-Disposition', 'Content-Encoding', 'Content-Type', 'Content-Length'];
+
     /**
      * Download a file
      *
@@ -29,6 +31,7 @@ class FileController extends ZendAbstractActionController
                 [
                     'identifier' => $identifier,
                     'isInline' => $isInline,
+                    'isStream' => true,
                 ]
             );
 
@@ -38,6 +41,7 @@ class FileController extends ZendAbstractActionController
                 [
                     'identifier' => base64_decode($identifier),
                     'isInline' => $isInline,
+                    'isStream' => true,
                 ]
             );
         }
@@ -55,19 +59,15 @@ class FileController extends ZendAbstractActionController
 
         $response = $downloadResponse->getHttpResponse();
 
-        // Construct a new response from the one from api
-        $newResponse = new Response();
-        $newResponse->setContent($response->getContent());
-
+        //  keep only allowed headers
         $headers = new \Zend\Http\Headers();
-        $allowedHeaders = ['Content-Disposition', 'Content-Encoding', 'Content-Type', 'Content-Length'];
         foreach ($response->getHeaders() as $header) {
-            if (in_array($header->getFieldName(), $allowedHeaders)) {
+            if (in_array($header->getFieldName(), self::$allowedHeaders, true)) {
                 $headers->addHeader($header);
             }
         }
-        $newResponse->setHeaders($headers);
+        $response->setHeaders($headers);
 
-        return $newResponse;
+        return $response;
     }
 }
