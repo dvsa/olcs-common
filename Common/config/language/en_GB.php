@@ -524,7 +524,7 @@ return [
     'application_vehicle-safety_discs-psv.validDiscs' => 'Valid discs',
     'application_vehicle-safety_safety-add' => 'Add safety inspector',
     'application_vehicle-safety_safety-edit' => 'Edit safety inspector',
-    'application_vehicle-safety_safety-sub-action.address.label' => 'Address',
+    'application_vehicle-safety_safety-sub-action.address.label' => 'Workshop address',
     'application_vehicle-safety_safety-sub-action.data.fao' => 'Name of the contractor or employee',
     'application_vehicle-safety_safety-sub-action.data.isExternal' => 'Who\'ll carry out the safety inspections?',
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'An owner or employee of the business',
