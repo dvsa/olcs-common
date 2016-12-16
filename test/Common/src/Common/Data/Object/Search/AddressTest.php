@@ -3,6 +3,7 @@
 namespace CommonTest\Data\Object\Search;
 
 use Mockery as m;
+use Common\Service\Helper\UrlHelperService;
 
 /**
  * Class AddressTest
@@ -22,15 +23,18 @@ class AddressTest extends SearchAbstractTest
     /**
      * @dataProvider dpTestLicenceFormatter
      */
-    public function testLicenceFormatter($expected, $row, $route, $routeParams)
+    public function testLicenceFormatter($expected, $row, $appTimes)
     {
         $column = [];
         $serviceLocator = m::mock();
 
-        $serviceLocator->shouldReceive('get')->with('Helper\Url')->andReturn(
-            m::mock()->shouldReceive('fromRoute')->with($route, $routeParams)->once()
-                ->andReturn('http://URL')->getMock()
-        );
+        $urlHelperService = m::mock(UrlHelperService::class);
+        $urlHelperService->shouldReceive('fromRoute')->with('licence', ['licence' => 123])->once()
+            ->andReturn('http://licURL');
+        $urlHelperService->shouldReceive('fromRoute')->with('lva-application', ['application' => 33])->times($appTimes)
+            ->andReturn('http://appURL');
+
+        $serviceLocator->shouldReceive('get')->with('Helper\Url')->andReturn($urlHelperService);
 
         $columns = $this->sut->getColumns();
         $this->assertSame($expected, $columns[0]['formatter']($row, $column, $serviceLocator));
@@ -48,12 +52,11 @@ class AddressTest extends SearchAbstractTest
         return [
             // expected, row, route, routeParams
             [
-                '<a href="http://URL">AB12345 / 33</a>',
+                '<a href="http://licURL">AB12345</a> / <a href="http://appURL">33</a>',
                 array_merge($data, ['appId' => 33]),
-                'lva-application',
-                ['application' => 33]
+                1
             ],
-            ['<a href="http://URL">AB12345</a>', $data, 'licence', ['licence' => 123]],
+            ['<a href="http://licURL">AB12345</a>', $data, 0],
         ];
     }
 
@@ -70,7 +73,7 @@ class AddressTest extends SearchAbstractTest
         );
 
         $columns = $this->sut->getColumns();
-        $this->assertSame($expected, $columns[1]['formatter']($row, $column, $serviceLocator));
+        $this->assertSame($expected, $columns[2]['formatter']($row, $column, $serviceLocator));
     }
 
     public function dpTestOperatorFormatter()

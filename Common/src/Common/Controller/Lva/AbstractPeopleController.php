@@ -251,9 +251,20 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
                 $guidanceLabel = null;
         }
 
+        $additionalGuidanceLabel = null;
+        if (
+            $this->lva === 'variation'
+            && $this->getAdapter()->hasMoreThanOneValidCurtailedOrSuspendedLicences()
+        ) {
+            $additionalGuidanceLabel = 'selfserve-app-subSection-your-business-people-guidanceAdditional';
+        }
+
         if ($this->getAdapter()->canModify()) {
             if ($guidanceLabel !== null) {
                 $this->getServiceLocator()->get('Helper\Guidance')->append($guidanceLabel);
+            }
+            if ($additionalGuidanceLabel !== null) {
+                $this->getServiceLocator()->get('Helper\Guidance')->append($additionalGuidanceLabel);
             }
         } else {
             if ($this->lva === 'licence' &&

@@ -46,6 +46,8 @@ class Address extends InternalSearchAbstract
                 new Filter\AddressType(),
                 new Filter\AddressComplaint(),
                 new Filter\AddressOpposition(),
+                new Filter\LicenceStatus(),
+                new Filter\ApplicationStatus(),
             ];
         }
 
@@ -53,6 +55,8 @@ class Address extends InternalSearchAbstract
     }
 
     /**
+     * Gets columns
+     *
      * @return array
      */
     public function getColumns()
@@ -63,22 +67,27 @@ class Address extends InternalSearchAbstract
                 'name'=> 'licNo',
                 'formatter' => function ($data, $column, $serviceLocator) {
                     $urlHelper  = $serviceLocator->get('Helper\Url');
-                    if (isset($data['appId'])) {
-                        return sprintf(
-                            '<a href="%s">%s / %s</a>',
-                            $urlHelper->fromRoute('lva-application', ['application' => $data['appId']]),
-                            $data['licNo'],
-                            $data['appId']
-                        );
-                    }
 
-                    return sprintf(
+                    $licenceLink = sprintf(
                         '<a href="%s">%s</a>',
                         $urlHelper->fromRoute('licence', ['licence' => $data['licId']]),
                         $data['licNo']
                     );
+
+                    if (isset($data['appId'])) {
+                        $appLink = sprintf(
+                            '<a href="%s">%s</a>',
+                            $urlHelper->fromRoute('lva-application', ['application' => $data['appId']]),
+                            $data['appId']
+                        );
+
+                        return $licenceLink . ' / ' . $appLink;
+                    }
+
+                    return $licenceLink;
                 }
             ],
+            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
