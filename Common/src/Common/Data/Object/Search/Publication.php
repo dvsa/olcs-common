@@ -41,6 +41,24 @@ class Publication extends InternalSearchAbstract
     protected $filters = [];
 
     /**
+     * Contains an array of required results order
+     *
+     * @var array
+     */
+    protected $orderOptions = [
+        [
+            'field' => 'pub_date',
+            'field_label' => 'Most recent publication',
+            'order' => 'desc'
+        ],
+        [
+            'field' => 'pub_date',
+            'field_label' => 'Oldest publication',
+            'order' => 'asc'
+        ],
+    ];
+
+    /**
      * Returns an array of date ranges for this index
      *
      * @return array
@@ -79,6 +97,8 @@ class Publication extends InternalSearchAbstract
     }
 
     /**
+     * Get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -96,6 +116,8 @@ class Publication extends InternalSearchAbstract
     }
 
     /**
+     * Get columns
+     *
      * @return array
      */
     public function getColumns()
