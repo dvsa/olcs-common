@@ -37,6 +37,7 @@ class RedirectTest extends MockeryTestCase
     {
         $route = 'foo';
         $params = array('foo' => 'bar');
+        $options = ['option_1' => 'val 1'];
 
         $mockController = m::mock();
         $mockController->shouldReceive('getRequest->isXmlHttpRequest')
@@ -45,10 +46,10 @@ class RedirectTest extends MockeryTestCase
         $this->sut->shouldReceive('getController')
             ->andReturn($mockController)
             ->shouldReceive('toRoute')
-            ->with($route, $params, array(), false)
+            ->with($route, $params, $options, false)
             ->andReturn('REDIRECT');
 
-        $this->assertEquals('REDIRECT', $this->sut->toRouteAjax($route, $params));
+        $this->assertEquals('REDIRECT', $this->sut->toRouteAjax($route, $params, $options));
     }
 
     /**
@@ -58,6 +59,7 @@ class RedirectTest extends MockeryTestCase
     {
         $route = 'foo';
         $params = array('foo' => 'bar');
+        $options = ['fragment' => 'frag'];
 
         $mockResponse = m::mock('\Zend\Http\Response');
         $mockResponse->shouldReceive('getHeaders->addHeaders')
@@ -71,8 +73,13 @@ class RedirectTest extends MockeryTestCase
             ->andReturn(true);
 
         $mockController->shouldReceive('url->fromRoute')
-            ->with($route, $params, [], false)
-            ->andReturn('URI');
+            ->with($route, $params, m::type('array'), false)
+            ->andReturnUsing(
+                function ($route, $params, $options) {
+                    $this->assertNotEmpty($options['query']['reload']);
+                    return 'URI';
+                }
+            );
 
         $mockEvent = m::mock('\Zend\Mvc\MvcEvent');
         $mockEvent->shouldReceive('getResponse')
@@ -86,7 +93,7 @@ class RedirectTest extends MockeryTestCase
             ->shouldReceive('toRoute')
             ->with($route, $params, array(), false);
 
-        $this->assertEquals($mockResponse, $this->sut->toRouteAjax($route, $params));
+        $this->assertEquals($mockResponse, $this->sut->toRouteAjax($route, $params, $options));
     }
 
     /**

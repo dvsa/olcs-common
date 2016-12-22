@@ -9,6 +9,7 @@ namespace Common\Controller\Plugin;
 
 use Zend\Json\Json;
 use Zend\Mvc\Controller\Plugin\Redirect as ZendRedirect;
+use Zend\Stdlib\ArrayUtils;
 
 /**
  * Redirect
@@ -17,14 +18,41 @@ use Zend\Mvc\Controller\Plugin\Redirect as ZendRedirect;
  */
 class Redirect extends ZendRedirect
 {
+    /**
+     * Refresh ajax
+     *
+     * @return \Zend\Http\Response
+     */
     public function refreshAjax()
     {
         return $this->toRouteAjax(null, array(), array(), true);
     }
 
+    /**
+     * Refresh ajax
+     *
+     * @param string $route              Route
+     * @param array  $params             Params
+     * @param array  $options            Options
+     * @param bool   $reuseMatchedParams Reuse matched params
+     *
+     * @return \Zend\Http\Response
+     */
     public function toRouteAjax($route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
     {
         $controller = $this->getController();
+
+        if (isset($options['fragment'])) {
+            // OLCS-14936 - force reload of the page by adding something random to the URL
+            $options = ArrayUtils::merge(
+                $options,
+                [
+                    'query' => [
+                        'reload' => time()
+                    ]
+                ]
+            );
+        }
 
         if ($controller->getRequest()->isXmlHttpRequest()) {
             $data = [
