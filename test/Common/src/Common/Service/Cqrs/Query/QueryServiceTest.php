@@ -16,7 +16,7 @@ use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\RouteInterface;
 
 /**
- * @covers Common\Service\Cqrs\Query\QueryService
+ * @covers \Common\Service\Cqrs\Query\QueryService
  */
 class QueryServiceTest extends MockeryTestCase
 {
@@ -33,10 +33,10 @@ class QueryServiceTest extends MockeryTestCase
     /** @var  m\MockInterface|FlashMessengerHelperService */
     private $mockFlashMsgr;
 
-    /** @var  m\MockInterface */
+    /** @var  QueryService | m\MockInterface */
     private $sut;
 
-    /** @var  m\MockInterface */
+    /** @var  QueryContainerInterface | m\MockInterface */
     private $mockQueryCntr;
     /** @var  m\MockInterface */
     private $mockQuery;
@@ -135,7 +135,8 @@ class QueryServiceTest extends MockeryTestCase
     {
         $this->mockQueryCntr
             ->shouldReceive('isValid')->once()->andReturn(true)
-            ->shouldReceive('getRouteName')->once()->andReturn('backend/unit_RouteName');
+            ->shouldReceive('getRouteName')->once()->andReturn('backend/unit_RouteName')
+            ->shouldReceive('isStream')->once()->andReturn('unit_IsStream');
 
         $uri = 'init_Uri';
 
@@ -160,6 +161,7 @@ class QueryServiceTest extends MockeryTestCase
         $this->mockCli
             ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
             ->shouldReceive('resetParameters')->once()->with(true)
+            ->shouldReceive('setStream')->once()->with('unit_IsStream')
             ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
 
         $this->sut

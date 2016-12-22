@@ -102,6 +102,9 @@ class QueryService implements QueryServiceInterface
                 $adapter->setShouldLogData(false);
             }
 
+            //  request should use stream for query or reset
+            $this->client->setStream($query->isStream());
+
             $clientResponse = $this->client->send($this->request);
 
             if ($isOmitLog) {
