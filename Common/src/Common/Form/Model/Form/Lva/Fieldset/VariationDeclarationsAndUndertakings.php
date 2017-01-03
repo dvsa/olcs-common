@@ -10,7 +10,7 @@ use Zend\Form\Annotation as Form;
 class VariationDeclarationsAndUndertakings
 {
     /**
-     * @Form\Attributes({"value": "markup-review-text"})
+     * @Form\Attributes({"value": "markup-review-text-variation"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $review = null;

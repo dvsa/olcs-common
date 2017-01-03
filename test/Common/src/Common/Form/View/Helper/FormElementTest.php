@@ -360,7 +360,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<div class="guidance">actual translated string<\/div>$/');
+        $this->expectOutputRegex('/^<div class="guidance article">actual translated string<\/div>$/');
     }
 
     /**
@@ -394,7 +394,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<div class="guidance"><div>foo string and then bar string<\/div><\/div>$/');
+        $this->expectOutputRegex('/^<div class="guidance article"><div>foo string and then bar string<\/div><\/div>$/');
     }
 
     /**
@@ -414,7 +414,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<div class="guidance"><div>foo string and then bar string<\/div><\/div>$/');
+        $this->expectOutputRegex('/^<div class="guidance article"><div>foo string and then bar string<\/div><\/div>$/');
     }
 
     public function testRenderForAttachFilesButton()

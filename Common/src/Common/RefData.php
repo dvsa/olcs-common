@@ -258,4 +258,8 @@ class RefData
     const ERROR_FEE_NOT_CREATED = 'AP-FEE-NOT-CREATED';
 
     const UNDERTAKINGS_KEY = 'undertakings';
+
+    const SIGNATURE_TYPE_PHYSICAL_SIGNATURE = 'sig_physical_signature';
+    const SIGNATURE_TYPE_DIGITAL_SIGNATURE = 'sig_digital_signature';
+    const SIGNATURE_TYPE_NOT_REQUIRED = 'sig_signature_not_required';
 }
