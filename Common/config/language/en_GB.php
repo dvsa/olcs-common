@@ -277,7 +277,7 @@ return [
     'application-review-safety-safetyInsVehicles' => 'Maximum time between safety inspections on your vehicles',
     'application-review-safety-tachographIns' => 'Who analyses your tachograph data?',
     'application-review-safety-tachographInsName' => 'Please give the full name of the company or external contractor who analyses your tachograph data',
-    'application-review-safety-workshop-address' => 'Address',
+    'application-review-safety-workshop-address' => 'Workshop Address',
     'application-review-safety-workshop-isExternal' => 'Who will carry out the safety inspections?',
     'application-review-safety-workshop-isExternal-N' => 'An owner or employee of the business',
     'application-review-safety-workshop-isExternal-Y' => 'An external contractor',
