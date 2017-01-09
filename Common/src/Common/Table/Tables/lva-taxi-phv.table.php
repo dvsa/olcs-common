@@ -4,7 +4,7 @@ $translationPrefix = 'application_taxi-phv_licence.table';
 
 return array(
     'variables' => array(
-        'title' => $translationPrefix . '.title',
+        'title' => '',
         'empty_message' => $translationPrefix . '.empty_message',
         'required_label' => 'licence',
         'within_form' => true
