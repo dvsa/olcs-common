@@ -2,6 +2,7 @@
 
 return array(
     'variables' => array(
+        'title' => '',
         'within_form' => true,
         'empty_message' => 'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage'
     ),
