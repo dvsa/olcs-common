@@ -1,6 +1,7 @@
 <div class="table__header"<?php
     echo !empty($this->object->getVariable('id')) ?
     ' id="' . $this->object->getVariable('id') .'"' : '' ?>>
+    <?php if (!empty($this->getEscaper()->escapeHtml($this->object->getVariable('title')))) { ?>
     <h3>
         <?php
         if ($this->object->renderTotal()) {
@@ -9,6 +10,7 @@
         ?>
         <?php echo $this->getEscaper()->escapeHtml($this->object->getVariable('title')); ?>
     </h3>
+    <?php } ?>
     <?php echo $this->object->renderActions(); ?>
 </div>
 <?php echo $this->object->renderLayout('table'); ?>
