@@ -4,7 +4,7 @@ $translationPrefix = 'psv_discs.table';
 
 return array(
     'variables' => array(
-        'title' => $translationPrefix . '.title',
+        'title' => '',
         'within_form' => true,
     ),
     'settings' => array(
