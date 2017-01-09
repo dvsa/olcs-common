@@ -2,7 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => 'application_operating-centres_authorisation.table.title',
+        'title' => '',
         'empty_message' => 'application_operating-centres_authorisation-tableEmptyMessage',
         'within_form' => true,
     ),
