@@ -24,8 +24,9 @@ trait CqrsTrait
     /**
      * Invalid response
      *
-     * @param array $messages
-     * @param int $statusCode
+     * @param array $messages   Messages
+     * @param int   $statusCode Status Code
+     *
      * @return Response
      */
     protected function invalidResponse(array $messages = [], $statusCode = HttpResponse::STATUS_CODE_500)
@@ -45,7 +46,9 @@ trait CqrsTrait
     /**
      * Show API messages
      *
-     * @param array $messages
+     * @param array $messages Messages
+     *
+     * @return void
      */
     protected function showApiMessages($messages = [])
     {
@@ -57,7 +60,9 @@ trait CqrsTrait
     /**
      * Show API messages from response
      *
-     * @param \Common\Service\Cqrs\Response $response
+     * @param \Common\Service\Cqrs\Response $response Cqrs Response
+     *
+     * @return void
      */
     protected function showApiMessagesFromResponse($response)
     {
