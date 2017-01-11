@@ -128,8 +128,8 @@ class PeopleTest extends SearchAbstractTest
     {
         return [
             ['NA', ['foundAs' => 'Historical TM']],
-            ['Yes', ['foundAs' => 'XX', 'disqualified' => 'Y']],
-            ['No', ['foundAs' => 'XX', 'disqualified' => 'N']],
+            ['Yes', ['foundAs' => 'XX', 'disqualified' => 'Yes']],
+            ['No', ['foundAs' => 'XX', 'disqualified' => 'No']],
         ];
     }
 }
