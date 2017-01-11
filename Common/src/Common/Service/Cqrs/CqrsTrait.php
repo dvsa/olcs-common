@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Cqrs Trait
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Service\Cqrs;
 
 use Zend\Http\Response as HttpResponse;
@@ -66,12 +61,15 @@ trait CqrsTrait
      */
     protected function showApiMessagesFromResponse($response)
     {
-        $result = $response->getResult();
+        if ($response->getHttpResponse() instanceof HttpResponse\Stream) {
+            return;
+        }
 
         if (json_last_error() && $response->getStatusCode() !== 302) {
             $this->showApiMessages(['Error decoding json response: ' . $response->getBody()]);
         }
 
+        $result = $response->getResult();
         if (!$response->isOk() && isset($result['messages'])) {
             $this->showApiMessages($result['messages']);
         }
