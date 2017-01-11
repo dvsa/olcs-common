@@ -34,6 +34,9 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         } else {
             $formData = $adapter->getFormData($id);
         }
+        $formData['evidence']['uploadedFileCount'] = isset($formData['evidence']['files']['list']) ?
+            count(isset($formData['evidence']['files']['list'])) :
+            0;
 
         // set up form
         /** @var \Common\Form\Form $form */
