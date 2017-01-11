@@ -5,7 +5,7 @@ $gb = include(__DIR__ . '/en_GB.php');
 $ni = array_merge(
     $gb,
     [
-        'TM1_FORM_LINK' => 'http://www.doeni.gov.uk/gv_ni_79___tm_ni_1___transport_manager_application_v_2.2.pdf',
+        'TM1_FORM_LINK' => 'https://www.infrastructure-ni.gov.uk/sites/default/files/publications/doe/tm%28ni%291-application-to-add-a-transport-manager-to-a-goods-vehicle-operator%27s-licence.pdf',
         'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'Has any person named in this
             application (including partners, directors and Transport Managers); any company of which a person named on
             this application is or has been a director; any parent company if you are a limited company; received any
