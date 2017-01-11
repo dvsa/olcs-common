@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Cqrs Trait
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Service\Cqrs;
 
 use Zend\Http\Response as HttpResponse;
@@ -29,8 +24,9 @@ trait CqrsTrait
     /**
      * Invalid response
      *
-     * @param array $messages
-     * @param int $statusCode
+     * @param array $messages   Messages
+     * @param int   $statusCode Status Code
+     *
      * @return Response
      */
     protected function invalidResponse(array $messages = [], $statusCode = HttpResponse::STATUS_CODE_500)
@@ -50,7 +46,9 @@ trait CqrsTrait
     /**
      * Show API messages
      *
-     * @param array $messages
+     * @param array $messages Messages
+     *
+     * @return void
      */
     protected function showApiMessages($messages = [])
     {
@@ -62,16 +60,21 @@ trait CqrsTrait
     /**
      * Show API messages from response
      *
-     * @param \Common\Service\Cqrs\Response $response
+     * @param \Common\Service\Cqrs\Response $response Cqrs Response
+     *
+     * @return void
      */
     protected function showApiMessagesFromResponse($response)
     {
-        $result = $response->getResult();
+        if ($response->getHttpResponse() instanceof HttpResponse\Stream) {
+            return;
+        }
 
         if (json_last_error() && $response->getStatusCode() !== 302) {
             $this->showApiMessages(['Error decoding json response: ' . $response->getBody()]);
         }
 
+        $result = $response->getResult();
         if (!$response->isOk() && isset($result['messages'])) {
             $this->showApiMessages($result['messages']);
         }
