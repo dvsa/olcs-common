@@ -96,7 +96,7 @@ class Responsibilities
      * @Form\Attributes({
      *      "class":"long",
      *      "label": "transport-manager.responsibilities.additional-information.title",
-     *      "autocomplete": "off",
+     *      "autocomplete": "nope",
      * })
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.additional-information",

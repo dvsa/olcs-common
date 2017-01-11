@@ -7,7 +7,10 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("lva-transport-manager-details")
- * @Form\Attributes({"method":"post"})
+ * @Form\Attributes({
+ *     "method":"post",
+ *     "autocomplete": "off",
+ * })
  * @Form\Type("Common\Form\Form")
  */
 class TransportManagerDetails
