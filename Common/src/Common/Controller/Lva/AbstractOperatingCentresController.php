@@ -239,12 +239,16 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     public function addAction()
     {
+        /** @var \Zend\Http\PhpEnvironment\Request $request */
         $request = $this->getRequest();
 
         $data = [];
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
+            $data['advertisements']['uploadedFileCount'] = isset($data['advertisements']['file']['list']) ?
+                count($data['advertisements']['file']['list']) :
+                0;
         }
 
         $resultData = $this->fetchOcData();
@@ -329,6 +333,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     public function editAction()
     {
+        /** @var \Zend\Http\PhpEnvironment\Request $request */
         $request = $this->getRequest();
 
         $resultData = $this->fetchOcItemData();
@@ -346,6 +351,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         } else {
             $data = OperatingCentre::mapFromResult($resultData);
         }
+        $data['advertisements']['uploadedFileCount'] = count($data['advertisements']['file']['list']);
 
         $resultData['canAddAnother'] = false;
         $resultData['action'] = 'edit';

@@ -34,13 +34,15 @@ class FileUploadCount extends \Zend\Validator\AbstractValidator
     /**
      * Set the min number of file uploads required
      *
-     * @param int $min
-     * @throws Exception\InvalidArgumentException
+     * @param int $min Min number required
+     *
+     * @return void
+     * @throws \Zend\Validator\Exception\InvalidArgumentException
      */
     public function setMin($min)
     {
         if (!is_numeric($min)) {
-            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
+            throw new \Zend\Validator\Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
         $this->options['min'] = $min;
@@ -59,8 +61,8 @@ class FileUploadCount extends \Zend\Validator\AbstractValidator
     /**
      * is the value valid
      *
-     * @param  mixed $value
-     * @param  array $context
+     * @param mixed $value   Value to validate
+     * @param array $context Context data
      *
      * @return bool
      */
@@ -77,14 +79,14 @@ class FileUploadCount extends \Zend\Validator\AbstractValidator
     /**
      * Get the number of files uploaded
      *
-     * @param array $context
+     * @param array $context Context data
      *
      * @return int
      */
     private function getNumberOfFilesUploaded($context)
     {
-        if (isset($context['files']['list']) && is_array($context['files']['list'])) {
-            return count($context['files']['list']);
+        if (isset($context['uploadedFileCount'])) {
+            return (int) $context['uploadedFileCount'];
         }
 
         return 0;
