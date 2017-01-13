@@ -1,15 +1,10 @@
 <?php
 
-/**
- * File Upload Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Helper;
 
+use Common\Exception\ConfigurationException;
 use Common\Exception\File\InvalidMimeException;
 use Zend\Validator\File\FilesSize;
-use Common\Exception\ConfigurationException;
 
 /**
  * File Upload Helper Service
@@ -18,10 +13,11 @@ use Common\Exception\ConfigurationException;
  */
 class FileUploadHelperService extends AbstractHelperService
 {
-    const MAX_FILE_SIZE = '25MB';
+    const FILE_UPLOAD_ERR_PREFIX = 'message.file-upload-error.';
 
+    /** @var  \Zend\Form\FormInterface */
     private $form;
-
+    /** @var  string */
     private $selector;
 
     private $countSelector;
@@ -32,26 +28,51 @@ class FileUploadHelperService extends AbstractHelperService
 
     private $loadCallback;
 
+    /** @var  \Zend\Http\Request */
     private $request;
 
     private $element;
 
+    /**
+     * Get Form
+     *
+     * @return \Zend\Form\FormInterface
+     */
     public function getForm()
     {
         return $this->form;
     }
 
+    /**
+     * Set Form
+     *
+     * @param \Zend\Form\FormInterface $form Form
+     *
+     * @return $this
+     */
     public function setForm($form)
     {
         $this->form = $form;
         return $this;
     }
 
+    /**
+     * Get Selector
+     *
+     * @return string
+     */
     public function getSelector()
     {
         return $this->selector;
     }
 
+    /**
+     * Set selector
+     *
+     * @param string $selector Selector
+     *
+     * @return $this
+     */
     public function setSelector($selector)
     {
         $this->selector = $selector;
@@ -74,6 +95,13 @@ class FileUploadHelperService extends AbstractHelperService
         return $this->uploadCallback;
     }
 
+    /**
+     * Set upload callback
+     *
+     * @param string $uploadCallback Name of method
+     *
+     * @return $this
+     */
     public function setUploadCallback($uploadCallback)
     {
         $this->uploadCallback = $uploadCallback;
@@ -152,8 +180,8 @@ class FileUploadHelperService extends AbstractHelperService
     /**
      * Populate file list
      *
-     * @return boolean
-     * @throws \Common\Exception\ConfigurationException
+     * @return void
+     * @throws ConfigurationException
      */
     private function populateFileList()
     {
@@ -176,7 +204,6 @@ class FileUploadHelperService extends AbstractHelperService
         $element->get('list')->setFiles($files, $url);
 
         $this->updateCount(count($files));
-
     }
 
     protected function updateCount($count)
@@ -218,8 +245,8 @@ class FileUploadHelperService extends AbstractHelperService
         }
 
         // Check if the upload button has been pressed
-        $postData = $this->findSelectorData((array)$this->getRequest()->getPost(), $this->getSelector());
-        $fileData = $this->findSelectorData((array)$this->getRequest()->getFiles(), $this->getSelector());
+        $postData = $this->findSelectorData((array)$this->request->getPost(), $this->getSelector());
+        $fileData = $this->findSelectorData((array)$this->request->getFiles(), $this->getSelector());
 
         /**
          * @TODO: these next two statements *are* temporary; the old MultipleFileUpload element groups
@@ -248,25 +275,26 @@ class FileUploadHelperService extends AbstractHelperService
 
         $error = $fileData['file-controls']['file']['error'];
 
-        $validator = new FilesSize(self::MAX_FILE_SIZE);
-
-        $file = $fileData['file-controls']['file'];
+        $fileTmpName = $fileData['file-controls']['file']['tmp_name'];
         // eg onAccess anti-virus removed it
-        if (!file_exists($file['tmp_name'])) {
-            $this->getForm()->setMessages($this->formatErrorMessageForForm('message.file-upload-error.' . 'missing'));
+        if (!file_exists($fileTmpName)) {
+            $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'missing'));
 
             return false;
         }
 
-        if ($error == UPLOAD_ERR_OK && !$validator->isValid($fileData['file-controls']['file']['tmp_name'])) {
+        $cfg = $this->getServiceLocator()->get('Config');
+
+        $validator = new FilesSize($cfg['document_share']['max_upload_size']);
+        if ($error == UPLOAD_ERR_OK && !$validator->isValid($fileTmpName)) {
             $error = UPLOAD_ERR_INI_SIZE;
         }
 
         if ($error === UPLOAD_ERR_OK) {
             // Run virus scan on file
             $scanner = $this->getServiceLocator()->get(\Common\Service\AntiVirus\Scan::class);
-            if ($scanner->isEnabled() && !$scanner->isClean($file['tmp_name'])) {
-                $this->getForm()->setMessages($this->formatErrorMessageForForm('message.file-upload-error.' . 'virus'));
+            if ($scanner->isEnabled() && !$scanner->isClean($fileTmpName)) {
+                $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'virus'));
 
                 return false;
             }
@@ -283,7 +311,7 @@ class FileUploadHelperService extends AbstractHelperService
                 return false;
             }
         } else {
-            $this->getForm()->setMessages($this->formatErrorMessageForForm('message.file-upload-error.'. $error));
+            $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX. $error));
         }
 
         return true;
@@ -292,7 +320,7 @@ class FileUploadHelperService extends AbstractHelperService
     /**
      * Process a single file deletion
      *
-     * @return array
+     * @return bool
      */
     private function processFileDeletions()
     {
@@ -411,6 +439,6 @@ class FileUploadHelperService extends AbstractHelperService
 
     private function failedUpload()
     {
-        $this->getForm()->setMessages($this->formatErrorMessageForForm('unknown_error'));
+        $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'any'));
     }
 }

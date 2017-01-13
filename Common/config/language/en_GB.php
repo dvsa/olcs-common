@@ -1816,6 +1816,7 @@ return [
     'manage-users.update.error' => 'The user could not be updated',
     'manage-users.update.success' => 'User successfully updated',
     'mark-urgent' => 'Mark as urgent',
+    'message.file-upload-error.any' => 'An unexpected error occurred while uploading the file',
     'message.file-upload-error.1' => 'The file was too large to upload',
     'message.file-upload-error.2' => 'The file was too large to upload',
     'message.file-upload-error.3' => 'File was only partially uploaded',

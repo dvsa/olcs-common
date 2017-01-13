@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Generic Upload Stub
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Traits\Stubs;
 
 use Common\Controller\Traits\GenericUpload;
@@ -20,6 +15,11 @@ class GenericUploadStub extends AbstractActionController
     use GenericUpload;
 
     public $stubResponse;
+
+    public function callUploadFile($fileData, $data)
+    {
+        return $this->uploadFile($fileData, $data);
+    }
 
     public function callDeleteFile($id)
     {
