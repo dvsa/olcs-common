@@ -1,27 +1,23 @@
 <?php
 
-/**
- * Command
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Cqrs\Command;
 
 use Common\Exception\ResourceConflictException;
+use Common\Service\Cqrs\CqrsTrait;
+use Common\Service\Cqrs\Response;
+use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Util\FileContent;
 use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
-use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
 use Dvsa\Olcs\Utils\Client\ClientAdapterLoggingWrapper;
+use Zend\Http\Client;
+use Zend\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
 use Zend\Http\Header\ContentType;
 use Zend\Http\Headers;
-use Zend\Http\Response as HttpResponse;
-use Zend\Mvc\Router\RouteInterface;
 use Zend\Http\Request;
-use Zend\Http\Client;
+use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\Exception\ExceptionInterface;
-use Zend\Http\Client\Exception\ExceptionInterface as HttpClientExceptionInterface;
-use Common\Service\Cqrs\CqrsTrait;
+use Zend\Mvc\Router\RouteInterface;
 
 /**
  * Command
@@ -47,6 +43,15 @@ class CommandService
      */
     protected $request;
 
+    /**
+     * CommandService constructor.
+     *
+     * @param RouteInterface              $router          Router
+     * @param Client                      $client          Http Client
+     * @param Request                     $request         Http Request
+     * @param boolean                     $showApiMessages Is Show Api messages
+     * @param FlashMessengerHelperService $flashMessenger  Flash messenger
+     */
     public function __construct(
         RouteInterface $router,
         Client $client,
@@ -64,8 +69,10 @@ class CommandService
     /**
      * Send a query and return the response
      *
-     * @param CommandContainerInterface $command
+     * @param \Dvsa\Olcs\Transfer\Command\CommandContainer $command Command
+     *
      * @return Response
+     * @throws ResourceConflictException
      */
     public function send(CommandContainerInterface $command)
     {
@@ -102,7 +109,7 @@ class CommandService
         foreach ($data as $name => $value) {
             if ($value instanceof FileContent) {
                 $isMultipart = true;
-                $this->client->setFileUpload($value->getFileName(), $name);
+                $this->client->setFileUpload($value->getFileName(), $name, null, $value->getMimeType());
             }
         }
 

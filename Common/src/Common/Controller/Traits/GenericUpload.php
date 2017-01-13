@@ -1,15 +1,9 @@
 <?php
 
-/**
- * Generic Upload
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Controller\Traits;
 
 use Common\Exception\File\InvalidMimeException;
 use Common\Util\FileContent;
-use Dvsa\Olcs\Transfer\Command\Document\CreateDocument;
 use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
 use Dvsa\Olcs\Transfer\Command\Document\Upload;
 
@@ -23,13 +17,14 @@ trait GenericUpload
     /**
      * Process files
      *
-     * @param \Zend\Form\Form $form
-     * @param string $selector - selector identifying the MultipleFileUpload element
-     * @param callable $uploadCallback
-     * @param callable $deleteCallback
-     * @param callable $loadCallback
-     * @param string $countSelector - optional selector identifying element to
-     * update with number of files uploaded (e.g. for validation)
+     * @param \Zend\Form\Form $form           Form
+     * @param string          $selector       selector identifying the MultipleFileUpload element
+     * @param callable        $uploadCallback method name for upload
+     * @param callable        $deleteCallback method name for delete
+     * @param callable        $loadCallback   method name for load
+     * @param string          $countSelector  optional selector identifying element to
+     *                                        update with number of files uploaded (e.g. for validation)
+     *
      * @return bool
      */
     public function processFiles(
@@ -40,6 +35,7 @@ trait GenericUpload
         $loadCallback,
         $countSelector = null
     ) {
+        /** @var \Common\Service\Helper\FileUploadHelperService $uploadHelper */
         $uploadHelper = $this->getServiceLocator()->get('Helper\FileUpload');
 
         $uploadHelper->setForm($form)
@@ -59,12 +55,12 @@ trait GenericUpload
     /**
      * Upload a file
      *
-     * @param array $fileData
-     * @param array $data
+     * @param array $fileData File Data
+     * @param array $data     Data
+     *
+     * @return void
      * @throws InvalidMimeException
      * @throws \Exception
-     *
-     * @return array
      */
     protected function uploadFile($fileData, $data)
     {
@@ -76,8 +72,10 @@ trait GenericUpload
             }
         }
 
-        $data['content'] = new FileContent($fileData['tmp_name']);
+        $mimeType = (isset($fileData['type']) ? $fileData['type'] : null);
+        $data['content'] = new FileContent($fileData['tmp_name'], $mimeType);
 
+        /** @var \Common\Service\Cqrs\Response $response */
         $response = $this->handleCommand(Upload::create($data));
 
         if ($response->isClientError()) {
@@ -93,7 +91,7 @@ trait GenericUpload
         }
 
         if ($response->isOk()) {
-            return true;
+            return;
         }
 
         throw new \Exception();
@@ -102,10 +100,13 @@ trait GenericUpload
     /**
      * Delete file
      *
-     * @param int $id
+     * @param int $id Identifier
+     *
+     * @return bool
      */
     public function deleteFile($id)
     {
+        /** @var \Common\Service\Cqrs\Response $response */
         $response = $this->handleCommand(DeleteDocument::create(['id' => $id]));
 
         return $response->isOk();

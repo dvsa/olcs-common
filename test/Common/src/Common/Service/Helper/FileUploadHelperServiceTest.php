@@ -1,10 +1,5 @@
 <?php
 
-/**
- * File Upload Helper Service Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Service\Helper;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -12,98 +7,101 @@ use Common\Service\Helper\FileUploadHelperService;
 use Mockery as m;
 
 /**
- * File Upload Helper Service Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @covers \Common\Service\Helper\FileUploadHelperService
  */
 class FileUploadHelperServiceTest extends MockeryTestCase
 {
+    /** @var  FileUploadHelperService */
+    private $sut;
+    /** @var  m\MockInterface */
+    private $mockRequest;
+    /** @var  m\MockInterface */
+    private $mockForm;
+    /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
+    private $mockSm;
+
+    public function setUp()
+    {
+        $this->mockRequest = m::mock(\Zend\Http\Request::class);
+        $this->mockForm = m::mock(\Zend\Form\Form::class);
+
+        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+
+        $this->sut = new FileUploadHelperService();
+        $this->sut->setRequest($this->mockRequest);
+        $this->sut->setForm($this->mockForm);
+        $this->sut->setServiceLocator($this->mockSm);
+    }
+
     public function testSetGetForm()
     {
-        $helper = new FileUploadHelperService();
-
         $this->assertEquals(
             'fakeForm',
-            $helper->setForm('fakeForm')->getForm()
+            $this->sut->setForm('fakeForm')->getForm()
         );
     }
 
     public function testSetGetSelector()
     {
-        $helper = new FileUploadHelperService();
-
         $this->assertEquals(
             'fakeSelector',
-            $helper->setSelector('fakeSelector')->getSelector()
+            $this->sut->setSelector('fakeSelector')->getSelector()
         );
     }
 
     public function testSetGetCountSelector()
     {
-        $helper = new FileUploadHelperService();
-
         $this->assertEquals(
             'fakeCountSelector',
-            $helper->setCountSelector('fakeCountSelector')->getCountSelector()
+            $this->sut->setCountSelector('fakeCountSelector')->getCountSelector()
         );
     }
 
     public function testSetGetUploadCallback()
     {
-        $helper = new FileUploadHelperService();
-
         $this->assertEquals(
             'fakeUploadCallback',
-            $helper->setUploadCallback('fakeUploadCallback')->getUploadCallback()
+            $this->sut->setUploadCallback('fakeUploadCallback')->getUploadCallback()
         );
     }
 
     public function testSetGetDeleteCallback()
     {
-        $helper = new FileUploadHelperService();
-
         $this->assertEquals(
             'fakeDeleteCallback',
-            $helper->setDeleteCallback('fakeDeleteCallback')->getDeleteCallback()
+            $this->sut->setDeleteCallback('fakeDeleteCallback')->getDeleteCallback()
         );
     }
 
     public function testSetGetLoadCallback()
     {
-        $helper = new FileUploadHelperService();
-
         $this->assertEquals(
             'fakeLoadCallback',
-            $helper->setLoadCallback('fakeLoadCallback')->getLoadCallback()
+            $this->sut->setLoadCallback('fakeLoadCallback')->getLoadCallback()
         );
     }
 
     public function testSetGetRequest()
     {
-        $helper = new FileUploadHelperService();
-
         $this->assertEquals(
             'fakeRequest',
-            $helper->setRequest('fakeRequest')->getRequest()
+            $this->sut->setRequest('fakeRequest')->getRequest()
         );
     }
 
     public function testSetGetElement()
     {
-        $helper = new FileUploadHelperService();
-
         $this->assertEquals(
             'fakeElement',
-            $helper->setElement('fakeElement')->getElement()
+            $this->sut->setElement('fakeElement')->getElement()
         );
     }
 
     public function testGetElementFromFormAndSelector()
     {
-        $form = m::mock('Zend\Form\Form');
         $fieldset = m::mock('Zend\Form\Fieldset');
 
-        $form->shouldReceive('get')
+        $this->mockForm->shouldReceive('get')
             ->with('foo')
             ->andReturn($fieldset);
 
@@ -111,46 +109,33 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ->with('bar')
             ->andReturn('fakeElement');
 
-        $helper = new FileUploadHelperService();
+        $this->sut->setSelector('foo->bar');
 
-        $helper->setForm($form);
-        $helper->setSelector('foo->bar');
-
-        $this->assertEquals('fakeElement', $helper->getElement());
+        $this->assertEquals('fakeElement', $this->sut->getElement());
     }
 
     public function testProcessWithGetRequestAndNoLoadCallback()
     {
-        $helper = new FileUploadHelperService();
+        $this->mockRequest->shouldReceive('isPost')->andReturn(false);
 
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(false);
-
-        $helper->setRequest($request);
-
-        $this->assertFalse($helper->process());
+        $this->assertFalse($this->sut->process());
     }
 
     public function testProcessWithGetRequestPopulatesFileCount()
     {
-        $helper = new FileUploadHelperService();
+        $this->mockRequest->shouldReceive('isPost')->andReturn(false);
 
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(false);
+        $this->sut->setCountSelector('my-hidden-field');
+        $this->sut->setSelector('my-files');
 
-        $helper->setRequest($request);
-
-        $helper->setCountSelector('my-hidden-field');
-        $helper->setSelector('my-files');
-
-        $helper->setLoadCallback(
+        $this->sut->setLoadCallback(
             function () {
                 return ['array-of-files'];
             }
         );
 
         $mockUrlHelper = m::mock();
-        $helper->setServiceLocator(
+        $this->sut->setServiceLocator(
             m::mock('Zend\ServiceManager\ServiceLocatorInterface')
                 ->shouldReceive('get')
                     ->with('Helper\Url')
@@ -171,7 +156,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
         $fileCountfield = m::mock()->shouldReceive('setValue')->with(1)->getMock();
 
-        $form = m::mock('Zend\Form\Form')
+        $this->mockForm
             ->shouldReceive('get')
                 ->with('my-files')
                 ->andReturn($fieldset)
@@ -180,23 +165,17 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 ->andReturn($fileCountfield)
             ->getMock();
 
-        $helper->setForm($form);
-
-        $this->assertFalse($helper->process());
+        $this->assertFalse($this->sut->process());
     }
 
     public function testProcessWithGetRequestAndNotCallableLoadCallback()
     {
-        $helper = new FileUploadHelperService();
+        $this->mockRequest->shouldReceive('isPost')->andReturn(false);
 
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(false);
-
-        $helper->setRequest($request);
-        $helper->setLoadCallback(true); // not callable... obviously
+        $this->sut->setLoadCallback(true); // not callable... obviously
 
         try {
-            $helper->process();
+            $this->sut->process();
         } catch (\Common\Exception\ConfigurationException $ex) {
             $this->assertEquals('Load data callback is not callable', $ex->getMessage());
             return;
@@ -206,15 +185,13 @@ class FileUploadHelperServiceTest extends MockeryTestCase
 
     public function testProcessWithPostAndValidFileUpload()
     {
-        $helper = new FileUploadHelperService();
-
         $file = tempnam(sys_get_temp_dir(), "fuhs");
         touch($file);
-        $helper->setServiceLocator($this->setupScan($file, true));
 
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(true);
+        $this->mockVirusScan($file, true);
+        $this->mockCfs([]);
 
+        //  mock request
         $postData = [
             'my-file' => [
                 'file-controls' => [
@@ -233,15 +210,14 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 ]
             ]
         ];
-        $request->shouldReceive('getPost')
-            ->andReturn($postData);
 
-        $request->shouldReceive('getFiles')
-            ->andReturn($fileData);
+        $this->mockRequest
+            ->shouldReceive('isPost')->andReturn(true)
+            ->shouldReceive('getPost')->andReturn($postData)
+            ->shouldReceive('getFiles')->andReturn($fileData);
 
-        $helper->setRequest($request);
-        $helper->setSelector('my-file');
-        $helper->setUploadCallback(
+        $this->sut->setSelector('my-file');
+        $this->sut->setUploadCallback(
             function ($data) use ($file) {
                 $expected = [
                     'error' => 0,
@@ -251,22 +227,33 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             }
         );
 
-        $this->assertEquals(true, $helper->process());
+        $this->assertEquals(true, $this->sut->process());
 
         unlink($file);
     }
 
-    private function setupScan($file, $isClean)
+    private function mockVirusScan($file, $isClean)
     {
-        $mockScan = m::mock(\Common\Service\AntiVirus\Scan::class);
-        $mockScan->shouldReceive('isEnabled')->with()->once()->andReturn(true);
-        $mockScan->shouldReceive('isClean')->with($file)->once()->andReturn($isClean);
+        $mockScan = m::mock(\Common\Service\AntiVirus\Scan::class)
+            ->shouldReceive('isEnabled')->with()->once()->andReturn(true)
+            ->shouldReceive('isClean')->with($file)->once()->andReturn($isClean)
+            ->getMock();
 
-        $mockServiceManager = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
-        $mockServiceManager->shouldReceive('get')->with(\Common\Service\AntiVirus\Scan::class)->once()
-            ->andReturn($mockScan);
+        $this->mockSm
+            ->shouldReceive('get')->with(\Common\Service\AntiVirus\Scan::class)->once()->andReturn($mockScan);
+    }
 
-        return $mockServiceManager;
+    private function mockCfs($cfg)
+    {
+        $cfg = $cfg +
+            [
+                'document_share' => [
+                    'max_upload_size' => '10MB',
+                ],
+            ];
+
+        $this->mockSm
+            ->shouldReceive('get')->with('Config')->once()->andReturn($cfg);
     }
 
     /**
@@ -276,23 +263,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     {
         $file = tempnam("/tmp", "fuhs");
         touch($file);
-
-        $helper = new FileUploadHelperService();
-
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(true);
-
-        $form = m::mock('Zend\Form\Form');
-        $form->shouldReceive('setMessages')
-            ->once()
-            ->with(
-                [
-                    'my-file' => [
-                        '__messages__' => [$message]
-                    ]
-
-                ]
-            );
 
         $postData = [
             'my-file' => [
@@ -312,16 +282,29 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 ]
             ]
         ];
-        $request->shouldReceive('getPost')
-            ->andReturn($postData);
 
-        $request->shouldReceive('getFiles')
-            ->andReturn($fileData);
+        $this->mockRequest
+            ->shouldReceive('isPost')->andReturn(true)
+            ->shouldReceive('getPost')->andReturn($postData)
+            ->shouldReceive('getFiles')->andReturn($fileData);
 
-        $helper->setRequest($request);
-        $helper->setSelector('my-file');
-        $helper->setForm($form);
-        $helper->setUploadCallback(
+        $this->mockForm
+            ->shouldReceive('setMessages')
+            ->once()
+            ->with(
+                [
+                    'my-file' => [
+                        '__messages__' => [$message]
+                    ]
+
+                ]
+            );
+
+        $this->mockCfs([]);
+
+        $this->sut->setSelector('my-file');
+        $this->sut->setServiceLocator($this->mockSm);
+        $this->sut->setUploadCallback(
             function ($data) use ($file) {
                 $expected = [
                     'error' => 0,
@@ -331,31 +314,24 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             }
         );
 
-        $this->assertEquals(true, $helper->process());
+        $this->assertEquals(true, $this->sut->process());
 
         unlink($file);
+    }
+
+    public function fileUploadProvider()
+    {
+        return [
+            [UPLOAD_ERR_PARTIAL, 'message.file-upload-error.'. UPLOAD_ERR_PARTIAL],
+            [UPLOAD_ERR_NO_FILE, 'message.file-upload-error.'. UPLOAD_ERR_NO_FILE],
+            [UPLOAD_ERR_INI_SIZE, 'message.file-upload-error.'. UPLOAD_ERR_INI_SIZE],
+            [UPLOAD_ERR_NO_TMP_DIR, 'message.file-upload-error.'. UPLOAD_ERR_NO_TMP_DIR],
+        ];
     }
 
     public function testProcessWithPostFileMissing()
     {
         $file = 'foo';
-
-        $helper = new FileUploadHelperService();
-
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(true);
-
-        $form = m::mock('Zend\Form\Form');
-        $form->shouldReceive('setMessages')
-            ->once()
-            ->with(
-                [
-                    'my-file' => [
-                        '__messages__' => ['message.file-upload-error.missing']
-                    ]
-
-                ]
-            );
 
         $postData = [
             'my-file' => [
@@ -374,13 +350,25 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 ]
             ]
         ];
-        $request->shouldReceive('getPost')->andReturn($postData);
-        $request->shouldReceive('getFiles')->andReturn($fileData);
 
-        $helper->setRequest($request);
-        $helper->setSelector('my-file');
-        $helper->setForm($form);
-        $helper->setUploadCallback(
+        $this->mockRequest
+            ->shouldReceive('isPost')->andReturn(true)
+            ->shouldReceive('getPost')->andReturn($postData)
+            ->shouldReceive('getFiles')->andReturn($fileData);
+
+        $this->mockForm->shouldReceive('setMessages')
+            ->once()
+            ->with(
+                [
+                    'my-file' => [
+                        '__messages__' => ['message.file-upload-error.missing']
+                    ]
+
+                ]
+            );
+
+        $this->sut->setSelector('my-file');
+        $this->sut->setUploadCallback(
             function ($data) use ($file) {
                 $expected = [
                     'error' => 0,
@@ -390,21 +378,18 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             }
         );
 
-        $this->assertEquals(false, $helper->process());
+        $this->assertEquals(false, $this->sut->process());
     }
 
     public function testProcessWithPostFileWithVirus()
     {
         $file = __FILE__;
 
-        $helper = new FileUploadHelperService();
-        $helper->setServiceLocator($this->setupScan($file, false));
+        $this->mockVirusScan($file, false);
+        $this->mockCfs([]);
 
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(true);
-
-        $form = m::mock('Zend\Form\Form');
-        $form->shouldReceive('setMessages')
+        $this->mockForm
+            ->shouldReceive('setMessages')
             ->once()
             ->with(
                 [
@@ -432,13 +417,13 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 ]
             ]
         ];
-        $request->shouldReceive('getPost')->andReturn($postData);
-        $request->shouldReceive('getFiles')->andReturn($fileData);
+        $this->mockRequest
+            ->shouldReceive('isPost')->andReturn(true)
+            ->shouldReceive('getPost')->andReturn($postData)
+            ->shouldReceive('getFiles')->andReturn($fileData);
 
-        $helper->setRequest($request);
-        $helper->setSelector('my-file');
-        $helper->setForm($form);
-        $helper->setUploadCallback(
+        $this->sut->setSelector('my-file');
+        $this->sut->setUploadCallback(
             function ($data) use ($file) {
                 $expected = [
                     'error' => 0,
@@ -448,25 +433,64 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             }
         );
 
-        $this->assertEquals(false, $helper->process());
+        $this->assertEquals(false, $this->sut->process());
     }
 
-    public function fileUploadProvider()
+    public function testProcessWithPostFileUploadAnyExpection()
     {
-        return [
-            [UPLOAD_ERR_PARTIAL, 'message.file-upload-error.'. UPLOAD_ERR_PARTIAL],
-            [UPLOAD_ERR_NO_FILE, 'message.file-upload-error.'. UPLOAD_ERR_NO_FILE],
-            [UPLOAD_ERR_INI_SIZE, 'message.file-upload-error.'. UPLOAD_ERR_INI_SIZE],
-            [UPLOAD_ERR_NO_TMP_DIR, 'message.file-upload-error.'. UPLOAD_ERR_NO_TMP_DIR],
+        $file = __FILE__;
+
+        $postData = [
+            'my-file' => [
+                'file-controls' => [
+                    'upload' => true,
+                ],
+            ],
         ];
+        $fileData = [
+            'my-file' => [
+                'file-controls' => [
+                    'file' => [
+                        'error' => UPLOAD_ERR_OK,
+                        'tmp_name' => $file,
+                    ],
+                ],
+            ]
+        ];
+
+        $this->mockRequest
+            ->shouldReceive('isPost')->andReturn(true)
+            ->shouldReceive('getPost')->andReturn($postData)
+            ->shouldReceive('getFiles')->andReturn($fileData);
+
+        $this->mockForm
+            ->shouldReceive('setMessages')
+            ->once()
+            ->with(
+                [
+                    'my-file' => [
+                        '__messages__' => ['message.file-upload-error.any'],
+                    ],
+                ]
+            );
+
+        $this->mockVirusScan($file, true);
+        $this->mockCfs([]);
+
+        $this->sut
+            ->setSelector('my-file')
+            ->setUploadCallback(
+                function () {
+                    throw new \Exception('any error');
+                }
+            );
+
+        static::assertEquals(false, $this->sut->process());
     }
 
     public function testProcessWithPostAndFileDeletions()
     {
-        $helper = new FileUploadHelperService();
-
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(true);
+        $this->mockRequest->shouldReceive('isPost')->andReturn(true);
 
         $postData = [
             'my-file' => [
@@ -479,7 +503,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ]
         ];
 
-        $request->shouldReceive('getPost')
+        $this->mockRequest->shouldReceive('getPost')
             ->andReturn($postData);
 
         $fieldset = m::mock('Zend\Form\Fieldset');
@@ -498,40 +522,34 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ->with('list')
             ->andReturn($listElement);
 
-        $helper->setElement($element);
-        $helper->setRequest($request);
-        $helper->setSelector('my-file');
-        $helper->setDeleteCallback(
+        $this->sut->setElement($element);
+        $this->sut->setSelector('my-file');
+        $this->sut->setDeleteCallback(
             function ($id) {
                 $this->assertEquals(123, $id);
                 return true;
             }
         );
 
-        $helper->setCountSelector('my-hidden-field');
+        $this->sut->setCountSelector('my-hidden-field');
 
         $fileCountfield = m::mock()
             ->shouldReceive('getValue')->andReturn('3')
             ->shouldReceive('setValue')->with(2)
             ->getMock();
 
-        $form = m::mock('Zend\Form\Form')
+        $this->mockForm
             ->shouldReceive('get')
                 ->with('my-hidden-field')
                 ->andReturn($fileCountfield)
             ->getMock();
 
-        $helper->setForm($form);
-
-        $this->assertEquals(true, $helper->process());
+        $this->assertEquals(true, $this->sut->process());
     }
 
     public function testProcessWithPostAndFileDeletionsWithNoDeletionsToDelete()
     {
-        $helper = new FileUploadHelperService();
-
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(true);
+        $this->mockRequest->shouldReceive('isPost')->andReturn(true);
 
         $postData = [
             'my-file' => [
@@ -544,7 +562,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ]
         ];
 
-        $request->shouldReceive('getPost')
+        $this->mockRequest->shouldReceive('getPost')
             ->andReturn($postData);
 
         $listElement = m::mock('\stdClass');
@@ -559,38 +577,33 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ->with('list')
             ->andReturn($listElement);
 
-        $helper->setElement($element);
-        $helper->setRequest($request);
-        $helper->setSelector('my-file');
-        $helper->setDeleteCallback(
+        $this->sut->setElement($element);
+        $this->sut->setSelector('my-file');
+        $this->sut->setDeleteCallback(
             function () {
             }
         );
 
-        $this->assertEquals(false, $helper->process());
+        $this->assertEquals(false, $this->sut->process());
     }
 
     public function testProcessWithPostAndFileDeletionsWithNoList()
     {
-        $helper = new FileUploadHelperService();
-
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('isPost')->andReturn(true);
+        $this->mockRequest->shouldReceive('isPost')->andReturn(true);
 
         $postData = [
             'my-file' => []
         ];
 
-        $request->shouldReceive('getPost')
+        $this->mockRequest->shouldReceive('getPost')
             ->andReturn($postData);
 
-        $helper->setRequest($request);
-        $helper->setSelector('my-file');
-        $helper->setDeleteCallback(
+        $this->sut->setSelector('my-file');
+        $this->sut->setDeleteCallback(
             function () {
             }
         );
 
-        $this->assertEquals(false, $helper->process());
+        $this->assertEquals(false, $this->sut->process());
     }
 }

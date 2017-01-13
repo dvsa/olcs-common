@@ -1,34 +1,156 @@
 <?php
 
-/**
- * Generic Upload Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Traits;
 
-use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Common\Exception\File\InvalidMimeException;
+use Common\Util\FileContent;
 use CommonTest\Bootstrap;
 use CommonTest\Controller\Traits\Stubs\GenericUploadStub;
+use Dvsa\Olcs\Transfer\Command as TransferCmd;
+use Dvsa\Olcs\Transfer\Command\Document\DeleteDocument;
+use Dvsa\Olcs\Transfer\Command\Document\Upload;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Generic Upload Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers \Common\Controller\Traits\GenericUpload
  */
 class GenericUploadTest extends MockeryTestCase
 {
-    protected $sut;
+    /** @var  GenericUploadStub */
+    private $sut;
+
     protected $sm;
+    /** @var  m\MockInterface */
+    private $mockResp;
 
     public function setUp()
     {
         $this->sm = Bootstrap::getServiceManager();
+        $this->mockResp = m::mock(\Zend\Http\Response::class);
 
         $this->sut = new GenericUploadStub();
         $this->sut->setServiceLocator($this->sm);
+        $this->sut->stubResponse = $this->mockResp;
+    }
+
+    /**
+     * @dataProvider dpTestUploadFile
+     */
+    public function testUploadFile($fileData, $data, $expect)
+    {
+        $this->mockResp
+            ->shouldReceive('isOk')->andReturn(true)
+            ->shouldReceive('isClientError')->andReturn(false);
+
+        $this->assertNull($this->sut->callUploadFile($fileData, $data));
+
+        /** @var Upload $dto */
+        $dto = $this->sut->stubResponse->dto;
+        $this->assertInstanceOf(TransferCmd\Document\Upload::class, $dto);
+
+        $this->assertEquals($expect['fileName'], $dto->getFilename());
+        $this->assertInstanceOf(FileContent::class, $dto->getContent());
+    }
+
+    public function dpTestUploadFile()
+    {
+        return [
+            [
+                'fileData' => [
+                    'tmp_name' => 'unit_FileName',
+                    'type' => 'unit_Mime',
+                ],
+                'data' => [
+                    'filename' => 'unit_FileName1',
+                ],
+                'expect' => [
+                    'fileName' => 'unit_FileName1',
+                ],
+            ],
+            [
+                'fileData' => [
+                    'name' => 'unit_Name2',
+                    'tmp_name' => 'unit_FileName',
+                    'type' => 'unit_Mime',
+                ],
+                'data' => [],
+                'expect' => [
+                    'fileName' => 'unit_Name2',
+                ],
+            ],
+            [
+                'fileData' => [
+                    'filename' => 'unit_FileName3',
+                    'tmp_name' => 'unit_FileName',
+                    'type' => 'unit_Mime',
+                ],
+                'data' => [],
+                'expect' => [
+                    'fileName' => 'unit_FileName3',
+                ],
+            ],
+
+        ];
+    }
+
+    public function testUploadFileServerFail()
+    {
+        $this->setExpectedException(\Exception::class);
+
+        $this->mockResp
+            ->shouldReceive('isOk')->andReturn(false)
+            ->shouldReceive('isClientError')->andReturn(false);
+
+        $fileData = [
+            'name' => 'unit_Name2',
+            'tmp_name' => 'unit_FileName',
+        ];
+        $this->sut->callUploadFile($fileData, []);
+    }
+
+    public function testUploadFileInvalidMime()
+    {
+        $this->setExpectedException(InvalidMimeException::class);
+
+        $this->mockResp
+            ->shouldReceive('isClientError')->andReturn(true)
+            ->shouldReceive('getResult')->andReturn(
+                [
+                    'messages' => [
+                        'ERR_MIME' => 'NOT_EXPECT_ERROR_MESSAGE',
+                    ],
+                ]
+            );
+
+        $fileData = [
+            'name' => 'unit_Name2',
+            'tmp_name' => 'unit_FileName',
+        ];
+
+        $this->sut->callUploadFile($fileData, []);
+    }
+
+    public function testUploadFileInvalidEbrsMime()
+    {
+        $this->setExpectedException(InvalidMimeException::class, 'EXPECT_ERROR_MESSAGE');
+
+        $this->mockResp
+            ->shouldReceive('isClientError')->andReturn(true)
+            ->shouldReceive('getResult')->andReturn(
+                [
+                    'messages' => [
+                        'ERR_EBSR_MIME' => 'EXPECT_ERROR_MESSAGE',
+                    ],
+                ]
+            );
+
+        $fileData = [
+            'name' => 'unit_Name2',
+            'tmp_name' => 'unit_FileName',
+        ];
+
+        $this->sut->callUploadFile($fileData, []);
     }
 
     public function testDeleteFile()
@@ -39,7 +161,7 @@ class GenericUploadTest extends MockeryTestCase
 
         $this->assertTrue($this->sut->callDeleteFile(123));
 
-        $this->assertInstanceOf(DeleteDocument::class, $this->sut->stubResponse->dto);
+        $this->assertInstanceOf(TransferCmd\Document\DeleteDocument::class, $this->sut->stubResponse->dto);
         $this->assertEquals(123, $this->sut->stubResponse->dto->getId());
     }
 }
