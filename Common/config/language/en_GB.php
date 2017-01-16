@@ -888,7 +888,7 @@ return [
     'disagree' => 'Disagree',
     'disqualification-column' => ' Disq.',
     'disqualified' => 'Disqualified',
-    'dob' => 'Date of birth',
+    'dob' => 'Date of birth (e.g. 12, 6, 2014)',
     'doc' => 'DOC',
     'docs' => 'Docs',
     'documents-home.data.category' => 'Category',
