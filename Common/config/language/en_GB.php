@@ -2620,6 +2620,7 @@ return [
     'task-update-success' => 'Task(s) successfully updated',
     'tasks.assignedBy' => 'Assigned by',
     'tasks.assignedBy.user' => 'User',
+    'tasks.lastModifiedBy' => 'Last updated by',
     'tasks.assignment' => 'Assigned to',
     'tasks.close.multiple' => 'Are you sure you want to close these tasks?',
     'tasks.close.single' => 'Are you sure you want to close this task?',
