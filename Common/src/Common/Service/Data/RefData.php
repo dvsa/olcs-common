@@ -2,8 +2,6 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\AbstractDataService;
-use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\RefData\RefDataList;
 
@@ -12,10 +10,8 @@ use Dvsa\Olcs\Transfer\Query\RefData\RefDataList;
  *
  * @package Common\Service\Data
  */
-class RefData extends AbstractDataService implements ListData
+class RefData extends AbstractListDataService
 {
-    use ListDataTrait;
-
     /**
      * Fetch list data
      *
@@ -24,7 +20,7 @@ class RefData extends AbstractDataService implements ListData
      * @return array
      * @throw UnexpectedResponseException
      */
-    public function fetchListData($category)
+    public function fetchListData($category = null)
     {
         if (is_null($this->getData($category))) {
 

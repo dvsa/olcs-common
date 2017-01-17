@@ -2,14 +2,12 @@
 
 namespace Common\Service\Data;
 
+use Common\Service\Data\Interfaces\ListData;
+
 /**
- * Trait ListDataTrait
- *
- * Provides a default implementation of ListData requires defining one method for handling fetching data
- *
- * @package Common\Service\Data
+ * @author Dmitry Golubev <dmitrij.golubev@valtech.com>
  */
-trait ListDataTrait
+abstract class AbstractListDataService extends AbstractDataService implements ListData
 {
     /**
      * Format data for groups
@@ -65,7 +63,7 @@ trait ListDataTrait
      *
      * @return array
      */
-    public function fetchListOptions($context, $useGroups = false)
+    public function fetchListOptions($context = null, $useGroups = false)
     {
         $data = $this->fetchListData($context);
 
@@ -81,32 +79,11 @@ trait ListDataTrait
     }
 
     /**
-     * Look up a property based on a key with a known value
-     *
-     * @param string $key      Key
-     * @param string $property Property
-     * @param mixed  $value    Value
-     *
-     * @return mixed|null
-     */
-    private function getPropertyFromKey($key, $property, $value)
-    {
-        $data = $this->fetchListData([]);
-        foreach ($data as $datum) {
-            if ($datum[$key] == $value) {
-                return $datum[$property];
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Fetch list data
      *
-     * @param array|string $context Context
+     * @param array $context Context
      *
      * @return array
      */
-    abstract public function fetchListData($context);
+    abstract public function fetchListData($context = null);
 }
