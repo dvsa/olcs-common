@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Helper;
 
+use Common\Exception\File\InvalidMimeException;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FileUploadHelperService;
 use Mockery as m;
@@ -189,7 +190,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         touch($file);
 
         $this->mockVirusScan($file, true);
-        $this->mockCfs([]);
 
         //  mock request
         $postData = [
@@ -243,19 +243,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ->shouldReceive('get')->with(\Common\Service\AntiVirus\Scan::class)->once()->andReturn($mockScan);
     }
 
-    private function mockCfs($cfg)
-    {
-        $cfg = $cfg +
-            [
-                'document_share' => [
-                    'max_upload_size' => '10MB',
-                ],
-            ];
-
-        $this->mockSm
-            ->shouldReceive('get')->with('Config')->once()->andReturn($cfg);
-    }
-
     /**
      * @dataProvider fileUploadProvider
      */
@@ -300,21 +287,14 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 ]
             );
 
-        $this->mockCfs([]);
-
         $this->sut->setSelector('my-file');
         $this->sut->setServiceLocator($this->mockSm);
         $this->sut->setUploadCallback(
-            function ($data) use ($file) {
-                $expected = [
-                    'error' => 0,
-                    'tmp_name' => $file
-                ];
-                $this->assertEquals($expected, $data);
+            function () {
             }
         );
 
-        $this->assertEquals(true, $this->sut->process());
+        static::assertEquals(false, $this->sut->process());
 
         unlink($file);
     }
@@ -386,7 +366,6 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $file = __FILE__;
 
         $this->mockVirusScan($file, false);
-        $this->mockCfs([]);
 
         $this->mockForm
             ->shouldReceive('setMessages')
@@ -436,7 +415,10 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->assertEquals(false, $this->sut->process());
     }
 
-    public function testProcessWithPostFileUploadAnyExpection()
+    /**
+     * @dataProvider dpTestProcessWithPostFileUploadExpection
+     */
+    public function testProcessWithPostFileUploadExpection($exception, $expectErrMsg)
     {
         $file = __FILE__;
 
@@ -469,23 +451,36 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ->with(
                 [
                     'my-file' => [
-                        '__messages__' => ['message.file-upload-error.any'],
+                        '__messages__' => [$expectErrMsg],
                     ],
                 ]
             );
 
         $this->mockVirusScan($file, true);
-        $this->mockCfs([]);
 
         $this->sut
             ->setSelector('my-file')
             ->setUploadCallback(
-                function () {
-                    throw new \Exception('any error');
+                function () use ($exception) {
+                    throw $exception;
                 }
             );
 
         static::assertEquals(false, $this->sut->process());
+    }
+
+    public function dpTestProcessWithPostFileUploadExpection()
+    {
+        return [
+            [
+                'expection' => new \Exception('any error'),
+                'expect' => 'message.file-upload-error.any',
+            ],
+            [
+                'expection' => new InvalidMimeException('any error'),
+                'expect' => 'ERR_MIME',
+            ],
+        ];
     }
 
     public function testProcessWithPostAndFileDeletions()
