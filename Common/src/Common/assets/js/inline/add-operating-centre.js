@@ -37,15 +37,25 @@ $(function() {
     });
   }
 
-  $('#noOfVehiclesRequired, #noOfTrailersRequired').change(function() {
+  function variationShowHide() {
     if (vehicles.data("current")) {
       // show the advertisements section if the OC's auth has increased at all
       if (vehicles.val() > vehicles.data("current") || trailers.val() > trailers.data("current")) {
         OLCS.eventEmitter.emit('show:advertisements:*');
+        $('[data-group="advertisements"]').show();
       } else {
         OLCS.eventEmitter.emit('hide:advertisements:*');
+        $('[data-group="advertisements"]').hide();
       }
     }
+  }
+
+  $(window).load(function() {
+    variationShowHide();
+  })
+
+  $('#noOfVehiclesRequired, #noOfTrailersRequired').change(function() {
+    variationShowHide();
   });
 
   OLCS.cascadeForm({
