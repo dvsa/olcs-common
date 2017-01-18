@@ -4,7 +4,6 @@ namespace Common\Service\Helper;
 
 use Common\Exception\ConfigurationException;
 use Common\Exception\File\InvalidMimeException;
-use Zend\Validator\File\FilesSize;
 
 /**
  * File Upload Helper Service
@@ -274,6 +273,11 @@ class FileUploadHelperService extends AbstractHelperService
         }
 
         $error = $fileData['file-controls']['file']['error'];
+        if ($error !== UPLOAD_ERR_OK) {
+            $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . $error));
+
+            return false;
+        }
 
         $fileTmpName = $fileData['file-controls']['file']['tmp_name'];
         // eg onAccess anti-virus removed it
@@ -283,35 +287,26 @@ class FileUploadHelperService extends AbstractHelperService
             return false;
         }
 
-        $cfg = $this->getServiceLocator()->get('Config');
+        // Run virus scan on file
+        $scanner = $this->getServiceLocator()->get(\Common\Service\AntiVirus\Scan::class);
+        if ($scanner->isEnabled() && !$scanner->isClean($fileTmpName)) {
+            $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'virus'));
 
-        $validator = new FilesSize($cfg['document_share']['max_upload_size']);
-        if ($error == UPLOAD_ERR_OK && !$validator->isValid($fileTmpName)) {
-            $error = UPLOAD_ERR_INI_SIZE;
+            return false;
         }
+        try {
+            call_user_func(
+                $callback,
+                $fileData['file-controls']['file']
+            );
+        } catch (InvalidMimeException $ex) {
+            $this->invalidMime();
 
-        if ($error === UPLOAD_ERR_OK) {
-            // Run virus scan on file
-            $scanner = $this->getServiceLocator()->get(\Common\Service\AntiVirus\Scan::class);
-            if ($scanner->isEnabled() && !$scanner->isClean($fileTmpName)) {
-                $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'virus'));
+            return false;
+        } catch (\Exception $ex) {
+            $this->failedUpload();
 
-                return false;
-            }
-            try {
-                call_user_func(
-                    $callback,
-                    $fileData['file-controls']['file']
-                );
-            } catch (InvalidMimeException $ex) {
-                $this->invalidMime();
-                return false;
-            } catch (\Exception $ex) {
-                $this->failedUpload();
-                return false;
-            }
-        } else {
-            $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX. $error));
+            return false;
         }
 
         return true;
