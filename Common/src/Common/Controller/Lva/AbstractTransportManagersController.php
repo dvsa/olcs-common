@@ -485,7 +485,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             $this->getServiceLocator()->get('CommandService')->send($command);
         }
 
-        return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+        return $this->redirect()->toRouteAjax(null, ['action' => 'index'], [], true);
     }
 
     /**

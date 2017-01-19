@@ -34,7 +34,7 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         /** @var CommandService $mockCommandSrv */
         $mockCommandSrv = m::mock(CommandService::class);
 
-        $this->sut = new TestClass(
+        $this->sut = new StubAbstractTransportManagerAdapter(
             $mockAnnotationBuilder, $mockQuerySrv, $mockCommandSrv
         );
         $this->sut->setServiceLocator($this->sm);
@@ -71,61 +71,56 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
 
     public function dataProviderTestMapResultForTable()
     {
-        $person = [
-            'familyname' => 'unit_FamilyName',
-            'foreName' => 'unit_ForeName',
-            'birthDate' => 'unit_BirthDate',
+        $expectedName = [
+            'familyName' => 'unit_FamilyName',
+            'forename' => 'unit_Forename',
         ];
-
-        $appMng = [
-            'id' => 80001,
-            'homeCd' => [
-                'person' => $person,
-                'emailAddress' => 'unit_AppEmail',
-            ],
+        $expectedStatus = [
+            'id' => 'unit_TmAppStatusId',
+            'description' => 'unit_TmAppStatusDesc'
         ];
-
-        $licMng = [
-            'id' => 70001,
-            'homeCd' => [
-                'person' => $person,
-                'emailAddress' => 'unit_LicEmail',
-            ],
-        ];
-
         return [
             [
                 'licTms' => [
                     [
                         'id' => 201,
-                        'transportManager' => $licMng,
+                        'tmid' => 70001,
+                        'birthDate' => 'unit_BirthDate',
+                        'forename' => 'unit_Forename',
+                        'familyName' => 'unit_FamilyName',
+                        'emailAddress' => 'unit_LicEmail'
                     ],
                 ],
                 'appTms' => [
                     [
                         'id' => 101,
-                        'transportManager' => $appMng,
                         'action' => 'unit_Action',
-                        'tmApplicationStatus' => 'unit_TmAppStatus',
+                        'tmid' => 80001,
+                        'tmasid' => 'unit_TmAppStatusId',
+                        'tmasdesc' => 'unit_TmAppStatusDesc',
+                        'birthDate' => 'unit_BirthDate',
+                        'forename' => 'unit_Forename',
+                        'familyName' => 'unit_FamilyName',
+                        'emailAddress' => 'unit_AppEmail'
                     ],
                 ],
                 'expect' => [
                     '80001a' => [
                         'id' => 101,
-                        'name' => $person,
-                        'status' => 'unit_TmAppStatus',
+                        'name' => $expectedName,
+                        'status' => $expectedStatus,
                         'email' => 'unit_AppEmail',
                         'dob' => 'unit_BirthDate',
-                        'transportManager' => $appMng,
+                        'transportManager' => ['id' => 80001],
                         'action' => 'unit_Action',
                     ],
                     '70001' => [
                         'id' => 'L201',
-                        'name' => $person,
+                        'name' => $expectedName,
                         'status' => null,
                         'email' => 'unit_LicEmail',
                         'dob' => 'unit_BirthDate',
-                        'transportManager' => $licMng,
+                        'transportManager' => ['id' => 70001],
                         'action' => 'E',
                     ],
                 ],
@@ -135,34 +130,44 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
                 'licTms' => [
                     [
                         'id' => 301,
-                        'transportManager' => ['id' => 8888] + $licMng,
+                        'tmid' => 8888,
+                        'birthDate' => 'unit_BirthDate',
+                        'forename' => 'unit_Forename',
+                        'familyName' => 'unit_FamilyName',
+                        'emailAddress' => 'unit_LicEmail'
                     ],
                 ],
                 'appTms' => [
                     [
                         'id' => 101,
-                        'transportManager' => ['id' => 8888] + $appMng,
-                        'action' => 'U',
-                        'tmApplicationStatus' => 'unit_TmAppStatus',
+                        'action' => 'unit_Action',
+                        'tmid' => 8888,
+                        'tmasid' => 'unit_TmAppStatusId',
+                        'tmasdesc' => 'unit_TmAppStatusDesc',
+                        'birthDate' => 'unit_BirthDate',
+                        'forename' => 'unit_Forename',
+                        'familyName' => 'unit_FamilyName',
+                        'emailAddress' => 'unit_AppEmail',
+                        'action' => 'U'
                     ],
                 ],
                 'expect' => [
                     '8888' => [
                         'id' => 'L301',
-                        'name' => $person,
+                        'name' => $expectedName,
                         'status' => null,
                         'email' => 'unit_LicEmail',
                         'dob' => 'unit_BirthDate',
-                        'transportManager' => ['id' => 8888] + $licMng,
+                        'transportManager' => ['id' => 8888],
                         'action' => 'C',
                     ],
                     '8888a' => [
                         'id' => 101,
-                        'name' => $person,
-                        'status' => 'unit_TmAppStatus',
+                        'name' => $expectedName,
+                        'status' => $expectedStatus,
                         'email' => 'unit_AppEmail',
                         'dob' => 'unit_BirthDate',
-                        'transportManager' => ['id' => 8888] + $appMng,
+                        'transportManager' => ['id' => 8888],
                         'action' => 'U',
                     ],
                 ],
@@ -172,29 +177,39 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
                 'licTms' => [
                     [
                         'id' => 301,
-                        'transportManager' => ['id' => 8888] + $licMng,
+                        'tmid' => 8888,
+                        'birthDate' => 'unit_BirthDate',
+                        'forename' => 'unit_Forename',
+                        'familyName' => 'unit_FamilyName',
+                        'emailAddress' => 'unit_LicEmail'
                     ],
                 ],
                 'appTms' => [
                     [
                         'id' => 101,
-                        'transportManager' => ['id' => 8888] + $appMng,
-                        'action' => 'D',
-                        'tmApplicationStatus' => 'unit_TmAppStatus',
+                        'action' => 'unit_Action',
+                        'tmid' => 8888,
+                        'tmasid' => 'unit_TmAppStatusId',
+                        'tmasdesc' => 'unit_TmAppStatusDesc',
+                        'birthDate' => 'unit_BirthDate',
+                        'forename' => 'unit_Forename',
+                        'familyName' => 'unit_FamilyName',
+                        'emailAddress' => 'unit_AppEmail',
+                        'action' => 'D'
                     ],
                 ],
                 'expect' => [
                     '8888a' => [
                         'id' => 101,
-                        'name' => $person,
-                        'status' => 'unit_TmAppStatus',
+                        'name' => $expectedName,
+                        'status' => $expectedStatus,
                         'email' => 'unit_AppEmail',
                         'dob' => 'unit_BirthDate',
-                        'transportManager' => ['id' => 8888] + $appMng,
+                        'transportManager' => ['id' => 8888],
                         'action' => 'D',
                     ],
                 ],
-            ],
+            ]
         ];
     }
 
@@ -306,31 +321,5 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
                 ],
             ],
         ];
-    }
-}
-
-/**
- * Test Class for testing abstract class
- */
-class TestClass extends AbstractTransportManagerAdapter
-{
-    protected $tableSortMethod = null;
-
-    public function mapResultForTable(array $applicationTms, array $licenceTms = [])
-    {
-        return parent::mapResultForTable($applicationTms, $licenceTms);
-    }
-
-    public function sortResultForTable(array $data, $method = null)
-    {
-        return parent::sortResultForTable($data, $method);
-    }
-
-    public function getTableData($applicationId, $licenceId)
-    {
-    }
-
-    public function delete(array $ids, $applicationId)
-    {
     }
 }
