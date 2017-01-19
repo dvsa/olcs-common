@@ -80,39 +80,44 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
 
         // add each TM from the licence
         foreach ($licenceTms as $tml) {
-            $mng = $tml['transportManager'];
-
-            $homeCd = $mng['homeCd'];
-
-            $mappedData[$mng['id']] = [
+            $id = $tml['tmid'];
+            $mappedData[$id] = [
                 // Transport Manager Licence ID
                 'id' => 'L' . $tml['id'],
-                'name' => $homeCd['person'],
+                'name' => [
+                    'forename' => $tml['forename'],
+                    'familyName' => $tml['familyName'],
+                ],
                 'status' => null,
-                'email' => $homeCd['emailAddress'],
-                'dob' => $homeCd['person']['birthDate'],
-                'transportManager' => $mng,
+                'email' => $tml['emailAddress'],
+                'dob' => $tml['birthDate'],
+                'transportManager' => [
+                    'id' => $id
+                ],
                 'action' => 'E',
             ];
         }
 
         // add each TM from the application/variation
         foreach ($applicationTms as $tma) {
-            $mng = $tma['transportManager'];
-
-            $id = $mng['id'];
-            $homeCd = $mng['homeCd'];
-
+            $id = $tma['tmid'];
             $mappedData[$id . 'a'] = [
                 'id' => $tma['id'],
-                'name' => $homeCd['person'],
-                'status' => $tma['tmApplicationStatus'],
-                'email' => $homeCd['emailAddress'],
-                'dob' => $homeCd['person']['birthDate'],
-                'transportManager' => $mng,
+                'name' => [
+                    'familyName' => $tma['familyName'],
+                    'forename' => $tma['forename']
+                ],
+                'status' => [
+                    'id' => $tma['tmasid'],
+                    'description' => $tma['tmasdesc']
+                ],
+                'email' => $tma['emailAddress'],
+                'dob' => $tma['birthDate'],
                 'action' => $tma['action'],
+                'transportManager' => [
+                    'id' => $id
+                ]
             ];
-
             // update the licence TM's if they have been updated
             switch ($tma['action']) {
                 case 'U':
