@@ -193,6 +193,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         switch ($organisationTypeId) {
             case RefData::ORG_TYPE_REGISTERED_COMPANY:
                 $tableHeader .= 'Directors';
+
+                //for selfserve we don't show the header for directors
+                if ($this->location === 'external') {
+                    $tableHeader = '';
+                }
                 break;
 
             case RefData::ORG_TYPE_LLP:
