@@ -113,6 +113,19 @@ class ActionTest extends MockeryTestCase
                     ' name="action[unit_Action][' . self::ID . ']"' .
                     ' value="unit_ValueFormat"  />',
             ],
+            [
+                'isFieldSet' => false,
+                'data' => [
+                    'field' => 'unit_FldVal',
+                ],
+                'column' => [
+                    'action' => 'unit_Action',
+                    'value_format' => 'unit_ValueFormat',
+                    'keepForReadOnly' => true,
+                ],
+                'content' => null,
+                'expect' => 'unit_ValueFormat',
+            ],
         ];
     }
 }

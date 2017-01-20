@@ -1929,7 +1929,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $columns = $this->getColumns();
             $updatedColumns = [];
             foreach ($columns as $column) {
-                if (isset($column['type']) && in_array($column['type'], $typesToRemove)) {
+                if (
+                    isset($column['type'])
+                    && in_array($column['type'], $typesToRemove)
+                    && !(isset($column['keepForReadOnly']) && $column['keepForReadOnly'])
+                ) {
                     continue;
                 }
                 $updatedColumns[] = $column;

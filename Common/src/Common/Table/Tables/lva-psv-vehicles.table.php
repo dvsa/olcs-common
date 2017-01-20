@@ -49,7 +49,8 @@ return array(
             'formatter' => 'StackValue',
             'action' => 'edit',
             'type' => 'Action',
-            'sort' => 'v.vrm'
+            'sort' => 'v.vrm',
+            'keepForReadOnly' => true
         ),
         array(
             'title' => $translationPrefix . '.make',

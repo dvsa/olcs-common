@@ -16,8 +16,8 @@ return array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
                 'delete' => array(
-                    'label' => 'Remove', 
-                    'class' => ' more-actions__item js-require--multiple', 
+                    'label' => 'Remove',
+                    'class' => ' more-actions__item js-require--multiple',
                     'requireRows' => true
                 ),
             )
@@ -47,7 +47,8 @@ return array(
                 return $data['vehicle']['vrm'];
             },
             'type' => 'Action',
-            'sort' => 'v.vrm'
+            'sort' => 'v.vrm',
+            'keepForReadOnly' => true
         ),
         array(
             'title' => $translationPrefix . '.weight',
