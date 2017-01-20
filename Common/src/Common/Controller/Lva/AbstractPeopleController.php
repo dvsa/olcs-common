@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Common\Form\Form;
 use Common\RefData;
 
 /**
@@ -24,6 +25,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     /**
      * Index action
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function indexAction()
     {
@@ -43,6 +46,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     /**
      * Handle all except sole trader
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     private function handleNonSoleTrader()
     {
@@ -85,6 +90,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     /**
      * Handle indexAction if a sole trader
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     private function handleSoleTrader()
     {
@@ -148,6 +155,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         return $this->render('person', $form);
     }
 
+    /**
+     * post save commands
+     *
+     * @return void
+     */
     protected function postSaveCommands()
     {
         $this->updateCompletion();
@@ -161,6 +173,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
     }
 
+    /**
+     * Update completion
+     *
+     * @return void
+     */
     protected function updateCompletion()
     {
         if ($this->lva != 'licence') {
@@ -172,6 +189,13 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
     }
 
+    /**
+     * save person
+     *
+     * @param array $data data
+     *
+     * @return void
+     */
     private function savePerson($data)
     {
         if (empty($data['id'])) {
@@ -183,6 +207,12 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     /**
      * Alter form based on company type
+     *
+     * @param Form                               $form               form
+     * @param \Common\Service\Table\TableBuilder $table              table builder
+     * @param int                                $organisationTypeId organisation id
+     *
+     * @return void
      */
     private function alterForm($form, \Common\Service\Table\TableBuilder $table, $organisationTypeId)
     {
@@ -193,6 +223,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         switch ($organisationTypeId) {
             case RefData::ORG_TYPE_REGISTERED_COMPANY:
                 $tableHeader .= 'Directors';
+
+                //for selfserve we don't show the header for directors
+                if ($this->location === 'external') {
+                    $tableHeader = '';
+                }
                 break;
 
             case RefData::ORG_TYPE_LLP:
@@ -231,6 +266,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         );
     }
 
+    /**
+     * add guidance message
+     *
+     * @return void
+     */
     private function addGuidanceMessage()
     {
         $guidanceLabel = 'selfserve-app-subSection-your-business-people-guidance';
@@ -283,6 +323,15 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
     }
 
+    /**
+     * alter crud form
+     *
+     * @param Form   $form    form
+     * @param string $mode    mode
+     * @param array  $orgData organisation data
+     *
+     * @return void
+     */
     private function alterCrudForm($form, $mode, $orgData)
     {
         if ($mode !== 'add') {
@@ -317,6 +366,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     /**
      * Add person action
+     *
+     * @return void
      */
     public function addAction()
     {
@@ -332,6 +383,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     /**
      * Edit person action
+     *
+     * @return void
      */
     public function editAction()
     {
@@ -345,7 +398,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      * Helper method as both add and edit pretty
      * much do the same thing
      *
-     * @param string $mode
+     * @param string $mode mode
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     private function addOrEdit($mode)
     {
@@ -386,6 +441,10 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     /**
      * Format data from CRUD form
+     *
+     * @param array $data data
+     *
+     * @return array
      */
     private function formatCrudDataForSave($data)
     {
@@ -400,6 +459,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Mechanism to *actually* delete a person, invoked by the
      * underlying delete action
+     *
+     * @return void
      */
     protected function delete()
     {
@@ -415,6 +476,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         $adapter->delete($ids);
     }
 
+    /**
+     * Redirect users who don't have permission
+     *
+     * @return \Zend\Http\Response
+     */
     private function redirectWithoutPermission()
     {
         $this->addErrorMessage('cannot-perform-action');
@@ -424,6 +490,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         );
     }
 
+    /**
+     * Restore action
+     *
+     * @return \Zend\Http\Response
+     */
     public function restoreAction()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
@@ -442,7 +513,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Is the person in the personData disqualified
      *
-     * @param array $personData
+     * @param array $personData array of person data
+     *
      * @return boolean
      */
     protected function isPersonDisqualified($personData)
