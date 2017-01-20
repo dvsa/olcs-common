@@ -505,7 +505,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         $adapter->restore($ids);
 
         return $this->redirect()->toRouteAjax(
-            null,
+            $this->getBaseRoute(),
             [$this->getIdentifierIndex() => $this->getIdentifier()]
         );
     }
