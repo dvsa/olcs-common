@@ -9,7 +9,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * @covers Common\Service\Table\TableBuilder
+ * @covers \Common\Service\Table\TableBuilder
  */
 class TableBuilderTest extends MockeryTestCase
 {
@@ -30,15 +30,17 @@ class TableBuilderTest extends MockeryTestCase
 
     /**
      * Get Mock Table Builder
+     *
+     * @return \Common\Service\Table\TableBuilder | \PHPUnit_Framework_MockObject_MockObject
      */
     private function getMockTableBuilder($methods = array())
     {
-        return $this->getMock('\Common\Service\Table\TableBuilder', $methods, array($this->getMockServiceLocator()));
+        return $this->getMock(\Common\Service\Table\TableBuilder::class, $methods, [$this->getMockServiceLocator()]);
     }
 
     private function getMockServiceLocator($config = true)
     {
-        $mockTranslator = $this->getMock('\Zend\Mvc\I18n\TranslatorInterface', array('translate'));
+        $mockTranslator = $this->getMock(\Zend\Mvc\I18n\Translator::class, ['translate'], [], '', false);
         $mockTranslator->expects(static::any())
             ->method('translate')
             ->willReturnCallback(
@@ -166,14 +168,14 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testBuildTable()
     {
-        $table = $this->getMock(
-            '\Common\Service\Table\TableBuilder', array(
-            'loadConfig',
-            'loadData',
-            'loadParams',
-            'setupAction',
-            'render'
-            ), array($this->getMockServiceLocator())
+        $table = $this->getMockTableBuilder(
+            [
+                'loadConfig',
+                'loadData',
+                'loadParams',
+                'setupAction',
+                'render',
+            ]
         );
 
         $table->expects($this->at(0))
@@ -200,13 +202,13 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testBuildTableWithoutRender()
     {
-        $table = $this->getMock(
-            '\Common\Service\Table\TableBuilder', array(
-            'loadConfig',
-            'loadData',
-            'loadParams',
-            'setupAction'
-            ), array($this->getMockServiceLocator())
+        $table = $this->getMockTableBuilder(
+            [
+                'loadConfig',
+                'loadData',
+                'loadParams',
+                'setupAction',
+            ]
         );
 
         $table->expects($this->at(0))
@@ -685,10 +687,10 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $table = $this->getMock(
-            '\Common\Service\Table\TableBuilder',
-            array('getContentHelper'),
-            array($this->getMockServiceLocator())
+        $table = $this->getMockTableBuilder(
+            [
+                'getContentHelper',
+            ]
         );
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
@@ -2811,7 +2813,8 @@ class TableBuilderTest extends MockeryTestCase
         $mockTranslatorService = m::mock(\Zend\Mvc\I18n\Translator::class);
 
         // Setup
-        $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        /** @var \Zend\ServiceManager\ServiceManager $sm */
+        $sm = m::mock(\Zend\ServiceManager\ServiceManager::class)->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());
         $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
@@ -2846,6 +2849,7 @@ class TableBuilderTest extends MockeryTestCase
         $mockTranslatorService = m::mock(\Zend\Mvc\I18n\Translator::class);
 
         // Setup
+        /** @var \Zend\ServiceManager\ServiceManager $sm */
         $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $sm->setAllowOverride(true);
         $sm->setService('Config', array());

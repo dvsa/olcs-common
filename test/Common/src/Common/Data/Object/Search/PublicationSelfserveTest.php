@@ -3,14 +3,14 @@
 namespace CommonTest\Data\Object\Search;
 
 /**
- * Class PublicationSelfserveTest
- * @package CommonTest\Data\Object\Search
+ * @covers \Common\Data\Object\Search\PublicationSelfserve
  */
 class PublicationSelfserveTest extends SearchAbstractTest
 {
-    protected $class = 'Common\Data\Object\Search\PublicationSelfserve';
+    protected $class = \Common\Data\Object\Search\PublicationSelfserve::class;
 
-    private $sut;
+    /** @var  \Common\Data\Object\Search\PublicationSelfserve */
+    protected $sut;
 
     public function setUp()
     {

@@ -66,14 +66,16 @@ else: ?>
     </ul>
         <?php
     } else {
+        $value = (isset($item['noEscape']) ? $item['value'] : $this->escapeHtml($this->translate($item['value'])));
         ?>
         <dt><?php echo $this->translate($item['label']); ?></dt>
         <dd>
             <?php if (isset($item['url']) && $item['url'] != ''): ?>
-            <a href="<?php echo $item['url']; ?>"><?php echo (isset($item['noEscape']) ? $item['value'] : $this->escapeHtml($item['value'])); ?></a>
+                <a href="<?php echo $item['url']; ?>"><?php echo $value; ?></a>
             <?php else: ?>
-            <?php echo (isset($item['noEscape']) ? $item['value'] : $this->escapeHtml($item['value'])); ?>
+                <?php echo $value; ?>
             <?php endif; ?>
+
             <?php echo !empty($item['suffix']) ? $item['suffix'] : '';?>
         </dd>
         <?php

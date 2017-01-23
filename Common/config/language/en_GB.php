@@ -2981,5 +2981,10 @@ return [
     'application.review-declarations.review.director' => 'a director',
     'application.review-declarations.review.person' => 'a responsible person of the business',
     'application.review-declarations.review.partner' => 'a partner',
+    //  pagination
+    'pagination.showing' => 'Showing',
+    'pagination.results-per-page' => 'results per page',
+    'pagination.next' => 'Next',
+    'pagination.previous' => 'Previous',
     // Potentially unused translations
 ];

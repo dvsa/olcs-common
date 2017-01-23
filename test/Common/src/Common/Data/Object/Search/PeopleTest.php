@@ -5,14 +5,11 @@ namespace CommonTest\Data\Object\Search;
 use Mockery as m;
 
 /**
- * Class PeopleTest
- * @package CommonTest\Data\Object\Search
+ * @covers \Common\Data\Object\Search\People
  */
 class PeopleTest extends SearchAbstractTest
 {
-    protected $class = 'Common\Data\Object\Search\People';
-
-    private $sut;
+    protected $class = \Common\Data\Object\Search\People::class;
 
     public function setUp()
     {

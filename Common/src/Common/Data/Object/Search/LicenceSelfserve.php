@@ -83,19 +83,17 @@ class LicenceSelfserve extends InternalSearchAbstract
                     return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
-            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
+            [
+                'title' => 'Licence status',
+                'name' => 'licStatusDesc',
+                'formatter' => 'Translate',
+            ],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
                 'formatter' => function ($data) {
-
-                    $orgName = $data['orgName'];
-                    if ($data['noOfLicencesHeld'] > 1) {
-                        $orgName .= ' (MLH)';
-                    }
-
-                    return $orgName;
-                }
+                    return $data['orgName'] . ($data['noOfLicencesHeld'] > 1 ? ' (MLH)' : '');
+                },
             ],
             [
                 'title' => 'Trading name',

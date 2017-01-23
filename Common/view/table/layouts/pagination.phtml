@@ -1,11 +1,11 @@
 <div class="table__footer">
     <?php if ($this->object->getTotal() > $this->object->getLimit()): ?>
     <div class="results-settings">
-        <p>Showing:</p>
+        <p><?php echo $this->translate('pagination.showing');?>:</p>
         <ul class="results-settings__list">
             <?php echo $this->object->renderLimitOptions(); ?>
         </ul><!-- end .results-settings__list -->
-        <p>results per page</p>
+        <p><?php echo $this->translate('pagination.results-per-page');?></p>
     </div><!-- end .results-settings -->
 
     <ul class="pagination right-aligned" role="navigation">

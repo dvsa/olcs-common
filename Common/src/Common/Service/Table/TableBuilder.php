@@ -503,6 +503,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         if (empty($this->paginationHelper)) {
             $this->paginationHelper = new PaginationHelper($this->getPage(), $this->getTotal(), $this->getLimit());
+            $this->paginationHelper->setTranslator($this->getTranslator());
         }
 
         return $this->paginationHelper;

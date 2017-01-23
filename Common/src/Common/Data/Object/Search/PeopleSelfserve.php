@@ -84,7 +84,11 @@ class PeopleSelfserve extends InternalSearchAbstract
                     return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
-            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
+            [
+                'title' => 'Licence status',
+                'name'=> 'licStatusDesc',
+                'formatter'=> 'Translate',
+            ],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
@@ -108,7 +112,7 @@ class PeopleSelfserve extends InternalSearchAbstract
             ],
             [
                 'permissionRequisites' => ['partner-user', 'partner-admin'],
-                'title' => 'Date of Birth',
+                'title' => 'Date of birth',
                 'formatter' => 'Date',
                 'name' => 'personBirthDate'
             ]
