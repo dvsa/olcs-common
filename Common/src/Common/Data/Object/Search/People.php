@@ -4,7 +4,6 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Data\Object\Search\Aggregations\DateRange as DateRange;
-use Common\Util\Escape;
 
 /**
  * Class People
@@ -139,7 +138,7 @@ class People extends InternalSearchAbstract
                         }
 
                         return $tmLink;
-                    } elseif (!empty($row['licId'])) {
+                    } elseif (!empty($row['licTypeDesc']) && !empty($row['licStatusDesc'])) {
                         return sprintf(
                             '<a href="%s">%s</a>, %s<br />%s',
                             $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
@@ -149,6 +148,14 @@ class People extends InternalSearchAbstract
                         );
                     } elseif (!empty($row['licNo'])) {
                         return $this->formatCellLicNo($row, $urlHelper);
+
+                    } elseif (!empty($row['applicationId'])) {
+                        return sprintf(
+                            '<a href="%s">%s</a>, %s',
+                            $urlHelper->fromRoute('lva-application', ['application' => $row['applicationId']]),
+                            $row['applicationId'],
+                            $row['appStatusDesc']
+                        );
                     }
                     return '';
                 }

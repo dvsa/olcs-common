@@ -42,10 +42,21 @@ class PeopleTest extends SearchAbstractTest
         return [
             // expected, row
             ['', []],
-            ['<a href="http://URL">TM 123</a>', ['tmId' => 123, 'foundAs' => 'XX']],
+            [
+                '<a href="http://URL">TM 123</a>',
+                [
+                    'tmId' => 123,
+                    'foundAs' => 'XX'
+                ]
+            ],
             [
                 '<a href="http://URL">TM 123</a> / <a href="http://URL">OB123</a>',
-                ['tmId' => 123, 'licNo' => 'OB123', 'foundAs' => 'XX']],
+                [
+                    'tmId' => 123,
+                    'licNo' => 'OB123',
+                    'foundAs' => 'XX'
+                ]
+            ],
             [
                 '<a href="http://URL">LIC_NO</a>, LT_DESC<br />LS_DESC',
                 [
@@ -71,7 +82,28 @@ class PeopleTest extends SearchAbstractTest
                     'applicationId' => 456
                 ]
             ],
-
+            [
+                '<a href="http://URL">OB123</a>, LIC_TYPE_DESC<br />LIC_STATUS_DESC',
+                [
+                    'licId' => 123,
+                    'licNo' => 'OB123',
+                    'licTypeDesc' => 'LIC_TYPE_DESC',
+                    'licStatusDesc' => 'LIC_STATUS_DESC',
+                ]
+            ],
+            [
+                '<a href="http://URL">LIC_NO</a>',
+                [
+                    'licNo' => 'LIC_NO',
+                ]
+            ],
+            [
+                '<a href="http://URL">123</a>, APP_STATUS_DESC',
+                [
+                    'applicationId' => 123,
+                    'appStatusDesc' => 'APP_STATUS_DESC',
+                ]
+            ],
         ];
     }
 
