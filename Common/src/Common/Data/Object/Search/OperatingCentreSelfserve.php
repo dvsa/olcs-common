@@ -3,6 +3,7 @@
 namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
+use Common\Util\Escape;
 
 /**
  * Class Address
@@ -78,9 +79,16 @@ class OperatingCentreSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Licence number',
                 'name'=> 'licNo',
-                'formatter' => function ($data) {
-                    return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>'
-                    . '<br />' . $data['licStatusDesc'];
+                'formatter' => function ($data, $col, $sl) {
+                    /** @var \Zend\I18n\Translator\TranslatorInterface $translator */
+                    $translator = $sl->get('translator');
+
+                    return sprintf(
+                        '<a href="%s">%s</a><br/>%s',
+                        '/view-details/licence/' . $data['licId'],
+                        Escape::html($data['licNo']),
+                        $translator->translate($data['licStatusDesc'])
+                    );
                 }
             ],
             [

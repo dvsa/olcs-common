@@ -8,9 +8,7 @@ use Common\Service\Table\Formatter\EbsrRegNumberLink;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class EbsrRegNumberLinkTest
- *
- * @package CommonTest\Service\Table\Formatter
+ * @covers \Common\Service\Table\Formatter\EbsrRegNumberLink
  */
 class EbsrRegNumberLinkTest extends MockeryTestCase
 {
@@ -20,7 +18,7 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
     public function testFormatWithNoId()
     {
         $sut = new EbsrRegNumberLink();
-        $this->assertEquals('', $sut->format([]));
+        $this->assertEquals('', $sut::format([]));
     }
 
     /**
@@ -43,10 +41,18 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
 
         $statusArray = [
             'id' => $regStatus,
-            'description' => $regStatusDesc
+            'description' => '_TRNSLT_' . $regStatusDesc,
         ];
 
         $sm = m::mock(ServiceLocatorInterface::class);
+        $sm->shouldReceive('get->translate')
+            ->once()
+            ->andReturnUsing(
+                function ($key) {
+                    return '_TRNSLT_' . $key;
+                }
+            );
+
         $sm->shouldReceive('get->fromRoute')
             ->once()
             ->with(EbsrRegNumberLink::URL_ROUTE, ['busRegId' => $id])
@@ -59,7 +65,7 @@ class EbsrRegNumberLinkTest extends MockeryTestCase
 
         $expected = sprintf(EbsrRegNumberLink::LINK_PATTERN, $url, $regNo) . $statusLabel;
 
-        $this->assertEquals($expected, $sut->format($data, [], $sm));
+        $this->assertEquals($expected, $sut::format($data, [], $sm));
     }
 
     /**
