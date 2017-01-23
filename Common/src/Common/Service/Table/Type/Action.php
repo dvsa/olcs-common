@@ -47,6 +47,10 @@ class Action extends AbstractType
 
         $attributes = isset($column['action-attributes']) ? $column['action-attributes'] : [];
 
+        if (isset($column['keepForReadOnly']) && $column['keepForReadOnly']) {
+            return $value;
+        }
+
         return sprintf($this->format, $class, $name, $value, implode(' ', $attributes));
     }
 }
