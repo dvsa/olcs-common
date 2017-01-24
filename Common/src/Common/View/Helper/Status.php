@@ -8,6 +8,7 @@
 
 namespace Common\View\Helper;
 
+use Common\Util\Escape;
 use Zend\View\Helper\AbstractHelper;
 use Common\RefData;
 
@@ -44,14 +45,14 @@ class Status extends AbstractHelper
     /**
      * Get the HTML to render
      *
-     * @param string $value Value to display
+     * @param string $value  Value to display
      * @param string $colour Class name to apply to the element
      *
      * @return string HTML
      */
     protected function render($value, $colour)
     {
-        return sprintf('<span class="status %s">%s</span>', $colour, $value);
+        return sprintf('<span class="status %s">%s</span>', Escape::html($colour), Escape::html($value));
     }
 
     /**
