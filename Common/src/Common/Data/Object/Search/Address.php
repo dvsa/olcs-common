@@ -5,7 +5,6 @@ namespace Common\Data\Object\Search;
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Util\Escape;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
-use Common\View\Helper\Status as StatusHelper;
 
 /**
  * Class Address
@@ -68,16 +67,7 @@ class Address extends InternalSearchAbstract
             [
                 'title' => 'Licence / Application',
                 'name'=> 'licNoAppNo',
-                'formatter' => function ($data, $column, $serviceLocator) {
-                    /**
-                     * @var UrlHelper    $urlHelper
-                     * @var StatusHelper $statusHelper
-                     */
-                    $urlHelper  = $serviceLocator->get('Helper\Url');
-                    $statusHelper = $serviceLocator->get('ViewHelperManager')->get('status');
-
-                    return $this->formatCellLicNoAppNo($data, $urlHelper, $statusHelper);
-                }
+                'formatter' => 'LicenceApplication'
             ],
             [
                 'title' => 'Operator name',

@@ -3,7 +3,6 @@
 namespace Common\Data\Object\Search;
 
 use Common\Service\Helper\UrlHelperService as UrlHelper;
-use Common\View\Helper\Status as StatusHelper;
 use Common\Util\Escape;
 
 /**
@@ -12,8 +11,6 @@ use Common\Util\Escape;
  */
 abstract class SearchAbstract
 {
-    const LINK_WITH_STATUS = '<a href="%s">%s</a>%s';
-
     /**
      * @var
      */
@@ -210,47 +207,5 @@ abstract class SearchAbstract
             $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),
             Escape::html($row['licNo'])
         );
-    }
-
-    /**
-     * Formats a cell with a licence and application links
-     *
-     * @param array        $row          data row
-     * @param UrlHelper    $urlHelper    url helper
-     * @param StatusHelper $statusHelper status helper
-     *
-     * @return string
-     */
-    public function formatCellLicNoAppNo(array $row, UrlHelper $urlHelper, StatusHelper $statusHelper)
-    {
-        $licenceStatus = [
-            'id' => $row['licStatus'],
-            'description' => $row['licStatusDesc']
-        ];
-
-        $licenceLink = sprintf(
-            self::LINK_WITH_STATUS,
-            $urlHelper->fromRoute('licence', ['licence' => $row['licId']]),
-            Escape::html($row['licNo']),
-            $statusHelper->__invoke($licenceStatus)
-        );
-
-        if (isset($row['appId'])) {
-            $appStatus = [
-                'id' => $row['appStatus'],
-                'description' => $row['appStatusDesc']
-            ];
-
-            $appLink = sprintf(
-                self::LINK_WITH_STATUS,
-                $urlHelper->fromRoute('lva-application', ['application' => $row['appId']]),
-                Escape::html($row['appId']),
-                $statusHelper->__invoke($appStatus)
-            );
-
-            return $licenceLink . '<br />' . $appLink;
-        }
-
-        return $licenceLink;
     }
 }
