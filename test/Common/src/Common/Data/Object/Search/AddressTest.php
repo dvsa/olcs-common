@@ -3,7 +3,9 @@
 namespace CommonTest\Data\Object\Search;
 
 use Mockery as m;
-use Common\Service\Helper\UrlHelperService;
+use Common\Service\Helper\UrlHelperService as UrlHelper;
+use Common\View\Helper\Status as StatusHelper;
+use Zend\View\HelperPluginManager as ViewPluginManager;
 
 /**
  * Class AddressTest
@@ -21,42 +23,91 @@ class AddressTest extends SearchAbstractTest
     }
 
     /**
-     * @dataProvider dpTestLicenceFormatter
+     * @dataProvider dpTestLicenceApplicationFormatter
+     *
+     * @param $expected
+     * @param $appTimes
+     * @param $extraRowData
      */
-    public function testLicenceFormatter($expected, $row, $appTimes)
+    public function testLicenceApplicationFormatter($expected, $extraRowData, $appTimes)
     {
         $column = [];
+        $licStatus = 'lic status';
+        $licStatusDesc = 'lic status desc';
+        $formattedLicStatus = 'formatted lic status';
+        $licUrl = 'http://licURL';
+        $licNo = 'OB1234567';
+        $licId = 1234;
+
+        $licStatusArray = [
+            'id' => $licStatus,
+            'description' => $licStatusDesc
+        ];
+
+        $appStatus = 'app status';
+        $appStatusDesc = 'app status desc';
+        $formattedAppStatus = 'formatted app status';
+        $appUrl = 'http://appURL';
+        $appId = 5678;
+
+        $appStatusArray = [
+            'id' => $appStatus,
+            'description' => $appStatusDesc
+        ];
+
+        $row = [
+            'licId' => $licId,
+            'licNo' => $licNo,
+            'licStatus' => $licStatus,
+            'licStatusDesc' => $licStatusDesc,
+            'appStatus' => $appStatus,
+            'appStatusDesc' => $appStatusDesc
+        ];
+
+        $row += $extraRowData;
+
         $serviceLocator = m::mock();
 
-        $urlHelperService = m::mock(UrlHelperService::class);
-        $urlHelperService->shouldReceive('fromRoute')->with('licence', ['licence' => 123])->once()
-            ->andReturn('http://licURL');
-        $urlHelperService->shouldReceive('fromRoute')->with('lva-application', ['application' => 33])->times($appTimes)
-            ->andReturn('http://appURL');
+        $statusService = m::mock(StatusHelper::class);
+        $statusService->shouldReceive('__invoke')->with($licStatusArray)->once()->andReturn($formattedLicStatus);
+        $statusService->shouldReceive('__invoke')
+            ->with($appStatusArray)
+            ->times($appTimes)
+            ->andReturn($formattedAppStatus);
 
-        $serviceLocator->shouldReceive('get')->with('Helper\Url')->andReturn($urlHelperService);
+        $urlHelperService = m::mock(UrlHelper::class);
+        $urlHelperService->shouldReceive('fromRoute')
+            ->with('licence', ['licence' => $licId])
+            ->once()
+            ->andReturn($licUrl);
+        $urlHelperService->shouldReceive('fromRoute')
+            ->with('lva-application', ['application' => $appId])
+            ->times($appTimes)
+            ->andReturn($appUrl);
+
+        $viewHelperManager = m::mock(ViewPluginManager::class);
+        $viewHelperManager->shouldReceive('get')->with('status')->once()->andReturn($statusService);
+
+        $serviceLocator->shouldReceive('get')->with('Helper\Url')->once()->andReturn($urlHelperService);
+        $serviceLocator->shouldReceive('get')->with('ViewHelperManager')->once()->andReturn($viewHelperManager);
 
         $columns = $this->sut->getColumns();
         $this->assertSame($expected, $columns[0]['formatter']($row, $column, $serviceLocator));
     }
 
-    public function dpTestLicenceFormatter()
+    /**
+     * data provider for testLicenceApplicationFormatter
+     *
+     * @return array
+     */
+    public function dpTestLicenceApplicationFormatter()
     {
-        $data = [
-            'licId' => 123,
-            'licNo' => 'AB12345',
-            'orgId' => '452',
-            'orgName' => 'ACME Ltd',
-        ];
+        $licenceLink = '<a href="http://licURL">OB1234567</a>formatted lic status';
+        $appLink = '<a href="http://appURL">5678</a>formatted app status';
 
         return [
-            // expected, row, route, routeParams
-            [
-                '<a href="http://licURL">AB12345</a> / <a href="http://appURL">33</a>',
-                array_merge($data, ['appId' => 33]),
-                1
-            ],
-            ['<a href="http://licURL">AB12345</a>', $data, 0],
+            [$licenceLink . '<br />' . $appLink, ['appId' => 5678], 1],
+            [$licenceLink, [], 0],
         ];
     }
 
@@ -73,7 +124,7 @@ class AddressTest extends SearchAbstractTest
         );
 
         $columns = $this->sut->getColumns();
-        $this->assertSame($expected, $columns[3]['formatter']($row, $column, $serviceLocator));
+        $this->assertSame($expected, $columns[1]['formatter']($row, $column, $serviceLocator));
     }
 
     public function dpTestOperatorFormatter()

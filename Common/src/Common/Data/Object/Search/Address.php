@@ -4,6 +4,8 @@ namespace Common\Data\Object\Search;
 
 use Common\Data\Object\Search\Aggregations\Terms as Filter;
 use Common\Util\Escape;
+use Common\Service\Helper\UrlHelperService as UrlHelper;
+use Common\View\Helper\Status as StatusHelper;
 
 /**
  * Class Address
@@ -48,6 +50,7 @@ class Address extends InternalSearchAbstract
                 new Filter\AddressOpposition(),
                 new Filter\LicenceStatus(),
                 new Filter\ApplicationStatus(),
+                new Filter\AddressConditionUndertaking()
             ];
         }
 
@@ -63,36 +66,24 @@ class Address extends InternalSearchAbstract
     {
         return [
             [
-                'title' => 'Licence number',
-                'name'=> 'licNo',
+                'title' => 'Licence / Application',
+                'name'=> 'licNoAppNo',
                 'formatter' => function ($data, $column, $serviceLocator) {
+                    /**
+                     * @var UrlHelper    $urlHelper
+                     * @var StatusHelper $statusHelper
+                     */
                     $urlHelper  = $serviceLocator->get('Helper\Url');
+                    $statusHelper = $serviceLocator->get('ViewHelperManager')->get('status');
 
-                    $licenceLink = sprintf(
-                        '<a href="%s">%s</a>',
-                        $urlHelper->fromRoute('licence', ['licence' => $data['licId']]),
-                        $data['licNo']
-                    );
-
-                    if (isset($data['appId'])) {
-                        $appLink = sprintf(
-                            '<a href="%s">%s</a>',
-                            $urlHelper->fromRoute('lva-application', ['application' => $data['appId']]),
-                            $data['appId']
-                        );
-
-                        return $licenceLink . ' / ' . $appLink;
-                    }
-
-                    return $licenceLink;
+                    return $this->formatCellLicNoAppNo($data, $urlHelper, $statusHelper);
                 }
             ],
-            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
-            ['title' => 'Application status', 'name'=> 'appStatusDesc'],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName',
                 'formatter' => function ($data, $column, $serviceLocator) {
+                    /** @var  UrlHelper $urlHelper */
                     $urlHelper  = $serviceLocator->get('Helper\Url');
                     return sprintf(
                         '<a href="%s">%s</a>',
@@ -111,6 +102,7 @@ class Address extends InternalSearchAbstract
                 'formatter' => function ($row, $column, $serviceLocator) {
 
                     if ($row['complaintCaseId']) {
+                        /** @var  UrlHelper $urlHelper */
                         $urlHelper  = $serviceLocator->get('Helper\Url');
                         return sprintf(
                             '<a href="%s">Yes</a>',
@@ -126,6 +118,7 @@ class Address extends InternalSearchAbstract
                 'formatter' => function ($row, $column, $serviceLocator) {
 
                     if ($row['oppositionCaseId']) {
+                        /** @var  UrlHelper $urlHelper */
                         $urlHelper  = $serviceLocator->get('Helper\Url');
                         return sprintf(
                             '<a href="%s">Yes</a>',
@@ -136,6 +129,7 @@ class Address extends InternalSearchAbstract
                     return 'No';
                 }
             ],
+            ['title' => 'Conditions', 'name'=> 'conditions'],
             [
                 'title' => 'Date added',
                 'formatter' => 'Date',
