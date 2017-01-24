@@ -26,11 +26,14 @@ class Correspondence
      * @Form\Options({
      *    "label":"application_your-business_fao.label",
      *    "label_attributes": {
-     *        "aria-label": "Add correspondent's name (optional)"
+     *        "aria-label": "application_your-business_fao.label"
      *    }
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
+     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     *     "min": 0, "max": 200
+     * }})
      */
     public $fao = null;
 }
