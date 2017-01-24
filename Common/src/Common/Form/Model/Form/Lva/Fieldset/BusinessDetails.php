@@ -49,7 +49,9 @@ class BusinessDetails
      *     },
      *     "help-block": "Please select a nature of business"
      * })
-     * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     *     "min": 0, "max": 200
+     * }})
      */
     public $natureOfBusiness = null;
 }
