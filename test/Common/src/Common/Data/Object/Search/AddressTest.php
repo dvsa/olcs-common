@@ -3,9 +3,6 @@
 namespace CommonTest\Data\Object\Search;
 
 use Mockery as m;
-use Common\Service\Helper\UrlHelperService as UrlHelper;
-use Common\View\Helper\Status as StatusHelper;
-use Zend\View\HelperPluginManager as ViewPluginManager;
 
 /**
  * Class AddressTest
