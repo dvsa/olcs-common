@@ -1275,5 +1275,6 @@ return [
     'pagination.results-per-page' => 'canlyniadau ar bob tudalen',
     'pagination.next' => 'Nesaf',
     'pagination.previous' => 'Bblaenorol',
+    'dashboard-correspondence.table.column.issuedDate' =>'Dyddiad cyhoeddi',
     // Potentially unused translations
 ];
