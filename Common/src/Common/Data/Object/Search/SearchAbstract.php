@@ -2,7 +2,8 @@
 
 namespace Common\Data\Object\Search;
 
-use Common\Service\Helper\UrlHelperService;
+use Common\Service\Helper\UrlHelperService as UrlHelper;
+use Common\Util\Escape;
 
 /**
  * Class SearchAbstract
@@ -194,8 +195,8 @@ abstract class SearchAbstract
     /**
      * Formats a cell with a licence link based on licNo
      *
-     * @param array            $row       data row
-     * @param UrlHelperService $urlHelper url helper
+     * @param array     $row       data row
+     * @param UrlHelper $urlHelper url helper
      *
      * @return string
      */
@@ -204,7 +205,7 @@ abstract class SearchAbstract
         return sprintf(
             '<a href="%s">%s</a>',
             $urlHelper->fromRoute('licence-no', ['licNo' => trim($row['licNo'])]),
-            $row['licNo']
+            Escape::html($row['licNo'])
         );
     }
 }
