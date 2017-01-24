@@ -66,7 +66,6 @@ class Address extends InternalSearchAbstract
         return [
             [
                 'title' => 'Licence / Application',
-                'name'=> 'licNoAppNo',
                 'formatter' => 'LicenceApplication'
             ],
             [
