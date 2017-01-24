@@ -1,29 +1,32 @@
 <?php
 
-/**
- * Pagination Helper Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Service\Table;
 
 use Common\Service\Table\PaginationHelper;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
 
 /**
- * Pagination Helper Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers \Common\Service\Table\PaginationHelper
  */
-class PaginationHelperTest extends \PHPUnit_Framework_TestCase
+class PaginationHelperTest extends MockeryTestCase
 {
     /**
      * Test paginationHelper
      *
      * @dataProvider provider
      */
-    public function testPaginationHelper($page, $total, $limit, $expected)
+    public function testPaginationHelper($page, $total, $limit, $isSetTranslator, $expected)
     {
+        $mockTranslator = m::mock(\Zend\Mvc\I18n\Translator::class);
+        $mockTranslator
+            ->shouldReceive('translate')->with('pagination.next')->andReturn('TRNSLT_NEXT')
+            ->shouldReceive('translate')->with('pagination.previous')->andReturn('TRNSLT_PREV');
+
         $paginationHelper = new PaginationHelper($page, $total, $limit);
+        if ($isSetTranslator) {
+            $paginationHelper->setTranslator($mockTranslator);
+        }
 
         $options = $paginationHelper->getOptions();
 
@@ -43,12 +46,42 @@ class PaginationHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function provider()
     {
-        return array(
-            array(1, 10, 10, array('1')),
-            array(1, 50, 10, array('1', '2', '3', '4', '5', 'Next')),
-            array(2, 50, 10, array('Previous', '1', '2', '3', '4', '5', 'Next')),
-            array(20, 1000, 10, array('Previous', '1', '...', '18', '19', '20', '21', '22', '...', '100', 'Next')),
-            array(100, 1000, 10, array('Previous', '1', '...', '96', '97', '98', '99', '100'))
-        );
+        return [
+            [
+                'page' => 1,
+                'total' => 10,
+                'limit' => 10,
+                'isSetTranslator' => false,
+                'expect' => ['1'],
+            ],
+            [
+                'page' => 1,
+                'total' => 50,
+                'limit' => 10,
+                'isSetTranslator' => true,
+                'expect' => ['1', '2', '3', '4', '5', 'TRNSLT_NEXT'],
+            ],
+            [
+                'page' => 2,
+                'total' => 50,
+                'limit' => 10,
+                'isSetTranslator' => true,
+                'expect' => ['TRNSLT_PREV', '1', '2', '3', '4', '5', 'TRNSLT_NEXT'],
+            ],
+            [
+                'page' => 20,
+                'total' => 1000,
+                'limit' => 10,
+                'isSetTranslator' => false,
+                'expect' => ['Previous', '1', '...', '18', '19', '20', '21', '22', '...', '100', 'Next'],
+            ],
+            [
+                'page' => 100,
+                'total' => 1000,
+                'limit' => 10,
+                'isSetTranslator' => true,
+                'expect' => ['TRNSLT_PREV', '1', '...', '96', '97', '98', '99', '100'],
+            ],
+        ];
     }
 }

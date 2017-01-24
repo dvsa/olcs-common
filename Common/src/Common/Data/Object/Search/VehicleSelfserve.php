@@ -82,7 +82,11 @@ class VehicleSelfserve extends InternalSearchAbstract
                     return '<a href="/view-details/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
                 }
             ],
-            ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
+            [
+                'title' => 'Licence status',
+                'name' => 'licStatusDesc',
+                'formatter' => 'Translate',
+            ],
             [
                 'title' => 'Operator name',
                 'name'=> 'orgName'

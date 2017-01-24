@@ -1,12 +1,6 @@
 <?php
 
-/**
- * Pagination Helper
- *
- * Formats pagination options
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
+
 namespace Common\Service\Table;
 
 /**
@@ -53,6 +47,9 @@ class PaginationHelper
      */
     private $options = array();
 
+    /** @var  \Zend\Mvc\I18n\Translator */
+    private $translator;
+
     /**
      * Pass in the settings
      *
@@ -81,11 +78,9 @@ class PaginationHelper
         $totalPagesToDisplay = ($this->pageDeviation * 2) + 3;
 
         if ($totalPages <= $totalPagesToDisplay) {
-
             $this->addRangeOfOptions(1, $totalPages);
 
         } else {
-
             $this->addRangeOptions($totalPages);
         }
 
@@ -104,7 +99,6 @@ class PaginationHelper
         $this->addPageOption(1);
 
         if ($totalPages > 1) {
-
             $lowerRange = $this->calculateLowerRange($totalPages);
 
             $upperRange = $this->calculateUpperRange($totalPages);
@@ -128,7 +122,6 @@ class PaginationHelper
     private function addRangeOfOptions($lowerRange, $upperRange)
     {
         for ($i = $lowerRange; $i <= $upperRange; $i++) {
-
             $this->addPageOption($i);
         }
     }
@@ -139,8 +132,9 @@ class PaginationHelper
     private function maybeAddPreviousOption()
     {
         if ($this->page > 1) {
+            $label = ($this->translator ? $this->translator->translate('pagination.previous') : 'Previous');
 
-            $this->addPageOption(($this->page - 1), 'Previous', false);
+            $this->addPageOption(($this->page - 1), $label, false);
         }
     }
 
@@ -152,8 +146,9 @@ class PaginationHelper
     private function maybeAddNextOption($totalPages)
     {
         if ($this->page < $totalPages) {
+            $label = ($this->translator ? $this->translator->translate('pagination.next') : 'Next');
 
-            $this->addPageOption(($this->page + 1), 'Next', false);
+            $this->addPageOption(($this->page + 1), $label, false);
         }
     }
 
@@ -165,7 +160,6 @@ class PaginationHelper
     private function maybeAddAbbreviationOption($add)
     {
         if ($add) {
-
             $this->addPageOption(null, '...', false);
         }
     }
@@ -235,5 +229,19 @@ class PaginationHelper
         }
 
         return $array;
+    }
+
+
+    /**
+     * Set translator
+     *
+     * @param \Zend\Mvc\I18n\Translator $translator
+     *
+     * @return $this
+     */
+    public function setTranslator(\Zend\Mvc\I18n\Translator $translator)
+    {
+        $this->translator = $translator;
+        return $this;
     }
 }

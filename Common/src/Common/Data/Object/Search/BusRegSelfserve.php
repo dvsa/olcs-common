@@ -78,16 +78,19 @@ class BusRegSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Registration number',
                 'name'=> 'regNo',
-                'formatter' => function ($data, $column, $serviceLocator) {
-                    $url = $serviceLocator->get('Helper\Url')->fromRoute(
+                'formatter' => function ($data, $column, $sl) {
+                    $translator = $sl->get('translator');
+
+                    $url = $sl->get('Helper\Url')->fromRoute(
                         'search-bus/details',
                         ['busRegId' => $data['busregId']]
                     );
+
                     return sprintf(
                         '<a href="%s">%s</a><br/>%s',
                         $url,
                         Escape::html($data['regNo']),
-                        $data['busRegStatus']
+                        $translator->translate($data['busRegStatus'])
                     );
                 }
             ],
