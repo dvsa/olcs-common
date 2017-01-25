@@ -404,6 +404,7 @@ return [
     'application.your-business.business-type' => 'Business type',
     'application.your-business.people' => 'People',
     'application.your-business.sole-trader' => 'People',
+    'application.vehicle.already-exist' => 'Vehicle already exists on this licence',
     'application_business-details_allow-email.label' => 'How would you like to receive your correspondence?',
     'application_community_licence_total_community_licences' => 'Total community licences',
     'application_operating-centres_authorisation-sub-action.advertisements' => 'Newspaper advert',
