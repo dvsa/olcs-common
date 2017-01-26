@@ -1987,6 +1987,7 @@ return [
     'pay-fees.success.view-receipt' => 'View receipt',
     'pay-fees.table.title' => 'Fees to be paid',
     'pay-fees.title' => 'Pay fees',
+    'pay-fee.title' => 'Pay fee',
     'pay-now' => 'Pay now',
     'payment-declined' => 'Payment declined',
     'payment-failed' => 'Payment failed. Please try again',

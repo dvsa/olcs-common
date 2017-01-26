@@ -53,6 +53,13 @@ class Selector extends AbstractType
             $attributes[] = 'disabled="disabled"';
         }
 
+        if (isset($column['disabled-callback'])) {
+            $callback = $column['disabled-callback'];
+            if ($callback($data)) {
+                $attributes[] = 'disabled="disabled"';
+            }
+        }
+
         // allow setting the data index name that contains the id value
         $idx = 'id';
         if (isset($column['idIndex'])) {
