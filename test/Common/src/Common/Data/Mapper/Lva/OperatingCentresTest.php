@@ -1,125 +1,45 @@
 <?php
 
-/**
- * Operating Centres Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\OperatingCentres;
 use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Operating Centres Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers \Common\Data\Mapper\Lva\OperatingCentres
  */
 class OperatingCentresTest extends MockeryTestCase
 {
+    const LOCATION = 'EXTERNAL';
+    const TRANSL = '_TRANSL_';
+
+    /** @var  m\MockInterface | TranslationHelperService*/
+    private $mockTranslator;
+    /** @var  m\MockInterface | FlashMessengerHelperService */
+    private $mockFlashMsg;
+
+    public function setUp()
+    {
+        $this->mockTranslator = m::mock(TranslationHelperService::class);
+        $this->mockFlashMsg = m::mock(FlashMessengerHelperService::class);
+    }
+
     /**
-     * @dataProvider resultProvider
+     * @dataProvider dpTestMapFromResult
      */
     public function testMapFromResult($result, $expected)
     {
         $this->assertEquals($expected, OperatingCentres::mapFromResult($result));
     }
 
-    public function testMapFromForm()
-    {
-        $formData = [
-            'data' => [
-                'foo' => 'bar'
-            ],
-            'dataTrafficArea' => [
-                'bar' => 'cake'
-            ]
-        ];
-
-        $expected = [
-            'foo' => 'bar',
-            'bar' => 'cake'
-        ];
-
-        $this->assertEquals($expected, OperatingCentres::mapFromForm($formData));
-    }
-
-    public function testMapFormErrors()
-    {
-        $form = m::mock(\Zend\Form\Form::class);
-        $fm = m::mock(FlashMessengerHelperService::class);
-        $translator = m::mock();
-        $translator->shouldReceive('translateReplace')->with('CODE_EXTERNAL', ['CODE' => 'MESSAGE'])->once()
-            ->andReturn('TRANSLATED');
-        $location = 'EXTERNAL';
-
-        $expectedMessages = [
-            'data' => [
-                'totCommunityLicences' => [
-                    'bar1'
-                ],
-                'totAuthVehicles' => [
-                    'bar2'
-                ],
-                'totAuthTrailers' => [
-                    'bar3'
-                ],
-            ],
-            'table' => [
-                'table' => [
-                    'bar7'
-                ]
-            ],
-            'dataTrafficArea' => [
-                'trafficArea' => [
-                    'TRANSLATED'
-                ],
-                'enforcementArea' => [
-                    'bar8'
-                ]
-            ]
-        ];
-
-        $errors = [
-            'totCommunityLicences' => [
-                'foo' => 'bar1'
-            ],
-            'totAuthVehicles' => [
-                'foo' => 'bar2'
-            ],
-            'totAuthTrailers' => [
-                'foo' => 'bar3'
-            ],
-            'operatingCentres' => [
-                'foo' => 'bar7'
-            ],
-            'trafficArea' => [
-                'foo' => ['CODE' => 'MESSAGE']
-            ],
-            'enforcementArea' => [
-                'foo' => 'bar8'
-            ],
-            'cake' => 'bar'
-        ];
-
-        $form->shouldReceive('setMessages')
-            ->once()
-            ->with($expectedMessages);
-
-        $fm->shouldReceive('addCurrentErrorMessage')
-            ->once()
-            ->with('bar');
-
-        OperatingCentres::mapFormErrors($form, $errors, $fm, $translator, $location);
-    }
-
-    public function resultProvider()
+    public function dpTestMapFromResult()
     {
         return [
             [
-                [
+                'result' => [
                     'foo' => 'bar',
                     'licence' => [
                         'enforcementArea' => [
@@ -127,7 +47,7 @@ class OperatingCentresTest extends MockeryTestCase
                         ]
                     ]
                 ],
-                [
+                'expected' => [
                     'data' => [
                         'foo' => 'bar',
                         'licence' => [
@@ -191,5 +111,120 @@ class OperatingCentresTest extends MockeryTestCase
                 ]
             ]
         ];
+    }
+
+    public function testMapFromForm()
+    {
+        $formData = [
+            'data' => [
+                'foo' => 'bar'
+            ],
+            'dataTrafficArea' => [
+                'bar' => 'cake'
+            ]
+        ];
+
+        $expected = [
+            'foo' => 'bar',
+            'bar' => 'cake'
+        ];
+
+        $this->assertEquals($expected, OperatingCentres::mapFromForm($formData));
+    }
+
+    public function testMapFormErrors()
+    {
+        $expectedMessages = [
+            'data' => [
+                'totCommunityLicences' => [
+                    'bar1'
+                ],
+                'totAuthVehicles' => [
+                    'bar2'
+                ],
+                'totAuthTrailers' => [
+                    'bar3'
+                ],
+            ],
+            'table' => [
+                'table' => [
+                    'bar7'
+                ]
+            ],
+            'dataTrafficArea' => [
+                'enforcementArea' => [
+                    'bar8'
+                ]
+            ]
+        ];
+
+        $errors = [
+            'totCommunityLicences' => [
+                'foo' => 'bar1'
+            ],
+            'totAuthVehicles' => [
+                'foo' => 'bar2'
+            ],
+            'totAuthTrailers' => [
+                'foo' => 'bar3'
+            ],
+            'operatingCentres' => [
+                'foo' => 'bar7'
+            ],
+            'enforcementArea' => [
+                'foo' => 'bar8'
+            ],
+            'detach_error' => 'unit_ERR_MSG',
+        ];
+
+        $form = m::mock(\Zend\Form\Form::class);
+        $form->shouldReceive('setMessages')->once()->with($expectedMessages);
+
+        $this->mockFlashMsg->shouldReceive('addCurrentErrorMessage')->once()->with('unit_ERR_MSG');
+
+        OperatingCentres::mapFormErrors($form, $errors, $this->mockFlashMsg, $this->mockTranslator, self::LOCATION);
+    }
+
+    public function testMapApiErrors()
+    {
+        $this->mockTranslator
+            ->shouldReceive('translateReplace')
+            ->andReturnUsing(
+                function ($key, $args) {
+                    static::assertEquals(key($args) . '_' . self::LOCATION, $key);
+
+                    return self::TRANSL . current($args);
+                }
+            );
+
+        $errors = [
+            'detach_error' => 'unit_DETACH_ERR_MSG',
+            'fieldset' => [
+                'field' => 'unit_FLD_ERR_MSG',
+            ],
+            'trafficArea' => [
+                ['CODE' => 'MESSAGE'],
+                ['ERR_TA_GOODS' => 'unit_TA_GOODS_msg'],
+                ['ERR_TA_PSV' => 'unit_TA_PSV_msg'],
+                ['ERR_TA_PSV_SR' => 'unit_TA_PSV_RS_msg'],
+            ],
+        ];
+
+        $this->mockFlashMsg
+            ->shouldReceive('addCurrentErrorMessage')->once()->with('unit_FLD_ERR_MSG')
+            ->shouldReceive('addCurrentErrorMessage')->once()->with('unit_DETACH_ERR_MSG')
+            ->shouldReceive('addCurrentErrorMessage')->once()->with('MESSAGE')
+            ->shouldReceive('addCurrentErrorMessage')->once()->with(self::TRANSL . 'unit_TA_GOODS_msg')
+            ->shouldReceive('addCurrentErrorMessage')->once()->with(self::TRANSL . 'unit_TA_PSV_msg')
+            ->shouldReceive('addCurrentErrorMessage')->once()->with(self::TRANSL . 'unit_TA_PSV_RS_msg');
+
+        OperatingCentres::mapApiErrors(self::LOCATION, $errors, $this->mockFlashMsg, $this->mockTranslator);
+    }
+
+    public function testMapApiErrorsEmpty()
+    {
+        static::assertNull(
+            OperatingCentres::mapApiErrors(self::LOCATION, [], $this->mockFlashMsg, $this->mockTranslator)
+        );
     }
 }
