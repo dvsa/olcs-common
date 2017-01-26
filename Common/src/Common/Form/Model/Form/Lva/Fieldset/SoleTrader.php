@@ -35,7 +35,9 @@ class SoleTrader
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"application_your-business_people-sub-action-formFirstName"})
+     * @Form\Options({
+     *     "label": "application_your-business_people-sub-action-formFirstName",
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
@@ -43,7 +45,9 @@ class SoleTrader
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"application_your-business_people-sub-action-formSurname"})
+     * @Form\Options({
+     *     "label": "application_your-business_people-sub-action-formSurname",
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
@@ -64,11 +68,10 @@ class SoleTrader
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
      *     "label": "application_your-business_people-sub-action-formDateOfBirth",
-     *     "short-label": "application_your-business_people-sub-action-formDateOfBirth",
      *     "create_empty_option": false,
      *     "render_delimiters": "d m y"
      * })
-     * @Form\Type("\Zend\Form\Element\DateSelect")
+     * @Form\Type("DateSelect")
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Validator({"name": "\Common\Validator\Date"})
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
