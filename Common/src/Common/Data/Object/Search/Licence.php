@@ -52,6 +52,8 @@ class Licence extends InternalSearchAbstract
     }
 
     /**
+     * Get settings config
+     *
      * @return array
      */
     public function getSettings()
@@ -84,6 +86,8 @@ class Licence extends InternalSearchAbstract
     }
 
     /**
+     * Get columns config
+     *
      * @return array
      */
     public function getColumns()
@@ -93,7 +97,7 @@ class Licence extends InternalSearchAbstract
                 'title' => 'Licence number',
                 'name'=> 'licNo',
                 'formatter' => function ($data) {
-                    return '<a href="/licence/' . $data['licId'] . '">' . $data['licNo'] . '</a>';
+                    return '<a href="/licence/' . $data['licId'] . '?' . date('Y-m-d') .'">' . $data['licNo'] . '</a>';
                 }
             ],
             ['title' => 'Licence status', 'name'=> 'licStatusDesc'],
