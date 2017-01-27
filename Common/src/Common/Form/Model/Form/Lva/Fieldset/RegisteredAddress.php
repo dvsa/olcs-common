@@ -43,6 +43,9 @@ class RegisteredAddress
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     *     "min": 0, "max": 200
+     * }})
      */
     public $addressLine1 = null;
 
@@ -58,6 +61,9 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
+     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     *     "min": 0, "max": 200
+     * }})
      */
     public $addressLine2 = null;
 
@@ -73,6 +79,9 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
+     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     *     "min": 0, "max": 200
+     * }})
      */
     public $addressLine3 = null;
 
@@ -88,6 +97,9 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
+     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     *     "min": 0, "max": 200
+     * }})
      */
     public $addressLine4 = null;
 
@@ -105,6 +117,9 @@ class RegisteredAddress
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
+     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     *     "min": 0, "max": 200
+     * }})
      */
     public $town = null;
 

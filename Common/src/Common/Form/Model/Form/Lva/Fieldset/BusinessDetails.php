@@ -24,6 +24,9 @@ class BusinessDetails
      * @Form\Options({"label":"application_your-business_business-details.data.company_name"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     *     "min": 0, "max": 200
+     * }})
      */
     public $name = null;
 
@@ -46,7 +49,9 @@ class BusinessDetails
      *     },
      *     "help-block": "Please select a nature of business"
      * })
-     * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
+     *     "min": 0, "max": 200
+     * }})
      */
     public $natureOfBusiness = null;
 }
