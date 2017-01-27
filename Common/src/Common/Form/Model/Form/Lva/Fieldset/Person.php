@@ -98,7 +98,7 @@ class Person
      *     "error-message": "person_birthDate-error",
      *     "fieldset-attributes": {"id":"dob_day"}
      * })
-     * @Form\Type("\Zend\Form\Element\DateSelect")
+     * @Form\Type("DateSelect")
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Validator({"name": "\Common\Validator\Date"})
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})

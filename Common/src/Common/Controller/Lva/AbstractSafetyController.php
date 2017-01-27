@@ -284,7 +284,6 @@ abstract class AbstractSafetyController extends AbstractController
         $addressLookup = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
         if (!$addressLookup && $request->isPost() && $form->isValid()) {
-
             $dtoData = [
                 $this->getIdentifierIndex() => $this->getIdentifier(),
                 'isExternal' => $data['data']['isExternal'],
@@ -346,7 +345,7 @@ abstract class AbstractSafetyController extends AbstractController
             ];
 
             // Add a hint to the external radio
-            /** @var \Zend\Form\Element\Radio $ee */
+            /** @var \Zend\Form\Element\Radio $externalElement */
             $externalElement = $form->get('data')->get('isExternal');
             $externalElement->setOption('hint', $hints[$ref]);
         }
