@@ -47,7 +47,10 @@ OLCS.ready(function() {
         },
         // these are the "Read more about" links
         '#typeOfLicence-hint-goods': function() {
-          return operatorType.filter(':checked').val() === 'lcat_gv';
+          return (
+            niFlag.filter(':checked').val() === 'Y' ||
+            operatorType.filter(':checked').val() === 'lcat_gv'
+          );
         },
         '#typeOfLicence-hint-psv': function() {
           return operatorType.filter(':checked').val() === 'lcat_psv';
