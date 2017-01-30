@@ -20,6 +20,7 @@ use Dvsa\Olcs\Transfer\Query\ApplicationOperatingCentre\ApplicationOperatingCent
 use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as LicOperatingCentres;
 use Dvsa\Olcs\Transfer\Query\LicenceOperatingCentre\LicenceOperatingCentre;
 use Dvsa\Olcs\Transfer\Query\VariationOperatingCentre\VariationOperatingCentre;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -81,6 +82,26 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected $operatingCentreId;
 
+    /** @var  \Common\Service\Helper\FlashMessengerHelperService */
+    private $hlpFlashMsgr;
+    /** @var  \Common\Service\Helper\TranslationHelperService */
+    private $hlpTranslator;
+
+    /**
+     * On Dispatch
+     *
+     * @param MvcEvent $e Event
+     *
+     * @return void
+     */
+    public function onDispatch(MvcEvent $e)
+    {
+        $this->hlpFlashMsgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        $this->hlpTranslator = $this->getServiceLocator()->get('Helper\Translation');
+
+        parent::onDispatch($e);
+    }
+
     /**
      * Operating centre list action
      *
@@ -95,6 +116,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 ->addVariationMessage($this->getIdentifier(), $this->section);
         }
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -107,6 +129,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $params = array_merge((array)$query, ['query' => $query]);
         $resultData['query'] = $params;
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-operating_centres')
             ->getForm($resultData)
@@ -170,6 +193,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $dtoClass = $this->updateCommandMap[$this->lva];
         $response = $this->handleCommand($dtoClass::create($dtoData));
+
         if ($response->isOk()) {
             if ($crudAction !== null) {
                 return $this->handleCrudAction($crudAction);
@@ -179,19 +203,19 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if ($response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+            $this->hlpFlashMsgr->addUnknownError();
         } else {
-            $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
             $errors = $response->getResult()['messages'];
 
             if ($crudAction !== null) {
                 $this->displayCrudErrors($errors);
                 return $this->redirect()->refreshAjax();
-            } else {
-                $translator = $this->getServiceLocator()->get('Helper\Translation');
-                OperatingCentres::mapFormErrors($form, $errors, $fm, $translator, $this->location);
             }
+
+            OperatingCentres::mapFormErrors($form, $errors, $this->hlpFlashMsgr, $this->hlpTranslator, $this->location);
         }
+
+        return null;
     }
 
     /**
@@ -203,39 +227,18 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private function displayCrudErrors($errors)
     {
-        $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
-        if (!empty($errors)) {
-
-            $expectedErrors = ['ERR_TA_GOODS', 'ERR_TA_PSV', 'ERR_TA_PSV_SR'];
-
-            foreach ($errors as $section => $error) {
-                foreach ($error as $errorMessage) {
-
-                    $key = key($errorMessage);
-
-                    if ($section == 'trafficArea' && in_array($key, $expectedErrors)) {
-
-                        $translator = $this->getServiceLocator()->get('Helper\Translation');
-                        $fm->addErrorMessage(
-                            $translator->translateReplace(
-                                $key .'_'. strtoupper($this->location),
-                                current($errorMessage)
-                            )
-                        );
-                    } else {
-                        $fm->addErrorMessage($errorMessage);
-                    }
-                }
-            }
-        } else {
-            $fm->addUnknownError();
+        if (empty($errors)) {
+            $this->hlpFlashMsgr->addUnknownError();
+            return;
         }
+
+        OperatingCentres::mapApiErrors($this->location, $errors, $this->hlpFlashMsgr, $this->hlpTranslator);
     }
 
     /**
      * Create Operating centre action
      *
-     * @return void
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function addAction()
     {
@@ -268,6 +271,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $resultData['applicationId'] = $this->getIdentifier();
         }
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-operating_centre')
             ->getForm($resultData, $request)
@@ -329,7 +333,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * Update Operating centre action
      *
-     * @return void
+     * @return \Common\View\Model\Section | \Zend\Http\Response
      */
     public function editAction()
     {
@@ -363,6 +367,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $resultData['applicationId'] = $this->getIdentifier();
         }
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-operating_centre')
             ->getForm($resultData, $request)
