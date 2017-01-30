@@ -11,16 +11,19 @@ use Zend\Form\Annotation as Form;
 class SafetyProvidersContactDetails
 {
     /**
+     * @Form\Type("Text")
      * @Form\Attributes({"class":"medium","id":""})
      * @Form\Options({
      *     "label":"application_vehicle-safety_safety-sub-action.data.fao",
-     *     "label_attributes": {
-     *         "aria-label": "Enter the name of the contractor or employee"
-     *     }
+     *     "label_attributes": {"aria-label":"application_vehicle-safety_safety-sub-action.data.fao"}
      * })
-     * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":1,"max":90}})
+     * @Form\Validator({"name":"Zend\Validator\StringLength",
+     *     "options":{"min":1,"max":90}
+     * })
+     * @Form\Validator({"name":"regex", 
+     *     "options":{"pattern":"/^[a-z ,.'-]+$/i","messages":{"regexNotMatch":"error.characters.not-allowed"}}
+     * })
      */
     public $fao = null;
 
