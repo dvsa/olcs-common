@@ -181,4 +181,41 @@ class SelectorTest extends MockeryTestCase
             $response
         );
     }
+
+    /**
+     * Test render with disabled callback
+     *
+     * @group checkboxTest
+     * @dataProvider disabledCallbackProvider
+     */
+    public function testRenderWithDisabledCallback($row, $expected)
+    {
+        $fieldset = 'table';
+        $column = [
+            'disabled-callback' => function ($row) {
+                return $row['isExpiredForLicence'];
+            }
+        ];
+
+        $this->table
+            ->shouldReceive('getFieldset')
+            ->andReturn($fieldset)
+            ->once();
+
+        $this->assertEquals($expected, $this->sut->render($row, $column));
+    }
+
+    public function disabledCallbackProvider()
+    {
+        return [
+            [
+                ['isExpiredForLicence' => 1, 'id' => 7],
+                '<input type="radio" name="table[id]" value="7" disabled="disabled" />'
+            ],
+            [
+                ['isExpiredForLicence' => 0, 'id' => 7],
+                '<input type="radio" name="table[id]" value="7"  />'
+            ]
+        ];
+    }
 }
