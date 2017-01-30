@@ -26,9 +26,7 @@ class Contact
      * @Form\Name("phone-validator")
      * @Form\Type("Hidden")
      * @Form\Options({
-     *     "fieldset-attributes": {
-     *          "id":"contact[phone_business]"
-     *     }
+     *     "fieldset-attributes":{"id":"contact[phone_business]"}
      * })
      * @Form\Attributes({"value":"1"})
      */
@@ -36,9 +34,7 @@ class Contact
 
     /**
      * @Form\Attributes({"class":"medium", "pattern":"\d(\+|\-|\(|\))*","id":"phoneBusiness"})
-     * @Form\Options({
-     *     "label": "application_your-business_business-type.contact-details.business-phone"
-     * })
+     * @Form\Options({"label": "application_your-business_business-type.contact-details.business-phone"})
      * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
      * @Form\Name("phone_business")
      */
@@ -60,9 +56,7 @@ class Contact
 
     /**
      * @Form\Attributes({"class":"medium","pattern":"\d(\+|\-|\(|\))*","id":"phoneHome"})
-     * @Form\Options({
-     *     "label": "application_your-business_business-type.contact-details.home-phone"
-     * })
+     * @Form\Options({"label": "application_your-business_business-type.contact-details.home-phone"})
      * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
      * @Form\Name("phone_home")
      */
@@ -84,9 +78,7 @@ class Contact
 
     /**
      * @Form\Attributes({"class":"medium","pattern":"\d(\+|\-|\(|\))*","id":"phoneMobile"})
-     * @Form\Options({
-     *     "label": "application_your-business_business-type.contact-details.mobile-phone"
-     * })
+     * @Form\Options({"label": "application_your-business_business-type.contact-details.mobile-phone"})
      * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
      * @Form\Name("phone_mobile")
      */
@@ -108,9 +100,7 @@ class Contact
 
     /**
      * @Form\Attributes({"class":"medium", "pattern":"\d(\+|\-|\(|\))*","id":"phoneFax"})
-     * @Form\Options({
-     *     "label": "application_your-business_business-type.contact-details.fax-phone"
-     * })
+     * @Form\Options({"label": "application_your-business_business-type.contact-details.fax-phone"})
      * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
      * @Form\Name("phone_fax")
      */
@@ -134,9 +124,7 @@ class Contact
      * @Form\Attributes({"class":"long","id":"email"})
      * @Form\Options({
      *    "label":"application_your-business_business-type.contact-details.email",
-     *    "label_attributes": {
-     *        "aria-label": "Business email address"
-     *    },
+     *    "label_attributes": {"aria-label": "Business email address"},
      *     "error-message": "contact_email-error"
      * })
      * @Form\Type("Text")
