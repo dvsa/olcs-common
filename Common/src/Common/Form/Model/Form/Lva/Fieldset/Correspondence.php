@@ -25,16 +25,15 @@ class Correspondence
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *    "label":"application_your-business_fao.label",
-     *    "label_attributes": {"aria-label": "application_your-business_fao.label"}
+     *    "label_attributes": {
+     *        "aria-label": "application_your-business_fao.label"
+     *    }
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
      * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
      *     "min": 0, "max": 200
      * }})
-     * @Form\Validator({"name":"regex", 
-     *     "options":{"pattern":"/^[a-z ,.'-]+$/i","messages":{"regexNotMatch":"error.characters.not-allowed"}}
-     * })
      */
     public $fao = null;
 }
