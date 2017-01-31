@@ -1014,7 +1014,6 @@ return [
     'error.vehicle.vrm-exists-on-application' => 'A vehicle with this registration number already exists on this application',
     'error.vehicle.vrm-exists-on-licence' => 'A vehicle with this registration number already exists on this licence',
     'error.vrm.invalid' => 'Invalid registration number',
-    'error.characters.not-allowed' => 'The input contains characters that are not allowed',
     'external' => 'External',
     'external.cancel_application.confirm.back_button' => 'Back',
     'external.cancel_application.confirm.cancel_message' => 'Application cancelled',
