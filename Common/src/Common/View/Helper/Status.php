@@ -91,7 +91,7 @@ class Status extends AbstractHelper
             RefData::LICENCE_STATUS_CANCELLED                   => 'grey',
             // Application statuses @todo double check these colours
             RefData::APPLICATION_STATUS_NOT_SUBMITTED           => 'grey',
-            RefData::APPLICATION_STATUS_GRANTED                 => 'green',
+            RefData::APPLICATION_STATUS_GRANTED                 => 'orange',
             RefData::APPLICATION_STATUS_UNDER_CONSIDERATION     => 'orange',
             RefData::APPLICATION_STATUS_VALID                   => 'green',
             RefData::APPLICATION_STATUS_WITHDRAWN               => 'red',
