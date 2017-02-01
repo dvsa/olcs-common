@@ -15,6 +15,7 @@ use Dvsa\Olcs\Transfer\Query as QueryDto;
 use Zend\Form\Element\Checkbox;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
+use Dvsa\Olcs\Transfer\Query\Licence\PsvVehiclesExport;
 
 /**
  * Vehicles PSV Controller
@@ -353,12 +354,24 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     {
         // export to CSV action
         if ($this->lva === 'licence' && $this->location === 'external' && $action === 'export') {
-            $resultData = $this->fetchResultData();
-            $data = $resultData['vehicles'];
+            $includeRemoved = $this->params()->fromQuery('includeRemoved');
+            $data = [
+                'id' => $this->getIdentifier(),
+                'includeRemoved' => (isset($includeRemoved) && $includeRemoved == '1')
+            ];
+            $response = $this->handleQuery(PsvVehiclesExport::create($data));
+            if (!$response->isOk()) {
+
+            }
+            $data = $response->getResult();
 
             return $this->getServiceLocator()
                 ->get('Helper\Response')
-                ->tableToCsv($this->getResponse(), $this->getTableBasic($data), 'psv-vehicles');
+                ->tableToCsv(
+                    $this->getResponse(),
+                    $this->getServiceLocator()->get('Table')->prepareTable('lva-psv-vehicles-export', $data['result']),
+                    'psv-vehicles'
+                );
         }
 
         return null;
