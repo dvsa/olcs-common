@@ -899,6 +899,7 @@ return [
     'documents-home.data.sub_category' => 'Subcategory',
     'documents.filter.show-tasks.title' => 'Show tasks',
     'documents.filter.show-docs.title' => 'Show documents',
+    'documents.filter.format.title' => 'Format',
     'documents.filter.option.all-tasks' => 'All tasks',
     'documents.filter.option.all-docs' => 'All documents',
     'documents.filter.option.this-app-only' => 'This application only',
