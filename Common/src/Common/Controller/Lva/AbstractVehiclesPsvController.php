@@ -361,7 +361,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             ];
             $response = $this->handleQuery(PsvVehiclesExport::create($data));
             if (!$response->isOk()) {
-
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+                return $this->redirect()->toRouteAjax(
+                    $this->getBaseRoute(),
+                    [$this->getIdentifierIndex() => $this->getIdentifier()]
+                );
             }
             $data = $response->getResult();
 
