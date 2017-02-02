@@ -18,27 +18,25 @@ class LicenceHistoryData
     /**
      * @Form\Attributes({"id":""})
      * @Form\Options({
-     *     "label": "application_previous-history_licence-history_prevHasLicence",
-     *     "error-message": "licenceHistoryData_prevHasLicence-error",
-     *     "value_options": {
+     *     "label":"application_previous-history_licence-history_prevHasLicence",
+     *     "error-message":"licenceHistoryData_prevHasLicence-error",
+     *     "value_options":{
      *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Does anyone you've named already have an operator's licence in any traffic area? Yes",
-     *                 "class" : "inline"
+     *             "value":"Y",
+     *             "label":"Yes",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No",
-     *             "label_attributes": {
-     *                 "class" : "inline"
+     *         },{
+     *             "value":"N",
+     *             "label":"No",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
      *         }
      *     },
-     *     "fieldset-attributes" : {
-     *          "class":"checkbox inline"
+     *     "fieldset-attributes":{
+     *          "class":"checkbox"
      *     }
      * })
      * @Form\Type("radio")
@@ -63,23 +61,21 @@ class LicenceHistoryData
      *     "error-message": "licenceHistoryData_prevHadLicence-error",
      *     "value_options": {
      *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever had or applied for an operator's licence in any traffic area? Yes",
-     *                 "class" : "inline"
+     *             "value":"Y",
+     *             "label":"Yes",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No",
-     *             "label_attributes": {
-     *                 "class" : "inline"
+     *         },{
+     *             "value":"N",
+     *             "label":"No",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
      *         }
      *     },
-     *     "fieldset-attributes" : {
-     *          "class":"checkbox inline"
+     *     "fieldset-attributes":{
+     *          "class":"checkbox"
      *     }
      * })
      * @Form\Type("radio")
@@ -100,27 +96,25 @@ class LicenceHistoryData
     /**
      * @Form\Attributes({"id":""})
      * @Form\Options({
-     *     "label": "application_previous-history_licence-history_prevBeenDisqualifiedTc",
-     *     "error-message": "licenceHistoryData_prevBeenDisqualifiedTc-error",
-     *     "value_options": {
+     *     "label":"application_previous-history_licence-history_prevBeenDisqualifiedTc",
+     *     "error-message":"licenceHistoryData_prevBeenDisqualifiedTc-error",
+     *     "value_options":{
      *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever been disqualified from having an operator's licence in any traffic area? Yes",
-     *                 "class" : "inline"
+     *             "value":"Y",
+     *             "label":"Yes",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No",
-     *             "label_attributes": {
-     *                 "class" : "inline"
+     *         },{
+     *             "value":"N",
+     *             "label":"No",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
      *         }
      *     },
-     *     "fieldset-attributes" : {
-     *          "class":"checkbox inline"
+     *     "fieldset-attributes":{
+     *          "class":"checkbox"
      *     }
      * })
      * @Form\Type("radio")
