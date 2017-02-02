@@ -59,7 +59,7 @@ trait TransferVehiclesTrait
                     $fm->addSuccessMessage('licence.vehicles_transfer.form.vehicles_transfered');
 
                     return $this->redirect()->toRouteAjax(
-                        null,
+                        $this->getBaseRoute(),
                         [$this->getIdentifierIndex() => $this->getIdentifier()]
                     );
                 }
@@ -112,7 +112,7 @@ trait TransferVehiclesTrait
                         $fm->addCurrentErrorMessage('unknown-error');
                     } else {
                         return $this->redirect()->toRouteAjax(
-                            null,
+                            $this->getBaseRoute(),
                             [$this->getIdentifierIndex() => $this->getIdentifier()]
                         );
                     }
