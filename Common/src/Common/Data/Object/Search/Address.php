@@ -118,7 +118,7 @@ class Address extends InternalSearchAbstract
                     return 'No';
                 }
             ],
-            ['title' => 'Conditions', 'name'=> 'conditions'],
+            ['title' => 'C/U', 'name'=> 'conditions'],
             [
                 'title' => 'Date added',
                 'formatter' => 'Date',

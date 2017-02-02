@@ -13,7 +13,7 @@ class AddressConditionUndertaking extends TermsAbstract
      *
      * @var string
      */
-    protected $title = 'Conditions';
+    protected $title = 'C/U';
 
     /**
      * The actual name of the field to ask for filter information for.
