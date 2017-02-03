@@ -15,18 +15,17 @@ class TransportConsultant
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *      "fieldset-attributes": {
-     *          "class": "checkbox inline"
+     *          "class":"checkbox inline"
      *      },
-     *     "label":
-     * "application_your-business_business-type.add-transport-consultant.label",
-     *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
-     *     "label_attributes": {
-     *         "class": "inline"
+     *     "label":"application_your-business_business-type.add-transport-consultant.label",
+     *     "value_options":{"Y":"Yes","N":"No"},
+     *     "help-block":"Please choose",
+     *     "label_attributes":{
+     *         "class":"inline"
      *     }
      * })
      * @Form\Attributes({
-     *     "value": "N"
+     *     "value":"N"
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
@@ -36,7 +35,7 @@ class TransportConsultant
      * @Form\Type("OlcsCheckbox")
      * @Form\Attributes({"id":"written-permission-to-engage","placeholder":""})
      * @Form\Options({
-     *     "label": "application_your-business_business-type.written-perm-engage.label",
+     *     "label":"application_your-business_business-type.written-perm-engage.label",
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
      * })

@@ -12,27 +12,25 @@ class LicenceHistoryPi
     /**
      * @Form\Attributes({"id":""})
      * @Form\Options({
-     *     "label": "application_previous-history_licence-history_prevBeenAtPi",
-     *     "error-message": "licenceHistoryPi_prevBeenAtPi-error",
-     *     "value_options": {
+     *     "label":"application_previous-history_licence-history_prevBeenAtPi",
+     *     "error-message":"licenceHistoryPi_prevBeenAtPi-error",
+     *     "value_options":{
      *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever taken part in a public inquiry held by a Traffic Commissioner? Yes",
-     *                 "class" : "inline"
+     *             "value":"Y",
+     *             "label":"Yes",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No",
-     *             "label_attributes": {
-     *                 "class" : "inline"
+     *         },{
+     *             "value":"N",
+     *             "label":"No",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
      *         }
      *     },
-     *     "fieldset-attributes" : {
-     *          "class":"checkbox inline"
+     *     "fieldset-attributes":{
+     *          "class":"checkbox"
      *     }
      * })
      * @Form\Type("radio")

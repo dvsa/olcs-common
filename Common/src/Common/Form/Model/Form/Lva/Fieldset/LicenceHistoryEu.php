@@ -12,27 +12,25 @@ class LicenceHistoryEu
     /**
      * @Form\Attributes({"id":""})
      * @Form\Options({
-     *     "label": "application_previous-history_licence-history_prevBeenRefused",
-     *     "error-message": "licenceHistoryEu_prevBeenRefused-error",
-     *     "value_options": {
+     *     "label":"application_previous-history_licence-history_prevBeenRefused",
+     *     "error-message":"licenceHistoryEu_prevBeenRefused-error",
+     *     "value_options":{
      *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Does anyone you've named already have an operator's licence in any traffic area? Yes",
-     *                 "class" : "inline"
+     *             "value":"Y",
+     *             "label":"Yes",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No",
-     *             "label_attributes": {
-     *                 "class" : "inline"
+     *         },{
+     *             "value":"N",
+     *             "label":"No",
+     *             "label_attributes":{
+     *                 "class":"inline"
      *             }
      *         }
      *     },
-     *     "fieldset-attributes" : {
-     *          "class":"checkbox inline"
+     *     "fieldset-attributes":{
+     *          "class":"checkbox"
      *     }
      * })
      * @Form\Type("radio")
@@ -53,33 +51,32 @@ class LicenceHistoryEu
     /**
      * @Form\Attributes({"id":""})
      * @Form\Options({
-     *     "label": "application_previous-history_licence-history_prevBeenRevoked",
-     *     "error-message": "licenceHistoryEu_prevBeenRevoked-error",
-     *     "value_options": {
+     *     "label":"application_previous-history_licence-history_prevBeenRevoked",
+     *     "error-message":"licenceHistoryEu_prevBeenRevoked-error",
+     *     "value_options":{
      *         {
-     *             "value": "Y",
-     *             "label": "Yes",
+     *             "value":"Y",
+     *             "label":"Yes",
      *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever had an operator's licence application revoked, suspended or curtailed in the European Union? Yes",
-     *                 "class" : "inline"
+     *                 "aria-label":"application_previous-history_licence-history_prevBeenRevoked",
+     *                 "class": "inline"
      *             }
-     *         },
-     *         {
+     *         },{
      *             "value": "N",
      *             "label": "No",
      *             "label_attributes": {
-     *                 "class" : "inline"
+     *                 "class": "inline"
      *             }
      *         }
      *     },
-     *     "fieldset-attributes" : {
-     *          "class":"checkbox inline"
+     *     "fieldset-attributes":{
+     *          "class":"checkbox"
      *     }
      * })
      * @Form\Type("radio")
      * @Form\Validator({
      *     "name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options": {"table": "prevBeenRevoked-table"}
+     *     "options":{"table":"prevBeenRevoked-table"}
      *})
      */
     public $prevBeenRevoked = null;
