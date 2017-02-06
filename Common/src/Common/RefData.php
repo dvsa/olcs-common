@@ -262,4 +262,7 @@ class RefData
     const SIGNATURE_TYPE_PHYSICAL_SIGNATURE = 'sig_physical_signature';
     const SIGNATURE_TYPE_DIGITAL_SIGNATURE = 'sig_digital_signature';
     const SIGNATURE_TYPE_NOT_REQUIRED = 'sig_signature_not_required';
+
+    const ERR_NO_FEES = 'ERR_NO_FEES';
+    const ERR_WAIT = 'ERR_WAIT';
 }

@@ -2999,5 +2999,7 @@ return [
     'pagination.results-per-page' => 'results per page',
     'pagination.next' => 'Next',
     'pagination.previous' => 'Previous',
+    'payment.error.15sec' => 'Error attempting to resolve a previous payment. Please wait 15 minutes and try again',
+    'payment.error.feepaid' => 'The fee(s) has already been paid',
     // Potentially unused translations
 ];
