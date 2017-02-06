@@ -23,8 +23,23 @@ class OperatingCentreVariationRecordActionTest extends MockeryTestCase
         $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
         $mockSm->shouldReceive('get')->once()->with('translator')->andReturn($mockTranslator);
 
-        $this->table = m::mock(\Common\Service\Table\TableBuilder::class);
-        $this->table->shouldReceive('getServiceLocator')->once()->andReturn($mockSm);
+        $mockAuthService = m::mock()
+            ->shouldReceive('isGranted')
+            ->with('internal-user')
+            ->andReturn(true)
+            ->shouldReceive('isGranted')
+            ->with('internal-edit')
+            ->andReturn(true)
+            ->getMock();
+
+        $this->table = m::mock(\Common\Service\Table\TableBuilder::class)
+            ->shouldReceive('getServiceLocator')
+            ->once()
+            ->andReturn($mockSm)
+            ->shouldReceive('getAuthService')
+            ->andReturn($mockAuthService)
+            ->once()
+            ->getMock();
 
         $this->sut = new OperatingCentreVariationRecordAction($this->table);
     }

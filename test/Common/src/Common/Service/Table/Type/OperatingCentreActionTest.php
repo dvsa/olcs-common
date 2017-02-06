@@ -18,7 +18,20 @@ class OperatingCentreActionTest extends MockeryTestCase
 
     public function setUp()
     {
-        $this->table = m::mock();
+        $mockAuthService = m::mock()
+            ->shouldReceive('isGranted')
+            ->with('internal-user')
+            ->andReturn(true)
+            ->shouldReceive('isGranted')
+            ->with('internal-edit')
+            ->andReturn(true)
+            ->getMock();
+
+        $this->table = m::mock()
+            ->shouldReceive('getAuthService')
+            ->andReturn($mockAuthService)
+            ->once()
+            ->getMock();
 
         $this->sut = new OperatingCentreAction($this->table);
     }

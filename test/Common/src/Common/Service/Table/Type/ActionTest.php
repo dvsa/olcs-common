@@ -32,9 +32,22 @@ class ActionTest extends MockeryTestCase
     /**
      * @dataProvider dpTestRender
      */
-    public function testRender($isFieldset, $data, $column, $content, $expect)
+    public function testRender($isFieldset, $data, $column, $content, $expect, $internalEdit)
     {
-        $this->table->shouldReceive('getFieldset')
+        $mockAuthService = m::mock()
+            ->shouldReceive('isGranted')
+            ->with('internal-user')
+            ->andReturn(true)
+            ->shouldReceive('isGranted')
+            ->with('internal-edit')
+            ->andReturn($internalEdit)
+            ->getMock();
+
+        $this->table
+            ->shouldReceive('getAuthService')
+            ->andReturn($mockAuthService)
+            ->once()
+            ->shouldReceive('getFieldset')
             ->once()
             ->andReturn($isFieldset ? 'unit_Fieldset' : null)
             //
@@ -69,6 +82,7 @@ class ActionTest extends MockeryTestCase
                     ' name="unit_Fieldset[action][unit_Action][' . self::ID . ']"' .
                     ' value="unit_Content"' .
                     ' attrA attrB />',
+                true,
             ],
             [
                 'isFieldSet' => false,
@@ -82,6 +96,7 @@ class ActionTest extends MockeryTestCase
                     '<input type="submit" class=""' .
                     ' name="action[unit_Action][' . self::ID . ']"' .
                     ' value="unit_Text"  />',
+                true,
             ],
             [
                 'isFieldSet' => false,
@@ -97,6 +112,7 @@ class ActionTest extends MockeryTestCase
                     '<input type="submit" class=""' .
                     ' name="action[unit_Action][' . self::ID . ']"' .
                     ' value="unit_FldVal"  />',
+                true,
             ],
             [
                 'isFieldSet' => false,
@@ -112,6 +128,7 @@ class ActionTest extends MockeryTestCase
                     '<input type="submit" class=""' .
                     ' name="action[unit_Action][' . self::ID . ']"' .
                     ' value="unit_ValueFormat"  />',
+                true,
             ],
             [
                 'isFieldSet' => false,
@@ -125,6 +142,7 @@ class ActionTest extends MockeryTestCase
                 ],
                 'content' => null,
                 'expect' => 'unit_ValueFormat',
+                false,
             ],
         ];
     }
