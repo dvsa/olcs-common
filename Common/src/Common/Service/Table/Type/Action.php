@@ -47,10 +47,24 @@ class Action extends AbstractType
 
         $attributes = isset($column['action-attributes']) ? $column['action-attributes'] : [];
 
-        if (isset($column['keepForReadOnly']) && $column['keepForReadOnly']) {
+        if ($this->isInternalReadOnly() && isset($column['keepForReadOnly']) && $column['keepForReadOnly']) {
             return $value;
         }
 
         return sprintf($this->format, $class, $name, $value, implode(' ', $attributes));
+    }
+
+    /**
+     * Return true if the current internal user has read only permissions
+     *
+     * @return bool
+     */
+    protected function isInternalReadOnly()
+    {
+        $authService = $this->table->getAuthService();
+        if ($authService->isGranted('internal-user') && !$authService->isGranted('internal-edit')) {
+            return true;
+        }
+        return false;
     }
 }
