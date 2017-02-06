@@ -47,7 +47,11 @@ class Action extends AbstractType
 
         $attributes = isset($column['action-attributes']) ? $column['action-attributes'] : [];
 
-        if ($this->isInternalReadOnly() && isset($column['keepForReadOnly']) && $column['keepForReadOnly']) {
+        if (
+            $this->isInternalReadOnly()
+            && isset($column['keepForReadOnly'])
+            && $column['keepForReadOnly'] === true
+        ) {
             return $value;
         }
 
@@ -62,9 +66,6 @@ class Action extends AbstractType
     protected function isInternalReadOnly()
     {
         $authService = $this->table->getAuthService();
-        if ($authService->isGranted('internal-user') && !$authService->isGranted('internal-edit')) {
-            return true;
-        }
-        return false;
+        return ($authService->isGranted('internal-user') && !$authService->isGranted('internal-edit'));
     }
 }
