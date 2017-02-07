@@ -89,14 +89,10 @@ class PreviousConvictionData
      * @Form\Attributes({"id":"","class":"long"})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetails",
-     *     "label_attributes": {
-     *         "class": "col-sm-2",
-     *         "aria-label": "Give details of the offence"
-     *     },
      *     "error-message": "previousConvictionData_notes-error",
-     *     "column-size": "sm-6",
      *     "help-block": "selfserve-app-subSection-previous-history-criminal-conviction-helpBlock",
-     *     "hint": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetaisHelpBlock"
+     *     "hint": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetaisHelpBlock",
+     *     "hint-position": "above"
      * })
      * @Form\Type("TextArea")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
