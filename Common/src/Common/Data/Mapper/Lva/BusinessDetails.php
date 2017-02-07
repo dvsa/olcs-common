@@ -1,26 +1,27 @@
 <?php
 
-/**
- * Business Details
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
 
 /**
  * Business Details
- *
- * @author Rob Caiger <rob@clocal.co.uk>
  */
 class BusinessDetails implements MapperInterface
 {
+    /**
+     * Map data from result data into something for the form
+     *
+     * @param array $data Data from the API
+     *
+     * @return array data for the form
+     */
     public static function mapFromResult(array $data)
     {
+        // Strip out all trading names properties except name
         $tradingNames = [];
         foreach ($data['tradingNames'] as $tradingName) {
-            $tradingNames[] = $tradingName['name'];
+            $tradingNames[]['name'] = $tradingName['name'];
         }
 
         return array(
@@ -29,9 +30,7 @@ class BusinessDetails implements MapperInterface
                 'companyNumber' => array(
                     'company_number' => $data['companyOrLlpNo']
                 ),
-                'tradingNames' => array(
-                    'trading_name' => $tradingNames
-                ),
+                'tradingNames' => $tradingNames,
                 'name' => $data['name'],
                 'type' => $data['type']['id'],
                 'natureOfBusiness' => $data['natureOfBusiness']
