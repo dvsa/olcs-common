@@ -584,6 +584,7 @@ return [
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate' => 'Received date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.removalDate' => 'Removed date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.seedDate' => 'Warning letter seed date',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.warningLetterSentDate' => 'Duplicate warning sent date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate' => 'Specified date',
     'application_vehicle-safety_vehicle.table.disc-no' => 'Disc No.',
     'application_vehicle-safety_vehicle.table.removed' => 'Removed',

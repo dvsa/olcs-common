@@ -87,6 +87,21 @@ class LicenceLicenceVehicle
     public $warningLetterSeedDate = null;
 
     /**
+     * @Form\Attributes({})
+     * @Form\Options({
+     *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.warningLetterSentDate",
+     *     "create_empty_option": true,
+     *     "render_delimiters": false
+     * })
+     * @Form\Required(false)
+     * @Form\Filter({"name": "DateSelectNullifier"})
+     * @Form\Type("Common\Form\Elements\Custom\DateSelect")
+     * @Form\Validator({"name": "\Common\Validator\Date"})
+     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
+     */
+    public $warningLetterSentDate = null;
+
+    /**
      * @Form\Attributes({"disabled":"disabled"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo"
