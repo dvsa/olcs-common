@@ -31,9 +31,13 @@ class Correspondence
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
-     *     "min": 0, "max": 200
-     * }})
+     * @Form\Validator({
+     *     "name":"Zend\Validator\StringLength",
+     *     "options":{
+     *         "min": 0,
+     *         "max": 90,
+     *     }
+     * })
      */
     public $fao = null;
 }
