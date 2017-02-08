@@ -1,10 +1,5 @@
 <?php
 
-/**
- * FileUploadListTest
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Form\Elements\Types;
 
 use PHPUnit_Framework_TestCase;
@@ -54,6 +49,14 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
                 'size' => 20000000,
                 'id' => 10,
                 'version' => 3
+            ),
+            array(
+                'identifier' => 'bar',
+                'filename' => 'tiffimage.tiff',
+                'description' => 'A document that cant be previewed',
+                'size' => 20000000,
+                'id' => 11,
+                'version' => 3
             )
         );
 
@@ -94,5 +97,17 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($element->get('file-10')->has('link'));
         $this->assertTrue($element->get('file-10')->has('remove'));
         $this->assertFalse($element->get('file-10')->has('preview'));
+
+        // image with no preview available
+        $this->assertTrue($element->has('file-11'));
+        $this->assertTrue($element->get('file-11')->has('id'));
+        $this->assertTrue($element->get('file-11')->has('version'));
+        $this->assertTrue($element->get('file-11')->has('link'));
+        $this->assertTrue($element->get('file-11')->has('remove'));
+        $this->assertTrue($element->get('file-11')->has('preview'));
+        $this->assertEquals(
+            'Preview is not available',
+            $element->get('file-11')->get('preview')->getValue()
+        );
     }
 }
