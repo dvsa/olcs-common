@@ -14,7 +14,6 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test the element configuration
-     * @group test123
      */
     public function testElement()
     {
