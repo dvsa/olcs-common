@@ -40,7 +40,7 @@ class BusinessDetails
      *          "label":"application_your-business_business-details.data.trading_names_optional",
      *          "hint":"markup-trading-name-hint",
      *          "hint_at_bottom":true,
-     *      },
+     *      }
      * })
      */
     public $tradingNames = null;
