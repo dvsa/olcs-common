@@ -113,9 +113,10 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
     protected function getSingleExpected()
     {
         $expected = [
-            'val-1' => 'Value 1',
-            'val-2' => 'Value 2',
-            'val-3' => 'Value 3',
+            '1' => 'A1 Council',
+            '2' => 'B Council',
+            '3' => 'C Council',
+            '4' => 'A2 Council',
         ];
         return $expected;
     }
@@ -126,22 +127,23 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
     protected function getGroupsExpected()
     {
         $expected = [
-            'B' => [
-                'label' => 'Bee',
+            'A' => [
+                'label' => 'AAA',
                 'options' => [
-                    'val-1' => 'Value 1',
+                    '1' => 'A1 Council',
+                    '4' => 'A2 Council',
                 ],
             ],
-            'A' => [
-                'label' => 'Aye',
+            'B' => [
+                'label' => 'BBB',
                 'options' => [
-                    'val-2' => 'Value 2',
+                    '2' => 'B Council',
                 ],
             ],
             'C' => [
-                'label' => 'Cee',
+                'label' => 'CCC',
                 'options' => [
-                    'val-3' => 'Value 3',
+                    '3' => 'C Council',
                 ],
             ]
         ];
@@ -154,9 +156,10 @@ class LocalAuthorityTest extends AbstractDataServiceTestCase
     protected function getSingleSource()
     {
         $source = [
-            ['id' => 'val-1', 'description' => 'Value 1', 'txcName' => 'B', 'trafficArea' => ['name' => 'Bee']],
-            ['id' => 'val-2', 'description' => 'Value 2', 'txcName' => 'A', 'trafficArea' => ['name' => 'Aye']],
-            ['id' => 'val-3', 'description' => 'Value 3', 'txcName' => 'C', 'trafficArea' => ['name' => 'Cee']]
+            ['id' => '1', 'description' => 'A1 Council', 'trafficArea' => ['name' => 'AAA', 'id' => 'A']],
+            ['id' => '2', 'description' => 'B Council', 'trafficArea' => ['name' => 'BBB', 'id' => 'B']],
+            ['id' => '3', 'description' => 'C Council', 'trafficArea' => ['name' => 'CCC', 'id' => 'C']],
+            ['id' => '4', 'description' => 'A2 Council', 'trafficArea' => ['name' => 'AAA', 'id' => 'A']],
         ];
         return $source;
     }
