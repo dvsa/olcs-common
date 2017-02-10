@@ -12,14 +12,7 @@ class Fields
 {
     /**
      * @Form\Attributes({"id":"","class":"extra-long"})
-     * @Form\Options({
-     *     "label": "Case summary",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-6",
-     *     "help-block": "You can type anything in this box."
-     * })
+     * @Form\Options({"label": "Case summary"})
      * @Form\Type("\Zend\Form\Element\Textarea")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Filter({"name":"Zend\Filter\StringToLower"})

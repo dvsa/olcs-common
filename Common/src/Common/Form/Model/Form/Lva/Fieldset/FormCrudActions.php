@@ -16,13 +16,7 @@ class FormCrudActions
      *     "class":"action--primary large",
      *     "aria-label": "Save and Continue"
      * })
-     * @Form\Options({
-     *     "label": "Save",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10"
-     * })
+     * @Form\Options({"label": "Save"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $submit = null;
@@ -34,11 +28,7 @@ class FormCrudActions
      *     "id": "cancel"
      * })
      * @Form\Options({
-     *     "label": "Cancel",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10"
+     *     "label": "Cancel"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
@@ -50,11 +40,7 @@ class FormCrudActions
      *    "class":"action--tertiary large"
      * })
      * @Form\Options({
-     *     "label": "Save and add another",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10"
+     *     "label": "Save and add another"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
