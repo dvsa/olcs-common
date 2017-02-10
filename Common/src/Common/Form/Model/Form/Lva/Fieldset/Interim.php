@@ -18,7 +18,6 @@ class Interim
      *     "label":
      * "interim.application.undertakings.form.checkbox.label",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     }

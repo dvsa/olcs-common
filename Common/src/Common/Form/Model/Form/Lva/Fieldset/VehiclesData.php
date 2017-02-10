@@ -36,7 +36,6 @@ class VehiclesData
      *             "label": "No"
      *         }
      *     },
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     }

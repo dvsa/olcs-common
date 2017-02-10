@@ -21,7 +21,6 @@ class SafetyApplication
      *     "label":
      * "application_vehicle-safety_safety.application.suitableMaintenance",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     }
@@ -39,7 +38,6 @@ class SafetyApplication
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "application_vehicle-safety_safety.application.safetyConfirmation",
-     *     "help-block": "Please choose",
      *     "must_be_value": "Y"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")

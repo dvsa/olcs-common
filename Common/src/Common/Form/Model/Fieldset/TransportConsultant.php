@@ -19,7 +19,6 @@ class TransportConsultant
      *      },
      *     "label":"application_your-business_business-type.add-transport-consultant.label",
      *     "value_options":{"Y":"Yes","N":"No"},
-     *     "help-block":"Please choose",
      *     "label_attributes":{
      *         "class":"inline"
      *     }
