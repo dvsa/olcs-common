@@ -23,7 +23,6 @@ class FinancialEvidenceEvidence
      *         "Y":"lva-financial-evidence-upload-now.yes",
      *         "N":"lva-financial-evidence-upload-now.no"
      *     },
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     },

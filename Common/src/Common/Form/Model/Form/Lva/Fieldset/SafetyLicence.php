@@ -65,7 +65,6 @@ class SafetyLicence
      *      },
      *     "label": "application_vehicle-safety_safety.licence.moreFrequentInspections",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     },
@@ -97,7 +96,6 @@ class SafetyLicence
      *             "label": "tachograph_analyser.tach_na"
      *         }
      *     },
-     *     "help-block": "Please choose",
      *     "category": "tachograph_analyser",
      *     "service_name": "StaticList"
      * })

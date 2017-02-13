@@ -128,7 +128,6 @@ class Address
      *     "error-message" : "address_country-error",
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
-     *     "help-block": "Please select a category",
      *     "service_name": "Common\Service\Data\Country"
      * })
      * @Form\Type("DynamicSelect")

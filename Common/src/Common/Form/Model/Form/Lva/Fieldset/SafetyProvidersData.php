@@ -34,8 +34,7 @@ class SafetyProvidersData
      *             "value": "Y",
      *             "label": "application_vehicle-safety_safety-sub-action.data.isExternal.option.yes"
      *         }
-     *     },
-     *     "help-block": "Please choose"
+     *     }
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */

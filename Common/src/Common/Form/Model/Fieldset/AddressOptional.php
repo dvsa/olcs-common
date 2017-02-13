@@ -127,7 +127,6 @@ class AddressOptional
      *     },
      *     "empty_option": "Please select",
      *     "disable_inarray_validator": false,
-     *     "help-block": "Please select a category",
      *     "service_name": "Common\Service\Data\Country"
      * })
      * @Form\Type("DynamicSelect")

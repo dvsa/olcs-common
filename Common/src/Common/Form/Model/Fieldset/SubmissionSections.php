@@ -14,7 +14,6 @@ class SubmissionSections
      * @Form\Attributes({})
      * @Form\Options({
      *     "label": "Compliance",
-     *     "help-block": "Please select a category",
      *     "category": "case_categories_compliance"
      * })
      * @Form\Required(false)
@@ -26,7 +25,6 @@ class SubmissionSections
      * @Form\Attributes({})
      * @Form\Options({
      *     "label": "TM",
-     *     "help-block": "Please select a category",
      *     "category": "case_categories_tm"
      * })
      * @Form\Required(false)
@@ -38,7 +36,6 @@ class SubmissionSections
      * @Form\Attributes({})
      * @Form\Options({
      *     "label": "Licensing application",
-     *     "help-block": "Please select a category",
      *     "category": "case_categories_app"
      * })
      * @Form\Required(false)
@@ -50,7 +47,6 @@ class SubmissionSections
      * @Form\Attributes({})
      * @Form\Options({
      *     "label": "Licence referral",
-     *     "help-block": "Please select a category",
      *     "category": "case_categories_referral"
      * })
      * @Form\Required(false)
@@ -62,7 +58,6 @@ class SubmissionSections
      * @Form\Attributes({})
      * @Form\Options({
      *     "label": "Bus registration",
-     *     "help-block": "Please select a category",
      *     "category": "case_categories_bus"
      * })
      * @Form\Required(false)

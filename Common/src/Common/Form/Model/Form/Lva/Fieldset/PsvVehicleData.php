@@ -24,14 +24,7 @@ class PsvVehicleData
 
     /**
      * @Form\Attributes({"id":"vrm","placeholder":""})
-     * @Form\Options({
-     *     "label": "application_vehicle-safety_vehicle-psv-sub-action.data.vrm",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-5",
-     *     "help-block": "Between 2 and 50 characters."
-     * })
+     * @Form\Options({"label": "application_vehicle-safety_vehicle-psv-sub-action.data.vrm"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Common\Filter\Vrm"})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Vrm"})
@@ -39,10 +32,7 @@ class PsvVehicleData
     public $vrm = null;
 
     /**
-     * @Form\Options({
-     *     "label": "application_vehicle-safety_vehicle-psv-sub-action.data.makeModel",
-     *     "help-block": "Up to 100 characters"
-     * })
+     * @Form\Options({"label": "application_vehicle-safety_vehicle-psv-sub-action.data.makeModel"})
      * @Form\Type("Text")
      * @Form\Required(false)
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
