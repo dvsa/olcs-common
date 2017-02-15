@@ -7,7 +7,7 @@ use Zend\Form\Annotation as Form;
 /**
  * @codeCoverageIgnore Auto-generated file with no methods
  */
-class TradingNames
+class TradingNames extends \Olcs\Form\Model\Fieldset\Base
 {
     /**
      * @Form\Attributes({"class":"long","id":""})
