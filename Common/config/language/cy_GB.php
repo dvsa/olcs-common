@@ -525,7 +525,6 @@ return [
     'lva.section.title.voided_discs' => 'A ydych yn sicr yr hoffech ddirymu\'r disgiau hyn?',
     'manage-users.table.title.count' => 'Defnyddwyr',
     'manage-users.action.add' => 'Ychwanegu defnyddiwr newydd',
-    'manage-users.table.action.remove' => 'Tynnu i ffwrdd',
     'manage-users.table.column.permission.title' => 'Caniatâd',
     'manage-users.field.permission.label' => 'Caniatâd',
     'manage-users.field.permission.tm.label' => 'Rheolwr Trafnidiaeth',
