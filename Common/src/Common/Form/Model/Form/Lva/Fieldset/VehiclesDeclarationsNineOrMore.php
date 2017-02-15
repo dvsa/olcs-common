@@ -24,7 +24,6 @@ class VehiclesDeclarationsNineOrMore
      *     "label": "application_vehicle-safety_undertakings.nineOrMore.details",
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
-     *     "help-block": "Please choose",
      *     "must_be_value": "Y"
      * })
      * @Form\Attributes({"data-container-class": "confirm checkbox"})

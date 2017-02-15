@@ -149,7 +149,7 @@ class FormRewriteController extends ZendAbstractActionController
         $data = $this->updateElementWithTemplateSpec($data);
         $data = $this->mutateElementType($data);
 
-        $mergeOptions = array('label', 'label_attributes', 'description', 'hint', 'route', 'value-label', 'help-block');
+        $mergeOptions = array('label', 'label_attributes', 'description', 'hint', 'route', 'value-label');
 
         foreach ($mergeOptions as $option) {
             if (isset($data[$option])) {

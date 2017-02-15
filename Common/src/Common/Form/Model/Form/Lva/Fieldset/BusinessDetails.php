@@ -52,8 +52,7 @@ class BusinessDetails
      *     "error-message" : "businessDetails_natureOfBusiness-error",
      *     "label_attributes": {
      *         "aria-label": "businessDetails_natureOfBusiness-error"
-     *     },
-     *     "help-block": "Please select a nature of business"
+     *     }
      * })
      * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
      *     "min": 0, "max": 200

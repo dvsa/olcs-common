@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Goods Vehicles Vehicle
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
@@ -46,7 +40,9 @@ class GoodsVehiclesVehicle implements MapperInterface
     public static function mapFromErrors($errors, FormInterface $form)
     {
         $dataFields = ['vrm', 'platedWeight'];
-        $licenceVehicleFields = ['receivedDate', 'specifiedDate', 'removalDate', 'warningLetterSeedDate', 'discNo'];
+        $licenceVehicleFields = [
+            'receivedDate', 'specifiedDate', 'removalDate', 'warningLetterSeedDate', 'discNo', 'warningLetterSentDate'
+        ];
         $formMessages = [];
         foreach ($errors as $key => $error) {
             if (in_array($key, $dataFields, false)) {

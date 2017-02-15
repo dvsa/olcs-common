@@ -20,7 +20,6 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     },

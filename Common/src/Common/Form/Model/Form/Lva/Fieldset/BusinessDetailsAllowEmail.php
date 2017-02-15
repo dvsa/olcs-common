@@ -29,7 +29,6 @@ class BusinessDetailsAllowEmail
      *             "label": "Email",
      *         },
      *     },
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     }

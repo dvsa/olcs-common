@@ -44,7 +44,7 @@ class LocalAuthority extends AbstractDataService implements ListData
         $optionData = [];
 
         foreach ($data as $datum) {
-            $taId = $datum['txcName'];
+            $taId = $datum['trafficArea']['id'];
 
             if (!isset($optionData[$taId])) {
                 $optionData[$taId] = [

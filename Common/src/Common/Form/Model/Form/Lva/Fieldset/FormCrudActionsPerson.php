@@ -17,11 +17,7 @@ class FormCrudActionsPerson
      *     "aria-label": "Save and continue"
      * })
      * @Form\Options({
-     *     "label": "Save",
-     *     "label_attributes": {
-     *         "class": "col-sm-2",
-     *     },
-     *     "column-size": "sm-10"
+     *     "label": "Save"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
@@ -29,39 +25,21 @@ class FormCrudActionsPerson
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--secondary large", "id": "cancel"})
-     * @Form\Options({
-     *     "label": "Cancel",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10"
-     * })
+     * @Form\Options({"label": "Cancel"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $cancel = null;
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--secondary large js-modal-ajax", "id": "disqualify"})
-     * @Form\Options({
-     *     "label": "Disqualify person",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10",
-     * })
+     * @Form\Options({"label": "Disqualify person"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
     public $disqualify = null;
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--tertiary large"})
-     * @Form\Options({
-     *     "label": "Save and add another",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10"
-     * })
+     * @Form\Options({"label": "Save and add another"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $addAnother = null;
