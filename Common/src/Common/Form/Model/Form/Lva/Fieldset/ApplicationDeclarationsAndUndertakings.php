@@ -51,6 +51,12 @@ class ApplicationDeclarationsAndUndertakings
     public $declarationDownload = null;
 
     /**
+     * @Form\Attributes({"value": "markup-declaration-for-verify","data-container-class":"declarationForVerify"})
+     * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
+     */
+    public $declarationForVerify = null;
+
+    /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */

@@ -26,6 +26,9 @@ $(function () {
         "selector:#label-declarationConfirmation": function () {
           return OLCS.formHelper.isChecked("declarationsAndUndertakings", "signatureOptions", "Y");
         },
+        "selector:.declarationForVerify": function () {
+          return OLCS.formHelper.isChecked("declarationsAndUndertakings", "signatureOptions", "Y");
+        },
       }
     }
   });
