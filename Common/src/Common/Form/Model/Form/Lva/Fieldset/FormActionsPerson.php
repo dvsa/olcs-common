@@ -27,13 +27,7 @@ class FormActionsPerson
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--secondary large js-modal-ajax", "id": "disqualify"})
-     * @Form\Options({
-     *     "label": "Disqualify person",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10",
-     * })
+     * @Form\Options({"label": "Disqualify person"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
     public $disqualify = null;

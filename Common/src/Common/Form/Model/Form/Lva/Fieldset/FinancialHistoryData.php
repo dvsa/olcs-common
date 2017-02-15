@@ -46,7 +46,6 @@ class FinancialHistoryData
      *             "label": "No"
      *         }
      *     },
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     },
@@ -78,7 +77,6 @@ class FinancialHistoryData
      *             "label": "No"
      *         }
      *     },
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     },
@@ -110,7 +108,6 @@ class FinancialHistoryData
      *             "label": "No"
      *         }
      *     },
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     },
@@ -142,7 +139,6 @@ class FinancialHistoryData
      *             "label": "No"
      *         }
      *     },
-     *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
      *     },
@@ -242,7 +238,6 @@ class FinancialHistoryData
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "application_previous-history_financial-history.insolvencyConfirmation.title",
-     *     "help-block": "Please choose",
      *     "must_be_value": "Y",
      *     "label_attributes": {
      *         "id":"insolvency"

@@ -49,7 +49,6 @@ class LicenceHistoryLicenceData
      *     "label": "selfserve-app-subSection-previous-history-licence-history-willSurrender",
      *     "error-message": "licenceHistoryLicenceData_willSurrender-error",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
      *      "fieldset-attributes": {
      *          "class": "checkbox inline"
      *      },

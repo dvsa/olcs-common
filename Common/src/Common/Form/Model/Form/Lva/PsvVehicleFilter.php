@@ -62,13 +62,7 @@ class PsvVehicleFilter
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary","data-container-class":"js-hidden"})
-     * @Form\Options({
-     *     "label": "internal-vehicle-filter-filter",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-10"
-     * })
+     * @Form\Options({"label": "internal-vehicle-filter-filter"})
      * @Form\Type("\Zend\Form\Element\Button")
      */
     public $filter = null;

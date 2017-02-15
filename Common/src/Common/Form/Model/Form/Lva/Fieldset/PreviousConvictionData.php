@@ -90,7 +90,6 @@ class PreviousConvictionData
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetails",
      *     "error-message": "previousConvictionData_notes-error",
-     *     "help-block": "selfserve-app-subSection-previous-history-criminal-conviction-helpBlock",
      *     "hint": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetaisHelpBlock",
      *     "hint-position": "above"
      * })

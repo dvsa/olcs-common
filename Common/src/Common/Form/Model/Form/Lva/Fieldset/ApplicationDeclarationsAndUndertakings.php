@@ -31,8 +31,7 @@ class ApplicationDeclarationsAndUndertakings
      *     "value_options": {"Y": "application.signature.options.verify", "N": "application.signature.options.sign"},
      *     "label_options": {
      *         "disable_html_escape": "true"
-     *     },
-     *     "help-block": "Please choose",
+     *     }
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
