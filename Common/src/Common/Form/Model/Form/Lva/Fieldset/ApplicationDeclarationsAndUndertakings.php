@@ -50,18 +50,10 @@ class ApplicationDeclarationsAndUndertakings
     public $declarationDownload = null;
 
     /**
-     * @Form\Options({
-     *     "checked_value": "Y",
-     *     "unchecked_value": "N",
-     *     "must_be_value": "Y",
-     *     "label": "application.review-declarations.confirm-verify-text",
-     *     "short-label": "application.review-declarations.confirm-short-label",
-     *     "label_attributes": {"id": "label-declarationConfirmation"}
-     * })
-     * @Form\Attributes({"data-container-class": "confirm checkbox"})
-     * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
+     * @Form\Attributes({"value": "markup-declaration-for-verify","data-container-class":"declarationForVerify"})
+     * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
      */
-    public $declarationConfirmation = null;
+    public $declarationForVerify = null;
 
     /**
      * @Form\Attributes({"value":""})
