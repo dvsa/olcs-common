@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Common variation OC controller logic
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Dvsa\Olcs\Transfer\Command\Variation\RestoreOperatingCentre;
@@ -18,6 +12,11 @@ use Dvsa\Olcs\Transfer\Command\Variation\RestoreOperatingCentre;
  */
 trait VariationOperatingCentresControllerTrait
 {
+    /**
+     * Action Restore Operation Center
+     *
+     * @return \Zend\Http\Response
+     */
     public function restoreAction()
     {
         $data = [
@@ -25,16 +24,20 @@ trait VariationOperatingCentresControllerTrait
             'application' => $this->getIdentifier()
         ];
 
+        /** @var \Common\Service\Cqrs\Response $response */
         $response = $this->handleCommand(RestoreOperatingCentre::create($data));
 
         if ($response->isOk()) {
-            return $this->redirect()->toRouteAjax(null, ['action' => null, 'child_id' => null], [], true);
+            return $this->redirect()
+                ->toRouteAjax($this->getBaseRoute(), ['action' => null, 'child_id' => null], [], true);
         }
 
+        /** @var \Common\Service\Helper\FlashMessengerHelperService $hlpFlashMsgr */
+        $hlpFlashMsgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
         if ($response->isServerError()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+            $hlpFlashMsgr->addUnknownError();
         } else {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('Can\'t restore this record');
+            $hlpFlashMsgr->addErrorMessage('Can\'t restore this record');
         }
 
         return $this->redirect()->toRouteAjax(null, ['action' => null, 'child_id' => null], [], true);
