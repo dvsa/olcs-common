@@ -1807,7 +1807,6 @@ return [
     'maint' => 'Maint',
     'manage-users.table.title.count' => 'Users',
     'manage-users.action.add' => 'Add new user',
-    'manage-users.table.action.remove' => 'Remove',
     'manage-users.table.column.permission.title' => 'Permission',
     'manage-users.create.error' => 'The user could not be created',
     'manage-users.create.success' => 'User successfully created',

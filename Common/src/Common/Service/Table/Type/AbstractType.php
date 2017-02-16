@@ -1,12 +1,8 @@
 <?php
 
-/**
- * Abstract type
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Service\Table\Type;
+
+use Common\Service\Table\TableBuilder;
 
 /**
  * Abstract type
@@ -18,14 +14,14 @@ abstract class AbstractType
     /**
      * Holds the table
      *
-     * @var object
+     * @var TableBuilder
      */
     protected $table;
 
     /**
      * DI the table
      *
-     * @param object $table
+     * @param TableBuilder $table Table
      */
     public function __construct($table)
     {
@@ -35,7 +31,7 @@ abstract class AbstractType
     /**
      * Getter for table
      *
-     * @return object
+     * @return TableBuilder
      */
     protected function getTable()
     {
@@ -45,9 +41,9 @@ abstract class AbstractType
     /**
      * Render the selector
      *
-     * @param array $data
-     * @param array $column
-     * @param string $formattedContent
+     * @param array  $data             Data
+     * @param array  $column           Column params
+     * @param string $formattedContent Content
      *
      * @return string
      */
