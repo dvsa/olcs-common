@@ -16,7 +16,7 @@ class TradingNames
      * })
      * @Form\Options({
      *      "hint":"markup-trading-name-hint",
-     *      "hint_at_bottom":true,
+     *      "hint-position": "below",
      *      "count":1,
      *      "wrapElements":false,
      *      "allow_add":true,

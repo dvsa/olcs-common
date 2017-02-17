@@ -25,6 +25,19 @@ class CompanyNumber extends Fieldset
 
         $this->add(
             array(
+                'type' => 'Common\Form\Elements\Types\PlainText',
+                'name' => 'description',
+                'attributes' => [
+                    'data-container-class' => 'hint',
+                ],
+                'options' => [
+                    'value' => 'selfserve-business-registered-company-description'
+                ]
+            )
+        );
+
+        $this->add(
+            array(
                 'type' => 'Common\Form\Elements\InputFilters\CompanyNumber',
                 'name' => 'company_number',
                 'attributes' => [
@@ -46,19 +59,6 @@ class CompanyNumber extends Fieldset
                     'data-container-class' => 'inline',
                     'type' => 'submit',
                 ],
-            )
-        );
-
-        $this->add(
-            array(
-                'type' => 'Common\Form\Elements\Types\PlainText',
-                'name' => 'description',
-                'attributes' => [
-                    'data-container-class' => 'hint',
-                ],
-                'options' => [
-                    'value' => 'selfserve-business-registered-company-description'
-                ]
             )
         );
     }
