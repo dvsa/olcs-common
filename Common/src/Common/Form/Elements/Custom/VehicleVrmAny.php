@@ -31,10 +31,6 @@ class VehicleVrmAny extends ZendElement implements InputProviderInterface
                     'options' => [
                         'min' => 1,
                         'max' => 20,
-                        'messages' => [
-                            \Zend\Validator\StringLength::TOO_SHORT => 'vehicle.error.vrm.lengthInvalid',
-                            \Zend\Validator\StringLength::TOO_LONG => 'vehicle.error.vrm.lengthInvalid',
-                        ],
                     ],
                 ],
             ],
