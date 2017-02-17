@@ -22,24 +22,31 @@ class GoodsVehiclesEditVehicleData
     public $version = null;
 
     /**
-     * @Form\Attributes({"class":"medium","id":"vrm","placeholder":"","disabled":"disabled"})
+     * @Form\Attributes({
+     *     "class":"medium",
+     *     "id":"vrm",
+     *     "placeholder":"",
+     *     "disabled":"disabled"
+     * })
      * @Form\Options({
-     *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm"
+     *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm",
      * })
      * @Form\Type("Text")
      */
     public $vrm = null;
 
     /**
-     * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":"","pattern":"\d(\.)*"})
+     * @Form\Attributes({
+     *     "class":"small",
+     *     "id":"plated_weight",
+     *     "placeholder":"",
+     *     "pattern":"\d"
+     * })
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight",
-     *     "label_attributes": {
-     *         "aria-label": "Enter the gross plated weight in kilograms"
-     *     }
+     *     "error-message": "vehicle.error.top.platedWeight",
      * })
-     * @Form\Validator({"name": "Zend\Validator\Between", "options": {"min": 0, "max": 999999}})
-     * @Form\Type("Text")
+     * @Form\Type("\Common\Form\Elements\Custom\VehiclePlatedWeight")
      */
     public $platedWeight = null;
 }

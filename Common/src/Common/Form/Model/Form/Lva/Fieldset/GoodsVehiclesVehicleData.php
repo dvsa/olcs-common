@@ -22,32 +22,31 @@ class GoodsVehiclesVehicleData
     public $version = null;
 
     /**
-     * @Form\Attributes({"class":"medium","id":"vrm","placeholder":""})
+     * @Form\Attributes({
+     *     "class": "medium",
+     *     "id": "vrm",
+     *     "placeholder": "",
+     * })
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm",
-     *     "error-message": "goodsVehiclesVehicleData_vrm-error",
-     *     "label_attributes": {
-     *         "aria-label": "Enter your vehicle registration number"
-     *     }
+     *     "error-message": "vehicle.error.top.vrm",
      * })
-     * @Form\Type("Text")
-     * @Form\Filter({"name":"Common\Filter\Vrm"})
-     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Vrm"})
+     * @Form\Type("\Common\Form\Elements\Custom\VehicleVrm")
      */
     public $vrm = null;
 
     /**
-     * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":"","pattern":"\d(\.)*"})
+     * @Form\Attributes({
+     *     "class": "small",
+     *     "id": "plated_weight",
+     *     "placeholder": "",
+     *     "pattern": "\d*",
+     * })
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight",
-     *     "error-message": "goodsVehiclesVehicleData_platedWeight-error",
-     *     "label_attributes": {
-     *         "aria-label": "Enter the gross plated weight in kilograms"
-     *     }
+     *     "error-message": "vehicle.error.top.platedWeight",
      * })
-     * @Form\Validator({"name": "Zend\Validator\Digits"})
-     * @Form\Validator({"name": "Zend\Validator\Between", "options": {"min": 0, "max": 999999}})
-     * @Form\Type("Text")
+     * @Form\Type("\Common\Form\Elements\Custom\VehiclePlatedWeight")
      */
     public $platedWeight = null;
 }
