@@ -45,10 +45,6 @@ class PsvVehicleData
      *     "options":{
      *          "min":2,
      *          "max":100,
-     *          "messages": {
-     *              "stringLengthTooShort": "vehicle.error.modelName.invalid",
-     *              "stringLengthTooLong": "vehicle.error.modelName.invalid",
-     *          },
      *     },
      * })
      */

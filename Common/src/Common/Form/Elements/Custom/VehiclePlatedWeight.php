@@ -26,11 +26,7 @@ class VehiclePlatedWeight extends ZendElement implements InputProviderInterface
                 'validators' => [
                     [
                         'name' => \Zend\Validator\Digits::class,
-                        'options' => [
-                            'messages' => [
-                                \Zend\Validator\Digits::NOT_DIGITS => 'vehicle.error.platedWeight.notDigits',
-                            ],
-                        ],
+                        'options' => [],
                     ],
                     [
                         'name' => \Zend\Validator\Between::class,
