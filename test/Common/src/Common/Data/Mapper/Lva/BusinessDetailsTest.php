@@ -27,8 +27,8 @@ class BusinessDetailsTest extends PHPUnit_Framework_TestCase
             'companyOrLlpNo' => '12345678',
             'version' => 11,
             'tradingNames' => [
-                ['name' => 'Foo'],
-                ['name' => 'Bar']
+                ['name' => 'Foo', 'id' => 1],
+                ['name' => 'Bar', 'foo' => 'bar']
             ],
             'natureOfBusiness' => 'SIC Code 1',
             'contactDetails' => [
@@ -50,10 +50,8 @@ class BusinessDetailsTest extends PHPUnit_Framework_TestCase
                     'company_number' => '12345678'
                 ],
                 'tradingNames' => [
-                    'trading_name' => [
-                        'Foo',
-                        'Bar'
-                    ]
+                    ['name' => 'Foo'],
+                    ['name' => 'Bar']
                 ],
                 'natureOfBusiness' => 'SIC Code 1',
             ],

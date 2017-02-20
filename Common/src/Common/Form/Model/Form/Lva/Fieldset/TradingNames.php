@@ -5,35 +5,16 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * Trading names fieldset
+ * @codeCoverageIgnore Auto-generated file with no methods
  */
-class TradingNames
+class TradingNames extends Base
 {
     /**
-     * @Form\Attributes({
-     *   "id":"", 
-     *   "class":"add-another"
-     * })
-     * @Form\Options({
-     *      "hint":"markup-trading-name-hint",
-     *      "hint-position": "below",
-     *      "count":1,
-     *      "wrapElements":false,
-     *      "allow_add":true,
-     *      "allow_remove":true,
-     *      "target_element": {
-     *          "type":"Text",
-     *          "attributes": {
-     *              "class": "medium",
-     *              "data-container-class" : "compound"
-     *          },
-     *          "options": {
-     *              "wrapElements":false
-     *          }
-     *      }
-     * })
-     * @Form\Type("Collection")
-     * @Form\Name("trading_name")
+     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Required(false)
+     * @Form\Type("Text")
+     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":1,"max":70}})
      */
-    public $tradingName = null;
+    public $name = null;
 }
