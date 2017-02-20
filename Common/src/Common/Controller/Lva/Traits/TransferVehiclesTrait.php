@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Transfer Vehicles Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Dvsa\Olcs\Transfer\Query\Licence\OtherActiveLicences;
@@ -19,9 +14,12 @@ trait TransferVehiclesTrait
 {
     /**
      * Transfer vehicles
+     *
+     * @return \Common\View\Model\Section | \Zend\Http\Response
      */
     protected function transferVehicles()
     {
+        /** @var \Common\Service\Cqrs\Response $response */
         $response = $this->handleQuery(OtherActiveLicences::create(['id' => $this->getLicenceId()]));
 
         $options = [];
@@ -32,14 +30,13 @@ trait TransferVehiclesTrait
 
         $form = $this->getVehicleTransferForm($options);
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $form->setData((array) $request->getPost());
 
             if ($form->isValid()) {
-
                 $formData = $form->getData();
 
                 $ids = explode(',', $this->params()->fromRoute('child_id'));
@@ -50,23 +47,30 @@ trait TransferVehiclesTrait
                     'licenceVehicles' => $ids
                 ];
 
+                /** @var \Common\Service\Cqrs\Response $response */
                 $response = $this->handleCommand(TransferVehicles::create($dtoData));
 
+                /** @var \Common\Service\Helper\FlashMessengerHelperService $fm */
                 $fm = $this->getServiceLocator()->get('Helper\FlashMessenger');
 
                 if ($response->isOk()) {
-
                     $fm->addSuccessMessage('licence.vehicles_transfer.form.vehicles_transfered');
 
                     return $this->redirect()->toRouteAjax(
                         $this->getBaseRoute(),
-                        [$this->getIdentifierIndex() => $this->getIdentifier()]
+                        [
+                            $this->getIdentifierIndex() => $this->getIdentifier(),
+                        ],
+                        [
+                            'query' => $request->getQuery()->toArray(),
+                        ]
                     );
                 }
 
                 if ($response->isClientError()) {
-
                     $messages = $response->getResult()['messages'];
+
+                    /** @var \Common\Service\Helper\TranslationHelperService $th */
                     $th = $this->getServiceLocator()->get('Helper\Translation');
                     $licNo = $options[$formData['data']['licence']];
 
@@ -113,7 +117,12 @@ trait TransferVehiclesTrait
                     } else {
                         return $this->redirect()->toRouteAjax(
                             $this->getBaseRoute(),
-                            [$this->getIdentifierIndex() => $this->getIdentifier()]
+                            [
+                                $this->getIdentifierIndex() => $this->getIdentifier(),
+                            ],
+                            [
+                                'query' => $request->getQuery()->toArray(),
+                            ]
                         );
                     }
                 }
@@ -129,6 +138,8 @@ trait TransferVehiclesTrait
 
     /**
      * Get vehicles transfer form
+     *
+     * @param array $options Options
      *
      * @return \Zend\Form\Form
      */

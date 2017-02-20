@@ -51,7 +51,7 @@ trait CrudTableTrait
      * Generic delete functionality; usually does the trick but
      * can be overridden if not
      *
-     * @return \Zend\Http\Response\
+     * @return \Zend\Http\Response
      */
     public function deleteAction()
     {
@@ -75,7 +75,12 @@ trait CrudTableTrait
 
             return $this->redirect()->toRouteAjax(
                 $this->getBaseRoute(),
-                array($this->getIdentifierIndex() => $this->getIdentifier())
+                [
+                    $this->getIdentifierIndex() => $this->getIdentifier(),
+                ],
+                [
+                    'query' => $request->getQuery()->toArray(),
+                ]
             );
         }
 

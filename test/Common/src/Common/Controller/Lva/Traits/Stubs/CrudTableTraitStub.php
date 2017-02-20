@@ -1,10 +1,5 @@
 <?php
 
-/**
- * CRUD Table Trait Stub
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Controller\Lva\Traits\Stubs;
 
 use Common\Controller\Lva\Traits\CrudTableTrait;
@@ -21,8 +16,8 @@ class CrudTableTraitStub extends AbstractActionController
 
     protected $section = 'fake-section';
 
-    public function callHandlePostSave($prefix = null)
+    public function callHandlePostSave($prefix = null, $options = [])
     {
-        return $this->handlePostSave($prefix);
+        return $this->handlePostSave($prefix, $options);
     }
 }

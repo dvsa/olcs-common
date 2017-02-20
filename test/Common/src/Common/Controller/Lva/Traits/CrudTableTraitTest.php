@@ -9,13 +9,13 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 /**
  * CRUD Table Trait Test
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @covers \Common\Controller\Lva\Traits\CrudTableTrait
  */
 class CrudTableTraitTest extends MockeryTestCase
 {
     /** @var  Stubs\CrudTableTraitStub|m\MockInterface */
     protected $sut;
-
+    /** @var  \Zend\ServiceManager\ServiceManager */
     protected $sm;
 
     protected function setUp()
@@ -31,15 +31,18 @@ class CrudTableTraitTest extends MockeryTestCase
 
     public function testHandlePostSaveWithAddAnother()
     {
+        $prefix = 'unit_Prdx';
+        $options = ['unit_options'];
+
         $redirectMock = m::mock()
             ->shouldReceive('toRoute')
             ->with(
                 null,
                 [
                     'application' => 123,
-                    'action' => 'add'
+                    'action' => 'unit_Prdx-add'
                 ],
-                []
+                $options
             )
             ->andReturn('redirect')
             ->getMock();
@@ -68,17 +71,20 @@ class CrudTableTraitTest extends MockeryTestCase
 
         $this->assertEquals(
             'redirect',
-            $this->sut->callHandlePostSave()
+            $this->sut->callHandlePostSave($prefix, $options)
         );
     }
 
     public function testHandlePostSave()
     {
+        $prefix = 'unit_Prdx';
+        $options = ['unit_options'];
+
         $route = 'unit_Route';
 
         $redirectMock = m::mock()
             ->shouldReceive('toRouteAjax')
-            ->with($route, ['application' => 123], [])
+            ->with($route, ['application' => 123], $options)
             ->andReturn('redirect')
             ->getMock();
 
@@ -108,7 +114,7 @@ class CrudTableTraitTest extends MockeryTestCase
 
         $this->assertEquals(
             'redirect',
-            $this->sut->callHandlePostSave()
+            $this->sut->callHandlePostSave($prefix, $options)
         );
     }
 
@@ -145,6 +151,7 @@ class CrudTableTraitTest extends MockeryTestCase
     public function testDeleteActionWithPost()
     {
         $route = 'unit_Route';
+        $queryParams = ['unit_queryParams'];
 
         $mockFlashMessenger = m::mock();
         $mockFlashMessenger->shouldReceive('addSuccessMessage');
@@ -156,20 +163,21 @@ class CrudTableTraitTest extends MockeryTestCase
                 $route,
                 [
                     'application' => 123
+                ],
+                [
+                    'query' => $queryParams,
                 ]
             )
             ->andReturn('redirect')
             ->getMock();
 
+        $mockRequest = m::mock(\Zend\Http\Request::class);
+        $mockRequest->shouldReceive('isPost')->andReturn(true);
+        $mockRequest->shouldReceive('getQuery->toArray')->andReturn($queryParams);
+
         $this->sut
             ->shouldReceive('getBaseRoute')->once()->andReturn($route)
-            ->shouldReceive('getRequest')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('isPost')
-                ->andReturn(true)
-                ->getMock()
-            )
+            ->shouldReceive('getRequest')->once()->andReturn($mockRequest)
             ->shouldReceive('getIdentifierIndex')
             ->andReturn('application')
             ->shouldReceive('getIdentifier')
