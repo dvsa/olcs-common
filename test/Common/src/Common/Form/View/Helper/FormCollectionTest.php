@@ -68,7 +68,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = $this->prepareViewHelper();
 
-        $this->element->setOption('hint_at_bottom', true);
+        $this->element->setOption('hint-position', 'below');
 
         echo $viewHelper($this->element, 'formCollection', '/');
 

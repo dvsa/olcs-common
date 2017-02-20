@@ -195,7 +195,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
                 $markup = sprintf('<li%s>%s%s</li>', $attributesString, $hint, $markup);
             } else {
 
-                if ($element->getOption('hint_at_bottom') === true) {
+                if ($element->getOption('hint-position') === 'below') {
                     $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $markup, $hint);
                 } else {
                     $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $hint, $markup);
