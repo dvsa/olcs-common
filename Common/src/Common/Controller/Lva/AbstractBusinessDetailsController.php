@@ -57,6 +57,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm($orgData['type']['id'], $orgData['hasInforceLicences'])
             ->setData($data);
+        // need to reset Input Filter defaults after the data has been set on the form
+        $form->attachInputFilterDefaults($form->getInputFilter(), $form);
 
         if ($form->has('table')) {
             $this->populateTable($form, $orgData);
@@ -79,7 +81,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $tradingNames = isset($data['data']['tradingNames']) ? $data['data']['tradingNames'] : [];
 
         // If we are interacting with the trading names collection element
-        if (isset($tradingNames['submit_add_trading_name'])) {
+        if (isset($data['data']['submit_add_trading_name'])) {
             $this->processTradingNames($tradingNames, $form);
             return $this->renderForm($form);
         }
@@ -105,7 +107,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'id' => $this->getLicenceId(),
                 'version' => $data['version'],
                 'name' => $data['data']['name'],
-                'tradingNames' => isset($tradingNames['trading_name']) ? $tradingNames['trading_name'] : [],
+                'tradingNames' => $this->flattenTradingNames($tradingNames),
                 'natureOfBusiness' => isset($data['data']['natureOfBusiness'])
                     ? $data['data']['natureOfBusiness'] : null,
                 'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
@@ -123,7 +125,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'licence' => $this->getLicenceId(),
                 'version' => $data['version'],
                 'name' => $data['data']['name'],
-                'tradingNames' => isset($tradingNames['trading_name']) ? $tradingNames['trading_name'] : [],
+                'tradingNames' => $this->flattenTradingNames($tradingNames),
                 'natureOfBusiness' => isset($data['data']['natureOfBusiness'])
                     ? $data['data']['natureOfBusiness'] : null,
                 'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
@@ -146,6 +148,25 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         return $this->completeSection('business_details');
+    }
+
+    /**
+     * Flatten the array from trading names elements and remove where empty
+     *
+     * @param array $tradingNames Eg [['name' => 'Trading name 1'], ['name' => ''], ['name' => 'Trading name 2'] ]
+     *
+     * @return array Eg ['Trading name 1', 'Trading name 2']
+     */
+    private function flattenTradingNames(array $tradingNames)
+    {
+        $result = [];
+        foreach ($tradingNames as $tradingNameElement) {
+            // If name is set (and not empty)
+            if (isset($tradingNameElement['name'])) {
+                $result[] = $tradingNameElement['name'];
+            }
+        }
+        return $result;
     }
 
     /**
@@ -177,7 +198,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     protected function renderForm($form)
     {
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'business-details']);
+        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud']);
         return $this->render('business_details', $form);
     }
 
@@ -217,19 +238,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     protected function processTradingNames($tradingNames, $form)
     {
         $form->setValidationGroup(array('data' => ['tradingNames']));
-
         if ($form->isValid()) {
-            // remove existing entries from collection and check for empty entries
-            $names = [];
-            foreach ($tradingNames['trading_name'] as $val) {
-                $trimmedVal = trim($val);
-                if (!empty($trimmedVal)) {
-                    $names[] = $trimmedVal;
-                }
-            }
-            $names[] = '';
-
-            $form->get('data')->get('tradingNames')->get('trading_name')->populateValues($names);
+            $tradingNames[]['name'] = '';
+            $form->get('data')->get('tradingNames')->populateValues($tradingNames);
         }
     }
 

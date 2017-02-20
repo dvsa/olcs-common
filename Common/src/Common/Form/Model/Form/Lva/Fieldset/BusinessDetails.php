@@ -31,10 +31,16 @@ class BusinessDetails
     public $name = null;
 
     /**
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TradingNames")
-     * @Form\Attributes({"class": "add-another"})
-     * @Form\Options({
-     *     "label": "application_your-business_business-details.data.trading_names_optional"
+     * @Form\Attributes({"class":"add-another"})
+     * @Form\ComposedObject({
+     *      "target_object":"Common\Form\Model\Form\Lva\Fieldset\TradingNames",
+     *      "is_collection":true,
+     *      "options":{
+     *          "count": 1,
+     *          "label":"application_your-business_business-details.data.trading_names_optional",
+     *          "hint":"markup-trading-name-hint",
+     *          "hint_at_bottom":true,
+     *      }
      * })
      */
     public $tradingNames = null;
