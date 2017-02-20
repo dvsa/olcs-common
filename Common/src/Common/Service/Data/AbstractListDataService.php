@@ -16,7 +16,7 @@ abstract class AbstractListDataService extends AbstractDataService implements Li
      *
      * @return array
      */
-    public function formatDataForGroups($data)
+    public function formatDataForGroups(array $data)
     {
         $groups = [];
         $optionData = [];

@@ -378,6 +378,15 @@ return [
     'application.review-declarations.confirm-text-internal' => 'Signature seen?',
     'application.review-declarations.summary' => 'Application summary',
     'application.review-declarations.summary.new-window' => 'View in another window',
+    'application.review-declarations.confirm-verify-text' => 'I declare that the statemens in this application ' .
+        'are true and the supporting evidence is correct and understand that it\'s an offence to make a false ' .
+        'declaration. I agree to Vehicle Operator Licensing using my name, address and date of birth ' .
+        'provided by GOV.UK Verify.',
+    'application.review-declarations.sign-button' => 'I agree - continue to GOV.UK Verify',
+    'application.review-declarations.review.business-owner' => 'the business owner',
+    'application.review-declarations.review.director' => 'a director',
+    'application.review-declarations.review.person' => 'a responsible person of the business',
+    'application.review-declarations.review.partner' => 'a partner',
     'application.schedule41.licence-is-psv' => 'You cannot transfer operating centres from a PSV licence',
     'application.schedule41.licence-not-valid' => 'You can only select a valid, suspended or curtailed licence',
     'application.schedule41.licence-number-not-valid' => 'The licence number is invalid',
@@ -405,6 +414,9 @@ return [
     'application.your-business.people' => 'People',
     'application.your-business.sole-trader' => 'People',
     'application.vehicle.already-exist' => 'Vehicle already exists on this licence',
+    'application.signature.options.label' => '<strong>How would you like to sign the declaration?</strong>',
+    'application.signature.options.verify' => '<strong>Sign online using GOV.UK Verify</strong>To use GOV.UK Verify you must be a UK resident with a valid passport.',
+    'application.signature.options.sign' => '<strong>Print, sign and return</strong>You\'ll need to return the signed declaration to the Central Licensing Office',
     'application_business-details_allow-email.label' => 'How would you like to receive your correspondence?',
     'application_community_licence_total_community_licences' => 'Total community licences',
     'application_operating-centres_authorisation-sub-action.advertisements' => 'Newspaper advert',
@@ -1487,6 +1499,9 @@ return [
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
     'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
+    'internal.document-description.formatter.no-description' => 'Document name missing',
+    'internal.marker' => '(internal)',
+    'internal.granting.email-error' => 'Unable to send an email, no valid email addresses found',
     'invalid-licence-type' => '*DUPLICATE TRANSLATION* If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'invalid-operator-type' => '*DUPLICATE TRANSLATION* If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',
@@ -2975,33 +2990,19 @@ return [
     'lva.external.return.link' => 'Return to overview',
     'date-label-hint' => '(e.g. 12, 6, 2014)',
     'operator-approve-message' => 'Transport Manager details approved',
-    //  AUTH MIRROR
+    'payment.error.15sec' => 'Error attempting to resolve a previous payment. Please wait 15 minutes and try again',
+    'payment.error.feepaid' => 'The fee(s) has already been paid',
+    'task.reassign.team.invalid' => 'Team and/or owner must be selected (possible selected owner user have not assigned to any team)',
+    //  AUTH MIRROR (please put in this section ONLY Authertication related messages)
     'auth.forgot-username.label.audio' => 'Retrieve your username',
     'auth.forgot-password.label.audio' => 'Retrieve your password',
     'auth.change-password.old-password.error' => 'Current password can\'t be blank',
     'auth.change-password.new-password.error' => 'Enter a new password',
     'auth.change-password.confirm-password.error' => 'Re-enter your new password',
-    'internal.document-description.formatter.no-description' => 'Document name missing',
-    'internal.marker' => '(internal)',
-    'internal.granting.email-error' => 'Unable to send an email, no valid email addresses found',
-    'application.signature.options.label' => '<strong>How would you like to sign the declaration?</strong>',
-    'application.signature.options.verify' => '<strong>Sign online using GOV.UK Verify</strong>To use GOV.UK Verify you must be a UK resident with a valid passport.',
-    'application.signature.options.sign' => '<strong>Print, sign and return</strong>You\'ll need to return the signed declaration to the Central Licensing Office',
-    'application.review-declarations.confirm-verify-text' => 'I declare that the statemens in this application ' .
-        'are true and the supporting evidence is correct and understand that it\'s an offence to make a false ' .
-        'declaration. I agree to Vehicle Operator Licensing using my name, address and date of birth ' .
-        'provided by GOV.UK Verify.',
-    'application.review-declarations.sign-button' => 'I agree - continue to GOV.UK Verify',
-    'application.review-declarations.review.business-owner' => 'the business owner',
-    'application.review-declarations.review.director' => 'a director',
-    'application.review-declarations.review.person' => 'a responsible person of the business',
-    'application.review-declarations.review.partner' => 'a partner',
-    //  pagination
+    //  pagination (please put in this section ONLY Pagination related messages)
     'pagination.showing' => 'Showing',
     'pagination.results-per-page' => 'results per page',
     'pagination.next' => 'Next',
     'pagination.previous' => 'Previous',
-    'payment.error.15sec' => 'Error attempting to resolve a previous payment. Please wait 15 minutes and try again',
-    'payment.error.feepaid' => 'The fee(s) has already been paid',
     // Potentially unused translations
 ];
