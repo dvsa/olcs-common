@@ -224,6 +224,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
      */
     public function addAction()
     {
+        /** @var \Zend\Http\Request $request */
+        $request = $this->getRequest();
+
         $result = $this->getVehicleSectionData();
 
         if ($result['spacesRemaining'] < 1) {
@@ -255,11 +258,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $this->getServiceLocator()->get('Helper\FlashMessenger')
                 ->addProminentErrorMessage($message);
 
-            return $this->redirect()->toRouteAjax($this->getBaseRoute(), ['action' => null], [], true);
+            return $this->redirect()->toRouteAjax(
+                $this->getBaseRoute(), ['action' => null], ['query' => $request->getQuery()->toArray()], true
+            );
         }
 
-        /** @var \Zend\Http\Request $request */
-        $request = $this->getRequest();
         $data = [];
 
         if ($request->isPost()) {
@@ -295,7 +298,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $response = $this->handleCommand($dtoClass::create($dtoData));
 
             if ($response->isOk()) {
-                return $this->handlePostSave(null);
+                return $this->handlePostSave(null, ['query' => $request->getQuery()->toArray()]);
             }
 
             if ($response->isServerError()) {
@@ -407,7 +410,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             }
 
             if ($response->isOk()) {
-                return $this->handlePostSave(null);
+                return $this->handlePostSave(null, ['query' => $request->getQuery()->toArray()]);
             }
 
             if ($response->isServerError()) {
@@ -479,7 +482,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $ids = explode(',', $this->params('child_id'));
 
             $response = $this->handleCommand(ReprintDisc::create(['ids' => $ids]));
@@ -490,7 +492,13 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
             return $this->redirect()->toRouteAjax(
                 $this->getBaseRoute(),
-                array($this->getIdentifierIndex() => $this->getIdentifier())
+                [
+                    $this->getIdentifierIndex() => $this->getIdentifier()
+                ],
+                [
+                    'query' => $request->getQuery()->toArray()
+                ],
+                true
             );
         }
 
