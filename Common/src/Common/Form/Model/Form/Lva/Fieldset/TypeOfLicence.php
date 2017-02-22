@@ -55,7 +55,7 @@ class TypeOfLicence
      *      "fieldset-attributes": {"id": "licence-type"},
      *      "fieldset-data-group": "licence-type",
      *      "label": "application_type-of-licence_licence-type.data.licenceType",
-     *      "label_attributes": {"class": "form-control form-control--checkbox"},
+     *      "label_attributes": {"class": "form-control form-control--radio"},
      *      "hint": "markup-typeOfLicence_licenceType-hint",
      *      "value_options": {
      *          {"value": "ltyp_r", "label": "Restricted"},
