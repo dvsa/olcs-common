@@ -2997,7 +2997,7 @@ return [
     'operator-approve-message' => 'Transport Manager details approved',
     'payment.error.15sec' => 'Error attempting to resolve a previous payment. Please wait 15 minutes and try again',
     'payment.error.feepaid' => 'The fee(s) has already been paid',
-    'task.reassign.team.invalid' => 'Team and/or owner must be selected (possible selected owner user have not assigned to any team)',
+    'task.edit.team.invalid' => 'Team and/or owner must be selected (possible selected owner user have not assigned to any team)',
     //  AUTH MIRROR (please put in this section ONLY Authertication related messages)
     'auth.forgot-username.label.audio' => 'Retrieve your username',
     'auth.forgot-password.label.audio' => 'Retrieve your password',
