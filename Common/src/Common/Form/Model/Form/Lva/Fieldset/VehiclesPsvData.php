@@ -20,26 +20,9 @@ class VehiclesPsvData
     /**
      * @Form\Attributes({"id":"","placeholder":"","class":"js-enabled"})
      * @Form\Options({
-     *     "fieldset-attributes": {
-     *         "class": "checkbox inline"
-     *     },
      *     "label": "application_vehicle-safety_vehicle-psv.hasEnteredReg",
-     *     "value_options": {
-     *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Do you want to submit vehicle details? Yes"
-     *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No"
-     *         }
-     *     },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */

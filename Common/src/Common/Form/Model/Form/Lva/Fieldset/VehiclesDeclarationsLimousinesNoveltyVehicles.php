@@ -18,12 +18,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesApplication.yesNo",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
-     *     "fieldset-attributes": {
-     *         "class": "checkbox inline"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */

@@ -15,23 +15,9 @@ class BusinessDetailsAllowEmail
     /**
      * @Form\Attributes({"id":"","placeholder":"","class":"js-enabled"})
      * @Form\Options({
-     *     "fieldset-attributes": {
-     *         "class": "checkbox inline"
-     *     },
      *     "label": "application_business-details_allow-email.label",
-     *     "value_options": {
-     *         {
-     *             "value": "N",
-     *             "label": "Post"
-     *         },
-     *         {
-     *             "value": "Y",
-     *             "label": "Email",
-     *         },
-     *     },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
+     *     "value_options": {"N": "Post", "Y": "Email"},
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */

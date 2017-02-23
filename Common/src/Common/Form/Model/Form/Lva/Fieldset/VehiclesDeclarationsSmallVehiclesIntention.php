@@ -19,13 +19,8 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo",
-     *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
-     *     "fieldset-attributes": {
-     *         "class": "checkbox inline"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "value_options": {"Y": "Yes", "N": "No"}
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
@@ -44,8 +39,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
 
     /**
      * @Form\Attributes({
-     *     "id":"",
-     *      "value":"markup-application_vehicle-safety_undertakings-smallVehiclesUndertakingsScotland"
+     *     "id":"", "value":"markup-application_vehicle-safety_undertakings-smallVehiclesUndertakingsScotland"
      * })
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title"

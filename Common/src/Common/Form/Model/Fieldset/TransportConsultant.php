@@ -14,18 +14,11 @@ class TransportConsultant
      * @Form\Name("add-transport-consultant")
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *      "fieldset-attributes": {
-     *          "class":"checkbox inline"
-     *      },
      *     "label":"application_your-business_business-type.add-transport-consultant.label",
      *     "value_options":{"Y":"Yes","N":"No"},
-     *     "label_attributes":{
-     *         "class":"inline"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      * })
-     * @Form\Attributes({
-     *     "value":"N"
-     * })
+     * @Form\Attributes({"value":"N"})
      * @Form\Type("\Zend\Form\Element\Radio")
      */
     public $addTransportConsultant = null;
