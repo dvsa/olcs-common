@@ -36,7 +36,7 @@ class FinancialEvidenceEvidence
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "fieldset-attributes": {
-     *          "id": "files",
+     *         "id": "files",
      *     },
      * })
      * @Form\Required(true)

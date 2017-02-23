@@ -18,34 +18,13 @@ class ConvictionsPenaltiesData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *      "fieldset-attributes": {
-     *          "class": "question checkbox inline"
-     *      },
-     *     "label":
-     * "selfserve-app-subSection-previous-history-criminal-conviction-hasConv",
-     *     "value_options": {
-     *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Have you, any person at your company or any of your employees been convicted of a relevant offence?",
-     *                 "class" : "inline"
-     *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No",
-     *             "label_attributes": {
-     *                 "class" : "inline"
-     *             }
-     *         }
-     *     },
+     *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-hasConv",
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "value_options": {"Y": "Yes", "N": "No"},
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      * @Form\Validator({"name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
-     *     "options": {
-     *         "name": "noConviction"
-     *      }
+     *     "options": {"name": "noConviction"}
      * })
      */
     public $question = null;
