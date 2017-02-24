@@ -37,8 +37,15 @@ class TmOtherLicenceDetails
     /**
      * @Form\Attributes({"class":"medium","id":"licNo"})
      * @Form\Options({"label":"transport-manager.other-licence.form.lic-no"})
-     * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
+     * @Form\Required(true)
      * @Form\Type("Text")
+     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({
+     *     "name":"Zend\Validator\StringLength",
+     *     "options":{
+     *          "max":18,
+     *     },
+     * })
      */
     public $licNo = null;
 
@@ -58,8 +65,15 @@ class TmOtherLicenceDetails
     /**
      * @Form\Attributes({"class":"long","id":"operatingCentres"})
      * @Form\Options({"label":"transport-manager.other-licence.form.operating-centres"})
-     * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
+     * @Form\Required(true)
      * @Form\Type("Textarea")
+     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({
+     *     "name":"Zend\Validator\StringLength",
+     *     "options":{
+     *          "max":255,
+     *     },
+     * })
      */
     public $operatingCentres = null;
 
