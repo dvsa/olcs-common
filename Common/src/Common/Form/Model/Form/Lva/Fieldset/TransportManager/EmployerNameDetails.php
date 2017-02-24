@@ -17,7 +17,14 @@ class EmployerNameDetails
      *     "short-label":"transport-manager.employment.form.employerName"
      * })
      * @Form\Type("Text")
-     * @Form\Validator({"name": "\Zend\Validator\NotEmpty"})
+     * @Form\Required(true)
+     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({
+     *     "name":"Zend\Validator\StringLength",
+     *     "options":{
+     *          "max":90,
+     *     },
+     * })
      */
     public $employerName = null;
 }
