@@ -592,7 +592,7 @@ return [
     'vehicle.error.top.vrm' => 'Enter the vehicle VRM',
     'vehicle.error.top.platedWeight' => 'Enter the vehicle weight',
     'vehicle.error.top.modelName' => 'Enter the vehicle model name',
-    'vehicle.error.vrm.invalid' => 'Invalid registration number (only characters and digits allowed)',
+    'vehicle.error.vrm.invalid' => 'Invalid registration number',
     'application_vehicle-safety_vehicle-reprint' => 'Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'Gross plated weight (kg)',
