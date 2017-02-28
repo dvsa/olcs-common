@@ -10,14 +10,12 @@ use Zend\Form\Annotation as Form;
 class ConvictionsPenaltiesConfirmation
 {
     /**
-     * @Form\Attributes({
-     *     "id":"",
-     *     "data-container-class": "confirm checkbox"
-     * })
+     * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
      *     "must_be_value": "Y"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")

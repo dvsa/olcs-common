@@ -138,18 +138,17 @@ class FinancialHistoryData
     public $file = null;
 
     /**
-     * @Form\Attributes({
-     *     "id":"", "data-container-class": "confirm checkbox"
-     * })
+     * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "short-label": "short-label-financial-history-insolvency",
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "application_previous-history_financial-history.insolvencyConfirmation.title",
-     *     "must_be_value": "Y",
      *     "label_attributes": {
+     *         "class": "form-control form-control--checkbox form-control--advanced", 
      *         "id":"insolvency"
-     *     }
+     *     },
+     *     "must_be_value": "Y"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */

@@ -28,6 +28,7 @@ class TransportConsultant
      * @Form\Attributes({"id":"written-permission-to-engage","placeholder":""})
      * @Form\Options({
      *     "label":"application_your-business_business-type.written-perm-engage.label",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
      * })

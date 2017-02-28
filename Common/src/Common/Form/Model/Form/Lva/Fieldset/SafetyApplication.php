@@ -38,6 +38,7 @@ class SafetyApplication
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "application_vehicle-safety_safety.application.safetyConfirmation",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
      *     "must_be_value": "Y"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
