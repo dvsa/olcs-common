@@ -13,9 +13,7 @@ use Zend\Form\Annotation as Form;
 class CommunityLicenceFilter
 {
     /**
-     * @Form\Options({
-     *     "category": "com_lic_sts"
-     * })
+     * @Form\Options({"category": "com_lic_sts"})
      * @Form\Type("\Common\Form\Element\DynamicMultiCheckbox")
      */
     public $status = null;
@@ -27,7 +25,11 @@ class CommunityLicenceFilter
     public $isFiltered = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary","data-container-class":"js-hidden"})
+     * @Form\Attributes({
+     *     "type":"submit",
+     *     "class":"action--primary",
+     *     "data-container-class":"js-hidden"
+     * })
      * @Form\Options({
      *     "label": "lva-community-licence-filter-button"
      * })

@@ -66,10 +66,10 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesConfirmation",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
      *     "checked_value": "Y",
      *     "unchecked_value": "N"
      * })
-     * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      * @Form\Validator({
      *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator"

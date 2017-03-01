@@ -28,11 +28,10 @@ class VariationDeclarationsAndUndertakings
      *     "label": "variation.review-declarations.confirm-text",
      *     "short-label": "variation.review-declarations.confirm-short-label",
      *     "label_attributes": {
-     *         "class": "form-control form-control--checkbox form-control--advanced"
-     *     },
-     *     "label_attributes": {"id": "label-declarationConfirmation"}
+     *         "class": "form-control form-control--checkbox form-control--advanced",
+     *         "id": "label-declarationConfirmation"
+     *     }
      * })
-     * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $declarationConfirmation = null;

@@ -37,16 +37,14 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesApplication.agreement",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
      *     "checked_value": "Y",
      *     "unchecked_value": "N"
      * })
-     * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      * @Form\Validator({
      *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
-     *     "options": {
-     *         "required_context_value": "N"
-     *     }
+     *     "options": {"required_context_value": "N"}
      * })
      */
     public $psvNoLimousineConfirmation = null;
@@ -64,10 +62,10 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      * @Form\Attributes({"class": "js-only-confirmation", "data-container-class":"psv-show-large psv-show-both"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesNine.agreement",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
      *     "checked_value": "Y",
      *     "unchecked_value": "N"
      * })
-     * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      * @Form\Validator({
      *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
