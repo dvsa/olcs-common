@@ -1752,7 +1752,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
 
-            $class = isset($details['class']) ? $details['class'] : 'secondary';
+            $class = isset($details['class']) ? $details['class'] : 'action--secondary';
 
             $id = isset($details['id']) ? $details['id'] : $name;
 
@@ -1789,7 +1789,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
 
-            $class = isset($details['class']) ? $details['class'] : 'secondary';
+            $class = isset($details['class']) ? $details['class'] : 'action--secondary';
 
             $route = isset($details['route']['route']) ? $details['route']['route'] : null;
             $params = isset($details['route']['params']) ? $details['route']['params'] : [];
