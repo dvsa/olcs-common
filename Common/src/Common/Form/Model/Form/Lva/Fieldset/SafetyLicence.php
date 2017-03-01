@@ -16,10 +16,7 @@ class SafetyLicence
     public $version = null;
 
     /**
-     * @Form\Attributes({
-     *    "class":"tiny",
-     *    "id":""
-     * })
+     * @Form\Attributes({"class":"tiny", "id":""})
      * @Form\Options({
      *     "label":"application_vehicle-safety_safety.licence.vehicleInspectionInterval",
      *     "error-message": "safetyLicence_safetyInsVehicles-error"
@@ -27,20 +24,14 @@ class SafetyLicence
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({"name": "Between", "options": {
-     *  "min":1,
-     *  "max":13,
-     *  "messages": {
-     *         "notBetween": "safetyLicence_safetyInsBetween-error"
-     *  }
+     *     "min":1, "max":13,
+     *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
      * }})
      */
     public $safetyInsVehicles = null;
 
     /**
-     * @Form\Attributes({
-     *    "class":"tiny",
-     *    "id":""
-     * })
+     * @Form\Attributes({"class":"tiny", "id":""})
      * @Form\Options({
      *     "label":"application_vehicle-safety_safety.licence.trailerInspectionInterval",
      *     "error-message": "safetyLicence_safetyInsTrailers-error"
@@ -48,11 +39,8 @@ class SafetyLicence
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({"name": "Between", "options": {
-     *  "min":1,
-     *  "max":13,
-     *  "messages": {
-     *         "notBetween": "safetyLicence_safetyInsBetween-error"
-     *  }
+     *     "min":1, "max":13,
+     *     "messages": {"notBetween": "safetyLicence_safetyInsBetween-error"}
      * }})
      */
     public $safetyInsTrailers = null;
@@ -60,14 +48,9 @@ class SafetyLicence
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *      "fieldset-attributes": {
-     *          "class": "checkbox inline"
-     *      },
      *     "label": "application_vehicle-safety_safety.licence.moreFrequentInspections",
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
      *     "hint": "application_vehicle-safety_safety.licence.moreFrequentInspectionsHint"
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
@@ -77,24 +60,13 @@ class SafetyLicence
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *      "fieldset-attributes": {
-     *          "class": "checkbox"
-     *      },
      *     "error-message": "safetyLicence_tachographsIns-error",
      *     "label": "application_vehicle-safety_safety.licence.tachographAnalyser",
+     *     "label_attributes": {"class": "form-control form-control--radio"},
      *     "value_options": {
-     *         {
-     *             "value": "tach_internal",
-     *             "label": "tachograph_analyser.tach_internal",
-     *         },
-     *         {
-     *             "value": "tach_external",
-     *             "label": "tachograph_analyser.tach_external"
-     *         },
-     *         {
-     *             "value": "tach_na",
-     *             "label": "tachograph_analyser.tach_na"
-     *         }
+     *         {"value": "tach_internal", "label": "tachograph_analyser.tach_internal"},
+     *         {"value": "tach_external", "label": "tachograph_analyser.tach_external"},
+     *         {"value": "tach_na", "label": "tachograph_analyser.tach_na"}
      *     },
      *     "category": "tachograph_analyser",
      *     "service_name": "StaticList"

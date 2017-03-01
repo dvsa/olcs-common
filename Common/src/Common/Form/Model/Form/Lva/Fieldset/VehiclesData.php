@@ -18,27 +18,10 @@ class VehiclesData
     /**
      * @Form\Attributes({"id":"","placeholder":"","class":"js-enabled"})
      * @Form\Options({
-     *     "fieldset-attributes": {
-     *         "class": "checkbox inline"
-     *     },
      *     "error-message": "vehiclesDate_hasEnteredReg-error",
      *     "label": "application_vehicle-safety_vehicle-psv.hasEnteredReg",
-     *     "value_options": {
-     *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Are some of your vehicles or trailers inspected more often than this? No"
-     *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No"
-     *         }
-     *     },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */

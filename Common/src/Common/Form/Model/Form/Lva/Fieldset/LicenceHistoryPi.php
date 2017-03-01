@@ -13,25 +13,9 @@ class LicenceHistoryPi
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevBeenAtPi",
-     *     "error-message":"licenceHistoryPi_prevBeenAtPi-error",
-     *     "value_options":{
-     *         {
-     *             "value":"Y",
-     *             "label":"Yes",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         },{
-     *             "value":"N",
-     *             "label":"No",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         }
-     *     },
-     *     "fieldset-attributes":{
-     *          "class":"checkbox"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "value_options": {"Y":"Yes", "N":"No"},
+     *     "error-message":"licenceHistoryPi_prevBeenAtPi-error"
      * })
      * @Form\Type("radio")
      * @Form\Validator({

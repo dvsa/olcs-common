@@ -18,22 +18,11 @@ class SafetyProvidersData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *      "fieldset-attributes": {
-     *          "class": "checkbox"
-     *      },
      *     "label": "application_vehicle-safety_safety-sub-action.data.isExternal",
+     *     "label_attributes": {"class": "form-control form-control--radio"},
      *     "value_options": {
-     *         {
-     *             "value": "N",
-     *             "label": "application_vehicle-safety_safety-sub-action.data.isExternal.option.no",
-     *             "label_attributes": {
-     *                 "aria-label": "Who'll carry out the safety inspections? An owner or employee of the business"
-     *             }
-     *         },
-     *         {
-     *             "value": "Y",
-     *             "label": "application_vehicle-safety_safety-sub-action.data.isExternal.option.yes"
-     *         }
+     *         "N": "application_vehicle-safety_safety-sub-action.data.isExternal.option.no",
+     *         "Y": "application_vehicle-safety_safety-sub-action.data.isExternal.option.yes"
      *     }
      * })
      * @Form\Type("\Zend\Form\Element\Radio")

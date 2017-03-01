@@ -15,15 +15,10 @@ class Advertisements
     /**
      * @Form\Attributes({"id":"adPlaced","placeholder":""})
      * @Form\Options({
-     *     "fieldset-attributes": {
-     *         "class": "checkbox"
-     *     },
      *     "error-message": "advertisements_adPlaced-error",
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "value_options": {"Y":"Yes", "N":"No"},
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */

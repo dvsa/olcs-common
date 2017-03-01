@@ -14,26 +14,8 @@ class LicenceHistoryAssets
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevPurchasedAssets",
      *     "error-message": "licenceHistoryAssets_prevPurchasedAssets-error",
-     *     "value_options": {
-     *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "In the past 12 months, has anyone you've named bought assets or shares in a company that holds or has held an operator's licence in any traffic area? Yes",
-     *                 "class" : "inline"
-     *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No",
-     *             "label_attributes": {
-     *                 "class" : "inline"
-     *             }
-     *         }
-     *     },
-     *     "fieldset-attributes" : {
-     *          "class":"checkbox inline"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
      * @Form\Validator({

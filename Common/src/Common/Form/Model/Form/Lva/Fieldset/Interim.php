@@ -12,19 +12,11 @@ class Interim
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *      "fieldset-attributes": {
-     *          "class": "checkbox"
-     *      },
-     *     "label":
-     * "interim.application.undertakings.form.checkbox.label",
+     *     "label": "interim.application.undertakings.form.checkbox.label",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
-     * @Form\Attributes({
-     *     "value": "N"
-     * })
+     * @Form\Attributes({"value": "N"})
      * @Form\Type("\Zend\Form\Element\Radio")
      */
     public $goodsApplicationInterim = null;
