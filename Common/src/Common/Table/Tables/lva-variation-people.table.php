@@ -10,7 +10,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'tertiary large', 'label' => 'Add person'),
+                'add' => array('label' => 'Add person'),
             )
         ),
         'row-disabled-callback' => function ($row) {

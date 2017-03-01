@@ -11,10 +11,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array(
-                    'class' => 'tertiary large',
-                    'label' => 'Add safety inspector'
-                ),
+                'add' => array('label' => 'Add safety inspector'),
             )
         )
     ),

@@ -8,7 +8,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'tertiary large', 'label' => 'Add operating centre'),
+                'add' => array('label' => 'Add operating centre'),
                 'schedule41' => array(
                     'class' => 'secondary',
                     'value' => 'Add schedule 4/1',

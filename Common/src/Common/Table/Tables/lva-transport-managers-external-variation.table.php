@@ -9,7 +9,7 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'tertiary large', 'label' => 'Add Transport Manager'),
+                'add' => array('label' => 'Add Transport Manager'),
             )
         ),
         'row-disabled-callback' => function ($row) {

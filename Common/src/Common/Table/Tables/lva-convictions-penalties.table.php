@@ -10,7 +10,6 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array(
-                    'class' => 'tertiary large',
                     'label' => 'Add offence'
                 ),
             )

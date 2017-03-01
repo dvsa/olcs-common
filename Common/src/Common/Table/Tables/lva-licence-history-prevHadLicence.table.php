@@ -11,7 +11,7 @@ return array(
         'crud' => array(
             'formName' => 'applied',
             'actions' => array(
-                'add' => array('class' => 'tertiary large', 'label' => 'Add licence'),
+                'add' => array('label' => 'Add licence'),
             )
         )
     ),
