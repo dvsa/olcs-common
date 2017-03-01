@@ -14,6 +14,7 @@ class LicenceHistoryEu
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevBeenRefused",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "error-message":"licenceHistoryEu_prevBeenRefused-error",
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
@@ -37,6 +38,7 @@ class LicenceHistoryEu
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevBeenRevoked",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "error-message":"licenceHistoryEu_prevBeenRevoked-error",
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })

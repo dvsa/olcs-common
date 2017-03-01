@@ -26,9 +26,7 @@ class Person
      * @Form\Options({
      *     "empty_option": "Please Select",
      *     "label": "application_your-business_people-sub-action-formTitle",
-     *     "label_attributes": {
-     *         "aria-label": "Select title"
-     *     },
+     *     "label_attributes": {"class": "form-element__question"},
      *     "category":"person_title",
      * })
      * @Form\Type("DynamicSelect")
@@ -40,9 +38,7 @@ class Person
      * @Form\Attributes({"class":"long","id":"forename"})
      * @Form\Options({
      *     "label":"application_your-business_people-sub-action-formFirstName",
-     *     "label_attributes": {
-     *         "aria-label": "Enter first names"
-     *     },
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "person_forename-error"
      * })
      * @Form\Type("Text")
@@ -55,9 +51,7 @@ class Person
      * @Form\Attributes({"class":"long","id":"familyname"})
      * @Form\Options({
      *    "label":"application_your-business_people-sub-action-formSurname",
-     *     "label_attributes": {
-     *         "aria-label": "Enter last name"
-     *     },
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "person_familyName-error"
      * })
      * @Form\Type("Text")
@@ -70,9 +64,7 @@ class Person
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *    "label":"application_your-business_people-sub-action-formOtherNames",
-     *     "label_attributes": {
-     *         "aria-label": "Enter other names (optional)"
-     *     }
+     *     "label_attributes": {"class": "form-element__question"}
      * })
      * @Form\Required(false)
      * @Form\Type("Text")

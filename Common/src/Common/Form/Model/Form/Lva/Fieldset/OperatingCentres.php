@@ -5,9 +5,7 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Options({
- *     "label": "application_operating-centres_authorisation.data"
- * })
+ * @Form\Options({})
  */
 class OperatingCentres
 {
@@ -25,10 +23,8 @@ class OperatingCentres
      * @Form\Attributes({"class":"short","id":"totAuthVehicles","required":false,"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthVehicles",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "short-label": "totAuthVehicles",
-     *     "label_attributes": {
-     *         "aria-label": "Enter total number of vehicles"
-     *     },
      *     "error-message": "operatingCentres_totAuthVehicles-error",
      *     "hint": "markup-operating-centres-authorisation"
      * })
@@ -46,10 +42,8 @@ class OperatingCentres
      * @Form\Attributes({"class":"short","id":"totAuthTrailers","required":false,"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthTrailers",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "short-label": "totAuthTrailers",
-     *     "label_attributes": {
-     *         "aria-label": "Enter total number of Trailers"
-     *     },
      *     "error-message": "operatingCentres_totAuthTrailers-error"
      * })
      * @Form\Validator({"name": "Digits"})

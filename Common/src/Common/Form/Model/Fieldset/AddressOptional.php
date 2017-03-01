@@ -27,7 +27,9 @@ class AddressOptional
     public $version = null;
 
     /**
-     * @Form\Options({"label":"Postcode search"})
+     * @Form\Options({
+     *     "label":"Postcode search", "label_attributes": {"class": "form-element__label"},
+     * })
      * @Form\Required(false)
      * @Form\Type("Common\Form\Elements\Types\PostcodeSearch")
      */
@@ -35,9 +37,7 @@ class AddressOptional
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
-     *   "id" : "",
-     *   "data-container-class" : "compound"
+     *   "class": "long", "id": "", "data-container-class": "compound"
      * })
      * @Form\Options({
      *     "label":"address_addressLines",

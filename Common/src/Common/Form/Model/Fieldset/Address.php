@@ -26,7 +26,9 @@ class Address
     public $version = null;
 
     /**
-     * @Form\Options({"label":"Postcode search"})
+     * @Form\Options({
+     *     "label":"Postcode search", "label_attributes": {"class": "form-element__label"}
+     * })
      * @Form\Required(false)
      * @Form\Type("Common\Form\Elements\Types\PostcodeSearch")
      */

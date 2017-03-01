@@ -15,6 +15,7 @@ class LicenceHistoryAssets
      *     "label": "application_previous-history_licence-history_prevPurchasedAssets",
      *     "error-message": "licenceHistoryAssets_prevPurchasedAssets-error",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
