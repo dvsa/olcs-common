@@ -159,6 +159,7 @@ class RefData
     const PERMISSION_INTERNAL_EDIT = 'internal-edit';
     const PERMISSION_INTERNAL_VIEW = 'internal-view';
     const PERMISSION_INTERNAL_CASE = 'internal-case';
+    const PERMISSION_INTERNAL_USER = 'internal-user';
     const PERMISSION_INTERNAL_DOCUMENTS = 'internal-documents';
     const PERMISSION_INTERNAL_NOTES = 'internal-notes';
     const PERMISSION_CAN_MANAGE_USER_INTERNAL = 'can-manage-user-internal';

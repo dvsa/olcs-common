@@ -140,6 +140,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $crudAction = $this->getCrudAction([$data['table']]);
 
             if ($crudAction !== null) {
+                if ($this->isInternalReadOnly()) {
+                    return $this->handleCrudAction($crudAction);
+                }
                 $this->getServiceLocator()->get('Helper\Form')->disableValidation($form->getInputFilter());
             }
 
