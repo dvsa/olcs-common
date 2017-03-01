@@ -6,6 +6,11 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("data")
+ * @Form\Options({
+ *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-hasConv-hint",
+ *     "label_options": {"disable_html_escape": "true"},
+ *     "label_attributes": {"class": "form-element__label field"},
+ * })
  */
 class ConvictionsPenaltiesData
 {
@@ -19,6 +24,7 @@ class ConvictionsPenaltiesData
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-hasConv",
+     *     "legend-attributes": {"class": "form-element__question"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "value_options": {"Y": "Yes", "N": "No"},
      * })

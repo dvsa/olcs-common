@@ -14,6 +14,7 @@ class LicenceHistoryPi
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevBeenAtPi",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "error-message":"licenceHistoryPi_prevBeenAtPi-error"
      * })

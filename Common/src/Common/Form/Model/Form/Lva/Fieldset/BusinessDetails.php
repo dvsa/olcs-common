@@ -21,7 +21,10 @@ class BusinessDetails
 
     /**
      * @Form\Attributes({"class":"long"})
-     * @Form\Options({"label":"application_your-business_business-details.data.company_name"})
+     * @Form\Options({
+     *     "label":"application_your-business_business-details.data.company_name",
+     *     "label_attributes": {"class": "form-element__question"}
+     * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
@@ -39,7 +42,7 @@ class BusinessDetails
      *          "count": 1,
      *          "label":"application_your-business_business-details.data.trading_names_optional",
      *          "hint":"markup-trading-name-hint",
-     *          "hint_at_bottom":true,
+     *          "hint-position": "below",
      *      }
      * })
      */
@@ -51,7 +54,8 @@ class BusinessDetails
      *     "label": "Nature of business",
      *     "error-message" : "businessDetails_natureOfBusiness-error",
      *     "label_attributes": {
-     *         "aria-label": "businessDetails_natureOfBusiness-error"
+     *         "aria-label": "businessDetails_natureOfBusiness-error",
+     *         "class": "form-element__question"
      *     }
      * })
      * @Form\Validator({"name":"Zend\Validator\StringLength", "options":{
