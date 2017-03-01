@@ -14,6 +14,7 @@ use Zend\Form\Fieldset;
 use Zend\Form\Form;
 use Zend\Http\Request;
 use Common\Service\Helper\FormHelperService;
+use Common\RefData;
 
 /**
  * @author Mat Evans <mat.evans@valtech.co.uk>
@@ -48,12 +49,35 @@ class AbstractOperatingCentresTest extends MockeryTestCase
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->once()->andReturn($mockFieldSet);
 
         $mockFormHelper->shouldReceive('remove')->with($mockForm, 'dataTrafficArea->trafficArea')->once();
-        $mockFieldSet->shouldReceive('get')->with('trafficAreaSet')->once()->andReturn(
-            m::mock()->shouldReceive('setValue')->with('THE NORTH')->once()->getMock()
+        $mockFieldSet->shouldReceive('get')->with('trafficAreaSet')->twice()->andReturn(
+            m::mock()
+                ->shouldReceive('setValue')
+                ->with('THE NORTH')
+                ->once()
+                ->shouldReceive('setLabel')
+                ->with('internal.oc.traffic_area_label')
+                ->once()
+                ->getMock()
         );
         $mockFieldSet->shouldReceive('get')->with('enforcementArea')->once()->andReturn(
             m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
         );
+
+        $mockAuthService = m::mock()
+            ->shouldReceive('isGranted')
+            ->with(RefData::PERMISSION_INTERNAL_USER)
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('isGranted')
+            ->with(RefData::PERMISSION_INTERNAL_EDIT)
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+
+        $this->sut->shouldReceive('getServiceLocator->get')
+            ->with(\ZfcRbac\Service\AuthorizationService::class)
+            ->andReturn($mockAuthService)
+            ->once();
 
         $this->sut->alterForm($mockForm, $params);
     }
@@ -81,15 +105,38 @@ class AbstractOperatingCentresTest extends MockeryTestCase
         $mockForm->shouldReceive('get')->with('dataTrafficArea')->twice()->andReturn($mockFieldSet);
 
         $mockFormHelper->shouldReceive('remove')->with($mockForm, 'dataTrafficArea->trafficArea')->once();
-        $mockFieldSet->shouldReceive('get')->with('trafficAreaSet')->twice()->andReturn(
+        $mockFieldSet->shouldReceive('get')->with('trafficAreaSet')->times(3)->andReturn(
             m::mock()
-                ->shouldReceive('setValue')->with('THE NORTH')->once()
-                ->shouldReceive('setOption')->with('hint', null)->once()
+                ->shouldReceive('setValue')
+                ->with('THE NORTH')
+                ->once()
+                ->shouldReceive('setOption')
+                ->with('hint', null)
+                ->once()
+                ->shouldReceive('setLabel')
+                ->with('internal.oc.traffic_area_label')
+                ->once()
                 ->getMock()
         );
         $mockFieldSet->shouldReceive('get')->with('enforcementArea')->once()->andReturn(
             m::mock()->shouldReceive('setValueOptions')->with(['A', 'B'])->once()->getMock()
         );
+
+        $mockAuthService = m::mock()
+            ->shouldReceive('isGranted')
+            ->with(RefData::PERMISSION_INTERNAL_USER)
+            ->andReturn(true)
+            ->once()
+            ->shouldReceive('isGranted')
+            ->with(RefData::PERMISSION_INTERNAL_EDIT)
+            ->andReturn(false)
+            ->once()
+            ->getMock();
+
+        $this->sut->shouldReceive('getServiceLocator->get')
+            ->with(\ZfcRbac\Service\AuthorizationService::class)
+            ->andReturn($mockAuthService)
+            ->once();
 
         $this->sut->alterForm($mockForm, $params);
     }

@@ -5,6 +5,7 @@ namespace Common\Controller\Lva;
 use Common\Controller\Traits\GenericUpload;
 use Common\Exception\ResourceConflictException;
 use Common\Util;
+use Common\RefData;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence;
 use Zend\Form\Form;
@@ -360,5 +361,19 @@ abstract class AbstractController extends AbstractActionController
     protected function isExternal()
     {
         return $this->location === 'external';
+    }
+
+    /**
+     * Return true if the current internal user has read only permissions
+     *
+     * @return bool
+     */
+    protected function isInternalReadOnly()
+    {
+        $authService = $this->getServiceLocator()->get(\ZfcRbac\Service\AuthorizationService::class);
+        return (
+            $authService->isGranted(RefData::PERMISSION_INTERNAL_USER)
+            && !$authService->isGranted(RefData::PERMISSION_INTERNAL_EDIT)
+        );
     }
 }

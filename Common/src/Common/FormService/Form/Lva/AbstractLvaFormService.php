@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Abstract Lva Form Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
 
 use Common\Form\Elements\InputFilters\Lva\BackToApplicationActionLink;
@@ -12,6 +7,7 @@ use Common\Form\Elements\InputFilters\Lva\BackToLicenceActionLink;
 use Common\Form\Elements\InputFilters\Lva\BackToVariationActionLink;
 use Common\FormService\Form\AbstractFormService;
 use Common\Form\Elements\InputFilters\ActionLink;
+use Common\RefData;
 
 /**
  * Abstract Lva Form Service
@@ -72,5 +68,19 @@ abstract class AbstractLvaFormService extends AbstractFormService
         }
 
         $formActions->get($action)->setAttribute('class', 'action--primary large');
+    }
+
+    /**
+     * Return true if the current internal user has read only permissions
+     *
+     * @return bool
+     */
+    protected function isInternalReadOnly()
+    {
+        $authService = $this->getServiceLocator()->get(\ZfcRbac\Service\AuthorizationService::class);
+        return (
+            $authService->isGranted(RefData::PERMISSION_INTERNAL_USER)
+            && !$authService->isGranted(RefData::PERMISSION_INTERNAL_EDIT)
+        );
     }
 }

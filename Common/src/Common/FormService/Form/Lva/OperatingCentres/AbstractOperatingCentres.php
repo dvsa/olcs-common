@@ -93,6 +93,10 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
         } else {
             $this->getFormHelper()->remove($form, 'dataTrafficArea->trafficArea');
             $dataTrafficAreaFieldset->get('trafficAreaSet')->setValue($trafficArea['name']);
+
+            if ($this->isInternalReadOnly()) {
+                $dataTrafficAreaFieldset->get('trafficAreaSet')->setLabel('internal.oc.traffic_area_label');
+            }
         }
 
         $dataTrafficAreaFieldset->get('enforcementArea')
