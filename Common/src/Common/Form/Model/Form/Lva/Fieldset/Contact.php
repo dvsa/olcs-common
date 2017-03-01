@@ -27,7 +27,7 @@ class Contact
      * @Form\Type("Hidden")
      * @Form\Options({
      *     "fieldset-attributes": {
-     *          "id":"contact[phone_business]"
+     *         "id":"contact[phone_business]"
      *     }
      * })
      * @Form\Attributes({"value":"1"})

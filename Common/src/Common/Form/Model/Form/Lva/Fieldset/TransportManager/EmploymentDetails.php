@@ -29,7 +29,13 @@ class EmploymentDetails
      *     "short-label":"transport-manager.employment.form.position"
      * })
      * @Form\Type("Text")
-     * @Form\Validator({"name": "\Zend\Validator\NotEmpty"})
+     * @Form\Required(true)
+     * @Form\Validator({
+     *     "name":"Zend\Validator\StringLength",
+     *     "options":{
+     *          "max":45,
+     *     },
+     * })
      */
     public $position = null;
 
@@ -40,7 +46,13 @@ class EmploymentDetails
      *     "short-label":"transport-manager.employment.form.hoursPerWeek"
      * })
      * @Form\Type("Textarea")
-     * @Form\Validator({"name": "\Zend\Validator\NotEmpty"})
+     * @Form\Required(true)
+     * @Form\Validator({
+     *     "name":"Zend\Validator\StringLength",
+     *     "options":{
+     *          "max":100,
+     *     },
+     * })
      */
     public $hoursPerWeek = null;
 }

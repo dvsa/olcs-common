@@ -13,25 +13,9 @@ class LicenceHistoryEu
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevBeenRefused",
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "error-message":"licenceHistoryEu_prevBeenRefused-error",
-     *     "value_options":{
-     *         {
-     *             "value":"Y",
-     *             "label":"Yes",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         },{
-     *             "value":"N",
-     *             "label":"No",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         }
-     *     },
-     *     "fieldset-attributes":{
-     *          "class":"checkbox"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
      * @Form\Validator({
@@ -52,26 +36,9 @@ class LicenceHistoryEu
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevBeenRevoked",
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "error-message":"licenceHistoryEu_prevBeenRevoked-error",
-     *     "value_options":{
-     *         {
-     *             "value":"Y",
-     *             "label":"Yes",
-     *             "label_attributes": {
-     *                 "aria-label":"application_previous-history_licence-history_prevBeenRevoked",
-     *                 "class": "inline"
-     *             }
-     *         },{
-     *             "value": "N",
-     *             "label": "No",
-     *             "label_attributes": {
-     *                 "class": "inline"
-     *             }
-     *         }
-     *     },
-     *     "fieldset-attributes":{
-     *          "class":"checkbox"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
      * @Form\Validator({

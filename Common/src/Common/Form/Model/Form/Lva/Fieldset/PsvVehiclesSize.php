@@ -12,10 +12,8 @@ class PsvVehiclesSize
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *      "fieldset-attributes": {
-     *          "class": "checkbox"
-     *      },
      *     "label": "application_psv_vehicle_size",
+     *     "label_attributes": {"class": "form-control form-control--radio"},
      *     "short-label": "application_psv_vehicle_size",
      *     "disable_inarray_validator": false,
      *     "category": "psv_vehicle_size",

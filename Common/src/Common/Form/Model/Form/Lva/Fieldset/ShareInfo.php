@@ -14,9 +14,11 @@ class ShareInfo
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "licence.vehicles-trailers.share-info",
-     *     "label_attributes": {"id": "label-shareInfo"}
+     *     "label_attributes": {
+     *         "class": "form-control form-control--checkbox form-control--advanced", 
+     *         "id": "label-shareInfo"
+     *     },
      * })
-     * @Form\Attributes({"data-container-class": "confirm checkbox"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $shareInfo = null;

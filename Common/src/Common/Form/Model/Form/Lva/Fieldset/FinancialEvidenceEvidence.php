@@ -12,21 +12,14 @@ class FinancialEvidenceEvidence
 {
     /**
      * @Form\Options({
-     *     "fieldset-attributes": {
-     *          "class": "checkbox inline",
-     *     },
-     *     "legend-attributes": {
-     *          "class": "visually-hidden",
-     *     },
+     *     "legend-attributes": {"class": "visually-hidden",},
      *     "label": "lva-financial-evidence-upload-now.label",
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "value_options": {
      *         "Y":"lva-financial-evidence-upload-now.yes",
      *         "N":"lva-financial-evidence-upload-now.no"
      *     },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
-     *    "error-message": "financialEvidence_uploadNow-error"
+     *     "error-message": "financialEvidence_uploadNow-error"
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
@@ -43,7 +36,7 @@ class FinancialEvidenceEvidence
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "fieldset-attributes": {
-     *          "id": "files",
+     *         "id": "files",
      *     },
      * })
      * @Form\Required(true)

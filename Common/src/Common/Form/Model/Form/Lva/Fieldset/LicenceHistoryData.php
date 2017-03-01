@@ -19,25 +19,9 @@ class LicenceHistoryData
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevHasLicence",
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "error-message":"licenceHistoryData_prevHasLicence-error",
-     *     "value_options":{
-     *         {
-     *             "value":"Y",
-     *             "label":"Yes",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         },{
-     *             "value":"N",
-     *             "label":"No",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         }
-     *     },
-     *     "fieldset-attributes":{
-     *          "class":"checkbox"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
      * @Form\Validator({
@@ -58,25 +42,9 @@ class LicenceHistoryData
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevHadLicence",
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "error-message": "licenceHistoryData_prevHadLicence-error",
-     *     "value_options": {
-     *         {
-     *             "value":"Y",
-     *             "label":"Yes",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         },{
-     *             "value":"N",
-     *             "label":"No",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         }
-     *     },
-     *     "fieldset-attributes":{
-     *          "class":"checkbox"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
      * @Form\Validator({
@@ -97,25 +65,9 @@ class LicenceHistoryData
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevBeenDisqualifiedTc",
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "error-message":"licenceHistoryData_prevBeenDisqualifiedTc-error",
-     *     "value_options":{
-     *         {
-     *             "value":"Y",
-     *             "label":"Yes",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         },{
-     *             "value":"N",
-     *             "label":"No",
-     *             "label_attributes":{
-     *                 "class":"inline"
-     *             }
-     *         }
-     *     },
-     *     "fieldset-attributes":{
-     *          "class":"checkbox"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"}
      * })
      * @Form\Type("radio")
      * @Form\Validator({

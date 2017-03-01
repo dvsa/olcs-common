@@ -49,12 +49,7 @@ class LicenceHistoryLicenceData
      *     "label": "selfserve-app-subSection-previous-history-licence-history-willSurrender",
      *     "error-message": "licenceHistoryLicenceData_willSurrender-error",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *      "fieldset-attributes": {
-     *          "class": "checkbox inline"
-     *      },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */

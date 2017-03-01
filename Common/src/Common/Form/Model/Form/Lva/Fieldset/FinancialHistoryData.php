@@ -33,26 +33,9 @@ class FinancialHistoryData
      *     "short-label": "short-label-financial-history-bankrupt",
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
      *     "error-message": "financialHistoryData_bankrupt-error",
-     *     "value_options": {
-     *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've ever named ever been decalred bankrupt or had their estate seized? Yes"
-     *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No"
-     *         }
-     *     },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
-     *     "fieldset-attributes" : {
-     *         "id":"bankrupt",
-     *         "class":"checkbox inline"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"},
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "fieldset-attributes": {"id":"bankrupt"}
      * })
      * @Form\Type("radio")
      */
@@ -64,26 +47,9 @@ class FinancialHistoryData
      *     "short-label": "short-label-financial-history-liquidation",
      *     "label": "application_previous-history_financial-history.finance.liquidation",
      *     "error-message": "financialHistoryData_liquidation-error",
-     *     "value_options": {
-     *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever been involved with a business that has gone or is going into liquidation, owing money? Yes"
-     *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No"
-     *         }
-     *     },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
-     *     "fieldset-attributes" : {
-     *         "id":"liquidation",
-     *         "class":"checkbox inline"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"},
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "fieldset-attributes": {"id":"liquidation"}
      * })
      * @Form\Type("radio")
      */
@@ -95,26 +61,9 @@ class FinancialHistoryData
      *     "short-label": "short-label-financial-history-receivership",
      *     "label": "application_previous-history_financial-history.finance.receivership",
      *     "error-message": "financialHistoryData_receivership-error",
-     *     "value_options": {
-     *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever been involved with a business that has gone or is going into receivership? Yes"
-     *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No"
-     *         }
-     *     },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
-     *     "fieldset-attributes" : {
-     *         "id": "receiversip",
-     *         "class":"checkbox inline"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"},
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "fieldset-attributes": {"id": "receiversip"}
      * })
      * @Form\Type("radio")
      */
@@ -126,26 +75,9 @@ class FinancialHistoryData
      *     "short-label": "short-label-financial-history-administration",
      *     "label": "application_previous-history_financial-history.finance.administration",
      *     "error-message": "financialHistoryData_administration-error",
-     *     "value_options": {
-     *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever been involved with a business that has gone or is going into administration? Yes"
-     *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No"
-     *         }
-     *     },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
-     *     "fieldset-attributes" : {
-     *         "id":"administration",
-     *         "class":"checkbox inline"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"},
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "fieldset-attributes": {"id":"administration"}
      * })
      * @Form\Type("radio")
      */
@@ -155,29 +87,11 @@ class FinancialHistoryData
      * @Form\Annotations({"id":""})
      * @Form\Options({
      *     "short-label": "short-label-financial-history-disqualified",
-     *      "fieldset-attributes": {
-     *         "id":"disqualified",
-     *         "class": "question checkbox inline"
-     *      },
+     *     "fieldset-attributes": {"id":"disqualified"},
+     *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label": "application_previous-history_financial-history.finance.disqualified",
-     *     "error-message": "financialHistoryData_disqualified-error",
-     *     "value_options": {
-     *         {
-     *             "value": "Y",
-     *             "label": "Yes",
-     *             "label_attributes": {
-     *                 "aria-label": "Has anyone you've named ever been disqualified from acting as a company director or managing a company under the Company Directors Disqualification Act 1986? Yes",
-     *                 "class" : "inline"
-     *             }
-     *         },
-     *         {
-     *             "value": "N",
-     *             "label": "No",
-     *             "label_attributes": {
-     *                 "class" : "inline"
-     *             }
-     *         }
-     *     },
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "error-message": "financialHistoryData_disqualified-error"
      * })
      * @Form\Type("radio")
      */
@@ -220,28 +134,21 @@ class FinancialHistoryData
     /**
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Attributes({"id":"file"})
-     * @Form\Options({
-     *     "label_attributes": {
-     *         "aria-label": "insolvency"
-     *     }
-     * })
      */
     public $file = null;
 
     /**
-     * @Form\Attributes({
-     *     "id":"",
-     *     "data-container-class": "confirm checkbox"
-     * })
+     * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "short-label": "short-label-financial-history-insolvency",
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "application_previous-history_financial-history.insolvencyConfirmation.title",
-     *     "must_be_value": "Y",
      *     "label_attributes": {
+     *         "class": "form-control form-control--checkbox form-control--advanced", 
      *         "id":"insolvency"
-     *     }
+     *     },
+     *     "must_be_value": "Y"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */

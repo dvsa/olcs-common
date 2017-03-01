@@ -35,6 +35,7 @@ class OperatingCentreData
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "application_operating-centres_authorisation-sub-action.data.sufficientParking",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
      *     "must_be_value": "Y"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
@@ -47,6 +48,7 @@ class OperatingCentreData
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "application_operating-centres_authorisation-sub-action.data.permission",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
      *     "must_be_value": "Y"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")

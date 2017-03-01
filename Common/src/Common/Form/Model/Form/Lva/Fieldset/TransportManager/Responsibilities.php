@@ -23,10 +23,8 @@ class Responsibilities
     public $version = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":"","class":"chosen-select-medium",  "multiple" : true})
-     * @Form\Options({
-     *     "label": "transport-manager.responsibilities.tm-application-oc"
-     * })
+     * @Form\Attributes({"id": "", "placeholder": "", "class": "chosen-select-medium", "multiple": true})
+     * @Form\Options({"label": "transport-manager.responsibilities.tm-application-oc"})
      * @Form\Type("Select")
      */
     public $operatingCentres = null;
@@ -35,12 +33,7 @@ class Responsibilities
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.tm-type",
      *     "category": "tm_type",
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
-     *     "fieldset-attributes": {
-     *         "class": "checkbox inline"
-     *     }
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
      * @Form\Type("DynamicRadio")
      * @Form\Validator({
@@ -64,16 +57,8 @@ class Responsibilities
     /**
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.is-owner",
-     *     "value_options":{
-     *         "Y":"Yes",
-     *         "N":"No"
-     *     },
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
-     *     "fieldset-attributes": {
-     *         "class": "checkbox inline"
-     *     }
+     *     "value_options": {"Y":"Yes", "N":"No"},
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
      * @Form\Type("Radio")
      */
