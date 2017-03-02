@@ -73,9 +73,19 @@ class User extends InternalSearchAbstract
         return [
             'crud' => [
                 'actions' => [
-                    'add' => ['class' => 'primary', 'requireRows' => false],
-                    'edit' => ['requireRows' => true, 'class' => 'secondary js-require--one'],
-                    'delete' => ['requireRows' => true, 'class' => 'secondary js-require--one']
+                    'add' => [
+                        'class' => 'action--primary', 
+                        'requireRows' => false
+                    ],
+                    'edit' => [
+                        'requireRows' => true, 
+                        'class' => 'action--secondary js-require--one'
+                    ],
+                    'delete' => [
+                        'label' => 'action_links.remove',
+                        'requireRows' => true, 
+                        'class' => 'action--secondary js-require--one'
+                    ]
                 ]
             ],
             'paginate' => [

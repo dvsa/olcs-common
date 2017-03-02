@@ -10,9 +10,8 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array(
-                    'label' => 'transport-manager.employments.table.add',
-                    'class' => 'primary'
-                ),
+                    'label' => 'transport-manager.employments.table.add'
+                )
             )
         ),
         'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,

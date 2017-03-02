@@ -23,16 +23,27 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  */
 class Listener implements EventManagerAwareInterface, ListenerAggregateInterface, ServiceLocatorAwareInterface
 {
-    use EventManagerAwareTrait,
-        ListenerAggregateTrait,
-        ServiceLocatorAwareTrait;
+    use EventManagerAwareTrait;
+    use ListenerAggregateTrait;
+    use ServiceLocatorAwareTrait;
 
     protected $controller;
 
+    // @NOTE 2/3/17 - below default config doesn't seem to work, would be very useful
     protected $defaultCrudConfig = [
-        'add' => ['requireRows' => false],
-        'edit' => ['requireRows' => true],
-        'delete' => ['requireRows' => true]
+        'add' => [
+            'class' => 'action--primary',
+            'label' => 'action_links.add',
+            'requireRows' => false
+        ],
+        'edit' => [
+            'label' => 'action_links.edit',
+            'requireRows' => true
+        ],
+        'delete' => [
+            'label' => 'action_links.remove',
+            'requireRows' => true
+        ]
     ];
 
     /**

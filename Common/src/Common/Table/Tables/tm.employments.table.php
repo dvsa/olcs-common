@@ -11,10 +11,9 @@ return array(
             'actions' => array(
                 'add-employment' => array(
                     'label' => 'transport-manager.employments.table.add',
-                    'class' => 'primary'
-                ),
+                )
             )
-        ),
+        )
     ),
     'columns' => array(
         array(

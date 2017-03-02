@@ -13,7 +13,6 @@ return array(
             'actions' => array(
                 'add' => array(
                     'label' => 'Request new discs',
-                    'class' => 'primary'
                 ),
                 'replace' => array(
                     'label' => 'Replace',

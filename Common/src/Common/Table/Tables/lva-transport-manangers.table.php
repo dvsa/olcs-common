@@ -8,13 +8,13 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
+                'add' => array(),
                 'delete' => array(
-                    'class' => 'secondary',
+                    'label' => 'action_links.remove',
                     'requireRows' => true
                 )
             )
-        ),
+        )
     ),
     'attributes' => array(
     ),
@@ -22,7 +22,7 @@ return array(
         array(
             'title' => 'Name',
             'formatter' => 'TransportManagerName',
-            'name' => 'name',
+            'name' => 'name'
         ),
         array(
             'title' => 'Email',

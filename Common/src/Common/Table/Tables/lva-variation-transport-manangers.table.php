@@ -8,9 +8,14 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
-                'delete' => array('class' => 'secondary', 'requireRows' => true),
-                'restore' => array('class' => 'secondary', 'requireRows' => true),
+                'add' => array(),
+                'delete' => array(
+                    'label' => 'action_links.remove',
+                    'requireRows' => true
+                ),
+                'restore' => array( 
+                    'requireRows' => true
+                ),
             )
         ),
         'row-disabled-callback' => function ($row) {
