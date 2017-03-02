@@ -116,7 +116,7 @@ return [
     'Yes' => 'Yes',
     'No' => 'No',
     'account-balance' => 'Account balance',
-    'action_links.add' => 'Remove',
+    'action_links.add' => 'Add',
     'action_links.remove' => 'Remove',
     'action_links.replace' => 'Replace',
     'actions' => 'actions',
