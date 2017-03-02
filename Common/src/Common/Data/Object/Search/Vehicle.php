@@ -59,12 +59,12 @@ class Vehicle extends InternalSearchAbstract
                 'crud' => array(
                     'actions' => array(
                         'vehicleSet26' => array(
-                            'class' => 'secondary js-require--multiple',
+                            'class' => 'action--secondary js-require--multiple',
                             'requireRows' => true,
                             'label' => 'Set Sec26',
                         ),
                         'vehicleRemove26' => array(
-                            'class' => 'secondary js-require--multiple',
+                            'class' => 'action--secondary js-require--multiple',
                             'requireRows' => true,
                             'label' => 'Remove section 26'
                         ),

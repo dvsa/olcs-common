@@ -11,7 +11,6 @@ return array(
             'actions' => array(
                 'add-previous-conviction' => array(
                     'label' => 'transport-manager.convictionsandpenalties.table.add',
-                    'class' => 'primary'
                 ),
             )
         ),

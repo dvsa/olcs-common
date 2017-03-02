@@ -14,10 +14,10 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array(
-                    'class' => 'primary',
                     'id' => 'addSmall'
                 ),
                 'delete' => array(
+                    'label' => 'action_links.remove',
                     'class' => ' more-actions__item',
                     'requireRows' => true
                 ),

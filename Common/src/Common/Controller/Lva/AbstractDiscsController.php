@@ -408,7 +408,7 @@ abstract class AbstractDiscsController extends AbstractController
             self::ACTION_CEASED_SHOW_HIDE,
             [
                 'label' => 'internal-psv-discs-filter-ceased-' . ($isIncluded ? 'hide' : 'show') . '-discs',
-                'class' => 'secondary js-disable-crud',
+                'class' => 'action--secondary js-disable-crud',
                 'requireRows' => true,
             ]
         );

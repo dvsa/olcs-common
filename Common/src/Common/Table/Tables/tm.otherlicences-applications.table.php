@@ -11,7 +11,6 @@ return array(
             'actions' => array(
                 'add-other-licence-applications' => array(
                     'label' => 'transport-manager.otherlicences.table.add',
-                    'class' => 'primary'
                 ),
             ),
         ),

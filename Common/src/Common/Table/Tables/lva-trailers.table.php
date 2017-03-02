@@ -11,10 +11,9 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
+                'add' => array(),
                 'delete' => array(
-                    'label' => 'Remove',
-                    'class' => 'secondary',
+                    'label' => 'action_links.remove',
                     'requireRows' => true
                 )
             )
@@ -25,7 +24,7 @@ return array(
             'title' => $translationPrefix . '.trailerNo',
             'name' => 'trailerNo',
             'action' => 'edit',
-            'type' => 'Action',
+            'type' => 'Action'
         ),
         array(
             'title' => $translationPrefix . '.specified',

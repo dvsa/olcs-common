@@ -9,15 +9,28 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('label' => 'Add', 'class' => 'primary'),
-                'office-licence-add' => array(
-                    'label' => 'Add office licence',
-                    'class' => 'secondary'
+                'add' => array(
+                    'label' => 'Add'
                 ),
-                'void' => array('label' => 'Annul', 'class' => 'secondary', 'requireRows' => true),
-                'restore' => array('label' => 'Restore', 'class' => 'secondary', 'requireRows' => true),
-                'stop' => array('label' => 'Stop', 'class' => 'secondary', 'requireRows' => true),
-                'reprint' => array('label' => 'Reprint', 'class' => 'secondary', 'requireRows' => true)
+                'office-licence-add' => array(
+                    'label' => 'Add office licence'
+                ),
+                'void' => array(
+                    'label' => 'Annul',
+                    'requireRows' => true
+                ),
+                'restore' => array(
+                    'label' => 'Restore',
+                    'requireRows' => true
+                ),
+                'stop' => array(
+                    'label' => 'Stop',
+                    'requireRows' => true
+                ),
+                'reprint' => array(
+                    'label' => 'Reprint',
+                    'requireRows' => true
+                )
             )
         ),
         'row-disabled-callback' => function ($row) {

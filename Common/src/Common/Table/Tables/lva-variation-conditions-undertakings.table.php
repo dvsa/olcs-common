@@ -9,7 +9,9 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
+                'add' => array(
+                    'label' => 'action_links.add'
+                ),
             )
         ),
         'row-disabled-callback' => function ($row) {

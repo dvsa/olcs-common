@@ -14,12 +14,9 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array(
-                    'label' => 'vehicle_table_action.add.label',
-                    'class' => 'primary'
-                ),
+                'add' => array(),
                 'delete' => array(
-                    'label' => 'vehicle_table_action.delete.label',
+                    'label' => 'action_links.remove',
                     'class' => ' more-actions__item',
                     'requireRows' => true
                 ),

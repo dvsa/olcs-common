@@ -14,12 +14,12 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-                'add' => array('class' => 'primary'),
+                'add' => array(),
                 'delete' => array(
-                    'label' => 'Remove',
+                    'label' => 'action_links.remove',
                     'class' => ' more-actions__item js-require--multiple',
                     'requireRows' => true
-                ),
+                )
             )
         ),
         'paginate' => [
