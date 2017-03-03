@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Table Builder
- *
- * Builds a table from config
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Table;
 
 use Zend\ServiceManager;
@@ -1500,6 +1493,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             && isset($column['type'])
             && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])
         ) {
+            /** @var \Common\Service\Table\Type\AbstractType $typeClass */
             $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
             $type = new $typeClass($this);
 
@@ -1885,11 +1879,21 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         return $callback($row);
     }
 
+    /**
+     * Should Paginate
+     *
+     * @return bool
+     */
     protected function shouldPaginate()
     {
         return isset($this->settings['paginate']);
     }
 
+    /**
+     * Setup Data Attributes
+     *
+     * @return void
+     */
     protected function setupDataAttributes()
     {
         if (isset($this->variables['dataAttributes']) && is_array($this->variables['dataAttributes'])) {
@@ -1922,18 +1926,24 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
     /**
      * If internal user has read only permissions remove columns with particular types
+     *
+     * @return void
      */
     protected function checkForActionLinks()
     {
         if ($this->isInternalReadOnly()) {
-            $typesToRemove = ['Action', 'ActionLinks', 'DeltaActionLinks'];
-            $columns = $this->getColumns();
+            $typesToRemove = ['ActionLinks', 'DeltaActionLinks'];
+
             $updatedColumns = [];
-            foreach ($columns as $column) {
+
+            foreach ($this->getColumns() as $column) {
                 if (
                     isset($column['type'])
                     && in_array($column['type'], $typesToRemove)
-                    && !(isset($column['keepForReadOnly']) && $column['keepForReadOnly'])
+                    && !(
+                        isset($column['keepForReadOnly'])
+                        && $column['keepForReadOnly']
+                    )
                 ) {
                     continue;
                 }

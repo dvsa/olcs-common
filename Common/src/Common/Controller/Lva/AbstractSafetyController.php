@@ -9,6 +9,7 @@ use Dvsa\Olcs\Transfer\Command\Workshop\CreateWorkshop as LicenceCreateWorkshop;
 use Dvsa\Olcs\Transfer\Command\Workshop\UpdateWorkshop as LicenceUpdateWorkshop;
 use Dvsa\Olcs\Transfer\Query\Workshop\Workshop;
 use Zend\Form\Form;
+use Zend\Form\FormInterface;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
 
@@ -129,19 +130,21 @@ abstract class AbstractSafetyController extends AbstractController
 
         if ($request->isPost()) {
             $crudAction = $this->getCrudAction([$data['table']]);
+            $haveCrudAction = ($crudAction !== null);
 
-            $partial = false;
+            if ($haveCrudAction) {
+                if ($this->isInternalReadOnly()) {
+                    return $this->handleCrudAction($crudAction);
+                }
 
-            if ($crudAction !== null) {
-                $partial = true;
                 $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
             }
 
             if ($form->isValid()) {
-                $response = $this->save($data, $partial);
+                $response = $this->save($data, $haveCrudAction);
 
                 if ($response->isOk()) {
-                    if ($crudAction !== null) {
+                    if ($haveCrudAction) {
                         return $this->handleCrudAction($crudAction);
                     }
 
@@ -149,7 +152,7 @@ abstract class AbstractSafetyController extends AbstractController
                 }
 
                 if ($response->isServerError()) {
-                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
                 } else {
                     $this->mapErrors($form, $response->getResult()['messages']);
                 }
@@ -164,8 +167,8 @@ abstract class AbstractSafetyController extends AbstractController
     /**
      * Map Errors
      *
-     * @param Form  $form   Form
-     * @param array $errors Errors
+     * @param FormInterface $form   Form
+     * @param array         $errors Errors
      *
      * @return void
      */
@@ -234,7 +237,7 @@ abstract class AbstractSafetyController extends AbstractController
         $response = $this->deleteWorkshops($ids);
 
         if (!$response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
         }
     }
 
@@ -308,7 +311,7 @@ abstract class AbstractSafetyController extends AbstractController
                 return $this->handlePostSave(null, ['fragment' => 'table']);
             }
 
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
         }
 
         $this->getServiceLocator()->get('Script')->loadFiles(['safety-inspector-add']);

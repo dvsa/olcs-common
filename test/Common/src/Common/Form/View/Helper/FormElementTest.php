@@ -1,10 +1,5 @@
 <?php
 
-/**
- * FormElement Test
- *
- * @author Jakub Igla <jakub.igla@gmail.com>
- */
 namespace CommonTest\Form\View\Helper;
 
 use Zend\View\HelperPluginManager;
@@ -18,7 +13,6 @@ use Zend\Form\View\Helper;
  */
 class FormElementTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var \Zend\Form\Element
      */
@@ -71,7 +65,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputRegex(
-            '/^<p class="hint">(.*)<\/p> <input type="text" name="(.*)" class="(.*)" id="(.*)" value="(.*)">$/'
+            '/^<p class="hint">(.*)<\/p><input type="text" name="(.*)" class="(.*)" id="(.*)" value="(.*)">$/'
         );
     }
 
@@ -271,7 +265,8 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $translateHelper = new \Zend\I18n\View\Helper\Translate();
         $translateHelper->setTranslator($translator);
 
-        $view = $this->getMock('\Zend\View\Renderer\PhpRenderer', array('url'));
+        /** @var \Zend\View\Renderer\PhpRenderer | \PHPUnit_Framework_MockObject_MockObject $view */
+        $view = $this->getMock(\Zend\View\Renderer\PhpRenderer::class, array('url'));
         $view->expects($this->any())
             ->method('url')
             ->will($this->returnValue('url'));
@@ -298,16 +293,18 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderForTrafficAreaSet()
     {
-        $this->prepareElement('\\Common\Form\Elements\Types\TrafficAreaSet');
+        $this->prepareElement(\Common\Form\Elements\Types\TrafficAreaSet::class);
 
-        $this->element->setValue('ABC');
+        $this->element
+            ->setValue('ABC')
+            ->setOption('hint-position', 'below');
 
         $viewHelper = $this->prepareViewHelper();
 
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertEquals(
-            '<div class="legend">trafficAreaSet.trafficArea</div><div class="label">ABC</div><p class="hint">Hint</p>',
+            '<div class="label">ABC</div><div class="hint">Hint</div>',
             $markup
         );
     }
@@ -324,7 +321,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertEquals(
-            '<div class="legend">trafficAreaSet.trafficArea</div><div class="label">ABC</div>',
+            '<div class="label">ABC</div>',
             $markup
         );
     }
@@ -341,7 +338,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertEquals(
-            '<div class="legend">trafficAreaSet.trafficArea</div><div class="label">ABC</div><p class="hint">Hint</p>',
+            '<p class="hint">Hint</p><div class="label">ABC</div>',
             $markup
         );
     }

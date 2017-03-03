@@ -88,11 +88,20 @@ class FormRow extends AbstractHelper
         $defElmHlpr = $this->getView()->plugin('FormElement');
 
         if (
-            $element instanceof ZendElement\Csrf
-            || $element instanceof Elements\InputFilters\ActionButton
+            $element instanceof Elements\InputFilters\ActionButton
             || $element instanceof Elements\Types\AttachFilesButton
         ) {
             return '';
+        }
+
+        if (
+            $element instanceof ZendElement\Csrf
+            || (
+                $element instanceof Elements\InputFilters\ActionButton
+                && strtoupper($element->getAttribute('id')) === 'CANCEL'
+            )
+        ) {
+            return $this->getView()->plugin('FormElement')->render($element);
         }
 
         if (in_array($element->getAttribute('type'), ['hidden', 'submit']) ||

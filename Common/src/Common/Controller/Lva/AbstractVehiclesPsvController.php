@@ -12,10 +12,9 @@ use Dvsa\Olcs\Transfer\Command\Application\CreatePsvVehicle as ApplicationCreate
 use Dvsa\Olcs\Transfer\Command\Application\UpdatePsvVehicles;
 use Dvsa\Olcs\Transfer\Command\Licence\CreatePsvVehicle as LicenceCreatePsvVehicle;
 use Dvsa\Olcs\Transfer\Query as QueryDto;
-use Zend\Form\Element\Checkbox;
+use Dvsa\Olcs\Transfer\Query\Licence\PsvVehiclesExport;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
-use Dvsa\Olcs\Transfer\Query\Licence\PsvVehiclesExport;
 
 /**
  * Vehicles PSV Controller
@@ -26,9 +25,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 {
     const SEARCH_VEHICLES_COUNT = 20;
 
-    use Traits\CrudTableTrait,
-        TransferVehiclesTrait,
+    use TransferVehiclesTrait,
         VehicleSearchTrait;
+    use Traits\CrudTableTrait {
+        handleCrudAction as protected traitHandleCrudAction;
+    }
 
     protected $section = 'vehicles_psv';
     protected $baseRoute = 'lva-%s/vehicles_psv';
@@ -51,6 +52,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         'application' => ApplicationCreatePsvVehicle::class
     ];
 
+    /**
+     * Process action - Index
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function indexAction()
     {
         /** @var \Zend\Http\Request $request */
@@ -78,77 +84,83 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $form = $this->alterForm($form, $resultData, $removeActions);
 
-        if ($request->isPost() && $form->isValid()) {
-            $crudAction = $this->getCrudAction($data);
+        if ($request->isPost()) {
+            $crudAction = $this->getCrudAction($data['vehicles']);
+            $haveCrudAction = ($crudAction !== null);
 
-            $response = $this->updateVehiclesSection($form, $crudAction);
-
-            if ($response !== null) {
-                return $response;
-            }
-
-            if ($crudAction !== null) {
-                $alternativeCrudResponse = $this->checkForAlternativeCrudAction($crudAction);
-
-                if ($alternativeCrudResponse !== null) {
-                    return $alternativeCrudResponse;
+            if ($haveCrudAction) {
+                if ($this->isInternalReadOnly()) {
+                    return $this->handleCrudAction($crudAction);
                 }
 
-                // handle the original action as planned
-                return $this->handleCrudAction(
-                    $data['vehicles'],
-                    ['add', 'show-removed-vehicles', 'hide-removed-vehicles']
-                );
+                $this->getServiceLocator()->get('Helper\Form')->disableValidation($form->getInputFilter());
             }
 
-            return $this->completeSection('vehicles_psv');
+            if ($form->isValid()) {
+                $isSuccess = $this->updateVehiclesSection($form, $haveCrudAction, $resultData);
+                if ($isSuccess === true) {
+                    if ($haveCrudAction) {
+                        return $this->handleCrudAction($crudAction);
+                    }
+
+                    return $this->completeSection('vehicles_psv');
+                }
+            }
         }
 
         return $this->renderForm($form, 'vehicles_psv', $resultData);
     }
 
     /**
-     * @param \Common\Form\Form $form
-     * @param $crudAction
-     * @return mixed
+     * Override handleCrudAction
+     *
+     * @param array $crudActionData Action data
+     *
+     * @return \Zend\Http\Response
      */
-    protected function updateVehiclesSection(FormInterface $form, $crudAction)
+    protected function handleCrudAction(array $crudActionData)
     {
-        /** @var \Common\Service\Helper\FlashMessengerHelperService $flashMssgr */
-        $flashMssgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
+        $alternativeCrudResponse = $this->checkForAlternativeCrudAction($crudActionData);
+        if ($alternativeCrudResponse !== null) {
+            return $alternativeCrudResponse;
+        }
 
-        $resultData = [];
+        return $this->traitHandleCrudAction(
+            $crudActionData,
+            [
+                'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
+            ]
+        );
+    }
+
+    /**
+     * Update Vehicle section status
+     *
+     * @param FormInterface $form           Form
+     * @param bool          $haveCrudAction Have crud action
+     * @param array         &$resultData    Api/Form Data
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    protected function updateVehiclesSection(FormInterface $form, $haveCrudAction, array &$resultData = [])
+    {
+        $cmd = null;
 
         if ($this->lva === 'application') {
             $formData = $form->getData();
+
+            $resultData['hasEnteredReg'] = $formData['data']['hasEnteredReg'];
 
             $dtoData = [
                 'id' => $this->getIdentifier(),
                 'version' => $formData['data']['version'],
                 'hasEnteredReg' => $formData['data']['hasEnteredReg'],
-                'partial' => $crudAction !== null
+                'partial' => $haveCrudAction,
             ];
+            $cmd = CommandDto\Application\UpdatePsvVehicles::create($dtoData);
 
-            $resultData['hasEnteredReg'] = $formData['data']['hasEnteredReg'];
-
-            $response = $this->handleCommand(UpdatePsvVehicles::create($dtoData));
-
-            if ($response->isClientError()) {
-                PsvVehicles::mapFormErrors(
-                    $form,
-                    $response->getResult()['messages'],
-                    $flashMssgr
-                );
-                return $this->renderForm($form, 'vehicles_psv', $resultData);
-            }
-
-            if ($response->isServerError()) {
-                $flashMssgr->addUnknownError();
-                return $this->renderForm($form, 'vehicles_psv', $resultData);
-            }
-        }
-
-        if ($this->lva === 'licence') {
+        } elseif ($this->lva === 'licence') {
             $shareInfo = $form->getData()['shareInfo']['shareInfo'];
 
             $dtoData = [
@@ -156,15 +168,27 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 'shareInfo' => $shareInfo
             ];
 
-            $response = $this->handleCommand(CommandDto\Licence\UpdateVehicles::create($dtoData));
-
-            if (!$response->isOk()) {
-                $flashMssgr->addCurrentErrorMessage('unknown-error');
-                return $this->renderForm($form, 'vehicles_psv', $resultData);
-            }
+            $cmd = CommandDto\Licence\UpdateVehicles::create($dtoData);
         }
 
-        return null;
+        if ($cmd === null) {
+            throw new \Exception('Incorrent lva type (application or licence allowed): ' . $this->lva);
+        }
+
+        $response = $this->handleCommand($cmd);
+        if ($response->isOk()) {
+            return true;
+        }
+
+        $flashMssgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
+
+        if ($response->isClientError()) {
+            PsvVehicles::mapFormErrors($form, $response->getResult()['messages'], $flashMssgr);
+        } elseif ($response->isServerError()) {
+            $flashMssgr->addUnknownError();
+        }
+
+        return false;
     }
 
     /**
@@ -208,13 +232,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Add a vehicle action
      *
-     * @return \Zend\View\Model\ViewModel
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function addAction()
     {
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
-        $resultData = $this->fetchResultData();
 
         $data = [];
         if ($request->isPost()) {
@@ -267,7 +290,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Edit action
      *
-     * @return \Zend\View\Model\ViewModel
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function editAction()
     {
@@ -346,7 +369,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Hijack the crud action check so we can validate the add button
      *
-     * @param string $action
+     * @param string $action Action
      *
      * @return null|\Zend\Http\Response
      */
@@ -405,7 +428,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Remove vehicle size tables based on OC data
      *
-     * @param Form $form
+     * @param FormInterface $form Form
+     *
      * @return Form
      */
     private function alterForm(Form $form, $resultData, $removeActions)
@@ -465,6 +489,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     /**
      * Delete vehicles
+     *
+     * @return void
      */
     protected function delete()
     {

@@ -93,7 +93,7 @@ return [
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'Faint o gerbydau ydych chi eisiau eu hawdurdodi ar y drwydded?',
     'application_operating-centres_authorisation.data.totCommunityLicences' => 'Trwyddedau cymunedol',
     'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'Faint o drwyddedau cymuned ydych chi eu hangen?',
-    'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Ardal Draffig',
+    'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Ardal draffig',
     'application_operating-centres_authorisation.table.address' => 'Cyfeiriad',
     'application_operating-centres_authorisation.table.footer.total' => 'Cyfansymiau',
     'application_operating-centres_authorisation.table.footer.total-psv' => 'Cyfanswm cerbydau',
