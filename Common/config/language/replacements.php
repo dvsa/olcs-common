@@ -3,6 +3,7 @@
 return [
     '{{OPENING_TIMES_LINK}}' => 'https://www.gov.uk/government/organisations/traffic-commissioners/about/'
         . 'access-and-opening',
+    '{{OPENING_TIMES_LINK_NI}}' => 'https://www.nidirect.gov.uk/articles/goods-vehicle-operator-licensing',
     '{{SIC_CODES}}' => 'https://www.gov.uk/government/publications/standard-industrial-classification-of'
         . '-economic-activities-sic',
     '{{CROWN_COPYRIGHT}}' => 'http://www.nationalarchives.gov.uk/information-management/re-using-public-'
