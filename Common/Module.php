@@ -183,13 +183,13 @@ class Module
         $missingTranslationProcessor = $sm->get('Utils\MissingTranslationProcessor');
         $missingTranslationProcessor->attach($eventManager);
 
-        // Log all messages where the translation is missing, only use these lines in dev environments
-        //$request = $sm->get('Request');
-        //if ($request instanceof \Zend\Http\PhpEnvironment\Request) {
-        //    $missingTranslationProcessor->setTranslationLogger(
-        //        new \Dvsa\Olcs\Utils\Translation\TranslatorLogger('/tmp/missing-translations.csv', $request)
-        //    );
-        //}
+        // Add a logger so that missing translations can be recorded
+        $request = $sm->get('Request');
+        if ($request instanceof \Zend\Http\PhpEnvironment\Request) {
+            $missingTranslationProcessor->setTranslationLogger(
+                new \Dvsa\Olcs\Utils\Translation\TranslatorLogger($sm->get('logger'), $request)
+            );
+        }
 
         $translator->enableEventManager();
         $translator->setEventManager($eventManager);
