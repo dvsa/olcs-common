@@ -2,13 +2,16 @@
 
 namespace Common\Form\View\Helper\Readonly;
 
-use Zend\Form\Element\Button;
+use Common\Form\Elements;
+use Common\Form\Elements\InputFilters\ActionButton;
+use Common\Form\Elements\Types\AttachFilesButton;
+use Common\Form\Elements\Types\Html;
+use Common\Form\Elements\Types\HtmlTranslated;
+use Common\Form\Elements\Types\Table;
+use Zend\Form\Element as ZendElement;
 use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\View\Helper\AbstractHelper;
-use Common\Form\Elements\Types\Table;
-use Common\Form\Elements\Types\HtmlTranslated;
-use Common\Form\Elements\Types\Html;
 
 /**
  * Class FormRow
@@ -28,7 +31,7 @@ class FormRow extends AbstractHelper
         'Zend\Form\Element\Radio' => 'readonlyformselect',
         'Zend\Form\Element\Select' => 'readonlyformselect',
         'Zend\Form\Element\DateSelect' => 'readonlyformdateselect',
-        'Common\Form\Elements\Types\Table' => 'readonlyformtable'
+        'Common\Form\Elements\Types\Table' => 'readonlyformtable',
     ];
 
     /**
@@ -41,8 +44,9 @@ class FormRow extends AbstractHelper
      *
      * Proxies to {@link render()}.
      *
-     * @param  ElementInterface|null $element
-     * @return string|FormElement
+     * @param ElementInterface|null $element Element
+     *
+     * @return string
      */
     public function __invoke(ElementInterface $element = null)
     {
@@ -56,7 +60,8 @@ class FormRow extends AbstractHelper
     /**
      * Retrieve the FormElement helper
      *
-     * @param \Zend\Form\ElementInterface $element
+     * @param ElementInterface $element Element
+     *
      * @return Callable
      */
     protected function getElementHelper(ElementInterface $element)
@@ -71,13 +76,27 @@ class FormRow extends AbstractHelper
     }
 
     /**
-     * @param ElementInterface $element
+     * Render element
+     *
+     * @param ElementInterface $element Element
+     *
      * @return string
      */
     public function render(ElementInterface $element)
     {
+        /** @var \Common\Form\View\Helper\FormElement $defElmHlpr */
+        $defElmHlpr = $this->getView()->plugin('FormElement');
+
+        if (
+            $element instanceof ZendElement\Csrf
+            || $element instanceof Elements\InputFilters\ActionButton
+            || $element instanceof Elements\Types\AttachFilesButton
+        ) {
+            return '';
+        }
+
         if (in_array($element->getAttribute('type'), ['hidden', 'submit']) ||
-            $element instanceof Button ||
+            $element instanceof ZendElement\Button ||
             $element->getOption('remove_if_readonly')
         ) {
             //bail early if we don't want to display this type of element
@@ -103,10 +122,15 @@ class FormRow extends AbstractHelper
             $label = $escapeHtmlHelper($label);
         }
 
-        $value = $elementHelper($element);
+        if ($element instanceof Html) {
+            $value = $defElmHlpr->render($element);
+        } else {
+            $value = $elementHelper($element);
+        }
+
         if ($translator !== null) {
             if ($element instanceof HtmlTranslated) {
-                $value = $this->getView()->plugin('FormElement')->render($element);
+                $value = $defElmHlpr->render($element);
             } elseif (is_string($value) && !($element instanceof Html)) {
                 $value = $translator->translate($value);
             }
@@ -117,7 +141,10 @@ class FormRow extends AbstractHelper
     }
 
     /**
-     * @param $element
+     * Get Class
+     *
+     * @param ElementInterface $element Element
+     *
      * @return string
      */
     public function getClass($element)

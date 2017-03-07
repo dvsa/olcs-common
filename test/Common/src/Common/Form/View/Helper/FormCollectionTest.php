@@ -7,6 +7,7 @@ use Common\Form\Elements\Types\FileUploadListItem;
 use Common\Form\Elements\Types\HoursPerWeek;
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\View\Helper\FormCollection as FormCollectionViewHelper;
+use Common\Form\View\Helper\Readonly\FormFieldset;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Element\Collection;
@@ -20,10 +21,11 @@ use Zend\View\Renderer\JsonRenderer;
 use Zend\View\Renderer\PhpRenderer;
 
 /**
- * @covers Common\Form\View\Helper\FormCollection
+ * @covers \Common\Form\View\Helper\FormCollection
  */
 class FormCollectionTest extends MockeryTestCase
 {
+    /** @var  \Zend\Form\FieldsetInterface | \Zend\Form\ElementInterface */
     protected $element;
 
     private function prepareElement($targetElement = 'Text')
@@ -173,6 +175,8 @@ class FormCollectionTest extends MockeryTestCase
         $mockHelper = m::mock('Common\Form\View\Helper\Readonly\FormRow');
         $mockHelper->shouldReceive('__invoke')->with($mockElement)->andReturn('element');
 
+        $mockFieldsetHlpr = m::mock(\Common\Form\View\Helper\Readonly\FormFieldset::class)->makePartial();
+
         $iterator = new PriorityQueue();
         $iterator->insert($mockElement);
 
@@ -188,11 +192,12 @@ class FormCollectionTest extends MockeryTestCase
         $mockView = m::mock('Zend\View\Renderer\PhpRenderer');
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
+        $mockView->shouldReceive('plugin')->with(FormFieldset::class)->andReturn($mockFieldsetHlpr);
 
         $sut = new FormCollectionViewHelper();
         $sut->setView($mockView);
 
-        $markup = $sut->__invoke($mockFieldset);
+        $markup = $sut($mockFieldset);  //  invoke
         $this->assertEquals('<ul class="definition-list">element</ul>', $markup);
     }
 

@@ -3,6 +3,7 @@
 use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
 use Common\Controller\Lva\Adapters as LvaAdapters;
+use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -320,7 +321,7 @@ return array(
         'invokables' => array(
             'form' => 'Common\Form\View\Helper\Form',
             'formCollection' => Common\Form\View\Helper\FormCollection::class,
-            'formElement' => 'Common\Form\View\Helper\FormElement',
+            'formElement' => Common\Form\View\Helper\FormElement::class,
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
             'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
@@ -330,11 +331,6 @@ return array(
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
             'flashMessengerAll' => 'Common\View\Helper\FlashMessenger',
             'addTags' => 'Common\View\Helper\AddTags',
-            'readonlyformitem' => 'Common\Form\View\Helper\Readonly\FormItem',
-            'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
-            'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
-            'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
-            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
             'status' => 'Common\View\Helper\Status',
             'address' => 'Common\View\Helper\Address',
@@ -342,8 +338,17 @@ return array(
             'dateTime' => \Common\View\Helper\DateTime::class,
             'returnToAddress' => Common\View\Helper\ReturnToAddress::class,
             'config' => Common\View\Helper\Config::class,
-            'readOnlyActions' => \Common\View\Helper\ReadOnlyActions::class,
             'navigationParentPage' => Common\View\Helper\NavigationParentPage::class,
+
+            //  read only elements helpers
+            ReadonlyFormHelper\FormFieldset::class => ReadonlyFormHelper\FormFieldset::class,
+            ReadonlyFormHelper\FormFileUploadList::class => ReadonlyFormHelper\FormFileUploadList::class,
+            'readonlyformitem' => ReadonlyFormHelper\FormItem::class,
+            'readonlyformselect' => ReadonlyFormHelper\FormSelect::class,
+            'readonlyformdateselect' => ReadonlyFormHelper\FormDateSelect::class,
+            'readonlyformrow' => ReadonlyFormHelper\FormRow::class,
+            'readonlyformtable' => ReadonlyFormHelper\FormTable::class,
+            'readOnlyActions' => \Common\View\Helper\ReadOnlyActions::class,
 
             // Extended form view helpers, to allow us to use alternative attributes that are not in ZF2's whitelist
             'formbutton'              => \Common\Form\View\Helper\Extended\FormButton::class,

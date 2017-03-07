@@ -7,16 +7,16 @@
  */
 namespace Common\Form\View\Helper;
 
-use Zend\Form\ElementInterface;
-use Zend\Form\Element\Collection as CollectionElement;
-use Zend\Form\FieldsetInterface;
-use Zend\Form\View\Helper\FormCollection as ZendFormCollection;
-use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\CompanyNumber;
 use Common\Form\Elements\Types\FileUploadList;
 use Common\Form\Elements\Types\FileUploadListItem;
-use Zend\Form\LabelAwareInterface;
 use Common\Form\Elements\Types\HoursPerWeek;
+use Common\Form\Elements\Types\PostcodeSearch;
+use Common\Form\View\Helper\Readonly\FormFieldset;
+use Zend\Form\Element\Collection as CollectionElement;
+use Zend\Form\ElementInterface;
+use Zend\Form\FieldsetInterface;
+use Zend\Form\LabelAwareInterface;
 
 /**
  * Form Collection wrapper
@@ -37,9 +37,11 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      */
     private $hintFormat = "<p class=\"hint\">%s</p>";
 
-
     /**
-     * @param boolean $readOnly
+     * Set Is Form in Read only status
+     *
+     * @param boolean $readOnly Is Read Only
+     *
      * @return $this
      */
     public function setReadOnly($readOnly)
@@ -49,6 +51,8 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
     }
 
     /**
+     * Is Form in Read only status
+     *
      * @return boolean
      */
     public function isReadOnly()
@@ -59,7 +63,8 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
     /**
      * Render a collection by iterating through all fieldsets and elements
      *
-     * @param  ElementInterface $element
+     * @param ElementInterface $element Element
+     *
      * @return string
      */
     public function render(ElementInterface $element)
@@ -89,7 +94,6 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         }
 
         $hint = $element->getOption('hint');
-
         if (!empty($hint)) {
             $view = $this->getView();
             $hint = sprintf($this->hintFormat, $view->translate($hint));
@@ -100,6 +104,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         $templateMarkup   = '';
         $readOnly = $this->isReadOnly() || $element->getOption('readonly');
 
+        /** @var callable $elementHelper */
         $elementHelper    = (
             $readOnly ?
             $this->getView()->plugin('readonlyformrow') :
@@ -112,7 +117,12 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
             return '';
         }
 
-        $fieldsetHelper   = $this->getFieldsetHelper();
+        /** @var callable $fieldsetHelper */
+        $fieldsetHelper = (
+            $readOnly
+            ? $this->view->plugin(FormFieldset::class)
+            : $this->getFieldsetHelper()
+        );
 
         if ($element instanceof CollectionElement && $element->shouldCreateTemplate()) {
             $templateMarkup = $this->renderTemplate($element);
