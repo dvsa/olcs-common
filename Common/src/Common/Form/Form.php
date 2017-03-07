@@ -2,6 +2,7 @@
 
 namespace Common\Form;
 
+use ReflectionClass;
 use Zend\Form as ZendForm;
 
 /**
@@ -9,9 +10,10 @@ use Zend\Form as ZendForm;
  */
 class Form extends ZendForm\Form
 {
-
-    /*
-     * Prevents browser HTML5 form validations
+    /**
+     * Form constructor. Prevents browser HTML5 form validations
+     *
+     * @param null $name Form Name
      */
     public function __construct($name = null)
     {
@@ -19,9 +21,34 @@ class Form extends ZendForm\Form
         $this->setAttribute('novalidate', 'novalidate');
     }
 
+    /**
+     * To string
+     *
+     * @return string
+     */
     public function __toString()
     {
         return get_class($this);
+    }
+
+    /**
+     * Clone
+     *
+     * @return void
+     */
+    public function __clone()
+    {
+        $reflect = new ReflectionClass($this);
+        $props = $reflect->getProperties();
+
+        foreach ($props as $prop) {
+            $name = $prop->getName();
+
+            $value = $this->$name;
+            if (is_object($value)) {
+                $this->$name = clone $this->$name;
+            }
+        }
     }
 
     /**
