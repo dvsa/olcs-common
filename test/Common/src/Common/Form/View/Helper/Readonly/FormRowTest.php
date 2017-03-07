@@ -1,18 +1,18 @@
 <?php
 
-
 namespace CommonTest\Form\View\Helper\Readonly;
 
+use Common\Form\Elements;
 use Common\Form\Elements\Types\HtmlTranslated;
-use PHPUnit_Framework_TestCase as TestCase;
 use Common\Form\View\Helper\Readonly\FormRow;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Form\Element as ZendElement;
 
 /**
- * Class FormRowTest
- * @package CommonTest\Form\View\Helper\Readonly
+ * @covers \Common\Form\View\Helper\Readonly\FormRow
  */
-class FormRowTest extends TestCase
+class FormRowTest extends MockeryTestCase
 {
     /**
      * @dataProvider provideTestInvoke
@@ -39,16 +39,14 @@ class FormRowTest extends TestCase
         $mockTranslater = m::mock('Zend\I18n\Translator\TranslatorInterface');
         $mockTranslater->shouldReceive('translate')->andReturnUsing($callback);
 
+        $mockFormElement = m::mock()->shouldReceive('render')->andReturn('translated')->getMock();
+
         $mockView = m::mock('Zend\View\Renderer\PhpRenderer');
+        $mockView->shouldReceive('plugin')->with('FormElement')->andReturn($mockFormElement);
         $mockView->shouldReceive('plugin')->with('escapehtml')->andReturn($mockHtmlHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockElementHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformselect')->andReturn($mockElementHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformtable')->andReturn($mockTableHelper);
-
-        if ($element instanceof HtmlTranslated) {
-            $mockFormElement = m::mock()->shouldReceive('render')->once()->andReturn('translated')->getMock();
-            $mockView->shouldReceive('plugin')->with('FormElement')->once()->andReturn($mockFormElement);
-        }
 
         $sut = new FormRow();
 
@@ -76,7 +74,7 @@ class FormRowTest extends TestCase
         $mockText->shouldReceive('getValue')->andReturn('Value');
         $mockText->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
-        $mockSelect = m::mock('Zend\Form\Element\Select');
+        $mockSelect = m::mock(ZendElement\Select::class);
         $mockSelect->shouldReceive('getAttribute')->with('type')->andReturn('select');
         $mockSelect->shouldReceive('getLabel')->andReturn('Label');
         $mockSelect->shouldReceive('getValue')->andReturn('Value');
@@ -84,7 +82,7 @@ class FormRowTest extends TestCase
         $mockSelect->shouldReceive('getAttribute')->andReturn(false);
         $mockSelect->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
-        $mockHtmlTranslated = m::mock('Common\Form\Elements\Types\HtmlTranslated');
+        $mockHtmlTranslated = m::mock(Elements\Types\HtmlTranslated::class);
         $mockHtmlTranslated->shouldReceive('getValue')->andReturn('<b>text</b>');
         $mockHtmlTranslated->shouldReceive('getAttribute')->andReturn('html-translated');
         $mockHtmlTranslated->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
@@ -110,7 +108,7 @@ class FormRowTest extends TestCase
         $mockTableBuilder->shouldReceive('getColumns')->andReturn($columns);
         $mockTableBuilder->shouldReceive('setColumns')->with($newColumns);
 
-        $mockTable = m::mock('Common\Form\Elements\Types\Table');
+        $mockTable = m::mock(Elements\Types\Table::class);
         $mockTable->shouldReceive('getAttribute')->with('type')->andReturnNull();
         $mockTable->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
@@ -124,7 +122,19 @@ class FormRowTest extends TestCase
             [$mockText, '<li class="definition-list__item full-width"><dt>Label</dt><dd>Value</dd></li>'],
             [$mockSelect, '<li class="definition-list__item"><dt>Label</dt><dd>Value</dd></li>'],
             [$mockTable, '<table></table>'],
-            [$mockHtmlTranslated, '<li class="definition-list__item"><dt></dt><dd>translated</dd></li>']
+            [$mockHtmlTranslated, '<li class="definition-list__item"><dt></dt><dd>translated</dd></li>'],
+            [
+                'element' => m::mock(ZendElement\Csrf::class),
+                'expect' => '',
+            ],
+            [
+                'element' => m::mock(Elements\InputFilters\ActionButton::class),
+                'expect' => '',
+            ],
+            [
+                'element' => m::mock(Elements\Types\AttachFilesButton::class),
+                'expect' => '',
+            ],
         ];
     }
 }
