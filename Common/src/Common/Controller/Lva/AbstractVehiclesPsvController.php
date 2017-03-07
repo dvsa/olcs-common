@@ -85,12 +85,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $form = $this->alterForm($form, $resultData, $removeActions);
 
         if ($request->isPost()) {
-            $crudAction = $this->getCrudAction($data['vehicles']);
+            $crudAction = $this->getCrudAction($data);
             $haveCrudAction = ($crudAction !== null);
 
             if ($haveCrudAction) {
                 if ($this->isInternalReadOnly()) {
-                    return $this->handleCrudAction($crudAction);
+                    return $this->handleCrudAction($data['vehicles']);
                 }
 
                 $this->getServiceLocator()->get('Helper\Form')->disableValidation($form->getInputFilter());
@@ -100,7 +100,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 $isSuccess = $this->updateVehiclesSection($form, $haveCrudAction, $resultData);
                 if ($isSuccess === true) {
                     if ($haveCrudAction) {
-                        return $this->handleCrudAction($crudAction);
+                        return $this->handleCrudAction($data['vehicles']);
                     }
 
                     return $this->completeSection('vehicles_psv');
@@ -128,7 +128,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $this->traitHandleCrudAction(
             $crudActionData,
             [
-                'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
+                'add', 'show-removed-vehicles', 'hide-removed-vehicles'
             ]
         );
     }
@@ -169,10 +169,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             ];
 
             $cmd = CommandDto\Licence\UpdateVehicles::create($dtoData);
-        }
-
-        if ($cmd === null) {
-            throw new \Exception('Incorrent lva type (application or licence allowed): ' . $this->lva);
         }
 
         $response = $this->handleCommand($cmd);

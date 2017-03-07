@@ -31,6 +31,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     {
         $this->loadData();
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -48,6 +49,10 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
+                if ($this->isInternalReadOnly()) {
+                    return $this->handleCrudAction($crudAction);
+                }
+
                 $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
             }
 
@@ -237,6 +242,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     {
         $this->loadData();
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $data = array();

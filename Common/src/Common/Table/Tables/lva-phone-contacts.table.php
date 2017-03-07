@@ -21,6 +21,7 @@ return [
             'name' => 'phoneContactType->description',
             'width' => '40%',
             'formatter' => 'Translate',
+            'keepForReadOnly' => true,
         ],
         [
             'title' => 'lva.contact-details.phone-contact.table.col.number.title',

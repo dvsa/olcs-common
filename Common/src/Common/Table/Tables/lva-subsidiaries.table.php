@@ -18,7 +18,8 @@ return array(
             'title' => 'application_your-business_business_details-subsidiaries-columnName',
             'name' => 'name',
             'action' => 'edit',
-            'type' => 'Action'
+            'type' => 'Action',
+            'keepForReadOnly' => true,
         ),
         array(
             'title' => 'application_your-business_business_details-subsidiaries-columnCompanyNo',

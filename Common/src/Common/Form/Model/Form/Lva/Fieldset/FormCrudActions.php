@@ -28,7 +28,8 @@ class FormCrudActions
      *     "id": "cancel"
      * })
      * @Form\Options({
-     *     "label": "Cancel"
+     *     "label": "Cancel",
+     *     "keepForReadonly": true,
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */

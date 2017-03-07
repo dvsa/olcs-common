@@ -182,7 +182,7 @@ class FormElement extends ZendFormElement
     }
 
     /**
-     * Attache hint html to element html
+     * Attach hint html to element html
      *
      * @param ElementInterface $element element
      * @param string           $markup  string

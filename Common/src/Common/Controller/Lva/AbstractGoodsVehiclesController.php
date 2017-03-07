@@ -194,10 +194,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $cmd = LicUpdateVehicles::create($dtoData);
         }
 
-        if ($cmd === null) {
-            throw new \Exception('Incorrent lva type (application or licence allowed): ' . $this->lva);
-        }
-
         $response = $this->handleCommand($cmd);
         if ($response->isOk()) {
             return true;

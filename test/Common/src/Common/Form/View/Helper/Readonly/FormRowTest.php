@@ -3,7 +3,6 @@
 namespace CommonTest\Form\View\Helper\Readonly;
 
 use Common\Form\Elements;
-use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\View\Helper\Readonly\FormRow;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -152,22 +151,23 @@ class FormRowTest extends MockeryTestCase
                 '<li class="definition-list__item"><dt>@@</dt><dd>' . self::STANDARD_RENDER_RESULT . '</dd></li>',
             ],
             [
-                'element' => m::mock(ZendElement\Csrf::class)
-                    ->shouldReceive('getAttribute')->with('id')->andReturnNull()
+                'element' => m::mock(ZendElement\Csrf::class),
+                'expected' => self::STANDARD_RENDER_RESULT,
+            ],
+            [
+                'element' => m::mock(Elements\InputFilters\ActionButton::class)
+                    ->shouldReceive('getOption')->with('keepForReadonly')->andReturn(true)
                     ->getMock(),
                 'expected' => self::STANDARD_RENDER_RESULT,
             ],
             [
                 'element' => m::mock(Elements\InputFilters\ActionButton::class)
-                    ->shouldReceive('getAttribute')->with('id')->andReturn('CANCEL')
+                    ->shouldReceive('getOption')->with('keepForReadonly')->andReturn(false)
                     ->getMock(),
-                'expected' => self::STANDARD_RENDER_RESULT,
+                'expected' => '',
             ],
             [
-                'element' => m::mock(Elements\Types\AttachFilesButton::class)
-                    ->shouldReceive('getAttribute')->withAnyArgs()
-                    ->shouldReceive('getOption')->withAnyArgs()
-                    ->getMock(),
+                'element' => m::mock(Elements\Types\AttachFilesButton::class),
                 'expected' => '',
             ],
         ];
