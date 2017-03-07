@@ -20,6 +20,7 @@ class PreviousConvictionData
      * @Form\Options({
      *     "empty_option": "Please Select",
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formTitle",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "previousConvictionData_title-error",
      *     "category":"person_title",
      * })
@@ -31,9 +32,7 @@ class PreviousConvictionData
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formFirstName",
-     *     "label_attributes": {
-     *         "aria-label": "Enter first names"
-     *     },
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "previousConvictionData_forename-error"
      * })
      * @Form\Type("Text")
@@ -45,9 +44,7 @@ class PreviousConvictionData
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formLastName",
-     *     "label_attributes": {
-     *         "aria-label": "Enter family names"
-     *     },
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "previousConvictionData_familyName-error"
      * })
      * @Form\Type("Text")
@@ -60,6 +57,7 @@ class PreviousConvictionData
      * @Form\Attributes({"id":"dob","required":false})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formDateOfConviction",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "create_empty_option": true,
      *     "render_delimiters": false,
      *     "error-message": "previousConvictionData_convictionDate-error"
@@ -76,9 +74,7 @@ class PreviousConvictionData
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formOffence",
-     *     "label_attributes": {
-     *         "aria-label": "Enter your offence"
-     *     }
+     *     "label_attributes": {"class": "form-element__question"}
      * })
      * @Form\Required(true)
      * @Form\Type("Text")
@@ -89,6 +85,7 @@ class PreviousConvictionData
      * @Form\Attributes({"id":"","class":"long"})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetails",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "previousConvictionData_notes-error",
      *     "hint": "selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetaisHelpBlock",
      *     "hint-position": "above"
@@ -102,9 +99,7 @@ class PreviousConvictionData
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formNameOfCourt",
-     *     "label_attributes": {
-     *         "aria-label": "Enter the name of the court"
-     *     },
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "previousConvictionData_courtFpn-error"
      * })
      * @Form\Type("Text")
@@ -116,9 +111,7 @@ class PreviousConvictionData
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-criminal-conviction-formPenalty",
-     *     "label_attributes": {
-     *         "aria-label": "Enter the penalty"
-     *     },
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "previousConvictionData_penalty-error"
      * })
      * @Form\Type("Text")

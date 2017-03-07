@@ -29,6 +29,7 @@ class GoodsVehiclesVehicleData
      * })
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "vehicle.error.top.vrm",
      * })
      * @Form\Type("\Common\Form\Elements\Custom\VehicleVrm")
@@ -44,6 +45,7 @@ class GoodsVehiclesVehicleData
      * })
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "vehicle.error.top.platedWeight",
      * })
      * @Form\Type("\Common\Form\Elements\Custom\VehiclePlatedWeight")

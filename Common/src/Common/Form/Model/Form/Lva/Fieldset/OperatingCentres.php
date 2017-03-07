@@ -26,7 +26,8 @@ class OperatingCentres
      *     "label_attributes": {"class": "form-element__question"},
      *     "short-label": "totAuthVehicles",
      *     "error-message": "operatingCentres_totAuthVehicles-error",
-     *     "hint": "markup-operating-centres-authorisation"
+     *     "hint": "markup-operating-centres-authorisation",
+     *     "hint-position": "below"
      * })
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":1, "max": 1000000}})

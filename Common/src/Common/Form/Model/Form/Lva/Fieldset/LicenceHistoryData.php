@@ -20,7 +20,7 @@ class LicenceHistoryData
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevHasLicence",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
-     *     "legend-attributes": {"class": "form-element__label"},
+     *     "legend-attributes": {"class": "form-element__question"},
      *     "error-message":"licenceHistoryData_prevHasLicence-error",
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
@@ -44,7 +44,7 @@ class LicenceHistoryData
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevHadLicence",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
-     *     "legend-attributes": {"class": "form-element__label"},
+     *     "legend-attributes": {"class": "form-element__question"},
      *     "error-message": "licenceHistoryData_prevHadLicence-error",
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
@@ -68,7 +68,7 @@ class LicenceHistoryData
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevBeenDisqualifiedTc",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
-     *     "legend-attributes": {"class": "form-element__label"},
+     *     "legend-attributes": {"class": "form-element__question"},
      *     "error-message":"licenceHistoryData_prevBeenDisqualifiedTc-error",
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })

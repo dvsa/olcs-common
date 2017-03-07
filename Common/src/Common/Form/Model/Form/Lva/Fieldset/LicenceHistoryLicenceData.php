@@ -25,6 +25,7 @@ class LicenceHistoryLicenceData
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label":"selfserve-app-subSection-previous-history-licence-history-licNo",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "licenceHistoryLicenceData_licNo-error"
      * })
      * @Form\Type("Text")
@@ -36,6 +37,7 @@ class LicenceHistoryLicenceData
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
      *     "label": "selfserve-app-subSection-previous-history-licence-history-holderName",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "licenceHistoryLicenceData_holderName-error"
      * })
      * @Form\Type("Text")
@@ -74,7 +76,8 @@ class LicenceHistoryLicenceData
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *     "label": "selfserve-app-subSection-previous-history-licence-history-disqualificationLength"
+     *     "label": "selfserve-app-subSection-previous-history-licence-history-disqualificationLength",
+     *     "label_attributes": {"class": "form-element__question"}
      * })
      * @Form\Required(false)
      * @Form\Type("Text")

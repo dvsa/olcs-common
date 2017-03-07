@@ -9,17 +9,17 @@
     "packages": [
         {
             "name": "doctrine/annotations",
-            "version": "v1.3.1",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "bd4461328621bde0ae6b1b2675fbc6aca4ceb558"
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-annotations-bd4461328621bde0ae6b1b2675fbc6aca4ceb558-zip-d10630.tar",
-                "reference": "bd4461328621bde0ae6b1b2675fbc6aca4ceb558",
-                "shasum": "4dc248942cea834b264ea3b389ab1d02bee3b1dd"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-annotations-54cacc9b81758b14e3ce750f205a393d52339e97-zip-879343.tar",
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97",
+                "shasum": "88950f002eade5cce9f6dbcb7252fe9329ac2625"
             },
             "require": {
                 "doctrine/lexer": "1.*",
@@ -27,7 +27,7 @@
             },
             "require-dev": {
                 "doctrine/cache": "1.*",
-                "phpunit/phpunit": "^5.6.1"
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "extra": {
@@ -73,7 +73,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2016-12-30 15:59:45"
+            "time": "2017-02-24 16:22:25"
         },
         {
             "name": "doctrine/cache",
@@ -84,10 +84,10 @@
                 "reference": "b6f544a20f4807e81f7044d31e679ccbb1866dc3"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-cache-b6f544a20f4807e81f7044d31e679ccbb1866dc3-zip-04548a.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/b6f544a20f4807e81f7044d31e679ccbb1866dc3",
                 "reference": "b6f544a20f4807e81f7044d31e679ccbb1866dc3",
-                "shasum": "8e44b50258a1cd041df7ddccabf11620defae6c5"
+                "shasum": ""
             },
             "require": {
                 "php": "~5.5|~7.0"
@@ -365,10 +365,10 @@
                 "reference": "8684c0bbee97d2d1477a9ac802e8b9df307671df"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-doctrine-module-8684c0bbee97d2d1477a9ac802e8b9df307671df-zip-799ad0.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/8684c0bbee97d2d1477a9ac802e8b9df307671df",
                 "reference": "8684c0bbee97d2d1477a9ac802e8b9df307671df",
-                "shasum": "f4b359161db0ae5e58ae1ecd0473fac559c8c7fe"
+                "shasum": ""
             },
             "require": {
                 "doctrine/cache": "~1.5",
@@ -443,10 +443,10 @@
                 "reference": "847db36f0f7ef8d940414e433e8b241aa601a6a7"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-doctrine-orm-module-847db36f0f7ef8d940414e433e8b241aa601a6a7-zip-01eccf.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/DoctrineORMModule/zipball/847db36f0f7ef8d940414e433e8b241aa601a6a7",
                 "reference": "847db36f0f7ef8d940414e433e8b241aa601a6a7",
-                "shasum": "a0c70cceea96a8783154ff5bc54f5d7da0bf2aef"
+                "shasum": ""
             },
             "require": {
                 "doctrine/dbal": ">=2.4,<2.7",
@@ -521,10 +521,10 @@
                 "reference": "90b2128806bfde671b6952ab8bea493942c1fdae"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-inflector-90b2128806bfde671b6952ab8bea493942c1fdae-zip-a91357.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/90b2128806bfde671b6952ab8bea493942c1fdae",
                 "reference": "90b2128806bfde671b6952ab8bea493942c1fdae",
-                "shasum": "36afb41eb4ca5dac80d06a31ebd853f521ac92f4"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
@@ -588,10 +588,10 @@
                 "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-instantiator-8e884e78f9f0eb1329e445619e04456e64d8051d-zip-681b88.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
                 "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "shasum": "cf5e99553fa1eaf68a0b8fd419a5a9a6788f6c14"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3,<8.0-DEV"
@@ -642,10 +642,10 @@
                 "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-lexer-83893c552fd2045dd78aef794c31e694c37c0b8c-zip-53c158.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/83893c552fd2045dd78aef794c31e694c37c0b8c",
                 "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c",
-                "shasum": "18b43deed479b7939e25cc21789b44020b28a10f"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
@@ -696,10 +696,10 @@
                 "reference": "e6c434196c8ef058239aaa0724b4aadb0107940b"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/doctrine-orm-e6c434196c8ef058239aaa0724b4aadb0107940b-zip-e93e47.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/e6c434196c8ef058239aaa0724b4aadb0107940b",
                 "reference": "e6c434196c8ef058239aaa0724b4aadb0107940b",
-                "shasum": "b6084c574b591b96ae3547c9971754c571f27467"
+                "shasum": ""
             },
             "require": {
                 "doctrine/cache": "~1.4",
@@ -772,10 +772,10 @@
                 "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/psr-log-4ebe3a8bf773a19edfe0a84b6585ba3d401b724d-zip-6434e8.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
-                "shasum": "4ac6dc20c957281fd9ad686ee8c9550c1ab0eef1"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
@@ -940,10 +940,10 @@
                 "reference": "823c035b1a5c13a4924e324d016eb07e70f94735"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-filesystem-823c035b1a5c13a4924e324d016eb07e70f94735-zip-9c1b69.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/823c035b1a5c13a4924e324d016eb07e70f94735",
                 "reference": "823c035b1a5c13a4924e324d016eb07e70f94735",
-                "shasum": "539d153f2b1aa605a3ac89ec6c5e8b25b867e0db"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -989,10 +989,10 @@
                 "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-polyfill-mbstring-e79d363049d1c2128f133a2667e4f4190904f7f4-zip-34592d.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
                 "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "shasum": "87c28cb8933dd20a3ec537f1c29d5997d0235688"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1048,10 +1048,10 @@
                 "reference": "32858f883fffb5eef9f610b538ed026f6033b6de"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/zendframework-zendframework-32858f883fffb5eef9f610b538ed026f6033b6de-zip-061607.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zendframework/zipball/32858f883fffb5eef9f610b538ed026f6033b6de",
                 "reference": "32858f883fffb5eef9f610b538ed026f6033b6de",
-                "shasum": "5f9e93fb16d0536b630c32aa61ac10b8ba859a5c"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.23",
@@ -1166,10 +1166,10 @@
                 "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/zendframework-zendxml-7b64507bc35d841c9c5802d67f6f87ef8e1a58c9-zip-41dd75.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/ZendXml/zipball/7b64507bc35d841c9c5802d67f6f87ef8e1a58c9",
                 "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9",
-                "shasum": "5fb5d1677f587dd78f9b63fb4ddcb1793545971c"
+                "shasum": ""
             },
             "require": {
                 "php": "^5.3.3 || ^7.0"
@@ -1211,10 +1211,10 @@
                 "reference": "42f466656ad9730025a6bbbfd4144ac2f3abb64c"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/zf-commons-zfc-rbac-42f466656ad9730025a6bbbfd4144ac2f3abb64c-zip-fcc7d7.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/ZF-Commons/zfc-rbac/zipball/42f466656ad9730025a6bbbfd4144ac2f3abb64c",
                 "reference": "42f466656ad9730025a6bbbfd4144ac2f3abb64c",
-                "shasum": "d773441c43af84c131611f78dee3032410c4dc76"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.4",
@@ -1287,10 +1287,10 @@
                 "reference": "493711bfc2a637fd7c6f23b71b7b55a621c35d9d"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/zfr-rbac-493711bfc2a637fd7c6f23b71b7b55a621c35d9d-zip-85e76c.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/zf-fr/rbac/zipball/493711bfc2a637fd7c6f23b71b7b55a621c35d9d",
                 "reference": "493711bfc2a637fd7c6f23b71b7b55a621c35d9d",
-                "shasum": "0e4ba62f47c21d1a3559f72dbdfdef262fd78b05"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.4"
@@ -1332,20 +1332,23 @@
     "packages-dev": [
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.8.0",
+            "version": "v4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2"
+                "reference": "a1c09b09e398687deeb8e309a6305def4b43439b"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/ezyang-htmlpurifier-d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2-zip-1e6c87.tar",
-                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2",
-                "shasum": "ef2017934a644efc48efd5ed49e358a70e5a5217"
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/a1c09b09e398687deeb8e309a6305def4b43439b",
+                "reference": "a1c09b09e398687deeb8e309a6305def4b43439b",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
+            },
+            "require-dev": {
+                "simpletest/simpletest": "^1.1"
             },
             "type": "library",
             "autoload": {
@@ -1372,7 +1375,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2016-07-16 12:58:58"
+            "time": "2017-01-13 12:31:37"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -1383,10 +1386,10 @@
                 "reference": "b37020aa976fa52d3de9aa904aa2522dc518f79c"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/hamcrest-hamcrest-php-b37020aa976fa52d3de9aa904aa2522dc518f79c-zip-2bc6c0.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/b37020aa976fa52d3de9aa904aa2522dc518f79c",
                 "reference": "b37020aa976fa52d3de9aa904aa2522dc518f79c",
-                "shasum": "c3e66895d7ec4bb63e10b70b6120fe1951a1231e"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
@@ -1428,10 +1431,10 @@
                 "reference": "fbce407507450953f9588fb68fdfb73ead0f5731"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/major-caiger-munit-fbce407507450953f9588fb68fdfb73ead0f5731-zip-1deefa.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/MajorCaiger/MUnit/zipball/fbce407507450953f9588fb68fdfb73ead0f5731",
                 "reference": "fbce407507450953f9588fb68fdfb73ead0f5731",
-                "shasum": "9108c155e43a14cd175be04d316686b2ca1e4c5c"
+                "shasum": ""
             },
             "require": {
                 "mockery/mockery": "~0.9.0",
@@ -1457,10 +1460,10 @@
                 "reference": "61b12172292cf539685507aa65b076c1530e83c1"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/mikey179-vfsstream-61b12172292cf539685507aa65b076c1530e83c1-zip-f9c27d.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/61b12172292cf539685507aa65b076c1530e83c1",
                 "reference": "61b12172292cf539685507aa65b076c1530e83c1",
-                "shasum": "e18d8e32756e105f181b6a8210d9d9996fed5a5a"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
@@ -1488,17 +1491,17 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "0.9.8",
+            "version": "0.9.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "1e5e2ffdc4d71d7358ed58a6fdd30a4a0c506855"
+                "reference": "6fdb61243844dc924071d3404bb23994ea0b6856"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/mockery-mockery-1e5e2ffdc4d71d7358ed58a6fdd30a4a0c506855-zip-0a1467.tar",
-                "reference": "1e5e2ffdc4d71d7358ed58a6fdd30a4a0c506855",
-                "shasum": "f4c06bf333a7865921c07f283e68b2666d3fcfa7"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/mockery-mockery-6fdb61243844dc924071d3404bb23994ea0b6856-zip-fc289d.tar",
+                "reference": "6fdb61243844dc924071d3404bb23994ea0b6856",
+                "shasum": "8c767c4f647b3f9a2f306f745dc51aa13ffd4f29"
             },
             "require": {
                 "hamcrest/hamcrest-php": "~1.1",
@@ -1549,7 +1552,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2017-02-09 13:29:38"
+            "time": "2017-02-28 12:52:32"
         },
         {
             "name": "olcs/olcs-testhelpers",
@@ -1557,7 +1560,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-testhelpers.git",
-                "reference": "4f7bf81c0d8310cdb41f6661f4aa2a30476b5fe9"
+                "reference": "022d8676f290e2a88741cc30a176ac09f33b51cf"
             },
             "require": {
                 "php": ">=5.4"
@@ -1574,7 +1577,7 @@
                 }
             },
             "description": "OLCS Test helpers",
-            "time": "2017-02-21 12:02:23"
+            "time": "2017-02-28 14:58:04"
         },
         {
             "name": "olcs/olcs-transfer",
@@ -1582,7 +1585,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-                "reference": "afaa20348592b07dd918ba5b5eb13c61c5af2d66"
+                "reference": "adb266511a6d65f9e67970a23be5f553943376bd"
             },
             "require": {
                 "php": ">=5.4",
@@ -1600,7 +1603,7 @@
                 }
             },
             "description": "OLCS Transfer",
-            "time": "2017-02-23 12:26:05"
+            "time": "2017-02-28 16:58:06"
         },
         {
             "name": "olcs/olcs-utils",
@@ -1608,7 +1611,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-utils.git",
-                "reference": "37df08ea2fc43d11076ccea2edf93f9a44ec259f"
+                "reference": "4158347e70a4138e8b08cc832f89de1026424c94"
             },
             "require": {
                 "php": ">=5.4",
@@ -1626,7 +1629,7 @@
                 }
             },
             "description": "OLCS Utils",
-            "time": "2017-02-20 16:38:29"
+            "time": "2017-02-28 16:58:25"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1637,10 +1640,10 @@
                 "reference": "144c307535e82c8fdcaacbcfc1d6d8eeb896687c"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpdocumentor-reflection-common-144c307535e82c8fdcaacbcfc1d6d8eeb896687c-zip-c3be2d.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/144c307535e82c8fdcaacbcfc1d6d8eeb896687c",
                 "reference": "144c307535e82c8fdcaacbcfc1d6d8eeb896687c",
-                "shasum": "22127f65575291ff4649a6b5d52b9d05ab080e19"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5"
@@ -1691,10 +1694,10 @@
                 "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpdocumentor-reflection-docblock-8331b5efe816ae05461b7ca1e721c01b46bafb3e-zip-319752.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/8331b5efe816ae05461b7ca1e721c01b46bafb3e",
                 "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e",
-                "shasum": "4c0c34bbf5d29ac1b4695e46d9735f63e1238553"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
@@ -1736,10 +1739,10 @@
                 "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpdocumentor-type-resolver-e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb-zip-e5468a.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
                 "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
-                "shasum": "e566fc377f58a3ea17fe529771e4d966365b6a01"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
@@ -1776,27 +1779,27 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.6.2",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "6c52c2722f8460122f96f86346600e1077ce22cb"
+                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpspec-prophecy-6c52c2722f8460122f96f86346600e1077ce22cb-zip-573078.tar",
-                "reference": "6c52c2722f8460122f96f86346600e1077ce22cb",
-                "shasum": "89bcc5bde8b67087b830c9cf74dec0d048fc98e6"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpspec-prophecy-93d39f1f7f9326d746203c7c056f300f7f126073-zip-f944ab.tar",
+                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073",
+                "shasum": "dc024e7e79e156d5e1287ce3cbcc6a83cb648c7d"
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2",
-                "sebastian/comparator": "^1.1",
-                "sebastian/recursion-context": "^1.0|^2.0"
+                "sebastian/comparator": "^1.1|^2.0",
+                "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^2.0",
+                "phpspec/phpspec": "^2.5|^3.2",
                 "phpunit/phpunit": "^4.8 || ^5.6.5"
             },
             "type": "library",
@@ -1835,7 +1838,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-11-21 14:58:47"
+            "time": "2017-03-02 20:05:34"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1846,10 +1849,10 @@
                 "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-php-code-coverage-eabf68b476ac7d0f73793aada060f1c1a9bf8979-zip-36457d.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/eabf68b476ac7d0f73793aada060f1c1a9bf8979",
                 "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979",
-                "shasum": "5aaa6ef5ada48f34c51bd8555a95bb7693972486"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
@@ -1908,10 +1911,10 @@
                 "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-php-file-iterator-3cc8f69b3028d0f96a9078e6295d86e9bf019be5-zip-184bc9.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
                 "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
-                "shasum": "9b06284bb9e5b0301bd7dfb65a23b9a435b15103"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1955,10 +1958,10 @@
                 "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-php-text-template-31f8b717e51d9a2afca6c9f046f5d69fc27c8686-zip-c6bcbd.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
                 "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
-                "shasum": "fe021fc7cd878081e202335219f6abd6a2595e78"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1989,25 +1992,30 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260"
+                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-php-timer-38e9124049cf1a164f1e4537caf19c99bf1eb260-zip-cb2ac7.tar",
-                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260",
-                "shasum": "84e88673c3b00dd98a4fcbd3f2b29263c6289fbd"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-php-timer-3dcf38ca72b158baf0bc245e9184d3fdffa9c46f-zip-c27592.tar",
+                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
+                "shasum": "7958c3cf853a06329165b3a846033dd8da861344"
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4|~5"
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "src/"
@@ -2029,21 +2037,21 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12 18:03:57"
+            "time": "2017-02-26 11:10:40"
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.9",
+            "version": "1.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b"
+                "reference": "e03f8f67534427a787e21a385a67ec3ca6978ea7"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-php-token-stream-3b402f65a4cc90abf6e1104e388b896ce209631b-zip-6915ed.tar",
-                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b",
-                "shasum": "2c27ee600311a09449ff7da3dd9859b1c8655d13"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-php-token-stream-e03f8f67534427a787e21a385a67ec3ca6978ea7-zip-3836d6.tar",
+                "reference": "e03f8f67534427a787e21a385a67ec3ca6978ea7",
+                "shasum": "5f9fea9f6d2933598a20affd8475e17c72adbecb"
             },
             "require": {
                 "ext-tokenizer": "*",
@@ -2078,7 +2086,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2016-11-15 14:06:22"
+            "time": "2017-02-27 10:12:30"
         },
         {
             "name": "phpunit/phpunit",
@@ -2161,10 +2169,10 @@
                 "reference": "ac8e7a3db35738d56ee9a76e78a4e03d97628983"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpunit-phpunit-mock-objects-ac8e7a3db35738d56ee9a76e78a4e03d97628983-zip-83ccd8.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/ac8e7a3db35738d56ee9a76e78a4e03d97628983",
                 "reference": "ac8e7a3db35738d56ee9a76e78a4e03d97628983",
-                "shasum": "ff03538a37dbcdbd891d3f889d202140faac25fb"
+                "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
@@ -2281,10 +2289,10 @@
                 "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/sebastian-diff-13edfd8706462032c2f52b4b862974dd46b71c9e-zip-13c115.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/13edfd8706462032c2f52b4b862974dd46b71c9e",
                 "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e",
-                "shasum": "8c1f4b236f4afba18ede11a0adbea00100e1d516"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -2333,10 +2341,10 @@
                 "reference": "be2c607e43ce4c89ecd60e75c6a85c126e754aea"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/sebastian-environment-be2c607e43ce4c89ecd60e75c6a85c126e754aea-zip-edab34.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/be2c607e43ce4c89ecd60e75c6a85c126e754aea",
                 "reference": "be2c607e43ce4c89ecd60e75c6a85c126e754aea",
-                "shasum": "b8efb9b586f32cf6552259fe61dae70613801824"
+                "shasum": ""
             },
             "require": {
                 "php": "^5.3.3 || ^7.0"
@@ -2383,10 +2391,10 @@
                 "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/sebastian-exporter-42c4c2eec485ee3e159ec9884f95b431287edde4-zip-3c7575.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/42c4c2eec485ee3e159ec9884f95b431287edde4",
                 "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4",
-                "shasum": "292ac6f8cc9885cc714606f7d32421de75f4a261"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
@@ -2450,10 +2458,10 @@
                 "reference": "bc37d50fea7d017d3d340f230811c9f1d7280af4"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/sebastian-global-state-bc37d50fea7d017d3d340f230811c9f1d7280af4-zip-c4abec.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/bc37d50fea7d017d3d340f230811c9f1d7280af4",
                 "reference": "bc37d50fea7d017d3d340f230811c9f1d7280af4",
-                "shasum": "b3f47390f9f8739d9471060e35f16b7df53320ba"
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
@@ -2494,17 +2502,17 @@
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "1.0.2",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791"
+                "reference": "b19cc3298482a335a95f3016d2f8a6950f0fbcd7"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/sebastian-recursion-context-913401df809e99e4f47b27cdd781f4a258d58791-zip-205e4a.tar",
-                "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
-                "shasum": "19c6a1765e24e05269f3b06a27138a85b26293ee"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/sebastian-recursion-context-b19cc3298482a335a95f3016d2f8a6950f0fbcd7-zip-811982.tar",
+                "reference": "b19cc3298482a335a95f3016d2f8a6950f0fbcd7",
+                "shasum": "1a9b37f6271a20d8adb8a9317c4a9044d5fe9390"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -2543,7 +2551,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2015-11-11 19:50:13"
+            "time": "2016-10-03 07:41:43"
         },
         {
             "name": "sebastian/version",
@@ -2554,10 +2562,10 @@
                 "reference": "58b3a85e7999757d6ad81c787a1fbf5ff6c628c6"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/sebastian-version-58b3a85e7999757d6ad81c787a1fbf5ff6c628c6-zip-8093ed.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/58b3a85e7999757d6ad81c787a1fbf5ff6c628c6",
                 "reference": "58b3a85e7999757d6ad81c787a1fbf5ff6c628c6",
-                "shasum": "6bb455c2af2a29475e618ed3e04696cdc5cb2ff0"
+                "shasum": ""
             },
             "type": "library",
             "autoload": {
@@ -2589,10 +2597,10 @@
                 "reference": "1f2d85a1b67bdb75bd86eb7a490e1c12280972b9"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/soflomo-purifier-1f2d85a1b67bdb75bd86eb7a490e1c12280972b9-zip-b8842f.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/juriansluiman/Soflomo-Purifier/zipball/1f2d85a1b67bdb75bd86eb7a490e1c12280972b9",
                 "reference": "1f2d85a1b67bdb75bd86eb7a490e1c12280972b9",
-                "shasum": "70c2b125e7fd690f1ce262ebfa5195228dd43216"
+                "shasum": ""
             },
             "require": {
                 "ezyang/htmlpurifier": ">=4.5.0",
@@ -2635,17 +2643,17 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "1.5.3",
+            "version": "1.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "396178ada8499ec492363587f037125bf7b07fcc"
+                "reference": "6f3e42d311b882b25b4d409d23a289f4d3b803d5"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/squizlabs-php_codesniffer-396178ada8499ec492363587f037125bf7b07fcc-zip-e67a29.tar",
-                "reference": "396178ada8499ec492363587f037125bf7b07fcc",
-                "shasum": "43851fec3d69c3e84c458a4ebac636da702d6a0b"
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/6f3e42d311b882b25b4d409d23a289f4d3b803d5",
+                "reference": "6f3e42d311b882b25b4d409d23a289f4d3b803d5",
+                "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
@@ -2706,7 +2714,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2014-05-01 03:07:07"
+            "time": "2014-12-04 22:32:15"
         },
         {
             "name": "symfony/yaml",
@@ -2772,10 +2780,10 @@
                 "reference": "2db61e59ff05fe5126d152bd0655c9ea113e550f"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/webmozart-assert-2db61e59ff05fe5126d152bd0655c9ea113e550f-zip-36e9ad.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/2db61e59ff05fe5126d152bd0655c9ea113e550f",
                 "reference": "2db61e59ff05fe5126d152bd0655c9ea113e550f",
-                "shasum": "ec51c97c4302e339dd4b1eea607b60de7a4ab966"
+                "shasum": ""
             },
             "require": {
                 "php": "^5.3.3 || ^7.0"

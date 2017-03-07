@@ -39,6 +39,8 @@ class Advertisements
      * @Form\Attributes({"id":"adPlacedDate", "data-container-class": "adPlacedDate"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate",
+     *     "legend-attributes": {"class": "form-element__label"},
+     *     "label_attributes": {"class": "form-element__label"},
      *     "create_empty_option": true,
      *     "render_delimiters": false,
      *     "fieldset-attributes":{
@@ -48,7 +50,7 @@ class Advertisements
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Type("DateSelect")
      * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
+     * @Form\Validator({"name": "Date","options":{"format":"Y-m-d"}})
      */
     public $adPlacedDate = null;
 
@@ -57,7 +59,8 @@ class Advertisements
      * @Form\Attributes({"id":"file"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\MultipleFileUpload")
      * @Form\Options({
-     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.file"
+     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.file",
+     *     "label_attributes": {"class": "form-element__label"}
      * })
      */
     public $file = null;
