@@ -19,6 +19,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo",
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "value_options": {"Y": "Yes", "N": "No"}
      * })
@@ -30,6 +31,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Attributes({"id":"","class":"long"})
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title"
      * })
      * @Form\Validator({"name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValidator"})

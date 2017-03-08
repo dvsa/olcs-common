@@ -15,6 +15,7 @@ class VehiclesDeclarationsMainOccupation
     /**
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.mainOccupation.confirmation",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--advanced"},
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "must_be_value": "Y"

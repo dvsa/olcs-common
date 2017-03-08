@@ -22,6 +22,7 @@ class SubsidiaryCompany
      * @Form\Attributes({"class":"long","id":"name"})
      * @Form\Options({
      *     "label":"application_your-business_business-details-formName",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "subsidiary-company-name-error"
      * })
      * @Form\Type("Text")
@@ -37,6 +38,7 @@ class SubsidiaryCompany
      * })
      * @Form\Options({
      *     "label":"application_your-business_business-details-formCompanyNo",
+     *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "subsidiary-company-number-error"
      * })
      * @Form\Type("Common\Form\Elements\InputFilters\CompanyNumber")
