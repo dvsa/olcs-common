@@ -1,14 +1,10 @@
 <?php
 
-/**
- * Application Controller Trait
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Common\Service\Entity\ApplicationEntityService;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
+use Zend\Http\Response as HttpResponse;
 
 /**
  * Application Controller Trait
@@ -19,11 +15,26 @@ trait CommonApplicationControllerTrait
 {
     use EnabledSectionTrait;
 
+    /**
+     * Runs if action is not found
+     *
+     * @return mixed
+     */
     abstract public function notFoundAction();
+
+    /**
+     * Checks for redirect
+     *
+     * @param int $lvaId lva id
+     *
+     * @return mixed
+     */
     abstract protected function checkForRedirect($lvaId);
 
     /**
      * Hook into the dispatch before the controller action is executed
+     *
+     * @return HttpResponse|null
      */
     protected function preDispatch()
     {
@@ -37,7 +48,8 @@ trait CommonApplicationControllerTrait
     /**
      * Get application status
      *
-     * @params int $applicationId
+     * @param int $applicationId application id
+     *
      * @return array
      */
     protected function getCompletionStatuses($applicationId)
@@ -48,8 +60,10 @@ trait CommonApplicationControllerTrait
     /**
      * Update application status
      *
-     * @params int $applicationId
-     * @params string $section
+     * @param int    $applicationId application id
+     * @param string $section       section
+     *
+     * @return void
      */
     protected function updateCompletionStatuses($applicationId, $section)
     {
@@ -64,7 +78,6 @@ trait CommonApplicationControllerTrait
     /**
      * Check if the application is new
      *
-     * @param int $applicationId
      * @return boolean
      */
     protected function isApplicationNew()
@@ -75,7 +88,6 @@ trait CommonApplicationControllerTrait
     /**
      * Check if the application is variation
      *
-     * @param int $applicationId
      * @return boolean
      */
     protected function isApplicationVariation()
@@ -98,7 +110,8 @@ trait CommonApplicationControllerTrait
     /**
      * Get licence id
      *
-     * @param int $applicationId
+     * @param int|null $applicationId application id
+     *
      * @return int
      */
     protected function getLicenceId($applicationId = null)
@@ -118,17 +131,33 @@ trait CommonApplicationControllerTrait
      * Complete a section and potentially redirect to the next
      * one depending on the user's choice
      *
-     * @return \Zend\Http\Response
+     * @param string $section section
+     * @param array  $prg     prg
+     *
+     * @return HttpResponse
      */
     protected function completeSection($section, $prg = [])
     {
+
         if ($this->isButtonPressed('saveAndContinue', $prg)) {
+            //undertakings section works differently, we return to the overview as there's no "next section"
+            if ($section === 'undertakings') {
+                return $this->goToOverview($this->getApplicationId());
+            }
+
             return $this->goToNextSection($section);
         }
 
         return $this->goToOverviewAfterSave();
     }
 
+    /**
+     * post save
+     *
+     * @param string $section section
+     *
+     * @return void
+     */
     protected function postSave($section)
     {
         $this->updateCompletionStatuses($this->getApplicationId(), $section);
@@ -137,7 +166,9 @@ trait CommonApplicationControllerTrait
     /**
      * Redirect to the next section
      *
-     * @param string $currentSection
+     * @param string $currentSection current section
+     *
+     * @return HttpResponse
      */
     protected function goToNextSection($currentSection)
     {
