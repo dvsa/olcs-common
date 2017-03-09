@@ -235,19 +235,19 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testOperatingCentres()
     {
         $element = [ 'responsibilities', 'operatingCentres' ];
-        $this->assertFormElementDynamicSelect($element, false);
+        $this->assertFormElementAllowEmpty($element, false);
     }
 
     public function testTradeManagerType()
     {
         $element = [ 'responsibilities', 'tmType' ];
-        $this->assertFormElementDynamicRadio($element);
+        $this->assertFormElementAllowEmpty($element, false);
     }
 
     public function testIsOwner()
     {
         $element = [ 'responsibilities', 'isOwner' ];
-        $this->assertFormElementDynamicRadio($element);
+        $this->assertFormElementRequired($element, true);
     }
 
     public function testTradeManagerApplicationType()
