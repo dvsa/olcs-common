@@ -4,6 +4,8 @@ namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Zend\Form\Exception\InvalidArgumentException;
+use Zend\InputFilter\Input;
+use Zend\InputFilter\InputFilter;
 
 /**
  * Class TransportManagerDetailsTest
@@ -90,6 +92,11 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDynamicSelect($element);
+
+        $element = ['homeAddress', 'searchPostcode'];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementPostcodeSearch($element);
     }
 
     /**
@@ -134,5 +141,175 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDynamicSelect($element);
+
+        $element = ['workAddress', 'searchPostcode'];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementPostcodeSearch($element);
+    }
+
+    public function testOtherLicences()
+    {
+        $element = [ 'responsibilities', 'otherLicences' ];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementTable($element);
+    }
+
+    public function testResponsibilityHoursOfWeek()
+    {
+        $element = ['responsibilities', 'hoursOfWeek'];
+
+        $this->assertFormElementNotValid($element,
+            [
+                'hoursMon' => null,
+                'hoursTue' => null,
+                'hoursWed' => null,
+                'hoursThu' => null,
+                'hoursFri' => null,
+                'hoursSat' => null,
+                'hoursSun' => null,
+            ],
+            [ 'hoursPerWeekContent' ]
+        );
+
+        $this->assertFormElementNotValid($element,
+            [
+                'hoursMon' => 0,
+                'hoursTue' => 0,
+                'hoursWed' => 0,
+                'hoursThu' => 0,
+                'hoursFri' => 0,
+                'hoursSat' => 0,
+                'hoursSun' => 0,
+            ],
+            [ 'hoursPerWeekContent' ]
+        );
+
+        $this->assertFormElementValid($element,
+            [
+                'hoursMon' => 1,
+                'hoursTue' => null,
+                'hoursWed' => null,
+                'hoursThu' => null,
+                'hoursFri' => null,
+                'hoursSat' => null,
+                'hoursSun' => null,
+            ]
+        );
+
+        $this->assertFormElementValid($element,
+            [
+                'hoursMon' => 1,
+                'hoursTue' => 0,
+                'hoursWed' => 0,
+                'hoursThu' => 0,
+                'hoursFri' => 0,
+                'hoursSat' => 0,
+                'hoursSun' => 0,
+            ]
+        );
+
+        $this->assertFormElementValid($element,
+            [
+                'hoursMon' => 10,
+                'hoursTue' => 10,
+                'hoursWed' => 10,
+                'hoursThu' => 10,
+                'hoursFri' => 10,
+                'hoursSat' => 10,
+                'hoursSun' => 10,
+            ]
+        );
+    }
+
+    public function testResponsibilities()
+    {
+        $element = [ 'responsibilities', 'id' ];
+        $this->assertFormElementRequired($element, false);
+
+        $element = [ 'responsibilities', 'version' ];
+        $this->assertFormElementRequired($element, false);
+    }
+
+    public function testOperatingCentres()
+    {
+        $element = [ 'responsibilities', 'operatingCentres' ];
+        $this->assertFormElementDynamicSelect($element, false);
+    }
+
+    public function testTradeManagerType()
+    {
+        $element = [ 'responsibilities', 'tmType' ];
+        $this->assertFormElementDynamicRadio($element);
+    }
+
+    public function testIsOwner()
+    {
+        $element = [ 'responsibilities', 'isOwner' ];
+        $this->assertFormElementDynamicRadio($element);
+    }
+
+    public function testTradeManagerApplicationType()
+    {
+        $element = [ 'responsibilities', 'tmApplicationStatus' ];
+        $this->assertFormElementDynamicSelect($element, true);
+    }
+
+    public function testAdditionalInformation()
+    {
+        $element = [ 'responsibilities', 'additionalInformation' ];
+        $this->assertFormElementText($element, 0, 4000);
+    }
+
+    public function testOtherEmployment()
+    {
+        $element = [ 'otherEmployment', 'table' ];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementTable($element);
+    }
+
+    public function testOtherEmploymentAction()
+    {
+        $element = [ 'otherEmployment', 'action' ];
+        $this->assertFormElementHidden($element);
+    }
+
+    public function testOtherEmploymentRows()
+    {
+        $element = [ 'otherEmployment', 'rows' ];
+        $this->assertFormElementHidden($element);
+    }
+
+    public function testOtherEmploymentId()
+    {
+        $element = [ 'otherEmployment', 'id' ];
+        $this->assertFormElementHidden($element);
+    }
+
+    public function testPreviousHistory()
+    {
+        $element = [ 'previousHistory', 'convictions' ];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementTable($element);
+
+        $element = [ 'previousHistory', 'previousLicences' ];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementTable($element);
+    }
+
+    public function testSubmit()
+    {
+        $element = ['form-actions', 'submit'];
+        $this->assertFormElementActionButton($element);
+    }
+
+    public function testSave()
+    {
+        $element = ['form-actions', 'save'];
+        $this->assertFormElementActionButton($element);
     }
 }
