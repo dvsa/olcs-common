@@ -32,7 +32,7 @@ class FormElement extends ZendFormElement
      *
      * @var string
      */
-    private static $format = '%s \r\n <div class="hint">%s</div>';
+    private static $format = '%s <div class="hint">%s</div>';
 
     /**
      * The form row output format.
@@ -190,7 +190,7 @@ class FormElement extends ZendFormElement
 
             if ($position === 'above') {
                 return sprintf(self::$topFormat, $hint, $markup);
-            } else if ($position === 'below') {
+            } elseif ($position === 'below') {
                 return sprintf(self::$format, $markup, $hint);
             }
 
