@@ -148,14 +148,6 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementPostcodeSearch($element);
     }
 
-    public function testOtherLicences()
-    {
-        $element = [ 'responsibilities', 'otherLicences' ];
-        $this->assertFormElementRequired($element, false);
-        $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementTable($element);
-    }
-
     public function testResponsibilityHoursOfWeek()
     {
         $element = ['responsibilities', 'hoursOfWeek'];
@@ -286,19 +278,6 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     {
         $element = [ 'otherEmployment', 'id' ];
         $this->assertFormElementHidden($element);
-    }
-
-    public function testPreviousHistory()
-    {
-        $element = [ 'previousHistory', 'convictions' ];
-        $this->assertFormElementRequired($element, false);
-        $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementTable($element);
-
-        $element = [ 'previousHistory', 'previousLicences' ];
-        $this->assertFormElementRequired($element, false);
-        $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementTable($element);
     }
 
     public function testSubmit()
