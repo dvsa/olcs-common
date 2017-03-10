@@ -113,7 +113,7 @@ class TransportManagerHelperService extends AbstractHelperService
     /**
      * This method superseeds alterPreviousHistoryFieldset
      *
-     * @param \Zend\Form\Fieldset $fieldset
+     * @param \Zend\Form\ElementInterface $fieldset
      * @param array               $tm
      */
     public function alterPreviousHistoryFieldsetTm($fieldset, $tm)
@@ -189,7 +189,7 @@ class TransportManagerHelperService extends AbstractHelperService
     /**
      * This method superseeds prepareOtherEmploymentTable
      *
-     * @param \Zend\Form\Element $element
+     * @param \Zend\Form\ElementInterface $element
      * @param array              $tm      Transport Manager data
      */
     public function prepareOtherEmploymentTableTm($element, $tm)

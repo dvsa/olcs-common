@@ -12,7 +12,7 @@ class HoursOfWeekContentRequired
 {
     /**
      * @Form\Type("Text")
-     * @Form\AllowEmpty(true)
+     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -24,12 +24,6 @@ class HoursOfWeekContentRequired
      *         "aria-label": "Enter your working hours, Monday"
      *     }
      * })
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\SumContext", "options": {
-     *     "min": 1,
-     *     "messages": {
-     *         "belowMin": "transport-manager-hours-per-week-validation-message"
-     *     }
-     * }})
      * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
@@ -42,11 +36,17 @@ class HoursOfWeekContentRequired
      *         "notBetween": "Mon must be between '%min%' and '%max%', inclusively"
      *     }
      * }})
+     * @Form\Validator({"name": "Common\Form\Elements\Validators\SumContext", "options": {
+     *     "min": 0.1,
+     *     "messages": {
+     *         "belowMin": "transport-manager-hours-per-week-validation-message"
+     *     }
+     * }})
      */
     public $hoursMon = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -74,7 +74,7 @@ class HoursOfWeekContentRequired
     public $hoursTue = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -102,7 +102,7 @@ class HoursOfWeekContentRequired
     public $hoursWed = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -130,7 +130,7 @@ class HoursOfWeekContentRequired
     public $hoursThu = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -158,7 +158,7 @@ class HoursOfWeekContentRequired
     public $hoursFri = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
@@ -186,7 +186,7 @@ class HoursOfWeekContentRequired
     public $hoursSat = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Filter({"name":"Common\Filter\NullToFloat"})
      * @Form\Attributes({
      *     "class": "short",
      *     "pattern": "\d(\.)*",
