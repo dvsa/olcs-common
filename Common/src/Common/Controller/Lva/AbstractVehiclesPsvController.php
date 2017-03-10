@@ -25,11 +25,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 {
     const SEARCH_VEHICLES_COUNT = 20;
 
-    use TransferVehiclesTrait,
+    use Traits\CrudTableTrait,
+        TransferVehiclesTrait,
         VehicleSearchTrait;
-    use Traits\CrudTableTrait {
-        handleCrudAction as protected traitHandleCrudAction;
-    }
 
     protected $section = 'vehicles_psv';
     protected $baseRoute = 'lva-%s/vehicles_psv';
@@ -85,26 +83,33 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $form = $this->alterForm($form, $resultData, $removeActions);
 
         if ($request->isPost()) {
-            $crudAction = $this->getCrudAction($data);
-            $haveCrudAction = ($crudAction !== null);
+            if ($this->isInternalReadOnly()) {
+                $crudAction = $this->getCrudAction($data, false);
+                return $this->handleCrudAction($crudAction);
+            }
+            if ($form->isValid()) {
+                $crudAction = $this->getCrudAction($data);
+                $response = $this->updateVehiclesSection($form, $crudAction);
 
-            if ($haveCrudAction) {
-                if ($this->isInternalReadOnly()) {
-                    return $this->handleCrudAction($data['vehicles']);
+                if ($response !== null) {
+                    return $response;
                 }
 
-                $this->getServiceLocator()->get('Helper\Form')->disableValidation($form->getInputFilter());
-            }
+                if ($crudAction !== null) {
+                    $alternativeCrudResponse = $this->checkForAlternativeCrudAction($crudAction);
 
-            if ($form->isValid()) {
-                $isSuccess = $this->updateVehiclesSection($form, $haveCrudAction, $resultData);
-                if ($isSuccess === true) {
-                    if ($haveCrudAction) {
-                        return $this->handleCrudAction($data['vehicles']);
+                    if ($alternativeCrudResponse !== null) {
+                        return $alternativeCrudResponse;
                     }
 
-                    return $this->completeSection('vehicles_psv');
+                    // handle the original action as planned
+                    return $this->handleCrudAction(
+                        $data['vehicles'],
+                        ['add', 'show-removed-vehicles', 'hide-removed-vehicles']
+                    );
                 }
+
+                return $this->completeSection('vehicles_psv');
             }
         }
 
@@ -112,55 +117,47 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     }
 
     /**
-     * Override handleCrudAction
-     *
-     * @param array $crudActionData Action data
-     *
-     * @return \Zend\Http\Response
+     * @param \Common\Form\Form $form
+     * @param $crudAction
+     * @return mixed
      */
-    protected function handleCrudAction(array $crudActionData)
+    protected function updateVehiclesSection(FormInterface $form, $crudAction)
     {
-        $alternativeCrudResponse = $this->checkForAlternativeCrudAction($crudActionData);
-        if ($alternativeCrudResponse !== null) {
-            return $alternativeCrudResponse;
-        }
+        /** @var \Common\Service\Helper\FlashMessengerHelperService $flashMssgr */
+        $flashMssgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
 
-        return $this->traitHandleCrudAction(
-            $crudActionData,
-            [
-                'add', 'show-removed-vehicles', 'hide-removed-vehicles'
-            ]
-        );
-    }
-
-    /**
-     * Update Vehicle section status
-     *
-     * @param FormInterface $form           Form
-     * @param bool          $haveCrudAction Have crud action
-     * @param array         &$resultData    Api/Form Data
-     *
-     * @return bool
-     * @throws \Exception
-     */
-    protected function updateVehiclesSection(FormInterface $form, $haveCrudAction, array &$resultData = [])
-    {
-        $cmd = null;
+        $resultData = [];
 
         if ($this->lva === 'application') {
             $formData = $form->getData();
-
-            $resultData['hasEnteredReg'] = $formData['data']['hasEnteredReg'];
 
             $dtoData = [
                 'id' => $this->getIdentifier(),
                 'version' => $formData['data']['version'],
                 'hasEnteredReg' => $formData['data']['hasEnteredReg'],
-                'partial' => $haveCrudAction,
+                'partial' => $crudAction !== null
             ];
-            $cmd = CommandDto\Application\UpdatePsvVehicles::create($dtoData);
 
-        } elseif ($this->lva === 'licence') {
+            $resultData['hasEnteredReg'] = $formData['data']['hasEnteredReg'];
+
+            $response = $this->handleCommand(UpdatePsvVehicles::create($dtoData));
+
+            if ($response->isClientError()) {
+                PsvVehicles::mapFormErrors(
+                    $form,
+                    $response->getResult()['messages'],
+                    $flashMssgr
+                );
+                return $this->renderForm($form, 'vehicles_psv', $resultData);
+            }
+
+            if ($response->isServerError()) {
+                $flashMssgr->addUnknownError();
+                return $this->renderForm($form, 'vehicles_psv', $resultData);
+            }
+        }
+
+        if ($this->lva === 'licence') {
             $shareInfo = $form->getData()['shareInfo']['shareInfo'];
 
             $dtoData = [
@@ -168,23 +165,15 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 'shareInfo' => $shareInfo
             ];
 
-            $cmd = CommandDto\Licence\UpdateVehicles::create($dtoData);
+            $response = $this->handleCommand(CommandDto\Licence\UpdateVehicles::create($dtoData));
+
+            if (!$response->isOk()) {
+                $flashMssgr->addCurrentErrorMessage('unknown-error');
+                return $this->renderForm($form, 'vehicles_psv', $resultData);
+            }
         }
 
-        $response = $this->handleCommand($cmd);
-        if ($response->isOk()) {
-            return true;
-        }
-
-        $flashMssgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
-
-        if ($response->isClientError()) {
-            PsvVehicles::mapFormErrors($form, $response->getResult()['messages'], $flashMssgr);
-        } elseif ($response->isServerError()) {
-            $flashMssgr->addUnknownError();
-        }
-
-        return false;
+        return null;
     }
 
     /**
@@ -554,15 +543,19 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Override the get crud action method
      *
-     * @param array $formTables
+     * @param array $formTables   form tables
+     * @param bool  $returnAction return action
+     *
      * @return array
      */
-    protected function getCrudAction(array $formTables = array())
+    protected function getCrudAction(array $formTables = array(), $returnAction = true)
     {
         $data = $formTables;
 
         if (isset($data['vehicles']['action'])) {
-            return $this->getActionFromCrudAction($data['vehicles']);
+            return $returnAction
+                ? $this->getActionFromCrudAction($data['vehicles'])
+                : $data['vehicles'];
         }
 
         return null;
