@@ -2,8 +2,12 @@
 
 namespace CommonTest\Form\Model\Form\Lva;
 
+use Common\Form\Elements\InputFilters\ActionButton;
+use Common\Form\Elements\Types\AttachFilesButton;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use Zend\Form\Element\File;
 use Zend\Form\Exception\InvalidArgumentException;
+use Zend\Form\Fieldset;
 use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
 
@@ -54,6 +58,21 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $element = [ 'details', 'birthPlace'];
         $this->assertFormElementRequired($element, true);
         $this->assertFormElementText($element);
+    }
+
+    public function testCertificateFileUpload()
+    {
+        $element = [ 'details', 'certificate', 'file' ];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementType($element, AttachFilesButton::class);
+
+        $element = [ 'details', 'certificate', '__messages__' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'details', 'certificate', 'upload' ];
+        $this->assertFormElementType($element, ActionButton::class);
+        $this->assertFormElementRequired($element, false);
     }
 
     public function testHomeAddress()
@@ -215,6 +234,38 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         );
     }
 
+    public function testLicenceFileUpload()
+    {
+        $element = [ 'responsibilities', 'file', 'file' ];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementType($element, AttachFilesButton::class);
+
+        $element = [ 'responsibilities', 'file', '__messages__' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'responsibilities', 'file', 'upload' ];
+        $this->assertFormElementType($element, ActionButton::class);
+        $this->assertFormElementRequired($element, false);
+    }
+
+    public function testOtherLicencesTable()
+    {
+        $element = [ 'responsibilities', 'otherLicences', 'table' ];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementTable($element);
+
+        $element = [ 'responsibilities', 'otherLicences', 'action' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'responsibilities', 'otherLicences', 'id' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'responsibilities', 'otherLicences', 'rows' ];
+        $this->assertFormElementHidden($element);
+    }
+
     public function testResponsibilities()
     {
         $element = [ 'responsibilities', 'id' ];
@@ -277,6 +328,40 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testOtherEmploymentId()
     {
         $element = [ 'otherEmployment', 'id' ];
+        $this->assertFormElementHidden($element);
+    }
+
+    public function testPreviousHistoryConvictionsTable()
+    {
+        $element = [ 'previousHistory', 'convictions', 'table' ];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementTable($element);
+
+        $element = [ 'previousHistory', 'convictions', 'action' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'previousHistory', 'convictions', 'id' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'previousHistory', 'convictions', 'rows' ];
+        $this->assertFormElementHidden($element);
+    }
+
+    public function testPreviousLicencesTable()
+    {
+        $element = [ 'previousHistory', 'previousLicences', 'table' ];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementTable($element);
+
+        $element = [ 'previousHistory', 'previousLicences', 'action' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'previousHistory', 'previousLicences', 'id' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'previousHistory', 'previousLicences', 'rows' ];
         $this->assertFormElementHidden($element);
     }
 
