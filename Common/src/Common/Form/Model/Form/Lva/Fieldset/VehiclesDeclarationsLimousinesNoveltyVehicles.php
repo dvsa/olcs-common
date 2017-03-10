@@ -17,6 +17,7 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesApplication.yesNo",
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
