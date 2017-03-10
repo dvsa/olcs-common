@@ -35,11 +35,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     const SEARCH_VEHICLES_COUNT = 20;
 
-    use TransferVehiclesTrait,
+    use Traits\CrudTableTrait,
+        TransferVehiclesTrait,
         VehicleSearchTrait;
-    use Traits\CrudTableTrait {
-           handleCrudAction as protected traitHandleCrudAction;
-        }
 
     protected $section = 'vehicles';
     protected $baseRoute = 'lva-%s/vehicles';
@@ -98,40 +96,51 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $headerData = $this->getHeaderData();
 
         $formData = [];
+        $crudAction = null;
 
         if ($request->isPost()) {
             $formData = (array)$request->getPost();
+            $crudAction = $this->getCrudAction([$formData['table']]);
         } elseif ($this->lva === 'application') {
             $formData = Mapper\Lva\GoodsVehicles::mapFromResult($headerData);
         } elseif ($this->lva === 'licence') {
             $formData = Mapper\Lva\LicenceGoodsVehicles::mapFromResult($headerData);
         }
 
+        $haveCrudAction = ($crudAction !== null);
+
         $formData = array_merge($formData, ['query' => (array)$request->getQuery()]);
+
         $form = $this->getForm($headerData, $formData);
 
         if ($request->isPost()) {
-            $crudAction = $this->getCrudAction([$formData['table']]);
-            $haveCrudAction = ($crudAction !== null);
-
-            //  define is necessary to save main form data
-            if ($haveCrudAction) {
-                if ($this->isInternalReadOnly()) {
-                    return $this->handleCrudAction($crudAction);
+            if ($this->isInternalReadOnly()) {
+                return $this->handleCrudAction($crudAction);
+            }
+            if ($form->isValid()) {
+                $response = $this->updateVehiclesSection($form, $haveCrudAction, $headerData);
+                if ($response !== null) {
+                    return $response;
                 }
 
-                $this->getServiceLocator()->get('Helper\Form')->disableValidation($form->getInputFilter());
-            }
+                if ($haveCrudAction) {
+                    $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
+                        $this->getActionFromCrudAction($crudAction)
+                    );
 
-            if ($form->isValid()) {
-                $isSuccess = $this->updateVehiclesSection($form, $haveCrudAction);
-                if ($isSuccess === true) {
-                    if ($haveCrudAction) {
-                        return $this->handleCrudAction($crudAction);
+                    if ($alternativeCrudResponse !== null) {
+                        return $alternativeCrudResponse;
                     }
 
-                    return $this->completeSection('vehicles');
+                    return $this->handleCrudAction(
+                        $crudAction,
+                        [
+                            'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
+                        ]
+                    );
                 }
+
+                return $this->completeSection('vehicles');
             }
         }
 
@@ -139,40 +148,16 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     }
 
     /**
-     * Override handleCrudAction
-     *
-     * @param array $crudActionData Action data
-     *
-     * @return \Zend\Http\Response
-     */
-    protected function handleCrudAction(array $crudActionData)
-    {
-        $alternativeCrudResponse = $this->checkForAlternativeCrudAction($crudActionData);
-        if ($alternativeCrudResponse !== null) {
-            return $alternativeCrudResponse;
-        }
-
-        return $this->traitHandleCrudAction(
-            $crudActionData,
-            [
-                'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
-            ]
-        );
-    }
-
-    /**
      * Update Vehicle Section
      *
      * @param \Common\Form\Form $form           Form
      * @param string            $haveCrudAction Action
+     * @param array             $headerData     Data from db
      *
-     * @return bool
-     * @throws \Exception
+     * @return \Common\View\Model\Section|null
      */
-    protected function updateVehiclesSection(FormInterface $form, $haveCrudAction)
+    protected function updateVehiclesSection(FormInterface $form, $haveCrudAction, $headerData)
     {
-        $cmd = null;
-
         if ($this->lva === 'application') {
             $data = $form->getData()['data'];
 
@@ -182,32 +167,37 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 'hasEnteredReg' => $data['hasEnteredReg'],
                 'partial' => $haveCrudAction
             ];
-            $cmd = AppUpdateVehicles::create($dtoData);
 
-        } elseif ($this->lva === 'licence') {
+            $response = $this->handleCommand(AppUpdateVehicles::create($dtoData));
+
+            if ($response->isServerError()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                return $this->renderForm($form, $headerData);
+            }
+
+            if ($response->isClientError()) {
+                $this->mapErrors($form, $response->getResult()['messages']);
+                return $this->renderForm($form, $headerData);
+            }
+        }
+
+        if ($this->lva === 'licence') {
             $shareInfo = $form->getData()['shareInfo']['shareInfo'];
 
             $dtoData = [
                 'id' => $this->getIdentifier(),
                 'shareInfo' => $shareInfo
             ];
-            $cmd = LicUpdateVehicles::create($dtoData);
+
+            $response = $this->handleCommand(LicUpdateVehicles::create($dtoData));
+
+            if (!$response->isOk()) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                return $this->renderForm($form, $headerData);
+            }
         }
 
-        $response = $this->handleCommand($cmd);
-        if ($response->isOk()) {
-            return true;
-        }
-
-        $flashMssgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
-
-        if ($response->isServerError()) {
-            $flashMssgr->addUnknownError();
-        } elseif ($response->isClientError()) {
-            $this->mapErrors($form, $response->getResult()['messages']);
-        }
-
-        return false;
+        return null;
     }
 
     /**
