@@ -19,7 +19,10 @@ class FormEditCrudActions
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--secondary large", "id": "cancel"})
-     * @Form\Options({"label": "Cancel"})
+     * @Form\Options({
+     *     "label": "Cancel",
+     *     "keepForReadonly": true,
+     * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $cancel = null;

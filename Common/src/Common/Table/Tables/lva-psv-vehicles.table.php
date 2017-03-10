@@ -50,7 +50,6 @@ return array(
             'action' => 'edit',
             'type' => 'Action',
             'sort' => 'v.vrm',
-            'keepForReadOnly' => true
         ),
         array(
             'title' => $translationPrefix . '.make',

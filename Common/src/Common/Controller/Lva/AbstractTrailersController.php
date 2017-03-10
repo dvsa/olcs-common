@@ -9,7 +9,6 @@ use Dvsa\Olcs\Transfer\Command\Trailer\DeleteTrailer;
 use Dvsa\Olcs\Transfer\Command\Trailer\UpdateTrailer;
 use Dvsa\Olcs\Transfer\Query\Licence\Trailers;
 use Dvsa\Olcs\Transfer\Query\Trailer\Trailer;
-use Zend\Form\FormInterface;
 use Zend\Stdlib\RequestInterface;
 
 /**
@@ -39,10 +38,11 @@ abstract class AbstractTrailersController extends AbstractController
      */
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $response = $this->handleQuery(Trailers::create(['id' => $this->getIdentifier()]));
-        /** @var \Zend\Http\Request $request */
+
         $result = $response->getResult();
 
         if ($request->isPost()) {
@@ -54,27 +54,41 @@ abstract class AbstractTrailersController extends AbstractController
         $form = $this->getForm($request, $this->getTable($result['trailers']));
         $form->setData($data);
 
-        if ($request->isPost() && $form->isValid()) {
-            $formData = (array)$form->getData();
+        if ($request->isPost()) {
+            $crudAction = $this->getCrudAction([$data['table']]);
+            $haveCrudAction = ($crudAction !== null);
 
-            $dtoData = [
-                'id' => $this->getIdentifier(),
-                'shareInfo' => $formData['trailers']['shareInfo']
-            ];
-
-            $response = $this->handleCommand(UpdateTrailers::create($dtoData));
-
-            if ($response->isOk()) {
-                $crudAction = $this->getCrudAction($data);
-
-                if ($crudAction !== null) {
+            if ($haveCrudAction) {
+                if ($this->isInternalReadOnly()) {
                     return $this->handleCrudAction($crudAction);
                 }
 
-                return $this->completeSection('trailers');
+                $this->getServiceLocator()->get('Helper\Form')->disableValidation($form->getInputFilter());
+            }
 
-            } else {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentUnknownError();
+            if ($form->isValid()) {
+                $formData = (array)$form->getData();
+
+                $cmd = UpdateTrailers::create(
+                    [
+                        'id' => $this->getIdentifier(),
+                        'shareInfo' => $formData['trailers']['shareInfo'],
+                    ]
+                );
+
+                $response = $this->handleCommand($cmd);
+
+                if ($response->isOk()) {
+                    if ($haveCrudAction) {
+                        return $this->handleCrudAction($crudAction);
+                    }
+
+                    return $this->completeSection('trailers');
+                }
+
+                if ($response->isServerError()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
+                }
             }
         }
 
@@ -116,7 +130,7 @@ abstract class AbstractTrailersController extends AbstractController
                     return $this->handlePostSave(null, false);
                 }
 
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
             }
         }
 
@@ -159,7 +173,7 @@ abstract class AbstractTrailersController extends AbstractController
         $response = $this->handleQuery($query);
 
         if (!$response->isOk()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addUnknownError();
 
             return $this->notFoundAction();
         }

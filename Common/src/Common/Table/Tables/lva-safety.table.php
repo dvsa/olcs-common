@@ -21,7 +21,7 @@ return array(
             'action' => 'edit',
             'stack' => 'contactDetails->fao',
             'formatter' => 'StackValue',
-            'type' => 'Action'
+            'type' => 'Action',
         ),
         array(
             'title' => $translationPrefix . '.external',

@@ -48,7 +48,6 @@ return array(
             },
             'type' => 'Action',
             'sort' => 'v.vrm',
-            'keepForReadOnly' => true
         ),
         array(
             'title' => $translationPrefix . '.weight',

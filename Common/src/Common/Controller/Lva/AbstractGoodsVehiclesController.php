@@ -113,30 +113,35 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
         $form = $this->getForm($headerData, $formData);
 
-        if ($request->isPost() && $form->isValid()) {
-            $response = $this->updateVehiclesSection($form, $haveCrudAction, $headerData);
-            if ($response !== null) {
-                return $response;
+        if ($request->isPost()) {
+            if ($this->isInternalReadOnly()) {
+                return $this->handleCrudAction($crudAction);
             }
-
-            if ($haveCrudAction) {
-                $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
-                    $this->getActionFromCrudAction($crudAction)
-                );
-
-                if ($alternativeCrudResponse !== null) {
-                    return $alternativeCrudResponse;
+            if ($form->isValid()) {
+                $response = $this->updateVehiclesSection($form, $haveCrudAction, $headerData);
+                if ($response !== null) {
+                    return $response;
                 }
 
-                return $this->handleCrudAction(
-                    $crudAction,
-                    [
-                        'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
-                    ]
-                );
-            }
+                if ($haveCrudAction) {
+                    $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
+                        $this->getActionFromCrudAction($crudAction)
+                    );
 
-            return $this->completeSection('vehicles');
+                    if ($alternativeCrudResponse !== null) {
+                        return $alternativeCrudResponse;
+                    }
+
+                    return $this->handleCrudAction(
+                        $crudAction,
+                        [
+                            'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
+                        ]
+                    );
+                }
+
+                return $this->completeSection('vehicles');
+            }
         }
 
         return $this->renderForm($form, $headerData);

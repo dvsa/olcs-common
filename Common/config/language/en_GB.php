@@ -1506,7 +1506,6 @@ return [
     'internal.document-description.formatter.no-description' => 'Document name missing',
     'internal.marker' => '(internal)',
     'internal.granting.email-error' => 'Unable to send an email, no valid email addresses found',
-    'internal.oc.traffic_area_label' => 'Traffic area',
     'invalid-licence-type' => '*DUPLICATE TRANSLATION* If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'invalid-operator-type' => '*DUPLICATE TRANSLATION* If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',

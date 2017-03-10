@@ -89,7 +89,16 @@ class FormRow extends AbstractHelper
 
         if (
             $element instanceof ZendElement\Csrf
-            || $element instanceof Elements\InputFilters\ActionButton
+            || (
+                $element instanceof Elements\InputFilters\ActionButton
+                && $element->getOption('keepForReadonly') === true
+            )
+        ) {
+            return $defElmHlpr->render($element);
+        }
+
+        if (
+            $element instanceof Elements\InputFilters\ActionButton
             || $element instanceof Elements\Types\AttachFilesButton
         ) {
             return '';

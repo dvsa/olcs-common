@@ -12,10 +12,9 @@ use Dvsa\Olcs\Transfer\Command\Application\CreatePsvVehicle as ApplicationCreate
 use Dvsa\Olcs\Transfer\Command\Application\UpdatePsvVehicles;
 use Dvsa\Olcs\Transfer\Command\Licence\CreatePsvVehicle as LicenceCreatePsvVehicle;
 use Dvsa\Olcs\Transfer\Query as QueryDto;
-use Zend\Form\Element\Checkbox;
+use Dvsa\Olcs\Transfer\Query\Licence\PsvVehiclesExport;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
-use Dvsa\Olcs\Transfer\Query\Licence\PsvVehiclesExport;
 
 /**
  * Vehicles PSV Controller
@@ -51,6 +50,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         'application' => ApplicationCreatePsvVehicle::class
     ];
 
+    /**
+     * Process action - Index
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function indexAction()
     {
         /** @var \Zend\Http\Request $request */
@@ -78,30 +82,35 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
         $form = $this->alterForm($form, $resultData, $removeActions);
 
-        if ($request->isPost() && $form->isValid()) {
-            $crudAction = $this->getCrudAction($data);
-
-            $response = $this->updateVehiclesSection($form, $crudAction);
-
-            if ($response !== null) {
-                return $response;
+        if ($request->isPost()) {
+            if ($this->isInternalReadOnly()) {
+                $crudAction = $this->getCrudAction($data, false);
+                return $this->handleCrudAction($crudAction);
             }
+            if ($form->isValid()) {
+                $crudAction = $this->getCrudAction($data);
+                $response = $this->updateVehiclesSection($form, $crudAction);
 
-            if ($crudAction !== null) {
-                $alternativeCrudResponse = $this->checkForAlternativeCrudAction($crudAction);
-
-                if ($alternativeCrudResponse !== null) {
-                    return $alternativeCrudResponse;
+                if ($response !== null) {
+                    return $response;
                 }
 
-                // handle the original action as planned
-                return $this->handleCrudAction(
-                    $data['vehicles'],
-                    ['add', 'show-removed-vehicles', 'hide-removed-vehicles']
-                );
-            }
+                if ($crudAction !== null) {
+                    $alternativeCrudResponse = $this->checkForAlternativeCrudAction($crudAction);
 
-            return $this->completeSection('vehicles_psv');
+                    if ($alternativeCrudResponse !== null) {
+                        return $alternativeCrudResponse;
+                    }
+
+                    // handle the original action as planned
+                    return $this->handleCrudAction(
+                        $data['vehicles'],
+                        ['add', 'show-removed-vehicles', 'hide-removed-vehicles']
+                    );
+                }
+
+                return $this->completeSection('vehicles_psv');
+            }
         }
 
         return $this->renderForm($form, 'vehicles_psv', $resultData);
@@ -208,13 +217,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Add a vehicle action
      *
-     * @return \Zend\View\Model\ViewModel
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function addAction()
     {
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
-        $resultData = $this->fetchResultData();
 
         $data = [];
         if ($request->isPost()) {
@@ -267,7 +275,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Edit action
      *
-     * @return \Zend\View\Model\ViewModel
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function editAction()
     {
@@ -346,7 +354,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Hijack the crud action check so we can validate the add button
      *
-     * @param string $action
+     * @param string $action Action
      *
      * @return null|\Zend\Http\Response
      */
@@ -405,7 +413,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Remove vehicle size tables based on OC data
      *
-     * @param Form $form
+     * @param FormInterface $form Form
+     *
      * @return Form
      */
     private function alterForm(Form $form, $resultData, $removeActions)
@@ -465,6 +474,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     /**
      * Delete vehicles
+     *
+     * @return void
      */
     protected function delete()
     {
@@ -532,15 +543,19 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Override the get crud action method
      *
-     * @param array $formTables
+     * @param array $formTables   form tables
+     * @param bool  $returnAction return action
+     *
      * @return array
      */
-    protected function getCrudAction(array $formTables = array())
+    protected function getCrudAction(array $formTables = array(), $returnAction = true)
     {
         $data = $formTables;
 
         if (isset($data['vehicles']['action'])) {
-            return $this->getActionFromCrudAction($data['vehicles']);
+            return $returnAction
+                ? $this->getActionFromCrudAction($data['vehicles'])
+                : $data['vehicles'];
         }
 
         return null;

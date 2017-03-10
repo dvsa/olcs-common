@@ -31,7 +31,12 @@ class TrafficArea
      *
      * @Form\Type("Common\Form\Elements\Types\TrafficAreaSet")
      * @Form\Options({
+     *     "label": "application_operating-centres_authorisation.dataTrafficArea.label.new",
+     *     "label_attributes": {
+     *         "class": "legend"
+     *     },
      *     "hint" : "markup-traffic-area-help",
+     *     "hint-position" : "below",
      * })
      */
     public $trafficAreaSet = null;

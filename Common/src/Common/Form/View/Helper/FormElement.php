@@ -2,17 +2,18 @@
 
 namespace Common\Form\View\Helper;
 
-use Zend\Form\View\Helper\FormElement as ZendFormElement;
-use Zend\Form\ElementInterface as ZendElementInterface;
+use Common\Form\Elements\InputFilters\ActionLink;
+use Common\Form\Elements\Types\AttachFilesButton;
+use Common\Form\Elements\Types\GuidanceTranslated;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
-use Common\Form\Elements\Types\GuidanceTranslated;
-use Common\Form\Elements\Types\TermsBox;
-use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\PlainText;
-use Common\Form\Elements\InputFilters\ActionLink;
+use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\Types\TrafficAreaSet;
-use Common\Form\Elements\Types\AttachFilesButton;
+use Zend\Form\ElementInterface;
+use Zend\Form\ElementInterface as ZendElementInterface;
+use Zend\Form\View\Helper\FormElement as ZendFormElement;
 
 /**
  * Render form
@@ -32,14 +33,14 @@ class FormElement extends ZendFormElement
      *
      * @var string
      */
-    private static $format = '%s <div class="hint">%s</div>';
+    private static $format = '%s<div class="hint">%s</div>';
 
     /**
      * The form row output format.
      *
      * @var string
      */
-    private static $topFormat = '<p class="hint">%s</p> %s';
+    private static $topFormat = '<p class="hint">%s</p>%s';
 
     /**
      * Render an element
@@ -68,15 +69,11 @@ class FormElement extends ZendFormElement
             $view = $this->getView();
 
             $markup = sprintf(
-                '<div class="legend">%s</div><div class="label">%s</div>',
-                $view->translate('trafficAreaSet.trafficArea'),
+                '<div class="label">%s</div>',
                 $view->translate($value)
             );
 
-            if ($element->getOption('hint')) {
-                $markup .= sprintf('<p class="hint">%s</p>', $view->translate($element->getOption('hint')));
-            }
-            return $markup;
+            return $this->attachHint($element, $markup);
         }
 
         if ($element instanceof PlainText) {
@@ -135,7 +132,6 @@ class FormElement extends ZendFormElement
         }
 
         if ($element instanceof TermsBox) {
-
             $attributes = $element->getAttributes();
 
             if (!isset($attributes['class'])) {
@@ -182,21 +178,30 @@ class FormElement extends ZendFormElement
             );
         }
 
-        $markup = parent::render($element);
+        return $this->attachHint($element, parent::render($element));
+    }
 
-        if ($element->getOption('hint')) {
-            $hint = $renderer->translate($element->getOption('hint'));
-            $position = $element->getOption('hint-position');
-
-            if ($position === 'above') {
-                return sprintf(self::$topFormat, $hint, $markup);
-            } elseif ($position === 'below') {
-                return sprintf(self::$format, $markup, $hint);
-            }
-
-            return sprintf(self::$topFormat, $hint, $markup);
+    /**
+     * Attach hint html to element html
+     *
+     * @param ElementInterface $element element
+     * @param string           $markup  string
+     *
+     * @return string
+     */
+    private function attachHint($element, $markup)
+    {
+        if (!$element->getOption('hint')) {
+            return $markup;
         }
 
-        return $markup;
+        $hint = $this->getView()->translate($element->getOption('hint'));
+        $position = $element->getOption('hint-position');
+
+        if ($position === 'below') {
+            return sprintf(self::$format, $markup, $hint);
+        }
+
+        return sprintf(self::$topFormat, $hint, $markup);
     }
 }

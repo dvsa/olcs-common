@@ -3024,7 +3024,11 @@ class TableBuilderTest extends MockeryTestCase
             'columns' => [
                 ['bar'],
                 [
-                    'type' => 'ActionLinks'
+                    'type' => 'ActionLinks',
+                    'keepForReadOnly' => true,
+                ],
+                [
+                    'type' => 'ActionLinks',
                 ],
                 [
                     'type' => 'DeltaActionLinks'
@@ -3056,7 +3060,16 @@ class TableBuilderTest extends MockeryTestCase
         $sut = new TableBuilder($sm);
 
         $sut->loadConfig($tableConfig);
-        $this->assertEquals([['bar']], $sut->getColumns());
+        $this->assertEquals(
+            [
+                ['bar'],
+                [
+                    'type' => 'ActionLinks',
+                    'keepForReadOnly' => true,
+                ],
+            ],
+            $sut->getColumns()
+        );
     }
 
     public function testSetSetting()

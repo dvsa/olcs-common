@@ -3,8 +3,7 @@
 namespace Common\Form\View\Helper\Readonly;
 
 use Zend\Form\ElementInterface;
-use Zend\View\Helper\AbstractHelper;
-use Zend\View\Helper\EscapeHtml;
+use Zend\Form\View\Helper\AbstractHelper;
 
 /**
  * Class FormItem
@@ -13,38 +12,13 @@ use Zend\View\Helper\EscapeHtml;
 class FormItem extends AbstractHelper
 {
     /**
-     * @var EscapeHtml
-     */
-    protected $escapeHtmlHelper;
-
-    /**
-     * Retrieve the escapeHtml helper
-     *
-     * @return EscapeHtml
-     */
-    protected function getEscapeHtmlHelper()
-    {
-        if ($this->escapeHtmlHelper) {
-            return $this->escapeHtmlHelper;
-        }
-
-        if (method_exists($this->view, 'plugin')) {
-            $this->escapeHtmlHelper = $this->view->plugin('escapehtml');
-        }
-
-        if (!$this->escapeHtmlHelper instanceof EscapeHtml) {
-            $this->escapeHtmlHelper = new EscapeHtml();
-        }
-
-        return $this->escapeHtmlHelper;
-    }
-    /**
      * Invoke helper as function
      *
      * Proxies to {@link render()}.
      *
-     * @param  ElementInterface|null $element
-     * @return string|FormElement
+     * @param ElementInterface|null $element Element
+     *
+     * @return string
      */
     public function __invoke(ElementInterface $element = null)
     {
@@ -56,8 +30,11 @@ class FormItem extends AbstractHelper
     }
 
     /**
-     * @param ElementInterface $element
-     * @return mixed
+     * Render
+     *
+     * @param ElementInterface $element Element
+     *
+     * @return string
      */
     public function render(ElementInterface $element)
     {

@@ -24,7 +24,8 @@ return array(
             'title' => $translationPrefix . '.trailerNo',
             'name' => 'trailerNo',
             'action' => 'edit',
-            'type' => 'Action'
+            'type' => 'Action',
+            'keepForReadOnly' => true,
         ),
         array(
             'title' => $translationPrefix . '.specified',
