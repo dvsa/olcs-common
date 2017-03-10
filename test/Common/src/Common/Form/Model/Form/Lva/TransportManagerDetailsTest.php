@@ -169,69 +169,40 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
     public function testResponsibilityHoursOfWeek()
     {
-        $element = ['responsibilities', 'hoursOfWeek'];
+        $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursMon' ];
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementNotValid($element, 'abc', [ 'belowMin', 'notFloat', ]);
+        $this->assertFormElementValid($element, 1.1);
 
-        $this->assertFormElementNotValid($element,
-            [
-                'hoursMon' => null,
-                'hoursTue' => null,
-                'hoursWed' => null,
-                'hoursThu' => null,
-                'hoursFri' => null,
-                'hoursSat' => null,
-                'hoursSun' => null,
-            ],
-            [ 'hoursPerWeekContent' ]
-        );
+        $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursTue' ];
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementValid($element, 1.1);
 
-        $this->assertFormElementNotValid($element,
-            [
-                'hoursMon' => 0,
-                'hoursTue' => 0,
-                'hoursWed' => 0,
-                'hoursThu' => 0,
-                'hoursFri' => 0,
-                'hoursSat' => 0,
-                'hoursSun' => 0,
-            ],
-            [ 'hoursPerWeekContent' ]
-        );
+        $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursWed' ];
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementValid($element, 1.1);
 
-        $this->assertFormElementValid($element,
-            [
-                'hoursMon' => 1,
-                'hoursTue' => null,
-                'hoursWed' => null,
-                'hoursThu' => null,
-                'hoursFri' => null,
-                'hoursSat' => null,
-                'hoursSun' => null,
-            ]
-        );
+        $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursThu' ];
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementValid($element, 1.1);
 
-        $this->assertFormElementValid($element,
-            [
-                'hoursMon' => 1,
-                'hoursTue' => 0,
-                'hoursWed' => 0,
-                'hoursThu' => 0,
-                'hoursFri' => 0,
-                'hoursSat' => 0,
-                'hoursSun' => 0,
-            ]
-        );
+        $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursFri' ];
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementValid($element, 1.1);
 
-        $this->assertFormElementValid($element,
-            [
-                'hoursMon' => 10,
-                'hoursTue' => 10,
-                'hoursWed' => 10,
-                'hoursThu' => 10,
-                'hoursFri' => 10,
-                'hoursSat' => 10,
-                'hoursSun' => 10,
-            ]
-        );
+        $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursSat' ];
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementValid($element, 1.1);
+
+        $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursSun' ];
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementValid($element, 1.1);
     }
 
     public function testLicenceFileUpload()
