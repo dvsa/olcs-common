@@ -34,7 +34,8 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testDateOfBirth()
     {
         $element = ['details', 'birthDate'];
-        $this->assertFormElementNotValid($element,
+        $this->assertFormElementNotValid(
+            $element,
             [
                 'day' => '15',
                 'month' => '06',
@@ -397,5 +398,4 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $element = ['form-actions', 'save'];
         $this->assertFormElementActionButton($element);
     }
-
 }
