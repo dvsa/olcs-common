@@ -40,7 +40,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
                 'month' => '06',
                 'year' => '2060',
             ],
-            [ 'inFuture' ]
+            [ \Common\Form\Elements\Validators\DateNotInFuture::IN_FUTURE ]
         );
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDate($element);
@@ -169,39 +169,89 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
     public function testResponsibilityHoursOfWeek()
     {
+        // Monday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursMon' ];
         $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementNotValid($element, 'abc', [ 'belowMin', 'notFloat', ]);
+        $this->assertFormElementNotValid(
+            $element,
+            'abc',
+            [
+                \Common\Form\Elements\Validators\SumContext::BELOW_MIN,
+                \Zend\I18n\Validator\Float::NOT_FLOAT,
+            ]
+        );
         $this->assertFormElementValid($element, 1.1);
 
+        // Tuesday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursTue' ];
         $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementNotValid(
+            $element,
+            'abc',
+            [
+                \Zend\I18n\Validator\Float::NOT_FLOAT,
+            ]
+        );
         $this->assertFormElementValid($element, 1.1);
 
+        // Wednesday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursWed' ];
         $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementNotValid(
+            $element,
+            'abc',
+            [
+                \Zend\I18n\Validator\Float::NOT_FLOAT,
+            ]
+        );
         $this->assertFormElementValid($element, 1.1);
 
+        // Thursday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursThu' ];
         $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementNotValid(
+            $element,
+            'abc',
+            [
+                \Zend\I18n\Validator\Float::NOT_FLOAT,
+            ]
+        );
         $this->assertFormElementValid($element, 1.1);
 
+        // Friday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursFri' ];
         $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementNotValid(
+            $element,
+            'abc',
+            [
+                \Zend\I18n\Validator\Float::NOT_FLOAT,
+            ]
+        );
         $this->assertFormElementValid($element, 1.1);
 
+        // Saturday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursSat' ];
         $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementNotValid(
+            $element,
+            'abc',
+            [
+                \Zend\I18n\Validator\Float::NOT_FLOAT,
+            ]
+        );
         $this->assertFormElementValid($element, 1.1);
 
+        // Sunday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursSun' ];
         $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementNotValid($element, 'abc', [ 'notFloat', ]);
+        $this->assertFormElementNotValid(
+            $element,
+            'abc',
+            [
+                \Zend\I18n\Validator\Float::NOT_FLOAT,
+            ]
+        );
         $this->assertFormElementValid($element, 1.1);
     }
 
@@ -347,4 +397,5 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $element = ['form-actions', 'save'];
         $this->assertFormElementActionButton($element);
     }
+
 }
