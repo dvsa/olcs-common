@@ -2985,7 +2985,7 @@ return [
     'common.file-upload.browse.title' => 'Attach file(s)',
     'common.file-upload.browse.hint' => 'PDF, DOC, JPG, PNG or GIF',
     'common.link.back.label' => 'Back',
-    'submitandpay.button' => 'Submit and pay',
+    'submitandpay.button' => 'Pay and submit',
     'submitapplication.button' => 'Submit application',
     'change.button' => 'I want to change something else',
     'invalid-payment-request.error' => 'Invalid payment submission request',
