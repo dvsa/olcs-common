@@ -48,11 +48,11 @@ class SumContext extends AbstractValidator
     /**
      * Set minimum float value
      *
-     * @param float $min Set minimum value for all fields
+     * @param int $min Set minimum value for all fields
      *
      * @return void
      */
-    public function setMin(float $min)
+    public function setMin($min)
     {
         $this->min = $min;
     }
@@ -60,11 +60,11 @@ class SumContext extends AbstractValidator
     /**
      * Set maximum float value
      *
-     * @param float $max Set maximum value for all fields
+     * @param int $max Set maximum value for all fields
      *
      * @return void
      */
-    public function setMax(float $max)
+    public function setMax($max)
     {
         $this->max = $max;
     }
