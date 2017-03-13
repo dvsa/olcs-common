@@ -34,7 +34,7 @@ class SumContext extends AbstractValidator
      */
     protected $messageVariables = [
         'min' => 'min',
-        'max' => 'max'
+        'max' => 'max',
     ];
 
     /**
@@ -42,28 +42,39 @@ class SumContext extends AbstractValidator
      */
     protected $messageTemplates = [
         self::BELOW_MIN => 'The sum of all values must be greater than %min%',
-        self::ABOVE_MAX => 'The sum of all values must be less than %max%'
+        self::ABOVE_MAX => 'The sum of all values must be less than %max%',
     ];
 
     /**
-     * @param $min
+     * Set minimum float value
+     *
+     * @param float $min Set minimum value for all fields
+     *
+     * @return void
      */
-    public function setMin($min)
+    public function setMin(float $min)
     {
         $this->min = $min;
     }
 
     /**
-     * @param $max
+     * Set maximum float value
+     *
+     * @param float $max Set maximum value for all fields
+     *
+     * @return void
      */
-    public function setMax($max)
+    public function setMax(float $max)
     {
         $this->max = $max;
     }
 
     /**
-     * @param  mixed $value
-     * @param  array $context
+     * Check if the context is valid.
+     *
+     * @param mixed      $value   Value of the input field
+     * @param array|null $context Context is values of all fields in same fieldset
+     *
      * @return bool
      */
     public function isValid($value, $context = null)

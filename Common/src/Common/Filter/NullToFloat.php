@@ -13,13 +13,15 @@ use Zend\InputFilter\Input as ZendInput;
 class NullToFloat extends AbstractFilter
 {
     /**
-     * @param mixed $value
+     * Filter
+     *
+     * @param mixed $value Value to check
      *
      * @return mixed
      */
     public function filter($value)
     {
-        if (!$value) {
+        if (! $value) {
             return 0;
         }
 
