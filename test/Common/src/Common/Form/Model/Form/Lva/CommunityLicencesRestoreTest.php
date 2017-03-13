@@ -30,5 +30,4 @@ class CommunityLicencesRestoreTest extends AbstractFormValidationTestCase
         $element = [ 'form-actions', 'cancel' ];
         $this->assertFormElementActionButton($element);
     }
-
 }
