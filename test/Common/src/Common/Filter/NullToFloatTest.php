@@ -29,7 +29,8 @@ class NullToFloatTest extends \PHPUnit_Framework_TestCase
     public function getValueDataProvider()
     {
         return [
-            'Null value should return int of 0' => [false, 0],
+            'Bool value should return int of 0' => [false, 0],
+            'Null value should return int of 0' => [null, 0],
             'Integer value should return same number' => [1, 1],
             'String should return a string' => ['string','string'],
         ];

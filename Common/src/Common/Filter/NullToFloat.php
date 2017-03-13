@@ -21,7 +21,7 @@ class NullToFloat extends AbstractFilter
      */
     public function filter($value)
     {
-        if (! $value) {
+        if ($value === false || empty($value)) {
             return 0;
         }
 
