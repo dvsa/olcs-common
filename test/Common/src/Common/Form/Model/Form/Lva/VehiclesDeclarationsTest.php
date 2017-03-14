@@ -67,7 +67,7 @@ class VehiclesDeclarationsTest extends AbstractFormValidationTestCase
 
         $context = [
             'psvOperateSmallVhl' => 'Y',
-            'psvSmallVhlNotes' => 'ABC',
+            'psvSmallVhlNotes'   => 'ABC',
         ];
 
         $this->assertFormElementValid($element, 'test', $context);
@@ -107,7 +107,7 @@ class VehiclesDeclarationsTest extends AbstractFormValidationTestCase
         $this->assertFormElementType($element, SingleCheckbox::class);
         $this->assertFormElementRequired($element, true);
         $this->assertFormElementValid($element, 'Y');
-        $this->assertFormElementNotValid($element, 'N', [ Identical::NOT_SAME ]);
+        $this->assertFormElementNotValid($element, 'N', [Identical::NOT_SAME]);
     }
 
     public function testPsvMediumVhlConfirmation()
@@ -116,7 +116,7 @@ class VehiclesDeclarationsTest extends AbstractFormValidationTestCase
         $this->assertFormElementType($element, SingleCheckbox::class);
         $this->assertFormElementRequired($element, true);
         $this->assertFormElementValid($element, 'Y');
-        $this->assertFormElementNotValid($element, 'N', [ Identical::NOT_SAME ]);
+        $this->assertFormElementNotValid($element, 'N', [Identical::NOT_SAME]);
     }
 
     public function testPsvMediumVhlNotes()
@@ -136,7 +136,10 @@ class VehiclesDeclarationsTest extends AbstractFormValidationTestCase
 
     public function testLimousinesNovelyVehiclesConfirmationLabel()
     {
-        $element = ['limousinesNoveltyVehicles', 'psvNoLimousineConfirmationLabel'];
+        $element = [
+            'limousinesNoveltyVehicles',
+            'psvNoLimousineConfirmationLabel',
+        ];
         $this->assertFormElementHtml($element);
         $this->assertFormElementRequired($element, false);
     }
@@ -149,16 +152,22 @@ class VehiclesDeclarationsTest extends AbstractFormValidationTestCase
         $this->assertFormElementValid($element, 'N');
     }
 
-    public function testLimousinesNovelyVehiclesPsvOnlyLimousinesConfirmationLabel()
+    public function testNovelyVehiclesPsvOnlyLimousinesConfirmationLabel()
     {
-        $element = ['limousinesNoveltyVehicles', 'psvOnlyLimousinesConfirmationLabel'];
+        $element = [
+            'limousinesNoveltyVehicles',
+            'psvOnlyLimousinesConfirmationLabel',
+        ];
         $this->assertFormElementHtml($element);
         $this->assertFormElementRequired($element, false);
     }
 
     public function testLimousinesNovelyPsvOnlyLimousinesConfirmation()
     {
-        $element = ['limousinesNoveltyVehicles', 'psvOnlyLimousinesConfirmation'];
+        $element = [
+            'limousinesNoveltyVehicles',
+            'psvOnlyLimousinesConfirmation',
+        ];
         $this->assertFormElementType($element, SingleCheckbox::class);
         $this->assertFormElementValid($element, 'Y');
         $this->assertFormElementValid($element, 'N');
