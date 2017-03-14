@@ -41,4 +41,79 @@ class PsvVehiclesVehicleTest extends AbstractFormValidationTestCase
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 2, 100);
     }
+
+    public function testLicenceVehicleId()
+    {
+        $element = ['licence-vehicle','id'];
+        $this->assertFormElementHidden($element);
+    }
+
+    public function testLicenceVehicleVersion()
+    {
+        $element = ['licence-vehicle','receivedDate'];
+        $this->assertFormElementDate($element);
+        $this->assertFormElementRequired($element, false);
+    }
+
+    public function testLicenceVehicleReceivedDate()
+    {
+        $element = ['licence-vehicle','specifiedDate'];
+        $this->assertFormElementDate($element);
+        $this->assertFormElementRequired($element, false);
+    }
+
+    public function testLicenceVehicleRemovalDate()
+    {
+        $element = ['licence-vehicle','removalDate'];
+        $this->assertFormElementDate($element);
+        $this->assertFormElementRequired($element, false);
+    }
+
+    public function testLicenceVehicleSpecifiedDate()
+    {
+        $element = ['licence-vehicle','version'];
+        $this->assertFormElementHidden($element);
+    }
+
+    public function testDiscNumber()
+    {
+        $element = ['licence-vehicle','discNo'];
+        $this->assertFormElementText($element);
+        $this->assertFormElementRequired($element, false);
+    }
+
+    public function testVehicleHistory()
+    {
+        $element = [ 'vehicle-history-table', 'table' ];
+        $this->assertFormElementTable($element);
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+
+        $element = [ 'vehicle-history-table', 'action' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'vehicle-history-table', 'rows' ];
+        $this->assertFormElementHidden($element);
+
+        $element = [ 'vehicle-history-table', 'id' ];
+        $this->assertFormElementHidden($element);
+    }
+
+    public function testAddAnother()
+    {
+        $element = ['form-actions', 'addAnother'];
+        $this->assertFormElementActionButton($element);
+    }
+
+    public function testSubmit()
+    {
+        $element = ['form-actions', 'submit'];
+        $this->assertFormElementActionButton($element);
+    }
+
+    public function testCancel()
+    {
+        $element = ['form-actions', 'cancel'];
+        $this->assertFormElementActionButton($element);
+    }
 }
