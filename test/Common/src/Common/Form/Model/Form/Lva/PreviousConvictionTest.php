@@ -80,7 +80,7 @@ class PreviousConvictionTest extends AbstractFormValidationTestCase
 
     public function testPenalty()
     {
-        $element = [ 'data', 'courtFpn' ];
+        $element = [ 'data', 'penalty' ];
         $this->assertFormElementText($element);
         $this->assertFormElementRequired($element, true);
     }
