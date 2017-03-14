@@ -18,37 +18,37 @@ class SoleTraderTest extends AbstractFormValidationTestCase
 
     public function testTitle()
     {
-        $element = [ 'data', 'title' ];
+        $element = ['data', 'title'];
         $this->assertFormElementDynamicSelect($element);
     }
 
     public function testId()
     {
-        $element = [ 'data', 'id' ];
+        $element = ['data', 'id'];
         $this->assertFormElementHidden($element);
     }
 
     public function testVersion()
     {
-        $element = [ 'data', 'version' ];
+        $element = ['data', 'version'];
         $this->assertFormElementHidden($element);
     }
 
     public function testForename()
     {
-        $element = [ 'data', 'forename' ];
+        $element = ['data', 'forename'];
         $this->assertFormElementText($element);
     }
 
     public function testFamilyName()
     {
-        $element = [ 'data', 'familyName' ];
+        $element = ['data', 'familyName'];
         $this->assertFormElementText($element);
     }
 
     public function testOtherName()
     {
-        $element = [ 'data', 'otherName' ];
+        $element = ['data', 'otherName'];
         $this->assertFormElementText($element);
     }
 
@@ -58,11 +58,11 @@ class SoleTraderTest extends AbstractFormValidationTestCase
         $this->assertFormElementValid(
             $element,
             [
-                'day' => '15',
+                'day'   => '15',
                 'month' => '06',
-                'year' => '1987',
+                'year'  => '1987',
             ],
-            [ \Common\Form\Elements\Validators\DateNotInFuture::IN_FUTURE ]
+            [\Common\Form\Elements\Validators\DateNotInFuture::IN_FUTURE]
         );
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDate($element);

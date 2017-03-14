@@ -34,7 +34,11 @@ class TrailerTest extends AbstractFormValidationTestCase
         $element = ['data', 'trailerNo'];
         $this->assertFormElementText($element);
         $this->assertFormElementValid($element, 'abc123');
-        $this->assertFormElementNotValid($element, '!!@@ABC123!!',[Alnum::NOT_ALNUM]);
+        $this->assertFormElementNotValid(
+            $element,
+            '!!@@ABC123!!',
+            [Alnum::NOT_ALNUM]
+        );
     }
 
     public function testSubmit()
