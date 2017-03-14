@@ -18,25 +18,25 @@ class PaymentSubmissionTest extends AbstractFormValidationTestCase
 
     public function testVersion()
     {
-        $element = [ 'version' ];
+        $element = ['version'];
         $this->assertFormElementHidden($element);
     }
 
     public function testDescription()
     {
-        $element = [ 'description'] ;
+        $element = ['description'];
         $this->assertFormElementHtml($element);
     }
 
     public function testAmount()
     {
-        $element = [ 'amount'] ;
+        $element = ['amount'];
         $this->assertFormElementHtml($element);
     }
 
     public function testSubmitAndPay()
     {
-        $element = [ 'submitPay' ];
+        $element = ['submitPay'];
         $this->assertFormElementActionButton($element);
     }
 }
