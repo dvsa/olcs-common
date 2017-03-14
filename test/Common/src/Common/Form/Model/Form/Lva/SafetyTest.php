@@ -66,7 +66,6 @@ class SafetyTest extends AbstractFormValidationTestCase
         $this->assertFormElementTable($element);
         $this->assertFormElementNotValid($element, null, ['required']);
 
-
         $element = ['table', 'action'];
         $this->assertFormElementHidden($element);
 

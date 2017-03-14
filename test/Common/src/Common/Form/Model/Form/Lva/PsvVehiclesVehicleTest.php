@@ -19,12 +19,14 @@ class PsvVehiclesVehicleTest extends AbstractFormValidationTestCase
     public function testDataId()
     {
         $element = ['data', 'id'];
-        $this->assertFormElementHidden($element);    }
+        $this->assertFormElementHidden($element);
+    }
 
     public function testDataVersion()
     {
         $element = ['data', 'version'];
-        $this->assertFormElementHidden($element);    }
+        $this->assertFormElementHidden($element);
+    }
 
     public function testDataVrm()
     {
