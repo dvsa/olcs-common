@@ -7,7 +7,6 @@ use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Common\Form\Elements\Types\AttachFilesButton;
 use Common\Form\Elements\InputFilters\ActionButton;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
-use Common\Form\Elements\Types\PostcodeSearch;
 
 /**
  * Class OperatingCentreTest
