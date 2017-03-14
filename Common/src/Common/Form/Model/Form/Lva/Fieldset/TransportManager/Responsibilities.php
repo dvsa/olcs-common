@@ -6,7 +6,7 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Attributes({"class":"table__form"})
- * @Form\Name("details")
+ * @Form\Name("responsibilities")
  */
 class Responsibilities
 {
@@ -65,6 +65,7 @@ class Responsibilities
     public $isOwner = null;
 
     /**
+     * @Form\Name("hoursOfWeek")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekRequired")
      */
     public $hoursOfWeek = null;

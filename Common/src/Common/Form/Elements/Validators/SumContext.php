@@ -19,30 +19,64 @@ class SumContext extends AbstractValidator
     const BELOW_MIN = 'belowMin';
     const ABOVE_MAX = 'aboveMax';
 
+    /**
+     * @var int
+     */
     protected $min;
 
+    /**
+     * @var int
+     */
     protected $max;
 
+    /**
+     * @var array
+     */
     protected $messageVariables = [
         'min' => 'min',
-        'max' => 'max'
+        'max' => 'max',
     ];
 
+    /**
+     * @var array
+     */
     protected $messageTemplates = [
         self::BELOW_MIN => 'The sum of all values must be greater than %min%',
-        self::ABOVE_MAX => 'The sum of all values must be less than %max%'
+        self::ABOVE_MAX => 'The sum of all values must be less than %max%',
     ];
 
+    /**
+     * Set minimum float value
+     *
+     * @param int $min Set minimum value for all fields
+     *
+     * @return void
+     */
     public function setMin($min)
     {
         $this->min = $min;
     }
 
+    /**
+     * Set maximum float value
+     *
+     * @param int $max Set maximum value for all fields
+     *
+     * @return void
+     */
     public function setMax($max)
     {
         $this->max = $max;
     }
 
+    /**
+     * Check if the context is valid.
+     *
+     * @param mixed      $value   Value of the input field
+     * @param array|null $context Context is values of all fields in same fieldset
+     *
+     * @return bool
+     */
     public function isValid($value, $context = null)
     {
         unset($value); // Removes CS violation

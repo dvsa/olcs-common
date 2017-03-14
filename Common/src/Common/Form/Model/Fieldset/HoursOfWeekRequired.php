@@ -11,6 +11,7 @@ use Zend\Form\Annotation as Form;
 class HoursOfWeekRequired
 {
     /**
+     * @Form\Name("hoursPerWeekContent")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekContentRequired")
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.hours-per-week-subtitle"
