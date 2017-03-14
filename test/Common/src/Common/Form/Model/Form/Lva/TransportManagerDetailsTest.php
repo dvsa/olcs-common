@@ -172,20 +172,18 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     {
         // Monday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursMon' ];
-        $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementNotValid(
             $element,
             'abc',
             [
-                \Common\Form\Elements\Validators\SumContext::BELOW_MIN,
                 \Zend\I18n\Validator\Float::NOT_FLOAT,
+                \Common\Form\Elements\Validators\SumContext::BELOW_MIN,
             ]
         );
         $this->assertFormElementValid($element, 1.1);
 
         // Tuesday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursTue' ];
-        $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementNotValid(
             $element,
             'abc',
@@ -197,7 +195,6 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
         // Wednesday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursWed' ];
-        $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementNotValid(
             $element,
             'abc',
@@ -209,7 +206,6 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
         // Thursday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursThu' ];
-        $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementNotValid(
             $element,
             'abc',
@@ -221,7 +217,6 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
         // Friday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursFri' ];
-        $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementNotValid(
             $element,
             'abc',
@@ -233,7 +228,6 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
         // Saturday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursSat' ];
-        $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementNotValid(
             $element,
             'abc',
@@ -245,7 +239,6 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
         // Sunday
         $element = [ 'responsibilities', 'hoursOfWeek', 'hoursPerWeekContent', 'hoursSun' ];
-        $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementNotValid(
             $element,
             'abc',
