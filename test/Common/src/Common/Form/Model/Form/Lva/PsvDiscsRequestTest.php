@@ -18,7 +18,7 @@ class PsvDiscsRequestTest extends AbstractFormValidationTestCase
 
     public function testAdditionalDiscs()
     {
-        $element = [ 'data', 'additionalDiscs' ];
+        $element = ['data', 'additionalDiscs'];
         $this->assertFormElementAllowEmpty($element, true);
     }
 

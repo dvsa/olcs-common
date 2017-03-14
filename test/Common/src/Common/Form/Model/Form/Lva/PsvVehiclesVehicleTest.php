@@ -84,18 +84,18 @@ class PsvVehiclesVehicleTest extends AbstractFormValidationTestCase
 
     public function testVehicleHistory()
     {
-        $element = [ 'vehicle-history-table', 'table' ];
+        $element = ['vehicle-history-table', 'table'];
         $this->assertFormElementTable($element);
         $this->assertFormElementRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
 
-        $element = [ 'vehicle-history-table', 'action' ];
+        $element = ['vehicle-history-table', 'action'];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'vehicle-history-table', 'rows' ];
+        $element = ['vehicle-history-table', 'rows'];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'vehicle-history-table', 'id' ];
+        $element = ['vehicle-history-table', 'id'];
         $this->assertFormElementHidden($element);
     }
 

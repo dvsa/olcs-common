@@ -20,33 +20,33 @@ class SafetyTest extends AbstractFormValidationTestCase
 
     public function testVersion()
     {
-        $element = ['licence','version'];
+        $element = ['licence', 'version'];
         $this->assertFormElementHidden($element);
     }
 
     public function testSafetyInsVehicle()
     {
-        $element = ['licence','safetyInsVehicles'];
-        $this->assertFormElementNumber($element, 1, 13, [ 'notBetween' ]);
+        $element = ['licence', 'safetyInsVehicles'];
+        $this->assertFormElementNumber($element, 1, 13, ['notBetween']);
     }
 
     public function testSafetyInsTrailers()
     {
-        $element = ['licence','safetyInsTrailers'];
-        $this->assertFormElementNumber($element, 1, 13, [ 'notBetween' ]);
+        $element = ['licence', 'safetyInsTrailers'];
+        $this->assertFormElementNumber($element, 1, 13, ['notBetween']);
     }
 
     public function testSafetyInsVaries()
     {
-        $element = ['licence','safetyInsVaries'];
+        $element = ['licence', 'safetyInsVaries'];
         $this->assertFormElementType($element, Radio::class);
         $this->assertFormElementRequired($element, true);
-        $this->assertFormElementAllowEmpty($element, false) ;
+        $this->assertFormElementAllowEmpty($element, false);
     }
 
     public function testTacographIns()
     {
-        $element = ['licence','tachographIns'];
+        $element = ['licence', 'tachographIns'];
         $this->assertFormElementType($element, Radio::class);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementValid($element, 'tach_internal');
@@ -56,43 +56,43 @@ class SafetyTest extends AbstractFormValidationTestCase
 
     public function testTacographInsName()
     {
-        $element = ['licence','tachographInsName'];
+        $element = ['licence', 'tachographInsName'];
         $this->assertFormElementRequired($element, false);
     }
 
     public function testTable()
     {
-        $element = [ 'table', 'table' ];
+        $element = ['table', 'table'];
         $this->assertFormElementTable($element);
-        $this->assertFormElementNotValid($element, null, [ 'required' ]);
+        $this->assertFormElementNotValid($element, null, ['required']);
 
 
-        $element = [ 'table', 'action' ];
+        $element = ['table', 'action'];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'table', 'rows' ];
+        $element = ['table', 'rows'];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'table', 'id' ];
+        $element = ['table', 'id'];
         $this->assertFormElementHidden($element);
     }
 
     public function testApplicationVersion()
     {
-        $element = ['application','version'];
+        $element = ['application', 'version'];
         $this->assertFormElementHidden($element);
     }
 
     public function testApplicationIsMaintenanceSuitable()
     {
-        $element = ['application','isMaintenanceSuitable'];
+        $element = ['application', 'isMaintenanceSuitable'];
         $this->assertFormElementType($element, Radio::class);
         $this->assertFormElementRequired($element, true);
     }
 
     public function testApplicationSafetyConfirmation()
     {
-        $element = ['application','safetyConfirmation'];
+        $element = ['application', 'safetyConfirmation'];
         $this->assertFormElementType($element, SingleCheckbox::class);
         $this->assertFormElementRequired($element, true);
     }

@@ -20,37 +20,37 @@ class PsvVehiclesTest extends AbstractFormValidationTestCase
 
     public function testVersion()
     {
-        $element = [ 'data', 'version' ];
+        $element = ['data', 'version'];
         $this->assertFormElementHidden($element);
     }
 
     public function testHasEnteredReg()
     {
-        $element = [ 'data', 'hasEnteredReg' ];
+        $element = ['data', 'hasEnteredReg'];
         $this->assertFormElementType($element, Radio::class);
         $this->assertFormElementAllowEmpty($element, false);
     }
 
     public function testVehiclesTable()
     {
-        $element = [ 'vehicles', 'table' ];
+        $element = ['vehicles', 'table'];
         $this->assertFormElementTable($element);
         $this->assertFormElementRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
 
-        $element = [ 'vehicles', 'action' ];
+        $element = ['vehicles', 'action'];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'vehicles', 'rows' ];
+        $element = ['vehicles', 'rows'];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'vehicles', 'id' ];
+        $element = ['vehicles', 'id'];
         $this->assertFormElementHidden($element);
     }
 
     public function testShareInfo()
     {
-        $element = [ 'shareInfo', 'shareInfo' ];
+        $element = ['shareInfo', 'shareInfo'];
         $this->assertFormElementType($element, Checkbox::class);
         $this->assertFormElementValid($element, 'Y');
         $this->assertFormElementValid($element, 'N');

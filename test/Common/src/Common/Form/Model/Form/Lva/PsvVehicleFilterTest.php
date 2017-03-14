@@ -20,41 +20,41 @@ class PsvVehicleFilterTest extends AbstractFormValidationTestCase
 
     public function testVrm()
     {
-        $element = [ 'vrm' ];
+        $element = ['vrm'];
         $this->assertFormElementType($element, Select::class);
         $this->assertFormElementAllowEmpty($element, false);
     }
 
     public function testSpecified()
     {
-        $element = [ 'specified' ];
+        $element = ['specified'];
         $this->assertFormElementType($element, Select::class);
         $this->assertFormElementAllowEmpty($element, false);
     }
 
     public function testDisc()
     {
-        $element = [ 'disc' ];
+        $element = ['disc'];
         $this->assertFormElementType($element, Select::class);
         $this->assertFormElementAllowEmpty($element, false);
     }
 
     public function testIncludeRemoved()
     {
-        $element = [ 'includeRemoved' ];
+        $element = ['includeRemoved'];
         $this->assertFormElementType($element, OlcsCheckbox::class);
         $this->assertFormElementAllowEmpty($element, false);
     }
 
     public function testLimit()
     {
-        $element = [ 'limit' ];
+        $element = ['limit'];
         $this->assertFormElementHidden($element);
     }
 
     public function testFilterButton()
     {
-        $element = [ 'filter' ];
+        $element = ['filter'];
         $this->assertFormElementActionButton($element);
     }
 }
