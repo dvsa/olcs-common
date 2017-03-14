@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use Zend\Validator\Identical;
 
 /**
  * Class CommunityLicenceFilterTest
@@ -19,7 +20,8 @@ class CommunityLicenceFilterTest extends AbstractFormValidationTestCase
     public function testStatus()
     {
         $element = [ 'status' ];
-        $this->assertFormElementDynamicMultiCheckbox($element, false);
+        $this->assertFormElementDynamicMultiCheckbox($element, true);
+        $this->assertFormElementNotValid($element, 'X', [ 0 ]);
     }
 
     public function testIsFiltered()

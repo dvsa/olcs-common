@@ -13,7 +13,7 @@ use Zend\Form\Annotation as Form;
 class CommunityLicenceFilter
 {
     /**
-     * @Form\Options({"category": "com_lic_sts","disable_inarray_validator": "true"})
+     * @Form\Options({"category": "com_lic_sts"})
      * @Form\Type("\Common\Form\Element\DynamicMultiCheckbox")
      */
     public $status = null;
