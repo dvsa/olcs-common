@@ -9,7 +9,6 @@ use Common\RefData;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence;
 use Zend\Form\Form;
-use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Exception;
 use Zend\Mvc\MvcEvent;
@@ -50,6 +49,9 @@ abstract class AbstractController extends AbstractActionController
      */
     protected $lva;
 
+    /** @var  string */
+    protected $baseRoute;
+
     /**
      * Current messages
      *
@@ -72,7 +74,8 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Execute the request
      *
-     * @param  MvcEvent $e
+     * @param MvcEvent $e Event
+     *
      * @return mixed
      * @throws Exception\DomainException
      */

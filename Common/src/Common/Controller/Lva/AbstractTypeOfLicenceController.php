@@ -1,13 +1,8 @@
 <?php
 
-/**
- * Common Lva Abstract Type Of Licence Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
-use Zend\Http\Response;
+use Common\Controller\Lva\Traits\CrudActionTrait;
 use Zend\Form\Form;
 
 /**
@@ -17,6 +12,18 @@ use Zend\Form\Form;
  */
 abstract class AbstractTypeOfLicenceController extends AbstractController
 {
+    use CrudActionTrait;
+
+    /** @var string */
+    protected $baseRoute = 'lva-%s/type_of_licence';
+
+    /**
+     * Render for Index action
+     *
+     * @param \Zend\Form\FormInterface $form Form
+     *
+     * @return \Common\View\Model\Section
+     */
     protected function renderIndex($form)
     {
         $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
@@ -24,6 +31,14 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
         return $this->render('type_of_licence', $form);
     }
 
+    /**
+     * Process error messages from API
+     *
+     * @param \Zend\Form\FormInterface $form   Form
+     * @param array                    $errors Errors
+     *
+     * @return void
+     */
     protected function mapErrors(Form $form, array $errors)
     {
         $formMessages = [];

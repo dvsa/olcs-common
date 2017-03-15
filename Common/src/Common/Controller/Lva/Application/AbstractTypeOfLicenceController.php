@@ -1,19 +1,12 @@
 <?php
 
-/**
- * Common Lva Abstract Type Of Licence Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Application;
 
-use Dvsa\Olcs\Transfer\Command\Application\UpdateTypeOfLicence;
-use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Common\Controller\Lva;
-use Zend\Http\Response;
 use Common\Data\Mapper\Lva\TypeOfLicence as TypeOfLicenceMapper;
-use Zend\View\Helper\ViewModel;
 use Common\FormService\Form\Lva\TypeOfLicence\AbstractTypeOfLicence as TypeOfLicenceFormService;
+use Dvsa\Olcs\Transfer\Command\Application\UpdateTypeOfLicence;
+use Zend\Http\Response;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -25,7 +18,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
     /**
      * Application type of licence section
      *
-     * @return Response
+     * @return array|\Common\View\Model\Section|Response
      */
     public function indexAction()
     {
@@ -35,7 +28,9 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         if ($prg instanceof Response) {
             return $prg;
         }
+        /** @var TypeOfLicenceFormService $tolFormService */
         $tolFormService = $this->getServiceLocator()->get('FormServiceManager')->get('lva-application-type-of-licence');
+        /** @var \Zend\Form\FormInterface $form */
         $form = $tolFormService->getForm();
 
         // always fetch Application data to check operator location
@@ -84,16 +79,14 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         if ($response->isClientError()) {
-
             // This means we need confirmation
             if (isset($response->getResult()['messages']['AP-TOL-5'])) {
-
                 $query = $formData['type-of-licence'];
                 $query['operator-location'] = $this->getOperatorLocation($applicationData, $formData);
                 $query['version'] = $formData['version'];
 
                 return $this->redirect()->toRoute(
-                    null,
+                    $this->getBaseRoute() . '/action',
                     ['action' => 'confirmation'],
                     ['query' => $query],
                     true
@@ -113,8 +106,9 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
     /**
      * Get operator location
      *
-     * @param array $data Application or Organisation data
-     * @param array $formData
+     * @param array $data     Application or Organisation data
+     * @param array $formData Api/Form Data
+     *
      * @return string
      */
     protected function getOperatorLocation($data, $formData)
@@ -130,6 +124,11 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         return $formData['type-of-licence']['operator-location'];
     }
 
+    /**
+     * Handle action - Confirmation
+     *
+     * @return \Common\View\Model\Section|Response
+     */
     public function confirmationAction()
     {
         $request = $this->getRequest();
