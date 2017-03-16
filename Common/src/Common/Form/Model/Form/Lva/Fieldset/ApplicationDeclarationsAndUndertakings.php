@@ -24,10 +24,10 @@ class ApplicationDeclarationsAndUndertakings
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *      "fieldset-attributes": {
-     *          "class":"checkbox has-advanced-labels"
-     *      },
      *     "label": "application.signature.options.label",
+     *     "label_attributes": {
+     *         "class":"form-control form-control--radio form-control--advanced"
+     *     },
      *     "value_options": {"Y": "application.signature.options.verify", "N": "application.signature.options.sign"},
      *     "label_options": {
      *         "disable_html_escape": "true"
