@@ -23,7 +23,7 @@ use Zend\Form\View\Helper\FormElement as ZendFormElement;
  */
 class FormElement extends ZendFormElement
 {
-    const GUIDANCE_WRAPPER = '<div class="guidance article">%s</div>';
+    const GUIDANCE_WRAPPER = '<div class="article">%s</div>';
     const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
     const FILE_CHOOSE_WRAPPER
         = '<ul class="%s"><li class="%s"><label class="%s">%s %s</label><p class="%s">%s</p></li></ul>';
