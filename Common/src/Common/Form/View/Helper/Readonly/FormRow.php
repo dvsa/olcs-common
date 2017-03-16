@@ -3,8 +3,6 @@
 namespace Common\Form\View\Helper\Readonly;
 
 use Common\Form\Elements;
-use Common\Form\Elements\InputFilters\ActionButton;
-use Common\Form\Elements\Types\AttachFilesButton;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\Elements\Types\Table;
@@ -37,7 +35,8 @@ class FormRow extends AbstractHelper
     /**
      * @var string
      */
-    protected $format = '<li class="%s"><dt>%s</dt><dd>%s</dd></li>';
+    private static $format = '<li class="%s"><dt>%s</dt><dd>%s</dd></li>';
+    private static $formatWithoutLabel = '<li class="%s">%s</li>';
 
     /**
      * Invoke helper as function
@@ -118,6 +117,8 @@ class FormRow extends AbstractHelper
             return  $elementHelper($element);
         }
 
+        $cssClass = $this->getClass($element);
+
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $elementHelper = $this->getElementHelper($element);
         $label = $element->getLabel();
@@ -144,9 +145,12 @@ class FormRow extends AbstractHelper
                 $value = $translator->translate($value);
             }
         }
-        $class = $this->getClass($element);
 
-        return sprintf($this->format, $class, $label, $value);
+        if ($element instanceof HtmlTranslated && $label === null) {
+            return sprintf(self::$formatWithoutLabel, $cssClass, $value);
+        }
+
+        return sprintf(self::$format, $cssClass, $label, $value);
     }
 
     /**
@@ -158,7 +162,7 @@ class FormRow extends AbstractHelper
      */
     public function getClass($element)
     {
-        $class = 'definition-list__item';
+        $class = 'definition-list__item readonly';
 
         if (
             $element->getAttribute('type') == 'textarea' ||
@@ -167,6 +171,6 @@ class FormRow extends AbstractHelper
             $class .= ' full-width';
         }
 
-        return $class;
+        return trim($class . ' '. ($element->getAttribute('class') ?: ''));
     }
 }
