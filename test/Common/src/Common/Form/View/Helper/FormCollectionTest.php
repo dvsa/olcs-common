@@ -56,7 +56,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = new FormCollectionViewHelper();
         $viewHelper->setView($view);
-        $viewHelper($this->element, 'formCollection', '/');
+        $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputString('');
     }
@@ -72,7 +72,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $this->element->setOption('hint-position', 'below');
 
-        echo $viewHelper($this->element, 'formCollection', '/');
+        echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
             '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend>'
@@ -89,7 +89,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = $this->prepareViewHelper();
 
-        echo $viewHelper($this->element, 'formCollection', '/');
+        echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
             '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
@@ -106,7 +106,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = $this->prepareViewHelper();
 
-        echo $viewHelper($this->element, 'formCollection', '/');
+        echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
             '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
@@ -123,7 +123,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = $this->prepareViewHelper();
 
-        echo $viewHelper($this->element, 'formCollection', '/');
+        echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex('/^<fieldset data-group="postcode"><\/fieldset>$/');
     }
@@ -138,7 +138,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = $this->prepareViewHelper();
 
-        echo $viewHelper($this->element, 'formCollection', '/');
+        echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
@@ -146,6 +146,11 @@ class FormCollectionTest extends MockeryTestCase
         );
     }
 
+    /**
+     * Prepare View Helper
+     *
+     * @return FormCollectionViewHelper
+     */
     private function prepareViewHelper()
     {
         $translator = new Translator();
@@ -182,6 +187,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $mockFieldset = m::mock('Zend\Form\FieldsetInterface');
         $mockFieldset->shouldReceive('getMessages')->andReturn([]);
+        $mockFieldset->shouldReceive('getAttribute')->with('class')->andReturn('unit_CssClass');
         $mockFieldset->shouldReceive('getAttributes')->andReturn([]);
         $mockFieldset->shouldReceive('getIterator')->andReturn($iterator);
         $mockFieldset->shouldReceive('getOption')->with('readonly')->andReturn(true);
@@ -189,7 +195,8 @@ class FormCollectionTest extends MockeryTestCase
         $mockFieldset->shouldReceive('getOption')->with('hintFormat')->andReturnNull();
         $mockFieldset->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
-        $mockView = m::mock('Zend\View\Renderer\PhpRenderer');
+        /** @var \Zend\View\Renderer\PhpRenderer | m\MockInterface $mockView */
+        $mockView = m::mock(\Zend\View\Renderer\PhpRenderer::class);
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with(FormFieldset::class)->andReturn($mockFieldsetHlpr);
@@ -198,7 +205,7 @@ class FormCollectionTest extends MockeryTestCase
         $sut->setView($mockView);
 
         $markup = $sut($mockFieldset);  //  invoke
-        $this->assertEquals('<ul class="definition-list">element</ul>', $markup);
+        $this->assertEquals('<ul class="definition-list readonly unit_CssClass">element</ul>', $markup);
     }
 
     /**
@@ -210,7 +217,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = $this->prepareViewHelper();
 
-        echo $viewHelper($this->element, 'formCollection', '/');
+        echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex('/^<ul data-group="files"><\/ul>$/');
     }
@@ -224,7 +231,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = $this->prepareViewHelper();
 
-        echo $viewHelper($this->element, 'formCollection', '/');
+        echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex('/^<li data-group="files"><\/li>$/');
     }
@@ -247,7 +254,7 @@ class FormCollectionTest extends MockeryTestCase
 
         $viewHelper = $this->prepareViewHelper();
 
-        echo $viewHelper($this->element, 'formCollection', '/');
+        echo $viewHelper($this->element, 'formCollection');
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'

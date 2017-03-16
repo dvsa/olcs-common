@@ -31,7 +31,7 @@ class FormRowTest extends MockeryTestCase
             ->shouldReceive('__invoke')
             ->andReturnUsing(
                 function ($v) {
-                    return '@' . $v . '@';
+                    return ($v === null ? $v : '@' . $v . '@');
                 }
             );
 
@@ -83,11 +83,13 @@ class FormRowTest extends MockeryTestCase
         $mockRemoveIfReadOnly = m::mock(\Zend\Form\ElementInterface::class);
         $mockRemoveIfReadOnly
             ->shouldReceive('getAttribute')->with('type')->andReturnNull()
+            ->shouldReceive('getAttribute')->with('class')->andReturnNull('unit_CssClass')
             ->shouldReceive('getOption')->with('remove_if_readonly')->andReturn(true);
 
         $mockText = m::mock(\Zend\Form\ElementInterface::class);
         $mockText
             ->shouldReceive('getAttribute')->with('type')->andReturn('textarea')
+            ->shouldReceive('getAttribute')->with('class')->andReturnNull()
             ->shouldReceive('getLabel')->andReturn('Label')
             ->shouldReceive('getValue')->andReturn('Value')
             ->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
@@ -143,12 +145,30 @@ class FormRowTest extends MockeryTestCase
             ],
             [$mockHidden, ''],
             [$mockRemoveIfReadOnly, ''],
-            [$mockText, '<li class="definition-list__item full-width"><dt>@_Label_@</dt><dd>_Value_</dd></li>'],
-            [$mockSelect, '<li class="definition-list__item"><dt>@_Label_@</dt><dd>_Value_</dd></li>'],
+            'text' => [
+                'element' => $mockText,
+                'expect' => '<li class="definition-list__item readonly full-width">' .
+                    '<dt>@_Label_@</dt><dd>_Value_</dd></li>',
+            ],
+            'select' => [
+                'element' => $mockSelect,
+                'expect' => '<li class="definition-list__item readonly"><dt>@_Label_@</dt><dd>_Value_</dd></li>',
+            ],
             [$mockTable, '<table></table>'],
-            [
-                $mockHtmlTranslated,
-                '<li class="definition-list__item"><dt>@@</dt><dd>' . self::STANDARD_RENDER_RESULT . '</dd></li>',
+            'htmlTranslated' => [
+                'element' => $mockHtmlTranslated,
+                'expect' => '<li class="definition-list__item readonly html-translated">' .
+                    '<dt>@@</dt><dd>' . self::STANDARD_RENDER_RESULT . '</dd></li>',
+            ],
+            'htmlTranslatedNoLabel' => [
+                'element' => m::mock(\Common\Form\Elements\Types\HtmlTranslated::class)
+                        ->shouldReceive('getValue')->andReturn('<b>text</b>')
+                        ->shouldReceive('getAttribute')->andReturn('unit_CssClass')
+                        ->shouldReceive('getOption')->andReturnNull()
+                        ->shouldReceive('getLabel')->andReturn(null)
+                        ->shouldReceive('getLabelOption')->andReturnNull()
+                        ->getMock(),
+                'expect' => '<li class="definition-list__item readonly unit_CssClass">STANDARD-RENDER-RESULT</li>',
             ],
             [
                 'element' => m::mock(ZendElement\Csrf::class),
