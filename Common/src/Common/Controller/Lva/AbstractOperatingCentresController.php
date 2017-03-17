@@ -212,7 +212,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
             if ($crudAction !== null) {
                 $this->displayCrudErrors($errors);
-                return $this->redirect()->refreshAjax();
+                return null;
             }
 
             OperatingCentres::mapFormErrors($form, $errors, $this->hlpFlashMsgr, $this->hlpTranslator, $this->location);
