@@ -32,10 +32,9 @@ class DisqualifyUrl implements FormatterInterface
         switch ($matchedRouteName) {
             case 'lva-variation/people':
                 $url = $urlHelper->fromRoute(
-                    'disqualify-person',
+                    'disqualify-person/variation',
                     [
-                        'action'       => 'index',
-                        'variation'    => $params['variation'],
+                        'variation'    => $params['application'],
                         'person'       => $row['id'],
                     ],
                     ['query' => $query],
@@ -44,9 +43,8 @@ class DisqualifyUrl implements FormatterInterface
                 break;
             case 'lva-licence/people':
                 $url = $urlHelper->fromRoute(
-                    'disqualify-person',
+                    'disqualify-person/licence',
                     [
-                        'action'       => 'index',
                         'licence'      => $params['licence'],
                         'person'       => $row['id'],
                     ],
@@ -56,9 +54,8 @@ class DisqualifyUrl implements FormatterInterface
                 break;
             case 'lva-application/people':
                 $url = $urlHelper->fromRoute(
-                    'disqualify-person',
+                    'disqualify-person/application',
                     [
-                        'action'       => 'index',
                         'application'  => $params['application'],
                         'person'       => $row['id'],
                     ],
