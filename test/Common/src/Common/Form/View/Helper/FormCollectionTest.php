@@ -205,7 +205,7 @@ class FormCollectionTest extends MockeryTestCase
         $sut->setView($mockView);
 
         $markup = $sut($mockFieldset);  //  invoke
-        $this->assertEquals('<ul class="definition-list readonly unit_CssClass">element</ul>', $markup);
+        $this->assertEquals('<ul class="definition-list readonly">element</ul>', $markup);
     }
 
     /**

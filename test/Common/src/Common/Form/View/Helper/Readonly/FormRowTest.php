@@ -147,7 +147,7 @@ class FormRowTest extends MockeryTestCase
             [$mockRemoveIfReadOnly, ''],
             'text' => [
                 'element' => $mockText,
-                'expect' => '<li class="definition-list__item readonly full-width">' .
+                'expect' => '<li class="definition-list__item readonly">' .
                     '<dt>@_Label_@</dt><dd>_Value_</dd></li>',
             ],
             'select' => [
@@ -157,7 +157,7 @@ class FormRowTest extends MockeryTestCase
             [$mockTable, '<table></table>'],
             'htmlTranslated' => [
                 'element' => $mockHtmlTranslated,
-                'expect' => '<li class="definition-list__item readonly html-translated">' .
+                'expect' => '<li class="definition-list__item readonly">' .
                     '<dt>@@</dt><dd>' . self::STANDARD_RENDER_RESULT . '</dd></li>',
             ],
             'htmlTranslatedNoLabel' => [
@@ -168,7 +168,7 @@ class FormRowTest extends MockeryTestCase
                         ->shouldReceive('getLabel')->andReturn(null)
                         ->shouldReceive('getLabelOption')->andReturnNull()
                         ->getMock(),
-                'expect' => '<li class="definition-list__item readonly unit_CssClass">STANDARD-RENDER-RESULT</li>',
+                'expect' => '<li class="definition-list__item readonly">STANDARD-RENDER-RESULT</li>',
             ],
             [
                 'element' => m::mock(ZendElement\Csrf::class),

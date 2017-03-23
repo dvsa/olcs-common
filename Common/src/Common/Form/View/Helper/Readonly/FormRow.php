@@ -162,15 +162,6 @@ class FormRow extends AbstractHelper
      */
     public function getClass($element)
     {
-        $class = 'definition-list__item readonly';
-
-        if (
-            $element->getAttribute('type') == 'textarea' ||
-            ($element->getAttribute('type') == 'select' && $element->getAttribute('multiple'))
-        ) {
-            $class .= ' full-width';
-        }
-
-        return trim($class . ' '. ($element->getAttribute('class') ?: ''));
+        return'definition-list__item readonly';
     }
 }

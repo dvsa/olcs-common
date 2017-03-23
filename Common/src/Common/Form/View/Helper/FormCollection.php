@@ -145,9 +145,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
                 return '';
             }
 
-            $elmCssClass = ($element->getAttribute('class') ?: '');
-
-            return '<ul class="definition-list readonly '. $elmCssClass . '">' . $markup . '</ul>';
+            return '<ul class="definition-list readonly">' . $markup . '</ul>';
         }
 
         // If $templateMarkup is not empty, use it for simplify adding new element in JavaScript
