@@ -1459,7 +1459,7 @@ return [
     'internal.inspection-request.form.6-month' => '6 month',
     'internal.inspection-request.form.9-month' => '9 month',
     'internal.inspection-request.form.caseworker-notes' => 'Caseworker notes',
-    'internal.inspection-request.form.create-inspection-request' => 'Would you like to create an inspection request?',
+    'internal.inspection-request.form.create-inspection-request' => 'Do you want to create an invite to a new operator seminar?',
     'internal.inspection-request.form.due-date' => 'Due date',
     'internal.inspection-request.form.title.grant' => 'Grant',
     'internal.inspection-request.remove-inspection-request' => 'Remove inspection request',
