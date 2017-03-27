@@ -163,4 +163,15 @@ class CurrentUser extends AbstractHelper
 
         return $this->userData;
     }
+
+    /**
+     * Get total number of vehicles for operator
+     *
+     * @return int
+     */
+    public function getNumberOfVehicles()
+    {
+        $userData = $this->getUserData();
+        return !empty($userData['numberOfVehicles']) ? $userData['numberOfVehicles'] : 0;
+    }
 }
