@@ -289,4 +289,20 @@ class CurrentUserTest extends MockeryTestCase
             [['userType' => User::USER_TYPE_OPERATOR, 'pid' => 'testing'], hash('sha256', 'testing')],
         ];
     }
+
+    public function testGetNumberOfVehicles()
+    {
+        $userData = [
+            'numberOfVehicles' => 25
+        ];
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals(25, $sut->getNumberOfVehicles());
+    }
 }
