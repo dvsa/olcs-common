@@ -78,11 +78,11 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
         }
 
         $result = $this->queryService->send($query);
-        if (!$result->isOk()) {
-            return null;
+        if ($result->isOk()) {
+            $this->localCache[$cacheIdentifier] = $result;
         }
 
-        return $this->localCache[$cacheIdentifier] = $result;
+        return $result;
     }
 
     /**
