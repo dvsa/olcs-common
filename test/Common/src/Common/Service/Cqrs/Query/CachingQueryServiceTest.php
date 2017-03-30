@@ -57,7 +57,7 @@ class CachingQueryServiceTest extends MockeryTestCase
 
         $this->mockResult->shouldReceive('isOk')->with()->once()->andReturn(false);
 
-        static::assertNull($this->sut->send($this->mockQuery));
+        static::assertSame($this->mockResult, $this->sut->send($this->mockQuery));
     }
 
     public function testSendWithShortCache()

@@ -59,13 +59,13 @@ class IdentityProviderTest extends TestCase
 
     public function testGetIdentityThrowsUnableToRetrieveException()
     {
-        $this->setExpectedException('Exception');
-
         $mockResponse = m::mock();
+        $mockResponse->shouldReceive('getResult')->with()->once()->andReturn(['messages' => ['foo', 'bar']]);
         $mockResponse->shouldReceive('isOk')->andReturn(false);
 
         $this->queryService->shouldReceive('send')->once()->andReturn($mockResponse);
 
+        $this->setExpectedException(\Exception::class, 'Unable to retrieve identity - foo; bar');
         $this->sut->getIdentity();
     }
 }

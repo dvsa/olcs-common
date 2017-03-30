@@ -26,7 +26,9 @@ class IdentityProvider implements IdentityProviderInterface
     private $identity;
 
     /**
-     * @param QuerySender $queryService
+     * Constructor
+     *
+     * @param QuerySender $queryService QuerySender service
      */
     public function __construct(QuerySender $queryService)
     {
@@ -45,7 +47,9 @@ class IdentityProvider implements IdentityProviderInterface
             $response = $this->queryService->send(MyAccount::create([]));
 
             if (!$response->isOk()) {
-                throw new \Exception('Unable to retrieve identity');
+                throw new \Exception(
+                    'Unable to retrieve identity - '. implode("; ", $response->getResult()['messages'])
+                );
             }
 
             $data = $response->getResult();
