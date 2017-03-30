@@ -2,9 +2,9 @@
 
 namespace CommonTest\Form\Model\Form\Lva;
 
-use Olcs\TestHelpers\FormTester\AbstractFormTest;
-use Olcs\TestHelpers\FormTester\Data\Object as F;
-use CommonTest\Bootstrap;
+use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use Common\Form\Elements\Types\AttachFilesButton;
+use Common\Form\Elements\InputFilters\ActionButton;
 
 /**
  * Class FinancialHistoryTest
@@ -13,28 +13,106 @@ use CommonTest\Bootstrap;
  * @group ComponentTests
  * @group FormTests
  */
-class FinancialHistoryTest extends AbstractFormTest
+class FinancialHistoryTest extends AbstractFormValidationTestCase
 {
-    protected $formName = '\Common\Form\Model\Form\Lva\FinancialHistory';
+    protected $formName = \Common\Form\Model\Form\Lva\FinancialHistory::class;
 
-    protected function getServiceManager()
+    public function testFileUpload()
     {
-        return Bootstrap::getRealServiceManager();
+        $element = ['data', 'file', 'file'];
+        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementType($element, AttachFilesButton::class);
+
+        $element = ['data', 'file', '__messages__'];
+        $this->assertFormElementHidden($element);
+
+        $element = ['data', 'file', 'upload'];
+        $this->assertFormElementType($element, ActionButton::class);
+        $this->assertFormElementRequired($element, false);
     }
 
-    protected function getFormData()
+    public function testId()
     {
-        $bankruptContext = new F\Context(new F\Stack(['data', 'bankrupt']), 'Y');
+        $this->assertFormElementHidden(['data', 'id']);
+    }
 
-        return [
-            new F\Test(
-                new F\Stack(['data', 'insolvencyDetails']),
-                new F\Value(F\Value::VALID, ''),
-                new F\Value(F\Value::VALID, 'foo'),
-                new F\Value(F\Value::INVALID, '', $bankruptContext), // this was failing (OLCS-6899)
-                new F\Value(F\Value::INVALID, 'not long enough', $bankruptContext),
-                new F\Value(F\Value::VALID, str_pad('', 200, 'x'), $bankruptContext)
-            ),
-        ];
+    public function testVersion()
+    {
+        $this->assertFormElementHidden(['data', 'version']);
+    }
+
+    public function testHasAnyPerson()
+    {
+        $this->assertFormElementHtml(['data', 'hasAnyPerson']);
+    }
+
+    public function testBankrupt()
+    {
+        $this->assertFormElementRequired(['data', 'bankrupt'], true);
+    }
+
+    public function testLiquidation()
+    {
+        $this->assertFormElementRequired(['data', 'liquidation'], true);
+    }
+
+    public function testReceivership()
+    {
+        $this->assertFormElementRequired(['data', 'receivership'], true);
+    }
+
+    public function testAdministration()
+    {
+        $this->assertFormElementRequired(['data', 'administration'], true);
+    }
+
+    public function testDisqualified()
+    {
+        $this->assertFormElementRequired(['data', 'disqualified'], true);
+    }
+
+    public function testAdditionalInfoLabel()
+    {
+        $this->assertFormElementHtml(['data', 'additionalInfoLabel']);
+    }
+
+    public function testInsolvencyDetails()
+    {
+        $this->assertFormElementAllowEmpty(['data', 'insolvencyDetails'], true);
+    }
+
+    public function testInsolvencyConfirmation()
+    {
+        $this->assertFormElementRequired(
+            ['data', 'insolvencyConfirmation'],
+            true
+        );
+    }
+
+    public function testNiFlag()
+    {
+        $this->assertFormElementHidden(['data', 'niFlag']);
+    }
+
+    public function testSaveAndContinue()
+    {
+        $this->assertFormElementActionButton(
+            ['form-actions', 'saveAndContinue']
+        );
+    }
+
+    public function testSave()
+    {
+        $this->assertFormElementActionButton(
+            ['form-actions', 'save']
+        );
+    }
+
+    public function testCancel()
+    {
+        $this->assertFormElementActionButton(
+            ['form-actions', 'cancel']
+        );
     }
 }
