@@ -2,7 +2,6 @@
 
 use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
-use Common\Controller\Lva\Adapters as LvaAdapters;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
@@ -317,6 +316,11 @@ return array(
             'defaultPath' => '[locale]/[doc_type_name]/[year]/[month]', // e.g. gb/publications/2015/03
         )
     ),
+    'navigation_helpers' =>  [
+        'invokables' => [
+            'menuRbac' => Common\View\Helper\Navigation\MenuRbac::class,
+        ],
+    ],
     'view_helpers' => array(
         'invokables' => array(
             'form' => 'Common\Form\View\Helper\Form',
