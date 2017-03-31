@@ -2,88 +2,79 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\AbstractDataService;
-use Common\Service\Data\Interfaces\ListData;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
-use Dvsa\Olcs\Transfer\Query\ContactDetail\ContactDetailsList;
+use Dvsa\Olcs\Transfer\Query as TransferQry;
 
 /**
  * Class ContactDetails
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class ContactDetails extends AbstractDataService implements ListData
+class ContactDetails extends AbstractListDataService
 {
-    /**
-     * Format data
-     *
-     * @param array $data Data
-     *
-     * @return array
-     */
-    public function formatData(array $data)
-    {
-        $optionData = [];
+    private static $sort = 'description';
+    private static $order = 'ASC';
 
-        foreach ($data as $datum) {
-            $optionData[$datum['id']] = $datum['description'];
-        }
-
-        return $optionData;
-    }
-
-    /**
-     * Fetch list options
-     *
-     * @param string $category  Category
-     * @param bool   $useGroups Use groups
-     *
-     * @return array
-     */
-    public function fetchListOptions($category, $useGroups = false)
-    {
-        $data = $this->fetchListData($category);
-
-        if (!$data) {
-            return [];
-        }
-
-        return $this->formatData($data);
-    }
+    /** @var int */
+    private $contactType;
 
     /**
      * Fetch list data
      *
-     * @param string $category Category
+     * @param string $context Category
      *
      * @return array
      * @throw UnexpectedResponseException
      */
-    public function fetchListData($category)
+    public function fetchListData($context = null)
     {
-        if (is_null($this->getData('ContactDetails'))) {
-
-            $params = [
-                'sort'  => 'description',
-                'order' => 'ASC',
-                'page'  => 1,
-                'limit' => 100,
-                'contactType' => $category
-            ];
-            $dtoData = ContactDetailsList::create($params);
-            $response = $this->handleQuery($dtoData);
-
-            if (!$response->isOk()) {
-                throw new UnexpectedResponseException('unknown-error');
-            }
-
-            $this->setData('ContactDetails', false);
-
-            if (isset($response->getResult()['results'])) {
-                $this->setData('ContactDetails', $response->getResult()['results']);
-            }
+        $data = (array)$this->getData('ContactDetails');
+        if (0 !== count($data)) {
+            return $data;
         }
 
+        $this->contactType = ($context ?: $this->contactType);
+
+        $query = TransferQry\ContactDetail\ContactDetailsList::create(
+            [
+                'sort' => self::$sort,
+                'order' => self::$order,
+                'contactType' => $this->contactType,
+            ]
+        );
+        $response = $this->handleQuery($query);
+
+        if (!$response->isOk()) {
+            throw new UnexpectedResponseException('unknown-error');
+        }
+
+        $result = $response->getResult();
+
+        $this->setData('ContactDetails', (isset($result['results']) ? $result['results'] : null));
+
         return $this->getData('ContactDetails');
+    }
+
+    /**
+     * Set contact type
+     *
+     * @param string $type Type of Contact
+     *
+     * @return $this
+     */
+    public function setContactType($type)
+    {
+        $this->contactType = $type;
+        return $this;
+    }
+
+    /**
+     * Returns contact type
+     *
+     * @return int
+     */
+    public function getContactType()
+    {
+        return $this->contactType;
     }
 }
