@@ -28,6 +28,11 @@ class TableBuilderTest extends MockeryTestCase
         }
     }
 
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * Get Mock Table Builder
      *
@@ -1027,26 +1032,158 @@ class TableBuilderTest extends MockeryTestCase
         $this->assertEquals('', $table->renderActions());
     }
 
-    /**
-     * Test renderActions with trimmed actions
-     */
-    public function testRenderActionsWithTrimmedActions()
+    public function testTrimActionsHaveRows()
     {
-        $settings = array(
-            'crud' => array(
-                'actions' => array(
-                    'add' => array('requireRows' => true)
-                )
-            )
-        );
+        $settings = [
+            'crud' => [
+                'actions' => [
+                    'action_1' => [
+                        'requireRows' => true,
+                    ],
+                    'action_2' => [
+                        'requireRows' => false,
+                    ],
+                ],
+            ]
+        ];
 
-        $table = new TableBuilder($this->getMockServiceLocator());
+        $mockContentHelper = m::mock(\Common\Service\Table\ContentHelper::class);
+        $mockContentHelper
+            ->shouldReceive('replaceContent')
+            ->times(2)
+            ->with('{{[elements/actionButton]}}', m::any())
+            ->andReturnUsing(
+                function ($content, $details) {
+                    return $details['name'];
+                }
+            );
+        $mockContentHelper
+            ->shouldReceive('replaceContent')
+            ->once()
+            ->with(
+                '{{[elements/actionContainer]}}',
+                [
+                    'content' => 'action_1action_2',
+                ]
+            );
 
-        $table->setType(TableBuilder::TYPE_CRUD);
+        $table = $this->getMockTableBuilder(['getContentHelper']);
+        $table
+            ->setType(TableBuilder::TYPE_CRUD)
+            ->setRows(['HAVE ROWS'])
+            ->setSettings($settings);
 
-        $table->setSettings($settings);
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->willReturn($mockContentHelper);
 
-        $this->assertEquals('', $table->renderActions());
+        $table->renderActions();
+    }
+
+    public function testTrimActionsReadOnlyUser()
+    {
+        $settings = [
+            'crud' => [
+                'actions' => [
+                    'action_1' => [
+                    ],
+                    'action_3' => [
+                        'keepForReadOnly' => true,
+                    ],
+                    'action_4' => [
+                        'keepForReadOnly' => false,
+                    ],
+                ],
+            ]
+        ];
+
+        $mockContentHelper = m::mock(\Common\Service\Table\ContentHelper::class);
+        $mockContentHelper
+            ->shouldReceive('replaceContent')
+            ->with('{{[elements/actionButton]}}', m::any())
+            ->andReturnUsing(
+                function ($content, $details) {
+                    return $details['name'];
+                }
+            );
+        $mockContentHelper
+            ->shouldReceive('replaceContent')
+            ->once()
+            ->with(
+                '{{[elements/actionContainer]}}',
+                [
+                    'content' => 'action_3',
+                ]
+            );
+
+        $table = $this->getMockTableBuilder(['getContentHelper', 'isInternalReadOnly']);
+        $table
+            ->setType(TableBuilder::TYPE_CRUD)
+            ->setRows([])
+            ->setSettings($settings);
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->willReturn($mockContentHelper);
+
+        $table->expects($this->exactly(2))
+            ->method('isInternalReadOnly')
+            ->willReturn(true);
+
+        $table->renderActions();
+    }
+
+    public function testTrimActionsNoRows()
+    {
+        $settings = [
+            'crud' => [
+                'actions' => [
+                    'action_1' => [
+                        'requireRows' => true,
+                    ],
+                    'action_2' => [
+                        'requireRows' => false,
+                    ],
+                    'action_3' => [
+                    ],
+                ],
+            ]
+        ];
+
+        $mockContentHelper = m::mock(\Common\Service\Table\ContentHelper::class);
+        $mockContentHelper
+            ->shouldReceive('replaceContent')
+            ->with('{{[elements/actionButton]}}', m::any())
+            ->andReturnUsing(
+                function ($content, $details) {
+                    return $details['name'];
+                }
+            );
+        $mockContentHelper
+            ->shouldReceive('replaceContent')
+            ->once()
+            ->with(
+                '{{[elements/actionContainer]}}',
+                [
+                    'content' => 'action_2action_3',
+                ]
+            );
+
+        $table = $this->getMockTableBuilder(['getContentHelper', 'isInternalReadOnly']);
+        $table
+            ->setType(TableBuilder::TYPE_CRUD)
+            ->setRows([])
+            ->setSettings($settings);
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->willReturn($mockContentHelper);
+
+        $table->expects($this->any())
+            ->method('isInternalReadOnly')
+            ->willReturn(false);
+
+        $table->renderActions();
     }
 
     /**
@@ -1079,19 +1216,18 @@ class TableBuilderTest extends MockeryTestCase
 
         $table = $this->getMockTableBuilder(array('getContentHelper', 'renderButtonActions'));
 
+        $table->setType(TableBuilder::TYPE_CRUD);
+        $table->setSettings($settings);
+
         $table->expects($this->once())
             ->method('renderButtonActions')
-            ->will($this->returnValue('BUTTONS'));
+            ->willReturn('EXPECTED');
 
         $table->expects($this->once())
             ->method('getContentHelper')
-            ->will($this->returnValue($mockContentHelper));
+            ->willReturn($mockContentHelper);
 
-        $table->setType(TableBuilder::TYPE_CRUD);
-
-        $table->setSettings($settings);
-
-        $this->assertEquals(array('content' => 'BUTTONS'), $table->renderActions());
+        $this->assertEquals(['content' => 'EXPECTED'], $table->renderActions());
     }
 
     /**
@@ -1364,42 +1500,30 @@ class TableBuilderTest extends MockeryTestCase
             array(
                 'bar' => 'cake'
             ),
-            array(
-                'more' => 'bar'
-            ),
-            array(
-                'more' => 'cake'
-            ),
+            [
+                'action_3' => 'unit_1|',
+            ],
+            [
+                'action_4' => 'unit_2|',
+            ],
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
-
-        $mockContentHelper->expects($this->at(0))
-            ->method('replaceContent')
-            ->with('{{[elements/actionButton]}}', ['foo' => 'bar'])
-            ->will($this->returnValue('foo bar'));
-
-        $mockContentHelper->expects($this->at(1))
-            ->method('replaceContent')
-            ->with('{{[elements/actionButton]}}', ['bar' => 'cake'])
-            ->will($this->returnValue('bar cake'));
-
-        $mockContentHelper->expects($this->at(2))
-            ->method('replaceContent')
-            ->with('{{[elements/actionButton]}}', ['more' => 'bar'])
-            ->will($this->returnValue('more bar '));
-
-        $mockContentHelper->expects($this->at(3))
-            ->method('replaceContent')
-            ->with('{{[elements/actionButton]}}', ['more' => 'cake'])
-            ->will($this->returnValue('more cake '));
-
-        $mockContentHelper->expects($this->at(4))
-            ->method('replaceContent')
+        $mockContentHelper = m::mock(\Common\Service\Table\ContentHelper::class);
+        $mockContentHelper
+            ->shouldReceive('replaceContent')
+            ->times(4)
+            ->with('{{[elements/actionButton]}}', m::any())
+            ->andReturnUsing(
+                function ($content, $details) {
+                    return key($details) . '-' . current($details);
+                }
+            );
+        $mockContentHelper
+            ->shouldReceive('replaceContent')
             ->with(
                 '{{[elements/moreActions]}}',
                 [
-                    'content' => 'more bar more cake ',
+                    'content' => 'action_3-unit_1|action_4-unit_2|',
                     'label' => self::TRANSLATED . 'table_button_more_actions',
                 ]
             );
@@ -1408,7 +1532,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $table->expects($this->any())
             ->method('getContentHelper')
-            ->will($this->returnValue($mockContentHelper));
+            ->willReturn($mockContentHelper);
 
         $table->renderButtonActions($actions, 2);
     }

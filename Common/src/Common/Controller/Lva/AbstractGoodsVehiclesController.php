@@ -7,7 +7,6 @@ use Common\Controller\Lva\Traits\VehicleSearchTrait;
 use Common\Data\Mapper;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
-use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Command\Application\CreateGoodsVehicle as ApplicationCreateGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteGoodsVehicle as ApplicationDeleteGoodsVehicle;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateGoodsVehicle as ApplicationUpdateGoodsVehicle;
@@ -35,9 +34,11 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
     const SEARCH_VEHICLES_COUNT = 20;
 
-    use Traits\CrudTableTrait,
-        TransferVehiclesTrait,
+    use TransferVehiclesTrait,
         VehicleSearchTrait;
+    use Traits\CrudTableTrait {
+        handleCrudAction as protected traitHandleCrudAction;
+    }
 
     protected $section = 'vehicles';
     protected $baseRoute = 'lva-%s/vehicles';
@@ -96,27 +97,32 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $headerData = $this->getHeaderData();
 
         $formData = [];
-        $crudAction = null;
 
         if ($request->isPost()) {
             $formData = (array)$request->getPost();
-            $crudAction = $this->getCrudAction([$formData['table']]);
         } elseif ($this->lva === 'application') {
             $formData = Mapper\Lva\GoodsVehicles::mapFromResult($headerData);
         } elseif ($this->lva === 'licence') {
             $formData = Mapper\Lva\LicenceGoodsVehicles::mapFromResult($headerData);
         }
 
-        $haveCrudAction = ($crudAction !== null);
-
         $formData = array_merge($formData, ['query' => (array)$request->getQuery()]);
-
         $form = $this->getForm($headerData, $formData);
 
         if ($request->isPost()) {
+            $crudAction = $this->getCrudAction([$formData['table']]);
+            $haveCrudAction = ($crudAction !== null);
+
+            if ($haveCrudAction) {
+                if ($this->isInternalReadOnly()) {
+                    return $this->handleCrudAction($crudAction);
+                }
+            }
+
             if ($this->isInternalReadOnly()) {
                 return $this->handleCrudAction($crudAction);
             }
+
             if ($form->isValid()) {
                 $response = $this->updateVehiclesSection($form, $haveCrudAction, $headerData);
                 if ($response !== null) {
@@ -124,20 +130,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 }
 
                 if ($haveCrudAction) {
-                    $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
-                        $this->getActionFromCrudAction($crudAction)
-                    );
-
-                    if ($alternativeCrudResponse !== null) {
-                        return $alternativeCrudResponse;
-                    }
-
-                    return $this->handleCrudAction(
-                        $crudAction,
-                        [
-                            'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
-                        ]
-                    );
+                    return $this->handleCrudAction($crudAction);
                 }
 
                 return $this->completeSection('vehicles');
@@ -145,6 +138,30 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         }
 
         return $this->renderForm($form, $headerData);
+    }
+
+    /**
+     * Override handleCrudAction
+     *
+     * @param array $crudActionData Action data
+     *
+     * @return \Zend\Http\Response
+     */
+    protected function handleCrudAction(array $crudActionData)
+    {
+        $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
+            $this->getActionFromCrudAction($crudActionData)
+        );
+        if ($alternativeCrudResponse !== null) {
+            return $alternativeCrudResponse;
+        }
+
+        return $this->traitHandleCrudAction(
+            $crudActionData,
+            [
+                'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
+            ]
+        );
     }
 
     /**

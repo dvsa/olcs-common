@@ -7,18 +7,16 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * CRUD Action Trait Test
- *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers \Common\Controller\Lva\Traits\CrudActionTrait
  */
 class CrudActionTraitTest extends MockeryTestCase
 {
     const ID = 9999;
-    /**
-     * @var Stubs\CrudActionTraitStub
-     */
-    protected $sut;
 
+    /** @var Stubs\CrudActionTraitStub | m\MockInterface */
+    protected $sut;
+    /** @var \Zend\ServiceManager\ServiceManager | m\MockInterface */
     protected $sm;
 
     protected function setUp()
@@ -30,6 +28,11 @@ class CrudActionTraitTest extends MockeryTestCase
             ->shouldAllowMockingProtectedMethods();
 
         $this->sut->setServiceLocator($this->sm);
+    }
+
+    public function tearDown()
+    {
+        m::close();
     }
 
     /**

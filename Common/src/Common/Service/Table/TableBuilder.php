@@ -147,7 +147,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Url plugin
      *
-     * @var object
+     * @var \Zend\Mvc\Controller\Plugin\Url
      */
     private $url;
 
@@ -239,7 +239,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Inject the service locator and auth service
      *
-     * @param $sm
+     * @param \Zend\ServiceManager\ServiceManager $sm ServiceManager
      */
     public function __construct($sm)
     {
@@ -314,6 +314,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function setType($type)
     {
         $this->type = $type;
+        return $this;
     }
 
     /**
@@ -376,6 +377,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function setRows($rows)
     {
         $this->rows = $rows;
+        return $this;
     }
 
     /**
@@ -813,8 +815,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Translate title
      *
-     * @param array $config
-     * @return array
+     * @param array $config Config
+     *
+     * @return void
      */
     private function translateTitle(&$config)
     {
@@ -1176,32 +1179,27 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             )
         );
 
-        if ($this->isDisabled || !$hasActions || $this->isInternalReadOnly()) {
+        if ($this->isDisabled || !$hasActions) {
             return '';
         }
 
-        $actions = $this->trimActions(
-            isset($this->settings['crud']['actions']) ? $this->settings['crud']['actions'] : array()
-        );
+        $crud = $this->getSetting('crud');
 
-        $links = isset($this->settings['crud']['links']) ? $this->settings['crud']['links'] : array();
+        $actions = $this->trimActions(isset($crud['actions']) ? $crud['actions'] : []);
+        $links = $this->trimLinks(isset($crud['links']) ? $crud['links'] : []);
 
         if (empty($actions) && empty($links)) {
             return '';
         }
 
-        $newActions = $this->formatActions($actions);
-
-        $newLinks = $this->formatLinks($links);
-
         $content = $this->formatActionContent(
-            $newActions,
+            $this->formatActions($actions),
             $this->getSetting('actionFormat'),
             $this->getSetting('collapseAt'),
-            $newLinks
+            $this->formatLinks($links)
         );
 
-        return $this->replaceContent('{{[elements/actionContainer]}}', array('content' => $content));
+        return $this->replaceContent('{{[elements/actionContainer]}}', ['content' => $content]);
     }
 
     /**
@@ -1215,7 +1213,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $options = '';
 
         foreach ($actions as $details) {
-
             $options .= $this->replaceContent('{{[elements/actionOption]}}', $details);
         }
 
@@ -1283,15 +1280,22 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $content = '';
         if (!empty($actions)) {
-            $moreActions = '';
+            $moreActions = [];
             foreach ($actions as $details) {
-                $moreActions .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+                //  add css class to items
+                $cssClasses = (isset($details['class']) ? $details['class'] : '');
+                if (0 == preg_match('/(\s|^)more-actions__item($|\s)/', $cssClasses)) {
+                    $details['class'] = $cssClasses . ' more-actions__item';
+                }
+
+                $moreActions[] = $this->replaceContent('{{[elements/actionButton]}}', $details);
             }
+
             $translator = $this->getServiceLocator()->get('translator');
             $content .= $this->replaceContent(
                 '{{[elements/moreActions]}}',
                 [
-                    'content' => $moreActions,
+                    'content' => implode('', $moreActions),
                     'label' => $translator->translate('table_button_more_actions'),
                 ]
             );
@@ -1731,7 +1735,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Format actions
      *
-     * @param array $actions
+     * @param array $actions Actions
+     *
      * @return array
      */
     private function formatActions($actions)
@@ -1771,6 +1776,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         return $newActions;
     }
 
+    /**
+     * Format links
+     *
+     * @param array $links Links
+     *
+     * @return array
+     */
     private function formatLinks($links)
     {
         $newLinks = array();
@@ -1804,21 +1816,70 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Trim actions
      *
-     * @param array $actions
+     * @param array $items Actions settings
+     *
      * @return array
      */
-    private function trimActions($actions)
+    private function trimActions(array $items)
     {
-        if (count($this->rows) === 0) {
-            foreach ($actions as $key => $details) {
-                if (isset($details['requireRows']) && $details['requireRows']) {
-                    unset($actions[$key]);
-                }
-            }
+        $items = $this->filterByRequireRows($items);
+        return $this->filterByInternalReadOnly($items);
+    }
+
+    /**
+     * Trim(filter) links
+     *
+     * @param array $items Links settings
+     *
+     * @return array
+     */
+    private function trimLinks(array $items)
+    {
+        return $this->filterByInternalReadOnly($items);
+    }
+
+    /**
+     * Remove items which require rows
+     *
+     * @param array $items Items (actions)
+     *
+     * @return array
+     */
+    private function filterByRequireRows(array $items)
+    {
+        if (count($this->rows) !== 0) {
+            return $items;
         }
 
-        return $actions;
+        return array_filter(
+            $items,
+            function (array $item) {
+                return !isset($item['requireRows']) || (bool)$item['requireRows'] === false;
+            }
+        );
     }
+
+    /**
+     * Remove items not available for ReadOnly
+     *
+     * @param array $items Items (actions)
+     *
+     * @return array
+     */
+    private function filterByInternalReadOnly(array $items)
+    {
+        if (!$this->isInternalReadOnly()) {
+            return $items;
+        }
+
+        return array_filter(
+            $items,
+            function (array $item) {
+                return isset($item['keepForReadOnly']) && (bool)$item['keepForReadOnly'] === true;
+            }
+        );
+    }
+
 
     public function getColumn($name)
     {
@@ -1918,10 +1979,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     protected function isInternalReadOnly()
     {
         $authService = $this->getAuthService();
-        if ($authService->isGranted('internal-user') && !$authService->isGranted('internal-edit')) {
-            return true;
-        }
-        return false;
+
+        return (
+            $authService->isGranted('internal-user')
+            && !$authService->isGranted('internal-edit')
+        );
     }
 
     /**

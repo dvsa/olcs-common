@@ -5,7 +5,6 @@ namespace Common\Form\View\Helper\Readonly;
 use Common\Form\Elements\Types\Table;
 use Zend\Form\ElementInterface;
 use Zend\Form\View\Helper\AbstractHelper;
-use Zend\View\Helper\EscapeHtml;
 
 /**
  * Class FormTable
@@ -13,13 +12,14 @@ use Zend\View\Helper\EscapeHtml;
  */
 class FormTable extends AbstractHelper
 {
-    /*
+    /**
      * Invoke helper as function
      *
      * Proxies to {@link render()}.
      *
-     * @param  ElementInterface|null $element
-     * @return string|FormElement
+     * @param ElementInterface|null $element Element
+     *
+     * @return FormTable|string
      */
     public function __invoke(ElementInterface $element = null)
     {
@@ -31,7 +31,10 @@ class FormTable extends AbstractHelper
     }
 
     /**
-     * @param ElementInterface $element
+     * Render
+     *
+     * @param ElementInterface $element Element
+     *
      * @return string
      */
     public function render(ElementInterface $element)
@@ -39,8 +42,8 @@ class FormTable extends AbstractHelper
         if (!($element instanceof Table)) {
             return '';
         }
+
         $table = $element->getTable();
-        $table->setDisabled(true);
 
         // remove all checkbox columns
         $columns = $table->getColumns();
@@ -48,11 +51,11 @@ class FormTable extends AbstractHelper
         if (is_array($columns)) {
             $newColumns = [];
             foreach ($columns as $column) {
-                if (isset($column['type']) && $column['type'] == 'Checkbox') {
+                if (isset($column['type']) && $column['type'] === 'Checkbox') {
                     continue;
-                } else {
-                    $newColumns[] = $column;
                 }
+
+                $newColumns[] = $column;
             }
             $table->setColumns($newColumns);
         }
