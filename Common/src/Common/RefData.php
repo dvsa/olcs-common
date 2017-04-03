@@ -190,12 +190,17 @@ class RefData
     const OPERATOR_CPID_DEFAULT = 'op_cpid_default';
     const OPERATOR_CPID_ALL = 'op_cpid_all';
 
+    /**
+     * Contact Details
+     */
     const TRANSPORT_MANAGER_TYPE_EXTERNAL = 'tm_t_e';
     const TRANSPORT_MANAGER_TYPE_BOTH = 'tm_t_b';
 
     const TRANSPORT_MANAGER_STATUS_CURRENT = 'tm_s_cur';
     const TRANSPORT_MANAGER_STATUS_DISQUALIFIED = 'tm_s_dis';
     const TRANSPORT_MANAGER_STATUS_REMOVED = 'tm_s_rem';
+
+    const CONTACT_TYPE_PARTNER = 'ct_partner';
 
     /**
      * IRFO Stock Control
