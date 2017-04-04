@@ -28,8 +28,9 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderFormWithElement()
+    public function testRenderFormWithoutAction()
     {
+        $_SERVER['REQUEST_URI'] = 'bar';
         $this->form->add(new \Zend\Form\Element\Text('test'));
 
         $helpers = new HelperPluginManager();
@@ -45,7 +46,32 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
         echo $viewHelper($this->form, 'form', '/');
 
         $this->expectOutputRegex(
-            '/^<form action="(.*)" method="(POST|GET)" name="test" id="test"><div class="field "><\/div><\/form>$/'
+            '/^<form action="bar" method="(POST|GET)" name="test" id="test"><div class="field "><\/div><\/form>$/'
+        );
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderFormWithElement()
+    {
+        $this->form->add(new \Zend\Form\Element\Text('test'));
+        $this->form->setAttribute('action', 'foo');
+
+        $helpers = new HelperPluginManager();
+        $helpers->setService('formRow', new Helper\FormRow());
+        $helpers->setService('formCollection', new Helper\FormCollection());
+        $helpers->setService('addTags', new \Common\View\Helper\AddTags());
+
+        $view = new PhpRenderer();
+        $view->setHelperPluginManager($helpers);
+
+        $viewHelper = new FormViewHelper();
+        $viewHelper->setView($view);
+        echo $viewHelper($this->form, 'form', '/');
+
+        $this->expectOutputRegex(
+            '/^<form action="foo" method="(POST|GET)" name="test" id="test"><div class="field "><\/div><\/form>$/'
         );
     }
 
@@ -55,6 +81,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
     public function testRenderFormWithFieldset()
     {
         $this->form->add(new \Zend\Form\Fieldset('test'));
+        $this->form->setAttribute('action', 'foo');
 
         $helpers = new HelperPluginManager();
         $helpers->setService('formCollection', new Helper\FormCollection());
@@ -87,6 +114,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
         $mockForm->shouldReceive('getIterator')->andReturn($iterator);
         $mockForm->shouldReceive('getOption')->with('readonly')->andReturn(true);
         $mockForm->shouldReceive('getAttributes')->andReturn([]);
+        $mockForm->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo');
 
         $mockView = m::mock('Zend\View\Renderer\RendererInterface');
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
@@ -118,6 +146,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
             ->shouldReceive('getIterator')->once()->andReturn($iterator)
             ->shouldReceive('getOption')->twice()->with('readonly')->andReturn(false)
             ->shouldReceive('getAttributes')->once()->andReturn([])
+            ->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo')
             ->getMock();
 
         /** @var \Zend\View\Renderer\RendererInterface|m\MockInterface $mockView */
@@ -182,6 +211,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
             ->shouldReceive('getIterator')->once()->andReturn($iterator)
             ->shouldReceive('getOption')->twice()->with('readonly')->andReturn(false)
             ->shouldReceive('getAttributes')->once()->andReturn([])
+            ->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo')
             ->getMock();
 
         /** @var \Zend\View\Renderer\RendererInterface|m\MockInterface $mockView */

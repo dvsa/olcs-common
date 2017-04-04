@@ -36,6 +36,11 @@ class Form extends \Zend\Form\View\Helper\Form
         /** @var \Zend\View\Renderer\PhpRenderer $view */
         $view = $this->getView();
 
+        if ($form->getAttribute('action') === null) {
+            // set the action, point being to remove any anchor (eg #validation-summary) from the URL
+            $form->setAttribute('action', $_SERVER['REQUEST_URI']);
+        }
+
         $view->formCollection()->setReadOnly($form->getOption('readonly'));
 
         /** @var callable $rowHelper */
