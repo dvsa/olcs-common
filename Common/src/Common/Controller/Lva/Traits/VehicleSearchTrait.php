@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Vehicle Search Trait
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Controller\Lva\Traits;
 
 use Common\Service\Table\TableBuilder;
@@ -113,8 +108,8 @@ trait VehicleSearchTrait
                 'hide-removed-vehicles',
                 [
                     'label' => 'label-hide-removed-vehciles',
-                    'class' => ' more-actions__item',
                     'requireRows' => true,
+                    'keepForReadOnly' => true,
                 ]
             );
         } else {
@@ -122,8 +117,8 @@ trait VehicleSearchTrait
                 'show-removed-vehicles',
                 [
                     'label' => 'label-show-removed-vehciles',
-                    'class' => ' more-actions__item',
                     'requireRows' => false,
+                    'keepForReadOnly' => true,
                 ]
             );
         }
