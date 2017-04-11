@@ -132,7 +132,7 @@ class BusRegEntityService extends AbstractEntityService
     /**
      * Find all bus routes by licence identifier.
      *
-     * @param string $identifier The licence id.
+     * @param int $identifier The licence id.
      *
      * @return array|bool
      */
@@ -190,10 +190,7 @@ class BusRegEntityService extends AbstractEntityService
     }
 
     /**
-     * This method exists for EBSR which requires the most recent variation, not the most recent active variation
-     * to prevent regression when the backend service is implemented this method implements an order by on a different
-     * field.
-     *@TODO in the event of a refused variation, the previous record should be returned instead
+     * This method is no longer used by EBSR, we may be able to delete this if it isn't used elsewhere
      *
      * @param string $identifier identifier
      *
@@ -220,7 +217,7 @@ class BusRegEntityService extends AbstractEntityService
      * Assumes that Route Numbers are incremental
      *
      * @param int $licenceId licenceId
-     * 
+     *
      * @return array
      */
     public function findMostRecentRouteNoByLicence($licenceId)
