@@ -84,7 +84,8 @@ class BusRegEntityService extends AbstractEntityService
     /**
      * Get data for task processing
      *
-     * @param int $id
+     * @param int $id id
+     *
      * @return array
      */
     public function getDataForTasks($id)
@@ -95,7 +96,8 @@ class BusRegEntityService extends AbstractEntityService
     /**
      * Get data for fee processing
      *
-     * @param int $id
+     * @param int $id id
+     *
      * @return array
      */
     public function getDataForFees($id)
@@ -106,7 +108,8 @@ class BusRegEntityService extends AbstractEntityService
     /**
      * Get data for variation creation
      *
-     * @param int $id
+     * @param int $id id
+     *
      * @return array
      */
     public function getDataForVariation($id)
@@ -117,7 +120,8 @@ class BusRegEntityService extends AbstractEntityService
     /**
      * Get data for grantable
      *
-     * @param int $id
+     * @param int $id id
+     *
      * @return array
      */
     public function getDataForGrantable($id)
@@ -128,7 +132,7 @@ class BusRegEntityService extends AbstractEntityService
     /**
      * Find all bus routes by licence identifier.
      *
-     * @param $identifier The licence id.
+     * @param int $identifier The licence id.
      *
      * @return array|bool
      */
@@ -149,6 +153,13 @@ class BusRegEntityService extends AbstractEntityService
         return $result;
     }
 
+    /**
+     * find by Identifier
+     *
+     * @param string $identifier identifier
+     *
+     * @return array|bool
+     */
     public function findByIdentifier($identifier)
     {
         $params = [
@@ -179,13 +190,10 @@ class BusRegEntityService extends AbstractEntityService
     }
 
     /**
-     * This method exists for EBSR which requires the most recent variation, not the most recent active variation
-     * to prevent regression when the backend service is implemented this method implements an order by on a different
-     * field.
+     * This method is no longer used by EBSR, we may be able to delete this if it isn't used elsewhere
      *
-     * @TODO in the event of a refused variation, the previous record should be returned instead
+     * @param string $identifier identifier
      *
-     * @param $identifier
      * @return bool
      */
     public function findMostRecentByIdentifier($identifier)
@@ -208,7 +216,8 @@ class BusRegEntityService extends AbstractEntityService
      * Find the most recent Route No by Licence
      * Assumes that Route Numbers are incremental
      *
-     * @param $licenceId
+     * @param int $licenceId licenceId
+     *
      * @return array
      */
     public function findMostRecentRouteNoByLicence($licenceId)
