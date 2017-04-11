@@ -1120,6 +1120,7 @@ return [
     'form.operator-merge.success' => 'The current operator\'s records have been merged into the winning operator',
     'form.operator-merge.to-operator-id' => 'To operator ID',
     'form.operator-merge.to-operator-id.validation' => 'Invalid Operator ID',
+    'form.operator-merge.success-alternative' => 'The licence(s) have been transferred onto the winning operator',
     'form.tm-merge.confirm' => 'I am aware that any licences and applications will be transferred from the losing Transport Manager to the winning Transport Manager',
     'form.tm-merge.from-tm-name' => 'From Transport Manager',
     'form.tm-merge.success' => 'The Transport Manager has been merged',
