@@ -29,7 +29,7 @@ class OperatingCentres
      * })
      * @Form\Validator({"name": "Digits", "options": {"break_chain_on_failure": true}})
      * @Form\Validator({"name": "Between", "options": {"min":1, "max": 1000000}})
-     * @Form\Filter({"name":"\Zend\Filter\Null", "options":{"type":"string"}})
+     * @Form\Filter({"name":"\Zend\Filter\ToNull", "options":{"type":"string"}})
      */
     public $totAuthVehicles = null;
 
@@ -45,7 +45,7 @@ class OperatingCentres
      * })
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
-     * @Form\Filter({"name":"\Zend\Filter\Null", "options":{"type":"string"}})
+     * @Form\Filter({"name":"\Zend\Filter\ToNull", "options":{"type":"string"}})
      */
     public $totAuthTrailers = null;
 
@@ -54,7 +54,7 @@ class OperatingCentres
      * @Form\Options({"label": "application_operating-centres_authorisation.data.totCommunityLicences"})
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
-     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
+     * @Form\Filter({"name":"\Zend\Filter\ToNull", "options": {"type":"string"} })
      */
     public $totCommunityLicences = null;
 }
