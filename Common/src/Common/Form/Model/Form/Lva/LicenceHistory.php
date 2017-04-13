@@ -21,6 +21,7 @@ class LicenceHistory
     /**
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryData")
+     * @Form\Options({"label": "application_previous-history_licence-history_Data"})
      */
     public $data;
 

@@ -23,6 +23,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     use Traits\CrudTableTrait;
 
     protected $sections = [
+        'guidance' =>[],
         'data' => [
             'prevHasLicence',
             'prevHadLicence',

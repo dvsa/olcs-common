@@ -29,7 +29,10 @@ class LicenceHistoryAssets
     /**
      * @Form\Name("prevPurchasedAssets-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({"id":"prevPurchasedAssets"})
+     * @Form\Attributes({
+     *      "id":"prevPurchasedAssets",
+     *      "class": "help__text help__text--removePadding"
+     * })
      */
     public $prevPurchasedAssetsTable = null;
 }
