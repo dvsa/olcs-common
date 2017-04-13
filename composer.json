@@ -25,7 +25,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "zendframework/zendframework": "~2.3.5",
+        "zendframework/zendframework": "~2.4.0",
         "doctrine/doctrine-orm-module": "~0.9.0",
         "doctrine/annotations": "^1.2.3",
         "symfony/Filesystem": "~2.6.0",
@@ -33,13 +33,13 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",
-        "phpunit/phpunit": "^4.4.0",
+        "phpunit/phpunit": "^4.8",
         "mockery/mockery": "~0.9.3",
         "major-caiger/munit": "~0.1.0",
         "mikey179/vfsStream": "~1.4.0",
         "olcs/olcs-testhelpers": "dev-develop",
-        "olcs/olcs-transfer": "dev-develop",
-        "olcs/olcs-utils": "dev-develop",
+        "olcs/olcs-transfer": "dev-feature/OLCS-16303-transfer-upgrade-zend",
+        "olcs/olcs-utils": "dev-feature/OLCS-16303-utils-upgrade-zend",
         "soflomo/purifier": "~0.1.0"
     },
     "autoload": {
