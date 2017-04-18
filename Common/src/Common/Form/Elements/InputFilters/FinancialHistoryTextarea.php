@@ -1,14 +1,9 @@
 <?php
 
-/**
- * Input Specification for Finacial History additional info
- *
- * @author Jakub Igla <jakub.igla@valtech.co.uk>
- */
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element\Textarea as ZendElement;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator;
 
 /**
@@ -30,7 +25,7 @@ class FinancialHistoryTextarea extends ZendElement implements InputProviderInter
             'required' => true,
             'validators' => [
                 new Validator\NotEmpty(Validator\NotEmpty::NULL),
-                new \Common\Form\Elements\Validators\FHAdditionalInfo,
+                new \Dvsa\Olcs\Transfer\Validators\FHAdditionalInfo(),
             ]
         ];
 
