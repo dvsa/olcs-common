@@ -60,8 +60,9 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
      * Utility form helper that renders a label (if it exists), an element and errors
      *
      * @param ElementInterface $element       Element
-     * @param null|string      $labelPosition position of Label
+     * @param null|string      $labelPosition Label Position
      *
+     * @throws \Zend\Form\Exception\DomainException
      * @return string
      */
     public function render(ElementInterface $element, $labelPosition = null)
@@ -74,9 +75,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             return sprintf(self::$readonlyFormat, $class, $label, $value);
         }
 
-        /**
-         * We don't want the parent class to render the errors.
-         */
+        // We don't want the parent class to render the errors.
         $this->setRenderErrors(false);
         $elementErrors = $this->getElementErrorsHelper()->render($element);
 
