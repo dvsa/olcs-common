@@ -106,14 +106,13 @@ class AddressOptional
      *     }
      * })
      * @Form\Type("Text")
-     * @Form\AllowEmpty(true)
-     * @Form\Required(true)
+     * @Form\Required(false)
      * @Form\Attributes({"id":"postcodeOptional", "required":false})
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Validator({
      *      "name":"Dvsa\Olcs\Transfer\Validators\Postcode",
      *      "options": {"allow_empty": true}
      * });
+     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
      */
     public $postcode = null;
 
