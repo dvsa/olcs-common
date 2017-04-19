@@ -9,7 +9,7 @@ use Common\Form\View\Helper;
 use Common\Form\View\Helper\Readonly\FormFileUploadList;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\ElementInterface;
+use Zend\Form\Element;
 use Zend\Form\FieldsetInterface;
 
 /**
@@ -34,26 +34,34 @@ class FormFileUploadListTest extends MockeryTestCase
 
     public function testRender()
     {
-        $mockUplElmChildItem = m::mock(ElementInterface::class)
-            ->shouldReceive('getName')->withAnyArgs()->andReturn('unit_elm1')
-            ->shouldReceive('setOption')->with('disable_html_escape', true)->times(4)
-            ->getMock();
+        /** @var Element | m\MockInterface $mockUplElmChildItem */
+        $mockUplElmChildItem = m::mock(Element::class)->makePartial();
+        $mockUplElmChildItem->setName("unit_elm1");
+        $mockUplElmChildItem->shouldReceive('setOption')->with('disable_html_escape', true)->times(4);
+
+        $mockUplElmChildItem2 = (clone $mockUplElmChildItem);
+        $mockUplElmChildItem2->setName("unit_elm2");
 
         $mockFileItem = (new FileUploadListItem('unit_UplItem'))
             ->add($mockUplElmChildItem)
-            ->add(clone $mockUplElmChildItem);
+            ->add($mockUplElmChildItem2);
 
+        $mockFileItem2 = clone $mockFileItem;
+        $mockFileItem2->setName('unit_UplItem2');
+
+        /** @var Address | m\MockInterface $mockOtherElm */
         $mockOtherElm = m::mock(Address::class);
         $mockOtherElm->shouldReceive('getName')->withAnyArgs()->andReturn('unit_Address');
 
         $list = (new FileUploadList())
             ->add($mockFileItem)
             ->add($mockOtherElm)
-            ->add($mockFileItem);
+            ->add($mockFileItem2);
 
         $mockFormItem = m::mock(Helper\Readonly\FormItem::class);
         $mockFormItem->shouldReceive('render')->andReturn('_FORM_ITEM_RENDER_RESULT_');
 
+        /** @var \Zend\View\Renderer\PhpRenderer | m\MockInterface $mockView */
         $mockView = m::mock(\Zend\View\Renderer\PhpRenderer::class);
         $mockView
             ->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockFormItem)

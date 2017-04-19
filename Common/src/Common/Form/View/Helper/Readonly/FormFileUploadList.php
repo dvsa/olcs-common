@@ -54,6 +54,7 @@ class FormFileUploadList extends AbstractHelper
             }
 
             $elmHtml = [];
+            /** @var \Zend\Form\ElementInterface $elm */
             foreach ($fieldset->getIterator() as $elm) {
                 $elm->setOption('disable_html_escape', true);
 
