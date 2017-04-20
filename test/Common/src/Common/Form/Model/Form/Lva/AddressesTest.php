@@ -100,7 +100,7 @@ class AddressesTest extends AbstractFormValidationTestCase
     {
         $element = ['correspondence_address', 'postcode'];
         $this->assertFormElementIsRequired($element, true);
-        $this->assertFormElementAllowEmpty($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcode($element);
     }
 
@@ -336,7 +336,7 @@ class AddressesTest extends AbstractFormValidationTestCase
     {
         $element = ['consultantAddress', 'postcode'];
         $this->assertFormElementIsRequired($element, true);
-        $this->assertFormElementAllowEmpty($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcode($element);
     }
 

@@ -114,7 +114,8 @@ class Address
      * @Form\Type("Text")
      * @Form\Required(true)
      * @Form\Attributes({"id":"postcode", "required":false})
-     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
+     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
+     * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"})
      */
     public $postcode = null;
 
