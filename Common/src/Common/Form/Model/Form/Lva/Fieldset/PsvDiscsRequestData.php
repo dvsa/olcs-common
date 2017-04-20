@@ -12,13 +12,11 @@ class PsvDiscsRequestData
     /**
      * @Form\Name("additionalDiscs")
      * @Form\Type("text")
-     * @Form\AllowEmpty(false)
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "label": "application_vehicle-safety_discs-psv-sub-action.additionalDiscs"
      * })
-     * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "GreaterThan", "options": {"min":0}})
+     * @Form\Validator({"name": "Digits"})
      */
     public $additionalDiscs = null;
 }
