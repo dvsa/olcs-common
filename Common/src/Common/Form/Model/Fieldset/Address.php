@@ -112,10 +112,8 @@ class Address
      *     "error-message" : "address_postcode-error",
      * })
      * @Form\Type("Text")
-     * @Form\AllowEmpty(true)
      * @Form\Required(true)
      * @Form\Attributes({"id":"postcode", "required":false})
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"});
      */
     public $postcode = null;
