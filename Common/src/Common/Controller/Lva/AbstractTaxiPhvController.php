@@ -8,6 +8,9 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Form\Form;
+use Common\Service\Cqrs\Response as CqrsResponse;
+
 /**
  * Shared logic between Taxi Phv controllers
  *
@@ -27,9 +30,18 @@ abstract class AbstractTaxiPhvController extends AbstractController
     protected $section = 'taxi_phv';
     protected $baseRoute = 'lva-%s/taxi_phv';
 
+    /**
+     * Index action
+     *
+     * @return array|\Common\View\Model\Section|\Zend\Http\Response
+     */
     public function indexAction()
     {
-        $this->loadData();
+        try {
+            $this->loadData();
+        } catch (\RuntimeException $ex) {
+            return $this->notFoundAction();
+        }
 
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
@@ -77,6 +89,13 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return $this->render('taxi_phv', $form);
     }
 
+    /**
+     * handle crud action
+     *
+     * @param array $data data
+     *
+     * @return \Zend\Http\Response
+     */
     protected function handleCrudAction($data)
     {
         $action = $this->getActionFromCrudAction($data);
@@ -146,6 +165,11 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return false;
     }
 
+    /**
+     * get form
+     *
+     * @return Form
+     */
     protected function getForm()
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
@@ -160,16 +184,31 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return $this->alterForm($form);
     }
 
+    /**
+     * Get form data
+     *
+     * @return array
+     */
     protected function getFormData()
     {
         return ['dataTrafficArea' => $this->getTrafficArea()];
     }
 
+    /**
+     * Get table
+     *
+     * @return \Common\Service\Table\TableBuilder
+     */
     protected function getTable()
     {
         return $this->getServiceLocator()->get('Table')->prepareTable('lva-taxi-phv', $this->getTableData());
     }
 
+    /**
+     * Get table data
+     *
+     * @return array
+     */
     protected function getTableData()
     {
         if ($this->tableData === null) {
@@ -197,6 +236,13 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return $this->tableData;
     }
 
+    /**
+     * alter form
+     *
+     * @param Form $form form to be altered
+     *
+     * @return Form
+     */
     protected function alterForm($form)
     {
         $licenceTableData = $this->getTableData();
@@ -228,16 +274,33 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return $form;
     }
 
+    /**
+     * add action
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function addAction()
     {
         return $this->addOrEdit('add');
     }
 
+    /**
+     * edit action
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function editAction()
     {
         return $this->addOrEdit('edit');
     }
 
+    /**
+     * add or edit
+     *
+     * @param string $mode option to add or edit
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     protected function addOrEdit($mode)
     {
         $this->loadData();
@@ -283,6 +346,13 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return $this->render($mode . '_taxi_phv', $form);
     }
 
+    /**
+     * get licence form
+     *
+     * @param string $mode add or edit
+     *
+     * @return Form
+     */
     protected function getLicenceForm($mode)
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
@@ -294,8 +364,10 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Alter form to process traffic area
      *
-     * @param Form $form
+     * @param Form   $form form being altered
      * @param string $mode edit or add
+     *
+     * @return Form
      */
     protected function alterActionForm($form, $mode)
     {
@@ -312,7 +384,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Delete licence
      *
-     * @return Response
+     * @return CqrsResponse
+     * @throws \RuntimeException
      */
     public function delete()
     {
@@ -347,7 +420,10 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Process the action load data
      *
-     * @param array $oldData
+     * @param string $mode    add or edit
+     * @param array  $oldData old data
+     *
+     * @return array
      */
     protected function formatDataForLicenceForm($mode, $oldData)
     {
@@ -370,7 +446,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Save the licence
      *
-     * @param array $data
+     * @param array $data licence data
      *
      * @return bool|array Array of error messages, false = the request failed, true = everything was good
      */
@@ -392,9 +468,9 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Create a new PrivateHireLicence
      *
-     * @param array $formData
+     * @param array $formData form data
      *
-     * @return \Common\Service\Cqrs\Response
+     * @return CqrsResponse
      * @throws \RuntimeException
      */
     protected function create($formData)
@@ -425,6 +501,13 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return $this->handleCommand($command);
     }
 
+    /**
+     * get traffic area validation message
+     *
+     * @param array $message message array
+     *
+     * @return array
+     */
     private function getTrafficAreaValidationMessage(array $message)
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
@@ -441,9 +524,9 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Update a new PrivateHireLicence
      *
-     * @param array $formData
+     * @param array $formData form data
      *
-     * @return \Common\Service\Cqrs\Response
+     * @return CqrsResponse
      * @throws \RuntimeException
      */
     protected function update($formData)
@@ -480,6 +563,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Load Taxi/PHV data, this is required for subsequent calls
      *
+     * @return array
      * @throws \Exception
      * @throws \RuntimeException
      */
@@ -526,7 +610,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     /**
      * Get data for one Private Vehicle Licence
      *
-     * @param int $id
+     * @param int $id id
      *
      * @return array|false
      */
@@ -552,6 +636,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
     /**
      * Get the Licence ID
+     *
+     * @param int|null $applicationId application id
      *
      * @return int
      */
