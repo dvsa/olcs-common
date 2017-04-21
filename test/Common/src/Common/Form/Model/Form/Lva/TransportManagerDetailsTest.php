@@ -26,7 +26,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testName()
     {
         $element = ['details', 'name'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element);
     }
@@ -50,21 +50,21 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testEmailAddress()
     {
         $element = ['details', 'emailAddress'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementEmailAddress($element);
     }
 
     public function testPlaceOfBirth()
     {
         $element = [ 'details', 'birthPlace'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementText($element);
     }
 
     public function testCertificateFileUpload()
     {
         $element = [ 'details', 'certificate', 'file' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementType($element, AttachFilesButton::class);
 
@@ -73,48 +73,48 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
         $element = [ 'details', 'certificate', 'upload' ];
         $this->assertFormElementType($element, ActionButton::class);
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
     }
 
     public function testHomeAddress()
     {
         $element = [ 'homeAddress', 'id' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
 
         $element = [ 'homeAddress', 'version'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
 
         $element = [ 'homeAddress', 'addressLine1' ];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementText($element, 1, 90);
 
         $element = [ 'homeAddress', 'addressLine2' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementText($element, 1, 90);
 
         $element = [ 'homeAddress', 'addressLine3' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementText($element, 1, 100);
 
         $element = [ 'homeAddress', 'addressLine4' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementText($element, 1, 35);
 
         $element = [ 'homeAddress', 'town' ];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementText($element, 1, 30);
 
         $element = [ 'homeAddress', 'postcode' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementPostcode($element);
 
         $element = ['homeAddress', 'countryCode'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDynamicSelect($element);
 
         $element = ['homeAddress', 'searchPostcode'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcodeSearch($element);
     }
@@ -128,42 +128,42 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testWorkAddress()
     {
         $element = [ 'workAddress', 'id' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
 
         $element = [ 'workAddress', 'version'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
 
         $element = [ 'workAddress', 'addressLine1' ];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementText($element, 1, 90);
 
         $element = [ 'workAddress', 'addressLine2' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementText($element, 1, 90);
 
         $element = [ 'workAddress', 'addressLine3' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementText($element, 1, 100);
 
         $element = [ 'workAddress', 'addressLine4' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementText($element, 1, 35);
 
         $element = [ 'workAddress', 'town' ];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementText($element, 1, 30);
 
         $element = [ 'workAddress', 'postcode' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementPostcode($element);
 
         $element = ['workAddress', 'countryCode'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDynamicSelect($element);
 
         $element = ['workAddress', 'searchPostcode'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcodeSearch($element);
     }
@@ -252,7 +252,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testLicenceFileUpload()
     {
         $element = [ 'responsibilities', 'file', 'file' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementType($element, AttachFilesButton::class);
 
@@ -261,13 +261,13 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
         $element = [ 'responsibilities', 'file', 'upload' ];
         $this->assertFormElementType($element, ActionButton::class);
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
     }
 
     public function testOtherLicencesTable()
     {
         $element = [ 'responsibilities', 'otherLicences', 'table' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementTable($element);
 
@@ -284,10 +284,10 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testResponsibilities()
     {
         $element = [ 'responsibilities', 'id' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
 
         $element = [ 'responsibilities', 'version' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
     }
 
     public function testOperatingCentres()
@@ -305,7 +305,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testIsOwner()
     {
         $element = [ 'responsibilities', 'isOwner' ];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
     }
 
     public function testTradeManagerApplicationType()
@@ -323,7 +323,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testOtherEmployment()
     {
         $element = [ 'otherEmployment', 'table' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementTable($element);
     }
@@ -349,7 +349,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testPreviousHistoryConvictionsTable()
     {
         $element = [ 'previousHistory', 'convictions', 'table' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementTable($element);
 
@@ -366,7 +366,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
     public function testPreviousLicencesTable()
     {
         $element = [ 'previousHistory', 'previousLicences', 'table' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementTable($element);
 

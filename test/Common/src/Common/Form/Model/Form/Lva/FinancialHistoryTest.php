@@ -20,7 +20,7 @@ class FinancialHistoryTest extends AbstractFormValidationTestCase
     public function testFileUpload()
     {
         $element = ['data', 'file', 'file'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementType($element, AttachFilesButton::class);
 
@@ -29,7 +29,7 @@ class FinancialHistoryTest extends AbstractFormValidationTestCase
 
         $element = ['data', 'file', 'upload'];
         $this->assertFormElementType($element, ActionButton::class);
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
     }
 
     public function testId()
@@ -49,27 +49,27 @@ class FinancialHistoryTest extends AbstractFormValidationTestCase
 
     public function testBankrupt()
     {
-        $this->assertFormElementRequired(['data', 'bankrupt'], true);
+        $this->assertFormElementIsRequired(['data', 'bankrupt'], true);
     }
 
     public function testLiquidation()
     {
-        $this->assertFormElementRequired(['data', 'liquidation'], true);
+        $this->assertFormElementIsRequired(['data', 'liquidation'], true);
     }
 
     public function testReceivership()
     {
-        $this->assertFormElementRequired(['data', 'receivership'], true);
+        $this->assertFormElementIsRequired(['data', 'receivership'], true);
     }
 
     public function testAdministration()
     {
-        $this->assertFormElementRequired(['data', 'administration'], true);
+        $this->assertFormElementIsRequired(['data', 'administration'], true);
     }
 
     public function testDisqualified()
     {
-        $this->assertFormElementRequired(['data', 'disqualified'], true);
+        $this->assertFormElementIsRequired(['data', 'disqualified'], true);
     }
 
     public function testAdditionalInfoLabel()
@@ -84,7 +84,7 @@ class FinancialHistoryTest extends AbstractFormValidationTestCase
 
     public function testInsolvencyConfirmation()
     {
-        $this->assertFormElementRequired(
+        $this->assertFormElementIsRequired(
             ['data', 'insolvencyConfirmation'],
             true
         );

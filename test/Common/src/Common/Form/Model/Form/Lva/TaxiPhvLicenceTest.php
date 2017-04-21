@@ -50,7 +50,7 @@ class TaxiPhvLicenceTest extends AbstractFormValidationTestCase
     {
         $element = ['contactDetails', 'description'];
         $this->assertFormElementText($element);
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
     }
 
     public function testAddressId()
@@ -68,7 +68,7 @@ class TaxiPhvLicenceTest extends AbstractFormValidationTestCase
     public function testAddressSearchPostcode()
     {
         $element = ['address', 'searchPostcode'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcodeSearch($element);
     }
@@ -76,7 +76,7 @@ class TaxiPhvLicenceTest extends AbstractFormValidationTestCase
     public function testAddressAddressLine1()
     {
         $element = ['address', 'addressLine1'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementText($element, 0, 90);
     }
@@ -84,7 +84,7 @@ class TaxiPhvLicenceTest extends AbstractFormValidationTestCase
     public function testAddressAddressLine2()
     {
         $element = ['address', 'addressLine2'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 0, 90);
     }
@@ -92,7 +92,7 @@ class TaxiPhvLicenceTest extends AbstractFormValidationTestCase
     public function testAddressAddressLine3()
     {
         $element = ['address', 'addressLine3'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 0, 100);
     }
@@ -100,7 +100,7 @@ class TaxiPhvLicenceTest extends AbstractFormValidationTestCase
     public function testAddressAddressLine4()
     {
         $element = ['address', 'addressLine4'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 0, 35);
     }
@@ -108,7 +108,7 @@ class TaxiPhvLicenceTest extends AbstractFormValidationTestCase
     public function testAddressTown()
     {
         $element = ['address', 'town'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementText($element, 0, 30);
     }
@@ -116,7 +116,7 @@ class TaxiPhvLicenceTest extends AbstractFormValidationTestCase
     public function testAddressPostcode()
     {
         $element = ['address', 'postcode'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcode($element);
     }
@@ -124,7 +124,7 @@ class TaxiPhvLicenceTest extends AbstractFormValidationTestCase
     public function testAddressCountryCode()
     {
         $element = ['address', 'countryCode'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDynamicSelect($element);
     }
