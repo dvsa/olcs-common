@@ -31,7 +31,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     public function indexAction()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
-        $this->getAdapter()->loadPeopleData($this->lva, $this->getIdentifier());
+        try {
+            $this->getAdapter()->loadPeopleData($this->lva, $this->getIdentifier());
+        } catch (\RuntimeException $ex) {
+            return $this->notFoundAction();
+        }
 
         if ($this->location === 'external') {
             $this->addGuidanceMessage();
