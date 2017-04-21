@@ -132,7 +132,7 @@ class FinancialHistoryData
      * })
      * @Form\Type("TextArea")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Validator({"name": "Dvsa\Olcs\Transfer\Validators\FHAdditionalInfo"})
+     * @Form\Validator({"name": "Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo"})
      */
     public $insolvencyDetails = null;
 
