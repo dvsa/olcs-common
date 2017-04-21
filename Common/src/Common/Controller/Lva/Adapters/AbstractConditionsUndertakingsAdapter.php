@@ -186,6 +186,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
             'fulfilled' => $data['fields']['fulfilled'],
             'attachedTo' => $data['fields']['attachedTo'],
             'operatingCentre' => $data['fields']['operatingCentre'],
+            'conditionCategory' => $data['fields']['conditionCategory'],
         ];
 
         return \Dvsa\Olcs\Transfer\Command\ConditionUndertaking\Update::create($params);
@@ -209,6 +210,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
             'fulfilled' => $data['fields']['fulfilled'],
             'attachedTo' => $data['fields']['attachedTo'],
             'operatingCentre' => $data['fields']['operatingCentre'],
+            'conditionCategory' => $data['fields']['conditionCategory'],
         ];
 
         if ($lva === 'licence') {
