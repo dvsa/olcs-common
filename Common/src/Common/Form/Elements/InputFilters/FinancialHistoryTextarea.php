@@ -25,7 +25,7 @@ class FinancialHistoryTextarea extends ZendElement implements InputProviderInter
             'required' => true,
             'validators' => [
                 new Validator\NotEmpty(Validator\NotEmpty::NULL),
-                new \Dvsa\Olcs\Transfer\Validators\FHAdditionalInfo(),
+                new \Dvsa\Olcs\Transfer\Validators\FhAdditionalInfo(),
             ]
         ];
 
