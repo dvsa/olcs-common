@@ -92,6 +92,7 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
             'fulfilled' => $data['fields']['fulfilled'],
             'attachedTo' => $data['fields']['attachedTo'],
             'operatingCentre' => $data['fields']['operatingCentre'],
+            'conditionCategory' => $data['fields']['conditionCategory'],
         ];
 
         return \Dvsa\Olcs\Transfer\Command\Variation\UpdateConditionUndertaking::create($params);

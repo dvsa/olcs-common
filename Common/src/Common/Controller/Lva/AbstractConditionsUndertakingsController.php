@@ -109,7 +109,8 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
                     'type' => $conditionUndertakingData['conditionType']['id'],
                     'notes' => $conditionUndertakingData['notes'],
                     'fulfilled' => $conditionUndertakingData['isFulfilled'],
-                    'attachedTo' => 'cat_lic'
+                    'attachedTo' => 'cat_lic',
+                    'conditionCategory' => $conditionUndertakingData['conditionCategory'],
                 ]
             ];
 
@@ -183,7 +184,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException(
-                'Failed creating a ConnditionUndertaking - '. print_r($response->getResult(), true)
+                'Failed creating a ConditionUndertaking - '. print_r($response->getResult(), true)
             );
         }
     }
@@ -201,7 +202,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException(
-                'Failed updating a ConnditionUndertaking - '. print_r($response->getResult(), true)
+                'Failed updating a ConditionUndertaking - '. print_r($response->getResult(), true)
             );
         }
     }
@@ -220,7 +221,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException(
-                'Failed deleting a ConnditionUndertaking - '. print_r($response->getResult(), true)
+                'Failed deleting a ConditionUndertaking - '. print_r($response->getResult(), true)
             );
         }
 
