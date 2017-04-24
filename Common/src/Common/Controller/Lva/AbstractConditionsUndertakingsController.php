@@ -202,7 +202,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException(
-                'Failed updating a ConnditionUndertaking - '. print_r($response->getResult(), true)
+                'Failed updating a ConditionUndertaking - '. print_r($response->getResult(), true)
             );
         }
     }
@@ -221,7 +221,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException(
-                'Failed deleting a ConnditionUndertaking - '. print_r($response->getResult(), true)
+                'Failed deleting a ConditionUndertaking - '. print_r($response->getResult(), true)
             );
         }
 
