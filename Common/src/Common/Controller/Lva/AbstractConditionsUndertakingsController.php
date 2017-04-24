@@ -184,7 +184,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $response = $this->handleCommand($command);
         if (!$response->isOk()) {
             throw new \RuntimeException(
-                'Failed creating a ConnditionUndertaking - '. print_r($response->getResult(), true)
+                'Failed creating a ConditionUndertaking - '. print_r($response->getResult(), true)
             );
         }
     }
