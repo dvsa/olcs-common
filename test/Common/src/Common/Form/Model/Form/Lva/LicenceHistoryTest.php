@@ -127,9 +127,9 @@ class LicenceHistoryTest extends AbstractFormValidationTestCase
         );
     }
 
-    public function testTitle()
+    public function testQuestionsHint()
     {
-        $this->assertFormElementHtml(['data', 'title']);
+        $this->assertFormElementHtml(['questionsHint', 'message']);
     }
 
     public function testPrevBeenRefusedTableTable()

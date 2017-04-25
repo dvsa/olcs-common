@@ -10,12 +10,6 @@ use Zend\Form\Annotation as Form;
 class LicenceHistoryData
 {
     /**
-     * @Form\Attributes({"value": "markup-application_previous-history_licence-history_data"})
-     * @Form\Type("Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $title;
-
-    /**
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevHasLicence",

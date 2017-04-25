@@ -252,16 +252,22 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     }
 
     /**
+     * Get Licence History Form
+     *
      * @return \Common\Form\Form
      */
     protected function getLicenceHistoryForm()
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
+        /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
+
+        $form->get('questionsHint')
+            ->get('message')->setAttribute('value', "markup-application_previous-history_licence-history_data");
 
         foreach ($this->sections as $group => $sections) {
             foreach ($sections as $section) {
@@ -403,6 +409,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * Edit prevBeenDisqualifiedTc licence
+     *
+     * @return array|\Common\View\Model\Section|\Zend\Http\Response
      */
     public function prevBeenDisqualifiedTcEditAction()
     {
@@ -411,6 +419,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * Delete prevBeenDisqualifiedTc licence
+     *
+     * @return \Zend\Http\Response
      */
     public function prevBeenDisqualifiedTcDeleteAction()
     {
@@ -419,6 +429,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * Add prevPurchasedAssets licence
+     *
+     * @return array|\Common\View\Model\Section|\Zend\Http\Response
      */
     public function prevPurchasedAssetsAddAction()
     {
@@ -427,6 +439,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * Edit prevPurchasedAssets licence
+     *
+     * @return array|\Common\View\Model\Section|\Zend\Http\Response
      */
     public function prevPurchasedAssetsEditAction()
     {
@@ -435,6 +449,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * Delete prevPurchasedAssets licence
+     *
+     * @return \Zend\Http\Response
      */
     public function prevPurchasedAssetsDeleteAction()
     {
@@ -443,6 +459,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * Add prevBeenAtPi licence
+     *
+     * @return array|\Common\View\Model\Section|\Zend\Http\Response
      */
     public function prevBeenAtPiAddAction()
     {
@@ -451,6 +469,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * Edit prevBeenAtPi licence
+     *
+     * @return array|\Common\View\Model\Section|\Zend\Http\Response
      */
     public function publicInquiryEditAction()
     {
@@ -459,6 +479,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     /**
      * Delete prevBeenAtPi licence
+     *
+     * @return \Zend\Http\Response
      */
     public function prevBeenAtPiDeleteAction()
     {
@@ -468,9 +490,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Generic functionality for adding/editing
      *
-     * @param string $mode
-     * @param string $which
-     * @return mixed
+     * @param string $mode  Operation
+     * @param string $which Which part to operate
+     *
+     * @return array|\Common\View\Model\Section|\Zend\Http\Response
      */
     protected function addOrEdit($mode, $which)
     {
@@ -517,7 +540,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Get licence form data
      *
-     * @param int $id
+     * @param int $id Id
+     *
      * @return array
      */
     protected function getLicenceFormData($id)
@@ -539,6 +563,13 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return $mappedResults;
     }
 
+    /**
+     * Get Other Licence Data
+     *
+     * @param int $id Id
+     *
+     * @return \Common\Service\Cqrs\Response
+     */
     protected function getOtherLicenceData($id)
     {
         return $this->handleQuery(OtherLicence::create(['id' => $id]));
@@ -559,9 +590,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Alter the form based on the licence type
      *
-     * @param \Zend\Form\Form $form
-     * @param string $which
-     * @return \Zend\Form\Form
+     * @param \Common\Form\Form $form  Form
+     * @param string            $which Which part to operate
+     *
+     * @return \Zend\Form\FormInterface
      */
     protected function alterActionForm($form, $which)
     {
@@ -586,7 +618,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Process action load
      *
-     * @param $data
+     * @param array  $data  Data
+     * @param string $which Which part to operate
+     *
+     * @return array
      */
     protected function formatDataForLicenceForm($data, $which)
     {
@@ -598,8 +633,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     /**
      * Save licence
      *
-     * @param \Common\Form\Form $form
-     * @param array $formData
+     * @param \Common\Form\Form $form     Form
+     * @param array             $formData Form Data
+     *
+     * @return bool
      */
     protected function saveLicence($form, $formData)
     {
