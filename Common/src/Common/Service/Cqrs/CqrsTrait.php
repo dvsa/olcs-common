@@ -53,7 +53,7 @@ trait CqrsTrait
     protected function showApiMessages($messages = [])
     {
         foreach ($messages as $message) {
-            $this->flashMessenger->addErrorMessage($message);
+            $this->flashMessenger->addErrorMessage('DEBUG: ' . $message);
         }
     }
 
