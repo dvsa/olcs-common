@@ -71,7 +71,7 @@ class CommandServiceTest extends MockeryTestCase
     {
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->andThrow(new RouterRuntimeException('err_message'));
-        $this->mockFlashMsgr->shouldReceive('addErrorMessage')->with('err_message');
+        $this->mockFlashMsgr->shouldReceive('addErrorMessage')->with('DEBUG: err_message');
 
         $actual = $this->sut->send($this->mockCmd);
 

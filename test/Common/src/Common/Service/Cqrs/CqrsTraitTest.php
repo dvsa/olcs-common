@@ -8,7 +8,6 @@ use CommonTest\Service\Cqrs\Stub\CqrsTraitStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Zend\Http\Response as HttpResponse;
-use Zend\Http\Response\Stream;
 
 class CqrsTraitTest extends MockeryTestCase
 {
@@ -53,8 +52,8 @@ class CqrsTraitTest extends MockeryTestCase
         json_decode('aaaaa');
 
         $this->mockFlashMsngr
-            ->shouldReceive('addErrorMessage')->once()->with('Error decoding json response: EXPECT_BODY')
-            ->shouldReceive('addErrorMessage')->times(2)->with(m::anyOf('EXPECT', 'EXPECT2'));
+            ->shouldReceive('addErrorMessage')->once()->with('DEBUG: Error decoding json response: EXPECT_BODY')
+            ->shouldReceive('addErrorMessage')->times(2)->with(m::anyOf('DEBUG: EXPECT', 'DEBUG: EXPECT2'));
 
         $this->mockCqrsResp
             ->shouldReceive('getStatusCode')->once()->andReturn(200)
