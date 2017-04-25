@@ -16,8 +16,8 @@ class FinancialEvidenceEvidence
      *     "label": "lva-financial-evidence-upload-now.label",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      *     "value_options": {
-     *         "Y":"lva-financial-evidence-upload-now.yes",
-     *         "N":"lva-financial-evidence-upload-now.no"
+     *         "1":"lva-financial-evidence-upload-now.yes",
+     *         "0":"lva-financial-evidence-upload-now.no"
      *     },
      *     "error-message": "financialEvidence_uploadNow-error"
      * })

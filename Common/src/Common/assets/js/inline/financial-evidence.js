@@ -4,11 +4,11 @@ $(function() {
   var F = OLCS.formHelper;
 
   function willUpload() {
-    return F.isChecked("evidence", "uploadNow");
+    return F.isChecked("evidence", "uploadNow", "1");
   }
 
   function willPost() {
-    return !willUpload();
+      return F.isChecked("evidence", "uploadNow", "0");
   }
 
   OLCS.cascadeForm({
