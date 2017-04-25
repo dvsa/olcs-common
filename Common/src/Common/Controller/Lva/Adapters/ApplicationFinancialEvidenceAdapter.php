@@ -35,7 +35,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
             'version'  => $applicationData['version'],
             'evidence' => [
                 // default to Y
-                'uploadNow' => is_null($uploaded) ? 'Y' : $uploaded,
+                'uploadNow' => is_null($uploaded) ? '1' : $uploaded,
             ],
         ];
     }
