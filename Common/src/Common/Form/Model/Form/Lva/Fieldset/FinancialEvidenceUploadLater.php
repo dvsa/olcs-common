@@ -11,10 +11,10 @@ class FinancialEvidenceUploadLater
 {
     /**
      * @Form\Attributes({
-     *     "id":"sendByPost",
+     *     "id":"uploadLaterMessage",
      *     "data-container-class": "upload-later",
      *     "value": "markup-financial-evidence-upload-later",
-     *     "class": "send-by-post"
+     *     "class": "upload-later-message"
      * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
