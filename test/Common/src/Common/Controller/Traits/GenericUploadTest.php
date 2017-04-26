@@ -43,7 +43,7 @@ class GenericUploadTest extends MockeryTestCase
             ->shouldReceive('isOk')->andReturn(true)
             ->shouldReceive('isClientError')->andReturn(false);
 
-        $this->assertNull($this->sut->callUploadFile($fileData, $data));
+        $this->assertTrue($this->sut->callUploadFile($fileData, $data));
 
         /** @var Upload $dto */
         $dto = $this->sut->stubResponse->dto;
