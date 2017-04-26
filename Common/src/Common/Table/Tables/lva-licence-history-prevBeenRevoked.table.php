@@ -3,16 +3,15 @@ $prefix = 'selfserve-app-subSection-previous-history-previous-licence-';
 
 return array(
     'variables' => array(
-        'title' => $prefix . 'tableHeader',
         'within_form' => true,
-        'empty_message' => 'application_previous-history_licence-history_table_empty'
+        'empty_message' => false,
     ),
     'settings' => array(
         'crud' => array(
             'formName' => 'revoked',
             'actions' => array(
-                'add' => array('label' => 'Add licence'),
-            )
+                'add' => array('label' => 'Add licence details'),
+            ),
         )
     ),
     'columns' => array(

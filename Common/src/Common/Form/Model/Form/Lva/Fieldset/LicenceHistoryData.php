@@ -10,17 +10,11 @@ use Zend\Form\Annotation as Form;
 class LicenceHistoryData
 {
     /**
-     * @Form\Attributes({"value": "markup-application_previous-history_licence-history_data"})
-     * @Form\Type("Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $title;
-
-    /**
      * @Form\Attributes({"id":""})
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevHasLicence",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
-     *     "legend-attributes": {"class": "form-element__question"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "error-message":"licenceHistoryData_prevHasLicence-error",
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
@@ -35,7 +29,10 @@ class LicenceHistoryData
     /**
      * @Form\Name("prevHasLicence-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({"id":"prevHasLicence"})
+     * @Form\Attributes({
+     *      "id":"prevHasLicence",
+     *      "class": "help__text help__text--removePadding"
+     * })
      */
     public $prevHasLicenceTable = null;
 
@@ -44,7 +41,7 @@ class LicenceHistoryData
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevHadLicence",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
-     *     "legend-attributes": {"class": "form-element__question"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "error-message": "licenceHistoryData_prevHadLicence-error",
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
@@ -59,7 +56,10 @@ class LicenceHistoryData
     /**
      * @Form\Name("prevHadLicence-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({"id":"prevHadLicence"})
+     * @Form\Attributes({
+     *      "id":"prevHadLicence",
+     *      "class": "help__text help__text--removePadding"
+     * })
      */
     public $prevHadLicenceTable = null;
 
@@ -68,7 +68,7 @@ class LicenceHistoryData
      * @Form\Options({
      *     "label":"application_previous-history_licence-history_prevBeenDisqualifiedTc",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
-     *     "legend-attributes": {"class": "form-element__question"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "error-message":"licenceHistoryData_prevBeenDisqualifiedTc-error",
      *     "value_options": {"Y":"Yes", "N":"No"}
      * })
@@ -83,7 +83,10 @@ class LicenceHistoryData
     /**
      * @Form\Name("prevBeenDisqualifiedTc-table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({"id":"prevBeenDisqualifiedTc"})
+     * @Form\Attributes({
+     *      "id":"prevBeenDisqualifiedTc",
+     *      "class": "help__text help__text--removePadding"
+     * })
      */
     public $prevBeenDisqualifiedTcTable = null;
 }

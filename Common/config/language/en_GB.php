@@ -491,6 +491,7 @@ return [
     'application_previous-history_licence-history-table-licences-revoked-delete' => 'Delete licence',
     'application_previous-history_licence-history-table-licences-revoked-edit' => 'Edit licence',
     'application_previous-history_licence-history.title' => 'Previous licences history',
+    'application_previous-history_licence-history_Data' => 'Traffic areas',
     'application_previous-history_licence-history_EU' => 'The EU',
     'application_previous-history_licence-history_PI' => 'Public inquiries',
     'application_previous-history_licence-history_appliedForLicence' => 'previously held or applied for a goods or public service Vehicle Operator\'s Licence in any traffic area?',
