@@ -1682,6 +1682,8 @@ return [
     'lva-financial-evidence-upload-now.label' => 'Choose an option',
     'lva-financial-evidence-upload-now.no' => 'Send in the post',
     'lva-financial-evidence-upload-now.yes' => 'Upload files',
+    'lva-financial-evidence-upload-now.later' => 'Upload later',
+    'lva-financial-evidence-upload-hint-later' => 'If you currently don\'t have access to your documents you can upload them at a later date.',
     'lva-financial-evidence-upload.files.hint' => 'Please ensure the evidence provided demonstrates there are sufficient financial resources to maintain the vehicles and run the business.',
     'lva-financial-evidence-upload.label' => 'Upload files',
     'lva-financial-evidence-upload.required' => 'Upload your financial evidence',
