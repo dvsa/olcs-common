@@ -14,10 +14,11 @@ class FinancialEvidenceEvidence
      * @Form\Options({
      *     "legend-attributes": {"class": "visually-hidden",},
      *     "label": "lva-financial-evidence-upload-now.label",
-     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "label_attributes": {"class": "form-control form-control--radio"},
      *     "value_options": {
      *         "1":"lva-financial-evidence-upload-now.yes",
-     *         "0":"lva-financial-evidence-upload-now.no"
+     *         "0":"lva-financial-evidence-upload-now.no",
+     *         "2":"lva-financial-evidence-upload-now.later"
      *     },
      *     "error-message": "financialEvidence_uploadNow-error"
      * })
@@ -45,7 +46,7 @@ class FinancialEvidenceEvidence
      * @Form\Validator({"name": "ValidateIf",
      *      "options":{
      *          "context_field": "uploadNow",
-     *          "context_values": {"Y"},
+     *          "context_values": {"1"},
      *          "validators": {
      *              {
      *                  "name": "\Common\Validator\FileUploadCount",
