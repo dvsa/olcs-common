@@ -19,8 +19,15 @@ class LicenceHistory
     public $version = null;
 
     /**
+     * @Form\Name("questionsHint")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Messages")
+     */
+    public $questionsHint;
+
+    /**
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryData")
+     * @Form\Options({"label": "application_previous-history_licence-history_Data"})
      */
     public $data;
 
