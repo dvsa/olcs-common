@@ -113,13 +113,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $crudAction = $this->getCrudAction([$formData['table']]);
             $haveCrudAction = ($crudAction !== null);
 
-            if ($haveCrudAction) {
-                if ($this->isInternalReadOnly()) {
-                    return $this->handleCrudAction($crudAction);
-                }
-            }
-
-            if ($this->isInternalReadOnly()) {
+            if ($haveCrudAction && $this->isInternalReadOnly()) {
                 return $this->handleCrudAction($crudAction);
             }
 
