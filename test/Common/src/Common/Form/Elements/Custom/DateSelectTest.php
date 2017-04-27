@@ -5,7 +5,7 @@ namespace CommonTest\Form\Elements\Custom;
 use Common\Form\Elements\Custom\DateSelect;
 
 /**
- * @covers Common\Form\Elements\Custom\DateSelect
+ * @covers \Common\Form\Elements\Custom\DateSelect
  */
 class DateSelectTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,6 +19,8 @@ class DateSelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGetInputSpecification()
     {
+        $this->sut->setOptions([]);
+
         $spec = $this->sut->getInputSpecification();
 
         $this->assertEquals('foo', $spec['name']);
@@ -35,6 +37,7 @@ class DateSelectTest extends \PHPUnit_Framework_TestCase
             '2015-02-01',
             $spec['filters'][0]['options']['callback'](['year' => '2015', 'month' => '02', 'day' => '01'])
         );
+        static::assertEquals('date-hint', $this->sut->getOption('hint'));
     }
 
     public function testSetOptionsMinAndMaxYear()
@@ -83,14 +86,14 @@ class DateSelectTest extends \PHPUnit_Framework_TestCase
     public function testSetOptionsDefaultDateNow()
     {
         $options = [
-            'label-suffix' => 'unit_LabelSfx',
+            'hint' => 'unit_Hint',
             'default_date' => 'now',
         ];
 
         $this->sut->setOptions($options);
 
         $this->assertEquals(date('Y-m-d'), $this->sut->getValue());
-        static::assertEquals('unit_LabelSfx', $this->sut->getOption('label-suffix'));
+        static::assertEquals('unit_Hint', $this->sut->getOption('hint'));
     }
 
     public function testSetOptionsDefaultDate()
