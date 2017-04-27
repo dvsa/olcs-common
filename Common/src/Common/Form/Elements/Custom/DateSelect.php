@@ -24,8 +24,8 @@ class DateSelect extends ZendElement\DateSelect
      */
     public function setOptions($options)
     {
-        if (!isset($options['label-suffix'])) {
-            $options['label-suffix'] = 'date-label-hint';
+        if (!isset($options['hint'])) {
+            $options['hint'] = 'date-hint';
         }
 
         $this->trait_setOptions($options);
