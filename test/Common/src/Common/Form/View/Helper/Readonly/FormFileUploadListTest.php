@@ -25,6 +25,13 @@ class FormFileUploadListTest extends MockeryTestCase
         $sut->render(m::mock(FieldsetInterface::class));
     }
 
+    public function testRenderNotItems()
+    {
+        $sut = new FormFileUploadList();
+
+        static::assertEquals('', $sut(new FileUploadList()));
+    }
+
     public function testRender()
     {
         $mockUplElmChildItem = m::mock(ElementInterface::class)
@@ -48,16 +55,25 @@ class FormFileUploadListTest extends MockeryTestCase
         $mockFormItem->shouldReceive('render')->andReturn('_FORM_ITEM_RENDER_RESULT_');
 
         $mockView = m::mock(\Zend\View\Renderer\PhpRenderer::class);
-        $mockView->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockFormItem);
+        $mockView
+            ->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockFormItem)
+            ->shouldReceive('translate')->andReturnUsing(
+                function ($arg) {
+                    return '_TRANSL_' . $arg;
+                }
+            );
 
         $sut = new FormFileUploadList();
         $sut->setView($mockView);
 
         static::assertEquals(
+            '<div class="help__text">' .
+            '<h3 class="file__heading">_TRANSL_common.file-upload.table.col.FileName</h3>' .
             '<ul class="js-upload-list">' .
             '<li class="file">_FORM_ITEM_RENDER_RESULT__FORM_ITEM_RENDER_RESULT_</li>' .
             '<li class="file">_FORM_ITEM_RENDER_RESULT__FORM_ITEM_RENDER_RESULT_</li>' .
-            '</ul>',
+            '</ul>' .
+            '</div>',
             $sut($list)
         );
     }

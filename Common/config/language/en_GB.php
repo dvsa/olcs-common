@@ -2989,6 +2989,7 @@ return [
     'common.table.No' => 'No',
     'common.file-upload.browse.title' => 'Attach file(s)',
     'common.file-upload.browse.hint' => 'PDF, DOC, JPG, PNG or GIF',
+    'common.file-upload.table.col.FileName' => 'File name',
     'common.link.back.label' => 'Back',
     'submitandpay.button' => 'Pay and submit',
     'submitapplication.button' => 'Submit application',

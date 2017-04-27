@@ -1,46 +1,66 @@
 <?php
 
-
 namespace CommonTest\Form\View\Helper\Readonly;
 
+use Common\Form\Elements;
 use Common\Form\View\Helper\Readonly\FormItem;
 use PHPUnit_Framework_TestCase as TestCase;
-use Mockery as m;
 
 /**
- * Class FormItemTest
- * @package CommonTest\Form\View\Helper\Readonly
+ * @covers \Common\Form\View\Helper\Readonly\FormItem
  */
 class FormItemTest extends TestCase
 {
-    public function testInvoke()
+    public function testInvokeSelf()
     {
         $sut = new FormItem();
-        $element = m::mock('Zend\Form\ElementInterface');
-        $element->shouldReceive('getValue')->andReturn('test')->once();
-        $element->shouldReceive('getOption')->with('disable_html_escape')->andReturnNull()->once();
 
-        $markup = $sut($element);
-
-        $this->assertEquals('test', $markup);
+        static::assertSame($sut, $sut(null));
     }
 
-    public function testRender()
+    /**
+     * @dataProvider dpTestRender
+     */
+    public function testRender($element, $expect)
     {
-        $element = new \Zend\Form\Element();
-        $element->setValue('foo<br />');
-
         $sut = new FormItem();
-        $this->assertSame('foo&lt;br /&gt;', $sut->render($element));
+        static::assertSame($expect, $sut->render($element));
     }
 
-    public function testRenderNoEscape()
+    public function dpTestRender()
     {
-        $element = new \Zend\Form\Element();
-        $element->setValue('foo<br />');
-        $element->setOption('disable_html_escape', true);
-
-        $sut = new FormItem();
-        $this->assertSame('foo<br />', $sut->render($element));
+        return [
+            'common' => [
+                'element' => (new \Zend\Form\Element())
+                    ->setValue('foo<br />'),
+                'expect' => 'foo&lt;br /&gt;',
+            ],
+            'common;htmlEscapeOff' => [
+                'element' => (new \Zend\Form\Element())
+                    ->setValue('foo<br />')
+                    ->setOption('disable_html_escape', true),
+                'expect' => 'foo<br />',
+            ],
+            'ActionButton' => [
+                'element' => (new Elements\InputFilters\ActionButton()),
+                'expect' => '',
+            ],
+            'AttachFilesButton' => [
+                'element' => (new Elements\Types\AttachFilesButton()),
+                'expect' => '',
+            ],
+            'Button' => [
+                'element' => (new \Zend\Form\Element\Button()),
+                'expect' => '',
+            ],
+            'input:submit' => [
+                'element' => (new \Zend\Form\Element\Submit()),
+                'expect' => '',
+            ],
+            'input:hidden' => [
+                'element' => (new \Zend\Form\Element\Hidden()),
+                'expect' => '',
+            ],
+        ];
     }
 }
