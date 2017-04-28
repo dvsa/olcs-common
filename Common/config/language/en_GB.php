@@ -3002,7 +3002,7 @@ return [
     'lva.external.save_and_return.link' => 'Save and return to overview',
     'lva.external.save_and_return_to_tm.link' => 'Save and return to transport managers',
     'lva.external.return.link' => 'Return to overview',
-    'date-hint' => 'for example 31 2 2017',
+    'date-hint' => 'For example 21 6 2014',
     'operator-approve-message' => 'Transport Manager details approved',
     'payment.error.15sec' => 'Error attempting to resolve a previous payment. Please wait 15 minutes and try again',
     'payment.error.feepaid' => 'The fee(s) has already been paid',
