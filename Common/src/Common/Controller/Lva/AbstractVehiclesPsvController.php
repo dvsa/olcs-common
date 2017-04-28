@@ -2,15 +2,10 @@
 
 namespace Common\Controller\Lva;
 
-use Common\Controller\Lva\Traits\TransferVehiclesTrait;
-use Common\Controller\Lva\Traits\VehicleSearchTrait;
 use Common\Data\Mapper\Lva\PsvVehicles;
 use Common\Data\Mapper\Lva\PsvVehiclesVehicle;
 use Common\Service\Entity\LicenceEntityService;
 use Dvsa\Olcs\Transfer\Command as CommandDto;
-use Dvsa\Olcs\Transfer\Command\Application\CreatePsvVehicle as ApplicationCreatePsvVehicle;
-use Dvsa\Olcs\Transfer\Command\Application\UpdatePsvVehicles;
-use Dvsa\Olcs\Transfer\Command\Licence\CreatePsvVehicle as LicenceCreatePsvVehicle;
 use Dvsa\Olcs\Transfer\Query as QueryDto;
 use Dvsa\Olcs\Transfer\Query\Licence\PsvVehiclesExport;
 use Zend\Form\Form;
@@ -25,9 +20,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 {
     const SEARCH_VEHICLES_COUNT = 20;
 
-    use Traits\CrudTableTrait,
-        TransferVehiclesTrait,
-        VehicleSearchTrait;
+    use Traits\TransferVehiclesTrait,
+        Traits\VehicleSearchTrait;
+    use Traits\CrudTableTrait {
+        handleCrudAction as protected traitHandleCrudAction;
+    }
 
     protected $section = 'vehicles_psv';
     protected $baseRoute = 'lva-%s/vehicles_psv';
@@ -45,9 +42,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     ];
 
     protected $createVehicleMap = [
-        'licence' => LicenceCreatePsvVehicle::class,
-        'variation' => ApplicationCreatePsvVehicle::class,
-        'application' => ApplicationCreatePsvVehicle::class
+        'licence' => CommandDto\Licence\CreatePsvVehicle::class,
+        'variation' => CommandDto\Application\CreatePsvVehicle::class,
+        'application' => CommandDto\Application\CreatePsvVehicle::class
     ];
 
     /**
@@ -83,30 +80,21 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $form = $this->alterForm($form, $resultData, $removeActions);
 
         if ($request->isPost()) {
-            if ($this->isInternalReadOnly()) {
-                $crudAction = $this->getCrudAction($data, false);
+            $crudAction = $this->getCrudAction([$data['vehicles']]);
+            $haveCrudAction = ($crudAction !== null);
+
+            if ($haveCrudAction && $this->isInternalReadOnly()) {
                 return $this->handleCrudAction($crudAction);
             }
-            if ($form->isValid()) {
-                $crudAction = $this->getCrudAction($data);
-                $response = $this->updateVehiclesSection($form, $crudAction);
 
+            if ($form->isValid()) {
+                $response = $this->updateVehiclesSection($form, $haveCrudAction);
                 if ($response !== null) {
                     return $response;
                 }
 
-                if ($crudAction !== null) {
-                    $alternativeCrudResponse = $this->checkForAlternativeCrudAction($crudAction);
-
-                    if ($alternativeCrudResponse !== null) {
-                        return $alternativeCrudResponse;
-                    }
-
-                    // handle the original action as planned
-                    return $this->handleCrudAction(
-                        $data['vehicles'],
-                        ['add', 'show-removed-vehicles', 'hide-removed-vehicles']
-                    );
+                if ($haveCrudAction) {
+                    return $this->handleCrudAction($crudAction);
                 }
 
                 return $this->completeSection('vehicles_psv');
@@ -117,11 +105,38 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     }
 
     /**
-     * @param \Common\Form\Form $form
-     * @param $crudAction
-     * @return mixed
+     * Override handleCrudAction
+     *
+     * @param array $crudActionData Action data
+     *
+     * @return \Zend\Http\Response
      */
-    protected function updateVehiclesSection(FormInterface $form, $crudAction)
+    protected function handleCrudAction(array $crudActionData)
+    {
+        $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
+            $this->getActionFromCrudAction($crudActionData)
+        );
+        if ($alternativeCrudResponse !== null) {
+            return $alternativeCrudResponse;
+        }
+
+        return $this->traitHandleCrudAction(
+            $crudActionData,
+            [
+                'add', 'show-removed-vehicles', 'hide-removed-vehicles'
+            ]
+        );
+    }
+
+    /**
+     * Update Vehicle Section on API
+     *
+     * @param \Common\Form\Form $form           Form
+     * @param boolean           $haveCrudAction Have Crud Action
+     *
+     * @return \Common\View\Model\Section|null
+     */
+    protected function updateVehiclesSection(FormInterface $form, $haveCrudAction)
     {
         /** @var \Common\Service\Helper\FlashMessengerHelperService $flashMssgr */
         $flashMssgr = $this->getServiceLocator()->get('Helper\FlashMessenger');
@@ -135,12 +150,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 'id' => $this->getIdentifier(),
                 'version' => $formData['data']['version'],
                 'hasEnteredReg' => $formData['data']['hasEnteredReg'],
-                'partial' => $crudAction !== null
+                'partial' => $haveCrudAction,
             ];
 
             $resultData['hasEnteredReg'] = $formData['data']['hasEnteredReg'];
 
-            $response = $this->handleCommand(UpdatePsvVehicles::create($dtoData));
+            $response = $this->handleCommand(CommandDto\Application\UpdatePsvVehicles::create($dtoData));
 
             if ($response->isClientError()) {
                 PsvVehicles::mapFormErrors(
@@ -208,9 +223,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     /**
      * Transfer vehicles
+     *
+     * @return \Common\View\Model\Section | \Zend\Http\Response
      */
     public function transferAction()
     {
+        /* @see \Common\Controller\Lva\Traits\TransferVehiclesTrait::transferVehicles */
         return $this->transferVehicles();
     }
 
@@ -390,9 +408,12 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     }
 
     /**
-     * @param \Common\Service\Table\TableBuilder $table
-     * @param array $filters
-     * @return mixed
+     * Alter Table
+     *
+     * @param \Common\Service\Table\TableBuilder $table   Table
+     * @param array                              $filters Filters
+     *
+     * @return \Common\Service\Table\TableBuilder
      */
     private function alterTable($table, array $filters = [])
     {
@@ -413,7 +434,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Remove vehicle size tables based on OC data
      *
-     * @param FormInterface $form Form
+     * @param FormInterface $form          Form
+     * @param array         $resultData    Api data
+     * @param boolean       $removeActions Is need to remove actions
      *
      * @return Form
      */
@@ -441,6 +464,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $form;
     }
 
+    /**
+     * Add Guidance
+     *
+     * @return void
+     */
     private function addGuidance()
     {
         $message = 'psv-vehicles-' . $this->lva . '-missing-breakdown';
@@ -464,6 +492,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     /**
      * Get the total number of vehicles
+     *
+     * @param array $resultData Data
      *
      * @return int
      */
@@ -494,8 +524,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Get the altered table
      *
-     * @param array $tableData
-     * @param bool  $readOnly
+     * @param array $tableData Table data
+     * @param bool  $readOnly  Is Read only
      *
      * @return \Common\Service\Table\TableBuilder
      */
@@ -507,8 +537,8 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Get the table
      *
-     * @param array $tableData
-     * @param bool  $readOnly
+     * @param array $tableData Table data
+     * @param bool  $readOnly  Is Read only
      *
      * @return \Common\Service\Table\TableBuilder
      */
@@ -525,6 +555,15 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $this->getServiceLocator()->get('Table')->prepareTable($tableName, $tableData, $params);
     }
 
+    /**
+     * Render Form
+     *
+     * @param FormInterface $form       Form
+     * @param string        $section    Section title
+     * @param array         $headerData Header data
+     *
+     * @return \Common\View\Model\Section
+     */
     private function renderForm($form, $section, $headerData)
     {
         $params = [];
@@ -538,27 +577,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         }
         $this->getServiceLocator()->get('Script')->loadFiles($files);
         return $this->render($section, $form, $params);
-    }
-
-    /**
-     * Override the get crud action method
-     *
-     * @param array $formTables   form tables
-     * @param bool  $returnAction return action
-     *
-     * @return array
-     */
-    protected function getCrudAction(array $formTables = array(), $returnAction = true)
-    {
-        $data = $formTables;
-
-        if (isset($data['vehicles']['action'])) {
-            return $returnAction
-                ? $this->getActionFromCrudAction($data['vehicles'])
-                : $data['vehicles'];
-        }
-
-        return null;
     }
 
     /**
@@ -578,7 +596,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     /**
      * Fetch one vehicles data
      *
-     * @param int $id
+     * @param int $id Id
      *
      * @return array
      */
@@ -608,6 +626,13 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         return $this->formatFilters((array)$query);
     }
 
+    /**
+     * Build filter from query params
+     *
+     * @param array $query Query parameters
+     *
+     * @return array
+     */
     protected function formatFilters($query)
     {
         $filters = [];
