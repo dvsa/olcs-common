@@ -58,7 +58,7 @@ trait GenericUpload
      * @param array $fileData File Data
      * @param array $data     Data
      *
-     * @return void
+     * @return bool Always true unless Exception thrown
      * @throws InvalidMimeException
      * @throws \Exception
      */
@@ -91,7 +91,7 @@ trait GenericUpload
         }
 
         if ($response->isOk()) {
-            return;
+            return true;
         }
 
         throw new \Exception();

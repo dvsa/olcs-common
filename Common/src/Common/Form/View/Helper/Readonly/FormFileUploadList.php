@@ -4,7 +4,6 @@ namespace Common\Form\View\Helper\Readonly;
 
 use Common\Form\Elements\Types\FileUploadList;
 use Common\Form\Elements\Types\FileUploadListItem;
-use Zend\Form\Element as ZendElement;
 use Zend\Form\FieldsetInterface;
 use Zend\Form\View\Helper\AbstractHelper;
 
@@ -13,6 +12,12 @@ use Zend\Form\View\Helper\AbstractHelper;
  */
 class FormFileUploadList extends AbstractHelper
 {
+    private static $htmlCntr =
+        '<div class="help__text">' .
+            '<h3 class="file__heading">%s</h3>' .
+            '<ul class="js-upload-list">%s</ul>' .
+        '</div>';
+
     /**
      * Invoke helper as function. Proxies to {@link render()}.
      *
@@ -38,6 +43,10 @@ class FormFileUploadList extends AbstractHelper
             throw new \Exception('Parameter must be instance of ' . FileUploadList::class);
         }
 
+        if ($fs->count() == 0) {
+            return '';
+        }
+
         $fsHtml = [];
         foreach ($fs->getIterator() as $fieldset) {
             if (!($fieldset instanceof FileUploadListItem)) {
@@ -54,6 +63,10 @@ class FormFileUploadList extends AbstractHelper
             $fsHtml[] = '<li class="file">' . implode('', $elmHtml) . '</li>';
         }
 
-        return '<ul class="js-upload-list">' . implode('', $fsHtml) . '</ul>';
+        return sprintf(
+            self::$htmlCntr,
+            $this->view->translate('common.file-upload.table.col.FileName'),
+            implode('', $fsHtml)
+        );
     }
 }

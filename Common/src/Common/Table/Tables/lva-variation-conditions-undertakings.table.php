@@ -2,7 +2,6 @@
 
 return array(
     'variables' => array(
-        'title' => 'lva-conditions-undertakings-table-title',
         'within_form' => true,
         'empty_message' => 'lva-conditions-undertakings-table-empty-message'
     ),

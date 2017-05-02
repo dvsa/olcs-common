@@ -25,6 +25,12 @@ use Zend\Form\LabelAwareInterface;
  */
 class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
 {
+    private static $htmlFileUploadCntr =
+        '<div class="help__text">' .
+            '<h3 class="file__heading">%s</h3>' .
+            '<ul%s>%s%s</ul>' .
+        '</div>';
+
     /**
      * @var bool
      */
@@ -35,7 +41,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      *
      * @var string
      */
-    private $hintFormat = "<p class=\"hint\">%s</p>";
+    private static $hintFormat = '<p class="hint">%s</p>';
 
     /**
      * Set Is Form in Read only status
@@ -96,7 +102,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         $hint = $element->getOption('hint');
         if (!empty($hint)) {
             $view = $this->getView();
-            $hint = sprintf($this->hintFormat, $view->translate($hint));
+            $hint = sprintf(self::$hintFormat, $view->translate($hint));
         }
 
         $attributes       = $element->getAttributes();
@@ -198,8 +204,17 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
             }
 
             if ($element instanceof FileUploadList) {
-
-                $markup = sprintf('<ul%s>%s%s</ul>', $attributesString, $hint, $markup);
+                if (!empty($markup)) {
+                    $markup = sprintf(
+                        self::$htmlFileUploadCntr,
+                        $this->view->translate('common.file-upload.table.col.FileName'),
+                        $attributesString,
+                        $hint,
+                        $markup
+                    );
+                } else {
+                    $markup = '';
+                }
 
             } elseif ($element instanceof FileUploadListItem) {
 

@@ -208,18 +208,54 @@ class FormCollectionTest extends MockeryTestCase
         $this->assertEquals('<ul class="definition-list readonly">element</ul>', $markup);
     }
 
-    /**
-     * @outputBuffering disabled
-     */
+    public function testRenderForFileUploadListElementNotItems()
+    {
+        $viewHelper = $this->prepareViewHelper();
+
+        static::assertEquals('', $viewHelper(new FileUploadList('files'), 'formCollection'));
+    }
+
     public function testRenderForFileUploadListElement()
     {
         $this->element = new FileUploadList('files');
+        $this->element
+            ->setAttributes(
+                [
+                    'title' => 'unit_attr1',
+                ]
+            )
+            ->setOptions(
+                [
+                    'hint' => '@unit_hint@',
+                ]
+            );
+
+        $this->element->add(new FileUploadListItem('file1'));
 
         $viewHelper = $this->prepareViewHelper();
 
-        echo $viewHelper($this->element, 'formCollection');
+        /** @var \Zend\View\Renderer\PhpRenderer | m\MockInterface $mockView */
+        $mockView = m::mock($viewHelper->getView())->makePartial();
+        $mockView
+            ->shouldReceive('translate')->andReturnUsing(
+                function ($arg) {
+                    return '_TRANSL_' . $arg;
+                }
+            );
+        $viewHelper->setView($mockView);
 
-        $this->expectOutputRegex('/^<ul data-group="files"><\/ul>$/');
+        $actual = $viewHelper($this->element, 'formCollection');
+
+        static::assertEquals(
+            '<div class="help__text">' .
+            '<h3 class="file__heading">_TRANSL_common.file-upload.table.col.FileName</h3>' .
+            '<ul title="unit_attr1" data-group="files">' .
+            '<p class="hint">_TRANSL_@unit_hint@</p>'.
+            '<li data-group="file1"></li>'.
+            '</ul>' .
+            '</div>',
+            $actual
+        );
     }
 
     /**
