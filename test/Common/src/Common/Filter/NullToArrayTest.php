@@ -7,7 +7,7 @@ use Common\Filter\NullToArray;
 /**
  * Class NullToArrayTest
  * @package CommonTest\Filter
- * @covers \Common\Filter\NullToFloat
+ * @covers \Common\Filter\NullToArray
  */
 class NullToArrayTest extends \PHPUnit_Framework_TestCase
 {
