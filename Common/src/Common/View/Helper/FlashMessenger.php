@@ -217,11 +217,7 @@ class FlashMessenger extends ZendFlashMessenger
 
         array_walk_recursive(
             $messages,
-            function ($item) use (
-                &$messagesToPrint,
-                $translator,
-                $translatorTextDomain
-            ) {
+            function ($item) use (&$messagesToPrint, $translator, $translatorTextDomain) {
                 if ($translator !== null) {
                     $item = $translator->translate(
                         $item,
