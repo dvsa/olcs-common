@@ -17,8 +17,8 @@ class Advertisements
      * @Form\Options({
      *     "error-message": "advertisements_adPlaced-error",
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
-     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
-     *     "value_options": {"Y":"Yes", "N":"No"},
+     *     "label_attributes": {"class": "form-control form-control--radio"},
+     *     "value_options": {"1":"Yes", "0":"No (operator to post)", "2":"No (operator to upload)"},
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
@@ -99,4 +99,10 @@ class Advertisements
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $adSendByPost = null;
+
+    /**
+     * @Form\Attributes({"data-container-class":"ad-upload-later"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $adUploadLater = null;
 }
