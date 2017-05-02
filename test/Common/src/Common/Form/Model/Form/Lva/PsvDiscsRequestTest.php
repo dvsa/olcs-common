@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use Zend\Validator\Digits;
 use Zend\Validator\GreaterThan;
 
 /**
@@ -27,6 +28,11 @@ class PsvDiscsRequestTest extends AbstractFormValidationTestCase
             1,
             null,
             [GreaterThan::NOT_GREATER]
+        );
+        $this->assertFormElementNotValid(
+            $element,
+            'test',
+            [GreaterThan::NOT_GREATER, Digits::NOT_DIGITS]
         );
     }
 
