@@ -32,7 +32,7 @@ class PsvDiscsRequestTest extends AbstractFormValidationTestCase
         $this->assertFormElementNotValid(
             $element,
             'test',
-            [GreaterThan::NOT_GREATER, Digits::NOT_DIGITS]
+            [Digits::NOT_DIGITS, GreaterThan::NOT_GREATER]
         );
     }
 
