@@ -5,6 +5,7 @@ namespace Common\Controller\Lva;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Form\Form;
 use Common\RefData;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Shared logic between People controllers
@@ -23,10 +24,28 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     protected $section = 'people';
     protected $baseRoute = 'lva-%s/people';
 
+    /** @var  \Common\Service\Helper\FormHelperService */
+    private $hlpForm;
+
+    /**
+     * On Dispatch
+     *
+     * @param MvcEvent $e Event
+     *
+     * @return mixed
+     */
+    public function onDispatch(MvcEvent $e)
+    {
+        $this->hlpForm = $this->getServiceLocator()->get('Helper\Form');
+
+        return parent::onDispatch($e);
+    }
+
+
     /**
      * Index action
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Zend\Http\Response
      */
     public function indexAction()
     {
@@ -202,10 +221,12 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     private function savePerson($data)
     {
+        /* @var Adapters\AbstractPeopleAdapter $adapter */
+        $adapter = $this->getAdapter();
         if (empty($data['id'])) {
-            $this->getAdapter()->create($data);
+            $adapter->create($data);
         } else {
-            $this->getAdapter()->update($data);
+            $adapter->update($data);
         }
     }
 
@@ -346,7 +367,21 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         $personId = (isset($personData['person']['id'])) ? $personData['person']['id'] : null;
         // if not internal OR no  person OR already disqualified then hide the disqualify button
 
-        if ($this->location !== 'internal' ||
+        //  allow for internal user do not specify DoB
+        if ($this->location === self::LOC_INTERNAL) {
+            /** @var \Zend\Form\Element $elm */
+            $elm = $form->get('data')->get('birthDate');
+            $elm->setOption('label-suffix', '(optional)');
+
+            /** @var \Zend\InputFilter\Input $birthDateInputFltr */
+            $birthDateInputFltr = $form->getInputFilter()->get('data')->get('birthDate');
+
+            $birthDateInputFltr
+                ->setAllowEmpty(true)
+                ->setContinueIfEmpty(true);
+        }
+
+        if ($this->location !== self::LOC_INTERNAL ||
             empty($personId) ||
             $this->isPersonDisqualified($personData) ||
             !$this->getAdapter()->isSoleTrader()
@@ -371,7 +406,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Add person action
      *
-     * @return void
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function addAction()
     {
@@ -388,7 +423,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     /**
      * Edit person action
      *
-     * @return void
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function editAction()
     {
@@ -423,6 +458,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $data['data']['position'] = $personData['position'];
         }
 
+        /** @var \Common\Form\Form $form */
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Person', $request);
 

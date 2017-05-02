@@ -32,6 +32,13 @@ use Zend\Mvc\MvcEvent;
  */
 abstract class AbstractController extends AbstractActionController
 {
+    const LVA_LIC = 'licence';
+    const LVA_APP = 'application';
+    const LVA_VAR = 'variation';
+
+    const LOC_INTERNAL = 'internal';
+    const LOC_EXT = 'external';
+
     use Util\FlashMessengerTrait,
         GenericUpload;
 
@@ -129,8 +136,10 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Check if a button is pressed
      *
-     * @param string $button
-     * @return boolean
+     * @param string $button Button id
+     * @param array  $data   Form Data
+     *
+     * @return bool
      */
     protected function isButtonPressed($button, $data = [])
     {
@@ -146,6 +155,10 @@ abstract class AbstractController extends AbstractActionController
 
     /**
      * Get accessible sections
+     *
+     * @param bool $keysOnly Define if you only want to return keys of array
+     *
+     * @return array
      */
     protected function getAccessibleSections($keysOnly = true)
     {
@@ -161,7 +174,11 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
+     * Fetch Data for Lva
+     *
      * @NOTE This is a new method to load the generic LVA bundle (which is cached)
+     *
+     * @return array|mixed
      */
     protected function fetchDataForLva()
     {
@@ -194,6 +211,8 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Wrapper method so we can extend this behaviour
      *
+     * @param int $lvaId LVA identifier
+     *
      * @return \Zend\Http\Response
      */
     protected function goToOverviewAfterSave($lvaId = null)
@@ -204,7 +223,8 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Go to overview page
      *
-     * @param int $lvaId
+     * @param int $lvaId LVA identifier
+     *
      * @return \Zend\Http\Response
      */
     protected function goToOverview($lvaId = null)
@@ -219,7 +239,9 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Add the section updated message
      *
-     * @param string $section
+     * @param string $section Section
+     *
+     * @return void
      */
     protected function addSectionUpdatedMessage($section)
     {
@@ -233,6 +255,10 @@ abstract class AbstractController extends AbstractActionController
 
     /**
      * Redirect to the next section
+     *
+     * @param string $currentSection Section
+     *
+     * @return \Zend\Http\Response
      */
     protected function goToNextSection($currentSection)
     {
@@ -255,8 +281,9 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Check for redirect
      *
-     * @param int $lvaId
-     * @return null|\Zend\Http\Response
+     * @param int $lvaId LVA Identifier
+     *
+     * @return \Common\Service\Cqrs\Response|null|\Zend\Http\Response
      */
     protected function checkForRedirect($lvaId)
     {
@@ -278,6 +305,11 @@ abstract class AbstractController extends AbstractActionController
 
     /**
      * No-op but extended
+     *
+     * @param Form  $form Form
+     * @param array $data Form Data
+     *
+     * @return void
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
@@ -286,10 +318,14 @@ abstract class AbstractController extends AbstractActionController
 
     /**
      * A method to be called post save, this can be hi-jacked to do things like update completion status
+     *
+     * @param string $section Section name
+     *
+     * @return void
+     * @deprecated is not used anythere
      */
     protected function postSave($section)
     {
-
     }
 
     /**
@@ -305,8 +341,11 @@ abstract class AbstractController extends AbstractActionController
     /**
      * Add current message
      *
-     * @param string $message
-     * @param string $namespace
+     * @param string $message   Message
+     * @param string $namespace Namespace
+     *
+     * @return void
+     * @deprecated  is not used anythere
      */
     protected function addCurrentMessage($message, $namespace = 'default')
     {
@@ -315,6 +354,9 @@ abstract class AbstractController extends AbstractActionController
 
     /**
      * Attach messages to display in the current response
+     *
+     * @return void
+     * @deprecated  is not used anythere
      */
     protected function attachCurrentMessages()
     {
@@ -353,7 +395,8 @@ abstract class AbstractController extends AbstractActionController
     /**
      * This method is overidden for applications
      *
-     * @param int $applicationId
+     * @param int $applicationId Application Id
+     *
      * @return int
      */
     protected function getLicenceId($applicationId = null)
