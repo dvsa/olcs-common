@@ -14,8 +14,8 @@ class NullToArrayTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getValueDataProvider
      *
-     * @param $input
-     * @param $expected
+     * @param $input    value to be passed into filter
+     * @param $expected expected value to be returned from filter
      */
     public function testFilter($input, $expected)
     {
@@ -23,9 +23,6 @@ class NullToArrayTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $filter->filter($input));
     }
 
-    /**
-     * @return array
-     */
     public function getValueDataProvider()
     {
         return [

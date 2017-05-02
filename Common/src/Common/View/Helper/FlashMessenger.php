@@ -107,30 +107,11 @@ class FlashMessenger extends ZendFlashMessenger
             return '';
         }
 
-        $markup = $this->renderAllFromNamespace(
-            'error',
-            ['notice--danger']
-        );
-
-        $markup .= $this->renderAllFromNamespace(
-            'success',
-            ['notice--success']
-        );
-
-        $markup .= $this->renderAllFromNamespace(
-            'warning',
-            ['notice--warning']
-        );
-
-        $markup .= $this->renderAllFromNamespace(
-            'info',
-            ['notice--info']
-        );
-
-        $markup .= $this->renderAllFromNamespace(
-            'default',
-            ['notice--info']
-        );
+        $markup = $this->renderAllFromNamespace('error', array('notice--danger'));
+        $markup .= $this->renderAllFromNamespace('success', array('notice--success'));
+        $markup .= $this->renderAllFromNamespace('warning', array('notice--warning'));
+        $markup .= $this->renderAllFromNamespace('info', array('notice--info'));
+        $markup .= $this->renderAllFromNamespace('default', array('notice--info'));
 
         if (empty($markup)) {
             return '';
@@ -154,10 +135,8 @@ class FlashMessenger extends ZendFlashMessenger
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
         array $classes = []
     ) {
-        return parent::render(
-            $namespace,
-            $classes
-        ) . $this->renderCurrent($namespace, $classes);
+        return parent::render($namespace, $classes) .
+            $this->renderCurrent($namespace, $classes);
     }
 
     /**
@@ -177,10 +156,7 @@ class FlashMessenger extends ZendFlashMessenger
     ) {
         $content = parent::renderCurrent($namespace, $classes);
 
-        $serviceLocator = $this->getServiceLocator();
-
-        $fmHelper = $serviceLocator->getServiceLocator()
-            ->get('Helper\FlashMessenger');
+        $fmHelper = $this->getServiceLocator()->getServiceLocator()->get('Helper\FlashMessenger');
 
         $content .= $this->renderMessages(
             $namespace,
