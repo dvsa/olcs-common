@@ -1829,6 +1829,7 @@ return [
     'lva.section.title.withdraw_application_confirmation' => 'Withdraw application ',
     'lva.section.title.upload-evidence' => 'Add supporting evidence',
     'lva.section.title.upload-evidence.financial-evidence' => 'Financial evidence',
+    'lva.section.title.upload-evidence.operating-centres' => 'Operating centre advertisements',
     'myDetails_loginId-error' => 'Username can\'t be blank',
     'myDetails_emailAddress-error' => 'Email address can\'t be blank',
     'myDetails_emailConfirms-error' => 'Please confirm your email address',

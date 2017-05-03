@@ -18,6 +18,20 @@ class UploadEvidence
      */
     public $financialEvidence = null;
 
+
+    /**
+     * @Form\ComposedObject({
+     *      "target_object":"Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceOperatingCentre",
+     *      "is_collection":true,
+     *      "options":{
+     *          "count": 1,
+     *          "label":"lva.section.title.upload-evidence.operating-centres",
+     *      }
+     * })
+     */
+    public $operatingCentres = null;
+
+
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({"label": "Save and continue"})
