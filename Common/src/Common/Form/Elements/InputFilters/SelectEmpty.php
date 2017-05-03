@@ -20,8 +20,6 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 class SelectEmpty extends ZendElement implements InputProviderInterface
 {
     protected $required = false;
-    protected $continueIfEmpty = true;
-    protected $allowEmpty = true;
 
     public function __construct($name = null, $options = array())
     {
@@ -35,7 +33,12 @@ class SelectEmpty extends ZendElement implements InputProviderInterface
      */
     protected function getValidators()
     {
-        return array();
+        return [
+            [
+                'name' => ZendValidator\NotEmpty::class,
+                [ZendValidator\NotEmpty::NULL]
+            ],
+        ];
     }
 
     /**
@@ -47,8 +50,6 @@ class SelectEmpty extends ZendElement implements InputProviderInterface
     {
         $specification = [
             'required' => $this->required,
-            'continue_if_empty' => $this->continueIfEmpty,
-            'allow_empty' => $this->allowEmpty,
             'validators' => $this->getValidators()
         ];
 
