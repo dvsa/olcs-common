@@ -59,26 +59,6 @@ class TextRequiredTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * ensure fields cannot be left empty
-     *
-     * @return void
-     */
-    public function testAllowEmptyIsDisabled()
-    {
-        $this->assertFalse($this->getSpecificationElement('allow_empty'));
-    }
-
-    /**
-     * ensure we have no validators by default
-     *
-     * @return void
-     */
-    public function testValidatorsAreEmpty()
-    {
-        $this->assertEquals(array(), $this->getSpecificationElement('validators'));
-    }
-
-    /**
      * ensure we trim all input strings
      *
      * @return void

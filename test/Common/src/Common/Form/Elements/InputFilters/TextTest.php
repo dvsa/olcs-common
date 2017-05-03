@@ -60,36 +60,6 @@ class TextTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * ensure validation won't continue on an empty text input
-     *
-     * @return void
-     */
-    public function testContinueIfEmptyIsDisabled()
-    {
-        $this->assertFalse($this->getSpecificationElement('continue_if_empty'));
-    }
-
-    /**
-     * ensure fields can be left empty
-     *
-     * @return void
-     */
-    public function testAllowEmptyIsEnabled()
-    {
-        $this->assertTrue($this->getSpecificationElement('allow_empty'));
-    }
-
-    /**
-     * ensure we have no validators by default
-     *
-     * @return void
-     */
-    public function testValidatorsAreEmpty()
-    {
-        $this->assertEquals(array(), $this->getSpecificationElement('validators'));
-    }
-
-    /**
      * ensure we trim all input strings
      *
      * @return void
@@ -103,18 +73,6 @@ class TextTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test set allow empty
-     *
-     * @return void
-     */
-    public function testSetAllowEmpty()
-    {
-        $this->filter->setAllowEmpty(false);
-
-        $this->assertFalse($this->getSpecificationElement('allow_empty'));
-    }
-
-    /**
      * Test set max
      *
      * @return void
@@ -123,6 +81,6 @@ class TextTest extends \PHPUnit_Framework_TestCase
     {
         $this->filter->setMax(10);
 
-        $this->assertEquals(10, $this->getSpecificationElement('validators')[0]['options']['max']);
+        $this->assertEquals(10, $this->getSpecificationElement('validators')[1]['options']['max']);
     }
 }
