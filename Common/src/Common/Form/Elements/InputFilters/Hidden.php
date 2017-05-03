@@ -28,6 +28,17 @@ class Hidden extends ZendElement implements InputProviderInterface
     }
 
     /**
+     * @param int $max Max string length
+     *
+     * @return $this
+     */
+    public function setMax($max)
+    {
+        $this->max = $max;
+        return $this;
+    }
+
+    /**
      * Provide default input rules for this element.
      *
      * @return array
@@ -51,7 +62,10 @@ class Hidden extends ZendElement implements InputProviderInterface
         ];
 
         if (!empty($this->max)) {
-            $specification['validators'][] = new ZendValidator\StringLength(['min' => 2, 'max' => $this->max]);
+            $specification['validators'][] = [
+                'name' => 'Zend\Validator\StringLength',
+                'options' => ['min' => 2, 'max' => $this->max]
+            ];
         }
 
         return $specification;
