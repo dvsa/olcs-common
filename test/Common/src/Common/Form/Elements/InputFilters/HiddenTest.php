@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Test Text InputFilter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters;
