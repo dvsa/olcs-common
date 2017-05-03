@@ -8,6 +8,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
+use Zend\Validator\NotEmpty;
 use Zend\Form\Element\MultiCheckbox;
 use Zend\InputFilter\InputProviderInterface;
 
@@ -19,18 +20,6 @@ use Zend\InputFilter\InputProviderInterface;
 class MultiCheckboxEmpty extends MultiCheckbox implements InputProviderInterface
 {
     protected $required = false;
-    protected $continueIfEmpty = true;
-    protected $allowEmpty = true;
-
-    /**
-     * Get a list of validators
-     *
-     * @return array
-     */
-    protected function getValidators()
-    {
-        return array();
-    }
 
     /**
      * Provide default input rules for this element.
@@ -41,9 +30,14 @@ class MultiCheckboxEmpty extends MultiCheckbox implements InputProviderInterface
     {
         $specification = [
             'required' => $this->required,
-            'continue_if_empty' => $this->continueIfEmpty,
-            'allow_empty' => $this->allowEmpty,
-            'validators' => $this->getValidators()
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    [
+                        NotEmpty::NULL
+                    ]
+                ],
+            ],
         ];
 
         return $specification;
