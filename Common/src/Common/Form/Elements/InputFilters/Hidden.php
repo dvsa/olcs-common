@@ -20,23 +20,11 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 class Hidden extends ZendElement implements InputProviderInterface
 {
     protected $required = false;
-    protected $continueIfEmpty = false;
-    protected $allowEmpty = true;
     protected $max = null;
 
     public function __construct($name = null, $options = array())
     {
         parent::__construct($name, $options);
-    }
-
-    /**
-     * Get a list of validators
-     *
-     * @return array
-     */
-    protected function getValidators()
-    {
-        return array();
     }
 
     /**
@@ -49,12 +37,17 @@ class Hidden extends ZendElement implements InputProviderInterface
         $specification = [
             'name' => $this->getName(),
             'required' => $this->required,
-            'continue_if_empty' => $this->continueIfEmpty,
-            'allow_empty' => $this->allowEmpty,
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim']
             ],
-            'validators' => $this->getValidators()
+            'validators' => [
+                [
+                    'name' => ZendValidator\NotEmpty::class,
+                    [
+                        ZendValidator\NotEmpty::NULL
+                    ]
+                ],
+            ],
         ];
 
         if (!empty($this->max)) {
