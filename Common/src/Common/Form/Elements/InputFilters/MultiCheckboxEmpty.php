@@ -7,9 +7,9 @@ use Zend\Form\Element\MultiCheckbox;
 use Zend\InputFilter\InputProviderInterface;
 
 /**
- * @internal This only gets used once in \Olcs\Controller\Document\DocumentGenerationController
- *           We must look into removing it and replacing with standard MultiCheckbox.
- *           Reference: OLCS-15198
+ * @deprecated This only gets used once in \Olcs\Controller\Document\DocumentGenerationController
+ *             We must look into removing it and replacing with standard MultiCheckbox.
+ *             Reference: OLCS-15198
  *
  *
  * Multi checkbox with empty allowed
