@@ -33,12 +33,17 @@ class DateCompare extends AbstractCompare
 
     /**
      * Whether we're comparing the time also
+     *
      * @var bool
      */
     protected $hasTime = false;
 
     /**
+     * @internal This is out of scope from ZF 2.4+.  This is only used for the custom validator.
+     *           There is no need to remove this for compatibility.
+     *
      * Whether the date can be empty
+     *
      * @var bool
      */
     protected $allowEmpty = false;
