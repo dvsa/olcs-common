@@ -355,24 +355,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
 
-            //if we're in a variation and the authorisation hasn't increased
-            if ($this->lva === 'variation'
-                && $data['data']['noOfVehiclesRequired'] <= $resultData['currentVehiclesRequired']
-                && $data['data']['noOfTrailersRequired'] <= $resultData['currentTrailersRequired']) {
-
-                //we don't validate (or process) the file upload
+            if ($this->isVariationWithNoAuthIncrease($data, $resultData)) {
+                $data = $this->clearAdvertisementData($data);
                 $validateAdverts = false;
-
-                //overwrite fields, and remove file upload fields
-                $data['advertisements'] = [
-                    'adPlaced' => 'N',
-                    'adPlacedIn' => '',
-                    'adPlacedDate' => [
-                        'year' => null,
-                        'month' => null,
-                        'day' => null
-                    ]
-                ];
             }
 
             if (!$resultData['canUpdateAddress']) {
@@ -641,5 +626,48 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $dtoClass = $this->getItemCommandMap[$this->lva];
         $response = $this->handleQuery($dtoClass::create(['id' => $this->params('child_id')]));
         return $response->getResult();
+    }
+
+    /**
+     * For lva variations we check whether the authorisation has increased
+     *
+     * @param array $data       posted form data
+     * @param array $resultData the original operating centre data
+     *
+     * @return bool
+     */
+    private function isVariationWithNoAuthIncrease($data, $resultData)
+    {
+        //if we're in a variation and the authorisation hasn't increased
+        return (
+            $this->lva === 'variation'
+            && isset($data['data']['noOfVehiclesRequired'])
+            && isset($data['data']['noOfTrailersRequired'])
+            && $data['data']['noOfVehiclesRequired'] <= $resultData['currentVehiclesRequired']
+            && $data['data']['noOfTrailersRequired'] <= $resultData['currentTrailersRequired']
+        );
+    }
+
+    /**
+     * Clear the advertisement data, used on variations where the authorisation has not increased
+     *
+     * @param array $data posted form data
+     *
+     * @return array
+     */
+    private function clearAdvertisementData($data)
+    {
+        //overwrite fields, and remove file upload fields
+        $data['advertisements'] = [
+            'adPlaced' => 'N',
+            'adPlacedIn' => '',
+            'adPlacedDate' => [
+                'year' => null,
+                'month' => null,
+                'day' => null
+            ]
+        ];
+
+        return $data;
     }
 }
