@@ -340,6 +340,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     public function editAction()
     {
+        //normally we validate adverts have been uploaded, but not for variations where authorisation hasn't increased
+        $validateAdverts = true;
+
         /** @var \Zend\Http\PhpEnvironment\Request $request */
         $request = $this->getRequest();
 
@@ -351,6 +354,26 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
+
+            //if we're in a variation and the authorisation hasn't increased
+            if ($this->lva === 'variation'
+                && $data['data']['noOfVehiclesRequired'] <= $resultData['currentVehiclesRequired']
+                && $data['data']['noOfTrailersRequired'] <= $resultData['currentTrailersRequired']) {
+
+                //we don't validate (or process) the file upload
+                $validateAdverts = false;
+
+                //overwrite fields, and remove file upload fields
+                $data['advertisements'] = [
+                    'adPlaced' => 'N',
+                    'adPlacedIn' => '',
+                    'adPlacedDate' => [
+                        'year' => null,
+                        'month' => null,
+                        'day' => null
+                    ]
+                ];
+            }
 
             if (!$resultData['canUpdateAddress']) {
                 $data['address'] = $resultData['operatingCentre']['address'];
@@ -383,7 +406,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $hasProcessedPostcode = false;
         }
 
-        if ($form->has('advertisements')) {
+        if ($form->has('advertisements') && $validateAdverts) {
             $hasProcessedFiles = $this->processFiles(
                 $form,
                 'advertisements->file',
