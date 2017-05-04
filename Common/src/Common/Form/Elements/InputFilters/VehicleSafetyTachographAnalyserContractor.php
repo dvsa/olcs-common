@@ -21,8 +21,11 @@ class VehicleSafetyTachographAnalyserContractor extends Text implements InputPro
      */
     protected function getValidators()
     {
-        return array(
-            new VehicleSafetyTachographAnalyserContractorValidator()
+        $validators = parent::getValidators();
+
+        return array_merge(
+            $validators,
+            [new VehicleSafetyTachographAnalyserContractorValidator()]
         );
     }
 }

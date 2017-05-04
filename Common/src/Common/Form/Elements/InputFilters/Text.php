@@ -24,6 +24,21 @@ class Text extends ZendElement implements InputProviderInterface
     }
 
     /**
+     * Get a list of validators
+     *
+     * @return array
+     */
+    protected function getValidators()
+    {
+        return [
+            [
+                'name' => ZendValidator\NotEmpty::class,
+                [ZendValidator\NotEmpty::NULL]
+            ],
+        ];
+    }
+
+    /**
      * Setter for max
      *
      * @param int $max
@@ -46,12 +61,7 @@ class Text extends ZendElement implements InputProviderInterface
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim']
             ],
-            'validators' => [
-                [
-                    'name' => ZendValidator\NotEmpty::class,
-                    [ZendValidator\NotEmpty::NULL]
-                ],
-            ]
+            'validators' => $this->getValidators(),
         ];
 
         if (!empty($this->max)) {

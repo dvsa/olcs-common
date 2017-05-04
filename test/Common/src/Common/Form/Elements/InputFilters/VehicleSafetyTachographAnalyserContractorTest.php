@@ -38,6 +38,6 @@ class VehicleSafetyTachographAnalyserContractorTest extends PHPUnit_Framework_Te
     {
         $spec = $this->element->getInputSpecification();
 
-        $this->assertTrue($spec['validators'][0] instanceof VehicleSafetyTachographAnalyserContractorValidator);
+        $this->assertTrue($spec['validators'][1] instanceof VehicleSafetyTachographAnalyserContractorValidator);
     }
 }
