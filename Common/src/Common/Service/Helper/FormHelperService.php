@@ -24,9 +24,12 @@ use Zend\Validator\ValidatorChain;
 use Zend\View\Model\ViewModel;
 
 /**
- * Form Helper Service
+ * @internal All validations to do with empty fields must be done as a validator
+ *           within the fieldsets.  AllowEmpty is deprecated, so we use the NotEmpty
+ *           validator.  All instances of AllowEmpty have been removed here for this
+ *           primary reason.
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * Form Helper Service
  */
 class FormHelperService extends AbstractHelperService
 {
