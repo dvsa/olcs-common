@@ -677,6 +677,8 @@ class FormHelperService extends AbstractHelperService
         if (!isset($attributes['class'])) {
             $attributes['class'] = '';
         }
+        // @TODO add this back in when the css has been tweaked
+        //$attributes['class'] .= ' tooltip-grandparent';
 
         $element->setLabelAttributes($attributes);
     }
