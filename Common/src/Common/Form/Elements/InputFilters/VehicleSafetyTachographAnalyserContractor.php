@@ -1,19 +1,13 @@
 <?php
-
-/**
- * VehicleSafetyTachographAnalyserContractor
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorValidator;
 
 /**
- * VehicleSafetyTachographAnalyserContractor
+ * @deprecated This does not get used and must be removed as in: OLCS-15198
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * VehicleSafetyTachographAnalyserContractor
  */
 class VehicleSafetyTachographAnalyserContractor extends Text implements InputProviderInterface
 {

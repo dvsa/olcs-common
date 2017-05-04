@@ -1,18 +1,12 @@
 <?php
-
-/**
- * Textarea Required
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
- * Textarea Required
+ * @deprecated This does not get used and must be removed as in: OLCS-15198
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * Custom Textarea element with required parameter
  */
 class TextareaRequired extends Textarea implements InputProviderInterface
 {

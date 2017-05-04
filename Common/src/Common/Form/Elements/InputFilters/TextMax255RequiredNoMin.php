@@ -1,14 +1,12 @@
 <?php
-
-/**
- * Text Max 255
- */
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Zend\Validator as ZendValidator;
 
 /**
+ * @deprecated This does not get used and must be removed as in: OLCS-15198
+ *
  * Text Max 255 Required no minimum chars
  */
 class TextMax255RequiredNoMin extends TextMax255 implements InputProviderInterface
