@@ -50,7 +50,7 @@ class Hidden extends ZendElement implements InputProviderInterface
             'validators' => [
                 [
                     'name' => ZendValidator\NotEmpty::class,
-                    [ZendValidator\NotEmpty::NULL],
+                    'type' => ZendValidator\NotEmpty::NULL,
                 ],
             ],
         ];
