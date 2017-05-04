@@ -450,7 +450,6 @@ class FormHelperService extends AbstractHelperService
     {
         /** @var InputFilterInterface $filter */
         list(, $filter, $name) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
-        $filter->get($name)->setAllowEmpty(true);
         $filter->get($name)->setRequired(false);
     }
 
@@ -494,7 +493,6 @@ class FormHelperService extends AbstractHelperService
             $element->setAttribute('disabled', 'disabled');
         }
 
-        $filter->get($reference)->setAllowEmpty(true);
         $filter->get($reference)->setRequired(false);
 
         return null;
@@ -598,7 +596,6 @@ class FormHelperService extends AbstractHelperService
         }
 
         if ($inputFilter instanceof Input) {
-            $inputFilter->setAllowEmpty(true);
             $inputFilter->setRequired(false);
             $inputFilter->setValidatorChain(new ValidatorChain());
         }
