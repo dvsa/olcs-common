@@ -340,6 +340,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     public function editAction()
     {
+        //normally we validate adverts have been uploaded, but not for variations where authorisation hasn't increased
+        $validateAdverts = true;
+
         /** @var \Zend\Http\PhpEnvironment\Request $request */
         $request = $this->getRequest();
 
@@ -351,6 +354,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
+
+            if ($this->isVariationWithNoAuthIncrease($data, $resultData)) {
+                $data = $this->clearAdvertisementData($data);
+                $validateAdverts = false;
+            }
 
             if (!$resultData['canUpdateAddress']) {
                 $data['address'] = $resultData['operatingCentre']['address'];
@@ -383,7 +391,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $hasProcessedPostcode = false;
         }
 
-        if ($form->has('advertisements')) {
+        if ($form->has('advertisements') && $validateAdverts) {
             $hasProcessedFiles = $this->processFiles(
                 $form,
                 'advertisements->file',
@@ -618,5 +626,48 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $dtoClass = $this->getItemCommandMap[$this->lva];
         $response = $this->handleQuery($dtoClass::create(['id' => $this->params('child_id')]));
         return $response->getResult();
+    }
+
+    /**
+     * For lva variations we check whether the authorisation has increased
+     *
+     * @param array $data       posted form data
+     * @param array $resultData the original operating centre data
+     *
+     * @return bool
+     */
+    private function isVariationWithNoAuthIncrease($data, $resultData)
+    {
+        //if we're in a variation and the authorisation hasn't increased
+        return (
+            $this->lva === 'variation'
+            && isset($data['data']['noOfVehiclesRequired'])
+            && isset($data['data']['noOfTrailersRequired'])
+            && $data['data']['noOfVehiclesRequired'] <= $resultData['currentVehiclesRequired']
+            && $data['data']['noOfTrailersRequired'] <= $resultData['currentTrailersRequired']
+        );
+    }
+
+    /**
+     * Clear the advertisement data, used on variations where the authorisation has not increased
+     *
+     * @param array $data posted form data
+     *
+     * @return array
+     */
+    private function clearAdvertisementData($data)
+    {
+        //overwrite fields, and remove file upload fields
+        $data['advertisements'] = [
+            'adPlaced' => 'N',
+            'adPlacedIn' => '',
+            'adPlacedDate' => [
+                'year' => null,
+                'month' => null,
+                'day' => null
+            ]
+        ];
+
+        return $data;
     }
 }
