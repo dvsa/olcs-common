@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Textarea
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element\Textarea as ZendElement;
@@ -13,9 +6,11 @@ use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
- * Textarea
+ * @deprecated This only gets used once in \Olcs\Form\Model\Fieldset\ReverseTransactionDetails
+ *             We must look into removing it and replacing with standard MultiCheckbox.
+ *             Reference: OLCS-15198
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * Textarea
  */
 class Textarea extends ZendElement implements InputProviderInterface
 {
@@ -27,16 +22,6 @@ class Textarea extends ZendElement implements InputProviderInterface
     public function __construct($name = null, $options = array())
     {
         parent::__construct($name, $options);
-    }
-
-    /**
-     * Get a list of validators
-     *
-     * @return array
-     */
-    protected function getValidators()
-    {
-        return array();
     }
 
     /**
@@ -54,7 +39,6 @@ class Textarea extends ZendElement implements InputProviderInterface
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim']
             ],
-            'validators' => $this->getValidators()
         ];
 
         if (!empty($this->max)) {
