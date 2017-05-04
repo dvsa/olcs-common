@@ -32,8 +32,6 @@ class FormHelperService extends AbstractHelperService
     const ALTER_LABEL_APPEND = 1;
     const ALTER_LABEL_PREPEND = 2;
 
-    const CSRF_TIMEOUT = 3600;
-
     const MIN_COMPANY_NUMBER_LENGTH = 1;
     const MAX_COMPANY_NUMBER_LENGTH = 8;
 
@@ -55,29 +53,30 @@ class FormHelperService extends AbstractHelperService
             $class = $this->findForm($formName);
         }
 
-        $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
+        $sm = $this->getServiceLocator();
+        $annotationBuilder = $sm->get('FormAnnotationBuilder');
+        $cfg = $sm->get('Config');
 
         /** @var \Zend\Form\FormInterface $form */
         $form = $annotationBuilder->createForm($class);
 
-        if ($addCsrf) {
-            $config = array(
-                'type' => 'Zend\Form\Element\Csrf',
-                'name' => 'security',
-                'attributes' => array(
-                    'class' => 'js-csrf-token',
-                ),
-                'options' => array(
-                    'csrf_options' => array(
-                        'messageTemplates' => array(
-                            'notSame' => 'csrf-message'
-                        ),
-                        'timeout' => self::CSRF_TIMEOUT
-                    )
-                )
-            );
-            $form->add($config);
-        }
+        //  add CSRF element
+        $config = [
+            'type' => \Zend\Form\Element\Csrf::class,
+            'name' => 'security',
+            'attributes' => [
+                'class' => 'js-csrf-token',
+            ],
+            'options' => [
+                'csrf_options' => [
+                    'messageTemplates' => array(
+                        'notSame' => 'csrf-message',
+                    ),
+                    'timeout' => $cfg['csrf']['timeout'],
+                ],
+            ],
+        ];
+        $form->add($config);
 
         if ($addContinue) {
             $config = array(
@@ -107,8 +106,12 @@ class FormHelperService extends AbstractHelperService
     }
 
     /**
-     * @param \Zend\Form\Form $form
-     * @param \Zend\Http\Request $request
+     * Set Form Action From Request
+     *
+     * @param \Zend\Form\FormInterface $form    Form
+     * @param \Zend\Http\Request       $request Request
+     *
+     * @return void
      */
     public function setFormActionFromRequest($form, $request)
     {
@@ -457,7 +460,6 @@ class FormHelperService extends AbstractHelperService
 
             if (empty($value) || $element instanceof Checkbox) {
                 $filter->get($key)
-                    ->setAllowEmpty(true)
                     ->setRequired(false)
                     ->setValidatorChain(
                         new ValidatorChain()
@@ -677,8 +679,6 @@ class FormHelperService extends AbstractHelperService
         if (!isset($attributes['class'])) {
             $attributes['class'] = '';
         }
-        // @TODO add this back in when the css has been tweaked
-        //$attributes['class'] .= ' tooltip-grandparent';
 
         $element->setLabelAttributes($attributes);
     }
@@ -710,6 +710,7 @@ class FormHelperService extends AbstractHelperService
      * @param array $data
      * @param string $detailsFieldset
      * @param string $addressFieldset
+     *
      * @return boolean
      */
     public function processCompanyNumberLookupForm(Form $form, $data, $detailsFieldset, $addressFieldset = null)
@@ -922,7 +923,8 @@ class FormHelperService extends AbstractHelperService
      * Populate an address fieldset using Companies House address data
      *
      * @param \Zend\Form\Fieldset $fieldset address fieldset
-     * @param array $data Companies House 'AddressLine' data
+     * @param array               $data     Companies House 'AddressLine' data
+     *
      * @return \Zend\Form\Fieldset
      */
     public function populateRegisteredAddressFieldset($fieldset, $data)
