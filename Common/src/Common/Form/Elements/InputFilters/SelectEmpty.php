@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Select with empty allowed
- *
- * @author Ian Lindsay <ian@hemera-business-services.co.uk>
- */
-
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element\Select as ZendElement;
@@ -13,9 +7,9 @@ use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
- * Select with empty allowed
+ * @deprecated Unused Custom InputFilter.  Need to remove in OLCS-15198
  *
- * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ * Select with empty allowed
  */
 class SelectEmpty extends ZendElement implements InputProviderInterface
 {
@@ -27,21 +21,6 @@ class SelectEmpty extends ZendElement implements InputProviderInterface
     }
 
     /**
-     * Get a list of validators
-     *
-     * @return array
-     */
-    protected function getValidators()
-    {
-        return [
-            [
-                'name' => ZendValidator\NotEmpty::class,
-                [ZendValidator\NotEmpty::NULL]
-            ],
-        ];
-    }
-
-    /**
      * Provide default input rules for this element.
      *
      * @return array
@@ -50,7 +29,12 @@ class SelectEmpty extends ZendElement implements InputProviderInterface
     {
         $specification = [
             'required' => $this->required,
-            'validators' => $this->getValidators()
+            'validators' => [
+                [
+                    'name' => ZendValidator\NotEmpty::class,
+                    [ZendValidator\NotEmpty::NULL],
+                ],
+            ]
         ];
 
         return $specification;

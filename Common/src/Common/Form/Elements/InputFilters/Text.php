@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Text
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element\Text as ZendElement;
@@ -13,9 +7,11 @@ use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
- * Text
+ * @deprecated This should not be used and must be removed as part of OLCS-15198
+ *             Replace other elements with the normal Text element provided by
+ *             Zend.
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * Custom Text Element
  */
 class Text extends ZendElement implements InputProviderInterface
 {
@@ -25,21 +21,6 @@ class Text extends ZendElement implements InputProviderInterface
     public function __construct($name = null, $options = array())
     {
         parent::__construct($name, $options);
-    }
-
-    /**
-     * Get a list of validators
-     *
-     * @return array
-     */
-    protected function getValidators()
-    {
-        return [
-            [
-                'name' => ZendValidator\NotEmpty::class,
-                [ZendValidator\NotEmpty::NULL]
-            ],
-        ];
     }
 
     /**
@@ -65,7 +46,12 @@ class Text extends ZendElement implements InputProviderInterface
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim']
             ],
-            'validators' => $this->getValidators()
+            'validators' => [
+                [
+                    'name' => ZendValidator\NotEmpty::class,
+                    [ZendValidator\NotEmpty::NULL]
+                ],
+            ]
         ];
 
         if (!empty($this->max)) {

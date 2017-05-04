@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Text
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element\Hidden as ZendElement;
@@ -13,9 +7,11 @@ use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
- * Text
+ * @deprecated This should not be used and must be removed as part of OLCS-15198
+ *             Replace other elements with the normal Text element provided by
+ *             Zend.
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * Custom Hidden Element
  */
 class Hidden extends ZendElement implements InputProviderInterface
 {
@@ -54,9 +50,7 @@ class Hidden extends ZendElement implements InputProviderInterface
             'validators' => [
                 [
                     'name' => ZendValidator\NotEmpty::class,
-                    [
-                        ZendValidator\NotEmpty::NULL
-                    ]
+                    [ZendValidator\NotEmpty::NULL],
                 ],
             ],
         ];
