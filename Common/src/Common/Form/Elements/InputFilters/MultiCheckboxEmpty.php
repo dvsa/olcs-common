@@ -30,10 +30,8 @@ class MultiCheckboxEmpty extends MultiCheckbox implements InputProviderInterface
             'validators' => [
                 [
                     'name' => NotEmpty::class,
-                    [
-                        'options' => [
-                            'type' => NotEmpty::NULL,
-                        ],
+                    'options' => [
+                        'type' => NotEmpty::NULL,
                     ],
                 ],
             ],

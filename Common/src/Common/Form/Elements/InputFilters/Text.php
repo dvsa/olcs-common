@@ -33,10 +33,8 @@ class Text extends ZendElement implements InputProviderInterface
         return [
             [
                 'name' => ZendValidator\NotEmpty::class,
-                [
-                    'options' => [
-                        'type' => ZendValidator\NotEmpty::NULL,
-                    ],
+                'options' => [
+                    'type' => ZendValidator\NotEmpty::NULL,
                 ],
             ],
         ];

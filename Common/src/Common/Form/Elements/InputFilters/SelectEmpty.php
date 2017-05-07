@@ -32,10 +32,8 @@ class SelectEmpty extends ZendElement implements InputProviderInterface
             'validators' => [
                 [
                     'name' => ZendValidator\NotEmpty::class,
-                    [
-                        'options' => [
-                            'type' => ZendValidator\NotEmpty::EMPTY_ARRAY,
-                        ],
+                    'options' => [
+                        'type' => ZendValidator\NotEmpty::EMPTY_ARRAY,
                     ],
                 ],
             ]
