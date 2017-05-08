@@ -61,18 +61,16 @@ abstract class AbstractDiscsController extends AbstractController
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
+        $data = [];
         if ($request->isPost()) {
             $data = (array)$request->getPost();
 
             $crudAction = $this->getCrudAction([$data['table']]);
-
             if ($crudAction !== null) {
                 return $this->handleCrudAction($crudAction, ['add', self::ACTION_CEASED_SHOW_HIDE]);
             }
 
             return $this->completeSection('discs');
-        } else {
-            $data = [];
         }
 
         $form = $this->getDiscsForm()->setData($data);
@@ -286,7 +284,7 @@ abstract class AbstractDiscsController extends AbstractController
     /**
      * Format disk number
      * 
-     * @param string $disc Disk number
+     * @param array $disc Disk data
      *
      * @return string
      */
@@ -410,6 +408,7 @@ abstract class AbstractDiscsController extends AbstractController
                 'label' => 'internal-psv-discs-filter-ceased-' . ($isIncluded ? 'hide' : 'show') . '-discs',
                 'class' => 'action--secondary js-disable-crud',
                 'requireRows' => true,
+                'keepForReadOnly' => true,
             ]
         );
 
