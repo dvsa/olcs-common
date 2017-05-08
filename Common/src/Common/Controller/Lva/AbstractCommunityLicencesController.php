@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Shared logic between Community Licences controllers
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Common\RefData;
@@ -55,9 +49,12 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Community Licences section
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function indexAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -104,18 +101,19 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function getFilterForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicenceFilter', false);
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicenceFilter');
     }
 
     /**
      * Get form
      *
-     * @return \Zend\Form\Form
+     * @return \Zend\Form\FormInterface
      */
     private function getForm()
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
@@ -129,6 +127,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     }
 
     /**
+     * Get Table
+     *
      * @return \Common\Service\Table\TableBuilder
      */
     private function getTable()
@@ -140,6 +140,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     }
 
     /**
+     * Get Table Data
+     *
      * @return array
      */
     private function getTableData()
@@ -185,7 +187,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Format data for form
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     private function formatDataForForm($data)
@@ -200,7 +203,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Hide Add Office Licence action, if necessary
      *
-     * @param \Common\Service\Table\TableBuilder $table
+     * @param \Common\Service\Table\TableBuilder $table Table
+     *
      * @return \Common\Service\Table\TableBuilder
      */
     protected function alterTable($table)
@@ -244,8 +248,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Check table for active licences
      *
-     * @param \Common\Service\Table\TableBuilder
-     * @param array $statuses
+     * @param \Common\Service\Table\TableBuilder $table    Table
+     * @param array                              $statuses Statuses
+     *
      * @return bool
      */
     protected function checkTableForLicences($table, $statuses)
@@ -262,7 +267,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Office licence add acion
      *
-     * @return Zend\Http\Redirect
+     * @return \Zend\Http\Response
      */
     public function officeLicenceAddAction()
     {
@@ -284,7 +289,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Redirect to index
      *
-     * @return Zend\Http\Redirect
+     * @return \Zend\Http\Response
      */
     protected function redirectToIndex()
     {
@@ -298,9 +303,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Add action
      *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function addAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if ($this->isButtonPressed('cancel')) {
@@ -309,9 +316,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         $licenceId = $this->getLicenceId();
 
+        /** @var \Common\Service\Helper\FormHelperService $formHelper */
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $form = $formHelper->createForm('Lva\CommunityLicencesAdd');
-        $formHelper->setFormActionFromRequest($form, $this->getRequest());
+        $formHelper->setFormActionFromRequest($form, $request);
 
         $view = new ViewModel(['form' => $form]);
         $view->setTemplate('partials/form');
@@ -347,9 +355,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Add action
      *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function voidAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $ids = explode(',', $this->params('child_id'));
@@ -381,9 +391,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Restore action
      *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function restoreAction()
     {
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         if (!$request->isPost()) {
@@ -407,12 +419,14 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Stop action
      *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function stopAction()
     {
         if ($this->isButtonPressed('cancel')) {
             return $this->redirectToIndex();
         }
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $form = $this->getStopForm();
@@ -465,6 +479,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             return $this->redirectToIndex();
         }
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
         $form = $this->getEditSuspensionForm();
@@ -507,7 +522,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Get edit suspension form
      *
-     * @return Lva\CommunityLicencesStop
+     * @see \Common\Form\Model\Form\Lva\CommunityLicencesStop
+     *
+     * @return \Zend\Form\FormInterface
      */
     protected function getEditSuspensionForm()
     {
@@ -520,7 +537,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Alter edit suspension form
      *
-     * @param Lva\CommunityLicencesStop $form form
+     * @param \Zend\Form\FormInterface $form form
      *
      * @return void
      */
@@ -530,6 +547,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $status = $form->get('data')->get('status')->getValue();
 
         if ($status === RefData::COMMUNITY_LICENCE_STATUS_SUSPENDED) {
+            /** @var \Common\Form\Elements\Custom\DateSelect $startDate */
             $startDate = $form->get('dates')->get('startDate');
             $startDate->getDayElement()->setAttribute('readonly', 'readonly');
             $startDate->getMonthElement()->setAttribute('readonly', 'readonly');
@@ -567,9 +585,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     }
 
     /**
-     * Get stop form
+     * Get stop form @see \Common\Form\Model\Form\Lva\CommunityLicencesStop
      *
-     * @return Lva\CommunityLicencesStop
+     * @return \Zend\Form\FormInterface
      */
     protected function getStopForm()
     {
@@ -582,7 +600,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Alter stop form
      *
-     * @param Lva\CommunityLicencesStop $form form
+     * @param \Zend\Form\FormInterface $form form
      *
      * @return void
      */
@@ -596,6 +614,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         }
     }
 
+    /**
+     * Action: Reprint
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function reprintAction()
     {
         if ($this->getRequest()->isPost() && $this->isButtonPressed('cancel')) {
@@ -613,6 +636,13 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         return $this->renderConfirmation('internal.community_licence.confirm_reprint_licences');
     }
 
+    /**
+     * Render Confirmation
+     * 
+     * @param string $message Message
+     *
+     * @return \Common\View\Model\Section
+     */
     protected function renderConfirmation($message)
     {
         $form = $this->getServiceLocator()->get('Helper\Form')
@@ -629,9 +659,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Process dto
      *
-     * @param array  $dto            dto
-     * @param string $successMessage success message
-     * @return Zend\Http\Redirect
+     * @param \Dvsa\Olcs\Transfer\Command\AbstractCommand $dto            dto
+     * @param string                                      $successMessage success message
+     *
+     * @return \Zend\Http\Response
      */
     protected function processDto($dto, $successMessage)
     {
@@ -650,7 +681,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Send command
      *
-     * @param array $dto dto
+     * @param \Dvsa\Olcs\Transfer\Command\AbstractCommand $dto dto
      *
      * @return \Common\Service\Cqrs\Response
      */

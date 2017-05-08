@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Form Helper Service Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Service\Helper;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -15,51 +10,87 @@ use Zend\Form\FormInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 /**
- * Form Helper Service Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+* @covers \Common\Service\Helper\FormHelperService
  */
 class FormHelperServiceTest extends MockeryTestCase
 {
+    /** @var FormHelperService  */
+    private $sut;
+    /** @var \Zend\ServiceManager\ServiceLocatorInterface | m\MockInterface */
+    private $mockSm;
+    /** @var \ZfcRbac\Service\AuthorizationService | m\MockInterface */
+    private $mockAuthSrv;
+    /** @var \Common\Form\Annotation\CustomAnnotationBuilder | m\MockInterface */
+    private $mockBuilder;
+    /** @var  \Common\Service\Helper\AddressHelperService | m\MockInterface */
+    private $mockHlpAddr;
+    /** @var  \Zend\View\Renderer\RendererInterface | m\MockInterface */
+    private $mockRenderer;
+    /** @var  \Common\Service\Helper\TranslationHelperService | m\MockInterface */
+    private $mockTransSrv;
+    /** @var  \Common\Service\Data\AddressDataService| m\MockInterface */
+    private $mockDataAddress;
+    /** @var  \Common\Service\Data\CompaniesHouseDataService | m\MockInterface */
+    private $mockDataCompHouse;
+
+    public function setUp()
+    {
+        $this->mockBuilder = m::mock(\Common\Form\Annotation\CustomAnnotationBuilder::class);
+        $this->mockAuthSrv = m::mock(\ZfcRbac\Service\AuthorizationService::class);
+
+        $this->mockTransSrv = m::mock(\Common\Service\Helper\TranslationHelperService::class);
+        $this->mockRenderer = m::mock(\Zend\View\Renderer\RendererInterface::class);
+        $this->mockHlpAddr = m::mock(\Common\Service\Helper\AddressHelperService::class);
+
+        $this->mockDataCompHouse = m::mock(\Common\Service\Data\CompaniesHouseDataService::class);
+        $this->mockDataAddress = m::mock(\Common\Service\Data\AddressDataService::class);
+
+        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $this->mockSm
+            ->shouldReceive('get')->with(\ZfcRbac\Service\AuthorizationService::class)->andReturn($this->mockAuthSrv)
+            ->shouldReceive('get')->with('ViewRenderer')->andReturn($this->mockRenderer)
+            ->shouldReceive('get')->with('FormAnnotationBuilder')->andReturn($this->mockBuilder)
+            ->shouldReceive('get')->with('Helper\Translation')->andReturn($this->mockTransSrv)
+            ->shouldReceive('get')->with('translator')->andReturn($this->mockTransSrv)
+            ->shouldReceive('get')->with('Helper\Address')->andReturn($this->mockHlpAddr)
+            ->shouldReceive('get')->with('Data\Address')->andReturn($this->mockDataAddress)
+            ->shouldReceive('get')->with('Data\CompaniesHouse')->andReturn($this->mockDataCompHouse);
+
+        $this->sut = new FormHelperService();
+        $this->sut->setServiceLocator($this->mockSm);
+    }
+
     public function testAlterElementLabelWithAppend()
     {
-        $helper = new FormHelperService();
-
         $element = m::mock('\stdClass');
         $element->shouldReceive('getLabel')->andReturn('My label');
         $element->shouldReceive('setLabel')->with('My labelAppended label');
 
-        $helper->alterElementLabel($element, 'Appended label', 1);
+        $this->sut->alterElementLabel($element, 'Appended label', 1);
     }
 
     public function testAlterElementLabelWithNoType()
     {
-        $helper = new FormHelperService();
-
         $element = m::mock('\stdClass');
         $element->shouldReceive('getLabel')->andReturn('My label');
         $element->shouldReceive('setLabel')->with('Replaced label');
 
-        $helper->alterElementLabel($element, 'Replaced label');
+        $this->sut->alterElementLabel($element, 'Replaced label');
     }
 
     public function testAlterElementLabelWithPrepend()
     {
-        $helper = new FormHelperService();
-
         $element = m::mock('\stdClass');
         $element->shouldReceive('getLabel')->andReturn('My label');
         $element->shouldReceive('setLabel')->with('Prepended labelMy label');
 
-        $helper->alterElementLabel($element, 'Prepended label', 2);
+        $this->sut->alterElementLabel($element, 'Prepended label', 2);
     }
 
     public function testCreateFormWithInvalidForm()
     {
-        $helper = new FormHelperService();
-
         try {
-            $helper->createForm('NotFound');
+            $this->sut->createForm('NotFound');
         } catch (\RuntimeException $ex) {
             $this->assertEquals('Form does not exist: NotFound', $ex->getMessage());
             return;
@@ -70,21 +101,23 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testCreateFormWithValidForm()
     {
-        $helper = new FormHelperService();
+        //  register class in namespace; do not remove mock
+        $formClass = 'Common\Form\Model\Form\MyFakeFormTest';
+        m::mock($formClass);
 
-        $form = m::mock('Common\Form\Model\Form\MyFakeFormTest');
-
-        $form->shouldReceive('add')
+        $form = m::mock(\Zend\Form\Form::class);
+        $form
+            ->shouldReceive('add')
             ->with(
                 array(
-                    'type' => 'Zend\Form\Element\Csrf',
+                    'type' => \Zend\Form\Element\Csrf::class,
                     'name' => 'security',
                     'options' => array(
                         'csrf_options' => array(
                             'messageTemplates' => array(
                                 'notSame' => 'csrf-message'
                             ),
-                            'timeout' => 3600
+                            'timeout' => 9999,
                         )
                     ),
                     'attributes' => array(
@@ -95,7 +128,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('add')
             ->with(
                 array(
-                    'type' => '\Zend\Form\Element\Button',
+                    'type' => \Zend\Form\Element\Button::class,
                     'name' => 'form-actions[continue]',
                     'options' => array(
                         'label' => 'Continue'
@@ -108,87 +141,29 @@ class FormHelperServiceTest extends MockeryTestCase
                 )
             );
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $this->mockAuthSrv->shouldReceive('isGranted')->with('internal-user')->andReturn(false);
+        $this->mockBuilder->shouldReceive('createForm')->once()->with($formClass)->andReturn($form);
 
-        // Mock the auth service to allow form test to pass through uninhibited
-        $mockAuthService = m::mock();
+        $mockCfg = [
+            'csrf' => [
+                'timeout' => 9999,
+            ]
+        ];
+        $this->mockSm->shouldReceive('get')->once()->with('Config')->andReturn($mockCfg);
 
-        $mockAuthService->shouldReceive('isGranted')
-            ->with('internal-user')
-            ->andReturn(false);
+        /** @var FormHelperService | m\MockInterface $sut */
+        $sut = m::mock(FormHelperService::class)->makePartial();
+        $sut->setServiceLocator($this->mockSm);
 
-        $sm->shouldReceive('get')
-            ->once()
-            ->with('ZfcRbac\Service\AuthorizationService')
-            ->andReturn($mockAuthService);
+        $sut->shouldReceive('removeValidator')->once()->with($form, 'security', \Zend\Validator\Csrf::class);
 
-        $builder = m::mock('\stdClass');
+        $actual = $sut->createForm($formClass);
 
-        $sm->shouldReceive('get')
-            ->once()
-            ->with('FormAnnotationBuilder')
-            ->andReturn($builder);
-
-        $builder->shouldReceive('createForm')
-            ->once()
-            ->with('Common\Form\Model\Form\MyFakeFormTest')
-            ->andReturn($form);
-
-        $helper->setServiceLocator($sm);
-
-        $result = $helper->createForm('MyFakeFormTest');
-
-        $this->assertEquals($form, $result);
-    }
-
-    public function testCreateFormWithValidFormAndNoCsrfOrContinue()
-    {
-        $helper = new FormHelperService();
-
-        $form = m::mock('Common\Form\Model\Form\MyFakeFormTest');
-
-        // @NOTE: the below should work according to the docs but it doesn't. However
-        // *not* adding any expectations throws an error if methods are then called,
-        // so not adding this is the same as asking for add to never be called
-        //$form->shouldReceive('add')->never();
-
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-
-        // Mock the auth service to allow form test to pass through uninhibited
-        $mockAuthService = m::mock();
-
-        $mockAuthService->shouldReceive('isGranted')
-            ->with('internal-user')
-            ->andReturn(false);
-
-        $sm->shouldReceive('get')
-            ->once()
-            ->with('ZfcRbac\Service\AuthorizationService')
-            ->andReturn($mockAuthService);
-
-        $builder = m::mock('\stdClass');
-
-        $sm->shouldReceive('get')
-            ->once()
-            ->with('FormAnnotationBuilder')
-            ->andReturn($builder);
-
-        $builder->shouldReceive('createForm')
-            ->once()
-            ->with('Common\Form\Model\Form\MyFakeFormTest')
-            ->andReturn($form);
-
-        $helper->setServiceLocator($sm);
-
-        $result = $helper->createForm('MyFakeFormTest', false, false);
-
-        $this->assertEquals($form, $result);
+        $this->assertEquals($form, $actual);
     }
 
     public function testProcessAddressLookupWithNoPostcodeOrAddressSelected()
     {
-        $helper = new FormHelperService();
-
         $form = m::mock('Zend\Form\Form');
 
         $request = m::mock('Zend\Http\Request');
@@ -215,37 +190,19 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn([$fieldset]);
 
         $this->assertFalse(
-            $helper->processAddressLookupForm($form, $request)
+            $this->sut->processAddressLookupForm($form, $request)
         );
     }
 
     public function testProcessAddressLookupWithAddressSelected()
     {
-        $helper = new FormHelperService();
-
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-
-        $addressData = m::mock('\stdClass');
-        $addressData->shouldReceive('getAddressForUprn')
+        $this->mockDataAddress->shouldReceive('getAddressForUprn')
             ->with(['address1'])
             ->andReturn('address_1234');
 
-        $addressHelper = m::mock('\stdClass');
-        $addressHelper->shouldReceive('formatPostalAddress')
+        $this->mockHlpAddr->shouldReceive('formatPostalAddress')
             ->with('address_1234')
             ->andReturn('formatted1');
-
-        $sm->shouldReceive('get')
-            ->with('Data\Address')
-            ->andReturn($addressData)
-            ->getMock()
-            ->shouldReceive('get')
-            ->with('Helper\Address')
-            ->andReturn($addressHelper);
-
-        $helper->setServiceLocator($sm);
-
-        $form = m::mock('Zend\Form\Form');
 
         $request = m::mock('Zend\Http\Request');
         $request->shouldReceive('getPost')
@@ -275,6 +232,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('searchPostcode')
             ->andReturn($element);
 
+        $form = m::mock('Zend\Form\Form');
         $form->shouldReceive('getFieldsets')
             ->once()
             ->andReturn([$fieldset])
@@ -284,40 +242,23 @@ class FormHelperServiceTest extends MockeryTestCase
             );
 
         $this->assertTrue(
-            $helper->processAddressLookupForm($form, $request)
+            $this->sut->processAddressLookupForm($form, $request)
         );
     }
 
     public function testProcessNestedAddressLookupWithAddressSelected()
     {
-        $helper = new FormHelperService();
-
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-
-        $addressData = m::mock('\stdClass');
-        $addressData->shouldReceive('getAddressForUprn')
+        $this->mockDataAddress->shouldReceive('getAddressForUprn')
             ->with(['address1'])
             ->andReturn('address_1234');
 
-        $addressHelper = m::mock('\stdClass');
-        $addressHelper->shouldReceive('formatPostalAddress')
+        $this->mockHlpAddr->shouldReceive('formatPostalAddress')
             ->with('address_1234')
             ->andReturn('formatted1');
 
-        $sm->shouldReceive('get')
-            ->with('Data\Address')
-            ->andReturn($addressData)
-            ->getMock()
-            ->shouldReceive('get')
-            ->with('Helper\Address')
-            ->andReturn($addressHelper);
-
-        $helper->setServiceLocator($sm);
-
-        $form = m::mock('Zend\Form\Form');
-
-        $request = m::mock('Zend\Http\Request');
-        $request->shouldReceive('getPost')
+        /** @var \Zend\Http\Request | m\MockInterface $mockReq */
+        $mockReq = m::mock(\Zend\Http\Request::class);
+        $mockReq->shouldReceive('getPost')
             ->andReturn(
                 [
                     'top-level' => [
@@ -353,7 +294,9 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getFieldsets')
             ->andReturn([$fieldset]);
 
-        $form->shouldReceive('getFieldsets')
+        /** @var \Zend\Form\FormInterface | m\MockInterface $mockForm */
+        $mockForm = m::mock(\Zend\Form\Form::class);
+        $mockForm->shouldReceive('getFieldsets')
             ->once()
             ->andReturn([$topFieldset])
             ->shouldReceive('setData')
@@ -367,34 +310,18 @@ class FormHelperServiceTest extends MockeryTestCase
             );
 
         $this->assertTrue(
-            $helper->processAddressLookupForm($form, $request)
+            $this->sut->processAddressLookupForm($mockForm, $mockReq)
         );
     }
 
     public function testProcessAddressLookupWithPostcodeSearch()
     {
-        $helper = new FormHelperService();
-
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-
-        $address = m::mock('\stdClass');
-        $address->shouldReceive('getAddressesForPostcode')
+        $this->mockDataAddress->shouldReceive('getAddressesForPostcode')
             ->andReturn(['address1', 'address2']);
 
-        $addressHelper = m::mock('\stdClass');
-        $addressHelper->shouldReceive('formatAddressesForSelect')
+        $this->mockHlpAddr->shouldReceive('formatAddressesForSelect')
             ->with(['address1', 'address2'])
             ->andReturn(['formatted1', 'formatted2']);
-
-        $sm->shouldReceive('get')
-            ->with('Data\Address')
-            ->andReturn($address)
-            ->getMock()
-            ->shouldReceive('get')
-            ->with('Helper\Address')
-            ->andReturn($addressHelper);
-
-        $helper->setServiceLocator($sm);
 
         $form = m::mock('Zend\Form\Form');
 
@@ -434,34 +361,18 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn([$fieldset]);
 
         $this->assertTrue(
-            $helper->processAddressLookupForm($form, $request)
+            $this->sut->processAddressLookupForm($form, $request)
         );
     }
 
     public function testProcessNestedAddressLookupWithPostcodeSearch()
     {
-        $helper = new FormHelperService();
-
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-
-        $address = m::mock('\stdClass');
-        $address->shouldReceive('getAddressesForPostcode')
+        $this->mockDataAddress->shouldReceive('getAddressesForPostcode')
             ->andReturn(['address1', 'address2']);
 
-        $addressHelper = m::mock('\stdClass');
-        $addressHelper->shouldReceive('formatAddressesForSelect')
+        $this->mockHlpAddr->shouldReceive('formatAddressesForSelect')
             ->with(['address1', 'address2'])
             ->andReturn(['formatted1', 'formatted2']);
-
-        $sm->shouldReceive('get')
-            ->with('Data\Address')
-            ->andReturn($address)
-            ->getMock()
-            ->shouldReceive('get')
-            ->with('Helper\Address')
-            ->andReturn($addressHelper);
-
-        $helper->setServiceLocator($sm);
 
         $form = m::mock('Zend\Form\Form');
 
@@ -523,25 +434,14 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn([$topFieldset]);
 
         $this->assertTrue(
-            $helper->processAddressLookupForm($form, $request)
+            $this->sut->processAddressLookupForm($form, $request)
         );
     }
 
     public function testProcessAddressLookupWithEmptyAddresses()
     {
-        $helper = new FormHelperService();
-
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-
-        $address = m::mock('\stdClass');
-        $address->shouldReceive('getAddressesForPostcode')
+        $this->mockDataAddress->shouldReceive('getAddressesForPostcode')
             ->andReturn([]);
-
-        $sm->shouldReceive('get')
-            ->with('Data\Address')
-            ->andReturn($address);
-
-        $helper->setServiceLocator($sm);
 
         $form = m::mock('Zend\Form\Form');
 
@@ -586,14 +486,12 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn([$fieldset]);
 
         $this->assertTrue(
-            $helper->processAddressLookupForm($form, $request)
+            $this->sut->processAddressLookupForm($form, $request)
         );
     }
 
     public function testProcessAddressLookupWithEmptyPostcodeSearch()
     {
-        $helper = new FormHelperService();
-
         $form = m::mock('Zend\Form\Form');
 
         $request = m::mock('Zend\Http\Request');
@@ -633,25 +531,21 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn([$fieldset]);
 
         $this->assertTrue(
-            $helper->processAddressLookupForm($form, $request)
+            $this->sut->processAddressLookupForm($form, $request)
         );
     }
 
     public function testProcessAddressLookupServiceUnavailable()
     {
-        $helper = new FormHelperService();
+        /** @var \Zend\ServiceManager\ServiceLocatorInterface | m\MockInterface $mockSm */
+        $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+        $mockSm->shouldReceive('get')->with('Data\Address')->andThrow(new \Exception('fail'));
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+        $this->sut->setServiceLocator($mockSm);
 
         $address = m::mock('\stdClass');
         $address->shouldReceive('getAddressesForPostcode')
             ->andReturn([]);
-
-        $sm->shouldReceive('get')
-            ->with('Data\Address')
-            ->andThrow(new \Exception('fail'));
-
-        $helper->setServiceLocator($sm);
 
         $form = m::mock('Zend\Form\Form');
 
@@ -693,14 +587,12 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn([$fieldset]);
 
         $this->assertTrue(
-            $helper->processAddressLookupForm($form, $request)
+            $this->sut->processAddressLookupForm($form, $request)
         );
     }
 
     public function testDisableElementWithNestedSelector()
     {
-        $helper = new FormHelperService();
-
         $form = m::mock('Zend\Form\Form');
 
         $validator = m::mock('\stdClass');
@@ -738,15 +630,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('bar')
             ->andReturn($element);
 
-        $helper->disableElement($form, 'foo->bar');
+        $this->sut->disableElement($form, 'foo->bar');
     }
 
     public function testDisableElementWithDateInput()
     {
-        $helper = new FormHelperService();
-
-        $form = m::mock('Zend\Form\Form');
-
         $validator = m::mock('\stdClass');
         $validator->shouldReceive('setAllowEmpty')
             ->with(true)
@@ -779,6 +667,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('bar')
             ->andReturn($element);
 
+        $form = m::mock('Zend\Form\Form');
         $form->shouldReceive('getInputFilter')
             ->andReturn($filter)
             ->getMock()
@@ -786,13 +675,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('bar')
             ->andReturn($element);
 
-        $helper->disableElement($form, 'bar');
+        $this->sut->disableElement($form, 'bar');
     }
 
     public function testDisableDateElement()
     {
-        $helper = new FormHelperService();
-
         $element = m::mock('Zend\Form\Element\DateSelect');
 
         $subElement = m::mock('\stdClass');
@@ -809,13 +696,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getYearElement')
             ->andReturn($subElement);
 
-        $helper->disableDateElement($element);
+        $this->sut->disableDateElement($element);
     }
 
     public function testRemove()
     {
-        $helper = new FormHelperService();
-
         $form = m::mock('Zend\Form\Form');
 
         $form->shouldReceive('get')
@@ -836,13 +721,11 @@ class FormHelperServiceTest extends MockeryTestCase
         $form->shouldReceive('getInputFilter')
             ->andReturn($filter);
 
-        $helper->remove($form, 'foo->bar');
+        $this->sut->remove($form, 'foo->bar');
     }
 
     public function testDisableElements()
     {
-        $helper = new FormHelperService();
-
         $subElement = m::mock('\stdClass');
         $subElement->shouldReceive('setAttribute')
             ->times(3)
@@ -877,13 +760,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getFieldsets')
             ->andReturn([$fieldset]);
 
-        $helper->disableElements($form);
+        $this->sut->disableElements($form);
     }
 
     public function testDisableValidation()
     {
-        $helper = new FormHelperService();
-
         $input = m::mock('Zend\InputFilter\Input');
         $input->shouldReceive('setAllowEmpty')
             ->with(true)
@@ -897,13 +778,11 @@ class FormHelperServiceTest extends MockeryTestCase
         $filter->shouldReceive('getInputs')
             ->andReturn([$input]);
 
-        $helper->disableValidation($filter);
+        $this->sut->disableValidation($filter);
     }
 
     public function testDisableEmptyValidation()
     {
-        $helper = new FormHelperService();
-
         $input = m::mock('Zend\InputFilter\Input');
         $input->shouldReceive('setAllowEmpty')
             ->with(true)
@@ -951,13 +830,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getFieldsets')
             ->andReturn([$fieldset]);
 
-        $helper->disableEmptyValidation($form);
+        $this->sut->disableEmptyValidation($form);
     }
 
     public function testDisableEmptyValidationOnElement()
     {
-        $helper = new FormHelperService();
-
         $input = m::mock('Zend\InputFilter\Input');
         $input->shouldReceive('setAllowEmpty')
             ->with(true)
@@ -990,13 +867,11 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('fieldset')
             ->andReturn($fieldset);
 
-        $helper->disableEmptyValidationOnElement($form, 'fieldset->foo');
+        $this->sut->disableEmptyValidationOnElement($form, 'fieldset->foo');
     }
 
     public function testPopulateFormTable()
     {
-        $helper = new FormHelperService();
-
         $table = m::mock('Common\Service\Table\TableBuilder');
         $table->shouldReceive('getRows')
             ->andReturn([1, 2, 3, 4]);
@@ -1018,35 +893,17 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('rows')
             ->andReturn($rowInput);
 
-        $helper->populateFormTable($fieldset, $table, 'fieldset');
+        $this->sut->populateFormTable($fieldset, $table, 'fieldset');
     }
 
     public function testLockElement()
     {
-        $helper = new FormHelperService();
+        $this->mockTransSrv
+            ->shouldReceive('translate')->with('message')->andReturn('translated')
+            ->shouldReceive('translate')->with('label')->andReturn('label');
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-
-        $translator = m::mock('\stdClass');
-        $translator->shouldReceive('translate')
-            ->with('message')
-            ->andReturn('translated')
-            ->shouldReceive('translate')
-            ->with('label')
-            ->andReturn('label');
-
-        $renderer = m::mock('\stdClass');
-        $renderer->shouldReceive('render')
+        $this->mockRenderer->shouldReceive('render')
             ->andReturn('template');
-
-        $sm->shouldReceive('get')
-            ->once()
-            ->with('ViewRenderer')
-            ->andReturn($renderer)
-            ->getMock()
-            ->shouldReceive('get')
-            ->with('Helper\Translation')
-            ->andReturn($translator);
 
         $element = m::mock('Zend\Form\Element');
         $element->shouldReceive('getLabel')
@@ -1069,15 +926,11 @@ class FormHelperServiceTest extends MockeryTestCase
                 ]
             );
 
-        $helper->setServiceLocator($sm);
-
-        $helper->lockElement($element, 'message');
+        $this->sut->lockElement($element, 'message');
     }
 
     public function testRemoveFieldLiset()
     {
-        $helper = new FormHelperService();
-
         $form = m::mock('Zend\Form\Form');
 
         $form->shouldReceive('get')
@@ -1098,14 +951,12 @@ class FormHelperServiceTest extends MockeryTestCase
         $form->shouldReceive('getInputFilter')
             ->andReturn($filter);
 
-        $helper->removeFieldList($form, 'foo', ['bar']);
+        $this->sut->removeFieldList($form, 'foo', ['bar']);
     }
 
     public function testProcessCompanyLookupValidData()
     {
-        $helper = new FormHelperService();
-
-        $service = m::mock()
+        $this->mockDataCompHouse
             ->shouldReceive('search')
             ->with('companyDetails', '12345678')
             ->andReturn(
@@ -1127,15 +978,6 @@ class FormHelperServiceTest extends MockeryTestCase
                 ]
             )
             ->getMock();
-
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->once()
-            ->with('Data\CompaniesHouse')
-            ->andReturn($service)
-            ->getMock();
-
-        $helper->setServiceLocator($sm);
 
         $form = m::mock('Zend\Form\Form');
 
@@ -1197,7 +1039,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('registeredAddress')
             ->andReturn($addressFieldset);
 
-        $helper->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
+        $this->sut->processCompanyNumberLookupForm($form, $data, 'data', 'registeredAddress');
     }
 
     /**
@@ -1205,8 +1047,6 @@ class FormHelperServiceTest extends MockeryTestCase
      */
     public function testProcessCompanyLookupWithNoResults($firstNumber, $secondNumber)
     {
-        $helper = new FormHelperService();
-
         $service = m::mock()
             ->shouldReceive('search')
             ->with('companyDetails', $firstNumber)
@@ -1243,7 +1083,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn($translator)
             ->getMock();
 
-        $helper->setServiceLocator($sm);
+        $this->sut->setServiceLocator($sm);
 
         $form = m::mock('Zend\Form\Form');
 
@@ -1272,7 +1112,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('data')
             ->andReturn($fieldset);
 
-        $helper->processCompanyNumberLookupForm($form, $data, 'data');
+        $this->sut->processCompanyNumberLookupForm($form, $data, 'data');
     }
 
     public function companyNumberProvider()
@@ -1299,7 +1139,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn($translator)
             ->getMock();
 
-        $helper->setServiceLocator($sm);
+        $this->sut->setServiceLocator($sm);
 
         $form = m::mock('Zend\Form\Form');
 
@@ -1328,7 +1168,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('data')
             ->andReturn($fieldset);
 
-        $helper->processCompanyNumberLookupForm($form, $data, 'data');
+        $this->sut->processCompanyNumberLookupForm($form, $data, 'data');
     }
 
     public function testProcessCompanyLookupError()
@@ -1356,7 +1196,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn($translator)
             ->getMock();
 
-        $helper->setServiceLocator($sm);
+        $this->sut->setServiceLocator($sm);
 
         $form = m::mock('Zend\Form\Form');
 
@@ -1385,7 +1225,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('data')
             ->andReturn($fieldset);
 
-        $helper->processCompanyNumberLookupForm($form, $data, 'data');
+        $this->sut->processCompanyNumberLookupForm($form, $data, 'data');
     }
 
     public function testSetFormActionFromRequestWhenFormHasAction()
@@ -1402,7 +1242,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getUri')->never()
             ->getMock();
 
-        $helper->setFormActionFromRequest($form, $request);
+        $this->sut->setFormActionFromRequest($form, $request);
     }
 
     public function testSetFormActionFromRequest()
@@ -1425,7 +1265,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $request->shouldReceive('getUri->getQuery')
             ->andReturn('QUERY');
 
-        $helper->setFormActionFromRequest($form, $request);
+        $this->sut->setFormActionFromRequest($form, $request);
     }
 
     public function testSetFormActionFromRequestWithNoQuery()
@@ -1451,7 +1291,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $request->shouldReceive('getUri->getQuery')
             ->andReturn('');
 
-        $helper->setFormActionFromRequest($form, $request);
+        $this->sut->setFormActionFromRequest($form, $request);
     }
 
     public function testRemoveOptionWithoutOption()
@@ -1470,7 +1310,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $element->shouldReceive('getValueOptions')
             ->andReturn($options);
 
-        $helper->removeOption($element, $index);
+        $this->sut->removeOption($element, $index);
     }
 
     public function testRemoveOptionWithOption()
@@ -1491,7 +1331,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('setValueOptions')
             ->with(['bar' => 'baz']);
 
-        $helper->removeOption($element, $index);
+        $this->sut->removeOption($element, $index);
     }
 
     public function testSetCurrentOptionWithoutCurrentOption()
@@ -1510,25 +1350,14 @@ class FormHelperServiceTest extends MockeryTestCase
         $element->shouldReceive('getValueOptions')
             ->andReturn($options);
 
-        $helper->setCurrentOption($element, $index);
+        $this->sut->setCurrentOption($element, $index);
     }
 
     public function testSetCurrentOptionWithCurrentOption()
     {
-        $sm = \CommonTest\Bootstrap::getServiceManager();
-
-        $helper = new FormHelperService();
-        $helper->setServiceLocator($sm);
-
-        $mockTranslator = m::mock();
-        $mockTranslator->shouldReceive('translate')
-            ->with('current.option.suffix')
-            ->andReturn('(current)');
-        $mockTranslator->shouldReceive('translate')
-            ->with('baz')
-            ->andReturn('baz-translated');
-
-        $sm->setService('Helper\Translation', $mockTranslator);
+        $this->mockTransSrv
+            ->shouldReceive('translate')->with('current.option.suffix')->andReturn('(current)')
+            ->shouldReceive('translate')->with('baz')->andReturn('baz-translated');
 
         $index = 'bar';
 
@@ -1544,18 +1373,16 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('setValueOptions')
             ->with(['foo' => 'bar', 'bar' => 'baz-translated (current)']);
 
-        $helper->setCurrentOption($element, $index);
+        $this->sut->setCurrentOption($element, $index);
     }
 
     public function testCreateFormWithRequest()
     {
-        // since the method we're testing just composes two other public ones, making
-        // a partial mock is fine
-        $helper = m::mock('Common\Service\Helper\FormHelperService')->makePartial();
+        $sut = m::mock(FormHelperService::class)->makePartial();
 
         $form = m::mock();
 
-        $helper->shouldReceive('createForm')
+        $sut->shouldReceive('createForm')
             ->with('MyForm')
             ->andReturn($form)
             ->shouldReceive('setFormActionFromRequest')
@@ -1563,7 +1390,7 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $this->assertEquals(
             $form,
-            $helper->createFormWithRequest('MyForm', 'request')
+            $sut->createFormWithRequest('MyForm', 'request')
         );
     }
 
@@ -1571,7 +1398,6 @@ class FormHelperServiceTest extends MockeryTestCase
     {
         $validatorName = '\Zend\Validator\GreaterThan';
 
-        $helper    = new FormHelperService();
         $form      = m::mock('Zend\Form\Form');
         $validator = m::mock($validatorName);
         $element   = m::mock();
@@ -1593,14 +1419,13 @@ class FormHelperServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
-        $result = $helper->getValidator($form, 'myelement', $validatorName);
+        $result = $this->sut->getValidator($form, 'myelement', $validatorName);
 
         $this->assertSame($validator, $result);
     }
 
     public function testGetValidatorNotFoundReturnsNull()
     {
-        $helper    = new FormHelperService();
         $form      = m::mock('Zend\Form\Form');
         $element   = m::mock();
         $filter    = m::mock('\Zend\InputFilter\InputFilter');
@@ -1616,7 +1441,7 @@ class FormHelperServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
-        $this->assertNull($helper->getValidator($form, 'myelement', 'MyValidator'));
+        $this->assertNull($this->sut->getValidator($form, 'myelement', 'MyValidator'));
     }
 
     public function testAttachValidator()
@@ -1651,55 +1476,44 @@ class FormHelperServiceTest extends MockeryTestCase
             ->once()
             ->with($mockValidator);
 
-        $helper = new FormHelperService();
-        $helper->attachValidator($mockForm, 'data->foo', $mockValidator);
+        $this->sut->attachValidator($mockForm, 'data->foo', $mockValidator);
     }
 
     public function testSetDefaultDate()
     {
-        $helper = new FormHelperService();
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-        $helper->setServiceLocator($sm);
-
         // mocks
         $field      = m::mock();
         $dateHelper = m::mock();
         $today      = m::mock('\DateTime');
 
         // expectations
-        $sm->shouldReceive('get')->with('Helper\Date')->andReturn($dateHelper);
+        $this->mockSm->shouldReceive('get')->with('Helper\Date')->andReturn($dateHelper);
         $field->shouldReceive('getValue')->andReturn('--');
         $dateHelper->shouldReceive('getDateObject')->andReturn($today);
         $field->shouldReceive('setValue')->with($today);
 
-        $helper->setDefaultDate($field);
+        $this->sut->setDefaultDate($field);
     }
 
     public function testSetDefaultDateFieldAlreadyHasValue()
     {
-        $helper = new FormHelperService();
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-        $helper->setServiceLocator($sm);
-
         // mocks
         $field      = m::mock();
 
         // expectations
-        $sm->shouldReceive('get')->with('Helper\Date')->never();
+        $this->mockSm->shouldReceive('get')->with('Helper\Date')->never();
         $field->shouldReceive('getValue')->andReturn('2015-04-09');
         $field->shouldReceive('setValue')->never();
 
-        $helper->setDefaultDate($field);
+        $this->sut->setDefaultDate($field);
     }
 
     public function testSaveFormState()
     {
-        $helper = new FormHelperService();
-
         $mockForm = m::mock('Zend\Form\Form');
         $mockForm->shouldReceive('getName')->with()->once()->andReturn('FORM_NAME');
 
-        $helper->saveFormState($mockForm, ['foo' => 'bar']);
+        $this->sut->saveFormState($mockForm, ['foo' => 'bar']);
 
         $sessionContainer = new \Zend\Session\Container('form_state');
         $this->assertEquals(['foo' => 'bar'], $sessionContainer->offsetGet('FORM_NAME'));
@@ -1707,8 +1521,6 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testRestoreFormState()
     {
-        $helper = new FormHelperService();
-
         $mockForm = m::mock('Zend\Form\Form');
         $mockForm->shouldReceive('getName')->with()->twice()->andReturn('FORM_NAME');
 
@@ -1716,13 +1528,11 @@ class FormHelperServiceTest extends MockeryTestCase
         $sessionContainer->offsetSet('FORM_NAME', ['an' => 'array']);
         $mockForm->shouldReceive('setData')->with(['an' => 'array'])->once();
 
-        $helper->restoreFormState($mockForm);
+        $this->sut->restoreFormState($mockForm);
     }
 
     public function testRemoveValueOption()
     {
-        $helper = new FormHelperService();
-
         $options = [
             'a' => 'A',
             'b' => 'B',
@@ -1733,7 +1543,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $select = m::mock(Select::class)->makePartial();
         $select->setValueOptions($options);
 
-        $helper->removeValueOption($select, 'a');
+        $this->sut->removeValueOption($select, 'a');
 
         $this->assertEquals(['b' => 'B', 'c' => 'C'], $select->getValueOptions());
     }

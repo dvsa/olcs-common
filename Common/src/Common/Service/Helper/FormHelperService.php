@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Form Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Helper;
 
 use Common\Form\Elements\Types\Address;
@@ -34,22 +29,18 @@ class FormHelperService extends AbstractHelperService
     const ALTER_LABEL_APPEND = 1;
     const ALTER_LABEL_PREPEND = 2;
 
-    const CSRF_TIMEOUT = 3600;
-
     const MIN_COMPANY_NUMBER_LENGTH = 1;
     const MAX_COMPANY_NUMBER_LENGTH = 8;
 
     /**
      * Create a form
      *
-     * @param string $formName
-     * @param bool $addCsrf
-     * @param bool $addContinue
+     * @param string $formName    Form Name
+     * @param bool   $addContinue Is need add Continue button
      *
-     * @return \Zend\Form\Form
-     * @throws \Exception
+     * @return FormInterface
      */
-    public function createForm($formName, $addCsrf = true, $addContinue = true)
+    public function createForm($formName, $addContinue = true)
     {
         if (class_exists($formName)) {
             $class = $formName;
@@ -57,42 +48,50 @@ class FormHelperService extends AbstractHelperService
             $class = $this->findForm($formName);
         }
 
-        $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
+        $sm = $this->getServiceLocator();
+        $annotationBuilder = $sm->get('FormAnnotationBuilder');
+        $cfg = $sm->get('Config');
 
         /** @var \Zend\Form\FormInterface $form */
         $form = $annotationBuilder->createForm($class);
 
-        if ($addCsrf) {
-            $config = array(
-                'type' => 'Zend\Form\Element\Csrf',
-                'name' => 'security',
-                'attributes' => array(
-                    'class' => 'js-csrf-token',
-                ),
-                'options' => array(
-                    'csrf_options' => array(
-                        'messageTemplates' => array(
-                            'notSame' => 'csrf-message'
-                        ),
-                        'timeout' => self::CSRF_TIMEOUT
-                    )
-                )
-            );
-            $form->add($config);
-        }
+        //  add CSRF element
+        $config = [
+            'type' => \Zend\Form\Element\Csrf::class,
+            'name' => 'security',
+            'attributes' => [
+                'class' => 'js-csrf-token',
+            ],
+            'options' => [
+                'csrf_options' => [
+                    'messageTemplates' => array(
+                        'notSame' => 'csrf-message'
+                    ),
+                    'timeout' => $cfg['csrf']['timeout'],
+                ],
+            ],
+        ];
+        $form->add($config);
 
+        /**
+         * remove validator to prevent error duplication.
+         * Main CSRF check happens in @see \Common\Module::validateCsrfToken
+         */
+        $this->removeValidator($form, 'security', \Zend\Validator\Csrf::class);
+
+        //  add button "Continue" element
         if ($addContinue) {
             $config = array(
-                'type' => '\Zend\Form\Element\Button',
+                'type' => \Zend\Form\Element\Button::class,
                 'name' => 'form-actions[continue]',
                 'options' => array(
-                    'label' => 'Continue'
+                    'label' => 'Continue',
                 ),
                 'attributes' => array(
                     'type' => 'submit',
                     'class' => 'visually-hidden',
-                    'id' => 'hidden-continue'
-                )
+                    'id' => 'hidden-continue',
+                ),
             );
             $form->add($config);
         }
@@ -109,8 +108,12 @@ class FormHelperService extends AbstractHelperService
     }
 
     /**
-     * @param \Zend\Form\Form $form
-     * @param \Zend\Http\Request $request
+     * Set Form Action From Request
+     *
+     * @param \Zend\Form\FormInterface $form    Form
+     * @param \Zend\Http\Request       $request Request
+     *
+     * @return void
      */
     public function setFormActionFromRequest($form, $request)
     {
@@ -139,6 +142,14 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
+    /**
+     * Create Form With Request
+     *
+     * @param string             $formName Form name
+     * @param \Zend\Http\Request $request  Request
+     *
+     * @return FormInterface
+     */
     public function createFormWithRequest($formName, $request)
     {
         $form = $this->createForm($formName);
@@ -151,9 +162,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Find form
      *
-     * @param string $formName
+     * @param string $formName Form Name
+     *
      * @return string
-     * @throws \Exception
      */
     private function findForm($formName)
     {
@@ -172,8 +183,9 @@ class FormHelperService extends AbstractHelperService
      * Check for address lookups
      *  Returns true if an address search is present, false otherwise
      *
-     * @param Form $form
-     * @param Request $request
+     * @param \Zend\Form\FormInterface $form    Form
+     * @param \Zend\Http\Request       $request Request
+     *
      * @return boolean
      */
     public function processAddressLookupForm(Form $form, Request $request)
@@ -210,9 +222,11 @@ class FormHelperService extends AbstractHelperService
     /**
      * Process an address lookup fieldset
      *
-     * @param Fieldset $fieldset
-     * @param array $post
-     * @return boolean
+     * @param \Zend\Form\Fieldset      $fieldset Fieldset
+     * @param array                    $post     Post data
+     * @param \Zend\Form\FormInterface $form     Form
+     *
+     * @return bool|array
      */
     private function processAddressLookupFieldset($fieldset, $post, $form)
     {
@@ -268,10 +282,11 @@ class FormHelperService extends AbstractHelperService
     /**
      * Process postcode lookup
      *
-     * @param \Zend\Form\Fieldset $fieldset
-     * @param array $post
-     * @param string $name
-     * @return boolean
+     * @param \Zend\Form\Fieldset $fieldset Fieldset
+     * @param array               $post     Post data
+     * @param string              $name     Field Name
+     *
+     * @return bool
      */
     private function processPostcodeSearch($fieldset, $post, $name)
     {
@@ -316,9 +331,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Process address select
      *
-     * @param \Zend\Form\Fieldset $fieldset
-     * @param array $post
-     * @param string $name
+     * @param array  $post Post data
+     * @param string $name Name (unused)
+     *
+     * @return array
      */
     private function processAddressSelect($post, $name)
     {
@@ -331,7 +347,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove address select fields
      *
-     * @param \Zend\Form\Fieldset $fieldset
+     * @param \Zend\Form\Fieldset $fieldset Fieldset
+     *
+     * @return void
      */
     private function removeAddressSelectFields($fieldset)
     {
@@ -342,9 +360,11 @@ class FormHelperService extends AbstractHelperService
     /**
      * Alter an elements label
      *
-     * @param \Zend\Form\Element $element
-     * @param string $label
-     * @param int $type
+     * @param \Zend\Form\Element $element Element
+     * @param string             $label   Label text
+     * @param int                $type    Alter type
+     *
+     * @return void
      */
     public function alterElementLabel($element, $label, $type = self::ALTER_LABEL_RESET)
     {
@@ -365,8 +385,10 @@ class FormHelperService extends AbstractHelperService
      * When passed something like
      * $form, 'data->registeredAddress', this method will remove the element from the form and input filter
      *
-     * @param \Zend\Form\Form $form
-     * @param string $elementReference
+     * @param \Zend\Form\FormInterface $form             Form
+     * @param string                   $elementReference Element ref
+     *
+     * @return $this
      */
     public function remove($form, $elementReference)
     {
@@ -377,6 +399,15 @@ class FormHelperService extends AbstractHelperService
         return $this;
     }
 
+    /**
+     * Remove element
+     *
+     * @param \Zend\Form\FormInterface $form             Form
+     * @param InputFilterInterface     $filter           Filter
+     * @param string                   $elementReference Element ref
+     *
+     * @return void
+     */
     private function removeElement($form, InputFilterInterface $filter, $elementReference)
     {
         list($form, $filter, $name) = $this->getElementAndInputParents($form, $filter, $elementReference);
@@ -388,6 +419,12 @@ class FormHelperService extends AbstractHelperService
     /**
      * Grab the parent input filter and fieldset from the top level form and input filter using the -> notation
      * i.e. data->field would return the data fieldset, data input filter and the string field
+     *
+     * @param \Zend\Form\FormInterface $form             Form
+     * @param InputFilterInterface     $filter           Filter
+     * @param string                   $elementReference Element ref
+     *
+     * @return array
      */
     public function getElementAndInputParents($form, InputFilterInterface $filter, $elementReference)
     {
@@ -407,8 +444,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable empty validation
      *
-     * @param Fieldset $form
-     * @param InputFilter $filter
+     * @param \Zend\Form\Fieldset $form   Form fieldset
+     * @param InputFilter         $filter Filter
+     *
+     * @return void
      */
     public function disableEmptyValidation(Fieldset $form, InputFilter $filter = null)
     {
@@ -442,9 +481,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable empty validation on a single element
      *
-     * @param \Zend\Form\Form $form
-     * @param string $reference
-     * @return null
+     * @param \Zend\Form\FormInterface $form      Form
+     * @param string                   $reference Element Ref
+     *
+     * @return void
      */
     public function disableEmptyValidationOnElement($form, $reference)
     {
@@ -457,8 +497,11 @@ class FormHelperService extends AbstractHelperService
     /**
      * Populate form table
      *
-     * @param \Zend\Form\Fieldset $fieldset
-     * @param \Common\Service\Table\TableBuilder $table
+     * @param \Zend\Form\Fieldset                $fieldset          Fieldset
+     * @param \Common\Service\Table\TableBuilder $table             Table
+     * @param string|null                        $tableFieldsetName Fieldset name
+     *
+     * @return void
      */
     public function populateFormTable(Fieldset $fieldset, TableBuilder $table, $tableFieldsetName = null)
     {
@@ -469,9 +512,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Recurse through the form and the input filter to disable the final result
      *
-     * @param \Zend\Form\Form $form
-     * @param string $reference
-     * @param \Zend\InputFilter\InputFilter $filter
+     * @param \Zend\Form\FormInterface      $form      Form
+     * @param string                        $reference Ref
+     * @param \Zend\InputFilter\InputFilter $filter    Filter
+     *
      * @return null
      */
     public function disableElement($form, $reference, $filter = null)
@@ -503,7 +547,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable date element
      *
-     * @param \Zend\Form\Element\DateSelect $element
+     * @param \Zend\Form\Element\DateSelect $element Element
+     *
+     * @return void
      */
     public function disableDateElement($element)
     {
@@ -515,7 +561,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Enable date element
      *
-     * @param \Zend\Form\Element\DateSelect $element
+     * @param \Zend\Form\Element\DateSelect $element Element
+     *
+     * @return void
      */
     public function enableDateElement($element)
     {
@@ -527,8 +575,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable all elements recursively
      *
-     * @param \Zend\Form\Fieldset $elements
-     * @return null
+     * @param \Zend\Form\Fieldset $elements Elements
+     *
+     * @return void
      */
     public function disableElements($elements)
     {
@@ -556,8 +605,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Enable all elements recursively
      *
-     * @param \Zend\Form\Fieldset $elements
-     * @return null
+     * @param \Zend\Form\Fieldset $elements Elements
+     *
+     * @return void
      */
     public function enableElements($elements)
     {
@@ -585,8 +635,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable field validation
      *
-     * @param \Zend\InputFilter\InputFilter $inputFilter
-     * @return null
+     * @param \Zend\InputFilter\InputFilter $inputFilter Input Filter
+     *
+     * @return void
      */
     public function disableValidation($inputFilter)
     {
@@ -607,8 +658,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Lock the element
      *
-     * @param \Zend\Form\Element $element
-     * @param string $message
+     * @param \Zend\Form\Element $element Element
+     * @param string             $message Message
+     *
+     * @return void
      */
     public function lockElement(Element $element, $message)
     {
@@ -631,8 +684,6 @@ class FormHelperService extends AbstractHelperService
         if (!isset($attributes['class'])) {
             $attributes['class'] = '';
         }
-        // @todo add this back in when the css has been tweaked
-        //$attributes['class'] .= ' tooltip-grandparent';
 
         $element->setLabelAttributes($attributes);
     }
@@ -640,9 +691,11 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove a list of form fields
      *
-     * @param \Zend\Form\Form $form
-     * @param string $fieldset
-     * @param array $fields
+     * @param \Zend\Form\FormInterface $form     Form
+     * @param string                   $fieldset Name of Fieldset
+     * @param array                    $fields   Names of Fields
+     *
+     * @return void
      */
     public function removeFieldList(Form $form, $fieldset, array $fields)
     {
@@ -654,15 +707,16 @@ class FormHelperService extends AbstractHelperService
     /**
      * Check for company number lookups
      *
+     * @param \Zend\Form\FormInterface $form            Form
+     * @param array                    $data            Data
+     * @param string                   $detailsFieldset Name of Details fieldset
+     * @param string                   $addressFieldset Name of Address fieldset
+     *
      * @NOTE Doesn't quite adhere to the same interface as the other process*LookupForm
      * methods as it already expects the presence of a company number field to have been
      * determined, and it expects an array of data rather than a request
      *
-     * @param Form $form
-     * @param array $data
-     * @param string $detailsFieldset
-     * @param string $addressFieldset
-     * @return boolean
+     * @return void
      */
     public function processCompanyNumberLookupForm(Form $form, $data, $detailsFieldset, $addressFieldset = null)
     {
@@ -710,11 +764,18 @@ class FormHelperService extends AbstractHelperService
 
         $form->get($detailsFieldset)->get('companyNumber')->setMessages(
             array(
-                'company_number' => array($translator->translate($message))
+                'company_number' => array($translator->translate($message)),
             )
         );
     }
 
+    /**
+     * Do Company Search
+     *
+     * @param string $companyNumber Company number
+     *
+     * @return array
+     */
     protected function doCompanySearch($companyNumber)
     {
         $result = null;
@@ -733,8 +794,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Remove a value option from an element
      *
-     * @param Element $element Select element or a Radio group
-     * @param string  $index
+     * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
+     * @param string                            $index   Index
+     *
+     * @return void
      */
     public function removeOption(Element $element, $index)
     {
@@ -746,6 +809,14 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
+    /**
+     * Set current option of element
+     *
+     * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
+     * @param string                            $index   Index
+     *
+     * @return void
+     */
     public function setCurrentOption(Element $element, $index)
     {
         $options = $element->getValueOptions();
@@ -760,6 +831,15 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
+    /**
+     * Remove Validator
+     *
+     * @param \Zend\Form\FormInterface $form           Form
+     * @param string                   $reference      Field Ref
+     * @param string                   $validatorClass Validator Class
+     *
+     * @return void
+     */
     public function removeValidator(FormInterface $form, $reference, $validatorClass)
     {
         /** @var InputFilterInterface $filter */
@@ -778,6 +858,15 @@ class FormHelperService extends AbstractHelperService
         $filter->get($field)->setValidatorChain($newValidatorChain);
     }
 
+    /**
+     * Attach Validator
+     *
+     * @param \Zend\Form\FormInterface           $form      Form
+     * @param string                             $reference Field Ref
+     * @param \Zend\Validator\ValidatorInterface $validator Validator Class
+     *
+     * @return void
+     */
     public function attachValidator(FormInterface $form, $reference, $validator)
     {
         /** @var InputFilterInterface $filter */
@@ -789,6 +878,15 @@ class FormHelperService extends AbstractHelperService
         $validatorChain->attach($validator);
     }
 
+    /**
+     * Get Validator
+     *
+     * @param \Zend\Form\FormInterface $form           Form
+     * @param string                   $reference      Field Ref
+     * @param string                   $validatorClass Validator Class
+     *
+     * @return null
+     */
     public function getValidator(FormInterface $form, $reference, $validatorClass)
     {
         /** @var InputFilterInterface $filter */
@@ -809,8 +907,8 @@ class FormHelperService extends AbstractHelperService
     /**
      * Set appropriate default values on date fields
      *
-     * @param \Zend\Form\Element $field
-     * @param \DateTime $currentDate
+     * @param \Zend\Form\Element $field Field
+     *
      * @return \Zend\Form\Element
      */
     public function setDefaultDate($field)
@@ -830,7 +928,8 @@ class FormHelperService extends AbstractHelperService
      * Populate an address fieldset using Companies House address data
      *
      * @param \Zend\Form\Fieldset $fieldset address fieldset
-     * @param array $data Companies House 'AddressLine' data
+     * @param array               $data     Companies House 'AddressLine' data
+     *
      * @return \Zend\Form\Fieldset
      */
     public function populateRegisteredAddressFieldset($fieldset, $data)
@@ -862,8 +961,10 @@ class FormHelperService extends AbstractHelperService
     /**
      * Save form state data
      *
-     * @param Form  $form
-     * @param array $data The form data to save
+     * @param \Zend\Form\FormInterface $form Form
+     * @param array                    $data The form data to save
+     *
+     * @return void
      */
     public function saveFormState(Form $form, $data)
     {
@@ -874,7 +975,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Restore form state
      *
-     * @param Form $form
+     * @param \Zend\Form\FormInterface $form Form
+     *
+     * @return void
      */
     public function restoreFormState(Form $form)
     {
@@ -884,6 +987,14 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
+    /**
+     * Remove Value Option
+     *
+     * @param \Zend\Form\Element\(Select|Radio) $element Element (Select|Radio)
+     * @param string                            $key     Key
+     *
+     * @return void
+     */
     public function removeValueOption(Element $element, $key)
     {
         $options = $element->getValueOptions();
