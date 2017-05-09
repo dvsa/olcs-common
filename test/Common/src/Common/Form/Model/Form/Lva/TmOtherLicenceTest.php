@@ -3,7 +3,7 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\I18n\Validator\Float;
+use Zend\I18n\Validator\IsFloat;
 
 /**
  * Class TmOtherLicenceTest
@@ -68,7 +68,7 @@ class TmOtherLicenceTest extends AbstractFormValidationTestCase
         $this->assertFormElementValid($element, 99.9);
         $this->assertFormElementValid($element, 1);
         $this->assertFormElementValid($element, 0);
-        $this->assertFormElementNotValid($element, 'abc', [Float::NOT_FLOAT]);
+        $this->assertFormElementNotValid($element, 'abc', [IsFloat::NOT_FLOAT]);
     }
 
     public function testOperatingCentres()
