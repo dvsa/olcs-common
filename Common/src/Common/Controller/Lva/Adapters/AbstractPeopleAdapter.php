@@ -1,16 +1,11 @@
 <?php
 
-/**
- * Abstract people adapter
- *
- * Contains common logic which used to just live in the abstract
- * people controller, i.e. the "plain" unmodified behaviour
- */
 namespace Common\Controller\Lva\Adapters;
 
-use Zend\Form\Form;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
-use Common\Service\Entity\OrganisationEntityService;
+use Common\RefData;
+use Common\Service\Table\TableBuilder;
+use Zend\Form\Form;
 
 /**
  * Abstract people adapter
@@ -37,7 +32,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Load the people dataa
      *
-     * @param int $id Either an Application or Licence ID
+     * @param string $lvs Lic|App|Var
+     * @param int    $id  Either an Application or Licence ID
      *
      * @return bool If successful
      */
@@ -207,9 +203,9 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
                 $this->indexRows(self::SOURCE_ORGANISATION, $this->data['people']),
                 $this->indexRows(self::SOURCE_APPLICATION, $this->data['application-people'])
             );
-        } else {
-            return $this->data['people'];
         }
+
+        return $this->data['people'];
     }
 
     /**
@@ -247,8 +243,10 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Alter form for organisation
      *
-     * @param Form                              $form  form
-     * @param \Common\Service\TableTableBuilder $table table
+     * @param Form         $form  form
+     * @param TableBuilder $table table
+     *
+     * @return void
      */
     public function alterFormForOrganisation(Form $form, $table)
     {
@@ -275,11 +273,24 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
+    /**
+     * Create table
+     *
+     * @return TableBuilder
+     */
     public function createTable()
     {
-        return $this->getServiceLocator()
+        /** @var TableBuilder $table */
+        $table = $this->getServiceLocator()
             ->get('Table')
             ->prepareTable($this->getTableConfig(), $this->getTableData());
+
+        //  set empty message in depend of Organisation type
+        if ($this->getOrganisationType() === RefData::ORG_TYPE_REGISTERED_COMPANY) {
+            $table->setEmptyMessage('selfserve-app-subSection-your-business-people-ltd.table.empty-message');
+        }
+
+        return $table;
     }
 
     /**
