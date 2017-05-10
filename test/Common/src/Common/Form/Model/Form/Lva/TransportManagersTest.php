@@ -18,44 +18,27 @@ class TransportManagersTest extends AbstractFormValidationTestCase
 
     public function testTable()
     {
-        $element = ['table', 'table'];
-        $this->assertFormElementTable($element);
-        $this->assertFormElementNotValid($element, null, ['required']);
-    }
+        $this->assertFormElementTable(['table', 'table']);
+        $this->assertFormElementHidden(['table', 'action']);
+        $this->assertFormElementHidden(['table', 'id']);
 
-    public function testTableAction()
-    {
-        $element = ['table', 'action'];
-        $this->assertFormElementNoRender($element);
-    }
-
-    public function testTableRows()
-    {
         $element = ['table', 'rows'];
-        $this->assertFormElementHidden($element);
-    }
-
-    public function testTableId()
-    {
-        $element = ['table', 'id'];
-        $this->assertFormElementNoRender($element);
+        $this->assertFormElementAllowEmpty($element, false);
+        $this->assertFormElementIsRequired($element);
     }
 
     public function testSaveAndContinue()
     {
-        $element = ['form-actions', 'saveAndContinue'];
-        $this->assertFormElementActionButton($element);
+        $this->assertFormElementActionButton(['form-actions', 'saveAndContinue']);
     }
 
     public function testSave()
     {
-        $element = ['form-actions', 'save'];
-        $this->assertFormElementActionButton($element);
+        $this->assertFormElementActionButton(['form-actions', 'save']);
     }
 
     public function testCancel()
     {
-        $element = ['form-actions', 'cancel'];
-        $this->assertFormElementActionButton($element);
+        $this->assertFormElementActionButton(['form-actions', 'cancel']);
     }
 }

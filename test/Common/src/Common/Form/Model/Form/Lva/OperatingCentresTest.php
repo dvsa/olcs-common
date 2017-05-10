@@ -20,18 +20,13 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
 
     public function testTable()
     {
-        $element = [ 'table', 'table' ];
-        $this->assertFormElementTable($element);
-        $this->assertFormElementNotValid($element, '', [ 'required' ]);
+        $this->assertFormElementTable(['table', 'table']);
+        $this->assertFormElementHidden(['table', 'action']);
+        $this->assertFormElementHidden(['table', 'id']);
 
-        $element = [ 'table', 'action' ];
-        $this->assertFormElementHidden($element);
-
-        $element = [ 'table', 'id' ];
-        $this->assertFormElementHidden($element);
-
-        $element = [ 'table', 'rows' ];
-        $this->assertFormElementHidden($element);
+        $element = ['table', 'rows'];
+        $this->assertFormElementAllowEmpty($element, false);
+        $this->assertFormElementIsRequired($element);
     }
 
     public function testTrafficAreaSelect()
@@ -57,8 +52,7 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
 
     public function testVersion()
     {
-        $element = [ 'data', 'version' ];
-        $this->assertFormElementHidden($element);
+        $this->assertFormElementHidden([ 'data', 'version' ]);
     }
 
     public function testTotalAuthVehicles()
@@ -93,19 +87,16 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
 
     public function testSaveAndContinue()
     {
-        $element = ['form-actions', 'saveAndContinue'];
-        $this->assertFormElementActionButton($element);
+        $this->assertFormElementActionButton(['form-actions', 'saveAndContinue']);
     }
 
     public function testSave()
     {
-        $element = ['form-actions', 'save'];
-        $this->assertFormElementActionButton($element);
+        $this->assertFormElementActionButton(['form-actions', 'save']);
     }
 
     public function testCancel()
     {
-        $element = ['form-actions', 'cancel'];
-        $this->assertFormElementActionButton($element);
+        $this->assertFormElementActionButton(['form-actions', 'cancel']);
     }
 }

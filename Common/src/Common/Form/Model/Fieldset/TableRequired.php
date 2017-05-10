@@ -10,29 +10,27 @@ use Zend\Form\Annotation as Form;
 class TableRequired
 {
     /**
-     * @Form\Options({"label":"row"})
-     * @Form\AllowEmpty(false)
      * @Form\Required(true)
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\Type("\Common\Form\Elements\Types\Table")
+     * @Form\Type("Hidden")
+     * @Form\Attributes({"value":""})
      * @Form\Validator({
      *     "name":"Common\Form\Elements\Validators\TableRequiredValidator",
      *     "options":{"label":"record"}
      * })
      */
+    public $rows = null;
+
+    /**
+     * @Form\Type("\Common\Form\Elements\Types\Table")
+     * @Form\Options({"label":"row"})
+     */
     public $table = null;
 
     /**
-     * @Form\Attributes({"value":""})
      * @Form\Type("\Common\Form\Elements\InputFilters\NoRender")
+     * @Form\Attributes({"value":""})
      */
     public $action = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $rows = null;
 
     /**
      * @Form\Attributes({"value":""})

@@ -40,7 +40,7 @@ class SafetyTest extends AbstractFormValidationTestCase
     {
         $element = ['licence', 'safetyInsVaries'];
         $this->assertFormElementType($element, Radio::class);
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
     }
 
@@ -57,23 +57,18 @@ class SafetyTest extends AbstractFormValidationTestCase
     public function testTacographInsName()
     {
         $element = ['licence', 'tachographInsName'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
     }
 
     public function testTable()
     {
-        $element = ['table', 'table'];
-        $this->assertFormElementTable($element);
-        $this->assertFormElementNotValid($element, null, ['required']);
-
-        $element = ['table', 'action'];
-        $this->assertFormElementHidden($element);
+        $this->assertFormElementTable(['table', 'table']);
+        $this->assertFormElementHidden(['table', 'action']);
+        $this->assertFormElementHidden(['table', 'id']);
 
         $element = ['table', 'rows'];
-        $this->assertFormElementHidden($element);
-
-        $element = ['table', 'id'];
-        $this->assertFormElementHidden($element);
+        $this->assertFormElementAllowEmpty($element, false);
+        $this->assertFormElementIsRequired($element);
     }
 
     public function testApplicationVersion()
@@ -86,14 +81,14 @@ class SafetyTest extends AbstractFormValidationTestCase
     {
         $element = ['application', 'isMaintenanceSuitable'];
         $this->assertFormElementType($element, Radio::class);
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
     }
 
     public function testApplicationSafetyConfirmation()
     {
         $element = ['application', 'safetyConfirmation'];
         $this->assertFormElementType($element, SingleCheckbox::class);
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
     }
 
     public function testSaveAndContinue()

@@ -14,6 +14,8 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
+ * @deprecated See: olcs-common/Common/config/module.config.php, line: 273
+ *
  * Table Factory
  *
  * Creates an instance of TableBuilder and passes in the application config

@@ -61,9 +61,12 @@ abstract class AbstractOperatingCentres extends AbstractLvaFormService
             $this->alterFormForGoodsLicences($form);
         }
 
-        // modify the table validation message
+        // - Modify the validation message for Required on 'rows' field
+        // The validator compares the data against the 'rows' field value.
+        // This is the reason why we use table->rows instead of table->table
+        // which it was previously.
         $this->getFormHelper()
-            ->getValidator($form, 'table->table', 'Common\Form\Elements\Validators\TableRequiredValidator')
+            ->getValidator($form, 'table->rows', 'Common\Form\Elements\Validators\TableRequiredValidator')
             ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
 
         if ($this->removeTrafficAreaElements($params)) {

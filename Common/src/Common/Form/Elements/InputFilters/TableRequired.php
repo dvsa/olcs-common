@@ -14,6 +14,9 @@ use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\Service\Table\TableBuilder;
 
 /**
+ * @deprecated This is not used.  It seems like the only validator being used is
+ *             Common/Form/Elements/Validators/TableRequiredValidator.php
+ *
  * Table Requried
  *
  * @author Rob Caiger <rob@clocal.co.uk>
