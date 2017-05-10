@@ -6,6 +6,7 @@ use Zend\Form\Annotation as Form;
 
 /**
  * UploadEvidenceFinancialEvidence
+ * @Form\Name("financialEvidence")
  */
 class UploadEvidenceFinancialEvidence
 {

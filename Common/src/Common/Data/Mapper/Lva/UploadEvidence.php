@@ -30,16 +30,14 @@ class UploadEvidence implements MapperInterface
                 $formData['operatingCentres'][$i]['adPlacedDate']['day'] = $adPlacedDate->format('j');
                 $formData['operatingCentres'][$i]['adPlacedDate']['month'] = $adPlacedDate->format('n');
                 $formData['operatingCentres'][$i]['adPlacedDate']['year'] = $adPlacedDate->format('Y');
-
             }
-
         }
 
         return $formData;
     }
 
     /**
-     * Map data from API result onto thr form
+     * Map data from API result onto the form
      *
      * @param array $data API data
      * @param Form  $form The form
@@ -66,24 +64,21 @@ class UploadEvidence implements MapperInterface
     /**
      * Prepare form data for Save command
      *
-     * @param array $data Form Data
+     * @param array $data form data
      *
      * @return array
      */
     public static function mapFromForm(array $data)
     {
-        // @todo This will need tweaking/checking
         $apiData = [];
         foreach ($data['operatingCentres'] as $operatingCentreData) {
             $apiData['operatingCentres'][$operatingCentreData['aocId']] = [
                 'adPlacedIn' => $operatingCentreData['adPlacedIn'],
-                'adPlacedDate' => $operatingCentreData['adPlacedDate']
+                'adPlacedDate' => $operatingCentreData['adPlacedDate'],
+                'aocId' => $operatingCentreData['aocId']
             ];
         }
 
-        var_dump($data);
-        var_dump($apiData);
-        die('STOP at '. __METHOD__);
         return $apiData;
     }
 }

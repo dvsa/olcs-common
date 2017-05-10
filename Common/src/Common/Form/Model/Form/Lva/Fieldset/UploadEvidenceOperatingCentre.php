@@ -8,6 +8,7 @@ use Zend\Form\Annotation as Form;
  * @Form\Options({
  *     "label": "ADDRESS OF OC"
  * })
+ * @Form\Name("OperatingCentre")
  */
 class UploadEvidenceOperatingCentre
 {
@@ -56,4 +57,15 @@ class UploadEvidenceOperatingCentre
      * })
      */
     public $file = null;
+
+    /**
+     * @Form\Type("Hidden")
+     * @Form\Required(true)
+     * @Form\Validator({
+     *  "name":"Zend\Validator\GreaterThan",
+     *  "options": {"min": 0, "message": "Please upload your advert"}
+     * })
+     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
+     */
+    public $uploadFileCount = null;
 }
