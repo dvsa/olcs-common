@@ -65,7 +65,7 @@ class FormHelperService extends AbstractHelperService
             'options' => [
                 'csrf_options' => [
                     'messageTemplates' => array(
-                        'notSame' => 'csrf-message'
+                        'notSame' => 'csrf-message',
                     ),
                     'timeout' => $cfg['csrf']['timeout'],
                 ],
@@ -78,6 +78,7 @@ class FormHelperService extends AbstractHelperService
          * Main CSRF check happens in @see \Common\Module::validateCsrfToken
          */
         $this->removeValidator($form, 'security', \Zend\Validator\Csrf::class);
+        $form->setInputFilter(new InputFilter());
 
         //  add button "Continue" element
         if ($addContinue) {
@@ -444,8 +445,8 @@ class FormHelperService extends AbstractHelperService
     /**
      * Disable empty validation
      *
-     * @param \Zend\Form\Fieldset $form   Form fieldset
-     * @param InputFilter         $filter Filter
+     * @param \Zend\Form\Fieldset|\Zend\Form\FormInterface $form   Form fieldset
+     * @param InputFilter                                  $filter Filter
      *
      * @return void
      */
@@ -455,13 +456,13 @@ class FormHelperService extends AbstractHelperService
             $filter = $form->getInputFilter();
         }
 
+        /** @var \Zend\Form\ElementInterface $element */
         foreach ($form->getElements() as $key => $element) {
-
             $value = $element->getValue();
 
             if (empty($value) || $element instanceof Checkbox) {
-
-                $filter->get($key)->setAllowEmpty(true)
+                $filter->get($key)
+                    ->setAllowEmpty(true)
                     ->setRequired(false)
                     ->setValidatorChain(
                         new ValidatorChain()

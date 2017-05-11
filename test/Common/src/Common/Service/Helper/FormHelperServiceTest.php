@@ -105,8 +105,8 @@ class FormHelperServiceTest extends MockeryTestCase
         $formClass = 'Common\Form\Model\Form\MyFakeFormTest';
         m::mock($formClass);
 
-        $form = m::mock(\Zend\Form\Form::class);
-        $form
+        $mockForm = m::mock(\Zend\Form\Form::class);
+        $mockForm
             ->shouldReceive('add')
             ->with(
                 array(
@@ -140,9 +140,10 @@ class FormHelperServiceTest extends MockeryTestCase
                     )
                 )
             );
+        $mockForm->shouldReceive('setInputFilter')->once()->with(m::type(InputFilterInterface::class));
 
+        $this->mockBuilder->shouldReceive('createForm')->once()->with($formClass)->andReturn($mockForm);
         $this->mockAuthSrv->shouldReceive('isGranted')->with('internal-user')->andReturn(false);
-        $this->mockBuilder->shouldReceive('createForm')->once()->with($formClass)->andReturn($form);
 
         $mockCfg = [
             'csrf' => [
@@ -155,11 +156,9 @@ class FormHelperServiceTest extends MockeryTestCase
         $sut = m::mock(FormHelperService::class)->makePartial();
         $sut->setServiceLocator($this->mockSm);
 
-        $sut->shouldReceive('removeValidator')->once()->with($form, 'security', \Zend\Validator\Csrf::class);
+        $sut->shouldReceive('removeValidator')->once()->with($mockForm, 'security', \Zend\Validator\Csrf::class);
 
-        $actual = $sut->createForm($formClass);
-
-        $this->assertEquals($form, $actual);
+        static::assertEquals($mockForm, $sut->createForm($formClass));
     }
 
     public function testProcessAddressLookupWithNoPostcodeOrAddressSelected()
@@ -1125,8 +1124,6 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testProcessCompanyLookupInvalidNumber()
     {
-        $helper = new FormHelperService();
-
         $translator = m::mock()
             ->shouldReceive('translate')
             ->with('company_number.length.validation.error')
@@ -1173,8 +1170,6 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testProcessCompanyLookupError()
     {
-        $helper = new FormHelperService();
-
         $service = m::mock()
             ->shouldReceive('search')
             ->with('companyDetails', '12345678')
@@ -1230,8 +1225,6 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testSetFormActionFromRequestWhenFormHasAction()
     {
-        $helper = new FormHelperService();
-
         $form = m::mock()
             ->shouldReceive('hasAttribute')
             ->with('action')
@@ -1247,8 +1240,6 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testSetFormActionFromRequest()
     {
-        $helper = new FormHelperService();
-
         $form = m::mock()
             ->shouldReceive('hasAttribute')
             ->with('action')
@@ -1270,8 +1261,6 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testSetFormActionFromRequestWithNoQuery()
     {
-        $helper = new FormHelperService();
-
         $form = m::mock()
             ->shouldReceive('getAttribute')
             ->with('method')
@@ -1296,8 +1285,6 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testRemoveOptionWithoutOption()
     {
-        $helper = new FormHelperService();
-
         $index = 'blap';
 
         $options = [
@@ -1315,8 +1302,6 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testRemoveOptionWithOption()
     {
-        $helper = new FormHelperService();
-
         $index = 'foo';
 
         $options = [
@@ -1336,8 +1321,6 @@ class FormHelperServiceTest extends MockeryTestCase
 
     public function testSetCurrentOptionWithoutCurrentOption()
     {
-        $helper = new FormHelperService();
-
         $index = 'blap';
 
         $options = [
