@@ -22,6 +22,12 @@ class Interim
     public $goodsApplicationInterim = null;
 
     /**
+     * @Form\Attributes({"value": "markup-interim-fee", "data-container-class": "interimFee"})
+     * @Form\Type("\Common\Form\Elements\Types\GuidanceTranslated")
+     */
+    public $interimFee = null;
+
+    /**
      * @Form\AllowEmpty(true)
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Required(true)

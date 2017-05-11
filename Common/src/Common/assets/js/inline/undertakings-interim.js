@@ -7,7 +7,10 @@ $(function () {
       "interim": {
         "label:applicationInterimReason": function () {
           return OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
-        }
+        },
+        "selector:.interimFee": function () {
+          return OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
+        },
       }
     }
   });
