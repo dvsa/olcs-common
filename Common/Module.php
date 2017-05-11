@@ -1,19 +1,16 @@
 <?php
 
-/**
- * ZF2 Module
- */
 namespace Common;
 
 use Common\Preference\LanguageListener;
+use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
 use Olcs\Logging\Log\Logger;
 use Zend\EventManager\EventManager;
-use Zend\I18n\Translator\Translator;
+use Zend\Http\Request;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Model\ViewModel;
 
 /**
  * ZF2 Module
@@ -102,12 +99,8 @@ class Module
 
         //  RBAC behaviour if user not authorised
         $events->attach($sm->get(\ZfcRbac\View\Strategy\UnauthorizedStrategy::class));
-
-        $events->attach(
-            MvcEvent::EVENT_DISPATCH,
-            array($this, 'validateCsfrToken'),
-            100
-        );
+        //  CSRF token check
+        $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'validateCsrfToken'], 100);
 
         $this->setupRequestForProxyHost($app->getRequest());
 
@@ -115,36 +108,43 @@ class Module
     }
 
     /**
-     * Validate the CSFR token
+     * Validate the CSRF token
      *
      * @param MvcEvent $e MVC event
      *
-     * @return ViewModel
+     * @return void
      */
-    public function validateCsfrToken(MvcEvent $e)
+    public function validateCsrfToken(MvcEvent $e)
     {
         /** @var \Zend\Http\PhpEnvironment\Request $request */
         $request = $e->getRequest();
-        // if request is a POST and 'form-actions" present, then valvalidate the CSFR token
-        if ($request->isPost() && $request->getPost('form-actions')) {
-            $name = 'security';
-            $token = $request->getPost($name);
-            $validator = new \Zend\Validator\Csrf(['name' => $name]);
-            if (!$validator->isValid($token)) {
-                $model = new ViewModel(
-                    [
-                        'message'   => 'CSFR error',
-                        'reason'    => 'error-csfr-failed',
-                    ]
-                );
-                $model->setTemplate('error/404');
-                $e->getViewModel()->addChild($model);
-                $e->getResponse()->setStatusCode(403);
-                $e->stopPropagation();
-                return $model;
-            }
+        if ($request->isPost() === false) {
+            return;
         }
 
+        $name = 'security';
+        $token = $request->getPost('security');
+
+        if (empty($token)) {
+            Logger::warn('need check why CSRF token not exists in form');
+
+            return;
+        }
+
+        $validator = new \Zend\Validator\Csrf(['name' => $name]);
+        if ($validator->isValid($token)) {
+            return;
+        }
+
+        /** @var TranslationHelperService $translator */
+        $hlpFlashMsgr = $e->getApplication()->getServiceManager()->get('Helper\FlashMessenger');
+        $hlpFlashMsgr->addCurrentErrorMessage('csrf-message');
+
+        /** @var \Zend\Http\Response $resp */
+        $resp = $e->getResponse();
+        $resp->getHeaders()->addHeaderLine('X-CSRF-error', '1');
+
+        $request->setMethod(Request::METHOD_GET);
     }
 
     /**
@@ -167,7 +167,7 @@ class Module
      */
     protected function setUpTranslator(ServiceLocatorInterface $sm, $eventManager)
     {
-        /** @var \Common\Util\TranslatorDelegator $translator */
+        /** @var \\Zend\I18n\Translator\TranslatorInterface $translator */
         $translator = $sm->get('translator');
 
         $translator->setLocale('en_GB')->setFallbackLocale('en_GB');

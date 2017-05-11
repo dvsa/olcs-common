@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Common PSV Vehicles Filter Form
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
@@ -16,11 +11,23 @@ use Common\FormService\Form\AbstractFormService;
  */
 class CommonPsvVehiclesFilters extends AbstractFormService
 {
+    /**
+     * Get Form
+     *
+     * @return \Zend\Form\FormInterface
+     */
     public function getForm()
     {
-        return $this->alterForm($this->getFormHelper()->createForm('Lva\PsvVehicleFilter', false));
+        return $this->alterForm($this->getFormHelper()->createForm('Lva\PsvVehicleFilter'));
     }
 
+    /**
+     * Form
+     *
+     * @param \Zend\Form\FormInterface $form Form
+     *
+     * @return \Zend\Form\FormInterface
+     */
     protected function alterForm($form)
     {
         $this->getFormHelper()->remove($form, 'vrm');
