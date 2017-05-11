@@ -11,11 +11,15 @@ $(function() {
   var isVariation = vehicles.data('current');
 
   function hasAdvertisements() {
-    return F.isChecked('advertisements', 'adPlaced', 'Y');
+    return F.isChecked('advertisements', 'adPlaced', '1');
+  }
+
+  function willUploadLater() {
+    return F.isChecked('advertisements', 'adPlaced', '2');
   }
 
   function isSendingByPost() {
-    return F.isChecked('advertisements', 'adPlaced', 'N');
+    return F.isChecked('advertisements', 'adPlaced', '0');
   }
 
   OLCS.cascadeForm({
@@ -36,7 +40,8 @@ $(function() {
         'label:adPlacedIn': hasAdvertisements,
         '.adPlacedDate': hasAdvertisements,
         '.file-uploader': hasAdvertisements,
-        '.ad-send-by-post': isSendingByPost
+        '.ad-send-by-post': isSendingByPost,
+        '.ad-upload-later': willUploadLater
       }
     }
   });

@@ -7,6 +7,8 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
+ * @Form\Name("upload-evidence")
+ * @Form\Options({"prefer_form_input_filter":true})
  */
 class UploadEvidence
 {
@@ -15,8 +17,23 @@ class UploadEvidence
      * @Form\Options({
      *    "label": "lva.section.title.upload-evidence.financial-evidence"
      * })
+     * @Form\Name("financialEvidence")
      */
     public $financialEvidence = null;
+
+    /**
+     * @Form\ComposedObject({
+     *      "target_object":"Common\Form\Model\Form\Lva\Fieldset\UploadEvidenceOperatingCentre",
+     *      "is_collection":true,
+     *      "options":{
+     *          "count": 1,
+     *          "label":"lva.section.title.upload-evidence.operating-centres",
+     *      }
+     * })
+     * @Form\Name("operatingCentres")
+     */
+    public $operatingCentres = null;
+
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})

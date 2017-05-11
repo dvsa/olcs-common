@@ -7,8 +7,12 @@ $(function() {
     return F.isChecked("evidence", "uploadNow", "1");
   }
 
+  function willUploadLater() {
+    return F.isChecked("evidence", "uploadNow", "2");
+  }
+
   function willPost() {
-      return F.isChecked("evidence", "uploadNow", "0");
+    return !willUpload() && !willUploadLater();
   }
 
   OLCS.cascadeForm({
@@ -18,7 +22,8 @@ $(function() {
         "selector:#files": willUpload,
         "selector:#uploadedFileCount": willUpload // show/hide the validation error as well
       },
-      "sendByPost": willPost
+      "sendByPost": willPost,
+      "uploadLater": willUploadLater
     }
   });
 });
