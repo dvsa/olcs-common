@@ -21,6 +21,7 @@ class TableRequired
     public $rows = null;
 
     /**
+     * @Form\Required(false)
      * @Form\Type("\Common\Form\Elements\Types\Table")
      * @Form\Options({"label":"row"})
      */
