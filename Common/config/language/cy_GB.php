@@ -868,7 +868,7 @@ return [
     'selfserve-app-subSection-your-business-people-columnName' => 'Enw',
     'selfserve-app-subSection-your-business-people-guidance-disabled' => 'Ni allwch wneud newidiadau yn yr adran hon.',
     'selfserve-app-subSection-your-business-people-guidanceLC' => 'Dylai\'ch rhestr o gyfarwyddwyr gydfynd â\'r un rydych wedi\'i chofrestru gyda Thŷ\'r Cwmnïau',
-    'selfserve-app-subSection-your-business-people-tableEmptyMessage' => 'Ychwanegwch at y tabl hwn',
+    'selfserve-app-subSection-your-business-people-ltd.table.empty-message' => 'Ychwanegwch at y tabl hwn',
     'selfserve-app-subSection-your-business-people-tableHeaderDirectors' => 'Cyfarwyddwyr',
     'selfserve-app-subSection-your-business-people-tableHeaderPartners' => 'Partneriaid',
     'selfserve-business-registered-company-description' => 'Os nad yw\'ch rhif cwmni gyda chi, neu os ydych yn cael problemau wrth adfer manylion eich cwmni, nodwch nhw isod.',
