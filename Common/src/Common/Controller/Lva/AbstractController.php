@@ -37,7 +37,7 @@ abstract class AbstractController extends AbstractActionController
     const LVA_VAR = 'variation';
 
     const LOC_INTERNAL = 'internal';
-    const LOC_EXT = 'external';
+    const LOC_EXTERNAL = 'external';
 
     use Util\FlashMessengerTrait,
         GenericUpload;
@@ -83,8 +83,7 @@ abstract class AbstractController extends AbstractActionController
      *
      * @param MvcEvent $e Event
      *
-     * @return mixed
-     * @throws Exception\DomainException
+     * @return null|\Zend\Http\Response
      */
     public function onDispatch(MvcEvent $e)
     {
@@ -116,6 +115,11 @@ abstract class AbstractController extends AbstractActionController
         return $actionResponse;
     }
 
+    /**
+     * May be Translate For Ni
+     *
+     * @return void
+     */
     protected function maybeTranslateForNi()
     {
         if ($this->lva !== null && $this->getIdentifier() !== null) {
@@ -127,10 +131,12 @@ abstract class AbstractController extends AbstractActionController
 
     /**
      * Hook into the dispatch before the controller action is executed
+     *
+     * @return null|\Zend\Http\Response
      */
     protected function preDispatch()
     {
-
+        return null;
     }
 
     /**
@@ -367,9 +373,14 @@ abstract class AbstractController extends AbstractActionController
         }
     }
 
+    /**
+     * Get Lva Entity Service
+     *
+     * @return array|object
+     */
     protected function getLvaEntityService()
     {
-        if ($this->lva === 'variation') {
+        if ($this->lva === self::LVA_VAR) {
             $service = 'Application';
         } else {
             $service = ucwords($this->lva);
@@ -378,14 +389,24 @@ abstract class AbstractController extends AbstractActionController
         return $this->getServiceLocator()->get('Entity\\' . $service);
     }
 
+    /**
+     * Get Identifier
+     *
+     * @return mixed|\Zend\Mvc\Controller\Plugin\Params
+     */
     protected function getIdentifier()
     {
         return $this->params($this->getIdentifierIndex());
     }
 
+    /**
+     * Get Identifier Index
+     *
+     * @return string
+     */
     protected function getIdentifierIndex()
     {
-        if ($this->lva === 'licence') {
+        if ($this->lva === self::LVA_LIC) {
             return 'licence';
         }
 
@@ -404,9 +425,14 @@ abstract class AbstractController extends AbstractActionController
         return $this->getIdentifier();
     }
 
+    /**
+     * Is External
+     *
+     * @return bool
+     */
     protected function isExternal()
     {
-        return $this->location === 'external';
+        return $this->location === self::LOC_EXTERNAL;
     }
 
     /**
