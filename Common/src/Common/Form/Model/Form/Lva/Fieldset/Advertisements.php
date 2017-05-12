@@ -79,7 +79,7 @@ class Advertisements
      * @Form\Validator({"name": "ValidateIf",
      *      "options":{
      *          "context_field": "adPlaced",
-     *          "context_values": {"Y"},
+     *          "context_values": {"1"},
      *          "validators": {
      *              {
      *                  "name": "\Common\Validator\FileUploadCount",
