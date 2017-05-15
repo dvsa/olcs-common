@@ -18,7 +18,7 @@ class Advertisements
      *     "error-message": "advertisements_adPlaced-error",
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
      *     "label_attributes": {"class": "form-control form-control--radio"},
-     *     "value_options": {"1":"Yes", "0":"No (operator to post)", "2":"No (operator to upload)"},
+     *     "value_options": {"1":"Yes"},
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
@@ -95,10 +95,32 @@ class Advertisements
     public $uploadedFileCount = null;
 
     /**
+     * @Form\Attributes({"id":"adPlaced2","placeholder":""})
+     * @Form\Options({
+     *     "error-message": "advertisements_adPlaced-error",
+     *     "label_attributes": {"class": "form-control form-control--radio"},
+     *     "value_options": {"0":"No (operator to post)"},
+     * })
+     * @Form\Type("\Zend\Form\Element\Radio")
+     */
+    public $adPlacedPost = null;
+
+    /**
      * @Form\Attributes({"data-container-class":"ad-send-by-post"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $adSendByPost = null;
+
+    /**
+     * @Form\Attributes({"id":"adPlaced3","placeholder":""})
+     * @Form\Options({
+     *     "error-message": "advertisements_adPlaced-error",
+     *     "label_attributes": {"class": "form-control form-control--radio"},
+     *     "value_options": {"2":"No (operator to upload)"},
+     * })
+     * @Form\Type("\Zend\Form\Element\Radio")
+     */
+    public $adPlacedLater = null;
 
     /**
      * @Form\Attributes({"data-container-class":"ad-upload-later"})
