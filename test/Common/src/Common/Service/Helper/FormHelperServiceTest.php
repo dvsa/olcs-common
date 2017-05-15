@@ -140,7 +140,6 @@ class FormHelperServiceTest extends MockeryTestCase
                     )
                 )
             );
-        $mockForm->shouldReceive('setInputFilter')->once()->with(m::type(InputFilterInterface::class));
 
         $this->mockBuilder->shouldReceive('createForm')->once()->with($formClass)->andReturn($mockForm);
         $this->mockAuthSrv->shouldReceive('isGranted')->with('internal-user')->andReturn(false);
@@ -155,8 +154,6 @@ class FormHelperServiceTest extends MockeryTestCase
         /** @var FormHelperService | m\MockInterface $sut */
         $sut = m::mock(FormHelperService::class)->makePartial();
         $sut->setServiceLocator($this->mockSm);
-
-        $sut->shouldReceive('removeValidator')->once()->with($mockForm, 'security', \Zend\Validator\Csrf::class);
 
         static::assertEquals($mockForm, $sut->createForm($formClass));
     }
