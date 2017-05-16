@@ -5,13 +5,14 @@ namespace CommonTest\Validator;
 use Common\Validator\OneOf;
 
 /**
- * Class ValidateDateCompare
- * @package CommonTest\Validator
+ * Class OneOfTest test
  */
 class OneOfTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * test setOptions
+     * Test setOptions
+     *
+     * @return void
      */
     public function testSetOptions()
     {
@@ -19,21 +20,25 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
         $sut->setOptions(
             [
                 'fields' => ['test', 'test2'],
-                'message' => 'Please provide at least one field'
+                'message' => 'Please provide at least one field',
+                'allowZero' => true
             ]
         );
 
         $this->assertEquals(['test', 'test2'], $sut->getFields());
         $this->assertEquals(['provide_one' => 'Please provide at least one field'], $sut->getMessageTemplates());
+        $this->assertEquals(true, $sut->getAllowZero());
     }
 
     /**
+     * Test is valid
+     *
      * @dataProvider provideIsValid
-     * @param $expected
-     * @param $options
-     * @param $context
-     * @param $chainValid
-     * @param array $errorMessages
+     * @param bool  $expected expected result
+     * @param array $options  options
+     * @param array $context  context
+     *
+     * @return void
      */
     public function testIsValid($expected, $options, $context)
     {
@@ -43,6 +48,8 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Provider isValid
+     *
      * @return array
      */
     public function provideIsValid()
@@ -52,7 +59,9 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
             [true, ['fields' => ['test1', 'test2']], ['test2'=>'notempty']],
             [true, ['fields' => ['test1', 'test2']], ['test1'=>'notempty', 'test2'=>'notempty']],
             [false, ['fields' => ['test1', 'test2']], ['test1'=>'', 'test2'=>'']],
-            [false, ['fields' => ['test1', 'test2']], []]
+            [false, ['fields' => ['test1', 'test2']], []],
+            [true, ['fields' => ['test1', 'test2'], 'allowZero' => true], ['test1'=>'0']],
+            [false, ['fields' => ['test1', 'test2'], 'allowZero' => false], ['test1'=>'0']],
         ];
     }
 }
