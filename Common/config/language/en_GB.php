@@ -3024,6 +3024,6 @@ return [
     'pagination.results-per-page' => 'results per page',
     'pagination.next' => 'Next',
     'pagination.previous' => 'Previous',
-    'selfserve.declaration.interim_fee' => '<p>The fee for interim licence is <b>£%s</b></p>'
+    'selfserve.declaration.interim_fee' => '<p class="help__text">The fee for interim licence is <b>£%s</b></p>'
     // Potentially unused translations
 ];
