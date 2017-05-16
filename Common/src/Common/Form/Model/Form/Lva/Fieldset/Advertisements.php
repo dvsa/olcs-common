@@ -13,6 +13,7 @@ use Zend\Form\Annotation as Form;
 class Advertisements
 {
     /**
+     * @Form\Required(false)
      * @Form\Attributes({"id":"adPlaced","placeholder":""})
      * @Form\Options({
      *     "error-message": "advertisements_adPlaced-error",
@@ -95,7 +96,8 @@ class Advertisements
     public $uploadedFileCount = null;
 
     /**
-     * @Form\Attributes({"id":"adPlaced2","placeholder":""})
+     * @Form\Required(false)
+     * @Form\Attributes({"id":"adPlacedPost","placeholder":""})
      * @Form\Options({
      *     "error-message": "advertisements_adPlaced-error",
      *     "label_attributes": {"class": "form-control form-control--radio"},
@@ -112,7 +114,8 @@ class Advertisements
     public $adSendByPost = null;
 
     /**
-     * @Form\Attributes({"id":"adPlaced3","placeholder":""})
+     * @Form\Required(false)
+     * @Form\Attributes({"id":"adPlacedLater","placeholder":""})
      * @Form\Options({
      *     "error-message": "advertisements_adPlaced-error",
      *     "label_attributes": {"class": "form-control form-control--radio"},
@@ -127,4 +130,21 @@ class Advertisements
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $adUploadLater = null;
+
+    /**
+     * @Form\Type("Hidden")
+     * @Form\Required(true)
+     * @Form\Options({
+     *     "error-message": "advertisements_adPlaced-error"
+     * })
+     * @Form\Validator({
+     *      "name": "OneOf",
+     *      "options": {
+     *          "fields": {"adPlaced", "adPlacedPost", "adPlacedLater"},
+     *          "allowZero": true,
+     *      }
+     * })
+     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
+     */
+    public $uploadValidator = null;
 }

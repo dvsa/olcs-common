@@ -11,6 +11,7 @@ use Common\Data\Mapper\MapperInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Zend\Form\Form;
+use Common\RefData;
 
 /**
  * Operating Centre
@@ -21,6 +22,16 @@ class OperatingCentre implements MapperInterface
 {
     public static function mapFromResult(array $data)
     {
+        $adPlaced = null;
+        $adPlacedPost = null;
+        $adPlacedLater = null;
+        if (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_UPLOAD_NOW) {
+            $adPlaced = RefData::AD_UPLOAD_NOW;
+        } elseif (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_POST) {
+            $adPlacedPost = RefData::AD_POST;
+        } elseif (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_UPLOAD_LATER) {
+            $adPlacedLater = RefData::AD_UPLOAD_LATER;
+        }
         $mappedData = [
             'version' => $data['version'],
             'data' => [
@@ -32,7 +43,9 @@ class OperatingCentre implements MapperInterface
             'operatingCentre' => $data['operatingCentre'],
             'address' => $data['operatingCentre']['address'],
             'advertisements' => [
-                'adPlaced' => $data['adPlaced'],
+                'adPlaced' => $adPlaced,
+                'adPlacedPost' => $adPlacedPost,
+                'adPlacedLater' => $adPlacedLater,
                 'adPlacedIn' => $data['adPlacedIn'],
                 'adPlacedDate' => $data['adPlacedDate']
             ]
@@ -45,6 +58,15 @@ class OperatingCentre implements MapperInterface
 
     public static function mapFromForm(array $data)
     {
+        $adPlaced = null;
+        if (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_UPLOAD_NOW) {
+            $adPlaced = RefData::AD_UPLOAD_NOW;
+        } elseif (isset($data['adPlacedPost']) && $data['adPlacedPost'] === RefData::AD_POST) {
+            $adPlaced = RefData::AD_POST;
+        } elseif (isset($data['adPlacedLater']) && $data['adPlacedLater'] === RefData::AD_UPLOAD_LATER) {
+            $adPlaced = RefData::AD_UPLOAD_LATER;
+        }
+
         $mappedData = [
             'version' => $data['version'],
             'address' => isset($data['address']) ? $data['address'] : null,
@@ -52,7 +74,7 @@ class OperatingCentre implements MapperInterface
             'noOfTrailersRequired' => null,
             'sufficientParking' => null,
             'permission' => null,
-            'adPlaced' => null,
+            'adPlaced' => $adPlaced,
             'adPlacedIn' => null,
             'adPlacedDate' => null
         ];
