@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva\Adapters;
 
+use Common\Controller\Lva\AbstractController;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
@@ -32,14 +33,14 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Load the people dataa
      *
-     * @param string $lvs Lic|App|Var
+     * @param string $lva Lic|App|Var
      * @param int    $id  Either an Application or Licence ID
      *
      * @return bool If successful
      */
     public function loadPeopleData($lva, $id)
     {
-        if ($lva === 'licence') {
+        if ($lva === AbstractController::LVA_LIC) {
             $this->loadPeopleDataForLicence($id);
         } else {
             $this->loadPeopleDataForApplication($id);
@@ -50,9 +51,9 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Load People data for a Licence
      *
-     * @param int $licenceId
+     * @param int $licenceId Licence Id
      *
-     * @throws \RuntimeException
+     * @return void
      */
     protected function loadPeopleDataForLicence($licenceId)
     {
@@ -71,9 +72,9 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Load People data for an Application/Variation
      *
-     * @param int $applicationId
+     * @param int $applicationId Application Id
      *
-     * @throws \RuntimeException
+     * @return void
      */
     protected function loadPeopleDataForApplication($applicationId)
     {
@@ -91,8 +92,10 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     }
 
     /**
+     * Handle query
      *
-     * @param \Dvsa\Olcs\Transfer\Query\QueryInterface $command
+     * @param \Dvsa\Olcs\Transfer\Query\QueryInterface $command Query
+     *
      * @return \Common\Service\Cqrs\Response
      */
     protected function handleQuery(\Dvsa\Olcs\Transfer\Query\QueryInterface $command)
@@ -104,8 +107,10 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     }
 
     /**
+     * Handle Command
      *
-     * @param \Dvsa\Olcs\Transfer\Command\CommandInterface $command
+     * @param \Dvsa\Olcs\Transfer\Command\CommandInterface $command Commnand
+     *
      * @return \Common\Service\Cqrs\Response
      */
     protected function handleCommand(\Dvsa\Olcs\Transfer\Command\CommandInterface $command)
@@ -118,21 +123,41 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $commandService->send($annotationBuilder->createCommand($command));
     }
 
+    /**
+     * Has Inforce Licences
+     *
+     * @return bool
+     */
     public function hasInforceLicences()
     {
         return $this->data['hasInforceLicences'];
     }
 
+    /**
+     * Is Exceptional Organisation
+     *
+     * @return bool
+     */
     public function isExceptionalOrganisation()
     {
         return $this->data['isExceptionalType'];
     }
 
+    /**
+     * Get Organisation data
+     *
+     * @return array
+     */
     public function getOrganisation()
     {
         return $this->licence['organisation'];
     }
 
+    /**
+     * Get organisation Id
+     *
+     * @return int
+     */
     public function getOrganisationId()
     {
         return $this->licence['organisation']['id'];
@@ -148,6 +173,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->application;
     }
 
+    /**
+     * Organisation is Sole Traider
+     *
+     * @return bool
+     */
     public function isSoleTrader()
     {
         return $this->data['isSoleTrader'];
@@ -211,7 +241,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Get person data
      *
-     * @param int $personId
+     * @param int $personId Person Id
      *
      * @return array|false person data or false if not found
      */
@@ -296,7 +326,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Get the table data for the main form
      *
-     * @param int $orgId
      * @return array
      */
     protected function getTableData()
@@ -307,6 +336,13 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->tableData;
     }
 
+    /**
+     * Prepare data to display in table
+     *
+     * @param array $results Results
+     *
+     * @return array
+     */
     protected function formatTableData($results)
     {
         $final = array();
@@ -325,6 +361,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     }
 
     /**
+     * Get Licence Id
+     *
      * @return int
      */
     public function getLicenceId()
@@ -333,6 +371,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     }
 
     /**
+     * Get application Id
+     *
      * @return int
      */
     public function getApplicationId()
@@ -351,6 +391,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $orgData['type']['id'];
     }
 
+    /**
+     * Get Licence Type
+     *
+     * @return mixed
+     */
     public function getLicenceType()
     {
         if ($this->application !== null) {
@@ -363,7 +408,9 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Delete a person from the organisation, and then delete the person if they are now an orphan
      *
-     * @param array $ids
+     * @param array $ids list of identifiers of Deleted Persons
+     *
+     * @return bool
      */
     public function delete($ids)
     {
@@ -376,6 +423,13 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
+    /**
+     * Respore Persons
+     *
+     * @param array $ids list of identifiers of Restored Persons
+     *
+     * @return bool
+     */
     public function restore($ids)
     {
         // Can only restore in an application\variation
@@ -384,7 +438,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
                 ['id' => $this->getApplicationId(), 'personIds' => $ids]
             )
         );
-        /* @var $response \Common\Service\Cqrs\Response */
         if (!$response->isOk()) {
             throw new \RuntimeException('Error restoring Person : '. print_r($response->getResult(), true));
         }
@@ -392,10 +445,16 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
+    /**
+     * Create
+     *
+     * @param array $data Command Data
+     *
+     * @return bool
+     */
     public function create($data)
     {
         $response = $this->handleCommand($this->getCreateCommand($data));
-        /* @var $response \Common\Service\Cqrs\Response */
         if (!$response->isOk()) {
             throw new \RuntimeException('Error creating Person : '. print_r($response->getResult(), true));
         }
@@ -403,10 +462,16 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return true;
     }
 
+    /**
+     * Update
+     *
+     * @param array $data Update data
+     *
+     * @return bool
+     */
     public function update($data)
     {
         $response = $this->handleCommand($this->getUpdateCommand($data));
-        /* @var $response \Common\Service\Cqrs\Response */
         if (!$response->isOk()) {
             throw new \RuntimeException('Error updating Person : '. print_r($response->getResult(), true));
         }
@@ -417,7 +482,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Get the backend command to create a Person
      *
-     * @param array $params
+     * @param array $params Params
      *
      * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
      */
@@ -430,7 +495,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Get the backend command to update a Person
      *
-     * @param array $params
+     * @param array $params Params
      *
      * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
      */
@@ -444,7 +509,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Get the backend command to delete a Person
      *
-     * @param array $params
+     * @param array $params Params
      *
      * @return \Dvsa\Olcs\Transfer\Command\AbstractCommand
      */
@@ -463,8 +528,9 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Update and filter the table data for variations
      *
-     * @param array $orgData
-     * @param array $applicationData
+     * @param array $orgData         Org Data
+     * @param array $applicationData Appl Data
+     *
      * @return array
      */
     private function updateAndFilterTableData($orgData, $applicationData)
@@ -490,6 +556,14 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $data;
     }
 
+    /**
+     * Attach id value as key to persons array (data)
+     *
+     * @param string $key  Key ???
+     * @param array  $data Array of persons
+     *
+     * @return array
+     */
     private function indexRows($key, $data)
     {
         $indexed = [];

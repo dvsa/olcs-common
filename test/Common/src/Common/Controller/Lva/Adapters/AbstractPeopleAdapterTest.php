@@ -2,27 +2,86 @@
 
 namespace CommonTest\Controller\Lva\Adapters;
 
+use Common\Controller\Lva\AbstractController;
+use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
+use Common\Service\Table\TableBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Form;
-use Common\Service\Table\TableBuilder;
-use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 
 /**
- * Abstract People Adapter Test
- *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @covers \Common\Controller\Lva\Adapters\AbstractPeopleAdapter
  */
 class AbstractPeopleAdapterTest extends MockeryTestCase
 {
+    const ID = 9001;
+    const LIC_ID = 8001;
+
+    /** @var  m\MockInterface | AbstractPeopleAdapter */
+    private $sut;
+    /** @var  m\MockInterface | AbstractPeopleAdapter */
+    private $mockResp;
+
+    public function setUp()
+    {
+        $this->mockResp = m::mock(\Zend\Http\Response::class);
+        $this->mockResp->shouldReceive('isOk')->andReturn(true);
+
+        $this->sut = m::mock(AbstractPeopleAdapter::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $this->sut->shouldReceive('handleQuery')->andReturn($this->mockResp);
+    }
+
+    public function testLoadPeopleDataLic()
+    {
+        $this->sut->shouldReceive('loadPeopleDataForLicence')->once()->with(self::ID);
+
+        static::assertTrue($this->sut->loadPeopleData(AbstractController::LVA_LIC, self::ID));
+    }
+
+    public function testLoadPeopleDataOth()
+    {
+        $this->sut->shouldReceive('loadPeopleDataForApplication')->twice()->with(self::ID);
+
+        static::assertTrue($this->sut->loadPeopleData(AbstractController::LVA_VAR, self::ID));
+        static::assertTrue($this->sut->loadPeopleData(AbstractController::LVA_APP, self::ID));
+    }
+
+    public function testHasInforceLicences()
+    {
+        $this->mockResp->shouldReceive('getResult')->once()->andReturn(['hasInforceLicences' => 'unit_EXPECT']);
+
+        $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
+
+        static::assertEquals('unit_EXPECT', $this->sut->hasInforceLicences());
+    }
+
+    public function testIsExceptionalOrganisation()
+    {
+        $this->mockResp->shouldReceive('getResult')->once()->andReturn(['isExceptionalType' => 'unit_EXPECT']);
+
+        $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
+
+        static::assertEquals('unit_EXPECT', $this->sut->isExceptionalOrganisation());
+    }
+
+    public function testIsSoleTrader()
+    {
+        $this->mockResp->shouldReceive('getResult')->once()->andReturn(['isSoleTrader' => 'unit_EXPECT']);
+
+        $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
+
+        static::assertEquals('unit_EXPECT', $this->sut->isSoleTrader());
+    }
+
     /**
-     * @dataProvider dataProvider
+     * @dataProvider dpTestAlterFormForOrganisation
      */
     public function testAlterFormForOrganisation($type, $expected)
     {
-        $sut = m::mock(AbstractPeopleAdapter::class)
-            ->makePartial();
-
         $mockTable = m::mock(TableBuilder::class)
             ->shouldReceive('getAction')
             ->with('add')
@@ -36,15 +95,15 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             ->once()
             ->getMock();
 
-        $sut->shouldReceive('getOrganisationType')
+        $this->sut->shouldReceive('getOrganisationType')
             ->andReturn($type)
             ->twice()
             ->getMock();
 
-        $sut->alterFormForOrganisation(m::mock(Form::class), $mockTable);
+        $this->sut->alterFormForOrganisation(m::mock(Form::class), $mockTable);
     }
 
-    public function dataProvider()
+    public function dpTestAlterFormForOrganisation()
     {
         return [
             'ltd' => [
