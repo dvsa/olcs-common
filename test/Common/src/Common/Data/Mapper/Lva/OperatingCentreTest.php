@@ -84,10 +84,7 @@ class OperatingCentreTest extends MockeryTestCase
         ];
     }
 
-    /**
-     * @dataProvider adProvider
-     */
-    public function testMapFromForm($adPlaced)
+    public function testMapFromForm()
     {
         $data = [
             'version' => 1,
@@ -99,7 +96,7 @@ class OperatingCentreTest extends MockeryTestCase
                 'permission' => 'Y'
             ],
             'advertisements' => [
-                'adPlaced' => $adPlaced,
+                'adPlaced' => RefData::AD_UPLOAD_NOW,
                 'adPlacedIn' => 'Donny Star',
                 'adPlacedDate' => '2015-01-01'
             ]
@@ -112,7 +109,7 @@ class OperatingCentreTest extends MockeryTestCase
             'noOfTrailersRequired' => 11,
             'sufficientParking' => 'Y',
             'permission' => 'Y',
-            'adPlaced' => $adPlaced,
+            'adPlaced' => RefData::AD_UPLOAD_NOW,
             'adPlacedIn' => 'Donny Star',
             'adPlacedDate' => '2015-01-01'
         ];

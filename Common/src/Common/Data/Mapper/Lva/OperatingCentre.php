@@ -53,15 +53,6 @@ class OperatingCentre implements MapperInterface
 
     public static function mapFromForm(array $data)
     {
-        $adPlaced = null;
-        if (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_UPLOAD_NOW) {
-            $adPlaced = RefData::AD_UPLOAD_NOW;
-        } elseif (isset($data['adPlacedPost']) && $data['adPlacedPost'] === RefData::AD_POST) {
-            $adPlaced = RefData::AD_POST;
-        } elseif (isset($data['adPlacedLater']) && $data['adPlacedLater'] === RefData::AD_UPLOAD_LATER) {
-            $adPlaced = RefData::AD_UPLOAD_LATER;
-        }
-
         $mappedData = [
             'version' => $data['version'],
             'address' => isset($data['address']) ? $data['address'] : null,
@@ -69,7 +60,7 @@ class OperatingCentre implements MapperInterface
             'noOfTrailersRequired' => null,
             'sufficientParking' => null,
             'permission' => null,
-            'adPlaced' => $adPlaced,
+            'adPlaced' => null,
             'adPlacedIn' => null,
             'adPlacedDate' => null
         ];

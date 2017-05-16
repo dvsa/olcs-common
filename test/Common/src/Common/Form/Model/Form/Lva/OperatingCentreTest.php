@@ -137,7 +137,21 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
     {
         $element = [ 'advertisements', 'adPlaced' ];
         $this->assertFormElementType($element, \Zend\Form\Element\Radio::class);
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementRequired($element, false);
+    }
+
+    public function testAdvertisementsAdPlacedPost()
+    {
+        $element = [ 'advertisements', 'adPlacedPost' ];
+        $this->assertFormElementType($element, \Zend\Form\Element\Radio::class);
+        $this->assertFormElementRequired($element, false);
+    }
+
+    public function testAdvertisementsAdPlacedLater()
+    {
+        $element = [ 'advertisements', 'adPlacedLater' ];
+        $this->assertFormElementType($element, \Zend\Form\Element\Radio::class);
+        $this->assertFormElementRequired($element, false);
     }
 
     public function testAdvertisementsAdIn()

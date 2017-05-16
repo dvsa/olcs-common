@@ -59,7 +59,7 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
             [true, ['fields' => ['test1', 'test2']], ['test2'=>'notempty']],
             [true, ['fields' => ['test1', 'test2']], ['test1'=>'notempty', 'test2'=>'notempty']],
             [false, ['fields' => ['test1', 'test2']], ['test1'=>'', 'test2'=>'']],
-            [false, ['fields' => ['test1', 'test2']], []],
+            [false, ['fields' => ['test1', 'test2'], 'allowZero' => true], []],
             [true, ['fields' => ['test1', 'test2'], 'allowZero' => true], ['test1'=>'0']],
             [false, ['fields' => ['test1', 'test2'], 'allowZero' => false], ['test1'=>'0']],
         ];
