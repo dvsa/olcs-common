@@ -326,10 +326,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     $taGuidesUrl
                 );
             }
-//        } else {
-//            echo '<pre>';
-//            print_r($form->getMessages());
-//            die();
         }
 
         $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
@@ -445,10 +441,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     $taGuidesUrl
                 );
             }
-//        } else {
-//            echo '<pre>';
-//            print_r($form->getMessages());
-//            die();
         }
 
         $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
