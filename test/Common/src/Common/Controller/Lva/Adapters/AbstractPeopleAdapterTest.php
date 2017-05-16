@@ -3,12 +3,11 @@
 namespace CommonTest\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\AbstractController;
-use Common\RefData;
+use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
+use Common\Service\Table\TableBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Form;
-use Common\Service\Table\TableBuilder;
-use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 
 /**
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
@@ -17,111 +16,67 @@ use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 class AbstractPeopleAdapterTest extends MockeryTestCase
 {
     const ID = 9001;
+    const LIC_ID = 8001;
 
     /** @var  m\MockInterface | AbstractPeopleAdapter */
     private $sut;
+    /** @var  m\MockInterface | AbstractPeopleAdapter */
+    private $mockResp;
 
     public function setUp()
     {
+        $this->mockResp = m::mock(\Zend\Http\Response::class);
+        $this->mockResp->shouldReceive('isOk')->andReturn(true);
+
         $this->sut = m::mock(AbstractPeopleAdapter::class)
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
+
+        $this->sut->shouldReceive('handleQuery')->andReturn($this->mockResp);
     }
 
     public function testLoadPeopleDataLic()
     {
-        $this->sut->shouldReceive('loadPeopleDataForLicence')->with(self::ID);
+        $this->sut->shouldReceive('loadPeopleDataForLicence')->once()->with(self::ID);
 
         static::assertTrue($this->sut->loadPeopleData(AbstractController::LVA_LIC, self::ID));
     }
 
     public function testLoadPeopleDataOth()
     {
-        $this->sut->shouldReceive('loadPeopleDataForApplication')->with(self::ID);
+        $this->sut->shouldReceive('loadPeopleDataForApplication')->twice()->with(self::ID);
 
         static::assertTrue($this->sut->loadPeopleData(AbstractController::LVA_VAR, self::ID));
         static::assertTrue($this->sut->loadPeopleData(AbstractController::LVA_APP, self::ID));
     }
 
-    /** @dataProvider dpTestHasInforceLicences */
-    public function testHasInforceLicences($data, $expect)
+    public function testHasInforceLicences()
     {
-        $this->sut->shouldReceive('getOrganisation')->once()->andReturn($data);
+        $this->mockResp->shouldReceive('getResult')->once()->andReturn(['hasInforceLicences' => 'unit_EXPECT']);
 
-        static::assertEquals($expect, $this->sut->hasInforceLicences());
+        $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
+
+        static::assertEquals('unit_EXPECT', $this->sut->hasInforceLicences());
     }
 
-    public function dpTestHasInforceLicences()
+    public function testIsExceptionalOrganisation()
     {
-        return[
-            [
-                'data'=> [
-                    'hasInforceLicences' => false,
-                ],
-                'expect'=> false,
-            ],
-            [
-                'data'=> [
-                    'hasInforceLicences' => true,
-                ],
-                'expect'=> true,
-            ],
-            [
-                'data'=> [],
-                'expect'=> false,
-            ],
-        ];
+        $this->mockResp->shouldReceive('getResult')->once()->andReturn(['isExceptionalType' => 'unit_EXPECT']);
+
+        $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
+
+        static::assertEquals('unit_EXPECT', $this->sut->isExceptionalOrganisation());
     }
 
-    /** @dataProvider dpTestIsExceptionalOrganisation */
-    public function testIsExceptionalOrganisation($type, $expect)
+    public function testIsSoleTrader()
     {
-        $this->sut->shouldReceive('getOrganisationType')->once()->andReturn($type);
+        $this->mockResp->shouldReceive('getResult')->once()->andReturn(['isSoleTrader' => 'unit_EXPECT']);
 
-        static::assertEquals($expect, $this->sut->isExceptionalOrganisation());
+        $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
+
+        static::assertEquals('unit_EXPECT', $this->sut->isSoleTrader());
     }
 
-    public function dpTestIsExceptionalOrganisation()
-    {
-        return[
-            [
-                'type'=> RefData::ORG_TYPE_REGISTERED_COMPANY,
-                'expect'=> false,
-            ],
-            [
-                'type'=> RefData::ORG_TYPE_PARTNERSHIP,
-                'expect'=> true,
-            ],
-            [
-                'type'=> RefData::ORG_TYPE_SOLE_TRADER,
-                'expect'=> true,
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dpTestIsSoleTrader
-     */
-    public function testIsSoleTrader($type, $expect)
-    {
-        $this->sut->shouldReceive('getOrganisationType')->once()->andReturn($type);
-
-        static::assertEquals($expect, $this->sut->isSoleTrader());
-    }
-
-    public function dpTestIsSoleTrader()
-    {
-        return[
-            [
-                'type'=> RefData::ORG_TYPE_REGISTERED_COMPANY,
-                'expect'=> false,
-            ],
-            [
-                'type'=> RefData::ORG_TYPE_SOLE_TRADER,
-                'expect'=> true,
-            ],
-        ];
-    }
     /**
      * @dataProvider dpTestAlterFormForOrganisation
      */

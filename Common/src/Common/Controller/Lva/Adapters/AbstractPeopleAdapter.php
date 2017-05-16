@@ -130,9 +130,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     public function hasInforceLicences()
     {
-        $org = $this->getOrganisation();
-
-        return isset($org['hasInforceLicences']) && $org['hasInforceLicences'] === true;
+        return $this->data['hasInforceLicences'];
     }
 
     /**
@@ -142,11 +140,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     public function isExceptionalOrganisation()
     {
-        $types = [
-            \Common\RefData::ORG_TYPE_PARTNERSHIP => 1,
-            \Common\RefData::ORG_TYPE_SOLE_TRADER => 1,
-        ];
-        return isset($types[$this->getOrganisationType()]);
+        return $this->data['isExceptionalType'];
     }
 
     /**
@@ -186,7 +180,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     public function isSoleTrader()
     {
-        return $this->getOrganisationType() === \Common\RefData::ORG_TYPE_SOLE_TRADER;
+        return $this->data['isSoleTrader'];
     }
 
     public function hasMoreThanOneValidCurtailedOrSuspendedLicences()
@@ -563,7 +557,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     }
 
     /**
-     * Attache id value as key to persons array (data)
+     * Attach id value as key to persons array (data)
      *
      * @param string $key  Key ???
      * @param array  $data Array of persons
