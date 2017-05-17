@@ -32,8 +32,7 @@ class AddressesTest extends MockeryTestCase
         $this->formHelper
             ->shouldReceive('createForm')->once()->with('Lva\Addresses')->andReturn($form)
             ->shouldReceive('remove')->once()->with($form, 'establishment')->andReturnSelf()
-            ->shouldReceive('remove')->once()->with($form, 'establishment_address')
-            ->shouldReceive('remove')->once()->with($form, 'phoneContactsTable');
+            ->shouldReceive('remove')->once()->with($form, 'establishment_address');
 
         $this->assertEquals(
             $form,

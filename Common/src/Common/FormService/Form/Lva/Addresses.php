@@ -44,9 +44,6 @@ class Addresses extends AbstractFormService
     protected function alterForm(\Zend\Form\Form $form, array $params)
     {
         $this->removeEstablishment($form, $params['typeOfLicence']['licenceType']);
-
-        //  remove phone fields
-        $this->getFormHelper()->remove($form, 'phoneContactsTable');
     }
 
     /**

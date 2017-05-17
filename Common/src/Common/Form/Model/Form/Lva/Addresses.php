@@ -25,18 +25,8 @@ class Addresses
     public $correspondenceAddress = null;
 
     /**
-     * @Form\Name("phoneContactsTable")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     */
-    public $phoneContactsTable = null;
-
-    /**
      * @Form\Name("contact")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Contact")
-     * @Form\Options({
-     *     "label": "application_your-business_business-type.contact-details.label",
-     *     "hint": "application_your-business_business-type.contact-details.hint"
-     * })
      */
     public $contact = null;
 

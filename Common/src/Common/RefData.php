@@ -275,4 +275,7 @@ class RefData
     const AD_POST = 0;
     const AD_UPLOAD_NOW = 1;
     const AD_UPLOAD_LATER = 2;
+
+    const PHONE_TYPE_PRIMARY = 'phone_t_primary';
+    const PHONE_TYPE_SECONDARY = 'phone_t_secondary';
 }
