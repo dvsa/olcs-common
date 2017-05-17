@@ -73,6 +73,13 @@ class FormHelperService extends AbstractHelperService
         ];
         $form->add($config);
 
+        /**
+         * remove validator to prevent error duplication.
+         * Main CSRF check happens in @see \Common\Module::validateCsrfToken
+         */
+        $this->removeValidator($form, 'security', \Zend\Validator\Csrf::class);
+        $form->setInputFilter(new InputFilter());
+
         //  add button "Continue" element
         if ($addContinue) {
             $config = array(
