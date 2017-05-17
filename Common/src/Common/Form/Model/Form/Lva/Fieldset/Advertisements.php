@@ -14,7 +14,7 @@ class Advertisements
 {
     /**
      * @Form\Required(false)
-     * @Form\Attributes({"id":"adPlaced","placeholder":""})
+     * @Form\Attributes({"id":"adPlaced","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
      *     "error-message": "advertisements_adPlaced-error",
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
@@ -97,7 +97,7 @@ class Advertisements
 
     /**
      * @Form\Required(false)
-     * @Form\Attributes({"id":"adPlacedPost","placeholder":""})
+     * @Form\Attributes({"id":"adPlacedPost","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
      *     "error-message": "advertisements_adPlaced-error",
      *     "label_attributes": {"class": "form-control form-control--radio"},
@@ -115,7 +115,7 @@ class Advertisements
 
     /**
      * @Form\Required(false)
-     * @Form\Attributes({"id":"adPlacedLater","placeholder":""})
+     * @Form\Attributes({"id":"adPlacedLater","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
      *     "error-message": "advertisements_adPlaced-error",
      *     "label_attributes": {"class": "form-control form-control--radio"},
