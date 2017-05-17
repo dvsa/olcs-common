@@ -417,7 +417,7 @@ return [
     'application.your-business.sole-trader' => 'People',
     'application.vehicle.already-exist' => 'Vehicle already exists on this licence',
     'application.signature.options.label' => '<strong>How would you like to sign the declaration?</strong>',
-    'application.signature.options.verify' => '<strong>Sign online using GOV.UK Verify</strong>To use GOV.UK Verify you must be a UK resident with a valid passport.',
+    'application.signature.options.verify' => '<strong>Sign online using GOV.UK Verify</strong>If you haven’t used GOV.UK Verify before, it takes about 15 minutes to set up',
     'application.signature.options.sign' => '<strong>Print, sign and return</strong>You\'ll need to return the signed declaration to the Central Licensing Office',
     'application_business-details_allow-email.label' => 'How would you like to receive your correspondence?',
     'application_community_licence_total_community_licences' => 'Total community licences',
