@@ -11,7 +11,8 @@ use Zend\Form\Annotation as Form;
 class HoursOfWeekContent
 {
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -35,7 +36,8 @@ class HoursOfWeekContent
     public $hoursMon = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -59,7 +61,8 @@ class HoursOfWeekContent
     public $hoursTue = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -83,7 +86,8 @@ class HoursOfWeekContent
     public $hoursWed = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -107,7 +111,8 @@ class HoursOfWeekContent
     public $hoursThu = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -131,7 +136,8 @@ class HoursOfWeekContent
     public $hoursFri = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -155,7 +161,8 @@ class HoursOfWeekContent
     public $hoursSat = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"

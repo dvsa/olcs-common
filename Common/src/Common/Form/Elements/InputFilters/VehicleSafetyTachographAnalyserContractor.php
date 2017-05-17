@@ -1,7 +1,7 @@
 <?php
+
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorValidator;
 
 /**
@@ -9,10 +9,10 @@ use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorVal
  *
  * VehicleSafetyTachographAnalyserContractor
  */
-class VehicleSafetyTachographAnalyserContractor extends Text implements InputProviderInterface
+class VehicleSafetyTachographAnalyserContractor extends Text
 {
     protected $continueIfEmpty = true;
-    protected $allowEmpty = false;
+    protected $isAllowEmpty = false;
 
     /**
      * Get a list of validators

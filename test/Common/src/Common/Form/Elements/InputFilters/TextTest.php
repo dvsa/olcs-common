@@ -1,22 +1,17 @@
 <?php
 
-/**
- * Test Text InputFilter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters;
-use \Zend\Validator\StringLength;
 
 /**
- * Test Text InputFilter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @covers \Common\Form\Elements\InputFilters\Text
  */
 class TextTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var  InputFilters\Text */
+    private $filter;
+
     /**
      * test setup
      *
@@ -32,7 +27,7 @@ class TextTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $key key to extract
      *
-     * @return array
+     * @return mixed
      */
     protected function getSpecificationElement($key)
     {
@@ -77,10 +72,41 @@ class TextTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testSetMax()
+    public function testSetMinMax()
     {
-        $this->filter->setMax(10);
+        $this->filter
+            ->setMin(99)
+            ->setMax(888);
 
-        $this->assertEquals(10, $this->getSpecificationElement('validators')[1]['options']['max']);
+        $validators = $this->getSpecificationElement('validators');
+        $options = current($validators)['options'];
+
+        static::assertEquals(99, $options['min']);
+        static::assertEquals(888, $options['max']);
+    }
+
+    /**
+     * Test set max
+     *
+     * @return void
+     */
+    public function testIsAllowEmpty()
+    {
+        $this->filter
+            ->setMin(0)
+            ->setMax(0)
+            ->setAllowEmpty(true);
+
+        $validators = $this->getSpecificationElement('validators');
+
+        static::assertEquals(
+            [
+                'name' => \Zend\Validator\NotEmpty::class,
+                'options' => [
+                    'type' => \Zend\Validator\NotEmpty::PHP,
+                ],
+            ],
+            current($validators)
+        );
     }
 }

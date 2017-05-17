@@ -1,16 +1,13 @@
 <?php
 
-/**
- * Text Max 4000
- */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-
 /**
+ * @deprecated Not used anythere and must be removed as part of https://jira.i-env.net/browse/OLCS-15198
+ *
  * Text Max 4000
  */
-class TextMax4000 extends Textarea implements InputProviderInterface
+class TextMax4000 extends Textarea
 {
     protected $max = 4000;
 }

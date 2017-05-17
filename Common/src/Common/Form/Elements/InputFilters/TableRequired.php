@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Table Required
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Form\Elements\InputFilters;
 
 use Common\Form\Elements\Types\Table;
@@ -18,8 +12,8 @@ use Common\Service\Table\TableBuilder;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  *
- * @deprecated This is not used.  It seems like the only validator being used is
- *             Common/Form/Elements/Validators/TableRequiredValidator.php
+ * @deprecated Not used anythere and must be removed as part of https://jira.i-env.net/browse/OLCS-15198
+ * It seems like the only validator being used is Common/Form/Elements/Validators/TableRequiredValidator.php
  */
 class TableRequired extends Table implements InputProviderInterface
 {
