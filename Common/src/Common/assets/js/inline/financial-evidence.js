@@ -19,8 +19,8 @@ $(function() {
     cascade: false,
     rulesets: {
       "evidence": {
-        "selector:#files": willUpload,
-        "selector:#uploadedFileCount": willUpload, // show/hide the validation error as well
+        "#files": willUpload,
+        "#uploadedFileCount": willUpload, // show/hide the validation error as well
         ".send-by-post": willPost,
         ".upload-later": willUploadLater
       }

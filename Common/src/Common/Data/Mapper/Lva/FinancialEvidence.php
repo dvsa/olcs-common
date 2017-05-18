@@ -29,8 +29,7 @@ class FinancialEvidence implements MapperInterface
         $sendByPost = null;
 
         // switch / case do not distinguishes 0 and null so need to use this trick
-        switch (true)
-        {
+        switch (true) {
             case $data['financialEvidenceUploaded'] === RefData::AD_UPLOAD_NOW:
                 $uploadNow = RefData::AD_UPLOAD_NOW;
                 break;
@@ -70,22 +69,17 @@ class FinancialEvidence implements MapperInterface
         $uploadLater = null;
         $sendByPost = null;
 
-        // switch / case do not distinguishes 0 and null so need to use this trick
-        switch (true) {
-            case (int) $data['evidence']['uploadNow'] === RefData::AD_UPLOAD_NOW:
-                $uploadNow = RefData::AD_UPLOAD_NOW;
-                break;
-            case (int) $data['evidence']['uploadNow'] === RefData::AD_POST:
-                $sendByPost = RefData::AD_POST;
-                break;
-            case (int) $data['evidence']['uploadNow'] === RefData::AD_UPLOAD_LATER:
-                $uploadLater = RefData::AD_UPLOAD_LATER;
-                break;
-            default:
-                $uploadNow = RefData::AD_UPLOAD_NOW;
+        $postUploadNow = (int) $data['evidence']['uploadNow'];
+        if ($postUploadNow === RefData::AD_UPLOAD_NOW) {
+            $uploadNow = RefData::AD_UPLOAD_NOW;
+        } elseif ($postUploadNow === RefData::AD_POST) {
+            $sendByPost = RefData::AD_POST;
+        } elseif ($postUploadNow === RefData::AD_UPLOAD_LATER) {
+            $uploadLater = RefData::AD_UPLOAD_LATER;
         }
 
         $evidenceFieldset = array_merge(
+            $data['evidence'],
             [
                 'uploadNowRadio' => $uploadNow,
                 'uploadLaterRadio' => $uploadLater,
@@ -93,8 +87,7 @@ class FinancialEvidence implements MapperInterface
                 'uploadedFileCount' => isset($data['evidence']['files']['list'])
                     ? count(isset($data['evidence']['files']['list']))
                     : 0
-            ],
-            $data['evidence']
+            ]
         );
         $data['evidence'] = $evidenceFieldset;
 
