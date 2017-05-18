@@ -237,7 +237,7 @@ class FormHelperService extends AbstractHelperService
             $processed = false;
             $modified  = false;
 
-            // @TODO possible bug :: Variable $fieldset is introduced as a method parameter and overridden here
+            // @TODO possible bug :: Variable fieldset is introduced as a method parameter and overridden here
             foreach ($fieldset->getFieldsets() as $fieldset) {
                 if ($result = $this->processAddressLookupFieldset($fieldset, $data, $form)) {
                     $processed = true;
