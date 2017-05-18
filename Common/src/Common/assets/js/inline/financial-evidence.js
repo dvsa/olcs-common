@@ -12,7 +12,7 @@ $(function() {
   }
 
   function willPost() {
-    return !willUpload() && !willUploadLater();
+    return F.isChecked("evidence", "uploadNow", "0");
   }
 
   OLCS.cascadeForm({
@@ -20,10 +20,10 @@ $(function() {
     rulesets: {
       "evidence": {
         "selector:#files": willUpload,
-        "selector:#uploadedFileCount": willUpload // show/hide the validation error as well
-      },
-      "sendByPost": willPost,
-      "uploadLater": willUploadLater
+        "selector:#uploadedFileCount": willUpload, // show/hide the validation error as well
+        ".send-by-post": willPost,
+        ".upload-later": willUploadLater
+      }
     }
   });
 });

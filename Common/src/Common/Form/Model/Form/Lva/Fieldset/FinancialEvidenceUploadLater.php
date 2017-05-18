@@ -16,7 +16,11 @@ class FinancialEvidenceUploadLater
      *     "value": "markup-financial-evidence-upload-later",
      *     "class": "upload-later-message"
      * })
+     * @Form\Options({
+     *     "fieldset-attributes": {"class":"uploadLaterFieldset"}
+     * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     * @Form\Name("uploadLaterMessage")
      */
     public $message = null;
 }

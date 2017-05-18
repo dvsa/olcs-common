@@ -1,14 +1,10 @@
 <?php
 
-/**
- * Application Financial Evidence Adapter
- *
- * @author Dan Eggleston <dan@stolenegg.com>
- */
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Service\Data\CategoryDataService as Category;
 use Dvsa\Olcs\Transfer\Query\Application\FinancialEvidence;
+use Common\RefData;
 
 /**
  * Application Financial Evidence Adapter
@@ -17,7 +13,6 @@ use Dvsa\Olcs\Transfer\Query\Application\FinancialEvidence;
  */
 class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapter
 {
-
     protected $applicationData = null; // cache
 
     /**
@@ -26,18 +21,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      */
     public function getFormData($applicationId)
     {
-        $applicationData = $this->getData($applicationId);
-
-        $uploaded = $applicationData['financialEvidenceUploaded'];
-
-        return [
-            'id'       => $applicationId,
-            'version'  => $applicationData['version'],
-            'evidence' => [
-                // default to Y
-                'uploadNow' => is_null($uploaded) ? '1' : $uploaded,
-            ],
-        ];
+        return $this->getData($applicationId);
     }
 
     /**

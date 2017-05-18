@@ -5,6 +5,7 @@ namespace Common\Controller\Lva;
 use Common\View\Helper\ReturnToAddress;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateFinancialEvidence;
 use Dvsa\Olcs\Utils\Helper\ValueHelper;
+use Common\Data\Mapper\Lva\FinancialEvidence;
 
 /**
  * Abstract Financial Evidence Controller
@@ -30,13 +31,10 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         // get data
         if ($request->isPost()) {
-            $formData = (array)$request->getPost();
+            $formData = FinancialEvidence::mapFromPost((array)$request->getPost());
         } else {
-            $formData = $adapter->getFormData($id);
+            $formData = FinancialEvidence::mapFromResult($adapter->getFormData($id));
         }
-        $formData['evidence']['uploadedFileCount'] = isset($formData['evidence']['files']['list']) ?
-            count(isset($formData['evidence']['files']['list'])) :
-            0;
 
         // set up form
         /** @var \Common\Form\Form $form */
@@ -134,13 +132,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
      */
     protected function saveFinancialEvidence($formData)
     {
-        $dto = UpdateFinancialEvidence::create(
-            [
-                'id' => $this->getIdentifier(),
-                'version' => $formData['version'],
-                'financialEvidenceUploaded' => $formData['evidence']['uploadNow'],
-            ]
-        );
+        $dto = UpdateFinancialEvidence::create(FinancialEvidence::mapFromForm($formData));
 
         $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')->createCommand($dto);
 

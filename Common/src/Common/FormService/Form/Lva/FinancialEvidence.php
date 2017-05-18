@@ -34,6 +34,10 @@ class FinancialEvidence extends AbstractLvaFormService
      */
     protected function alterForm($form)
     {
+        $form->get('evidence')->get('uploadNowRadio')->setName('uploadNow');
+        $form->get('evidence')->get('uploadLaterRadio')->setName('uploadNow');
+        $form->get('evidence')->get('sendByPostRadio')->setName('uploadNow');
+        $this->getFormHelper()->remove($form, 'evidence->uploadNow');
         return $form;
     }
 }
