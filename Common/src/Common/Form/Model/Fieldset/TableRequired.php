@@ -21,15 +21,14 @@ class TableRequired
     public $rows = null;
 
     /**
-     * @Form\Required(false)
-     * @Form\Type("\Common\Form\Elements\Types\Table")
      * @Form\Options({"label":"row"})
+     * @Form\Type("\Common\Form\Elements\Types\Table")
      */
     public $table = null;
 
     /**
-     * @Form\Type("\Common\Form\Elements\InputFilters\NoRender")
      * @Form\Attributes({"value":""})
+     * @Form\Type("\Common\Form\Elements\InputFilters\NoRender")
      */
     public $action = null;
 

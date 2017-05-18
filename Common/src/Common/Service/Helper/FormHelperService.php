@@ -17,6 +17,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Validator\ValidatorChain;
 use Zend\View\Model\ViewModel;
+use Zend\Validator\ValidatorInterface;
 
 /**
  * @internal All validations to do with empty fields must be done as a validator
@@ -880,7 +881,7 @@ class FormHelperService extends AbstractHelperService
      * @param string                   $reference      Field Ref
      * @param string                   $validatorClass Validator Class
      *
-     * @return null
+     * @return null|ValidatorInterface
      */
     public function getValidator(FormInterface $form, $reference, $validatorClass)
     {
