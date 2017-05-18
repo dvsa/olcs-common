@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Common Goods Vehicles Filters Form
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
@@ -11,14 +16,9 @@ use Common\FormService\Form\AbstractFormService;
  */
 class CommonGoodsVehiclesFilters extends AbstractFormService
 {
-    /**
-     * Get Form
-     *
-     * @return \Zend\Form\FormInterface
-     */
     public function getForm()
     {
-        $form = $this->getFormHelper()->createForm('Lva\VehicleFilter');
+        $form = $this->getFormHelper()->createForm('Lva\VehicleFilter', false);
 
         // @NOTE Might as well hard code this list rather than generating it using range, array_combine and array_merge
         // everytime, as the values will never change

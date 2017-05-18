@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Common Goods Vehicles Filters Test
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
@@ -7,18 +12,19 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\CommonGoodsVehiclesFilters;
 
 /**
- * @covers \Common\FormService\Form\Lva\CommonGoodsVehiclesFilters
+ * Common Goods Vehicles Filters Test
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class CommonGoodsVehiclesFiltersTest extends MockeryTestCase
 {
-    /** @var  CommonGoodsVehiclesFilters */
     protected $sut;
-    /** @var  \Common\Service\Helper\FormHelperService | m\MockInterface */
+
     protected $formHelper;
 
     public function setUp()
     {
-        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
+        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
 
         $this->sut = new CommonGoodsVehiclesFilters();
         $this->sut->setFormHelper($this->formHelper);
@@ -31,7 +37,7 @@ class CommonGoodsVehiclesFiltersTest extends MockeryTestCase
 
         // Expectations
         $this->formHelper->shouldReceive('createForm')
-            ->with('Lva\VehicleFilter')
+            ->with('Lva\VehicleFilter', false)
             ->andReturn($mockForm);
 
         $options = [
