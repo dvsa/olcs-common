@@ -108,16 +108,13 @@ class OneOf extends AbstractValidator
     {
         $valid = false;
         foreach ($this->getFields() as $field) {
-            if ($this->getAllowZero()) {
-                if (isset($context[$field]) && $context[$field] !== '' && $context[$field] !== null) {
-                    $valid = true;
-                    break;
-                }
-            } else {
-                if (isset($context[$field]) && !empty($context[$field])) {
-                    $valid = true;
-                    break;
-                }
+            if (!isset($context[$field])) {
+                continue;
+            }
+            if ((!empty($context[$field])) || ($context[$field] == 0 && $this->getAllowZero())
+            ) {
+                $valid = true;
+                break;
             }
         }
 
