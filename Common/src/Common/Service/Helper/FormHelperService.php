@@ -33,6 +33,8 @@ class FormHelperService extends AbstractHelperService
     const ALTER_LABEL_APPEND = 1;
     const ALTER_LABEL_PREPEND = 2;
 
+    const CSRF_TIMEOUT = 3600;
+
     const MIN_COMPANY_NUMBER_LENGTH = 1;
     const MAX_COMPANY_NUMBER_LENGTH = 8;
 
@@ -54,30 +56,29 @@ class FormHelperService extends AbstractHelperService
             $class = $this->findForm($formName);
         }
 
-        $sm = $this->getServiceLocator();
-        $annotationBuilder = $sm->get('FormAnnotationBuilder');
-        $cfg = $sm->get('Config');
+        $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
 
         /** @var \Zend\Form\FormInterface $form */
         $form = $annotationBuilder->createForm($class);
 
-        //  add CSRF element
-        $config = [
-            'type' => \Zend\Form\Element\Csrf::class,
-            'name' => 'security',
-            'attributes' => [
-                'class' => 'js-csrf-token',
-            ],
-            'options' => [
-                'csrf_options' => [
-                    'messageTemplates' => array(
-                        'notSame' => 'csrf-message',
-                    ),
-                    'timeout' => $cfg['csrf']['timeout'],
-                ],
-            ],
-        ];
-        $form->add($config);
+        if ($addCsrf) {
+            $config = array(
+                'type' => 'Zend\Form\Element\Csrf',
+                'name' => 'security',
+                'attributes' => array(
+                    'class' => 'js-csrf-token',
+                ),
+                'options' => array(
+                    'csrf_options' => array(
+                        'messageTemplates' => array(
+                            'notSame' => 'csrf-message'
+                        ),
+                        'timeout' => self::CSRF_TIMEOUT
+                    )
+                )
+            );
+            $form->add($config);
+        }
 
         if ($addContinue) {
             $config = array(
