@@ -40,7 +40,9 @@ class FinancialEvidenceTest extends AbstractFormValidationTestCase
 
     public function testUploadNow()
     {
-        $this->assertFormElementRequired(['evidence', 'uploadNow'], true);
+        $this->assertFormElementIsRequired(['evidence', 'uploadNowRadio'], false);
+        $this->assertFormElementIsRequired(['evidence', 'uploadLaterRadio'], false);
+        $this->assertFormElementIsRequired(['evidence', 'sendByPostRadio'], false);
     }
 
     public function testUploadFileCount()
@@ -53,7 +55,7 @@ class FinancialEvidenceTest extends AbstractFormValidationTestCase
 
     public function testUploadMessage()
     {
-        $this->assertFormElementHtml(['sendByPost', 'message']);
+        $this->assertFormElementHtml(['evidence', 'sendByPost', 'message']);
     }
 
     public function testSaveAndContinue()
