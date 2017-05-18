@@ -16,15 +16,6 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     protected $applicationData = null; // cache
 
     /**
-     * @param int $applicationId
-     * @return array
-     */
-    public function getFormData($applicationId)
-    {
-        return $this->getData($applicationId);
-    }
-
-    /**
      * @param Common\Form\Form
      * @return void
      */

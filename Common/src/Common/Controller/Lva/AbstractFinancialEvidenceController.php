@@ -33,7 +33,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         if ($request->isPost()) {
             $formData = FinancialEvidence::mapFromPost((array)$request->getPost());
         } else {
-            $formData = FinancialEvidence::mapFromResult($adapter->getFormData($id));
+            $formData = FinancialEvidence::mapFromResult($adapter->getData($id));
         }
 
         // set up form
