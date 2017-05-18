@@ -1,16 +1,12 @@
 <?php
 
-/**
- * Operating Centre
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Zend\Form\Form;
+use Common\RefData;
 
 /**
  * Operating Centre
@@ -21,6 +17,16 @@ class OperatingCentre implements MapperInterface
 {
     public static function mapFromResult(array $data)
     {
+        $adPlaced = null;
+        $adPlacedPost = null;
+        $adPlacedLater = null;
+        if (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_UPLOAD_NOW) {
+            $adPlaced = RefData::AD_UPLOAD_NOW;
+        } elseif (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_POST) {
+            $adPlacedPost = RefData::AD_POST;
+        } elseif (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_UPLOAD_LATER) {
+            $adPlacedLater = RefData::AD_UPLOAD_LATER;
+        }
         $mappedData = [
             'version' => $data['version'],
             'data' => [
@@ -32,7 +38,9 @@ class OperatingCentre implements MapperInterface
             'operatingCentre' => $data['operatingCentre'],
             'address' => $data['operatingCentre']['address'],
             'advertisements' => [
-                'adPlaced' => $data['adPlaced'],
+                'adPlaced' => $adPlaced,
+                'adPlacedPost' => $adPlacedPost,
+                'adPlacedLater' => $adPlacedLater,
                 'adPlacedIn' => $data['adPlacedIn'],
                 'adPlacedDate' => $data['adPlacedDate']
             ]

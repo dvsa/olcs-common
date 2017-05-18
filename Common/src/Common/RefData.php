@@ -272,5 +272,7 @@ class RefData
     const ERR_NO_FEES = 'ERR_NO_FEES';
     const ERR_WAIT = 'ERR_WAIT';
 
+    const AD_POST = 0;
+    const AD_UPLOAD_NOW = 1;
     const AD_UPLOAD_LATER = 2;
 }

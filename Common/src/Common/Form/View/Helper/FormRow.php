@@ -122,7 +122,8 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
         $wrap = true;
 
         $type = $element->getAttribute('type');
-        if ($type === 'multi_checkbox' || $type === 'radio'
+        $allowWrap = $element->getAttribute('allowWrap');
+        if ($type === 'multi_checkbox' || ($type === 'radio' && !$allowWrap)
             || $element->getAttribute('id') === 'security') {
             $wrap = false;
         }

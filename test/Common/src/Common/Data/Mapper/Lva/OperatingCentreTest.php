@@ -12,6 +12,7 @@ use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Common\RefData;
 
 /**
  * Operating Centre Test
@@ -20,7 +21,10 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  */
 class OperatingCentreTest extends MockeryTestCase
 {
-    public function testMapFromResult()
+    /**
+     * @dataProvider adProvider
+     */
+    public function testMapFromResult($adPlaced, $adPlacedNow, $adPlacedPost, $adPlacedLater)
     {
         $result = [
             'version' => 1,
@@ -35,7 +39,7 @@ class OperatingCentreTest extends MockeryTestCase
                     'countryCode' => ['id' => 'GB']
                 ]
             ],
-            'adPlaced' => 'Y',
+            'adPlaced' => $adPlaced,
             'adPlacedIn' => 'Donny Star',
             'adPlacedDate' => '2015-01-01'
         ];
@@ -60,13 +64,24 @@ class OperatingCentreTest extends MockeryTestCase
                 'countryCode' => 'GB'
             ],
             'advertisements' => [
-                'adPlaced' => 'Y',
+                'adPlaced' => $adPlacedNow,
+                'adPlacedPost' => $adPlacedPost,
+                'adPlacedLater' => $adPlacedLater,
                 'adPlacedIn' => 'Donny Star',
                 'adPlacedDate' => '2015-01-01'
             ]
         ];
 
         $this->assertEquals($expected, OperatingCentre::mapFromResult($result));
+    }
+
+    public function adProvider()
+    {
+        return [
+            [RefData::AD_UPLOAD_NOW, RefData::AD_UPLOAD_NOW, null, null],
+            [RefData::AD_POST, null, RefData::AD_POST, null],
+            [RefData::AD_UPLOAD_LATER, null, null, RefData::AD_UPLOAD_LATER]
+        ];
     }
 
     public function testMapFromForm()
@@ -81,7 +96,7 @@ class OperatingCentreTest extends MockeryTestCase
                 'permission' => 'Y'
             ],
             'advertisements' => [
-                'adPlaced' => 'Y',
+                'adPlaced' => RefData::AD_UPLOAD_NOW,
                 'adPlacedIn' => 'Donny Star',
                 'adPlacedDate' => '2015-01-01'
             ]
@@ -94,7 +109,7 @@ class OperatingCentreTest extends MockeryTestCase
             'noOfTrailersRequired' => 11,
             'sufficientParking' => 'Y',
             'permission' => 'Y',
-            'adPlaced' => 'Y',
+            'adPlaced' => RefData::AD_UPLOAD_NOW,
             'adPlacedIn' => 'Donny Star',
             'adPlacedDate' => '2015-01-01'
         ];

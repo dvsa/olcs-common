@@ -26,6 +26,11 @@ class OneOf extends AbstractValidator
     protected $fields;
 
     /**
+     * @var
+     */
+    protected $allowZero;
+
+    /**
      * @param mixed $fields
      * @return $this
      */
@@ -44,6 +49,29 @@ class OneOf extends AbstractValidator
     }
 
     /**
+     * Set allowZero
+     *
+     * @param bool $allowZero allow zero
+     *
+     * @return $this
+     */
+    public function setAllowZero($allowZero)
+    {
+        $this->allowZero = $allowZero;
+        return $this;
+    }
+
+    /**
+     * Get allowZero
+     *
+     * @return bool
+     */
+    public function getAllowZero()
+    {
+        return $this->allowZero;
+    }
+
+    /**
      * @param array $options
      * @return \Zend\Validator\AbstractValidator
      */
@@ -51,6 +79,9 @@ class OneOf extends AbstractValidator
     {
         if (isset($options['fields'])) {
             $this->setFields($options['fields']);
+        }
+        if (isset($options['allowZero'])) {
+            $this->setAllowZero($options['allowZero']);
         }
 
         // provides an easier method to override the default message, which will be a common use case.
@@ -77,7 +108,11 @@ class OneOf extends AbstractValidator
     {
         $valid = false;
         foreach ($this->getFields() as $field) {
-            if (isset($context[$field]) && !empty($context[$field])) {
+            if (!isset($context[$field])) {
+                continue;
+            }
+            if ((!empty($context[$field])) || ($context[$field] == 0 && $this->getAllowZero())
+            ) {
                 $valid = true;
                 break;
             }
