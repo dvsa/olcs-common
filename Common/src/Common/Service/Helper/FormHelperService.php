@@ -40,12 +40,14 @@ class FormHelperService extends AbstractHelperService
     /**
      * Create a form
      *
-     * @param string $formName    Form Name
-     * @param bool   $addContinue Is need add Continue button
+     * @param string $formName
+     * @param bool $addCsrf
+     * @param bool $addContinue
      *
-     * @return FormInterface
+     * @return \Zend\Form\Form
+     * @throws \Exception
      */
-    public function createForm($formName, $addContinue = true)
+    public function createForm($formName, $addCsrf = true, $addContinue = true)
     {
         if (class_exists($formName)) {
             $class = $formName;
@@ -79,16 +81,16 @@ class FormHelperService extends AbstractHelperService
 
         if ($addContinue) {
             $config = array(
-                'type' => \Zend\Form\Element\Button::class,
+                'type' => '\Zend\Form\Element\Button',
                 'name' => 'form-actions[continue]',
                 'options' => array(
-                    'label' => 'Continue',
+                    'label' => 'Continue'
                 ),
                 'attributes' => array(
                     'type' => 'submit',
                     'class' => 'visually-hidden',
-                    'id' => 'hidden-continue',
-                ),
+                    'id' => 'hidden-continue'
+                )
             );
             $form->add($config);
         }
