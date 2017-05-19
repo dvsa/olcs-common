@@ -204,6 +204,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     private $translator;
 
+    /** @var  \Zend\Form\Element\Csrf */
+    private $elmCsrf;
+
     /**
      * @return \Zend\Mvc\I18n\Translator
      */
@@ -1090,6 +1093,15 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         if ((!isset($this->variables['within_form']) || $this->variables['within_form'] == false)
             && isset($this->settings['crud'])) {
+
+            $this->elmCsrf = new \Zend\Form\Element\Csrf(
+                'security',
+                [
+                    'csrf_options' => [
+                        'timeout' => $this->applicationConfig['csrf']['timeout'],
+                    ],
+                ]
+            );
 
             return $this->renderLayout('crud');
         }
@@ -2027,5 +2039,15 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $this->settings[$key] = $value;
         return $this;
+    }
+
+    /**
+     * Get Csrf Element
+     *
+     * @return \Zend\Form\Element\Csrf
+     */
+    public function getCsrfElement()
+    {
+        return $this->elmCsrf;
     }
 }

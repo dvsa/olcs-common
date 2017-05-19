@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Common Vehicles Search Test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
@@ -12,19 +7,18 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\CommonVehiclesSearch;
 
 /**
- * Common Vehicles Search Test
- *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @covers \Common\FormService\Form\Lva\CommonVehiclesSearch
  */
 class CommonVehiclesSearchTest extends MockeryTestCase
 {
+    /** @var CommonVehiclesSearch  */
     protected $sut;
-
+    /** @var  \Common\Service\Helper\FormHelperService | m\MockInterface */
     protected $formHelper;
 
     public function setUp()
     {
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
 
         $this->sut = new CommonVehiclesSearch();
         $this->sut->setFormHelper($this->formHelper);
