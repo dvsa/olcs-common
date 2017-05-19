@@ -7,6 +7,9 @@ use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Common\Form\Elements\Types\AttachFilesButton;
 use Common\Form\Elements\InputFilters\ActionButton;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
+use Common\Validator\OneOf;
+use Zend\Validator\NotEmpty;
+use Zend\Form\Element\Hidden;
 
 /**
  * Class OperatingCentreTest
@@ -227,6 +230,9 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
     public function testAdvertisementsUploadValidator()
     {
         $element = ['advertisements', 'uploadValidator'];
-        $this->assertFormElementType($element, \Zend\Form\Element\Hidden::class);
+        $this->assertFormElementType($element, Hidden::class);
+        $this->assertFormElementIsRequired(
+            $element, true, [OneOf::PROVIDE_ONE, NotEmpty::IS_EMPTY]
+        );
     }
 }
