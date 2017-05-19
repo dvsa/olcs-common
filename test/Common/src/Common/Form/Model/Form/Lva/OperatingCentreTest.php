@@ -168,6 +168,12 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
         $this->assertFormElementRequired($element, false);
     }
 
+    public function testAdvertisementsUploadLaterMessage()
+    {
+        $element = ['advertisements', 'adUploadLater'];
+        $this->assertFormElementHtml($element);
+    }
+
     public function testAdvertisementsMultiFileUploadControls()
     {
         $element = [ 'advertisements', 'file', 'file' ];
@@ -216,5 +222,11 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
     {
         $element = ['form-actions', 'cancel'];
         $this->assertFormElementActionButton($element);
+    }
+
+    public function testAdvertisementsUploadValidator()
+    {
+        $element = ['advertisements', 'uploadValidator'];
+        $this->assertFormElementType($element, \Zend\Form\Element\Hidden::class);
     }
 }
