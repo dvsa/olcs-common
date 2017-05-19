@@ -33,7 +33,7 @@ class Comment implements FormatterInterface
                 && is_numeric($column['maxlength'])
                 && strlen($data[$column['name']]) > $column['maxlength']
             ) {
-                $content = substr($data[$column['name']], 0, $column['maxlength']);
+                $content = mb_substr($data[$column['name']], 0, $column['maxlength']);
 
                 if (isset($column['append'])) {
                     $content .= $column['append'];
