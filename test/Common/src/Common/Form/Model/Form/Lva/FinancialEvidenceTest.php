@@ -90,4 +90,9 @@ class FinancialEvidenceTest extends AbstractFormValidationTestCase
         $element = ['version'];
         $this->assertFormElementHidden($element);
     }
+
+    public function testUploadLaterMessage()
+    {
+        $this->assertFormElementHtml(['evidence', 'uploadLater', 'uploadLaterMessage']);
+    }
 }
