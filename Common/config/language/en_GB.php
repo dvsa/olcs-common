@@ -3045,7 +3045,6 @@ return [
     'continuations.type-of-licence.type-of-licence' => 'Type of licence',
     'continuations.type-of-licence.gb' => 'Great Britain',
     'continuations.type-of-licence.ni' => 'Northern Ireland',
-    'selfserve.declaration.interim_fee' => '<p class="help__text">The fee for interim licence is <b>£%s</b></p>',
     'contact-number' => 'Contact number',
     'contact-number-optional' => 'Contact number (optional)',
     'secondary-contact-number-optional' => 'Secondary contact number (optional)',

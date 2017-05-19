@@ -174,14 +174,6 @@ class RefData
     const USER_TYPE_PARTNER = 'partner';
 
     /**
-     * Phone contact types
-     */
-    const TYPE_BUSINESS = 'phone_t_tel';
-    const TYPE_HOME = 'phone_t_home';
-    const TYPE_MOBILE = 'phone_t_mobile';
-    const TYPE_FAX = 'phone_t_fax';
-
-    /**
      * Operator CPID.
      */
     const OPERATOR_CPID_CENTRAL = 'op_cpid_central_government';
