@@ -19,9 +19,10 @@ class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
             \Dvsa\Olcs\Transfer\Query\Licence\TransportManagers::create(['id' => $licenceId])
         );
 
-        $data = $this->querySrv->send($query)->getResult();
-
-        return $this->mapResultForTable([], $data['tmLicences']);
+        $response = $this->querySrv->send($query);
+        return $response->isForbidden()
+            ? null
+            : $this->mapResultForTable([], $response->getResult()['tmLicences']);
     }
 
     public function delete(array $ids, $applicationId)

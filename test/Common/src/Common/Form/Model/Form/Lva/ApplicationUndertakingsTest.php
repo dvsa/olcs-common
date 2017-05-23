@@ -86,6 +86,11 @@ class ApplicationUndertakingsTest extends AbstractFormValidationTestCase
         $this->assertFormElementAllowEmpty($element, false, ['interim' => ['goodsApplicationInterim' => 'Y']]);
     }
 
+    public function testDeclarationsAndUndertakingsInterimInterimFee()
+    {
+        $this->assertFormElementHtml(['interim', 'interimFee']);
+    }
+
     public function testSaveAndContinue()
     {
         $element = ['form-actions', 'saveAndContinue'];

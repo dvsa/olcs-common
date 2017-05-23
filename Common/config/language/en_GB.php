@@ -863,6 +863,7 @@ return [
     'dashboard-table-variations-status' => 'Status',
     'dashboard-table-variations-submittedDate' => 'Submitted',
     'dashboard.tm-applications.table.EmptyMessage' => 'There are no open applications right now that you have been named as Transport Manager',
+    'dashboard.tm-applications.table.column.operator.title' => 'Operator name',
     'dashboard.tm-applications.table.column.app-no.title' => 'Application No.',
     'dashboard.tm-applications.table.column.lic-no.title' => 'Licence number',
     'dashboard.tm-applications.table.action.provide-details' => 'Provide details',

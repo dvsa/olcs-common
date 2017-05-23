@@ -42,6 +42,9 @@ abstract class AbstractTrailersController extends AbstractController
         $request = $this->getRequest();
 
         $response = $this->handleQuery(Trailers::create(['id' => $this->getIdentifier()]));
+        if ($response->isForbidden()) {
+            return $this->notFoundAction();
+        }
 
         $result = $response->getResult();
 

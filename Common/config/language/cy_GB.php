@@ -290,6 +290,7 @@ return [
     'dashboard-table-variations-licNo' => 'Rhif y drwydded',
     'dashboard-table-variations-status' => 'Statws',
     'dashboard-table-variations-submittedDate' => 'Cyflwynwyd',
+    'dashboard.tm-applications.table.column.operator.title' => 'Enw gweithredwr',
     'dashboard.tm-applications.table.column.app-no.title' => 'Rhif Cais',
     'dashboard.tm-applications.table.column.lic-no.title' => 'Rhif y drwydded',
     'dashboard.tm-applications.table.action.provide-details' => 'Darparu manylion',

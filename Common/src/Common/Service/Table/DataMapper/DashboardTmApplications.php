@@ -19,6 +19,7 @@ class DashboardTmApplications implements DataMapperInterface
      * Flatten data
      *
      * @param array $data from UserEntityService->getTransportManagerApplications
+     *
      * @return array
      */
     public function map(array $data)
@@ -31,6 +32,7 @@ class DashboardTmApplications implements DataMapperInterface
                 'licNo' => $tmApplication['application']['licence']['licNo'],
                 'applicationId' => $tmApplication['application']['id'],
                 'isVariation' => $tmApplication['application']['isVariation'],
+                'operatorName' => $tmApplication['application']['licence']['organisation']['name']
             ];
         };
 

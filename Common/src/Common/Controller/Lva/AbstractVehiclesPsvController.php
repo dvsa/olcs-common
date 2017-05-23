@@ -58,6 +58,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $request = $this->getRequest();
 
         $resultData = $this->fetchResultData();
+        if ($resultData === null) {
+            return $this->notFoundAction();
+        }
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -590,6 +593,9 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         $dtoData = $this->getFilters();
         $dtoData['id'] = $this->getIdentifier();
         $response = $this->handleQuery($dtoClass::create($dtoData));
+        if ($response->isForbidden()) {
+            return null;
+        }
         return $response->getResult();
     }
 

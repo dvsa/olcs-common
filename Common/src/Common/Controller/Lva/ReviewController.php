@@ -22,6 +22,9 @@ class ReviewController extends AbstractController implements Interfaces\AdapterA
     public function indexAction()
     {
         $response = $this->handleQuery(Review::create(['id' => $this->params('application')]));
+        if ($response->isForbidden()) {
+            return $this->notFoundAction();
+        }
         $data = $response->getResult();
 
         $view = new ViewModel(['content' => $data['markup']]);
