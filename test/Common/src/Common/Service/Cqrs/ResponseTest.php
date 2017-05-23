@@ -85,4 +85,10 @@ class ResponseTest extends MockeryTestCase
             ],
         ];
     }
+
+    public function testIsForbidden()
+    {
+        $this->mockHttpResp->shouldReceive('getStatusCode')->andReturn(403)->once()->getMock();
+        static::assertTrue($this->sut->isForbidden());
+    }
 }

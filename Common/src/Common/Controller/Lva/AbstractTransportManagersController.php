@@ -65,7 +65,11 @@ abstract class AbstractTransportManagersController extends AbstractController im
             ->getForm();
 
         $table = $this->getAdapter()->getTable('lva-transport-managers-'. $this->location .'-'. $this->lva);
-        $table->loadData($this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId()));
+        $tableData = $this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId());
+        if ($tableData === null) {
+            return $this->notFoundAction();
+        }
+        $table->loadData($tableData);
         $form->get('table')->get('table')->setTable($table);
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
 

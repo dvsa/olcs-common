@@ -73,7 +73,11 @@ abstract class AbstractDiscsController extends AbstractController
             return $this->completeSection('discs');
         }
 
-        $form = $this->getDiscsForm()->setData($data);
+        $form = $this->getDiscsForm();
+        if ($form === null) {
+            return $this->notFoundAction();
+        }
+        $form->setData($data);
 
         /** @var \Common\Service\Script\ScriptFactory $scriptSrv */
         $scriptSrv = $this->getServiceLocator()->get('Script');
@@ -209,7 +213,11 @@ abstract class AbstractDiscsController extends AbstractController
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
-        $formHelper->populateFormTable($form->get('table'), $this->getDiscsTable());
+        $discTable = $this->getDiscsTable();
+        if ($discTable === null) {
+            return null;
+        }
+        $formHelper->populateFormTable($form->get('table'), $discTable);
         $formHelper->setFormActionFromRequest($form, $this->getRequest());
 
         return $form;
@@ -225,9 +233,13 @@ abstract class AbstractDiscsController extends AbstractController
         $tableParams = $this->getFilters();
         $tableParams['query'] = $tableParams;
 
+        $tableData = $this->getTableData();
+        if ($tableData === null) {
+            return null;
+        }
         $table = $this->getServiceLocator()->get('Table')->prepareTable(
             'lva-psv-discs',
-            $this->getTableData(),
+            $tableData,
             $tableParams
         );
 
@@ -261,7 +273,11 @@ abstract class AbstractDiscsController extends AbstractController
             $data = $this->getFilters();
             $data['id'] = $this->getLicenceId();
 
-            $result = $this->handleQuery(PsvDiscs::create($data))->getResult();
+            $response = $this->handleQuery(PsvDiscs::create($data));
+            if ($response->isForbidden()) {
+                return null;
+            }
+            $result = $response->getResult();
             $data = $result['psvDiscs'];
             $this->spacesRemaining = $result['remainingSpacesPsv'];
 
