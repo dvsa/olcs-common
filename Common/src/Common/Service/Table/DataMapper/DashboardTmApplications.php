@@ -19,6 +19,7 @@ class DashboardTmApplications implements DataMapperInterface
      * Flatten data
      *
      * @param array $data from UserEntityService->getTransportManagerApplications
+     *
      * @return array
      */
     public function map(array $data)
