@@ -95,6 +95,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         $request = $this->getRequest();
 
         $headerData = $this->getHeaderData();
+        if ($headerData === null) {
+            return $this->notFoundAction();
+        }
 
         $formData = [];
 
@@ -226,6 +229,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
 
             /** @var \Common\Service\Cqrs\Response $response */
             $response = $this->handleQuery($dtoClass::create($dtoData));
+            if ($response->isForbidden()) {
+                return null;
+            }
 
             $this->headerData = $response->getResult();
         }

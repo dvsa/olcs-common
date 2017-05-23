@@ -38,6 +38,16 @@ class Response
     }
 
     /**
+     * Access to resource is not permitted
+     *
+     * @return bool
+     */
+    public function isForbidden()
+    {
+        return $this->getStatusCode() === \Zend\Http\Response::STATUS_CODE_403;
+    }
+
+    /**
      * Is not found
      * 
      * @return bool

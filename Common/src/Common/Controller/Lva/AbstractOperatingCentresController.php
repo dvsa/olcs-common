@@ -110,6 +110,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
     public function indexAction()
     {
         $resultData = $this->fetchOcData();
+        if ($resultData === null) {
+            return $this->notFoundAction();
+        }
 
         if ($resultData['requiresVariation']) {
             $this->getServiceLocator()->get('Lva\Variation')
@@ -613,7 +616,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $response = $this->handleQuery($queryDtoClass::create($params));
 
-        return $response->getResult();
+        return $response->isForbidden() ? null : $response->getResult();
     }
 
     /**
