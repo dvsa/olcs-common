@@ -310,13 +310,21 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
                 if (is_array($fieldsetAttributes)) {
                     $attributesString = ' ' . $this->createAttributesString($fieldsetAttributes);
                 }
-                $markup = sprintf(
-                    '<fieldset%s><legend%s>%s</legend>%s</fieldset>',
-                    $attributesString,
-                    $legendAttributesString,
-                    $label,
-                    $elementString
-                );
+                $singleRadio = $element->getOption('single-radio');
+                if ($singleRadio) {
+                    $markup = sprintf(
+                        '%s',
+                        $elementString
+                    );
+                } else {
+                    $markup = sprintf(
+                        '<fieldset%s><legend%s>%s</legend>%s</fieldset>',
+                        $attributesString,
+                        $legendAttributesString,
+                        $label,
+                        $elementString
+                    );
+                }
             } else {
                 if ($element->hasAttribute('id')
                     && ! ($element instanceof SingleCheckbox)

@@ -14,11 +14,11 @@ class FinancialEvidenceEvidence
      * @Form\Required(false)
      * @Form\Attributes({"id":"uploadNowRadio","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
-     *     "legend-attributes": {"class": "visually-hidden"},
      *     "label": "lva-financial-evidence-upload-now.label",
      *     "label_attributes": {"class": "form-control form-control--radio"},
      *     "value_options": {"1":"lva-financial-evidence-upload-now.yes"},
-     *     "error-message": "financialEvidence_uploadNow-error"
+     *     "error-message": "financialEvidence_uploadNow-error",
+     *     "single-radio": true
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
@@ -26,7 +26,7 @@ class FinancialEvidenceEvidence
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
-     * @Form\Attributes({"id":"files"})
+     * @Form\Attributes({"id":"files", "class":"help__text"})
      */
     public $files = null;
 
@@ -34,11 +34,11 @@ class FinancialEvidenceEvidence
      * @Form\Required(false)
      * @Form\Attributes({"id":"sendByPost","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
-     *     "legend-attributes": {"class": "visually-hidden"},
      *     "label": "lva-financial-evidence-upload-now.label",
      *     "label_attributes": {"class": "form-control form-control--radio"},
      *     "value_options": {"0":"lva-financial-evidence-upload-now.no"},
-     *     "error-message": "financialEvidence_uploadNow-error"
+     *     "error-message": "financialEvidence_uploadNow-error",
+     *     "single-radio": true
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
@@ -54,11 +54,11 @@ class FinancialEvidenceEvidence
      * @Form\Required(false)
      * @Form\Attributes({"id":"uploadLaterRadio","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
-     *     "legend-attributes": {"class": "visually-hidden",},
      *     "label": "lva-financial-evidence-upload-now.label",
      *     "label_attributes": {"class": "form-control form-control--radio"},
      *     "value_options": {"2":"lva-financial-evidence-upload-now.later"},
-     *     "error-message": "financialEvidence_uploadNow-error"
+     *     "error-message": "financialEvidence_uploadNow-error",
+     *     "single-radio": true
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
