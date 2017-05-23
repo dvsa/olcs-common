@@ -10,12 +10,19 @@ use Zend\Form\Annotation as Form;
 class TableRequiredTransportManager extends TableRequired
 {
     /**
-     * @Form\Options({"label":"row"})
-     * @Form\Type("\Common\Form\Elements\Types\Table")
+     * @Form\Required(true)
+     * @Form\Type("Hidden")
+     * @Form\Attributes({"value":""})
      * @Form\Validator({
      *     "name":"Common\Form\Elements\Validators\TableRequiredValidator",
      *     "options":{"label":"Transport Manager"}
      * })
+     */
+    public $rows = null;
+
+    /**
+     * @Form\Options({"label":"row"})
+     * @Form\Type("\Common\Form\Elements\Types\Table")
      */
     public $table = null;
 }
