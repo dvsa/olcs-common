@@ -45,8 +45,13 @@ class FinancialEvidenceEvidence
     public $sendByPostRadio = null;
 
     /**
-     * @Form\Name("sendByPost")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidencePost")
+     * @Form\Attributes({
+     *     "id":"sendByPost",
+     *     "data-container-class": "send-by-post",
+     *     "value": "markup-financial-evidence-send-by-post",
+     *     "class": "send-by-post"
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $sendByPost = null;
 
@@ -65,8 +70,14 @@ class FinancialEvidenceEvidence
     public $uploadLaterRadio = null;
 
     /**
-     * @Form\Name("uploadLater")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidenceUploadLater")
+     * @Form\Attributes({
+     *     "id":"uploadLaterMessage",
+     *     "data-container-class": "upload-later",
+     *     "value": "markup-financial-evidence-upload-later",
+     *     "class": "upload-later-message"
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     * @Form\Name("uploadLaterMessage")
      */
     public $uploadLater = null;
 
