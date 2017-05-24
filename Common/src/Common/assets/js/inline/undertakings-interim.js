@@ -5,10 +5,12 @@ $(function () {
     cascade: false,
     rulesets: {
       "interim": {
-        "label:applicationInterimReason": function () {
-          return OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
+        "#applicationInterimReason": function () {
+          var check = OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
+          $("#applicationInterimReason").parents('.validation-wrapper').toggle(check);
+          return check
         },
-        "selector:.interimFee": function () {
+        "#interimFee": function () {
           return OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
         },
       }
