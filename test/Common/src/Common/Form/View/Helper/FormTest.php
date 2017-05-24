@@ -172,6 +172,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
             ->shouldReceive('hasAttribute')->once()->with('keepEmptyFieldset')->andReturn(false)
             ->shouldReceive('count')->once()->andReturn(1)
             ->shouldReceive('getElements')->once()->with()->andReturn([$mockElm])
+            ->shouldReceive('has')->once()->with('rows')->andReturn(false)
             ->getMock();
 
         //  check Fieldset with Fieldse with usual element
@@ -184,6 +185,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
             ->shouldReceive('hasAttribute')->once()->with('keepEmptyFieldset')->andReturn(false)
             ->shouldReceive('count')->once()->andReturn(1)
             ->shouldReceive('getFieldsets')->once()->with()->andReturn([$mockSubFs])
+            ->shouldReceive('has')->once()->with('rows')->andReturn(false)
             ->getMock();
 
         //  check Fieldset with Hidden element
@@ -193,6 +195,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
             ->shouldReceive('getElements')->once()->with()->andReturn([$mockElmHidden])
             ->shouldReceive('setAttribute')->once()->with('class', 'hidden')
             ->shouldReceive('getFieldsets')->once()->with()->andReturn([])
+            ->shouldReceive('has')->once()->with('rows')->andReturn(false)
             ->getMock();
 
         $mockHelper = m::mock('Common\Form\View\Helper\FormCollection')

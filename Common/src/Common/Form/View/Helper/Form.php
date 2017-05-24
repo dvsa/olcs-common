@@ -2,6 +2,7 @@
 
 namespace Common\Form\View\Helper;
 
+use Common\Form\Elements\Types\Table;
 use Zend\Form\Element\Hidden;
 use Zend\Form\FormInterface as ZendFormInterface;
 use Zend\Form\FieldsetInterface;
@@ -64,6 +65,17 @@ class Form extends \Zend\Form\View\Helper\Form
 
                 if ($this->isAllChildsHidden($element) === true) {
                     $element->setAttribute('class', 'hidden');
+                }
+
+                // In relation to: OLCS-16809 and OLCS-16630.  Read comments.
+                // Not the best method, but the table element is treated as a fieldset.
+                // Now the validation is done, we manipulate where the messages are shown.
+                if ($element->has('rows')) {
+                   if ($element->get('rows')->getMessages()) {
+                       $errors = $element->get('rows')->getMessages();
+                       $element->get('rows')->setMessages([]);
+                       $element->get('table')->setMessages($errors);
+                   }
                 }
 
                 $fieldsets[] = $view->addTags(
