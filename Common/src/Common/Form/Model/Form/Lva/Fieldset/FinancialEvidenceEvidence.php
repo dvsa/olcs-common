@@ -72,7 +72,7 @@ class FinancialEvidenceEvidence
     /**
      * @Form\Attributes({
      *     "id":"uploadLaterMessage",
-     *     "data-container-class": "upload-later",
+     *     "data-container-class": "upload-later last",
      *     "value": "markup-financial-evidence-upload-later",
      *     "class": "upload-later-message"
      * })
