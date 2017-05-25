@@ -66,11 +66,14 @@ class Form extends \Zend\Form\View\Helper\Form
 
                 // In relation to: OLCS-16809 and OLCS-16630.  Read comments.
                 // Not the best method, but the table element is treated as a fieldset.
+                // So InputFilter does not set messages on isValid().
                 // Now the validation is done, we manipulate where the messages are shown.
-                if ($element->has('rows') && $element->get('rows')->getMessages()) {
-                    $errors = $element->get('rows')->getMessages();
-                    $element->get('rows')->setMessages([]);
-                    $element->get('table')->setMessages($errors);
+                if ($element->has('rows')) {
+                    if ($element->get('rows')->getMessages()) {
+                        $errors = $element->get('rows')->getMessages();
+                        $element->get('rows')->setMessages([]);
+                        $element->get('table')->setMessages($errors);
+                    }
                 }
 
                 $fieldsets[] = $view->addTags(
