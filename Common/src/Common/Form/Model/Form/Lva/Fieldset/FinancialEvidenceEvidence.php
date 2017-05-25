@@ -26,7 +26,7 @@ class FinancialEvidenceEvidence
 
     /**
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
-     * @Form\Attributes({"id":"files", "class":"help__text"})
+     * @Form\Attributes({"id":"files", "class":"help__text file-uploader"})
      */
     public $files = null;
 
