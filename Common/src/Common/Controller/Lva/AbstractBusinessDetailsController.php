@@ -6,8 +6,6 @@ use Common\Controller\Lva\Traits\CrudTableTrait;
 use Common\Data\Mapper\Lva\BusinessDetails as Mapper;
 use Common\Data\Mapper\Lva\CompanySubsidiary as CompanySubsidiaryMapper;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Dvsa\Olcs\Transfer\Command\Application\UpdateBusinessDetails as ApplicationUpdateBusinessDetails;
-use Dvsa\Olcs\Transfer\Command\Licence\UpdateBusinessDetails;
 use Dvsa\Olcs\Transfer\Query\CompanySubsidiary\CompanySubsidiary;
 use Dvsa\Olcs\Transfer\Query\Licence\BusinessDetails;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -102,7 +100,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             return $this->renderForm($form);
         }
 
-        if ($this->lva === 'licence') {
+        if ($this->lva === self::LVA_LIC) {
             $dtoData = [
                 'id' => $this->getLicenceId(),
                 'version' => $data['version'],
@@ -118,7 +116,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                     ? $data['allow-email']['allowEmail'] : null,
             ];
 
-            $response = $this->handleCommand(UpdateBusinessDetails::create($dtoData));
+            $response = $this->handleCommand(TransferCmd\Licence\UpdateBusinessDetails::create($dtoData));
         } else {
             $dtoData = [
                 'id' => $this->getIdentifier(),
@@ -134,7 +132,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 'partial' => $crudAction !== null
             ];
 
-            $response = $this->handleCommand(ApplicationUpdateBusinessDetails::create($dtoData));
+            $response = $this->handleCommand(TransferCmd\Application\UpdateBusinessDetails::create($dtoData));
         }
 
         if (!$response->isOk()) {
@@ -263,7 +261,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $entity = ($this->lva === 'licence' ? 'licence' : 'application');
+            $entity = ($this->lva === self::LVA_LIC ? 'licence' : 'application');
 
             $query = CompanySubsidiary::create(['id' => $id, $entity => $this->getIdentifier()]);
 
@@ -302,7 +300,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             }
 
             /** @var QueryInterface $dtoClass */
-            if ($this->lva === 'licence') {
+            if ($this->lva === self::LVA_LIC) {
                 $dtoData['licence'] = $this->getIdentifier();
 
                 if ($isCreate) {
@@ -361,7 +359,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         ];
 
         /** @var QueryInterface $dtoClass */
-        if ($this->lva === 'licence') {
+        if ($this->lva === self::LVA_LIC) {
             $dtoClass = TransferCmd\Licence\DeleteCompanySubsidiary::class;
         } else {
             $dtoClass = TransferCmd\Application\DeleteCompanySubsidiary::class;

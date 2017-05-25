@@ -4,8 +4,8 @@ namespace Common\Controller\Lva;
 
 use Common\Controller\Traits\GenericUpload;
 use Common\Exception\ResourceConflictException;
-use Common\Util;
 use Common\RefData;
+use Common\Util;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence;
 use Zend\Form\Form;
@@ -37,7 +37,7 @@ abstract class AbstractController extends AbstractActionController
     const LVA_VAR = 'variation';
 
     const LOC_INTERNAL = 'internal';
-    const LOC_EXT = 'external';
+    const LOC_EXTERNAL = 'external';
 
     use Util\FlashMessengerTrait,
         GenericUpload;
@@ -369,7 +369,7 @@ abstract class AbstractController extends AbstractActionController
 
     protected function getLvaEntityService()
     {
-        if ($this->lva === 'variation') {
+        if ($this->lva === self::LVA_VAR) {
             $service = 'Application';
         } else {
             $service = ucwords($this->lva);
@@ -385,7 +385,7 @@ abstract class AbstractController extends AbstractActionController
 
     protected function getIdentifierIndex()
     {
-        if ($this->lva === 'licence') {
+        if ($this->lva === self::LVA_LIC) {
             return 'licence';
         }
 
@@ -406,7 +406,7 @@ abstract class AbstractController extends AbstractActionController
 
     protected function isExternal()
     {
-        return $this->location === 'external';
+        return $this->location === self::LOC_EXTERNAL;
     }
 
     /**
