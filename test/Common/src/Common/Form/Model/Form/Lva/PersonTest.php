@@ -61,6 +61,7 @@ class PersonTest extends AbstractFormValidationTestCase
     public function testDateOfBirth()
     {
         $element = ['data', 'birthDate'];
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementNotValid(
             $element,
             [
@@ -70,7 +71,6 @@ class PersonTest extends AbstractFormValidationTestCase
             ],
             [ \Common\Form\Elements\Validators\DateNotInFuture::IN_FUTURE ]
         );
-        $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDate($element);
     }
 

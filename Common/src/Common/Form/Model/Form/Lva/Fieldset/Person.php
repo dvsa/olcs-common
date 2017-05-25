@@ -82,6 +82,7 @@ class Person
     public $position = null;
 
     /**
+     * @Form\Required(true)
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
      *     "label": "dob",
@@ -91,7 +92,8 @@ class Person
      *     "fieldset-attributes": {"id":"dob_day"}
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name": "DateSelectNullifier"})
+     * @Form\Filter({"name":"DateSelect", "options":{"null_on_empty":true}})
+     * @Form\Validator({"name":"NotEmpty", "options": {"array"}})
      * @Form\Validator({"name": "\Common\Validator\Date"})
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      * @Form\Validator({"name":"\Common\Form\Elements\Validators\DateNotInFuture"})
