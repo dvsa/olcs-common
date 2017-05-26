@@ -4,6 +4,7 @@ namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Common\Form\Elements\Types\TrafficAreaSet;
+use Zend\Validator\Digits;
 
 /**
  * Class OperatingCentresTest
@@ -37,21 +38,21 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
     {
         $element = [ 'dataTrafficArea', 'trafficArea' ];
         $this->assertFormElementType($element, \Zend\Form\Element\Select::class);
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
     }
 
     public function testTrafficAreaSet()
     {
         $element = [ 'dataTrafficArea', 'trafficAreaSet' ];
         $this->assertFormElementType($element, TrafficAreaSet::class);
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
     }
 
     public function testTrafficAreaEnforcementAreaSelect()
     {
         $element = [ 'dataTrafficArea', 'enforcementArea' ];
         $this->assertFormElementType($element, \Zend\Form\Element\Select::class);
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
     }
 
     public function testVersion()
@@ -63,13 +64,25 @@ class OperatingCentresTest extends AbstractFormValidationTestCase
     public function testTotalAuthVehicles()
     {
         $element = [ 'data', 'totAuthVehicles' ];
-        $this->assertFormElementNumber($element, 1, 1000000, [ \Zend\Validator\Between::NOT_BETWEEN ]);
+        $this->assertFormElementIsRequired($element, true);
+        $this->assertFormElementNumber(
+            $element,
+            1,
+            1000000,
+            [ \Zend\Validator\Between::NOT_BETWEEN ]
+        );
     }
 
     public function testTotalAuthTrailers()
     {
         $element = [ 'data', 'totAuthTrailers' ];
-        $this->assertFormElementNumber($element, 0, 1000000, [ \Zend\Validator\Between::NOT_BETWEEN ]);
+        $this->assertFormElementIsRequired($element, true);
+        $this->assertFormElementNumber(
+            $element,
+            0,
+            1000000,
+            [ \Zend\Validator\Between::NOT_BETWEEN ]
+        );
     }
 
     public function testTotalCommunityLicences()
