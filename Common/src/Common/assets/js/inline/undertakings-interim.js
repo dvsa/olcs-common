@@ -10,9 +10,12 @@ $(function () {
           $("#applicationInterimReason").parents('.validation-wrapper').toggle(check);
           return check
         },
-        "#interimFee": function () {
+        ".interimFee": function () {
           return OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
         },
+        "#application-interim-reason": function(){
+          return OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
+        }
       }
     }
   });
