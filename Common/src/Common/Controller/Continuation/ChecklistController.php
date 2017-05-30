@@ -2,8 +2,10 @@
 
 namespace Common\Controller\Continuation;
 
-use Common\Form\Model\Form\Continuation\Start;
+use Common\Form\Model\Form\Continuation\LicenceChecklist as LicenceChecklistForm;
 use Zend\View\Model\ViewModel;
+use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist as LicenceChecklistQuery;
+use Common\Data\Mapper\LicenceChecklist as LicenceChecklistMapper;
 
 /**
  * ChecklistController
@@ -17,9 +19,12 @@ class ChecklistController extends AbstractContinuationController
      */
     public function indexAction()
     {
-        $continuationDetailId = $this->getContinuationDetailId();
-        // @todo Create new form
-        $form = $this->getForm(Start::class);
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $licenceData = $this->getLicenceData(
+            $this->getContinuationDetailId()
+        );
+
+        $form = $this->getForm(LicenceChecklistForm::class);
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
@@ -28,6 +33,31 @@ class ChecklistController extends AbstractContinuationController
             }
         }
 
-        return $this->getViewModel('[THIS IS THE LIC NO]', $form);
+
+        return $this->getViewModel(
+            $licenceData['licNo'],
+            $form,
+            LicenceChecklistMapper::mapFromResultToView($licenceData, $translator)
+        );
+    }
+
+    /**
+     * Get licence data
+     *
+     * @param int $continuationDetailId continuation detail id
+     *
+     * @return array
+     */
+    protected function getLicenceData($continuationDetailId)
+    {
+        $dto = LicenceChecklistQuery::create(['id' => $continuationDetailId]);
+        $response = $this->handleQuery($dto);
+        if (!$response->isOk()) {
+            // currently we assume that all server errors will be handled in one place
+            // so we always should have data here.
+            // just display and error in case of any client error
+            $this->addErrorMessage('unknown-error');
+        }
+        return $response->getResult()['licence'];
     }
 }

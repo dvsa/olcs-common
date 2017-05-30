@@ -14,18 +14,16 @@ abstract class AbstractContinuationController extends AbstractController
     /**
      * Get the ViewModel used for continuations
      *
-     * @param string    $licNo Licence number eg OB1234567
-     * @param Form|null $form  Form to display on the page
+     * @param string    $licNo     Licence number eg OB1234567
+     * @param Form|null $form      Form to display on the page
+     * @param array     $variables additional variables to view
      *
      * @return ViewModel
      */
-    protected function getViewModel($licNo, Form $form = null)
+    protected function getViewModel($licNo, Form $form = null, $variables = [])
     {
         $view = new ViewModel(
-            [
-                'licNo' => $licNo,
-                'form' => $form,
-            ]
+            array_merge(['licNo' => $licNo, 'form' => $form], $variables)
         );
 
         $view->setTemplate('pages/continuation');
