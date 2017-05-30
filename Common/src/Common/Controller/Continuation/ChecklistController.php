@@ -33,7 +33,6 @@ class ChecklistController extends AbstractContinuationController
             }
         }
 
-
         return $this->getViewModel(
             $licenceData['licNo'],
             $form,
