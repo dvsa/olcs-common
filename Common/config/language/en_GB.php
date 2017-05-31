@@ -3031,6 +3031,12 @@ return [
     'pagination.results-per-page' => 'results per page',
     'pagination.next' => 'Next',
     'pagination.previous' => 'Previous',
-    'selfserve.declaration.interim_fee' => '<p class="help__text">The fee for interim licence is <b>£%s</b></p>'
+    'selfserve.declaration.interim_fee' => '<p class="help__text">The fee for interim licence is <b>£%s</b></p>',
+    'continuations.type-of-licence-checkbox.label' => 'Type of licence',
+    'continuations.type-of-licence.operating-from' => 'Operating from',
+    'continuations.type-of-licence.type-of-operator' => 'Type of operator',
+    'continuations.type-of-licence.type-of-licence' => 'Type of licence',
+    'continuations.type-of-licence.gb' => 'Great Britain',
+    'continuations.type-of-licence.ni' => 'Northern Ireland',
     // Potentially unused translations
 ];

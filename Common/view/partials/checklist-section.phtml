@@ -1,0 +1,20 @@
+<table class="continuations-data">
+    <tbody>
+        <?php
+            foreach ($this->data as $line) {
+                echo '<tr>';
+                foreach ($line as $cell) {
+                    if (isset($cell['header']) && $cell['header']) {
+                        $openTag = '<th>';
+                        $closeTag = '</th>';
+                    } else {
+                        $openTag = '<td>';
+                        $closeTag = '</td>';
+                    }
+                    echo $openTag . $cell['value'] . $closeTag;
+                }
+                echo '</tr>';
+            }
+        ?>
+    </tbody>
+</table>
