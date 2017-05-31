@@ -121,10 +121,13 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         $adapter = $this->getAdapter();
 
-        /** @var \Zend\Http\Request $request */
-        $request = $this->getRequest();
         /** @var array $personData */
         $personData = $adapter->getFirstPersonData();
+
+        $orgId = $adapter->getOrganisationId();
+
+        /** @var \Zend\Http\Request $request */
+        $request = $this->getRequest();
         if ($request->isPost()) {
             $data = (array) $request->getPost();
         } else {
@@ -147,7 +150,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
             $params['disqualifyUrl'] = $this->url()->fromRoute(
                 'operator/disqualify_person',
-                ['organisation' => $adapter->getOrganisationId(), 'person' => $personId]
+                ['organisation' => $orgId, 'person' => $personId]
             );
             $params['isDisqualified'] = $this->isPersonDisqualified($personData);
             $params['personId'] = $personId;
@@ -188,14 +191,18 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     {
         $this->updateCompletion();
 
-        $id = $this->getIdentifier();
-        $isLicence = ($this->lva === self::LVA_LIC);
+        //  update organisation name
+        /* @var $adapter Adapters\AbstractPeopleAdapter */
+        $adapter = $this->getAdapter();
+        if (!$adapter->isSoleTrader() && !$adapter->isPartnership()) {
+            return;
+        }
 
         $this->handleCommand(
             TransferCmd\Organisation\GenerateName::create(
                 [
-                    'application' => (!$isLicence ? $id : null),
-                    'licence' => ($isLicence ? $id : null),
+                    'organisation' => $adapter->getOrganisationId(),
+                    'application' => ($this->lva === self::LVA_APP ? $this->getIdentifier() : null),
                 ]
             )
         );
@@ -507,20 +514,25 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      * Mechanism to *actually* delete a person, invoked by the
      * underlying delete action
      *
-     * @return void
+     * @return null|\Zend\Http\Response
      */
     protected function delete()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         $adapter = $this->getAdapter();
+
         $adapter->loadPeopleData($this->lva, $this->getIdentifier());
         if (!$adapter->canModify()) {
             return $this->redirectWithoutPermission();
         }
-        $id = $this->params('child_id');
-        $ids = explode(',', $id);
 
-        $adapter->delete($ids);
+        $adapter->delete(
+            explode(',', $this->params('child_id'))
+        );
+
+        $this->postSaveCommands();
+
+        return null;
     }
 
     /**
