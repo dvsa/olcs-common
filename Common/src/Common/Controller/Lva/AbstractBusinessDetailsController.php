@@ -371,6 +371,16 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     }
 
     /**
+     * Get delete modal title
+     *
+     * @return string
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-company-subsidiary';
+    }
+
+    /**
      * Map errors
      *
      * @param Form  $form   Form

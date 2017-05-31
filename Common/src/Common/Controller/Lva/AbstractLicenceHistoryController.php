@@ -134,6 +134,16 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return false;
     }
 
+    /**
+     * Get delete modal title
+     *
+     * @return string
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-other-licence';
+    }
+
     protected function saveLicenceHistory($form, $data, $inProgress)
     {
         $data = $this->formatDataForSave($data);

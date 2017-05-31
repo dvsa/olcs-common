@@ -206,6 +206,16 @@ abstract class AbstractTrailersController extends AbstractController
     }
 
     /**
+     * Get delete modal title
+     *
+     * @return string
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-trailers';
+    }
+
+    /**
      * Prepare and return the form with the form data.
      *
      * @param array $tableData Table data

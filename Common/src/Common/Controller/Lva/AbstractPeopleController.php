@@ -524,6 +524,16 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     }
 
     /**
+     * Get delete modal title
+     *
+     * @return string
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-person';
+    }
+
+    /**
      * Redirect users who don't have permission
      *
      * @return \Zend\Http\Response

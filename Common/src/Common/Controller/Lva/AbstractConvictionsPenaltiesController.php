@@ -207,6 +207,16 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         $this->handleCommand($dto);
     }
 
+    /**
+     * Get delete modal title
+     *
+     * @return string
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-conviction-penalty';
+    }
+
     protected function getPreviousConvictionForm()
     {
         return $this->getServiceLocator()

@@ -551,16 +551,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
     }
 
     /**
-     * Delete message text key
-     *
-     * @return string
-     */
-    protected function getDeleteMessage()
-    {
-        return 'lva.section.operating_centres_delete';
-    }
-
-    /**
      * Delete message title key
      *
      * @return string
