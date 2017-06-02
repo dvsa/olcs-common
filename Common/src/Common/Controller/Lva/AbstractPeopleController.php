@@ -108,7 +108,10 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud-delta', 'more-actions']);
 
-        return $this->render('people', $form);
+        $variables = [
+            'title' => $this->getPageTitle($this->getAdapter()->getOrganisationType()),
+        ];
+        return $this->render('people', $form, $variables);
     }
 
     /**
@@ -243,6 +246,38 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     }
 
     /**
+     * Get the page title
+     *
+     * @param string $organisationTypeId Organisation type refdata ID
+     *
+     * @return string
+     */
+    private function getPageTitle($organisationTypeId)
+    {
+        $pageTitle = 'selfserve-app-subSection-your-business-people-tableHeader';
+
+        switch ($organisationTypeId) {
+            case RefData::ORG_TYPE_REGISTERED_COMPANY:
+                $pageTitle .= 'Directors';
+                break;
+
+            case RefData::ORG_TYPE_LLP:
+                $pageTitle .= 'PartnersMembers';
+                break;
+
+            case RefData::ORG_TYPE_PARTNERSHIP:
+                $pageTitle .= 'Partners';
+                break;
+
+            case RefData::ORG_TYPE_OTHER:
+                $pageTitle .= 'People';
+                break;
+        }
+
+        return $pageTitle;
+    }
+
+    /**
      * Alter form based on company type
      *
      * @param Form                               $form               form
@@ -254,34 +289,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     private function alterForm($form, \Common\Service\Table\TableBuilder $table, $organisationTypeId)
     {
         $this->alterFormForLva($form);
-
-        $tableHeader = 'selfserve-app-subSection-your-business-people-tableHeader';
-
-        switch ($organisationTypeId) {
-            case RefData::ORG_TYPE_REGISTERED_COMPANY:
-                $tableHeader .= 'Directors';
-
-                //for selfserve we don't show the header for directors
-                if ($this->location === 'external') {
-                    $tableHeader = '';
-                }
-                break;
-
-            case RefData::ORG_TYPE_LLP:
-                $tableHeader .= 'PartnersMembers';
-                break;
-
-            case RefData::ORG_TYPE_PARTNERSHIP:
-                $tableHeader .= 'Partners';
-                break;
-
-            case RefData::ORG_TYPE_OTHER:
-                $tableHeader .= 'People';
-                break;
-
-            default:
-                break;
-        }
 
         // if not on internal then remove the disqual column
         if ($this->location !== self::LOC_INTERNAL) {
@@ -296,11 +303,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         if ($this->isExternal() && $this->lva === self::LVA_LIC && $table->getTotal() == 0) {
             $form->remove('table');
         }
-
-        $table->setVariable(
-            'title',
-            $this->getServiceLocator()->get('translator')->translate($tableHeader)
-        );
     }
 
     /**
