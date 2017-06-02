@@ -11,10 +11,8 @@ use Dvsa\Olcs\Api\Entity;
 class Addresses implements MapperInterface
 {
     protected static $typeMap = array(
-        'phone_t_tel' => 'phone_business',
-        'phone_t_home' => 'phone_home',
-        'phone_t_mobile' => 'phone_mobile',
-        'phone_t_fax' => 'phone_fax',
+        'phone_t_primary' => 'phone_primary',
+        'phone_t_secondary' => 'phone_secondary',
     );
 
     /**

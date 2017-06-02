@@ -174,14 +174,6 @@ class RefData
     const USER_TYPE_PARTNER = 'partner';
 
     /**
-     * Phone contact types
-     */
-    const TYPE_BUSINESS = 'phone_t_tel';
-    const TYPE_HOME = 'phone_t_home';
-    const TYPE_MOBILE = 'phone_t_mobile';
-    const TYPE_FAX = 'phone_t_fax';
-
-    /**
      * Operator CPID.
      */
     const OPERATOR_CPID_CENTRAL = 'op_cpid_central_government';
@@ -275,4 +267,7 @@ class RefData
     const AD_POST = 0;
     const AD_UPLOAD_NOW = 1;
     const AD_UPLOAD_LATER = 2;
+
+    const PHONE_TYPE_PRIMARY = 'phone_t_primary';
+    const PHONE_TYPE_SECONDARY = 'phone_t_secondary';
 }
