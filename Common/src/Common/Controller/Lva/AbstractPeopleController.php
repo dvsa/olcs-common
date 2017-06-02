@@ -87,6 +87,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
                 return $this->handleCrudAction($crudAction);
             }
 
+            $this->updateCompletion();
+
             return $this->completeSection('people');
         }
 
