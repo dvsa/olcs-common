@@ -259,7 +259,7 @@ class AddressesTest extends AbstractFormValidationTestCase
     public function testConsultantWrittenPermissionToEngage()
     {
         $element = ['consultant', 'writtenPermissionToEngage'];
-        $this->assertFormElementIsRequired($element, false);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementCheckbox($element);
     }
