@@ -16,7 +16,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     private $sut;
     /** @var  m\MockInterface */
     private $mockRequest;
-    /** @var  m\MockInterface */
+    /** @var  \Zend\Form\FormInterface | m\MockInterface */
     private $mockForm;
     /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
     private $mockSm;
@@ -600,5 +600,37 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
 
         $this->assertEquals(false, $this->sut->process());
+    }
+
+    /**
+     * Test upload big files. When post to big size then post and files are empty.
+     */
+    public function testProcessWithEmptyPostAndFiles()
+    {
+        $this->mockRequest
+            ->shouldReceive('isPost')->andReturn(true)
+            ->shouldReceive('getPost')->andReturn([])
+            ->shouldReceive('getFiles')->andReturn(null);
+
+        $this->mockForm
+            ->shouldReceive('setMessages')
+            ->once()
+            ->with(
+                [
+                    'my-file' => [
+                        '__messages__' => [FileUploadHelperService::FILE_UPLOAD_ERR_PREFIX . '1'],
+                    ],
+                ]
+            );
+
+        $this->sut
+            ->setSelector('my-file')
+            ->setServiceLocator($this->mockSm)
+            ->setUploadCallback(
+                function () {
+                }
+            );
+
+        static::assertEquals(false, $this->sut->process());
     }
 }
