@@ -31,7 +31,7 @@ class AddressesTest extends MockeryTestCase
                 'phoneContacts' => [
                     [
                         'phoneContactType' => [
-                            'id' => 'phone_t_tel',
+                            'id' => 'phone_t_primary',
                         ],
                         'phoneNumber' => 'unit_CdPhoneNr1',
                         'id' => 'unit_CdPhoneId1',
@@ -63,7 +63,7 @@ class AddressesTest extends MockeryTestCase
                 'phoneContacts' => [
                     [
                         'phoneContactType' => [
-                            'id' => 'phone_t_mobile',
+                            'id' => 'phone_t_primary',
                         ],
                         'phoneNumber' => 'unit_TrPhoneNr1',
                         'id' => 'unit_TrPhoneId1',
@@ -82,9 +82,9 @@ class AddressesTest extends MockeryTestCase
                 'fao' => 'unit_CdFao',
             ],
             'contact' => [
-                'phone_business' => 'unit_CdPhoneNr1',
-                'phone_business_id' => 'unit_CdPhoneId1',
-                'phone_business_version' => 'unit_CdPhoneVersion',
+                'phone_primary' => 'unit_CdPhoneNr1',
+                'phone_primary_id' => 'unit_CdPhoneId1',
+                'phone_primary_version' => 'unit_CdPhoneVersion',
                 'email' => 'unit_CdEmail',
             ],
             'correspondence_address' => [
@@ -112,9 +112,9 @@ class AddressesTest extends MockeryTestCase
                 ],
             ],
             'consultantContact' => [
-                'phone_mobile' => 'unit_TrPhoneNr1',
-                'phone_mobile_id' => 'unit_TrPhoneId1',
-                'phone_mobile_version' => 'unit_TrPhoneVersion',
+                'phone_primary' => 'unit_TrPhoneNr1',
+                'phone_primary_id' => 'unit_TrPhoneId1',
+                'phone_primary_version' => 'unit_TrPhoneVersion',
                 'email' => 'unit_TrEmail',
             ],
         ];
@@ -156,9 +156,9 @@ class AddressesTest extends MockeryTestCase
                     'countryCode' => 'unit_CdAdrCountryId',
                 ],
                 'contact' => [
-                    'phone_business' => 'unit_CdPhoneNr1',
-                    'phone_business_id' => 'unit_CdPhoneId1',
-                    'phone_business_version' => 'unit_CdPhoneVersion',
+                    'phone_primary' => 'unit_CdPhoneNr1',
+                    'phone_primary_id' => 'unit_CdPhoneId1',
+                    'phone_primary_version' => 'unit_CdPhoneVersion',
                     'email' => 'unit_CdEmail',
                 ],
                 'establishment' => [
@@ -181,9 +181,9 @@ class AddressesTest extends MockeryTestCase
                         ],
                     ],
                     'contact' => [
-                        'phone_mobile' => 'unit_TrPhoneNr1',
-                        'phone_mobile_id' => 'unit_TrPhoneId1',
-                        'phone_mobile_version' => 'unit_TrPhoneVersion',
+                        'phone_primary' => 'unit_TrPhoneNr1',
+                        'phone_primary_id' => 'unit_TrPhoneId1',
+                        'phone_primary_version' => 'unit_TrPhoneVersion',
                         'email' => 'unit_TrEmail',
                     ],
                 ],

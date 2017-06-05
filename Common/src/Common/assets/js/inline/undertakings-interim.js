@@ -5,12 +5,17 @@ $(function () {
     cascade: false,
     rulesets: {
       "interim": {
-        "label:applicationInterimReason": function () {
+        "#applicationInterimReason": function () {
+          var check = OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
+          $("#applicationInterimReason").parents('.validation-wrapper').toggle(check);
+          return check
+        },
+        ".interimFee": function () {
           return OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
         },
-        "selector:.interimFee": function () {
+        "#application-interim-reason": function(){
           return OLCS.formHelper.isChecked("interim", "goodsApplicationInterim");
-        },
+        }
       }
     }
   });

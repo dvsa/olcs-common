@@ -10,105 +10,46 @@ use Zend\Form\Annotation as Form;
 class ContactOptional
 {
     /**
-     * @Form\Attributes({"class":"medium"})
-     * @Form\Options({
-     *     "label": "Business telephone No."
-     * })
+     * @Form\Attributes({"class":"medium", "id":"tc_phone_primary"})
      * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
-     * @Form\Name("phone_business")
      */
-    public $phoneBusiness = null;
+    public $phone_primary = null;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
-     * @Form\Name("phone_business_id")
      */
-    public $phoneBusinessId = null;
+    public $phone_primary_id = null;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
-     * @Form\Name("phone_business_version")
      */
-    public $phoneBusinessVersion = null;
+    public $phone_primary_version = null;
 
     /**
-     * @Form\Attributes({"class":"medium"})
-     * @Form\Options({
-     *     "label": "Home telephone No."
-     * })
+     * @Form\Attributes({"class":"medium", "id":"tc_phone_secondary"})
+     * @Form\Options({"label": "secondary-contact-number-optional"})
      * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
-     * @Form\Name("phone_home")
      */
-    public $phoneHome = null;
+    public $phone_secondary = null;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
-     * @Form\Name("phone_home_id")
      */
-    public $phoneHomeId = null;
+    public $phone_secondary_id = null;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
-     * @Form\Name("phone_home_version")
      */
-    public $phoneHomeVersion = null;
-
-    /**
-     * @Form\Attributes({"class":"medium"})
-     * @Form\Options({
-     *     "label": "Mobile telephone No."
-     * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
-     * @Form\Name("phone_mobile")
-     */
-    public $phoneMobile = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     * @Form\Name("phone_mobile_id")
-     */
-    public $phoneMobileId = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     * @Form\Name("phone_mobile_version")
-     */
-    public $phoneMobileVersion = null;
-
-    /**
-     * @Form\Attributes({"class":"medium"})
-     * @Form\Options({
-     *     "label": "Fax telephone No. (optional)"
-     * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\Phone")
-     * @Form\Name("phone_fax")
-     */
-    public $phoneFax = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     * @Form\Name("phone_fax_id")
-     */
-    public $phoneFaxId = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     * @Form\Name("phone_fax_version")
-     */
-    public $phoneFaxVersion = null;
+    public $phone_secondary_version = null;
 
     /**
      * @Form\Attributes({"class":"long"})
      * @Form\Options({
-     *     "label": "email-address",
+     *     "label": "email-address-optional",
      *     "error-message": "contactOptional_email-error"
      * })
      * @Form\Required(false)

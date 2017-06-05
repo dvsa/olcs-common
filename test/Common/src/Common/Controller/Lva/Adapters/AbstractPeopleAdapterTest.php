@@ -77,6 +77,25 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         static::assertEquals('unit_EXPECT', $this->sut->isSoleTrader());
     }
 
+    public function testIsPartnership()
+    {
+        $this->mockResp->shouldReceive('getResult')
+            ->once()
+            ->andReturn(
+                [
+                    'organisation' => [
+                        'type' => [
+                            'id' => \Common\RefData::ORG_TYPE_PARTNERSHIP,
+                        ],
+                    ],
+                ]
+            );
+
+        $this->sut->loadPeopleData(AbstractController::LVA_LIC, self::LIC_ID);
+
+        static::assertTrue($this->sut->isPartnership());
+    }
+
     /**
      * @dataProvider dpTestAlterFormForOrganisation
      */

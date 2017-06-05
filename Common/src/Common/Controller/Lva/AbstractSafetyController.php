@@ -242,6 +242,16 @@ abstract class AbstractSafetyController extends AbstractController
     }
 
     /**
+     * Get delete modal title
+     *
+     * @return string
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-safety-inspector';
+    }
+
+    /**
      * Helper method as both add and edit pretty
      * much do the same thing
      *

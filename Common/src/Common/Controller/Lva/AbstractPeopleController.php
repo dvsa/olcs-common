@@ -5,6 +5,7 @@ namespace Common\Controller\Lva;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Form\Form;
 use Common\RefData;
+use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Zend\Mvc\MvcEvent;
 
 /**
@@ -56,7 +57,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             return $this->notFoundAction();
         }
 
-        if ($this->location === 'external') {
+        if ($this->location === self::LOC_EXTERNAL) {
             $this->addGuidanceMessage();
         }
 
@@ -85,7 +86,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             if ($crudAction !== null) {
                 return $this->handleCrudAction($crudAction);
             }
-            $this->postSaveCommands();
 
             return $this->completeSection('people');
         }
@@ -108,7 +108,10 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud-delta', 'more-actions']);
 
-        return $this->render('people', $form);
+        $variables = [
+            'title' => $this->getPageTitle($this->getAdapter()->getOrganisationType()),
+        ];
+        return $this->render('people', $form, $variables);
     }
 
     /**
@@ -121,10 +124,13 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         $adapter = $this->getAdapter();
 
-        /** @var \Zend\Http\Request $request */
-        $request = $this->getRequest();
         /** @var array $personData */
         $personData = $adapter->getFirstPersonData();
+
+        $orgId = $adapter->getOrganisationId();
+
+        /** @var \Zend\Http\Request $request */
+        $request = $this->getRequest();
         if ($request->isPost()) {
             $data = (array) $request->getPost();
         } else {
@@ -142,17 +148,18 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             'orgType' => $adapter->getOrganisationType()
         ];
 
-        if ($this->location === 'internal') {
+        if ($this->location === self::LOC_INTERNAL) {
             $personId = (isset($personData['person']['id'])) ? $personData['person']['id'] : null;
 
             $params['disqualifyUrl'] = $this->url()->fromRoute(
                 'operator/disqualify_person',
-                ['organisation' => $adapter->getOrganisationId(), 'person' => $personId]
+                ['organisation' => $orgId, 'person' => $personId]
             );
             $params['isDisqualified'] = $this->isPersonDisqualified($personData);
             $params['personId'] = $personId;
         }
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-sole_trader')
@@ -187,13 +194,21 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     {
         $this->updateCompletion();
 
-        if ($this->lva === 'application' && $this->location === 'external') {
-            $this->handleCommand(
-                \Dvsa\Olcs\Transfer\Command\Application\GenerateOrganisationName::create(
-                    ['id' => $this->getIdentifier()]
-                )
-            );
+        //  update organisation name
+        /* @var $adapter Adapters\AbstractPeopleAdapter */
+        $adapter = $this->getAdapter();
+        if (!$adapter->isSoleTrader() && !$adapter->isPartnership()) {
+            return;
         }
+
+        $this->handleCommand(
+            TransferCmd\Organisation\GenerateName::create(
+                [
+                    'organisation' => $adapter->getOrganisationId(),
+                    'application' => ($this->lva === self::LVA_APP ? $this->getIdentifier() : null),
+                ]
+            )
+        );
     }
 
     /**
@@ -203,7 +218,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     protected function updateCompletion()
     {
-        if ($this->lva != 'licence') {
+        if ($this->lva !== self::LVA_LIC) {
             $this->handleCommand(
                 \Dvsa\Olcs\Transfer\Command\Application\UpdateCompletion::create(
                     ['id' => $this->getIdentifier(), 'section' => 'people']
@@ -231,6 +246,38 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     }
 
     /**
+     * Get the page title
+     *
+     * @param string $organisationTypeId Organisation type refdata ID
+     *
+     * @return string
+     */
+    private function getPageTitle($organisationTypeId)
+    {
+        $pageTitle = 'selfserve-app-subSection-your-business-people-tableHeader';
+
+        switch ($organisationTypeId) {
+            case RefData::ORG_TYPE_REGISTERED_COMPANY:
+                $pageTitle .= 'Directors';
+                break;
+
+            case RefData::ORG_TYPE_LLP:
+                $pageTitle .= 'PartnersMembers';
+                break;
+
+            case RefData::ORG_TYPE_PARTNERSHIP:
+                $pageTitle .= 'Partners';
+                break;
+
+            case RefData::ORG_TYPE_OTHER:
+                $pageTitle .= 'People';
+                break;
+        }
+
+        return $pageTitle;
+    }
+
+    /**
      * Alter form based on company type
      *
      * @param Form                               $form               form
@@ -243,36 +290,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     {
         $this->alterFormForLva($form);
 
-        $tableHeader = 'selfserve-app-subSection-your-business-people-tableHeader';
-
-        switch ($organisationTypeId) {
-            case RefData::ORG_TYPE_REGISTERED_COMPANY:
-                $tableHeader .= 'Directors';
-
-                //for selfserve we don't show the header for directors
-                if ($this->location === 'external') {
-                    $tableHeader = '';
-                }
-                break;
-
-            case RefData::ORG_TYPE_LLP:
-                $tableHeader .= 'PartnersMembers';
-                break;
-
-            case RefData::ORG_TYPE_PARTNERSHIP:
-                $tableHeader .= 'Partners';
-                break;
-
-            case RefData::ORG_TYPE_OTHER:
-                $tableHeader .= 'People';
-                break;
-
-            default:
-                break;
-        }
-
         // if not on internal then remove the disqual column
-        if ($this->location !== 'internal') {
+        if ($this->location !== self::LOC_INTERNAL) {
             $table->removeColumn('disqual');
         }
 
@@ -281,14 +300,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $table->removeColumn('position');
         }
 
-        if ($this->isExternal() && $this->lva === 'licence' && $table->getTotal() == 0) {
+        if ($this->isExternal() && $this->lva === self::LVA_LIC && $table->getTotal() == 0) {
             $form->remove('table');
         }
-
-        $table->setVariable(
-            'title',
-            $this->getServiceLocator()->get('translator')->translate($tableHeader)
-        );
     }
 
     /**
@@ -318,7 +332,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $additionalGuidanceLabel = null;
         if (
-            $this->lva === 'variation'
+            $this->lva === self::LVA_VAR
             && $this->getAdapter()->hasMoreThanOneValidCurtailedOrSuspendedLicences()
         ) {
             $additionalGuidanceLabel = 'selfserve-app-subSection-your-business-people-guidanceAdditional';
@@ -332,7 +346,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
                 $this->getServiceLocator()->get('Helper\Guidance')->append($additionalGuidanceLabel);
             }
         } else {
-            if ($this->lva === 'licence' &&
+            if ($this->lva === self::LVA_LIC
+                &&
                 (
                     ($this->getAdapter()->isOrganisationLimited() &&
                         $this->getAdapter()->getLicenceType() !== \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED)
@@ -472,6 +487,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $data = $this->formatCrudDataForSave($form->getData());
 
             $this->savePerson($data);
+            $this->postSaveCommands();
 
             return $this->handlePostSave(null, false);
         }
@@ -500,20 +516,35 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      * Mechanism to *actually* delete a person, invoked by the
      * underlying delete action
      *
-     * @return void
+     * @return null|\Zend\Http\Response
      */
     protected function delete()
     {
         /* @var $adapter Adapters\AbstractPeopleAdapter */
         $adapter = $this->getAdapter();
+
         $adapter->loadPeopleData($this->lva, $this->getIdentifier());
         if (!$adapter->canModify()) {
             return $this->redirectWithoutPermission();
         }
-        $id = $this->params('child_id');
-        $ids = explode(',', $id);
 
-        $adapter->delete($ids);
+        $adapter->delete(
+            explode(',', $this->params('child_id'))
+        );
+
+        $this->postSaveCommands();
+
+        return null;
+    }
+
+    /**
+     * Get delete modal title
+     *
+     * @return string
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-person';
     }
 
     /**

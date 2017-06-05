@@ -183,6 +183,16 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->data['isSoleTrader'];
     }
 
+    /**
+     * Organisation is Partner Ship
+     *
+     * @return bool
+     */
+    public function isPartnership()
+    {
+        return $this->getOrganisationType() === \Common\RefData::ORG_TYPE_PARTNERSHIP;
+    }
+
     public function hasMoreThanOneValidCurtailedOrSuspendedLicences()
     {
         return $this->data['hasMoreThanOneValidCurtailedOrSuspendedLicences'];

@@ -58,11 +58,11 @@ class TypeOfLicence
      *      "label_attributes": {"class": "form-control form-control--radio"},
      *      "hint": "markup-typeOfLicence_licenceType-hint",
      *      "value_options": {
-     *          {"value": "ltyp_r", "label": "Restricted"},
-     *          "ltyp_sn": "Standard National",
-     *          "ltyp_si": "Standard International",
-     *          "ltyp_sr": "Special Restricted"
-     *      }
+     *          \Common\RefData::LICENCE_TYPE_RESTRICTED: "Restricted",
+     *          \Common\RefData::LICENCE_TYPE_STANDARD_NATIONAL: "Standard National",
+     *          \Common\RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL: "Standard International",
+     *          \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED: "Special Restricted",
+     *      },
      * })
      * @Form\Type("Radio")
      */

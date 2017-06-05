@@ -16,10 +16,8 @@ class OperatingCentres
     public $version = null;
 
     /**
-     * @Form\Type("Text")
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\AllowEmpty(true)
      * @Form\Required(true)
+     * @Form\Type("Text")
      * @Form\Attributes({"class":"short","id":"totAuthVehicles","required":false,"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthVehicles",
@@ -29,17 +27,15 @@ class OperatingCentres
      *     "hint": "markup-operating-centres-authorisation",
      *     "hint-position": "below"
      * })
-     * @Form\Validator({"name": "Digits"})
+     * @Form\Validator({"name": "Digits", "options": {"break_chain_on_failure": true}})
      * @Form\Validator({"name": "Between", "options": {"min":1, "max": 1000000}})
      * @Form\Filter({"name":"\Zend\Filter\Null", "options":{"type":"string"}})
      */
     public $totAuthVehicles = null;
 
     /**
-     * @Form\Type("Text")
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\AllowEmpty(true)
      * @Form\Required(true)
+     * @Form\Type("Text")
      * @Form\Attributes({"class":"short","id":"totAuthTrailers","required":false,"pattern":"\d*"})
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthTrailers",

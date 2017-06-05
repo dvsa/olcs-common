@@ -4,7 +4,7 @@ namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element as ZendElement;
 use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator as ZendValidator;
+use Zend\Validator\NotEmpty;
 
 /**
  * Phone Filter
@@ -13,6 +13,20 @@ use Zend\Validator as ZendValidator;
  */
 class Phone extends ZendElement implements InputProviderInterface
 {
+    protected $required = false;
+
+    /**
+     * Initialise the form
+     *
+     * @return void
+     */
+    public function init()
+    {
+        $this->setAttribute('pattern', '\d(\+|\-|\(|\))*');
+        $this->setLabel('contact-number-optional');
+        parent::init();
+    }
+
     /**
      * Provide default input rules for this element.
      *
@@ -22,11 +36,20 @@ class Phone extends ZendElement implements InputProviderInterface
     {
         $specification = [
             'name' => $this->getName(),
-            'required' => false,
+            'required' => $this->required,
             'filters' => [
                 ['name' => \Zend\Filter\StringTrim::class],
             ],
             'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [
+                            NotEmpty::IS_EMPTY => 'Contact number is missing',
+                        ],
+                    ],
+                    'break_chain_on_failure' => true,
+                ],
                 [
                     'name'=> \Zend\Validator\Regex::class,
                     'options' => [

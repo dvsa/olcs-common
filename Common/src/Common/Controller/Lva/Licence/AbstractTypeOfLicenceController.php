@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Common Lva Abstract Type Of Licence Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva\Licence;
 
 use Dvsa\Olcs\Transfer\Command\Licence\UpdateTypeOfLicence;
@@ -23,7 +18,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
     /**
      * Licence type of licence section
      *
-     * @return Response
+     * @return \Common\View\Model\Section|Response
      */
     public function indexAction()
     {
@@ -61,13 +56,13 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
             'canUpdateLicenceType' => $data['canUpdateLicenceType']
         ];
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-licence-type-of-licence')
             ->getForm($params);
 
         // If we have no data (not posted)
         if ($prg === false) {
-
             $form->setData(TypeOfLicenceMapper::mapFromResult($data));
 
             return $this->renderIndex($form);
@@ -97,7 +92,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         }
 
         if ($response->isClientError()) {
-
             // This means we need confirmation
             if (isset($response->getResult()['messages']['LIC-REQ-VAR'])) {
 
@@ -119,17 +113,23 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
         return $this->renderIndex($form);
     }
 
+    /**
+     * Process action: confirmation
+     *
+     * @return \Common\View\Model\Section|Response
+     */
     public function confirmationAction()
     {
         // @NOTE The behaviour of this service differs internally to externally
         $processingService = $this->getServiceLocator()->get('Processing\CreateVariation');
 
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
+        /** @var \Zend\Form\FormInterface $form */
         $form = $processingService->getForm($request);
 
         if ($request->isPost() && $form->isValid()) {
-
             $data = $processingService->getDataFromForm($form);
 
             $data['licenceType'] = $this->params()->fromQuery('licence-type');
