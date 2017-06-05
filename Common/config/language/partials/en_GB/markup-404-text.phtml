@@ -4,4 +4,7 @@
 <ul>
     <li>which page you were visiting</li>
     <li>what you were trying to do</li>
+    <?php if (!empty($id)): ?>
+        <li>quoting reference <?php echo $this->escapeHtml($id); ?></li>
+    <?php endif; ?>
 </ul>
