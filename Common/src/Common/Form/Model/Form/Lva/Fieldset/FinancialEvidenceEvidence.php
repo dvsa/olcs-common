@@ -11,6 +11,35 @@ use Zend\Form\Annotation as Form;
 class FinancialEvidenceEvidence
 {
     /**
+     * @Form\AllowEmpty(true)
+     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\Options({
+     *     "fieldset-attributes": {
+     *         "id": "files",
+     *     },
+     * })
+     * @Form\Required(true)
+     * @Form\Attributes({"required":false, "id":"uploadedFileCount"})
+     * @Form\Type("Hidden")
+     * @Form\Validator({"name": "ValidateIf",
+     *      "options":{
+     *          "context_field": "uploadNowRadio",
+     *          "context_values": {"1"},
+     *          "validators": {
+     *              {
+     *                  "name": "\Common\Validator\FileUploadCount",
+     *                  "options": {
+     *                      "min": 1,
+     *                      "message": "lva-financial-evidence-upload.required"
+     *                  }
+     *              }
+     *          }
+     *      }
+     * })
+     */
+    public $uploadedFileCount = null;
+
+    /**
      * @Form\Required(false)
      * @Form\Attributes({"id":"uploadNowRadio","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
@@ -80,33 +109,4 @@ class FinancialEvidenceEvidence
      * @Form\Name("uploadLaterMessage")
      */
     public $uploadLater = null;
-
-    /**
-     * @Form\AllowEmpty(true)
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\Options({
-     *     "fieldset-attributes": {
-     *         "id": "files",
-     *     },
-     * })
-     * @Form\Required(true)
-     * @Form\Attributes({"required":false, "id":"uploadedFileCount"})
-     * @Form\Type("Hidden")
-     * @Form\Validator({"name": "ValidateIf",
-     *      "options":{
-     *          "context_field": "uploadNowRadio",
-     *          "context_values": {"1"},
-     *          "validators": {
-     *              {
-     *                  "name": "\Common\Validator\FileUploadCount",
-     *                  "options": {
-     *                      "min": 1,
-     *                      "message": "lva-financial-evidence-upload.required"
-     *                  }
-     *              }
-     *          }
-     *      }
-     * })
-     */
-    public $uploadedFileCount = null;
 }
