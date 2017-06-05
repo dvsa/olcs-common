@@ -467,4 +467,18 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             '<div class="field "><fieldset class="date"><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>'
         );
     }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderSingleRadio()
+    {
+        $element = $this->prepareElement('Radio', ['single-radio' => true]);
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        // no wrapping at all
+        $this->expectOutputRegex('/^$/');
+    }
 }

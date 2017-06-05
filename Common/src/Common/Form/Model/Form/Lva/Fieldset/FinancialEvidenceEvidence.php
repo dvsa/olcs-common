@@ -11,28 +11,6 @@ use Zend\Form\Annotation as Form;
 class FinancialEvidenceEvidence
 {
     /**
-     * @Form\Options({
-     *     "legend-attributes": {"class": "visually-hidden",},
-     *     "label": "lva-financial-evidence-upload-now.label",
-     *     "label_attributes": {"class": "form-control form-control--radio"},
-     *     "value_options": {
-     *         "1":"lva-financial-evidence-upload-now.yes",
-     *         "0":"lva-financial-evidence-upload-now.no",
-     *         "2":"lva-financial-evidence-upload-now.later"
-     *     },
-     *     "error-message": "financialEvidence_uploadNow-error"
-     * })
-     * @Form\Type("\Zend\Form\Element\Radio")
-     */
-    public $uploadNow = null;
-
-    /**
-     * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
-     * @Form\Attributes({"id":"files"})
-     */
-    public $files = null;
-
-    /**
      * @Form\AllowEmpty(true)
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
@@ -45,7 +23,7 @@ class FinancialEvidenceEvidence
      * @Form\Type("Hidden")
      * @Form\Validator({"name": "ValidateIf",
      *      "options":{
-     *          "context_field": "uploadNow",
+     *          "context_field": "uploadNowRadio",
      *          "context_values": {"1"},
      *          "validators": {
      *              {
@@ -60,4 +38,75 @@ class FinancialEvidenceEvidence
      * })
      */
     public $uploadedFileCount = null;
+
+    /**
+     * @Form\Required(false)
+     * @Form\Attributes({"id":"uploadNowRadio","allowWrap":true,"data-container-class":"form-control__container"})
+     * @Form\Options({
+     *     "label": "lva-financial-evidence-upload-now.label",
+     *     "label_attributes": {"class": "form-control form-control--radio"},
+     *     "value_options": {\Common\RefData::AD_UPLOAD_NOW:"lva-financial-evidence-upload-now.yes"},
+     *     "error-message": "financialEvidence_uploadNow-error",
+     *     "single-radio": true
+     * })
+     * @Form\Type("\Zend\Form\Element\Radio")
+     */
+    public $uploadNowRadio = null;
+
+    /**
+     * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
+     * @Form\Attributes({"id":"files", "class":"help__text file-uploader"})
+     */
+    public $files = null;
+
+    /**
+     * @Form\Required(false)
+     * @Form\Attributes({"id":"sendByPost","allowWrap":true,"data-container-class":"form-control__container"})
+     * @Form\Options({
+     *     "label": "lva-financial-evidence-upload-now.label",
+     *     "label_attributes": {"class": "form-control form-control--radio"},
+     *     "value_options": {\Common\RefData::AD_POST:"lva-financial-evidence-upload-now.no"},
+     *     "error-message": "financialEvidence_uploadNow-error",
+     *     "single-radio": true
+     * })
+     * @Form\Type("\Zend\Form\Element\Radio")
+     */
+    public $sendByPostRadio = null;
+
+    /**
+     * @Form\Attributes({
+     *     "id":"sendByPost",
+     *     "data-container-class": "send-by-post",
+     *     "value": "markup-financial-evidence-send-by-post",
+     *     "class": "send-by-post"
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $sendByPost = null;
+
+    /**
+     * @Form\Required(false)
+     * @Form\Attributes({"id":"uploadLaterRadio","allowWrap":true,"data-container-class":"form-control__container"})
+     * @Form\Options({
+     *     "label": "lva-financial-evidence-upload-now.label",
+     *     "label_attributes": {"class": "form-control form-control--radio"},
+     *     "value_options": {\Common\RefData::AD_UPLOAD_LATER:"lva-financial-evidence-upload-now.later"},
+     *     "error-message": "financialEvidence_uploadNow-error",
+     *     "single-radio": true
+     * })
+     * @Form\Type("\Zend\Form\Element\Radio")
+     */
+    public $uploadLaterRadio = null;
+
+    /**
+     * @Form\Attributes({
+     *     "id":"uploadLaterMessage",
+     *     "data-container-class": "upload-later last",
+     *     "value": "markup-financial-evidence-upload-later",
+     *     "class": "upload-later-message"
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     * @Form\Name("uploadLaterMessage")
+     */
+    public $uploadLater = null;
 }

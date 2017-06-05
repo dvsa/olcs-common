@@ -13,15 +13,6 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
     FinancialEvidenceAdapterInterface
 {
     /**
-     * Get form data by Id
-     *
-     * @param int $id Lva object identifier
-     *
-     * @return array
-     */
-    abstract public function getFormData($id);
-
-    /**
      * Get documents from application data
      *
      * @param int $id Lva object identifier

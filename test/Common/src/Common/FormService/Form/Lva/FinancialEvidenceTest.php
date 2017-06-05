@@ -35,11 +35,53 @@ class FinancialEvidenceTest extends MockeryTestCase
         $request = m::mock(\Zend\Http\Request::class);
 
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock()
+            ->shouldReceive('get')
+            ->with('evidence')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('uploadNowRadio')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('setName')
+                            ->with('uploadNow')
+                            ->once()
+                            ->getMock()
+                    )
+                    ->once()
+                    ->shouldReceive('get')
+                    ->with('uploadLaterRadio')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('setName')
+                            ->with('uploadNow')
+                            ->once()
+                            ->getMock()
+                    )
+                    ->once()
+                    ->shouldReceive('get')
+                    ->with('sendByPostRadio')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('setName')
+                            ->with('uploadNow')
+                            ->once()
+                            ->getMock()
+                    )
+                    ->once()
+                ->getMock()
+            )
+            ->times(3)
+            ->getMock();
 
         $this->formHelper->shouldReceive('createFormWithRequest')
             ->with('Lva\FinancialEvidence', $request)
-            ->andReturn($mockForm);
+            ->andReturn($mockForm)
+            ->shouldReceive('remove')
+            ->with($mockForm, 'evidence->uploadNow')
+            ->once()
+            ->getMock();
 
         $form = $this->sut->getForm($request);
 
