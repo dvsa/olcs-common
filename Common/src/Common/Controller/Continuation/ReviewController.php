@@ -1,0 +1,44 @@
+<?php
+
+namespace Common\Controller\Continuation;
+
+use Zend\View\Model\ViewModel;
+use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Review as ReviewQuery;
+
+/**
+ * Review controller
+ */
+class ReviewController extends AbstractContinuationController
+{
+    /**
+     * Index page
+     *
+     * @return ViewModel
+     */
+    public function indexAction()
+    {
+        $reviewData = $this->getLicenceData($this->getContinuationDetailId());
+        $view = new ViewModel(['content' => $reviewData['markup']]);
+
+        $view->setTerminal(true);
+        $view->setTemplate('layout/blank');
+        return $view;
+    }
+
+    /**
+     * Get review data
+     *
+     * @param int $continuationDetailId continuation detail id
+     *
+     * @return array
+     */
+    protected function getReviewData($continuationDetailId)
+    {
+        $dto = ReviewQuery::create(['id' => $continuationDetailId]);
+        $response = $this->handleQuery($dto);
+        if (!$response->isOk()) {
+            $this->addErrorMessage('unknown-error');
+        }
+        return $response->getResult()['licence'];
+    }
+}
