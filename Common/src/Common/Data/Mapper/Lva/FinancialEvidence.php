@@ -104,11 +104,12 @@ class FinancialEvidence implements MapperInterface
     public static function mapFromForm(array $data)
     {
         $uploadNow = null;
-        if ((int) $data['evidence']['uploadNowRadio'] === RefData::AD_UPLOAD_NOW) {
+        $dataEvidence = $data['evidence'];
+        if ((int) $dataEvidence['uploadNowRadio'] === RefData::AD_UPLOAD_NOW) {
             $uploadNow = RefData::AD_UPLOAD_NOW;
-        } elseif ((int) $data['evidence']['uploadLaterRadio'] === RefData::AD_UPLOAD_LATER) {
+        } elseif ((int) $dataEvidence['uploadLaterRadio'] === RefData::AD_UPLOAD_LATER) {
             $uploadNow = RefData::AD_UPLOAD_LATER;
-        } elseif ((int) $data['evidence']['sendByPost'] === RefData::AD_POST) {
+        } elseif ((int) $dataEvidence['sendByPost'] === RefData::AD_POST) {
             $uploadNow = RefData::AD_POST;
         }
 

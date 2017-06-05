@@ -312,10 +312,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
                 }
                 $singleRadio = $element->getOption('single-radio');
                 if ($singleRadio) {
-                    $markup = sprintf(
-                        '%s',
-                        $elementString
-                    );
+                    $markup = $elementString;
                 } else {
                     $markup = sprintf(
                         '<fieldset%s><legend%s>%s</legend>%s</fieldset>',

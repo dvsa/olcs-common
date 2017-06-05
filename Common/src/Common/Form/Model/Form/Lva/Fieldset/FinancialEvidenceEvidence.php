@@ -45,7 +45,7 @@ class FinancialEvidenceEvidence
      * @Form\Options({
      *     "label": "lva-financial-evidence-upload-now.label",
      *     "label_attributes": {"class": "form-control form-control--radio"},
-     *     "value_options": {"1":"lva-financial-evidence-upload-now.yes"},
+     *     "value_options": {\Common\RefData::AD_UPLOAD_NOW:"lva-financial-evidence-upload-now.yes"},
      *     "error-message": "financialEvidence_uploadNow-error",
      *     "single-radio": true
      * })
@@ -65,7 +65,7 @@ class FinancialEvidenceEvidence
      * @Form\Options({
      *     "label": "lva-financial-evidence-upload-now.label",
      *     "label_attributes": {"class": "form-control form-control--radio"},
-     *     "value_options": {"0":"lva-financial-evidence-upload-now.no"},
+     *     "value_options": {\Common\RefData::AD_POST:"lva-financial-evidence-upload-now.no"},
      *     "error-message": "financialEvidence_uploadNow-error",
      *     "single-radio": true
      * })
@@ -90,7 +90,7 @@ class FinancialEvidenceEvidence
      * @Form\Options({
      *     "label": "lva-financial-evidence-upload-now.label",
      *     "label_attributes": {"class": "form-control form-control--radio"},
-     *     "value_options": {"2":"lva-financial-evidence-upload-now.later"},
+     *     "value_options": {\Common\RefData::AD_UPLOAD_LATER:"lva-financial-evidence-upload-now.later"},
      *     "error-message": "financialEvidence_uploadNow-error",
      *     "single-radio": true
      * })
