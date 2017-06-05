@@ -53,9 +53,9 @@ class FinancialEvidenceTest extends AbstractFormValidationTestCase
         );
     }
 
-    public function testUploadMessage()
+    public function testSendByPost()
     {
-        $this->assertFormElementHtml(['evidence', 'sendByPost', 'message']);
+        $this->assertFormElementHtml(['evidence', 'sendByPost']);
     }
 
     public function testSaveAndContinue()
@@ -91,8 +91,8 @@ class FinancialEvidenceTest extends AbstractFormValidationTestCase
         $this->assertFormElementHidden($element);
     }
 
-    public function testUploadLaterMessage()
+    public function testUploadLater()
     {
-        $this->assertFormElementHtml(['evidence', 'uploadLater', 'uploadLaterMessage']);
+        $this->assertFormElementHtml(['evidence', 'uploadLaterMessage']);
     }
 }
