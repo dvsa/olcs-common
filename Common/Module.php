@@ -178,7 +178,7 @@ class Module
 
         /** @var TranslationHelperService $translator */
         $hlpFlashMsgr = $e->getApplication()->getServiceManager()->get('Helper\FlashMessenger');
-        $hlpFlashMsgr->addCurrentErrorMessage('csrf-message');
+        $hlpFlashMsgr->addErrorMessage('csrf-message');
 
         /** @var \Zend\Http\Response $resp */
         $resp = $e->getResponse();
