@@ -13,6 +13,24 @@ use Zend\Form\Annotation as Form;
 class Advertisements
 {
     /**
+     * @Form\Type("Hidden")
+     * @Form\Required(true)
+     * @Form\Options({
+     *     "error-message": "advertisements_adPlaced-error"
+     * })
+     * @Form\Validator({
+     *      "name": "OneOf",
+     *      "options": {
+     *          "fields": {"adPlaced", "adPlacedPost", "adPlacedLater"},
+     *          "allowZero": true,
+     *          "message": "advertisements_value_is_required"
+     *      }
+     * })
+     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
+     */
+    public $uploadValidator = null;
+
+    /**
      * @Form\Required(false)
      * @Form\Attributes({"id":"adPlaced","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
@@ -130,21 +148,4 @@ class Advertisements
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $adUploadLater = null;
-
-    /**
-     * @Form\Type("Hidden")
-     * @Form\Required(true)
-     * @Form\Options({
-     *     "error-message": "advertisements_adPlaced-error"
-     * })
-     * @Form\Validator({
-     *      "name": "OneOf",
-     *      "options": {
-     *          "fields": {"adPlaced", "adPlacedPost", "adPlacedLater"},
-     *          "allowZero": true,
-     *      }
-     * })
-     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
-     */
-    public $uploadValidator = null;
 }

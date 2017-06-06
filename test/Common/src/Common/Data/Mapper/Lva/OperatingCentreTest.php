@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Operating Centre Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\OperatingCentre;
@@ -84,37 +79,105 @@ class OperatingCentreTest extends MockeryTestCase
         ];
     }
 
-    public function testMapFromForm()
+    /**
+     * @dataProvider mapFromFormProvider
+     */
+    public function testMapFromForm($data, $expected)
     {
-        $data = [
-            'version' => 1,
-            'address' => ['foo' => 'bar'],
-            'data' => [
-                'noOfVehiclesRequired' => 10,
-                'noOfTrailersRequired' => 11,
-                'sufficientParking' => 'Y',
-                'permission' => 'Y'
+        $this->assertEquals($expected, OperatingCentre::mapFromForm($data));
+    }
+
+    public function mapFromFormProvider()
+    {
+        return [
+            [
+                [
+                    'version' => 1,
+                    'address' => ['foo' => 'bar'],
+                    'data' => [
+                        'noOfVehiclesRequired' => 10,
+                        'noOfTrailersRequired' => 11,
+                        'sufficientParking' => 'Y',
+                        'permission' => 'Y'
+                    ],
+                    'advertisements' => [
+                        'adPlacedNow' => RefData::AD_UPLOAD_NOW,
+                        'adPlacedIn' => 'Donny Star',
+                        'adPlacedDate' => '2015-01-01'
+                    ]
+                ],
+                [
+                    'version' => 1,
+                    'address' => ['foo' => 'bar'],
+                    'noOfVehiclesRequired' => 10,
+                    'noOfTrailersRequired' => 11,
+                    'sufficientParking' => 'Y',
+                    'permission' => 'Y',
+                    'adPlaced' => RefData::AD_UPLOAD_NOW,
+                    'adPlacedNow' => RefData::AD_UPLOAD_NOW,
+                    'adPlacedIn' => 'Donny Star',
+                    'adPlacedDate' => '2015-01-01'
+                ]
             ],
-            'advertisements' => [
-                'adPlaced' => RefData::AD_UPLOAD_NOW,
-                'adPlacedIn' => 'Donny Star',
-                'adPlacedDate' => '2015-01-01'
+            [
+                [
+                    'version' => 1,
+                    'address' => ['foo' => 'bar'],
+                    'data' => [
+                        'noOfVehiclesRequired' => 10,
+                        'noOfTrailersRequired' => 11,
+                        'sufficientParking' => 'Y',
+                        'permission' => 'Y'
+                    ],
+                    'advertisements' => [
+                        'adPlacedPost' => RefData::AD_POST,
+                        'adPlacedIn' => 'Donny Star',
+                        'adPlacedDate' => '2015-01-01'
+                    ]
+                ],
+                [
+                    'version' => 1,
+                    'address' => ['foo' => 'bar'],
+                    'noOfVehiclesRequired' => 10,
+                    'noOfTrailersRequired' => 11,
+                    'sufficientParking' => 'Y',
+                    'permission' => 'Y',
+                    'adPlaced' => RefData::AD_POST,
+                    'adPlacedPost' => RefData::AD_POST,
+                    'adPlacedIn' => 'Donny Star',
+                    'adPlacedDate' => '2015-01-01'
+                ]
+            ],
+            [
+                [
+                    'version' => 1,
+                    'address' => ['foo' => 'bar'],
+                    'data' => [
+                        'noOfVehiclesRequired' => 10,
+                        'noOfTrailersRequired' => 11,
+                        'sufficientParking' => 'Y',
+                        'permission' => 'Y'
+                    ],
+                    'advertisements' => [
+                        'adPlacedLater' => RefData::AD_UPLOAD_LATER,
+                        'adPlacedIn' => 'Donny Star',
+                        'adPlacedDate' => '2015-01-01'
+                    ]
+                ],
+                [
+                    'version' => 1,
+                    'address' => ['foo' => 'bar'],
+                    'noOfVehiclesRequired' => 10,
+                    'noOfTrailersRequired' => 11,
+                    'sufficientParking' => 'Y',
+                    'permission' => 'Y',
+                    'adPlaced' => RefData::AD_UPLOAD_LATER,
+                    'adPlacedLater' => RefData::AD_UPLOAD_LATER,
+                    'adPlacedIn' => 'Donny Star',
+                    'adPlacedDate' => '2015-01-01'
+                ]
             ]
         ];
-
-        $expected = [
-            'version' => 1,
-            'address' => ['foo' => 'bar'],
-            'noOfVehiclesRequired' => 10,
-            'noOfTrailersRequired' => 11,
-            'sufficientParking' => 'Y',
-            'permission' => 'Y',
-            'adPlaced' => RefData::AD_UPLOAD_NOW,
-            'adPlacedIn' => 'Donny Star',
-            'adPlacedDate' => '2015-01-01'
-        ];
-
-        $this->assertEquals($expected, OperatingCentre::mapFromForm($data));
     }
 
     public function testMapFormErrors()
@@ -200,5 +263,76 @@ class OperatingCentreTest extends MockeryTestCase
             ->with('bar');
 
         OperatingCentre::mapFormErrors($form, $errors, $fm, $th, $location, 'url');
+    }
+
+    /**
+     * @dataProvider mapFromPostProvider
+     */
+    public function testMapFromPost($data, $expected)
+    {
+        $this->assertEquals($expected, OperatingCentre::mapFromPost($data));
+    }
+
+    public function mapFromPostProvider()
+    {
+        return [
+            [
+                [
+                    'advertisements' => [
+                        'adPlaced' => RefData::AD_POST,
+                        'file' => [
+                            'list' => ['foo']
+                        ]
+                    ],
+                    'bar' => 'cake'
+                ],
+                [
+                    'advertisements' => [
+                        'adPlaced' => null,
+                        'adPlacedLater' => null,
+                        'adPlacedPost' => RefData::AD_POST,
+                        'uploadedFileCount' => 1,
+                        'file' => [
+                            'list' => ['foo']
+                        ]
+                    ],
+                    'bar' => 'cake'
+                ]
+            ],
+            [
+                [
+                    'advertisements' => [
+                        'adPlaced' => RefData::AD_UPLOAD_LATER,
+                    ],
+                    'bar' => 'cake'
+                ],
+                [
+                    'advertisements' => [
+                        'adPlaced' => null,
+                        'adPlacedLater' => RefData::AD_UPLOAD_LATER,
+                        'adPlacedPost' => null,
+                        'uploadedFileCount' => 0,
+                    ],
+                    'bar' => 'cake'
+                ]
+            ],
+            [
+                [
+                    'advertisements' => [
+                        'adPlaced' => RefData::AD_UPLOAD_NOW,
+                    ],
+                    'bar' => 'cake'
+                ],
+                [
+                    'advertisements' => [
+                        'adPlaced' => RefData::AD_UPLOAD_NOW,
+                        'adPlacedLater' => null,
+                        'adPlacedPost' => null,
+                        'uploadedFileCount' => 0,
+                    ],
+                    'bar' => 'cake'
+                ]
+            ],
+        ];
     }
 }
