@@ -67,10 +67,59 @@ class OperatingCentre implements MapperInterface
 
         $mappedData = array_merge($mappedData, $data['data']);
         if (isset($data['advertisements'])) {
-            $mappedData = array_merge($mappedData, $data['advertisements']);
+            $adv = $data['advertisements'];
+            $mappedData = array_merge($mappedData, $adv);
+            if (isset($adv['adPlacedNow']) && $adv['adPlacedNow'] === RefData::AD_UPLOAD_NOW) {
+                $mappedData['adPlaced'] = RefData::AD_UPLOAD_NOW;
+            } elseif (isset($adv['adPlacedPost']) && $adv['adPlacedPost'] === RefData::AD_POST) {
+                $mappedData['adPlaced'] = RefData::AD_POST;
+            } elseif (isset($adv['adPlacedLater']) && $adv['adPlacedLater'] === RefData::AD_UPLOAD_LATER) {
+                $mappedData['adPlaced'] = RefData::AD_UPLOAD_LATER;
+            }
         }
 
         return $mappedData;
+    }
+
+    /**
+     * Map from post
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    public static function mapFromPost(array $data)
+    {
+        $uploadNow = null;
+        $uploadLater = null;
+        $sendByPost = null;
+        $postUploadNow = null;
+
+        if (isset($data['advertisements']['adPlaced'])) {
+            $postUploadNow = (int) $data['advertisements']['adPlaced'];
+        }
+        if ($postUploadNow === RefData::AD_UPLOAD_NOW) {
+            $uploadNow = RefData::AD_UPLOAD_NOW;
+        } elseif ($postUploadNow === RefData::AD_POST) {
+            $sendByPost = RefData::AD_POST;
+        } elseif ($postUploadNow === RefData::AD_UPLOAD_LATER) {
+            $uploadLater = RefData::AD_UPLOAD_LATER;
+        }
+
+        $advertisementsFieldset = array_merge(
+            $data['advertisements'],
+            [
+                'adPlaced' => $uploadNow,
+                'adPlacedLater' => $uploadLater,
+                'adPlacedPost' => $sendByPost,
+                'uploadedFileCount' => isset($data['advertisements']['file']['list'])
+                    ? count($data['advertisements']['file']['list']) :
+                    0
+            ]
+        );
+        $data['advertisements'] = $advertisementsFieldset;
+
+        return $data;
     }
 
     public static function mapFormErrors(
