@@ -106,7 +106,7 @@ class OperatingCentre implements MapperInterface
             $uploadLater = RefData::AD_UPLOAD_LATER;
         }
 
-        $advertisementsFieldset = array_merge(
+        $data['advertisements'] = array_merge(
             $data['advertisements'],
             [
                 'adPlaced' => $uploadNow,
@@ -117,7 +117,6 @@ class OperatingCentre implements MapperInterface
                     0
             ]
         );
-        $data['advertisements'] = $advertisementsFieldset;
 
         return $data;
     }
