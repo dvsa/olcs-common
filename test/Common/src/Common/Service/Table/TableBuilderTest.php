@@ -778,7 +778,7 @@ class TableBuilderTest extends MockeryTestCase
                     'timeout' => 9999,
                 ],
             ],
-                $csrfElm->getOptions()
+            $csrfElm->getOptions()
         );
     }
 

@@ -43,7 +43,7 @@ class FormHelperService extends AbstractHelperService
      * @param bool   $addCsrf     Is need add CSRF field
      * @param bool   $addContinue Is need add Continue button
      *
-     * @return FormInterface
+     * @return \Common\Form\Form
      */
     public function createForm($formName, $addCsrf = true, $addContinue = true)
     {

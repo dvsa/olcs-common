@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Generic Methods from legacy Abstract Action controller
- *
- * @author Alex Peshkov <alex.pehkov@valtech.co.uk>
- */
 namespace Common\Controller\Traits;
-
-use Common\Service\Helper\FormHelperService;
-use Zend\View\Model\ViewModel;
 
 /**
  * Generic Methods from legacy Abstract Action controller
@@ -17,10 +9,11 @@ use Zend\View\Model\ViewModel;
  */
 trait GenericMethods
 {
-    /*
+    /**
      * Load an array of script files which will be rendered inline inside a view
      *
-     * @param array $scripts
+     * @param array $scripts Scripts
+     *
      * @return array
      */
     protected function loadScripts($scripts)
@@ -30,12 +23,14 @@ trait GenericMethods
 
     /**
      * Gets a from from either a built or custom form config.
-     * @param string $type
+     *
+     * @param string $type Form name or class
+     *
      * @return \Common\Form\Form
      */
     public function getForm($type)
     {
-        /** @var FormHelperService $formHelper */
+        /** @var \Common\Service\Helper\FormHelperService $formHelper */
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $form = $formHelper->createForm($type);
         $formHelper->setFormActionFromRequest($form, $this->getRequest());
@@ -46,26 +41,22 @@ trait GenericMethods
 
     /**
      * Method to process posted form data and validate it and process a callback
-     * @param \Common\Form\Form $form
-     * @param callable $callback
-     * @param array $additionalParams
-     * @param bool $validateForm
-     * @param bool $enableCsrf
-     * @param array $fieldValues
-     * @return \Zend\Form\Form
+     *
+     * @param \Common\Form\Form $form             Form
+     * @param callable          $callback         onSuccess callback
+     * @param array             $additionalParams onSuccess callback additional params
+     * @param bool              $validateForm     is need validate form
+     * @param array             $fieldValues      Forced Form Values
+     *
+     * @return \Common\Form\Form
      */
     public function formPost(
         $form,
         $callback = null,
         $additionalParams = [],
         $validateForm = true,
-        $enableCsrf = true,
         $fieldValues = []
     ) {
-        if (!$enableCsrf) {
-            $form->remove('csrf');
-        }
-
         if (method_exists($this, 'alterFormBeforeValidation')) {
             $form = $this->alterFormBeforeValidation($form);
         }
@@ -118,9 +109,10 @@ trait GenericMethods
     /**
      * Calls the callback function/method if exists.
      *
-     * @param callable $callback
-     * @param array $params
+     * @param callable $callback Callback
+     * @param array    $params   Callback params
      *
+     * @return void
      * @throws \Exception
      */
     public function callCallbackIfExists($callback, $params)
@@ -137,10 +129,11 @@ trait GenericMethods
     /**
      * Wraps the redirect()->toRoute to help with unit testing
      *
-     * @param string $route
-     * @param array $params
-     * @param array $options
-     * @param bool $reuse
+     * @param string $route   Route
+     * @param array  $params  Parameters to use in url generation, if any
+     * @param array  $options RouteInterface-specific options to use in url generation, if any
+     * @param bool   $reuse   Whether to reuse matched parameters
+     *
      * @return \Zend\Http\Response
      */
     public function redirectToRoute($route = null, $params = array(), $options = array(), $reuse = false)
@@ -151,10 +144,11 @@ trait GenericMethods
     /**
      * Wraps the redirect()->toRouteAjax method to help with unit testing
      *
-     * @param string $route
-     * @param array $params
-     * @param array $options
-     * @param bool $reuse
+     * @param string $route   Route
+     * @param array  $params  Parameters to use in url generation, if any
+     * @param array  $options RouteInterface-specific options to use in url generation, if any
+     * @param bool   $reuse   Whether to reuse matched parameters
+     *
      * @return \Zend\Http\Response
      */
     public function redirectToRouteAjax($route = null, $params = array(), $options = array(), $reuse = false)
@@ -165,9 +159,10 @@ trait GenericMethods
     /**
      * Build a table from config and results, and return the table object
      *
-     * @param string $table
-     * @param array $results
-     * @param array $data
+     * @param string $table   Table config file
+     * @param array  $results Table Data
+     * @param array  $data    Params
+     *
      * @return string
      */
     public function getTable($table, $results, $data = array())
@@ -182,8 +177,9 @@ trait GenericMethods
     /**
      * Check if a button was pressed
      *
-     * @param string $button
-     * @param array $data
+     * @param string $button Button name
+     * @param array  $data   Post data
+     *
      * @return bool
      */
     public function isButtonPressed($button, $data = null)
@@ -201,7 +197,8 @@ trait GenericMethods
     /**
      * Get param from route
      *
-     * @param string $name
+     * @param string $name Route param name
+     *
      * @return string
      */
     public function getFromRoute($name)
@@ -212,22 +209,23 @@ trait GenericMethods
     /**
      * Generate a form with data
      *
-     * @param string    $name     Form name
-     * @param callable  $callback Method to call to process
-     * @param mixed     $data
-     * @param boolean   $tables
+     * @param string   $name        Form name or class
+     * @param callable $callback    onSuccess callback
+     * @param array    $data        Form data
+     * @param boolean  $tables      Is tables
+     * @param array    $fieldValues onSuccess callback additional params
      *
      * @return \Common\Form\Form
+     * @deprecated Used in 2 places only, better do not use and remove in future
      */
     public function generateFormWithData(
         $name,
         $callback,
         $data = null,
         $tables = false,
-        $enableCsrf = true,
         $fieldValues = []
     ) {
-        $form = $this->generateForm($name, $callback, $tables, $enableCsrf, $fieldValues);
+        $form = $this->generateForm($name, $callback, $tables, $fieldValues);
 
         if (!$this->getRequest()->isPost() && is_array($data)) {
             $form->setData($data);
@@ -239,15 +237,15 @@ trait GenericMethods
     /**
      * Generate a form with a callback
      *
-     * @param string   $name
-     * @param callable $callback
-     * @param bool     $tables
-     * @param bool     $enableCsrf
-     * @param array    $fieldValues
+     * @param string   $name        Form name or class
+     * @param callable $callback    onSuccess callback
+     * @param bool     $tables      is table
+     * @param array    $fieldValues onSuccess callback additional params
      *
      * @return \Common\Form\Form
+     * @deprecated Used twice only, better don't use and remove in future
      */
-    protected function generateForm($name, $callback, $tables = false, $enableCsrf = true, $fieldValues = [])
+    protected function generateForm($name, $callback, $tables = false, $fieldValues = [])
     {
         $form = $this->getForm($name);
 
@@ -255,6 +253,6 @@ trait GenericMethods
             return $form;
         }
 
-        return $this->formPost($form, $callback, [], true, $enableCsrf, $fieldValues);
+        return $this->formPost($form, $callback, [], true, $fieldValues);
     }
 }
