@@ -1,16 +1,13 @@
 <?php
 
-/**
- * Text Max 40
- */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-
 /**
+ * @deprecated Not used anythere and must be removed as part of https://jira.i-env.net/browse/OLCS-15198
+ *
  * Text Max 40
  */
-class TextMax40 extends Text implements InputProviderInterface
+class TextMax40 extends Text
 {
     protected $max = 40;
 }

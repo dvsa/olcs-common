@@ -14,6 +14,9 @@ use Zend\Validator\ValidatorPluginManager;
 class ValidateIfMultiple extends ValidateIf
 {
     /**
+     * @internal This is out of scope from ZF 2.4+.  This is only used for the custom validator.
+     *           There is no need to remove this for compatibility.
+     *
      * Returns true if and only if $value meets the validation requirements
      * If $value fails validation, then this method returns false, and
      * getMessages() will return an array of messages that explain why the

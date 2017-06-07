@@ -15,8 +15,8 @@ use Zend\Code\Generator\FileGenerator;
 /**
  * Class FormRewriteController
  * @package Common\Controller
- * @TO-DO when the forms have all been converted, this controller, its entry in modules.config and the console route to
- * it can all be removed
+ *
+ * @deprecated Need to remove.  See story: OLCS-16488 in comments.
  */
 class FormRewriteController extends ZendAbstractActionController
 {

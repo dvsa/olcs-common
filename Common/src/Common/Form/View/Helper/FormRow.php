@@ -10,7 +10,6 @@ use Common\Form\Elements\Types\Readonly;
 use Common\Form\Elements\Types\Table;
 use Zend\Form\Element\Button;
 use Zend\Form\Element\DateSelect;
-use Zend\Form\Element\DateTimeSelect;
 use Zend\Form\Element\Hidden;
 use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
@@ -60,12 +59,13 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
     /**
      * Utility form helper that renders a label (if it exists), an element and errors
      *
-     * @param ElementInterface $element Element
+     * @param ElementInterface $element       Element
+     * @param null|string      $labelPosition Label Position
      *
      * @throws \Zend\Form\Exception\DomainException
      * @return string
      */
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element, $labelPosition = null)
     {
         if ($element instanceof Readonly) {
             $class = $element->getAttribute('data-container-class');
@@ -75,9 +75,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             return sprintf(self::$readonlyFormat, $class, $label, $value);
         }
 
-        /**
-         * We don't want the parent class to render the errors.
-         */
+        // We don't want the parent class to render the errors.
         $this->setRenderErrors(false);
         $elementErrors = $this->getElementErrorsHelper()->render($element);
 

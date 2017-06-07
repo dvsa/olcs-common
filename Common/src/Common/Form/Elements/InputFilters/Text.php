@@ -1,29 +1,31 @@
 <?php
 
-/**
- * Text
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Text as ZendElement;
-use Zend\Validator as ZendValidator;
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Zend\Form\Element as ZendElement;
+use Zend\InputFilter\InputProviderInterface;
 
 /**
- * Text
- *
  * @author Rob Caiger <rob@clocal.co.uk>
+ *
+ * @deprecated This should not be used and must be removed as part of OLCS-15198
+ *             Replace other elements with the normal Text element provided by
+ *             Zend.
  */
-class Text extends ZendElement implements InputProviderInterface
+class Text extends ZendElement\Text implements InputProviderInterface
 {
-    protected $required = false;
-    protected $continueIfEmpty = false;
-    protected $allowEmpty = true;
+    protected $isRequired = false;
+    protected $isAllowEmpty = true;
+
+    protected $min = 2;
     protected $max = null;
 
+    /**
+     * Text constructor.
+     *
+     * @param null  $name    Name
+     * @param array $options Options
+     */
     public function __construct($name = null, $options = array())
     {
         parent::__construct($name, $options);
@@ -36,27 +38,69 @@ class Text extends ZendElement implements InputProviderInterface
      */
     protected function getValidators()
     {
-        return array();
+        $validators = [];
+
+        if (!empty($this->max) || !empty($this->min)) {
+            $validators[] = [
+                'name' => \Zend\Validator\StringLength::class,
+                'options' => array_filter(
+                    [
+                        'min' => $this->min,
+                        'max' => $this->max,
+                    ]
+                ),
+            ];
+        }
+
+        if ($this->isAllowEmpty === true) {
+            $validators[] = [
+                'name' => \Zend\Validator\NotEmpty::class,
+                'options' => [
+                    'type' => \Zend\Validator\NotEmpty::PHP,
+                ],
+            ];
+        }
+
+        return $validators;
     }
 
     /**
      * Setter for allow empty
      *
-     * @param boolean $allowEmpty
+     * @param boolean $isAllowEmpty Is Allow empty
+     *
+     * @return $this
      */
-    public function setAllowEmpty($allowEmpty)
+    public function setAllowEmpty($isAllowEmpty)
     {
-        $this->allowEmpty = $allowEmpty;
+        $this->isAllowEmpty = (bool)$isAllowEmpty;
+        return $this;
     }
 
     /**
      * Setter for max
      *
-     * @param int $max
+     * @param int $max Max
+     *
+     * @return $this
      */
     public function setMax($max)
     {
         $this->max = $max;
+        return $this;
+    }
+
+    /**
+     * Setter for min
+     *
+     * @param int $min Min
+     *
+     * @return $this
+     */
+    public function setMin($min)
+    {
+        $this->min = $min;
+        return $this;
     }
 
     /**
@@ -66,24 +110,15 @@ class Text extends ZendElement implements InputProviderInterface
      */
     public function getInputSpecification()
     {
-        $specification = [
+        return [
             'name' => $this->getName(),
-            'required' => $this->required,
-            'continue_if_empty' => $this->continueIfEmpty,
-            'allow_empty' => $this->allowEmpty,
+            'required' => $this->isRequired,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim']
+                [
+                    'name' => \Zend\Filter\StringTrim::class,
+                ],
             ],
-            'validators' => $this->getValidators()
+            'validators' => $this->getValidators(),
         ];
-
-        if (!empty($this->max)) {
-            $specification['validators'][] = [
-                'name' => 'Zend\Validator\StringLength',
-                'options' => ['min' => 2, 'max' => $this->max]
-            ];
-        }
-
-        return $specification;
     }
 }

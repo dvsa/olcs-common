@@ -167,14 +167,15 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
         $mockElmHidden = m::mock(Element\Hidden::class);
         $mockElm = m::mock(ElementInterface::class);
 
-        //  check Fieldset with usual element
+        // Check Fieldset with usual element
         $mockFsWithElement = m::mock(FieldsetInterface::class)
             ->shouldReceive('hasAttribute')->once()->with('keepEmptyFieldset')->andReturn(false)
             ->shouldReceive('count')->once()->andReturn(1)
             ->shouldReceive('getElements')->once()->with()->andReturn([$mockElm])
+            ->shouldReceive('has')->once()->with('rows')->andReturn(false)
             ->getMock();
 
-        //  check Fieldset with Fieldse with usual element
+        // Check Fieldset with Fieldset with usual element
         $mockSubFs = m::mock(FieldsetInterface::class)
             ->shouldReceive('getElements')->once()->with()->andReturn([$mockElm])
             ->getMock();
@@ -184,6 +185,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
             ->shouldReceive('hasAttribute')->once()->with('keepEmptyFieldset')->andReturn(false)
             ->shouldReceive('count')->once()->andReturn(1)
             ->shouldReceive('getFieldsets')->once()->with()->andReturn([$mockSubFs])
+            ->shouldReceive('has')->once()->with('rows')->andReturn(false)
             ->getMock();
 
         //  check Fieldset with Hidden element
@@ -193,6 +195,7 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
             ->shouldReceive('getElements')->once()->with()->andReturn([$mockElmHidden])
             ->shouldReceive('setAttribute')->once()->with('class', 'hidden')
             ->shouldReceive('getFieldsets')->once()->with()->andReturn([])
+            ->shouldReceive('has')->once()->with('rows')->andReturn(false)
             ->getMock();
 
         $mockHelper = m::mock('Common\Form\View\Helper\FormCollection')
@@ -219,6 +222,58 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
             ->shouldReceive('formCollection')->times(4)->andReturn($mockHelper)
             ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
             ->shouldReceive('addTags')->times(3)
+            ->getMock();
+
+        $sut = new FormViewHelper();
+        $sut->setView($mockView);
+
+        $sut($mockForm);
+    }
+
+    public function testRenderFieldsetsWithTable()
+    {
+        // Mock rows element
+        $mockRowsElm = m::mock(ElementInterface::class)
+            ->shouldReceive('getMessages')->twice()->andReturn([ 'required' => 'test' ])
+            ->shouldReceive('setMessages')->once()->with([])->andReturn(true)
+            ->getMock();
+
+        // Mock table element
+        $mockTableElement = m::mock(ElementInterface::class)
+            ->shouldReceive('setMessages')->once()->with([ 'required' => 'test' ])->andReturn(true)
+            ->getMock();
+
+        $mockFsWithTableElement = m::mock(FieldsetInterface::class)
+            ->shouldReceive('getElements')->once()->with()->andReturn([$mockRowsElm])
+            ->shouldReceive('hasAttribute')->once()->with('keepEmptyFieldset')->andReturn(false)
+            ->shouldReceive('count')->once()->andReturn(1)
+            ->shouldReceive('has')->once()->with('rows')->andReturn(true)
+            ->shouldReceive('get')->with('rows')->andReturn($mockRowsElm)
+            ->shouldReceive('get')->once()->with('table')->andReturn($mockTableElement)
+            ->getMock();
+
+        $mockHelper = m::mock('Common\Form\View\Helper\FormCollection')
+            ->shouldReceive('setReadOnly')
+            ->with(false)
+            ->once()
+            ->getMock();
+
+        $iterator = new PriorityQueue();
+        $iterator->insert($mockFsWithTableElement);
+
+        $mockForm = m::mock(\Zend\Form\Form::class)
+            ->shouldReceive('prepare')->once()->andReturnNull()
+            ->shouldReceive('getIterator')->once()->andReturn($iterator)
+            ->shouldReceive('getOption')->twice()->with('readonly')->andReturn(false)
+            ->shouldReceive('getAttributes')->once()->andReturn([])
+            ->shouldReceive('getAttribute')->with('action')->once()->andReturn('foo')
+            ->getMock();
+
+        /** @var \Zend\View\Renderer\RendererInterface|m\MockInterface $mockView */
+        $mockView = m::mock(\Zend\View\Renderer\RendererInterface::class)
+            ->shouldReceive('formCollection')->times(2)->andReturn($mockHelper)
+            ->shouldReceive('plugin')->once()->with('formrow')->andReturn($mockHelper)
+            ->shouldReceive('addTags')->times(1)
             ->getMock();
 
         $sut = new FormViewHelper();

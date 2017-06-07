@@ -1,20 +1,15 @@
 <?php
 
-/**
- * Test TextRequired InputFilter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters;
+use \Zend\Validator\StringLength;
 
 /**
- * Test TextRequired InputFilter
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * Test Hidden InputFilter
+ * @covers \Common\Form\Elements\InputFilters\Hidden
  */
-class TextRequiredTest extends \PHPUnit_Framework_TestCase
+class HiddenTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * test setup
@@ -23,7 +18,7 @@ class TextRequiredTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->filter = new InputFilters\TextRequired("text-required");
+        $this->filter = new InputFilters\Hidden("test");
     }
 
     /**
@@ -45,17 +40,17 @@ class TextRequiredTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetInputSpecificationReturnsCorrectName()
     {
-        $this->assertEquals('text-required', $this->getSpecificationElement('name'));
+        $this->assertEquals('test', $this->getSpecificationElement('name'));
     }
 
     /**
-     * ensure fields are required by default
+     * ensure hidden fields aren't required by default
      *
      * @return void
      */
-    public function testTextIsRequired()
+    public function testTextNotRequired()
     {
-        $this->assertTrue($this->getSpecificationElement('required'));
+        $this->assertFalse($this->getSpecificationElement('required'));
     }
 
     /**
@@ -69,5 +64,17 @@ class TextRequiredTest extends \PHPUnit_Framework_TestCase
             [['name' => 'Zend\Filter\StringTrim']],
             $this->getSpecificationElement('filters')
         );
+    }
+
+    /**
+     * Test set max
+     *
+     * @return void
+     */
+    public function testSetMax()
+    {
+        $this->filter->setMax(10);
+
+        $this->assertEquals(10, $this->getSpecificationElement('validators')[1]['options']['max']);
     }
 }

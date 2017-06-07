@@ -19,7 +19,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testEmployerName()
     {
         $element = ['tm-employer-name-details', 'employerName'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementText($element, 0, 90);
     }
@@ -39,7 +39,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testSearchPostcode()
     {
         $element = ['address', 'searchPostcode'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcodeSearch($element);
     }
@@ -47,7 +47,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testAddressLine1()
     {
         $element = ['address', 'addressLine1'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementText($element, 0, 90);
     }
@@ -55,7 +55,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testAddressLine2()
     {
         $element = ['address', 'addressLine2'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 0, 90);
     }
@@ -63,7 +63,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testAddressLine3()
     {
         $element = ['address', 'addressLine3'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 0, 100);
     }
@@ -71,7 +71,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testAddressLine4()
     {
         $element = ['address', 'addressLine4'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 0, 35);
     }
@@ -79,7 +79,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testTown()
     {
         $element = ['address', 'town'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementText($element, 0, 30);
     }
@@ -87,7 +87,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testPostcode()
     {
         $element = ['address', 'postcode'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcode($element);
     }
@@ -95,7 +95,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testCountryCode()
     {
         $element = ['address', 'countryCode'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDynamicSelect($element);
     }
@@ -115,7 +115,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testTmEmploymentDetailsPosition()
     {
         $element = ['tm-employment-details', 'position'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementText($element, 0, 45);
     }
@@ -123,7 +123,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
     public function testTmEmploymentDetailsHoursPerWeek()
     {
         $element = ['tm-employment-details', 'hoursPerWeek'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementText($element, 0, 100);
     }

@@ -15,7 +15,7 @@ use Mockery as m;
 /**
  * Flash Messenger View Helper Test
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers \Common\View\Helper\FlashMessenger
  */
 class FlashMessengerTest extends MockeryTestCase
 {

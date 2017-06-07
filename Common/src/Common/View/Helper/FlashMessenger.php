@@ -17,8 +17,8 @@ class FlashMessenger extends ZendFlashMessenger
      *
      * @var string
      */
-    protected $messageCloseString     = '</p></div>';
-    protected $messageOpenFormat      = '<div %s><p role="alert">';
+    protected $messageCloseString = '</p></div>';
+    protected $messageOpenFormat = '<div %s><p role="alert">';
     protected $messageSeparatorString = '</p></div><div %s><p>';
 
     /**
@@ -91,13 +91,18 @@ class FlashMessenger extends ZendFlashMessenger
     /**
      * Render messages
      *
-     * @param string $namespace Namespace
-     * @param array  $classes   Classes
+     * @param string    $namespace  Namespace
+     * @param array     $classes    Classes
+     * @param bool|null $autoEscape AutoEscape
      *
      * @return string
      */
-    public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = array())
-    {
+    public function render
+    (
+        $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
+        array $classes = [],
+        $autoEscape = null
+    ) {
         if ($this->getIsRendered()) {
             return '';
         }
@@ -125,26 +130,40 @@ class FlashMessenger extends ZendFlashMessenger
      *
      * @return string
      */
-    protected function renderAllFromNamespace($namespace, $classes)
-    {
-        return parent::render($namespace, $classes) . $this->renderCurrent($namespace, $classes);
+    protected function renderAllFromNamespace
+    (
+        $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
+        array $classes = []
+    ) {
+        return parent::render($namespace, $classes) .
+            $this->renderCurrent($namespace, $classes);
     }
 
     /**
      * Render current messages
      *
-     * @param string $namespace Namespace
-     * @param array  $classes   Classes
+     * @param string    $namespace  Namespace
+     * @param array     $classes    Classes
+     * @param bool|null $autoEscape AutoEscape
      *
      * @return string
      */
-    public function renderCurrent($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = array())
-    {
+    public function renderCurrent
+    (
+        $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
+        array $classes = [],
+        $autoEscape = null
+    ) {
         $content = parent::renderCurrent($namespace, $classes);
 
         $fmHelper = $this->getServiceLocator()->getServiceLocator()->get('Helper\FlashMessenger');
 
-        $content .= $this->renderMessages($namespace, $fmHelper->getCurrentMessages($namespace), $classes);
+        $content .= $this->renderMessages(
+            $namespace,
+            $fmHelper->getCurrentMessages($namespace),
+            $classes,
+            $autoEscape
+        );
 
         return $content;
     }
@@ -154,21 +173,24 @@ class FlashMessenger extends ZendFlashMessenger
      * in our flash messengers, and we shouldn't ever need to escape it as our messages will never contain user entered
      * info
      *
-     * @param string $namespace Namespace
-     * @param array  $messages  Messages
-     * @param array  $classes   Classes
+     * @param string    $namespace  Namespace
+     * @param array     $messages   Messages
+     * @param array     $classes    Classes
+     * @param bool|null $autoEscape AutoEscape
      *
      * @return string
      */
     protected function renderMessages(
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
-        array $messages = array(),
-        array $classes = array()
+        array $messages = [],
+        array $classes = [],
+        $autoEscape = null
     ) {
         // Flatten message array
         $messagesToPrint = array();
         $translator = $this->getTranslator();
         $translatorTextDomain = $this->getTranslatorTextDomain();
+
         array_walk_recursive(
             $messages,
             function ($item) use (&$messagesToPrint, $translator, $translatorTextDomain) {
@@ -178,19 +200,31 @@ class FlashMessenger extends ZendFlashMessenger
                         $translatorTextDomain
                     );
                 }
+
                 $messagesToPrint[] = $item;
             }
         );
+
         if (empty($messagesToPrint)) {
             return '';
         }
+
         // Generate markup
-        $markup  = sprintf($this->getMessageOpenFormat(), 'class="' . implode(' ', $classes) . '"');
+        $markup = sprintf(
+            $this->getMessageOpenFormat(),
+            'class="' . implode(' ', $classes) . '"'
+        );
+
         $markup .= implode(
-            sprintf($this->getMessageSeparatorString(), 'class="' . implode(' ', $classes) . '"'),
+            sprintf(
+                $this->getMessageSeparatorString(),
+                'class="' . implode(' ', $classes) . '"'
+            ),
             $messagesToPrint
         );
+
         $markup .= $this->getMessageCloseString();
+
         return $markup;
     }
 }

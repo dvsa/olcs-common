@@ -12,8 +12,6 @@ class PsvDiscsRequestData
     /**
      * @Form\Name("additionalDiscs")
      * @Form\Type("text")
-     * @Form\AllowEmpty(false)
-     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "label": "application_vehicle-safety_discs-psv-sub-action.additionalDiscs"
      * })

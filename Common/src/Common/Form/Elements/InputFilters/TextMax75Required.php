@@ -1,16 +1,13 @@
 <?php
 
-/**
- * Text Max 70 Required
- */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-
 /**
+ * @deprecated Not used anythere and must be removed as part of https://jira.i-env.net/browse/OLCS-15198
+ *
  * Text Max 75 Required
  */
-class TextMax75Required extends TextMax75 implements InputProviderInterface
+class TextMax75Required extends TextMax75
 {
-    protected $required = true;
+    protected $isRequired = true;
 }

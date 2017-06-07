@@ -1,13 +1,4 @@
 <?php
-
-/**
- * Table Factory
- *
- * Creates an instance of TableBuilder and passes in the application config
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Service\Table;
 
 use Zend\ServiceManager\FactoryInterface;
@@ -15,10 +6,9 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Table Factory
- *
  * Creates an instance of TableBuilder and passes in the application config
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @deprecated See: olcs-common/Common/config/module.config.php, line: 273
  */
 class TableFactory implements FactoryInterface
 {

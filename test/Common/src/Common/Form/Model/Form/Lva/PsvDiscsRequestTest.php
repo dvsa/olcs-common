@@ -3,6 +3,8 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use Zend\Validator\Digits;
+use Zend\Validator\GreaterThan;
 
 /**
  * Class PsvDiscsRequestTest
@@ -19,7 +21,19 @@ class PsvDiscsRequestTest extends AbstractFormValidationTestCase
     public function testAdditionalDiscs()
     {
         $element = ['data', 'additionalDiscs'];
-        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementAllowEmpty($element, false);
+        $this->assertFormElementIsRequired($element, true);
+        $this->assertFormElementNumber(
+            $element,
+            1,
+            null,
+            [GreaterThan::NOT_GREATER]
+        );
+        $this->assertFormElementNotValid(
+            $element,
+            'test',
+            [Digits::NOT_DIGITS, GreaterThan::NOT_GREATER]
+        );
     }
 
     public function testCancel()

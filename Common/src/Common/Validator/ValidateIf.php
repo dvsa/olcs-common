@@ -1,5 +1,4 @@
 <?php
-
 namespace Common\Validator;
 
 use Zend\Validator\AbstractValidator;
@@ -35,6 +34,9 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     protected $contextTruth = true;
 
     /**
+     * @internal This is out of scope from ZF 2.4+.  This is only used for the custom validator.
+     *           There is no need to remove this for compatibility.
+     *
      * @var bool
      */
     protected $allowEmpty = false;

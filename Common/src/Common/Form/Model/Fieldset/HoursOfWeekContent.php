@@ -11,7 +11,8 @@ use Zend\Form\Annotation as Form;
 class HoursOfWeekContent
 {
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -19,7 +20,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-mon"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
+     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -35,7 +36,8 @@ class HoursOfWeekContent
     public $hoursMon = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -43,7 +45,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-tue"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
+     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -59,7 +61,8 @@ class HoursOfWeekContent
     public $hoursTue = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -67,7 +70,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-wed"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
+     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -83,7 +86,8 @@ class HoursOfWeekContent
     public $hoursWed = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -91,7 +95,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-thu"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
+     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -107,7 +111,8 @@ class HoursOfWeekContent
     public $hoursThu = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -115,7 +120,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-fri"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
+     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -131,7 +136,8 @@ class HoursOfWeekContent
     public $hoursFri = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -139,7 +145,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-sat"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
+     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }
@@ -155,7 +161,8 @@ class HoursOfWeekContent
     public $hoursSat = null;
 
     /**
-     * @Form\AllowEmpty(true)
+     * @Form\Required(false)
+     * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
      *     "data-container-class": "inline-text"
@@ -163,7 +170,7 @@ class HoursOfWeekContent
      * @Form\Options({
      *     "label": "days-of-week-short-sun"
      * })
-     * @Form\Validator({"name":"Zend\I18n\Validator\Float", "options": {
+     * @Form\Validator({"name":"Zend\I18n\Validator\IsFloat", "options": {
      *     "messages": {
      *          "notFloat": "Only numbers are allowed"
      *     }

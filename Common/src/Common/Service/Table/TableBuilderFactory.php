@@ -1,22 +1,12 @@
 <?php
-
-/**
- * Zend Framework Compatible Table Builder Factory
- *
- * Creates an instance of TableBuilder and passes in the main service locator
- *
- * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
- */
-
 namespace Common\Service\Table;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Zend Framework Compatible Table Builder Factory
- *
- * Creates an instance of TableBuilder and passes in the main service locator
+ * Zend Framework Compatible Table Builder Factory. Creates an instance of
+ * TableBuilder and passes in the main service locator
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */

@@ -18,17 +18,12 @@ class PsvDiscsTest extends AbstractFormValidationTestCase
 
     public function testTable()
     {
-        $element = ['table', 'table'];
-        $this->assertFormElementTable($element);
-        $this->assertFormElementNotValid($element, null, ['required']);
-
-        $element = ['table', 'action'];
-        $this->assertFormElementHidden($element);
+        $this->assertFormElementTable(['table', 'table']);
+        $this->assertFormElementHidden(['table', 'action']);
+        $this->assertFormElementHidden(['table', 'id']);
 
         $element = ['table', 'rows'];
-        $this->assertFormElementHidden($element);
-
-        $element = ['table', 'id'];
-        $this->assertFormElementHidden($element);
+        $this->assertFormElementAllowEmpty($element, false);
+        $this->assertFormElementIsRequired($element);
     }
 }

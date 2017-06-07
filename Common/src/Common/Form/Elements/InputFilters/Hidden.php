@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Text
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element\Hidden as ZendElement;
@@ -13,15 +7,15 @@ use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
- * Text
+ * @deprecated This should not be used and must be removed as part of OLCS-15198
+ *             Replace other elements with the normal Text element provided by
+ *             Zend.
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * Custom Hidden Element
  */
 class Hidden extends ZendElement implements InputProviderInterface
 {
     protected $required = false;
-    protected $continueIfEmpty = false;
-    protected $allowEmpty = true;
     protected $max = null;
 
     public function __construct($name = null, $options = array())
@@ -30,13 +24,14 @@ class Hidden extends ZendElement implements InputProviderInterface
     }
 
     /**
-     * Get a list of validators
+     * @param int $max Max string length
      *
-     * @return array
+     * @return $this
      */
-    protected function getValidators()
+    public function setMax($max)
     {
-        return array();
+        $this->max = $max;
+        return $this;
     }
 
     /**
@@ -49,16 +44,24 @@ class Hidden extends ZendElement implements InputProviderInterface
         $specification = [
             'name' => $this->getName(),
             'required' => $this->required,
-            'continue_if_empty' => $this->continueIfEmpty,
-            'allow_empty' => $this->allowEmpty,
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim']
             ],
-            'validators' => $this->getValidators()
+            'validators' => [
+                [
+                    'name' => ZendValidator\NotEmpty::class,
+                    'options' => [
+                        'type' => ZendValidator\NotEmpty::NULL,
+                    ],
+                ],
+            ],
         ];
 
         if (!empty($this->max)) {
-            $specification['validators'][] = new ZendValidator\StringLength(['min' => 2, 'max' => $this->max]);
+            $specification['validators'][] = [
+                'name' => 'Zend\Validator\StringLength',
+                'options' => ['min' => 2, 'max' => $this->max]
+            ];
         }
 
         return $specification;

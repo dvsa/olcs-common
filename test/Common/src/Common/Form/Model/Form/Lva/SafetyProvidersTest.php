@@ -59,7 +59,7 @@ class SafetyProvidersTest extends AbstractFormValidationTestCase
     public function testSearchPostcode()
     {
         $element = ['address', 'searchPostcode'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcodeSearch($element);
     }
@@ -67,7 +67,7 @@ class SafetyProvidersTest extends AbstractFormValidationTestCase
     public function testAddressAddressLine1()
     {
         $element = ['address', 'addressLine1'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementText($element, 0, 90);
     }
@@ -75,7 +75,7 @@ class SafetyProvidersTest extends AbstractFormValidationTestCase
     public function testRegisteredAddressAddressLine2()
     {
         $element = ['address', 'addressLine2'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 0, 90);
     }
@@ -83,7 +83,7 @@ class SafetyProvidersTest extends AbstractFormValidationTestCase
     public function testAddressAddressLine3()
     {
         $element = ['address', 'addressLine3'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 0, 100);
     }
@@ -91,7 +91,7 @@ class SafetyProvidersTest extends AbstractFormValidationTestCase
     public function testAddressAddressLine4()
     {
         $element = ['address', 'addressLine4'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementText($element, 0, 35);
     }
@@ -105,7 +105,7 @@ class SafetyProvidersTest extends AbstractFormValidationTestCase
     public function testAddressPostcode()
     {
         $element = ['address', 'postcode'];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementPostcode($element);
     }
@@ -113,7 +113,7 @@ class SafetyProvidersTest extends AbstractFormValidationTestCase
     public function testCountryCode()
     {
         $element = ['address', 'countryCode'];
-        $this->assertFormElementRequired($element, true);
+        $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
         $this->assertFormElementDynamicSelect($element);
     }

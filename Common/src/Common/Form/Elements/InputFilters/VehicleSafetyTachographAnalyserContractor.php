@@ -1,24 +1,18 @@
 <?php
 
-/**
- * VehicleSafetyTachographAnalyserContractor
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorValidator;
 
 /**
- * VehicleSafetyTachographAnalyserContractor
+ * @deprecated This does not get used and must be removed as in: OLCS-15198
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * VehicleSafetyTachographAnalyserContractor
  */
-class VehicleSafetyTachographAnalyserContractor extends Text implements InputProviderInterface
+class VehicleSafetyTachographAnalyserContractor extends Text
 {
     protected $continueIfEmpty = true;
-    protected $allowEmpty = false;
+    protected $isAllowEmpty = false;
 
     /**
      * Get a list of validators
@@ -27,8 +21,11 @@ class VehicleSafetyTachographAnalyserContractor extends Text implements InputPro
      */
     protected function getValidators()
     {
-        return array(
-            new VehicleSafetyTachographAnalyserContractorValidator()
+        $validators = parent::getValidators();
+
+        return array_merge(
+            $validators,
+            [new VehicleSafetyTachographAnalyserContractorValidator()]
         );
     }
 }
