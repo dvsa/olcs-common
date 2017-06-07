@@ -551,16 +551,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
     }
 
     /**
-     * Delete message text key
-     *
-     * @return string
-     */
-    protected function getDeleteMessage()
-    {
-        return 'lva.section.operating_centres_delete';
-    }
-
-    /**
      * Delete message title key
      *
      * @return string
@@ -662,13 +652,14 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         //overwrite fields, and remove file upload fields
         $data['advertisements'] = [
-            'adPlaced' => 'N',
+            'adPlaced' => 0,
             'adPlacedIn' => '',
             'adPlacedDate' => [
                 'year' => null,
                 'month' => null,
                 'day' => null
-            ]
+            ],
+            'uploadValidator' => ''
         ];
 
         return $data;

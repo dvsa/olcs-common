@@ -2,36 +2,36 @@
 
 namespace CommonTest\Form\Elements\InputFilters;
 
-use Common\Form\Elements\InputFilters\Phone;
+use Common\Form\Elements\InputFilters\PhoneRequired;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
 /**
- * @covers \Common\Form\Elements\InputFilters\Phone
+ * @covers \Common\Form\Elements\InputFilters\PhoneRequired
  */
-class PhoneTest extends MockeryTestCase
+class PhoneRequiredTest extends MockeryTestCase
 {
     public function testInit()
     {
-        $sut = new Phone();
+        $sut = new PhoneRequired();
 
         $sut->init();
 
         static::assertSame('\d(\+|\-|\(|\))*', $sut->getAttribute('pattern'));
-        static::assertSame('contact-number-optional', $sut->getLabel());
+        static::assertSame('contact-number', $sut->getLabel());
     }
 
     public function testValidators()
     {
         /** @var Phone $sut */
-        $sut = m::mock(Phone::class)->makePartial()
+        $sut = m::mock(PhoneRequired::class)->makePartial()
             ->shouldReceive('getName')->once()->andReturn('unit_Name')
             ->getMock();
 
         $actual = $sut->getInputSpecification();
 
         static::assertEquals('unit_Name', $actual['name']);
-        static::assertFalse($actual['required']);
+        static::assertTrue($actual['required']);
         static::assertEquals(
             [
                 \Zend\Validator\NotEmpty::class,

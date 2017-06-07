@@ -437,16 +437,6 @@ abstract class AbstractTransportManagersController extends AbstractController im
     }
 
     /**
-     * Gives a new translation key to use for the delete modal text.
-     *
-     * @return string The message translation key.
-     */
-    protected function getDeleteMessage()
-    {
-        return 'review-transport_managers_delete';
-    }
-
-    /**
      * Override the delete title.
      *
      * @return string The modal message key.

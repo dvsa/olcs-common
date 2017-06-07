@@ -247,6 +247,15 @@ class FileUploadHelperService extends AbstractHelperService
         $postData = $this->findSelectorData((array)$this->request->getPost(), $this->getSelector());
         $fileData = $this->findSelectorData((array)$this->request->getFiles(), $this->getSelector());
 
+        //  if Files and Post are empty this is as symptom that the PHP ini post_max_size has been exceeded
+        if (empty($postData) && empty($fileData)) {
+            $this->getForm()->setMessages(
+                $this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . UPLOAD_ERR_INI_SIZE)
+            );
+
+            return false;
+        }
+
         /**
          * @TODO: these next two statements *are* temporary; the old MultipleFileUpload element groups
          * all its inputs (including the file itself) under a nested 'file-controls' fieldset. The updated

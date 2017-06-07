@@ -494,6 +494,16 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     }
 
     /**
+     * Get delete modal title
+     *
+     * @return string
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-vehicles';
+    }
+
+    /**
      * Process Reprint action
      *
      * @return \Common\View\Model\Section|\Zend\Http\Response
