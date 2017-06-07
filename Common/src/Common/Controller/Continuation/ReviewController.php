@@ -17,8 +17,8 @@ class ReviewController extends AbstractContinuationController
      */
     public function indexAction()
     {
-        $reviewData = $this->getLicenceData($this->getContinuationDetailId());
-        $view = new ViewModel(['content' => $reviewData['markup']]);
+        $reviewData = $this->getReviewData($this->getContinuationDetailId());
+        $view = new ViewModel(['content' => $reviewData]);
 
         $view->setTerminal(true);
         $view->setTemplate('layout/blank');
@@ -39,6 +39,6 @@ class ReviewController extends AbstractContinuationController
         if (!$response->isOk()) {
             $this->addErrorMessage('unknown-error');
         }
-        return $response->getResult()['licence'];
+        return $response->getResult()['markup'];
     }
 }
