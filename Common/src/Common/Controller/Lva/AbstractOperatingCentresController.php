@@ -254,10 +254,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $data = [];
 
         if ($request->isPost()) {
-            $data = (array)$request->getPost();
-            $data['advertisements']['uploadedFileCount'] = isset($data['advertisements']['file']['list']) ?
-                count($data['advertisements']['file']['list']) :
-                0;
+            $data = OperatingCentre::mapFromPost((array) $request->getPost());
         }
 
         $resultData = $this->fetchOcData();
