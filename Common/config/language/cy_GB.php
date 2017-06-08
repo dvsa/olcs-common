@@ -1008,7 +1008,6 @@ return [
     'transport-manager.responsibilities.hours-per-week-subtitle' => 'Faint o oriau fyddwch yn eu treulio ar eich dyletswyddau fel Rheolwr Trafnidiaeth?',
     'transport-manager.responsibilities.is-owner' => 'Ydych chi\'n berchennog/cyfarwyddwr y sefydliad sy\'n gwneud cais am y Drwydded Gweithredwr Cerbydau?',
     'transport-manager.responsibilities.table.licences' => 'Trwyddedau',
-    'transport-manager.responsibilities.tm-application-oc' => 'Pa ganolfannau gweithredu fyddwch yn gyfrifol amdanynt?',
     'transport-manager.responsibilities.tm-type' => 'Pa fath o reolwr trafnidiaeth fyddwch chi ar gyfer y drwydded hon?',
     'transport-managers-email-address' => 'Cyfeiriad e-bost y Rheolwr Trafnidiaeth',
     'transport_managers-details-OtherEmployments-delete-success' => 'Tynnwyd cyflogaeth(au) yn llwyddiannus',

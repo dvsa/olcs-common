@@ -1,14 +1,10 @@
 <?php
 
-/**
- * Abstract Service Factory
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Util;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\AbstractFactoryInterface;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Abstract Service Factory
@@ -20,9 +16,10 @@ class AbstractServiceFactory implements AbstractFactoryInterface
     /**
      * Determine if we can create a service with name
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param $name
-     * @param $requestedName
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator Service manager
+     * @param string                                       $name           Name
+     * @param string                                       $requestedName  Class Name
+     *
      * @return bool
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
@@ -33,16 +30,21 @@ class AbstractServiceFactory implements AbstractFactoryInterface
     /**
      * Create service with name
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param $name
-     * @param $requestedName
-     * @return mixed
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator Service manager
+     * @param string                                       $name           Name
+     * @param string                                       $requestedName  Class Name
+     *
+     * @return object
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
         $serviceClassName = $this->getClassName($requestedName);
 
         $service = new $serviceClassName();
+
+        if ($service instanceof FactoryInterface) {
+            return $service->createService($serviceLocator);
+        }
 
         return $service;
     }
@@ -53,10 +55,11 @@ class AbstractServiceFactory implements AbstractFactoryInterface
      * Helper\Access becomes Common\Service\Helper\AccessHelperService
      * Access becomes Common\Service\Access
      *
-     * @param string $name
+     * @param string $name Class name
+     *
      * @return string
      */
-    private function getClassName($name)
+    protected function getClassName($name)
     {
         $namespaces = [
             'Olcs\Service\\',

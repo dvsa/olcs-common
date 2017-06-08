@@ -23,14 +23,6 @@ class Responsibilities
     public $version = null;
 
     /**
-     * @Form\Attributes({"id": "", "placeholder": "", "class": "chosen-select-medium", "multiple": true})
-     * @Form\Options({"label": "transport-manager.responsibilities.tm-application-oc"})
-     * @Form\Filter({"name":"Common\Filter\NullToArray"})
-     * @Form\Type("Select")
-     */
-    public $operatingCentres = null;
-
-    /**
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.tm-type",
      *     "category": "tm_type",

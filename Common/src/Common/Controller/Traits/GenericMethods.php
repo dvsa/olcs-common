@@ -163,7 +163,7 @@ trait GenericMethods
      * @param array  $results Table Data
      * @param array  $data    Params
      *
-     * @return string
+     * @return \Common\Service\Table\TableBuilder
      */
     public function getTable($table, $results, $data = array())
     {
