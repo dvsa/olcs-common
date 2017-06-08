@@ -112,9 +112,7 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $permission = m::mock();
 
         $dataFieldset = m::mock();
-        $dataFieldset->shouldReceive('get')
-            ->with('sufficientParking')
-            ->andReturn($sufficientParking)
+        $dataFieldset
             ->shouldReceive('get')
             ->with('permission')
             ->andReturn($permission);
@@ -132,9 +130,6 @@ class CommonOperatingCentreTest extends MockeryTestCase
             ->shouldReceive('alterElementLabel')
             ->once()
             ->with($dataFieldset, '-psv', FormHelperService::ALTER_LABEL_APPEND)
-            ->shouldReceive('alterElementLabel')
-            ->once()
-            ->with($sufficientParking, '-psv', FormHelperService::ALTER_LABEL_APPEND)
             ->shouldReceive('alterElementLabel')
             ->once()
             ->with($permission, '-psv', FormHelperService::ALTER_LABEL_APPEND);

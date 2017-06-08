@@ -75,11 +75,6 @@ class CommonOperatingCentre extends AbstractFormService
             FormHelperService::ALTER_LABEL_APPEND
         );
         $this->getFormHelper()->alterElementLabel(
-            $form->get('data')->get('sufficientParking'),
-            '-psv',
-            FormHelperService::ALTER_LABEL_APPEND
-        );
-        $this->getFormHelper()->alterElementLabel(
             $form->get('data')->get('permission'),
             '-psv',
             FormHelperService::ALTER_LABEL_APPEND

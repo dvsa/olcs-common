@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Review Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Zend\View\Model\ViewModel;
