@@ -83,7 +83,7 @@ class CommonOperatingCentre extends AbstractFormService
     /**
      * Alter operating centre form for PSV
      *
-     * @param Form  $form   Form model
+     * @param Form $form Form model
      *
      * @return void
      */
