@@ -51,7 +51,7 @@ class CommonOperatingCentre extends AbstractFormService
     protected function alterForm(Form $form, array $params)
     {
         if ($params['isPsv']) {
-            $this->alterActionFormForPsv($form, $params);
+            $this->alterActionFormForPsv($form);
         }
 
         // Set the postcode field as not required
@@ -84,11 +84,10 @@ class CommonOperatingCentre extends AbstractFormService
      * Alter operating centre form for PSV
      *
      * @param Form  $form   Form model
-     * @param array $params Parameters for form
      *
      * @return void
      */
-    protected function alterActionFormForPsv(Form $form, array $params)
+    protected function alterActionFormForPsv(Form $form)
     {
         $this->getFormHelper()->remove($form, 'data->noOfTrailersRequired');
         $this->getFormHelper()->remove($form, 'advertisements');
