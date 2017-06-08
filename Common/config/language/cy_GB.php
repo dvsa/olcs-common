@@ -1283,5 +1283,9 @@ return [
     'pagination.next' => 'Nesaf',
     'pagination.previous' => 'Bblaenorol',
     'dashboard-correspondence.table.column.issuedDate' =>'Dyddiad cyhoeddi',
+    'continuations.type-of-licence-checkbox.label' => 'Math o drwydded',
+    'continuations.type-of-licence.type-of-licence' => 'Math o drwydded',
+    'continuations.type-of-licence.gb' => 'Prydain Fawr',
+    'continuations.type-of-licence.ni' => 'Gogledd Iwerddon',
     // Potentially unused translations
 ];
