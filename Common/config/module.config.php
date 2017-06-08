@@ -72,6 +72,7 @@ return array(
             'ContinuationController/Declaration' => \Common\Controller\Continuation\DeclarationController::class,
             'ContinuationController/Payment' => \Common\Controller\Continuation\PaymentController::class,
             'ContinuationController/Success' => \Common\Controller\Continuation\SuccessController::class,
+            'ContinuationController/Review' => \Common\Controller\Continuation\ReviewController::class,
         ],
     ),
     'controller_plugins' => array(

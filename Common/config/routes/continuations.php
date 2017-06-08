@@ -67,6 +67,16 @@ return [
                     ]
                 ],
             ],
+            'review' => [
+                'type' => Http\Literal::class,
+                'options' =>  [
+                    'route' => '/review',
+                    'defaults' => [
+                        'controller' => 'ContinuationController/Review',
+                        'action' => 'index'
+                    ]
+                ],
+            ],
         ],
     ],
 ];
