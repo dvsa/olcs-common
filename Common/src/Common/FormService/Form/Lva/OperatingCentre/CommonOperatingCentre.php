@@ -19,6 +19,14 @@ use Zend\Http\Request;
  */
 class CommonOperatingCentre extends AbstractFormService
 {
+    /**
+     * Get operating centre form
+     *
+     * @param array   $params  Parameters for form
+     * @param Request $request HTTP Request parameters
+     *
+     * @return \Zend\Form\FormInterface
+     */
     public function getForm(array $params, Request $request)
     {
         $form = $this->getFormHelper()->createFormWithRequest('Lva\OperatingCentre', $request);
@@ -32,6 +40,14 @@ class CommonOperatingCentre extends AbstractFormService
         return $form;
     }
 
+    /**
+     * Alter operating centre form
+     *
+     * @param Form  $form   Form model
+     * @param array $params Parameters for form
+     *
+     * @return void
+     */
     protected function alterForm(Form $form, array $params)
     {
         if ($params['isPsv']) {
@@ -64,6 +80,14 @@ class CommonOperatingCentre extends AbstractFormService
         $form->get('address')->get('postcode')->setOption('shouldEscapeMessages', false);
     }
 
+    /**
+     * Alter operating centre form for PSV
+     *
+     * @param Form  $form   Form model
+     * @param array $params Parameters for form
+     *
+     * @return void
+     */
     protected function alterActionFormForPsv(Form $form, array $params)
     {
         $this->getFormHelper()->remove($form, 'data->noOfTrailersRequired');
@@ -84,7 +108,9 @@ class CommonOperatingCentre extends AbstractFormService
     /**
      * Disable and lock address fields
      *
-     * @param \Zend\Form\Form $form
+     * @param \Zend\Form\Form $form Form model
+     *
+     * @return void
      */
     protected function disableAddressFields($form)
     {
