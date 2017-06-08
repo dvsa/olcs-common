@@ -432,8 +432,6 @@ return [
     'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired' => 'Total number of vehicles',
     'application_operating-centres_authorisation-sub-action.data.permission' => 'I have enough off-street spaces for all the vehicles and trailers I want to keep at this address and I am the site owner or have the owner\'s permission to park them',
     'application_operating-centres_authorisation-sub-action.data.permission-psv' => 'I have enough off-street spaces for all the vehicles I want to keep at this address and I am the site owner or have the owner\'s permission to park them',
-//    'application_operating-centres_authorisation-sub-action.data.sufficientParking' => 'I have enough off-street parking spaces available for the total number of vehicles and trailers that I want to keep at this address',
-//    'application_operating-centres_authorisation-sub-action.data.sufficientParking-psv' => 'I have enough off-street parking spaces available for the total number of vehicles that I want to keep at this address',
     'application_operating-centres_authorisation-tableEmptyMessage' => 'Add an operating centre',
     'application_operating-centres_authorisation.data' => 'Authorisation',
     'application_operating-centres_authorisation.data.hint' => 'How many vehicles and trailers do you want to authorise on the licence?',

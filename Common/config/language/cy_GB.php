@@ -83,8 +83,6 @@ return [
     'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired' => 'Cyfanswm cerbydau',
     'application_operating-centres_authorisation-sub-action.data.permission' => 'Rywf naill ai\'n berchennog y safle neu mae gennyf ganiatâd gan berchennog y safle i ddefnyddio\'r safle i barcio\'r nifer o gerbydau ac ôl-gerbydau a ddatgenir',
     'application_operating-centres_authorisation-sub-action.data.permission-psv' => 'Rwyf naill ai yn berchennog y safle neu mae gennyf ganiatâd gan berchennog y safle i ddefnyddio\'r safle i barcio\'r nifer o gerbydau a ddatgenir',
-//    'application_operating-centres_authorisation-sub-action.data.sufficientParking' => 'Mae gennyf ddigon o fannau parcio oddi ar y stryd ar gael ar gyfer y cyfanswm o gerbydau ac ôl-gerbydau rwyf am eu cadw yn y cyfeiriad hwn',
-//    'application_operating-centres_authorisation-sub-action.data.sufficientParking-psv' => 'Mae gennyf ddigon o fannau parcio oddi ar y stryd ar gael ar gyfer cyfanswm y cerbydau rwyf am eu cadw yn y cyfeiriad hwn',
     'application_operating-centres_authorisation-tableEmptyMessage' => 'Ychwanegu canolfan weithredu',
     'application_operating-centres_authorisation.data' => 'Awdurdodiad',
     'application_operating-centres_authorisation.data.hint' => 'Faint o gerbydau ac ôl-gerbydau ydych chi eisiau eu hawdurdodi ar y drwydded?',
