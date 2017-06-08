@@ -108,7 +108,6 @@ class CommonOperatingCentreTest extends MockeryTestCase
             'wouldIncreaseRequireAdditionalAdvertisement' => false
         ];
 
-        $sufficientParking = m::mock();
         $permission = m::mock();
 
         $dataFieldset = m::mock();

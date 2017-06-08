@@ -49,7 +49,6 @@ return [
     'ERR_OC_PSV_SUM_1A' => 'The sum of small, medium and large vehicles does not match the total number of vehicles',
     'ERR_OC_PSV_SUM_1B' => 'The sum of small and medium vehicles does not match the total number of vehicles',
     'ERR_OC_R_1' => 'The total number of vehicles on a restricted licence cannot exceed 2',
-    'ERR_OC_SUFFICIENT_PARKING' => 'Check box to continue',
     'ERR_OC_TA_1' => 'Please select a traffic area',
     'ERR_OC_T_1' => 'The total number of trailers must be the same as at your operating centre.',
     'ERR_OC_T_2' => 'You can\'t have fewer trailers than your largest operating centre',

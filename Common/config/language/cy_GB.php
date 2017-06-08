@@ -8,7 +8,6 @@ return [
     'Continue' => 'Parhau',
     'Date' => 'Dyddiad',
     'ERR_OC_PERMISSION' => 'Rhaid nodi’r blwch hwn i barhau',
-    'ERR_OC_SUFFICIENT_PARKING' => 'Rhaid nodi’r blwch hwn i barhau',
     'ERR_OC_T_1' => 'Os ydych yn gwneud cais am un ganolfan weithredu yn unig, rhaid i gyfanswm yr ôl-gerbydau awdurdodedig fod yr un peth ag yn eich canolfan weithredu',
     'ERR_OC_V_1' => 'Os ydych yn gwneud cais am un ganolfan weithredu yn unig, rhaid i gyfanswm y cerbydau awdurdodedig fod yr un peth ag yn eich canolfan weithredu',
     'ERR_PSV_VE_NO_ROWS' => 'Ychwanegu o leiaf un cerbyd',
