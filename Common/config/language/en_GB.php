@@ -24,7 +24,7 @@ return [
     'Applicant' => 'Applicant',
     'Application reference' => 'Application reference',
     'Authorisation' => 'Authorisation',
-    'BUS_TYP_REQ_CONF' => 'The items below will be deleted. Would you like to continue? <ul>%s</ul>',
+    'BUS_TYP_REQ_CONF' => 'The items below will be deleted. <ul class="list--bullet">%s</ul> <p>Would you like to continue?</p>',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
     'DATE_ERR_CONTAINS_STRING' => 'The date should be entered in number format',
