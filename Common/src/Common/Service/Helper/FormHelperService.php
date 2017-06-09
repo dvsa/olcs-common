@@ -90,7 +90,8 @@ class FormHelperService extends AbstractHelperService
                 'attributes' => array(
                     'type' => 'submit',
                     'class' => 'visually-hidden',
-                    'id' => 'hidden-continue'
+                    'style' => 'display: none;',
+                    'id' => 'hidden-continue',
                 )
             );
             $form->add($config);

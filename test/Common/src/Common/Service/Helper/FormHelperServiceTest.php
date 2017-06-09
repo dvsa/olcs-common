@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Form Helper Service Test
- *
- * @author Nick Payne <nick.payne@valtech.co.uk>
- */
 namespace CommonTest\Service\Helper;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -103,6 +98,7 @@ class FormHelperServiceTest extends MockeryTestCase
                     'attributes' => array(
                         'type' => 'submit',
                         'class' => 'visually-hidden',
+                        'style' => 'display: none;',
                         'id' => 'hidden-continue'
                     )
                 )
