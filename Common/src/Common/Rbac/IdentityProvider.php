@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Identity Provider
- */
 namespace Common\Rbac;
 
 use Common\Service\Cqrs\Query\QuerySender;

@@ -122,13 +122,6 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
         $this->assertFormElementValid($element, 1000000);
     }
 
-    public function testSufficientParkingCheckbox()
-    {
-        $element = [ 'data', 'sufficientParking' ];
-        $this->assertFormElementType($element, SingleCheckbox::class);
-        $this->assertFormElementIsRequired($element, true);
-    }
-
     public function testPermissionCheckbox()
     {
         $element = [ 'data', 'permission' ];
@@ -147,14 +140,14 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
     {
         $element = [ 'advertisements', 'adPlacedPost' ];
         $this->assertFormElementType($element, \Zend\Form\Element\Radio::class);
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
     }
 
     public function testAdvertisementsAdPlacedLater()
     {
         $element = [ 'advertisements', 'adPlacedLater' ];
         $this->assertFormElementType($element, \Zend\Form\Element\Radio::class);
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
     }
 
     public function testAdvertisementsAdIn()
