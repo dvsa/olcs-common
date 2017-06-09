@@ -25,7 +25,6 @@ class OperatingCentreTest extends MockeryTestCase
             'version' => 1,
             'noOfVehiclesRequired' => 10,
             'noOfTrailersRequired' => 11,
-            'sufficientParking' => 12,
             'permission' => 13,
             'operatingCentre' => [
                 'foo' => 'bar',
@@ -44,7 +43,6 @@ class OperatingCentreTest extends MockeryTestCase
             'data' => [
                 'noOfVehiclesRequired' => 10,
                 'noOfTrailersRequired' => 11,
-                'sufficientParking' => 12,
                 'permission' => 13,
             ],
             'operatingCentre' => [
@@ -97,7 +95,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'data' => [
                         'noOfVehiclesRequired' => 10,
                         'noOfTrailersRequired' => 11,
-                        'sufficientParking' => 'Y',
                         'permission' => 'Y'
                     ],
                     'advertisements' => [
@@ -111,7 +108,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'address' => ['foo' => 'bar'],
                     'noOfVehiclesRequired' => 10,
                     'noOfTrailersRequired' => 11,
-                    'sufficientParking' => 'Y',
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_NOW,
                     'adPlacedNow' => RefData::AD_UPLOAD_NOW,
@@ -126,7 +122,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'data' => [
                         'noOfVehiclesRequired' => 10,
                         'noOfTrailersRequired' => 11,
-                        'sufficientParking' => 'Y',
                         'permission' => 'Y'
                     ],
                     'advertisements' => [
@@ -140,7 +135,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'address' => ['foo' => 'bar'],
                     'noOfVehiclesRequired' => 10,
                     'noOfTrailersRequired' => 11,
-                    'sufficientParking' => 'Y',
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_POST,
                     'adPlacedPost' => RefData::AD_POST,
@@ -155,7 +149,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'data' => [
                         'noOfVehiclesRequired' => 10,
                         'noOfTrailersRequired' => 11,
-                        'sufficientParking' => 'Y',
                         'permission' => 'Y'
                     ],
                     'advertisements' => [
@@ -169,7 +162,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'address' => ['foo' => 'bar'],
                     'noOfVehiclesRequired' => 10,
                     'noOfTrailersRequired' => 11,
-                    'sufficientParking' => 'Y',
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_LATER,
                     'adPlacedLater' => RefData::AD_UPLOAD_LATER,
@@ -200,9 +192,6 @@ class OperatingCentreTest extends MockeryTestCase
                 ],
                 'noOfTrailersRequired' => [
                     'bar2'
-                ],
-                'sufficientParking' => [
-                    'bar5'
                 ],
                 'permission' => [
                     'bar6'
@@ -244,9 +233,6 @@ class OperatingCentreTest extends MockeryTestCase
             ],
             'adPlacedDate' => [
                 'foo' => 'bar4'
-            ],
-            'sufficientParking' => [
-                'foo' => 'bar5'
             ],
             'permission' => [
                 'foo' => 'bar6'
