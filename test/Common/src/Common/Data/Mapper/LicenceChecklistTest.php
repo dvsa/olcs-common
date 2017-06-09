@@ -17,6 +17,7 @@ class LicenceChecklistTest extends MockeryTestCase
 {
     /**
      * @dataProvider operatingFromProvider
+     * @group test123
      */
     public function testMapFromResultToView($key, $description, $code)
     {
@@ -30,6 +31,11 @@ class LicenceChecklistTest extends MockeryTestCase
             ],
             'licenceType' => [
                 'description' => 'Cake'
+            ],
+            'organisation' => [
+                'type' => [
+                    'description' => 'Limited Company'
+                ]
             ]
         ];
         $out = [
@@ -37,6 +43,9 @@ class LicenceChecklistTest extends MockeryTestCase
                 'operatingFrom' => $description,
                 'goodsOrPsv' => 'Bar',
                 'licenceType' => 'Cake'
+            ],
+            'businessType' => [
+                'typeOfBusiness' => 'Limited Company'
             ]
         ];
         $mockTranslator = m::mock(TranslationHelperService::class)

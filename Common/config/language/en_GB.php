@@ -3050,6 +3050,8 @@ return [
     'continuations.type-of-licence.type-of-licence' => 'Type of licence',
     'continuations.type-of-licence.gb' => 'Great Britain',
     'continuations.type-of-licence.ni' => 'Northern Ireland',
+    'continuations.business-type-checkbox.label' => 'Business type',
+    'continuations.business-type.type-of-business' => 'Type of business',
     'contact-number' => 'Contact number',
     'contact-number-optional' => 'Contact number (optional)',
     'secondary-contact-number-optional' => 'Secondary contact number (optional)',

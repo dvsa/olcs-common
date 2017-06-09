@@ -1287,5 +1287,6 @@ return [
     'continuations.type-of-licence.type-of-licence' => 'Math o drwydded',
     'continuations.type-of-licence.gb' => 'Prydain Fawr',
     'continuations.type-of-licence.ni' => 'Gogledd Iwerddon',
+    'continuations.business-type-checkbox.label' => 'Math o fusnes',
     // Potentially unused translations
 ];

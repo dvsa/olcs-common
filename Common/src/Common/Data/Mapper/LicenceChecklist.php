@@ -22,6 +22,9 @@ class LicenceChecklist
                         : $translator->translate('continuations.type-of-licence.gb'),
                 'goodsOrPsv' => $data['goodsOrPsv']['description'],
                 'licenceType' => $data['licenceType']['description']
+            ],
+            'businessType' => [
+                'typeOfBusiness' => $data['organisation']['type']['description']
             ]
         ];
     }
