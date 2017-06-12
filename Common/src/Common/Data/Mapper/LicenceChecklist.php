@@ -50,6 +50,7 @@ class LicenceChecklist
     {
         $organisation = $data['organisation'];
         $organisationType = $organisation['type'];
+        $organisationTypeId = $organisationType['id'];
         $businessDetails = [];
         $baseCompanyTypes = [
             RefData::ORG_TYPE_REGISTERED_COMPANY,
@@ -73,14 +74,14 @@ class LicenceChecklist
         ];
         if (in_array($organisationType['id'], $baseCompanyTypes)) {
             $businessDetails['companyName'] = $organisation['name'];
-            $businessDetails['organisationLabel'] = $organisationLabels[$organisationType['id']];
+            $businessDetails['organisationLabel'] = $organisationLabels[$organisationTypeId];
         }
-        if ($organisationType['id'] !== RefData::ORG_TYPE_OTHER) {
+        if ($organisationTypeId !== RefData::ORG_TYPE_OTHER) {
             $businessDetails['tradingNames'] = count($data['tradingNames']) !== 0
                 ? implode(', ', array_column($data['tradingNames'], 'name'))
                 : $translator->translate('continuations.business-details.trading-names.none-added');
         }
-        if (in_array($organisationType['id'], $limitedCompanyTypes)) {
+        if (in_array($organisationTypeId, $limitedCompanyTypes)) {
             $businessDetails['companyNumber'] = $organisation['companyOrLlpNo'];
         }
         return $businessDetails;
