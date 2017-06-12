@@ -32,7 +32,6 @@ class OperatingCentre implements MapperInterface
             'data' => [
                 'noOfVehiclesRequired' => $data['noOfVehiclesRequired'],
                 'noOfTrailersRequired' => $data['noOfTrailersRequired'],
-                'sufficientParking' => $data['sufficientParking'],
                 'permission' => $data['permission'],
             ],
             'operatingCentre' => $data['operatingCentre'],
@@ -58,7 +57,6 @@ class OperatingCentre implements MapperInterface
             'address' => isset($data['address']) ? $data['address'] : null,
             'noOfVehiclesRequired' => null,
             'noOfTrailersRequired' => null,
-            'sufficientParking' => null,
             'permission' => null,
             'adPlaced' => null,
             'adPlacedIn' => null,
@@ -194,14 +192,6 @@ class OperatingCentre implements MapperInterface
             unset($errors['postcode']);
         }
 
-        if (isset($errors['sufficientParking'])) {
-
-            foreach ($errors['sufficientParking'] as $key => $message) {
-                $formMessages['data']['sufficientParking'][] = $message;
-            }
-
-            unset($errors['sufficientParking']);
-        }
         if (isset($errors['permission'])) {
 
             foreach ($errors['permission'] as $key => $message) {

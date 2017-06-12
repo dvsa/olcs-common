@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Review Controller
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Zend\View\Model\ViewModel;
@@ -19,6 +14,11 @@ class ReviewController extends AbstractController implements Interfaces\AdapterA
 {
     use Traits\AdapterAwareTrait;
 
+    /**
+     * Review application action
+     *
+     * @return ViewModel
+     */
     public function indexAction()
     {
         $response = $this->handleQuery(Review::create(['id' => $this->params('application')]));

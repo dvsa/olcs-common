@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Common Goods Vehicles Filters Form
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
@@ -16,6 +11,11 @@ use Common\FormService\Form\AbstractFormService;
  */
 class CommonGoodsVehiclesFilters extends AbstractFormService
 {
+    /**
+     * Get Form
+     *
+     * @return \Zend\Form\FormInterface
+     */
     public function getForm()
     {
         $form = $this->getFormHelper()->createForm('Lva\VehicleFilter', false);
