@@ -47,6 +47,24 @@ class LicenceChecklist
     public $businessType = null;
 
     /**
+     * @Form\Type("OlcsCheckbox")
+     * @Form\Attributes({"id":"businessTypeCheckbox"})
+     * @Form\Options({
+     *     "label":"continuations.business-details-checkbox.label",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
+     * })
+     */
+    public $businessDetailsCheckbox = null;
+
+    /**
+     * @Form\Attributes({"value": "markup-continuation-licence-checklist-business-details"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $businessDetails = null;
+
+    /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({"label":"Continue"})
      * @Form\Type("\Zend\Form\Element\Button")
