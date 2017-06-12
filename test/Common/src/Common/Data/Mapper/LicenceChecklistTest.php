@@ -17,7 +17,6 @@ class LicenceChecklistTest extends MockeryTestCase
 {
     /**
      * @dataProvider operatingFromProvider
-     * @group test123
      */
     public function testMapFromResultToView($key, $description, $code)
     {
