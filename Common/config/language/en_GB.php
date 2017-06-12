@@ -158,6 +158,7 @@ return [
     'advertising-your-operating-centre-ni-new-title' => 'How to advertise your application',
     'advertising-your-operating-centre-ni-var-title' => 'How to advertise your application',
     'advertisements_adPlaced-error' => 'Tell us how you\'d like to send your advert',
+    'advertisements_value_is_required' => 'Value is required',
     'agree' => 'Agree',
     'alternative-operator-location-lock-message-gb' => 'Please contact the Operator Licensing office if you need to apply for a new licence in Northern Ireland',
     'alternative-operator-location-lock-message-ni' => 'Please contact the Operator Licensing office if you need to apply for a new licence in Great Britain',
