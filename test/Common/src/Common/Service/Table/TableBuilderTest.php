@@ -71,6 +71,9 @@ class TableBuilderTest extends MockeryTestCase
                             'html' => ''
                         )
                     ),
+                    'csrf' => [
+                        'timeout' => 9999,
+                    ],
                 )
                 : array())
             ],
@@ -766,6 +769,17 @@ class TableBuilderTest extends MockeryTestCase
         $table->setSettings($settings);
 
         $table->renderTable();
+
+        $csrfElm = $table->getCsrfElement();
+        static::assertEquals('security', $csrfElm->getName());
+        static::assertEquals(
+            [
+                'csrf_options' => [
+                    'timeout' => 9999,
+                ],
+            ],
+            $csrfElm->getOptions()
+        );
     }
 
     /**

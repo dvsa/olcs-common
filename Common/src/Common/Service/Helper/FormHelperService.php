@@ -33,20 +33,17 @@ class FormHelperService extends AbstractHelperService
     const ALTER_LABEL_APPEND = 1;
     const ALTER_LABEL_PREPEND = 2;
 
-    const CSRF_TIMEOUT = 3600;
-
     const MIN_COMPANY_NUMBER_LENGTH = 1;
     const MAX_COMPANY_NUMBER_LENGTH = 8;
 
     /**
      * Create a form
      *
-     * @param string $formName
-     * @param bool $addCsrf
-     * @param bool $addContinue
+     * @param string $formName    Form Name
+     * @param bool   $addCsrf     Is need add CSRF field
+     * @param bool   $addContinue Is need add Continue button
      *
-     * @return \Zend\Form\Form
-     * @throws \Exception
+     * @return \Common\Form\Form
      */
     public function createForm($formName, $addCsrf = true, $addContinue = true)
     {
@@ -56,43 +53,47 @@ class FormHelperService extends AbstractHelperService
             $class = $this->findForm($formName);
         }
 
-        $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
+        $sm = $this->getServiceLocator();
+        $annotationBuilder = $sm->get('FormAnnotationBuilder');
+        $cfg = $sm->get('Config');
 
         /** @var \Zend\Form\FormInterface $form */
         $form = $annotationBuilder->createForm($class);
 
+        //  add CSRF element
         if ($addCsrf) {
-            $config = array(
-                'type' => 'Zend\Form\Element\Csrf',
+            $config = [
+                'type' => \Zend\Form\Element\Csrf::class,
                 'name' => 'security',
-                'attributes' => array(
+                'attributes' => [
                     'class' => 'js-csrf-token',
-                ),
-                'options' => array(
-                    'csrf_options' => array(
+                ],
+                'options' => [
+                    'csrf_options' => [
                         'messageTemplates' => array(
-                            'notSame' => 'csrf-message'
+                            'notSame' => 'csrf-message',
                         ),
-                        'timeout' => self::CSRF_TIMEOUT
-                    )
-                )
-            );
+                        'timeout' => $cfg['csrf']['timeout'],
+                    ],
+                ],
+            ];
             $form->add($config);
         }
 
+        //  add button "Continue" element
         if ($addContinue) {
             $config = array(
-                'type' => '\Zend\Form\Element\Button',
+                'type' => \Zend\Form\Element\Button::class,
                 'name' => 'form-actions[continue]',
                 'options' => array(
-                    'label' => 'Continue'
+                    'label' => 'Continue',
                 ),
                 'attributes' => array(
                     'type' => 'submit',
                     'class' => 'visually-hidden',
                     'style' => 'display: none;',
                     'id' => 'hidden-continue',
-                )
+                ),
             );
             $form->add($config);
         }
@@ -166,7 +167,6 @@ class FormHelperService extends AbstractHelperService
      * @param string $formName Form Name
      *
      * @return string
-     * @throws \Exception
      */
     private function findForm($formName)
     {
@@ -462,6 +462,7 @@ class FormHelperService extends AbstractHelperService
             $value = $element->getValue();
 
             if (empty($value) || $element instanceof Checkbox) {
+
                 $filter->get($key)
                     ->setRequired(false)
                     ->setValidatorChain(
@@ -705,16 +706,16 @@ class FormHelperService extends AbstractHelperService
     /**
      * Check for company number lookups
      *
+     * @param \Zend\Form\FormInterface $form            Form
+     * @param array                    $data            Data
+     * @param string                   $detailsFieldset Name of Details fieldset
+     * @param string                   $addressFieldset Name of Address fieldset
+     *
      * @NOTE Doesn't quite adhere to the same interface as the other process*LookupForm
      * methods as it already expects the presence of a company number field to have been
      * determined, and it expects an array of data rather than a request
      *
-     * @param Form $form
-     * @param array $data
-     * @param string $detailsFieldset
-     * @param string $addressFieldset
-     *
-     * @return boolean
+     * @return void
      */
     public function processCompanyNumberLookupForm(Form $form, $data, $detailsFieldset, $addressFieldset = null)
     {
@@ -883,7 +884,7 @@ class FormHelperService extends AbstractHelperService
      * @param string                   $reference      Field Ref
      * @param string                   $validatorClass Validator Class
      *
-     * @return null|ValidatorInterface
+     * @return null
      */
     public function getValidator(FormInterface $form, $reference, $validatorClass)
     {
