@@ -113,7 +113,7 @@ class People extends InternalSearchAbstract
     public function getColumns()
     {
         return [
-            ['title' => 'Found As', 'name'=> 'foundAs'],
+            ['title' => 'Found as', 'name'=> 'foundAs'],
             [
                 'title' => 'Record',
                 'formatter' => function ($row, $column, $serviceLocator) {
