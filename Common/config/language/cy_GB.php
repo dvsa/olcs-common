@@ -1285,5 +1285,12 @@ return [
     'continuations.type-of-licence.gb' => 'Prydain Fawr',
     'continuations.type-of-licence.ni' => 'Gogledd Iwerddon',
     'continuations.business-type-checkbox.label' => 'Math o fusnes',
+    'continuations.business-details-checkbox.label' => 'Manylion y busnes',
+    'continuations.business-details.trading-names' => 'Enwau masnachu',
+    'continuations.business-details.trading-names.none-added' => 'Dim wedi ei ychwanegu',
+    'continuations.business-details.company-number' => 'Rhif cwmni cofrestredig',
+    'continuations.business-details.company-name' => 'Enw\'r cwmni',
+    'continuations.business-details.partnership-name' => 'Partneriaeth',
+    'continuations.business-details.organisation-name' => 'Enw’r sefydliad',
     // Potentially unused translations
 ];

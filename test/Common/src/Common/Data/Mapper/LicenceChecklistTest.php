@@ -18,7 +18,7 @@ class LicenceChecklistTest extends MockeryTestCase
     /**
      * @dataProvider operatingFromProvider
      */
-    public function testMapFromResultToView($key, $description, $code)
+    public function testMapFromResultToView($key, $code)
     {
         $in = [
             'trafficArea' => [
@@ -33,25 +33,44 @@ class LicenceChecklistTest extends MockeryTestCase
             ],
             'organisation' => [
                 'type' => [
-                    'description' => 'Limited Company'
+                    'description' => 'Limited Company',
+                    'id' => RefData::ORG_TYPE_REGISTERED_COMPANY
+                ],
+                'name' => 'Foo Ltd',
+                'companyOrLlpNo' => '12345678'
+            ],
+            'tradingNames' => [
+                [
+                    'name' => 'aaa'
+                ],
+                [
+                    'name' => 'bbb'
                 ]
             ]
         ];
         $out = [
             'typeOfLicence' => [
-                'operatingFrom' => $description,
+                'operatingFrom' => $key . '_translated',
                 'goodsOrPsv' => 'Bar',
                 'licenceType' => 'Cake'
             ],
             'businessType' => [
                 'typeOfBusiness' => 'Limited Company'
+            ],
+            'businessDetails' => [
+                'companyName' => 'Foo Ltd',
+                'companyNumber' => '12345678',
+                'organisationLabel' => 'continuations.business-details.company-name_translated',
+                'tradingNames' => 'aaa, bbb',
             ]
         ];
         $mockTranslator = m::mock(TranslationHelperService::class)
             ->shouldReceive('translate')
-            ->with($key)
-            ->once()
-            ->andReturn($description)
+            ->andReturnUsing(
+                function ($arg) {
+                    return $arg . '_translated';
+                }
+            )
             ->getMock();
 
         $this->assertEquals($out, LicenceChecklist::mapFromResultToView($in, $mockTranslator));
@@ -60,8 +79,8 @@ class LicenceChecklistTest extends MockeryTestCase
     public function operatingFromProvider()
     {
         return [
-            ['continuations.type-of-licence.ni', 'Baz', RefData::NORTHERN_IRELAND_TRAFFIC_AREA_CODE],
-            ['continuations.type-of-licence.gb', 'Baz1', 'B']
+            ['continuations.type-of-licence.ni', RefData::NORTHERN_IRELAND_TRAFFIC_AREA_CODE],
+            ['continuations.type-of-licence.gb', 'B']
         ];
     }
 }
