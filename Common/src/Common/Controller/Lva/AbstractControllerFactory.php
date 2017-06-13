@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Abstract Controller Factory
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Controller\Lva;
 
 use Zend\ServiceManager\AbstractFactoryInterface;
+use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -20,9 +16,10 @@ class AbstractControllerFactory implements AbstractFactoryInterface
     /**
      * Determine if we can create a service with name
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param $name
-     * @param $requestedName
+     * @param \Zend\Mvc\Controller\ControllerManager $serviceLocator Controller service manager
+     * @param string                                 $name           Name
+     * @param string                                 $requestedName  Class Name
+     *
      * @return bool
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
@@ -35,18 +32,26 @@ class AbstractControllerFactory implements AbstractFactoryInterface
     /**
      * Create service with name
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param $name
-     * @param $requestedName
-     * @return mixed
+     * @param \Zend\Mvc\Controller\ControllerManager $serviceLocator Controller service manager
+     * @param string                                 $name           Name
+     * @param string                                 $requestedName  Class Name
+     *
+     * @return \Zend\Mvc\Controller\AbstractActionController
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $config =  $serviceLocator->getServiceLocator()->get('Config');
+        /** @var \Zend\ServiceManager\ServiceLocatorInterface $sm */
+        $sm = $serviceLocator->getServiceLocator();
+
+        $config = $sm->get('Config');
 
         $class = $config['controllers']['lva_controllers'][$requestedName];
 
         $controller = new $class;
+
+        if ($controller instanceof FactoryInterface) {
+            return $controller->createService($sm);
+        }
 
         return $controller;
     }

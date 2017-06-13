@@ -1,21 +1,37 @@
 <?php
 
-/**
- * Transport Manager Helper Service
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Service\Helper;
 
 use Common\Service\Data\CategoryDataService;
+use Common\Service\Table\TableBuilder;
+use Zend\Form\Fieldset;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Transport Manager Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TransportManagerHelperService extends AbstractHelperService
+class TransportManagerHelperService extends AbstractHelperService implements FactoryInterface
 {
+    /** @var FormHelperService */
+    private $formHelper;
+
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator Service manager
+     *
+     * @return $this
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->formHelper = $serviceLocator->get('Helper\Form');
+
+        return $this;
+    }
+
     public function getCertificateFiles($tmId)
     {
         return $this->getServiceLocator()->get('Entity\TransportManager')
@@ -39,15 +55,19 @@ class TransportManagerHelperService extends AbstractHelperService
         ];
     }
 
-    public function alterResponsibilitiesFieldset($fieldset, $ocOptions, $otherLicencesTable)
+    /**
+     * Alter Responsibilities Fieldset
+     *
+     * @param Fieldset     $fieldset           Fieldset element
+     * @param TableBuilder $otherLicencesTable Other lics table
+     *
+     * @return void
+     */
+    public function alterResponsibilitiesFieldset(Fieldset $fieldset, TableBuilder $otherLicencesTable)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $this->formHelper->removeOption($fieldset->get('tmType'), 'tm_t_b');
 
-        $fieldset->get('operatingCentres')->setValueOptions($ocOptions);
-
-        $formHelper->removeOption($fieldset->get('tmType'), 'tm_t_b');
-
-        $formHelper->populateFormTable($fieldset->get('otherLicences'), $otherLicencesTable);
+        $this->formHelper->populateFormTable($fieldset->get('otherLicences'), $otherLicencesTable);
     }
 
     public function getResponsibilityFileData($tmId)
@@ -86,6 +106,7 @@ class TransportManagerHelperService extends AbstractHelperService
     {
         $annotationBuilder = $this->getServiceLocator()->get('TransferAnnotationBuilder');
         $queryService = $this->getServiceLocator()->get('QueryService');
+        /** @var \Common\Service\Cqrs\Response $response */
         $response = $queryService->send($annotationBuilder->createQuery($dto));
 
         if (!$response->isOk()) {

@@ -9,13 +9,17 @@ use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
 use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
 use Dvsa\Olcs\Transfer\Command;
 use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Abstract Transport Managers Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractTransportManagersController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractTransportManagersController extends AbstractController implements
+    AdapterAwareInterface,
+    FactoryInterface
 {
     use Traits\CrudTableTrait;
 
@@ -26,6 +30,26 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /** @var  AbstractTransportManagerAdapter */
     protected $adapter;
     protected $baseRoute = 'lva-%s/transport_managers';
+
+    /** @var  \Common\Service\Helper\FormHelperService */
+    protected $hlpForm;
+    /** @var  \Common\Service\Helper\TransportManagerHelperService */
+    protected $hlpTransMngr;
+
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator Service Manager
+     *
+     * @return $this
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->hlpForm = $serviceLocator->get('Helper\Form');
+        $this->hlpTransMngr = $serviceLocator->get('Helper\TransportManager');
+
+        return $this;
+    }
 
     /**
      * Get Adapter
@@ -52,7 +76,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Transport Managers section
      *
-     * @return \Common\View\Model\Section|\Zend\Http\Response
+     * @return array|\Common\View\Model\Section|\Zend\Http\Response
      */
     public function indexAction()
     {
@@ -303,7 +327,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $request = $this->getRequest();
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Common\Form\Form $form */
         $form = $formHelper->createFormWithRequest('Lva\NewTmUser', $request);
 
         if ($request->isPost()) {

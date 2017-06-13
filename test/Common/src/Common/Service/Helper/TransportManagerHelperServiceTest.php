@@ -1,12 +1,8 @@
 <?php
 
-/**
- * Transport Manager Helper Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Helper;
 
+use Common\Service\Table\TableBuilder;
 use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -14,23 +10,28 @@ use Common\Service\Helper\TransportManagerHelperService;
 use Common\Service\Data\CategoryDataService;
 
 /**
- * Transport Manager Helper Service Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers \Common\Service\Helper\TransportManagerHelperService
  */
 class TransportManagerHelperServiceTest extends MockeryTestCase
 {
+    /** @var TransportManagerHelperService */
     protected $sut;
 
-    protected $tab;
+    /** @var \Common\Service\Helper\FormHelperService | m\MockInterface */
+    private $mockFormHlp;
 
+    protected $tab;
     protected $qs;
 
+    /** @var \Zend\ServiceManager\ServiceManager | m\MockInterface */
     protected $sm;
 
     public function setUp()
     {
         $this->sm = Bootstrap::getServiceManager();
+
+        $this->mockFormHlp = m::mock(\Common\Service\Helper\FormHelperService::class);
+        $this->sm->setService('Helper\Form', $this->mockFormHlp);
 
         $this->tab = m::mock();
         $this->sm->setService('TransferAnnotationBuilder', $this->tab);
@@ -41,6 +42,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->sut = new TransportManagerHelperService();
 
         $this->sut->setServiceLocator($this->sm);
+        $this->sut->createService($this->sm);
     }
 
     public function testGetCertificateFiles()
@@ -95,44 +97,25 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
     public function testAlterResponsibilitiesFieldset()
     {
         // Params
-        $fieldset = m::mock();
-        $ocOptions = [
-            111 => ['foo'],
-            222 => ['bar']
-        ];
-        $otherLicencesTable = m::mock();
+        /** @var \Zend\Form\Fieldset::class $fieldset */
+        $fieldset = m::mock(\Zend\Form\Fieldset::class);
+        /** @var TableBuilder $otherLicencesTable */
+        $otherLicencesTable = m::mock(TableBuilder::class);
 
         // Mocks
-        $mockFormHelper = m::mock();
-        $mockTmTypeField = m::mock();
-        $mockOtherLicenceField = m::mock();
-        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $mockTmTypeField = m::mock(\Zend\Form\Element::class);
+        $mockOtherLicenceField = m::mock(\Zend\Form\Fieldset::class);
 
         // Expectations
-        $fieldset->shouldReceive('get')
-            ->once()
-            ->with('operatingCentres')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('setValueOptions')
-                ->once()
-                ->with($ocOptions)
-                ->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('tmType')
-            ->andReturn($mockTmTypeField)
-            ->shouldReceive('get')
-            ->with('otherLicences')
-            ->andReturn($mockOtherLicenceField);
+        $fieldset
+            ->shouldReceive('get')->with('tmType')->andReturn($mockTmTypeField)
+            ->shouldReceive('get')->with('otherLicences')->andReturn($mockOtherLicenceField);
 
-        $mockFormHelper->shouldReceive('removeOption')
-            ->once()
-            ->with($mockTmTypeField, 'tm_t_b')
-            ->shouldReceive('populateFormTable')
-            ->with($mockOtherLicenceField, $otherLicencesTable);
+        $this->mockFormHlp
+            ->shouldReceive('removeOption')->once()->with($mockTmTypeField, 'tm_t_b')
+            ->shouldReceive('populateFormTable')->once()->with($mockOtherLicenceField, $otherLicencesTable);
 
-        $this->sut->alterResponsibilitiesFieldset($fieldset, $ocOptions, $otherLicencesTable);
+        $this->sut->alterResponsibilitiesFieldset($fieldset, $otherLicencesTable);
     }
 
     public function testGetResponsibilityFileData()

@@ -57,7 +57,7 @@ class FormHelperService extends AbstractHelperService
         $annotationBuilder = $sm->get('FormAnnotationBuilder');
         $cfg = $sm->get('Config');
 
-        /** @var \Zend\Form\FormInterface $form */
+        /** @var \Common\Form\Form $form */
         $form = $annotationBuilder->createForm($class);
 
         //  add CSRF element
@@ -462,7 +462,6 @@ class FormHelperService extends AbstractHelperService
             $value = $element->getValue();
 
             if (empty($value) || $element instanceof Checkbox) {
-
                 $filter->get($key)
                     ->setRequired(false)
                     ->setValidatorChain(

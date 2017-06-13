@@ -290,12 +290,6 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementIsRequired($element, false);
     }
 
-    public function testOperatingCentres()
-    {
-        $element = [ 'responsibilities', 'operatingCentres' ];
-        $this->assertFormElementAllowEmpty($element, false);
-    }
-
     public function testTradeManagerType()
     {
         $element = [ 'responsibilities', 'tmType' ];

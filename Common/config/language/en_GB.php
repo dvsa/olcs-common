@@ -2858,7 +2858,6 @@ return [
     'transport-manager.responsibilities.table.applications' => 'Applications',
     'transport-manager.responsibilities.table.licences' => 'Licences',
     'transport-manager.responsibilities.tm-app-status' => 'Transport Manager application status',
-    'transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be responsible for?',
     'transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
     'transport-managers' => 'Transport Managers',
     'transport-managers-email-address' => 'Transport Manager\'s email address',

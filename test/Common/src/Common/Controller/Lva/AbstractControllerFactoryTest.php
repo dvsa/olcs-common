@@ -1,28 +1,33 @@
 <?php
 
-/**
- * Abstract Controller Factory Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Controller\Lva;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery as m;
 use Common\Controller\Lva\AbstractControllerFactory;
+use CommonTest\Controller\Lva\Stubs\ControllerWithFactoryStub;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\ServiceManager\FactoryInterface;
 
 /**
- * Abstract Controller Factory Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @covers \Common\Controller\Lva\AbstractControllerFactory
  */
 class AbstractControllerFactoryTest extends MockeryTestCase
 {
+    /** @var  AbstractControllerFactory */
     protected $sut;
+    /** @var  m\MockInterface | \Zend\Mvc\Controller\ControllerManager */
+    protected $mockScm;
+    /** @var  m\MockInterface | \Zend\ServiceManager\ServiceLocatorInterface */
+    protected $mockSm;
 
     protected function setUp()
     {
         $this->sut = new AbstractControllerFactory();
+
+        $this->mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
+
+        $this->mockScm = m::mock(\Zend\Mvc\Controller\ControllerManager::class);
+        $this->mockScm->shouldReceive('getServiceLocator')->andReturn($this->mockSm);
     }
 
     /**
@@ -30,7 +35,6 @@ class AbstractControllerFactoryTest extends MockeryTestCase
      */
     public function testCanCreateServiceWithName()
     {
-        $sm = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
         $name = 'bar';
         $requestedName = 'foo';
 
@@ -42,11 +46,9 @@ class AbstractControllerFactoryTest extends MockeryTestCase
             )
         );
 
-        $sm->shouldReceive('getServiceLocator->get')
-            ->with('Config')
-            ->andReturn($config);
+        $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
-        $this->assertTrue($this->sut->canCreateServiceWithName($sm, $name, $requestedName));
+        $this->assertTrue($this->sut->canCreateServiceWithName($this->mockScm, $name, $requestedName));
     }
 
     /**
@@ -54,7 +56,6 @@ class AbstractControllerFactoryTest extends MockeryTestCase
      */
     public function testCanCreateServiceWithNameWithoutConfigMatch()
     {
-        $sm = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
         $name = 'foo';
         $requestedName = 'bar';
 
@@ -66,11 +67,9 @@ class AbstractControllerFactoryTest extends MockeryTestCase
             )
         );
 
-        $sm->shouldReceive('getServiceLocator->get')
-            ->with('Config')
-            ->andReturn($config);
+        $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
-        $this->assertFalse($this->sut->canCreateServiceWithName($sm, $name, $requestedName));
+        $this->assertFalse($this->sut->canCreateServiceWithName($this->mockScm, $name, $requestedName));
     }
 
     /**
@@ -78,7 +77,6 @@ class AbstractControllerFactoryTest extends MockeryTestCase
      */
     public function testCreateServiceWithName()
     {
-        $sm = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
         $name = 'bar';
         $requestedName = 'foo';
 
@@ -90,10 +88,29 @@ class AbstractControllerFactoryTest extends MockeryTestCase
             )
         );
 
-        $sm->shouldReceive('getServiceLocator->get')
-            ->with('Config')
-            ->andReturn($config);
+        $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
 
-        $this->assertInstanceOf('\stdClass', $this->sut->createServiceWithName($sm, $name, $requestedName));
+        $this->assertInstanceOf('\stdClass', $this->sut->createServiceWithName($this->mockScm, $name, $requestedName));
+    }
+
+    public function testCreateServiceWithNameUsingFactory()
+    {
+        $name = 'unit_Name';
+        $requestedName = 'unit_reqName';
+
+        $config = [
+            'controllers' => [
+                'lva_controllers' => [
+                    $requestedName => ControllerWithFactoryStub::class,
+                ],
+            ],
+        ];
+
+        $this->mockSm->shouldReceive('get')->with('Config')->andReturn($config);
+
+        $actual = $this->sut->createServiceWithName($this->mockScm, $name, $requestedName);
+
+        static::assertInstanceOf(FactoryInterface::class, $actual);
+        static::assertInstanceOf(ControllerWithFactoryStub::class, $actual);
     }
 }
