@@ -16,7 +16,7 @@ use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceC
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Reprint as ReprintDto;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Restore as RestoreDto;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Stop as StopDto;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\Void as VoidDto;
+use Dvsa\Olcs\Transfer\Command as TransferCmd;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\EditSuspension as EditSuspensionDto;
 
 /**
@@ -353,11 +353,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     }
 
     /**
-     * Add action
+     * Annul action
      *
      * @return \Common\View\Model\Section|\Zend\Http\Response
      */
-    public function voidAction()
+    public function annulAction()
     {
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
@@ -365,10 +365,12 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $ids = explode(',', $this->params('child_id'));
         if (!$request->isPost()) {
             $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $form = $formHelper->createForm('Lva\CommunityLicencesVoid');
+            $form = $formHelper->createForm('Lva\CommunityLicencesAnnul');
             $formHelper->setFormActionFromRequest($form, $this->getRequest());
+
             $view = new ViewModel(['form' => $form]);
             $view->setTemplate('partials/form');
+
             return $this->render($view);
         }
 
@@ -383,7 +385,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                 $void['application'] = $this->getIdentifier();
             }
 
-            return $this->processDto(VoidDto::create($void), 'internal.community_licence.licences_voided');
+            return $this->processDto(
+                TransferCmd\CommunityLic\Annul::create($void),
+                'internal.community_licence.licences_annulled'
+            );
         }
         return $this->redirectToIndex();
     }
