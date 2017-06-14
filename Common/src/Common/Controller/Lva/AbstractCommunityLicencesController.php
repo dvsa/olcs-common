@@ -155,10 +155,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         $response = $this->handleQuery(CommunityLicences::create($query));
 
-        if ($response->isNotFound()) {
-            return $this->notFoundAction();
-        }
-
         if ($response->isClientError() || $response->isServerError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
@@ -573,10 +569,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     protected function getCommunityLicenceData()
     {
         $response = $this->handleQuery(CommunityLicence::create(['id' => $this->params('child_id')]));
-
-        if ($response->isNotFound()) {
-            return $this->notFoundAction();
-        }
 
         if ($response->isClientError() || $response->isServerError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');

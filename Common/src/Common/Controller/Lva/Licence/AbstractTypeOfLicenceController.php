@@ -31,10 +31,6 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
         $response = $this->handleQuery(TypeOfLicence::create(['id' => $this->getIdentifier()]));
 
-        if ($response->isNotFound()) {
-            return $this->notFoundAction();
-        }
-
         if ($response->isClientError() || $response->isServerError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
             return $this->notFoundAction();

@@ -5,6 +5,7 @@ namespace Common\Service\Cqrs\Command;
 use Common\Exception\ResourceConflictException;
 use Common\Service\Cqrs\CqrsTrait;
 use Common\Service\Cqrs\Response;
+use Common\Service\Cqrs\Exception;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Util\FileContent;
 use Dvsa\Olcs\Transfer\Command\CommandContainerInterface;
@@ -90,7 +91,7 @@ class CommandService
             $routeName = str_replace('backend/', 'backend/api/', $routeName);
             $uri = $this->router->assemble($data, ['name' => 'api/' . $routeName . '/' . $method]);
         } catch (ExceptionInterface $ex) {
-            return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
+            throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_404, $ex);
         }
 
         /**
@@ -156,6 +157,16 @@ class CommandService
 
             $response = new Response($clientResponse);
 
+            if ($response->getStatusCode() === \Zend\Http\Response::STATUS_CODE_404) {
+                throw new Exception\NotFoundException('API responded with a 404 Not Found : '. $uri);
+            }
+            if ($response->getStatusCode() === \Zend\Http\Response::STATUS_CODE_403) {
+                throw new Exception\AccessDeniedException($response->getBody() .' : '. $uri);
+            }
+            if ($response->getStatusCode() > \Zend\Http\Response::STATUS_CODE_400) {
+                throw new Exception($response->getBody()  ." : ". $uri);
+            }
+
             if ($this->showApiMessages) {
                 $this->showApiMessagesFromResponse($response);
             }
@@ -163,7 +174,7 @@ class CommandService
             return $response;
 
         } catch (HttpClientExceptionInterface $ex) {
-            return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_500);
+            throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);
         }
     }
 }

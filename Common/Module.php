@@ -3,12 +3,15 @@
 namespace Common;
 
 use Common\Preference\LanguageListener;
+use Common\Service\Cqrs\Exception\AccessDeniedException;
+use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
 use Olcs\Logging\Log\Logger;
 use Zend\EventManager\EventManager;
 use Zend\Http\Request;
 use Zend\ModuleManager\ModuleEvent;
+use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Http\PhpEnvironment\Response;
@@ -102,6 +105,21 @@ class Module
         $events->attach($sm->get(\ZfcRbac\View\Strategy\UnauthorizedStrategy::class));
         //  CSRF token check
         $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'validateCsrfToken'], 100);
+
+        // On dispatch error ot certain CQRS exceptions then change page to a 404
+        $events->attach(
+            MvcEvent::EVENT_DISPATCH_ERROR,
+            function (MvcEvent $e) {
+                // If Backend Not found or access denied then display error as a 404 not found
+                if ($e->getParam('exception') instanceof NotFoundException
+                    || $e->getParam('exception') instanceof AccessDeniedException
+                ) {
+                    $e->setError(Application::ERROR_CONTROLLER_INVALID);
+                    $e->setParam('exceptionNoLog', true);
+                }
+            },
+            100
+        );
 
         $this->setupRequestForProxyHost($app->getRequest());
 
