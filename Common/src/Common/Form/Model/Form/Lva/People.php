@@ -5,7 +5,6 @@ namespace Common\Form\Model\Form\Lva;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("lva-people")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
@@ -14,7 +13,7 @@ class People
 {
     /**
      * @Form\Name("table")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TableRequiredPeople")
      */
     public $table = null;
 

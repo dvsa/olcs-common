@@ -78,20 +78,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $postData = (array)$request->getPost();
-
-            $crudAction = $this->getCrudAction(array($postData['table']));
-
-            if ($crudAction !== null) {
-                return $this->handleCrudAction($crudAction);
-            }
-
-            $this->updateCompletion();
-
-            return $this->completeSection('people');
-        }
-
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
@@ -104,9 +90,27 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             ->get('table')
             ->setTable($table);
 
+        $form->get('table')->get('rows')->setValue(count($table->getRows()));
+
         $this->alterForm($form, $table, $this->getAdapter()->getOrganisationType());
 
         $this->getAdapter()->alterFormForOrganisation($form, $table);
+
+        if ($request->isPost()) {
+            $postData = (array)$request->getPost();
+            $form->setData($postData);
+            if ($form->isValid()) {
+                $crudAction = $this->getCrudAction(array($postData['table']));
+
+                if ($crudAction !== null) {
+                    return $this->handleCrudAction($crudAction);
+                }
+
+                $this->updateCompletion();
+
+                return $this->completeSection('people');
+            }
+        }
 
         $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud-delta', 'more-actions']);
 
