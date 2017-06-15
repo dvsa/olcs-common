@@ -49,4 +49,62 @@ class AddressTest extends SearchAbstractTest
             ['<a href="http://URL">ACME Ltd</a>', $data, 'operator/business-details', ['organisation' => 452]],
         ];
     }
+
+    public function testComplaintColumnNo()
+    {
+        $column = $this->sut->getColumns()[3];
+        $row = [
+            'complaint' => 'No'
+        ];
+
+        $this->assertSame('Complaint', $column['title']);
+        $this->assertSame('No', $column['formatter']($row, [], null));
+    }
+
+    public function testComplaintColumnYes()
+    {
+        $mockHelperUrl = m::mock();
+        $mockHelperUrl->shouldReceive('fromRoute')->with('licence/opposition', ['licence' => 123])->once()
+            ->andReturn('URL');
+        $mockServiceLocator = m::mock();
+        $mockServiceLocator->shouldReceive('get')->with('Helper\Url')->once()->andReturn($mockHelperUrl);
+
+        $column = $this->sut->getColumns()[3];
+        $row = [
+            'licId' => 123,
+            'complaint' => 'Yes'
+        ];
+
+        $this->assertSame('Complaint', $column['title']);
+        $this->assertSame('<a href="URL">Yes</a>', $column['formatter']($row, [], $mockServiceLocator));
+    }
+
+    public function testOppositionColumnNo()
+    {
+        $column = $this->sut->getColumns()[4];
+        $row = [
+            'opposition' => 'No'
+        ];
+
+        $this->assertSame('Opposition', $column['title']);
+        $this->assertSame('No', $column['formatter']($row, [], null));
+    }
+
+    public function testOppositionColumnYes()
+    {
+        $mockHelperUrl = m::mock();
+        $mockHelperUrl->shouldReceive('fromRoute')->with('licence/opposition', ['licence' => 123])->once()
+            ->andReturn('URL');
+        $mockServiceLocator = m::mock();
+        $mockServiceLocator->shouldReceive('get')->with('Helper\Url')->once()->andReturn($mockHelperUrl);
+
+        $column = $this->sut->getColumns()[4];
+        $row = [
+            'licId' => 123,
+            'opposition' => 'Yes'
+        ];
+
+        $this->assertSame('Opposition', $column['title']);
+        $this->assertSame('<a href="URL">Yes</a>', $column['formatter']($row, [], $mockServiceLocator));
+    }
 }

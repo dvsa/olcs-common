@@ -90,7 +90,7 @@ class Address extends InternalSearchAbstract
                 'title' => 'Complaint',
                 'formatter' => function ($row, $column, $serviceLocator) {
 
-                    if ($row['complaintCaseId']) {
+                    if ($row['complaint'] === 'Yes') {
                         /** @var  UrlHelper $urlHelper */
                         $urlHelper  = $serviceLocator->get('Helper\Url');
                         return sprintf(
@@ -106,7 +106,7 @@ class Address extends InternalSearchAbstract
                 'title' => 'Opposition',
                 'formatter' => function ($row, $column, $serviceLocator) {
 
-                    if ($row['oppositionCaseId']) {
+                    if ($row['opposition'] === 'Yes') {
                         /** @var  UrlHelper $urlHelper */
                         $urlHelper  = $serviceLocator->get('Helper\Url');
                         return sprintf(
