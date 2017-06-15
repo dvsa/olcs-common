@@ -59,13 +59,10 @@ class UploadEvidenceOperatingCentre
     public $file = null;
 
     /**
-     * @Form\Type("Hidden")
      * @Form\Required(true)
-     * @Form\Validator({
-     *  "name":"Zend\Validator\GreaterThan",
-     *  "options": {"min": 0, "message": "Please upload your advert"}
-     * })
+     * @Form\Type("Hidden")
+     * @Form\Validator({"name": "Dvsa\Olcs\Transfer\Validators\UploadEvidence"})
      * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
      */
-    public $uploadFileCount = null;
+    public $uploadFileValidator = '';
 }
