@@ -13,7 +13,6 @@ class TableRequiredPeople extends TableRequired
     /**
      * @Form\Required(false)
      * @Form\Type("Hidden")
-     * @Form\Attributes({"value":""})
      * @Form\Validator({
      *     "name":"Common\Form\Elements\Validators\TableRequiredValidator",
      *     "options":{"label":"person"}
@@ -26,5 +25,5 @@ class TableRequiredPeople extends TableRequired
      * @Form\Options({"label":"row"})
      * @Form\Type("\Common\Form\Elements\Types\Table")
      */
-    public $table = '';
+    public $table;
 }
