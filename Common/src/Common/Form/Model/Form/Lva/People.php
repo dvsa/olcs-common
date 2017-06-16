@@ -14,7 +14,7 @@ class People
 {
     /**
      * @Form\Name("table")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TableRequiredPeople")
      */
     public $table = null;
 

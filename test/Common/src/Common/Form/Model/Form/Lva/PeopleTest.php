@@ -33,7 +33,9 @@ class PeopleTest extends AbstractFormValidationTestCase
     public function testTableRows()
     {
         $element = ['table', 'rows'];
-        $this->assertFormElementHidden($element);
+        $this->assertFormElementIsRequired($element, false);
+        $this->assertFormElementAllowEmpty($element, true);
+        $this->assertFormElementValid($element, '');
     }
 
     public function testTableId()
