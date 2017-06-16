@@ -15,6 +15,7 @@ use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Http\PhpEnvironment\Response;
+use Zend\View\Model\ViewModel;
 
 /**
  * ZF2 Module
@@ -128,7 +129,19 @@ class Module
         $identifier = $sm->get('LogProcessorManager')
             ->get(\Olcs\Logging\Log\Processor\RequestId::class)
             ->getIdentifier();
+
         $this->onFatalError($identifier);
+
+        $events->attach(
+            MvcEvent::EVENT_RENDER,
+            function (MvcEvent $e) use ($identifier) {
+                // Inject the log correlation ID into the view
+                if ($e->getResult() instanceof ViewModel) {
+                    $e->getResult()->setVariable('correlationId', $identifier);
+                }
+            },
+            -100
+        );
     }
 
     /**
@@ -161,7 +174,7 @@ class Module
 
                 /** @var Response $response */
                 $response = new Response();
-                $response->getHeaders()->addHeaderLine('Location', '/error?id='. $identifier .'&src=shutdown');
+                $response->getHeaders()->addHeaderLine('Location', '/error?correlationId='. $identifier .'&src=shutdown');
                 $response->setStatusCode(Response::STATUS_CODE_302);
                 $response->sendHeaders();
 
