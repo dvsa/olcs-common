@@ -168,6 +168,14 @@ class Module
             return;
         }
 
+        $sm = $e->getApplication()->getServiceManager();
+
+        //  whitelisted paths: allow POST without CSRF check
+        $cfg = $sm->get('config');
+        if (in_array($request->getUri()->getPath(), $cfg['csrf']['whitelist'], true)) {
+            return;
+        }
+
         $name = 'security';
         $token = $request->getPost($name);
 
@@ -177,7 +185,7 @@ class Module
         }
 
         /** @var TranslationHelperService $translator */
-        $hlpFlashMsgr = $e->getApplication()->getServiceManager()->get('Helper\FlashMessenger');
+        $hlpFlashMsgr = $sm->get('Helper\FlashMessenger');
         $hlpFlashMsgr->addErrorMessage('csrf-message');
 
         /** @var \Zend\Http\Response $resp */
