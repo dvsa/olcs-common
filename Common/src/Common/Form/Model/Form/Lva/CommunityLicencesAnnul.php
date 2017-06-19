@@ -6,15 +6,15 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Options({"prefer_form_input_filter":true})
- * @Form\Name("lva-community-licences-void")
+ * @Form\Name("lva-community-licences-annul")
  * @Form\Attributes({"method":"post", "class":"table__form"})
  * @Form\Type("Common\Form\Form")
  */
-class CommunityLicencesVoid
+class CommunityLicencesAnnul
 {
     /**
      * @Form\Name("data")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesDataVoid")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesDataAnnul")
      */
     public $data = null;
 

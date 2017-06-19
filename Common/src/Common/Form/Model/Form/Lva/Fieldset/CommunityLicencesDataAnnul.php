@@ -5,12 +5,12 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Name("community-licences-data-void")
+ * @Form\Name("community-licences-data-annul")
  */
-class CommunityLicencesDataVoid
+class CommunityLicencesDataAnnul
 {
     /**
-     * @Form\Attributes({"value": "internal.community_licence.confirm_void_licences"})
+     * @Form\Attributes({"value": "internal.community_licence.confirm_annul_licences"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $confirm = null;

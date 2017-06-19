@@ -9,12 +9,12 @@ use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
  *
  * @group FormTests
  */
-class CommunityLicencesVoidTest extends AbstractFormValidationTestCase
+class CommunityLicencesAnnulTest extends AbstractFormValidationTestCase
 {
     /**
      * @var string The class name of the form being tested
      */
-    protected $formName = \Common\Form\Model\Form\Lva\CommunityLicencesVoid::class;
+    protected $formName = \Common\Form\Model\Form\Lva\CommunityLicencesAnnul::class;
 
     public function testConfirm()
     {

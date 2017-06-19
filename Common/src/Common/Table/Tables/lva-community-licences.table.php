@@ -15,7 +15,7 @@ return array(
                 'office-licence-add' => array(
                     'label' => 'Add office licence'
                 ),
-                'void' => array(
+                'annul' => array(
                     'label' => 'Annul',
                     'requireRows' => true
                 ),
