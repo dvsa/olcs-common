@@ -96,7 +96,7 @@ class QueryServiceTest extends MockeryTestCase
             ->once()
             ->andThrow(new \Zend\Mvc\Router\Exception\RuntimeException('unit_ExcMsg'));
 
-        $this->setExpectedException(Exception::class, 'unit_ExcMsg', 404);
+        $this->setExpectedException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_404);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -118,7 +118,7 @@ class QueryServiceTest extends MockeryTestCase
             ->once()
             ->andThrow(new \Zend\Http\Client\Exception\RuntimeException('unit_ExcMsg'));
 
-        $this->setExpectedException(Exception::class, 'unit_ExcMsg', 500);
+        $this->setExpectedException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_500);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -148,7 +148,8 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setMethod')->once()->with(Request::METHOD_GET)->andReturn();
 
         $mockResp = m::mock(Response::class);
-        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)->andReturn(200);
+        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)
+            ->andReturn(HttpResponse::STATUS_CODE_200);
 
         $this->mockCli
             ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
@@ -190,7 +191,8 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setMethod')->once()->with(Request::METHOD_GET)->andReturn();
 
         $mockResp = m::mock(Response::class);
-        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)->andReturn(404);
+        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)
+            ->andReturn(HttpResponse::STATUS_CODE_404);
 
         $this->mockCli
             ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
@@ -228,7 +230,8 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setMethod')->once()->with(Request::METHOD_GET)->andReturn();
 
         $mockResp = m::mock(Response::class);
-        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)->andReturn(403);
+        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)
+            ->andReturn(HttpResponse::STATUS_CODE_403);
         $mockResp->shouldReceive('getBody')->with()->times(1)->andReturn('BODY');
 
         $this->mockCli
@@ -267,7 +270,8 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setMethod')->once()->with(Request::METHOD_GET)->andReturn();
 
         $mockResp = m::mock(Response::class);
-        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)->andReturn(401);
+        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)
+            ->andReturn(HttpResponse::STATUS_CODE_401);
         $mockResp->shouldReceive('getBody')->with()->times(1)->andReturn('BODY');
 
         $this->mockCli

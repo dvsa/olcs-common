@@ -174,7 +174,8 @@ class Module
 
                 /** @var Response $response */
                 $response = new Response();
-                $response->getHeaders()->addHeaderLine('Location', '/error?correlationId='. $identifier .'&src=shutdown');
+                $response->getHeaders()
+                    ->addHeaderLine('Location', '/error?correlationId='. $identifier .'&src=shutdown');
                 $response->setStatusCode(Response::STATUS_CODE_302);
                 $response->sendHeaders();
 

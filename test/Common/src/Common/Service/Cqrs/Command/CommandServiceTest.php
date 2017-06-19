@@ -97,7 +97,6 @@ class CommandServiceTest extends MockeryTestCase
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
 
-        new HttpResponse();
         $mockResp = m::mock(HttpResponse::class);
         $mockResp->shouldReceive('getStatusCode')->atLeast()->times(1)->andReturn(HttpResponse::STATUS_CODE_404);
 
@@ -117,7 +116,6 @@ class CommandServiceTest extends MockeryTestCase
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
 
-        new HttpResponse();
         $mockResp = m::mock(HttpResponse::class);
         $mockResp->shouldReceive('getStatusCode')->atLeast()->times(1)->andReturn(HttpResponse::STATUS_CODE_403);
         $mockResp->shouldReceive('getBody')->with()->once()->andReturn('HTTP BODY');

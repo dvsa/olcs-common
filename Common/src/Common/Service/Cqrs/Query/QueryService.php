@@ -114,13 +114,13 @@ class QueryService implements QueryServiceInterface
 
             $response = new Response($clientResponse);
 
-            if ($response->getStatusCode() === \Zend\Http\Response::STATUS_CODE_404) {
+            if ($response->getStatusCode() === HttpResponse::STATUS_CODE_404) {
                 throw new Exception\NotFoundException('API responded with a 404 Not Found : '. $uri);
             }
-            if ($response->getStatusCode() === \Zend\Http\Response::STATUS_CODE_403) {
+            if ($response->getStatusCode() === HttpResponse::STATUS_CODE_403) {
                 throw new Exception\AccessDeniedException($response->getBody() ." : ". $uri);
             }
-            if ($response->getStatusCode() > \Zend\Http\Response::STATUS_CODE_400) {
+            if ($response->getStatusCode() > HttpResponse::STATUS_CODE_400) {
                 throw new Exception($response->getBody()  .' : '. $uri);
             }
 
