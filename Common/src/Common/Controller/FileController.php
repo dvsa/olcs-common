@@ -49,10 +49,6 @@ class FileController extends ZendAbstractActionController
         /** @var \Common\Service\Cqrs\Response $downloadResponse */
         $downloadResponse = $this->handleQuery($query);
 
-        if ($downloadResponse->isNotFound()) {
-            return $this->notFoundAction();
-        }
-
         if (!$downloadResponse->isOk()) {
             throw new \RuntimeException('Error downloading file');
         }

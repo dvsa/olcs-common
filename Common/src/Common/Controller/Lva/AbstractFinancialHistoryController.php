@@ -120,10 +120,6 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     {
         $response = $this->getFinancialHistory();
 
-        if ($response->isNotFound()) {
-            return $this->notFoundAction();
-        }
-
         if ($response->isClientError() || $response->isServerError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }

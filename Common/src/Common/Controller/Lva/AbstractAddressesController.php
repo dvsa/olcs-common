@@ -162,10 +162,6 @@ abstract class AbstractAddressesController extends AbstractController
             return true;
         }
 
-        if ($response->isNotFound()) {
-            return $this->notFoundAction();
-        }
-
         if ($response->isClientError() || $response->isServerError()) {
             $this->hlpFlashMsgr->addUnknownError();
         }

@@ -29,10 +29,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             PreviousConvictions::create(['id' => $this->getIdentifier()])
         );
 
-        if ($response->isNotFound()) {
-            return $this->notFoundAction();
-        }
-
         $result = $response->getResult();
 
         if ($request->isPost()) {
@@ -75,10 +71,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
                         return $this->handleCrudAction($crudAction);
                     }
                     return $this->completeSection('convictions_penalties');
-                }
-
-                if ($response->isNotFound()) {
-                    return $this->notFoundAction();
                 }
 
                 if ($response->isClientError() || $response->isServerError()) {
@@ -151,10 +143,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
             $response = $this->handleQuery(PreviousConviction::create(['id' => $id]));
 
-            if ($response->isNotFound()) {
-                return $this->notFoundAction();
-            }
-
             $data = ['data' => $response->getResult()];
         }
 
@@ -182,10 +170,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
             if ($response->isOk()) {
                 return $this->handlePostSave(null, false);
-            }
-
-            if ($response->isNotFound()) {
-                return $this->notFoundAction();
             }
 
             if ($response->isClientError() || $response->isServerError()) {

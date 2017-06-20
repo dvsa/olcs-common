@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Cqrs\Query;
 
+use Common\Service\Cqrs\Exception;
 use Common\Service\Cqrs\Query\QueryService;
 use Common\Service\Cqrs\Response as CqrsResponse;
 use Common\Service\Helper\FlashMessengerHelperService;
@@ -95,13 +96,8 @@ class QueryServiceTest extends MockeryTestCase
             ->once()
             ->andThrow(new \Zend\Mvc\Router\Exception\RuntimeException('unit_ExcMsg'));
 
-        $this->sut
-            ->shouldReceive('invalidResponse')
-            ->once()
-            ->with(['unit_ExcMsg'], HttpResponse::STATUS_CODE_404)
-            ->andReturn('unit_EXPECT');
-
-        static::assertEquals('unit_EXPECT', $this->sut->send($this->mockQueryCntr));
+        $this->setExpectedException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_404);
+        $this->sut->send($this->mockQueryCntr);
     }
 
     public function testSendFailHttpClientException()
@@ -122,13 +118,8 @@ class QueryServiceTest extends MockeryTestCase
             ->once()
             ->andThrow(new \Zend\Http\Client\Exception\RuntimeException('unit_ExcMsg'));
 
-        $this->sut
-            ->shouldReceive('invalidResponse')
-            ->once()
-            ->with(['unit_ExcMsg'], HttpResponse::STATUS_CODE_500)
-            ->andReturn('unit_EXPECT');
-
-        static::assertEquals('unit_EXPECT', $this->sut->send($this->mockQueryCntr));
+        $this->setExpectedException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_500);
+        $this->sut->send($this->mockQueryCntr);
     }
 
     public function testSendOk()
@@ -157,6 +148,8 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setMethod')->once()->with(Request::METHOD_GET)->andReturn();
 
         $mockResp = m::mock(Response::class);
+        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)
+            ->andReturn(HttpResponse::STATUS_CODE_200);
 
         $this->mockCli
             ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
@@ -170,5 +163,124 @@ class QueryServiceTest extends MockeryTestCase
             ->with(m::type(CqrsResponse::class));
 
         static::assertInstanceOf(CqrsResponse::class, $this->sut->send($this->mockQueryCntr));
+    }
+
+    public function testSend404()
+    {
+        $this->mockQueryCntr
+            ->shouldReceive('isValid')->once()->andReturn(true)
+            ->shouldReceive('getRouteName')->once()->andReturn('backend/unit_RouteName')
+            ->shouldReceive('isStream')->once()->andReturn('unit_IsStream');
+
+        $uri = 'init_Uri';
+
+        $this->mockRouter
+            ->shouldReceive('assemble')
+            ->once()
+            ->with(self::$queryData, ['name' => 'api/backend/api/unit_RouteName/GET'])
+            ->andReturn($uri);
+
+        $mockAdapter = m::mock(ClientAdapterLoggingWrapper::class)
+            ->shouldReceive('getShouldLogData')->once()->andReturn('unit_ShouldLogData')
+            ->shouldReceive('setShouldLogData')->once()->with(false)
+            ->shouldReceive('setShouldLogData')->once()->with('unit_ShouldLogData')
+            ->getMock();
+
+        $this->mockRequest
+            ->shouldReceive('setUri')->once()->with($uri)->andReturn($mockAdapter)
+            ->shouldReceive('setMethod')->once()->with(Request::METHOD_GET)->andReturn();
+
+        $mockResp = m::mock(Response::class);
+        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)
+            ->andReturn(HttpResponse::STATUS_CODE_404);
+
+        $this->mockCli
+            ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
+            ->shouldReceive('resetParameters')->once()->with(true)
+            ->shouldReceive('setStream')->once()->with('unit_IsStream')
+            ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
+
+        $this->setExpectedException(Exception\NotFoundException::class, 'API responded with a 404 Not Found : '. $uri);
+        $this->sut->send($this->mockQueryCntr);
+    }
+
+    public function testSend403()
+    {
+        $this->mockQueryCntr
+            ->shouldReceive('isValid')->once()->andReturn(true)
+            ->shouldReceive('getRouteName')->once()->andReturn('backend/unit_RouteName')
+            ->shouldReceive('isStream')->once()->andReturn('unit_IsStream');
+
+        $uri = 'init_Uri';
+
+        $this->mockRouter
+            ->shouldReceive('assemble')
+            ->once()
+            ->with(self::$queryData, ['name' => 'api/backend/api/unit_RouteName/GET'])
+            ->andReturn($uri);
+
+        $mockAdapter = m::mock(ClientAdapterLoggingWrapper::class)
+            ->shouldReceive('getShouldLogData')->once()->andReturn('unit_ShouldLogData')
+            ->shouldReceive('setShouldLogData')->once()->with(false)
+            ->shouldReceive('setShouldLogData')->once()->with('unit_ShouldLogData')
+            ->getMock();
+
+        $this->mockRequest
+            ->shouldReceive('setUri')->once()->with($uri)->andReturn($mockAdapter)
+            ->shouldReceive('setMethod')->once()->with(Request::METHOD_GET)->andReturn();
+
+        $mockResp = m::mock(Response::class);
+        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)
+            ->andReturn(HttpResponse::STATUS_CODE_403);
+        $mockResp->shouldReceive('getBody')->with()->times(1)->andReturn('BODY');
+
+        $this->mockCli
+            ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
+            ->shouldReceive('resetParameters')->once()->with(true)
+            ->shouldReceive('setStream')->once()->with('unit_IsStream')
+            ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
+
+        $this->setExpectedException(Exception\AccessDeniedException::class, 'BODY : '. $uri);
+        $this->sut->send($this->mockQueryCntr);
+    }
+
+    public function testSendGreaterThan400()
+    {
+        $this->mockQueryCntr
+            ->shouldReceive('isValid')->once()->andReturn(true)
+            ->shouldReceive('getRouteName')->once()->andReturn('backend/unit_RouteName')
+            ->shouldReceive('isStream')->once()->andReturn('unit_IsStream');
+
+        $uri = 'init_Uri';
+
+        $this->mockRouter
+            ->shouldReceive('assemble')
+            ->once()
+            ->with(self::$queryData, ['name' => 'api/backend/api/unit_RouteName/GET'])
+            ->andReturn($uri);
+
+        $mockAdapter = m::mock(ClientAdapterLoggingWrapper::class)
+            ->shouldReceive('getShouldLogData')->once()->andReturn('unit_ShouldLogData')
+            ->shouldReceive('setShouldLogData')->once()->with(false)
+            ->shouldReceive('setShouldLogData')->once()->with('unit_ShouldLogData')
+            ->getMock();
+
+        $this->mockRequest
+            ->shouldReceive('setUri')->once()->with($uri)->andReturn($mockAdapter)
+            ->shouldReceive('setMethod')->once()->with(Request::METHOD_GET)->andReturn();
+
+        $mockResp = m::mock(Response::class);
+        $mockResp->shouldReceive('getStatusCode')->with()->atLeast()->times(1)
+            ->andReturn(HttpResponse::STATUS_CODE_401);
+        $mockResp->shouldReceive('getBody')->with()->times(1)->andReturn('BODY');
+
+        $this->mockCli
+            ->shouldReceive('getAdapter')->once()->andReturn($mockAdapter)
+            ->shouldReceive('resetParameters')->once()->with(true)
+            ->shouldReceive('setStream')->once()->with('unit_IsStream')
+            ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
+
+        $this->setExpectedException(Exception::class, 'BODY : '. $uri);
+        $this->sut->send($this->mockQueryCntr);
     }
 }

@@ -3,6 +3,7 @@
 namespace Common\Service\Cqrs\Query;
 
 use Common\Service\Cqrs\CqrsTrait;
+use Common\Service\Cqrs\Exception;
 use Common\Service\Cqrs\Response;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Dvsa\Olcs\Transfer\Query\LoggerOmitResponseInterface;
@@ -82,7 +83,7 @@ class QueryService implements QueryServiceInterface
                 ['name' => 'api/' . $routeName . '/GET']
             );
         } catch (ExceptionInterface $ex) {
-            return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_404);
+            throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_404, $ex);
         }
 
         $this->request->setUri($uri);
@@ -113,6 +114,16 @@ class QueryService implements QueryServiceInterface
 
             $response = new Response($clientResponse);
 
+            if ($response->getStatusCode() === HttpResponse::STATUS_CODE_404) {
+                throw new Exception\NotFoundException('API responded with a 404 Not Found : '. $uri);
+            }
+            if ($response->getStatusCode() === HttpResponse::STATUS_CODE_403) {
+                throw new Exception\AccessDeniedException($response->getBody() ." : ". $uri);
+            }
+            if ($response->getStatusCode() > HttpResponse::STATUS_CODE_400) {
+                throw new Exception($response->getBody()  .' : '. $uri);
+            }
+
             if ($this->showApiMessages) {
                 $this->showApiMessagesFromResponse($response);
             }
@@ -120,7 +131,7 @@ class QueryService implements QueryServiceInterface
             return $response;
 
         } catch (HttpClientExceptionInterface $ex) {
-            return $this->invalidResponse([$ex->getMessage()], HttpResponse::STATUS_CODE_500);
+            throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);
         }
     }
 }

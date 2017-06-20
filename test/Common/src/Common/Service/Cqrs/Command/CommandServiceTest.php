@@ -4,6 +4,7 @@ namespace CommonTest\Service\Cqrs\Command;
 
 use Common\Exception\ResourceConflictException;
 use Common\Service\Cqrs\Command\CommandService;
+use Common\Service\Cqrs\Exception;
 use Common\Service\Cqrs\Response as CqrsResponse;
 use Common\Util\FileContent;
 use Dvsa\Olcs\Transfer\Command\CommandContainer;
@@ -12,6 +13,7 @@ use Dvsa\Olcs\Transfer\Command\CommandInterface;
 use Dvsa\Olcs\Transfer\Command\LoggerOmitContentInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Http\Client\Exception\RuntimeException;
 use Zend\Http\Headers;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\Router\Exception\RuntimeException as RouterRuntimeException;
@@ -67,15 +69,14 @@ class CommandServiceTest extends MockeryTestCase
         );
     }
 
-    public function testSend404()
+    public function testSend404ErrorWithRoute()
     {
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->andThrow(new RouterRuntimeException('err_message'));
         $this->mockFlashMsgr->shouldReceive('addErrorMessage')->with('DEBUG: err_message');
 
-        $actual = $this->sut->send($this->mockCmd);
-
-        $this->assertInvalidResponse($actual, 'err_message', HttpResponse::STATUS_CODE_404);
+        $this->setExpectedException(Exception::class, 'err_message', 404);
+        $this->sut->send($this->mockCmd);
     }
 
     public function testSend422()
@@ -91,15 +92,70 @@ class CommandServiceTest extends MockeryTestCase
         $this->assertInvalidResponse($actual, 'EXPECT_MESSAGES', HttpResponse::STATUS_CODE_422);
     }
 
+    public function testSend404()
+    {
+        $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
+        $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
+
+        $mockResp = m::mock(HttpResponse::class);
+        $mockResp->shouldReceive('getStatusCode')->atLeast()->times(1)->andReturn(HttpResponse::STATUS_CODE_404);
+
+        $this->mockClient
+            ->shouldReceive('getAdapter')->once()->andReturn()
+            ->shouldReceive('send')->once()->andReturn($mockResp);
+
+        $this->setExpectedException(
+            Exception\NotFoundException::class,
+            "API responded with a 404 Not Found : unit_uri"
+        );
+        $this->sut->send($this->mockCmd);
+    }
+
+    public function testSend403()
+    {
+        $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
+        $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
+
+        $mockResp = m::mock(HttpResponse::class);
+        $mockResp->shouldReceive('getStatusCode')->atLeast()->times(1)->andReturn(HttpResponse::STATUS_CODE_403);
+        $mockResp->shouldReceive('getBody')->with()->once()->andReturn('HTTP BODY');
+
+        $this->mockClient
+            ->shouldReceive('getAdapter')->once()->andReturn()
+            ->shouldReceive('send')->once()->andReturn($mockResp);
+
+        $this->setExpectedException(Exception\AccessDeniedException::class, "HTTP BODY : unit_uri");
+        $this->sut->send($this->mockCmd);
+    }
+
     public function testSend500()
     {
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
-        $this->mockFlashMsgr->shouldReceive('addErrorMessage')->once()->andReturn('EXPECT_MESSAGES');
 
-        $actual = $this->sut->send($this->mockCmd);
+        $mockResp = m::mock(HttpResponse::class);
+        $mockResp->shouldReceive('getStatusCode')->atLeast()->times(1)->andReturn(HttpResponse::STATUS_CODE_500);
+        $mockResp->shouldReceive('getBody')->with()->once()->andReturn('HTTP BODY');
 
-        $this->assertInvalidResponse($actual, 'Unable to connect to ', HttpResponse::STATUS_CODE_500);
+        $this->mockClient
+            ->shouldReceive('getAdapter')->once()->andReturn()
+            ->shouldReceive('send')->once()->andReturn($mockResp);
+
+        $this->setExpectedException(Exception::class, "HTTP BODY : unit_uri");
+        $this->sut->send($this->mockCmd);
+    }
+
+    public function testSendOtherException()
+    {
+        $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
+        $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');
+
+        $this->mockClient
+            ->shouldReceive('getAdapter')->once()->andReturn()
+            ->shouldReceive('send')->once()->andThrow(RuntimeException::class, 'ERROR');
+
+        $this->setExpectedException(Exception::class, "ERROR");
+        $this->sut->send($this->mockCmd);
     }
 
     public function testSend409()

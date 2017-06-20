@@ -44,7 +44,6 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
         $origResponse->setContent('CONTENT');
 
         $mockResp = m::mock(Response::class)
-            ->shouldReceive('isNotFound')->once()->andReturn(false)
             ->shouldReceive('isOk')->once()->andReturn(true)
             ->shouldReceive('getHttpResponse')->once()->andReturn($origResponse)
             ->getMock();
@@ -91,7 +90,6 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
         $origResponse->setContent('CONTENT');
 
         $mockResp = m::mock(Response::class)
-            ->shouldReceive('isNotFound')->once()->andReturn(false)
             ->shouldReceive('isOk')->once()->andReturn(true)
             ->shouldReceive('getHttpResponse')->once()->andReturn($origResponse)
             ->getMock();
@@ -121,25 +119,6 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
         static::assertSame('CONTENT', $response->getContent());
     }
 
-    public function testFailNotFound()
-    {
-        $identifier = '8999';
-
-        $this->mockParams
-            ->shouldReceive('fromRoute')->once()->with('identifier')->andReturn($identifier)
-            ->shouldReceive('fromQuery')->andReturn(null);
-
-        $mockResp = m::mock(Response::class)
-            ->shouldReceive('isNotFound')->once()->andReturn(true)
-            ->getMock();
-
-        $this->sut
-            ->shouldReceive('handleQuery')->once()->andReturn($mockResp)
-            ->shouldReceive('notFoundAction')->once()->andReturn('EXPECTED_ERR_NOT_FOUND');
-
-        static::assertEquals('EXPECTED_ERR_NOT_FOUND', $this->sut->downloadAction());
-    }
-
     public function testFailExceptionErrDownload()
     {
         $identifier = '8999';
@@ -149,7 +128,6 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('fromQuery')->andReturn(null);
 
         $mockResp = m::mock(Response::class)
-            ->shouldReceive('isNotFound')->once()->andReturn(false)
             ->shouldReceive('isOk')->once()->andReturn(false)
             ->getMock();
 

@@ -3,15 +3,19 @@
 namespace Common;
 
 use Common\Preference\LanguageListener;
+use Common\Service\Cqrs\Exception\AccessDeniedException;
+use Common\Service\Cqrs\Exception\NotFoundException;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Utils\Translation\MissingTranslationProcessor;
 use Olcs\Logging\Log\Logger;
 use Zend\EventManager\EventManager;
 use Zend\Http\Request;
 use Zend\ModuleManager\ModuleEvent;
+use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Http\PhpEnvironment\Response;
+use Zend\View\Model\ViewModel;
 
 /**
  * ZF2 Module
@@ -103,6 +107,21 @@ class Module
         //  CSRF token check
         $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'validateCsrfToken'], 100);
 
+        // On dispatch error ot certain CQRS exceptions then change page to a 404
+        $events->attach(
+            MvcEvent::EVENT_DISPATCH_ERROR,
+            function (MvcEvent $e) {
+                // If Backend Not found or access denied then display error as a 404 not found
+                if ($e->getParam('exception') instanceof NotFoundException
+                    || $e->getParam('exception') instanceof AccessDeniedException
+                ) {
+                    $e->setError(Application::ERROR_CONTROLLER_INVALID);
+                    $e->setParam('exceptionNoLog', true);
+                }
+            },
+            100
+        );
+
         $this->setupRequestForProxyHost($app->getRequest());
 
         $this->setLoggerUser($sm);
@@ -110,7 +129,19 @@ class Module
         $identifier = $sm->get('LogProcessorManager')
             ->get(\Olcs\Logging\Log\Processor\RequestId::class)
             ->getIdentifier();
+
         $this->onFatalError($identifier);
+
+        $events->attach(
+            MvcEvent::EVENT_RENDER,
+            function (MvcEvent $e) use ($identifier) {
+                // Inject the log correlation ID into the view
+                if ($e->getResult() instanceof ViewModel) {
+                    $e->getResult()->setVariable('correlationId', $identifier);
+                }
+            },
+            -100
+        );
     }
 
     /**
@@ -143,7 +174,8 @@ class Module
 
                 /** @var Response $response */
                 $response = new Response();
-                $response->getHeaders()->addHeaderLine('Location', '/error?id='. $identifier .'&src=shutdown');
+                $response->getHeaders()
+                    ->addHeaderLine('Location', '/error?correlationId='. $identifier .'&src=shutdown');
                 $response->setStatusCode(Response::STATUS_CODE_302);
                 $response->sendHeaders();
 

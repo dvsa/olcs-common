@@ -219,10 +219,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     {
         $response = $this->getLicenceHistory();
 
-        if ($response->isNotFound()) {
-            return $this->notFoundAction();
-        }
-
         if ($response->isClientError() || $response->isServerError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
         }
@@ -557,10 +553,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     protected function getLicenceFormData($id)
     {
         $response = $this->getOtherLicenceData($id);
-
-        if ($response->isNotFound()) {
-            return $this->notFoundAction();
-        }
 
         if ($response->isClientError() || $response->isServerError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');
