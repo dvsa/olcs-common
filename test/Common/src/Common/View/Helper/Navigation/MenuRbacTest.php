@@ -29,11 +29,9 @@ class MenuRbacTest extends MockeryTestCase
             ]
         );
 
-        //  need error rep change, because Mock::__call have different declaration vs AbstractHandler::__call
-        $oldErrLevel = error_reporting(E_ALL ^ E_STRICT);
+        //  @ - need because Mock::__call have different declaration vs AbstractHandler::__call
         /** @var MenuRbac | m\MockInterface $sut */
-        $sut = m::mock(MenuRbac::class)->makePartial();
-        error_reporting($oldErrLevel);
+        $sut = @m::mock(MenuRbac::class)->makePartial();
 
         $sut->setContainer($mockCntr);
         $sut->shouldReceive('accept')->once()->with($mockPage1, false)->andReturn(false)
