@@ -38,9 +38,7 @@ abstract class AbstractTypeOfLicenceController extends Lva\AbstractTypeOfLicence
 
         $data = $response->getResult();
 
-        if (!$data['canUpdateLicenceType']) {
-            $this->getServiceLocator()->get('Helper\Guidance')->append('variation-application-text');
-        } elseif ($data['doesChangeRequireVariation']) {
+        if (!$data['canUpdateLicenceType'] || $data['doesChangeRequireVariation']) {
             $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage(
                 $this->getIdentifier(),
                 'type_of_licence'
