@@ -34,13 +34,17 @@ abstract class AbstractContinuationController extends AbstractController
     /**
      * Get a form
      *
-     * @param string $formClass Class name of the form to generate
+     * @param string $formServiceName form service name of the form to generate
+     * @param array  $data            data to alter the form
      *
      * @return Form
      */
-    protected function getForm($formClass)
+    protected function getForm($formServiceName, $data = [])
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm($formClass);
+        return $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get($formServiceName)
+            ->getForm($data);
     }
 
     /**

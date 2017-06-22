@@ -18,7 +18,7 @@ return [
         'may_terminate' => true,
         'child_routes' => [
             'checklist' => [
-                'type' => Http\Literal::class,
+                'type' => Http\Segment::class,
                 'options' =>  [
                     'route' => '/checklist',
                     'defaults' => [
@@ -26,11 +26,24 @@ return [
                         'action' => 'index'
                     ]
                 ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'people' => [
+                        'type' => Http\Segment::class,
+                        'options' => [
+                            'route' => '/people[/]',
+                            'defaults' => [
+                                'action' => 'people',
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ],
+                ],
             ],
             'finances' => [
-                'type' => Http\Literal::class,
+                'type' => Http\Segment::class,
                 'options' =>  [
-                    'route' => '/finances',
+                    'route' => '/finances[/]',
                     'defaults' => [
                         'controller' => 'ContinuationController/Finances',
                         'action' => 'index'
@@ -38,9 +51,9 @@ return [
                 ],
             ],
             'declaration' => [
-                'type' => Http\Literal::class,
+                'type' => Http\Segment::class,
                 'options' =>  [
-                    'route' => '/declaration',
+                    'route' => '/declaration[/]',
                     'defaults' => [
                         'controller' => 'ContinuationController/Declaration',
                         'action' => 'index'
@@ -48,9 +61,9 @@ return [
                 ],
             ],
             'payment' => [
-                'type' => Http\Literal::class,
+                'type' => Http\Segment::class,
                 'options' =>  [
-                    'route' => '/payment',
+                    'route' => '/payment[/]',
                     'defaults' => [
                         'controller' => 'ContinuationController/Payment',
                         'action' => 'index'
@@ -58,9 +71,9 @@ return [
                 ],
             ],
             'success' => [
-                'type' => Http\Literal::class,
+                'type' => Http\Segment::class,
                 'options' =>  [
-                    'route' => '/success',
+                    'route' => '/success[/]',
                     'defaults' => [
                         'controller' => 'ContinuationController/Success',
                         'action' => 'index'
@@ -68,9 +81,9 @@ return [
                 ],
             ],
             'review' => [
-                'type' => Http\Literal::class,
+                'type' => Http\Segment::class,
                 'options' =>  [
-                    'route' => '/review',
+                    'route' => '/review[/]',
                     'defaults' => [
                         'controller' => 'ContinuationController/Review',
                         'action' => 'index'

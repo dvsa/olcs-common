@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Continuation;
 
-use Common\Form\Model\Form\Continuation\Start;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -18,7 +17,7 @@ class StartController extends AbstractContinuationController
     public function indexAction()
     {
         $continuationDetailId = $this->getContinuationDetailId();
-        $form = $this->getForm(Start::class);
+        $form = $this->getForm('continuations-start');
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());

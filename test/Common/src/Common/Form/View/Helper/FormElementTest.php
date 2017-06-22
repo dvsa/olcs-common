@@ -117,6 +117,22 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
+    public function testRenderForActionLinkElementWithTarget()
+    {
+        $this->prepareElement(\Common\Form\Elements\InputFilters\ActionLink::class);
+        $this->element->setValue('url');
+        $this->element->setAttribute('target', '_blank');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<a href="(.*)" class="(.*)" target="_blank">(.*)<\/a>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
     public function testRenderForHtmlElement()
     {
         $this->prepareElement('\Common\Form\Elements\Types\Html');
