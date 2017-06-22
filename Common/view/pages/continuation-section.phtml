@@ -1,0 +1,23 @@
+<?php
+echo $this->partial(
+    'partials/page-header-simple',
+    [
+        'pageTitle' => $this->pageTitle(),
+        'pageSubTitle' => $this->licNo
+    ]
+);
+?>
+<h2><?php echo $this->translate($this->totalPeopleMessage) . ' ' . $this->totalPeopleCount; ?></h2>
+<a class="hide-print" href="javascript:window.print();">
+    <?php echo $this->translate('continuations.section.print.link'); ?>
+</a>
+<a href="javascript:window.close();">
+    <?php echo $this->translate('continuations.section.close-the-window.link'); ?>
+</a>
+<div class="row">
+
+  <div class="dashboard two-thirds js-body">
+      <?php echo $this->partial('partials/checklist-section', ['data' => $this->people]); ?>
+  </div>
+
+</div>

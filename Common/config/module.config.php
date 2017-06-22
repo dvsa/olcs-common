@@ -2,6 +2,7 @@
 
 use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
+use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
@@ -592,6 +593,10 @@ return array(
             'lva-licence-transport_managers' => LvaFormService\TransportManager\LicenceTransportManager::class,
             'lva-variation-transport_managers' => LvaFormService\TransportManager\VariationTransportManager::class,
             'lva-application-transport_managers' => LvaFormService\TransportManager\ApplicationTransportManager::class,
+
+            // Continuation forms
+            'continuations-checklist' => ContinuationFormService\LicenceChecklist::class,
+            'continuations-start' => ContinuationFormService\Start::class,
         ]
     ],
     'translator' => [

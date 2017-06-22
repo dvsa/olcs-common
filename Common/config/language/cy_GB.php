@@ -1291,5 +1291,12 @@ return [
     'continuations.business-details.company-name' => 'Enw\'r cwmni',
     'continuations.business-details.partnership-name' => 'Partneriaeth',
     'continuations.business-details.organisation-name' => 'Enw’r sefydliad',
+    'continuations.people-section.table.date-of-birth' => 'Ddyddiad geni',
+    'continuations.people-checkbox.label.org_t_ir' => 'Pobl',
+    'continuations.people-checkbox.label.org_t_llp' => 'Partners or members',
+    'continuations.people-checkbox.label.org_t_p' => 'Partneriaid',
+    'continuations.people-checkbox.label.org_t_rc' => 'Cyfarwyddwyr',
+    'continuations.people-section.table.name' => 'Enw',
+    'continuations.people-section.table.date-of-birth' => 'Dyddiad geni',
     // Potentially unused translations
 ];

@@ -97,9 +97,15 @@ class FormElement extends ZendFormElement
                 $class = $element->getAttribute('class');
             }
 
+            $target = '';
+
+            if ($element->getAttribute('target')) {
+                $target = ' target="' . $element->getAttribute('target') . '"';
+            }
+
             $label = $this->getView()->translate($element->getLabel());
 
-            return '<a href="' . $url . '" class="' . $class . '">' . $label . '</a>';
+            return '<a href="' . $url . '" class="' . $class . '"' . $target . '>' . $label . '</a>';
         }
 
         if ($element instanceof HtmlTranslated) {

@@ -6,7 +6,7 @@ use Common\Service\Helper\TranslationHelperService;
 use Common\RefData;
 
 /**
- * Licence Checklist
+ * Licence checklist mapper
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
@@ -34,7 +34,8 @@ class LicenceChecklist
             'businessType' => [
                 'typeOfBusiness' => $data['organisation']['type']['description']
             ],
-            'businessDetails' => self::mapBusinessDetails($data, $translator)
+            'businessDetails' => self::mapBusinessDetails($data, $translator),
+            'people' => self::mapPeople($data, $translator),
         ];
     }
 
@@ -85,5 +86,83 @@ class LicenceChecklist
             $businessDetails['companyNumber'] = $organisation['companyOrLlpNo'];
         }
         return $businessDetails;
+    }
+
+    /**
+     * Map people
+     *
+     * @param array                    $data       data
+     * @param TranslationHelperService $translator translator
+     *
+     * @return array
+     */
+    private static function mapPeople($data, $translator)
+    {
+        $people = [];
+        $organisation = $data['organisation'];
+        foreach ($organisation['organisationPersons'] as $op) {
+            $person = $op['person'];
+            $people[] = [
+                'name' => implode(
+                    ' ',
+                    [$person['title']['description'], $person['forename'], $person['familyName']]
+                ),
+                'birthDate' => date(\DATE_FORMAT, strtotime($person['birthDate']))
+            ];
+        }
+        usort(
+            $people,
+            function ($a, $b) {
+                return strcmp($a['name'], $b['name']);
+            }
+        );
+        return [
+            'persons' => $people,
+            'header' => $translator->translate('continuations.people-section-header.' . $organisation['type']['id']),
+            'displayPersonCount' => RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT
+        ];
+    }
+
+    /**
+     * Map people section to view
+     *
+     * @param array                    $organisationPersons data
+     * @param string                   $orgType             organisation type
+     * @param TranslationHelperService $translator          translator
+     *
+     * @return array
+     */
+    public static function mapPeopleSectionToView($organisationPersons, $orgType, $translator)
+    {
+        $peopleHeader[] = [
+            ['value' => $translator->translate('continuations.people-section.table.name'), 'header' => true],
+            ['value' => $translator->translate('continuations.people-section.table.date-of-birth'), 'header' => true]
+        ];
+        $peopleDetails = [];
+        foreach ($organisationPersons as $op) {
+            $person = $op['person'];
+            $peopleDetails[] = [
+                [
+                    'value' => implode(
+                        ' ',
+                        [$person['title']['description'], $person['forename'], $person['familyName']]
+                    )
+                ],
+                [
+                    'value' => date(\DATE_FORMAT, strtotime($person['birthDate']))
+                ]
+            ];
+        }
+        usort(
+            $peopleDetails,
+            function ($a, $b) {
+                return strcmp($a[0]['value'], $b[0]['value']);
+            }
+        );
+
+        return [
+            'people' => array_merge($peopleHeader, $peopleDetails),
+            'totalPeopleMessage' => $translator->translate('continuations.people.section-header.' . $orgType),
+        ];
     }
 }

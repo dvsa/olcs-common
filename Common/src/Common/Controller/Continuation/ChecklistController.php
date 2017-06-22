@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Continuation;
 
-use Common\Form\Model\Form\Continuation\LicenceChecklist as LicenceChecklistForm;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist as LicenceChecklistQuery;
 use Common\Data\Mapper\LicenceChecklist as LicenceChecklistMapper;
@@ -20,11 +19,12 @@ class ChecklistController extends AbstractContinuationController
     public function indexAction()
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
-        $licenceData = $this->getLicenceData(
+        $data = $this->getData(
             $this->getContinuationDetailId()
         );
+        $licenceData = $data['licence'];
 
-        $form = $this->getForm(LicenceChecklistForm::class);
+        $form = $this->getForm('continuations-checklist', $data);
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
@@ -41,13 +41,13 @@ class ChecklistController extends AbstractContinuationController
     }
 
     /**
-     * Get licence data
+     * Get data
      *
      * @param int $continuationDetailId continuation detail id
      *
      * @return array
      */
-    protected function getLicenceData($continuationDetailId)
+    protected function getData($continuationDetailId)
     {
         $dto = LicenceChecklistQuery::create(['id' => $continuationDetailId]);
         $response = $this->handleQuery($dto);
@@ -57,6 +57,39 @@ class ChecklistController extends AbstractContinuationController
             // just display and error in case of any client error
             $this->addErrorMessage('unknown-error');
         }
-        return $response->getResult()['licence'];
+        return $response->getResult();
+    }
+
+    /**
+     * People section page
+     *
+     * @return ViewModel
+     */
+    public function peopleAction()
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $data = $this->getData(
+            $this->getContinuationDetailId()
+        );
+        $licenceData = $data['licence'];
+        $organisation = $data['licence']['organisation'];
+        $organisationUsers = $organisation['organisationPersons'];
+        $mappedData = LicenceChecklistMapper::mapPeopleSectionToView(
+            $organisationUsers,
+            $organisation['type']['id'],
+            $translator
+        );
+        $view = new ViewModel(
+            [
+                'licNo' => $licenceData['licNo'],
+                'people' => $mappedData['people'],
+                'totalPeopleMessage' => $mappedData['totalPeopleMessage'],
+                'totalPeopleCount' => count($organisationUsers)
+            ]
+        );
+
+        $view->setTemplate('pages/continuation-section');
+
+        return $view;
     }
 }

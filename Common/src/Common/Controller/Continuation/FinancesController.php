@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Continuation;
 
-use Common\Form\Model\Form\Continuation\Start;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -19,7 +18,7 @@ class FinancesController extends AbstractContinuationController
     {
         $continuationDetailId = $this->getContinuationDetailId();
         // @todo Create new form
-        $form = $this->getForm(Start::class);
+        $form = $this->getForm('continuations-start');
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());

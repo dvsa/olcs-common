@@ -37,7 +37,29 @@ class LicenceChecklistTest extends MockeryTestCase
                     'id' => RefData::ORG_TYPE_REGISTERED_COMPANY
                 ],
                 'name' => 'Foo Ltd',
-                'companyOrLlpNo' => '12345678'
+                'companyOrLlpNo' => '12345678',
+                'organisationPersons' => [
+                    [
+                        'person' => [
+                            'title' => [
+                                'description' => 'Mr'
+                            ],
+                            'familyName' => 'Bar',
+                            'forename' => 'Foo',
+                            'birthDate' => '1980/01/02'
+                        ]
+                    ],
+                    [
+                        'person' => [
+                            'title' => [
+                                'description' => 'Doctor'
+                            ],
+                            'familyName' => 'Cake',
+                            'forename' => 'Buz',
+                            'birthDate' => '1980/02/01'
+                        ]
+                    ]
+                ]
             ],
             'tradingNames' => [
                 [
@@ -62,6 +84,21 @@ class LicenceChecklistTest extends MockeryTestCase
                 'companyNumber' => '12345678',
                 'organisationLabel' => 'continuations.business-details.company-name_translated',
                 'tradingNames' => 'aaa, bbb',
+            ],
+            'people' => [
+                'persons' => [
+                    [
+                        'name' => 'Doctor Buz Cake',
+                        'birthDate' => '01/02/1980'
+                    ],
+                    [
+                        'name' => 'Mr Foo Bar',
+                        'birthDate' => '02/01/1980'
+                    ]
+                ],
+                'header' =>
+                    'continuations.people-section-header.' . RefData::ORG_TYPE_REGISTERED_COMPANY . '_translated',
+                'displayPersonCount' => RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT
             ]
         ];
         $mockTranslator = m::mock(TranslationHelperService::class)
@@ -82,5 +119,62 @@ class LicenceChecklistTest extends MockeryTestCase
             ['continuations.type-of-licence.ni', RefData::NORTHERN_IRELAND_TRAFFIC_AREA_CODE],
             ['continuations.type-of-licence.gb', 'B']
         ];
+    }
+
+    public function testMapPeopleSectionToView()
+    {
+        $in = [
+            [
+                'person' => [
+                    'title' => [
+                        'description' => 'Mr'
+                    ],
+                    'forename' => 'Foo',
+                    'familyName' => 'Bar',
+                    'birthDate' => '1980/01/02'
+                ]
+            ],
+            [
+                'person' => [
+                    'title' => [
+                        'description' => 'Doctor'
+                    ],
+                    'forename' => 'Buz',
+                    'familyName' => 'Cake',
+                    'birthDate' => '1980/02/01'
+                ]
+            ]
+        ];
+        $out = [
+            'people' => [
+                [
+                    ['value' => 'continuations.people-section.table.name_translated', 'header' => true],
+                    ['value' => 'continuations.people-section.table.date-of-birth_translated', 'header' => true]
+                ],
+                [
+                    ['value' => 'Doctor Buz Cake'],
+                    ['value' => '01/02/1980']
+                ],
+                [
+                    ['value' => 'Mr Foo Bar'],
+                    ['value' => '02/01/1980']
+                ],
+            ],
+            'totalPeopleMessage' =>
+                'continuations.people.section-header.' . RefData::ORG_TYPE_REGISTERED_COMPANY . '_translated'
+        ];
+        $mockTranslator = m::mock(TranslationHelperService::class)
+            ->shouldReceive('translate')
+            ->andReturnUsing(
+                function ($arg) {
+                    return $arg . '_translated';
+                }
+            )
+            ->getMock();
+
+        $this->assertEquals(
+            $out,
+            LicenceChecklist::mapPeopleSectionToView($in, RefData::ORG_TYPE_REGISTERED_COMPANY, $mockTranslator)
+        );
     }
 }
