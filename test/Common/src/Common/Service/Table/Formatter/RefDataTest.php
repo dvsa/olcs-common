@@ -7,29 +7,69 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * @covers Common\Service\Table\Formatter\RefData
+ * @covers \Common\Service\Table\Formatter\RefData
  */
 class RefDataTest extends MockeryTestCase
 {
-    public function testFormat()
+    /**
+     * @dataProvider dpTestFormat
+     */
+    public function testFormat($data, $expect)
     {
         $mockSm = m::mock(\Zend\ServiceManager\ServiceLocatorInterface::class);
-        $mockSm->shouldReceive('get->translate')->with('unit_TextKey')->andReturn('EXPECT');
+        $mockSm
+            ->shouldReceive('get->translate')
+            ->andReturnUsing(
+                function ($text) {
+                    return '_TRNSLT_' . $text;
+                }
+            );
 
-        $result = RefData::format(
-            [
-                'statusField' => [
-                    'id' => 'status_unknown',
-                    'description' => 'unit_TextKey',
+        $col = [
+            'name' => 'statusField',
+            'formatter' => 'RefData',
+            'separator' => '@unit_Sepr@',
+        ];
+
+        static::assertEquals($expect, RefData::format($data, $col, $mockSm));
+    }
+
+    public function dpTestFormat()
+    {
+        return [
+            'noField' => [
+                'data' => [
+                    'statusField' => [],
+                    'unit_field' => 'unit_val',
                 ],
+                'expect' => '',
             ],
-            [
-                'name' => 'statusField',
-                'formatter' => 'RefData',
-            ],
-            $mockSm
-        );
+            'simple' => [
+                'data' => [
+                    'statusField' => [
+                        'id' => 'unit_id',
+                        'description' => 'unit_Desc',
+                    ],
 
-        static::assertEquals('EXPECT', $result);
+                ],
+                'expect' => '_TRNSLT_unit_Desc',
+            ],
+            'multi' => [
+                'data' => [
+                    'statusField' => [
+                        [
+                            'id' => 'unit_Id1',
+                            'description' => 'unit_Desc1',
+                        ],
+                        [
+                            'id' => 'unit_Id2',
+                            'description' => 'unit_Desc2',
+                        ],
+                    ],
+
+                ],
+                'expect' => '_TRNSLT_unit_Desc1@unit_Sepr@_TRNSLT_unit_Desc2',
+            ],
+        ];
     }
 }

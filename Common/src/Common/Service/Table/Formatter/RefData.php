@@ -20,6 +20,26 @@ class RefData implements FormatterInterface
      */
     public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
     {
-        return $sm->get('translator')->translate($data[$column['name']]['description']);
+        $colData = $data[$column['name']];
+        if (empty($colData)) {
+            return '';
+        }
+
+        $trslSrv = $sm->get('translator');
+
+        //  single RefData (check, it is NOT an array of entities)
+        if (isset($colData['description'])) {
+            return $trslSrv->translate($colData['description']);
+        }
+
+        //  array of RefData
+        $result = [];
+        foreach ($colData as $row) {
+            $result[] = $trslSrv->translate($row['description']);
+        }
+
+        $sprtr = (isset($column['separator']) ? $column['separator'] : '');
+
+        return implode($sprtr, $result);
     }
 }
