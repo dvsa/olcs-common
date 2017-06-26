@@ -30,5 +30,8 @@ return array(
             'name' => 'dob',
             'formatter' => 'Date',
         ),
+        array(
+            'type' => 'DeltaActionLinks'
+        ),
     )
 );

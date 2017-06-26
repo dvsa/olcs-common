@@ -1748,7 +1748,7 @@ return [
     'lva.section.title.declarations_internal' => 'Declarations Internal',
     'lva.section.title.delete' => 'Are you sure you want to remove these records?',
     'lva.section.title.delete-oc' => 'Are you sure you want to remove this operating centre',
-    'lva.section.title.delete-tm' => 'Are you sure you want to remove this Transport Manager',
+    'lva.section.title.delete-tm' => 'Are you sure you want to remove this Transport Manager?',
     'lva.section.title.delete-safety-inspector' => 'Are you sure you want to remove this safety inspector',
     'lva.section.title.delete-person' => 'Are you sure you want to remove this Director',
     'lva.section.title.delete-company-subsidiary' => 'Are you sure you want to remove this subsidiary company',
