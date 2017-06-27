@@ -58,8 +58,10 @@ class CaseEntityNameTest extends MockeryTestCase
                     'caseType' => [
                         'id' => \Common\RefData::CASE_TYPE_LICENCE,
                     ],
-                    'organisation' => [
-                        'name' => 'unit_Org',
+                    'licence' => [
+                        'organisation' => [
+                            'name' => 'unit_Org',
+                        ],
                     ],
                 ],
                 'expect' => 'unit_Org',
