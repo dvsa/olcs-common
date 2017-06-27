@@ -38,6 +38,6 @@ class CaseEntityName implements FormatterInterface
             );
         }
 
-        return $data['organisation']['name'];
+        return $data['licence']['organisation']['name'];
     }
 }
