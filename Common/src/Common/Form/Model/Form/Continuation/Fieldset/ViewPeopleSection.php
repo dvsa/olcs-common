@@ -21,4 +21,10 @@ class ViewPeopleSection
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
     public $viewPeople = null;
+
+    /**
+     * @Form\Attributes({"value": "markup-continuation-licence-checklist-people-help-message"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $message = null;
 }
