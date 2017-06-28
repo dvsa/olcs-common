@@ -142,6 +142,13 @@ class Module
             },
             -100
         );
+
+        /** @var Response $response */
+        $response = $e->getResponse();
+        $headers = $response->getHeaders();
+        $headers->addHeaders(
+            ['X-XSS-Protection: 1; mode=block', 'X-Content-Type-Options: nosniff']
+        );
     }
 
     /**
