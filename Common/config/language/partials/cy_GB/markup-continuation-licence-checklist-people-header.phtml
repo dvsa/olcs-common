@@ -1,6 +1,7 @@
 <?php
 $peopleData = [];
-if (is_array($this->people) && count($this->people) > $this->people['displayPersonCount']) {
+$persons = $this->people['persons'];
+if (is_array($persons) && count($persons) > $this->people['displayPersonCount']) {
     $peopleData[] = [
         ['value' => $this->people['header'], 'header' => true],
         ['value' => count($this->people['persons'])]
