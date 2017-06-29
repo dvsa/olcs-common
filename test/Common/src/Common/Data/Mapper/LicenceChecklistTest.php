@@ -128,7 +128,7 @@ class LicenceChecklistTest extends MockeryTestCase
                 ],
                 'header' => 'continuations.vehicles-section-header_translated',
                 'isGoods' => true,
-                'displayVehiclesCount' => 2
+                'displayVehiclesCount' => RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT
             ],
         ];
         $mockTranslator = m::mock(TranslationHelperService::class)
