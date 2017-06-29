@@ -21,4 +21,6 @@ return [
     '{{EBSR_SUPPORT_EMAIL}}' => 'ebsr@vosa.gov.uk',
     '{{EBSR_PAPER_FORMS_LINK}}' => 'https://www.gov.uk/government/collections/local-bus-service-registration-forms',
     '{{EBSR_TRANSXCHANGE_LINK}}' => 'https://www.gov.uk/government/publications/transxchange-downloads-and-schema',
+    '{{OPERATOR_LICENSING_EMAIL}}' => 'operatorlicensing@otc.gsi.gov.uk',
+    '{{OPERATOR_LICENSING_PHONE}}' => '0300 123 9000',
 ];

@@ -900,6 +900,7 @@ return [
     'definition' => 'Definition',
     'delete' => 'Delete',
     'delete.confirmation.text' => 'This action is permanent and cannot be undone.',
+    'delete.final-tm.confirmation.text' => 'You are removing your last Transport Manager. If you haven\'t yet made an application to appoint a replacement, you must contact us on {{OPERATOR_LICENSING_PHONE}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL}}">{{OPERATOR_LICENSING_EMAIL}}</a>',
     'deleting.all.vehicles.message' => 'If you are removing all the vehicles from your licence you must be aware that standard licence holders must be able to prove they have a formal arrangement for access at all times to at least one vehicle registered or in circulation.',
     'delta_action_links.remove' => 'Remove',
     'delta_action_links.restore' => 'Restore',
