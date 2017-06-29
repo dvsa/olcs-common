@@ -72,14 +72,29 @@ class ModuleTest extends MockeryTestCase
         static::assertNull($this->sut->validateCsrfToken($this->mockEvent));
     }
 
+    public function testValidateCsrfTokenEmptyPost()
+    {
+        $this->mockReq->shouldReceive('isPost')->andReturn(false);
+        $this->mockReq->shouldReceive('getPost->count')->never();
+
+        $this->mockEvent->shouldReceive('getApplication')->never();
+
+        static::assertNull($this->sut->validateCsrfToken($this->mockEvent));
+    }
+
     public function testValidateCsrfTokenValid()
     {
         $validator = new Csrf(['name' => 'security']);
         $hash = $validator->getHash();
 
+        $mockParams = m::mock(\Zend\Stdlib\Parameters::class)
+            ->shouldReceive('count')->andReturn(1)
+            ->getMock();
+
         $this->mockReq->shouldReceive('getUri->getPath')->andReturn('unit_NOT_whitelisted_path');
         $this->mockReq
             ->shouldReceive('isPost')->once()->andReturn(true)
+            ->shouldReceive('getPost')->once()->withNoArgs()->andReturn($mockParams)
             ->shouldReceive('getPost')->once()->with('security')->andReturn($hash);
 
         $this->mockEvent->shouldReceive('getApplication')->once()->andReturn($this->mockApp);
@@ -93,9 +108,14 @@ class ModuleTest extends MockeryTestCase
         $mockFlashHlp->shouldReceive('addErrorMessage')->once()->with('csrf-message');
         $this->mockSm->shouldReceive('get')->with('Helper\FlashMessenger')->andReturn($mockFlashHlp);
 
+        $mockParams = m::mock(\Zend\Stdlib\Parameters::class)
+            ->shouldReceive('count')->andReturn(1)
+            ->getMock();
+
         $this->mockReq->shouldReceive('getUri->getPath')->andReturn('unit_NOT_whitelisted_host');
         $this->mockReq
             ->shouldReceive('isPost')->once()->andReturn(true)
+            ->shouldReceive('getPost')->once()->withNoArgs()->andReturn($mockParams)
             ->shouldReceive('getPost')->once()->with('security')->andReturn('NOT VALID HASH')
             ->shouldReceive('setMethod')->once()->with(\Zend\Http\Request::METHOD_GET);
 
