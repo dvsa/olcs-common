@@ -3088,5 +3088,11 @@ return [
     'continuations.people.button-label.org_t_pa' => 'View responsible people',
     'continuations.people.button-label.org_t_rc' => 'View directors',
     'continuations.people.button-label.org_t_st' => 'View owner',
+    'continuations.vehicles-section-header' => 'Vehicle registered on licence',
+    'continuations.vehicles-checkbox.label' => 'Vehicles',
+    'continuations.vehicles-section.table.vrm' => 'Vehicle registration mark',
+    'continuations.vehicles-section.table.weight' => 'Gross plated weight (kg)',
+    'continuations.vehicles.button-label' => 'View vehicles',
+    'continuations.vehicles.section-header' => 'Vehicles total:',
     // Potentially unused translations
 ];

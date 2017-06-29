@@ -1,0 +1,11 @@
+<?php
+$vehiclesData = [];
+$vehicles = $this->vehicles['vehicles'];
+if (is_array($vehicles) && count($vehicles) > $this->vehicles['displayVehiclesCount']) {
+    $vehiclesData[] = [
+        ['value' => $this->vehicles['header'], 'header' => true],
+        ['value' => count($this->vehicles['vehicles'])]
+    ];
+}
+?>
+<?php echo $this->partial('partials/checklist-section', ['data' => $vehiclesData]); ?>

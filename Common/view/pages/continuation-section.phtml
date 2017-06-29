@@ -7,7 +7,7 @@ echo $this->partial(
     ]
 );
 ?>
-<h2><?php echo $this->translate($this->totalPeopleMessage) . ' ' . $this->totalPeopleCount; ?></h2>
+<h2><?php echo $this->translate($this->totalMessage) . ' ' . $this->totalCount; ?></h2>
 <a class="hide-print" href="javascript:window.print();">
     <?php echo $this->translate('continuations.section.print.link'); ?>
 </a>
@@ -17,7 +17,7 @@ echo $this->partial(
 <div class="row">
 
   <div class="dashboard two-thirds js-body">
-      <?php echo $this->partial('partials/checklist-section', ['data' => $this->people]); ?>
+      <?php echo $this->partial('partials/checklist-section', ['data' => $this->data]); ?>
   </div>
 
 </div>

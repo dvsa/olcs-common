@@ -36,6 +36,7 @@ class LicenceChecklist
             ],
             'businessDetails' => self::mapBusinessDetails($data, $translator),
             'people' => self::mapPeople($data, $translator),
+            'vehicles' => self::mapVehicles($data, $translator),
         ];
     }
 
@@ -164,5 +165,81 @@ class LicenceChecklist
             'people' => array_merge($peopleHeader, $peopleDetails),
             'totalPeopleMessage' => $translator->translate('continuations.people.section-header.' . $orgType),
         ];
+    }
+
+    /**
+     * Map people
+     *
+     * @param array                    $data       data
+     * @param TranslationHelperService $translator translator
+     *
+     * @return array
+     */
+    private static function mapVehicles($data, $translator)
+    {
+        $vehicles = [];
+        $licenceVehicles = $data['licenceVehicles'];
+        foreach ($licenceVehicles as $licenceVehicle) {
+            $vehicles[] = [
+                'vrm' => $licenceVehicle['vehicle']['vrm'],
+                'weight' => $licenceVehicle['vehicle']['platedWeight'],
+            ];
+        }
+        usort(
+            $vehicles,
+            function ($a, $b) {
+                return strcmp($a['vrm'], $b['vrm']);
+            }
+        );
+
+        return [
+            'vehicles' => $vehicles,
+            'header' => $translator->translate('continuations.vehicles-section-header'),
+            'isGoods' => $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'displayVehiclesCount' => RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT
+        ];
+    }
+
+    /**
+     * Map people section to view
+     *
+     * @param array                    $date       data
+     * @param TranslationHelperService $translator translator
+     *
+     * @return array
+     */
+    public static function mapVehiclesSectionToView($data, $translator)
+    {
+        $isGoods = $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE;
+        $header[] = [
+            ['value' => $translator->translate('continuations.vehicles-section.table.vrm'), 'header' => true]
+        ];
+        if ($isGoods) {
+            $header[0][] = [
+                'value' => $translator->translate('continuations.vehicles-section.table.weight'), 'header' => true
+            ];
+        }
+
+        $vehicles = [];
+        $licenceVehicles = $data['licenceVehicles'];
+        foreach ($licenceVehicles as $licenceVehicle) {
+            $row = [];
+            $row[] = ['value' => $licenceVehicle['vehicle']['vrm']];
+            if ($isGoods) {
+                $row[] = ['value' => $licenceVehicle['vehicle']['platedWeight']];
+            }
+            $vehicles[] = $row;
+        }
+        usort(
+            $vehicles,
+            function ($a, $b) {
+                return strcmp($a[0]['value'], $b[0]['value']);
+            }
+        );
+        return [
+            'vehicles' => array_merge($header, $vehicles),
+            'totalVehiclesMessage' => $translator->translate('continuations.vehicles.section-header'),
+        ];
+
     }
 }

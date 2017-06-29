@@ -41,7 +41,7 @@ class LicenceChecklistTest extends MockeryTestCase
         $this->sut->setFormServiceLocator($fsm);
     }
 
-    public function testAlterFormSmallPersonCount()
+    public function testAlterFormSmallCount()
     {
         $form = m::mock(LicenceChecklistForm::class)
             ->shouldReceive('get')
@@ -94,6 +94,9 @@ class LicenceChecklistTest extends MockeryTestCase
             ->shouldReceive('remove')
             ->with($form, 'data->viewPeopleSection')
             ->once()
+            ->shouldReceive('remove')
+            ->with($form, 'data->viewVehiclesSection')
+            ->once()
             ->andReturnSelf();
 
         $data = [
@@ -104,13 +107,16 @@ class LicenceChecklistTest extends MockeryTestCase
                     ],
                     'organisationPersons' => ['foo']
                 ],
+                'licenceVehicles' => [
+                    ['vehicle' => 'foo'],
+                ]
             ],
             'id' => 1
         ];
         $this->assertEquals($form, $this->sut->getForm($data));
     }
 
-    public function testAlterFormLargePersonCount()
+    public function testAlterFormLargeCount()
     {
         $form = m::mock(LicenceChecklistForm::class)
             ->shouldReceive('get')
@@ -153,9 +159,26 @@ class LicenceChecklistTest extends MockeryTestCase
                             ->getMock()
                     )
                     ->once()
+                    ->shouldReceive('get')
+                    ->with('viewVehiclesSection')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('get')
+                            ->with('viewVehicles')
+                            ->andReturn(
+                                m::mock()
+                                    ->shouldReceive('setValue')
+                                    ->with('url1')
+                                    ->once()
+                                    ->getMock()
+                            )
+                            ->once()
+                            ->getMock()
+                    )
+                    ->once()
                     ->getMock()
             )
-            ->once()
+            ->twice()
             ->getMock();
 
         $this->urlHelper->shouldReceive('fromRoute')
@@ -167,6 +190,15 @@ class LicenceChecklistTest extends MockeryTestCase
             )
             ->andReturn('url')
             ->once()
+            ->shouldReceive('fromRoute')
+            ->with(
+                'continuation/checklist/vehicles',
+                [
+                    'continuationDetailId' => 1,
+                ]
+            )
+            ->andReturn('url1')
+            ->once()
             ->getMock();
 
         $this->formHelper
@@ -176,6 +208,9 @@ class LicenceChecklistTest extends MockeryTestCase
             ->andReturn($form)
             ->shouldReceive('remove')
             ->with($form, 'data->people')
+            ->once()
+            ->shouldReceive('remove')
+            ->with($form, 'data->vehicles')
             ->once()
             ->andReturnSelf();
 
@@ -187,6 +222,7 @@ class LicenceChecklistTest extends MockeryTestCase
                     ],
                     'organisationPersons' => array_fill(0, RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT + 1, 'foo')
                 ],
+                'licenceVehicles' => array_fill(0, RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT + 1, 'foo')
             ],
             'id' => 1
         ];

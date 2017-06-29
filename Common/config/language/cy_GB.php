@@ -1298,5 +1298,8 @@ return [
     'continuations.people-checkbox.label.org_t_rc' => 'Cyfarwyddwyr',
     'continuations.people-section.table.name' => 'Enw',
     'continuations.people-section.table.date-of-birth' => 'Dyddiad geni',
+    'continuations.vehicles-checkbox.label' => 'Cerbydau',
+    'continuations.vehicles-section.table.vrm' => 'Nod gofrestru cerbyd',
+    'continuations.vehicles-section.table.weight' => 'Pwysau plât gros (cg)',
     // Potentially unused translations
 ];

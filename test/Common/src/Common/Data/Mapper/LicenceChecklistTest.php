@@ -26,6 +26,7 @@ class LicenceChecklistTest extends MockeryTestCase
                 'description' => 'Foo'
             ],
             'goodsOrPsv' => [
+                'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
                 'description' => 'Bar'
             ],
             'licenceType' => [
@@ -68,6 +69,20 @@ class LicenceChecklistTest extends MockeryTestCase
                 [
                     'name' => 'bbb'
                 ]
+            ],
+            'licenceVehicles' => [
+                [
+                    'vehicle' => [
+                        'vrm' => 'VRM456',
+                        'platedWeight' => 1000,
+                    ]
+                ],
+                [
+                    'vehicle' => [
+                        'vrm' => 'VRM123',
+                        'platedWeight' => 2000,
+                    ]
+                ],
             ]
         ];
         $out = [
@@ -99,7 +114,22 @@ class LicenceChecklistTest extends MockeryTestCase
                 'header' =>
                     'continuations.people-section-header.' . RefData::ORG_TYPE_REGISTERED_COMPANY . '_translated',
                 'displayPersonCount' => RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT
-            ]
+            ],
+            'vehicles' => [
+                'vehicles' => [
+                    [
+                        'vrm' => 'VRM123',
+                        'weight' => 2000,
+                    ],
+                    [
+                        'vrm' => 'VRM456',
+                        'weight' => 1000,
+                    ]
+                ],
+                'header' => 'continuations.vehicles-section-header_translated',
+                'isGoods' => true,
+                'displayVehiclesCount' => 2
+            ],
         ];
         $mockTranslator = m::mock(TranslationHelperService::class)
             ->shouldReceive('translate')
@@ -175,6 +205,59 @@ class LicenceChecklistTest extends MockeryTestCase
         $this->assertEquals(
             $out,
             LicenceChecklist::mapPeopleSectionToView($in, RefData::ORG_TYPE_REGISTERED_COMPANY, $mockTranslator)
+        );
+    }
+
+    public function testMapVehiclesSectionToView()
+    {
+        $in = [
+            'goodsOrPsv' => [
+                'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
+            ],
+            'licenceVehicles' => [
+                [
+                    'vehicle' => [
+                        'vrm' => 'VRM456',
+                        'platedWeight' => 1000,
+                    ],
+                ],
+                [
+                    'vehicle' => [
+                        'vrm' => 'VRM123',
+                        'platedWeight' => 2000,
+                    ],
+                ]
+            ]
+        ];
+        $out = [
+            'vehicles' => [
+                [
+                    ['value' => 'continuations.vehicles-section.table.vrm_translated', 'header' => true],
+                    ['value' => 'continuations.vehicles-section.table.weight_translated', 'header' => true],
+                ],
+                [
+                    ['value' => 'VRM123'],
+                    ['value' => 2000],
+                ],
+                [
+                    ['value' => 'VRM456'],
+                    ['value' => 1000],
+                ]
+            ],
+            'totalVehiclesMessage' => 'continuations.vehicles.section-header_translated',
+        ];
+        $mockTranslator = m::mock(TranslationHelperService::class)
+            ->shouldReceive('translate')
+            ->andReturnUsing(
+                function ($arg) {
+                    return $arg . '_translated';
+                }
+            )
+            ->getMock();
+
+        $this->assertEquals(
+            $out,
+            LicenceChecklist::mapVehiclesSectionToView($in, $mockTranslator)
         );
     }
 }

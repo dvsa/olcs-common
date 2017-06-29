@@ -5,22 +5,22 @@ namespace Common\Form\Model\Form\Continuation\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Name("viewPeopleSection")
+ * @Form\Name("viewVehiclesSection")
  */
-class ViewPeopleSection
+class ViewVehiclesSection
 {
     /**
-     * @Form\Attributes({"value": "markup-continuation-licence-checklist-people-header"})
+     * @Form\Attributes({"value": "markup-continuation-licence-checklist-vehicles-header"})
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $peopleHeader = null;
+    public $vehiclesHeader = null;
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--secondary large", "id": "viewPeople", "target":"_blank"})
-     * @Form\Options({"label": "continuations.people.button-label."})
+     * @Form\Options({"label": "continuations.vehicles.button-label"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
-    public $viewPeople = null;
+    public $viewVehicles = null;
 
     /**
      * @Form\Attributes({"value": "markup-continuation-licence-checklist-help-message"})

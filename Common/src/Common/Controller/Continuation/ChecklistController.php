@@ -82,9 +82,40 @@ class ChecklistController extends AbstractContinuationController
         $view = new ViewModel(
             [
                 'licNo' => $licenceData['licNo'],
-                'people' => $mappedData['people'],
-                'totalPeopleMessage' => $mappedData['totalPeopleMessage'],
-                'totalPeopleCount' => count($organisationUsers)
+                'data' => $mappedData['people'],
+                'totalMessage' => $mappedData['totalPeopleMessage'],
+                'totalCount' => count($organisationUsers)
+            ]
+        );
+
+        $view->setTemplate('pages/continuation-section');
+
+        return $view;
+    }
+
+    /**
+     * Vehicles section page
+     *
+     * @return ViewModel
+     */
+    public function vehiclesAction()
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $data = $this->getData(
+            $this->getContinuationDetailId()
+        );
+        $licenceData = $data['licence'];
+        $licenceVehicles = $licenceData['licenceVehicles'];
+        $mappedData = LicenceChecklistMapper::mapVehiclesSectionToView(
+            $licenceData,
+            $translator
+        );
+        $view = new ViewModel(
+            [
+                'licNo' => $licenceData['licNo'],
+                'data' => $mappedData['vehicles'],
+                'totalMessage' => $mappedData['totalVehiclesMessage'],
+                'totalCount' => count($licenceVehicles)
             ]
         );
 

@@ -86,4 +86,28 @@ class LicenceChecklist
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $people = null;
+
+    /**
+     * @Form\Type("OlcsCheckbox")
+     * @Form\Attributes({"id":"vehiclesCheckbox"})
+     * @Form\Options({
+     *     "label":"continuations.vehicles-checkbox.label",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
+     * })
+     */
+    public $vehiclesCheckbox = null;
+
+    /**
+     * @Form\Name("viewVehiclesSection")
+     * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\ViewVehiclesSection")
+     */
+    public $viewVehiclesSection = null;
+
+    /**
+     * @Form\Attributes({"value": "markup-continuation-licence-checklist-vehicles"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $vehicles = null;
 }
