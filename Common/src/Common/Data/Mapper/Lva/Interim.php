@@ -18,6 +18,13 @@ use Zend\Form\Form;
  */
 class Interim implements MapperInterface
 {
+    /**
+     * map data from result array
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     public static function mapFromResult(array $data)
     {
         return [
@@ -38,6 +45,13 @@ class Interim implements MapperInterface
         ];
     }
 
+    /**
+     * map data from form
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     public static function mapFromForm(array $data)
     {
         $defaultDataData = [
@@ -58,12 +72,21 @@ class Interim implements MapperInterface
             'endDate' => $dataData['interimEnd'],
             'authVehicles' => $dataData['interimAuthVehicles'],
             'authTrailers' => $dataData['interimAuthTrailers'],
-            'operatingCentres' => isset($data['operatingCentres']['id']) ? $data['operatingCentres']['id'] : null,
-            'vehicles' => isset($data['vehicles']['id']) ? $data['vehicles']['id'] : null,
+            'operatingCentres' => isset($data['operatingCentres']['id']) ? $data['operatingCentres']['id'] : [],
+            'vehicles' => isset($data['vehicles']['id']) ? $data['vehicles']['id'] : [],
             'status' => isset($data['interimStatus']['status']) ? $data['interimStatus']['status'] : null
         ];
     }
 
+    /**
+     * map form errors
+     *
+     * @param Form                        $form   form
+     * @param array                       $errors array of errors
+     * @param FlashMessengerHelperService $fm     flash messenger
+     *
+     * @return void
+     */
     public static function mapFormErrors(Form $form, array $errors, FlashMessengerHelperService $fm)
     {
         $formMessages = [];
