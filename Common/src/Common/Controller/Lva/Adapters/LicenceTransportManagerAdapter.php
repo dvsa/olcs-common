@@ -13,6 +13,14 @@ class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
     protected $lva = 'licence';
     protected $entityService = 'Entity\ApplicationOperatingCentre';
 
+    /**
+     * get table data
+     *
+     * @param null $applicationId not used here but needed to conform to interface
+     * @param int  $licenceId     licence id
+     *
+     * @return array|null
+     */
     public function getTableData($applicationId, $licenceId)
     {
         $query = $this->transferAnnotationBuilder->createQuery(
@@ -25,8 +33,20 @@ class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
             : $this->mapResultForTable([], $response->getResult()['tmLicences']);
     }
 
+    /**
+     * delete a transport manager from a licence
+     *
+     * @param array $ids           ids to be deleted
+     * @param null  $applicationId not used here but needed to conform to interface
+     *
+     * @return bool
+     */
     public function delete(array $ids, $applicationId)
     {
-        // No-op
+        $command = $this->transferAnnotationBuilder->createCommand(
+            \Dvsa\Olcs\Transfer\Command\TransportManagerLicence\Delete::create(['ids' => $ids])
+        );
+
+        return $this->commandSrv->send($command)->isOk();
     }
 }
