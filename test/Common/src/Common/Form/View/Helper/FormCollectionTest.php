@@ -6,11 +6,15 @@ use Common\Form\Elements\Types\FileUploadList;
 use Common\Form\Elements\Types\FileUploadListItem;
 use Common\Form\Elements\Types\HoursPerWeek;
 use Common\Form\Elements\Types\PostcodeSearch;
+use Common\Form\Elements\Types\RadioHorizontal;
 use Common\Form\View\Helper\FormCollection as FormCollectionViewHelper;
+use Common\Form\View\Helper\FormCollection;
 use Common\Form\View\Helper\Readonly\FormFieldset;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Element\Collection;
+use Zend\Form\Element\Radio;
+use Zend\Form\Fieldset;
 use Zend\Form\Form;
 use Zend\Form\View\Helper;
 use Zend\I18n\Translator\Translator;
@@ -296,5 +300,34 @@ class FormCollectionTest extends MockeryTestCase
             '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
             . '<fieldset data-group="hpw"><\/fieldset><\/div>$/'
         );
+    }
+
+    public function testRenderRadioHorizontal()
+    {
+        $mockView = m::mock(PhpRenderer::class);
+        $mockView->shouldReceive('plugin')->with('formrow')->once()->andReturn(
+            m::mock(Helper\AbstractHelper::class)->shouldReceive('render')->getMock()
+        );
+        $mockView->shouldReceive('plugin')->with('escapehtml')->once()->andReturn(
+            m::mock(Helper\AbstractHelper::class)->shouldReceive('render')->getMock()
+        );
+        $mockView->shouldReceive('plugin')->with('escapehtmlattr')->once()->andReturn(
+            m::mock(Helper\AbstractHelper::class)->shouldReceive('render')->getMock()
+        );
+        $mockView->shouldReceive('plugin')->with('formRadioHorizontal')->once()->andReturn(
+            function () {
+                return "formRadioHorizontal MARKUP";
+            }
+        );
+
+        $sut = new FormCollection();
+        $sut->setView($mockView);
+
+        $element = new Fieldset();
+        $element->add(new RadioHorizontal('test'));
+
+        $output = $sut->render($element);
+
+        $this->assertSame('<fieldset>formRadioHorizontal MARKUP</fieldset>', $output);
     }
 }

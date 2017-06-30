@@ -12,6 +12,7 @@ use Common\Form\Elements\Types\FileUploadList;
 use Common\Form\Elements\Types\FileUploadListItem;
 use Common\Form\Elements\Types\HoursPerWeek;
 use Common\Form\Elements\Types\PostcodeSearch;
+use Common\Form\Elements\Types\RadioHorizontal;
 use Common\Form\View\Helper\Readonly\FormFieldset;
 use Zend\Form\Element\Collection as CollectionElement;
 use Zend\Form\ElementInterface;
@@ -25,6 +26,15 @@ use Zend\Form\LabelAwareInterface;
  */
 class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
 {
+    /**
+     * Instance map to view helper
+     *
+     * @var array
+     */
+    protected $classMap = array(
+        RadioHorizontal::class => 'formRadioHorizontal',
+    );
+
     private static $htmlFileUploadCntr =
         '<div class="help__text">' .
             '<h3 class="file__heading">%s</h3>' .
@@ -139,6 +149,15 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         }
 
         foreach ($element->getIterator() as $elementOrFieldset) {
+            // Check if this element class has a bespoke view helper
+            foreach ($this->classMap as $class => $helperName) {
+                if ($elementOrFieldset instanceof $class) {
+                    $helper = $this->view->plugin($helperName);
+                    $markup .= $helper($elementOrFieldset);
+                    continue 2;
+                }
+            }
+
             if ($elementOrFieldset instanceof FieldsetInterface) {
                 $markup .= $fieldsetHelper($elementOrFieldset);
             } elseif ($elementOrFieldset instanceof ElementInterface) {
