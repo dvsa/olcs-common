@@ -38,6 +38,16 @@ return [
                         ],
                         'may_terminate' => true,
                     ],
+                    'vehicles' => [
+                        'type' => Http\Segment::class,
+                        'options' => [
+                            'route' => '/vehicles[/]',
+                            'defaults' => [
+                                'action' => 'vehicles',
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ],
                 ],
             ],
             'finances' => [

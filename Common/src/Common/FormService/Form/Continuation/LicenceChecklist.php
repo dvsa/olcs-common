@@ -48,6 +48,8 @@ class LicenceChecklist extends AbstractFormService
             count($orgData['organisationPersons']),
             $data['id']
         );
+
+        $this->alterVehiclesSection($form, count($data['licence']['licenceVehicles']), $data['id']);
     }
 
     /**
@@ -84,6 +86,34 @@ class LicenceChecklist extends AbstractFormService
             );
         } else {
             $formHelper->remove($form, 'data->viewPeopleSection');
+        }
+    }
+
+    /**
+     * Alter vehicles section
+     *
+     * @param Form $form                 form
+     * @param int  $vehiclesCount        vehicles count
+     * @param int  $continuationDetailId continuation detail id
+     *
+     * @return void
+     */
+    protected function alterVehiclesSection($form, $vehiclesCount, $continuationDetailId)
+    {
+        $formHelper = $this->getFormHelper();
+        if ($vehiclesCount > RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT) {
+            $formHelper->remove($form, 'data->vehicles');
+            $viewButton = $form->get('data')->get('viewVehiclesSection')->get('viewVehicles');
+            $viewButton->setValue(
+                $this->getServiceLocator()->get('Helper\Url')->fromRoute(
+                    'continuation/checklist/vehicles',
+                    [
+                        'continuationDetailId' => $continuationDetailId,
+                    ]
+                )
+            );
+        } else {
+            $formHelper->remove($form, 'data->viewVehiclesSection');
         }
     }
 }

@@ -273,4 +273,5 @@ class RefData
     const PHONE_TYPE_SECONDARY = 'phone_t_secondary';
 
     const CONTINUATIONS_DISPLAY_PERSON_COUNT = 10;
+    const CONTINUATIONS_DISPLAY_VEHICLES_COUNT = 10;
 }
