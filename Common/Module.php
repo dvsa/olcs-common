@@ -215,6 +215,11 @@ class Module
             return;
         }
 
+        $postDataCnt = $request->getPost()->count();
+        if ($postDataCnt === 0) {
+            return;
+        }
+
         $name = 'security';
         $token = $request->getPost($name);
 
