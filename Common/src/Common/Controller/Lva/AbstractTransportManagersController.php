@@ -471,6 +471,21 @@ abstract class AbstractTransportManagersController extends AbstractController im
     }
 
     /**
+     * Override the delete title.
+     *
+     * @return string The modal message key.
+     */
+    protected function getDeleteMessage()
+    {
+        if ($this->lva === 'licence'
+            && $this->getAdapter()->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1) {
+            return 'delete.final-tm.confirmation.text';
+        }
+
+        return 'delete.confirmation.text';
+    }
+
+    /**
      * Restore Transport Managers
      *
      * @return \Zend\Http\Response

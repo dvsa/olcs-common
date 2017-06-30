@@ -17,7 +17,7 @@ use Zend\ServiceManager\ServiceManager;
  */
 class AbstractTransportManagerAdapterTest extends MockeryTestCase
 {
-    /** @var  TestClass */
+    /** @var  \CommonTest\Controller\Lva\Adapters\StubAbstractTransportManagerAdapter */
     protected $sut;
     /** @var  ServiceManager|\Mockery\MockInterface */
     protected $sm;
@@ -38,6 +38,11 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
             $mockAnnotationBuilder, $mockQuerySrv, $mockCommandSrv
         );
         $this->sut->setServiceLocator($this->sm);
+    }
+
+    public function testGetNumberOfRows()
+    {
+        $this->assertEquals(2, $this->sut->getNumberOfRows(888, 999));
     }
 
     public function testGetTable()

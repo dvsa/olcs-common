@@ -25,6 +25,10 @@ class StubAbstractTransportManagerAdapter extends AbstractTransportManagerAdapte
 
     public function getTableData($applicationId, $licenceId)
     {
+        return [
+            0 => 'data row 1',
+            1 => 'data row 2',
+        ];
     }
 
     public function delete(array $ids, $applicationId)
