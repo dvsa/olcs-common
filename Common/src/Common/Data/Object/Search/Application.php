@@ -53,6 +53,8 @@ class Application extends InternalSearchAbstract
     }
 
     /**
+     * get columns
+     *
      * @return array
      */
     public function getColumns()

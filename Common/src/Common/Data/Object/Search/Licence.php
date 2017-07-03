@@ -53,6 +53,8 @@ class Licence extends InternalSearchAbstract
     }
 
     /**
+     * get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -85,6 +87,8 @@ class Licence extends InternalSearchAbstract
     }
 
     /**
+     * get columns
+     *
      * @return array
      */
     public function getColumns()
