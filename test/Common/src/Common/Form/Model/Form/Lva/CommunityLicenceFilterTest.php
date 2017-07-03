@@ -21,7 +21,7 @@ class CommunityLicenceFilterTest extends AbstractFormValidationTestCase
     {
         $element = [ 'status' ];
         $this->assertFormElementDynamicMultiCheckbox($element, true);
-        $this->assertFormElementNotValid($element, 'X', [ 0 ]);
+        $this->assertFormElementNotValid($element, 'X', [['notInArray' => 'The input was not found in the haystack']]);
     }
 
     public function testIsFiltered()
