@@ -258,6 +258,8 @@ return array(
     ],
     'view_helpers' => array(
         'invokables' => array(
+            'formRadioOption' => \Common\Form\View\Helper\FormRadioOption::class,
+            'formRadioHorizontal' => \Common\Form\View\Helper\FormRadioHorizontal::class,
             'form' => 'Common\Form\View\Helper\Form',
             'formCollection' => Common\Form\View\Helper\FormCollection::class,
             'formElement' => Common\Form\View\Helper\FormElement::class,
