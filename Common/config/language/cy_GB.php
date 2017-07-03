@@ -307,6 +307,7 @@ return [
     'declaration-guidance' => 'Rhaid i chi lofnodi a dychwelyd y ffurflen hon cyn i ni fedru ystyried eich cais.',
     'declaration-sig-label' => 'Llofnod y cyfarwyddwr',
     'delete.confirmation.text' => 'Mae\'r weithred hon yn barhaol ac ni ellir ei dadwneud.',
+    'delete.final-tm.confirmation.text' => 'Mae\'r weithred hon yn barhaol ac ni ellir ei dadwneud.',
     'deleting.all.vehicles.message' => 'Os ydych yn dileu\'r holl gerbydau oddi ar eich trwydded mae\'n rhaid ichi fod yn ymwybodol bod rhaid i ddeiliaid trwydded safonol allu profi bod ganddynt drefniad ffurfiol am fynediad drwy\'r amser i o leiaf un cerbyd sydd wedi\'i gofrestru neu sy\'n cylchredeg.',
     'delta_action_links.remove' => 'Tynnu i ffwrdd',
     'delta_action_links.restore' => 'Adfer',

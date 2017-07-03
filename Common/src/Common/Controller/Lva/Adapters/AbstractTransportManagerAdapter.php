@@ -29,6 +29,15 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
 
     protected $tableSortMethod = self::SORT_LAST_FIRST_NAME;
 
+    /**
+     * AbstractTransportManagerAdapter constructor.
+     *
+     * @param TransferAnnotationBuilder $transferAnnotationBuilder annotation builder
+     * @param CachingQueryService       $querySrv                  caching query service
+     * @param CommandService            $commandSrv                command service
+     *
+     * @return void
+     */
     public function __construct(
         TransferAnnotationBuilder $transferAnnotationBuilder,
         CachingQueryService $querySrv,
@@ -41,6 +50,8 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
 
     /**
      * Get the table
+     *
+     * @param string $template table being prepared
      *
      * @return \Common\Service\Table\TableBuilder
      */
@@ -61,6 +72,10 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
 
     /**
      * Add any messages to the page
+     *
+     * @param int $licenceId licence id
+     *
+     * @return void
      */
     public function addMessages($licenceId)
     {
@@ -160,7 +175,10 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     }
 
     /**
-     * Comparition function for sorting a table by Last and First name (ASC)
+     * Comparison function for sorting a table by Last and First name (ASC)
+     *
+     * @param array $a first entry to sort
+     * @param array $b second entry to sort
      *
      * @return int
      */
@@ -173,9 +191,12 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
     }
 
     /**
-     * Comparition function to provider sort:
+     * Comparison function to provider sort:
      *  - new items (action ='A') located at the end;
      *  - all item sorted by Last and First name (ASC),
+     *
+     * @param array $a first entry to sort
+     * @param array $b second entry to sort
      *
      * @return int
      */
@@ -189,5 +210,18 @@ abstract class AbstractTransportManagerAdapter extends AbstractControllerAwareAd
         }
 
         return static::sortCmpByName($a, $b);
+    }
+
+    /**
+     * get number of rows in the data
+     *
+     * @param int $applicationId application id
+     * @param int $licenceId     licence id
+     *
+     * @return int
+     */
+    public function getNumberOfRows($applicationId, $licenceId)
+    {
+        return count($this->getTableData($applicationId, $licenceId));
     }
 }
