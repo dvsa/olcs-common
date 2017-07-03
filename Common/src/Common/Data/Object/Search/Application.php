@@ -45,6 +45,7 @@ class Application extends InternalSearchAbstract
                 new Filter\LicenceType(),
                 new Filter\LicenceStatus(),
                 new Filter\ApplicationStatus(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 

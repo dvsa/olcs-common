@@ -45,6 +45,7 @@ class Licence extends InternalSearchAbstract
                 new Filter\LicenceStatus(),
                 new Filter\LicenceTrafficArea(),
                 new Filter\EntityType(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 
