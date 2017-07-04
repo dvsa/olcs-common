@@ -182,7 +182,9 @@ class LicenceChecklist
         foreach ($licenceVehicles as $licenceVehicle) {
             $vehicles[] = [
                 'vrm' => $licenceVehicle['vehicle']['vrm'],
-                'weight' => $licenceVehicle['vehicle']['platedWeight'],
+                'weight' =>
+                    $licenceVehicle['vehicle']['platedWeight']
+                    . $translator->translate('continuations.vehicles.weight-kg'),
             ];
         }
         usort(
@@ -226,7 +228,10 @@ class LicenceChecklist
             $row = [];
             $row[] = ['value' => $licenceVehicle['vehicle']['vrm']];
             if ($isGoods) {
-                $row[] = ['value' => $licenceVehicle['vehicle']['platedWeight']];
+                $row[] = [
+                    'value' =>
+                        $licenceVehicle['vehicle']['platedWeight']
+                        . $translator->translate('continuations.vehicles.weight-kg')];
             }
             $vehicles[] = $row;
         }

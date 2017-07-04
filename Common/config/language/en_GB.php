@@ -3095,5 +3095,6 @@ return [
     'continuations.vehicles-section.table.weight' => 'Gross plated weight (kg)',
     'continuations.vehicles.button-label' => 'View vehicles',
     'continuations.vehicles.section-header' => 'Vehicles total:',
+    'continuations.vehicles.weight-kg' => 'kg',
     // Potentially unused translations
 ];
