@@ -45,6 +45,7 @@ class Licence extends InternalSearchAbstract
                 new Filter\LicenceStatus(),
                 new Filter\LicenceTrafficArea(),
                 new Filter\EntityType(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 
@@ -52,6 +53,8 @@ class Licence extends InternalSearchAbstract
     }
 
     /**
+     * get settings
+     *
      * @return array
      */
     public function getSettings()
@@ -84,6 +87,8 @@ class Licence extends InternalSearchAbstract
     }
 
     /**
+     * get columns
+     *
      * @return array
      */
     public function getColumns()

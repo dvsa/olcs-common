@@ -45,6 +45,7 @@ class Application extends InternalSearchAbstract
                 new Filter\LicenceType(),
                 new Filter\LicenceStatus(),
                 new Filter\ApplicationStatus(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 
@@ -52,6 +53,8 @@ class Application extends InternalSearchAbstract
     }
 
     /**
+     * get columns
+     *
      * @return array
      */
     public function getColumns()

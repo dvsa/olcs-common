@@ -49,7 +49,8 @@ class Address extends InternalSearchAbstract
                 new Filter\AddressOpposition(),
                 new Filter\LicenceStatus(),
                 new Filter\ApplicationStatus(),
-                new Filter\AddressConditionUndertaking()
+                new Filter\AddressConditionUndertaking(),
+                new Filter\GoodsOrPsv(),
             ];
         }
 
