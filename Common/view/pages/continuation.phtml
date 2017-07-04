@@ -15,6 +15,7 @@ echo $this->partial(
       <?php
       echo $this->flashMessengerAll();
 
+      echo $this->partial('partials/guidance');
 
       if (isset($this->form)):
           echo $this->formErrors($this->form);
