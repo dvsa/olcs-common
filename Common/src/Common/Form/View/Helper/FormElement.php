@@ -184,7 +184,9 @@ class FormElement extends ZendFormElement
             );
         }
 
-        return $this->attachHint($element, parent::render($element));
+        $html = $this->attachHint($element, parent::render($element));
+
+        return $this->attachBelowHint($element, $html);
     }
 
     /**
@@ -209,5 +211,26 @@ class FormElement extends ZendFormElement
         }
 
         return sprintf(self::$topFormat, $hint, $markup);
+    }
+
+    /**
+     * Attach hint html below element
+     * This is same as setting a "hint" and "hint-position" = "below", but this option allows a hint
+     * above and below the element
+     *
+     * @param ElementInterface $element element
+     * @param string           $markup  string
+     *
+     * @return string
+     */
+    private function attachBelowHint($element, $markup)
+    {
+        if (!$element->getOption('hint-below')) {
+            return $markup;
+        }
+
+        $hint = $this->getView()->translate($element->getOption('hint-below'));
+
+        return sprintf(self::$format, $markup, $hint);
     }
 }

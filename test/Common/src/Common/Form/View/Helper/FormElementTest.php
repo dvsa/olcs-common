@@ -473,4 +473,19 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
             $markup
         );
     }
+
+    public function testRenderHintBelow()
+    {
+        $this->prepareElement('Text', ['hint-below' => 'HINT BELOW']);
+
+        $viewHelper = $this->prepareViewHelper();
+
+        $output = $viewHelper($this->element, 'formCollection', '/');
+
+        $this->assertSame(
+            '<p class="hint">Hint</p><input type="text" name="test" class="class" id="test" value="">'
+            .'<div class="hint">HINT BELOW</div>',
+            $output
+        );
+    }
 }

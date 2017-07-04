@@ -113,4 +113,24 @@ class ValidateIfTest extends MockeryTestCase
             ],
         ];
     }
+
+    public function testIsValidInjecttPost()
+    {
+        $mockValidatorChain = m::mock('Zend\Validator\ValidatorChain');
+        $mockValidatorChain->shouldReceive('isValid')->with('XXX', ['bar' => 'VALUE'])->andReturn(true);
+
+        $_POST = ['foo' => ['bar' => 'VALUE']];
+
+        $sut = new ValidateIf();
+        $sut->setOptions(
+            [
+                'inject_post_data' => 'foo->bar',
+                'context_field' => 'bar',
+                'context_values' => 'VALUE'
+            ]
+        );
+        $sut->setValidatorChain($mockValidatorChain);
+
+        $this->assertEquals(true, $sut->isValid('XXX'));
+    }
 }
