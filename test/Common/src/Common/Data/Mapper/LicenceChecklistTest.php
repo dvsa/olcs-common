@@ -119,11 +119,11 @@ class LicenceChecklistTest extends MockeryTestCase
                 'vehicles' => [
                     [
                         'vrm' => 'VRM123',
-                        'weight' => '2000' . 'continuations.vehicles.weight-kg_translated',
+                        'weight' => '2000kg',
                     ],
                     [
                         'vrm' => 'VRM456',
-                        'weight' => '1000' . 'continuations.vehicles.weight-kg_translated',
+                        'weight' => '1000kg',
                     ]
                 ],
                 'header' => 'continuations.vehicles-section-header_translated',
@@ -237,11 +237,11 @@ class LicenceChecklistTest extends MockeryTestCase
                 ],
                 [
                     ['value' => 'VRM123'],
-                    ['value' => '2000' . 'continuations.vehicles.weight-kg_translated' ],
+                    ['value' => '2000kg'],
                 ],
                 [
                     ['value' => 'VRM456'],
-                    ['value' => '1000' . 'continuations.vehicles.weight-kg_translated'],
+                    ['value' => '1000kg'],
                 ]
             ],
             'totalVehiclesMessage' => 'continuations.vehicles.section-header_translated',

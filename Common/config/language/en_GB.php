@@ -3095,7 +3095,6 @@ return [
     'continuations.vehicles-section.table.weight' => 'Gross plated weight (kg)',
     'continuations.vehicles.button-label' => 'View vehicles',
     'continuations.vehicles.section-header' => 'Vehicles total:',
-    'continuations.vehicles.weight-kg' => 'kg',
     'continuations.finances.hint' => '<p>You are required to show that you have access to <strong>&pound;%s</strong> in order to continue your licence.</p><p>The following questions apply to your business bank accounts.</p>',
     'continuations.finances.averageBalance.label' => 'What is your average balance over the last 3 months?',
     'continuations.finances.averageBalance.hint' => 'If the balance is negative you should indicate this in the amount',
