@@ -182,7 +182,8 @@ class LicenceChecklist
         foreach ($licenceVehicles as $licenceVehicle) {
             $vehicles[] = [
                 'vrm' => $licenceVehicle['vehicle']['vrm'],
-                'weight' => $licenceVehicle['vehicle']['platedWeight'],
+                // no need to translate, the same in Welsh
+                'weight' => $licenceVehicle['vehicle']['platedWeight'] . 'kg',
             ];
         }
         usort(
@@ -226,7 +227,8 @@ class LicenceChecklist
             $row = [];
             $row[] = ['value' => $licenceVehicle['vehicle']['vrm']];
             if ($isGoods) {
-                $row[] = ['value' => $licenceVehicle['vehicle']['platedWeight']];
+                // no need to translate, the same in Welsh
+                $row[] = ['value' => $licenceVehicle['vehicle']['platedWeight']  . 'kg'];
             }
             $vehicles[] = $row;
         }
