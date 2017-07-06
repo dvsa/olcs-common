@@ -2,9 +2,8 @@
 
 return array(
     'variables' => array(
-        'title' => 'Transport Managers',
         'within_form' => true,
-        'empty_message' => 'lva-transport-manager-table-empty-message'
+        'empty_message' => 'lva-transport-manager-licence-table-empty-message'
     ),
     'settings' => array(
         'crud' => array(
