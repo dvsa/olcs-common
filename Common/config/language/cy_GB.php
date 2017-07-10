@@ -463,6 +463,7 @@ return [
     'lva-tm-details-forename' => 'Enw cyntaf',
     'lva-tm-details-submit-success' => 'Cyflwynwyd y cais Rheolwr Trafnidiaeth yn llwyddiannus.',
     'lva-transport-manager-table-empty-message' => 'I\'w enwebu',
+    'lva-transport-manager-licence-table-empty-message' => 'I\'w enwebu',
     'lva.section.title.add-transport_managers' => 'Ychwanegu Rheolwr Trafnidiaeth',
     'lva.section.title.add_convictions_penalties' => 'Ychwanegu trosedd blaenorol',
     'lva.section.title.add_discs' => 'Gwneud cais am ddisgiau newydd',

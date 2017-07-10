@@ -124,19 +124,20 @@ class LicenceChecklistTest extends MockeryTestCase
                     'vehicles' => [
                         [
                             'vrm' => 'VRM123',
-                            'weight' => 2000,
+                            'weight' => '2000kg',
                         ],
                         [
                             'vrm' => 'VRM456',
-                            'weight' => 1000,
+                            'weight' => '1000kg',
                         ]
                     ],
-                    'header' => 'continuations.vehicles-section-header_translated',
                     'isGoods' => true,
-                    'displayVehiclesCount' => RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT
+                    'displayVehiclesCount' => RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT,
+                    'header' => 'continuations.vehicles-section-header_translated'
                 ],
                 'continuationDetailId' => 999,
-            ]
+            ],
+
         ];
         $mockTranslator = m::mock(TranslationHelperService::class)
             ->shouldReceive('translate')
@@ -244,11 +245,11 @@ class LicenceChecklistTest extends MockeryTestCase
                 ],
                 [
                     ['value' => 'VRM123'],
-                    ['value' => 2000],
+                    ['value' => '2000kg'],
                 ],
                 [
                     ['value' => 'VRM456'],
-                    ['value' => 1000],
+                    ['value' => '1000kg'],
                 ]
             ],
             'totalVehiclesMessage' => 'continuations.vehicles.section-header_translated',
