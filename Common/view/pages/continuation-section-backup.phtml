@@ -1,0 +1,52 @@
+<?php echo $this->doctype(); ?>
+<html lang="en-GB">
+
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headLink(['rel' => 'icon', 'href' => $this->assetPath('/images/bitmap/favicon.ico'), 'type' => 'image/x-icon'], 'PREPEND'); ?>
+    <?php echo $this->headTitle(strip_tags($this->pageTitle())); ?>
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')->appendHttpEquiv('X-UA-Compatible', 'IE=edge'); ?>
+    <?php echo $this->headLink(['rel' => 'icon', 'href' => $this->assetPath('/images/bitmap/favicon.ico'), 'type' => 'image/x-icon'], 'PREPEND'); ?>
+    <?php $this->headLink()->deleteContainer(); ?>
+    <?php echo $this->headLink()->appendStylesheet($this->assetPath('/styles/' . $this->applicationName() . '.css'), ['media' => 'screen,print']); ?>
+    <?php echo $this->headScript(); ?>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body class="selfserve" id="<?php echo $this->pageId(); ?>">
+
+<div class="page-wrapper">
+
+    <main id="main" role="main">
+        <?php
+        echo $this->partial(
+            'partials/page-header-simple',
+            [
+                'pageTitle' => $this->pageTitle(),
+                'pageSubTitle' => $this->translate('Continue licence') .' '. $this->licNo,
+            ]
+        );
+        ?>
+        <h2><?php echo $this->translate($this->totalMessage) . ' ' . $this->totalCount; ?></h2>
+        <a class="hide-print" href="javascript:window.print();">
+            <?php echo $this->translate('continuations.section.print.link'); ?>
+        </a>
+        <a href="javascript:window.close();">
+            <?php echo $this->translate('continuations.section.close-the-window.link'); ?>
+        </a>
+        <div class="row">
+
+            <div class="dashboard full-width js-body">
+                <?php echo $this->partial('partials/continuation/checklist-section', ['data' => $this->data]); ?>
+            </div>
+
+        </div>
+
+    </main><!-- main -->
+
+</div><!-- page-wrapper-->
+
+</body>
+</html>

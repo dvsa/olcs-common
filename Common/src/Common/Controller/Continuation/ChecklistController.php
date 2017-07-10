@@ -4,13 +4,17 @@ namespace Common\Controller\Continuation;
 
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist as LicenceChecklistQuery;
-use Common\Data\Mapper\LicenceChecklist as LicenceChecklistMapper;
+use Common\Data\Mapper\Continuation\LicenceChecklist as LicenceChecklistMapper;
 
 /**
  * ChecklistController
  */
 class ChecklistController extends AbstractContinuationController
 {
+    protected $layout = 'pages/continuation-checklist';
+    // @todo should be replaced with a correct layout
+    protected $checklistSectionLayout = 'layouts/simple';
+
     /**
      * Index page
      *
@@ -25,9 +29,10 @@ class ChecklistController extends AbstractContinuationController
         $licenceData = $data['licence'];
 
         $form = $this->getForm('continuations-checklist', $data);
+        $request = $this->getRequest();
 
-        if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
+        if ($request->isPost()) {
+            $form->setData((array) $request->getPost());
             if ($form->isValid()) {
                 $this->redirect()->toRoute('continuation/finances', [], [], true);
             }
@@ -36,7 +41,7 @@ class ChecklistController extends AbstractContinuationController
         return $this->getViewModel(
             $licenceData['licNo'],
             $form,
-            LicenceChecklistMapper::mapFromResultToView($licenceData, $translator)
+            LicenceChecklistMapper::mapFromResultToView($data, $translator)
         );
     }
 
@@ -88,9 +93,7 @@ class ChecklistController extends AbstractContinuationController
             ]
         );
 
-        $view->setTemplate('pages/continuation-section');
-
-        return $view;
+        return $this->renderSection($view);
     }
 
     /**
@@ -119,8 +122,24 @@ class ChecklistController extends AbstractContinuationController
             ]
         );
 
-        $view->setTemplate('pages/continuation-section');
+        return $this->renderSection($view);
+    }
 
-        return $view;
+    /**
+     * Render section
+     *
+     * @param ViewModel $view view model
+     *
+     * @return ViewModel
+     */
+    protected function renderSection($view)
+    {
+        $view->setTemplate('pages/continuation-section');
+        $base = new ViewModel();
+        $base->setTemplate($this->checklistSectionLayout)
+            ->setTerminal(true)
+            ->addChild($view, 'content');
+
+        return $base;
     }
 }

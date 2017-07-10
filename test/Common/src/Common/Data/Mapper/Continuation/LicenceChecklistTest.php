@@ -1,8 +1,8 @@
 <?php
 
-namespace CommonTest\Data\Mapper;
+namespace CommonTest\Data\Mapper\Continuation;
 
-use Common\Data\Mapper\LicenceChecklist;
+use Common\Data\Mapper\Continuation\LicenceChecklist;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -21,115 +21,122 @@ class LicenceChecklistTest extends MockeryTestCase
     public function testMapFromResultToView($key, $code)
     {
         $in = [
-            'trafficArea' => [
-                'id' => $code,
-                'description' => 'Foo'
-            ],
-            'goodsOrPsv' => [
-                'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
-                'description' => 'Bar'
-            ],
-            'licenceType' => [
-                'description' => 'Cake'
-            ],
-            'organisation' => [
-                'type' => [
-                    'description' => 'Limited Company',
-                    'id' => RefData::ORG_TYPE_REGISTERED_COMPANY
+            'licence' => [
+                'trafficArea' => [
+                    'id' => $code,
+                    'description' => 'Foo'
                 ],
-                'name' => 'Foo Ltd',
-                'companyOrLlpNo' => '12345678',
-                'organisationPersons' => [
+                'goodsOrPsv' => [
+                    'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    'description' => 'Bar'
+                ],
+                'licenceType' => [
+                    'description' => 'Cake'
+                ],
+                'organisation' => [
+                    'type' => [
+                        'description' => 'Limited Company',
+                        'id' => RefData::ORG_TYPE_REGISTERED_COMPANY
+                    ],
+                    'name' => 'Foo Ltd',
+                    'companyOrLlpNo' => '12345678',
+                    'organisationPersons' => [
+                        [
+                            'person' => [
+                                'title' => [
+                                    'description' => 'Mr'
+                                ],
+                                'familyName' => 'Bar',
+                                'forename' => 'Foo',
+                                'birthDate' => '1980/01/02'
+                            ]
+                        ],
+                        [
+                            'person' => [
+                                'title' => [
+                                    'description' => 'Doctor'
+                                ],
+                                'familyName' => 'Cake',
+                                'forename' => 'Buz',
+                                'birthDate' => '1980/02/01'
+                            ]
+                        ]
+                    ]
+                ],
+                'tradingNames' => [
                     [
-                        'person' => [
-                            'title' => [
-                                'description' => 'Mr'
-                            ],
-                            'familyName' => 'Bar',
-                            'forename' => 'Foo',
-                            'birthDate' => '1980/01/02'
+                        'name' => 'aaa'
+                    ],
+                    [
+                        'name' => 'bbb'
+                    ]
+                ],
+                'licenceVehicles' => [
+                    [
+                        'vehicle' => [
+                            'vrm' => 'VRM456',
+                            'platedWeight' => 1000,
                         ]
                     ],
                     [
-                        'person' => [
-                            'title' => [
-                                'description' => 'Doctor'
-                            ],
-                            'familyName' => 'Cake',
-                            'forename' => 'Buz',
-                            'birthDate' => '1980/02/01'
+                        'vehicle' => [
+                            'vrm' => 'VRM123',
+                            'platedWeight' => 2000,
                         ]
-                    ]
+                    ],
                 ]
             ],
-            'tradingNames' => [
-                [
-                    'name' => 'aaa'
-                ],
-                [
-                    'name' => 'bbb'
-                ]
-            ],
-            'licenceVehicles' => [
-                [
-                    'vehicle' => [
-                        'vrm' => 'VRM456',
-                        'platedWeight' => 1000,
-                    ]
-                ],
-                [
-                    'vehicle' => [
-                        'vrm' => 'VRM123',
-                        'platedWeight' => 2000,
-                    ]
-                ],
-            ]
+            'id' => 999,
         ];
         $out = [
-            'typeOfLicence' => [
-                'operatingFrom' => $key . '_translated',
-                'goodsOrPsv' => 'Bar',
-                'licenceType' => 'Cake'
-            ],
-            'businessType' => [
-                'typeOfBusiness' => 'Limited Company'
-            ],
-            'businessDetails' => [
-                'companyName' => 'Foo Ltd',
-                'companyNumber' => '12345678',
-                'organisationLabel' => 'continuations.business-details.company-name_translated',
-                'tradingNames' => 'aaa, bbb',
-            ],
-            'people' => [
-                'persons' => [
-                    [
-                        'name' => 'Doctor Buz Cake',
-                        'birthDate' => '01/02/1980'
-                    ],
-                    [
-                        'name' => 'Mr Foo Bar',
-                        'birthDate' => '02/01/1980'
-                    ]
+            'data' => [
+                'typeOfLicence' => [
+                    'operatingFrom' => $key . '_translated',
+                    'goodsOrPsv' => 'Bar',
+                    'licenceType' => 'Cake'
                 ],
-                'header' =>
-                    'continuations.people-section-header.' . RefData::ORG_TYPE_REGISTERED_COMPANY . '_translated',
-                'displayPersonCount' => RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT
-            ],
-            'vehicles' => [
+                'businessType' => [
+                    'typeOfBusiness' => 'Limited Company',
+                    'typeOfBusinessId' => RefData::ORG_TYPE_REGISTERED_COMPANY
+                ],
+                'businessDetails' => [
+                    'companyName' => 'Foo Ltd',
+                    'companyNumber' => '12345678',
+                    'organisationLabel' => 'continuations.business-details.company-name_translated',
+                    'tradingNames' => 'aaa, bbb',
+                ],
+                'people' => [
+                    'persons' => [
+                        [
+                            'name' => 'Doctor Buz Cake',
+                            'birthDate' => '01/02/1980'
+                        ],
+                        [
+                            'name' => 'Mr Foo Bar',
+                            'birthDate' => '02/01/1980'
+                        ]
+                    ],
+                    'header' =>
+                        'continuations.people-section-header.' . RefData::ORG_TYPE_REGISTERED_COMPANY . '_translated',
+                    'displayPersonCount' => RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT
+                ],
                 'vehicles' => [
-                    [
-                        'vrm' => 'VRM123',
-                        'weight' => 2000,
+                    'vehicles' => [
+                        [
+                            'vrm' => 'VRM123',
+                            'weight' => 2000,
+                        ],
+                        [
+                            'vrm' => 'VRM456',
+                            'weight' => 1000,
+                        ]
                     ],
-                    [
-                        'vrm' => 'VRM456',
-                        'weight' => 1000,
-                    ]
+                    'header' => 'continuations.vehicles-section-header_translated',
+                    'isGoods' => true,
+                    'displayVehiclesCount' => RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT
                 ],
-                'header' => 'continuations.vehicles-section-header_translated',
-                'isGoods' => true,
-                'displayVehiclesCount' => RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT
-            ],
+                'continuationDetailId' => 999,
+            ]
         ];
         $mockTranslator = m::mock(TranslationHelperService::class)
             ->shouldReceive('translate')

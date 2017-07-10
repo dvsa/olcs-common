@@ -42,78 +42,43 @@ class LicenceChecklist extends AbstractFormService
     protected function alterForm($form, $data)
     {
         $orgData = $data['licence']['organisation'];
-        $this->alterPeopleSection(
-            $form,
-            $orgData['type']['id'],
-            count($orgData['organisationPersons']),
-            $data['id']
-        );
-
-        $this->alterVehiclesSection($form, count($data['licence']['licenceVehicles']), $data['id']);
+        $this->alterPeopleSection($form, $orgData['type']['id']);
+        $this->alterBackUrl($form, $data['licence']['id']);
     }
 
     /**
      * Alter people section
      *
-     * @param Form   $form                 form
-     * @param string $orgType              organisation type
-     * @param int    $personCount          person count
-     * @param int    $continuationDetailId continuation detail id
+     * @param Form   $form    form
+     * @param string $orgType organisation type
      *
      * @return void
      */
-    protected function alterPeopleSection($form, $orgType, $personCount, $continuationDetailId)
+    protected function alterPeopleSection($form, $orgType)
     {
         $dataFieldset = $form->get('data');
         $peopleCheckbox = $dataFieldset->get('peopleCheckbox');
         $peopleCheckbox->setLabel(
             $peopleCheckbox->getLabel() . $orgType
         );
-        $viewButton = $dataFieldset->get('viewPeopleSection')->get('viewPeople');
-        $viewButton->setLabel(
-            $viewButton->getLabel() . $orgType
-        );
-        $formHelper = $this->getFormHelper();
-        if ($personCount > RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT) {
-            $formHelper->remove($form, 'data->people');
-            $viewButton->setValue(
-                $this->getServiceLocator()->get('Helper\Url')->fromRoute(
-                    'continuation/checklist/people',
-                    [
-                        'continuationDetailId' => $continuationDetailId,
-                    ]
-                )
-            );
-        } else {
-            $formHelper->remove($form, 'data->viewPeopleSection');
-        }
     }
 
     /**
-     * Alter vehicles section
+     * Alter back url
      *
-     * @param Form $form                 form
-     * @param int  $vehiclesCount        vehicles count
-     * @param int  $continuationDetailId continuation detail id
+     * @param Form $form      form
+     * @param int  $licenceId licence id
      *
      * @return void
      */
-    protected function alterVehiclesSection($form, $vehiclesCount, $continuationDetailId)
+    protected function alterBackUrl($form, $licenceId)
     {
-        $formHelper = $this->getFormHelper();
-        if ($vehiclesCount > RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT) {
-            $formHelper->remove($form, 'data->vehicles');
-            $viewButton = $form->get('data')->get('viewVehiclesSection')->get('viewVehicles');
-            $viewButton->setValue(
-                $this->getServiceLocator()->get('Helper\Url')->fromRoute(
-                    'continuation/checklist/vehicles',
-                    [
-                        'continuationDetailId' => $continuationDetailId,
-                    ]
-                )
-            );
-        } else {
-            $formHelper->remove($form, 'data->viewVehiclesSection');
-        }
+        $backButton = $form->get('data')->get('licenceChecklistConfirmation')->get('noContent')->get('backToLicence');
+        $backButton->setValue(
+            $this->getServiceLocator()->get('Helper\Url')->fromRoute(
+                'lva-licence',
+                ['licence' => $licenceId]
+            )
+        );
     }
 }

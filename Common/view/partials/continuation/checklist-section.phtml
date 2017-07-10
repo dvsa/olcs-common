@@ -1,17 +1,23 @@
-<table class="continuations-data">
+<table  class="checklist-table">
     <tbody>
         <?php
             foreach ($this->data as $line) {
                 echo '<tr>';
+                $rightAligned = false;
                 foreach ($line as $cell) {
+                    $class = '';
+                    if ($rightAligned) {
+                        $class = 'class="td--right-aligned"';
+                    }
                     if (isset($cell['header']) && $cell['header']) {
-                        $openTag = '<th>';
+                        $openTag = '<th ' . $class . '>';
                         $closeTag = '</th>';
                     } else {
-                        $openTag = '<td>';
+                        $openTag = '<td ' . $class . '>';
                         $closeTag = '</td>';
                     }
                     echo $openTag . $cell['value'] . $closeTag;
+                    $rightAligned = !$rightAligned;
                 }
                 echo '</tr>';
             }

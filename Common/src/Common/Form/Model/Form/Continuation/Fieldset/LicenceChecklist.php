@@ -10,104 +10,118 @@ use Zend\Form\Annotation as Form;
 class LicenceChecklist
 {
     /**
-     * @Form\Type("OlcsCheckbox")
-     * @Form\Attributes({"id":"typeOfLicenceCheckbox"})
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"typeOfLicenceCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#typeOfLicenceCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
      * @Form\Options({
-     *     "label":"continuations.type-of-licence-checkbox.label",
-     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
-     *     "checked_value":"Y",
-     *     "unchecked_value":"N",
+     *      "label":"continuations.type-of-licence-checkbox.label",
+     *      "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *      "content":"partials/continuation/licence-checklist-type-of-licence",
+     *      "checked_value":"Y",
+     *      "unchecked_value":"N",
+     *      "must_be_value": "Y",
+     *      "not_checked_message":"continuations.checklist.section.error",
      * })
      */
     public $typeOfLicenceCheckbox = null;
 
     /**
-     * @Form\Attributes({"value": "markup-continuation-licence-checklist-type-of-licence"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $typeOfLicence = null;
-
-    /**
-     * @Form\Type("OlcsCheckbox")
-     * @Form\Attributes({"id":"businessTypeCheckbox"})
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"businessTypeCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#businessTypeCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
      * @Form\Options({
      *     "label":"continuations.business-type-checkbox.label",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/licence-checklist-business-type",
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error"
      * })
      */
     public $businessTypeCheckbox = null;
 
     /**
-     * @Form\Attributes({"value": "markup-continuation-licence-checklist-business-type"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $businessType = null;
-
-    /**
-     * @Form\Type("OlcsCheckbox")
-     * @Form\Attributes({"id":"businessTypeCheckbox"})
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"businessDetailsCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#businessDetailsCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
      * @Form\Options({
      *     "label":"continuations.business-details-checkbox.label",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/licence-checklist-business-details",
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error"
      * })
      */
     public $businessDetailsCheckbox = null;
 
     /**
-     * @Form\Attributes({"value": "markup-continuation-licence-checklist-business-details"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $businessDetails = null;
-
-    /**
-     * @Form\Type("OlcsCheckbox")
-     * @Form\Attributes({"id":"peopleCheckbox"})
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"peopleCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#peopleCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
      * @Form\Options({
      *     "label":"continuations.people-checkbox.label.",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/licence-checklist-people",
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error"
      * })
      */
     public $peopleCheckbox = null;
 
     /**
-     * @Form\Name("viewPeopleSection")
-     * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\ViewPeopleSection")
-     */
-    public $viewPeopleSection = null;
-
-    /**
-     * @Form\Attributes({"value": "markup-continuation-licence-checklist-people"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $people = null;
-
-    /**
-     * @Form\Type("OlcsCheckbox")
-     * @Form\Attributes({"id":"vehiclesCheckbox"})
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"vehiclesCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#vehiclesCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
      * @Form\Options({
      *     "label":"continuations.vehicles-checkbox.label",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/licence-checklist-vehicles",
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error"
      * })
      */
     public $vehiclesCheckbox = null;
 
     /**
-     * @Form\Name("viewVehiclesSection")
-     * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\ViewVehiclesSection")
+     * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\LicenceChecklistConfirmation")
+     * @Form\Options(
+     *     {
+     *          "label" : "continuations.checklist.confirmation.label",
+     *          "hint":"continuations.checklist.confirmation.hint",
+     *     }
+     * )
      */
-    public $viewVehiclesSection = null;
-
-    /**
-     * @Form\Attributes({"value": "markup-continuation-licence-checklist-vehicles"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $vehicles = null;
+    public $licenceChecklistConfirmation = null;
 }

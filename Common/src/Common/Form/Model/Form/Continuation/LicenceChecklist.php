@@ -13,13 +13,13 @@ class LicenceChecklist
     /**
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\LicenceChecklist")
+     * @Form\Options({
+     *     "hint": "continuations.checklist.form-hint",
+     *     "hintClass": "form-hint",
+     *     "label": "continuations.checklist.hidden.legend",
+     *     "label_attributes": {"class": "visually-hidden"},
+     *     "shouldWrap": true,
+     *  })
      */
     public $data = null;
-
-    /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
-     * @Form\Options({"label":"Continue"})
-     * @Form\Type("\Zend\Form\Element\Button")
-     */
-    public $submit = null;
 }
