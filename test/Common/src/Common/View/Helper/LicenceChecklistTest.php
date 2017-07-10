@@ -2,82 +2,293 @@
 
 namespace CommonTest\View\Helper;
 
-use Common\View\Helper\PageTitle;
+use Common\View\Helper\LicenceChecklist;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\I18n\View\Helper\Translate;
-use Zend\Mvc\Router\Http\RouteMatch;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\Placeholder;
 use Zend\View\Helper\ViewModel;
 use Zend\View\HelperPluginManager;
+use Common\RefData;
 
 /**
- * @covers Common\View\Helper\PageTitle
+ * @covers Common\View\Helper\LicenceChecklist
  */
-class PageTitleTest extends MockeryTestCase
+class LicenceChecklistTest extends MockeryTestCase
 {
     /**
-     * @var PageTitle
+     * @var LicenceChecklist
      */
     private $sut;
 
     public function setUp()
     {
-        $this->sut = new PageTitle();
+        $this->sut = new LicenceChecklist();
     }
 
     /**
      * @dataProvider providerInvoke
      */
-    public function testInvoke($pageTitlePlaceholder, $matchedRouteName, $keyToTranslate)
+    public function testInvoke($type, $data, $expected)
     {
-        $placeholder = m::mock(Placeholder::class);
-        $placeholder->shouldReceive('getContainer')->with('pageTitle')->andReturn($pageTitlePlaceholder);
-
-        $translate = m::mock(Translate::class);
-        $translate->shouldReceive('__invoke')->with($keyToTranslate)->andReturn('translated');
-
-        $routeMatch = m::mock(RouteMatch::class);
-        $routeMatch->shouldReceive('getMatchedRouteName')->andReturn($matchedRouteName);
-        $routeMatch->shouldReceive('getParam')->with('action')->andReturn('someaction');
-
-        $app = m::mock();
-        $app->shouldReceive('getMvcEvent->getRouteMatch')->andReturn($routeMatch);
+        $mockTranslator = m::mock(Translate::class)
+            ->shouldReceive('__invoke')
+            ->andReturnUsing(
+                function ($arg) {
+                    return $arg . '_translated';
+                }
+            )
+            ->getMock();
 
         /** @var ServiceLocatorInterface | m\MockInterface $sm */
         $sm = m::mock(ServiceLocatorInterface::class);
-        $sm->shouldReceive('get')->with('Application')->andReturn($app);
+        $sm->shouldReceive('get')->with('translate')->andReturn($mockTranslator);
 
-        /** @var HelperPluginManager | m\MockInterface $vhm */
-        $vhm = m::mock(HelperPluginManager::class)->makePartial();
-        $vhm->setServiceLocator($sm);
-        $vhm->shouldReceive('get')->with('translate')->andReturn($translate);
-        $vhm->shouldReceive('get')->with('placeholder')->andReturn($placeholder);
+        $sut = $this->sut->createService($sm);
 
-        $sut = $this->sut->createService($vhm);
-
-        $this->assertEquals('translated', $sut->__invoke());
+        $this->assertEquals($sut->__invoke($type, $data), $expected);
     }
 
     public function providerInvoke()
     {
         return [
-            'placeholder' => [
-                'placeholder',
-                'foo/bar',
-                'placeholder',
+            [
+                'foo',
+                ['bar'],
+                []
             ],
-            'routingWithTranslation' => [
-                null,
-                'foo/bar',
-                'page.title.foo/bar.someaction',
+            [
+                RefData::LICENCE_CHECKLIST_TYPE_OF_LICENCE,
+                [
+                    'typeOfLicence' => [
+                        'operatingFrom' => 'GB',
+                        'goodsOrPsv' => 'goods',
+                        'licenceType' => 'type'
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.type-of-licence.operating-from_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => 'GB'
+                        ]
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.type-of-licence.type-of-operator_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => 'goods'
+                        ],
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.type-of-licence.type-of-licence_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => 'type'
+                        ]
+                    ]
+                ]
             ],
-            'routingWithoutTranslation' => [
-                null,
-                null,
-                'header-vehicle-operator-licensing',
+            [
+                RefData::LICENCE_CHECKLIST_BUSINESS_TYPE,
+                [
+                    'businessType' => [
+                        'typeOfBusiness' => 'ltd'
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.business-type.type-of-business_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => 'ltd'
+                        ]
+                    ],
+                ]
             ],
+            [
+                RefData::LICENCE_CHECKLIST_BUSINESS_DETAILS,
+                [
+                    'businessDetails' => [
+                        'companyNumber' => '12345678',
+                        'companyName' => 'foo',
+                        'organisationLabel' => 'bar',
+                        'tradingNames' => 'trading,names'
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.business-details.company-number_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => '12345678'
+                        ]
+                    ],
+                    [
+                        ['value' => 'bar', 'header' => true],
+                        ['value' => 'foo']
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.business-details.trading-names_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => 'trading,names'
+                        ]
+                    ]
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_PEOPLE,
+                [
+                    'people' => [
+                        'persons' => [
+                            [
+                                'name' => 'name1',
+                                'birthDate' => 'birthDate1'
+                            ],
+                            [
+                                'name' => 'name2',
+                                'birthDate' => 'birthDate2'
+                            ],
+                        ],
+                        'header' => 'foo',
+                        'displayPersonCount' => 2
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.people-section.table.name_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.people-section.table.date-of-birth_translated',
+                            'header' => true
+                        ],
+                    ],
+                    [
+                        ['value' => 'name1'],
+                        ['value' => 'birthDate1']
+                    ],
+                    [
+                        ['value' => 'name2'],
+                        ['value' => 'birthDate2']
+                    ]
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_PEOPLE,
+                [
+                    'people' => [
+                        'persons' => [
+                            [
+                                'name' => 'name1',
+                                'birthDate' => 'birthDate1'
+                            ],
+                            [
+                                'name' => 'name2',
+                                'birthDate' => 'birthDate2'
+                            ],
+                            [
+                                'name' => 'name3',
+                                'birthDate' => 'birthDate3'
+                            ],
+                        ],
+                        'header' => 'foo',
+                        'displayPersonCount' => 2
+                    ]
+                ],
+                [
+                    [
+                        ['value' => 'foo', 'header' => true],
+                        ['value' => 3]
+                    ]
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_VEHICLES,
+                [
+                    'vehicles' => [
+                        'vehicles' => [
+                            [
+                                'vrm' => 'vrm1',
+                                'weight' => 1000
+                            ],
+                            [
+                                'vrm' => 'vrm2',
+                                'weight' => 2000
+                            ],
+                        ],
+                        'displayVehiclesCount' => 2,
+                        'isGoods' => true,
+                        'header' => 'foo'
+                    ],
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.vehicles-section.table.vrm_translated',
+                            'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.vehicles-section.table.weight_translated',
+                            'header' => true
+                        ]
+                    ],
+                    [
+                        ['value' => 'vrm1'],
+                        ['value' => 1000],
+                    ],
+                    [
+                        ['value' => 'vrm2'],
+                        ['value' => 2000]
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_VEHICLES,
+                [
+                    'vehicles' => [
+                        'vehicles' => [
+                            [
+                                'vrm' => 'vrm1',
+                                'weight' => 1000
+                            ],
+                            [
+                                'vrm' => 'vrm2',
+                                'weight' => 2000
+                            ],
+                            [
+                                'vrm' => 'vrm2',
+                                'weight' => 3000
+                            ],
+                        ],
+                        'displayVehiclesCount' => 2,
+                        'isGoods' => true,
+                        'header' => 'foo'
+                    ],
+                ],
+                [
+                    [
+                        ['value' => 'foo', 'header' => true],
+                        ['value' => 3]
+                    ]
+                ]
+            ]
         ];
     }
 }
