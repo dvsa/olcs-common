@@ -25,7 +25,7 @@ class LicenceChecklist
      *      "checked_value":"Y",
      *      "unchecked_value":"N",
      *      "must_be_value": "Y",
-     *      "not_checked_message":"continuations.checklist.section.error",
+     *      "not_checked_message":"continuations.checklist.section.error.type-of-licence",
      * })
      */
     public $typeOfLicenceCheckbox = null;
@@ -46,7 +46,7 @@ class LicenceChecklist
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
      *     "must_be_value": "Y",
-     *     "not_checked_message":"continuations.checklist.section.error"
+     *     "not_checked_message":"continuations.checklist.section.error.business-type"
      * })
      */
     public $businessTypeCheckbox = null;
@@ -67,10 +67,31 @@ class LicenceChecklist
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
      *     "must_be_value": "Y",
-     *     "not_checked_message":"continuations.checklist.section.error"
+     *     "not_checked_message":"continuations.checklist.section.error.business-details"
      * })
      */
     public $businessDetailsCheckbox = null;
+
+    /**
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"addressesCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#addressesCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
+     * @Form\Options({
+     *     "label":"continuations.addresses-checkbox.label",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/stub",
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error.addresses"
+     * })
+     */
+    public $addressesCheckbox = null;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -88,10 +109,52 @@ class LicenceChecklist
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
      *     "must_be_value": "Y",
-     *     "not_checked_message":"continuations.checklist.section.error"
+     *     "not_checked_message":"continuations.checklist.section.error.people."
      * })
      */
     public $peopleCheckbox = null;
+
+    /**
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"operatingCentresCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#operatingCentresCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
+     * @Form\Options({
+     *     "label":"continuations.operatingCentres-checkbox.label",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/stub",
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error.operatingCentres"
+     * })
+     */
+    public $operatingCentresCheckbox = null;
+
+    /**
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"transportManagersCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#transportManagersCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
+     * @Form\Options({
+     *     "label":"continuations.transportManagers-checkbox.label",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/stub",
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error.transportManagers"
+     * })
+     */
+    public $transportManagersCheckbox = null;
 
     /**
      * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
@@ -109,17 +172,58 @@ class LicenceChecklist
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
      *     "must_be_value": "Y",
-     *     "not_checked_message":"continuations.checklist.section.error"
+     *     "not_checked_message":"continuations.checklist.section.error.vehicles"
      * })
      */
     public $vehiclesCheckbox = null;
+
+    /**
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"safetyCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#safetyCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
+     * @Form\Options({
+     *     "label":"continuations.safety-checkbox.label",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/stub",
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error.safety"
+     * })
+     */
+    public $safetyCheckbox = null;
+
+    /**
+     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
+     * @Form\Required(true)
+     * @Form\Attributes({
+     *      "id":"conditionsUndertakingsCheckbox",
+     *      "data-js-validate":"required",
+     *      "data-show-element":"#conditionsUndertakingsCheckbox-hidden",
+     *      "class":"checkbox"
+     * })
+     * @Form\Options({
+     *     "label":"continuations.conditionsUndertakings-checkbox.label",
+     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
+     *     "content":"partials/continuation/stub",
+     *     "checked_value":"Y",
+     *     "unchecked_value":"N",
+     *     "must_be_value": "Y",
+     *     "not_checked_message":"continuations.checklist.section.error.conditionsUndertakings"
+     * })
+     */
+    public $conditionsUndertakingsCheckbox = null;
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\LicenceChecklistConfirmation")
      * @Form\Options(
      *     {
      *          "label" : "continuations.checklist.confirmation.label",
-     *          "hint":"continuations.checklist.confirmation.hint",
      *     }
      * )
      */
