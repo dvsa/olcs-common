@@ -3119,7 +3119,7 @@ return [
     'continuations.finances.otherFinances.amount.notBetween' => 'Your other finances must be between %min% and %max%',
     'continuations.finances.otherFinances.detail.label' => 'Where do these finances come from?',
     'continuations.finances.otherFinances.detail.empty' => 'You must state where these finances come from',
-    'continuations.checklist.guidance' => '<p>You should ensure that all information on your current licence is up to date before you apply for a continuation.</p><p>All sections must be reviewed.</p>',
+    'continuations.checklist.guidance' => '<p class="important"><strong>You should ensure that all information on your current licence is up to date before you apply for a continuation.</strong></p>',
     'continuations.checklist.hidden.legend' => 'Licence review',
     'continuations.checklist.form-hint' => 'Start the process by selecting a section for review',
     'continuations.checklist.confirmation.error' => 'Please confirm your licence details is up to date',
