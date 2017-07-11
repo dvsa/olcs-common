@@ -27,36 +27,31 @@ $hasValidationError = !empty($errors);
             <?php echo $this->formRadioOption($radioElement, 'N') ?>
         </div>
 
-        <?php if ($element->has('yesContent')) : ?>
-            <?php
-            $id = $radioElement->getValueOptions()['Y']['attributes']['id'] .'_content';
-            ?>
-            <div class="radio-button__hidden-content help__text" id="<?php echo $id ?>">
-                <?php
-                $yesContentElement = $element->get('yesContent');
-                if ($yesContentElement instanceof \Zend\Form\Fieldset) {
-                    echo $this->formCollection($yesContentElement, false);
-                } else {
-                    echo $this->formRow($yesContentElement);
-                }
-                ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if ($element->has('noContent')) : ?>
-            <?php
-            $id = $radioElement->getValueOptions()['N']['attributes']['id'] .'_content';
-            ?>
-            <div class="radio-button__hidden-content help__text" id="<?php echo $id ?>">
-                <?php
-                $noContentElement = $element->get('noContent');
-                if ($noContentElement instanceof \Zend\Form\Fieldset) {
-                    echo $this->formCollection($noContentElement, false);
-                } else {
-                    echo $this->formRow($noContentElement);
-                }
-                ?>
-            </div>
-        <?php endif; ?>
+        <?php
+        if ($element->has('yesContent'))  {
+            echo $this->render(
+                'partials/form/radio-content',
+                array_merge(
+                    $this->vars()->getArrayCopy(),
+                    [
+                        'element' => $element->get('yesContent'),
+                        'id' => $radioElement->getValueOptions()['Y']['attributes']['id'] .'_content',
+                    ]
+                )
+            );
+        }
+        if ($element->has('noContent'))  {
+            echo $this->render(
+                'partials/form/radio-content',
+                array_merge(
+                    $this->vars()->getArrayCopy(),
+                    [
+                        'element' => $element->get('noContent'),
+                        'id' => $radioElement->getValueOptions()['N']['attributes']['id'] .'_content',
+                    ]
+                )
+            );
+        }
+        ?>
     </fieldset>
 </div>

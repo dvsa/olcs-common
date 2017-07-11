@@ -14,6 +14,7 @@ use Common\Form\Elements\Types\HoursPerWeek;
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\RadioHorizontal;
 use Common\Form\Elements\Types\CheckboxAdvanced;
+use Common\Form\Elements\Types\RadioVertical;
 use Common\Form\View\Helper\Readonly\FormFieldset;
 use Zend\Form\Element\Collection as CollectionElement;
 use Zend\Form\ElementInterface;
@@ -35,6 +36,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
     protected $classMap = array(
         RadioHorizontal::class => 'formRadioHorizontal',
         CheckboxAdvanced::class => 'formCheckboxAdvanced',
+        RadioVertical::class => 'formRadioVertical',
     );
 
     private static $htmlFileUploadCntr =
@@ -89,6 +91,13 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      */
     public function render(ElementInterface $element)
     {
+        foreach ($this->classMap as $class => $helperName) {
+            if ($element instanceof $class) {
+                $helper = $this->view->plugin($helperName);
+                return $helper($element);
+            }
+        }
+
         $messages = $element->getMessages();
 
         if ($element instanceof HoursPerWeek) {

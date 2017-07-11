@@ -21,6 +21,9 @@ class FormRadioHorizontal extends \Common\Form\View\Helper\Extended\FormCollecti
     {
         /** @var PhpRenderer $v */
         $view = $this->view;
-        return $view->partial('partials/form/radio-horizontal', ['element' => $element]);
+        return $view->render(
+            'partials/form/radio-horizontal',
+            array_merge($view->vars()->getArrayCopy(), ['element' => $element])
+        );
     }
 }

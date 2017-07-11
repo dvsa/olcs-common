@@ -1,0 +1,14 @@
+<?php
+/** @var \Zend\Form\Element $element */
+$element = $this->element;
+$id = $this->id;
+?>
+<div class="radio-button__hidden-content help__text" id="<?php echo $id ?>">
+    <?php
+    if ($element instanceof \Zend\Form\Fieldset) {
+        echo $this->formCollection($element);
+    } else {
+        echo $this->formRow($element);
+    }
+    ?>
+</div>
