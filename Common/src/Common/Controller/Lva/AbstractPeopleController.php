@@ -78,11 +78,13 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
 
+        // @todo move alterForm and alterFormForOrganisation logic into form services
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
-            ->getForm();
-        // @todo move alterForm and alterFormForOrganisation logic into form services
+            ->getForm(
+                ['canModify' => $this->getAdapter()->canModify()]
+            );
 
         $table = $this->getAdapter()->createTable();
 
