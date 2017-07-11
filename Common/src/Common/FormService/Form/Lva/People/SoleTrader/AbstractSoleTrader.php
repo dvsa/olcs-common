@@ -16,6 +16,13 @@ use Common\FormService\Form\Lva\AbstractLvaFormService;
  */
 abstract class AbstractSoleTrader extends AbstractLvaFormService
 {
+    /**
+     * Get sole trader form
+     *
+     * @param array $params Parameters for form
+     *
+     * @return \Common\Form\Form
+     */
     public function getForm($params)
     {
         $form = $this->getFormHelper()->createForm('Lva\SoleTrader');
@@ -28,7 +35,9 @@ abstract class AbstractSoleTrader extends AbstractLvaFormService
     /**
      * Make form alterations
      *
-     * @param \Zend\Form\Form $form
+     * @param \Zend\Form\Form $form   Form
+     * @param array           $params Parameters for form
+     *
      * @return \Zend\Form\Form
      */
     protected function alterForm($form, array $params)

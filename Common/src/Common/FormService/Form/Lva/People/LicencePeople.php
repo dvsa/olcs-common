@@ -16,6 +16,14 @@ use Common\Form\Form;
  */
 class LicencePeople extends AbstractPeople
 {
+    /**
+     * Alter licence people form
+     *
+     * @param Form  $form   Form
+     * @param array $params Parameters / options for form
+     *
+     * @return Form
+     */
     protected function alterForm(Form $form, array $params = [])
     {
         $form = parent::alterForm($form, $params);
