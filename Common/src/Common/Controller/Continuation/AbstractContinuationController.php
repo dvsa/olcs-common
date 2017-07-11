@@ -11,6 +11,8 @@ use Zend\View\Model\ViewModel;
  */
 abstract class AbstractContinuationController extends AbstractController
 {
+    protected $layout = 'pages/continuation';
+
     /**
      * Get the ViewModel used for continuations
      *
@@ -26,7 +28,7 @@ abstract class AbstractContinuationController extends AbstractController
             array_merge(['licNo' => $licNo, 'form' => $form], $variables)
         );
 
-        $view->setTemplate('pages/continuation');
+        $view->setTemplate($this->layout);
 
         return $view;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Data\Mapper;
+namespace Common\Data\Mapper\Continuation;
 
 use Common\Service\Helper\TranslationHelperService;
 use Common\RefData;
@@ -22,21 +22,26 @@ class LicenceChecklist
      */
     public static function mapFromResultToView(array $data, TranslationHelperService $translator)
     {
+        $licenceData = $data['licence'];
         return [
-            'typeOfLicence' => [
-                'operatingFrom' =>
-                    $data['trafficArea']['id'] === RefData::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
-                        ? $translator->translate('continuations.type-of-licence.ni')
-                        : $translator->translate('continuations.type-of-licence.gb'),
-                'goodsOrPsv' => $data['goodsOrPsv']['description'],
-                'licenceType' => $data['licenceType']['description']
-            ],
-            'businessType' => [
-                'typeOfBusiness' => $data['organisation']['type']['description']
-            ],
-            'businessDetails' => self::mapBusinessDetails($data, $translator),
-            'people' => self::mapPeople($data, $translator),
-            'vehicles' => self::mapVehicles($data, $translator),
+            'data' => [
+                'typeOfLicence' => [
+                    'operatingFrom' =>
+                        $licenceData['trafficArea']['id'] === RefData::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                            ? $translator->translate('continuations.type-of-licence.ni')
+                            : $translator->translate('continuations.type-of-licence.gb'),
+                    'goodsOrPsv' => $licenceData['goodsOrPsv']['description'],
+                    'licenceType' => $licenceData['licenceType']['description']
+                ],
+                'businessType' => [
+                    'typeOfBusiness' => $licenceData['organisation']['type']['description'],
+                    'typeOfBusinessId' => $licenceData['organisation']['type']['id'],
+                ],
+                'businessDetails' => self::mapBusinessDetails($licenceData, $translator),
+                'people' => self::mapPeople($licenceData, $translator),
+                'vehicles' => self::mapVehicles($licenceData, $translator),
+                'continuationDetailId' => $data['id']
+            ]
         ];
     }
 

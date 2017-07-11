@@ -274,4 +274,10 @@ class RefData
 
     const CONTINUATIONS_DISPLAY_PERSON_COUNT = 10;
     const CONTINUATIONS_DISPLAY_VEHICLES_COUNT = 10;
+
+    const LICENCE_CHECKLIST_TYPE_OF_LICENCE = 'type_of_licence';
+    const LICENCE_CHECKLIST_BUSINESS_TYPE = 'business_type';
+    const LICENCE_CHECKLIST_BUSINESS_DETAILS = 'business_details';
+    const LICENCE_CHECKLIST_PEOPLE = 'people';
+    const LICENCE_CHECKLIST_VEHICLES = 'vehicles';
 }

@@ -3,7 +3,7 @@ echo $this->partial(
     'partials/page-header-simple',
     [
         'pageTitle' => $this->pageTitle(),
-        'pageSubTitle' => $this->licNo
+        'pageSubTitle' => $this->translate('Continue licence') .' '. $this->licNo,
     ]
 );
 ?>
@@ -16,8 +16,8 @@ echo $this->partial(
 </a>
 <div class="row">
 
-  <div class="dashboard two-thirds js-body">
-      <?php echo $this->partial('partials/checklist-section', ['data' => $this->data]); ?>
-  </div>
+    <div class="dashboard full-width js-body">
+        <?php echo $this->partial('partials/continuation/checklist-section', ['data' => $this->data]); ?>
+    </div>
 
 </div>

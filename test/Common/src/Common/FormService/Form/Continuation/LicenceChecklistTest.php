@@ -41,7 +41,7 @@ class LicenceChecklistTest extends MockeryTestCase
         $this->sut->setFormServiceLocator($fsm);
     }
 
-    public function testAlterFormSmallCount()
+    public function testAlterForm()
     {
         $form = m::mock(LicenceChecklistForm::class)
             ->shouldReceive('get')
@@ -62,42 +62,49 @@ class LicenceChecklistTest extends MockeryTestCase
                     )
                     ->once()
                     ->shouldReceive('get')
-                    ->with('viewPeopleSection')
+                    ->with('licenceChecklistConfirmation')
                     ->andReturn(
                         m::mock()
+                        ->shouldReceive('get')
+                        ->with('noContent')
+                        ->andReturn(
+                            m::mock()
                             ->shouldReceive('get')
-                            ->with('viewPeople')
+                            ->with('backToLicence')
                             ->andReturn(
                                 m::mock()
-                                    ->shouldReceive('getLabel')
-                                    ->andReturn('label.')
-                                    ->once()
-                                    ->shouldReceive('setLabel')
-                                    ->with('label.' . RefData::ORG_TYPE_REGISTERED_COMPANY)
-                                    ->once()
-                                    ->getMock()
+                                ->shouldReceive('setValue')
+                                ->with('url')
+                                ->once()
+                                ->getMock()
                             )
                             ->once()
                             ->getMock()
+                        )
+                        ->once()
+                        ->getMock()
                     )
                     ->once()
                     ->getMock()
             )
+            ->twice()
+            ->getMock();
+
+        $this->urlHelper->shouldReceive('fromRoute')
+            ->with(
+                'lva-licence',
+                ['licence' => 2]
+            )
+            ->andReturn('url')
             ->once()
             ->getMock();
 
         $this->formHelper
             ->shouldReceive('createForm')
             ->with(LicenceChecklistForm::class)
-            ->once()
             ->andReturn($form)
-            ->shouldReceive('remove')
-            ->with($form, 'data->viewPeopleSection')
             ->once()
-            ->shouldReceive('remove')
-            ->with($form, 'data->viewVehiclesSection')
-            ->once()
-            ->andReturnSelf();
+            ->getMock();
 
         $data = [
             'licence' => [
@@ -109,120 +116,8 @@ class LicenceChecklistTest extends MockeryTestCase
                 ],
                 'licenceVehicles' => [
                     ['vehicle' => 'foo'],
-                ]
-            ],
-            'id' => 1
-        ];
-        $this->assertEquals($form, $this->sut->getForm($data));
-    }
-
-    public function testAlterFormLargeCount()
-    {
-        $form = m::mock(LicenceChecklistForm::class)
-            ->shouldReceive('get')
-            ->with('data')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('get')
-                    ->with('peopleCheckbox')
-                    ->andReturn(
-                        m::mock()
-                            ->shouldReceive('getLabel')
-                            ->andReturn('label.')
-                            ->once()
-                            ->shouldReceive('setLabel')
-                            ->with('label.' . RefData::ORG_TYPE_REGISTERED_COMPANY)
-                            ->once()
-                            ->getMock()
-                    )
-                    ->once()
-                    ->shouldReceive('get')
-                    ->with('viewPeopleSection')
-                    ->andReturn(
-                        m::mock()
-                            ->shouldReceive('get')
-                            ->with('viewPeople')
-                            ->andReturn(
-                                m::mock()
-                                    ->shouldReceive('getLabel')
-                                    ->andReturn('label.')
-                                    ->once()
-                                    ->shouldReceive('setLabel')
-                                    ->with('label.' . RefData::ORG_TYPE_REGISTERED_COMPANY)
-                                    ->once()
-                                    ->shouldReceive('setValue')
-                                    ->with('url')
-                                    ->once()
-                                    ->getMock()
-                            )
-                            ->once()
-                            ->getMock()
-                    )
-                    ->once()
-                    ->shouldReceive('get')
-                    ->with('viewVehiclesSection')
-                    ->andReturn(
-                        m::mock()
-                            ->shouldReceive('get')
-                            ->with('viewVehicles')
-                            ->andReturn(
-                                m::mock()
-                                    ->shouldReceive('setValue')
-                                    ->with('url1')
-                                    ->once()
-                                    ->getMock()
-                            )
-                            ->once()
-                            ->getMock()
-                    )
-                    ->once()
-                    ->getMock()
-            )
-            ->twice()
-            ->getMock();
-
-        $this->urlHelper->shouldReceive('fromRoute')
-            ->with(
-                'continuation/checklist/people',
-                [
-                    'continuationDetailId' => 1,
-                ]
-            )
-            ->andReturn('url')
-            ->once()
-            ->shouldReceive('fromRoute')
-            ->with(
-                'continuation/checklist/vehicles',
-                [
-                    'continuationDetailId' => 1,
-                ]
-            )
-            ->andReturn('url1')
-            ->once()
-            ->getMock();
-
-        $this->formHelper
-            ->shouldReceive('createForm')
-            ->with(LicenceChecklistForm::class)
-            ->once()
-            ->andReturn($form)
-            ->shouldReceive('remove')
-            ->with($form, 'data->people')
-            ->once()
-            ->shouldReceive('remove')
-            ->with($form, 'data->vehicles')
-            ->once()
-            ->andReturnSelf();
-
-        $data = [
-            'licence' => [
-                'organisation' => [
-                    'type' => [
-                        'id' => RefData::ORG_TYPE_REGISTERED_COMPANY
-                    ],
-                    'organisationPersons' => array_fill(0, RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT + 1, 'foo')
                 ],
-                'licenceVehicles' => array_fill(0, RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT + 1, 'foo')
+                'id' => 2,
             ],
             'id' => 1
         ];

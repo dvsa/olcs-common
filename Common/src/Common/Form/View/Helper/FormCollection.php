@@ -13,6 +13,7 @@ use Common\Form\Elements\Types\FileUploadListItem;
 use Common\Form\Elements\Types\HoursPerWeek;
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\RadioHorizontal;
+use Common\Form\Elements\Types\CheckboxAdvanced;
 use Common\Form\View\Helper\Readonly\FormFieldset;
 use Zend\Form\Element\Collection as CollectionElement;
 use Zend\Form\ElementInterface;
@@ -33,6 +34,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      */
     protected $classMap = array(
         RadioHorizontal::class => 'formRadioHorizontal',
+        CheckboxAdvanced::class => 'formCheckboxAdvanced',
     );
 
     private static $htmlFileUploadCntr =
@@ -51,7 +53,9 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
      *
      * @var string
      */
-    private static $hintFormat = '<p class="hint">%s</p>';
+    private static $hintFormat = '<p class="%s">%s</p>';
+
+    private static $hintClass = 'hint';
 
     /**
      * Set Is Form in Read only status
@@ -110,9 +114,10 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         }
 
         $hint = $element->getOption('hint');
+        $hintClass = $element->getOption('hintClass') ? $element->getOption('hintClass') : self::$hintClass;
         if (!empty($hint)) {
             $view = $this->getView();
-            $hint = sprintf(self::$hintFormat, $view->translate($hint));
+            $hint = sprintf(self::$hintFormat, $hintClass, $view->translate($hint));
         }
 
         $attributes       = $element->getAttributes();
@@ -179,7 +184,7 @@ class FormCollection extends \Common\Form\View\Helper\Extended\FormCollection
         }
 
         // Every collection is wrapped by a fieldset if needed
-        if ($this->shouldWrap) {
+        if ($element->getOption('shouldWrap') || $this->shouldWrap) {
             $label = $element->getLabel();
             $legend = '';
 

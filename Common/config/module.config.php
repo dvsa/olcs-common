@@ -260,6 +260,7 @@ return array(
         'invokables' => array(
             'formRadioOption' => \Common\Form\View\Helper\FormRadioOption::class,
             'formRadioHorizontal' => \Common\Form\View\Helper\FormRadioHorizontal::class,
+            'formCheckboxAdvanced' => \Common\Form\View\Helper\FormCheckboxAdvanced::class,
             'form' => 'Common\Form\View\Helper\Form',
             'formCollection' => Common\Form\View\Helper\FormCollection::class,
             'formElement' => Common\Form\View\Helper\FormElement::class,
@@ -326,6 +327,7 @@ return array(
         'factories' => array(
             'pageId' => \Common\View\Helper\PageId::class,
             'pageTitle' => \Common\View\Helper\PageTitle::class,
+            'LicenceChecklist' => \Common\View\Helper\LicenceChecklist::class,
             'date' => \Common\View\Helper\Date::class,
             'formRow' => 'Common\Form\View\Helper\FormRow',
             'languageLink' => \Common\View\Helper\LanguageLink::class,

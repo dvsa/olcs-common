@@ -2006,6 +2006,7 @@ return [
     'page.title.continuation.index' => 'Licence review',
     'page.title.continuation/checklist.index' => 'Licence review',
     'page.title.continuation/checklist/people.people' => 'Licence review',
+    'page.title.continuation/checklist/vehicles.vehicles' => 'Licence review',
     'page.title.continuation/finances.index' => 'Finances',
     'page.title.continuation/declaration.index' => 'Declaration',
     'page.title.continuation/payment.index' => 'Pay the fee',
@@ -3118,6 +3119,17 @@ return [
     'continuations.finances.otherFinances.amount.notBetween' => 'Your other finances must be between %min% and %max%',
     'continuations.finances.otherFinances.detail.label' => 'Where do these finances come from?',
     'continuations.finances.otherFinances.detail.empty' => 'You must state where these finances come from',
+    'continuations.checklist.guidance' => '<p>You should ensure that all information on your current licence is up to date before you apply for a continuation.</p><p>All sections must be reviewed.</p>',
+    'continuations.checklist.hidden.legend' => 'Licence review',
+    'continuations.checklist.form-hint' => 'Start the process by selecting a section for review',
+    'continuations.checklist.confirmation.error' => 'Please confirm your licence details is up to date',
+    'continuations.checklist.confirmation.label' => 'Are your licence details up to date?',
+    'continuations.checklist.confirmation.hint' => 'If you\'ve recently submitted an application to change this licence, you should choose yes.',
+    'continuations.checklist.confirmation.yes-button' => 'I understand - continue to finances',
+    'continuations.checklist.confirmation.no-button' => 'Update your licence',
+    'continuations.checklist.section.opens_in_a_new_window' => '(opens in a new browser window)',
+    'continuations.checklist.hidden.legend' => 'Licence review',
+    'continuations.checklist.section.error' => 'Please review the section',
 
     // Potentially unused translations
 ];

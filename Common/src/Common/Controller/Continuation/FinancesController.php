@@ -26,7 +26,7 @@ class FinancesController extends AbstractContinuationController
 
         $this->setGuidanceMessage($continuationDetail);
 
-        $form = $this->getForm();
+        $form = $this->getFinancesForm();
 
         $form->setData(Finances::mapFromResult($continuationDetail));
 
@@ -61,7 +61,7 @@ class FinancesController extends AbstractContinuationController
      *
      * @return Form
      */
-    protected function getForm()
+    protected function getFinancesForm()
     {
         return $this->getServiceLocator()->get('Helper\Form')->createForm(
             \Common\Form\Model\Form\Continuation\Finances::class

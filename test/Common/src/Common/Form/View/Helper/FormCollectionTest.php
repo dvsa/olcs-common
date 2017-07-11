@@ -196,6 +196,7 @@ class FormCollectionTest extends MockeryTestCase
         $mockFieldset->shouldReceive('getIterator')->andReturn($iterator);
         $mockFieldset->shouldReceive('getOption')->with('readonly')->andReturn(true);
         $mockFieldset->shouldReceive('getOption')->with('hint')->andReturnNull();
+        $mockFieldset->shouldReceive('getOption')->with('hintClass')->andReturnNull()->once();
         $mockFieldset->shouldReceive('getOption')->with('hintFormat')->andReturnNull();
         $mockFieldset->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
@@ -329,5 +330,25 @@ class FormCollectionTest extends MockeryTestCase
         $output = $sut->render($element);
 
         $this->assertSame('<fieldset>formRadioHorizontal MARKUP</fieldset>', $output);
+    }
+    /**
+     *
+     * @outputBuffering disabled
+     */
+    public function testRenderWithHintAndClass()
+    {
+        $this->prepareElement();
+
+        $viewHelper = $this->prepareViewHelper();
+
+        $this->element->setOption('hint-position', 'below');
+        $this->element->setOption('hintClass', 'form-hint');
+
+        echo $viewHelper($this->element, 'formCollection');
+
+        $this->expectOutputRegex(
+            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend>'
+            . '<span data-template="(.*)"><\/span><p class="form-hint">(.*)<\/p><\/fieldset>$/'
+        );
     }
 }
