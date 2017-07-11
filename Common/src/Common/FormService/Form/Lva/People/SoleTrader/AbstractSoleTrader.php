@@ -40,7 +40,7 @@ abstract class AbstractSoleTrader extends AbstractLvaFormService
             $form->get('form-actions')->get('disqualify')->setValue($params['disqualifyUrl']);
         }
 
-        if ($params['canModify'] === false) {
+        if (isset($params['canModify']) && $params['canModify'] === false) {
             $this->getServiceLocator()->get('Lva\People')->lockPersonForm($form, $params['orgType']);
         }
 
