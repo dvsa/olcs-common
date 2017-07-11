@@ -3119,7 +3119,7 @@ return [
     'continuations.finances.otherFinances.amount.notBetween' => 'Your other finances must be between %min% and %max%',
     'continuations.finances.otherFinances.detail.label' => 'Where do these finances come from?',
     'continuations.finances.otherFinances.detail.empty' => 'You must state where these finances come from',
-    'continuations.checklist.guidance' => '<p><b>You must review all sections</b></p>',
+    'continuations.checklist.guidance' => '<p class="important"><strong>You must review all sections</strong></p>',
     'continuations.checklist.hidden.legend' => 'Licence review',
     'continuations.checklist.form-hint' => 'Select a section to review',
     'continuations.checklist.confirmation.error' => 'Please confirm your licence details is up to date',
