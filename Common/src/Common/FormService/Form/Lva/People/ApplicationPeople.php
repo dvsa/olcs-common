@@ -23,8 +23,8 @@ class ApplicationPeople extends AbstractPeople
      */
     protected function alterForm(Form $form, array $params = [])
     {
-        $this->getFormServiceLocator()->get('lva-application')->alterForm($form);
-
         parent::alterForm($form, $params);
+
+        $this->removeFormAction($form, 'cancel');
     }
 }
