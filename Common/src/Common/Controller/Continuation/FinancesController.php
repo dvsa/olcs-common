@@ -53,7 +53,10 @@ class FinancesController extends AbstractContinuationController
             }
         }
 
-        return $this->getViewModel($continuationDetail['licence']['licNo'], $form);
+        $vars = [
+            'backRoute' => 'continuation/checklist',
+        ];
+        return $this->getViewModel($continuationDetail['licence']['licNo'], $form, $vars);
     }
 
     /**
