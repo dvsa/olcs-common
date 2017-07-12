@@ -2008,6 +2008,7 @@ return [
     'page.title.continuation/checklist/people.people' => 'Licence review',
     'page.title.continuation/checklist/vehicles.vehicles' => 'Licence review',
     'page.title.continuation/finances.index' => 'Finances',
+    'page.title.continuation/insufficient-finances.index' => 'Finances',
     'page.title.continuation/declaration.index' => 'Declaration',
     'page.title.continuation/payment.index' => 'Pay the fee',
     'page.title.continuation/success.index' => 'Success',
@@ -3148,5 +3149,13 @@ return [
     'continuations.checklist.section.error.safety' => 'Safety and compliance',
     'continuations.conditionsUndertakings-checkbox.label' => 'Conditions and undertakings',
     'continuations.checklist.section.error.conditionsUndertakings' => 'Conditions and undertakings',
+    'continuations.insufficient-finances-summary.label' => 'Financial overview',
+    'continuations.insufficient-finances.hint' => 'Currently you don\'t meet the financial requirements',
+    'continuations.insufficient-finances.label' => 'Are these figures correct?',
+    'continuations.insufficient-finances.error' => 'You must state whether these figures correct',
+    'continuations.insufficient-finances.no' => 'You must select Yes to continue',
+    'continuations.financial-evidence-required.label' => 'Financial evidence required',
+    'continuations.financial-evidence-required.error' => 'You must select how you will provide your financial evidence',
+    'continuations.insufficient-finances.upload-files' => 'You must upload financial evidence',
     // Potentially unused translations
 ];

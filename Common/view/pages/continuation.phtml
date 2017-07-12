@@ -4,24 +4,24 @@ echo $this->partial(
     [
         'pageTitle' => $this->pageTitle(),
         'pageSubTitle' => $this->translate('Continue licence') .' '. $this->licNo,
-        'backUrl' => ['url' => $this->url('dashboard', [], [], true)],
+        'backUrl' => ['url' => $this->url($this->backRoute, [], [], true)],
     ]
 );
 ?>
 
 <div class="row">
 
-  <div class="dashboard two-thirds js-body">
-      <?php
-      echo $this->flashMessengerAll();
+    <div class="dashboard two-thirds js-body">
+        <?php
+        echo $this->flashMessengerAll();
 
-      echo $this->partial('partials/guidance');
+        echo $this->partial('partials/guidance');
 
-      if (isset($this->form)):
-          echo $this->formErrors($this->form);
-          echo $this->form($this->form);
-      endif;
-      ?>
-  </div>
+        if (isset($this->form)):
+            echo $this->formErrors($this->form);
+            echo $this->form($this->form);
+        endif;
+        ?>
+    </div>
 
 </div>

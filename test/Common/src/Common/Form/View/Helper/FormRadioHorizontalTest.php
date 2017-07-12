@@ -23,8 +23,9 @@ class FormRadioHorizontalTest extends m\Adapter\Phpunit\MockeryTestCase
     {
         $mockElement = m::mock(ElementInterface::class);
         $mockView = m::mock(RendererInterface::class);
-        $mockView->shouldReceive('partial')->with('partials/form/radio-horizontal', ['element' => $mockElement])
-            ->once();
+        $mockView->shouldReceive('vars->getArrayCopy')->with()->andReturn(['VAR' => 'FOO']);
+        $mockView->shouldReceive('render')
+            ->with('partials/form/radio-horizontal', ['VAR' => 'FOO', 'element' => $mockElement])->once();
 
         $this->sut->setView($mockView);
 

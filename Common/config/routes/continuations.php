@@ -60,6 +60,16 @@ return [
                     ]
                 ],
             ],
+            'insufficient-finances' => [
+                'type' => Http\Segment::class,
+                'options' =>  [
+                    'route' => '/insufficient-finances[/]',
+                    'defaults' => [
+                        'controller' => 'ContinuationController/InsufficientFinances',
+                        'action' => 'index'
+                    ]
+                ],
+            ],
             'declaration' => [
                 'type' => Http\Segment::class,
                 'options' =>  [

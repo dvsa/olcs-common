@@ -19,8 +19,11 @@ class FormRadioVertical extends \Common\Form\View\Helper\Extended\FormCollection
      */
     public function render(ElementInterface $element)
     {
-        /** @var PhpRenderer $v */
+        /** @var PhpRenderer $view */
         $view = $this->view;
-        return $view->partial('partials/form/radio-vertical', ['element' => $element]);
+        return $view->render(
+            'partials/form/radio-vertical',
+            array_merge($view->vars()->getArrayCopy(), ['element' => $element])
+        );
     }
 }
