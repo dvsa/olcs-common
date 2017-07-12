@@ -40,10 +40,9 @@ class InsufficientFinancesController extends AbstractContinuationController
             array($this, 'getDocuments')
         );
 
-        if (!$hasProcessedFiles && $this->getRequest()->isPost()) {
+        if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
-            if ($form->isValid()) {
-
+            if (!$hasProcessedFiles && $form->isValid()) {
                 $dtoData = array_merge(
                     InsufficientFinances::mapFromForm($form->getData()),
                     ['id' => $continuationDetail['id']]
