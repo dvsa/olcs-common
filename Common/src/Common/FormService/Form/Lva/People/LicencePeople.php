@@ -7,6 +7,8 @@
  */
 namespace Common\FormService\Form\Lva\People;
 
+use Common\Form\Form;
+
 /**
  * Licence People
  *
@@ -14,9 +16,17 @@ namespace Common\FormService\Form\Lva\People;
  */
 class LicencePeople extends AbstractPeople
 {
-    protected function alterForm($form)
+    /**
+     * Alter licence people form
+     *
+     * @param Form  $form   Form
+     * @param array $params Parameters / options for form
+     *
+     * @return Form
+     */
+    protected function alterForm(Form $form, array $params = [])
     {
-        $form = parent::alterForm($form);
+        $form = parent::alterForm($form, $params);
 
         $this->removeStandardFormActions($form);
 

@@ -7,6 +7,8 @@
  */
 namespace Common\FormService\Form\Lva\People;
 
+use Common\Form\Form;
+
 /**
  * Variation People
  *
@@ -14,12 +16,18 @@ namespace Common\FormService\Form\Lva\People;
  */
 class VariationPeople extends AbstractPeople
 {
-    protected function alterForm($form)
+    /**
+     * Alter variation form
+     *
+     * @param Form  $form   Form class
+     * @param array $params Parameters for form
+     *
+     * @return void
+     */
+    protected function alterForm(Form $form, array $params = [])
     {
-        $form = parent::alterForm($form);
+        parent::alterForm($form, $params);
 
         $this->removeStandardFormActions($form);
-
-        return $form;
     }
 }
