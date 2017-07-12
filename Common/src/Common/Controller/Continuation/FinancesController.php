@@ -7,7 +7,6 @@ use Common\Form\Form;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Util\TranslatorDelegator;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\UpdateFinances;
-use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -83,16 +82,5 @@ class FinancesController extends AbstractContinuationController
         $translatorHelper = $this->getServiceLocator()->get('Helper\Translation');
         $guideMessage = $translatorHelper->translateReplace('continuations.finances.hint', [$financeRequired]);
         $this->getServiceLocator()->get('Helper\Guidance')->append($guideMessage);
-    }
-
-    /**
-     * Get continuation detail data from API
-     *
-     * @return array of data from API
-     */
-    private function getContinuationDetailData()
-    {
-        $response = $this->handleQuery(Get::create(['id' => $this->getContinuationDetailId()]));
-        return $response->getResult();
     }
 }
