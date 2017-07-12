@@ -97,5 +97,4 @@ abstract class AbstractContinuationController extends AbstractController
     {
         return $this->redirect()->toRoute('continuation/payment', [], [], true);
     }
-
 }
