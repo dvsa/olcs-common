@@ -58,6 +58,13 @@ class LicenceChecklistTest extends MockeryTestCase
                             ->shouldReceive('setLabel')
                             ->with('label.' . RefData::ORG_TYPE_REGISTERED_COMPANY)
                             ->once()
+                            ->shouldReceive('getOption')
+                            ->with('not_checked_message')
+                            ->andReturn('message.')
+                            ->once()
+                            ->shouldReceive('setOption')
+                            ->with('not_checked_message', 'message.'  . RefData::ORG_TYPE_REGISTERED_COMPANY)
+                            ->once()
                             ->getMock()
                     )
                     ->once()
@@ -104,6 +111,9 @@ class LicenceChecklistTest extends MockeryTestCase
             ->with(LicenceChecklistForm::class)
             ->andReturn($form)
             ->once()
+            ->shouldReceive('remove')
+            ->with($form, 'data->conditionsUndertakingsCheckbox')
+            ->once()
             ->getMock();
 
         $data = [
@@ -119,7 +129,18 @@ class LicenceChecklistTest extends MockeryTestCase
                 ],
                 'id' => 2,
             ],
-            'id' => 1
+            'id' => 1,
+            'sections' => [
+                'typeOfLicence',
+                'businessType',
+                'businessDetails',
+                'addresses',
+                'people',
+                'operatingCentres',
+                'transportManagers',
+                'vehicles',
+                'safety',
+            ]
         ];
         $this->assertEquals($form, $this->sut->getForm($data));
     }
