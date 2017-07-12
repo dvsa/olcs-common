@@ -5,6 +5,7 @@ namespace Common\Controller\Continuation;
 use Common\Controller\Lva\AbstractController;
 use Common\Form\Form;
 use Zend\View\Model\ViewModel;
+use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
 
 /**
  * AbstractContinuationController
@@ -58,4 +59,43 @@ abstract class AbstractContinuationController extends AbstractController
     {
         return (int)$this->params('continuationDetailId');
     }
+
+    /**
+     * Get continuation fee data
+     *
+     * @return array
+     */
+    protected function getContinuationDetailData()
+    {
+        $response = $this->handleQuery(
+            GetContinuationDetail::create(
+                ['id' => $this->getContinuationDetailId()]
+            )
+        );
+        if (!$response->isOk()) {
+            $this->addErrorMessage('unknown-error');
+        }
+        return $response->getResult();
+    }
+
+    /**
+     * Redirect to success page
+     *
+     * @return \Zend\Http\Response
+     */
+    protected function redirectToSuccessPage()
+    {
+        return $this->redirect()->toRoute('continuation/success', [], [], true);
+    }
+
+    /**
+     * Refresh current pages
+     *
+     * @return \Zend\Http\Response
+     */
+    protected function redirectToPaymentPage()
+    {
+        return $this->redirect()->toRoute('continuation/payment', [], [], true);
+    }
+
 }

@@ -12,7 +12,6 @@ use Common\Data\Mapper\Continuation\LicenceChecklist as LicenceChecklistMapper;
 class ChecklistController extends AbstractContinuationController
 {
     protected $layout = 'pages/continuation-checklist';
-    // @todo should be replaced with a correct layout
     protected $checklistSectionLayout = 'layouts/simple';
 
     /**
@@ -57,9 +56,6 @@ class ChecklistController extends AbstractContinuationController
         $dto = LicenceChecklistQuery::create(['id' => $continuationDetailId]);
         $response = $this->handleQuery($dto);
         if (!$response->isOk()) {
-            // currently we assume that all server errors will be handled in one place
-            // so we always should have data here.
-            // just display and error in case of any client error
             $this->addErrorMessage('unknown-error');
         }
         return $response->getResult();

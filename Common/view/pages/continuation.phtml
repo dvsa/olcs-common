@@ -3,7 +3,7 @@ echo $this->partial(
     'partials/page-header-simple',
     [
         'pageTitle' => $this->pageTitle(),
-        'pageSubTitle' => $this->translate('Continue licence') .' '. $this->licNo,
+        'pageSubTitle' => $this->translate('continuation.sub-title.continue-licence') .' '. $this->licNo,
         'backUrl' => ['url' => $this->url('dashboard', [], [], true)],
     ]
 );

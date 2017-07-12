@@ -3130,6 +3130,11 @@ return [
     'continuations.checklist.section.opens_in_a_new_window' => '(opens in a new browser window)',
     'continuations.checklist.hidden.legend' => 'Licence review',
     'continuations.checklist.section.error' => 'Please review the section',
-
+    'payment-cancelled' => 'Payment cancelled',
+    'payment-completed' => 'Payment completed',
+    'continuation.sub-title.continue-licence' => 'Continue licence',
+    'continuation.payment.title.pay-fee' => 'Pay the fee',
+    'continuation.payment.title.pay-fees' => 'Pay fees',
+    'continuation.payment.pay-and-submit' => 'Pay and submit'
     // Potentially unused translations
 ];
