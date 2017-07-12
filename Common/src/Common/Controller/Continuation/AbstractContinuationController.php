@@ -14,6 +14,9 @@ abstract class AbstractContinuationController extends AbstractController
 {
     protected $layout = 'pages/continuation';
 
+    /** @var array */
+    protected $continuationData;
+
     /**
      * Get the ViewModel used for continuations
      *
@@ -63,19 +66,24 @@ abstract class AbstractContinuationController extends AbstractController
     /**
      * Get continuation fee data
      *
+     * @param bool $forceReload Force reload of data
+     *
      * @return array
      */
-    protected function getContinuationDetailData()
+    protected function getContinuationDetailData($forceReload = false)
     {
-        $response = $this->handleQuery(
-            GetContinuationDetail::create(
-                ['id' => $this->getContinuationDetailId()]
-            )
-        );
-        if (!$response->isOk()) {
-            $this->addErrorMessage('unknown-error');
+        if ($forceReload || $this->continuationData === null) {
+            $response = $this->handleQuery(
+                GetContinuationDetail::create(
+                    ['id' => $this->getContinuationDetailId()]
+                )
+            );
+            $this->continuationData = $response->getResult();
+            if (!$response->isOk()) {
+                $this->addErrorMessage('unknown-error');
+            }
         }
-        return $response->getResult();
+        return $this->continuationData;
     }
 
     /**
