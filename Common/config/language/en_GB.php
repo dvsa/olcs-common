@@ -3135,7 +3135,7 @@ return [
     'continuation.sub-title.continue-licence' => 'Continue licence',
     'continuation.payment.title.pay-fee' => 'Pay the fee',
     'continuation.payment.title.pay-fees' => 'Pay fees',
-    'continuation.payment.pay-and-submit' => 'Pay and submit'
+    'continuation.payment.pay-and-submit' => 'Pay and submit',
     'continuations.checklist.section.error.type-of-licence' => 'Type of licence',
     'continuations.checklist.section.error.business-type' => 'Business type',
     'continuations.checklist.section.error.business-details' => 'Business details',
