@@ -46,13 +46,16 @@ class FinancesController extends AbstractContinuationController
                     if ($totalFunds >= (float)$continuationDetail['financeRequired']) {
                         $this->redirect()->toRoute('continuation/declaration', [], [], true);
                     }
-                    $this->redirect()->toRoute('continuation/insufficent-finances', [], [], true);
+                    $this->redirect()->toRoute('continuation/insufficient-finances', [], [], true);
                 }
                 $this->addErrorMessage('unknown-error');
             }
         }
 
-        return $this->getViewModel($continuationDetail['licence']['licNo'], $form);
+        $vars = [
+            'backRoute' => 'continuation/checklist',
+        ];
+        return $this->getViewModel($continuationDetail['licence']['licNo'], $form, $vars);
     }
 
     /**

@@ -37,11 +37,11 @@ class ApplicationPeopleTest extends MockeryTestCase
 
     public function testGetForm()
     {
-        $formActions = m::mock();
+        $formActions = m::mock(\Common\Form\Form::class);
         $formActions->shouldReceive('has')->with('cancel')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('cancel');
 
-        $form = m::mock();
+        $form = m::mock(\Common\Form\Form::class);
         $form->shouldReceive('has')->with('form-actions')->andReturn(true);
         $form->shouldReceive('get')->with('form-actions')->andReturn($formActions);
 

@@ -4,7 +4,7 @@ echo $this->partial(
     [
         'pageTitle' => $this->pageTitle(),
         'pageSubTitle' => $this->translate('continuation.sub-title.continue-licence') .' '. $this->licNo,
-        'backUrl' => ['url' => $this->url('dashboard', [], [], true)],
+        'backUrl' => ['url' => $this->url($this->backRoute, [], [], true)],
     ]
 );
 ?>

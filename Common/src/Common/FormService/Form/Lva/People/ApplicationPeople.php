@@ -11,19 +11,20 @@ use Common\Form\Form;
  */
 class ApplicationPeople extends AbstractPeople
 {
+    protected $lva = 'application';
+
     /**
      * Alter form
      *
-     * @param Form $form form
+     * @param Form  $form   Form class
+     * @param array $params Parameters for form
      *
      * @return Form
      */
-    protected function alterForm($form)
+    protected function alterForm(Form $form, array $params = [])
     {
-        $form = parent::alterForm($form);
+        parent::alterForm($form, $params);
 
         $this->removeFormAction($form, 'cancel');
-
-        return $form;
     }
 }

@@ -7,6 +7,7 @@ use Common\Form\Elements\Types\FileUploadListItem;
 use Common\Form\Elements\Types\HoursPerWeek;
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\RadioHorizontal;
+use Common\Form\Elements\Types\RadioVertical;
 use Common\Form\View\Helper\FormCollection as FormCollectionViewHelper;
 use Common\Form\View\Helper\FormCollection;
 use Common\Form\View\Helper\Readonly\FormFieldset;
@@ -331,6 +332,26 @@ class FormCollectionTest extends MockeryTestCase
 
         $this->assertSame('<fieldset>formRadioHorizontal MARKUP</fieldset>', $output);
     }
+
+    public function testRenderRadioVertical()
+    {
+        $mockView = m::mock(PhpRenderer::class);
+        $mockView->shouldReceive('plugin')->with('formRadioVertical')->once()->andReturn(
+            function () {
+                return "formRadioVertical MARKUP";
+            }
+        );
+
+        $sut = new FormCollection();
+        $sut->setView($mockView);
+
+        $element = new RadioVertical('test');
+
+        $output = $sut->render($element);
+
+        $this->assertSame('formRadioVertical MARKUP', $output);
+    }
+
     /**
      *
      * @outputBuffering disabled

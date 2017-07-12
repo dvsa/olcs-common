@@ -70,6 +70,8 @@ return array(
             'ContinuationController/Start' => \Common\Controller\Continuation\StartController::class,
             'ContinuationController/Checklist' => \Common\Controller\Continuation\ChecklistController::class,
             'ContinuationController/Finances' => \Common\Controller\Continuation\FinancesController::class,
+            'ContinuationController/InsufficientFinances' =>
+                \Common\Controller\Continuation\InsufficientFinancesController::class,
             'ContinuationController/Declaration' => \Common\Controller\Continuation\DeclarationController::class,
             'ContinuationController/Payment' => \Common\Controller\Continuation\PaymentController::class,
             'ContinuationController/Success' => \Common\Controller\Continuation\SuccessController::class,
@@ -261,6 +263,7 @@ return array(
             'formRadioOption' => \Common\Form\View\Helper\FormRadioOption::class,
             'formRadioHorizontal' => \Common\Form\View\Helper\FormRadioHorizontal::class,
             'formCheckboxAdvanced' => \Common\Form\View\Helper\FormCheckboxAdvanced::class,
+            'formRadioVertical' => \Common\Form\View\Helper\FormRadioVertical::class,
             'form' => 'Common\Form\View\Helper\Form',
             'formCollection' => Common\Form\View\Helper\FormCollection::class,
             'formElement' => Common\Form\View\Helper\FormElement::class,

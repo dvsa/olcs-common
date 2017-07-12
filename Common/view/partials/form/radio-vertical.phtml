@@ -1,12 +1,9 @@
 <?php
-
-// @todo This is currently a copy of the horizontal file, needs updating
-
 /** @var Common\Form\Elements\Types\RadioHorizontal $element */
 $element = $this->element;
 
 /** @var \Zend\Form\Element\Radio $radioElement */
-$radioElement = $element->get('yesNo');
+$radioElement = $element->get('radio');
 $errors = $this->formElementErrors()->render($element);
 $hasValidationError = !empty($errors);
 ?>
@@ -23,43 +20,27 @@ $hasValidationError = !empty($errors);
             <p class="form-hint"><?php echo $this->translate($element->getOption('hint')) ?></p>
         <?php endif; ?>
 
-        <div class="radio-button__container radio-button__container--inline">
-            <?php echo $this->formRadioOption($radioElement, 'Y') ?>
-        </div>
-        <div class="radio-button__container radio-button__container--inline">
-            <?php echo $this->formRadioOption($radioElement, 'N') ?>
-        </div>
-
-        <?php if ($element->has('yesContent')) : ?>
-            <?php
-            $id = $radioElement->getValueOptions()['Y']['attributes']['id'] .'_content';
-            ?>
-            <div class="radio-button__hidden-content help__text" id="<?php echo $id ?>">
-                <?php
-                $yesContentElement = $element->get('yesContent');
-                if ($yesContentElement instanceof \Zend\Form\Fieldset) {
-                    echo $this->formCollection($yesContentElement, false);
-                } else {
-                    echo $this->formRow($yesContentElement);
-                }
-                ?>
+        <?php foreach ($radioElement->getValueOptions() as $valueOption) : ?>
+            <div class="radio-button__container">
+                <?php echo $this->formRadioOption($radioElement, $valueOption['value']) ?>
             </div>
-        <?php endif; ?>
 
-        <?php if ($element->has('noContent')) : ?>
             <?php
-            $id = $radioElement->getValueOptions()['N']['attributes']['id'] .'_content';
+            $contentElementName = $valueOption['value'] .'Content';
+            if ($element->has($contentElementName)) {
+                echo $this->render(
+                    'partials/form/radio-content',
+                    array_merge(
+                        $this->vars()->getArrayCopy(),
+                        [
+                            'element' => $element->get($contentElementName),
+                            'id' => $valueOption['attributes']['id'] .'_content',
+                        ]
+                    )
+                );
+            }
             ?>
-            <div class="radio-button__hidden-content help__text" id="<?php echo $id ?>">
-                <?php
-                $noContentElement = $element->get('noContent');
-                if ($noContentElement instanceof \Zend\Form\Fieldset) {
-                    echo $this->formCollection($noContentElement, false);
-                } else {
-                    echo $this->formRow($noContentElement);
-                }
-                ?>
-            </div>
-        <?php endif; ?>
+        <?php endforeach; ?>
+
     </fieldset>
 </div>

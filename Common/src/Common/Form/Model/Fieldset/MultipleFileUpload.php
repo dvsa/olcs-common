@@ -12,6 +12,14 @@ use Zend\Form\Annotation as Form;
 class MultipleFileUpload
 {
     /**
+     * @Form\Required(false)
+     * @Form\Type("Hidden")
+     * @Form\Validator({"name": "Zend\Validator\NotEmpty", "options": {"null"}})
+     * @Form\Validator({"name": "Common\Validator\FileUploadCountV2", "options": {"min": 1}})
+     */
+    public $fileCount = null;
+
+    /**
      * @Form\Name("file")
      * @Form\Attributes({
      *   "class": "js-visually-hidden"

@@ -15,6 +15,19 @@ use Common\RefData;
  */
 class LicenceChecklist extends AbstractFormService
 {
+    protected $checklistCheckboxes = [
+        'typeOfLicence',
+        'businessType',
+        'businessDetails',
+        'addresses',
+        'people',
+        'operatingCentres',
+        'transportManagers',
+        'vehicles',
+        'safety',
+        'conditionsUndertakings',
+    ];
+
     /**
      * Get form
      *
@@ -44,6 +57,7 @@ class LicenceChecklist extends AbstractFormService
         $orgData = $data['licence']['organisation'];
         $this->alterPeopleSection($form, $orgData['type']['id']);
         $this->alterBackUrl($form, $data['licence']['id']);
+        $this->alterAllSections($form, $data['sections']);
     }
 
     /**
@@ -61,6 +75,7 @@ class LicenceChecklist extends AbstractFormService
         $peopleCheckbox->setLabel(
             $peopleCheckbox->getLabel() . $orgType
         );
+        $peopleCheckbox->setOption('not_checked_message', $peopleCheckbox->getOption('not_checked_message') . $orgType);
     }
 
     /**
@@ -80,5 +95,23 @@ class LicenceChecklist extends AbstractFormService
                 ['licence' => $licenceId]
             )
         );
+    }
+
+    /**
+     * Alter all sections
+     *
+     * @param Form  $form     form
+     * @param array $sections sections
+     *
+     * @rtuen void
+     */
+    protected function alterAllSections($form, $sections)
+    {
+        $formHelper = $this->getFormHelper();
+        foreach ($this->checklistCheckboxes as $checkbox) {
+            if (!in_array($checkbox, $sections)) {
+                $formHelper->remove($form, 'data->' . $checkbox . 'Checkbox');
+            }
+        }
     }
 }

@@ -37,7 +37,7 @@ class VariationPeopleTest extends MockeryTestCase
 
     public function testGetForm()
     {
-        $formActions = m::mock();
+        $formActions = m::mock(\Common\Form\Form::class);
         $formActions->shouldReceive('has')->with('save')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('save');
         $formActions->shouldReceive('has')->with('cancel')->andReturn(true);
@@ -45,7 +45,7 @@ class VariationPeopleTest extends MockeryTestCase
         $formActions->shouldReceive('has')->with('saveAndContinue')->andReturn(true);
         $formActions->shouldReceive('remove')->once()->with('saveAndContinue');
 
-        $form = m::mock();
+        $form = m::mock(\Common\Form\Form::class);
         $form->shouldReceive('has')->with('form-actions')->andReturn(true);
         $form->shouldReceive('get')->with('form-actions')->andReturn($formActions);
 
