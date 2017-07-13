@@ -12,6 +12,7 @@ use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
  */
 abstract class AbstractContinuationController extends AbstractController
 {
+    /** @var string  */
     protected $layout = 'pages/continuation';
 
     /** @var array */
