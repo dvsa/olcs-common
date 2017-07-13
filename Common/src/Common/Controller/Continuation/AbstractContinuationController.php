@@ -5,13 +5,18 @@ namespace Common\Controller\Continuation;
 use Common\Controller\Lva\AbstractController;
 use Common\Form\Form;
 use Zend\View\Model\ViewModel;
+use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
 
 /**
  * AbstractContinuationController
  */
 abstract class AbstractContinuationController extends AbstractController
 {
+    /** @var string  */
     protected $layout = 'pages/continuation';
+
+    /** @var array */
+    protected $continuationData;
 
     /**
      * Get the ViewModel used for continuations
@@ -57,5 +62,48 @@ abstract class AbstractContinuationController extends AbstractController
     protected function getContinuationDetailId()
     {
         return (int)$this->params('continuationDetailId');
+    }
+
+    /**
+     * Get continuation fee data
+     *
+     * @param bool $forceReload Force reload of data
+     *
+     * @return array
+     */
+    protected function getContinuationDetailData($forceReload = false)
+    {
+        if ($forceReload || $this->continuationData === null) {
+            $response = $this->handleQuery(
+                GetContinuationDetail::create(
+                    ['id' => $this->getContinuationDetailId()]
+                )
+            );
+            $this->continuationData = $response->getResult();
+            if (!$response->isOk()) {
+                $this->addErrorMessage('unknown-error');
+            }
+        }
+        return $this->continuationData;
+    }
+
+    /**
+     * Redirect to success page
+     *
+     * @return \Zend\Http\Response
+     */
+    protected function redirectToSuccessPage()
+    {
+        return $this->redirect()->toRoute('continuation/success', [], [], true);
+    }
+
+    /**
+     * Refresh current pages
+     *
+     * @return \Zend\Http\Response
+     */
+    protected function redirectToPaymentPage()
+    {
+        return $this->redirect()->toRoute('continuation/payment', [], [], true);
     }
 }

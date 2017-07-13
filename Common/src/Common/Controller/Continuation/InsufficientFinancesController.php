@@ -7,7 +7,6 @@ use Common\Data\Mapper\Continuation\InsufficientFinances;
 use Common\Form\Form;
 use Common\Service\Helper\TranslationHelperService;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\UpdateInsufficientFinances;
-use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -15,9 +14,6 @@ use Zend\View\Model\ViewModel;
  */
 class InsufficientFinancesController extends AbstractContinuationController
 {
-    /** @var array */
-    private $continuationData;
-
     /**
      * Index page
      *
@@ -93,22 +89,6 @@ class InsufficientFinancesController extends AbstractContinuationController
         $translatorHelper = $this->getServiceLocator()->get('Helper\Translation');
         $guideMessage = $translatorHelper->translate('continuations.insufficient-finances.hint');
         $this->getServiceLocator()->get('Helper\Guidance')->append($guideMessage);
-    }
-
-    /**
-     * Get continuation detail data from API
-     *
-     * @param bool $forceReload Force reload of data
-     *
-     * @return array of data from API
-     */
-    private function getContinuationDetailData($forceReload = false)
-    {
-        if ($forceReload || $this->continuationData === null) {
-            $response = $this->handleQuery(Get::create(['id' => $this->getContinuationDetailId()]));
-            $this->continuationData = $response->getResult();
-        }
-        return $this->continuationData;
     }
 
     /**

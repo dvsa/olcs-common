@@ -1303,6 +1303,8 @@ return [
     'continuations.vehicles-checkbox.label' => 'Cerbydau',
     'continuations.vehicles-section.table.vrm' => 'Nod gofrestru cerbyd',
     'continuations.vehicles-section.table.weight' => 'Pwysau plât gros (cg)',
+    'continuation.payment.title.pay-fees' => 'Talu ffioedd',
+    'continuation.payment.pay-and-submit' => 'Cyflwyno a thalu',
     'continuations.checklist.section.error.type-of-licence' => 'Math o drwydded',
     'continuations.checklist.section.error.business-type' => 'Math o fusnes',
     'continuations.checklist.section.error.business-details' => 'Manylion y busnes',
