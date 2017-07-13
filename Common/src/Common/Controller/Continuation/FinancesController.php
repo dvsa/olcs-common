@@ -45,9 +45,9 @@ class FinancesController extends AbstractContinuationController
                         + (float)$dtoData['overdraftAmount']
                         + (float)$dtoData['otherFinancesAmount'];
                     if ($totalFunds >= (float)$continuationDetail['financeRequired']) {
-                        $this->redirect()->toRoute('continuation/declaration', [], [], true);
+                        return $this->redirect()->toRoute('continuation/declaration', [], [], true);
                     }
-                    $this->redirect()->toRoute('continuation/insufficient-finances', [], [], true);
+                    return $this->redirect()->toRoute('continuation/insufficient-finances', [], [], true);
                 }
                 $this->addErrorMessage('unknown-error');
             }
