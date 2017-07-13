@@ -87,4 +87,3 @@ class PaymentTest extends MockeryTestCase
         $this->assertEquals($form, $this->sut->getForm($data));
     }
 }
-
