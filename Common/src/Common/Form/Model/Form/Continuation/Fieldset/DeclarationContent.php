@@ -1,0 +1,58 @@
+<?php
+
+namespace Common\Form\Model\Form\Continuation\Fieldset;
+
+use Zend\Form\Annotation as Form;
+
+/**
+ * DeclarationContent
+ */
+class DeclarationContent
+{
+    /**
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     * @Form\Options({"tokens": {"application.review-declarations.review.director"}})
+     * @Form\Attributes({"value": "markup-continuation-declaration-review"})
+     */
+    public $review = null;
+
+    /**
+     * @Form\Attributes({"value": "SET IN FORM SERVICE"})
+     * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
+     */
+    public $declaration = null;
+
+    /**
+     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Options({
+     *     "label": "application.signature.options.label",
+     *     "label_attributes": {
+     *         "class":"form-control form-control--radio form-control--advanced"
+     *     },
+     *     "value_options": {"Y": "application.signature.options.verify", "N": "application.signature.options.sign"},
+     *     "label_options": {
+     *         "disable_html_escape": "true"
+     *     }
+     * })
+     * @Form\Type("\Zend\Form\Element\Radio")
+     */
+    public $signatureOptions = null;
+
+    /**
+     * @Form\Attributes({"value": "markup-signature-disabled-text"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $disabledReview = null;
+
+    /**
+     * @Form\Attributes({"id":"declarationDownload"})
+     * @Form\Type("\Common\Form\Elements\Types\Html")
+     */
+    public $declarationDownload = null;
+
+    /**
+     * @Form\Attributes({"value": "markup-declaration-for-verify","data-container-class":"declarationForVerify"})
+     * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
+     */
+    public $declarationForVerify = null;
+}
