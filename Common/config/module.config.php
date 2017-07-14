@@ -605,6 +605,7 @@ return array(
             'continuations-checklist' => ContinuationFormService\LicenceChecklist::class,
             'continuations-start' => ContinuationFormService\Start::class,
             'continuations-payment' => ContinuationFormService\Payment::class,
+            ContinuationFormService\Declaration::class => ContinuationFormService\Declaration::class,
         ]
     ],
     'translator' => [
