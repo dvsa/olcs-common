@@ -2887,7 +2887,7 @@ return [
     'undertakings' => 'Undertakings',
     'undertakings_declaration_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',
     'undertakings_summary_download' => '<p><a href="%s" target="_blank" class="download">%s</a></p>',
-    'undertakings_not_signed' => 'The application hasn\'t been signed',
+    'undertakings_not_signed' => 'The declaration hasn\'t been signed',
     'undertakings_signed' => '<h3>Declaration signed through GOV.UK Verify</h3><p>Signed by %s on %s</p>',
     'undertakings_redirect_to_verify' => 'You should automatically be redirected to GOV.UK Verify.',
     'united-kingdom' => 'United Kingdom',

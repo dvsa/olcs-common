@@ -36,8 +36,7 @@ class DeclarationController extends AbstractContinuationController
                     return $this->redirect()->toRoute(
                         'verify/initiate-request',
                         [
-                            'identifierName' => 'continuationDetail',
-                            'id' => $continuationDetail['id'],
+                            'continuationDetailId' => $continuationDetail['id'],
                         ]
                     );
                 } else {
