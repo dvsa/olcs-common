@@ -21,10 +21,6 @@ class DeclarationController extends AbstractContinuationController
     {
         $continuationDetail = $this->getContinuationDetailData();
 
-        if ($continuationDetail['disableSignatures'] === false) {
-            $this->getServiceLocator()->get('Script')->loadFiles(['continuation-declaration']);
-        }
-
         /** @var \Common\Form\Form $form */
         $form = $this->getForm(\Common\FormService\Form\Continuation\Declaration::class, $continuationDetail);
 

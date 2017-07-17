@@ -42,6 +42,10 @@ class Bootstrap
         self::$config = $config;
 
         self::getServiceManager();
+
+        if (!defined('DATE_FORMAT')) {
+            define('DATE_FORMAT', 'd/m/Y');
+        }
     }
 
     /**

@@ -21,6 +21,11 @@ class Declaration
     public $content = null;
 
     /**
+     * @Form\ComposedObject("\Common\Form\Model\Form\Continuation\Fieldset\DeclarationSignatureDetails")
+     */
+    public $signatureDetails = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("\Common\Form\Model\Form\Continuation\Fieldset\DeclarationFormActions")
      */
