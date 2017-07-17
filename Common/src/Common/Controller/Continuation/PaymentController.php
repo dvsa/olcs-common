@@ -54,6 +54,7 @@ class PaymentController extends AbstractContinuationController
 
         $viewVariables = [
             'form' => $form,
+            'payingFromFlow' => true,
             'hasContinuation' => true,
             'type' => 'fees'
         ];
