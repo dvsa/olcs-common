@@ -38,14 +38,17 @@ class DeclarationController extends AbstractContinuationController
                 } else {
                     // Using Print to sign
                     // Submit the continuation
-                    $this->handleCommand(
+                    $response = $this->handleCommand(
                         Submit::create(['id' => $continuationDetail['id'], 'version' => $form->getData()['version']])
                     );
-                    // Goto to page depenedant on whether fees need to be paid
-                    if ($continuationDetail['hasOutstandingContinuationFee']) {
-                        return $this->redirectToPaymentPage();
+                    if ($response->isOk()) {
+                        // Goto to page depenedant on whether fees need to be paid
+                        if ($continuationDetail['hasOutstandingContinuationFee']) {
+                            return $this->redirectToPaymentPage();
+                        }
+                        return $this->redirectToSuccessPage();
                     }
-                    return $this->redirectToSuccessPage();
+                    $this->addErrorMessage('unknown-error');
                 }
             }
         }
