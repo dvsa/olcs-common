@@ -57,6 +57,7 @@ class LicenceChecklist extends AbstractFormService
         $orgData = $data['licence']['organisation'];
         $this->alterPeopleSection($form, $orgData['type']['id']);
         $this->alterBackUrl($form, $data['licence']['id']);
+        $this->alterContinueButton($form, $data['licence']);
         $this->alterAllSections($form, $data['sections']);
     }
 
@@ -103,7 +104,7 @@ class LicenceChecklist extends AbstractFormService
      * @param Form  $form     form
      * @param array $sections sections
      *
-     * @rtuen void
+     * @return void
      */
     protected function alterAllSections($form, $sections)
     {
@@ -112,6 +113,28 @@ class LicenceChecklist extends AbstractFormService
             if (!in_array($checkbox, $sections)) {
                 $formHelper->remove($form, 'data->' . $checkbox . 'Checkbox');
             }
+        }
+    }
+
+    /**
+     * Alter continue button
+     *
+     * @param Form  $form        form
+     * @param array $licenceData licence data
+     *
+     * @return void
+     */
+    protected function alterContinueButton($form, $licenceData)
+    {
+        if (
+            $licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
+            && $licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
+        ) {
+            $form->get('data')
+                ->get('licenceChecklistConfirmation')
+                ->get('yesContent')
+                ->get('submit')
+                ->setLabel('continuations.checklist.confirmation.yes-button-declaration');
         }
     }
 }

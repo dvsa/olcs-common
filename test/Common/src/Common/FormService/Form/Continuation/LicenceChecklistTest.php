@@ -72,29 +72,46 @@ class LicenceChecklistTest extends MockeryTestCase
                     ->with('licenceChecklistConfirmation')
                     ->andReturn(
                         m::mock()
-                        ->shouldReceive('get')
-                        ->with('noContent')
-                        ->andReturn(
-                            m::mock()
                             ->shouldReceive('get')
-                            ->with('backToLicence')
+                            ->with('noContent')
                             ->andReturn(
                                 m::mock()
-                                ->shouldReceive('setValue')
-                                ->with('url')
-                                ->once()
-                                ->getMock()
+                                    ->shouldReceive('get')
+                                    ->with('backToLicence')
+                                    ->andReturn(
+                                        m::mock()
+                                        ->shouldReceive('setValue')
+                                        ->with('url')
+                                        ->once()
+                                        ->getMock()
+                                    )
+                                    ->once()
+                                    ->getMock()
+                            )
+                            ->once()
+                            ->shouldReceive('get')
+                            ->with('yesContent')
+                            ->andReturn(
+                                m::mock()
+                                    ->shouldReceive('get')
+                                    ->with('submit')
+                                    ->andReturn(
+                                        m::mock()
+                                            ->shouldReceive('setLabel')
+                                            ->with('continuations.checklist.confirmation.yes-button-declaration')
+                                            ->once()
+                                            ->getMock()
+                                    )
+                                    ->once()
+                                    ->getMock()
                             )
                             ->once()
                             ->getMock()
-                        )
-                        ->once()
-                        ->getMock()
                     )
-                    ->once()
+                    ->twice()
                     ->getMock()
             )
-            ->twice()
+            ->times(3)
             ->getMock();
 
         $this->urlHelper->shouldReceive('fromRoute')
@@ -128,6 +145,12 @@ class LicenceChecklistTest extends MockeryTestCase
                     ['vehicle' => 'foo'],
                 ],
                 'id' => 2,
+                'licenceType' => [
+                    'id' => RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
+                ],
+                'goodsOrPsv' => [
+                    'id' => RefData::LICENCE_CATEGORY_PSV
+                ]
             ],
             'id' => 1,
             'sections' => [

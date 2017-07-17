@@ -3127,6 +3127,7 @@ return [
     'continuations.checklist.confirmation.error' => 'Please confirm your licence details is up to date',
     'continuations.checklist.confirmation.label' => 'Are your licence details up to date?',
     'continuations.checklist.confirmation.yes-button' => 'I understand - continue to finances',
+    'continuations.checklist.confirmation.yes-button-declaration' => 'I understand - continue to declaration',
     'continuations.checklist.confirmation.no-button' => 'Update your licence',
     'continuations.checklist.section.opens_in_a_new_window' => '(opens in a new browser window)',
     'continuations.checklist.hidden.legend' => 'Licence review',

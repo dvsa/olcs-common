@@ -5,12 +5,16 @@ namespace Common\Controller\Continuation;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\LicenceChecklist as LicenceChecklistQuery;
 use Common\Data\Mapper\Continuation\LicenceChecklist as LicenceChecklistMapper;
+use Common\RefData;
 
 /**
  * ChecklistController
  */
 class ChecklistController extends AbstractContinuationController
 {
+    const FINANCES_ROUTE = 'continuation/finances';
+    const DECLARATION_ROUTE = 'continuation/declaration';
+
     protected $layout = 'pages/continuation-checklist';
     protected $checklistSectionLayout = 'layouts/simple';
 
@@ -33,7 +37,7 @@ class ChecklistController extends AbstractContinuationController
         if ($request->isPost()) {
             $form->setData((array) $request->getPost());
             if ($form->isValid()) {
-                $this->redirect()->toRoute('continuation/finances', [], [], true);
+                $this->redirect()->toRoute($this->getNextStepRoute($licenceData), [], [], true);
             }
         }
 
@@ -137,5 +141,24 @@ class ChecklistController extends AbstractContinuationController
             ->addChild($view, 'content');
 
         return $base;
+    }
+
+    /**
+     * Get next step route
+     *
+     * @param array $licenceData licence data
+     *
+     * @return string
+     */
+    protected function getNextStepRoute($licenceData)
+    {
+        if (
+            $licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
+            && $licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
+        ) {
+            return self::DECLARATION_ROUTE;
+        }
+        return self::FINANCES_ROUTE;
+
     }
 }
