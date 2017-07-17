@@ -18,14 +18,14 @@ class DeclarationFormActions
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large","id":"submitAndPay"})
-     * @Form\Options({"label": "submitandpay.button"})
+     * @Form\Options({"label": "continue-to-payment.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $submitAndPay = null;
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large","id":"submit"})
-     * @Form\Options({"label": "submitapplication.button"})
+     * @Form\Options({"label": "continue.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $submit = null;

@@ -35,10 +35,44 @@ class Declaration extends AbstractFormService
         $this->updateDeclarationElement();
         $this->updateFormBasedOnDisableSignatureSetting();
         $this->updateFormActions();
+        $this->updateFormSignature();
 
         $this->populateForm();
 
         return $this->form;
+    }
+
+    /**
+     * Update form with signature details
+     *
+     * @return void
+     */
+    private function updateFormSignature()
+    {
+        /** @var \Common\Service\Helper\FormHelperService $formHelper */
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        // if form signed, then display signature details
+        if (!empty($this->continuationDetailData['signature']['name'])
+            && !empty($this->continuationDetailData['signature']['date'])
+            && $this->continuationDetailData['signatureType']['id'] === RefData::SIGNATURE_TYPE_DIGITAL_SIGNATURE
+            ) {
+            $signedBy = $this->continuationDetailData['signature']['name'];
+            $signedDate = new \DateTime($this->continuationDetailData['signature']['date']);
+
+            // Update the form HTML with details name of person who signed
+            /** @var \Common\Service\Helper\TranslationHelperService $translator */
+            $translator = $this->getServiceLocator()->get('Helper\Translation');
+            $this->form->get('signatureDetails')->get('signature')->setValue(
+                $translator->translateReplace('undertakings_signed', [$signedBy, $signedDate->format(\DATE_FORMAT)])
+            );
+            $formHelper->remove($this->form, 'form-actions->sign');
+            $formHelper->remove($this->form, 'content');
+        } else {
+            $formHelper->remove($this->form, 'signatureDetails');
+            if ($this->continuationDetailData['disableSignatures'] === false) {
+                $this->getServiceLocator()->get('Script')->loadFiles(['continuation-declaration']);
+            }
+        }
     }
 
     /**
@@ -48,8 +82,6 @@ class Declaration extends AbstractFormService
      */
     private function populateForm()
     {
-        /** @var \Common\Service\Helper\FormHelperService $formHelper */
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $this->form->get('version')->setValue($this->continuationDetailData['version']);
     }
 

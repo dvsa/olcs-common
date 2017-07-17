@@ -779,6 +779,7 @@ return [
     'continuation-detail-filter-status' => 'Status',
     'continuaton-generate-confirm' => 'Are you sure you want to generate (or regenerate) checklists for the selected licence(s)?',
     'continue.button' => 'Continue',
+    'continue-to-payment.button' => 'Continue to payment',
     'conv-#' => 'Conv. #',
     'conv-description' => 'Conv. description',
     'conviction-date' => 'Conviction date',
