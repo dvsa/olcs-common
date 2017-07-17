@@ -280,4 +280,6 @@ class RefData
     const LICENCE_CHECKLIST_BUSINESS_DETAILS = 'business_details';
     const LICENCE_CHECKLIST_PEOPLE = 'people';
     const LICENCE_CHECKLIST_VEHICLES = 'vehicles';
+
+    const RESULT_LICENCE_CONTINUED = 'licence_continued';
 }
