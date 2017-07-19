@@ -1323,5 +1323,7 @@ return [
     'continuations.checklist.section.error.safety' => 'Diogelwch a chydymffurfiad',
     'continuations.conditionsUndertakings-checkbox.label' => 'Amodau ac ymgymeriadau',
     'continuations.checklist.section.error.conditionsUndertakings' => 'Amodau ac ymgymeriadau',
+    'continuations.addresses.correspondence-address.table.name' => 'Cyfeiriad gohebiaeth',
+    'continuations.addresses.establishment-address.table.name' => 'Cyfeiriad y Sefydliad',
     // Potentially unused translations
 ];
