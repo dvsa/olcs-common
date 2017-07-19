@@ -2093,7 +2093,7 @@ return [
     'pi_t_other' => 'Other',
     'please-select' => 'Please select',
     'please-select-row' => 'Please select a row',
-    'please_select_a_row' => 'Please select a row',
+    'select-at-least-one-row' => 'You must select at least one row',
     'points' => 'Points',
     'position' => 'Position',
     'postcode.address.manual_entry' => 'Enter the address yourself',

@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Traits;
 
+use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -19,11 +20,11 @@ trait CheckForCrudAction
     /**
      * Check for crud actions
      *
-     * @param string $route
-     * @param array $params
-     * @param string $itemIdParam
+     * @param string $route       Route
+     * @param array  $params      Parameters from query
+     * @param string $itemIdParam Item
      *
-     * @return boolean
+     * @return boolean|Response
      */
     protected function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
     {
@@ -107,7 +108,9 @@ trait CheckForCrudAction
     /**
      * Do nothing, this method can be overridden to hijack the crud action check
      *
-     * @param string $action
+     * @param string $action Action
+     *
+     * @return void
      */
     protected function checkForAlternativeCrudAction($action)
     {
@@ -116,6 +119,8 @@ trait CheckForCrudAction
 
     /**
      * Get the last part of the action from the action name
+     *
+     * @param string $action action
      *
      * @return string
      */
@@ -133,6 +138,11 @@ trait CheckForCrudAction
         return array_pop($parts);
     }
 
+    /**
+     * Get no action identifier required
+     *
+     * @return array
+     */
     protected function getNoActionIdentifierRequired()
     {
         return array('add');
@@ -140,10 +150,12 @@ trait CheckForCrudAction
 
     /**
      * Called when a crud action is missing a required ID
+     *
+     * @return Response
      */
     protected function crudActionMissingId()
     {
-        $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please_select_a_row');
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please-select-row');
         return $this->redirect()->toRoute(null, [], [], true);
     }
 }
