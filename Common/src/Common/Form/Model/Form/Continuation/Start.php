@@ -12,7 +12,7 @@ class Start
 {
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
-     * @Form\Options({"label":"Continue"})
+     * @Form\Options({"label":"continuations.start-page.review-licence-label"})
      * @Form\Type("\Zend\Form\Element\Button")
      */
     public $submit = null;

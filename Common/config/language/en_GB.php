@@ -3174,5 +3174,10 @@ return [
     'continuations.addresses.establishment-address.same' => 'Same as correspondence address',
     'continuations.addresses.primary-number.table.name' => 'Primary number',
     'continuations.addresses.secondary-number.table.name' => 'Secondary number',
+    'continuations.start-page.helptext' => 'Before you submit a continuation application you should ensure that the information on your current licence is up to date.',
+    'continuations.start-page.recently-submitted-changes' => 'Recently submitted licence changes?',
+    'continuations.start-page.it-can-take-time' => 'It can take time for your changes to be updated onto our system.',
+    'continuations.start-page.you-can-submit' => 'You can still submit your application as being up to date whilst those changes are pending.',
+    'continuations.start-page.review-licence-label' => 'Review licence',
     // Potentially unused translations
 ];
