@@ -84,7 +84,37 @@ class LicenceChecklistTest extends MockeryTestCase
                             'platedWeight' => 2000,
                         ]
                     ],
-                ]
+                ],
+                'correspondenceCd' => [
+                    'address' => [
+                        'addressLine1' => 'Flat 1',
+                        'addressLine2' => 'Foo house',
+                        'town' => 'Leeds',
+                        'postcode' => 'LS9 6NF'
+                    ],
+                    'phoneContacts' => [
+                        [
+                            'phoneContactType' => [
+                                'id' => RefData::PHONE_TYPE_PRIMARY
+                            ],
+                            'phoneNumber' => '123'
+                        ],
+                        [
+                            'phoneContactType' => [
+                                'id' => RefData::PHONE_TYPE_SECONDARY
+                            ],
+                            'phoneNumber' => '456'
+                        ],
+                    ]
+                ],
+                'establishmentCd' => [
+                    'address' => [
+                        'addressLine1' => 'Flat 99',
+                        'addressLine2' => 'Bar house',
+                        'town' => 'London',
+                        'postcode' => 'SW1A 2AA'
+                    ],
+                ],
             ],
             'id' => 999,
         ];
@@ -134,6 +164,12 @@ class LicenceChecklistTest extends MockeryTestCase
                     'isGoods' => true,
                     'displayVehiclesCount' => RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT,
                     'header' => 'continuations.vehicles-section-header_translated'
+                ],
+                'addresses' => [
+                    'correspondenceAddress' => 'Flat 1, Foo house, Leeds, LS9 6NF',
+                    'establishmentAddress' => 'Flat 99, Bar house, London, SW1A 2AA',
+                    'primaryNumber' => '123',
+                    'secondaryNumber' => '456',
                 ],
                 'continuationDetailId' => 999,
             ],

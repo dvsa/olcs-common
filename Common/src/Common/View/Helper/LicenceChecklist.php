@@ -49,6 +49,9 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             case RefData::LICENCE_CHECKLIST_BUSINESS_DETAILS:
                 $preparedData = $this->prepareBusinessDetails($data['businessDetails']);
                 break;
+            case RefData::LICENCE_CHECKLIST_ADDRESSES:
+                $preparedData = $this->prepareAddresses($data['addresses']);
+                break;
             case RefData::LICENCE_CHECKLIST_PEOPLE:
                 $preparedData = $this->preparePeople($data['people']);
                 break;
@@ -59,6 +62,13 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
         return $preparedData;
     }
 
+    /**
+     * Prepare type of licence
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     private function prepareTypeOfLicence($data)
     {
         return [
@@ -92,6 +102,13 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
         ];
     }
 
+    /**
+     * Prepare business type
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     private function prepareBusinessType($data)
     {
         return [
@@ -107,6 +124,13 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
         ];
     }
 
+    /**
+     * Prepare business details
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     private function prepareBusinessDetails($data)
     {
         $businessDetailsData = [];
@@ -141,6 +165,79 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
         return $businessDetailsData;
     }
 
+    /**
+     * Prepare addresses
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    private function prepareAddresses($data)
+    {
+        $addressesData = [];
+        $addressesData[] = [
+            [
+                'value' => $this->translator->__invoke('continuations.addresses.correspondence-address.table.name'),
+                'header' => true
+            ],
+            [
+                'value' => $data['correspondenceAddress']
+            ]
+        ];
+        if (isset($data['establishmentAddress'])) {
+            $addressesData[] = [
+                [
+                    'value' => $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
+                    'header' => true
+                ],
+                [
+                    'value' => $data['establishmentAddress']
+                ]
+            ];
+        } else {
+            $addressesData[] = [
+                [
+                    'value' => $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
+                    'header' => true
+                ],
+                [
+                    'value' => $this->translator->__invoke('continuations.addresses.establishment-address.same'),
+                ]
+            ];
+        }
+        if (isset($data['primaryNumber'])) {
+            $addressesData[] = [
+                [
+                    'value' => $this->translator->__invoke('continuations.addresses.primary-number.table.name'),
+                    'header' => true
+                ],
+                [
+                    'value' => $data['primaryNumber']
+                ]
+            ];
+        }
+        if (isset($data['secondaryNumber'])) {
+            $addressesData[] = [
+                [
+                    'value' => $this->translator->__invoke('continuations.addresses.secondary-number.table.name'),
+                    'header' => true
+                ],
+                [
+                    'value' => $data['secondaryNumber']
+                ]
+            ];
+        }
+
+        return $addressesData;
+    }
+
+    /**
+     * Prepare people
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     private function preparePeople($data)
     {
         $persons = $data['persons'];
@@ -171,6 +268,13 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
         return $peopleData;
     }
 
+    /**
+     * Prepare vehicles
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     private function prepareVehicles($data)
     {
         $vehicles = $data['vehicles'];

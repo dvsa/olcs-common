@@ -288,6 +288,65 @@ class LicenceChecklistTest extends MockeryTestCase
                         ['value' => 3]
                     ]
                 ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_ADDRESSES,
+                [
+                    'addresses' => [
+                        'correspondenceAddress' => 'correspondence address',
+                        'establishmentAddress' => 'establishment address',
+                        'primaryNumber' => '123',
+                        'secondaryNumber' => '456',
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.addresses.correspondence-address.table.name_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'correspondence address']
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.addresses.establishment-address.table.name_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'establishment address']
+                    ],
+                    [
+                        ['value' => 'continuations.addresses.primary-number.table.name_translated', 'header' => true],
+                        ['value' => '123']
+                    ],
+                    [
+                        ['value' => 'continuations.addresses.secondary-number.table.name_translated', 'header' => true],
+                        ['value' => '456']
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_ADDRESSES,
+                [
+                    'addresses' => [
+                        'correspondenceAddress' => 'correspondence address',
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.addresses.correspondence-address.table.name_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'correspondence address']
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.addresses.establishment-address.table.name_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'continuations.addresses.establishment-address.same_translated']
+                    ],
+                ]
             ]
         ];
     }

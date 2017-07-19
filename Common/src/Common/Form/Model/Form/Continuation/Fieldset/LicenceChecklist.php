@@ -84,7 +84,7 @@ class LicenceChecklist
      * @Form\Options({
      *     "label":"continuations.addresses-checkbox.label",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
-     *     "content":"partials/continuation/stub",
+     *     "content":"partials/continuation/licence-checklist-addresses",
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
      *     "must_be_value": "Y",

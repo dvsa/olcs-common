@@ -38,6 +38,7 @@ class LicenceChecklist
                     'typeOfBusinessId' => $licenceData['organisation']['type']['id'],
                 ],
                 'businessDetails' => self::mapBusinessDetails($licenceData, $translator),
+                'addresses' => self::mapAddresses($licenceData),
                 'people' => self::mapPeople($licenceData, $translator),
                 'vehicles' => self::mapVehicles($licenceData, $translator),
                 'continuationDetailId' => $data['id']
@@ -92,6 +93,59 @@ class LicenceChecklist
             $businessDetails['companyNumber'] = $organisation['companyOrLlpNo'];
         }
         return $businessDetails;
+    }
+
+    /**
+     * Map business details
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    private static function mapAddresses($licenceData)
+    {
+        $addresses = [];
+        if (isset($licenceData['correspondenceCd']['address'])) {
+            $addresses['correspondenceAddress'] = self::formatAddress($licenceData['correspondenceCd']['address']);
+        }
+        if (isset($licenceData['establishmentCd']['address'])) {
+            $addresses['establishmentAddress'] = self::formatAddress($licenceData['establishmentCd']['address']);
+        }
+        if (isset($licenceData['correspondenceCd']['phoneContacts'])) {
+            foreach ($licenceData['correspondenceCd']['phoneContacts'] as $pc) {
+                if ($pc['phoneContactType']['id'] === RefData::PHONE_TYPE_PRIMARY) {
+                    $addresses['primaryNumber'] = $pc['phoneNumber'];
+                }
+                if ($pc['phoneContactType']['id'] === RefData::PHONE_TYPE_SECONDARY) {
+                    $addresses['secondaryNumber'] = $pc['phoneNumber'];
+                }
+            }
+        }
+        return $addresses;
+    }
+
+    /**
+     * Format address
+     *
+     * @param array $inputAddress input address
+     *
+     * @return string
+     */
+    private static function formatAddress($inputAddress)
+    {
+        $fields = ['addressLine1', 'addressLine2', 'addressLine3', 'addressLine4', 'town', 'postcode'];
+        $outputAddress = '';
+        array_walk(
+            $fields,
+            function ($item) use ($inputAddress, &$outputAddress) {
+                if (isset($inputAddress[$item]) && !empty($inputAddress[$item])) {
+                    $outputAddress .= $inputAddress[$item] . ', ';
+                }
+            }
+        );
+        $outputAddress = trim($outputAddress, ', ');
+
+        return $outputAddress;
     }
 
     /**

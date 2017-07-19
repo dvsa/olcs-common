@@ -3167,5 +3167,10 @@ return [
     'continuations.financial-evidence-required.label' => 'Financial evidence required',
     'continuations.financial-evidence-required.error' => 'You must select how you will provide your financial evidence',
     'continuations.insufficient-finances.upload-files' => 'You must upload financial evidence',
+    'continuations.addresses.correspondence-address.table.name' => 'Correspondence address',
+    'continuations.addresses.establishment-address.table.name' => 'Establishment address',
+    'continuations.addresses.establishment-address.same' => 'Same as correspondence address',
+    'continuations.addresses.primary-number.table.name' => 'Primary number',
+    'continuations.addresses.secondary-number.table.name' => 'Secondary number',
     // Potentially unused translations
 ];
