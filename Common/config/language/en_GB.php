@@ -2251,6 +2251,8 @@ return [
     'search-result-label-partners' => 'Partners',
     'search-result-label-people' => 'People',
     'search-result-label-phone-numbers' => 'Phone numbers',
+    'search-result-label-primary-number' => 'Primary number',
+    'search-result-label-secondary-number' => 'Secondary number',
     'search-result-label-responsible-people' => 'Responsible people',
     'search-result-label-tauth' => 'Total trailer authorisation (TAUTH)',
     'search-result-label-tip' => 'Trailers in possession (TIP)',
