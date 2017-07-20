@@ -48,6 +48,16 @@ return [
                         ],
                         'may_terminate' => true,
                     ],
+                    'operating-centres' => [
+                        'type' => Http\Segment::class,
+                        'options' => [
+                            'route' => '/operating-centres[/]',
+                            'defaults' => [
+                                'action' => 'operating-centres',
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ],
                 ],
             ],
             'finances' => [

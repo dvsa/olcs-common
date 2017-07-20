@@ -347,6 +347,102 @@ class LicenceChecklistTest extends MockeryTestCase
                         ['value' => 'continuations.addresses.establishment-address.same_translated']
                     ],
                 ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_OPERATING_CENTRES,
+                [
+                    'operatingCentres' => [
+                        'operatingCentres' => [
+                            [
+                                'name' => 'Foo',
+                                'vehicles' => '1',
+                                'trailers' => '2'
+                            ],
+                            [
+                                'name' => 'Bar',
+                                'vehicles' => '3',
+                                'trailers' => '4'
+                            ]
+                        ],
+                        'displayOperatingCentresCount' => 10,
+                        'isGoods' => true
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.oc-section.table.oc_translated', 'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.oc-section.table.vehicles_translated', 'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.oc-section.table.trailers_translated', 'header' => true
+                        ]
+                    ],
+                    [
+                        ['value' => 'Foo'],
+                        ['value' => '1'],
+                        ['value' => '2'],
+                    ],
+                    [
+                        ['value' => 'Bar'],
+                        ['value' => '3'],
+                        ['value' => '4'],
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_OPERATING_CENTRES,
+                [
+                    'operatingCentres' => [
+                        'operatingCentres' => [
+                            [
+                                'name' => 'Foo',
+                                'vehicles' => '1',
+                                'trailers' => '2'
+                            ],
+                            [
+                                'name' => 'Bar',
+                                'vehicles' => '3',
+                                'trailers' => '4'
+                            ]
+                        ],
+                        'displayOperatingCentresCount' => 1,
+                        'isGoods' => true,
+                        'totalOperatingCentres' => 2
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.oc-section.table.total-oc_translated', 'header' => true
+                        ],
+                        [
+                            'value' => '2'
+                        ],
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_OPERATING_CENTRES_AUTHORITY,
+                [
+                    'operatingCentres' => [
+                        'totalVehicles' => 10,
+                        'totalTrailers' => 20,
+                        'isGoods' => true,
+                    ]
+                ],
+                [
+                    [
+                        ['value' => 'continuations.oc-section.table.auth_vehicles_translated', 'header' => true],
+                        ['value' => '10'],
+                    ],
+                    [
+                        ['value' => 'continuations.oc-section.table.auth_trailers_translated', 'header' => true],
+                        ['value' => '20'],
+                    ],
+                ]
             ]
         ];
     }

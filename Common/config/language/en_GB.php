@@ -3174,5 +3174,14 @@ return [
     'continuations.addresses.establishment-address.same' => 'Same as correspondence address',
     'continuations.addresses.primary-number.table.name' => 'Primary number',
     'continuations.addresses.secondary-number.table.name' => 'Secondary number',
+    'continuations.oc-section.table.oc' => 'Operating centre',
+    'continuations.oc-section.table.vehicles' => 'Vehicles',
+    'continuations.oc-section.table.trailers' => 'Trailers',
+    'continuations.operating-centres.button-label' => 'View operating centres',
+    'continuations.authorisation.label' => 'Authorisation',
+    'continuations.oc-section.table.auth_vehicles' => 'Vehicles',
+    'continuations.oc-section.table.auth_trailers' => 'Trailers',
+    'continuations.oc-section.table.total-oc' => 'Number of operating centres on this licence',
+    'continuations.operating-centres.section-header' => 'Operating centres total:',
     // Potentially unused translations
 ];

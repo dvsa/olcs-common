@@ -126,6 +126,35 @@ class ChecklistController extends AbstractContinuationController
     }
 
     /**
+     * Operating centres section page
+     *
+     * @return ViewModel
+     */
+    public function operatingCentresAction()
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $data = $this->getData(
+            $this->getContinuationDetailId()
+        );
+        $licenceData = $data['licence'];
+        $licenceVehicles = $licenceData['operatingCentres'];
+        $mappedData = LicenceChecklistMapper::mapOperatingCentresSectionToView(
+            $licenceData,
+            $translator
+        );
+        $view = new ViewModel(
+            [
+                'licNo' => $licenceData['licNo'],
+                'data' => $mappedData['operatingCentres'],
+                'totalMessage' => $mappedData['totalOperatingCentresMessage'],
+                'totalCount' => count($licenceVehicles)
+            ]
+        );
+
+        return $this->renderSection($view);
+    }
+
+    /**
      * Render section
      *
      * @param ViewModel $view view model

@@ -274,6 +274,7 @@ class RefData
 
     const CONTINUATIONS_DISPLAY_PERSON_COUNT = 10;
     const CONTINUATIONS_DISPLAY_VEHICLES_COUNT = 10;
+    const CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT = 10;
 
     const LICENCE_CHECKLIST_TYPE_OF_LICENCE = 'type_of_licence';
     const LICENCE_CHECKLIST_BUSINESS_TYPE = 'business_type';
@@ -281,6 +282,8 @@ class RefData
     const LICENCE_CHECKLIST_ADDRESSES = 'addresses';
     const LICENCE_CHECKLIST_PEOPLE = 'people';
     const LICENCE_CHECKLIST_VEHICLES = 'vehicles';
+    const LICENCE_CHECKLIST_OPERATING_CENTRES = 'operating_centres';
+    const LICENCE_CHECKLIST_OPERATING_CENTRES_AUTHORITY = 'operating_centres_authority';
 
     const RESULT_LICENCE_CONTINUED = 'licence_continued';
 }

@@ -1325,5 +1325,11 @@ return [
     'continuations.checklist.section.error.conditionsUndertakings' => 'Amodau ac ymgymeriadau',
     'continuations.addresses.correspondence-address.table.name' => 'Cyfeiriad gohebiaeth',
     'continuations.addresses.establishment-address.table.name' => 'Cyfeiriad y Sefydliad',
+    'continuations.oc-section.table.oc' => 'Canolfan weithredu',
+    'continuations.oc-section.table.vehicles' => 'Cerbydau',
+    'continuations.oc-section.table.trailers' => 'Ôl-gerbydau',
+    'continuations.authorisation.label' => 'Awdurdodiad',
+    'continuations.oc-section.table.auth_vehicles' => 'Cerbydau',
+    'continuations.oc-section.table.auth_trailers' => 'Ôl-gerbydau',
     // Potentially unused translations
 ];

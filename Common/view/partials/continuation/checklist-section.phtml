@@ -3,10 +3,9 @@
         <?php
             foreach ($this->data as $line) {
                 echo '<tr>';
-                $rightAligned = false;
                 foreach ($line as $cell) {
                     $class = '';
-                    if ($rightAligned) {
+                    if ($cell === $line[count($line) - 1]) {
                         $class = 'class="td--right-aligned"';
                     }
                     if (isset($cell['header']) && $cell['header']) {
@@ -17,7 +16,6 @@
                         $closeTag = '</td>';
                     }
                     echo $openTag . $cell['value'] . $closeTag;
-                    $rightAligned = !$rightAligned;
                 }
                 echo '</tr>';
             }
