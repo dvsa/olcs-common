@@ -9,6 +9,11 @@ use Zend\View\Model\ViewModel;
  */
 class StartController extends AbstractContinuationController
 {
+    const BACK_ROUTE = 'lva-licence';
+
+    /** @var string  */
+    protected $layout = 'pages/continuation-start';
+
     /**
      * Index page
      *
@@ -16,7 +21,11 @@ class StartController extends AbstractContinuationController
      */
     public function indexAction()
     {
-        $continuationDetailId = $this->getContinuationDetailId();
+        $data = $this->getContinuationDetailData(
+            $this->getContinuationDetailId()
+        );
+        $licenceData = $data['licence'];
+
         $form = $this->getForm('continuations-start');
 
         if ($this->getRequest()->isPost()) {
@@ -26,6 +35,10 @@ class StartController extends AbstractContinuationController
             }
         }
 
-        return $this->getViewModel('[THIS IS THE LIC NO]', $form);
+        return $this->getViewModel(
+            $licenceData['licNo'],
+            $form,
+            ['backRoute' => self::BACK_ROUTE, 'backRouteParams' => ['licence' => $licenceData['id']]]
+        );
     }
 }

@@ -2633,8 +2633,8 @@ return [
     'sidebar-variation-advertise-ni' => 'How to advertise your goods application (NI)',
     'sidebar-variation-being-an-operator' => 'Being a goods vehicle operator',
     'sidebar-variation-financial-evidence' => 'How to provide financial evidence',
-    'sidebar-variation-public-service' => 'Public Service Vehicle operator licences',
-    'sidebar-variation-safety-and-maintenance' => 'Vehicle safety and maintenance guides',
+    'sidebar-variation-public-service' => 'PSV (Public Service Vehicle) operator licences',
+    'sidebar-variation-safety-and-maintenance' => 'Commercial vehicle safety and maintenance guides',
     'signin-or-register-text' => 'Sign in or <a href="%s">create an account</a> to get started.',
     'skip-content' => 'Skip to main content',
     'skip-hire-waste-transfer-refuse' => 'Skip Hire / Waste Transfer / Refuse',
@@ -3183,5 +3183,10 @@ return [
     'continuations.oc-section.table.auth_trailers' => 'Trailers',
     'continuations.oc-section.table.total-oc' => 'Number of operating centres on this licence',
     'continuations.operating-centres.section-header' => 'Operating centres total:',
+    'continuations.start-page.helptext' => 'Before you submit a continuation application you should ensure that the information on your current licence is up to date.',
+    'continuations.start-page.recently-submitted-changes' => 'Recently submitted licence changes?',
+    'continuations.start-page.it-can-take-time' => 'It can take time for your changes to be updated onto our system.',
+    'continuations.start-page.you-can-submit' => 'You can still submit your application as being up to date whilst those changes are pending.',
+    'continuations.start-page.review-licence-label' => 'Review licence',
     // Potentially unused translations
 ];

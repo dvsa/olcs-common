@@ -190,26 +190,30 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                 'value' => $data['correspondenceAddress']
             ]
         ];
-        if (isset($data['establishmentAddress'])) {
-            $addressesData[] = [
-                [
-                    'value' => $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
-                    'header' => true
-                ],
-                [
-                    'value' => $data['establishmentAddress']
-                ]
-            ];
-        } else {
-            $addressesData[] = [
-                [
-                    'value' => $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
-                    'header' => true
-                ],
-                [
-                    'value' => $this->translator->__invoke('continuations.addresses.establishment-address.same'),
-                ]
-            ];
+        if ($data['showEstablishmentAddress']) {
+            if (isset($data['establishmentAddress'])) {
+                $addressesData[] = [
+                    [
+                        'value' =>
+                            $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
+                        'header' => true
+                    ],
+                    [
+                        'value' => $data['establishmentAddress']
+                    ]
+                ];
+            } else {
+                $addressesData[] = [
+                    [
+                        'value' =>
+                            $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
+                        'header' => true
+                    ],
+                    [
+                        'value' => $this->translator->__invoke('continuations.addresses.establishment-address.same'),
+                    ]
+                ];
+            }
         }
         if (isset($data['primaryNumber'])) {
             $addressesData[] = [
