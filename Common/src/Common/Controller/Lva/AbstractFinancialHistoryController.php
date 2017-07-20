@@ -55,7 +55,6 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         }
 
         $form = $this->getFinancialHistoryForm()->setData($data);
-
         $this->alterFormForLva($form, $data);
 
         $hasProcessedFiles = $this->processFiles(
@@ -90,11 +89,27 @@ abstract class AbstractFinancialHistoryController extends AbstractController
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
+        $this->updateInsolvencyConfirmationLabel($form, $data);
+        return $form;
+    }
+
+    /**
+     * If the licence is NI then update the label.  Used in current controller
+     * and CommonVariationControllerTrait.
+     *
+     * @param Form  $form Form
+     * @param array $data Api/Form Data
+     *
+     * @return Form
+     */
+    protected function updateInsolvencyConfirmationLabel(Form $form, $data = null)
+    {
         if (isset($data['data']['niFlag']) && $data['data']['niFlag'] === 'Y') {
             $form->get('data')
                 ->get('insolvencyConfirmation')
                 ->setLabel('application_previous-history_financial-history.insolvencyConfirmation.title.ni');
         }
+
         return $form;
     }
 
