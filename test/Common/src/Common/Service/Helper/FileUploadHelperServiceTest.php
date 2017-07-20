@@ -205,7 +205,8 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 'file-controls' => [
                     'file' => [
                         'error' => 0,
-                        'tmp_name' => $file
+                        'tmp_name' => $file,
+                        'name' => 'testfile.zip',
                     ]
                 ]
             ]
@@ -221,7 +222,8 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             function ($data) use ($file) {
                 $expected = [
                     'error' => 0,
-                    'tmp_name' => $file
+                    'tmp_name' => $file,
+                    'name' => 'testfile.zip',
                 ];
                 $this->assertEquals($expected, $data);
             }
@@ -264,7 +266,8 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 'file-controls' => [
                     'file' => [
                         'error' => $error,
-                        'tmp_name' => $file
+                        'tmp_name' => $file,
+                        'name' => 'testfile.zip',
                     ]
                 ]
             ]
@@ -325,7 +328,8 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 'file-controls' => [
                     'file' => [
                         'error' => UPLOAD_ERR_OK,
-                        'tmp_name' => $file
+                        'tmp_name' => $file,
+                        'name' => 'testfile.zip',
                     ]
                 ]
             ]
@@ -352,7 +356,66 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             function ($data) use ($file) {
                 $expected = [
                     'error' => 0,
-                    'tmp_name' => $file
+                    'tmp_name' => $file,
+                    'name' => 'testfile.zip',
+                ];
+                $this->assertEquals($expected, $data);
+            }
+        );
+
+        $this->assertEquals(false, $this->sut->process());
+    }
+
+
+    public function testProcessWithPostFileLengthTooLong()
+    {
+        $file = 'foo';
+
+        $postData = [
+            'my-file' => [
+                'file-controls' => [
+                    'upload' => true
+                ]
+            ]
+        ];
+
+        $fileName = 'onvtbzqimrzwxpulkxxsonvtbzqimrzwxpulkxxsonvtbzqimrzwxpulkxxsonvtbz.zip';
+
+        $fileData = [
+            'my-file' => [
+                'file-controls' => [
+                    'file' => [
+                        'error' => UPLOAD_ERR_OK,
+                        'tmp_name' => $file,
+                        'name' => $fileName
+                    ]
+                ]
+            ]
+        ];
+
+        $this->mockRequest
+            ->shouldReceive('isPost')->andReturn(true)
+            ->shouldReceive('getPost')->andReturn($postData)
+            ->shouldReceive('getFiles')->andReturn($fileData);
+
+        $this->mockForm->shouldReceive('setMessages')
+            ->once()
+            ->with(
+                [
+                    'my-file' => [
+                        '__messages__' => [FileUploadHelperService::FILE_UPLOAD_ERR_FILE_LENGTH_TOO_LONG]
+                    ]
+
+                ]
+            );
+
+        $this->sut->setSelector('my-file');
+        $this->sut->setUploadCallback(
+            function ($data) use ($file) {
+                $expected = [
+                    'error' => 0,
+                    'tmp_name' => $file,
+                    'name' => 'testfile.zip',
                 ];
                 $this->assertEquals($expected, $data);
             }
@@ -391,7 +454,8 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                 'file-controls' => [
                     'file' => [
                         'error' => UPLOAD_ERR_OK,
-                        'tmp_name' => $file
+                        'tmp_name' => $file,
+                        'name' => 'testfile.zip',
                     ]
                 ]
             ]
@@ -406,7 +470,8 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             function ($data) use ($file) {
                 $expected = [
                     'error' => 0,
-                    'tmp_name' => $file
+                    'tmp_name' => $file,
+                    'name' => 'testfile.zip',
                 ];
                 $this->assertEquals($expected, $data);
             }
@@ -435,6 +500,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
                     'file' => [
                         'error' => UPLOAD_ERR_OK,
                         'tmp_name' => $file,
+                        'name' => 'testfile.zip',
                     ],
                 ],
             ]

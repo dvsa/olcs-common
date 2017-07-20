@@ -1870,6 +1870,7 @@ return [
     'message.file-upload-error.8' => 'An unexpected error occurred while uploading the file',
     'message.file-upload-error.missing' => 'An unexpected error occurred while uploading the file',
     'message.file-upload-error.virus' => 'This file cannot be uploaded as it failed an anti-virus check. For more information see www.getsafeonline.org',
+    'message.file-upload-error.lengthtoolong' => 'The length of the filename is longer than 50 characters',
     'message.post_max_size_exceeded' => 'Too much data was submitted',
     'mlh' => 'MLH',
     'money-element-invalid' => 'Please enter a valid amount (max 2 decimal places)',
