@@ -108,6 +108,10 @@ class LicenceChecklist extends AbstractFormService
      */
     protected function alterAllSections($form, $sections)
     {
+        $key = array_search('vehiclesPsv', $sections);
+        if ($key !== false) {
+            $sections[$key] = 'vehicles';
+        }
         $formHelper = $this->getFormHelper();
         foreach ($this->checklistCheckboxes as $checkbox) {
             if (!in_array($checkbox, $sections)) {
