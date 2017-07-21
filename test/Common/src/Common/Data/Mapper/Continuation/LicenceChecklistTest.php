@@ -116,6 +116,28 @@ class LicenceChecklistTest extends MockeryTestCase
                         'postcode' => 'SW1A 2AA'
                     ],
                 ],
+                'operatingCentres' => [
+                    [
+                        'operatingCentre' => [
+                            'address' => [
+                                'addressLine1' => 'Foo',
+                                'town' => 'Bar'
+                            ]
+                        ],
+                        'noOfVehiclesRequired' => 1,
+                        'noOfTrailersRequired' => 2,
+                    ],
+                    [
+                        'operatingCentre' => [
+                            'address' => [
+                                'addressLine1' => 'Cake',
+                                'town' => 'Baz'
+                            ]
+                        ],
+                        'noOfVehiclesRequired' => 3,
+                        'noOfTrailersRequired' => 4,
+                    ],
+                ]
             ],
             'id' => 999,
         ];
@@ -172,6 +194,25 @@ class LicenceChecklistTest extends MockeryTestCase
                     'primaryNumber' => '123',
                     'secondaryNumber' => '456',
                     'showEstablishmentAddress' => true,
+                ],
+                'operatingCentres' => [
+                    'operatingCentres' => [
+                        [
+                            'name' => 'Cake, Baz',
+                            'vehicles' => 3,
+                            'trailers' => 4,
+                        ],
+                        [
+                            'name' => 'Foo, Bar',
+                            'vehicles' => 1,
+                            'trailers' => 2,
+                        ],
+                    ],
+                    'totalOperatingCentres' => 2,
+                    'totalVehicles' => 4,
+                    'totalTrailers' => 6,
+                    'isGoods' => true,
+                    'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT
                 ],
                 'continuationDetailId' => 999,
             ],
@@ -304,6 +345,70 @@ class LicenceChecklistTest extends MockeryTestCase
         $this->assertEquals(
             $out,
             LicenceChecklist::mapVehiclesSectionToView($in, $mockTranslator)
+        );
+    }
+
+    public function testMapOperatingCentresSectionToView()
+    {
+        $in = [
+            'goodsOrPsv' => [
+                'id' => RefData::LICENCE_CATEGORY_GOODS_VEHICLE
+            ],
+            'operatingCentres' => [
+                [
+                    'operatingCentre' => [
+                        'address' => [
+                            'addressLine1' => 'Foo',
+                            'town' => 'Bar'
+                        ],
+                    ],
+                    'noOfVehiclesRequired' => 1,
+                    'noOfTrailersRequired' => 2,
+                ],
+                [
+                    'operatingCentre' => [
+                        'address' => [
+                            'addressLine1' => 'Baz',
+                            'town' => 'Cake'
+                        ],
+                    ],
+                    'noOfVehiclesRequired' => 3,
+                    'noOfTrailersRequired' => 4,
+                ]
+            ]
+        ];
+        $out = [
+            'operatingCentres' => [
+                [
+                    ['value' => 'continuations.oc-section.table.oc_translated', 'header' => true],
+                    ['value' => 'continuations.oc-section.table.vehicles_translated', 'header' => true],
+                    ['value' => 'continuations.oc-section.table.trailers_translated', 'header' => true],
+                ],
+                [
+                    ['value' => 'Baz, Cake'],
+                    ['value' => '3'],
+                    ['value' => '4'],
+                ],
+                [
+                    ['value' => 'Foo, Bar'],
+                    ['value' => '1'],
+                    ['value' => '2'],
+                ]
+            ],
+            'totalOperatingCentresMessage' => 'continuations.operating-centres.section-header_translated',
+        ];
+        $mockTranslator = m::mock(TranslationHelperService::class)
+            ->shouldReceive('translate')
+            ->andReturnUsing(
+                function ($arg) {
+                    return $arg . '_translated';
+                }
+            )
+            ->getMock();
+
+        $this->assertEquals(
+            $out,
+            LicenceChecklist::mapOperatingCentresSectionToView($in, $mockTranslator)
         );
     }
 }

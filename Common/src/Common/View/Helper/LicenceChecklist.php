@@ -58,6 +58,12 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             case RefData::LICENCE_CHECKLIST_VEHICLES:
                 $preparedData = $this->prepareVehicles($data['vehicles']);
                 break;
+            case RefData::LICENCE_CHECKLIST_OPERATING_CENTRES:
+                $preparedData = $this->prepareOperatingCentres($data['operatingCentres']);
+                break;
+            case RefData::LICENCE_CHECKLIST_OPERATING_CENTRES_AUTHORITY:
+                $preparedData = $this->prepareOperatingCentresAuthority($data['operatingCentres']);
+                break;
         }
         return $preparedData;
     }
@@ -188,7 +194,8 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             if (isset($data['establishmentAddress'])) {
                 $addressesData[] = [
                     [
-                        'value' => $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
+                        'value' =>
+                            $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
                         'header' => true
                     ],
                     [
@@ -198,7 +205,8 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             } else {
                 $addressesData[] = [
                     [
-                        'value' => $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
+                        'value' =>
+                            $this->translator->__invoke('continuations.addresses.establishment-address.table.name'),
                         'header' => true
                     ],
                     [
@@ -308,5 +316,86 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             ];
         }
         return $vehicleData;
+    }
+
+    /**
+     * Prepare operating centres
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    private function prepareOperatingCentres($data)
+    {
+        $operatingCentres = $data['operatingCentres'];
+        if (is_array($operatingCentres) && count($operatingCentres) <= $data['displayOperatingCentresCount']) {
+            $header = [
+                [
+                    'value' => $this->translator->__invoke('continuations.oc-section.table.oc'),
+                    'header' => true
+                ],
+                [
+                    'value' => $this->translator->__invoke('continuations.oc-section.table.vehicles'),
+                    'header' => true
+                ]
+            ];
+            if ($data['isGoods']) {
+                $header[] = [
+                    'value' => $this->translator->__invoke('continuations.oc-section.table.trailers'),
+                    'header' => true
+                ];
+            }
+            $ocData[] = $header;
+            foreach ($operatingCentres as $oc) {
+                $row = [
+                    ['value' => $oc['name']],
+                    ['value' => $oc['vehicles']]
+                ];
+                if ($data['isGoods']) {
+                    $row[] = ['value' => $oc['trailers']];
+                }
+                $ocData[] = $row;
+            }
+
+        } else {
+            $ocData[] = [
+                ['value' => $this->translator->__invoke('continuations.oc-section.table.total-oc'), 'header' => true],
+                ['value' => $data['totalOperatingCentres']]
+            ];
+        }
+        return $ocData;
+    }
+
+    /**
+     * Prepare operating centres authority
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    private function prepareOperatingCentresAuthority($data)
+    {
+        $ocData[] = [
+            [
+                'value' => $this->translator->__invoke('continuations.oc-section.table.auth_vehicles'),
+                'header' => true
+            ],
+            [
+                'value' => $data['totalVehicles'],
+            ]
+        ];
+        if ($data['isGoods']) {
+            $ocData[] = [
+                [
+                    'value' => $this->translator->__invoke('continuations.oc-section.table.auth_trailers'),
+                    'header' => true
+                ],
+                [
+                    'value' => $data['totalTrailers'],
+                ]
+            ];
+        }
+
+        return $ocData;
     }
 }

@@ -126,7 +126,7 @@ class LicenceChecklist
      * @Form\Options({
      *     "label":"continuations.operatingCentres-checkbox.label",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
-     *     "content":"partials/continuation/stub",
+     *     "content":"partials/continuation/licence-checklist-operating-centres",
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
      *     "must_be_value": "Y",

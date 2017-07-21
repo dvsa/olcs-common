@@ -41,6 +41,7 @@ class LicenceChecklist
                 'addresses' => self::mapAddresses($licenceData),
                 'people' => self::mapPeople($licenceData, $translator),
                 'vehicles' => self::mapVehicles($licenceData, $translator),
+                'operatingCentres' => self::mapOperatingCentres($licenceData),
                 'continuationDetailId' => $data['id']
             ]
         ];
@@ -305,6 +306,88 @@ class LicenceChecklist
             'vehicles' => array_merge($header, $vehicles),
             'totalVehiclesMessage' => $translator->translate('continuations.vehicles.section-header'),
         ];
+    }
 
+    /**
+     * Map operating centres
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    private static function mapOperatingCentres($data)
+    {
+        $operatingCentres = [];
+        $totalVehicles = 0;
+        $totalTrailers = 0;
+        foreach ($data['operatingCentres'] as $loc) {
+            $oc = $loc['operatingCentre'];
+            $operatingCentres[] = [
+                'name' => implode(', ', [$oc['address']['addressLine1'], $oc['address']['town']]),
+                'vehicles' => $loc['noOfVehiclesRequired'],
+                'trailers' => $loc['noOfTrailersRequired'],
+            ];
+            $totalVehicles += (int) $loc['noOfVehiclesRequired'];
+            $totalTrailers += (int) $loc['noOfTrailersRequired'];
+        }
+        usort(
+            $operatingCentres,
+            function ($a, $b) {
+                return strcmp($a['name'], $b['name']);
+            }
+        );
+        return [
+            'operatingCentres' => $operatingCentres,
+            'totalOperatingCentres' => count($operatingCentres),
+            'totalVehicles' => $totalVehicles,
+            'totalTrailers' => $totalTrailers,
+            'isGoods' => $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT
+        ];
+    }
+
+    /**
+     * Map operating centres section to view
+     *
+     * @param array                    $date       data
+     * @param TranslationHelperService $translator translator
+     *
+     * @return array
+     */
+    public static function mapOperatingCentresSectionToView($data, $translator)
+    {
+        $isGoods = $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE;
+        $header[] = [
+            ['value' => $translator->translate('continuations.oc-section.table.oc'), 'header' => true],
+            ['value' => $translator->translate('continuations.oc-section.table.vehicles'), 'header' => true],
+        ];
+        if ($isGoods) {
+            $header[0][] = [
+                'value' => $translator->translate('continuations.oc-section.table.trailers'), 'header' => true
+            ];
+        }
+
+        $operatingCentres = [];
+        foreach ($data['operatingCentres'] as $loc) {
+            $oc = $loc['operatingCentre'];
+            $row = [
+                ['value' => implode(', ', [$oc['address']['addressLine1'], $oc['address']['town']])],
+                ['value' => $loc['noOfVehiclesRequired']]
+            ];
+            if ($isGoods) {
+                $row[] = ['value' => $loc['noOfTrailersRequired']];
+            }
+            $operatingCentres[] = $row;
+        }
+        usort(
+            $operatingCentres,
+            function ($a, $b) {
+                return strcmp($a[0]['value'], $b[0]['value']);
+            }
+        );
+        return [
+            'operatingCentres' => array_merge($header, $operatingCentres),
+            'totalOperatingCentresMessage' => $translator->translate('continuations.operating-centres.section-header'),
+        ];
     }
 }
