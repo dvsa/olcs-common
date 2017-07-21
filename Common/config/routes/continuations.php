@@ -58,6 +58,16 @@ return [
                         ],
                         'may_terminate' => true,
                     ],
+                    'transport-managers' => [
+                        'type' => Http\Segment::class,
+                        'options' => [
+                            'route' => '/transport-managers[/]',
+                            'defaults' => [
+                                'action' => 'transport-managers',
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ],
                 ],
             ],
             'finances' => [

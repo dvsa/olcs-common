@@ -463,7 +463,69 @@ class LicenceChecklistTest extends MockeryTestCase
                         ['value' => '20'],
                     ],
                 ]
-            ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_TRANSPORT_MANAGERS,
+                [
+                    'transportManagers' => [
+                        'transportManagers' => [
+                            [
+                                'name' => 'Mr Cake Baz',
+                                'dob' => '01/01/1970',
+                            ],
+                            [
+                                'name' => 'Mr Foo Bar',
+                                'dob' => '01/01/1980',
+                            ],
+                        ],
+                        'displayTransportManagersCount' => 10,
+                        'totalTransportManagers' => 2
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.tm-section.table.name_translated', 'header' => true
+                        ],
+                        [
+                            'value' => 'continuations.tm-section.table.dob_translated', 'header' => true
+                        ],
+                    ],
+                    [
+                        ['value' => 'Mr Cake Baz'],
+                        ['value' => '01/01/1970'],
+                    ],
+                    [
+                        ['value' => 'Mr Foo Bar'],
+                        ['value' => '01/01/1980'],
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_TRANSPORT_MANAGERS,
+                [
+                    'transportManagers' => [
+                        'transportManagers' => [
+                            [
+                                'name' => 'Mr Cake Baz',
+                                'dob' => '01/01/1970',
+                            ],
+                            [
+                                'name' => 'Mr Foo Bar',
+                                'dob' => '01/01/1980',
+                            ],
+                        ],
+                        'displayTransportManagersCount' => 1,
+                        'totalTransportManagers' => 2
+                    ]
+                ],
+                [
+                    [
+                        ['value' => 'continuations.tm-section.table.total-tm_translated', 'header' => true],
+                        ['value' => '2'],
+                    ],
+                ]
+            ],
         ];
     }
 }

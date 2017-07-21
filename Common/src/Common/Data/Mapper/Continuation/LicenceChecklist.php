@@ -42,6 +42,7 @@ class LicenceChecklist
                 'people' => self::mapPeople($licenceData, $translator),
                 'vehicles' => self::mapVehicles($licenceData, $translator),
                 'operatingCentres' => self::mapOperatingCentres($licenceData),
+                'transportManagers' => self::mapTransportManagers($licenceData),
                 'continuationDetailId' => $data['id']
             ]
         ];
@@ -268,7 +269,7 @@ class LicenceChecklist
     /**
      * Map people section to view
      *
-     * @param array                    $date       data
+     * @param array                    $data       data
      * @param TranslationHelperService $translator translator
      *
      * @return array
@@ -349,7 +350,7 @@ class LicenceChecklist
     /**
      * Map operating centres section to view
      *
-     * @param array                    $date       data
+     * @param array                    $data       data
      * @param TranslationHelperService $translator translator
      *
      * @return array
@@ -388,6 +389,75 @@ class LicenceChecklist
         return [
             'operatingCentres' => array_merge($header, $operatingCentres),
             'totalOperatingCentresMessage' => $translator->translate('continuations.operating-centres.section-header'),
+        ];
+    }
+
+    /**
+     * Map transport manager section to view
+     *
+     * @param array                    $data       data
+     * @param TranslationHelperService $translator translator
+     *
+     * @return array
+     */
+    public static function mapTransportManagers($data)
+    {
+        $transportManagers = [];
+        foreach ($data['tmLicences'] as $tmLicence) {
+            $person = $tmLicence['transportManager']['homeCd']['person'];
+            $transportManagers[] = [
+                'name' => implode(' ', [$person['title']['description'], $person['forename'], $person['familyName']]),
+                'dob' => date(\DATE_FORMAT, strtotime($person['birthDate'])),
+            ];
+        }
+        usort(
+            $transportManagers,
+            function ($a, $b) {
+                return strcmp($a['name'], $b['name']);
+            }
+        );
+        return [
+            'transportManagers' => $transportManagers,
+            'totalTransportManagers' => count($transportManagers),
+            'displayTransportManagersCount' => RefData::CONTINUATIONS_DISPLAY_TM_COUNT
+        ];
+    }
+
+    /**
+     * Map operating centres section to view
+     *
+     * @param array                    $data       data
+     * @param TranslationHelperService $translator translator
+     *
+     * @return array
+     */
+    public static function mapTransportManagerSectionToView($data, $translator)
+    {
+        $header[] = [
+            ['value' => $translator->translate('continuations.tm-section.table.name'), 'header' => true],
+            ['value' => $translator->translate('continuations.tm-section.table.dob'), 'header' => true],
+        ];
+
+        $transportManagers = [];
+        foreach ($data['tmLicences'] as $tmLicence) {
+            $person = $tmLicence['transportManager']['homeCd']['person'];
+            $transportManagers[] = [
+                [
+                    'value' =>
+                        implode(' ', [$person['title']['description'], $person['forename'], $person['familyName']])
+                ],
+                ['value' => date(\DATE_FORMAT, strtotime($person['birthDate']))]
+            ];
+        }
+        usort(
+            $transportManagers,
+            function ($a, $b) {
+                return strcmp($a[0]['value'], $b[0]['value']);
+            }
+        );
+        return [
+            'transportManagers' => array_merge($header, $transportManagers),
+            'totalTransportManagersMessage' => $translator->translate('continuations.tm.section-header'),
         ];
     }
 }

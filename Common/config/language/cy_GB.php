@@ -1331,5 +1331,7 @@ return [
     'continuations.authorisation.label' => 'Awdurdodiad',
     'continuations.oc-section.table.auth_vehicles' => 'Cerbydau',
     'continuations.oc-section.table.auth_trailers' => 'Ôl-gerbydau',
+    'continuations.tm-section.table.name' => 'Enw',
+    'continuations.tm-section.table.dob' => 'Dyddiad geni',
     // Potentially unused translations
 ];

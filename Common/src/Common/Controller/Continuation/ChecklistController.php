@@ -155,6 +155,35 @@ class ChecklistController extends AbstractContinuationController
     }
 
     /**
+     * Transport managers section page
+     *
+     * @return ViewModel
+     */
+    public function transportManagersAction()
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $data = $this->getData(
+            $this->getContinuationDetailId()
+        );
+        $licenceData = $data['licence'];
+        $tmLicences = $licenceData['tmLicences'];
+        $mappedData = LicenceChecklistMapper::mapTransportManagerSectionToView(
+            $licenceData,
+            $translator
+        );
+        $view = new ViewModel(
+            [
+                'licNo' => $licenceData['licNo'],
+                'data' => $mappedData['transportManagers'],
+                'totalMessage' => $mappedData['totalTransportManagersMessage'],
+                'totalCount' => count($tmLicences)
+            ]
+        );
+
+        return $this->renderSection($view);
+    }
+
+    /**
      * Render section
      *
      * @param ViewModel $view view model

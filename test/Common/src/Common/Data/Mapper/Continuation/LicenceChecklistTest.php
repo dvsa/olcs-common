@@ -137,6 +137,36 @@ class LicenceChecklistTest extends MockeryTestCase
                         'noOfVehiclesRequired' => 3,
                         'noOfTrailersRequired' => 4,
                     ],
+                ],
+                'tmLicences' => [
+                    [
+                        'transportManager' => [
+                            'homeCd' => [
+                                'person' => [
+                                    'title' => [
+                                        'description' => 'Mr'
+                                    ],
+                                    'forename' => 'foo',
+                                    'familyName' => 'bar',
+                                    'birthDate' => '1980-01-01'
+                                ]
+                            ]
+                        ]
+                    ],
+                    [
+                        'transportManager' => [
+                            'homeCd' => [
+                                'person' => [
+                                    'title' => [
+                                        'description' => 'Mr'
+                                    ],
+                                    'forename' => 'cake',
+                                    'familyName' => 'baz',
+                                    'birthDate' => '1970-01-01'
+                                ]
+                            ]
+                        ]
+                    ],
                 ]
             ],
             'id' => 999,
@@ -213,6 +243,20 @@ class LicenceChecklistTest extends MockeryTestCase
                     'totalTrailers' => 6,
                     'isGoods' => true,
                     'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT
+                ],
+                'transportManagers' => [
+                    'transportManagers' => [
+                        [
+                            'name' => 'Mr cake baz',
+                            'dob' => '01/01/1970'
+                        ],
+                        [
+                            'name' => 'Mr foo bar',
+                            'dob' => '01/01/1980'
+                        ]
+                    ],
+                    'totalTransportManagers' => 2,
+                    'displayTransportManagersCount' => RefData::CONTINUATIONS_DISPLAY_TM_COUNT
                 ],
                 'continuationDetailId' => 999,
             ],
@@ -409,6 +453,72 @@ class LicenceChecklistTest extends MockeryTestCase
         $this->assertEquals(
             $out,
             LicenceChecklist::mapOperatingCentresSectionToView($in, $mockTranslator)
+        );
+    }
+
+    public function testMapTransportManagerSectionToView()
+    {
+        $in = [
+            'tmLicences' => [
+                [
+                    'transportManager' => [
+                        'homeCd' => [
+                            'person' => [
+                                'title' => [
+                                    'description' => 'Mr'
+                                ],
+                                'forename' => 'foo',
+                                'familyName' => 'bar',
+                                'birthDate' => '1980-01-01'
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'transportManager' => [
+                        'homeCd' => [
+                            'person' => [
+                                'title' => [
+                                    'description' => 'Mr'
+                                ],
+                                'forename' => 'baz',
+                                'familyName' => 'cake',
+                                'birthDate' => '1970-01-01'
+                            ],
+                        ],
+                    ],
+                ],
+            ]
+        ];
+        $out = [
+            'transportManagers' => [
+                [
+                    ['value' => 'continuations.tm-section.table.name_translated', 'header' => true],
+                    ['value' => 'continuations.tm-section.table.dob_translated', 'header' => true],
+                ],
+                [
+                    ['value' => 'Mr baz cake'],
+                    ['value' => '01/01/1970'],
+                ],
+                [
+                    ['value' => 'Mr foo bar'],
+                    ['value' => '01/01/1980'],
+                ]
+            ],
+            'totalTransportManagersMessage' => 'continuations.tm.section-header_translated',
+        ];
+        $mockTranslator = m::mock(TranslationHelperService::class)
+            ->shouldReceive('translate')
+            ->andReturnUsing(
+                function ($arg) {
+                    return $arg . '_translated';
+                }
+            )
+            ->getMock();
+
+        $this->assertEquals(
+            $out,
+            LicenceChecklist::mapTransportManagerSectionToView($in, $mockTranslator)
         );
     }
 }
