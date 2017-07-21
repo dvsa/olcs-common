@@ -161,7 +161,7 @@ class LicenceChecklistTest extends MockeryTestCase
                 'people',
                 'operatingCentres',
                 'transportManagers',
-                'vehicles',
+                'vehiclesPsv',
                 'safety',
             ]
         ];

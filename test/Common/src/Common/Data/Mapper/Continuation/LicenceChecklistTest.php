@@ -31,7 +31,8 @@ class LicenceChecklistTest extends MockeryTestCase
                     'description' => 'Bar'
                 ],
                 'licenceType' => [
-                    'description' => 'Cake'
+                    'description' => 'Cake',
+                    'id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ],
                 'organisation' => [
                     'type' => [
@@ -222,6 +223,7 @@ class LicenceChecklistTest extends MockeryTestCase
                     'establishmentAddress' => 'Flat 99, Bar house, London, SW1A 2AA',
                     'primaryNumber' => '123',
                     'secondaryNumber' => '456',
+                    'showEstablishmentAddress' => true,
                 ],
                 'operatingCentres' => [
                     'operatingCentres' => [

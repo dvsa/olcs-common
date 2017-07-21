@@ -123,6 +123,10 @@ class LicenceChecklist
                 }
             }
         }
+        $addresses['showEstablishmentAddress'] = in_array(
+            $licenceData['licenceType']['id'],
+            [RefData::LICENCE_TYPE_STANDARD_NATIONAL, RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL]
+        );
         return $addresses;
     }
 

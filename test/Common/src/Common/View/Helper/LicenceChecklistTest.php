@@ -297,6 +297,7 @@ class LicenceChecklistTest extends MockeryTestCase
                         'establishmentAddress' => 'establishment address',
                         'primaryNumber' => '123',
                         'secondaryNumber' => '456',
+                        'showEstablishmentAddress' => true,
                     ]
                 ],
                 [
@@ -329,6 +330,7 @@ class LicenceChecklistTest extends MockeryTestCase
                 [
                     'addresses' => [
                         'correspondenceAddress' => 'correspondence address',
+                        'showEstablishmentAddress' => true,
                     ]
                 ],
                 [
@@ -345,6 +347,24 @@ class LicenceChecklistTest extends MockeryTestCase
                             'header' => true
                         ],
                         ['value' => 'continuations.addresses.establishment-address.same_translated']
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_ADDRESSES,
+                [
+                    'addresses' => [
+                        'correspondenceAddress' => 'correspondence address',
+                        'showEstablishmentAddress' => false,
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.addresses.correspondence-address.table.name_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'correspondence address']
                     ],
                 ]
             ],
