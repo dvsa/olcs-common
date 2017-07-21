@@ -275,6 +275,7 @@ class RefData
     const CONTINUATIONS_DISPLAY_PERSON_COUNT = 10;
     const CONTINUATIONS_DISPLAY_VEHICLES_COUNT = 10;
     const CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT = 10;
+    const CONTINUATIONS_DISPLAY_TM_COUNT = 1;
 
     const LICENCE_CHECKLIST_TYPE_OF_LICENCE = 'type_of_licence';
     const LICENCE_CHECKLIST_BUSINESS_TYPE = 'business_type';
@@ -284,6 +285,7 @@ class RefData
     const LICENCE_CHECKLIST_VEHICLES = 'vehicles';
     const LICENCE_CHECKLIST_OPERATING_CENTRES = 'operating_centres';
     const LICENCE_CHECKLIST_OPERATING_CENTRES_AUTHORITY = 'operating_centres_authority';
+    const LICENCE_CHECKLIST_TRANSPORT_MANAGERS = 'transport_managers';
 
     const RESULT_LICENCE_CONTINUED = 'licence_continued';
 }

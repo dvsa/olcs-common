@@ -3183,5 +3183,10 @@ return [
     'continuations.oc-section.table.auth_trailers' => 'Trailers',
     'continuations.oc-section.table.total-oc' => 'Number of operating centres on this licence',
     'continuations.operating-centres.section-header' => 'Operating centres total:',
+    'continuations.transport-managers.button-label' => 'View transport managers',
+    'continuations.tm-section.table.total-tm' => 'Number of transport managers on this licence',
+    'continuations.tm-section.table.name' => 'Name',
+    'continuations.tm-section.table.dob' => 'Date of birth',
+    'continuations.tm.section-header' => 'Transport managers total:',
     // Potentially unused translations
 ];

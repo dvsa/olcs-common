@@ -64,6 +64,9 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             case RefData::LICENCE_CHECKLIST_OPERATING_CENTRES_AUTHORITY:
                 $preparedData = $this->prepareOperatingCentresAuthority($data['operatingCentres']);
                 break;
+            case RefData::LICENCE_CHECKLIST_TRANSPORT_MANAGERS:
+                $preparedData = $this->prepareTransportManagers($data['transportManagers']);
+                break;
         }
         return $preparedData;
     }
@@ -393,5 +396,44 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
         }
 
         return $ocData;
+    }
+
+    /**
+     * Prepare transport managers
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    private function prepareTransportManagers($data)
+    {
+        $transportManagers = $data['transportManagers'];
+        if (is_array($transportManagers) && count($transportManagers) <= $data['displayTransportManagersCount']) {
+            $header = [
+                [
+                    'value' => $this->translator->__invoke('continuations.tm-section.table.name'),
+                    'header' => true
+                ],
+                [
+                    'value' => $this->translator->__invoke('continuations.tm-section.table.dob'),
+                    'header' => true
+                ]
+            ];
+            $tmData[] = $header;
+            foreach ($transportManagers as $tm) {
+                $row = [
+                    ['value' => $tm['name']],
+                    ['value' => $tm['dob']]
+                ];
+                $tmData[] = $row;
+            }
+
+        } else {
+            $tmData[] = [
+                ['value' => $this->translator->__invoke('continuations.tm-section.table.total-tm'), 'header' => true],
+                ['value' => $data['totalTransportManagers']]
+            ];
+        }
+        return $tmData;
     }
 }
