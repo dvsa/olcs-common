@@ -19,7 +19,7 @@ class FileUploadHelperService extends AbstractHelperService
 {
     const FILE_UPLOAD_ERR_PREFIX = 'message.file-upload-error.';
     const FILE_UPLOAD_ERR_FILE_LENGTH_TOO_LONG = 'message.file-upload-error.lengthtoolong';
-    const FILE_NAME_MAX_LENGTH = 50;
+    const FILE_NAME_MAX_LENGTH = 250;
 
     /**
      * @var \Zend\Form\FormInterface

@@ -379,7 +379,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             ]
         ];
 
-        $fileName = 'onvtbzqimrzwxpulkxxsonvtbzqimrzwxpulkxxsonvtbzqimrzwxpulkxxsonvtbz.zip';
+        $fileName = str_repeat('abcde', 50) . '.zip';
 
         $fileData = [
             'my-file' => [
