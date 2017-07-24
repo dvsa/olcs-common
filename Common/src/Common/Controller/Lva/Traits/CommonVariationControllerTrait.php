@@ -64,12 +64,14 @@ trait CommonVariationControllerTrait
     }
 
     /**
-     * Alter Table
+     * Alter Table.  This overrides the AbstractFinancialHistoryController method.
+     * This is the reason why i placed the label update logic into a seperate method
+     * to avoid duplication of code.
      *
      * @param Form  $form Form
      * @param array $data Form Data
      *
-     * @return mixed
+     * @return Form
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
