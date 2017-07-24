@@ -54,7 +54,15 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             $data = $this->getFormData();
         }
 
-        $form = $this->getFinancialHistoryForm()->setData($data);
+        $formParameters = [
+            'lva' => $this->lva,
+            'niFlag' => $this->getNiFlag($data),
+        ];
+
+        /** @var \Common\Form\Form $form */
+        $form = $this->getFinancialHistoryForm($formParameters)
+            ->setData($data);
+
         $this->alterFormForLva($form, $data);
 
         $hasProcessedFiles = $this->processFiles(
@@ -80,50 +88,47 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     }
 
     /**
+     * Get NI Flag for Financial History form
+     *
+     * @param array $data Data from API or post data
+     *
+     * @return string
+     */
+    protected function getNiFlag(array $data)
+    {
+        if (!isset($data['data']['niFlag'])) {
+            return 'N';
+        }
+
+        return $data['data']['niFlag'];
+    }
+
+    /**
      * Alter form for LVA form
      *
      * @param Form  $form Form
-     * @param array $data Api/Form Data
+     * @param array $data Api Form Data
      *
      * @return Form
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
-        $this->updateInsolvencyConfirmationLabel($form, $data);
-        return $form;
-    }
-
-    /**
-     * If the licence is NI then update the label.  Used in current controller
-     * and CommonVariationControllerTrait.
-     *
-     * @param Form  $form Form
-     * @param array $data Api/Form Data
-     *
-     * @return Form
-     */
-    protected function updateInsolvencyConfirmationLabel(Form $form, $data = null)
-    {
-        if (isset($data['data']['niFlag']) && $data['data']['niFlag'] === 'Y') {
-            $form->get('data')
-                ->get('insolvencyConfirmation')
-                ->setLabel('application_previous-history_financial-history.insolvencyConfirmation.title.ni');
-        }
-
         return $form;
     }
 
     /**
      * Get Financial History Form
      *
+     * @param array $data Data for form
+     *
      * @return FormInterface
      */
-    protected function getFinancialHistoryForm()
+    protected function getFinancialHistoryForm(array $data = [])
     {
         return $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-financial_history')
-            ->getForm($this->getRequest());
+            ->getForm($this->getRequest(), $data);
     }
 
     /**

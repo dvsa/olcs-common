@@ -75,7 +75,6 @@ trait CommonVariationControllerTrait
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
-        $form = $this->updateInsolvencyConfirmationLabel($form, $data);
         return $this->getServiceLocator()->get('FormServiceManager')->get('lva-variation')->alterForm($form);
     }
 }
