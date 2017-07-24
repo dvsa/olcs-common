@@ -4,6 +4,11 @@ namespace Common\Service\Helper;
 
 use Common\Exception\ConfigurationException;
 use Common\Exception\File\InvalidMimeException;
+use Common\Service\Table\Type\Selector;
+use Zend\Form\ElementInterface;
+use Zend\Form\FormInterface;
+use Zend\Http\Request;
+use Zend\Stdlib\RequestInterface;
 
 /**
  * File Upload Helper Service
@@ -13,23 +18,47 @@ use Common\Exception\File\InvalidMimeException;
 class FileUploadHelperService extends AbstractHelperService
 {
     const FILE_UPLOAD_ERR_PREFIX = 'message.file-upload-error.';
+    const FILE_UPLOAD_ERR_FILE_LENGTH_TOO_LONG = 'message.file-upload-error.lengthtoolong';
+    const FILE_NAME_MAX_LENGTH = 250;
 
-    /** @var  \Zend\Form\FormInterface */
+    /**
+     * @var \Zend\Form\FormInterface
+     */
     private $form;
-    /** @var  string */
+
+    /**
+     * @var string
+     */
     private $selector;
 
+    /**
+     * @var string
+     */
     private $countSelector;
 
+    /**
+     * @var callable
+     */
     private $uploadCallback;
 
+    /**
+     * @var callable
+     */
     private $deleteCallback;
 
+    /**
+     * @var callable
+     */
     private $loadCallback;
 
-    /** @var  \Zend\Http\Request */
+    /**
+     * @var \Zend\Http\Request
+     */
     private $request;
 
+    /**
+     * @var ElementInterface
+     */
     private $element;
 
     /**
@@ -78,17 +107,34 @@ class FileUploadHelperService extends AbstractHelperService
         return $this;
     }
 
+    /**
+     * Get count selector
+     *
+     * @return string
+     */
     public function getCountSelector()
     {
         return $this->countSelector;
     }
 
+    /**
+     * Set Count selector
+     *
+     * @param string $selector Count Selector
+     *
+     * @return $this
+     */
     public function setCountSelector($selector)
     {
         $this->countSelector = $selector;
         return $this;
     }
 
+    /**
+     * Get upload callback
+     *
+     * @return callable
+     */
     public function getUploadCallback()
     {
         return $this->uploadCallback;
@@ -107,47 +153,96 @@ class FileUploadHelperService extends AbstractHelperService
         return $this;
     }
 
+    /**
+     * Get delete callback
+     *
+     * @return callable
+     */
     public function getDeleteCallback()
     {
         return $this->deleteCallback;
     }
 
+    /**
+     * Set delete callback
+     *
+     * @param callable $deleteCallback Delete callback
+     *
+     * @return $this
+     */
     public function setDeleteCallback($deleteCallback)
     {
         $this->deleteCallback = $deleteCallback;
         return $this;
     }
 
+    /**
+     * Get load callback
+     *
+     * @return callable
+     */
     public function getLoadCallback()
     {
         return $this->loadCallback;
     }
 
+    /**
+     * Load callback
+     *
+     * @param callable $loadCallback Load callback
+     *
+     * @return $this
+     */
     public function setLoadCallback($loadCallback)
     {
         $this->loadCallback = $loadCallback;
         return $this;
     }
 
+    /**
+     * Get request service
+     *
+     * @return \Zend\Http\Request
+     */
     public function getRequest()
     {
         return $this->request;
     }
 
+    /**
+     * Set request service
+     *
+     * @param RequestInterface $request Request service
+     *
+     * @return $this
+     */
     public function setRequest($request)
     {
         $this->request = $request;
         return $this;
     }
 
+    /**
+     * Get element
+     *
+     * @return ElementInterface
+     */
     public function getElement()
     {
         if ($this->element === null) {
             $this->element = $this->findElement($this->getForm(), $this->getSelector());
         }
+
         return $this->element;
     }
 
+    /**
+     * Set element
+     *
+     * @param ElementInterface $element Element
+     *
+     * @return $this
+     */
     public function setElement($element)
     {
         $this->element = $element;
@@ -205,6 +300,13 @@ class FileUploadHelperService extends AbstractHelperService
         $this->updateCount(count($files));
     }
 
+    /**
+     * Update count
+     *
+     * @param int $count new count
+     *
+     * @return void
+     */
     protected function updateCount($count)
     {
         $selector = $this->getCountSelector();
@@ -214,6 +316,11 @@ class FileUploadHelperService extends AbstractHelperService
         }
     }
 
+    /**
+     * Remove 1 from count
+     *
+     * @return void
+     */
     protected function decrementCount()
     {
         $selector = $this->getCountSelector();
@@ -288,6 +395,17 @@ class FileUploadHelperService extends AbstractHelperService
             return false;
         }
 
+        $fileName = $fileData['file-controls']['file']['name'];
+        if (strlen($fileName) > self::FILE_NAME_MAX_LENGTH) {
+            $this->getForm()->setMessages(
+                $this->formatErrorMessageForForm(
+                    self::FILE_UPLOAD_ERR_FILE_LENGTH_TOO_LONG
+                )
+            );
+
+            return false;
+        }
+
         $fileTmpName = $fileData['file-controls']['file']['tmp_name'];
         // eg onAccess anti-virus removed it
         if (!file_exists($fileTmpName)) {
@@ -303,6 +421,7 @@ class FileUploadHelperService extends AbstractHelperService
 
             return false;
         }
+
         try {
             call_user_func(
                 $callback,
@@ -371,7 +490,8 @@ class FileUploadHelperService extends AbstractHelperService
     /**
      * Build the error array for the form
      *
-     * @param string $message
+     * @param string $message Message for error
+     *
      * @return array
      */
     private function formatErrorMessageForForm($message)
@@ -396,8 +516,9 @@ class FileUploadHelperService extends AbstractHelperService
     /**
      * Find the selector index of the given data
      *
-     * @param array $data
-     * @param string $selector
+     * @param array  $data     array of given data
+     * @param string $selector selector
+     *
      * @return array
      */
     private function findSelectorData($data, $selector)
@@ -422,8 +543,9 @@ class FileUploadHelperService extends AbstractHelperService
     /**
      * Find the element by the selector
      *
-     * @param \Zend\Form\ElementInterface $form
-     * @param string $selector
+     * @param FormInterface $form     Form
+     * @param string        $selector Selector
+     *
      * @return \Zend\Form\ElementInterface
      */
     private function findElement($form, $selector)
@@ -436,11 +558,21 @@ class FileUploadHelperService extends AbstractHelperService
         return $form->get($selector);
     }
 
+    /**
+     * Invalid mime
+     *
+     * @return void
+     */
     private function invalidMime()
     {
         $this->getForm()->setMessages($this->formatErrorMessageForForm('ERR_MIME'));
     }
 
+    /**
+     * Failed upload
+     *
+     * @return void
+     */
     private function failedUpload()
     {
         $this->getForm()->setMessages($this->formatErrorMessageForForm(self::FILE_UPLOAD_ERR_PREFIX . 'any'));
