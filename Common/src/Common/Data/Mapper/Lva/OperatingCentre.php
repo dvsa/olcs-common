@@ -104,6 +104,11 @@ class OperatingCentre implements MapperInterface
             $uploadLater = RefData::AD_UPLOAD_LATER;
         }
 
+        // If adding a new operating centre then $data could be an empty array
+        if (!isset($data['advertisements']) || !is_array($data['advertisements'])) {
+            $data['advertisements'] = [];
+        }
+
         $data['advertisements'] = array_merge(
             $data['advertisements'],
             [
