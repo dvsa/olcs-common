@@ -186,6 +186,10 @@ class FinancialEvidenceTest extends PHPUnit_Framework_TestCase
                     ]
                 ]
             ],
+            [
+                [],
+                []
+            ]
         ];
     }
 
