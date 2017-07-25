@@ -61,7 +61,7 @@ return [
     'application.overview.application-no' => 'Rhif y cais',
     'application.overview.title' => 'Trosolwg y cais',
     'application.apply-for-new-licence.title' => 'Gwneud cais am drwydded newydd',
-    'application.payment-submission.amount.value' => '<div>Cyfanswm ffi(oedd) <h2>£%s</h2></div>',
+    'application.payment-submission.amount.value' => '<p>Cyfanswm ffi(oedd): £%s</p>',
     'application.progress' => '%s o %s o adrannau\'n gyflawn',
     'application.review-declarations.confirm-short-label' => 'Datganiadau',
     'application.review-declarations.confirm-text' => 'Rwyf yn deall na ellir ystyried fy nghais tan fy mod wedi dychwelyd fy ffurflen gais wedi\'i llofnodi',
