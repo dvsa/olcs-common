@@ -184,6 +184,35 @@ class ChecklistController extends AbstractContinuationController
     }
 
     /**
+     * Safety inspectors section page
+     *
+     * @return ViewModel
+     */
+    public function safetyInspectorsAction()
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $data = $this->getData(
+            $this->getContinuationDetailId()
+        );
+        $licenceData = $data['licence'];
+        $mappedData = LicenceChecklistMapper::mapSafetyInspectorsSectionToView(
+            $licenceData,
+            $translator
+        );
+        $workshops = $licenceData['workshops'];
+        $view = new ViewModel(
+            [
+                'licNo' => $licenceData['licNo'],
+                'data' => $mappedData['safetyInspectors'],
+                'totalMessage' => $mappedData['totalSafetyInspectorsMessage'],
+                'totalCount' => count($workshops)
+            ]
+        );
+
+        return $this->renderSection($view);
+    }
+
+    /**
      * Render section
      *
      * @param ViewModel $view view model

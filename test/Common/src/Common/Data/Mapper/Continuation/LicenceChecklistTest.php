@@ -15,6 +15,19 @@ use Common\RefData;
  */
 class LicenceChecklistTest extends MockeryTestCase
 {
+    protected $mockTranslator;
+
+    public function setUp()
+    {
+        $this->mockTranslator = m::mock(TranslationHelperService::class)
+            ->shouldReceive('translate')
+            ->andReturnUsing(
+                function ($arg) {
+                    return $arg . '_translated';
+                }
+            )
+            ->getMock();
+    }
     /**
      * @dataProvider operatingFromProvider
      */
@@ -167,7 +180,36 @@ class LicenceChecklistTest extends MockeryTestCase
                             ]
                         ]
                     ],
-                ]
+                ],
+                'workshops' => [
+                    [
+                        'contactDetails' => [
+                            'fao' => 'Foo Bar',
+                            'address' => [
+                                'addressLine1' => 'Line2',
+                                'town' => 'Town2'
+                            ]
+                        ],
+                        'isExternal' => 'N'
+                    ],
+                    [
+                        'contactDetails' => [
+                            'fao' => 'Baz Cake',
+                            'address' => [
+                                'addressLine1' => 'Line1',
+                                'town' => 'Town1'
+                            ]
+                        ],
+                        'isExternal' => 'Y'
+                    ],
+                ],
+                'safetyInsVehicles' => 2,
+                'safetyInsTrailers' => 2,
+                'safetyInsVaries' => 'N',
+                'tachographIns' => [
+                    'id' => 'tach_external'
+                ],
+                'tachographInsName' => 'Foo Ltd',
             ],
             'id' => 999,
         ];
@@ -258,20 +300,32 @@ class LicenceChecklistTest extends MockeryTestCase
                     'totalTransportManagers' => 2,
                     'displayTransportManagersCount' => RefData::CONTINUATIONS_DISPLAY_TM_COUNT
                 ],
+                'safety' => [
+                    'safetyInspectors' => [
+                        [
+                            'name' => 'Baz Cake (continuations.safety-section.table.external-contractor_translated)',
+                            'address' => 'Line1, Town1'
+                        ],
+                        [
+                            'name' => 'Foo Bar (continuations.safety-section.table.owner-or-employee_translated)',
+                            'address' => 'Line2, Town2'
+                        ]
+                    ],
+                    'totalSafetyInspectors' => 2,
+                    'safetyInsVehicles' => '2 continuations.safety-section.table.weeks_translated',
+                    'safetyInsTrailers' => '2 continuations.safety-section.table.weeks_translated',
+                    'safetyInsVaries' => 'No_translated',
+                    'tachographIns' => 'continuations.safety-section.table.tach_external_translated',
+                    'tachographInsName' => 'Foo Ltd',
+                    'isGoods' => true,
+                    'showCompany' => true,
+                    'displaySafetyInspectorsCount' => RefData::CONTINUATIONS_DISPLAY_SAFETY_INSPECTORS_COUNT
+                ],
                 'continuationDetailId' => 999,
             ],
-
         ];
-        $mockTranslator = m::mock(TranslationHelperService::class)
-            ->shouldReceive('translate')
-            ->andReturnUsing(
-                function ($arg) {
-                    return $arg . '_translated';
-                }
-            )
-            ->getMock();
 
-        $this->assertEquals($out, LicenceChecklist::mapFromResultToView($in, $mockTranslator));
+        $this->assertEquals($out, LicenceChecklist::mapFromResultToView($in, $this->mockTranslator));
     }
 
     public function operatingFromProvider()
@@ -324,18 +378,10 @@ class LicenceChecklistTest extends MockeryTestCase
             'totalPeopleMessage' =>
                 'continuations.people.section-header.' . RefData::ORG_TYPE_REGISTERED_COMPANY . '_translated'
         ];
-        $mockTranslator = m::mock(TranslationHelperService::class)
-            ->shouldReceive('translate')
-            ->andReturnUsing(
-                function ($arg) {
-                    return $arg . '_translated';
-                }
-            )
-            ->getMock();
 
         $this->assertEquals(
             $out,
-            LicenceChecklist::mapPeopleSectionToView($in, RefData::ORG_TYPE_REGISTERED_COMPANY, $mockTranslator)
+            LicenceChecklist::mapPeopleSectionToView($in, RefData::ORG_TYPE_REGISTERED_COMPANY, $this->mockTranslator)
         );
     }
 
@@ -377,19 +423,8 @@ class LicenceChecklistTest extends MockeryTestCase
             ],
             'totalVehiclesMessage' => 'continuations.vehicles.section-header_translated',
         ];
-        $mockTranslator = m::mock(TranslationHelperService::class)
-            ->shouldReceive('translate')
-            ->andReturnUsing(
-                function ($arg) {
-                    return $arg . '_translated';
-                }
-            )
-            ->getMock();
 
-        $this->assertEquals(
-            $out,
-            LicenceChecklist::mapVehiclesSectionToView($in, $mockTranslator)
-        );
+        $this->assertEquals($out, LicenceChecklist::mapVehiclesSectionToView($in, $this->mockTranslator));
     }
 
     public function testMapOperatingCentresSectionToView()
@@ -441,19 +476,8 @@ class LicenceChecklistTest extends MockeryTestCase
             ],
             'totalOperatingCentresMessage' => 'continuations.operating-centres.section-header_translated',
         ];
-        $mockTranslator = m::mock(TranslationHelperService::class)
-            ->shouldReceive('translate')
-            ->andReturnUsing(
-                function ($arg) {
-                    return $arg . '_translated';
-                }
-            )
-            ->getMock();
 
-        $this->assertEquals(
-            $out,
-            LicenceChecklist::mapOperatingCentresSectionToView($in, $mockTranslator)
-        );
+        $this->assertEquals($out, LicenceChecklist::mapOperatingCentresSectionToView($in, $this->mockTranslator));
     }
 
     public function testMapTransportManagerSectionToView()
@@ -507,18 +531,54 @@ class LicenceChecklistTest extends MockeryTestCase
             ],
             'totalTransportManagersMessage' => 'continuations.tm.section-header_translated',
         ];
-        $mockTranslator = m::mock(TranslationHelperService::class)
-            ->shouldReceive('translate')
-            ->andReturnUsing(
-                function ($arg) {
-                    return $arg . '_translated';
-                }
-            )
-            ->getMock();
 
-        $this->assertEquals(
-            $out,
-            LicenceChecklist::mapTransportManagerSectionToView($in, $mockTranslator)
-        );
+        $this->assertEquals($out, LicenceChecklist::mapTransportManagerSectionToView($in, $this->mockTranslator));
+    }
+
+    public function testMapSafetyInspectorsSectionToView()
+    {
+        $in = [
+            'workshops' => [
+                [
+                    'contactDetails' => [
+                        'address' => [
+                            'addressLine1' => 'Line 2',
+                            'town' => 'Town 2'
+                        ],
+                        'fao' => 'Foo Bar'
+                    ],
+                    'isExternal' => 'Y'
+                ],
+                [
+                    'contactDetails' => [
+                        'address' => [
+                            'addressLine1' => 'Line 1',
+                            'town' => 'Town 1'
+                        ],
+                        'fao' => 'Baz Cake'
+                    ],
+                    'isExternal' => 'N'
+                ],
+            ]
+        ];
+        $out = [
+            'safetyInspectors' => [
+                [
+                    ['value' => 'continuations.safety-section.table.inspector_translated', 'header' => true],
+                    ['value' => 'continuations.safety-section.table.address_translated', 'header' => true],
+                ],
+                [
+                    ['value' => 'Baz Cake (continuations.safety-section.table.owner-or-employee_translated)'],
+                    ['value' => 'Line 1, Town 1'],
+                ],
+                [
+                    ['value' => 'Foo Bar (continuations.safety-section.table.external-contractor_translated)'],
+                    ['value' => 'Line 2, Town 2'],
+                ]
+            ],
+            'totalSafetyInspectorsMessage' => 'continuations.safety.section-header_translated',
+        ];
+
+        $this->assertEquals($out, LicenceChecklist::mapSafetyInspectorsSectionToView($in, $this->mockTranslator));
     }
 }

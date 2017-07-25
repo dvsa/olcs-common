@@ -43,6 +43,7 @@ class LicenceChecklist
                 'vehicles' => self::mapVehicles($licenceData, $translator),
                 'operatingCentres' => self::mapOperatingCentres($licenceData),
                 'transportManagers' => self::mapTransportManagers($licenceData),
+                'safety' => self::mapSafetyDetails($licenceData, $translator),
                 'continuationDetailId' => $data['id']
             ]
         ];
@@ -424,7 +425,7 @@ class LicenceChecklist
     }
 
     /**
-     * Map operating centres section to view
+     * Map transport manager section to view
      *
      * @param array                    $data       data
      * @param TranslationHelperService $translator translator
@@ -458,6 +459,113 @@ class LicenceChecklist
         return [
             'transportManagers' => array_merge($header, $transportManagers),
             'totalTransportManagersMessage' => $translator->translate('continuations.tm.section-header'),
+        ];
+    }
+
+    /**
+     * Map safety details
+     *
+     * @param array                    $data       data
+     * @param TranslationHelperService $translator translator
+     *
+     * @return array
+     */
+    private static function mapSafetyDetails($data, $translator)
+    {
+        $safetyInspectors = [];
+        foreach ($data['workshops'] as $workshop) {
+            $contactDetails = $workshop['contactDetails'];
+            $address = $contactDetails['address'];
+
+            $safetyInspectors[] = [
+                'name' => $contactDetails['fao']
+                    . ' ('
+                    . (($workshop['isExternal'] === 'Y')
+                            ? $translator->translate('continuations.safety-section.table.external-contractor')
+                            : $translator->translate('continuations.safety-section.table.owner-or-employee'))
+                    . ')',
+                'address' => implode(', ', [$address['addressLine1'], $address['town']])
+            ];
+
+        }
+        usort(
+            $safetyInspectors,
+            function ($a, $b) {
+                return strcmp($a['name'], $b['name']);
+            }
+        );
+        return [
+            'safetyInspectors' => $safetyInspectors,
+            'totalSafetyInspectors' => count($safetyInspectors),
+            'safetyInsVehicles' => $data['safetyInsVehicles']
+                . ' '
+                . (
+                    ((int) $data['safetyInsVehicles'] === 1)
+                    ? $translator->translate('continuations.safety-section.table.week')
+                    : $translator->translate('continuations.safety-section.table.weeks')
+                ),
+            'safetyInsTrailers' => $data['safetyInsTrailers']
+                . ' '
+                . (
+                    ((int) $data['safetyInsTrailers'] === 1)
+                    ? $translator->translate('continuations.safety-section.table.week')
+                    : $translator->translate('continuations.safety-section.table.weeks')
+                ),
+            'safetyInsVaries' => ($data['safetyInsVaries'] === 'Y')
+                ? $translator->translate('Yes')
+                : $translator->translate('No'),
+            'tachographIns'=> isset($data['tachographIns']['id'])
+                ? $translator->translate('continuations.safety-section.table.' . $data['tachographIns']['id'])
+                : null,
+            'tachographInsName' => $data['tachographInsName'],
+            'isGoods' => $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'showCompany' =>
+                isset($data['tachographIns']['id'])
+                && $data['tachographIns']['id'] === RefData::LICENCE_SAFETY_INSPECTOR_EXTERNAL,
+            'displaySafetyInspectorsCount' => RefData::CONTINUATIONS_DISPLAY_SAFETY_INSPECTORS_COUNT
+        ];
+    }
+
+    /**
+     * Map safety inspectors section to view
+     *
+     * @param array                    $data       data
+     * @param TranslationHelperService $translator translator
+     *
+     * @return array
+     */
+    public static function mapSafetyInspectorsSectionToView($data, $translator)
+    {
+        $header[] = [
+            ['value' => $translator->translate('continuations.safety-section.table.inspector'), 'header' => true],
+            ['value' => $translator->translate('continuations.safety-section.table.address'), 'header' => true],
+        ];
+
+        $safetyInspectors = [];
+        foreach ($data['workshops'] as $workshop) {
+            $contactDetails = $workshop['contactDetails'];
+            $address = $contactDetails['address'];
+            $safetyInspectors[] = [
+                [
+                    'value' => $contactDetails['fao']
+                        . ' ('
+                        . (($workshop['isExternal'] === 'Y')
+                            ? $translator->translate('continuations.safety-section.table.external-contractor')
+                            : $translator->translate('continuations.safety-section.table.owner-or-employee'))
+                        . ')',
+                ],
+                ['value' => implode(', ', [$address['addressLine1'], $address['town']])]
+            ];
+        }
+        usort(
+            $safetyInspectors,
+            function ($a, $b) {
+                return strcmp($a[0]['value'], $b[0]['value']);
+            }
+        );
+        return [
+            'safetyInspectors' => array_merge($header, $safetyInspectors),
+            'totalSafetyInspectorsMessage' => $translator->translate('continuations.safety.section-header'),
         ];
     }
 }

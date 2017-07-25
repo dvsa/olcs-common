@@ -189,7 +189,7 @@ class LicenceChecklist
      * @Form\Options({
      *     "label":"continuations.safety-checkbox.label",
      *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
-     *     "content":"partials/continuation/stub",
+     *     "content":"partials/continuation/licence-checklist-safety",
      *     "checked_value":"Y",
      *     "unchecked_value":"N",
      *     "must_be_value": "Y",
