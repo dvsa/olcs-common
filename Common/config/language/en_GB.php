@@ -3195,5 +3195,7 @@ return [
     'continuations.start-page.it-can-take-time' => 'It can take time for your changes to be updated onto our system.',
     'continuations.start-page.you-can-submit' => 'You can still submit your application as being up to date whilst those changes are pending.',
     'continuations.start-page.review-licence-label' => 'Review licence',
+    'licence.status.expired' => 'Expired',
+    'licence.status.expiring' => 'Expiring',
     // Potentially unused translations
 ];

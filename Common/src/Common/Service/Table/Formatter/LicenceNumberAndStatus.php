@@ -20,9 +20,10 @@ class LicenceNumberAndStatus implements FormatterInterface
     /**
      * Format a licence number and status
      *
-     * @param array $row
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $serviceLocator
+     * @param array                               $row            Row data
+     * @param array                               $column         Column data
+     * @param \Zend\ServiceManager\ServiceManager $serviceLocator Service locator
+     *
      * @return string
      * @inheritdoc
      */
@@ -56,6 +57,17 @@ class LicenceNumberAndStatus implements FormatterInterface
                 break;
         }
         $urlHelper = $serviceLocator->get('Helper\Url');
+
+        $translator = $serviceLocator->get('translator');
+        if (isset($row['isExpired']) && $row['isExpired'] === true) {
+            $row['status']['description'] = $translator->translate('licence.status.expired');
+            $statusClass = 'status red';
+        }
+
+        if (isset($row['isExpiring']) && $row['isExpiring'] === true) {
+            $row['status']['description'] = $translator->translate('licence.status.expiring');
+            $statusClass = 'status red';
+        }
 
         return vsprintf(
             '<b><a href="%s">%s</a></b> <span class="%s">%s</span>',
