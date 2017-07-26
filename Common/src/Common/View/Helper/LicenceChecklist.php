@@ -511,6 +511,7 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                 ]
             ]
         ];
+
         if ($data['isGoods']) {
             $safetyData[] = [
                 [
@@ -524,6 +525,7 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                 ]
             ];
         }
+
         $safetyData[] = [
             [
                 'value' => $this->translator->__invoke('continuations.safety-section.table.varies'),
@@ -535,6 +537,7 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                     : $this->translator->__invoke('continuations.safety-section.table.not-known'),
             ]
         ];
+
         $safetyData[] = [
             [
                 'value' => $this->translator->__invoke('continuations.safety-section.table.tachographs'),
@@ -546,6 +549,7 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
                     : $this->translator->__invoke('continuations.safety-section.table.not-known'),
             ]
         ];
+
         if ($data['showCompany']) {
             $safetyData[] = [
                 [
