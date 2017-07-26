@@ -21,12 +21,12 @@ class PaymentSubmission
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $description = null;
+    public $amount = null;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $amount = null;
+    public $description = null;
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
