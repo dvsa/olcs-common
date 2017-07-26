@@ -67,6 +67,12 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             case RefData::LICENCE_CHECKLIST_TRANSPORT_MANAGERS:
                 $preparedData = $this->prepareTransportManagers($data['transportManagers']);
                 break;
+            case RefData::LICENCE_CHECKLIST_SAFETY_INSPECTORS:
+                $preparedData = $this->prepareSafetyInspectors($data['safety']);
+                break;
+            case RefData::LICENCE_CHECKLIST_SAFETY_DETAILS:
+                $preparedData = $this->prepareSafetyDetails($data['safety']);
+                break;
         }
         return $preparedData;
     }
@@ -194,7 +200,7 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             ]
         ];
         if ($data['showEstablishmentAddress']) {
-            if (isset($data['establishmentAddress'])) {
+            if (isset($data['establishmentAddress'] )&& !empty($data['establishmentAddress'])) {
                 $addressesData[] = [
                     [
                         'value' =>
@@ -439,5 +445,125 @@ class LicenceChecklist extends AbstractHelper implements FactoryInterface
             ];
         }
         return $tmData;
+    }
+
+    /**
+     * Prepare safety inspectors
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    private function prepareSafetyInspectors($data)
+    {
+        $safetyInspectors = $data['safetyInspectors'];
+        if (is_array($safetyInspectors) && count($safetyInspectors) <= $data['displaySafetyInspectorsCount']) {
+            $header = [
+                [
+                    'value' => $this->translator->__invoke('continuations.safety-section.table.inspector'),
+                    'header' => true
+                ],
+                [
+                    'value' => $this->translator->__invoke('continuations.safety-section.table.address'),
+                    'header' => true
+                ]
+            ];
+            $siData[] = $header;
+            foreach ($safetyInspectors as $safetyInspector) {
+                $row = [
+                    ['value' => $safetyInspector['name']],
+                    ['value' => $safetyInspector['address']]
+                ];
+                $siData[] = $row;
+            }
+
+        } else {
+            $siData[] = [
+                [
+                    'value' => $this->translator->__invoke('continuations.safety-section.table.total-inspectors'),
+                    'header' => true
+                ],
+                ['value' => $data['totalSafetyInspectors']]
+            ];
+        }
+        return $siData;
+    }
+
+    /**
+     * Prepare safety details
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
+    private function prepareSafetyDetails($data)
+    {
+        $safetyData = [
+            [
+                [
+                    'value' => $this->translator->__invoke('continuations.safety-section.table.max-time-vehicles'),
+                    'header' => true
+                ],
+                [
+                    'value' => isset($data['safetyInsVehicles'])
+                        ? $data['safetyInsVehicles']
+                        : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+                ]
+            ]
+        ];
+
+        if ($data['isGoods']) {
+            $safetyData[] = [
+                [
+                    'value' => $this->translator->__invoke('continuations.safety-section.table.max-time-trailers'),
+                    'header' => true
+                ],
+                [
+                    'value' => isset($data['safetyInsTrailers'])
+                        ? $data['safetyInsTrailers']
+                        : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+                ]
+            ];
+        }
+
+        $safetyData[] = [
+            [
+                'value' => $this->translator->__invoke('continuations.safety-section.table.varies'),
+                'header' => true
+            ],
+            [
+                'value' => isset($data['safetyInsVaries'])
+                    ? $data['safetyInsVaries']
+                    : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+            ]
+        ];
+
+        $safetyData[] = [
+            [
+                'value' => $this->translator->__invoke('continuations.safety-section.table.tachographs'),
+                'header' => true
+            ],
+            [
+                'value' => isset($data['tachographIns'])
+                    ? $data['tachographIns']
+                    : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+            ]
+        ];
+
+        if ($data['showCompany']) {
+            $safetyData[] = [
+                [
+                    'value' => $this->translator->__invoke('continuations.safety-section.table.tachographInsName'),
+                    'header' => true
+                ],
+                [
+                    'value' => !empty($data['tachographInsName'])
+                        ? $data['tachographInsName']
+                        : $this->translator->__invoke('continuations.safety-section.table.not-known'),
+                ]
+            ];
+        }
+
+        return $safetyData;
     }
 }

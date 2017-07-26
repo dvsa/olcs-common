@@ -5,7 +5,7 @@
                 echo '<tr>';
                 foreach ($line as $cell) {
                     $class = '';
-                    if ($cell === $line[count($line) - 1]) {
+                    if (($cell === $line[count($line) - 1]) && count($line) !== 1) {
                         $class = 'class="td--right-aligned"';
                     }
                     if (isset($cell['header']) && $cell['header']) {

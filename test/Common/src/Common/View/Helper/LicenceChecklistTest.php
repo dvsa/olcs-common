@@ -526,6 +526,115 @@ class LicenceChecklistTest extends MockeryTestCase
                     ],
                 ]
             ],
+            [
+                RefData::LICENCE_CHECKLIST_SAFETY_INSPECTORS,
+                [
+                    'safety' => [
+                        'safetyInspectors' => [
+                            [
+                                'name' => 'Baz Cake',
+                                'address' => 'Line 1, Town 1',
+                            ],
+                            [
+                                'name' => 'Foo Bar',
+                                'address' => 'Line 2, Town 2',
+                            ],
+                        ],
+                        'displaySafetyInspectorsCount' => 2,
+                        'totalSafetyInspectors' => 2
+                    ]
+                ],
+                [
+                    [
+                        ['value' => 'continuations.safety-section.table.inspector_translated', 'header' => true],
+                        ['value' => 'continuations.safety-section.table.address_translated', 'header' => true],
+                    ],
+                    [
+                        ['value' => 'Baz Cake'],
+                        ['value' => 'Line 1, Town 1'],
+                    ],
+                    [
+                        ['value' => 'Foo Bar'],
+                        ['value' => 'Line 2, Town 2'],
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_SAFETY_INSPECTORS,
+                [
+                    'safety' => [
+                        'safetyInspectors' => [
+                            [
+                                'name' => 'Baz Cake',
+                                'address' => 'Line 1, Town 1',
+                            ],
+                            [
+                                'name' => 'Foo Bar',
+                                'address' => 'Line 2, Town 2',
+                            ],
+                        ],
+                        'displaySafetyInspectorsCount' => 1,
+                        'totalSafetyInspectors' => 2
+                    ]
+                ],
+                [
+                    [
+                        ['value' => 'continuations.safety-section.table.total-inspectors_translated', 'header' => true],
+                        ['value' => 2],
+                    ],
+                ]
+            ],
+            [
+                RefData::LICENCE_CHECKLIST_SAFETY_DETAILS,
+                [
+                    'safety' => [
+                        'safetyInsVehicles' => 2,
+                        'safetyInsTrailers' => 2,
+                        'safetyInsVaries' => 'Yes',
+                        'tachographIns' => 'External',
+                        'showCompany' => true,
+                        'tachographInsName' => 'ABC Ltd',
+                        'isGoods' => true,
+                    ]
+                ],
+                [
+                    [
+                        [
+                            'value' => 'continuations.safety-section.table.max-time-vehicles_translated',
+                            'header' => true
+                        ],
+                        ['value' => 2],
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.safety-section.table.max-time-trailers_translated',
+                            'header' => true
+                        ],
+                        ['value' => 2],
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.safety-section.table.varies_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'Yes'],
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.safety-section.table.tachographs_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'External'],
+                    ],
+                    [
+                        [
+                            'value' => 'continuations.safety-section.table.tachographInsName_translated',
+                            'header' => true
+                        ],
+                        ['value' => 'ABC Ltd'],
+                    ],
+                ]
+            ],
         ];
     }
 }

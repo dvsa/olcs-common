@@ -1333,5 +1333,9 @@ return [
     'continuations.oc-section.table.auth_trailers' => 'Ôl-gerbydau',
     'continuations.tm-section.table.name' => 'Enw',
     'continuations.tm-section.table.dob' => 'Dyddiad geni',
+    'continuations.safety-section.table.address' => 'Cyfeiriad y gweithdy',
+    'continuations.safety-section.table.week' => 'wythnos',
+    'continuations.safety-section.table.weeks' => 'Wythnosau',
+    'continuations.safety-section.table.tach_na' => 'Ddim yn gymwys',
     // Potentially unused translations
 ];

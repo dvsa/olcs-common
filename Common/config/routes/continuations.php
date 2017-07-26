@@ -68,6 +68,16 @@ return [
                         ],
                         'may_terminate' => true,
                     ],
+                    'safety-inspectors' => [
+                        'type' => Http\Segment::class,
+                        'options' => [
+                            'route' => '/safety-inspectors[/]',
+                            'defaults' => [
+                                'action' => 'safety-inspectors',
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ],
                 ],
             ],
             'finances' => [
