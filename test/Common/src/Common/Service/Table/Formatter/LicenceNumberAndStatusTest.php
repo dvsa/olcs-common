@@ -31,9 +31,16 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
     {
 
         $mockUrl = m::mock();
+        $mockTranslator = m::mock();
+        $mockTranslator->shouldReceive('translate')->andReturnUsing(
+            function ($message) {
+                return 'TRANSLATED_'. $message;
+            }
+        );
 
         $sm = Bootstrap::getServiceManager();
         $sm->setService('Helper\Url', $mockUrl);
+        $sm->setService('translator', $mockTranslator);
 
         $mockUrl->shouldReceive('fromRoute')
             ->with('lva-licence', ['licence' => 2])
@@ -203,6 +210,32 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                     'id' => 2
                 ],
                 '<b><a href="lva-licence/2">OB123</a></b> <span class="status grey">Unknown</span>'
+            ],
+            'Expired' => [
+                [
+                    'status' => [
+                        'id' => 'unknown',
+                        'description' => 'Unknown'
+                    ],
+                    'licNo' => 'OB123',
+                    'id' => 2,
+                    'isExpired' => true,
+                ],
+                '<b><a href="lva-licence/2">OB123</a></b> '.
+                    '<span class="status red">TRANSLATED_licence.status.expired</span>'
+            ],
+            'Expiring' => [
+                [
+                    'status' => [
+                        'id' => 'unknown',
+                        'description' => 'Unknown'
+                    ],
+                    'licNo' => 'OB123',
+                    'id' => 2,
+                    'isExpiring' => true,
+                ],
+                '<b><a href="lva-licence/2">OB123</a></b> '.
+                    '<span class="status red">TRANSLATED_licence.status.expiring</span>'
             ],
         ];
     }
