@@ -41,7 +41,7 @@ class LicenceChecklist
                 'addresses' => self::mapAddresses($licenceData),
                 'people' => self::mapPeople($licenceData, $translator),
                 'vehicles' => self::mapVehicles($licenceData, $translator),
-                'operatingCentres' => self::mapOperatingCentres($licenceData),
+                'operatingCentres' => self::mapOperatingCentres($data),
                 'transportManagers' => self::mapTransportManagers($licenceData),
                 'safety' => self::mapSafetyDetails($licenceData, $translator),
                 'continuationDetailId' => $data['id']
@@ -313,12 +313,13 @@ class LicenceChecklist
     /**
      * Map operating centres
      *
-     * @param array $data data
+     * @param array $fullData data
      *
      * @return array
      */
-    private static function mapOperatingCentres($data)
+    private static function mapOperatingCentres($fullData)
     {
+        $data = $fullData['licence'];
         $operatingCentres = [];
         $totalVehicles = 0;
         $totalTrailers = 0;
@@ -344,7 +345,8 @@ class LicenceChecklist
             'totalVehicles' => $totalVehicles,
             'totalTrailers' => $totalTrailers,
             'isGoods' => $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
-            'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT
+            'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT,
+            'ocChanges' => $fullData['ocChanges'],
         ];
     }
 
