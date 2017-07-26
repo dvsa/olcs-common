@@ -407,13 +407,15 @@ class LicenceChecklist
         foreach ($data['tmLicences'] as $tmLicence) {
             $person = $tmLicence['transportManager']['homeCd']['person'];
             $transportManagers[] = [
-                'name' => implode(
-                    ' ',
-                    [
-                        isset($person['title']['description']) ? $person['title']['description'] : '',
-                        $person['forename'],
-                        $person['familyName']
-                    ]
+                'name' => trim(
+                    implode(
+                        ' ',
+                        [
+                            isset($person['title']['description']) ? $person['title']['description'] : '',
+                            $person['forename'],
+                            $person['familyName']
+                        ]
+                    )
                 ),
                 'dob' => date(\DATE_FORMAT, strtotime($person['birthDate'])),
             ];
@@ -451,13 +453,15 @@ class LicenceChecklist
             $person = $tmLicence['transportManager']['homeCd']['person'];
             $transportManagers[] = [
                 [
-                    'value' => implode(
-                        ' ',
-                        [
-                            isset($person['title']['description']) ? $person['title']['description'] : '',
-                            $person['forename'],
-                            $person['familyName']
-                        ]
+                    'value' => trim(
+                        implode(
+                            ' ',
+                            [
+                                isset($person['title']['description']) ? $person['title']['description'] : '',
+                                $person['forename'],
+                                $person['familyName']
+                            ]
+                        )
                     ),
                 ],
                 ['value' => date(\DATE_FORMAT, strtotime($person['birthDate']))]
