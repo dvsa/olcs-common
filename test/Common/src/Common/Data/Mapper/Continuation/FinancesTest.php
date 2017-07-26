@@ -30,6 +30,8 @@ class FinancesTest extends MockeryTestCase
             'hasOtherFinances' => 'N',
             'otherFinancesAmount' => '345.67',
             'otherFinancesDetails' => 'FOO',
+            'hasFactoring' => 'Y',
+            'factoringAmount' => '2776',
         ];
 
         $expected = [
@@ -40,11 +42,10 @@ class FinancesTest extends MockeryTestCase
                     'yesNo' => 'Y',
                     'yesContent' => '234.56'
                 ],
-                'otherFinances' => [
-                    'yesNo' => 'N',
+                'factoring' => [
+                    'yesNo' => 'Y',
                     'yesContent' => [
-                        'amount' => '345.67',
-                        'detail' => 'FOO'
+                        'amount' => '2776'
                     ]
                 ]
             ]
@@ -60,6 +61,7 @@ class FinancesTest extends MockeryTestCase
             'averageBalanceAmount' => '123.45',
             'hasOverdraft' => 'Y',
             'hasOtherFinances' => 'N',
+            'hasFactoring' => 'N',
         ];
 
         $expected = [
@@ -70,11 +72,10 @@ class FinancesTest extends MockeryTestCase
                     'yesNo' => 'Y',
                     'yesContent' => ''
                 ],
-                'otherFinances' => [
+                'factoring' => [
                     'yesNo' => 'N',
                     'yesContent' => [
-                        'amount' => '',
-                        'detail' => ''
+                        'amount' => ''
                     ]
                 ]
             ]
@@ -93,11 +94,10 @@ class FinancesTest extends MockeryTestCase
                     'yesNo' => 'Y',
                     'yesContent' => '234.56'
                 ],
-                'otherFinances' => [
+                'factoring' => [
                     'yesNo' => 'Y',
                     'yesContent' => [
-                        'amount' => '345.67',
-                        'detail' => 'FOO'
+                        'amount' => '2607',
                     ]
                 ]
             ]
@@ -108,9 +108,8 @@ class FinancesTest extends MockeryTestCase
             'averageBalanceAmount' => '123.45',
             'hasOverdraft' => 'Y',
             'overdraftAmount' => '234.56',
-            'hasOtherFinances' => 'Y',
-            'otherFinancesAmount' => '345.67',
-            'otherFinancesDetails' => 'FOO',
+            'hasFactoring' => 'Y',
+            'factoringAmount' => '2607',
         ];
 
         $this->assertSame($expected, $this->sut->mapFromForm($formData));
@@ -126,11 +125,10 @@ class FinancesTest extends MockeryTestCase
                     'yesNo' => 'N',
                     'yesContent' => '234.56'
                 ],
-                'otherFinances' => [
+                'factoring' => [
                     'yesNo' => 'N',
                     'yesContent' => [
-                        'amount' => '345.67',
-                        'detail' => 'FOO'
+                        'amount' => '2607',
                     ]
                 ]
             ]
@@ -141,9 +139,8 @@ class FinancesTest extends MockeryTestCase
             'averageBalanceAmount' => '123.45',
             'hasOverdraft' => 'N',
             'overdraftAmount' => null,
-            'hasOtherFinances' => 'N',
-            'otherFinancesAmount' => null,
-            'otherFinancesDetails' => null,
+            'hasFactoring' => 'N',
+            'factoringAmount' => null,
         ];
 
         $this->assertSame($expected, $this->sut->mapFromForm($formData));

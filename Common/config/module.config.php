@@ -70,6 +70,7 @@ return array(
             'ContinuationController/Start' => \Common\Controller\Continuation\StartController::class,
             'ContinuationController/Checklist' => \Common\Controller\Continuation\ChecklistController::class,
             'ContinuationController/Finances' => \Common\Controller\Continuation\FinancesController::class,
+            'ContinuationController/OtherFinances' => \Common\Controller\Continuation\OtherFinancesController::class,
             'ContinuationController/InsufficientFinances' =>
                 \Common\Controller\Continuation\InsufficientFinancesController::class,
             'ContinuationController/Declaration' => \Common\Controller\Continuation\DeclarationController::class,

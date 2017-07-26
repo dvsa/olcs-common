@@ -49,13 +49,8 @@ class Finances
     public $overdraftFacility = null;
 
     /**
-     * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\OtherFinances")
-     * @Form\Options(
-     *     {
-     *          "label" : "continuations.finances.otherFinances.label",
-     *          "hint":"continuations.finances.otherFinances.hint",
-     *     }
-     * )
+     * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\FinancesFactoring")
+     * @Form\Options({"label": "continuations.finances.factoring.label"})
      */
-    public $otherFinances = null;
+    public $factoring = null;
 }

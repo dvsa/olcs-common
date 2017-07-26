@@ -2,17 +2,16 @@
 
 namespace Common\Controller\Continuation;
 
-use Common\Data\Mapper\Continuation\Finances;
+use Common\Data\Mapper\Continuation\OtherFinances;
 use Common\Form\Form;
 use Common\Service\Helper\TranslationHelperService;
-use Common\Util\TranslatorDelegator;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\UpdateFinances;
 use Zend\View\Model\ViewModel;
 
 /**
- * FinancesController
+ * OtherFinancesController
  */
-class FinancesController extends AbstractContinuationController
+class OtherFinancesController extends AbstractContinuationController
 {
     /**
      * Index page
@@ -27,33 +26,35 @@ class FinancesController extends AbstractContinuationController
 
         $form = $this->getFinancesForm();
 
-        $form->setData(Finances::mapFromResult($continuationDetail));
+        $form->setData(OtherFinances::mapFromResult($continuationDetail));
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
 
                 $dtoData = array_merge(
-                    Finances::mapFromForm($form->getData()),
+                    OtherFinances::mapFromForm($form->getData()),
                     ['id' => $continuationDetail['id']]
                 );
                 $response = $this->handleCommand(UpdateFinances::create($dtoData));
                 if ($response->isOk()) {
 
-                    $totalFunds = (float)$dtoData['averageBalanceAmount']
-                        + (float)$dtoData['overdraftAmount']
-                        + (float)$dtoData['factoringAmount'];
+                    $totalFunds = (float)$continuationDetail['averageBalanceAmount']
+                        + (float)$continuationDetail['overdraftAmount']
+                        + (float)$continuationDetail['factoringAmount']
+                        + (float)$dtoData['otherFinancesAmount'];
+
                     if ($totalFunds >= (float)$continuationDetail['financeRequired']) {
                         return $this->redirect()->toRoute('continuation/declaration', [], [], true);
                     }
-                    return $this->redirect()->toRoute('continuation/other-finances', [], [], true);
+                    return $this->redirect()->toRoute('continuation/insufficient-finances', [], [], true);
                 }
                 $this->addErrorMessage('unknown-error');
             }
         }
 
         $vars = [
-            'backRoute' => 'continuation/checklist',
+            'backRoute' => 'continuation/finances',
         ];
         return $this->getViewModel($continuationDetail['licence']['licNo'], $form, $vars);
     }
@@ -66,7 +67,7 @@ class FinancesController extends AbstractContinuationController
     protected function getFinancesForm()
     {
         return $this->getServiceLocator()->get('Helper\Form')->createForm(
-            \Common\Form\Model\Form\Continuation\Finances::class
+            \Common\Form\Model\Form\Continuation\OtherFinances::class
         );
     }
 
@@ -80,10 +81,19 @@ class FinancesController extends AbstractContinuationController
     private function setGuidanceMessage($continuationDetail)
     {
         $financeRequired = number_format((int)$continuationDetail['financeRequired']);
+        $shortByAmount = number_format(
+            (float)$continuationDetail['financeRequired'] -
+            (float)$continuationDetail['averageBalanceAmount'] -
+            (float)$continuationDetail['overdraftAmount'] -
+            (float)$continuationDetail['factoringAmount']
+        );
 
         /** @var TranslationHelperService $translatorHelper */
         $translatorHelper = $this->getServiceLocator()->get('Helper\Translation');
-        $guideMessage = $translatorHelper->translateReplace('continuations.finances.hint', [$financeRequired]);
+        $guideMessage = $translatorHelper->translateReplace(
+            'continuations.other-finances.hint',
+            [$financeRequired, $shortByAmount]
+        );
         $this->getServiceLocator()->get('Helper\Guidance')->append($guideMessage);
     }
 }

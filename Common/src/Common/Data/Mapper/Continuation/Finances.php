@@ -26,11 +26,10 @@ class Finances implements MapperInterface
                     'yesNo' => isset($data['hasOverdraft']) ? $data['hasOverdraft'] : '',
                     'yesContent' => isset($data['overdraftAmount']) ? $data['overdraftAmount'] : '',
                 ],
-                'otherFinances' => [
-                    'yesNo' => isset($data['hasOtherFinances']) ? $data['hasOtherFinances'] : '',
+                'factoring' => [
+                    'yesNo' => isset($data['hasFactoring']) ? $data['hasFactoring'] : '',
                     'yesContent' => [
-                        'amount' => isset($data['otherFinancesAmount']) ? $data['otherFinancesAmount'] : '',
-                        'detail' => isset($data['otherFinancesDetails']) ? $data['otherFinancesDetails'] : '',
+                        'amount' => isset($data['factoringAmount']) ? $data['factoringAmount'] : '',
                     ]
                 ]
             ]
@@ -53,12 +52,9 @@ class Finances implements MapperInterface
             'overdraftAmount' => $formData['finances']['overdraftFacility']['yesNo'] === 'Y'
                 ? $formData['finances']['overdraftFacility']['yesContent']
                 : null,
-            'hasOtherFinances' => $formData['finances']['otherFinances']['yesNo'],
-            'otherFinancesAmount' => $formData['finances']['otherFinances']['yesNo'] === 'Y'
-                ? $formData['finances']['otherFinances']['yesContent']['amount']
-                : null,
-            'otherFinancesDetails' => $formData['finances']['otherFinances']['yesNo'] === 'Y'
-                ? $formData['finances']['otherFinances']['yesContent']['detail']
+            'hasFactoring' => $formData['finances']['factoring']['yesNo'],
+            'factoringAmount' => $formData['finances']['factoring']['yesNo'] === 'Y'
+                ? $formData['finances']['factoring']['yesContent']['amount']
                 : null,
         ];
     }
