@@ -5,6 +5,8 @@ namespace CommonTest\Form\Model\Form\Continuation;
 use Dvsa\Olcs\Transfer\Validators\Money;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 use Zend\Validator\Between;
+use Zend\Validator\GreaterThan;
+use Zend\Validator\LessThan;
 use Zend\Validator\NotEmpty;
 
 /**
@@ -57,43 +59,30 @@ class FinancesTest extends AbstractFormValidationTestCase
         $this->assertFormElementValid($element, '99999999', $yesContext);
     }
 
-    public function testFinancesOtherFinances()
+    public function testFinancesFactoring()
     {
-        $element = ['finances', 'otherFinances', 'yesNo'];
+        $element = ['finances', 'factoring', 'yesNo'];
         $this->assertFormElementIsRequired($element, true, [0 => 0]);
         $this->assertFormElementValid($element, 'Y');
         $this->assertFormElementValid($element, 'N');
-        $this->assertFormElementNotValid($element, 'X', 'continuations.finances.otherFinances.error');
-        $this->assertFormElementNotValid($element, '', 'continuations.finances.otherFinances.error');
+        $this->assertFormElementNotValid($element, 'X', 'continuations.finances.factoring.error');
+        $this->assertFormElementNotValid($element, '', 'continuations.finances.factoring.error');
     }
 
     public function testFinancesOtherFinancesAmount()
     {
-        $element = ['finances', 'otherFinances', 'yesContent', 'amount'];
+        $element = ['finances', 'factoring', 'yesContent', 'amount'];
 
         $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, true);
 
-        $_POST = ['finances' => ['otherFinances' => ['yesNo' => 'Y']]];
+        $_POST = ['finances' => ['factoring' => ['yesNo' => 'Y']]];
         $this->assertFormElementAllowEmpty($element, false);
 
         $this->assertFormElementNotValid($element, 'X99999999', Money::INVALID);
-        $this->assertFormElementNotValid($element, '999999991', Between::NOT_BETWEEN);
-        $this->assertFormElementNotValid($element, '-1', Money::INVALID);
+        $this->assertFormElementNotValid($element, '999999991', LessThan::NOT_LESS_INCLUSIVE);
+        $this->assertFormElementNotValid($element, '-1', GreaterThan::NOT_GREATER);
         $this->assertFormElementValid($element, '99999999');
-    }
-
-    public function testFinancesOtherFinancesDetail()
-    {
-        $element = ['finances', 'otherFinances', 'yesContent', 'detail'];
-
-        $this->assertFormElementIsRequired($element, true);
-        $this->assertFormElementAllowEmpty($element, true);
-
-        $_POST = ['finances' => ['otherFinances' => ['yesNo' => 'Y']]];
-        $this->assertFormElementAllowEmpty($element, false);
-
-        $this->assertFormElementText($element, 0, 200);
     }
 
     public function testSubmit()

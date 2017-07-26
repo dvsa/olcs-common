@@ -55,6 +55,7 @@ class InsufficientFinancesController extends AbstractContinuationController
             'continuationData' => [
                 'Average balance' => $continuationDetail['averageBalanceAmount'],
                 'Overdraft limit' => $continuationDetail['overdraftAmount'],
+                'Factoring or discount facilities' => $continuationDetail['factoringAmount'],
                 'Other available finances' => $continuationDetail['otherFinancesAmount'],
             ],
             'backRoute' => 'continuation/finances',

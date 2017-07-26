@@ -90,6 +90,16 @@ return [
                     ]
                 ],
             ],
+            'other-finances' => [
+                'type' => Http\Segment::class,
+                'options' =>  [
+                    'route' => '/other-finances[/]',
+                    'defaults' => [
+                        'controller' => 'ContinuationController/OtherFinances',
+                        'action' => 'index'
+                    ]
+                ],
+            ],
             'insufficient-finances' => [
                 'type' => Http\Segment::class,
                 'options' =>  [
