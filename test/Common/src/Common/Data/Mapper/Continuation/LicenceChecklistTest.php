@@ -211,6 +211,7 @@ class LicenceChecklistTest extends MockeryTestCase
                 ],
                 'tachographInsName' => 'Foo Ltd',
             ],
+            'ocChanges' => 1,
             'id' => 999,
         ];
         $out = [
@@ -284,7 +285,8 @@ class LicenceChecklistTest extends MockeryTestCase
                     'totalVehicles' => 4,
                     'totalTrailers' => 6,
                     'isGoods' => true,
-                    'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT
+                    'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT,
+                    'ocChanges' => 1
                 ],
                 'transportManagers' => [
                     'transportManagers' => [
