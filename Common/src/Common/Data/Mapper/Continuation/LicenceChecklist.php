@@ -593,7 +593,7 @@ class LicenceChecklist
      *
      * @param string $date date
      *
-     * @return bool|string
+     * @return string
      */
     private static function formatDate($date)
     {
