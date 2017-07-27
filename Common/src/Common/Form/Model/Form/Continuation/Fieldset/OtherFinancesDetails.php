@@ -35,15 +35,22 @@ class OtherFinancesDetails
      *                  "name": "Dvsa\Olcs\Transfer\Validators\Money",
      *                  "options": {
      *                      "messages": {"invalid": "continuations.finances.otherFinances.amount.notNumber"},
+     *                      "allow_negative" : true,
      *                      "break_chain_on_failure": true,
      *                  }
      *              },
      *              {
-     *                  "name": "Between",
+     *                  "name": "GreaterThan",
      *                  "options": {
      *                      "min" : 0,
-     *                      "max" : 99999999,
-     *                      "messages": {"notBetween": "continuations.finances.otherFinances.amount.notBetween"}
+     *                      "messages": {"notGreaterThan": "continuations.finances.otherFinances.amount.notGreaterThan"}
+     *                  }
+     *              },
+     *              {
+     *                  "name": "LessThan",
+     *                  "options": {
+     *                      "max": 10000000000,
+     *                      "messages": {"notLessThan": "continuations.finances.otherFinances.amount.notLessThan"}
      *                  }
      *              },
      *          }
