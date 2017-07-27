@@ -33,11 +33,16 @@ class Finances
      *          "invalid": "continuations.finances.averageBalance.notNumber"
      *     }
      * }})
-     * @Form\Validator({"name":"Between", "options": {
-     *     "min": -99999999,
-     *     "max": 99999999,
+     * @Form\Validator({"name":"GreaterThan", "options": {
+     *     "min": -10000000000,
      *     "messages": {
-     *         "notBetween": "continuations.finances.averageBalance.notBetween"
+     *         "notGreaterThan": "continuations.finances.averageBalance.notGreaterThan"
+     *     }
+     * }})
+     * @Form\Validator({"name":"LessThan", "options": {
+     *     "max": 10000000000,
+     *     "messages": {
+     *         "notLessThan": "continuations.finances.averageBalance.notLessThan"
      *     }
      * }})
      */

@@ -28,10 +28,10 @@ class FinancesTest extends AbstractFormValidationTestCase
         $this->assertFormElementIsRequired($element, true);
 
         $this->assertFormElementNotValid($element, 'X99999999', Money::INVALID);
-        $this->assertFormElementNotValid($element, '999999991', Between::NOT_BETWEEN);
-        $this->assertFormElementNotValid($element, '-999999991', Between::NOT_BETWEEN);
-        $this->assertFormElementValid($element, '-99999999');
-        $this->assertFormElementValid($element, '99999999');
+        $this->assertFormElementNotValid($element, '10000000000', LessThan::NOT_LESS);
+        $this->assertFormElementNotValid($element, '-10000000000', GreaterThan::NOT_GREATER);
+        $this->assertFormElementValid($element, '-9999999999');
+        $this->assertFormElementValid($element, '9999999999');
     }
 
     public function testFinancesOverdraftFacility()
@@ -54,9 +54,11 @@ class FinancesTest extends AbstractFormValidationTestCase
         $this->assertFormElementIsRequired($element, true);
 
         $this->assertFormElementNotValid($element, 'X99999999', Money::INVALID, $yesContext);
-        $this->assertFormElementNotValid($element, '999999991', Between::NOT_BETWEEN, $yesContext);
-        $this->assertFormElementNotValid($element, '-1', Money::INVALID, $yesContext);
-        $this->assertFormElementValid($element, '99999999', $yesContext);
+        $this->assertFormElementNotValid($element, '10000000000', LessThan::NOT_LESS, $yesContext);
+        $this->assertFormElementNotValid($element, '-1', GreaterThan::NOT_GREATER, $yesContext);
+        $this->assertFormElementNotValid($element, '0', GreaterThan::NOT_GREATER, $yesContext);
+        $this->assertFormElementValid($element, '1', $yesContext);
+        $this->assertFormElementValid($element, '9999999999', $yesContext);
     }
 
     public function testFinancesFactoring()
@@ -69,7 +71,7 @@ class FinancesTest extends AbstractFormValidationTestCase
         $this->assertFormElementNotValid($element, '', 'continuations.finances.factoring.error');
     }
 
-    public function testFinancesOtherFinancesAmount()
+    public function testFinancesFactoringAmount()
     {
         $element = ['finances', 'factoring', 'yesContent', 'amount'];
 
@@ -80,9 +82,11 @@ class FinancesTest extends AbstractFormValidationTestCase
         $this->assertFormElementAllowEmpty($element, false);
 
         $this->assertFormElementNotValid($element, 'X99999999', Money::INVALID);
-        $this->assertFormElementNotValid($element, '999999991', LessThan::NOT_LESS_INCLUSIVE);
+        $this->assertFormElementNotValid($element, '10000000000', LessThan::NOT_LESS);
         $this->assertFormElementNotValid($element, '-1', GreaterThan::NOT_GREATER);
-        $this->assertFormElementValid($element, '99999999');
+        $this->assertFormElementNotValid($element, '0', GreaterThan::NOT_GREATER);
+        $this->assertFormElementValid($element, '1');
+        $this->assertFormElementValid($element, '9999999999');
     }
 
     public function testSubmit()
