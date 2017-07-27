@@ -65,6 +65,10 @@ class FinancialEvidence implements MapperInterface
      */
     public static function mapFromPost(array $data)
     {
+        if (empty($data)) {
+            return [];
+        }
+
         $uploadNow = null;
         $uploadLater = null;
         $sendByPost = null;
