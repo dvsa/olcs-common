@@ -156,7 +156,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             'orgType' => $adapter->getOrganisationType()
         ];
 
-        if ($this->location === self::LOC_INTERNAL) {
+        if ($this->location === self::LOC_INTERNAL && $personData !== false) {
             $personId = (isset($personData['person']['id'])) ? $personData['person']['id'] : null;
 
             $params['disqualifyUrl'] = $this->url()->fromRoute(
