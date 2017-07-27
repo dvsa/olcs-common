@@ -3225,7 +3225,7 @@ return [
     'continuations.safety-section.table.tach_na' => 'Not applicable',
     'continuations.safety-section.table.owner-or-employee' => 'Owner or employee',
     'continuations.safety-section.table.external-contractor' => 'External contractor',
-    'continuations.operating-centres.change' => 'change pending',
-    'continuations.operating-centres.changes' => 'changes pending',
+    'continuations.pending.change' => 'change pending',
+    'continuations.pending.changes' => 'changes pending',
     // Potentially unused translations
 ];

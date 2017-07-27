@@ -42,7 +42,7 @@ class LicenceChecklist
                 'people' => self::mapPeople($licenceData, $translator),
                 'vehicles' => self::mapVehicles($licenceData, $translator),
                 'operatingCentres' => self::mapOperatingCentres($data),
-                'transportManagers' => self::mapTransportManagers($licenceData),
+                'transportManagers' => self::mapTransportManagers($data),
                 'safety' => self::mapSafetyDetails($licenceData, $translator),
                 'continuationDetailId' => $data['id']
             ]
@@ -398,13 +398,14 @@ class LicenceChecklist
     /**
      * Map transport manager section to view
      *
-     * @param array                    $data       data
+     * @param array                    $fullData   data
      * @param TranslationHelperService $translator translator
      *
      * @return array
      */
-    public static function mapTransportManagers($data)
+    public static function mapTransportManagers($fullData)
     {
+        $data = $fullData['licence'];
         $transportManagers = [];
         foreach ($data['tmLicences'] as $tmLicence) {
             $person = $tmLicence['transportManager']['homeCd']['person'];
@@ -431,7 +432,8 @@ class LicenceChecklist
         return [
             'transportManagers' => $transportManagers,
             'totalTransportManagers' => count($transportManagers),
-            'displayTransportManagersCount' => RefData::CONTINUATIONS_DISPLAY_TM_COUNT
+            'displayTransportManagersCount' => RefData::CONTINUATIONS_DISPLAY_TM_COUNT,
+            'tmChanges' => $fullData['tmChanges'],
         ];
     }
 
