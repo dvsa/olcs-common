@@ -1,3 +1,15 @@
+<?php $tmChanges = $this->data['transportManagers']['tmChanges']; ?>
+<?php if ($tmChanges > 0): ?>
+    <p class="important">
+        <strong>
+            <?php
+            echo $tmChanges
+                . ' '
+                . $this->translate('continuations.pending.change'. ($tmChanges > 1 ? 's' : ''));
+            ?>
+        </strong>
+    </p>
+<?php endif;?>
 <?php
 echo $this->partial(
     'partials/continuation/checklist-section',
@@ -6,7 +18,11 @@ echo $this->partial(
     ]
 );
 ?>
-<?php if (count($this->data['people']['persons']) > \Common\RefData::CONTINUATIONS_DISPLAY_TM_COUNT) : ?>
+<?php
+    if (
+        count($this->data['transportManagers']['transportManagers']) > \Common\RefData::CONTINUATIONS_DISPLAY_TM_COUNT
+    ) :
+?>
     <p>
     <a
         href="<?php echo $this->url(
