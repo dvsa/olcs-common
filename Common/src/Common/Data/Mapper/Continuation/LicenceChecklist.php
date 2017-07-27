@@ -174,7 +174,7 @@ class LicenceChecklist
                     ' ',
                     [$person['title']['description'], $person['forename'], $person['familyName']]
                 ),
-                'birthDate' => date(\DATE_FORMAT, strtotime($person['birthDate']))
+                'birthDate' => self::formatDate($person['birthDate'])
             ];
         }
         usort(
@@ -216,7 +216,7 @@ class LicenceChecklist
                     )
                 ],
                 [
-                    'value' => date(\DATE_FORMAT, strtotime($person['birthDate']))
+                    'value' => self::formatDate($person['birthDate'])
                 ]
             ];
         }
@@ -419,7 +419,7 @@ class LicenceChecklist
                         ]
                     )
                 ),
-                'dob' => date(\DATE_FORMAT, strtotime($person['birthDate'])),
+                'dob' => self::formatDate($person['birthDate']),
             ];
         }
         usort(
@@ -466,7 +466,7 @@ class LicenceChecklist
                         )
                     ),
                 ],
-                ['value' => date(\DATE_FORMAT, strtotime($person['birthDate']))]
+                ['value' => self::formatDate($person['birthDate'])]
             ];
         }
         usort(
@@ -586,5 +586,17 @@ class LicenceChecklist
             'safetyInspectors' => array_merge($header, $safetyInspectors),
             'totalSafetyInspectorsMessage' => $translator->translate('continuations.safety.section-header'),
         ];
+    }
+
+    /**
+     * Format date
+     *
+     * @param string $date date
+     *
+     * @return bool|string
+     */
+    private static function formatDate($date)
+    {
+        return !empty($date) ? date(\DATE_FORMAT, strtotime($date)) : '';
     }
 }
