@@ -49,9 +49,8 @@ class FactoringDetails
      *              {
      *                  "name": "LessThan",
      *                  "options": {
-     *                      "max": 99999999,
-     *                      "inclusive": true,
-     *                      "messages": {"notLessThanInclusive": "continuations.finances.factoring.amount.notLessThan"}
+     *                      "max": 10000000000,
+     *                      "messages": {"notLessThan": "continuations.finances.factoring.amount.notLessThan"}
      *                  }
      *              },
      *          }

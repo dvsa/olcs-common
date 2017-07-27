@@ -4,8 +4,8 @@ namespace CommonTest\Form\Model\Form\Continuation;
 
 use Dvsa\Olcs\Transfer\Validators\Money;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Validator\Between;
-use Zend\Validator\NotEmpty;
+use Zend\Validator\GreaterThan;
+use Zend\Validator\LessThan;
 
 /**
  * Class OtherFinancesTest
@@ -40,9 +40,11 @@ class OtherFinancesTest extends AbstractFormValidationTestCase
         $this->assertFormElementAllowEmpty($element, false);
 
         $this->assertFormElementNotValid($element, 'X99999999', Money::INVALID);
-        $this->assertFormElementNotValid($element, '999999991', Between::NOT_BETWEEN);
-        $this->assertFormElementNotValid($element, '-1', Money::INVALID);
-        $this->assertFormElementValid($element, '99999999');
+        $this->assertFormElementNotValid($element, '10000000000', LessThan::NOT_LESS);
+        $this->assertFormElementNotValid($element, '-1', GreaterThan::NOT_GREATER);
+        $this->assertFormElementNotValid($element, '0', GreaterThan::NOT_GREATER);
+        $this->assertFormElementValid($element, '1');
+        $this->assertFormElementValid($element, '9999999999');
     }
 
     public function testFinancesOtherFinancesDetail()
