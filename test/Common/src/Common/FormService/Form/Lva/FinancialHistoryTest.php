@@ -55,7 +55,10 @@ class FinancialHistoryTest extends MockeryTestCase
         $this->assertSame($mockForm, $form);
     }
 
-    public function testGetFormWithNiFlagSetToY()
+    /**
+     * @dataProvider lvaDataProvider
+     */
+    public function testGetFormWithNiFlagSetToY($lva)
     {
         $request = m::mock(Request::class);
 
@@ -82,11 +85,22 @@ class FinancialHistoryTest extends MockeryTestCase
         $form = $this->sut->getForm(
             $request,
             [
-                'lva' => 'variation',
+                'lva' => $lva,
                 'niFlag' => 'Y',
             ]
         );
 
         $this->assertSame($mockForm, $form);
+    }
+
+    /**
+     * @return array
+     */
+    public function lvaDataProvider()
+    {
+        return [
+            ['variation'],
+            ['application'],
+        ];
     }
 }

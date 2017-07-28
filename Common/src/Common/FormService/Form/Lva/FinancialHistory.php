@@ -41,7 +41,7 @@ class FinancialHistory extends AbstractFormService
      */
     protected function alterForm(Form $form, array $data = [])
     {
-        if (isset($data['lva']) && $data['lva'] === 'variation') {
+        if (isset($data['lva']) && in_array($data['lva'], ['variation', 'application'])) {
             $this->updateInsolvencyConfirmationLabel($form, $data);
         }
 
