@@ -72,7 +72,7 @@ class LicenceChecklistTest extends MockeryTestCase
                                 ],
                                 'familyName' => 'Cake',
                                 'forename' => 'Buz',
-                                'birthDate' => '1980/02/01'
+                                'birthDate' => null
                             ]
                         ]
                     ]
@@ -175,7 +175,7 @@ class LicenceChecklistTest extends MockeryTestCase
                                     ],
                                     'forename' => 'cake',
                                     'familyName' => 'baz',
-                                    'birthDate' => '1970-01-01'
+                                    'birthDate' => null
                                 ]
                             ]
                         ]
@@ -236,7 +236,7 @@ class LicenceChecklistTest extends MockeryTestCase
                     'persons' => [
                         [
                             'name' => 'Doctor Buz Cake',
-                            'birthDate' => '01/02/1980'
+                            'birthDate' => ''
                         ],
                         [
                             'name' => 'Mr Foo Bar',
@@ -293,7 +293,7 @@ class LicenceChecklistTest extends MockeryTestCase
                     'transportManagers' => [
                         [
                             'name' => 'Mr cake baz',
-                            'dob' => '01/01/1970'
+                            'dob' => ''
                         ],
                         [
                             'name' => 'Mr foo bar',
@@ -360,7 +360,7 @@ class LicenceChecklistTest extends MockeryTestCase
                     ],
                     'forename' => 'Buz',
                     'familyName' => 'Cake',
-                    'birthDate' => '1980/02/01'
+                    'birthDate' => null
                 ]
             ]
         ];
@@ -372,7 +372,7 @@ class LicenceChecklistTest extends MockeryTestCase
                 ],
                 [
                     ['value' => 'Doctor Buz Cake'],
-                    ['value' => '01/02/1980']
+                    ['value' => '']
                 ],
                 [
                     ['value' => 'Mr Foo Bar'],
@@ -511,7 +511,7 @@ class LicenceChecklistTest extends MockeryTestCase
                                 ],
                                 'forename' => 'baz',
                                 'familyName' => 'cake',
-                                'birthDate' => '1970-01-01'
+                                'birthDate' => null
                             ],
                         ],
                     ],
@@ -526,7 +526,7 @@ class LicenceChecklistTest extends MockeryTestCase
                 ],
                 [
                     ['value' => 'Mr baz cake'],
-                    ['value' => '01/01/1970'],
+                    ['value' => ''],
                 ],
                 [
                     ['value' => 'Mr foo bar'],
