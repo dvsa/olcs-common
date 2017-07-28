@@ -321,8 +321,6 @@ class LicenceChecklist
     {
         $data = $fullData['licence'];
         $operatingCentres = [];
-        $totalVehicles = 0;
-        $totalTrailers = 0;
         foreach ($data['operatingCentres'] as $loc) {
             $oc = $loc['operatingCentre'];
             $operatingCentres[] = [
@@ -330,8 +328,6 @@ class LicenceChecklist
                 'vehicles' => $loc['noOfVehiclesRequired'],
                 'trailers' => $loc['noOfTrailersRequired'],
             ];
-            $totalVehicles += (int) $loc['noOfVehiclesRequired'];
-            $totalTrailers += (int) $loc['noOfTrailersRequired'];
         }
         usort(
             $operatingCentres,
@@ -342,8 +338,8 @@ class LicenceChecklist
         return [
             'operatingCentres' => $operatingCentres,
             'totalOperatingCentres' => count($operatingCentres),
-            'totalVehicles' => $totalVehicles,
-            'totalTrailers' => $totalTrailers,
+            'totalVehicles' => $data['totAuthVehicles'],
+            'totalTrailers' => $data['totAuthTrailers'],
             'isGoods' => $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
             'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT,
             'ocChanges' => $fullData['ocChanges'],
