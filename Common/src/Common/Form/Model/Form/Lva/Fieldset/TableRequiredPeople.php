@@ -15,7 +15,7 @@ class TableRequiredPeople extends TableRequired
      * @Form\Type("Hidden")
      * @Form\Validator({
      *     "name":"Common\Form\Elements\Validators\TableRequiredValidator",
-     *     "options":{"label":"person"}
+     *     "options":{"label":"person", "rowsRequired":1}
      * })
      * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"array"}})
      */

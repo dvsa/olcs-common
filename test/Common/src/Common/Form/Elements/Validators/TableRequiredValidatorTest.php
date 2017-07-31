@@ -1,13 +1,10 @@
 <?php
 
-/**
- * Test TableRequiredValidator
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\TableRequiredValidator;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Test TableRequiredValidator
@@ -51,5 +48,13 @@ class TableRequiredValidatorTest extends \PHPUnit_Framework_TestCase
             array(null, array('rows' => 1), true),
             array(null, array('rows' => 10), true)
         );
+    }
+
+    public function testGetSetRowsRequired()
+    {
+        $validator = new TableRequiredValidator(['rowsRequired' => 2]);
+
+        $this->assertEquals(true, $validator->isValid(null, ['rows' => 2]));
+        $this->assertEquals(false, $validator->isValid(null, ['rows' => 1]));
     }
 }
