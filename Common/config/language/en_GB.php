@@ -3230,5 +3230,6 @@ return [
     'continuations.safety-section.table.external-contractor' => 'External contractor',
     'continuations.pending.change' => 'change pending',
     'continuations.pending.changes' => 'changes pending',
+    'people.partnership.validation-message' => 'Please enter two or more partners for your partnership',
     // Potentially unused translations
 ];
