@@ -321,8 +321,6 @@ class LicenceChecklist
     {
         $data = $fullData['licence'];
         $operatingCentres = [];
-        $totalVehicles = 0;
-        $totalTrailers = 0;
         foreach ($data['operatingCentres'] as $loc) {
             $oc = $loc['operatingCentre'];
             $operatingCentres[] = [
@@ -330,8 +328,6 @@ class LicenceChecklist
                 'vehicles' => $loc['noOfVehiclesRequired'],
                 'trailers' => $loc['noOfTrailersRequired'],
             ];
-            $totalVehicles += (int) $loc['noOfVehiclesRequired'];
-            $totalTrailers += (int) $loc['noOfTrailersRequired'];
         }
         usort(
             $operatingCentres,
@@ -342,8 +338,8 @@ class LicenceChecklist
         return [
             'operatingCentres' => $operatingCentres,
             'totalOperatingCentres' => count($operatingCentres),
-            'totalVehicles' => $totalVehicles,
-            'totalTrailers' => $totalTrailers,
+            'totalVehicles' => $data['totAuthVehicles'],
+            'totalTrailers' => $data['totAuthTrailers'],
             'isGoods' => $data['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE,
             'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT,
             'ocChanges' => $fullData['ocChanges'],
@@ -515,26 +511,40 @@ class LicenceChecklist
                 return strcmp($a['name'], $b['name']);
             }
         );
+
+        $safetyInsVehicles = null;
+        $safetyInsTrailers = null;
+        $safetyInsVaries = null;
+        if (!empty($data['safetyInsVehicles'])) {
+            $safetyInsVehicles = $data['safetyInsVehicles']
+                . ' '
+                . (
+                ((int) $data['safetyInsVehicles'] === 1)
+                    ? $translator->translate('continuations.safety-section.table.week')
+                    : $translator->translate('continuations.safety-section.table.weeks')
+                );
+        }
+        if (!empty($data['safetyInsTrailers'])) {
+            $safetyInsTrailers = $data['safetyInsTrailers']
+                . ' '
+                . (
+                ((int) $data['safetyInsTrailers'] === 1)
+                    ? $translator->translate('continuations.safety-section.table.week')
+                    : $translator->translate('continuations.safety-section.table.weeks')
+                );
+        }
+        if ($data['safetyInsVaries'] !== null) {
+            $safetyInsVaries = ($data['safetyInsVaries'] === 'Y')
+                ? $translator->translate('Yes')
+                : $translator->translate('No');
+        }
+
         return [
             'safetyInspectors' => $safetyInspectors,
             'totalSafetyInspectors' => count($safetyInspectors),
-            'safetyInsVehicles' => $data['safetyInsVehicles']
-                . ' '
-                . (
-                    ((int) $data['safetyInsVehicles'] === 1)
-                    ? $translator->translate('continuations.safety-section.table.week')
-                    : $translator->translate('continuations.safety-section.table.weeks')
-                ),
-            'safetyInsTrailers' => $data['safetyInsTrailers']
-                . ' '
-                . (
-                    ((int) $data['safetyInsTrailers'] === 1)
-                    ? $translator->translate('continuations.safety-section.table.week')
-                    : $translator->translate('continuations.safety-section.table.weeks')
-                ),
-            'safetyInsVaries' => ($data['safetyInsVaries'] === 'Y')
-                ? $translator->translate('Yes')
-                : $translator->translate('No'),
+            'safetyInsVehicles' => $safetyInsVehicles,
+            'safetyInsTrailers' => $safetyInsTrailers,
+            'safetyInsVaries' => $safetyInsVaries,
             'tachographIns'=> isset($data['tachographIns']['id'])
                 ? $translator->translate('continuations.safety-section.table.' . $data['tachographIns']['id'])
                 : null,

@@ -210,6 +210,8 @@ class LicenceChecklistTest extends MockeryTestCase
                     'id' => 'tach_external'
                 ],
                 'tachographInsName' => 'Foo Ltd',
+                'totAuthVehicles' => 5,
+                'totAuthTrailers' => 10,
             ],
             'ocChanges' => 1,
             'tmChanges' => 1,
@@ -283,8 +285,8 @@ class LicenceChecklistTest extends MockeryTestCase
                         ],
                     ],
                     'totalOperatingCentres' => 2,
-                    'totalVehicles' => 4,
-                    'totalTrailers' => 6,
+                    'totalVehicles' => 5,
+                    'totalTrailers' => 10,
                     'isGoods' => true,
                     'displayOperatingCentresCount' => RefData::CONTINUATIONS_DISPLAY_OPERATING_CENTRES_COUNT,
                     'ocChanges' => 1

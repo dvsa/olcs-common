@@ -3218,7 +3218,7 @@ return [
     'continuations.safety-section.table.total-inspectors' => 'Number of safety inspectors on this licence',
     'continuations.safety-section.table.max-time-vehicles' => 'Maximum time between vehicle safety inspections',
     'continuations.safety-section.table.max-time-trailers' => 'Maximum time between trailer safety inspections',
-    'continuations.safety-section.table.varies' => 'Are some of the vehicles or trailers inspected more frequently than the interval stated above',
+    'continuations.safety-section.table.varies' => 'Are some of the vehicles or trailers inspected more frequently than the interval stated above?',
     'continuations.safety-section.table.tachographs' => 'How do you analyse the information from your digital tachographs?',
     'continuations.safety-section.table.tachographInsName' => 'The company or external contractor who analyses your tachograph data',
     'continuations.safety-section.table.not-known' => 'Not known',
