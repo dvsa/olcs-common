@@ -2011,6 +2011,7 @@ return [
     'page.title.continuation/checklist/people.people' => 'Licence review',
     'page.title.continuation/checklist/vehicles.vehicles' => 'Licence review',
     'page.title.continuation/finances.index' => 'Finances',
+    'page.title.continuation/other-finances.index' => 'Finances',
     'page.title.continuation/insufficient-finances.index' => 'Finances',
     'page.title.continuation/declaration.index' => 'Declaration',
     'page.title.continuation/payment.index' => 'Pay the fee',
