@@ -511,26 +511,40 @@ class LicenceChecklist
                 return strcmp($a['name'], $b['name']);
             }
         );
+
+        $safetyInsVehicles = null;
+        $safetyInsTrailers = null;
+        $safetyInsVaries = null;
+        if (!empty($data['safetyInsVehicles'])) {
+            $safetyInsVehicles = $data['safetyInsVehicles']
+                . ' '
+                . (
+                ((int) $data['safetyInsVehicles'] === 1)
+                    ? $translator->translate('continuations.safety-section.table.week')
+                    : $translator->translate('continuations.safety-section.table.weeks')
+                );
+        }
+        if (!empty($data['safetyInsTrailers'])) {
+            $safetyInsTrailers = $data['safetyInsTrailers']
+                . ' '
+                . (
+                ((int) $data['safetyInsTrailers'] === 1)
+                    ? $translator->translate('continuations.safety-section.table.week')
+                    : $translator->translate('continuations.safety-section.table.weeks')
+                );
+        }
+        if ($data['safetyInsVaries'] !== null) {
+            $safetyInsVaries = ($data['safetyInsVaries'] === 'Y')
+                ? $translator->translate('Yes')
+                : $translator->translate('No');
+        }
+
         return [
             'safetyInspectors' => $safetyInspectors,
             'totalSafetyInspectors' => count($safetyInspectors),
-            'safetyInsVehicles' => $data['safetyInsVehicles']
-                . ' '
-                . (
-                    ((int) $data['safetyInsVehicles'] === 1)
-                    ? $translator->translate('continuations.safety-section.table.week')
-                    : $translator->translate('continuations.safety-section.table.weeks')
-                ),
-            'safetyInsTrailers' => $data['safetyInsTrailers']
-                . ' '
-                . (
-                    ((int) $data['safetyInsTrailers'] === 1)
-                    ? $translator->translate('continuations.safety-section.table.week')
-                    : $translator->translate('continuations.safety-section.table.weeks')
-                ),
-            'safetyInsVaries' => ($data['safetyInsVaries'] === 'Y')
-                ? $translator->translate('Yes')
-                : $translator->translate('No'),
+            'safetyInsVehicles' => $safetyInsVehicles,
+            'safetyInsTrailers' => $safetyInsTrailers,
+            'safetyInsVaries' => $safetyInsVaries,
             'tachographIns'=> isset($data['tachographIns']['id'])
                 ? $translator->translate('continuations.safety-section.table.' . $data['tachographIns']['id'])
                 : null,
