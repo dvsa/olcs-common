@@ -37,4 +37,11 @@ class FinancialEvidenceRequired
      * })
      */
     public $sendContent = null;
+
+    /**
+     * @Form\Attributes({"type":"submit","class":"action--primary large"})
+     * @Form\Options({"label":"Continue"})
+     * @Form\Type("\Zend\Form\Element\Button")
+     */
+    public $submit = null;
 }

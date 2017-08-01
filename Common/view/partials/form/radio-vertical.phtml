@@ -44,3 +44,9 @@ $hasValidationError = !empty($errors);
 
     </fieldset>
 </div>
+
+<?php
+if ($element->has('submit')) {
+    echo $this->formRow($element->get('submit'));
+}
+?>

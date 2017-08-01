@@ -24,11 +24,4 @@ class InsufficientFinances
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\InsufficientFinances")
      */
     public $insufficientFinances = null;
-
-    /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
-     * @Form\Options({"label":"Continue"})
-     * @Form\Type("\Zend\Form\Element\Button")
-     */
-    public $submit = null;
 }
