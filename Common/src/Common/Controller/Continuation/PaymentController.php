@@ -6,6 +6,7 @@ use Zend\View\Model\ViewModel;
 use Common\Controller\Traits\StoredCardsTrait;
 use Dvsa\Olcs\Transfer\Command\Transaction\PayOutstandingFees;
 use Dvsa\Olcs\Transfer\Query\Transaction\Transaction as PaymentById;
+use Dvsa\Olcs\Transfer\Command\Transaction\CompleteTransaction as CompletePayment;
 use Common\RefData;
 
 /**
@@ -81,7 +82,7 @@ class PaymentController extends AbstractContinuationController
     {
         $cpmsRedirectUrl = $this->getServiceLocator()
             ->get('Helper\Url')
-            ->fromRoute('continuation/success', [], ['force_canonical' => true], true);
+            ->fromRoute('continuation/payment/result', [], ['force_canonical' => true], true);
 
         $paymentMethod = RefData::FEE_PAYMENT_METHOD_CARD_ONLINE;
         $dtoData = compact('cpmsRedirectUrl', 'feeIds', 'paymentMethod', 'organisationId', 'storedCardReference');
@@ -141,5 +142,50 @@ class PaymentController extends AbstractContinuationController
         }
 
         return null;
+    }
+
+    /**
+     * Handle payment result
+     *
+     * @return null|\Zend\Http\Response
+     */
+    public function resultAction()
+    {
+        $queryStringData = (array) $this->getRequest()->getQuery();
+        if (empty($queryStringData)) {
+            $this->addErrorMessage('payment-failed');
+            return $this->redirectToPaymentPage();
+        }
+
+        $dtoData = [
+            'reference' => $queryStringData['receipt_reference'],
+            'cpmsData' => $queryStringData,
+            'paymentMethod' => RefData::FEE_PAYMENT_METHOD_CARD_ONLINE,
+        ];
+
+        $response = $this->handleCommand(CompletePayment::create($dtoData));
+
+        if (!$response->isOk()) {
+            $this->addErrorMessage('payment-failed');
+            return $this->redirectToPaymentPage();
+        }
+
+        $paymentId = $response->getResult()['id']['transaction'];
+        $response = $this->handleQuery(PaymentById::create(['id' => $paymentId]));
+        $payment = $response->getResult();
+
+        switch ($payment['status']['id']) {
+            case RefData::TRANSACTION_STATUS_COMPLETE:
+                $this->addSuccessMessage('payment-completed');
+                return $this->redirectToSuccessPage();
+            case RefData::TRANSACTION_STATUS_CANCELLED:
+                $this->addErrorMessage('payment-cancelled');
+                break;
+            case RefData::TRANSACTION_STATUS_FAILED:
+            default:
+                $this->addErrorMessage('payment-failed');
+        }
+
+        return $this->redirectToPaymentPage();
     }
 }

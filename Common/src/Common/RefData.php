@@ -292,4 +292,7 @@ class RefData
     const LICENCE_SAFETY_INSPECTOR_EXTERNAL = 'tach_external';
 
     const RESULT_LICENCE_CONTINUED = 'licence_continued';
+
+    const CONTINUATION_STATUS_GENERATED = 'con_det_sts_printed';
+    const CONTINUATION_STATUS_COMPLETE = 'con_det_sts_complete';
 }
