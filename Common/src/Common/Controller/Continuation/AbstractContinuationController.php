@@ -42,9 +42,9 @@ abstract class AbstractContinuationController extends AbstractController
     }
 
     /**
-     * Get the ViewModel used for continuations
+     * Get simple ViewModel used for printing
      *
-     * @param array     $variables additional variables to view
+     * @param array $variables additional variables to view
      *
      * @return ViewModel
      */
