@@ -122,8 +122,7 @@ class Declaration extends AbstractFormService
         $declarationDownload = $translator->translateReplace(
             'undertakings_declaration_download',
             [
-                // @todo This page/url needs updating as part of OLCS-16481
-                $urlControllerPlugin->fromRoute('continuation/declaration', [], [], true),
+                $urlControllerPlugin->fromRoute('continuation/declaration/print', [], [], true),
                 $translator->translate('print-declaration-form'),
             ]
         );

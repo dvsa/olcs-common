@@ -1337,5 +1337,11 @@ return [
     'continuations.safety-section.table.week' => 'wythnos',
     'continuations.safety-section.table.weeks' => 'Wythnosau',
     'continuations.safety-section.table.tach_na' => 'Ddim yn gymwys',
+    'continuation.declaration.print.licence_number' => 'Rhif y drwydded',
+    'continuation.declaration.print.licence_holder' => 'Deiliad Trwydded',
+    'continuation.declaration.print.return_to' => 'Dychwelwch i',
+    'continuation.declaration.print.full_name_in_block-capitals' => 'Enw yn llawn mewn llythrennau bras',
+    'continuation.declaration.print.date' => 'Dyddiad',
+
     // Potentially unused translations
 ];

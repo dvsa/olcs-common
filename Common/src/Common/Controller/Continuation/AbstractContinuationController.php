@@ -15,6 +15,9 @@ abstract class AbstractContinuationController extends AbstractController
     /** @var string  */
     protected $layout = 'pages/continuation';
 
+    /** @var string  */
+    protected $simpleLayout = 'layouts/simple';
+
     /** @var array */
     protected $continuationData;
 
@@ -36,6 +39,26 @@ abstract class AbstractContinuationController extends AbstractController
         $view->setTemplate($this->layout);
 
         return $view;
+    }
+
+    /**
+     * Get the ViewModel used for continuations
+     *
+     * @param array     $variables additional variables to view
+     *
+     * @return ViewModel
+     */
+    protected function getSimpleViewModel($variables = [])
+    {
+        $view = new ViewModel($variables);
+
+        $layout = new ViewModel();
+        $layout->setTemplate($this->simpleLayout);
+        $layout->setTerminal(true);
+        $layout->addChild($view, 'content');
+        $view->setTemplate($this->layout);
+
+        return $layout;
     }
 
     /**
