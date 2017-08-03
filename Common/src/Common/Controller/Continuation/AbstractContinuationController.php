@@ -6,12 +6,18 @@ use Common\Controller\Lva\AbstractController;
 use Common\Form\Form;
 use Zend\View\Model\ViewModel;
 use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
+use Common\RefData;
+use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Exception;
 
 /**
  * AbstractContinuationController
  */
 abstract class AbstractContinuationController extends AbstractController
 {
+    const SUCCESS_CONTROLLER = 'ContinuationController/Success';
+    const LICENCE_OVERVIEW_ROUTE = 'lva-licence';
+
     /** @var string  */
     protected $layout = 'pages/continuation';
 
@@ -98,12 +104,55 @@ abstract class AbstractContinuationController extends AbstractController
     }
 
     /**
-     * Refresh current pages
+     * Redirect to payment page
      *
      * @return \Zend\Http\Response
      */
     protected function redirectToPaymentPage()
     {
         return $this->redirect()->toRoute('continuation/payment', [], [], true);
+    }
+
+    /**
+     * Redirect to licence overview page
+     *
+     * @return \Zend\Http\Response
+     */
+    protected function redirectToLicenceOverviewPage($licenceId)
+    {
+        return $this->redirect()->toRoute(self::LICENCE_OVERVIEW_ROUTE, ['licence' => $licenceId], [], true);
+    }
+
+    /**
+     * Execute the request
+     *
+     * @param MvcEvent $e Event
+     *
+     * @return null|\Zend\Http\Response
+     */
+    public function onDispatch(MvcEvent $e)
+    {
+        $routeMatch = $e->getRouteMatch();
+        if (!$routeMatch) {
+            throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
+        }
+        $data = $this->getContinuationDetailData();
+        $status = isset($data['status']['id']) ? $data['status']['id'] : null;
+        $controller = $routeMatch->getParam('controller');
+
+        if ($controller !== self::SUCCESS_CONTROLLER) {
+            if ($status === RefData::CONTINUATION_STATUS_COMPLETE && (int) $data['isDigital'] === 1) {
+                return $this->redirectToSuccessPage();
+            }
+            if ($status === RefData::CONTINUATION_STATUS_GENERATED) {
+                return parent::onDispatch($e);
+            }
+        } else {
+            if ($status === RefData::CONTINUATION_STATUS_COMPLETE) {
+                return parent::onDispatch($e);
+            }
+        }
+
+        return $this->redirectToLicenceOverviewPage($data['licence']['id']);
     }
 }
