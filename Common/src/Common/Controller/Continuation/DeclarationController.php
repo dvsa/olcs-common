@@ -6,12 +6,22 @@ use Common\Form\Declaration;
 use Dvsa\Olcs\Transfer\Command\ContinuationDetail\Submit;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
+use Common\RefData;
 
 /**
  * DeclarationController
  */
 class DeclarationController extends AbstractContinuationController
 {
+    protected $signatures = [
+        RefData::ORG_TYPE_SOLE_TRADER => 'declaration-sig-label-st',
+        RefData::ORG_TYPE_OTHER => 'declaration-sig-label-other',
+        RefData::ORG_TYPE_PARTNERSHIP => 'declaration-sig-label-p',
+        RefData::ORG_TYPE_REGISTERED_COMPANY => 'declaration-sig-label',
+        RefData::ORG_TYPE_LLP => 'declaration-sig-label',
+        RefData::ORG_TYPE_IRFO => 'declaration-sig-label',
+    ];
+
     /**
      * Index page
      *
@@ -69,5 +79,38 @@ class DeclarationController extends AbstractContinuationController
         return $this->getServiceLocator()->get('Helper\Form')->createForm(
             \Common\Form\Model\Form\Continuation\Declaration::class
         );
+    }
+
+    /**
+     * Print action
+     *
+     * @return ViewModel
+     */
+    public function printAction()
+    {
+        $continuationDetail = $this->getContinuationDetailData();
+        $licence = $continuationDetail['licence'];
+        $organisation = $licence['organisation'];
+
+        if ($licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_GOODS_VEHICLE) {
+            $title = 'continuation.declaration.print.gv_title';
+        } elseif ($licence['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+            $title = 'continuation.declaration.print.psv_sr_title';
+        } else {
+            $title = 'continuation.declaration.print.psv_title';
+        }
+
+        $params = [
+            'isNi' => $licence['niFlag'] === 'Y',
+            'name' => $organisation['name'],
+            'title' => $title,
+            'signatureLabel' => $this->signatures[$organisation['type']['id']],
+            'undertakings' => $continuationDetail['declarations'],
+            'licNo' => $licence['licNo'],
+        ];
+
+        $this->layout = 'pages/continuation-declaration';
+
+        return $this->getSimpleViewModel($params);
     }
 }
