@@ -3232,5 +3232,20 @@ return [
     'continuations.pending.change' => 'change pending',
     'continuations.pending.changes' => 'changes pending',
     'people.partnership.validation-message' => 'Please enter two or more partners for your partnership',
+    'continuations.success.title' => 'Thank you',
+    'continuations.success.subtitle' => 'Your licence has been continued',
+    'continuation.success.confirmation.your-licence-number' => 'Your licence number is',
+    'continuation.success.confirmation.view-print-receipt' => 'View/print receipt',
+    'continuation.success.confirmation.what-you-need-to-do' => 'What you need to do next',
+    'continuation.success.declaration-send-text' => 'The declaration must be sent to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a>',
+    'continuation.success.declaration-send-text-ni' => 'The declaration must be sent to the <a href="{{OPENING_TIMES_LINK_NI}}" target="_blank">Central Licensing Office</a>',
+    'continuation.success.download-declaration-letter' => 'Download declaration letter',
+    'continuation.success.add-supporting-evidence' => 'Add supporting evidence',
+    'continuation.success.supporting-evidence-text' => 'You need to submit your <a href="%s" target="_blank">financial evidence</a> by post to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a> along with your licence number.',
+    'continuation.success.supporting-evidence-text-ni' => 'You need to submit your <a href="%s" target="_blank">financial evidence</a> by post to the <a href="{{OPENING_TIMES_LINK_NI}}" target="_blank">Central Licensing Office</a> along with your licence number.',
+    'continuation.success.what-happens-next' => 'What happens next',
+    'continuation.success.licence-documentation' => 'Your licence documentation and vehicle discs will be sent within 5 working days',
+    'continuation.success.finish' => 'Finish',
+
     // Potentially unused translations
 ];

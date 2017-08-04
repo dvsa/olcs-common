@@ -14,6 +14,9 @@ use Common\RefData;
  */
 class SuccessController extends AbstractContinuationController
 {
+    /** @var string */
+    protected $layout = 'pages/continuation-success';
+
     /**
      * Index action to handle payment result
      *
@@ -22,7 +25,16 @@ class SuccessController extends AbstractContinuationController
     public function indexAction()
     {
         $data = $this->getContinuationDetailData();
+        $licence = $data['licence'];
 
-        return $this->getViewModel($data['licence']['licNo']);
+        $params = [
+            'paymentRef' => $data['reference'],
+            'isDigital' => $data['isDigital'],
+            'isFinancialEvidenceRequired' => $data['isFinancialEvidenceRequired'],
+            'isNi' => $licence['trafficArea']['isNi'],
+            'licenceId' => $licence['id'],
+        ];
+
+        return $this->getViewModel($licence['licNo'], null, $params);
     }
 }
