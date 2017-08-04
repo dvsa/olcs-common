@@ -27,6 +27,14 @@ abstract class AbstractContinuationController extends AbstractController
     /** @var array */
     protected $continuationData;
 
+    /** @var array */
+    protected $exclusions = [
+        'printDeclaration' => [
+            'controller' => 'ContinuationController/Declaration',
+            'action' => 'print'
+        ],
+    ];
+
     /**
      * Get the ViewModel used for continuations
      *
@@ -162,8 +170,12 @@ abstract class AbstractContinuationController extends AbstractController
         $data = $this->getContinuationDetailData();
         $status = isset($data['status']['id']) ? $data['status']['id'] : null;
         $controller = $routeMatch->getParam('controller');
+        $action = $routeMatch->getParam('action');
 
         if ($controller !== self::SUCCESS_CONTROLLER) {
+            if ($this->allowedToAccess($controller, $action)) {
+                return parent::onDispatch($e);
+            }
             if ($status === RefData::CONTINUATION_STATUS_COMPLETE && (int) $data['isDigital'] === 1) {
                 return $this->redirectToSuccessPage();
             }
@@ -177,5 +189,24 @@ abstract class AbstractContinuationController extends AbstractController
         }
 
         return $this->redirectToLicenceOverviewPage($data['licence']['id']);
+    }
+
+    /**
+     * Allowed to access
+     *
+     * @param string $controller controller
+     * @param string $action     action
+     *
+     * @return bool
+     */
+    protected function allowedToAccess($controller, $action)
+    {
+        foreach ($this->exclusions as $exclusion) {
+            if ($exclusion['controller'] === $controller && $exclusion['action'] === $action) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
