@@ -119,6 +119,19 @@ return [
                         'action' => 'index'
                     ]
                 ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'print' => [
+                        'type' => Http\Segment::class,
+                        'options' => [
+                            'route' => 'print[/]',
+                            'defaults' => [
+                                'action' => 'print',
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ],
+                ],
             ],
             'payment' => [
                 'type' => Http\Segment::class,

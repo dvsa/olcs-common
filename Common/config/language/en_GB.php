@@ -3246,6 +3246,13 @@ return [
     'continuation.success.what-happens-next' => 'What happens next',
     'continuation.success.licence-documentation' => 'Your licence documentation and vehicle discs will be sent within 5 working days',
     'continuation.success.finish' => 'Finish',
-
+    'continuation.declaration.print.licence_number' => 'Licence number',
+    'continuation.declaration.print.licence_holder' => 'Licence holder',
+    'continuation.declaration.print.return_to' => 'Return to',
+    'continuation.declaration.print.gv_title' => 'Continue an existing Goods Vehicle Operator\'s Licence',
+    'continuation.declaration.print.psv_title' => 'Continue an existing Public Service Vehicle Operator\'s Licence',
+    'continuation.declaration.print.psv_sr_title' => 'Continue an existing Special Restricted Public Service Vehicle Operator\'s Licence',
+    'continuation.declaration.print.full_name_in_block-capitals' => 'Full name in block capitals',
+    'continuation.declaration.print.date' => 'Date',
     // Potentially unused translations
 ];

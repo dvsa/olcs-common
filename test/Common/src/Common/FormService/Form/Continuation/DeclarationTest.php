@@ -51,7 +51,7 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration', [], [], true)->once()
+        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
         $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
@@ -107,7 +107,7 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration', [], [], true)->once()
+        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
         $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
@@ -162,7 +162,7 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration', [], [], true)->once()
+        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
         $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
@@ -217,7 +217,7 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration', [], [], true)->once()
+        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
         $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
@@ -272,7 +272,7 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration', [], [], true)->once()
+        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
         $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
@@ -333,7 +333,7 @@ class DeclarationTest extends MockeryTestCase
         $form->shouldReceive('get')->with('content')->andReturn($contentElement);
         $contentElement->shouldReceive('get')->with('declaration')->andReturn($declarationElement);
 
-        $urlService->shouldReceive('fromRoute')->with('continuation/declaration', [], [], true)->once()
+        $urlService->shouldReceive('fromRoute')->with('continuation/declaration/print', [], [], true)->once()
             ->andReturn('URL');
         $translatorService->shouldReceive('translate')->with('print-declaration-form')->once()
             ->andReturn('print-declaration-form');
