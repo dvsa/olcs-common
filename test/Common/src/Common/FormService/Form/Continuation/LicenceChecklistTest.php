@@ -128,9 +128,6 @@ class LicenceChecklistTest extends MockeryTestCase
             ->with(LicenceChecklistForm::class)
             ->andReturn($form)
             ->once()
-            ->shouldReceive('remove')
-            ->with($form, 'data->conditionsUndertakingsCheckbox')
-            ->once()
             ->getMock();
 
         $data = [
@@ -166,5 +163,54 @@ class LicenceChecklistTest extends MockeryTestCase
             ]
         ];
         $this->assertEquals($form, $this->sut->getForm($data));
+    }
+
+    public function testAlterContinueButton()
+    {
+        $sut = m::mock(LicenceChecklist::class)->makePartial()->shouldAllowMockingProtectedMethods();
+
+        $form = m::mock()
+            ->shouldReceive('get')
+            ->with('data')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('licenceChecklistConfirmation')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('get')
+                            ->with('yesContent')
+                            ->andReturn(
+                                m::mock()
+                                    ->shouldReceive('get')
+                                    ->with('submit')
+                                    ->andReturn(
+                                        m::mock()
+                                        ->shouldReceive('setLabel')
+                                        ->with(
+                                            'continuations.checklist.confirmation.yes-button-conditions-undertakings'
+                                        )
+                                        ->once()
+                                        ->getMock()
+                                    )
+                                    ->once()
+                                    ->getMock()
+                                )
+                            ->once()
+                            ->getMock()
+                    )
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
+
+        $sut->alterContinueButton(
+            $form,
+            [
+                'licence' => ['licenceType' => ['id' => RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL]],
+                'hasConditionsUndertakings' => true
+            ]
+        );
     }
 }

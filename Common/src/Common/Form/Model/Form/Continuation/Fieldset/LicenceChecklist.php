@@ -199,27 +199,6 @@ class LicenceChecklist
     public $safetyCheckbox = null;
 
     /**
-     * @Form\Type("Common\Form\Elements\Types\CheckboxAdvanced")
-     * @Form\Required(true)
-     * @Form\Attributes({
-     *      "id":"conditionsUndertakingsCheckbox",
-     *      "data-js-validate":"required",
-     *      "data-show-element":"#conditionsUndertakingsCheckbox-hidden",
-     *      "class":"checkbox"
-     * })
-     * @Form\Options({
-     *     "label":"continuations.conditionsUndertakings-checkbox.label",
-     *     "label_attributes": {"class": "form-control form-control--checkbox form-control--confirm"},
-     *     "content":"partials/continuation/stub",
-     *     "checked_value":"Y",
-     *     "unchecked_value":"N",
-     *     "must_be_value": "Y",
-     *     "not_checked_message":"continuations.checklist.section.error.conditionsUndertakings"
-     * })
-     */
-    public $conditionsUndertakingsCheckbox = null;
-
-    /**
      * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\LicenceChecklistConfirmation")
      * @Form\Options(
      *     {

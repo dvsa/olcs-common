@@ -69,6 +69,8 @@ return array(
             \Common\Controller\GuidesController::class => \Common\Controller\GuidesController::class,
             'ContinuationController/Start' => \Common\Controller\Continuation\StartController::class,
             'ContinuationController/Checklist' => \Common\Controller\Continuation\ChecklistController::class,
+            'ContinuationController/ConditionsUndertakings' =>
+                \Common\Controller\Continuation\ConditionsUndertakingsController::class,
             'ContinuationController/Finances' => \Common\Controller\Continuation\FinancesController::class,
             'ContinuationController/OtherFinances' => \Common\Controller\Continuation\OtherFinancesController::class,
             'ContinuationController/InsufficientFinances' =>
@@ -607,6 +609,8 @@ return array(
             'continuations-start' => ContinuationFormService\Start::class,
             'continuations-payment' => ContinuationFormService\Payment::class,
             ContinuationFormService\Declaration::class => ContinuationFormService\Declaration::class,
+            ContinuationFormService\ConditionsUndertakings::class =>
+                ContinuationFormService\ConditionsUndertakings::class,
         ]
     ],
     'translator' => [

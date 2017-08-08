@@ -80,6 +80,16 @@ return [
                     ],
                 ],
             ],
+            'conditions-undertakings' => [
+                'type' => Http\Segment::class,
+                'options' =>  [
+                    'route' => '/conditions-undertakings[/]',
+                    'defaults' => [
+                        'controller' => 'ContinuationController/ConditionsUndertakings',
+                        'action' => 'index'
+                    ]
+                ],
+            ],
             'finances' => [
                 'type' => Http\Segment::class,
                 'options' =>  [

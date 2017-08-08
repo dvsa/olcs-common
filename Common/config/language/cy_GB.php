@@ -1342,6 +1342,7 @@ return [
     'continuation.declaration.print.return_to' => 'Dychwelwch i',
     'continuation.declaration.print.full_name_in_block-capitals' => 'Enw yn llawn mewn llythrennau bras',
     'continuation.declaration.print.date' => 'Dyddiad',
+    'continuation.conditions-undertakings.page-title' => 'Amodau ac ymgymeriadau',
     'continuation.success.confirmation.what-you-need-to-do' => 'Beth mae arnoch angen ei wneud nesaf?',
     'continuation.success.add-supporting-evidence' => 'Ychwanegu\'ch tystiolaeth gefnogol',
     // Potentially unused translations
