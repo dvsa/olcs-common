@@ -29,7 +29,7 @@ class SuccessController extends AbstractContinuationController
 
         $params = [
             'paymentRef' => $data['reference'],
-            'isDigital' => $data['isDigital'],
+            'isPhysicalSignature' => $data['isPhysicalSignature'],
             'isFinancialEvidenceRequired' => $data['isFinancialEvidenceRequired'],
             'isNi' => $licence['trafficArea']['isNi'],
             'licenceId' => $licence['id'],
