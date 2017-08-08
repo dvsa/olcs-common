@@ -3257,5 +3257,10 @@ return [
     'continuation.declaration.print.date' => 'Date',
     'continuation.conditions-undertakings.page-title' => 'Conditions and undertakings',
     'continuations.conditions-undertakings.continue.label' => 'I understand - continue to finances',
+    'continuations.conditions-undertakings.guidance' => '<p class="exclamation">You must review and comply with any conditions and undertakings.</p>',
+    'continuations.conditions-undertakings.licence' => 'Licence',
+    'continuations.conditions-undertakings.conditions' => 'Conditions',
+    'continuations.conditions-undertakings.undertakings' => 'Undertakings',
+    'continuations.conditions-undertakings.summary' => '<p class="important">If you have any questions about specific conditions or undertakings please contact <a href="mailto:{{OPERATOR_LICENSING_EMAIL}}">{{OPERATOR_LICENSING_EMAIL}}</a></p>',
     // Potentially unused translations
 ];

@@ -15,6 +15,8 @@ class ConditionsUndertakingsController extends AbstractContinuationController
 {
     const NEXT_STEP = 'continuation/finances';
 
+    protected $layout = 'pages/continuation-conditions-undertakings';
+
     /**
      * Index action
      *
@@ -34,7 +36,11 @@ class ConditionsUndertakingsController extends AbstractContinuationController
             }
         }
 
+        $params = [
+            'backRoute' => 'continuation/checklist',
+            'conditionsUndertakings' => $data['conditionsUndertakings'],
+        ];
         $this->placeholder()->setPlaceholder('pageTitle', 'continuation.conditions-undertakings.page-title');
-        return $this->getViewModel($data['licence']['licNo'], $form, ['backRoute' => 'continuation/checklist']);
+        return $this->getViewModel($data['licence']['licNo'], $form, $params);
     }
 }

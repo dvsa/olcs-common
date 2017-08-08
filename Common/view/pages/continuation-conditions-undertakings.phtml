@@ -1,0 +1,103 @@
+<?php
+echo $this->partial(
+    'partials/page-header-simple',
+    [
+        'pageTitle' => $this->pageTitle(),
+        'pageSubTitle' => $this->translate('continuation.sub-title.continue-licence') .' '. $this->licNo,
+        'backUrl' => ['url' => $this->url($this->backRoute, [], [], true)],
+    ]
+);
+?>
+<div class="dashboard">
+
+    <div class="field">
+        <?php echo $this->translate('continuations.conditions-undertakings.guidance'); ?>
+    </div>
+
+    <?php if (count($conditionsUndertakings['licence']) > 0) : ?>
+
+        <h2><?php echo $this->translate('continuations.conditions-undertakings.licence'); ?></h2>
+
+        <?php if (count($conditionsUndertakings['licence']['conditions'])) : ?>
+
+            <h3><?php echo $this->translate('continuations.conditions-undertakings.conditions'); ?></h3>
+
+            <div class="field">
+                <?php foreach($conditionsUndertakings['licence']['conditions'] as $cu) : ?>
+                    <p><?php echo $cu['notes']; ?></p>
+                <?php endforeach; ?>
+            </div>
+
+        <?php endif; ?>
+
+        <?php if (count($conditionsUndertakings['licence']['undertakings'])) : ?>
+
+            <h3><?php echo $this->translate('continuations.conditions-undertakings.undertakings'); ?></h3>
+
+            <div class="field">
+                <?php foreach($conditionsUndertakings['licence']['undertakings'] as $cu) : ?>
+                    <p><?php echo $cu['notes']; ?></p>
+                <?php endforeach; ?>
+            </div>
+
+        <?php endif; ?>
+
+    <?php endif; ?>
+
+    <hr class="divider"/>
+
+    <?php if (count($conditionsUndertakings['operatingCentres'])): ?>
+
+        <h2><?php echo $this->translate('Operating centres(s)'); ?></h2>
+
+        <?php foreach($conditionsUndertakings['operatingCentres'] as $oc) : ?>
+
+            <?php $index = (isset($oc['conditions']) ? 'conditions' : 'undertakings'); ?>
+            <h3>
+                <?php echo $this->address(
+                    $oc[$index][0]['operatingCentre']['address'], ['addressLine1', 'town', 'postcode']
+                ); ?>
+            </h3>
+
+            <?php if (count($oc['conditions']) > 0) : ?>
+
+                <h4><?php echo $this->translate('continuations.conditions-undertakings.conditions'); ?></h4>
+                <div class="field">
+                    <?php foreach($oc['conditions'] as $cu) : ?>
+                          <p><?php echo $cu['notes']; ?></p>
+                    <?php endforeach; ?>
+                </div>
+
+            <?php endif; ?>
+
+            <?php if (count($oc['conditions']) > 0) : ?>
+
+                <h4><?php echo $this->translate('continuations.conditions-undertakings.undertakings'); ?></h4>
+                <div class="field">
+                    <?php foreach($oc['undertakings'] as $cu) : ?>
+                        <p><?php echo $cu['notes']; ?></p>
+                    <?php endforeach; ?>
+                </div>
+
+            <?php endif; ?>
+
+        <?php endforeach; ?>
+
+    <?php endif; ?>
+
+    <hr class="divider"/>
+
+    <div class="field">
+        <p><?php echo $this->translate('continuations.conditions-undertakings.summary'); ?></p>
+    </div>
+
+    <?php
+    echo $this->flashMessengerAll();
+
+    if (isset($this->form)) {
+        echo $this->formErrors($this->form);
+        echo $this->form($this->form);
+    }
+    ?>
+
+</div>
