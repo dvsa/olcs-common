@@ -3146,6 +3146,7 @@ return [
     'continuations.checklist.confirmation.label' => 'Are your licence details up to date?',
     'continuations.checklist.confirmation.yes-button' => 'I understand - continue to finances',
     'continuations.checklist.confirmation.yes-button-declaration' => 'I understand - continue to declaration',
+    'continuations.checklist.confirmation.yes-button-conditions-undertakings' => 'I understand - continue',
     'continuations.checklist.confirmation.no-button' => 'Update your licence',
     'continuations.checklist.section.opens_in_a_new_window' => '(opens in a new browser window)',
     'continuations.checklist.hidden.legend' => 'Licence review',
@@ -3240,5 +3241,7 @@ return [
     'continuation.declaration.print.psv_sr_title' => 'Continue an existing Special Restricted Public Service Vehicle Operator\'s Licence',
     'continuation.declaration.print.full_name_in_block-capitals' => 'Full name in block capitals',
     'continuation.declaration.print.date' => 'Date',
+    'continuation.conditions-undertakings.page-title' => 'Conditions and undertakings',
+    'continuations.conditions-undertakings.continue.label' => 'I understand - continue to finances',
     // Potentially unused translations
 ];

@@ -25,7 +25,6 @@ class LicenceChecklist extends AbstractFormService
         'transportManagers',
         'vehicles',
         'safety',
-        'conditionsUndertakings',
     ];
 
     /**
@@ -57,7 +56,7 @@ class LicenceChecklist extends AbstractFormService
         $orgData = $data['licence']['organisation'];
         $this->alterPeopleSection($form, $orgData['type']['id']);
         $this->alterBackUrl($form, $data['licence']['id']);
-        $this->alterContinueButton($form, $data['licence']);
+        $this->alterContinueButton($form, $data);
         $this->alterAllSections($form, $data['sections']);
     }
 
@@ -123,13 +122,14 @@ class LicenceChecklist extends AbstractFormService
     /**
      * Alter continue button
      *
-     * @param Form  $form        form
-     * @param array $licenceData licence data
+     * @param Form  $form form
+     * @param array $data data
      *
      * @return void
      */
-    protected function alterContinueButton($form, $licenceData)
+    protected function alterContinueButton($form, $data)
     {
+        $licenceData = $data['licence'];
         if (
             $licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             && $licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
@@ -139,6 +139,14 @@ class LicenceChecklist extends AbstractFormService
                 ->get('yesContent')
                 ->get('submit')
                 ->setLabel('continuations.checklist.confirmation.yes-button-declaration');
+            return;
+        }
+        if ($data['hasConditionsUndertakings']) {
+            $form->get('data')
+                ->get('licenceChecklistConfirmation')
+                ->get('yesContent')
+                ->get('submit')
+                ->setLabel('continuations.checklist.confirmation.yes-button-conditions-undertakings');
         }
     }
 }

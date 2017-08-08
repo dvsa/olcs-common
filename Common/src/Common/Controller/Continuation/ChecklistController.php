@@ -14,6 +14,7 @@ class ChecklistController extends AbstractContinuationController
 {
     const FINANCES_ROUTE = 'continuation/finances';
     const DECLARATION_ROUTE = 'continuation/declaration';
+    const CONDITIONS_UNDERTAKINGS_ROUTE = 'continuation/conditions-undertakings';
 
     protected $layout = 'pages/continuation-checklist';
     protected $checklistSectionLayout = 'layouts/simple';
@@ -37,7 +38,7 @@ class ChecklistController extends AbstractContinuationController
         if ($request->isPost()) {
             $form->setData((array) $request->getPost());
             if ($form->isValid()) {
-                $this->redirect()->toRoute($this->getNextStepRoute($licenceData), [], [], true);
+                $this->redirect()->toRoute($this->getNextStepRoute($data), [], [], true);
             }
         }
 
@@ -233,17 +234,21 @@ class ChecklistController extends AbstractContinuationController
     /**
      * Get next step route
      *
-     * @param array $licenceData licence data
+     * @param array $data data
      *
      * @return string
      */
-    protected function getNextStepRoute($licenceData)
+    protected function getNextStepRoute($data)
     {
+        $licenceData = $data['licence'];
         if (
             $licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             && $licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
         ) {
             return self::DECLARATION_ROUTE;
+        }
+        if ($data['hasConditionsUndertakings']) {
+            return self::CONDITIONS_UNDERTAKINGS_ROUTE;
         }
         return self::FINANCES_ROUTE;
 
