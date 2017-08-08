@@ -5,6 +5,8 @@ namespace Common\Controller\Lva;
 use Common\RefData;
 use Common\Service\Entity\CommunityLicEntityService;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Common\Service\Table\TableBuilder;
+use Olcs\Mvc\Controller\ParameterProvider\GenericList;
 use Zend\View\Model\ViewModel;
 use Common\Data\Mapper\Lva\CommunityLicence as CommunityLicMapper;
 use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicences;
@@ -119,7 +121,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             ->get('lva-' . $this->lva . '-' . $this->section)
             ->getForm();
 
-        $table = $this->alterTable($this->getTable());
+        $table = $this->alterTable($this->getTableConfig());
         $formHelper->populateFormTable($form->get('table'), $table);
         $this->getServiceLocator()->get('Helper\Form')->setFormActionFromRequest($form, $this->getRequest());
 
@@ -129,13 +131,29 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Get Table
      *
-     * @return \Common\Service\Table\TableBuilder
+     * @return TableBuilder
      */
-    private function getTable()
+    private function getTableConfig()
     {
-        $table = $this->getServiceLocator()->get('Table')->prepareTable(
-            'lva-community-licences', $this->getTableData()
-        );
+        $licenceData = $this->getTableData();
+        /** @var TableBuilder $table */
+        $table = $this->table()->buildTable('community.licence', $licenceData, [], false);
+
+        if ($licenceData['count'] > 0) {
+            $table->addAction(
+                'annul',
+                ['class' => 'action--secondary', 'value' => 'Annul']
+            );
+            $table->addAction(
+                'stop',
+                ['class' => 'action--secondary', 'value' => 'Stop']
+            );
+            $table->addAction(
+                'reprint',
+                ['class' => 'action--secondary', 'value' => 'Reprint']
+            );
+        }
+
         return $table;
     }
 
@@ -146,14 +164,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function getTableData()
     {
-        $query = [
-            'licence' => $this->getLicenceId(),
-            'statuses' => implode(',', $this->filters['status']),
-            'sort' => 'issueNo',
-            'order' => 'DESC'
-        ];
+        $paramProvider = new GenericList(['licence', 'statuses']);
+        $paramProvider->setParams($this->plugin('params'));
+        $listParams = $paramProvider->provideParameters();
 
-        $response = $this->handleQuery(CommunityLicences::create($query));
+        $response = $this->handleQuery(CommunityLicences::create($listParams));
 
         if ($response->isClientError() || $response->isServerError()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage('unknown-error');

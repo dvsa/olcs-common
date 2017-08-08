@@ -12,6 +12,7 @@ use Zend\Form\Form;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Exception;
 use Zend\Mvc\MvcEvent;
+use Common\Service\Table\TableBuilder;
 
 /**
  * Lva Abstract Controller
@@ -26,6 +27,7 @@ use Zend\Mvc\MvcEvent;
  * @method boolean isGranted(string $permission)
  * @method \Common\Controller\Plugin\CurrentUser currentUser()
  * @method \Zend\Http\Response completeSection($section, $prg = [])
+ * @method TableBuilder table()
  * 
  * @see   \Olcs\Controller\Lva\Traits\ApplicationControllerTrait::render
  * @method \Common\View\Model\Section render($titleSuffix, Form $form = null, $variables = [])
