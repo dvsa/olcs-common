@@ -2309,7 +2309,7 @@ return [
     'search.form.filter.licence-type' => 'Licence type',
     'search.form.filter.organisation-type' => 'Organisation type',
     'search.form.filter.licence-status' => 'Licence status',
-    'search.form.filter.traffic-area' => 'Traffic area',
+    'search.form.filter.traffic-area' => 'Licence traffic area',
     'search.form.filter.publication-type' => 'Publication type',
     'search.form.filter.publication-section' => 'Publication section',
     'search.form.filter.publication-date-from' => 'Publication date from',
