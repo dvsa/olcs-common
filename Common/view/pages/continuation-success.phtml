@@ -15,9 +15,9 @@
               </p>
           <?php endif; ?>
       </div>
-      <?php if (!$isDigital || $isFinancialEvidenceRequired): ?>
+      <?php if ($isPhysicalSignature || $isFinancialEvidenceRequired): ?>
           <h2><?php echo $this->translate('continuation.success.confirmation.what-you-need-to-do'); ?></h2>
-          <?php if (!$isDigital): ?>
+          <?php if ($isPhysicalSignature): ?>
               <div class="incomplete-section">
                   <h3><?php echo $this->translate('print-sign-return-declaration-form'); ?></h3>
                   <p>
