@@ -9,7 +9,6 @@ use Common\Util;
 use Dvsa\Olcs\Transfer\Query\Application\Application;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence;
 use Zend\Form\Form;
-use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Exception;
 use Zend\Mvc\MvcEvent;
@@ -319,7 +318,7 @@ abstract class AbstractController extends AbstractActionController
      *
      * @return void
      */
-    protected function alterFormForLva(FormInterface $form, $data = null)
+    protected function alterFormForLva(Form $form, $data = null)
     {
 
     }
