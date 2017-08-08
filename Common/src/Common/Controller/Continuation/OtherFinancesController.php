@@ -85,7 +85,8 @@ class OtherFinancesController extends AbstractContinuationController
             (float)$continuationDetail['financeRequired'] -
             (float)$continuationDetail['averageBalanceAmount'] -
             (float)$continuationDetail['overdraftAmount'] -
-            (float)$continuationDetail['factoringAmount']
+            (float)$continuationDetail['factoringAmount'],
+            2
         );
 
         /** @var TranslationHelperService $translatorHelper */
