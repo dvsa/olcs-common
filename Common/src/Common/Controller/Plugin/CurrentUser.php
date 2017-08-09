@@ -39,4 +39,16 @@ final class CurrentUser extends AbstractPlugin implements CurrentUserInterface
     {
         return $this->getIdentity()->getUserData();
     }
+
+    /**
+     * Has the current user got a permission
+     *
+     * @param string $permission The permission to check, see Refdata::PERMISSION_*
+     *
+     * @return bool
+     */
+    public function hasPermission($permission)
+    {
+        return $this->authService->isGranted($permission);
+    }
 }

@@ -29,4 +29,14 @@ class CurrentUserTest extends MockeryTestCase
 
         static::assertEquals($data, $sut->getUserData());
     }
+
+    public function testHasPermission()
+    {
+        /** @var AuthorizationServiceInterface|\Mockery\MockInterface $mockAuth */
+        $mockAuth = m::mock(AuthorizationServiceInterface::class);
+        $mockAuth->shouldReceive('isGranted')->with('PERMISSION1')->once()->andReturn('RESULT');
+
+        $sut = new CurrentUser($mockAuth);
+        static::assertEquals('RESULT', $sut->hasPermission('PERMISSION1'));
+    }
 }

@@ -163,6 +163,11 @@ abstract class AbstractContinuationController extends AbstractController
      */
     public function onDispatch(MvcEvent $e)
     {
+        // If Internal user, then redirect rules do not apply
+        if ($this->currentUser()->hasPermission(RefData::PERMISSION_INTERNAL_USER)) {
+            return parent::onDispatch($e);
+        }
+
         $routeMatch = $e->getRouteMatch();
         if (!$routeMatch) {
             throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
