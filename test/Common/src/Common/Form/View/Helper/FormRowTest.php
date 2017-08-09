@@ -15,21 +15,27 @@ use Common\Form\View\Helper as CommonHelper;
 class FormRowTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param string $type
-     * @param array $options
+     * Prepare element for test
+     *
+     * @param string $type    Element type
+     * @param array  $options Options for element
+     *
      * @return \Zend\Form\Element
      */
-    private function prepareElement($type = 'Text', $options = array(), $attributes = array('class' => 'class'))
-    {
+    private function prepareElement(
+        $type = 'Text',
+        $options = array(),
+        $attributes = array('class' => 'class')
+    ) {
         if (strpos($type, '\\') === false) {
             $type = '\Zend\Form\Element\\' . ucfirst($type);
         }
 
         $options = array_merge(
             array(
-                'type' => $type,
+                'type'  => $type,
                 'label' => 'Label',
-                'hint' => 'Hint',
+                'hint'  => 'Hint',
             ),
             $options
         );
@@ -54,7 +60,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($element);
 
         $this->expectOutputRegex(
-            '/^<div class="validation-wrapper"><div class="field ">'.
+            '/^<div class="validation-wrapper"><div class="field ">' .
             '<ul><li>(.*)<\/li><\/ul><label>(.*)<\/label>(.*)<\/div><\/div>$/'
         );
     }
@@ -71,7 +77,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($element);
 
         $this->expectOutputRegex(
-            '/^<div class="validation-wrapper"><div class="field ">'.
+            '/^<div class="validation-wrapper"><div class="field ">' .
             '<ul><li>(.*)<\/li><\/ul>(.*)<\/div><\/div>$/'
         );
     }
@@ -176,8 +182,8 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             'Common\Form\Elements\InputFilters\Checkbox',
             [
                 'label_options' => [
-                    'label_position' => 'append'
-                ]
+                    'label_position' => 'append',
+                ],
             ]
         );
 
@@ -209,8 +215,8 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             'Radio',
             [
                 "legend-attributes" => [
-                    'class' => 'A_CLASS'
-                ]
+                    'class' => 'A_CLASS',
+                ],
             ]
         );
 
@@ -228,7 +234,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $element = $this->prepareElement(
             'Radio',
             [
-                "fieldset-data-group" => 'data-group'
+                "fieldset-data-group" => 'data-group',
             ]
         );
 
@@ -244,9 +250,9 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             'Radio',
             [
                 "fieldset-attributes" => [
-                    "class" => "inline",
-                    "data-group" => "data-group"
-                ]
+                    "class"      => "inline",
+                    "data-group" => "data-group",
+                ],
             ]
         );
 
@@ -269,11 +275,11 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
             [
                 'csrf_options' => [
                     'messageTemplates' => [
-                        'notSame' => 'csrf-message'
+                        'notSame' => 'csrf-message',
                     ],
-                    'timeout' => 600
+                    'timeout'          => 600,
                 ],
-                'name' => 'security'
+                'name'         => 'security',
             ],
             ['id' => 'security']
         );
@@ -293,7 +299,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $element = $this->prepareElement(
             'Text',
             [
-                'name' => 'text'
+                'name' => 'text',
             ],
             ['class' => 'visually-hidden']
         );
@@ -313,7 +319,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $element = $this->prepareElement(
             'Hidden',
             [
-                'name' => 'hidden'
+                'name' => 'hidden',
             ],
             ['class' => 'visually-hidden']
         );
@@ -328,7 +334,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [null],
-            [["class" => ""]]
+            [["class" => ""]],
         ];
     }
 
@@ -344,7 +350,11 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $helpers->setService('form_element', new CommonHelper\FormElement());
         $helpers->setService('form_text', new ZendHelper\FormText());
 
-        $view = $this->getMock('Zend\View\Renderer\PhpRenderer', array('render'));
+        $view = $this->getMock(
+            'Zend\View\Renderer\PhpRenderer',
+            array('render')
+        );
+
         $view->setHelperPluginManager($helpers);
 
         // Set the view of element errors then set the service
@@ -381,7 +391,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $element = $this->prepareElement(
             'Common\Form\Elements\Types\Readonly',
             [
-                'name' => 'readonly',
+                'name'  => 'readonly',
                 'label' => 'Foo',
             ],
             []
@@ -403,8 +413,8 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $element = $this->prepareElement(
             'DateSelect',
             [
-                'name' => 'date',
-                'label' => 'Foo',
+                'name'         => 'date',
+                'label'        => 'Foo',
                 'label-suffix' => 'unit_LabelSfx',
             ],
             []
@@ -415,10 +425,10 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         $this->expectOutputString(
             '<div class="field ">' .
-                '<fieldset class="date">' .
-                    '<legend>Foo unit_LabelSfx</legend>' .
-                    '<p class="hint">Hint</p>' .
-                '</fieldset>' .
+            '<fieldset class="date">' .
+            '<legend>Foo unit_LabelSfx</legend>' .
+            '<p class="hint">Hint</p>' .
+            '</fieldset>' .
             '</div>'
         );
     }
@@ -431,10 +441,10 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $element = $this->prepareElement(
             'DateSelect',
             [
-                'name' => 'date',
-                'label' => 'Foo',
+                'name'          => 'date',
+                'label'         => 'Foo',
                 'fieldsetClass' => 'user',
-                'hint' => null,
+                'hint'          => null,
             ],
             []
         );
@@ -455,7 +465,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $element = $this->prepareElement(
             'DateTimeSelect',
             [
-                'name' => 'date',
+                'name'  => 'date',
                 'label' => 'Foo',
             ],
             []
@@ -477,13 +487,13 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $element = new AttachFilesButton('files');
         $element->setOptions(
             [
-                'type' => AttachFilesButton::class,
+                'type'  => AttachFilesButton::class,
                 'label' => 'Label',
-                'hint' => 'Hint',
+                'hint'  => 'Hint',
             ]
         );
         $element->setAttributes(
-            [ 'class' => 'fileUploadTest' ]
+            ['class' => 'fileUploadTest']
         );
 
         $viewHelper = $this->prepareHelper();
