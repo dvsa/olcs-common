@@ -419,7 +419,7 @@ return [
     'application.signature.options.verify' => '<strong>Sign online using GOV.UK Verify</strong>If you haven’t used Verify before, it takes about 15 minutes to set up',
     'application.signature.options.sign' => '<strong>Print, sign and return</strong>You\'ll need to return the signed declaration to the Central Licensing Office',
     'application_business-details_allow-email.label' => 'How would you like to receive your correspondence?',
-    'application_community_licence_total_community_licences' => 'Total community licences',
+    'application_community_licence_total_community_licences' => 'Active community licences',
     'application_operating-centres_authorisation-sub-action.advertisements' => 'Newspaper advert',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlaced' => 'Has the operator advertised the operating centre?',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate' => 'Date of advert (if applicable)',

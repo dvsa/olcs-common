@@ -2,24 +2,24 @@
 
 namespace Common\Controller\Lva;
 
-use Common\RefData;
-use Common\Service\Entity\CommunityLicEntityService;
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
-use Common\Service\Table\TableBuilder;
-use Olcs\Mvc\Controller\ParameterProvider\GenericList;
-use Zend\View\Model\ViewModel;
-use Common\Data\Mapper\Lva\CommunityLicence as CommunityLicMapper;
-use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicences;
-use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicence;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\Create as ApplicationCreateCommunityLic;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\Create as LicenceCreateCommunityLic;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\Create as ApplicationCreateCommunityLic;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\Create as LicenceCreateCommunityLic;
+use Dvsa\Olcs\Transfer\Command\CommunityLic\EditSuspension as EditSuspensionDto;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Reprint as ReprintDto;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Restore as RestoreDto;
+use Common\Data\Mapper\Lva\CommunityLicence as CommunityLicMapper;
+use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicences;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Stop as StopDto;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Dvsa\Olcs\Transfer\Query\CommunityLic\CommunityLicence;
+use Olcs\Mvc\Controller\ParameterProvider\GenericList;
+use Common\Service\Entity\CommunityLicEntityService;
 use Dvsa\Olcs\Transfer\Command as TransferCmd;
-use Dvsa\Olcs\Transfer\Command\CommunityLic\EditSuspension as EditSuspensionDto;
+use Common\Service\Table\TableBuilder;
+use Zend\View\Model\ViewModel;
+use Common\RefData;
 
 /**
  * Shared logic between Community Licences controllers
@@ -30,6 +30,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 {
     use Traits\CrudTableTrait,
         Traits\AdapterAwareTrait;
+
+    // See OLCS-16655, pagination is to be 50 per page only
+    const TABLE_RESULTS_PER_PAGE = 50;
 
     protected $section = 'community_licences';
     protected $baseRoute = 'lva-%s/community_licences';
@@ -85,9 +88,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $filterForm = $this->getFilterForm()->setData($this->filters);
 
         $form = $this->getForm();
-
         $this->alterFormForLva($form);
-
         $data = $this->formatDataForForm($this->getFormData());
         $form->setData($data);
 
@@ -136,8 +137,14 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     private function getTableConfig()
     {
         $licenceData = $this->getTableData();
+
         /** @var TableBuilder $table */
-        $table = $this->table()->buildTable('community.licence', $licenceData, [], false);
+        $table = $this->table()->buildTable(
+            'community.licence',
+            $licenceData,
+            $this->params()->fromQuery(),
+            false
+        );
 
         if ($licenceData['count'] > 0) {
             $table->addAction(
@@ -164,9 +171,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function getTableData()
     {
-        $paramProvider = new GenericList(['licence', 'statuses']);
+        $paramProvider = new GenericList(['licence']);
         $paramProvider->setParams($this->plugin('params'));
         $listParams = $paramProvider->provideParameters();
+        $listParams['statuses'] = implode(',', $this->filters['status']);
+        $listParams['limit'] = self::TABLE_RESULTS_PER_PAGE;
 
         $response = $this->handleQuery(CommunityLicences::create($listParams));
 

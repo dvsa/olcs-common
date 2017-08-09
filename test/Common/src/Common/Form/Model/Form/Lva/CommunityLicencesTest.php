@@ -26,7 +26,7 @@ class CommunityLicencesTest extends AbstractFormValidationTestCase
     public function testTable()
     {
         $element = [ 'table', 'table' ];
-        $this->assertFormElementRequired($element, false);
+        $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementTable($element);
     }
