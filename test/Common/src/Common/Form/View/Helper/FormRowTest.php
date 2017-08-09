@@ -2,14 +2,15 @@
 
 namespace CommonTest\Form\View\Helper;
 
+use Common\Form\Elements\Types\AttachFilesButton;
 use Zend\Form\Element\DateSelect;
 use Zend\View\HelperPluginManager;
 use Zend\Form\View\Helper as ZendHelper;
 use Common\Form\View\Helper as CommonHelper;
 
 /**
- * @covers Common\Form\View\Helper\FormRow
- * @covers Common\Form\View\Helper\Extended\FormRow
+ * @covers \Common\Form\View\Helper\FormRow
+ * @covers \Common\Form\View\Helper\Extended\FormRow
  */
 class FormRowTest extends \PHPUnit_Framework_TestCase
 {
@@ -465,6 +466,31 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         $this->expectOutputString(
             '<div class="field "><fieldset class="date"><legend>Foo</legend><p class="hint">Hint</p></fieldset></div>'
+        );
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderAttachFilesButtonElement()
+    {
+        $element = new AttachFilesButton('files');
+        $element->setOptions(
+            [
+                'type' => AttachFilesButton::class,
+                'label' => 'Label',
+                'hint' => 'Hint',
+            ]
+        );
+        $element->setAttributes(
+            [ 'class' => 'fileUploadTest' ]
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputString(
+            '<div class=""><label for="files">Label</label></div>'
         );
     }
 
