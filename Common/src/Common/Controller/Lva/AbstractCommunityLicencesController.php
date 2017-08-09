@@ -173,9 +173,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     {
         $paramProvider = new GenericList(['licence']);
         $paramProvider->setParams($this->plugin('params'));
+
         $listParams = $paramProvider->provideParameters();
-        $listParams['statuses'] = implode(',', $this->filters['status']);
-        $listParams['limit'] = self::TABLE_RESULTS_PER_PAGE;
+        $listParams['licence'] = $this->getLicenceId();
 
         $response = $this->handleQuery(CommunityLicences::create($listParams));
 
