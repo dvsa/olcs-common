@@ -29,7 +29,7 @@ echo $this->partial(
 
             <div class="field">
                 <?php foreach($conditionsUndertakings['licence']['conditions'] as $cu) : ?>
-                    <p><?php echo $this->escape($cu['notes']); ?></p>
+                    <p><?php echo $this->escapeHtml($cu['notes']); ?></p>
                 <?php endforeach; ?>
             </div>
 
@@ -46,7 +46,7 @@ echo $this->partial(
 
             <div class="field">
                 <?php foreach($conditionsUndertakings['licence']['undertakings'] as $cu) : ?>
-                    <p><?php echo $this->escape($cu['notes']); ?></p>
+                    <p><?php echo $this->escapeHtml($cu['notes']); ?></p>
                 <?php endforeach; ?>
             </div>
 
@@ -75,7 +75,7 @@ echo $this->partial(
                 <h4><?php echo $this->translate('continuations.conditions-undertakings.conditions'); ?></h4>
                 <div class="field">
                     <?php foreach($oc['conditions'] as $cu) : ?>
-                          <p><?php echo $this->escape($cu['notes']); ?></p>
+                          <p><?php echo $this->escapeHtml($cu['notes']); ?></p>
                     <?php endforeach; ?>
                 </div>
 
@@ -86,7 +86,7 @@ echo $this->partial(
                 <h4><?php echo $this->translate('continuations.conditions-undertakings.undertakings'); ?></h4>
                 <div class="field">
                     <?php foreach($oc['undertakings'] as $cu) : ?>
-                        <p><?php echo $this->escape($cu['notes']); ?></p>
+                        <p><?php echo $this->escapeHtml($cu['notes']); ?></p>
                     <?php endforeach; ?>
                 </div>
 
