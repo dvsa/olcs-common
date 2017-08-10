@@ -15,6 +15,7 @@ use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Common\Form\Elements\Types\AttachFilesButton;
 
 /**
  * Render form row
@@ -32,6 +33,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
      * @var string
      */
     private static $format = '<div class="field %s">%s</div>';
+    private static $formatNoDivClass = '<div class="%s">%s</div>';
     private static $readonlyFormat = '<div class="field read-only %s"><p>%s<br><b>%s</b></p></div>';
     private static $errorClass = '<div class="validation-wrapper">%s</div>';
     protected $fieldsetWrapper = '<fieldset%4$s>%2$s%1$s%3$s</fieldset>';
@@ -98,7 +100,6 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             }
 
             $markup = $this->renderFieldset($element, false);
-
         } else {
             if ($element instanceof SingleCheckbox) {
                 $this->labelPosition = self::LABEL_APPEND;
@@ -145,7 +146,11 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
                 $renderAsFieldset = $element->getOption('render_as_fieldset');
 
                 if (!$renderAsFieldset) {
-                    $markup = sprintf(self::$format, $class, $markup);
+                    if ($element instanceof AttachFilesButton) {
+                        $markup = sprintf(self::$formatNoDivClass, $class, $markup);
+                    } else {
+                        $markup = sprintf(self::$format, $class, $markup);
+                    }
                 }
             }
         }
@@ -290,6 +295,7 @@ class FormRow extends \Common\Form\View\Helper\Extended\FormRow implements Facto
             // Multicheckbox elements have to be handled differently as the HTML standard does not allow nested
             // labels. The semantic way is to group them inside a fieldset
             $type = $element->getAttribute('type');
+
             if ($type === 'multi_checkbox' || $type === 'radio') {
                 $fieldsetAttributes = $element->getOption('fieldset-attributes');
                 $dataGroup = $element->getOption('fieldset-data-group');
