@@ -1345,5 +1345,9 @@ return [
     'continuation.conditions-undertakings.page-title' => 'Amodau ac ymgymeriadau',
     'continuation.success.confirmation.what-you-need-to-do' => 'Beth mae arnoch angen ei wneud nesaf?',
     'continuation.success.add-supporting-evidence' => 'Ychwanegu\'ch tystiolaeth gefnogol',
+    'continuation.conditions-undertakings.page-title' => 'Amodau ac ymgymeriadau',
+    'continuations.conditions-undertakings.licence' => 'Ffi drwydded',
+    'continuations.conditions-undertakings.undertakings' => 'Ymgymeriadau',
+    'continuations.conditions-undertakings.conditions' => 'Amodau',
     // Potentially unused translations
 ];
