@@ -66,7 +66,7 @@ echo $this->partial(
             <?php $index = (isset($oc['conditions']) ? 'conditions' : 'undertakings'); ?>
             <h3>
                 <?php echo $this->address(
-                    $oc[$index][0]['operatingCentre']['address'], ['addressLine1', 'town', 'postcode']
+                    $oc[$index][0]['address'], ['addressLine1', 'town', 'postcode']
                 ); ?>
             </h3>
 
