@@ -3262,5 +3262,7 @@ return [
     'continuations.conditions-undertakings.conditions' => 'Conditions',
     'continuations.conditions-undertakings.undertakings' => 'Undertakings',
     'continuations.conditions-undertakings.summary' => '<p class="important">If you have any questions about specific conditions or undertakings please contact <a href="mailto:{{OPERATOR_LICENSING_EMAIL}}">{{OPERATOR_LICENSING_EMAIL}}</a></p>',
+    'community-licences.add.error-message.max' => 'The maximum number is 50',
+    'community-licences.add.error-message.min' => 'The minimum number is 1',
     // Potentially unused translations
 ];
