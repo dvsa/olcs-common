@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\Form\Form;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\CreateOfficeCopy as ApplicationCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Licence\CreateOfficeCopy as LicenceCreateOfficeCopy;
 use Dvsa\Olcs\Transfer\Command\CommunityLic\Application\Create as ApplicationCreateCommunityLic;
@@ -63,7 +64,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $data = (array)$request->getPost();
             $crudAction = $this->getCrudAction([$data['table']]);
 
@@ -104,7 +104,19 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     private function getFilterForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicenceFilter', false);
+        /** @var Form $form */
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createForm('Lva\CommunityLicenceFilter', false);
+
+        $form->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                $this->getBaseRoute(),
+                [$this->lva => $this->getIdentifier()]
+            )
+        );
+
+        return $form;
     }
 
     /**
