@@ -88,7 +88,7 @@ class LicenceChecklist extends AbstractFormService
      */
     protected function alterBackUrl($form, $licenceId)
     {
-        $backButton = $form->get('data')->get('licenceChecklistConfirmation')->get('noContent')->get('backToLicence');
+        $backButton = $form->get('licenceChecklistConfirmation')->get('noContent')->get('backToLicence');
         $backButton->setValue(
             $this->getServiceLocator()->get('Helper\Url')->fromRoute(
                 'lva-licence',
@@ -134,16 +134,14 @@ class LicenceChecklist extends AbstractFormService
             $licenceData['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED
             && $licenceData['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV
         ) {
-            $form->get('data')
-                ->get('licenceChecklistConfirmation')
+            $form->get('licenceChecklistConfirmation')
                 ->get('yesContent')
                 ->get('submit')
                 ->setLabel('continuations.checklist.confirmation.yes-button-declaration');
             return;
         }
         if ($data['hasConditionsUndertakings']) {
-            $form->get('data')
-                ->get('licenceChecklistConfirmation')
+            $form->get('licenceChecklistConfirmation')
                 ->get('yesContent')
                 ->get('submit')
                 ->setLabel('continuations.checklist.confirmation.yes-button-conditions-undertakings');

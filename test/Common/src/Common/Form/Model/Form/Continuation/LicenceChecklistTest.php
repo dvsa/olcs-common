@@ -83,7 +83,7 @@ class LicenceChecklistTest extends AbstractFormValidationTestCase
 
     public function testLicenceChecklistConfirmation()
     {
-        $element = ['data', 'licenceChecklistConfirmation', 'yesNo'];
+        $element = ['licenceChecklistConfirmation', 'yesNo'];
         $this->assertFormElementIsRequired($element, true, [0 => 0]);
         $this->assertFormElementValid($element, 'Y');
         $this->assertFormElementValid($element, 'N');
@@ -93,25 +93,25 @@ class LicenceChecklistTest extends AbstractFormValidationTestCase
 
     public function testSubmit()
     {
-        $element = ['data', 'licenceChecklistConfirmation', 'yesContent', 'submit'];
+        $element = ['licenceChecklistConfirmation', 'yesContent', 'submit'];
         $this->assertFormElementActionButton($element);
     }
 
     public function testChecklistConfirmText()
     {
-        $element = ['data', 'licenceChecklistConfirmation', 'yesContent', 'checklistConfirmText'];
+        $element = ['licenceChecklistConfirmation', 'yesContent', 'checklistConfirmText'];
         $this->assertFormElementHtml($element);
     }
 
     public function testChecklistDeclineText()
     {
-        $element = ['data', 'licenceChecklistConfirmation', 'noContent', 'checklistDeclineText'];
+        $element = ['licenceChecklistConfirmation', 'noContent', 'checklistDeclineText'];
         $this->assertFormElementHtml($element);
     }
 
     public function testActionLink()
     {
-        $element = ['data', 'licenceChecklistConfirmation', 'noContent', 'backToLicence'];
+        $element = ['licenceChecklistConfirmation', 'noContent', 'backToLicence'];
         $this->assertFormElementHtml($element);
     }
 }
