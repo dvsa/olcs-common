@@ -22,4 +22,14 @@ class LicenceChecklist
      *  })
      */
     public $data = null;
+
+    /**
+     * @Form\ComposedObject("Common\Form\Model\Form\Continuation\Fieldset\LicenceChecklistConfirmation")
+     * @Form\Options(
+     *     {
+     *          "label" : "continuations.checklist.confirmation.label",
+     *     }
+     * )
+     */
+    public $licenceChecklistConfirmation = null;
 }
