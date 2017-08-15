@@ -14,7 +14,7 @@ $name = $element->getName();
     echo $this->formCheckbox($element);
     ?>
     <label class="checkbox__label <?php echo $hasValidationError ? 'checkbox__label--error' : ''; ?>"
-           for="<?php echo $name; ?>">
+           for="<?php echo $element->getAttribute("id"); ?>">
         <?php echo $this->translate($element->getLabel()); ?>
     </label>
     <div class="checkbox__hidden-content help__text" id="<?php echo $name; ?>-hidden">
