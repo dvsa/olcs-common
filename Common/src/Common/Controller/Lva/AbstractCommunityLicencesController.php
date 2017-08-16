@@ -108,11 +108,13 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\CommunityLicenceFilter', false);
 
+        $lva = ($this->lva !== 'variation')? $this->lva :'application';
+
         $form->setAttribute(
             'action',
             $this->url()->fromRoute(
                 $this->getBaseRoute(),
-                [$this->lva => $this->getIdentifier()]
+                [$lva => $this->getIdentifier()]
             )
         );
 
