@@ -147,6 +147,8 @@ abstract class AbstractContinuationController extends AbstractController
     /**
      * Redirect to licence overview page
      *
+     * @param int $licenceId licence Id
+     *
      * @return \Zend\Http\Response
      */
     protected function redirectToLicenceOverviewPage($licenceId)

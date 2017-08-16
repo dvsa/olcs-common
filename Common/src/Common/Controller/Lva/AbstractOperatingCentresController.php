@@ -366,6 +366,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
         } else {
             $data = OperatingCentre::mapFromResult($resultData);
         }
+
+        if (!isset($data['advertisements']['file']['list'])) {
+            $data['advertisements']['file']['list'] = [];
+        }
+
         $data['advertisements']['uploadedFileCount'] = count($data['advertisements']['file']['list']);
 
         $resultData['canAddAnother'] = false;

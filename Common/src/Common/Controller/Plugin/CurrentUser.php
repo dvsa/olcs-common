@@ -17,7 +17,9 @@ final class CurrentUser extends AbstractPlugin implements CurrentUserInterface
     private $authService;
 
     /**
-     * @param AuthorizationServiceInterface $authService
+     * Constructor
+     *
+     * @param AuthorizationServiceInterface $authService Auth service
      */
     public function __construct(AuthorizationServiceInterface $authService)
     {
@@ -25,6 +27,8 @@ final class CurrentUser extends AbstractPlugin implements CurrentUserInterface
     }
 
     /**
+     * Get zf identity
+     * 
      * @return \Common\Rbac\User
      */
     public function getIdentity()
@@ -33,6 +37,8 @@ final class CurrentUser extends AbstractPlugin implements CurrentUserInterface
     }
 
     /**
+     * Get user data
+     *
      * @return array
      */
     public function getUserData()
