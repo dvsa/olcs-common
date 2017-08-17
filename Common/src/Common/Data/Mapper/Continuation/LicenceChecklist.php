@@ -186,6 +186,8 @@ class LicenceChecklist
         return [
             'persons' => $people,
             'header' => $translator->translate('continuations.people-section-header.' . $organisation['type']['id']),
+            'emptyTableMessage' =>
+                $translator->translate('continuations.people-empty-table-message.' . $organisation['type']['id']),
             'displayPersonCount' => RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT
         ];
     }

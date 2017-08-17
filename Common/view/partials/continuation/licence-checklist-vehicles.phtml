@@ -1,10 +1,14 @@
 <?php
-echo $this->partial(
-    'partials/continuation/checklist-section',
-    [
-        'data' => $this->licenceChecklist(\Common\RefData::LICENCE_CHECKLIST_VEHICLES, $this->data)
-    ]
-);
+if (count($this->data['vehicles']['vehicles']) > 0) {
+    echo $this->partial(
+        'partials/continuation/checklist-section',
+        [
+            'data' => $this->licenceChecklist(\Common\RefData::LICENCE_CHECKLIST_VEHICLES, $this->data)
+        ]
+    );
+} else {
+    echo $this->translate('There are no vehicles recorded on your licence');
+}
 ?>
 <?php if (count($this->data['vehicles']['vehicles']) > \Common\RefData::CONTINUATIONS_DISPLAY_VEHICLES_COUNT) : ?>
     <p>
