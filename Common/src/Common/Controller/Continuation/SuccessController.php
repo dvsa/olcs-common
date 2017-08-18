@@ -30,7 +30,7 @@ class SuccessController extends AbstractContinuationController
         $params = [
             'paymentRef' => $data['reference'],
             'isPhysicalSignature' => $data['isPhysicalSignature'],
-            'isFinancialEvidenceRequired' => true,//$data['isFinancialEvidenceRequired'],
+            'isFinancialEvidenceRequired' => $data['isFinancialEvidenceRequired'],
             'isNi' => $licence['trafficArea']['isNi'],
             'licenceId' => $licence['id'],
             'isSpecialRestricted' => $licence['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED,
