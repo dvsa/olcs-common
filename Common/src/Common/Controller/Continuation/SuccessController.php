@@ -30,9 +30,10 @@ class SuccessController extends AbstractContinuationController
         $params = [
             'paymentRef' => $data['reference'],
             'isPhysicalSignature' => $data['isPhysicalSignature'],
-            'isFinancialEvidenceRequired' => $data['isFinancialEvidenceRequired'],
+            'isFinancialEvidenceRequired' => true,//$data['isFinancialEvidenceRequired'],
             'isNi' => $licence['trafficArea']['isNi'],
             'licenceId' => $licence['id'],
+            'isSpecialRestricted' => $licence['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED,
         ];
 
         return $this->getViewModel($licence['licNo'], null, $params);
