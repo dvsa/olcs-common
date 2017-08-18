@@ -22,7 +22,8 @@ class FinancialEvidence
      * @Form\Name("evidence")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidenceEvidence")
      * @Form\Options({
-     *    "label": "lva-financial-evidence-evidence.label"
+     *    "label": "lva-financial-evidence-evidence.label",
+     *    "hint": "lva-financial-evidence-evidence.hint"
      * })
      */
     public $evidence = null;
