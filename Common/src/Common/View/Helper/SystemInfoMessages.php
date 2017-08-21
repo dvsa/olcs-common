@@ -51,7 +51,7 @@ class SystemInfoMessages extends AbstractHelper
 
     private function render()
     {
-        if ($this->mssgs === null || $this->mssgs['count'] === 0) {
+        if ($this->mssgs === null || !isset($this->mssgs['results']) || $this->mssgs['count'] === 0) {
             return null;
         }
 
