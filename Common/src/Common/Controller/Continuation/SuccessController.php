@@ -33,6 +33,7 @@ class SuccessController extends AbstractContinuationController
             'isFinancialEvidenceRequired' => $data['isFinancialEvidenceRequired'],
             'isNi' => $licence['trafficArea']['isNi'],
             'licenceId' => $licence['id'],
+            'isSpecialRestricted' => $licence['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED,
         ];
 
         return $this->getViewModel($licence['licNo'], null, $params);
