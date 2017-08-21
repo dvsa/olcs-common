@@ -92,6 +92,11 @@ class SystemInfoMessagesTest extends MockeryTestCase
                     '<div class="system-messages__wrapper"><p>unit_Desc2 &amp;amp;</p></div>' .
                     '</div>',
             ],
+            // no data alt
+            [
+                'data' => [],
+                'expect' => null,
+            ],
         ];
     }
 }
