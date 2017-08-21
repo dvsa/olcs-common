@@ -3264,5 +3264,11 @@ return [
     'continuations.conditions-undertakings.summary' => '<p class="important">If you have any questions about specific conditions or undertakings please contact <a href="mailto:{{OPERATOR_LICENSING_EMAIL}}">{{OPERATOR_LICENSING_EMAIL}}</a></p>',
     'community-licences.add.error-message.max' => 'The maximum number is 50',
     'community-licences.add.error-message.min' => 'The minimum number is 1',
+    'continuations.people-empty-table-message.org_t_ir' => 'There are no people recorded on your licence',
+    'continuations.people-empty-table-message.org_t_llp' => 'There are no partners recorded on your licence',
+    'continuations.people-empty-table-message.org_t_p' => 'There are no partners recorded on your licence',
+    'continuations.people-empty-table-message.org_t_pa' => 'There are no responsible people recorded on your licence',
+    'continuations.people-empty-table-message.org_t_rc' => 'There are no directors recorded on your licence',
+    'continuations.people-empty-table-message.org_t_st' => 'There is no owner recorded on your licence',
     // Potentially unused translations
 ];

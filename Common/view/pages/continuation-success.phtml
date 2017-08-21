@@ -15,7 +15,7 @@
               </p>
           <?php endif; ?>
       </div>
-      <?php if ($isPhysicalSignature || $isFinancialEvidenceRequired): ?>
+      <?php if ($isPhysicalSignature || ($isFinancialEvidenceRequired && !$isSpecialRestricted)): ?>
           <h2><?php echo $this->translate('continuation.success.confirmation.what-you-need-to-do'); ?></h2>
           <?php if ($isPhysicalSignature): ?>
               <div class="incomplete-section">
@@ -32,7 +32,7 @@
                   </p>
               </div>
           <?php endif; ?>
-          <?php if ($isFinancialEvidenceRequired): ?>
+          <?php if ($isFinancialEvidenceRequired && !$isSpecialRestricted): ?>
               <div class="incomplete-section">
                   <h3><?php echo $this->translate('continuation.success.add-supporting-evidence'); ?></h3>
                   <p>
@@ -46,7 +46,9 @@
               </div>
           <?php endif; ?>
       <?php endif; ?>
-      <h2><?php echo $this->translate('continuation.success.what-happens-next'); ?></h2>
+      <?php if (!$isSpecialRestricted): ?>
+        <h2><?php echo $this->translate('continuation.success.what-happens-next'); ?></h2>
+      <?php endif; ?>
       <div class="field">
         <p><?php echo $this->translate('continuation.success.licence-documentation'); ?></p>
       </div>
