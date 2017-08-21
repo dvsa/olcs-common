@@ -1,10 +1,14 @@
 <?php
-echo $this->partial(
-    'partials/continuation/checklist-section',
-    [
-        'data' => $this->licenceChecklist(\Common\RefData::LICENCE_CHECKLIST_PEOPLE, $this->data)
-    ]
-);
+if (count($this->data['people']['persons']) > 0) {
+    echo $this->partial(
+        'partials/continuation/checklist-section',
+        [
+            'data' => $this->licenceChecklist(\Common\RefData::LICENCE_CHECKLIST_PEOPLE, $this->data)
+        ]
+    );
+} else {
+    echo $this->data['people']['emptyTableMessage'];
+}
 ?>
 <?php if (count($this->data['people']['persons']) > \Common\RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT) : ?>
     <p>

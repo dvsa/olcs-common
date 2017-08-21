@@ -247,6 +247,10 @@ class LicenceChecklistTest extends MockeryTestCase
                     ],
                     'header' =>
                         'continuations.people-section-header.' . RefData::ORG_TYPE_REGISTERED_COMPANY . '_translated',
+                    'emptyTableMessage' =>
+                        'continuations.people-empty-table-message.' .
+                        RefData::ORG_TYPE_REGISTERED_COMPANY .
+                        '_translated',
                     'displayPersonCount' => RefData::CONTINUATIONS_DISPLAY_PERSON_COUNT
                 ],
                 'vehicles' => [
