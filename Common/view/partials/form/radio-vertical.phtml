@@ -4,20 +4,20 @@ $element = $this->element;
 
 /** @var \Zend\Form\Element\Radio $radioElement */
 $radioElement = $element->get('radio');
-$errors = $this->formElementErrors()->render($element);
+$errors = $this->formElementErrors()->render($radioElement);
 $hasValidationError = !empty($errors);
 ?>
 
 <div class="<?php echo ($hasValidationError) ? 'validation-wrapper' : 'field' ?>">
     <fieldset class="radio-button__fieldset">
-        <?php if ($hasValidationError) : ?>
-            <?php echo $errors ?>
-        <?php endif; ?>
-
         <legend><?php echo $this->translate($element->getLabel()) ?></legend>
 
         <?php if ($element->getOption('hint')) : ?>
             <p class="form-hint"><?php echo $this->translate($element->getOption('hint')) ?></p>
+        <?php endif; ?>
+
+        <?php if ($hasValidationError) : ?>
+            <?php echo $errors ?>
         <?php endif; ?>
 
         <?php foreach ($radioElement->getValueOptions() as $valueOption) : ?>
