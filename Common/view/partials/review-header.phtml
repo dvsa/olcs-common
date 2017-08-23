@@ -1,7 +1,10 @@
 <head>
     <meta charset="utf-8">
     <?php
-        echo $this->headTitle($this->translate(''));
+        $pageTitle = $this->pageTitle();
+        if ($pageTitle !== null) {
+            echo $this->headTitle($this->translate($pageTitle));
+        }
         echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge');

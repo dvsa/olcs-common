@@ -23,6 +23,8 @@ trait GenericReceipt
      */
     public function printAction()
     {
+        $this->placeholder()->setPlaceholder('pageTitle', 'pay-fees.success.print-title');
+
         $paymentRef = $this->params()->fromRoute('reference');
 
         $viewData = $this->getReceiptData($paymentRef);
