@@ -33,7 +33,7 @@ class DataRetentionRuleLinkTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->assertEquals(
-            '<a href="DATA_RETENTION_EDIT_URL" target="_self">test</a>',
+            '<a href="DATA_RETENTION_EDIT_URL" target="_self">Test</a>',
             DataRetentionRuleLink::format($data, [], $sm)
         );
     }
