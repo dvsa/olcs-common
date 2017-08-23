@@ -30,14 +30,29 @@ class FinancialEvidence extends AbstractLvaFormService
      *
      * @param \Zend\Form\Form $form Form
      *
-     * @return \Zend\Form\Form
+     * @return void
      */
     protected function alterForm($form)
     {
-        $form->get('evidence')->get('uploadNowRadio')->setName('uploadNow');
-        $form->get('evidence')->get('uploadLaterRadio')->setName('uploadNow');
-        $form->get('evidence')->get('sendByPostRadio')->setName('uploadNow');
+        $evidenceFieldset = $form->get('evidence');
+        $evidenceFieldset->get('uploadNowRadio')->setName('uploadNow');
+        $evidenceFieldset->get('uploadLaterRadio')->setName('uploadNow');
+        $evidenceFieldset->get('sendByPostRadio')->setName('uploadNow');
         $this->getFormHelper()->remove($form, 'evidence->uploadNow');
-        return $form;
+
+        $sl = $this->getServiceLocator();
+        /** @var \Zend\Mvc\Controller\Plugin\Url $urlControllerPlugin */
+        $urlControllerPlugin = $sl->get('ControllerPluginManager')->get('url');
+
+        /** @var \Common\Service\Helper\TranslationHelperService $translator */
+        $translator = $sl->get('Helper\Translation');
+
+        $evidenceHint = $translator->translateReplace(
+            'lva-financial-evidence-evidence.hint',
+            [
+                $urlControllerPlugin->fromRoute('guides/guide', ['guide' => 'financial-evidence'], [], true),
+            ]
+        );
+        $evidenceFieldset->setOption('hint', $evidenceHint);
     }
 }

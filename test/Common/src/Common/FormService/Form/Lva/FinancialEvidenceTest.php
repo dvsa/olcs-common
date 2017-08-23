@@ -31,6 +31,43 @@ class FinancialEvidenceTest extends MockeryTestCase
 
     public function testGetForm()
     {
+        $mockUrlService = m::mock()
+            ->shouldReceive('fromRoute')
+            ->with('guides/guide', ['guide' => 'financial-evidence'], [], true)
+            ->andReturn('FOO')
+            ->once()
+            ->getMock();
+
+        $mockTranslatorService = m::mock()
+            ->shouldReceive('translateReplace')
+            ->with('lva-financial-evidence-evidence.hint', ['FOO'])
+            ->andReturn('BAR')
+            ->once()
+            ->getMock();
+
+        $mockServiceLocator =  m::mock()
+            ->shouldReceive('get')
+            ->with('ControllerPluginManager')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('url')
+                    ->andReturn($mockUrlService)
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('get')
+            ->with('Helper\Translation')
+            ->andReturn($mockTranslatorService)
+            ->once()
+            ->getMock();
+
+        $this->fsm
+            ->shouldReceive('getServiceLocator')
+            ->andReturn($mockServiceLocator)
+            ->once()
+            ->getMock();
+
         /** @var \Zend\Http\Request $request */
         $request = m::mock(\Zend\Http\Request::class);
 
@@ -70,9 +107,12 @@ class FinancialEvidenceTest extends MockeryTestCase
                             ->getMock()
                     )
                     ->once()
-                ->getMock()
+                    ->shouldReceive('setOption')
+                    ->with('hint', 'BAR')
+                    ->once()
+                    ->getMock()
             )
-            ->times(3)
+            ->once()
             ->getMock();
 
         $this->formHelper->shouldReceive('createFormWithRequest')

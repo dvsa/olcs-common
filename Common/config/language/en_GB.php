@@ -1680,7 +1680,7 @@ return [
     'lva-conditions-undertakings-table-title' => 'Conditions and undertakings',
     'lva-conditions-undertakings-table-type' => 'Type',
     'lva-financial-evidence-evidence.label' => 'How would you like to send your evidence?',
-    'lva-financial-evidence-evidence.hint' => 'Uploading your information as soon as possible will help us process your application quickly. <a href="">See the types of evidence we accept</a>.',
+    'lva-financial-evidence-evidence.hint' => 'Uploading your information as soon as possible will help us process your application quickly. <a href="%s">See the types of evidence we accept</a>.',
     'lva-financial-evidence-upload-now.label' => 'Choose an option',
     'lva-financial-evidence-upload-now.no' => 'Send in the post',
     'lva-financial-evidence-upload-now.yes' => 'Upload files',
