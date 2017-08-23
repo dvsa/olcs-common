@@ -42,7 +42,7 @@ class FinancialEvidence extends AbstractLvaFormService
 
         $sl = $this->getServiceLocator();
         /** @var \Zend\Mvc\Controller\Plugin\Url $urlControllerPlugin */
-        $urlControllerPlugin = $sl->get('ControllerPluginManager')->get('url');
+        $urlHelper = $sl->get('Helper\Url');
 
         /** @var \Common\Service\Helper\TranslationHelperService $translator */
         $translator = $sl->get('Helper\Translation');
@@ -50,7 +50,7 @@ class FinancialEvidence extends AbstractLvaFormService
         $evidenceHint = $translator->translateReplace(
             'lva-financial-evidence-evidence.hint',
             [
-                $urlControllerPlugin->fromRoute('guides/guide', ['guide' => 'financial-evidence'], [], true),
+                $urlHelper->fromRoute('guides/guide', ['guide' => 'financial-evidence'], [], true),
             ]
         );
         $evidenceFieldset->setOption('hint', $evidenceHint);

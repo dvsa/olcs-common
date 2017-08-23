@@ -5,6 +5,7 @@ namespace CommonTest\FormService\Form\Lva;
 use Common\FormService\Form\Lva\FinancialEvidence;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use CommonTest\Bootstrap;
 
 /**
  * @covers Common\FormService\Form\Lva\FinancialEvidence
@@ -18,11 +19,23 @@ class FinancialEvidenceTest extends MockeryTestCase
     protected $formHelper;
     /** @var  \Common\FormService\FormServiceManager */
     protected $fsm;
+    /** @var  m\MockInterface */
+    protected $urlHelper;
+    /** @var  m\MockInterface */
+    protected $translator;
 
     public function setUp()
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
+        $this->urlHelper = m::mock();
+        $this->translator = m::mock();
+
+        $sm = Bootstrap::getServiceManager();
+        $sm->setService('Helper\Url', $this->urlHelper);
+        $sm->setService('Helper\Translation', $this->translator);
+
+        $this->fsm->shouldReceive('getServiceLocator')->andReturn($sm);
 
         $this->sut = new FinancialEvidence();
         $this->sut->setFormHelper($this->formHelper);
@@ -31,40 +44,17 @@ class FinancialEvidenceTest extends MockeryTestCase
 
     public function testGetForm()
     {
-        $mockUrlService = m::mock()
-            ->shouldReceive('fromRoute')
-            ->with('guides/guide', ['guide' => 'financial-evidence'], [], true)
-            ->andReturn('FOO')
-            ->once()
-            ->getMock();
-
-        $mockTranslatorService = m::mock()
+        $this->translator
             ->shouldReceive('translateReplace')
             ->with('lva-financial-evidence-evidence.hint', ['FOO'])
             ->andReturn('BAR')
             ->once()
             ->getMock();
 
-        $mockServiceLocator =  m::mock()
-            ->shouldReceive('get')
-            ->with('ControllerPluginManager')
-            ->andReturn(
-                m::mock()
-                    ->shouldReceive('get')
-                    ->with('url')
-                    ->andReturn($mockUrlService)
-                    ->getMock()
-            )
-            ->once()
-            ->shouldReceive('get')
-            ->with('Helper\Translation')
-            ->andReturn($mockTranslatorService)
-            ->once()
-            ->getMock();
-
-        $this->fsm
-            ->shouldReceive('getServiceLocator')
-            ->andReturn($mockServiceLocator)
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with('guides/guide', ['guide' => 'financial-evidence'], [], true)
+            ->andReturn('FOO')
             ->once()
             ->getMock();
 

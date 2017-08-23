@@ -1,15 +1,11 @@
 <?php
 
-/**
- * Variation Financial Evidence Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\VariationFinancialEvidence;
+use CommonTest\Bootstrap;
 
 /**
  * Variation Financial Evidence Test
@@ -20,17 +16,27 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
 {
     /** @var  VariationFinancialEvidence */
     protected $sut;
-
     /** @var  m\MockInterface|\Common\Service\Helper\FormHelperService */
     protected $formHelper;
     /** @var  \Common\FormService\FormServiceManager */
     protected $fsm;
+    /** @var  m\MockInterface */
+    protected $urlHelper;
+    /** @var  m\MockInterface */
+    protected $translator;
 
     public function setUp()
     {
         $this->formHelper = m::mock(\Common\Service\Helper\FormHelperService::class);
         $this->fsm = m::mock(\Common\FormService\FormServiceManager::class)->makePartial();
+        $this->urlHelper = m::mock();
+        $this->translator = m::mock();
 
+        $sm = Bootstrap::getServiceManager();
+        $sm->setService('Helper\Url', $this->urlHelper);
+        $sm->setService('Helper\Translation', $this->translator);
+
+        $this->fsm->shouldReceive('getServiceLocator')->andReturn($sm);
         $this->sut = new VariationFinancialEvidence();
         $this->sut->setFormHelper($this->formHelper);
         $this->sut->setFormServiceLocator($this->fsm);
@@ -38,6 +44,20 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
 
     public function testGetForm()
     {
+        $this->translator
+            ->shouldReceive('translateReplace')
+            ->with('lva-financial-evidence-evidence.hint', ['FOO'])
+            ->andReturn('BAR')
+            ->once()
+            ->getMock();
+
+        $this->urlHelper
+            ->shouldReceive('fromRoute')
+            ->with('guides/guide', ['guide' => 'financial-evidence'], [], true)
+            ->andReturn('FOO')
+            ->once()
+            ->getMock();
+
         /** @var \Zend\Http\Request $request */
         $request = m::mock(\Zend\Http\Request::class);
 
@@ -82,9 +102,12 @@ class VariationFinancialEvidenceTest extends MockeryTestCase
                             ->getMock()
                     )
                     ->once()
+                    ->shouldReceive('setOption')
+                    ->with('hint', 'BAR')
+                    ->once()
                     ->getMock()
             )
-            ->times(3)
+            ->once()
             ->shouldReceive('has')
             ->with('form-actions')
             ->andReturn(true)
