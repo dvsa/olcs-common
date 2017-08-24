@@ -10,14 +10,14 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class DataRetentionRecordLink implements FormatterInterface
 {
-    const ENTITY_TRANSPORT_MANAGER = 'transport_manager';
-    const ENTITY_IRFO_GV_PERMIT = 'irfo_gv_permit';
-    const ENTITY_IRFO_PSV_AUTH = 'irfo_gv_auth';
-    const ENTITY_ORGANISATION = 'organisation';
-    const ENTITY_APPLICATION = 'application';
+    const ENTITY_TRANSPORT_MANAGER = 'transport_manager'; //done
+    const ENTITY_IRFO_GV_PERMIT = 'irfo_gv_permit'; //done
+    const ENTITY_IRFO_PSV_AUTH = 'irfo_gv_auth'; //done
+    const ENTITY_ORGANISATION = 'organisation'; //done
+    const ENTITY_APPLICATION = 'application'; //done
     const ENTITY_BUS_REG = 'bus_reg';
-    const ENTITY_LICENCE = 'licence';
-    const ENTITY_CASES = 'cases';
+    const ENTITY_LICENCE = 'licence'; // done
+    const ENTITY_CASES = 'cases'; // done
 
     /**
      * Format column value
@@ -45,6 +45,15 @@ class DataRetentionRecordLink implements FormatterInterface
                 break;
             case (self::ENTITY_IRFO_GV_PERMIT || self::ENTITY_IRFO_PSV_AUTH):
                 $url = $urlHelper->fromRoute('operator/irfo/gv-permits', ['organisation' => $data['organisationId']]);
+                break;
+            case self::ENTITY_ORGANISATION:
+                $url = $urlHelper->fromRoute('operator/business-details', ['organisation' => $data['organisationId']]);
+                break;
+            case self::ENTITY_CASES:
+                $url = $urlHelper->fromRoute('case', ['action' => 'details', 'case' => $data['entityPk']]);
+                break;
+            case self::ENTITY_BUS_REG:
+                $url = $urlHelper->fromRoute('licence/bus-details', ['licence' => '123', 'busRegId' => $data['entityPk']]);
                 break;
             default:
                 $url = null;
