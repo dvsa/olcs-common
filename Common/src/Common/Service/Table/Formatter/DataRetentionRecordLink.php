@@ -10,14 +10,14 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class DataRetentionRecordLink implements FormatterInterface
 {
-    const ENTITY_TRANSPORT_MANAGER = 'transport_manager'; //done
-    const ENTITY_IRFO_GV_PERMIT = 'irfo_gv_permit'; //done
-    const ENTITY_IRFO_PSV_AUTH = 'irfo_psv_auth'; //done
-    const ENTITY_ORGANISATION = 'organisation'; //done
-    const ENTITY_APPLICATION = 'application'; //done
+    const ENTITY_TRANSPORT_MANAGER = 'transport_manager';
+    const ENTITY_IRFO_GV_PERMIT = 'irfo_gv_permit';
+    const ENTITY_IRFO_PSV_AUTH = 'irfo_psv_auth';
+    const ENTITY_ORGANISATION = 'organisation';
+    const ENTITY_APPLICATION = 'application';
     const ENTITY_BUS_REG = 'bus_reg';
-    const ENTITY_LICENCE = 'licence'; // done
-    const ENTITY_CASES = 'cases'; // done
+    const ENTITY_LICENCE = 'licence';
+    const ENTITY_CASES = 'cases';
 
     /**
      * Format column value
@@ -56,13 +56,25 @@ class DataRetentionRecordLink implements FormatterInterface
                 $url = $urlHelper->fromRoute('case', ['action' => 'details', 'case' => $data['entityPk']]);
                 break;
             case self::ENTITY_BUS_REG:
-                $url = $urlHelper->fromRoute('licence/bus-details', ['licence' => $data['licenceId'], 'busRegId' => $data['entityPk']]);
+                $url = $urlHelper->fromRoute(
+                    'licence/bus-details',
+                    [
+                        'licence' => $data['licenceId'],
+                        'busRegId' => $data['entityPk']
+                    ]
+                );
                 break;
             default:
                 $url = null;
         }
 
-        return self::getOutput($data['organisationName'], $data['licNo'], $data['entityName'], $data['entityPk'], $url);
+        return self::getOutput(
+            $data['organisationName'],
+            $data['licNo'],
+            $data['entityName'],
+            $data['entityPk'],
+            $url
+        );
     }
 
     /**
@@ -76,8 +88,13 @@ class DataRetentionRecordLink implements FormatterInterface
      *
      * @return string
      */
-    private static function getOutput($organisationName, $licNo, $entityName, $entityPk, $url = null)
-    {
+    private static function getOutput(
+        $organisationName,
+        $licNo,
+        $entityName,
+        $entityPk,
+        $url = null
+    ) {
         $licenceNumber = self::getLicenceNumber($licNo, $url);
 
         if ($url === null) {
@@ -86,22 +103,17 @@ class DataRetentionRecordLink implements FormatterInterface
                 $entityPk;
         }
 
-        return sprintf(
-                '<a href="%s" target="_self">%s</a>', $url, $organisationName
-            ) . ' / ' .
+        return sprintf('<a href="%s" target="_self">%s</a>', $url, $organisationName) . ' / ' .
             $licenceNumber .
-            sprintf(
-                '<a href="%s" target="_self">%s</a>', $url, ucfirst($entityName)
-            ) . ' / ' .
-            sprintf(
-                '<a href="%s" target="_self">%s</a>', $url, $entityPk
-            );
+            sprintf('<a href="%s" target="_self">%s</a>', $url, ucfirst($entityName)) . ' / ' .
+            sprintf('<a href="%s" target="_self">%s</a>', $url, $entityPk);
     }
 
     /**
      * Get licence number value for output, if URL or non URL
      *
      * @param string $licenceNumber Licence number value
+     * @param string $url           URL
      *
      * @return string
      */

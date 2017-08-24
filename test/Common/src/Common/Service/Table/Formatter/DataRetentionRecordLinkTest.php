@@ -24,14 +24,16 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
         $routeName,
         $routeParameters,
         $isHyperLinkExpected
-    )
-    {
-        $queryData = array_merge([
-            'organisationName' => 'DVSA',
-            'organisationId' => 'ORG123',
-            'licNo' => 'OB1234',
-            'licenceId' => '9',
-        ], $queryData);
+    ) {
+        $queryData = array_merge(
+            [
+                'organisationName' => 'DVSA',
+                'organisationId' => 'ORG123',
+                'licNo' => 'OB1234',
+                'licenceId' => '9',
+            ],
+            $queryData
+        );
 
         $sm = m::mock(ServiceLocatorInterface::class)
             ->shouldReceive('get')
