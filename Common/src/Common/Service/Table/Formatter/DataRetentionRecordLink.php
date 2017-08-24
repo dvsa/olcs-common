@@ -43,7 +43,10 @@ class DataRetentionRecordLink implements FormatterInterface
             case self::ENTITY_TRANSPORT_MANAGER:
                 $url = $urlHelper->fromRoute('transport-manager', ['transport-manager' => $data['entityPk']]);
                 break;
-            case (self::ENTITY_IRFO_GV_PERMIT || self::ENTITY_IRFO_PSV_AUTH):
+            case self::ENTITY_IRFO_GV_PERMIT:
+                $url = $urlHelper->fromRoute('operator/irfo/gv-permits', ['organisation' => $data['organisationId']]);
+                break;
+            case self::ENTITY_IRFO_PSV_AUTH:
                 $url = $urlHelper->fromRoute('operator/irfo/gv-permits', ['organisation' => $data['organisationId']]);
                 break;
             case self::ENTITY_ORGANISATION:
@@ -53,7 +56,7 @@ class DataRetentionRecordLink implements FormatterInterface
                 $url = $urlHelper->fromRoute('case', ['action' => 'details', 'case' => $data['entityPk']]);
                 break;
             case self::ENTITY_BUS_REG:
-                $url = $urlHelper->fromRoute('licence/bus-details', ['licence' => '123', 'busRegId' => $data['entityPk']]);
+                $url = $urlHelper->fromRoute('licence/bus-details', ['licence' => $data['licenceId'], 'busRegId' => $data['entityPk']]);
                 break;
             default:
                 $url = null;
@@ -78,7 +81,9 @@ class DataRetentionRecordLink implements FormatterInterface
         $licenceNumber = self::getLicenceNumber($licNo, $url);
 
         if ($url === null) {
-            return $organisationName . $licenceNumber . $entityName . ' / ' . $entityPk;
+            return $organisationName . ' / ' .
+                $licenceNumber . $entityName . ' / ' .
+                $entityPk;
         }
 
         return sprintf(
