@@ -119,7 +119,7 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
                 true,
             ],
             'IRFO PSV Permit' => [
-                ['entityName' => 'irfo_gv_auth', 'entityPk' => 7],
+                ['entityName' => 'irfo_psv_auth', 'entityPk' => 7],
                 'operator/irfo/gv-permits',
                 ['organisation' => 'ORG123'],
                 true,

@@ -12,7 +12,7 @@ class DataRetentionRecordLink implements FormatterInterface
 {
     const ENTITY_TRANSPORT_MANAGER = 'transport_manager'; //done
     const ENTITY_IRFO_GV_PERMIT = 'irfo_gv_permit'; //done
-    const ENTITY_IRFO_PSV_AUTH = 'irfo_gv_auth'; //done
+    const ENTITY_IRFO_PSV_AUTH = 'irfo_psv_auth'; //done
     const ENTITY_ORGANISATION = 'organisation'; //done
     const ENTITY_APPLICATION = 'application'; //done
     const ENTITY_BUS_REG = 'bus_reg';
