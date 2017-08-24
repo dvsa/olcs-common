@@ -439,6 +439,7 @@ return [
     'lva-conditions-undertakings-table-status' => 'Statws',
     'lva-conditions-undertakings-table-type' => 'Math',
     'lva-financial-evidence-evidence.label' => 'Sut hoffech chi anfon eich tystiolaeth?',
+    'lva-financial-evidence-evidence.hint' => 'Unwaith bod gennych eich tystiolaeth ariannol gallwch naill ai lanlwytho neu bostio copi atom. Gweler y <a href="%s" target="_blank"> mathau o dystiolaeth rydym yn eu derbyn</a>.',
     'lva-financial-evidence-upload-now.label' => 'Dewiswch opsiwn',
     'lva-financial-evidence-upload-now.no' => 'Anfon yn y post',
     'lva-financial-evidence-upload-now.yes' => 'Lanlwytho ffeiliau',

@@ -4,41 +4,41 @@
 
     <p>Darllen rhagor am <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">sut i ddarparu tystiolaeth ariannol</a>.</p>
     </div>
-    <h3>Faint fydd arnoch ei angen?</h3>
 
-    <h2 style="margin-top: 0;">&pound; <?php echo number_format($requiredFinance); ?></h2>
+    <div class="info-box info-box--grey info-box--large-padding">
+        <h3>Faint fydd arnoch ei angen?</h3>
 
-    <p>Seilir y ffigur hwn ar:</p>
-    <ul>
-        <li>Y cais hwn ar gyfer <?php echo $applicationVehicles; ?> cerbyd<?php echo $applicationVehicles != 1 ? 'au' : ''; ?></li>
-        <?php if ((int) $otherLicenceVehicles > 0): ?>
-            <li>maintenance of <?php echo $otherLicenceVehicles; ?> vehicle<?php echo $otherLicenceVehicles != 1 ? 's' : ''; ?> on your other licence(s)</li>
-        <?php endif; ?>
-        <?php if ((int) $otherApplicationVehicles > 0): ?>
-            <li>your other application(s) for <?php echo $otherApplicationVehicles; ?> vehicle<?php echo $otherApplicationVehicles != 1 ? 's' : ''; ?></li>
-        <?php endif; ?>
-    </ul>
+        <h2 style="margin-top: 0;">&pound; <?php echo number_format($requiredFinance); ?></h2>
 
-    <p>
-        <details class="help">
-            <summary class="help__summary">
-                Sut wnaethom amcangyfrif hwn?
-            </summary>
-            <div class="help__text">
-                <p>For standard national and international licences you must have:</p>
-                <ul>
-                    <li>&pound;<?php echo number_format($standardFirst); ?> for the first vehicle</li>
-                    <li>&pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle</li>
-                </ul>
-                <p>For restricted licences you must have:</p>
-                <ul>
-                    <li>&pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle</li>
-                    <li>&pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle</li>
-                </ul>
-            </div>
-        </details>
-    </p>
+        <p>Seilir y ffigur hwn ar:</p>
+        <ul>
+            <li>Y cais hwn ar gyfer <?php echo $applicationVehicles; ?> cerbyd<?php echo $applicationVehicles != 1 ? 'au' : ''; ?></li>
+            <?php if ((int) $otherLicenceVehicles > 0): ?>
+                <li>maintenance of <?php echo $otherLicenceVehicles; ?> vehicle<?php echo $otherLicenceVehicles != 1 ? 's' : ''; ?> on your other licence(s)</li>
+            <?php endif; ?>
+            <?php if ((int) $otherApplicationVehicles > 0): ?>
+                <li>your other application(s) for <?php echo $otherApplicationVehicles; ?> vehicle<?php echo $otherApplicationVehicles != 1 ? 's' : ''; ?></li>
+            <?php endif; ?>
+        </ul>
 
-    <h3>Anfon copi atom</h3>
-    <p>Unwaith bod gennych eich tystiolaeth ariannol gallwch naill ai lanlwytho neu bostio copi atom. Gweler y <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank"> mathau o dystiolaeth rydym yn eu derbyn</a>.</p>
+        <p>
+            <details class="help">
+                <summary class="help__summary">
+                    Sut wnaethom amcangyfrif hwn?
+                </summary>
+                <div class="help__text">
+                    <p>For standard national and international licences you must have:</p>
+                    <ul>
+                        <li>&pound;<?php echo number_format($standardFirst); ?> for the first vehicle</li>
+                        <li>&pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle</li>
+                    </ul>
+                    <p>For restricted licences you must have:</p>
+                    <ul>
+                        <li>&pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle</li>
+                        <li>&pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle</li>
+                    </ul>
+                </div>
+            </details>
+        </p>
+    </div>
 </div>

@@ -6,44 +6,42 @@
         <p>Read more about <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">how to provide financial evidence</a>.</p>
     </div>
 
-    <h3>How much will you need?</h3>
+    <div class="info-box info-box--grey info-box--large-padding">
+        <h3>How much will you need?</h3>
 
-    <h2 style="margin-top: 0;">&pound; <?php echo number_format($requiredFinance); ?></h2>
+        <h2 style="margin-top: 0;">&pound; <?php echo number_format($requiredFinance); ?></h2>
 
-    <p>This figure is based on:</p>
-    
-    <ul>
-        <li>this application for <?php echo $applicationVehicles; ?> vehicle<?php echo $applicationVehicles != 1 ? 's' : ''; ?></li>
-        <?php if ((int) $otherLicenceVehicles > 0): ?>
-        <li>maintenance of <?php echo $otherLicenceVehicles; ?> vehicle<?php echo $otherLicenceVehicles != 1 ? 's' : ''; ?> on your other licence(s)</li>
-        <?php endif; ?>
-        <?php if ((int) $otherApplicationVehicles > 0): ?>
-        <li>your other application(s) for <?php echo $otherApplicationVehicles; ?> vehicle<?php echo $otherApplicationVehicles != 1 ? 's' : ''; ?></li>
-        <?php endif; ?>
-    </ul>
+        <p>This figure is based on:</p>
+        
+        <ul>
+            <li>this application for <?php echo $applicationVehicles; ?> vehicle<?php echo $applicationVehicles != 1 ? 's' : ''; ?></li>
+            <?php if ((int) $otherLicenceVehicles > 0): ?>
+            <li>maintenance of <?php echo $otherLicenceVehicles; ?> vehicle<?php echo $otherLicenceVehicles != 1 ? 's' : ''; ?> on your other licence(s)</li>
+            <?php endif; ?>
+            <?php if ((int) $otherApplicationVehicles > 0): ?>
+            <li>your other application(s) for <?php echo $otherApplicationVehicles; ?> vehicle<?php echo $otherApplicationVehicles != 1 ? 's' : ''; ?></li>
+            <?php endif; ?>
+        </ul>
 
-    <p>
-        <details class="help">
-          <summary class="help__summary">
-            How did we calculate this?
-          </summary>
-          <div class="help__text">
-            <p>For standard national and international licences you must have:</p>
-            <ul>
-                <li>&pound;<?php echo number_format($standardFirst); ?> for the first vehicle</li>
-                <li>&pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle</li>
-            </ul>
-            <p>For restricted licences you must have:</p>
-            <ul>
-                <li>&pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle</li>
-                <li>&pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle</li>
-            </ul>
-          </div>
-        </details>
-    </p>
+        <p>
+            <details class="help">
+              <summary class="help__summary">
+                How did we calculate this?
+              </summary>
+              <div class="help__text">
+                <p>For standard national and international licences you must have:</p>
+                <ul>
+                    <li>&pound;<?php echo number_format($standardFirst); ?> for the first vehicle</li>
+                    <li>&pound;<?php echo number_format($standardAdditional); ?> for each additional vehicle</li>
+                </ul>
+                <p>For restricted licences you must have:</p>
+                <ul>
+                    <li>&pound;<?php echo number_format($restrictedFirst); ?> for the first vehicle</li>
+                    <li>&pound;<?php echo number_format($restrictedAdditional); ?> for each additional vehicle</li>
+                </ul>
+              </div>
+            </details>
+        </p>
 
-    <h3>Send a copy to us</h3>
-    
-    <p>Once you have your financial evidence you can either upload or post a copy to us. See the <a href="<?php echo $this->url('guides/guide', ['guide' => 'financial-evidence']) ?>" target="_blank">types of evidence we accept</a>.</p>
-    
+    </div>
 </div>
