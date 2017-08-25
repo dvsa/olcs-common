@@ -86,7 +86,7 @@ class FileUploadList extends Fieldset
                 if ($this->isPreviewableImage($file)) {
                     $imagePreview = new Html('preview', array('render-container' => false));
                     $imagePreview->setValue(
-                        '<img src="' . $file['url'] . '" />'
+                        '<div class="file__image-container"><img src="' . $file['url'] . '" /></div>'
                     );
                     $fileItem->add($imagePreview);
                     // show "now available" message for some extensions
