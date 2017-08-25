@@ -746,6 +746,35 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->sut->disableDateElement($element);
     }
 
+    public function testEnableDateTimeElement()
+    {
+        $element = m::mock(\Zend\Form\Element\DateSelect::class);
+
+        $subElement = m::mock('\stdClass');
+        $subElement->shouldReceive('removeAttribute')
+            ->times(5)
+            ->with('disabled');
+
+        $element->shouldReceive('getDayElement')
+            ->andReturn($subElement)
+            ->once()
+            ->shouldReceive('getMonthElement')
+            ->andReturn($subElement)
+            ->once()
+            ->shouldReceive('getYearElement')
+            ->andReturn($subElement)
+            ->once()
+            ->shouldReceive('getHourElement')
+            ->andReturn($subElement)
+            ->once()
+            ->shouldReceive('getMinuteElement')
+            ->andReturn($subElement)
+            ->once()
+            ->getMock();
+
+        $this->sut->enableDateTimeElement($element);
+    }
+
     public function testRemove()
     {
         $form = m::mock('Zend\Form\Form');

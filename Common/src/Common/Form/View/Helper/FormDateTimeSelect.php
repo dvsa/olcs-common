@@ -26,6 +26,8 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
 
     private $format = '<div class="field inline-text"><label for="%s">%s</label>%s</div>';
 
+    private $displayEveryMinute;
+
     /**
      * Render a date element that is composed of six selects
      *
@@ -56,6 +58,7 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
                 )
             );
         }
+        $this->setDisplayEveryMinute((bool) $element->getOption('display_every_minute'));
 
         $shouldRenderDelimiters = $element->shouldRenderDelimiters();
         $selectHelper = $this->getSelectElementHelper();
@@ -179,15 +182,49 @@ class FormDateTimeSelect extends \Common\Form\View\Helper\Extended\FormDateTimeS
         $valueFormatter = new IntlDateFormatter($this->getLocale(), null, null, null, null, $pattern);
         $date           = new DateTime('1970-01-01 00:00:00');
 
+        $displayEveryMinute = $this->getDisplayEveryMinute();
+        if ($displayEveryMinute) {
+            $modifier = '+1 minute';
+            $from = 0;
+            $to = 59;
+        } else {
+            $modifier = '+15 minute';
+            $from = 1;
+            $to = 4;
+        }
+
         $result = array();
-        for ($min = 1; $min <= 4; $min++) {
+
+        for ($min = $from; $min <= $to; $min++) {
             $key   = $keyFormatter->format($date);
             $value = $valueFormatter->format($date);
             $result[$key] = $value;
 
-            $date->modify('+15 minute');
+            $date->modify($modifier);
         }
 
         return $result;
+    }
+
+    /**
+     * Get display every minute flag
+     *
+     * @return bool
+     */
+    protected function getDisplayEveryMinute()
+    {
+        return $this->displayEveryMinute;
+    }
+
+    /**
+     * Set display every minute
+     *
+     * @param bool $displayEveryMinute display every minute flag
+     *
+     * @return void
+     */
+    protected function setDisplayEveryMinute($displayEveryMinute)
+    {
+        $this->displayEveryMinute = $displayEveryMinute;
     }
 }

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Application Psv Vehicles Vehicle Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
@@ -69,7 +64,53 @@ class ApplicationPsvVehiclesVehicleTest extends MockeryTestCase
         // <<-- START SUT::alterForm
 
         $mockLicenceVehicle = m::mock();
-        $mockSpecifiedDate = m::mock();
+        $mockSpecifiedDate = m::mock()
+            ->shouldReceive('getYearElement')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('setValue')
+                ->with('')
+                ->once()
+                ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getMonthElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getDayElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getHourElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getMinuteElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
         $mockRemovalDate = m::mock();
 
         $mockForm->shouldReceive('get')
@@ -130,7 +171,53 @@ class ApplicationPsvVehiclesVehicleTest extends MockeryTestCase
         // <<-- START SUT::alterForm
 
         $mockLicenceVehicle = m::mock();
-        $mockSpecifiedDate = m::mock();
+        $mockSpecifiedDate = m::mock()
+            ->shouldReceive('getYearElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getMonthElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getDayElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getHourElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getMinuteElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
         $mockRemovalDate = m::mock();
 
         $mockForm->shouldReceive('get')
@@ -194,7 +281,53 @@ class ApplicationPsvVehiclesVehicleTest extends MockeryTestCase
         // <<-- START SUT::alterForm
 
         $mockLicenceVehicle = m::mock();
-        $mockSpecifiedDate = m::mock();
+        $mockSpecifiedDate = m::mock()
+            ->shouldReceive('getYearElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getMonthElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getDayElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getHourElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->shouldReceive('getMinuteElement')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('')
+                    ->once()
+                    ->getMock()
+            )
+            ->once()
+            ->getMock();
         $mockRemovalDate = m::mock();
         $mockFormActions = m::mock();
 

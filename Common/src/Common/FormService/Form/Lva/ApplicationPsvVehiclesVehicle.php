@@ -17,8 +17,15 @@ class ApplicationPsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
     protected function alterForm($form, $params)
     {
         $dataFieldset = $form->get('licence-vehicle');
-        $this->getFormHelper()->disableDateElement($dataFieldset->get('specifiedDate'));
+        $specifiedDate = $dataFieldset->get('specifiedDate');
+        $this->getFormHelper()->disableDateElement($specifiedDate);
         $this->getFormHelper()->disableDateElement($dataFieldset->get('removalDate'));
+
+        $specifiedDate->getYearElement()->setValue('');
+        $specifiedDate->getMonthElement()->setValue('');
+        $specifiedDate->getDayElement()->setValue('');
+        $specifiedDate->getHourElement()->setValue('');
+        $specifiedDate->getMinuteElement()->setValue('');
 
         parent::alterForm($form, $params);
 
