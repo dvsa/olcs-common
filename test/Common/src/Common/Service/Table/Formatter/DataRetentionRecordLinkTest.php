@@ -43,7 +43,9 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
                     ->shouldReceive('fromRoute')
                     ->with(
                         $routeName,
-                        $routeParameters
+                        $routeParameters,
+                        [],
+                        true
                     )
                     ->andReturn('DATA_RETENTION_RECORD_URL')
                     ->getMock()

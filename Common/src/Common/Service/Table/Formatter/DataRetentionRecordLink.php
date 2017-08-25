@@ -35,7 +35,7 @@ class DataRetentionRecordLink implements FormatterInterface
 
         switch($data['entityName']) {
             case self::ENTITY_LICENCE:
-                $url = $urlHelper->fromRoute('licence', ['licence' => $data['entityPk']]);
+                $url = $urlHelper->fromRoute('licence', ['licence' => $data['entityPk']], [], true);
                 break;
             case self::ENTITY_APPLICATION:
                 $url = $urlHelper->fromRoute('lva-application', ['application' => $data['entityPk']], [], true);
@@ -81,7 +81,9 @@ class DataRetentionRecordLink implements FormatterInterface
                     [
                         'licence' => $data['licenceId'],
                         'busRegId' => $data['entityPk']
-                    ]
+                    ],
+                    [],
+                    true
                 );
                 break;
             default:
