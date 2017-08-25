@@ -38,22 +38,42 @@ class DataRetentionRecordLink implements FormatterInterface
                 $url = $urlHelper->fromRoute('licence', ['licence' => $data['entityPk']]);
                 break;
             case self::ENTITY_APPLICATION:
-                $url = $urlHelper->fromRoute('lva-application', ['application' => $data['entityPk']]);
+                $url = $urlHelper->fromRoute('lva-application', ['application' => $data['entityPk']], [], true);
                 break;
             case self::ENTITY_TRANSPORT_MANAGER:
-                $url = $urlHelper->fromRoute('transport-manager', ['transport-manager' => $data['entityPk']]);
+                $url = $urlHelper->fromRoute(
+                    'transport-manager',
+                    ['transport-manager' => $data['entityPk']],
+                    [],
+                    true
+                );
                 break;
             case self::ENTITY_IRFO_GV_PERMIT:
-                $url = $urlHelper->fromRoute('operator/irfo/gv-permits', ['organisation' => $data['organisationId']]);
+                $url = $urlHelper->fromRoute(
+                    'operator/irfo/gv-permits',
+                    ['organisation' => $data['organisationId']],
+                    [],
+                    true
+                );
                 break;
             case self::ENTITY_IRFO_PSV_AUTH:
-                $url = $urlHelper->fromRoute('operator/irfo/gv-permits', ['organisation' => $data['organisationId']]);
+                $url = $urlHelper->fromRoute(
+                    'operator/irfo/gv-permits',
+                    ['organisation' => $data['organisationId']],
+                    [],
+                    true
+                );
                 break;
             case self::ENTITY_ORGANISATION:
-                $url = $urlHelper->fromRoute('operator/business-details', ['organisation' => $data['organisationId']]);
+                $url = $urlHelper->fromRoute(
+                    'operator/business-details',
+                    ['organisation' => $data['organisationId']],
+                    [],
+                    true
+                );
                 break;
             case self::ENTITY_CASES:
-                $url = $urlHelper->fromRoute('case', ['action' => 'details', 'case' => $data['entityPk']]);
+                $url = $urlHelper->fromRoute('case', ['action' => 'details', 'case' => $data['entityPk']], [], true);
                 break;
             case self::ENTITY_BUS_REG:
                 $url = $urlHelper->fromRoute(
