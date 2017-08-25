@@ -36,6 +36,15 @@ class SuccessController extends AbstractContinuationController
             'isSpecialRestricted' => $licence['licenceType']['id'] === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED,
         ];
 
+        // if licence is PSV R, PSV SN or PSV SI
+        if ($licence['goodsOrPsv']['id'] === RefData::LICENCE_CATEGORY_PSV &&
+            ($licence['licenceType']['id'] === RefData::LICENCE_TYPE_RESTRICTED ||
+            $licence['licenceType']['id'] === RefData::LICENCE_TYPE_STANDARD_NATIONAL ||
+            $licence['licenceType']['id'] === RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL)
+        ) {
+            $params['numPsvDiscs'] = $data['totPsvDiscs'];
+        }
+
         return $this->getViewModel($licence['licNo'], null, $params);
     }
 }
