@@ -1722,7 +1722,7 @@ return [
     'lva-tm-details-submit-success' => 'The Transport Manager application has been submitted successfully',
     'lva-tm-sent-success' => 'The form has been emailed to the Transport Manager',
     'lva-transport-manager-table-empty-message' => 'To be nominated',
-    'lva-transport-manager-licence-table-empty-message' => '<p class="article"><p class="important"><strong>You don’t have a Transport Manager specified. If you haven’t yet made an application to appoint a replacement you must contact us on {{OPERATOR_LICENSING_PHONE}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL}}">{{OPERATOR_LICENSING_EMAIL}}</a></strong></p></div>',
+    'lva-transport-manager-licence-table-empty-message' => '<p class="article"><p class="important"><strong>You don’t have a Transport Manager specified. If you haven’t yet made an application to appoint a replacement you must contact us on {{OPERATOR_LICENSING_PHONE}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL}}">{{OPERATOR_LICENSING_EMAIL}}</a></strong></p>',
     'lva.section.operating_centres_delete' => 'Are you sure you wish to remove the selected operating centre(s)',
     'lva.section.title.add-grace-period' => 'Add grace period',
     'lva.section.title.add-transport_managers' => 'Add Transport Manager',
