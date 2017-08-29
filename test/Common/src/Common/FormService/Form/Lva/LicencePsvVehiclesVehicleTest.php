@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Licence Psv Vehicles Vehicle Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
@@ -51,13 +46,6 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
         $this->formService->setService('lva-psv-vehicles-vehicle', $mockPsvVehiclesVehicle);
         $this->formService->setService('lva-generic-vehicles-vehicle', $mockGenericVehiclesVehicle);
 
-        // Expectations
-        $this->formHelper->shouldReceive('createFormWithRequest')
-            ->with('Lva\PsvVehiclesVehicle', $mockRequest)
-            ->andReturn($mockForm)
-            ->shouldReceive('remove')
-            ->with($mockForm, 'licence-vehicle->discNo');
-
         $mockPsvVehiclesVehicle->shouldReceive('alterForm')
             ->once()
             ->with($mockForm);
@@ -70,6 +58,17 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
         $mockLicenceVehicle = m::mock();
         $mockSpecifiedDate = m::mock();
+
+        // Expectations
+        $this->formHelper->shouldReceive('createFormWithRequest')
+            ->with('Lva\PsvVehiclesVehicle', $mockRequest)
+            ->andReturn($mockForm)
+            ->shouldReceive('remove')
+            ->with($mockForm, 'licence-vehicle->discNo')
+            ->shouldReceive('enableDateTimeElement')
+            ->with($mockSpecifiedDate)
+            ->once()
+            ->getMock();
 
         $mockForm->shouldReceive('get')
             ->with('licence-vehicle')
@@ -110,11 +109,6 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
         $this->formService->setService('lva-generic-vehicles-vehicle', $mockGenericVehiclesVehicle);
 
         // Expectations
-        $this->formHelper->shouldReceive('createFormWithRequest')
-            ->with('Lva\PsvVehiclesVehicle', $mockRequest)
-            ->andReturn($mockForm)
-            ->shouldReceive('remove')
-            ->with($mockForm, 'licence-vehicle->discNo');
 
         $mockPsvVehiclesVehicle->shouldReceive('alterForm')
             ->once()
@@ -128,6 +122,16 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
 
         $mockLicenceVehicle = m::mock();
         $mockSpecifiedDate = m::mock();
+
+        $this->formHelper->shouldReceive('createFormWithRequest')
+            ->with('Lva\PsvVehiclesVehicle', $mockRequest)
+            ->andReturn($mockForm)
+            ->shouldReceive('remove')
+            ->with($mockForm, 'licence-vehicle->discNo')
+            ->shouldReceive('enableDateTimeElement')
+            ->with($mockSpecifiedDate)
+            ->once()
+            ->getMock();
 
         $mockForm->shouldReceive('get')
             ->with('licence-vehicle')
@@ -169,12 +173,6 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
         $this->formService->setService('lva-generic-vehicles-vehicle', $mockGenericVehiclesVehicle);
 
         // Expectations
-        $this->formHelper->shouldReceive('createFormWithRequest')
-            ->with('Lva\PsvVehiclesVehicle', $mockRequest)
-            ->andReturn($mockForm)
-            ->shouldReceive('remove')
-            ->with($mockForm, 'licence-vehicle->discNo');
-
         $mockPsvVehiclesVehicle->shouldReceive('alterForm')
             ->once()
             ->with($mockForm);
@@ -188,6 +186,16 @@ class LicencePsvVehiclesVehicleTest extends MockeryTestCase
         $mockLicenceVehicle = m::mock();
         $mockSpecifiedDate = m::mock();
         $mockRemovalDate = m::mock();
+
+        $this->formHelper->shouldReceive('createFormWithRequest')
+            ->with('Lva\PsvVehiclesVehicle', $mockRequest)
+            ->andReturn($mockForm)
+            ->shouldReceive('remove')
+            ->with($mockForm, 'licence-vehicle->discNo')
+            ->shouldReceive('enableDateTimeElement')
+            ->with($mockSpecifiedDate)
+            ->once()
+            ->getMock();
 
         $mockForm->shouldReceive('get')
             ->with('licence-vehicle')

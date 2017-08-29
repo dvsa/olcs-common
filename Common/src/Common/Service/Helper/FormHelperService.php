@@ -572,6 +572,22 @@ class FormHelperService extends AbstractHelperService
     }
 
     /**
+     * Enable DateTime element
+     *
+     * @param \Zend\Form\Element\DateTimeSelect $element Element
+     *
+     * @return void
+     */
+    public function enableDateTimeElement($element)
+    {
+        $element->getDayElement()->removeAttribute('disabled');
+        $element->getMonthElement()->removeAttribute('disabled');
+        $element->getYearElement()->removeAttribute('disabled');
+        $element->getHourElement()->removeAttribute('disabled');
+        $element->getMinuteElement()->removeAttribute('disabled');
+    }
+
+    /**
      * Disable all elements recursively
      *
      * @param \Zend\Form\Fieldset $elements Elements

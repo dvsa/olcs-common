@@ -7,7 +7,7 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("licence-vehicle")
  */
-class LicenceLicenceVehicle
+class LicenceVehicleAppVar
 {
     /**
      * @Form\Attributes({"value":""})
@@ -47,7 +47,11 @@ class LicenceLicenceVehicle
      *     "render_delimiters": true,
      *     "pattern": "d MMMM y '</fieldset><fieldset><div class=""field""><label for=""hearingDate"">Specified time</label>'HH:mm:ss'</div>'",
      *     "field": "specifiedDate",
-     *     "default_date": "now",
+     *     "month_attributes": {"disabled":"disabled"},
+     *     "year_attributes": {"disabled":"disabled"},
+     *     "day_attributes": {"disabled":"disabled"},
+     *     "hour_attributes": {"disabled":"disabled"},
+     *     "minute_attributes": {"disabled":"disabled"},
      *     "display_every_minute": true
      * })
      * @Form\Filter({"name": "DateTimeSelectNullifier"})
@@ -73,36 +77,6 @@ class LicenceLicenceVehicle
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      */
     public $removalDate = null;
-
-    /**
-     * @Form\Attributes({})
-     * @Form\Options({
-     *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.seedDate",
-     *     "create_empty_option": true,
-     *     "render_delimiters": false
-     * })
-     * @Form\Required(false)
-     * @Form\Filter({"name": "DateSelectNullifier"})
-     * @Form\Type("Common\Form\Elements\Custom\DateSelect")
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     */
-    public $warningLetterSeedDate = null;
-
-    /**
-     * @Form\Attributes({})
-     * @Form\Options({
-     *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.warningLetterSentDate",
-     *     "create_empty_option": true,
-     *     "render_delimiters": false
-     * })
-     * @Form\Required(false)
-     * @Form\Filter({"name": "DateSelectNullifier"})
-     * @Form\Type("Common\Form\Elements\Custom\DateSelect")
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     */
-    public $warningLetterSentDate = null;
 
     /**
      * @Form\Attributes({"disabled":"disabled"})

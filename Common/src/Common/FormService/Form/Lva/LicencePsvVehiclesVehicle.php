@@ -20,7 +20,7 @@ class LicencePsvVehiclesVehicle extends AbstractPsvVehiclesVehicle
             $form->get('licence-vehicle')->get('specifiedDate')->setShouldCreateEmptyOption(false);
         }
 
-        $this->getFormHelper()->enableDateElement($form->get('licence-vehicle')->get('specifiedDate'));
+        $this->getFormHelper()->enableDateTimeElement($form->get('licence-vehicle')->get('specifiedDate'));
 
         parent::alterForm($form, $params);
 

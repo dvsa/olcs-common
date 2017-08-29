@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Form Date Select Test
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace CommonTest\Form\View\Helper;
 
 use Common\Form\View\Helper\FormDateTimeSelect;
@@ -104,6 +99,63 @@ class FormDateTimeSelectTest extends MockeryTestCase
             . '<option value="30">30</option>'
             . '<option value="45">45</option>'
         . '</select>';
+
+        $this->assertEquals($expected, str_replace("\n", '', $markup));
+    }
+
+    public function testRenderWithAllMinutes()
+    {
+        $element = new DateTimeSelect('date');
+        $element->setOption('pattern', "d MMMM y 'at' HH:mm:ss");
+        $element->setOption('display_every_minute', true);
+
+        $markup = $this->sut->render($element);
+
+        $expected = '<div class="field inline-text">'
+            . '<label for="_day">translated-date-Day</label>'
+            . '<input type="select" name="day" id="_day" maxlength="2" value="">'
+            . '</div> '
+            . '<div class="field inline-text">'
+            . '<label for="_month">translated-date-Month</label>'
+            . '<input type="select" name="month" id="_month" maxlength="2" value="">'
+            . '</div> '
+            . '<div class="field inline-text">'
+            . '<label for="_year">translated-date-Year</label>'
+            . '<input type="select" name="year" id="_year" maxlength="4" value="">'
+            . '</div>'
+            . ' at <select name="hour" id="_hour">'
+            . '<option value="00">00</option>'
+            . '<option value="01">01</option>'
+            . '<option value="02">02</option>'
+            . '<option value="03">03</option>'
+            . '<option value="04">04</option>'
+            . '<option value="05">05</option>'
+            . '<option value="06">06</option>'
+            . '<option value="07">07</option>'
+            . '<option value="08">08</option>'
+            . '<option value="09">09</option>'
+            . '<option value="10">10</option>'
+            . '<option value="11">11</option>'
+            . '<option value="12">12</option>'
+            . '<option value="13">13</option>'
+            . '<option value="14">14</option>'
+            . '<option value="15">15</option>'
+            . '<option value="16">16</option>'
+            . '<option value="17">17</option>'
+            . '<option value="18">18</option>'
+            . '<option value="19">19</option>'
+            . '<option value="20">20</option>'
+            . '<option value="21">21</option>'
+            . '<option value="22">22</option>'
+            . '<option value="23">23</option>'
+            . '</select>'
+            . ':<select name="minute" id="_minute">';
+
+        for ($i = 0; $i <= 59; $i++) {
+            $minute = str_pad($i, 2, '0', STR_PAD_LEFT);
+            $expected .= '<option value="' . $minute . '">' . $minute. '</option>';
+        }
+        $expected .= '</select>';
 
         $this->assertEquals($expected, str_replace("\n", '', $markup));
     }

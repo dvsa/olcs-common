@@ -38,22 +38,28 @@ class LicenceVehicle
     public $receivedDate = null;
 
     /**
-     * @Form\Attributes({})
+     * @Form\Required(false)
+     * @Form\Type("DateTimeSelect")
+     * @Form\Attributes({"id":"specifiedDate"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate",
-     *     "create_empty_option": true,
-     *     "render_delimiters": false,
+     *     "create_empty_option": false,
+     *     "render_delimiters": true,
+     *     "pattern": "d MMMM y '</fieldset><fieldset><div class=""field""><label for=""hearingDate"">Specified time</label>'HH:mm:ss'</div>'",
+     *     "field": "specifiedDate",
      *     "month_attributes": {"disabled":"disabled"},
      *     "year_attributes": {"disabled":"disabled"},
-     *     "day_attributes": {"disabled":"disabled"}
+     *     "day_attributes": {"disabled":"disabled"},
+     *     "hour_attributes": {"disabled":"disabled"},
+     *     "minute_attributes": {"disabled":"disabled"},
+     *     "default_date": "now",
+     *     "display_every_minute": true
      * })
-     * @Form\Required(false)
-     * @Form\Filter({"name": "DateSelectNullifier"})
-     * @Form\Type("Common\Form\Elements\Custom\DateSelect")
+     * @Form\Filter({"name": "DateTimeSelectNullifier"})
      * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
+     * @Form\Validator({"name": "Date", "options": {"format": "Y-m-d H:i:s"}})
      */
-    public $specifiedDate = null;
+    public $specifiedDate;
 
     /**
      * @Form\Attributes({})
