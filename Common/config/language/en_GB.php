@@ -3246,7 +3246,7 @@ return [
     'continuation.success.supporting-evidence-text' => 'You need to submit your <a href="%s" target="_blank">financial evidence</a> by post to the <a href="{{OPENING_TIMES_LINK}}" target="_blank">Central Licensing Office</a> along with your licence number.',
     'continuation.success.supporting-evidence-text-ni' => 'You need to submit your <a href="%s" target="_blank">financial evidence</a> by post to the <a href="{{OPENING_TIMES_LINK_NI}}" target="_blank">Central Licensing Office</a> along with your licence number.',
     'continuation.success.what-happens-next' => 'What happens next',
-    'continuation.success.licence-documentation' => 'Your licence documentation and vehicle discs will be sent within 5 working days',
+    'continuation.success.licence-documentation' => 'Your licence documentation and %s vehicle discs will be sent within 5 working days',
     'continuation.success.finish' => 'Finish',
     'continuation.declaration.print.licence_number' => 'Licence number',
     'continuation.declaration.print.licence_holder' => 'Licence holder',
