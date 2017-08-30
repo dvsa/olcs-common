@@ -9,6 +9,7 @@ use Dvsa\Olcs\Transfer\Query\ContinuationDetail\Get as GetContinuationDetail;
 use Common\RefData;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Exception;
+use Common\Service\Helper\TranslationHelperService;
 
 /**
  * AbstractContinuationController
@@ -17,6 +18,15 @@ abstract class AbstractContinuationController extends AbstractController
 {
     const SUCCESS_CONTROLLER = 'ContinuationController/Success';
     const LICENCE_OVERVIEW_ROUTE = 'lva-licence';
+    const PATH_SR = 1;
+    const PATH_CU = 2;
+    const PATH_NCU = 3;
+    const STEP_START = 'start';
+    const STEP_CHECKLIST = 'checklist';
+    const STEP_CU = 'cu';
+    const STEP_FINANCE = 'finance';
+    const STEP_DECLARATION = 'declaration';
+    const STEP_DEFAULT = 'default';
 
     /** @var string  */
     protected $layout = 'pages/continuation';
@@ -35,6 +45,8 @@ abstract class AbstractContinuationController extends AbstractController
         ],
     ];
 
+    protected $currentStep = self::STEP_DEFAULT;
+
     /**
      * Get the ViewModel used for continuations
      *
@@ -46,8 +58,10 @@ abstract class AbstractContinuationController extends AbstractController
      */
     protected function getViewModel($licNo, Form $form = null, $variables = [])
     {
+        $stepHeader = $this->getStepHeader($this->currentStep);
+
         $view = new ViewModel(
-            array_merge(['licNo' => $licNo, 'form' => $form], $variables)
+            array_merge(['licNo' => $licNo, 'form' => $form, 'stepHeader' => $stepHeader], $variables)
         );
 
         $view->setTemplate($this->layout);
@@ -215,5 +229,89 @@ abstract class AbstractContinuationController extends AbstractController
         }
 
         return false;
+    }
+
+    /**
+     * Get step header
+     *
+     * @param string $step step
+     *
+     * @return string
+     */
+    protected function getStepHeader($step = null)
+    {
+        if ($step === null || $step === self::STEP_DEFAULT) {
+            return '';
+        }
+        $data = $this->getContinuationDetailData();
+        $licenceType = $data['licence']['licenceType']['id'];
+        $hasConditionsUndertakings =
+            (
+                isset($data['conditionsUndertakings']['licence'])
+                && is_array($data['conditionsUndertakings']['licence'])
+                && count($data['conditionsUndertakings']['licence']) > 0
+            )
+            ||
+            (
+                isset($data['conditionsUndertakings']['operatingCentres'])
+                && is_array($data['conditionsUndertakings']['operatingCentres'])
+                && count($data['conditionsUndertakings']['operatingCentres']) > 0
+            );
+
+        if ($licenceType === RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+            $path = self::PATH_SR;
+        } elseif ($hasConditionsUndertakings) {
+            $path = self::PATH_CU;
+        } else {
+            $path = self::PATH_NCU;
+        }
+
+        $stepDetails = $this->getStepDetails($path, $step);
+
+        /** @var TranslationHelperService $translatorHelper */
+        $translatorHelper = $this->getServiceLocator()->get('Helper\Translation');
+
+        return $translatorHelper->translateReplace(
+            'continuations.step.header', [$stepDetails['current'], $stepDetails['total']]
+        );
+    }
+
+    /**
+     * Get step details
+     *
+     * @param int    $path path
+     * @param string $step step
+     *
+     * @return array
+     */
+    protected function getStepDetails($path, $step)
+    {
+        $steps = [];
+
+        // special restricted licence
+        $steps[self::PATH_SR] = [
+            self::STEP_START => ['current' => 1, 'total' => 2],
+            self::STEP_CHECKLIST => ['current' => 1, 'total' => 2],
+            self::STEP_DECLARATION => ['current' => 2, 'total' => 2],
+        ];
+
+        // other licence types with conditions and undertakings
+        $steps[self::PATH_CU] = [
+            self::STEP_START => ['current' => 1, 'total' => 4],
+            self::STEP_CHECKLIST => ['current' => 1, 'total' => 4],
+            self::STEP_CU => ['current' => 2, 'total' => 4],
+            self::STEP_FINANCE => ['current' => 3, 'total' => 4],
+            self::STEP_DECLARATION => ['current' => 4, 'total' => 4],
+        ];
+
+        // other licence types with no conditions and undertakings
+        $steps[self::PATH_NCU] = [
+            self::STEP_START => ['current' => 1, 'total' => 3],
+            self::STEP_CHECKLIST => ['current' => 1, 'total' => 3],
+            self::STEP_FINANCE => ['current' => 2, 'total' => 3],
+            self::STEP_DECLARATION => ['current' => 3, 'total' => 3],
+        ];
+
+        return isset($steps[$path][$step]) ? $steps[$path][$step] : '';
     }
 }

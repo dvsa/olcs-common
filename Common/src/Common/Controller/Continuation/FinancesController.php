@@ -14,6 +14,8 @@ use Zend\View\Model\ViewModel;
  */
 class FinancesController extends AbstractContinuationController
 {
+    protected $currentStep = self::STEP_FINANCE;
+
     /**
      * Index page
      *

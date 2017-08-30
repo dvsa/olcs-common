@@ -22,6 +22,8 @@ class DeclarationController extends AbstractContinuationController
         RefData::ORG_TYPE_IRFO => 'declaration-sig-label',
     ];
 
+    protected $currentStep = self::STEP_DECLARATION;
+
     /**
      * Index page
      *
