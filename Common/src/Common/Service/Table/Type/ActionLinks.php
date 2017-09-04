@@ -85,8 +85,11 @@ class ActionLinks extends Selector
         $content = '';
         if ($this->isLinkVisible($data, $column, 'Remove')) {
             $inputName = sprintf($this->getInputName($column, 'deleteInputName'), $data['id']);
+
+            $modalClass = ($this->useModal($column)) ? ' trigger-modal' :'';
             $content .= sprintf(
-                '<input type="submit" class="right-aligned trigger-modal" name="%s" value="' .$remove . '">',
+                '<input type="submit" class="right-aligned%s" name="%s" value="' .$remove . '">',
+                $modalClass,
                 $inputName
             );
         }
@@ -113,5 +116,21 @@ class ActionLinks extends Selector
             );
         }
         return $content;
+    }
+
+    /**
+     * Should a modal be used?
+     *
+     * @param array $column Column data
+     *
+     * @return bool
+     */
+    private function useModal($column)
+    {
+        if (!isset($column['dontUseModal'])) {
+            return true;
+        }
+
+        return $column['dontUseModal'] !== true;
     }
 }
