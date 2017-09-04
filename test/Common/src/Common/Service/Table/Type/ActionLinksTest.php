@@ -96,4 +96,33 @@ class ActionLinksTest extends MockeryTestCase
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
     }
+
+    public function testRenderNoModal()
+    {
+        $mockTranslate = m::mock()
+            ->shouldReceive('translate')
+            ->with('action_links.remove')
+            ->andReturn('Remove')
+            ->once()
+            ->shouldReceive('translate')
+            ->with('action_links.replace')
+            ->andReturn('Replace')
+            ->once()
+            ->getMock();
+
+        $this->sm->setService('translator', $mockTranslate);
+
+        $column = [
+            'replaceInputName' => 'table[action][replace][%d]',
+            'dontUseModal' => true,
+        ];
+        $data = [
+            'id' => 123
+        ];
+
+        $expected = '<input type="submit" class="right-aligned" name="table[action][delete][123]" ' .
+            'value="Remove">';
+
+        $this->assertEquals($expected, $this->sut->render($data, $column));
+    }
 }
