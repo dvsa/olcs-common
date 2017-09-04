@@ -59,7 +59,7 @@ class DashboardApplicationLink implements FormatterInterface
         }
 
         return vsprintf(
-            '<b><a href="%s">%s</a></b> <span class="%s">%s</span>',
+            '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span> <span class="overview__%s">%s</span></a>',
             [
                 $url,
                 isset($data['licNo']) ? $data['licNo'] . '/' . $data['id'] : $data['id'],

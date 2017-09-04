@@ -70,7 +70,7 @@ class LicenceNumberAndStatus implements FormatterInterface
         }
 
         return vsprintf(
-            '<b><a href="%s">%s</a></b> <span class="%s">%s</span>',
+            '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span> <span class="overview__%s">%s</span></a>',
             [
                 $urlHelper->fromRoute('lva-licence', ['licence' => $row['id']]),
                 $row['licNo'],
