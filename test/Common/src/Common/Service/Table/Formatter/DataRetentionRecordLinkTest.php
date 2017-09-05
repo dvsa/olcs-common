@@ -164,6 +164,7 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
 
         $queryData = [
             'entityName' => 'undefined',
+            'organisationId' => 1,
             'organisationName' => 'DVSA',
             'entityPk' => 3,
             'licenceId' => 9,

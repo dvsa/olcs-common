@@ -19,6 +19,9 @@ class DataRetentionRecordLink implements FormatterInterface
     const ENTITY_LICENCE = 'licence';
     const ENTITY_CASES = 'cases';
 
+    /** @var ServiceLocatorInterface */
+    protected static $sm;
+
     /**
      * Format column value
      *
@@ -30,6 +33,8 @@ class DataRetentionRecordLink implements FormatterInterface
      */
     public static function format($data, array $column = [], ServiceLocatorInterface $sm = null)
     {
+        self::$sm = $sm;
+
         /** @var Url $urlHelper */
         $urlHelper = $sm->get('Helper\Url');
 
@@ -43,7 +48,7 @@ class DataRetentionRecordLink implements FormatterInterface
             case self::ENTITY_TRANSPORT_MANAGER:
                 $url = $urlHelper->fromRoute(
                     'transport-manager',
-                    ['transport-manager' => $data['entityPk']],
+                    ['transportManager' => $data['entityPk']],
                     [],
                     true
                 );
@@ -51,15 +56,23 @@ class DataRetentionRecordLink implements FormatterInterface
             case self::ENTITY_IRFO_GV_PERMIT:
                 $url = $urlHelper->fromRoute(
                     'operator/irfo/gv-permits',
-                    ['organisation' => $data['organisationId']],
+                    [
+                        'organisation' => $data['organisationId'],
+                        'action' => 'details',
+                        'id' => $data['entityPk']
+                    ],
                     [],
                     true
                 );
                 break;
             case self::ENTITY_IRFO_PSV_AUTH:
                 $url = $urlHelper->fromRoute(
-                    'operator/irfo/gv-permits',
-                    ['organisation' => $data['organisationId']],
+                    'operator/irfo/psv-authorisations',
+                    [
+                        'organisation' => $data['organisationId'],
+                        'action' => 'edit',
+                        'id' => $data['entityPk']
+                    ],
                     [],
                     true
                 );
@@ -91,7 +104,9 @@ class DataRetentionRecordLink implements FormatterInterface
         }
 
         return self::getOutput(
+            $data['organisationId'],
             $data['organisationName'],
+            $data['licenceId'],
             $data['licNo'],
             $data['entityName'],
             $data['entityPk'],
@@ -102,7 +117,9 @@ class DataRetentionRecordLink implements FormatterInterface
     /**
      * render output for the table
      *
+     * @param int         $organisationId   Organisation id
      * @param string      $organisationName Organisation name
+     * @param int         $licenceId        Licence ID
      * @param string      $licNo            Licence number
      * @param string      $entityName       Entity name
      * @param string      $entityPk         Entity Primary Key
@@ -111,46 +128,95 @@ class DataRetentionRecordLink implements FormatterInterface
      * @return string
      */
     private static function getOutput(
+        $organisationId,
         $organisationName,
+        $licenceId,
         $licNo,
         $entityName,
         $entityPk,
         $url = null
     ) {
-        $licenceNumber = self::getLicenceNumber($licNo, $url);
+        $licenceNumber = self::getLicenceNumber($licenceId, $licNo, $url);
+        $organisationName = self::getOrganisationName($organisationId, $organisationName, $url);
 
         if ($url === null) {
             return $organisationName . ' / ' .
-                $licenceNumber . $entityName . ' / ' .
+                $licenceNumber . $entityName .
                 $entityPk;
         }
 
-        return sprintf('<a href="%s" target="_self">%s</a>', $url, $organisationName) . ' / ' .
+        return sprintf(
+            $organisationName .
             $licenceNumber .
-            sprintf('<a href="%s" target="_self">%s</a>', $url, ucfirst($entityName)) . ' / ' .
-            sprintf('<a href="%s" target="_self">%s</a>', $url, $entityPk);
+            sprintf('<a href="%s" target="_self">%s</a>', $url, ucfirst($entityName) . ' ' . $entityPk)
+        );
     }
 
     /**
      * Get licence number value for output, if URL or non URL
      *
+     * @param int    $licenceId     Licence ID
      * @param string $licenceNumber Licence number value
      * @param string $url           URL
      *
      * @return string
      */
-    private static function getLicenceNumber($licenceNumber, $url = null)
+    private static function getLicenceNumber($licenceId, $licenceNumber, $url = null)
     {
-        if (empty($licenceNumber)) {
+        if (empty($licenceId) || empty($licenceNumber)) {
             return '';
         }
 
         if (!is_null($url)) {
+            /** @var Url $urlHelper */
+            $urlHelper = self::$sm->get('Helper\Url');
+
+            $url = $urlHelper->fromRoute(
+                'licence',
+                ['licence' => $licenceId],
+                [],
+                true
+            );
+
             return sprintf(
                 '<a href="%s" target="_self">%s</a>', $url, $licenceNumber
             ) . ' / ';
         }
 
         return $licenceNumber . ' / ';
+    }
+
+    /**
+     * Get organisation name value for output, if URL or non URL
+     *
+     * @param int    $organisationId   Organisation ID
+     * @param string $organisationName Organisation number value
+     * @param string $url              URL
+     *
+     * @return string
+     */
+    private static function getOrganisationName($organisationId, $organisationName, $url = null)
+    {
+        if (empty($organisationId) || empty($organisationName)) {
+            return '';
+        }
+
+        if (!is_null($url)) {
+            /** @var Url $urlHelper */
+            $urlHelper = self::$sm->get('Helper\Url');
+
+            $url = $urlHelper->fromRoute(
+                'operator/business-details',
+                ['organisation' => $organisationId],
+                [],
+                true
+            );
+
+            return sprintf(
+                    '<a href="%s" target="_self">%s</a>', $url, $organisationName
+                ) . ' / ';
+        }
+
+        return $organisationName . ' / ';
     }
 }
