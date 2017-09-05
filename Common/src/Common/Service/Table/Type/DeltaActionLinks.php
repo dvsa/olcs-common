@@ -34,7 +34,7 @@ class DeltaActionLinks extends Selector
 
         if ($this->isRemoveVisible($data, $column)) {
             return sprintf(
-                '<input type="submit" class="right-aligned trigger-modal" name="table[action][delete][%s]" value="' . $remove . '">',
+                '<input type="submit" class="right-aligned action--secondary trigger-modal" name="table[action][delete][%s]" value="' . $remove . '">',
                 $data['id']
             );
         }

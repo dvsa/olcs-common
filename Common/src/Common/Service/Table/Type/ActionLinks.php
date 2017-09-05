@@ -88,8 +88,7 @@ class ActionLinks extends Selector
 
             $modalClass = ($this->useModal($column)) ? ' trigger-modal' :'';
             $content .= sprintf(
-                '<input type="submit" class="right-aligned%s" name="%s" value="' .$remove . '">',
-                $modalClass,
+                '<input type="submit" class="right-aligned action--secondary %s" name="%s" value="' .$remove . '">',
                 $inputName
             );
         }
