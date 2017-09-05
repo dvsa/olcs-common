@@ -27,7 +27,7 @@ class DeltaActionLinks extends Selector
 
         if ($this->isRestoreVisible($data, $column)) {
             return sprintf(
-                '<input type="submit" class="right-aligned" name="table[action][restore][%s]" value="' . $restore . '">',
+                '<input type="submit" class="right-aligned action--secondary" name="table[action][restore][%s]" value="' . $restore . '">',
                 $data['id']
             );
         }
