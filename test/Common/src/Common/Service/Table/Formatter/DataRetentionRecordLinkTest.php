@@ -4,6 +4,7 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\DataRetentionRecordLink;
 use Mockery as m;
+use Zend\Mvc\Controller\Plugin\Url;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -11,147 +12,82 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
 {
+    const ORGANISATION_NAME = 'DVSA';
+
+    const ORGANISATION_ID = 'ORG123';
+
+    const LIC_NO = 'OB1234';
+
+    const LICENCE_ID = 9;
+
+    const ENTITY_ID = 3;
+
     /**
      * @param array  $queryData           Query Data
-     * @param string $routeName           Expected route name
-     * @param array  $routeParameters     Expected route parameters
-     * @param bool   $isHyperLinkExpected Is hyperlink expected in string
      *
-     * @dataProvider entityTypeDataProvider
+     * @dataProvider entityTypeDataProviderWithUrl
      */
-    public function testFormat(
-        $queryData,
-        $routeName,
-        $routeParameters,
-        $isHyperLinkExpected
-    ) {
+    public function testFormat($queryData)
+    {
         $queryData = array_merge(
             [
-                'organisationName' => 'DVSA',
-                'organisationId' => 'ORG123',
-                'licNo' => 'OB1234',
-                'licenceId' => '9',
+                'organisationName' => self::ORGANISATION_NAME,
+                'organisationId' => self::ORGANISATION_ID,
+                'licNo' => self::LIC_NO,
+                'licenceId' => self::LICENCE_ID,
+                'entityPk' => self::ENTITY_ID,
             ],
             $queryData
         );
 
-        $sm = m::mock(ServiceLocatorInterface::class)
-            ->shouldReceive('get')
+        $sm = m::mock(ServiceLocatorInterface::class);
+        $sm->shouldReceive('get')
             ->with('Helper\Url')
             ->andReturn(
-                m::mock()
-                    ->shouldReceive('fromRoute')
-                    ->with(
-                        $routeName,
-                        $routeParameters,
-                        [],
-                        true
-                    )
-                    ->andReturn('DATA_RETENTION_RECORD_URL')
-                    ->getMock()
+                $this->getUrlHelperMock()
             )
             ->getMock();
 
-        if ($isHyperLinkExpected) {
-            $this->assertEquals(
-                sprintf(
-                    '<a href="%s" target="_self">%s</a>',
-                    'DATA_RETENTION_RECORD_URL',
-                    $queryData['organisationName']
-                ) . ' / ' .
-                sprintf(
-                    '<a href="%s" target="_self">%s</a>',
-                    'DATA_RETENTION_RECORD_URL',
-                    $queryData['licNo']
-                ) . ' / ' .
-                sprintf(
-                    '<a href="%s" target="_self">%s</a>',
-                    'DATA_RETENTION_RECORD_URL',
-                    ucfirst($queryData['entityName'])
-                ) . ' / ' .
-                sprintf(
-                    '<a href="%s" target="_self">%s</a>',
-                    'DATA_RETENTION_RECORD_URL',
-                    $queryData['entityPk']
-                ),
-                DataRetentionRecordLink::format($queryData, [], $sm)
-            );
-        } else {
-            $this->assertEquals(
-                $queryData['organisationName'] . ' / ' .
-                $queryData['licNo'] . ' / ' .
-                $queryData['entityName'] . ' / ' .
-                $queryData['entityPk'],
-                DataRetentionRecordLink::format($queryData, [], $sm)
-            );
-        }
+        $this->assertEquals(
+            '<a href="DATA_RETENTION_RECORD_URL" target="_self">' . $queryData['organisationName'] . '</a> / ' .
+            '<a href="DATA_RETENTION_RECORD_URL" target="_self">' . $queryData['licNo'] . '</a> / ' .
+            '<a href="DATA_RETENTION_RECORD_URL" target="_self">' .
+            ucfirst($queryData['entityName']) . ' ' . $queryData['entityPk'] .
+            '</a>',
+            DataRetentionRecordLink::format($queryData, [], $sm)
+        );
     }
 
     /**
-     * Parameter 1: data from query
-     * Parameter 2: expected route name
-     * Parameter 3: expected route parameters
-     * Parameter 4: is hyperlink expected? (boolean)
+     * Parameter 1: query data
+     * Parameter 2: URL parameters for last entity
      *
      * @return array
      */
-    public function entityTypeDataProvider()
+    public function entityTypeDataProviderWithUrl()
     {
         return [
             'Licence entity type' => [
-                ['entityName' => 'licence', 'entityPk' => 3],
-                'licence',
-                ['licence' => 3],
-                true,
+                ['entityName' => 'licence', ],
             ],
             'Application entity type' => [
-                ['entityName' => 'application', 'entityPk' => 5],
-                'lva-application',
-                ['application' => 5],
-                true,
+                ['entityName' => 'application', ],
             ],
             'Transport manager entity type' => [
-                ['entityName' => 'transport_manager', 'entityPk' => 1],
-                'transport-manager',
-                ['transport-manager' => 1],
-                true,
+                ['entityName' => 'transport_manager', ],
             ],
-            'IRFO GV Permit' => [
-                ['entityName' => 'irfo_gv_permit', 'entityPk' => 6],
-                'operator/irfo/gv-permits',
-                ['organisation' => 'ORG123'],
-                true,
+            'IRFO GV entity type' => [
+                ['entityName' => 'irfo_gv_permit', ],
             ],
-            'IRFO PSV Permit' => [
-                ['entityName' => 'irfo_psv_auth', 'entityPk' => 7],
-                'operator/irfo/gv-permits',
-                ['organisation' => 'ORG123'],
-                true,
+            'IRFO PSV auth entity type' => [
+                ['entityName' => 'irfo_psv_auth', ],
             ],
-            'Organisation' => [
-                ['entityName' => 'organisation', 'entityPk' => 8],
-                'operator/business-details',
-                ['organisation' => 'ORG123'],
-                true,
+            'Organisation entity type' => [
+                ['entityName' => 'organisation', ],
             ],
-            'Cases' => [
-                ['entityName' => 'cases', 'entityPk' => 10],
-                'case',
-                ['action' => 'details', 'case' => 10],
-                true,
+            'Case entity type' => [
+                ['entityName' => 'cases', ],
             ],
-            'Bus reg' => [
-                ['entityName' => 'bus_reg', 'entityPk' => 11],
-                'licence/bus-details',
-                ['licence' => 9, 'busRegId' => 11],
-                true,
-            ],
-            'Undefined' => [
-                ['entityName' => 'undefined', 'entityPk' => 1],
-                null,
-                [],
-                false,
-            ]
         ];
     }
 
@@ -164,17 +100,129 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
 
         $queryData = [
             'entityName' => 'undefined',
+            'organisationId' => self::ORGANISATION_ID,
             'organisationName' => 'DVSA',
-            'entityPk' => 3,
-            'licenceId' => 9,
-            'licNo' => null,
+            'entityPk' => self::ENTITY_ID,
+            'licenceId' => self::LICENCE_ID,
+            'licNo' => '123',
         ];
 
         $this->assertEquals(
             $queryData['organisationName'] . ' / ' .
-            $queryData['entityName'] . ' / ' .
+            $queryData['licNo'] . ' / ' .
+            $queryData['entityName'] . ' ' .
             $queryData['entityPk'],
             DataRetentionRecordLink::format($queryData, [], $sm)
         );
+    }
+
+    public function testWithoutLicenceNumberAndOrganisationAndUndefinedEntity()
+    {
+        $sm = m::mock(ServiceLocatorInterface::class)
+            ->shouldReceive('get')
+            ->with('Helper\Url')
+            ->getMock();
+
+        $queryData = [
+            'entityName' => 'undefined',
+            'organisationName' => null,
+            'organisationId' => self::ORGANISATION_ID,
+            'entityPk' => self::ENTITY_ID,
+            'licenceId' => self::LICENCE_ID,
+            'licNo' => '123',
+        ];
+
+        $this->assertEquals(
+            $queryData['licNo'] . ' / ' .
+            $queryData['entityName'] . ' ' .
+            $queryData['entityPk'],
+            DataRetentionRecordLink::format($queryData, [], $sm)
+        );
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getUrlHelperMock()
+    {
+        $urlHelper = m::mock(Url::class)
+            ->shouldReceive('fromRoute')
+            ->with(
+                'licence',
+                ['licence' => self::ENTITY_ID],
+                [],
+                true
+            )
+            ->andReturn('DATA_RETENTION_RECORD_URL')
+            ->shouldReceive('fromRoute')
+            ->with(
+                'licence',
+                ['licence' => self::LICENCE_ID],
+                [],
+                true
+            )
+            ->andReturn('DATA_RETENTION_RECORD_URL')
+            ->shouldReceive('fromRoute')
+            ->with(
+                'lva-application',
+                ['application' => self::ENTITY_ID],
+                [],
+                true
+            )
+            ->andReturn('DATA_RETENTION_RECORD_URL')
+            ->shouldReceive('fromRoute')
+            ->with(
+                'transport-manager',
+                ['transportManager' => self::ENTITY_ID],
+                [],
+                true
+            )
+            ->andReturn('DATA_RETENTION_RECORD_URL')
+            ->shouldReceive('fromRoute')
+            ->with(
+                'operator/business-details',
+                ['organisation' => self::ORGANISATION_ID],
+                [],
+                true
+            )
+            ->andReturn('DATA_RETENTION_RECORD_URL')
+            ->shouldReceive('fromRoute')
+            ->with(
+                'operator/irfo/gv-permits',
+                [
+                    'organisation' => self::ORGANISATION_ID,
+                    'action' => 'details',
+                    'id' => self::ENTITY_ID,
+                ],
+                [],
+                true
+            )
+            ->andReturn('DATA_RETENTION_RECORD_URL')
+            ->shouldReceive('fromRoute')
+            ->with(
+                'operator/irfo/psv-authorisations',
+                [
+                    'organisation' => self::ORGANISATION_ID,
+                    'action' => 'edit',
+                    'id' => self::ENTITY_ID,
+                ],
+                [],
+                true
+            )
+            ->andReturn('DATA_RETENTION_RECORD_URL')
+            ->shouldReceive('fromRoute')
+            ->with(
+                'case',
+                [
+                    'action' => 'details',
+                    'case' => self::ENTITY_ID,
+                ],
+                [],
+                true
+            )
+            ->andReturn('DATA_RETENTION_RECORD_URL')
+            ->getMock();
+
+        return $urlHelper;
     }
 }
