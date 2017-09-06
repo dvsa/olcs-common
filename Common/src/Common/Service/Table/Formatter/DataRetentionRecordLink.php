@@ -2,6 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Util\Escape;
 use Zend\Mvc\Controller\Plugin\Url;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -109,12 +110,12 @@ class DataRetentionRecordLink implements FormatterInterface
         }
 
         return self::getOutput(
-            $data['organisationId'],
-            $data['organisationName'],
-            $data['licenceId'],
-            $data['licNo'],
-            $data['entityName'],
-            $data['entityPk'],
+            Escape::html($data['organisationId']),
+            Escape::html($data['organisationName']),
+            Escape::html($data['licenceId']),
+            Escape::html($data['licNo']),
+            Escape::html($data['entityName']),
+            Escape::html($data['entityPk']),
             $url
         );
     }
