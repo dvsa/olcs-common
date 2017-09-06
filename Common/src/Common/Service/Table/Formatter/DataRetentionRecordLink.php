@@ -86,7 +86,12 @@ class DataRetentionRecordLink implements FormatterInterface
                 );
                 break;
             case self::ENTITY_CASES:
-                $url = $urlHelper->fromRoute('case', ['action' => 'details', 'case' => $data['entityPk']], [], true);
+                $url = $urlHelper->fromRoute(
+                    'case',
+                    ['action' => 'details', 'case' => $data['entityPk']],
+                    [],
+                    true
+                );
                 break;
             case self::ENTITY_BUS_REG:
                 $url = $urlHelper->fromRoute(
@@ -140,8 +145,9 @@ class DataRetentionRecordLink implements FormatterInterface
         $organisationName = self::getOrganisationName($organisationId, $organisationName, $url);
 
         if ($url === null) {
-            return $organisationName . ' / ' .
-                $licenceNumber . $entityName .
+            return $organisationName .
+                $licenceNumber .
+                $entityName . ' ' .
                 $entityPk;
         }
 
@@ -213,8 +219,11 @@ class DataRetentionRecordLink implements FormatterInterface
             );
 
             return sprintf(
-                    '<a href="%s" target="_self">%s</a>', $url, $organisationName
-                ) . ' / ';
+                '<a href="%s" target="_self">%s</a>',
+                $url,
+                $organisationName
+            ) .
+            ' / ';
         }
 
         return $organisationName . ' / ';
