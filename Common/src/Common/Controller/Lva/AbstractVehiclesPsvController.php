@@ -502,7 +502,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      */
     private function getTotalNumberOfVehicles($resultData)
     {
-        return $resultData['total'];
+        return isset($resultData['total']) ? $resultData['total'] : 0;
     }
 
     /**
