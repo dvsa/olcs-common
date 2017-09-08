@@ -67,8 +67,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 'expectedParams' => [
                     'application' => 2
                 ],
-                'expect' => '<b><a href="lva-application/2">OB123/2</a></b> ' .
-                    '<span class="status grey">_TRNLTD_Not sumbitted</span>'
+                'expect' => '<a class="overview__link" href="lva-application/2">'.
+                    '<span class="overview__link--underline">OB123/2</span> '.
+                    '<span class="overview__status grey">_TRNLTD_Not sumbitted</span></a>',
             ],
             'Not sumbitted variation' => [
                 'data' => [
@@ -84,8 +85,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-variation',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<b><a href="lva-variation/2">OB123/2</a></b> ' .
-                    '<span class="status grey">_TRNLTD_Not sumbitted</span>'
+                'expect' => '<a class="overview__link" href="lva-variation/2">'.
+                    '<span class="overview__link--underline">OB123/2</span> '.
+                    '<span class="overview__status grey">_TRNLTD_Not sumbitted</span></a>',
             ],
             'Under consideration' => [
                 'data' => [
@@ -100,8 +102,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<b><a href="lva-application/submission-summary/2">2</a></b> ' .
-                    '<span class="status orange">_TRNLTD_Under consideration</span>'
+                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2">'.
+                    '<span class="overview__link--underline">2</span> '.
+                    '<span class="overview__status orange">_TRNLTD_Under consideration</span></a>',
             ],
             'Valid' => [
                 'data' => [
@@ -117,8 +120,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<b><a href="lva-application/submission-summary/2">OB123/2</a></b> ' .
-                    '<span class="status green">_TRNLTD_Valid</span>'
+                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2">'.
+                    '<span class="overview__link--underline">OB123/2</span> '.
+                    '<span class="overview__status green">_TRNLTD_Valid</span></a>',
             ],
             'Granted' => [
                 'data' => [
@@ -134,8 +138,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<b><a href="lva-application/submission-summary/2">OB123/2</a></b> ' .
-                    '<span class="status green">_TRNLTD_Granted</span>'
+                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2">'.
+                    '<span class="overview__link--underline">OB123/2</span> '.
+                    '<span class="overview__status green">_TRNLTD_Granted</span></a>',
             ],
             'Withdrawn' => [
                 'data' => [
@@ -151,8 +156,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<b><a href="lva-application/submission-summary/2">OB123/2</a></b> ' .
-                    '<span class="status red">_TRNLTD_Withdrawn</span>'
+                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2">'.
+                    '<span class="overview__link--underline">OB123/2</span> '.
+                    '<span class="overview__status red">_TRNLTD_Withdrawn</span></a>',
             ],
             'Refused' => [
                 'data' => [
@@ -168,8 +174,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<b><a href="lva-application/submission-summary/2">OB123/2</a></b> ' .
-                    '<span class="status red">_TRNLTD_Refused</span>'
+                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2">'.
+                    '<span class="overview__link--underline">OB123/2</span> '.
+                    '<span class="overview__status red">_TRNLTD_Refused</span></a>',
             ],
             'Not taken up' => [
                 'data' => [
@@ -185,8 +192,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<b><a href="lva-application/submission-summary/2">OB123/2</a></b> ' .
-                    '<span class="status red">_TRNLTD_Not taken up</span>'
+                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2">'.
+                    '<span class="overview__link--underline">OB123/2</span> '.
+                    '<span class="overview__status red">_TRNLTD_Not taken up</span></a>',
             ],
             'Cancelled' => [
                 'data' => [
@@ -202,8 +210,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<b><a href="lva-application/submission-summary/2">OB123/2</a></b> ' .
-                    '<span class="status grey">_TRNLTD_Cancelled</span>'
+                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2">'.
+                    '<span class="overview__link--underline">OB123/2</span> '.
+                    '<span class="overview__status grey">_TRNLTD_Cancelled</span></a>',
             ],
             'Unknown' => [
                 'data' => [
@@ -219,8 +228,9 @@ class DashboardApplicationLinkTest extends MockeryTestCase
                 ],
                 'expectedRoute' => 'lva-application/submission-summary',
                 'expectedParams' => ['application' => 2],
-                'expect' => '<b><a href="lva-application/submission-summary/2">OB123/2</a></b> ' .
-                    '<span class="status grey">_TRNLTD_Unknown</span>'
+                'expect' => '<a class="overview__link" href="lva-application/submission-summary/2">'.
+                    '<span class="overview__link--underline">OB123/2</span> '.
+                    '<span class="overview__status grey">_TRNLTD_Unknown</span></a>',
             ],
         ];
     }
