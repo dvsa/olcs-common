@@ -17,6 +17,8 @@ class ConditionsUndertakingsController extends AbstractContinuationController
 
     protected $layout = 'pages/continuation-conditions-undertakings';
 
+    protected $currentStep = self::STEP_CU;
+
     /**
      * Index action
      *

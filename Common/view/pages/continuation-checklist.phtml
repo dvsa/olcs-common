@@ -1,9 +1,10 @@
 <?php
 echo $this->partial(
-    'partials/page-header-simple',
+    'partials/page-header-continuation',
     [
         'pageTitle' => $this->pageTitle(),
         'pageSubTitle' => $this->translate('Continue licence') .' '. $this->licNo,
+        'stepHeader' => $this->stepHeader,
         'backUrl' => [
             'url' => $this->url(
                 'continuation', ['continuationDetailId' => $this->data['continuationDetailId']], [], true

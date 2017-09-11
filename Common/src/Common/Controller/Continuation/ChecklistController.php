@@ -18,6 +18,7 @@ class ChecklistController extends AbstractContinuationController
 
     protected $layout = 'pages/continuation-checklist';
     protected $checklistSectionLayout = 'layouts/simple';
+    protected $currentStep = self::STEP_CHECKLIST;
 
     /**
      * Index page

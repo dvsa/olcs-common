@@ -14,6 +14,8 @@ class StartController extends AbstractContinuationController
     /** @var string  */
     protected $layout = 'pages/continuation-start';
 
+    protected $currentStep = self::STEP_START;
+
     /**
      * Index page
      *

@@ -13,6 +13,8 @@ use Zend\View\Model\ViewModel;
  */
 class OtherFinancesController extends AbstractContinuationController
 {
+    protected $currentStep = self::STEP_FINANCE;
+
     /**
      * Index page
      *

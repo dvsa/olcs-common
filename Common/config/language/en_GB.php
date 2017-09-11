@@ -3271,5 +3271,6 @@ return [
     'continuations.people-empty-table-message.org_t_pa' => 'There are no responsible people recorded on your licence',
     'continuations.people-empty-table-message.org_t_rc' => 'There are no directors recorded on your licence',
     'continuations.people-empty-table-message.org_t_st' => 'There is no owner recorded on your licence',
+    'continuations.step.header' => 'Step %s of %s',
     // Potentially unused translations
 ];
