@@ -142,7 +142,7 @@ class DataRetentionRecordLink implements FormatterInterface
         $entityPk,
         $url = null
     ) {
-        $licenceNumber = self::getLicenceNumber($licenceId, $licNo, $url);
+        $licenceNumber = self::getLicenceNumber($licNo, $url);
         $organisationName = self::getOrganisationName($organisationId, $organisationName, $url);
 
         if ($url === null) {
@@ -162,15 +162,14 @@ class DataRetentionRecordLink implements FormatterInterface
     /**
      * Get licence number value for output, if URL or non URL
      *
-     * @param int    $licenceId     Licence ID
      * @param string $licenceNumber Licence number value
      * @param string $url           URL
      *
      * @return string
      */
-    private static function getLicenceNumber($licenceId, $licenceNumber, $url = null)
+    private static function getLicenceNumber($licenceNumber, $url = null)
     {
-        if (empty($licenceId) || empty($licenceNumber)) {
+        if (empty($licenceNumber)) {
             return '';
         }
 
@@ -179,8 +178,8 @@ class DataRetentionRecordLink implements FormatterInterface
             $urlHelper = self::$sm->get('Helper\Url');
 
             $url = $urlHelper->fromRoute(
-                'licence',
-                ['licence' => $licenceId],
+                'licence-no',
+                ['licNo' => $licenceNumber],
                 [],
                 true
             );
