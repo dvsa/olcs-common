@@ -112,7 +112,6 @@ class DataRetentionRecordLink implements FormatterInterface
         return self::getOutput(
             Escape::html($data['organisationId']),
             Escape::html($data['organisationName']),
-            Escape::html($data['licenceId']),
             Escape::html($data['licNo']),
             Escape::html($data['entityName']),
             Escape::html($data['entityPk']),
@@ -125,7 +124,6 @@ class DataRetentionRecordLink implements FormatterInterface
      *
      * @param int         $organisationId   Organisation id
      * @param string      $organisationName Organisation name
-     * @param int         $licenceId        Licence ID
      * @param string      $licNo            Licence number
      * @param string      $entityName       Entity name
      * @param string      $entityPk         Entity Primary Key
@@ -136,7 +134,6 @@ class DataRetentionRecordLink implements FormatterInterface
     private static function getOutput(
         $organisationId,
         $organisationName,
-        $licenceId,
         $licNo,
         $entityName,
         $entityPk,
