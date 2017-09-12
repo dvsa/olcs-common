@@ -9,7 +9,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\View\Renderer\RendererInterface;
 
 /**
- * @covers Common\View\Helper\TransportManagerApplicationStatus
+ * @covers \Common\View\Helper\TransportManagerApplicationStatus
  */
 class TransportManagerApplicationStatusTest extends MockeryTestCase
 {
@@ -57,7 +57,7 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
             );
 
         static::assertEquals(
-            '<span class="status' . $expectedClass . '">_TRANSL_' . $status . '</span>',
+            '<span class="overview__status' . $expectedClass . '">_TRANSL_' . $status . '</span>',
             $this->sut->__invoke($status, $status)
         );
     }
