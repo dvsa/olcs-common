@@ -38,7 +38,7 @@ class TransportManagerApplicationStatus extends AbstractHelper
         }
 
         return sprintf(
-            '<span class="status%s">%s</span>',
+            '<span class="overview__status%s">%s</span>',
             $statusClass,
             $this->getView()->translate($description)
         );
