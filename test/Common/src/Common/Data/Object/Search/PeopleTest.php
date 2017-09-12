@@ -123,10 +123,10 @@ class PeopleTest extends SearchAbstractTest
     public function dataProviderTestNameFormatter()
     {
         return [
-            ['Bobby Smith', ['foundAs' => 'ZZ', 'personForename' => 'Bobby', 'personFamilyName' => 'Smith']],
+            ['Bobby Smith', ['foundAs' => 'ZZ', 'personFullname' => 'Bobby Smith']],
             [
                 '<a href="http://URL">Bobby Smith</a>',
-                ['foundAs' => 'Historical TM', 'personForename' => 'Bobby', 'personFamilyName' => 'Smith', 'tmId' => 1]
+                ['foundAs' => 'Historical TM', 'personFullname' => 'Bobby Smith', 'tmId' => 1]
             ],
         ];
     }

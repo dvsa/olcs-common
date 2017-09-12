@@ -100,14 +100,7 @@ class PeopleSelfserve extends InternalSearchAbstract
             [
                 'title' => 'Name',
                 'formatter' => function ($row) {
-
-                    $name = [
-
-                        $row['personForename'],
-                        $row['personFamilyName']
-                    ];
-
-                    return implode(' ', $name);
+                    return $row['personFullname'];
                 }
             ],
             [
