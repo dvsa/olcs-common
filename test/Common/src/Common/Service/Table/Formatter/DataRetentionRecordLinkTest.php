@@ -20,7 +20,7 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
 
     const LICENCE_ID = 9;
 
-    const ENTITY_ID = 3;
+    const ENTITY_ID = 9;
 
     /**
      * @param array  $queryData           Query Data
@@ -148,8 +148,8 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
         $urlHelper = m::mock(Url::class)
             ->shouldReceive('fromRoute')
             ->with(
-                'licence',
-                ['licence' => self::ENTITY_ID],
+                'licence-no',
+                ['licNo' => self::LIC_NO],
                 [],
                 true
             )
