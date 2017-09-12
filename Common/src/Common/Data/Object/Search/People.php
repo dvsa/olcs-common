@@ -164,15 +164,14 @@ class People extends InternalSearchAbstract
                 'title' => 'Name',
                 'formatter' => function ($row, $column, $serviceLocator) {
                     if ($row['foundAs'] === self::FOUND_AS_HISTORICAL_TM) {
-                        $urlHelper  = $serviceLocator->get('Helper\Url');
+                        $urlHelper = $serviceLocator->get('Helper\Url');
                         return sprintf(
-                            '<a href="%s">%s %s</a>',
+                            '<a href="%s">%s</a>',
                             $urlHelper->fromRoute('historic-tm', ['historicId' => $row['tmId']]),
-                            $row['personForename'],
-                            $row['personFamilyName']
+                            $row['personFullname']
                         );
                     } else {
-                        return $row['personForename'] . ' ' .$row['personFamilyName'];
+                        return $row['personFullname'];
                     }
                 }
             ],
