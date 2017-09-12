@@ -6,6 +6,7 @@ use Common\Service\Table\Formatter\DataRetentionRecordLink;
 use Mockery as m;
 use Zend\Mvc\Controller\Plugin\Url;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Common\View\Helper\Status as StatusHelper;
 
 /**
  * DataRetentionRecord Link test
@@ -27,7 +28,7 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider entityTypeDataProviderWithUrl
      */
-    public function testFormat($queryData)
+    public function testFormat($queryData, $statusArray)
     {
         $queryData = array_merge(
             [
@@ -40,7 +41,10 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
             $queryData
         );
 
+        $statusLabel = 'status label';
+
         $sm = m::mock(ServiceLocatorInterface::class);
+
         $sm->shouldReceive('get')
             ->with('Helper\Url')
             ->andReturn(
@@ -48,12 +52,16 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
             )
             ->getMock();
 
+        $viewHelperManager = $this->getViewHelperWithStatusMock($statusArray, $statusLabel);
+        $sm->shouldReceive('get')->with('ViewHelperManager')->once()->andReturn($viewHelperManager);
+
         $this->assertEquals(
             '<a href="DATA_RETENTION_RECORD_URL" target="_self">' . $queryData['organisationName'] . '</a> / ' .
             '<a href="DATA_RETENTION_RECORD_URL" target="_self">' . $queryData['licNo'] . '</a> / ' .
             '<a href="DATA_RETENTION_RECORD_URL" target="_self">' .
             ucfirst($queryData['entityName']) . ' ' . $queryData['entityPk'] .
-            '</a>',
+            '</a>' .
+            $statusLabel,
             DataRetentionRecordLink::format($queryData, [], $sm)
         );
     }
@@ -68,25 +76,60 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'Licence entity type' => [
-                ['entityName' => 'licence', ],
+                [
+                    'entityName' => 'licence',
+                    'actionConfirmation' => false,
+                    'nextReviewDate' => '2030-12-25'
+                ],
+                DataRetentionRecordLink::STATUS_POSTPONED
             ],
             'Application entity type' => [
-                ['entityName' => 'application', ],
+                [
+                    'entityName' => 'application',
+                    'actionConfirmation' => true,
+                    'nextReviewDate' => '2030-12-25'
+                ],
+                DataRetentionRecordLink::STATUS_DELETION
             ],
             'Transport manager entity type' => [
-                ['entityName' => 'transport_manager', ],
+                [
+                    'entityName' => 'transport_manager',
+                    'actionConfirmation' => false,
+                    'nextReviewDate' => null
+                ],
+                DataRetentionRecordLink::STATUS_REVIEW
             ],
             'IRFO GV entity type' => [
-                ['entityName' => 'irfo_gv_permit', ],
+                [
+                    'entityName' => 'irfo_gv_permit',
+                    'actionConfirmation' => false,
+                    'nextReviewDate' => '2030-12-25'
+                ],
+                DataRetentionRecordLink::STATUS_POSTPONED
             ],
             'IRFO PSV auth entity type' => [
-                ['entityName' => 'irfo_psv_auth', ],
+                [
+                    'entityName' => 'irfo_psv_auth',
+                    'actionConfirmation' => true,
+                    'nextReviewDate' => '2030-12-25'
+                ],
+                DataRetentionRecordLink::STATUS_DELETION
             ],
             'Organisation entity type' => [
-                ['entityName' => 'organisation', ],
+                [
+                    'entityName' => 'organisation',
+                    'actionConfirmation' => false,
+                    'nextReviewDate' => null
+                ],
+                DataRetentionRecordLink::STATUS_REVIEW
             ],
             'Case entity type' => [
-                ['entityName' => 'cases', ],
+                [
+                    'entityName' => 'cases',
+                    'actionConfirmation' => false,
+                    'nextReviewDate' => '2030-12-25'
+                ],
+                DataRetentionRecordLink::STATUS_POSTPONED
             ],
         ];
     }
@@ -98,6 +141,11 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
             ->with('Helper\Url')
             ->getMock();
 
+        $statusLabel = 'statusLabel';
+
+        $viewHelperManager = $this->getViewHelperWithStatusMock(DataRetentionRecordLink::STATUS_REVIEW, $statusLabel);
+        $sm->shouldReceive('get')->with('ViewHelperManager')->once()->andReturn($viewHelperManager);
+
         $queryData = [
             'entityName' => 'undefined',
             'organisationId' => self::ORGANISATION_ID,
@@ -105,13 +153,16 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
             'entityPk' => self::ENTITY_ID,
             'licenceId' => self::LICENCE_ID,
             'licNo' => '123',
+            'actionConfirmation' => false,
+            'nextReviewDate' => null
         ];
 
         $this->assertEquals(
             $queryData['organisationName'] . ' / ' .
             $queryData['licNo'] . ' / ' .
             $queryData['entityName'] . ' ' .
-            $queryData['entityPk'],
+            $queryData['entityPk'] .
+            $statusLabel,
             DataRetentionRecordLink::format($queryData, [], $sm)
         );
     }
@@ -123,6 +174,11 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
             ->with('Helper\Url')
             ->getMock();
 
+        $statusLabel = 'statusLabel';
+
+        $viewHelperManager = $this->getViewHelperWithStatusMock(DataRetentionRecordLink::STATUS_REVIEW, $statusLabel);
+        $sm->shouldReceive('get')->with('ViewHelperManager')->once()->andReturn($viewHelperManager);
+
         $queryData = [
             'entityName' => 'undefined',
             'organisationName' => null,
@@ -130,14 +186,31 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
             'entityPk' => self::ENTITY_ID,
             'licenceId' => self::LICENCE_ID,
             'licNo' => '123',
+            'actionConfirmation' => false,
+            'nextReviewDate' => null
         ];
 
         $this->assertEquals(
             $queryData['licNo'] . ' / ' .
             $queryData['entityName'] . ' ' .
-            $queryData['entityPk'],
+            $queryData['entityPk'] .
+            $statusLabel,
             DataRetentionRecordLink::format($queryData, [], $sm)
         );
+    }
+
+    private function getViewHelperWithStatusMock($statusArray, $statusLabel)
+    {
+        $mockStatusHelper = m::mock(StatusHelper::class);
+        $mockStatusHelper->shouldReceive('__invoke')
+            ->once()
+            ->with($statusArray)
+            ->andReturn($statusLabel);
+
+        $mockViewHelper = m::mock();
+        $mockViewHelper->shouldReceive('get')->with('status')->andReturn($mockStatusHelper);
+
+        return $mockViewHelper;
     }
 
     /**

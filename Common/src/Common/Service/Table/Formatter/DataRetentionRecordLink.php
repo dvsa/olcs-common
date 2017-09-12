@@ -5,6 +5,7 @@ namespace Common\Service\Table\Formatter;
 use Common\Util\Escape;
 use Zend\Mvc\Controller\Plugin\Url;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Common\View\Helper\Status as StatusHelper;
 
 /**
  * Data Retention Record Link
@@ -19,6 +20,21 @@ class DataRetentionRecordLink implements FormatterInterface
     const ENTITY_BUS_REG = 'bus_reg';
     const ENTITY_LICENCE = 'licence';
     const ENTITY_CASES = 'cases';
+
+    const STATUS_DELETION = [
+        'value' => 'Marked for deletion',
+        'colour' => 'red'
+    ];
+
+    const STATUS_POSTPONED = [
+        'value' => 'Postponed',
+        'colour' => 'orange'
+    ];
+
+    const STATUS_REVIEW = [
+        'value' => 'To review',
+        'colour' => 'green'
+    ];
 
     /** @var ServiceLocatorInterface */
     protected static $sm;
@@ -37,7 +53,12 @@ class DataRetentionRecordLink implements FormatterInterface
         self::$sm = $sm;
 
         /** @var Url $urlHelper */
+        /**
+         * @var Url          $urlHelper
+         * @var StatusHelper $statusHelper
+         */
         $urlHelper = $sm->get('Helper\Url');
+        $statusHelper = $sm->get('ViewHelperManager')->get('status');
 
         switch($data['entityName']) {
             case self::ENTITY_LICENCE:
@@ -109,7 +130,7 @@ class DataRetentionRecordLink implements FormatterInterface
                 $url = null;
         }
 
-        return self::getOutput(
+        $output = self::getOutput(
             Escape::html($data['organisationId']),
             Escape::html($data['organisationName']),
             Escape::html($data['licNo']),
@@ -117,6 +138,11 @@ class DataRetentionRecordLink implements FormatterInterface
             Escape::html($data['entityPk']),
             $url
         );
+
+        $statusInfo = self::getStatus($data['actionConfirmation'], $data['nextReviewDate']);
+        $status = $statusHelper->__invoke($statusInfo);
+
+        return $output . $status;
     }
 
     /**
@@ -224,5 +250,29 @@ class DataRetentionRecordLink implements FormatterInterface
         }
 
         return $organisationName . ' / ';
+    }
+
+    /**
+     * Determine the status
+     * This ought to come from backend ref data or be calculated by the entity, but not currently available.
+     *
+     * @param bool        $actionConfirmation action confirmation
+     * @param string|null $nextReviewDate     next review date
+     *
+     * @return array
+     */
+    private static function getStatus($actionConfirmation, $nextReviewDate)
+    {
+        $status = self::STATUS_DELETION;
+
+        if ($actionConfirmation === false) {
+            $status = self::STATUS_POSTPONED;
+
+            if (is_null($nextReviewDate)) {
+                $status = self::STATUS_REVIEW;
+            }
+        }
+
+        return $status;
     }
 }
