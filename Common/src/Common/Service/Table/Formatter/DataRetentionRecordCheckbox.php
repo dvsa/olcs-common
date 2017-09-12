@@ -25,6 +25,10 @@ class DataRetentionRecordCheckbox implements FormatterInterface
             $result = sprintf($format, '');
         }
 
+        if ($data['nextReviewDate'] !== null) {
+            $result = sprintf($format, 'disabled');
+        }
+
         return $result;
     }
 }
