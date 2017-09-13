@@ -82,7 +82,7 @@ trait VehicleSearchTrait
      */
     protected function removeUnusedParametersFromQuery($query)
     {
-        if ((isset($query['vehicleSearch']['filter']) && !$query['vehicleSearch']['vrm']) ||
+        if ((isset($query['vehicleSearch']['filter']) && empty($query['vehicleSearch']['vrm'])) ||
             isset($query['vehicleSearch']['clearSearch'])) {
             $query['vehicleSearch'] = null;
             unset($query['vehicleSearch']);
