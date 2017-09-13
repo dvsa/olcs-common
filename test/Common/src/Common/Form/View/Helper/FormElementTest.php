@@ -488,4 +488,18 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
             $output
         );
     }
+
+    public function testRenderElementWithError()
+    {
+        $this->prepareElement();
+        $this->element->setMessages(['Message 1']);
+        $viewHelper = $this->prepareViewHelper();
+
+        $markup = $viewHelper($this->element, 'formCollection', '/');
+
+        $this->assertSame(
+            '<p class="hint">Hint</p><input type="text" name="test" class="error__input" id="test" value="">',
+            $markup
+        );
+    }
 }
