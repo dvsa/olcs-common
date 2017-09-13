@@ -10,18 +10,6 @@ $(function() {
 
   var isVariation = vehicles.data('current');
 
-  function hasAdvertisements() {
-    return F.isChecked('advertisements', 'adPlaced', '1');
-  }
-
-  function willUploadLater() {
-    return F.isChecked('advertisements', 'adPlaced', '2');
-  }
-
-  function isSendingByPost() {
-    return F.isChecked('advertisements', 'adPlaced', '0');
-  }
-
   OLCS.cascadeForm({
     form: formId,
     cascade: false,
@@ -37,11 +25,6 @@ $(function() {
           // for non variations (i.e. licences and applications) we always show the ads block
           return true;
         },
-        'label:adPlacedIn': hasAdvertisements,
-        '.adPlacedDate': hasAdvertisements,
-        '.file-uploader': hasAdvertisements,
-        '.ad-send-by-post': isSendingByPost,
-        '.ad-upload-later': willUploadLater
       }
     }
   });

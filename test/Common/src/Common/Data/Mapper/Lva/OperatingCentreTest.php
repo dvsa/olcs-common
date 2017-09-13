@@ -19,7 +19,7 @@ class OperatingCentreTest extends MockeryTestCase
     /**
      * @dataProvider adProvider
      */
-    public function testMapFromResult($adPlaced, $adPlacedNow, $adPlacedPost, $adPlacedLater)
+    public function testMapFromResult($adPlaced, $radio)
     {
         $result = [
             'version' => 1,
@@ -57,11 +57,11 @@ class OperatingCentreTest extends MockeryTestCase
                 'countryCode' => 'GB'
             ],
             'advertisements' => [
-                'adPlaced' => $adPlacedNow,
-                'adPlacedPost' => $adPlacedPost,
-                'adPlacedLater' => $adPlacedLater,
-                'adPlacedIn' => 'Donny Star',
-                'adPlacedDate' => '2015-01-01'
+                'radio' => $radio,
+                'adPlacedContent' => [
+                    'adPlacedIn' => 'Donny Star',
+                    'adPlacedDate' => '2015-01-01'
+                ]
             ]
         ];
 
@@ -71,14 +71,15 @@ class OperatingCentreTest extends MockeryTestCase
     public function adProvider()
     {
         return [
-            [RefData::AD_UPLOAD_NOW, RefData::AD_UPLOAD_NOW, null, null],
-            [RefData::AD_POST, null, RefData::AD_POST, null],
-            [RefData::AD_UPLOAD_LATER, null, null, RefData::AD_UPLOAD_LATER]
+            [RefData::AD_UPLOAD_NOW, OperatingCentre::VALUE_OPTION_AD_PLACED_NOW],
+            [RefData::AD_POST, OperatingCentre::VALUE_OPTION_AD_POST],
+            [RefData::AD_UPLOAD_LATER, OperatingCentre::VALUE_OPTION_AD_UPLOAD_LATER]
         ];
     }
 
     /**
      * @dataProvider mapFromFormProvider
+     * @group test123
      */
     public function testMapFromForm($data, $expected)
     {
@@ -98,9 +99,11 @@ class OperatingCentreTest extends MockeryTestCase
                         'permission' => 'Y'
                     ],
                     'advertisements' => [
-                        'adPlacedNow' => RefData::AD_UPLOAD_NOW,
-                        'adPlacedIn' => 'Donny Star',
-                        'adPlacedDate' => '2015-01-01'
+                        'radio' => OperatingCentre::VALUE_OPTION_AD_PLACED_NOW,
+                        'adPlacedContent' => [
+                            'adPlacedIn' => 'Donny Star',
+                            'adPlacedDate' => '2015-01-01'
+                        ]
                     ]
                 ],
                 [
@@ -110,7 +113,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'noOfTrailersRequired' => 11,
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_NOW,
-                    'adPlacedNow' => RefData::AD_UPLOAD_NOW,
                     'adPlacedIn' => 'Donny Star',
                     'adPlacedDate' => '2015-01-01'
                 ]
@@ -125,9 +127,11 @@ class OperatingCentreTest extends MockeryTestCase
                         'permission' => 'Y'
                     ],
                     'advertisements' => [
-                        'adPlacedPost' => RefData::AD_POST,
-                        'adPlacedIn' => 'Donny Star',
-                        'adPlacedDate' => '2015-01-01'
+                        'radio' => OperatingCentre::VALUE_OPTION_AD_POST,
+                        'adPlacedContent' => [
+                            'adPlacedIn' => 'Donny Star',
+                            'adPlacedDate' => '2015-01-01'
+                        ]
                     ]
                 ],
                 [
@@ -137,7 +141,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'noOfTrailersRequired' => 11,
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_POST,
-                    'adPlacedPost' => RefData::AD_POST,
                     'adPlacedIn' => 'Donny Star',
                     'adPlacedDate' => '2015-01-01'
                 ]
@@ -152,9 +155,11 @@ class OperatingCentreTest extends MockeryTestCase
                         'permission' => 'Y'
                     ],
                     'advertisements' => [
-                        'adPlacedLater' => RefData::AD_UPLOAD_LATER,
-                        'adPlacedIn' => 'Donny Star',
-                        'adPlacedDate' => '2015-01-01'
+                        'radio' => OperatingCentre::VALUE_OPTION_AD_UPLOAD_LATER,
+                        'adPlacedContent' => [
+                            'adPlacedIn' => 'Donny Star',
+                            'adPlacedDate' => '2015-01-01'
+                        ]
                     ]
                 ],
                 [
@@ -164,7 +169,6 @@ class OperatingCentreTest extends MockeryTestCase
                     'noOfTrailersRequired' => 11,
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_LATER,
-                    'adPlacedLater' => RefData::AD_UPLOAD_LATER,
                     'adPlacedIn' => 'Donny Star',
                     'adPlacedDate' => '2015-01-01'
                 ]
@@ -265,21 +269,23 @@ class OperatingCentreTest extends MockeryTestCase
             [
                 [
                     'advertisements' => [
-                        'adPlaced' => RefData::AD_POST,
-                        'file' => [
-                            'list' => ['foo']
+                        'radio' => OperatingCentre::VALUE_OPTION_AD_POST,
+                        'adPlacedContent' => [
+                            'file' => [
+                                'list' => ['foo']
+                            ]
                         ]
                     ],
                     'bar' => 'cake'
                 ],
                 [
                     'advertisements' => [
-                        'adPlaced' => null,
-                        'adPlacedLater' => null,
-                        'adPlacedPost' => RefData::AD_POST,
+                        'radio' => OperatingCentre::VALUE_OPTION_AD_POST,
                         'uploadedFileCount' => 1,
-                        'file' => [
-                            'list' => ['foo']
+                        'adPlacedContent' => [
+                            'file' => [
+                                'list' => ['foo']
+                            ]
                         ]
                     ],
                     'bar' => 'cake'
@@ -288,15 +294,13 @@ class OperatingCentreTest extends MockeryTestCase
             [
                 [
                     'advertisements' => [
-                        'adPlaced' => RefData::AD_UPLOAD_LATER,
+                        'radio' => OperatingCentre::VALUE_OPTION_AD_UPLOAD_LATER,
                     ],
                     'bar' => 'cake'
                 ],
                 [
                     'advertisements' => [
-                        'adPlaced' => null,
-                        'adPlacedLater' => RefData::AD_UPLOAD_LATER,
-                        'adPlacedPost' => null,
+                        'radio' => OperatingCentre::VALUE_OPTION_AD_UPLOAD_LATER,
                         'uploadedFileCount' => 0,
                     ],
                     'bar' => 'cake'
@@ -305,15 +309,13 @@ class OperatingCentreTest extends MockeryTestCase
             [
                 [
                     'advertisements' => [
-                        'adPlaced' => RefData::AD_UPLOAD_NOW,
+                        'radio' => OperatingCentre::VALUE_OPTION_AD_PLACED_NOW
                     ],
                     'bar' => 'cake'
                 ],
                 [
                     'advertisements' => [
-                        'adPlaced' => RefData::AD_UPLOAD_NOW,
-                        'adPlacedLater' => null,
-                        'adPlacedPost' => null,
+                        'radio' => OperatingCentre::VALUE_OPTION_AD_PLACED_NOW,
                         'uploadedFileCount' => 0,
                     ],
                     'bar' => 'cake'

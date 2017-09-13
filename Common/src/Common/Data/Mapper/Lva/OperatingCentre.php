@@ -15,18 +15,24 @@ use Common\RefData;
  */
 class OperatingCentre implements MapperInterface
 {
+    const VALUE_OPTION_AD_PLACED_NOW = 'adPlaced';
+    const VALUE_OPTION_AD_POST = 'adSendByPost';
+    const VALUE_OPTION_AD_UPLOAD_LATER = 'adPlacedLater';
+
+    /**
+     * Map from result
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     public static function mapFromResult(array $data)
     {
-        $adPlaced = null;
-        $adPlacedPost = null;
-        $adPlacedLater = null;
-        if (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_UPLOAD_NOW) {
-            $adPlaced = RefData::AD_UPLOAD_NOW;
-        } elseif (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_POST) {
-            $adPlacedPost = RefData::AD_POST;
-        } elseif (isset($data['adPlaced']) && $data['adPlaced'] === RefData::AD_UPLOAD_LATER) {
-            $adPlacedLater = RefData::AD_UPLOAD_LATER;
-        }
+        $adPlaceMapping = [
+            RefData::AD_UPLOAD_NOW => self::VALUE_OPTION_AD_PLACED_NOW,
+            RefData::AD_POST => self::VALUE_OPTION_AD_POST,
+            RefData::AD_UPLOAD_LATER => self::VALUE_OPTION_AD_UPLOAD_LATER,
+        ];
         $mappedData = [
             'version' => $data['version'],
             'data' => [
@@ -37,11 +43,11 @@ class OperatingCentre implements MapperInterface
             'operatingCentre' => $data['operatingCentre'],
             'address' => $data['operatingCentre']['address'],
             'advertisements' => [
-                'adPlaced' => $adPlaced,
-                'adPlacedPost' => $adPlacedPost,
-                'adPlacedLater' => $adPlacedLater,
-                'adPlacedIn' => $data['adPlacedIn'],
-                'adPlacedDate' => $data['adPlacedDate']
+                'adPlacedContent' => [
+                    'adPlacedIn' => $data['adPlacedIn'],
+                    'adPlacedDate' => $data['adPlacedDate']
+                ],
+                'radio' => $adPlaceMapping[$data['adPlaced']]
             ]
         ];
 
@@ -50,6 +56,13 @@ class OperatingCentre implements MapperInterface
         return $mappedData;
     }
 
+    /**
+     * Map from form
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     public static function mapFromForm(array $data)
     {
         $mappedData = [
@@ -66,13 +79,20 @@ class OperatingCentre implements MapperInterface
         $mappedData = array_merge($mappedData, $data['data']);
         if (isset($data['advertisements'])) {
             $adv = $data['advertisements'];
-            $mappedData = array_merge($mappedData, $adv);
-            if (isset($adv['adPlacedNow']) && $adv['adPlacedNow'] === RefData::AD_UPLOAD_NOW) {
-                $mappedData['adPlaced'] = RefData::AD_UPLOAD_NOW;
-            } elseif (isset($adv['adPlacedPost']) && $adv['adPlacedPost'] === RefData::AD_POST) {
-                $mappedData['adPlaced'] = RefData::AD_POST;
-            } elseif (isset($adv['adPlacedLater']) && $adv['adPlacedLater'] === RefData::AD_UPLOAD_LATER) {
-                $mappedData['adPlaced'] = RefData::AD_UPLOAD_LATER;
+            $adPlaceMapping = [
+                self::VALUE_OPTION_AD_PLACED_NOW => RefData::AD_UPLOAD_NOW,
+                self::VALUE_OPTION_AD_POST => RefData::AD_POST,
+                self::VALUE_OPTION_AD_UPLOAD_LATER => RefData::AD_UPLOAD_LATER
+            ];
+
+            if (isset($adv['radio'])) {
+                $mappedData['adPlaced'] = $adPlaceMapping[$adv['radio']];
+            }
+            if (isset($adv['adPlacedContent']['adPlacedIn'])) {
+                $mappedData['adPlacedIn'] = $adv['adPlacedContent']['adPlacedIn'];
+            }
+            if (isset($adv['adPlacedContent']['adPlacedDate'])) {
+                $mappedData['adPlacedDate'] = $adv['adPlacedContent']['adPlacedDate'];
             }
         }
 
@@ -88,42 +108,29 @@ class OperatingCentre implements MapperInterface
      */
     public static function mapFromPost(array $data)
     {
-        $uploadNow = null;
-        $uploadLater = null;
-        $sendByPost = null;
-        $postUploadNow = null;
-
-        if (isset($data['advertisements']['adPlaced'])) {
-            $postUploadNow = (int) $data['advertisements']['adPlaced'];
-        }
-        if ($postUploadNow === RefData::AD_UPLOAD_NOW) {
-            $uploadNow = RefData::AD_UPLOAD_NOW;
-        } elseif ($postUploadNow === RefData::AD_POST) {
-            $sendByPost = RefData::AD_POST;
-        } elseif ($postUploadNow === RefData::AD_UPLOAD_LATER) {
-            $uploadLater = RefData::AD_UPLOAD_LATER;
-        }
-
-        // If adding a new operating centre then $data could be an empty array
         if (!isset($data['advertisements']) || !is_array($data['advertisements'])) {
             $data['advertisements'] = [];
         }
-
-        $data['advertisements'] = array_merge(
-            $data['advertisements'],
-            [
-                'adPlaced' => $uploadNow,
-                'adPlacedLater' => $uploadLater,
-                'adPlacedPost' => $sendByPost,
-                'uploadedFileCount' => isset($data['advertisements']['file']['list'])
-                    ? count($data['advertisements']['file']['list']) :
-                    0
-            ]
-        );
+        $data['advertisements']['uploadedFileCount'] =
+            isset($data['advertisements']['adPlacedContent']['file']['list'])
+                ? count($data['advertisements']['adPlacedContent']['file']['list'])
+                : 0;
 
         return $data;
     }
 
+    /**
+     * Map from errors
+     *
+     * @param Form                        $form        form
+     * @param array                       $errors      errors
+     * @param FlashMessengerHelperService $fm          flash messenger helper
+     * @param TranslationHelperService    $translator  translator service
+     * @param string                      $location    location
+     * @param string                      $taGuidesUrl guides url
+     *
+     * @return void
+     */
     public static function mapFormErrors(
         Form $form,
         array $errors,

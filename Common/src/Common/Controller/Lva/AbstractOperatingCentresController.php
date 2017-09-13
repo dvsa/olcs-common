@@ -286,7 +286,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         if ($form->has('advertisements')) {
             $hasProcessedFiles = $this->processFiles(
                 $form,
-                'advertisements->file',
+                'advertisements->adPlacedContent->file',
                 [$this, 'processAdvertisementFileUpload'],
                 [$this, 'deleteFile'],
                 [$this, 'getDocuments']
@@ -367,11 +367,12 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $data = OperatingCentre::mapFromResult($resultData);
         }
 
-        if (!isset($data['advertisements']['file']['list'])) {
-            $data['advertisements']['file']['list'] = [];
+        if (!isset($data['advertisements']['adPlacedContent']['file']['list'])) {
+            $data['advertisements']['adPlacedContent']['file']['list'] = [];
         }
 
-        $data['advertisements']['uploadedFileCount'] = count($data['advertisements']['file']['list']);
+        $data['advertisements']['uploadedFileCount'] =
+            count($data['advertisements']['adPlacedContent']['file']['list']);
 
         $resultData['canAddAnother'] = false;
         $resultData['action'] = 'edit';
@@ -399,7 +400,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         if ($form->has('advertisements') && $validateAdverts) {
             $hasProcessedFiles = $this->processFiles(
                 $form,
-                'advertisements->file',
+                'advertisements->adPlacedContent->file',
                 [$this, 'processAdvertisementFileUpload'],
                 [$this, 'deleteFile'],
                 [$this, 'getDocuments']
@@ -654,14 +655,15 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         //overwrite fields, and remove file upload fields
         $data['advertisements'] = [
-            'adPlaced' => 0,
-            'adPlacedIn' => '',
-            'adPlacedDate' => [
-                'year' => null,
-                'month' => null,
-                'day' => null
-            ],
-            'uploadValidator' => ''
+            'radio' => 'adSendByPost',
+            'adPlacedContent' => [
+                'adPlacedIn' => '',
+                'adPlacedDate' => [
+                    'year' => null,
+                    'month' => null,
+                    'day' => null
+                ],
+            ]
         ];
 
         return $data;

@@ -5,6 +5,7 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
+ * @Form\Type("\Common\Form\Elements\Types\RadioVertical")
  * @Form\Name("advertisements")
  * @Form\Options({
  *     "label": "application_operating-centres_authorisation-sub-action.advertisements"
@@ -13,76 +14,37 @@ use Zend\Form\Annotation as Form;
 class Advertisements
 {
     /**
-     * @Form\Type("Hidden")
-     * @Form\Required(true)
+     * @Form\Type("Common\Form\Elements\Types\Radio")
+     * @Form\Attributes({"id":"adPlacedPost","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
-     *     "error-message": "advertisements_adPlaced-error"
-     * })
-     * @Form\Validator({
-     *      "name": "OneOf",
-     *      "options": {
-     *          "fields": {"adPlaced", "adPlacedPost", "adPlacedLater"},
-     *          "allowZero": true,
-     *          "message": "advertisements_value_is_required"
-     *      }
-     * })
-     * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
-     */
-    public $uploadValidator = null;
-
-    /**
-     * @Form\Required(false)
-     * @Form\Attributes({"id":"adPlaced","allowWrap":true,"data-container-class":"form-control__container"})
-     * @Form\Options({
-     *     "error-message": "advertisements_adPlaced-error",
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
      *     "label_attributes": {"class": "form-control form-control--radio"},
-     *     "value_options": {"1":"Yes"},
+     *     "value_options": {
+     *          "adPlaced": "Yes",
+     *          "adSendByPost": "No (operator to post)",
+     *          "adPlacedLater": "No (operator to upload)"
+     *      },
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\ErrorMessage("advertisements_adPlaced-error")
      */
-    public $adPlaced = null;
+    public $radio = null;
 
     /**
-     * @Form\Required(false)
-     * @Form\Attributes({"class":"long","id":"adPlacedIn"})
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn"
-     * })
-     * @Form\Type("Text")
+     * @Form\ComposedObject("\Common\Form\Model\Form\Lva\Fieldset\AdvertisementsAdPlacedNow")
      */
-    public $adPlacedIn = null;
+    public $adPlacedContent = null;
 
     /**
-     * @Form\Required(false)
-     * @Form\Attributes({"id":"adPlacedDate", "data-container-class": "adPlacedDate"})
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate",
-     *     "legend-attributes": {"class": "form-element__label"},
-     *     "label_attributes": {"class": "form-element__label"},
-     *     "create_empty_option": true,
-     *     "render_delimiters": false,
-     *     "fieldset-attributes":{
-     *          "id":"adPlacedDate_day"
-     *      }
-     * })
-     * @Form\Filter({"name": "DateSelectNullifier"})
-     * @Form\Type("DateSelect")
-     * @Form\Validator({"name": "\Common\Validator\Date"})
-     * @Form\Validator({"name": "Date","options":{"format":"Y-m-d"}})
+     * @Form\Attributes({"data-container-class":"ad-send-by-post"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $adPlacedDate = null;
+    public $adSendByPostContent = null;
 
     /**
-     * @Form\Name("file")
-     * @Form\Attributes({"id":"file"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\MultipleFileUpload")
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.file",
-     *     "label_attributes": {"class": "form-element__label"}
-     * })
+     * @Form\Attributes({"data-container-class":"ad-upload-later"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $file = null;
+    public $adPlacedLaterContent = null;
 
     /**
      * @Form\AllowEmpty(true)
@@ -97,8 +59,8 @@ class Advertisements
      * @Form\Type("Hidden")
      * @Form\Validator({"name": "ValidateIf",
      *      "options":{
-     *          "context_field": "adPlaced",
-     *          "context_values": {"1"},
+     *          "context_field": "radio",
+     *          "context_values": {"adPlaced"},
      *          "validators": {
      *              {
      *                  "name": "\Common\Validator\FileUploadCount",
@@ -112,40 +74,4 @@ class Advertisements
      * })
      */
     public $uploadedFileCount = null;
-
-    /**
-     * @Form\Required(false)
-     * @Form\Attributes({"id":"adPlacedPost","allowWrap":true,"data-container-class":"form-control__container"})
-     * @Form\Options({
-     *     "error-message": "advertisements_adPlaced-error",
-     *     "label_attributes": {"class": "form-control form-control--radio"},
-     *     "value_options": {"0":"No (operator to post)"},
-     * })
-     * @Form\Type("\Zend\Form\Element\Radio")
-     */
-    public $adPlacedPost = null;
-
-    /**
-     * @Form\Attributes({"data-container-class":"ad-send-by-post"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $adSendByPost = null;
-
-    /**
-     * @Form\Required(false)
-     * @Form\Attributes({"id":"adPlacedLater","allowWrap":true,"data-container-class":"form-control__container"})
-     * @Form\Options({
-     *     "error-message": "advertisements_adPlaced-error",
-     *     "label_attributes": {"class": "form-control form-control--radio"},
-     *     "value_options": {"2":"No (operator to upload)"},
-     * })
-     * @Form\Type("\Zend\Form\Element\Radio")
-     */
-    public $adPlacedLater = null;
-
-    /**
-     * @Form\Attributes({"data-container-class":"ad-upload-later"})
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $adUploadLater = null;
 }

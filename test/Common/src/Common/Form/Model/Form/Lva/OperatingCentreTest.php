@@ -131,35 +131,25 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
 
     public function testAdvertisementsAdPlaced()
     {
-        $element = [ 'advertisements', 'adPlaced' ];
+        $element = [ 'advertisements', 'radio' ];
         $this->assertFormElementType($element, \Zend\Form\Element\Radio::class);
-        $this->assertFormElementIsRequired($element, false);
-    }
-
-    public function testAdvertisementsAdPlacedPost()
-    {
-        $element = [ 'advertisements', 'adPlacedPost' ];
-        $this->assertFormElementType($element, \Zend\Form\Element\Radio::class);
-        $this->assertFormElementIsRequired($element, false);
-    }
-
-    public function testAdvertisementsAdPlacedLater()
-    {
-        $element = [ 'advertisements', 'adPlacedLater' ];
-        $this->assertFormElementType($element, \Zend\Form\Element\Radio::class);
-        $this->assertFormElementIsRequired($element, false);
+        $this->assertFormElementIsRequired($element, true, [0 => 0]);
+        $this->assertFormElementValid($element, 'adPlaced');
+        $this->assertFormElementValid($element, 'adSendByPost');
+        $this->assertFormElementValid($element, 'adPlacedLater');
+        $this->assertFormElementNotValid($element, '', 'advertisements_adPlaced-error');
     }
 
     public function testAdvertisementsAdIn()
     {
-        $element = [ 'advertisements', 'adPlacedIn' ];
+        $element = [ 'advertisements', 'adPlacedContent', 'adPlacedIn' ];
         $this->assertFormElementText($element);
         $this->assertFormElementIsRequired($element, false);
     }
 
     public function testAdvertisementsPlacedDate()
     {
-        $element = [ 'advertisements', 'adPlacedDate' ];
+        $element = [ 'advertisements', 'adPlacedContent', 'adPlacedDate' ];
         $this->assertFormElementDate($element);
         $this->assertFormElementIsRequired(
             $element,
@@ -172,26 +162,20 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
         );
     }
 
-    public function testAdvertisementsUploadLaterMessage()
-    {
-        $element = ['advertisements', 'adUploadLater'];
-        $this->assertFormElementHtml($element);
-    }
-
     public function testAdvertisementsMultiFileUploadControls()
     {
-        $element = [ 'advertisements', 'file', 'file' ];
+        $element = [ 'advertisements', 'adPlacedContent', 'file', 'file' ];
         $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementType($element, AttachFilesButton::class);
 
-        $element = [ 'advertisements', 'file', '__messages__' ];
+        $element = [ 'advertisements', 'adPlacedContent', 'file', '__messages__' ];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'advertisements', 'file', 'list' ];
+        $element = [ 'advertisements', 'adPlacedContent', 'file', 'list' ];
         $this->assertFormElementType($element, FileUploadList::class);
 
-        $element = [ 'advertisements', 'file', 'upload' ];
+        $element = [ 'advertisements', 'adPlacedContent', 'file', 'upload' ];
         $this->assertFormElementType($element, ActionButton::class);
         $this->assertFormElementIsRequired($element, false);
     }
@@ -201,12 +185,6 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
         $element = [ 'advertisements', 'uploadedFileCount' ];
         $this->assertFormElementHidden($element);
         $this->assertFormElementIsRequired($element, false);
-    }
-
-    public function testAdvertisementAdSendByPost()
-    {
-        $element = [ 'advertisements', 'adSendByPost' ];
-        $this->assertFormElementHtml($element);
     }
 
     public function testSubmit()
@@ -225,14 +203,5 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
     {
         $element = ['form-actions', 'cancel'];
         $this->assertFormElementActionButton($element);
-    }
-
-    public function testAdvertisementsUploadValidator()
-    {
-        $element = ['advertisements', 'uploadValidator'];
-        $this->assertFormElementType($element, Hidden::class);
-        $this->assertFormElementIsRequired(
-            $element, true, [OneOf::PROVIDE_ONE, NotEmpty::IS_EMPTY]
-        );
     }
 }
