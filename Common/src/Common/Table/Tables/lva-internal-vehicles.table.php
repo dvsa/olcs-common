@@ -39,13 +39,7 @@ return array(
             'title' => $translationPrefix . '.vrm',
             'name' => 'vrm',
             'action' => 'edit',
-            'formatter' => function ($data) {
-                if (!is_null($data['interimApplication'])) {
-                    return $data['vehicle']['vrm'] . ' (interim)';
-                }
-
-                return $data['vehicle']['vrm'];
-            },
+            'formatter' => 'VehicleRegistrationMark',
             'type' => 'Action',
             'sort' => 'v.vrm',
         ),

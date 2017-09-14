@@ -609,6 +609,7 @@ return [
     'application_vehicle-safety_vehicle.table.title' => 'Vehicles',
     'application_vehicle-safety_vehicle.table.titleSingular' => 'Vehicle',
     'application_vehicle-safety_vehicle.table.vrm' => 'Vehicle registration mark',
+    'application_vehicle-safety_vehicle.table.vrm.interim-marker' => 'interim',
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
     'application_vehicle-safety_vehicle.tableEmptyMessage' => 'Add your vehicles here',
     'application_your-business_business-details-add' => 'Add subsidiary company',

@@ -40,8 +40,7 @@ return array(
     'columns' => array(
         array(
             'title' => $translationPrefix . '.vrm',
-            'stack' => 'vehicle->vrm',
-            'formatter' => 'StackValue',
+            'formatter' => 'VehicleRegistrationMark',
             'action' => 'edit',
             'type' => 'Action',
             'sort' => 'v.vrm'
