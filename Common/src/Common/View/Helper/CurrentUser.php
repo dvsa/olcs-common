@@ -174,4 +174,14 @@ class CurrentUser extends AbstractHelper
         $userData = $this->getUserData();
         return !empty($userData['numberOfVehicles']) ? $userData['numberOfVehicles'] : 0;
     }
+
+    /**
+     * Is current user internal
+     *
+     * @return bool
+     */
+    public function isInternalUser()
+    {
+        return $this->authService->isGranted('internal-user');
+    }
 }

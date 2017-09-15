@@ -3,7 +3,10 @@
 $element = $this->element;
 $id = $this->id;
 ?>
-<div class="radio-button__hidden-content help__text" id="<?php echo $id ?>">
+<div
+    class="radio-button__hidden-content <?php echo !$this->currentUser()->isInternalUser() ? 'help__text' : ''; ?>"
+    id="<?php echo $id ?>"
+>
     <?php
     if ($element instanceof \Zend\Form\Fieldset) {
         echo $this->formCollection($element);
