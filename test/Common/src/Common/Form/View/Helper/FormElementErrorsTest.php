@@ -44,8 +44,8 @@ class FormElementErrorsTest extends \PHPUnit_Framework_TestCase
 
         $viewHelper = new \Common\Form\View\Helper\FormElementErrors();
         $viewHelper->setView($view);
-        echo $viewHelper($this->element);
+        $markup = $viewHelper($this->element);
 
-        $this->expectOutputRegex('/^<ul><li>(.*)<\/li><\/ul>$/');
+        $this->assertSame('<p class="error__text">Message</p>', $markup);
     }
 }

@@ -22,12 +22,16 @@ use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
  */
 class FormElementErrors extends ZendFormElementErrors
 {
+    protected $attributes = [
+        'class' => 'error__text',
+    ];
+
     /**
      * Render validation errors for the provided $element
-     * @NOTE: Pretty much identical to Zends version except we translate the messages here
      *
-     * @param  ElementInterface $element
-     * @param  array $attributes
+     * @param ElementInterface $element    Element to render errors for
+     * @param array            $attributes HTML attributes to add to the render markup
+     *
      * @throws Exception\DomainException
      * @return string
      */
@@ -93,10 +97,10 @@ class FormElementErrors extends ZendFormElementErrors
             return '';
         }
 
-        // Generate markup
-        $markup  = sprintf($this->getMessageOpenFormat(), $attributes);
-        $markup .= implode($this->getMessageSeparatorString(), $messagesToPrint);
-        $markup .= $this->getMessageCloseString();
+        $markup = '';
+        foreach ($messagesToPrint as $message) {
+            $markup .= sprintf('<p%s>%s</p>', $attributes, $message);
+        }
 
         return $markup;
     }

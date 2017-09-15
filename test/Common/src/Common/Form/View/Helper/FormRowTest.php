@@ -61,7 +61,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><div class="field ">' .
-            '<ul><li>(.*)<\/li><\/ul><label>(.*)<\/label>(.*)<\/div><\/div>$/'
+            '<p class="error__text">Message<\/p><label>(.*)<\/label>(.*)<\/div><\/div>$/'
         );
     }
 
@@ -78,7 +78,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><div class="field ">' .
-            '<ul><li>(.*)<\/li><\/ul>(.*)<\/div><\/div>$/'
+            '<p class="error__text">Message<\/p>(.*)<\/div><\/div>$/'
         );
     }
 
