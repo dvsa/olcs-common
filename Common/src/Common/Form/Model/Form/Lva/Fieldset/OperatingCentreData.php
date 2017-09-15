@@ -41,4 +41,9 @@ class OperatingCentreData
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $permission = null;
+
+    /**
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $guidance = null;
 }

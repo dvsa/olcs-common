@@ -7,9 +7,6 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Type("\Common\Form\Elements\Types\RadioVertical")
  * @Form\Name("advertisements")
- * @Form\Options({
- *     "label": "application_operating-centres_authorisation-sub-action.advertisements"
- * })
  */
 class Advertisements
 {
@@ -17,7 +14,6 @@ class Advertisements
      * @Form\Type("Common\Form\Elements\Types\Radio")
      * @Form\Attributes({"id":"adPlacedPost","allowWrap":true,"data-container-class":"form-control__container"})
      * @Form\Options({
-     *     "label": "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
      *     "label_attributes": {"class": "form-control form-control--radio"},
      *     "value_options": {
      *          "adPlaced": "Yes",

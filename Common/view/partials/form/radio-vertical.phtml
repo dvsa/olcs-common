@@ -11,7 +11,7 @@ $hasValidationError = !empty($errors);
 <div class="<?php echo ($hasValidationError) ? 'validation-wrapper' : 'field' ?>">
     <fieldset class="radio-button__fieldset">
         <legend>
-            <?php echo $this->translate($element->getLabel()) . $this->translate($radioElement->getLabel()); ?>
+            <?php echo $this->translate($element->getLabel()); ?>
         </legend>
 
         <?php if ($element->getOption('hint')) : ?>
