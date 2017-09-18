@@ -12,7 +12,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class EbsrDocumentLink implements FormatterInterface
 {
-    const LINK_PATTERN = '<a href="%s">%s</a>';
+    const LINK_PATTERN = '<a class="file__link" href="%s">%s %s</a>';
     const URL_ROUTE = 'bus-registration/ebsr';
     const URL_ACTION = 'detail';
 
@@ -21,7 +21,7 @@ class EbsrDocumentLink implements FormatterInterface
      *
      * @param array                        $data   data array
      * @param array                        $column column info
-     * @param null|ServiceLocatorInterface $sm     service locator
+     * @§ null|ServiceLocatorInterface $sm     service locator
      *
      * @return string
      */
@@ -69,6 +69,6 @@ class EbsrDocumentLink implements FormatterInterface
         /** @var \Common\View\Helper\Status $statusHelper */
         $statusHelper = $sm->get('ViewHelperManager')->get('status');
 
-        return sprintf(self::LINK_PATTERN, $url, $data['document']['description']) . $statusHelper->__invoke($status);
+        return sprintf(self::LINK_PATTERN, $url, $data['document']['description'], $statusHelper->__invoke($status)); 
     }
 }
