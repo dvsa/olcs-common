@@ -64,7 +64,7 @@ class ActionLinksTest extends MockeryTestCase
 
         $expected = '<input type="submit" class="right-aligned action--secondary trigger-modal" '.
             'name="table[action][delete][123]" ' .
-            'value="Remove"> <input type="submit" class="right-aligned trigger-modal" ' .
+            'value="Remove"> <input type="submit" class="action--secondary right-aligned trigger-modal" ' .
             'name="table[action][replace][123]" value="Replace">';
 
         $this->assertEquals($expected, $this->sut->render($data, $column));
