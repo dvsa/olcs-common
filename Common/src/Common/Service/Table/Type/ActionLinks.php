@@ -111,7 +111,7 @@ class ActionLinks extends Selector
         if ($this->isLinkVisible($data, $column, 'Replace', false)) {
             $inputName = sprintf($this->getInputName($column, 'replaceInputName'), $data['id']);
             $content .= sprintf(
-                ' <input type="submit" class="right-aligned trigger-modal" name="%s" value="' . $replace . '">',
+                ' <input type="submit" class="action--secondary right-aligned trigger-modal" name="%s" value="' . $replace . '">',
                 $inputName
             );
         }
