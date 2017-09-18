@@ -120,8 +120,8 @@ class FinancialEvidence implements MapperInterface
         ) {
             $uploadNow = RefData::AD_UPLOAD_LATER;
         } elseif (
-            isset($dataEvidence['sendByPost'])
-            && (int) $dataEvidence['sendByPost'] === RefData::AD_POST
+            isset($dataEvidence['sendByPostRadio'])
+            && (int) $dataEvidence['sendByPostRadio'] === RefData::AD_POST
         ) {
             $uploadNow = RefData::AD_POST;
         }
