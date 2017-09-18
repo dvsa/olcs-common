@@ -305,4 +305,17 @@ class CurrentUserTest extends MockeryTestCase
 
         $this->assertEquals(25, $sut->getNumberOfVehicles());
     }
+
+    public function testIsInternalUser()
+    {
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn(new User());
+        $mockAuthService->shouldReceive('isGranted')
+            ->with('internal-user')
+            ->andReturn(true);
+
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertTrue($sut->isInternalUser());
+    }
 }
