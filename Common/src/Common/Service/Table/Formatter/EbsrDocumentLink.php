@@ -21,7 +21,7 @@ class EbsrDocumentLink implements FormatterInterface
      *
      * @param array                        $data   data array
      * @param array                        $column column info
-     * @§ null|ServiceLocatorInterface $sm     service locator
+     * @param null|ServiceLocatorInterface $sm     service locator
      *
      * @return string
      */
