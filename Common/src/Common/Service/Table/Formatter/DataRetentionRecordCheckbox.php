@@ -10,12 +10,11 @@ class DataRetentionRecordCheckbox implements FormatterInterface
     /**
      * Format a checkbox
      *
-     * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
+     * @param array $data Data of data retention row
+     *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public static function format($data)
     {
         $format = '<input type="checkbox" value="' . $data['id'] . '" name="id[]" %s>';
 
