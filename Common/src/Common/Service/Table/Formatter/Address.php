@@ -8,6 +8,9 @@
 
 namespace Common\Service\Table\Formatter;
 
+use function array_key_exists;
+use function is_string;
+
 /**
  * Address formatter
  *
@@ -15,14 +18,21 @@ namespace Common\Service\Table\Formatter;
  */
 class Address implements FormatterInterface
 {
-    protected static $allFields = [
-        'addressLine1',
-        'addressLine2',
-        'addressLine3',
-        'addressLine4',
-        'town',
-        'postcode',
-        'countryCode'
+    protected static $formats = [
+        'FULL' => [
+            'addressLine1',
+            'addressLine2',
+            'addressLine3',
+            'addressLine4',
+            'town',
+            'postcode',
+            'countryCode'
+        ],
+        'BRIEF' => [
+            'addressLine1',
+            'town',
+            'postcode',
+        ]
     ];
 
     /**
@@ -44,9 +54,8 @@ class Address implements FormatterInterface
         }
 
         if (isset($column['addressFields'])) {
-
-            if ($column['addressFields'] == 'FULL') {
-                $fields = self::$allFields;
+            if (is_string($column['addressFields']) and array_key_exists($column['addressFields'], self::$formats)) {
+                $fields = self::$formats[$column['addressFields']];
             } else {
                 $fields = $column['addressFields'];
             }
