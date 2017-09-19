@@ -25,7 +25,7 @@ class DataRetentionRecordCheckboxTest extends MockeryTestCase
         return [
             'action_confirmation is set to true' => [
                 ['actionConfirmation' => true, 'id' => 1, 'nextReviewDate' => null],
-                '<input type="checkbox" value="1" name="id[]" checked>'
+                '<input type="checkbox" value="1" name="id[]" >'
             ],
             'action_confirmation is set to false' => [
                 ['actionConfirmation' => false, 'id' => 1, 'nextReviewDate' => null],

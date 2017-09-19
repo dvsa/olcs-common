@@ -2,6 +2,8 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Util\Escape;
+
 /**
  * Data Retention Record Checkbox formatter
  */
@@ -16,13 +18,9 @@ class DataRetentionRecordCheckbox implements FormatterInterface
      */
     public static function format($data)
     {
-        $format = '<input type="checkbox" value="' . $data['id'] . '" name="id[]" %s>';
+        $format = '<input type="checkbox" value="' . Escape::html($data['id']) . '" name="id[]" %s>';
 
-        if (isset($data['actionConfirmation']) && $data['actionConfirmation'] === true) {
-            $result = sprintf($format, 'checked');
-        } else {
-            $result = sprintf($format, '');
-        }
+        $result = sprintf($format, '');
 
         if ($data['nextReviewDate'] !== null) {
             $result = sprintf($format, 'disabled');
