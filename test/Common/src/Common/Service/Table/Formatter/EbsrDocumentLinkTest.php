@@ -60,7 +60,7 @@ class EbsrDocumentLinkTest extends MockeryTestCase
             'id' => $submissionId
         ];
 
-        $expected = sprintf(EbsrDocumentLink::LINK_PATTERN, $url, $documentDescription) . $statusLabel;
+        $expected = sprintf(EbsrDocumentLink::LINK_PATTERN, $url, $documentDescription, $statusLabel);
 
         $this->assertEquals($expected, $sut->format($data, [], $sm));
     }
