@@ -8,6 +8,8 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Zend\ServiceManager\ServiceLocatorInterface;
+
 /**
  * Address formatter
  *
@@ -15,23 +17,31 @@ namespace Common\Service\Table\Formatter;
  */
 class Address implements FormatterInterface
 {
-    protected static $allFields = [
-        'addressLine1',
-        'addressLine2',
-        'addressLine3',
-        'addressLine4',
-        'town',
-        'postcode',
-        'countryCode'
+    protected static $formats = [
+        'FULL' => [
+            'addressLine1',
+            'addressLine2',
+            'addressLine3',
+            'addressLine4',
+            'town',
+            'postcode',
+            'countryCode'
+        ],
+        'BRIEF' => [
+            'addressLine1',
+            'town',
+            'postcode',
+        ]
     ];
 
     /**
      * Format an address
      *
-     * @param array $data
-     * @param array $column
-     * @param \Zend\ServiceManager\ServiceManager $sm
-     * @return string
+     * @param array                   $data   The row data.
+     * @param array                   $column The column data.
+     * @param ServiceLocatorInterface $sm     The service manager.
+     *
+     * @return string                         The formatted address
      */
     public static function format($data, $column = array(), $sm = null)
     {
@@ -43,19 +53,7 @@ class Address implements FormatterInterface
             }
         }
 
-        if (isset($column['addressFields'])) {
-
-            if ($column['addressFields'] == 'FULL') {
-                $fields = self::$allFields;
-            } else {
-                $fields = $column['addressFields'];
-            }
-        } else {
-            $fields = array(
-                'addressLine1',
-                'town'
-            );
-        }
+        $fields = self::getFields($column);
 
         $parts = array();
 
@@ -79,11 +77,36 @@ class Address implements FormatterInterface
     /**
      * How to format the resulting address fields. Comma separated.
      *
-     * @param $parts
-     * @return string
+     * @param string[] $parts The address fields to format
+     *
+     * @return string         The formatted address fields
      */
     protected static function formatAddress($parts)
     {
         return implode(', ', $parts);
+    }
+
+    /**
+     * Get the list of fields to include from the column data
+     *
+     * @param array $column The column data.
+     *
+     * @return array        The fields to include
+     */
+    private static function getFields($column)
+    {
+        if (isset($column['addressFields'])) {
+            if (is_string($column['addressFields']) and array_key_exists($column['addressFields'], self::$formats)) {
+                $fields = self::$formats[$column['addressFields']];
+            } else {
+                $fields = $column['addressFields'];
+            }
+        } else {
+            $fields = array(
+                'addressLine1',
+                'town'
+            );
+        }
+        return $fields;
     }
 }

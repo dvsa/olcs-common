@@ -3275,6 +3275,6 @@ return [
     'continuations.step.header' => 'Step %s of %s',
     'lva-operating-centre-radio-hint' => 'Uploading your financial information as soon as possible will help us process your application quickly.',
     'lva-operating-centre-radio-label' => '<p class="legend">How would you like to send your advert?</p>',
-    'lva-operating-centre-newspaper-advert' => '<p class="label">Newspaper advert</p>',
+    'lva-operating-centre-newspaper-advert' => '<p class="label newspaper-advert">Newspaper advert</p>',
     // Potentially unused translations
 ];
