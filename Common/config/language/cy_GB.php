@@ -1351,7 +1351,7 @@ return [
     'continuations.conditions-undertakings.undertakings' => 'Ymgymeriadau',
     'continuations.conditions-undertakings.conditions' => 'Amodau',
     'lva-operating-centre-radio-label' => '<p class="legend">Sut hoffech chi anfon eich hysbyseb?</p>',
-    'lva-operating-centre-newspaper-advert' => '<p class="label">Hysbyseb papur newyddion</p>',
+    'lva-operating-centre-newspaper-advert' => '<p class="label newspaper-advert">Hysbyseb papur newyddion</p>',
 
     // Potentially unused translations
 ];
