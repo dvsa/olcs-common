@@ -76,6 +76,44 @@ class AddressTest extends \PHPUnit_Framework_TestCase
                 array('addressFields' => 'FULL'),
                 'foo, bar, cake'
             ),
+            "BRIEF with postCode" => array(
+                array(
+                    'addressLine1' => 'foo',
+                    'addressLine2' => 'bar',
+                    'addressLine3' => 'cake',
+                    'addressLine4' => 'baz',
+                    'town' => 'spam',
+                    'postcode'  => 'eggs',
+                    'countryCode' => 'ham',
+                ),
+                array('addressFields' => 'BRIEF'),
+                'foo, spam, eggs'
+            ),
+            "BRIEF with blank postCode" => array(
+                array(
+                    'addressLine1' => 'foo',
+                    'addressLine2' => 'bar',
+                    'addressLine3' => 'cake',
+                    'addressLine4' => 'baz',
+                    'town' => 'spam',
+                    'postcode'  => '',
+                    'countryCode' => 'ham',
+                ),
+                array('addressFields' => 'BRIEF'),
+                'foo, spam'
+            ),
+            "BRIEF without postCode" => array(
+                array(
+                    'addressLine1' => 'foo',
+                    'addressLine2' => 'bar',
+                    'addressLine3' => 'cake',
+                    'addressLine4' => 'baz',
+                    'town' => 'spam',
+                    'countryCode' => 'ham',
+                ),
+                array('addressFields' => 'BRIEF'),
+                'foo, spam'
+            ),
             array(
                 array(
                     'address' => array(

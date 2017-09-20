@@ -29,6 +29,7 @@ return array(
             'action' => 'edit',
             'name' => 'operatingCentre->address',
             'formatter' => 'Address',
+            'addressFields' => 'BRIEF',
             'sort' => 'adr',
             'width' => '60%'
         ),
