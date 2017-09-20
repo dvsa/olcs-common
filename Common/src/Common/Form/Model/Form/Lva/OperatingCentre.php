@@ -36,7 +36,8 @@ class OperatingCentre
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Advertisements")
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation-sub-action.advertisements",
-     *     "error-messages": "test"
+     *     "error-messages": "test",
+     *     "fieldset-data-group": "advertisements",
      * })
      */
     public $advertisements = null;
