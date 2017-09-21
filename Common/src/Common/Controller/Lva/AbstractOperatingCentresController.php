@@ -536,7 +536,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $this->documents = null;
 
         $data = [
-            'description' => 'Advertisement',
+            'description' => $file['name'],
             'category' => Category::CATEGORY_APPLICATION,
             'subCategory' => Category::DOC_SUB_CATEGORY_APPLICATION_ADVERT_DIGITAL,
             'isExternal'  => $this->isExternal(),

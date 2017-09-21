@@ -75,7 +75,6 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         return [
             'transportManager' => $tmId,
             'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
-            'description' => 'Additional information',
             'category'    => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
         ];
