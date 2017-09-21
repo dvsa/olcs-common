@@ -43,7 +43,9 @@ class OperatingCentreTest extends MockeryTestCase
             'data' => [
                 'noOfVehiclesRequired' => 10,
                 'noOfTrailersRequired' => 11,
-                'permission' => 13,
+                'permission' => [
+                    'permission' => 13,
+                ]
             ],
             'operatingCentre' => [
                 'foo' => 'bar',
@@ -95,7 +97,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'data' => [
                         'noOfVehiclesRequired' => 10,
                         'noOfTrailersRequired' => 11,
-                        'permission' => 'Y'
+                        'permission' => [
+                            'permission' => 'Y'
+                        ]
                     ],
                     'advertisements' => [
                         'radio' => OperatingCentre::VALUE_OPTION_AD_PLACED_NOW,
@@ -123,7 +127,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'data' => [
                         'noOfVehiclesRequired' => 10,
                         'noOfTrailersRequired' => 11,
-                        'permission' => 'Y'
+                        'permission' => [
+                            'permission' => 'Y'
+                        ]
                     ],
                     'advertisements' => [
                         'radio' => OperatingCentre::VALUE_OPTION_AD_POST,
@@ -151,7 +157,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'data' => [
                         'noOfVehiclesRequired' => 10,
                         'noOfTrailersRequired' => 11,
-                        'permission' => 'Y'
+                        'permission' => [
+                            'permission' => 'Y'
+                        ]
                     ],
                     'advertisements' => [
                         'radio' => OperatingCentre::VALUE_OPTION_AD_UPLOAD_LATER,
@@ -197,7 +205,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'bar2'
                 ],
                 'permission' => [
-                    'bar6'
+                    'permission' => [
+                        'bar6'
+                    ]
                 ]
             ],
             'advertisements' => [
