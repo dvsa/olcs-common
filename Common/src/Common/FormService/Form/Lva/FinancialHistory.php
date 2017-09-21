@@ -61,7 +61,8 @@ class FinancialHistory extends AbstractFormService
     {
         if (isset($data['niFlag']) && $data['niFlag'] === 'Y') {
             $dataFieldset = $form->get('data');
-            $insolvencyConfirmationField = $dataFieldset->get('insolvencyConfirmation');
+            $insolvencyConfirmationField = $dataFieldset->get('financialHistoryConfirmation')
+                ->get('insolvencyConfirmation');
             $insolvencyConfirmationField->setLabel(
                 'application_previous-history_financial-history.insolvencyConfirmation.title.ni'
             );

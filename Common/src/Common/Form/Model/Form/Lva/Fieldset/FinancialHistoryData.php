@@ -28,11 +28,18 @@ class FinancialHistoryData
     public $hasAnyPerson = null;
 
     /**
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     * @Form\Attributes({"value":"<h2>%s</h2>"})
+     * @Form\Options({"tokens": {"application_previous-history_financial-history.intro"}})
+     */
+    public $intro= null;
+
+    /**
      * @Form\Annotations({"id":""})
      * @Form\Options({
      *     "short-label": "short-label-financial-history-bankrupt",
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
-     *     "legend-attributes": {"class": "form-element__question"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "error-message": "financialHistoryData_bankrupt-error",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
@@ -47,7 +54,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-liquidation",
      *     "label": "application_previous-history_financial-history.finance.liquidation",
-     *     "legend-attributes": {"class": "form-element__question"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "error-message": "financialHistoryData_liquidation-error",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
@@ -62,7 +69,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-receivership",
      *     "label": "application_previous-history_financial-history.finance.receivership",
-     *     "legend-attributes": {"class": "form-element__question"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "error-message": "financialHistoryData_receivership-error",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
@@ -77,7 +84,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-administration",
      *     "label": "application_previous-history_financial-history.finance.administration",
-     *     "legend-attributes": {"class": "form-element__question"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "error-message": "financialHistoryData_administration-error",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
@@ -92,7 +99,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-disqualified",
      *     "fieldset-attributes": {"id":"disqualified"},
-     *     "legend-attributes": {"class": "form-element__question"},
+     *     "legend-attributes": {"class": "form-element__label"},
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label": "application_previous-history_financial-history.finance.disqualified",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
@@ -143,21 +150,9 @@ class FinancialHistoryData
     public $file = null;
 
     /**
-     * @Form\Attributes({"id":""})
-     * @Form\Options({
-     *     "short-label": "short-label-financial-history-insolvency",
-     *     "checked_value": "Y",
-     *     "unchecked_value": "N",
-     *     "label": "application_previous-history_financial-history.insolvencyConfirmation.title",
-     *     "label_attributes": {
-     *         "class": "form-control form-control--checkbox form-control--advanced", 
-     *         "id":"insolvency"
-     *     },
-     *     "must_be_value": "Y"
-     * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
+     * @Form\ComposedObject("\Common\Form\Model\Form\Lva\Fieldset\FinancialHistoryConfirmation")
      */
-    public $insolvencyConfirmation = null;
+    public $financialHistoryConfirmation = null;
 
     /**
      * @Form\Attributes({"value":""})
