@@ -38,7 +38,9 @@ class OperatingCentre implements MapperInterface
             'data' => [
                 'noOfVehiclesRequired' => $data['noOfVehiclesRequired'],
                 'noOfTrailersRequired' => $data['noOfTrailersRequired'],
-                'permission' => $data['permission'],
+                'permission' => [
+                    'permission' => $data['permission']
+                ],
             ],
             'operatingCentre' => $data['operatingCentre'],
             'address' => $data['operatingCentre']['address'],
@@ -94,6 +96,9 @@ class OperatingCentre implements MapperInterface
             if (isset($adv['adPlacedContent']['adPlacedDate'])) {
                 $mappedData['adPlacedDate'] = $adv['adPlacedContent']['adPlacedDate'];
             }
+        }
+        if (isset($data['data']['permission']['permission'])) {
+            $mappedData['permission'] = $data['data']['permission']['permission'];
         }
 
         return $mappedData;
@@ -207,7 +212,7 @@ class OperatingCentre implements MapperInterface
         if (isset($errors['permission'])) {
 
             foreach ($errors['permission'] as $key => $message) {
-                $formMessages['data']['permission'][] = $message;
+                $formMessages['data']['permission']['permission'][] = $message;
             }
 
             unset($errors['permission']);

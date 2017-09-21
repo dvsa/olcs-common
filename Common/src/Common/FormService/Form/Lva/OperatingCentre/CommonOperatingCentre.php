@@ -99,7 +99,7 @@ class CommonOperatingCentre extends AbstractFormService
             FormHelperService::ALTER_LABEL_APPEND
         );
         $this->getFormHelper()->alterElementLabel(
-            $form->get('data')->get('permission'),
+            $form->get('data')->get('permission')->get('permission'),
             '-psv',
             FormHelperService::ALTER_LABEL_APPEND
         );

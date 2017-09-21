@@ -124,7 +124,7 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
 
     public function testPermissionCheckbox()
     {
-        $element = [ 'data', 'permission' ];
+        $element = [ 'data', 'permission', 'permission' ];
         $this->assertFormElementType($element, SingleCheckbox::class);
         $this->assertFormElementIsRequired($element, true);
     }

@@ -114,7 +114,14 @@ class CommonOperatingCentreTest extends MockeryTestCase
         $dataFieldset
             ->shouldReceive('get')
             ->with('permission')
-            ->andReturn($permission);
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('permission')
+                    ->andReturn($permission)
+                    ->once()
+                    ->getMock()
+            );
 
         $this->form->shouldReceive('get')
             ->with('data')
