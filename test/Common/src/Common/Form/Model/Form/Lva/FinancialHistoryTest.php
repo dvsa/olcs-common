@@ -85,7 +85,7 @@ class FinancialHistoryTest extends AbstractFormValidationTestCase
     public function testInsolvencyConfirmation()
     {
         $this->assertFormElementIsRequired(
-            ['data', 'insolvencyConfirmation'],
+            ['data', 'financialHistoryConfirmation', 'insolvencyConfirmation'],
             true
         );
     }
