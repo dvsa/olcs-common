@@ -52,17 +52,21 @@ class IdentityProvider implements IdentityProviderInterface
             $data = $response->getResult();
 
             $user = new User();
-            $user->setId($data['id']);
+            if (!empty($data['id'])) {
+                $user->setId($data['id']);
+            }
             $user->setPid($data['pid']);
             $user->setUserType($data['userType']);
             $user->setUsername($data['loginId']);
             $user->setUserData($data);
 
-            $roles = [];
-            foreach ($data['roles'] as $role) {
-                $roles[] = $role['role'];
+            if (!empty($data['roles']) && is_array($data['roles'])) {
+                $roles = [];
+                foreach ($data['roles'] as $role) {
+                    $roles[] = $role['role'];
+                }
+                $user->setRoles($roles);
             }
-            $user->setRoles($roles);
 
             $this->identity = $user;
         }
