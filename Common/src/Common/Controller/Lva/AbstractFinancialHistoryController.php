@@ -190,7 +190,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             $file,
             array(
                 'application' => $this->getApplicationId(),
-                'description' => 'Insolvency document',
+                'description' => $file['name'],
                 'category'    => CategoryDataService::CATEGORY_LICENSING,
                 'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL,
                 'licence'     => $this->getLicenceId(),

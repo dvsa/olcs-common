@@ -125,7 +125,6 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $expected = [
             'transportManager' => 111,
             'issuedDate' => '2014-01-20 10:10:10',
-            'description' => 'Additional information',
             'category' => CategoryDataService::CATEGORY_TRANSPORT_MANAGER,
             'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL
         ];
