@@ -69,6 +69,7 @@ trait VehicleSearchTrait
                 ];
                 $searchForm->setMessages($message);
             }
+            $searchForm->setAttribute('action', '');
         }
         return $searchForm;
     }
