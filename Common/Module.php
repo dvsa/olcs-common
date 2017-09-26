@@ -2,6 +2,7 @@
 
 namespace Common;
 
+use Common\Exception\ResourceNotFoundException;
 use Common\Preference\LanguageListener;
 use Common\Service\Cqrs\Exception\AccessDeniedException;
 use Common\Service\Cqrs\Exception\NotFoundException;
@@ -114,6 +115,7 @@ class Module
                 // If Backend Not found or access denied then display error as a 404 not found
                 if ($e->getParam('exception') instanceof NotFoundException
                     || $e->getParam('exception') instanceof AccessDeniedException
+                    || $e->getParam('exception') instanceof ResourceNotFoundException
                 ) {
                     $e->setError(Application::ERROR_CONTROLLER_INVALID);
                     $e->setParam('exceptionNoLog', true);
