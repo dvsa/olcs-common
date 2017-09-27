@@ -81,7 +81,9 @@ class FormErrors extends AbstractHelper
     </ol>
 </div>';
 
-        return sprintf($messagesOpenFormat, $this->translate('form-errors'))
+        $messagesTitle = $this->translate($form->getOption('formErrorsTitle')) ? $this->translate($form->getOption('formErrorsTitle')) : '<h3>'.$this->translate('form-errors').'</h3>';
+
+        return sprintf($messagesOpenFormat, $messagesTitle)
             . implode($messageSeparatorString, $this->getFlatMessages($messages, $form))
             . $messageCloseString;
     }
