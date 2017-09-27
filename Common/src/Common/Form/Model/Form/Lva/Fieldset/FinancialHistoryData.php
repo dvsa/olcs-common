@@ -29,7 +29,7 @@ class FinancialHistoryData
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     * @Form\Attributes({"value":"<h2>%s</h2>"})
+     * @Form\Attributes({"value":"<h3 id=""mainq"">%s</h3>"})
      * @Form\Options({"tokens": {"application_previous-history_financial-history.intro"}})
      */
     public $intro= null;
@@ -39,7 +39,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-bankrupt",
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
-     *     "legend-attributes": {"class": "form-element__label"},
+     *     "legend-attributes": {"class": "form-element__label", "aria-describedby": "mainq"},
      *     "error-message": "financialHistoryData_bankrupt-error",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
@@ -54,7 +54,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-liquidation",
      *     "label": "application_previous-history_financial-history.finance.liquidation",
-     *     "legend-attributes": {"class": "form-element__label"},
+     *     "legend-attributes": {"class": "form-element__label", "aria-describedby": "mainq"},
      *     "error-message": "financialHistoryData_liquidation-error",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
@@ -69,7 +69,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-receivership",
      *     "label": "application_previous-history_financial-history.finance.receivership",
-     *     "legend-attributes": {"class": "form-element__label"},
+     *     "legend-attributes": {"class": "form-element__label", "aria-describedby": "mainq"},
      *     "error-message": "financialHistoryData_receivership-error",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
@@ -84,7 +84,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-administration",
      *     "label": "application_previous-history_financial-history.finance.administration",
-     *     "legend-attributes": {"class": "form-element__label"},
+     *     "legend-attributes": {"class": "form-element__label", "aria-describedby": "mainq"},
      *     "error-message": "financialHistoryData_administration-error",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
@@ -99,7 +99,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "short-label": "short-label-financial-history-disqualified",
      *     "fieldset-attributes": {"id":"disqualified"},
-     *     "legend-attributes": {"class": "form-element__label"},
+     *     "legend-attributes": {"class": "form-element__label", "aria-describedby": "mainq"},
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label": "application_previous-history_financial-history.finance.disqualified",
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
