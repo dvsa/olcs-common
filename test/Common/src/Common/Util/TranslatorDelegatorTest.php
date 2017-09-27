@@ -49,6 +49,11 @@ class TranslatorDelegatorTest extends MockeryTestCase
         $this->assertEquals('translated-replace-foo-bar', $this->sut->translate('replace-{{bar}}-{{foo}}'));
     }
 
+    public function testTranslateNull()
+    {
+        $this->assertEquals('', $this->sut->translate(null));
+    }
+
     public function testCall()
     {
         $this->mockTranslator->shouldReceive('setLocale')->once();

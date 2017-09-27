@@ -63,6 +63,10 @@ class TranslatorDelegator extends Translator
      */
     public function translate($message, $textDomain = 'default', $locale = null)
     {
+        if ($message === null) {
+            return '';
+        }
+
         return $this->replaceVariables($this->translator->translate($message, $textDomain, $locale));
     }
 
