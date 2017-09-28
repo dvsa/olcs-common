@@ -71,6 +71,7 @@ class FormErrorsTest extends MockeryTestCase
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
             . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Cake-translated(\s+)?<\/li>(\s+)?'
@@ -96,7 +97,13 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')
             ->once()
             ->with('foo')
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -132,6 +139,7 @@ class FormErrorsTest extends MockeryTestCase
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
             . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -157,7 +165,13 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')
             ->once()
             ->with('foo')
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -193,6 +207,7 @@ class FormErrorsTest extends MockeryTestCase
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
             . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -218,7 +233,13 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')
             ->once()
             ->with('foo')
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -251,6 +272,7 @@ class FormErrorsTest extends MockeryTestCase
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
             . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
@@ -276,7 +298,13 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')
             ->once()
             ->with('foo')
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -308,6 +336,7 @@ class FormErrorsTest extends MockeryTestCase
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
             . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?foo-error-translated(\s+)?<\/li>(\s+)?'
             . '<\/ol>(\s+)?'
@@ -336,7 +365,13 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')
             ->once()
             ->with('foo')
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -372,6 +407,7 @@ class FormErrorsTest extends MockeryTestCase
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
             . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?'
             . '<a href="#foo-id">foo-label-translated\: bar-translated-translated<\/a>(\s+)?'
@@ -401,7 +437,13 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')
             ->once()
             ->with('foo')
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -431,6 +473,7 @@ class FormErrorsTest extends MockeryTestCase
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
             . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?foo-label-translated\: bar-translated-translated(\s+)?'
             . '<\/li>(\s+)?'
@@ -458,7 +501,13 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')
             ->once()
             ->with('foo')
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -499,6 +548,7 @@ class FormErrorsTest extends MockeryTestCase
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
             . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?bar-translated(\s+)?'
             . '<\/li>(\s+)?'
@@ -524,7 +574,13 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('has')
             ->once()
             ->with('foo')
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -560,6 +616,7 @@ class FormErrorsTest extends MockeryTestCase
         ];
         $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
             . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
             . '<ol class="validation-summary__list">(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Bar-translated(\s+)?<\/li>(\s+)?'
             . '<li class="validation-summary__item">(\s+)?Cake-translated(\s+)?<\/li>(\s+)?'
@@ -588,7 +645,13 @@ class FormErrorsTest extends MockeryTestCase
             ->andReturn(null)
             ->shouldReceive('has')
             ->times(3)
-            ->andReturn(false);
+            ->andReturn(false)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -611,8 +674,220 @@ class FormErrorsTest extends MockeryTestCase
         $this->assertRegExp($expected, $sut($form));
     }
 
+    public function testInvokeRenderWithMessagesWithAnchorAndCustomTitle()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+
+        $title = 'error-title';
+        $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
+            . '<h3>error-title-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn($title)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('error-message')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn('foo-id');
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithMessagesWithAnchorAndCustomTitleAndParagraph()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+
+        $title = 'error-title';
+        $paragraph = 'error-paragraph';
+        $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
+            . '<h3>error-title-translated<\/h3>(\s+)?'
+            . '<p>error-paragraph-translated<\/p>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn($title)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn($paragraph);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('error-message')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn('foo-id');
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithMessagesWithAnchorAndCustomParagraph()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+                'cake'
+            ]
+        ];
+
+        $paragraph = 'error-paragraph';
+        $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p>error-paragraph-translated<\/p>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#foo-id">Cake-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('formErrorsParagraph')
+            ->andReturn($paragraph);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('error-message')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn('foo-id');
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
     public function mockTranslate($text)
     {
         return $text . '-translated';
     }
 }
+
