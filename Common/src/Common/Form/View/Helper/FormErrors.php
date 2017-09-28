@@ -71,6 +71,7 @@ class FormErrors extends AbstractHelper
         $messagesOpenFormat = '
 <div class="validation-summary" role="alert" id="validationSummary">
     <h3>%s</h3>
+    <p>%s</p>
     <ol class="validation-summary__list">
         <li class="validation-summary__item">';
             $messageSeparatorString = '
@@ -81,9 +82,14 @@ class FormErrors extends AbstractHelper
     </ol>
 </div>';
 
-        $messagesTitle = $this->translate($form->getOption('formErrorsTitle')) ? $this->translate($form->getOption('formErrorsTitle')) : '<h3>'.$this->translate('form-errors').'</h3>';
+        $messagesTitle = $form->getOption('formErrorsTitle') ?
+            $this->translate($form->getOption('formErrorsTitle')) :
+            $this->translate('form-errors');
+        $messagesParagraph = $form->getOption('formErrorsParagraph') ?
+            $this->translate($form->getOption('formErrorsParagraph')) :
+            '';
 
-        return sprintf($messagesOpenFormat, $messagesTitle)
+        return sprintf($messagesOpenFormat, $messagesTitle, $messagesParagraph)
             . implode($messageSeparatorString, $this->getFlatMessages($messages, $form))
             . $messageCloseString;
     }
