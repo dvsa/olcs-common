@@ -33,7 +33,7 @@ class FeeTransactionDateTest extends MockeryTestCase
 
         $expected = '01/09/2015';
 
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createMock('\stdClass', array('get'));
 
         $sm = m::mock()
             ->shouldReceive('get')
@@ -43,7 +43,7 @@ class FeeTransactionDateTest extends MockeryTestCase
                     ->shouldReceive('getStackValue')
                     ->with(
                         $data,
-                        ['child','someDate']
+                        ['child', 'someDate']
                     )
                     ->andReturn('2015-09-01')
                     ->getMock()

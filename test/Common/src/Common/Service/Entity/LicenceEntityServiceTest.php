@@ -235,7 +235,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 7;
 
-        $mockLicenceVehicleService = $this->getMock('\stdClass', array('getCurrentVrmsForLicence'));
+        $mockLicenceVehicleService = $this->createPartialMock('\stdClass', array('getCurrentVrmsForLicence'));
         $mockLicenceVehicleService->expects($this->once())
             ->method('getCurrentVrmsForLicence')
             ->will($this->returnValue('RESPONSE'));
@@ -466,7 +466,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectedRestCallInOrder('Licence', 'GET', $licenceId)
             ->will($this->returnValue($licenceData));
 
-        $mockLicenceNoGenService = $this->getMock('\stdClass', array('save'));
+        $mockLicenceNoGenService = $this->createPartialMock('\stdClass', array('save'));
         $mockLicenceNoGenService->expects($this->once())
             ->method('save')
             ->with(array('licence' => $licenceId))
@@ -520,7 +520,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue($licenceData));
         $this->expectedRestCallInOrder('Licence', 'PUT', $saveData);
 
-        $mockLicenceNoGenService = $this->getMock('\stdClass', array('save'));
+        $mockLicenceNoGenService = $this->createPartialMock('\stdClass', array('save'));
         $mockLicenceNoGenService->expects($this->once())
             ->method('save')
             ->with(array('licence' => $licenceId))

@@ -21,7 +21,7 @@ class TableBuilderAwareInterfaceTest extends TestCase
     public function testSetGetTableBuilder()
     {
         /** @var \Common\Service\Table\TableBuilderAwareInterface $trait */
-        $interface = $this->getMock('\Common\Service\Table\TableBuilderAwareInterface');
+        $interface = $this->createMock('\Common\Service\Table\TableBuilderAwareInterface');
 
         $this->assertTrue(method_exists($interface, 'getTableBuilder'), 'Class does not have method getTableBuilder');
         $this->assertTrue(method_exists($interface, 'setTableBuilder'), 'Class does not have method setTableBuilder');

@@ -23,9 +23,9 @@ class TaskDateTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+        $mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
 
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createPartialMock('\stdClass', array('get'));
         $sm->expects($this->any())
             ->method('get')
             ->with('translator')

@@ -33,7 +33,7 @@ abstract class AbstractEntityServiceTestCase extends MockeryTestCase
 
     protected function setUp()
     {
-        $this->restHelper = $this->getMock('\stdClass', array('makeRestCall'));
+        $this->restHelper = $this->createPartialMock('\stdClass', array('makeRestCall'));
         $this->restCallOrder = 0;
 
         $this->sm = $this->getServiceManager();

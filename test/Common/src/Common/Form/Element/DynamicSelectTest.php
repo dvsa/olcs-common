@@ -32,7 +32,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGetValueOptions()
     {
-        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService = $this->createMock('\Common\Service\Data\RefData');
         $mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
@@ -51,7 +51,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGetValueOptionsWithOtherOption()
     {
-        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService = $this->createMock('\Common\Service\Data\RefData');
         $mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
@@ -71,7 +71,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGetValueOptionsWithExclude()
     {
-        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService = $this->createMock('\Common\Service\Data\RefData');
         $mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
@@ -91,7 +91,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGetValueOptionsWithEmptyOption()
     {
-        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService = $this->createMock('\Common\Service\Data\RefData');
         $mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
@@ -141,9 +141,9 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
     {
         $serviceName = 'testListService';
 
-        $mockService = $this->getMock('\Common\Service\Data\ListDataInterface');
+        $mockService = $this->createMock('\Common\Service\Data\ListDataInterface');
 
-        $mockSl = $this->getMock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicSelect();
@@ -156,9 +156,9 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
     {
         $serviceName = 'testListService';
 
-        $mockService = $this->getMock('\StdClass');
+        $mockService = $this->createMock('\StdClass');
 
-        $mockSl = $this->getMock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicSelect();

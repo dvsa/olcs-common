@@ -13,7 +13,7 @@ class DynamicMultiCheckboxFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateService()
     {
 
-        $mockSl = $this->getMock('\Zend\Form\FormElementManager');
+        $mockSl = $this->createMock('\Zend\Form\FormElementManager');
         $mockSl->expects($this->any())->method('getServiceLocator')->willReturnSelf();
         $mockSl->expects($this->any())->method('get')->willReturnSelf();
 

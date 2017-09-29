@@ -39,7 +39,7 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $pluginManager = $this->getMock('\stdClass', array('getNamespace'));
+        $pluginManager = $this->createPartialMock('\stdClass', array('getNamespace'));
 
         $this->sut->expects($this->once())
             ->method('plugin')
@@ -56,7 +56,7 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->getMock('\stdClass', array('addInfoMessage'));
+        $chainMock = $this->createPartialMock('\stdClass', array('addInfoMessage'));
         $chainMock->expects($this->once())
             ->method('addInfoMessage')
             ->with($message);
@@ -76,7 +76,7 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->getMock('\stdClass', array('addErrorMessage'));
+        $chainMock = $this->createPartialMock('\stdClass', array('addErrorMessage'));
         $chainMock->expects($this->once())
             ->method('addErrorMessage')
             ->with($message);
@@ -96,7 +96,7 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->getMock('\stdClass', array('addSuccessMessage'));
+        $chainMock = $this->createPartialMock('\stdClass', array('addSuccessMessage'));
         $chainMock->expects($this->once())
             ->method('addSuccessMessage')
             ->with($message);
@@ -116,7 +116,7 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'foo';
 
-        $chainMock = $this->getMock('\stdClass', array('addWarningMessage'));
+        $chainMock = $this->createPartialMock('\stdClass', array('addWarningMessage'));
         $chainMock->expects($this->once())
             ->method('addWarningMessage')
             ->with($message);
@@ -137,7 +137,7 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
         $message = 'foo';
         $namespace = 'error';
 
-        $chainMock = $this->getMock('\stdClass', array('addMessage', 'setNamespace'));
+        $chainMock = $this->createPartialMock('\stdClass', array('addMessage', 'setNamespace'));
         $chainMock->expects($this->at(0))
             ->method('setNamespace')
             ->with($namespace)

@@ -33,9 +33,9 @@ class ContentHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function testTranslatorSet()
     {
-        $translatorMock = $this->getMock(\Zend\Mvc\I18n\TranslatorInterface::class);
+        $translatorMock = $this->createMock(\Zend\Mvc\I18n\Translator::class);
 
-        $mock = $this->getMock('\stdClass', array('getTranslator'));
+        $mock = $this->createPartialMock('\stdClass', array('getTranslator'));
 
         $mock->expects($this->once())
             ->method('getTranslator')
@@ -51,7 +51,7 @@ class ContentHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderLayoutWithMissingPartial()
     {
-        $mock = $this->getMock('\stdClass', array());
+        $mock = $this->createMock('\stdClass');
 
         $this->contentHelper = $this->getContentHelper($mock);
 
@@ -63,7 +63,7 @@ class ContentHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderLayoutWithPartial()
     {
-        $mock = $this->getMock('\stdClass', array('getContent'));
+        $mock = $this->createPartialMock('\stdClass', array('getContent'));
 
         $mock->expects($this->once())
             ->method('getContent')
@@ -81,7 +81,7 @@ class ContentHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderAttributes($attrs, $expected)
     {
-        $mock = $this->getMock('\stdClass', array());
+        $mock = $this->createMock('\stdClass', array());
 
         $this->contentHelper = $this->getContentHelper($mock);
 
@@ -107,7 +107,7 @@ class ContentHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function testReplaceContent($content, $vars, $expected)
     {
-        $mock = $this->getMock('\stdClass', array());
+        $mock = $this->createMock('\stdClass', array());
 
         $this->contentHelper = $this->getContentHelper($mock);
 

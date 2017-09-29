@@ -28,9 +28,9 @@ class AddressTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+        $mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
 
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createPartialMock('\stdClass', array('get'));
         $sm->expects($this->any())
             ->method('get')
             ->with('translator')
@@ -139,14 +139,14 @@ class AddressTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatWithNestedKeys()
     {
-        $mockHelper = $this->getMock('\stdClass', array('fetchNestedData'));
+        $mockHelper = $this->createPartialMock('\stdClass', array('fetchNestedData'));
 
         $mockHelper->expects($this->once())
             ->method('fetchNestedData')
             ->with(['foo' => 'bar'], 'bar->baz')
             ->willReturn(['addressLine1' => 'address 1']);
 
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createPartialMock('\stdClass', array('get'));
         $sm->expects($this->any())
             ->method('get')
             ->with('Helper\Data')

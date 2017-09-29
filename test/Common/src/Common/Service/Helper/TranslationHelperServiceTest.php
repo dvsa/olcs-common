@@ -32,7 +32,7 @@ class TranslationHelperServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->mockTranslator = $this->getMock('\stdClass', array('translate'));
+        $this->mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
         $this->mockTranslator->expects($this->any())
             ->method('translate')
             ->will($this->returnCallback(array($this, 'translate')));

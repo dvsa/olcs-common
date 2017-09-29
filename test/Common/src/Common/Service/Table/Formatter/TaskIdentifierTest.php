@@ -37,9 +37,9 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
 
         $routeParams = array_merge($routeParams, [$param => $data['linkId']]);
 
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createPartialMock('\stdClass', array('get'));
 
-        $mockUrlHelper = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrlHelper = $this->createPartialMock('\stdClass', array('fromRoute'));
 
         $mockUrlHelper->expects($this->any())
             ->method('fromRoute')
