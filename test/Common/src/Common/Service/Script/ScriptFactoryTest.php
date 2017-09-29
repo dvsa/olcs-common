@@ -31,7 +31,7 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->inlineScript = new \Zend\View\Helper\InlineScript();
 
-        $vhm = $this->getMock('\Zend\View\HelperPluginManager', ['get']);
+        $vhm = $this->createMock('\Zend\View\HelperPluginManager', ['get']);
         $vhm->expects($this->any())
             ->method('get')
             ->with('inlineScript')
@@ -42,7 +42,7 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
             array('Config', $this->config),
         );
 
-        $sl = $this->getMock('\Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $sl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
         $sl->expects($this->any())
            ->method('get')
            ->will($this->returnValueMap($valueMap));

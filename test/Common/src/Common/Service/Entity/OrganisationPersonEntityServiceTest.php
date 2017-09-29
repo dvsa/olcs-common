@@ -101,7 +101,7 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectedRestCallInOrder('OrganisationPerson', 'GET', ['person' => $personId])
             ->willReturn(['Count' => 0]);
 
-        $personService = $this->getMock('\stdClass', ['delete']);
+        $personService = $this->createPartialMock('\stdClass', ['delete']);
         $personService->expects($this->once())
             ->method('delete')
             ->with(7);

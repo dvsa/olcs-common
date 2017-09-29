@@ -38,7 +38,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
     {
         $this->serviceManager = Bootstrap::getServiceManager();
 
-        $this->mockApiResolver = $this->getMock('\stdClass', array('getClient'));
+        $this->mockApiResolver = $this->createPartialMock('\stdClass', array('getClient'));
         $this->mockApiResolver->expects($this->any())
             ->method('getClient')
             ->will($this->returnCallback(array($this, 'getClient')));
@@ -100,7 +100,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'foo' => 'bar'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('get'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('get'));
         $this->mockService->expects($this->once())
             ->method('get')
             ->with('', $data)
@@ -123,7 +123,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'foo' => 'bar'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('get'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('get'));
         $this->mockService->expects($this->once())
             ->method('get')
             ->with('/1', array())
@@ -146,7 +146,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'foo' => 'bar'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('post'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('post'));
         $this->mockService->expects($this->once())
             ->method('post')
             ->with('', $data)
@@ -167,7 +167,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
         $bundle = null;
         $response = array('foo' => 'bar');
 
-        $this->mockService = $this->getMock('\stdClass', array('get'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('get'));
         $this->mockService->expects($this->once())
             ->method('get')
             ->with('', $data)
@@ -190,7 +190,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
         $bundle = null;
         $response = array('foo' => 'bar');
 
-        $this->mockService = $this->getMock('\stdClass', array('get'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('get'));
         $this->mockService->expects($this->once())
             ->method('get')
             ->with('', array('id' => $data))
@@ -213,7 +213,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
         $bundle = array('fudge' => 'cake');
         $response = array('foo' => 'bar');
 
-        $this->mockService = $this->getMock('\stdClass', array('get'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('get'));
         $this->mockService->expects($this->once())
             ->method('get')
             ->with('', array('id' => $data, 'bundle' => '{"fudge":"cake"}'))
@@ -236,7 +236,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
         $bundle = null;
         $response = array('foo' => 'bar');
 
-        $this->mockService = $this->getMock('\stdClass', array('get'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('get'));
         $this->mockService->expects($this->once())
             ->method('get')
             ->with('', $data)
@@ -260,7 +260,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
         $response = array('foo' => 'bar');
         $expectedData = array('foo' => 'bar', 'bundle' => '{"fudge":"cake"}');
 
-        $this->mockService = $this->getMock('\stdClass', array('get'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('get'));
         $this->mockService->expects($this->once())
             ->method('get')
             ->with('', $expectedData)
@@ -284,7 +284,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
         $bundle = null;
         $response = false;
 
-        $this->mockService = $this->getMock('\stdClass', array('get'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('get'));
         $this->mockService->expects($this->once())
             ->method('get')
             ->with('', $data)
@@ -307,7 +307,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'data' => '{"foo":"bar"}'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('post'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('post'));
         $this->mockService->expects($this->once())
             ->method('post')
             ->with('', $expectedData)
@@ -333,7 +333,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'data' => '{"foo":"bar"}'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('post'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('post'));
         $this->mockService->expects($this->once())
             ->method('post')
             ->with('', $expectedData)
@@ -353,7 +353,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
         $data = array('id' => 1);
         $response = array('id' => 1);
 
-        $this->mockService = $this->getMock('\stdClass', array('delete'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('delete'));
         $this->mockService->expects($this->once())
             ->method('delete')
             ->with('', $data)
@@ -376,7 +376,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
         $data = array('id' => 1);
         $response = false;
 
-        $this->mockService = $this->getMock('\stdClass', array('delete'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('delete'));
         $this->mockService->expects($this->once())
             ->method('delete')
             ->with('', $data)
@@ -399,7 +399,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'data' => '{"foo":"bar"}'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('put'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('put'));
         $this->mockService->expects($this->once())
             ->method('put')
             ->with('/1', $expectedData)
@@ -437,7 +437,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'data' => '{"0":{"id":1,"foo":"bar"},"1":{"id":2,"foo":"bar"},"_OPTIONS_":{"multiple":true}}'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('put'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('put'));
         $this->mockService->expects($this->once())
             ->method('put')
             ->with('/0', $expectedData)
@@ -463,7 +463,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'data' => '{"foo":"bar"}'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('put'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('put'));
         $this->mockService->expects($this->once())
             ->method('put')
             ->with('/1', $expectedData)
@@ -487,7 +487,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'data' => '{"foo":"bar"}'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('put'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('put'));
         $this->mockService->expects($this->once())
             ->method('put')
             ->with('/1', $expectedData)
@@ -511,7 +511,7 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
             'data' => '{"foo":"bar"}'
         );
 
-        $this->mockService = $this->getMock('\stdClass', array('put'));
+        $this->mockService = $this->createPartialMock('\stdClass', array('put'));
         $this->mockService->expects($this->once())
             ->method('put')
             ->with('/1', $expectedData)

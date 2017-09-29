@@ -40,12 +40,15 @@ class TableBuilderTest extends MockeryTestCase
      */
     private function getMockTableBuilder($methods = array())
     {
-        return $this->getMock(\Common\Service\Table\TableBuilder::class, $methods, [$this->getMockServiceLocator()]);
+        return $this->getMockBuilder(TableBuilder::class)
+            ->setMethods($methods)
+            ->setConstructorArgs([$this->getMockServiceLocator()])
+            ->getMock();
     }
 
     private function getMockServiceLocator($config = true)
     {
-        $mockTranslator = $this->getMock(\Zend\Mvc\I18n\Translator::class, ['translate'], [], '', false);
+        $mockTranslator = $this->createPartialMock(\Zend\Mvc\I18n\Translator::class, ['translate']);
         $mockTranslator->expects(static::any())
             ->method('translate')
             ->willReturnCallback(
@@ -58,9 +61,9 @@ class TableBuilderTest extends MockeryTestCase
                 }
             );
 
-        $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
-        $mockControllerPluginManager = $this->getMock('\Zend\Mvc\Controller\PluginManager', array('get'));
-        $mockAuthService = $this->getMock('\stdClass', array('isGranted'));
+        $mockSm = $this->createPartialMock('\Zend\ServiceManager\ServiceManager', array('get'));
+        $mockControllerPluginManager = $this->createPartialMock('\Zend\Mvc\Controller\PluginManager', array('get'));
+        $mockAuthService = $this->createPartialMock('\stdClass', array('isGranted'));
 
         $servicesMap = [
             ['Config', true, ($config
@@ -588,7 +591,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         $variables = array();
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
 
         $mockUrl->expects($this->once())
             ->method('fromRoute')
@@ -616,7 +619,7 @@ class TableBuilderTest extends MockeryTestCase
             'action_route' => array('route' => 'someroute', 'params' => array('foo' => 'bar'))
         );
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
 
         $mockUrl->expects($this->once())
             ->method('fromRoute')
@@ -641,7 +644,7 @@ class TableBuilderTest extends MockeryTestCase
     public function testRender()
     {
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -701,7 +704,7 @@ class TableBuilderTest extends MockeryTestCase
             ]
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->any())
             ->method('replaceContent')
@@ -892,7 +895,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
-        $mockContentHelper = $this->getMock('\stdClass', array('renderLayout'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('renderLayout'));
 
         $mockContentHelper->expects($this->once())
             ->method('renderLayout')
@@ -927,7 +930,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $expectedTotal = 10;
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -958,7 +961,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $expectedTotal = 1;
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -988,7 +991,7 @@ class TableBuilderTest extends MockeryTestCase
         $total = 10;
         $expectedTotal = 10;
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -1214,7 +1217,7 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->any())
             ->method('replaceContent')
@@ -1262,7 +1265,7 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->any())
             ->method('replaceContent')
@@ -1312,7 +1315,7 @@ class TableBuilderTest extends MockeryTestCase
             'actionFormat' => 'buttons'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->any())
             ->method('replaceContent')
@@ -1359,7 +1362,7 @@ class TableBuilderTest extends MockeryTestCase
             'actionFormat' => 'dropdown'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->any())
             ->method('replaceContent')
@@ -1397,7 +1400,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         $attributes = array();
 
-        $mockContentHelper = $this->getMock('\stdClass', array('renderAttributes'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('renderAttributes'));
 
         $mockContentHelper->expects($this->once())
             ->method('renderAttributes')
@@ -1417,7 +1420,7 @@ class TableBuilderTest extends MockeryTestCase
      */
     public function testRenderAttributesWithoutAttributes()
     {
-        $mockContentHelper = $this->getMock('\stdClass', array('renderAttributes'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('renderAttributes'));
 
         $mockContentHelper->expects($this->once())
             ->method('renderAttributes')
@@ -1446,7 +1449,7 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -1483,7 +1486,7 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -1628,7 +1631,7 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -1652,7 +1655,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper', 'getUrl'));
 
@@ -1686,7 +1689,7 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -1710,14 +1713,14 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
 
-        //$mockQuery = $this->getMock('\stdClass', array('toArray'));
+        //$mockQuery = $this->createMock('\stdClass', array('toArray'));
         $mockQuery = [
             'foo' => 'bar',
             'page' => '1',
             'limit' => '30'
         ];
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
         $mockUrl->expects($this->any())
             ->method('fromRoute')
             ->will($this->returnValue('?' . http_build_query($mockQuery)));
@@ -1752,7 +1755,7 @@ class TableBuilderTest extends MockeryTestCase
 
         );
 
-        $mockPaginationHelper = $this->getMock('\stdClass', array('getOptions'));
+        $mockPaginationHelper = $this->createPartialMock('\stdClass', array('getOptions'));
 
         $mockPaginationHelper->expects($this->once())
             ->method('getOptions')
@@ -1787,15 +1790,15 @@ class TableBuilderTest extends MockeryTestCase
             )
         );
 
-        $mockPaginationHelper = $this->getMock('\stdClass', array('getOptions'));
+        $mockPaginationHelper = $this->createPartialMock('\stdClass', array('getOptions'));
 
         $mockPaginationHelper->expects($this->once())
             ->method('getOptions')
             ->will($this->returnValue($options));
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -1841,7 +1844,7 @@ class TableBuilderTest extends MockeryTestCase
 
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -1865,7 +1868,7 @@ class TableBuilderTest extends MockeryTestCase
 
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -1896,7 +1899,7 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -1906,7 +1909,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with('{{[elements/foo]}}');
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
 
         $mockUrl->expects($this->once())
             ->method('fromRoute')
@@ -1944,7 +1947,7 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -1954,7 +1957,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with('{{[elements/foo]}}');
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
 
         $mockUrl->expects($this->once())
             ->method('fromRoute')
@@ -1992,7 +1995,7 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -2002,7 +2005,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with('{{[elements/foo]}}');
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
 
         $mockUrl->expects($this->once())
             ->method('fromRoute')
@@ -2039,7 +2042,7 @@ class TableBuilderTest extends MockeryTestCase
             'title' => self::TRANSLATED . 'Title',
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2085,7 +2088,7 @@ class TableBuilderTest extends MockeryTestCase
             'class' => 'right',
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2118,7 +2121,7 @@ class TableBuilderTest extends MockeryTestCase
             'link' => 'LINK',
         ];
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -2128,7 +2131,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with('{{[elements/th]}}');
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
 
         $mockUrl->expects($this->once())
             ->method('fromRoute')
@@ -2205,7 +2208,7 @@ class TableBuilderTest extends MockeryTestCase
             'permissionRequisites' => ['correctPermission']
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
         $mockContentHelper->expects($this->once())
             ->method('replaceContent');
 
@@ -2215,7 +2218,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $mockAuthService = $this->getMock('\StdClass', array('isGranted'));
+        $mockAuthService = $this->createPartialMock('\StdClass', array('isGranted'));
         $mockAuthService->expects($this->once())
             ->method('isGranted')
             ->willReturn(true);
@@ -2236,11 +2239,11 @@ class TableBuilderTest extends MockeryTestCase
             'permissionRequisites' => ['correctPermission']
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
         $mockContentHelper->expects($this->once())
             ->method('replaceContent');
 
-        $mockAuthService = $this->getMock('\StdClass', array('isGranted'));
+        $mockAuthService = $this->createPartialMock('\StdClass', array('isGranted'));
         $mockAuthService->expects($this->once())
             ->method('isGranted')
             ->willReturn(true);
@@ -2265,7 +2268,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $column = array();
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2293,7 +2296,7 @@ class TableBuilderTest extends MockeryTestCase
             'name' => 'foo'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2322,7 +2325,7 @@ class TableBuilderTest extends MockeryTestCase
             'align' => 'right',
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2351,7 +2354,7 @@ class TableBuilderTest extends MockeryTestCase
             'title' => '<div>Foo</div>',
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2379,7 +2382,7 @@ class TableBuilderTest extends MockeryTestCase
 
         $column = array();
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2407,7 +2410,7 @@ class TableBuilderTest extends MockeryTestCase
             'format' => 'FOO'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -2441,7 +2444,7 @@ class TableBuilderTest extends MockeryTestCase
             'name' => 'date'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2474,7 +2477,7 @@ class TableBuilderTest extends MockeryTestCase
             'name' => 'date'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $expected = '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '"  />';
         $mockContentHelper->expects($this->once())
@@ -2506,7 +2509,7 @@ class TableBuilderTest extends MockeryTestCase
             'formatter' => 'Blah'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2537,7 +2540,7 @@ class TableBuilderTest extends MockeryTestCase
             'name' => 'date'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2565,7 +2568,7 @@ class TableBuilderTest extends MockeryTestCase
             'type' => 'Selector'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2596,7 +2599,7 @@ class TableBuilderTest extends MockeryTestCase
             'type' => 'Selector'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2633,7 +2636,7 @@ class TableBuilderTest extends MockeryTestCase
             'action' => 'edit'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2671,7 +2674,7 @@ class TableBuilderTest extends MockeryTestCase
             'action' => 'edit'
         );
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2715,7 +2718,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper', 'getServiceLocator'));
 
-        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+        $mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
 
         $mockTranslator->expects($this->any())
             ->method('translate')
@@ -2727,7 +2730,7 @@ class TableBuilderTest extends MockeryTestCase
                 )
             );
 
-        $mockServiceLocator = $this->getMock('\stdClass', array('get'));
+        $mockServiceLocator = $this->createPartialMock('\stdClass', array('get'));
 
         $mockServiceLocator->expects($this->any())
             ->method('get')
@@ -2748,7 +2751,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getColumns')
             ->will($this->returnValue(array('foo')));
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->at(0))
             ->method('replaceContent')
@@ -2774,7 +2777,7 @@ class TableBuilderTest extends MockeryTestCase
     {
         $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper', 'getServiceLocator'));
 
-        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+        $mockTranslator = $this->createPartialMock('\stdClass', array('translate'));
 
         $mockTranslator->expects($this->any())
             ->method('translate')
@@ -2786,7 +2789,7 @@ class TableBuilderTest extends MockeryTestCase
                 )
             );
 
-        $mockServiceLocator = $this->getMock('\stdClass', array('get'));
+        $mockServiceLocator = $this->createPartialMock('\stdClass', array('get'));
 
         $mockServiceLocator->expects($this->any())
             ->method('get')
@@ -2805,7 +2808,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('getColumns')
             ->will($this->returnValue(array('foo')));
 
-        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
@@ -2825,7 +2828,7 @@ class TableBuilderTest extends MockeryTestCase
     public function testGetServiceLocator()
     {
         $tableFactory = new TableFactory();
-        $serviceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
+        $serviceLocator = $this->createPartialMock('\Zend\ServiceManager\ServiceManager', array('get'));
         $tableBuilder = $tableFactory->createService($serviceLocator)->getTableBuilder();
 
         $newServiceLocator = $tableBuilder->getServiceLocator();

@@ -24,14 +24,14 @@ class TransportManagerAdapterFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->sm = $this->getMock(ServiceLocatorInterface::class);
+        $this->sm = $this->createMock(ServiceLocatorInterface::class);
         $this->sm->expects(static::exactly(3))
             ->method('get')
             ->willReturnMap(
                 [
-                    ['TransferAnnotationBuilder', $this->getMock(AnnotationBuilder::class)],
-                    ['QueryService', $this->getMock(CachingQueryService::class, [], [], '', false)],
-                    ['CommandService', $this->getMock(CommandService::class, [], [], '', false)],
+                    ['TransferAnnotationBuilder', $this->createMock(AnnotationBuilder::class)],
+                    ['QueryService', $this->createMock(CachingQueryService::class, [], [], '', false)],
+                    ['CommandService', $this->createMock(CommandService::class, [], [], '', false)],
                 ]
             );
     }

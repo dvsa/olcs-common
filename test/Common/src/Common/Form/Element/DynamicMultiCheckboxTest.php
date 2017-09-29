@@ -30,7 +30,7 @@ class DynamicMultiCheckboxTest extends \PHPUnit_Framework_TestCase
 
     public function testGetValueOptions()
     {
-        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService = $this->createMock('\Common\Service\Data\RefData');
         $mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
@@ -73,9 +73,9 @@ class DynamicMultiCheckboxTest extends \PHPUnit_Framework_TestCase
     {
         $serviceName = 'testListService';
 
-        $mockService = $this->getMock('\Common\Service\Data\ListDataInterface');
+        $mockService = $this->createMock('\Common\Service\Data\ListDataInterface');
 
-        $mockSl = $this->getMock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicMultiCheckbox();
@@ -88,9 +88,9 @@ class DynamicMultiCheckboxTest extends \PHPUnit_Framework_TestCase
     {
         $serviceName = 'testListService';
 
-        $mockService = $this->getMock('\StdClass');
+        $mockService = $this->createMock('\StdClass');
 
-        $mockSl = $this->getMock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $mockSl = $this->createMock('\Zend\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
         $sut = new DynamicMultiCheckbox();

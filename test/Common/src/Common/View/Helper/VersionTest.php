@@ -33,7 +33,7 @@ class VersionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetServiceLocator()
     {
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager');
+        $mockServiceLocator = $this->createMock('\Zend\ServiceManager\ServiceManager');
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
@@ -47,7 +47,10 @@ class VersionTest extends PHPUnit_Framework_TestCase
     {
         $config = [];
 
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', ['get', 'getServiceLocator']);
+        $mockServiceLocator = $this->createPartialMock(
+            '\Zend\ServiceManager\ServiceManager',
+            ['get', 'getServiceLocator']
+        );
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
@@ -76,7 +79,10 @@ class VersionTest extends PHPUnit_Framework_TestCase
             ]
         ];
 
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', ['get', 'getServiceLocator']);
+        $mockServiceLocator = $this->createPartialMock(
+            '\Zend\ServiceManager\ServiceManager',
+            ['get', 'getServiceLocator']
+        );
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
@@ -112,7 +118,10 @@ class VersionTest extends PHPUnit_Framework_TestCase
             ]
         ];
 
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', ['get', 'getServiceLocator']);
+        $mockServiceLocator = $this->createPartialMock(
+            '\Zend\ServiceManager\ServiceManager',
+            ['get', 'getServiceLocator']
+        );
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 

@@ -25,9 +25,9 @@ class TaskCheckboxTest extends \PHPUnit_Framework_TestCase
     {
         $column = [];
 
-        $mockTableService = $this->getMock('\stdClass', array('replaceContent'));
+        $mockTableService = $this->createPartialMock('\stdClass', array('replaceContent'));
 
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createPartialMock('\stdClass', array('get'));
         $sm->expects($this->any())
             ->method('get')
             ->with('TableBuilder')

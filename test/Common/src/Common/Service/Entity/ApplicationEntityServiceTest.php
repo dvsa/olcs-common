@@ -404,7 +404,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->expectedRestCallInOrder('Application', 'DELETE', ['id' => $id]);
 
-        $mockLicenceService = $this->getMock('\stdClass', ['delete']);
+        $mockLicenceService = $this->createPartialMock('\stdClass', ['delete']);
         $mockLicenceService->expects($this->once())
             ->method('delete')
             ->with(5);
@@ -450,7 +450,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $mockVariationCompletion->shouldReceive('save')
             ->with(['application' => 5]);
 
-        $mockApplicationTrackingService = $this->getMock('\stdClass', array('save'));
+        $mockApplicationTrackingService = $this->createPartialMock('\stdClass', array('save'));
         $mockApplicationTrackingService->expects($this->once())
             ->method('save')
             ->with(['application' => 5]);

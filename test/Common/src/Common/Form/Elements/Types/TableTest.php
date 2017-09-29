@@ -24,7 +24,7 @@ class TableTest extends PHPUnit_Framework_TestCase
     {
         $fieldset = 'table';
 
-        $mockTable = $this->getMock('\stdClass', array('setFieldset', 'setDisabled'));
+        $mockTable = $this->createPartialMock('\stdClass', array('setFieldset', 'setDisabled'));
 
         $mockTable->expects($this->once())
             ->method('setFieldset')
@@ -42,7 +42,7 @@ class TableTest extends PHPUnit_Framework_TestCase
     {
         $fieldset = 'table';
 
-        $mockTable = $this->getMock('\stdClass', array('setFieldset', 'setDisabled', 'render'));
+        $mockTable = $this->createPartialMock('\stdClass', array('setFieldset', 'setDisabled', 'render'));
 
         $mockTable->expects($this->once())
             ->method('setFieldset')
@@ -63,7 +63,7 @@ class TableTest extends PHPUnit_Framework_TestCase
     {
         $fieldset = 'table';
 
-        $mockTable = $this->getMock('\stdClass', array('setFieldset', 'setDisabled', 'render'));
+        $mockTable = $this->createPartialMock('\stdClass', array('setFieldset', 'setDisabled', 'render'));
 
         $mockTable->expects($this->once())
             ->method('setDisabled')

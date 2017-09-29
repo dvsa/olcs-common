@@ -157,7 +157,7 @@ class ApplicationOrganisationPersonEntityServiceTest extends AbstractEntityServi
 
         $this->expectedRestCallInOrder('ApplicationOrganisationPerson', 'DELETE', ['id' => 123]);
 
-        $personService = $this->getMock('\stdClass', ['delete']);
+        $personService = $this->createPartialMock('\stdClass', ['delete']);
         $personService->expects($this->once())
             ->method('delete')
             ->with(456);
@@ -174,7 +174,7 @@ class ApplicationOrganisationPersonEntityServiceTest extends AbstractEntityServi
             'position' => 'a position'
         ];
 
-        $personService = $this->getMock('\stdClass', ['save']);
+        $personService = $this->createPartialMock('\stdClass', ['save']);
         $personService->expects($this->once())
             ->method('save')
             ->with($personData)
@@ -208,7 +208,7 @@ class ApplicationOrganisationPersonEntityServiceTest extends AbstractEntityServi
             'position' => 'a position'
         ];
 
-        $personService = $this->getMock('\stdClass', ['save']);
+        $personService = $this->createPartialMock('\stdClass', ['save']);
         $personService->expects($this->once())
             ->method('save')
             ->with($expectedData)
@@ -305,7 +305,7 @@ class ApplicationOrganisationPersonEntityServiceTest extends AbstractEntityServi
         $this->expectOneRestCall('ApplicationOrganisationPerson', 'PUT', $mergedData)
             ->will($this->returnValue('RESPONSE'));
 
-        $personService = $this->getMock('\stdClass', ['save']);
+        $personService = $this->createPartialMock('\stdClass', ['save']);
         $personService->expects($this->once())
             ->method('save')
             ->with($personData)

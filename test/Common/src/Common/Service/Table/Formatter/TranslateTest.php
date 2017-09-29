@@ -15,7 +15,7 @@ class TranslateTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $mockTranslator = $this->getMock('\stdClass', ['translate']);
+        $mockTranslator = $this->createPartialMock('\stdClass', ['translate']);
 
         $mockTranslator->expects($this->any())
             ->method('translate')
@@ -29,7 +29,7 @@ class TranslateTest extends \PHPUnit_Framework_TestCase
 
         $hldData = new DataHelperService();
 
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createPartialMock('\stdClass', array('get'));
         $sm->expects($this->any())
             ->method('get')
             ->willReturnMap(
@@ -42,7 +42,7 @@ class TranslateTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, Translate::format($data, $column, $sm));
     }
 
-    /**
+    /**TaskIdentifierTest
      * Data provider
      *
      * @return array

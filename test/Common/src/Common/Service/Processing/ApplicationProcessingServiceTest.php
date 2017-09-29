@@ -41,7 +41,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
     protected function mockApplicationService($id, $licenceId, $validationData)
     {
-        $mockApplicationService = $this->getMock(
+        $mockApplicationService = $this->createMock(
             '\stdClass',
             ['getLicenceIdForApplication', 'forceUpdate', 'getDataForValidating', 'getCategory']
         );
@@ -66,7 +66,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
     protected function mockLicenceService($licenceId, $expectedLicenceData)
     {
-        $mockLicenceService = $this->getMock('\stdClass', ['forceUpdate']);
+        $mockLicenceService = $this->createMock('\stdClass', ['forceUpdate']);
         $mockLicenceService->expects($this->once())
             ->method('forceUpdate')
             ->with($licenceId, $expectedLicenceData);
@@ -96,7 +96,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             )
         );
 
-        $mockApplicationOperatingCentre = $this->getMock('\stdClass', ['getForApplication', 'clearInterims']);
+        $mockApplicationOperatingCentre = $this->createMock('\stdClass', ['getForApplication', 'clearInterims']);
         $mockApplicationOperatingCentre->expects($this->once())
             ->method('getForApplication')
             ->with($id)
@@ -111,7 +111,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
     protected function mockLicenceOperatingCentre($licenceId)
     {
-        $mockLicenceOperatingCentre = $this->getMock('\stdClass', ['save']);
+        $mockLicenceOperatingCentre = $this->createMock('\stdClass', ['save']);
         $mockLicenceOperatingCentre->expects($this->at(0))
             ->method('save')
             ->with(
@@ -133,7 +133,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
     protected function mockLicenceVehicles($licenceId, $mockLicenceVehicles)
     {
-        $mockLicenceVehicle = $this->getMock('\stdClass', ['getForApplicationValidation', 'multiUpdate']);
+        $mockLicenceVehicle = $this->createMock('\stdClass', ['getForApplicationValidation', 'multiUpdate']);
         $mockLicenceVehicle->expects($this->once())
             ->method('getForApplicationValidation')
             ->with($licenceId)
@@ -145,7 +145,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
     protected function expectSuccessMessage()
     {
-        $mockFlashMessenger = $this->getMock('\stdClass', ['addSuccessMessage']);
+        $mockFlashMessenger = $this->createMock('\stdClass', ['addSuccessMessage']);
         $mockFlashMessenger->expects($this->once())
             ->method('addSuccessMessage')
             ->with('licence-valid-confirmation');

@@ -31,7 +31,7 @@ class ApplicationNameTest extends PHPUnit_Framework_TestCase
      */
     public function testSetServiceLocator()
     {
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager');
+        $mockServiceLocator = $this->createMock('\Zend\ServiceManager\ServiceManager');
 
         $helper = $this->viewHelper;
 
@@ -45,7 +45,10 @@ class ApplicationNameTest extends PHPUnit_Framework_TestCase
     {
         $config = array();
 
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get', 'getServiceLocator'));
+        $mockServiceLocator = $this->createPartialMock(
+            '\Zend\ServiceManager\ServiceManager',
+            array('get', 'getServiceLocator')
+        );
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
@@ -70,7 +73,10 @@ class ApplicationNameTest extends PHPUnit_Framework_TestCase
             'application-name' => 'Yo'
         );
 
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get', 'getServiceLocator'));
+        $mockServiceLocator = $this->createPartialMock(
+            '\Zend\ServiceManager\ServiceManager',
+            array('get', 'getServiceLocator')
+        );
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
@@ -95,7 +101,10 @@ class ApplicationNameTest extends PHPUnit_Framework_TestCase
             'application-name' => 'Test2'
         );
 
-        $mockServiceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get', 'getServiceLocator'));
+        $mockServiceLocator = $this->createPartialMock(
+            '\Zend\ServiceManager\ServiceManager',
+            array('get', 'getServiceLocator')
+        );
 
         $this->viewHelper->setServiceLocator($mockServiceLocator);
 
