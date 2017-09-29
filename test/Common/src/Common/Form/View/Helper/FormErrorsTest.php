@@ -99,9 +99,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsTitle')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsParagraph')
             ->andReturn(null);
 
@@ -167,9 +169,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsTitle')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsParagraph')
             ->andReturn(null);
 
@@ -235,9 +239,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsTitle')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsParagraph')
             ->andReturn(null);
 
@@ -300,9 +306,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsTitle')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsParagraph')
             ->andReturn(null);
 
@@ -359,19 +367,21 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('getMessages')
             ->andReturn($messages)
             ->shouldReceive('getOption')
+            ->once()
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->once()
+            ->with('formErrorsParagraph')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
             ->andReturn(null)
             ->shouldReceive('getAttribute')
             ->andReturn(null)
             ->shouldReceive('has')
             ->once()
             ->with('foo')
-            ->andReturn(true)
-            ->shouldReceive('getOption')
-            ->with('formErrorsTitle')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('formErrorsParagraph')
-            ->andReturn(null);
+            ->andReturn(true);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -439,9 +449,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsTitle')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsParagraph')
             ->andReturn(null);
 
@@ -503,9 +515,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsTitle')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsParagraph')
             ->andReturn(null);
 
@@ -576,9 +590,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsTitle')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsParagraph')
             ->andReturn(null);
 
@@ -640,18 +656,20 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('getMessages')
             ->andReturn($messages)
             ->shouldReceive('getOption')
+            ->once()
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->once()
+            ->with('formErrorsParagraph')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
             ->andReturn(null)
             ->shouldReceive('getAttribute')
             ->andReturn(null)
             ->shouldReceive('has')
             ->times(3)
-            ->andReturn(false)
-            ->shouldReceive('getOption')
-            ->with('formErrorsTitle')
-            ->andReturn(null)
-            ->shouldReceive('getOption')
-            ->with('formErrorsParagraph')
-            ->andReturn(null);
+            ->andReturn(false);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -714,9 +732,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->twice()
             ->with('formErrorsTitle')
             ->andReturn($title)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsParagraph')
             ->andReturn(null);
 
@@ -785,9 +805,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->twice()
             ->with('formErrorsTitle')
             ->andReturn($title)
             ->shouldReceive('getOption')
+            ->twice()
             ->with('formErrorsParagraph')
             ->andReturn($paragraph);
 
@@ -855,9 +877,11 @@ class FormErrorsTest extends MockeryTestCase
             ->with('foo')
             ->andReturn(true)
             ->shouldReceive('getOption')
+            ->once()
             ->with('formErrorsTitle')
             ->andReturn(null)
             ->shouldReceive('getOption')
+            ->twice()
             ->with('formErrorsParagraph')
             ->andReturn($paragraph);
 
