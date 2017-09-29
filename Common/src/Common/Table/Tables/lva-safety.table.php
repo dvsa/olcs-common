@@ -1,4 +1,5 @@
 <?php
+use Common\Controller\Lva\AbstractSafetyController;
 
 $translationPrefix = 'safety-inspection-providers.table';
 
@@ -13,7 +14,13 @@ return array(
             'actions' => array(
                 'add' => array('label' => 'Add safety inspector'),
             )
-        )
+        ),
+        'paginate' => array(
+            'limit' => array(
+                'default' => AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT,
+                'options' => array(10, 25, 50),
+            ),
+        ),
     ),
     'columns' => array(
         array(

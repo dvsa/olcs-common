@@ -22,6 +22,8 @@ abstract class AbstractSafetyController extends AbstractController
 {
     use Traits\CrudTableTrait;
 
+    const DEFAULT_TABLE_RECORDS_COUNT = 10;
+
     protected $section = 'safety';
     protected $baseRoute = 'lva-%s/safety';
 
@@ -472,7 +474,9 @@ abstract class AbstractSafetyController extends AbstractController
     protected function getSafetyForm()
     {
         /** @var \Common\Service\Table\TableBuilder $table */
-        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-safety', $this->workshops);
+        $table = $this->getServiceLocator()
+            ->get('Table')
+            ->prepareTable('lva-safety', $this->workshops, (array) $this->getRequest()->getQuery());
 
         if ($this->location === 'external') {
             $table->removeColumn('isExternal');
