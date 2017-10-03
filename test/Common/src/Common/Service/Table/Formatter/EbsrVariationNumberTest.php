@@ -50,7 +50,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
 
         return [
             [$data],
-            ['busReg' => $data]
+            [['busReg' => $data]]
         ];
     }
 
@@ -103,7 +103,7 @@ class EbsrVariationNumberTest extends MockeryTestCase
 
         return [
             [$data],
-            ['busReg' => $data]
+            [['busReg' => $data]]
         ];
     }
 }
