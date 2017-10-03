@@ -25,38 +25,47 @@ class EbsrVariationNumberTest extends MockeryTestCase
 
     /**
      * Tests that the variation number is returned as is, when the record is not short notice
+     *
+     * @param array $data data
+     *
+     * @dataProvider dpNotShortNoticeProvider
      */
-    public function testFormatNotShortNotice()
+    public function testFormatNotShortNotice($data)
     {
-        $variationNumber = 1234;
+        $sut = new EbsrVariationNumber();
+        $this->assertEquals(1234, $sut->format($data));
+    }
 
+    /**
+     * data provider for testFormatNotShortNotice
+     *
+     * @return array
+     */
+    public function dpNotShortNoticeProvider()
+    {
         $data = [
-            'busReg' => [
-                'isShortNotice' => 'N',
-                'variationNo' => $variationNumber
-            ]
+            'isShortNotice' => 'N',
+            'variationNo' => 1234
         ];
 
-        $sut = new EbsrVariationNumber();
-        $this->assertEquals($variationNumber, $sut->format($data));
+        return [
+            [$data],
+            [['busReg' => $data]]
+        ];
     }
 
     /**
      * Tests format with short notice
+     *
+     * @param array $data data
+     *
+     * @dataProvider dpShortNoticeProvider
      */
-    public function testFormatWithShortNotice()
+    public function testFormatWithShortNotice($data)
     {
         $sut = new EbsrVariationNumber();
 
-        $variationNumber = 1234;
         $statusLabel = 'status label';
-
-        $data = [
-            'busReg' => [
-                'isShortNotice' => 'Y',
-                'variationNo' => $variationNumber
-            ]
-        ];
 
         $statusArray = [
             'colour' => 'orange',
@@ -75,8 +84,26 @@ class EbsrVariationNumberTest extends MockeryTestCase
             ->with(EbsrVariationNumber::SN_TRANSLATION_KEY)
             ->andReturn($statusLabel);
 
-        $expected = $variationNumber . $statusLabel;
+        $expected = 1234 . $statusLabel;
 
         $this->assertEquals($expected, $sut->format($data, [], $sm));
+    }
+
+    /**
+     * data provider for testFormatWithShortNotice
+     *
+     * @return array
+     */
+    public function dpShortNoticeProvider()
+    {
+        $data = [
+            'isShortNotice' => 'Y',
+            'variationNo' => 1234
+        ];
+
+        return [
+            [$data],
+            [['busReg' => $data]]
+        ];
     }
 }
