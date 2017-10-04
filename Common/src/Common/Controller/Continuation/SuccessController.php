@@ -43,6 +43,7 @@ class SuccessController extends AbstractContinuationController
             $licence['licenceType']['id'] === RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL)
         ) {
             $params['numPsvDiscs'] = $data['totPsvDiscs'];
+            $params['licenceDocumentationMessage'] = $params['numPsvDiscs'] > 0 ? 'continuation.success.licence-documentation' : 'continuation.success.licence-documentation.zero.discs';
         }
 
         return $this->getViewModel($licence['licNo'], null, $params);
