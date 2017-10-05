@@ -17,7 +17,7 @@ class RetrievableInterfaceTest extends PHPUnit_Framework_TestCase
      */
     public function testAggregateInterfaceMethodsExist()
     {
-        $interface = $this->getMock('Common\Service\Data\Interfaces\Retrievable');
+        $interface = $this->createMock('Common\Service\Data\Interfaces\Retrievable');
 
         $this->assertTrue(method_exists($interface, 'getCount'));
         $this->assertTrue(method_exists($interface, 'getResults'));

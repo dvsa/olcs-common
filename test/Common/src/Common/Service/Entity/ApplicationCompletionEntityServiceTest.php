@@ -100,7 +100,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
     ) {
         $applicationId = 3;
 
-        $mockApplicationEntityService = $this->getMock('\stdClass', array('getDataForCompletionStatus'));
+        $mockApplicationEntityService = $this->createPartialMock('\stdClass', array('getDataForCompletionStatus'));
         $mockApplicationEntityService->expects($this->once())
             ->method('getDataForCompletionStatus')
             ->with($applicationId)

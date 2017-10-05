@@ -40,7 +40,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createMock('\stdClass', array('get'));
         $this->assertEquals($expected, Date::format($data, $column, $sm));
     }
 

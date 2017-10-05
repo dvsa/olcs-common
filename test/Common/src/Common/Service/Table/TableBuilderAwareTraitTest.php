@@ -21,7 +21,7 @@ class TableBuilderAwareTraitTest extends TestCase
      */
     public function testSetGetTableBuilder()
     {
-        $tableBuilder = $this->getMock(
+        $tableBuilder = $this->createMock(
             '\Common\Service\Table\TableBuilder',
             [], [], '', false, true, true, false, false
         );

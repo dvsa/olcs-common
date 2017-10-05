@@ -26,9 +26,11 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
 
     public function getSutMock($methods = null)
     {
-        return $this->getMock(
-            '\Common\Util\RestClient', $methods, array(new HttpUri)
-        );
+        if ($methods === null) {
+            $methods = [];
+        }
+
+        return $this->createPartialMock(RestClient::class, $methods);
     }
 
     public function testUrl()
@@ -37,7 +39,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         $mock->expects($this->once())
             ->method('pathOrParams')
             ->with('/licence');
-        $toString = $this->getMock('\stdClass', array('toString'));
+        $toString = $this->createPartialMock('\stdClass', array('toString'));
         $toString->expects($this->once())
             ->method('toString');
         $mock->url = $toString;
@@ -138,13 +140,16 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             ->method('prepareRequest')
             ->with('GET', 'licence', array('id' => 7));
 
-        $send = $this->getMock('\stdClass', array('send'));
+        $send = $this->createPartialMock('\stdClass', array('send'));
         $send->expects($this->once())
             ->method('send')
             ->will($this->returnValue('responseHelper'));
         $mock->client = $send;
 
-        $responseHelper = $this->getMock('\stdClass', array('setMethod', 'setResponse', 'setParams', 'handleResponse'));
+        $responseHelper = $this->createPartialMock(
+            '\stdClass',
+            array('setMethod', 'setResponse', 'setParams', 'handleResponse')
+        );
         $responseHelper->expects($this->once())
             ->method('setMethod')
             ->with('GET');
@@ -174,7 +179,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getSutMock(array('getClientRequest', 'getAccept', 'getAcceptLanguage'));
 
-        $accept = $this->getMock('\stdClass', array('addMediaType'));
+        $accept = $this->createPartialMock('\stdClass', array('addMediaType'));
         $accept->expects($this->once())
             ->method('addMediaType')
             ->with('application/json');
@@ -183,7 +188,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             ->method('getAccept')
             ->will($this->returnValue($accept));
 
-        $acceptLanguage = $this->getMock('\stdClass', array('addLanguage'));
+        $acceptLanguage = $this->createPartialMock('\stdClass', array('addLanguage'));
         $acceptLanguage->expects($this->once())
             ->method('addLanguage')
             ->with('en-gb');
@@ -192,7 +197,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             ->method('getAcceptLanguage')
             ->will($this->returnValue($acceptLanguage));
 
-        $client = $this->getMock(
+        $client = $this->createPartialMock(
             '\stdClass',
             array(
                 'setRequest', 'setUri', 'setHeaders', 'setMethod', 'setEncType', 'setRawBody', 'getRequest',
@@ -206,7 +211,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             ->method('setUri')
             ->with('licence');
 
-        $toString = $this->getMock('\stdClass', array('toString'));
+        $toString = $this->createPartialMock('\stdClass', array('toString'));
         $toString->expects($this->once())
             ->method('toString');
         $mock->url = $toString;
@@ -242,7 +247,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getSutMock(array('getClientRequest', 'getAccept', 'getAcceptLanguage'));
 
-        $accept = $this->getMock('\stdClass', array('addMediaType'));
+        $accept = $this->createPartialMock('\stdClass', array('addMediaType'));
         $accept->expects($this->once())
             ->method('addMediaType')
             ->with('application/json');
@@ -251,7 +256,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             ->method('getAccept')
             ->will($this->returnValue($accept));
 
-        $acceptLanguage = $this->getMock('\stdClass', array('addLanguage'));
+        $acceptLanguage = $this->createPartialMock('\stdClass', array('addLanguage'));
         $acceptLanguage->expects($this->once())
             ->method('addLanguage')
             ->with('en-gb');
@@ -260,7 +265,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             ->method('getAcceptLanguage')
             ->will($this->returnValue($acceptLanguage));
 
-        $client = $this->getMock(
+        $client = $this->createPartialMock(
             '\stdClass',
             array(
                 'setRequest',
@@ -280,7 +285,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             ->method('setUri')
             ->with('licence');
 
-        $toString = $this->getMock('\stdClass', array('toString'));
+        $toString = $this->createPartialMock('\stdClass', array('toString'));
         $toString->expects($this->once())
             ->method('toString');
         $mock->url = $toString;

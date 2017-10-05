@@ -282,7 +282,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $translateHelper->setTranslator($translator);
 
         /** @var \Zend\View\Renderer\PhpRenderer | \PHPUnit_Framework_MockObject_MockObject $view */
-        $view = $this->getMock(\Zend\View\Renderer\PhpRenderer::class, array('url'));
+        $view = $this->createPartialMock(\Zend\View\Renderer\PhpRenderer::class, array('url'));
         $view->expects($this->any())
             ->method('url')
             ->will($this->returnValue('url'));

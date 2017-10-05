@@ -350,7 +350,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $helpers->setService('form_element', new CommonHelper\FormElement());
         $helpers->setService('form_text', new ZendHelper\FormText());
 
-        $view = $this->getMock(
+        $view = $this->createPartialMock(
             'Zend\View\Renderer\PhpRenderer',
             array('render')
         );

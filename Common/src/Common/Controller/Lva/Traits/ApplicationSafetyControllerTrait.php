@@ -5,6 +5,7 @@ namespace Common\Controller\Lva\Traits;
 use Dvsa\Olcs\Transfer\Command\Application\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Command\Application\UpdateSafety;
 use Dvsa\Olcs\Transfer\Query\Application\Safety;
+use Common\Controller\Lva\AbstractSafetyController;
 
 /**
  * Application Safety Controller Trait
@@ -61,7 +62,18 @@ trait ApplicationSafetyControllerTrait
     protected function getSafetyData($noCache = false)
     {
         if (is_null($this->safetyData) || $noCache) {
-            $response = $this->handleQuery(Safety::create(['id' => $this->getApplicationId()]));
+            $request = $this->getRequest();
+            $query = $request->isPost() ? $request->getPost('query') : $request->getQuery();
+            $params = [
+                'id' => $this->getApplicationId()
+            ];
+            $params['page'] = isset($query['page'])? $query['page'] : 1;
+
+            $params['limit'] = isset($query['limit'])
+                ? $query['limit']
+                : AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT;
+
+            $response = $this->handleQuery(Safety::create($params));
 
             if (!$response->isOk()) {
                 return $this->notFoundAction();
@@ -72,7 +84,7 @@ trait ApplicationSafetyControllerTrait
 
             $this->canHaveTrailers = $application['canHaveTrailers'];
             $this->isShowTrailers = $application['isShowTrailers'];
-            $this->workshops = $application['licence']['workshops'];
+            $this->workshops = $application['workshops'];
         }
         return $this->safetyData;
     }

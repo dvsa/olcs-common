@@ -38,7 +38,7 @@ class VrmTest extends PHPUnit_Framework_TestCase
      */
     private function getMockedServiceManager()
     {
-        $urlMock = $this->getMock('\stdClass', array('__invoke'));
+        $urlMock = $this->createPartialMock('\stdClass', array('__invoke'));
         $urlMock->expects($this->once())
             ->method('__invoke')
             ->will(
@@ -49,13 +49,13 @@ class VrmTest extends PHPUnit_Framework_TestCase
                 )
             );
 
-        $mockViewHelper = $this->getMock('\stdClass', array('get'));
+        $mockViewHelper = $this->createPartialMock('\stdClass', array('get'));
         $mockViewHelper->expects($this->once())
             ->method('get')
             ->with('url')
             ->will($this->returnValue($urlMock));
 
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createPartialMock('\stdClass', array('get'));
         $sm->expects($this->once())
             ->method('get')
             ->with('viewhelpermanager')

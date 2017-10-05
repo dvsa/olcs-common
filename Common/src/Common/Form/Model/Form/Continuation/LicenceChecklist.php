@@ -6,6 +6,10 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Attributes({"method":"post"})
+ * @Form\Options({
+ *     "formErrorsTitle":"continuations.checklist.form-errors-title",
+ *     "formErrorsParagraph":"continuations.checklist.form-errors-paragraph"
+ * })
  * @Form\Type("Common\Form\Form")
  */
 class LicenceChecklist

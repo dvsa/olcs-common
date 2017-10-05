@@ -147,9 +147,9 @@ class UrlHelperServiceTest extends MockeryTestCase
 
     protected function attachMockUrlBuilder()
     {
-        $mockUrlViewHelper = $this->getMock('\Zend\View\Helper\Url', array('__invoke'));
+        $mockUrlViewHelper = $this->createPartialMock('\Zend\View\Helper\Url', array('__invoke'));
 
-        $mockViewHelperManager = $this->getMock('\stdClass', array('get'));
+        $mockViewHelperManager = $this->createPartialMock('\stdClass', array('get'));
         $mockViewHelperManager->expects($this->any())
             ->method('get')
             ->will($this->returnValue($mockUrlViewHelper));

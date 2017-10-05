@@ -22,14 +22,14 @@ class TableFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateService()
     {
-        $serviceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
+        $serviceLocator = $this->createPartialMock('\Zend\ServiceManager\ServiceManager', array('get'));
 
         $serviceLocator->expects($this->at(0))
             ->method('get')
             ->with('Config')
             ->will($this->returnValue(array()));
 
-        $mockAuthService = $this->getMock('stdClass');
+        $mockAuthService = $this->createMock('stdClass');
 
         $serviceLocator->expects($this->at(1))
             ->method('get')
@@ -53,13 +53,13 @@ class TableFactoryTest extends \PHPUnit_Framework_TestCase
         $params = array('cake' => 'bbar');
         $render = true;
 
-        $mockTable = $this->getMock('\stdClass', array('buildTable'));
+        $mockTable = $this->createPartialMock('\stdClass', array('buildTable'));
 
         $mockTable->expects($this->once())
             ->method('buildTable')
             ->with($name, $data, $params, $render);
 
-        $tableFactory = $this->getMock('\Common\Service\Table\TableFactory', array('getTableBuilder'));
+        $tableFactory = $this->createPartialMock('\Common\Service\Table\TableFactory', array('getTableBuilder'));
 
         $tableFactory->expects($this->once())
             ->method('getTableBuilder')

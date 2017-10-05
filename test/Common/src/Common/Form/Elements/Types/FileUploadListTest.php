@@ -60,7 +60,7 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl = $this->createPartialMock('\stdClass', array('fromRoute'));
         $mockUrl->expects($this->any())
             ->method('fromRoute')
             ->will($this->returnValue('url'));

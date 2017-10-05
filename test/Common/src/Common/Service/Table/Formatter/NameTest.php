@@ -87,14 +87,14 @@ class NameTest extends MockeryTestCase
             ]
         ];
 
-        $mockHelper = $this->getMock('\stdClass', array('fetchNestedData'));
+        $mockHelper = $this->createPartialMock('\stdClass', array('fetchNestedData'));
 
         $mockHelper->expects($this->once())
             ->method('fetchNestedData')
             ->with($data, 'foo->name')
             ->willReturn($data['foo']['name']);
 
-        $sm = $this->getMock('\stdClass', array('get'));
+        $sm = $this->createPartialMock('\stdClass', array('get'));
         $sm->expects($this->any())
             ->method('get')
             ->with('Helper\Data')

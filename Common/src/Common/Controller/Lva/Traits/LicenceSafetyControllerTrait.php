@@ -6,6 +6,7 @@ use Dvsa\Olcs\Transfer\Command\Licence\UpdateSafety;
 use Dvsa\Olcs\Transfer\Command\Workshop\DeleteWorkshop;
 use Dvsa\Olcs\Transfer\Query\Licence\Safety;
 use Zend\Form\Form;
+use Common\Controller\Lva\AbstractSafetyController;
 
 /**
  * Licence Safety Controller Trait
@@ -59,7 +60,20 @@ trait LicenceSafetyControllerTrait
     protected function getSafetyData($noCache = false)
     {
         if (is_null($this->safetyData) || $noCache) {
-            $response = $this->handleQuery(Safety::create(['id' => $this->getLicenceId()]));
+
+            $request = $this->getRequest();
+            $query = $request->isPost() ? $request->getPost('query') : $request->getQuery();
+            $params = [
+                'id' => $this->getLicenceId()
+            ];
+            $params['page'] = isset($query['page'])? $query['page'] : 1;
+
+            $params['limit'] = isset($query['limit'])
+                ? $query['limit']
+                : AbstractSafetyController::DEFAULT_TABLE_RECORDS_COUNT;
+
+            $response = $this->handleQuery(Safety::create($params));
+
             if (!$response->isOk()) {
                 return $this->notFoundAction();
             }
