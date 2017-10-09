@@ -24,7 +24,7 @@ class VehicleRegistrationMark implements FormatterInterface
     public static function format($data, $column = array(), ServiceLocatorInterface $sm = null)
     {
         $vrm = $data['vehicle']['vrm'];
-        return is_null($data['interimApplication'])
+        return empty($data['interimApplication'])
             ? $vrm
             : self::formatInterimValue($sm, $vrm);
     }
