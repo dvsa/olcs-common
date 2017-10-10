@@ -3,6 +3,7 @@
 namespace Common\FormService\Form\Lva\People;
 
 use Common\Form\Form;
+use Common\Form\Model\Form\Lva\People;
 use Common\FormService\Form\Lva\AbstractLvaFormService;
 
 /**
@@ -22,7 +23,8 @@ abstract class AbstractPeople extends AbstractLvaFormService
      */
     public function getForm(array $params = [])
     {
-        $form = $this->getFormHelper()->createForm('Lva\People');
+        $form = $this->getFormHelper()->createForm(People::class);
+
 
         $this->alterForm($form, $params);
 

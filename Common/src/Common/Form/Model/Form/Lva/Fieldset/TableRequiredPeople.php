@@ -22,6 +22,13 @@ class TableRequiredPeople extends TableRequired
     public $rows;
 
     /**
+     * @Form\Attributes({"id":"addPerson","type":"submit","class":"action--secondary"})
+     * @Form\Options({"label": "lva.section.title.add_director"})
+     * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
+     */
+    public $addButton =null;
+
+    /**
      * @Form\Options({"label":"row"})
      * @Form\Type("\Common\Form\Elements\Types\Table")
      */

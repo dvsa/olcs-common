@@ -89,6 +89,10 @@ abstract class AbstractController extends AbstractActionController
      */
     public function onDispatch(MvcEvent $e)
     {
+
+
+
+
         $routeMatch = $e->getRouteMatch();
         if (!$routeMatch) {
             throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
