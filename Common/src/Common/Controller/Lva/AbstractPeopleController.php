@@ -57,9 +57,11 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             return $this->notFoundAction();
         }
 
+        /**
         if ($this->location === self::LOC_EXTERNAL) {
-            $this->addGuidanceMessage();
+            $this->addGuidanceMessage(); //@todo removes variation message show this always go
         }
+        **/
 
         if ($this->getAdapter()->isSoleTrader()) {
             return $this->handleSoleTrader();
@@ -341,13 +343,14 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
 
         $additionalGuidanceLabel = null;
-        if (
+
+        /** @todo REMOVE completely as variation is only people? */
+        /* * if (
             $this->lva === self::LVA_VAR
             && $this->getAdapter()->hasMoreThanOneValidCurtailedOrSuspendedLicences()
         ) {
             $additionalGuidanceLabel = 'selfserve-app-subSection-your-business-people-guidanceAdditional';
-        }
-
+        } **/
         if ($this->getAdapter()->canModify()) {
             if ($guidanceLabel !== null) {
                 $this->getServiceLocator()->get('Helper\Guidance')->append($guidanceLabel);
