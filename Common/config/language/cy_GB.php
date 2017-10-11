@@ -376,6 +376,7 @@ return [
     'form.fee-stored-cards.option1' => 'Defnyddio cerdyn newydd',
     'header-vehicle-operator-licensing' => 'Trwyddedu Gweithredu Cerbydau',
     'interim.application.undertakings.form.checkbox.label' => 'Ydych chi\'n dymuno gwneud cais am awdurdod dros dro? Codir tâl ychwanegol am hyn',
+    'interim.application.undertakings.form.checkbox.label.no-interim-fee' => 'Ydych chi\'n dymuno gwneud cais am awdurdod dros dro?',
     'interim.application.undertakings.form.textarea.placeholder' => 'Rhowch eich rheswm dros ymgeisio am awdurdod dros dro.',
     'internal-licence-bus-fees' => 'Ffioedd',
     'internal-licence-bus-fees-label' => 'Ffioedd',

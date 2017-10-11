@@ -1167,6 +1167,7 @@ return [
     'interim-start-date' => 'Interim start date',
     'interim-status' => 'Interim status',
     'interim.application.undertakings.form.checkbox.label' => 'Do you want to apply for an interim authority? There\'s an additional charge for this',
+    'interim.application.undertakings.form.checkbox.label.no-interim-fee' => 'Do you want to apply for an interim authority?',
     'interim.application.undertakings.form.textarea.error.message.empty' => 'Tell us why you want an interim application',
     'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim authority.',
     'internal' => 'Internal',
