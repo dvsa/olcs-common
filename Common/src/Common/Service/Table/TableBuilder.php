@@ -2031,7 +2031,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Set setting
      *
      * @param string $key   key
-     * @param string $value value
+     * @param mixed $value value
      *
      * @return TableBuilder
      */

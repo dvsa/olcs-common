@@ -7,7 +7,6 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 
 /**
  * Common (aka Internal) Licence People Adapter
@@ -16,4 +15,7 @@ use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
  */
 class LicencePeopleAdapter extends AbstractPeopleAdapter
 {
+
+
+
 }
