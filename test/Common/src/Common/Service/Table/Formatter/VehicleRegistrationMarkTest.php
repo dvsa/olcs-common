@@ -49,4 +49,15 @@ class VehicleRegistrationMarkTest extends PHPUnit_Framework_TestCase
             VehicleRegistrationMark::format($data, [], $this->mockServiceManager)
         );
     }
+
+    public function testThatNonInterimVrmIsDisplayedWhenInterimApplicationIndexIsMissing()
+    {
+        $data = [
+            'vehicle' => ['vrm' => 'TEST_VRM'],
+        ];
+        $this->assertSame(
+            'TEST_VRM',
+            VehicleRegistrationMark::format($data, [], $this->mockServiceManager)
+        );
+    }
 }

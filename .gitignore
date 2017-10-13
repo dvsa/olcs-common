@@ -18,3 +18,5 @@ coverage/
 node_modules
 Common/data
 .vscode
+test/coverage/
+.scannerwork/
