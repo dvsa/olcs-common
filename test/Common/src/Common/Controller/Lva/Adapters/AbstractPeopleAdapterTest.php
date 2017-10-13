@@ -149,4 +149,22 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
         $this->sut->getAddLabelTextForOrganisation();
     }
+
+
+    public function testGetAddLabelTextForOrganisationReturnsNullIfNoOrganisationType()
+    {
+        $this->assertNull($this->sut->getAddLabelTextForOrganisation());
+    }
+
+    /**
+     * @dataProvider dpTestAlterFormForOrganisation
+     */
+    public function testGetAddLabelTextForOrganisationReturnsAppropriateLabel($type, $expected)
+    {
+        $this->sut->shouldReceive('getOrganisationType')
+            ->andReturn($type)
+            ->twice()
+            ->getMock();
+        $this->assertEquals($expected, $this->sut->getAddLabelTextForOrganisation());
+    }
 }

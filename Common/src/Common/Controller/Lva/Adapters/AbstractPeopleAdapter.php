@@ -589,9 +589,9 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
 
     /**
      * Get the add label text
-     * Defaults to null if not set
+     * Defaults to null if organisation type not set
      *
-     * @return string
+     * @return mixed | null or string
      */
     public function getAddLabelTextForOrganisation()
     {
