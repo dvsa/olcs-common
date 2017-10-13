@@ -7,6 +7,7 @@
  */
 namespace CommonTest\FormService\Form\Lva\People;
 
+use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\FormService\Form\Lva\People\VariationPeople as Sut;
@@ -27,7 +28,7 @@ class VariationPeopleTest extends MockeryTestCase
 
     public function setUp()
     {
-        $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+        $this->formHelper = m::mock(FormHelperService::class);
         $this->fsm = m::mock('\Common\FormService\FormServiceManager')->makePartial();
 
         $this->sut = new Sut();
@@ -50,7 +51,7 @@ class VariationPeopleTest extends MockeryTestCase
         $form->shouldReceive('get')->with('form-actions')->andReturn($formActions);
 
         $this->formHelper->shouldReceive('createForm')->once()
-            ->with('Lva\People')
+            ->with('Common\Form\Model\Form\Lva\People')
             ->andReturn($form);
 
         $this->sut->getForm();

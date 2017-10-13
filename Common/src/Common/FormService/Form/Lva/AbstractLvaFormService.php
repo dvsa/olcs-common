@@ -70,6 +70,7 @@ abstract class AbstractLvaFormService extends AbstractFormService
         $formActions->get($action)->setAttribute('class', 'action--primary large');
     }
 
+
     /**
      * Return true if the current internal user has read only permissions
      *

@@ -293,6 +293,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     public function alterFormForOrganisation(Form $form, $table)
     {
         $labelTextForOrganisation = $this->getAddLabelTextForOrganisation();
+
         $action = $table->getAction('add');
         $table->removeAction('add');
         $action['label'] = $labelTextForOrganisation;
@@ -588,21 +589,21 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
 
     /**
      * Get the add label text
-     * Defaults to other if organisation type not set
+     * Defaults to null if not set
      *
      * @return string
      */
     public function getAddLabelTextForOrganisation()
     {
         $type = [
-            \Common\RefData::ORG_TYPE_RC => 'lva.section.title.add_director',
-            \Common\RefData::ORG_TYPE_LLP => 'lva.section.title.add_partner',
-            \Common\RefData::ORG_TYPE_PARTNERSHIP => 'lva.section.title.add_partner',
-            \Common\RefData::ORG_TYPE_OTHER => 'lva.section.title.add_person',
+            RefData::ORG_TYPE_RC => 'lva.section.title.add_director',
+            RefData::ORG_TYPE_LLP => 'lva.section.title.add_partner',
+            RefData::ORG_TYPE_PARTNERSHIP => 'lva.section.title.add_partner',
+            RefData::ORG_TYPE_OTHER => 'lva.section.title.add_person',
         ];
         if (isset($type[$this->getOrganisationType()])) {
             return $type[$this->getOrganisationType()];
         }
-        return $type[3];
+        return null;
     }
 }

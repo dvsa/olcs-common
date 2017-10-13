@@ -50,7 +50,7 @@ class LicencePeopleTest extends MockeryTestCase
         $form->shouldReceive('get')->with('form-actions')->andReturn($formActions);
 
         $this->formHelper->shouldReceive('createForm')->once()
-            ->with('Lva\People')
+            ->with('Common\Form\Model\Form\Lva\People')
             ->andReturn($form);
 
         $this->sut->getForm();
