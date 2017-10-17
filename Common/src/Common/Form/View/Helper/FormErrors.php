@@ -8,6 +8,7 @@
  */
 namespace Common\Form\View\Helper;
 
+use Common\Form\Elements\Types\PostcodeSearch;
 use Zend\Form\View\Helper\AbstractHelper;
 use Zend\Form\FormInterface;
 use Zend\Form\Fieldset;
@@ -191,6 +192,13 @@ class FormErrors extends AbstractHelper
      */
     protected function getNamedAnchor($element)
     {
+        // For PostcodeSearch we want to use the id of the text input, as this is the element we want to receive focus
+        if ($element instanceof PostcodeSearch
+            && !empty($element->get('postcode')->getAttributes()['id'])
+        ) {
+            return $element->get('postcode')->getAttributes()['id'];
+        }
+
         $fieldsetAttributes = $element->getOption('fieldset-attributes');
 
         if (isset($fieldsetAttributes['id'])) {

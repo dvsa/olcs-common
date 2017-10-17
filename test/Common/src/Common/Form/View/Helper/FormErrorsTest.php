@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\View\Helper;
 
+use Common\Form\Elements\Types\PostcodeSearch;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Form\View\Helper\FormErrors;
@@ -328,6 +329,69 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('getOption')
             ->with('fieldset-attributes')
             ->andReturn(['id' => 'foo-id']);
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    public function testInvokeRenderWithMessagesWithAnchorPostcodeSearch()
+    {
+        $messages = [
+            'foo' => [
+                'bar',
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary" role="alert" id="validationSummary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<p><\/p>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?<a href="#PC_ID">Bar-translated<\/a>(\s+)?<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock(PostcodeSearch::class);
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->once()
+            ->with('foo')
+            ->andReturn(true)
+            ->shouldReceive('getOption')
+            ->once()
+            ->with('formErrorsTitle')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->once()
+            ->with('formErrorsParagraph')
+            ->andReturn(null);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('has')->once()->andReturn()
+            ->shouldReceive('get')->with('postcode')->twice()->andReturn(
+                m::mock()->shouldReceive('getAttributes')->with()->twice()->andReturn(['id' => 'PC_ID'])->getMock()
+            )
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('error-message')
+            ->andReturn(null);
 
         $this->assertRegExp($expected, $sut($form));
     }
@@ -914,4 +978,3 @@ class FormErrorsTest extends MockeryTestCase
         return $text . '-translated';
     }
 }
-
