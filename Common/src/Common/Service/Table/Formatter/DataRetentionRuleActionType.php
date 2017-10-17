@@ -12,13 +12,11 @@ class DataRetentionRuleActionType implements FormatterInterface
     /**
      * Format
      *
-     * @param array          $data   Data of current row
-     * @param array          $column Column
-     * @param ServiceManager $sm     Service manager
+     * @param array $data Data of current row
      *
      * @return string
      */
-    public static function format($data, $column = array(), $sm = null)
+    public static function format($data)
     {
         return $data['actionType']['id'];
     }

@@ -4,7 +4,6 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\DataRetentionRuleIsEnabled;
 
-
 /**
  * DataRetentionRule Link test
  */
@@ -37,7 +36,7 @@ class DataRetentionRuleIsEnabledTest extends \PHPUnit_Framework_TestCase
             "retentionPeriod"=> "60"
         ];
 
-        $this->assertEquals('No',DataRetentionRuleIsEnabled::format($data));
+        $this->assertEquals('No', DataRetentionRuleIsEnabled::format($data));
     }
 
     public function testIsEnabledtrue()
@@ -67,6 +66,6 @@ class DataRetentionRuleIsEnabledTest extends \PHPUnit_Framework_TestCase
             "retentionPeriod"=> "60"
         ];
 
-        $this->assertEquals('Yes',DataRetentionRuleIsEnabled::format($data));
+        $this->assertEquals('Yes', DataRetentionRuleIsEnabled::format($data));
     }
 }

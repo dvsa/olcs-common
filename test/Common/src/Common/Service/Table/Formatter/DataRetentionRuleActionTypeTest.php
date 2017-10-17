@@ -37,6 +37,6 @@ class DataRetentionRuleActionTypeTest extends \PHPUnit_Framework_TestCase
             "retentionPeriod"=> "60"
         ];
 
-        $this->assertEquals($data['actionType']['id'],DataRetentionRuleActionType::format($data));
+        $this->assertEquals($data['actionType']['id'], DataRetentionRuleActionType::format($data));
     }
 }
