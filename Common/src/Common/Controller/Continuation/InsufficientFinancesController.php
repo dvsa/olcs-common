@@ -60,7 +60,7 @@ class InsufficientFinancesController extends AbstractContinuationController
                 'Factoring or discount facilities' => $continuationDetail['factoringAmount'],
                 'Other available finances' => $continuationDetail['otherFinancesAmount'],
             ],
-            'backRoute' => 'continuation/finances',
+            'backRoute' => 'continuation/other-finances',
             'isNi' => $continuationDetail['licence']['trafficArea']['isNi'],
         ];
 
