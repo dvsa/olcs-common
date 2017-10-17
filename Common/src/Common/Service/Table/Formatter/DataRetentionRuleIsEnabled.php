@@ -20,6 +20,6 @@ class DataRetentionRuleIsEnabled implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        return $data['isEnabled'] ? 'YES' : 'NO';
+        return $data['isEnabled'] ? 'Yes' : 'No';
     }
 }
