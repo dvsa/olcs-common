@@ -56,13 +56,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         } catch (\RuntimeException $ex) {
             return $this->notFoundAction();
         }
-
-
         if ($this->location === self::LOC_EXTERNAL) {
             $this->addGuidanceMessage();
         }
-
-
         if ($this->getAdapter()->isSoleTrader()) {
             return $this->handleSoleTrader();
         }
@@ -144,7 +140,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $data = (array) $request->getPost();
+            $data = (array)$request->getPost();
         } else {
             if ($personData === false) {
                 $data['data'] = [];
@@ -344,7 +340,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $additionalGuidanceLabel = null;
 
-       if (
+        if (
             $this->lva === self::LVA_VAR
             && $this->getAdapter()->hasMoreThanOneValidCurtailedOrSuspendedLicences()
         ) {
@@ -479,7 +475,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $personId = (int) $this->params('child_id');
+            $personId = (int)$this->params('child_id');
             $personData = $adapter->getPersonData($personId);
             $data['data'] = $personData['person'];
             $data['data']['position'] = $personData['position'];

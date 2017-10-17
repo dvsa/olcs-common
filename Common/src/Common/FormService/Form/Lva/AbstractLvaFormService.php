@@ -22,6 +22,13 @@ abstract class AbstractLvaFormService extends AbstractFormService
         'variation' => BackToVariationActionLink::class
     ];
 
+    /**
+     * add link to go back to overview
+     *
+     * @param      $form
+     * @param      $lva
+     * @param bool $isPrimary
+     */
     protected function addBackToOverviewLink($form, $lva, $isPrimary = true)
     {
         $backToOverviewClass = $this->backToLinkMap[$lva];
@@ -35,6 +42,11 @@ abstract class AbstractLvaFormService extends AbstractFormService
         $form->get('form-actions')->add($back);
     }
 
+    /**
+     * remove unwanted form actions
+     *
+     * @param $form
+     */
     protected function removeStandardFormActions($form)
     {
         $this->removeFormAction($form, 'save');
@@ -42,6 +54,12 @@ abstract class AbstractLvaFormService extends AbstractFormService
         $this->removeFormAction($form, 'cancel');
     }
 
+    /**
+     * remove a particular form actionc
+     *
+     * @param $form
+     * @param $action
+     */
     protected function removeFormAction($form, $action)
     {
         if (!$form->has('form-actions')) {

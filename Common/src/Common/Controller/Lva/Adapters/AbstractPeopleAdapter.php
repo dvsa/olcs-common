@@ -34,7 +34,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      * Load the people dataa
      *
      * @param string $lva Lic|App|Var
-     * @param int $id     Either an Application or Licence ID
+     * @param int    $id  Either an Application or Licence ID
      *
      * @return bool If successful
      */
@@ -165,11 +165,21 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->licence['organisation']['id'];
     }
 
+    /**
+     * Get the licence
+     *
+     * @return mixed
+     */
     public function getLicence()
     {
         return $this->licence;
     }
 
+    /**
+     * Get the Application
+     *
+     * @return mixed
+     */
     public function getApplication()
     {
         return $this->application;
@@ -195,6 +205,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->getOrganisationType() === \Common\RefData::ORG_TYPE_PARTNERSHIP;
     }
 
+    /**
+     * Check if has more than one suspended Curtailed licences
+     *
+     * @return mixed
+     */
     public function hasMoreThanOneValidCurtailedOrSuspendedLicences()
     {
         return $this->data['hasMoreThanOneValidCurtailedOrSuspendedLicences'];
@@ -227,6 +242,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return in_array($this->getOrganisationType(), $types, false);
     }
 
+    /**
+     * use Deltas
+     *
+     * @return bool
+     */
     public function useDeltas()
     {
         return (isset($this->data['useDeltas']) && $this->data['useDeltas']);
@@ -278,6 +298,9 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return (isset($this->getPeople()[0])) ? $this->getPeople()[0] : false;
     }
 
+    /**
+     * Abstract Method implementation
+     */
     public function addMessages()
     {
     }
@@ -285,7 +308,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Alter form for organisation
      *
-     * @param Form $form          form
+     * @param Form         $form  form
      * @param TableBuilder $table table
      *
      * @return void
@@ -300,10 +323,20 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         $table->addAction('add', $action);
     }
 
+    /**
+     * Abstract method implementation
+     *
+     * @param Form $form
+     */
     public function alterAddOrEditFormForOrganisation(Form $form)
     {
     }
 
+    /**
+     * Can the form be modified
+     *
+     * @return bool
+     */
     public function canModify()
     {
         return true;
@@ -325,8 +358,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         if ($this->getOrganisationType() === RefData::ORG_TYPE_REGISTERED_COMPANY) {
             $table->setEmptyMessage('selfserve-app-subSection-your-business-people-ltd.table.empty-message');
         }
-
-
         return $table;
     }
 
@@ -527,6 +558,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     }
 
 
+    /**
+     * Get the name of the table config
+     *
+     * @return string
+     */
     protected function getTableConfig()
     {
         return 'lva-people';
@@ -563,8 +599,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Attach id value as key to persons array (data)
      *
-     * @param string $key Key ???
-     * @param array $data Array of persons
+     * @param string $key  Key ???
+     * @param array  $data Array of persons
      *
      * @return array
      */

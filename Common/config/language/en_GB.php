@@ -1621,6 +1621,7 @@ return [
     'licence_person-add-action-formTitleValueMr' => 'Mr',
     'licence_person-add-action-formTitleValueMrs' => 'Mrs',
     'licence_person-add-action-formTitleValueMs' => 'Ms',
+    'continue.finance.history.button' => 'Continue to financial history',
     'list-of-convictions' => 'List of convictions',
     'llp-name' => 'LLP name',
     'llp-number' => 'LLP #',

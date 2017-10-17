@@ -68,7 +68,6 @@ trait CrudActionTrait
 
         $routeParams = array('action' => isset($data['routeAction']) ? $data['routeAction'] : $action);
 
-
         if (!in_array($action, $rowsNotRequired, true)) {
             if (!isset($data['id'])) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please-select-row');

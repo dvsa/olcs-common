@@ -9,7 +9,7 @@
 namespace Common\Form\Model\Form\Licence;
 
 /**
- * @Form\Options({"prefer_form_input_filter":true})
+ *
  * @Form\Name("lic-people")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
@@ -25,9 +25,8 @@ class AddPerson
 
     /**
      * @Form\Name("form-actions")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActionsPerson")
+     * @Form\ComposedObject("Common\Form\Model\Form\Licence\Fieldset\AddPersonFormActions")
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
-
 }

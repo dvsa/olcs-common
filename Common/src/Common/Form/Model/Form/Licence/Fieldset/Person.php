@@ -8,6 +8,11 @@
 
 namespace Common\Form\Model\Form\Licence\Fieldset;
 
+/**
+ * Class Person
+ *
+ * @package Common\Form\Model\Form\Licence\Fieldset
+ */
 class Person
 {
     /**
