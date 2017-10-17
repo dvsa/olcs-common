@@ -144,13 +144,6 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
         ];
     }
 
-    public function testgetAddLabelTextForOrganisationDefaultsToAddPerson()
-    {
-
-        $this->sut->getAddLabelTextForOrganisation();
-    }
-
-
     public function testGetAddLabelTextForOrganisationReturnsNullIfNoOrganisationType()
     {
         $this->assertNull($this->sut->getAddLabelTextForOrganisation());

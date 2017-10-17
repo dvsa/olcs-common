@@ -51,7 +51,7 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
 
     public function lockOrganisationForm(Form $form, $table)
     {
-//        $table->removeActions();
+        $table->removeActions();
         $table->removeColumn('select');
     }
 }

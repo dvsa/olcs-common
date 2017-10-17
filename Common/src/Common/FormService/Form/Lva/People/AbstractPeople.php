@@ -24,8 +24,6 @@ abstract class AbstractPeople extends AbstractLvaFormService
     public function getForm(array $params = [])
     {
         $form = $this->getFormHelper()->createForm(People::class);
-
-
         $this->alterForm($form, $params);
 
         return $form;
