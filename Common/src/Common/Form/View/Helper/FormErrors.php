@@ -201,9 +201,9 @@ class FormErrors extends AbstractHelper
     {
         // For PostcodeSearch we want to use the id of the text input, as this is the element we want to receive focus
         if ($element instanceof PostcodeSearch
-            && !empty($element->get('postcode')->getAttributes()['id'])
+            && !empty($element->get('postcode')->getAttribute('id'))
         ) {
-            return $element->get('postcode')->getAttributes()['id'];
+            return $element->get('postcode')->getAttribute('id');
         }
 
         // For DateSelect element we want to focus on the day element
@@ -229,7 +229,8 @@ class FormErrors extends AbstractHelper
             return $id;
         }
 
-        return null;
+        // Last resort, If can't find an ID then use the name as that is often copied to ID when rendered
+        return $element->getName();
     }
 
     /**
