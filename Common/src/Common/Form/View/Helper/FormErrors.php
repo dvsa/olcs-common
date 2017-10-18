@@ -9,6 +9,8 @@
 namespace Common\Form\View\Helper;
 
 use Common\Form\Elements\Types\PostcodeSearch;
+use Zend\Form\Element;
+use \Zend\Form\Element\DateSelect;
 use Zend\Form\View\Helper\AbstractHelper;
 use Zend\Form\FormInterface;
 use Zend\Form\Fieldset;
@@ -33,8 +35,10 @@ class FormErrors extends AbstractHelper
     /**
      * Invoke as function
      *
-     * @param  ZendFormFormInterface $form The form object
-     * @return Form
+     * @param FormInterface|null $form             Form to be rendered
+     * @param bool               $ignoreValidation Ignore validation
+     *
+     * @return string
      */
     public function __invoke(FormInterface $form = null, $ignoreValidation = false)
     {
@@ -49,9 +53,9 @@ class FormErrors extends AbstractHelper
     /**
      * Renders the error messages.
      *
-     * @param FormInterface $form
+     * @param FormInterface $form Form that is being rendered
      *
-     * return string
+     * @return string
      */
     public function render(FormInterface $form)
     {
@@ -98,8 +102,9 @@ class FormErrors extends AbstractHelper
     /**
      * Recurse the messages array and flatten them out
      *
-     * @param array $messages
-     * @param Fieldset $fieldset
+     * @param array    $messages Multi dimension array of form error messages
+     * @param Fieldset $fieldset The fieldset element owning the messages
+     *
      * @return array
      */
     protected function getFlatMessages($messages, $fieldset)
@@ -134,9 +139,10 @@ class FormErrors extends AbstractHelper
     /**
      * Format the message
      *
-     * @param string $message
-     * @param Element $element
-     * @return string|array
+     * @param string  $message Message to format
+     * @param Element $element Form element owning the message
+     *
+     * @return string
      */
     protected function formatMessage($message, $element)
     {
@@ -187,7 +193,8 @@ class FormErrors extends AbstractHelper
     /**
      * Try and find an anchor to link to
      *
-     * @param Element $element
+     * @param Element $element Element that has the error that we want to link to
+     *
      * @return string
      */
     protected function getNamedAnchor($element)
@@ -199,8 +206,13 @@ class FormErrors extends AbstractHelper
             return $element->get('postcode')->getAttributes()['id'];
         }
 
-        $fieldsetAttributes = $element->getOption('fieldset-attributes');
+        // For DateSelect element we want to focus on the day element
+        if ($element instanceof DateSelect) {
+            // id is automatically generated on day element when it is rendered using this pattern
+            return $element->getAttribute('id') . '_day';
+        }
 
+        $fieldsetAttributes = $element->getOption('fieldset-attributes');
         if (isset($fieldsetAttributes['id'])) {
             return $fieldsetAttributes['id'];
         }
@@ -221,9 +233,10 @@ class FormErrors extends AbstractHelper
     }
 
     /**
-     * Grab the label if it exists
+     * Get the short label if it exists
      *
-     * @param string $element
+     * @param Element $element Element to get teh short label from
+     *
      * @return string
      */
     protected function getShortLabel($element)
@@ -238,9 +251,10 @@ class FormErrors extends AbstractHelper
     }
 
     /**
-     * Grab the custom error message if it exists
+     * Get the custom error message if it exists
      *
-     * @param string $element
+     * @param Element $element Element to get cusomt error message from
+     *
      * @return string
      */
     protected function getCustomErrorMessage($element)
@@ -257,7 +271,8 @@ class FormErrors extends AbstractHelper
     /**
      * Helper method to translate strings
      *
-     * @param string $text
+     * @param string $text Text to translate
+     *
      * @return string
      */
     protected function translate($text)
