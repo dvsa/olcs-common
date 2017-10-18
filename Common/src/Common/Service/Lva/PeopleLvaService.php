@@ -45,13 +45,13 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
 
     public function lockPartnershipForm(Form $form, $table)
     {
-        $table->removeActions();
+        //$table->removeActions(); @todo check if removing this OK
         $table->removeColumn('select');
     }
 
     public function lockOrganisationForm(Form $form, $table)
     {
-        $table->removeActions();
+        //$table->removeActions(); @todo check if removing this OK
         $table->removeColumn('select');
     }
 }
