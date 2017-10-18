@@ -667,6 +667,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                 'licence' => $this->getLicenceId(),
                 'communityLicenceIds' => explode(',', $this->params('child_id'))
             ];
+
+            if ($this->lva === self::LVA_APP) {
+                // If reprinting on an Application with an Interim, then need to pass application ID
+                $reprint['application'] = $this->getApplicationId();
+            }
             return $this->processDto(ReprintDto::create($reprint), 'internal.community_licence.licences_reprinted');
         }
 
