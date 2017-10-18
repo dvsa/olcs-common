@@ -8,6 +8,7 @@
 
 namespace Common\Form\Model\Form\Licence\Fieldset;
 
+use Zend\Form\Annotation as Form;
 /**
  * Class Person
  *
