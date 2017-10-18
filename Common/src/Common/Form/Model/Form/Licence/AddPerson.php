@@ -8,6 +8,8 @@
 
 namespace Common\Form\Model\Form\Licence;
 
+use Zend\Form\Annotation as Form;
+
 /**
  *
  * @Form\Name("lic-people")

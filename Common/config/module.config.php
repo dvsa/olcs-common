@@ -537,6 +537,7 @@ return array(
 
             // People form services
             'lva-licence-people' => LvaFormService\People\LicencePeople::class,
+            'lva-licence-addperson' => LvaFormService\People\LicenceAddPerson::class,
             'lva-variation-people' => LvaFormService\People\VariationPeople::class,
             'lva-application-people' => LvaFormService\People\ApplicationPeople::class,
             'lva-licence-sole_trader' => LvaFormService\People\SoleTrader\LicenceSoleTrader::class,

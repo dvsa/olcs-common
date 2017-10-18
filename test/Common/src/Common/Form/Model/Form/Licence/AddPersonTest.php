@@ -12,13 +12,8 @@ use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 
 class AddPersonTest extends AbstractFormValidationTestCase
 {
-
-    /**
-     * @var string The class name of the form being tested
-     */
+    /** @var string The class name of the form being tested */
     protected $formName = \Common\Form\Model\Form\Licence\AddPerson::class;
-
-
 
     public function testContinueToFinancialHistory()
     {
