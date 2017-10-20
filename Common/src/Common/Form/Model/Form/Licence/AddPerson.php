@@ -11,7 +11,7 @@ namespace Common\Form\Model\Form\Licence;
 use Zend\Form\Annotation as Form;
 
 /**
- *
+ * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("lic-people")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")

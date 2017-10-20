@@ -96,6 +96,8 @@ class Person
      * @Form\Type("DateSelect")
      * @Form\Filter({"name":"DateSelect", "options":{"null_on_empty":true}})
      * @Form\Validator({"name":"NotEmpty", "options": {"array"}})
+     * @Form\Validator({"name": "\Common\Validator\Date"})
+     * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
      * @Form\Validator({"name":"\Common\Form\Elements\Validators\DateNotInFuture"})
      */
     public $birthDate = null;
