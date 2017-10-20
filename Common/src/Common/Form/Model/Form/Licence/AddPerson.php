@@ -20,7 +20,6 @@ class AddPerson
 {
 
     /**
-     * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Form\Licence\Fieldset\Person")
      */
     public $data = null;
