@@ -642,4 +642,19 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         }
         return null;
     }
+
+    public function amendLicencePeopleListTable(TableBuilder $table)
+    {
+        $table->setSetting(
+            'crud',
+            [
+                'actions' => [
+                    'add' => [
+                        'label' => $this->getAddLabelTextForOrganisation()
+                    ]
+                ]
+            ]
+        );
+        return $table;
+    }
 }
