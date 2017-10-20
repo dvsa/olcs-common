@@ -18,6 +18,6 @@ class DataRetentionRuleActionType implements FormatterInterface
      */
     public static function format($data)
     {
-        return $data['actionType']['id'];
+        return htmlspecialchars($data['actionType']['id']);
     }
 }
