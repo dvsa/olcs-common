@@ -15,7 +15,8 @@ class HoursOfWeekContent
      * @Form\Filter({"name":"\Zend\Filter\StringTrim"})
      * @Form\Attributes({
      *     "class": "short",
-     *     "data-container-class": "inline-text"
+     *     "data-container-class": "inline-text",
+     *     "id": "hoursMon"
      * })
      * @Form\Options({
      *     "label": "days-of-week-short-mon"
