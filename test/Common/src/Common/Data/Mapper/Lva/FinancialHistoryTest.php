@@ -20,14 +20,19 @@ class FinancialHistoryTest extends PHPUnit_Framework_TestCase
     public function testMapFromResult()
     {
         $input = [
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'insolvencyConfirmation' => 'FOO',
         ];
 
         $output = FinancialHistory::mapFromResult($input);
 
         $expected = [
             'data' => [
-                'foo' => 'bar'
+                'foo' => 'bar',
+                'insolvencyConfirmation' => 'FOO',
+                'financialHistoryConfirmation' => [
+                    'insolvencyConfirmation' => 'FOO'
+                ]
             ]
         ];
 
