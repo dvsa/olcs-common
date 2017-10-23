@@ -21,6 +21,7 @@ class AddPerson
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Licence\Fieldset\Person")
+     * @Form\Attributes({"class":""})
      */
     public $data = null;
 
