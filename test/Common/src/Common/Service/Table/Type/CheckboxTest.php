@@ -57,7 +57,7 @@ class CheckboxTest extends MockeryTestCase
         $response = $this->sut->render($data, $column);
 
         $this->assertEquals(
-            '<input type="checkbox" name="table[id][]" value="7" disabled="disabled" />',
+            '<input type="checkbox" name="table[id][]" value="7" disabled="disabled" id="table[id][7]" />',
             $response
         );
     }
@@ -81,7 +81,7 @@ class CheckboxTest extends MockeryTestCase
         $response = $this->sut->render($data, $column);
 
         $this->assertEquals(
-            '<input type="checkbox" name="table[id][]" value="7"  />',
+            '<input type="checkbox" name="table[id][]" value="7" id="table[id][7]" />',
             $response
         );
     }
@@ -110,7 +110,7 @@ class CheckboxTest extends MockeryTestCase
         $response = $this->sut->render($data, $column);
 
         $this->assertEquals(
-            '<input type="checkbox" name="table[id][]" value="7" data-action="foo" />',
+            '<input type="checkbox" name="table[id][]" value="7" data-action="foo" id="table[id][7]" />',
             $response
         );
     }

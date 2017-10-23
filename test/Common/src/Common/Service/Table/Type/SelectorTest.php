@@ -45,7 +45,7 @@ class SelectorTest extends MockeryTestCase
         $response = $this->sut->render($data, $column);
 
         $this->assertEquals(
-            '<input type="radio" name="table[id]" value="7"  />',
+            '<input type="radio" name="table[id]" value="7" id="table[id][7]" />',
             $response
         );
     }
@@ -75,7 +75,7 @@ class SelectorTest extends MockeryTestCase
         $response = $this->sut->render($data, $column);
 
         $this->assertEquals(
-            '<input type="radio" name="table[id]" value="7" disabled="disabled" />',
+            '<input type="radio" name="table[id]" value="7" disabled="disabled" id="table[id][7]" />',
             $response
         );
     }
@@ -97,7 +97,7 @@ class SelectorTest extends MockeryTestCase
         $response = $this->sut->render($data, $column);
 
         $this->assertEquals(
-            '<input type="radio" name="id" value="7"  />',
+            '<input type="radio" name="id" value="7" id="[id][7]" />',
             $response
         );
     }
@@ -124,7 +124,7 @@ class SelectorTest extends MockeryTestCase
         $response = $this->sut->render($data, $column);
 
         $this->assertEquals(
-            '<input type="radio" name="id" value="7" data-action="blap" />',
+            '<input type="radio" name="id" value="7" data-action="blap" id="[id][7]" />',
             $response
         );
     }
@@ -153,7 +153,7 @@ class SelectorTest extends MockeryTestCase
         $response = $this->sut->render($data, $column);
 
         $this->assertEquals(
-            '<input type="radio" name="id" value="7" data-action="blap" />',
+            '<input type="radio" name="id" value="7" data-action="blap" id="[id][7]" />',
             $response
         );
     }
@@ -177,7 +177,7 @@ class SelectorTest extends MockeryTestCase
         $response = $this->sut->render($data, $column);
 
         $this->assertEquals(
-            '<input type="radio" name="id" value="7"  />',
+            '<input type="radio" name="id" value="7" id="[id][7]" />',
             $response
         );
     }
@@ -210,11 +210,11 @@ class SelectorTest extends MockeryTestCase
         return [
             [
                 ['isExpiredForLicence' => 1, 'id' => 7],
-                '<input type="radio" name="table[id]" value="7" disabled="disabled" />'
+                '<input type="radio" name="table[id]" value="7" disabled="disabled" id="table[id][7]" />'
             ],
             [
                 ['isExpiredForLicence' => 0, 'id' => 7],
-                '<input type="radio" name="table[id]" value="7"  />'
+                '<input type="radio" name="table[id]" value="7" id="table[id][7]" />'
             ]
         ];
     }
