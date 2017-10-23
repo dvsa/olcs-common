@@ -18,4 +18,13 @@ class AddPersonFormActions
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $continueToFinancialHistory = null;
+
+
+    /**
+     * @Form\Attributes({"type":"submit","class":"", "id": "cancel"})
+     * @Form\Options({"label": "cancel.button"})
+     * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
+     */
+    public $cancel = null;
+
 }

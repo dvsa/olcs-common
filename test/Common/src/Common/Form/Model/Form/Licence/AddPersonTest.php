@@ -21,6 +21,13 @@ class AddPersonTest extends AbstractFormValidationTestCase
         $this->assertFormElementActionButton($element);
     }
 
+
+    public function testCancel()
+    {
+        $element = ['form-actions', 'cancel'];
+        $this->assertFormElementActionButton($element);
+    }
+
     public function testTitle()
     {
         $element = ['data', 'title'];

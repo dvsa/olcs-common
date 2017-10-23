@@ -662,4 +662,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         );
         return $table;
     }
+
+
 }
