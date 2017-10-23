@@ -195,6 +195,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
     /**
      * Authorisation service to allow columns/rows to be hidden depending on permission model
+     *
      * @var \ZfcRbac\Service\AuthorizationService
      */
     private $authService;
@@ -208,6 +209,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private $elmCsrf;
 
     /**
+     *
      * @return \Zend\Mvc\I18n\Translator
      */
     public function getTranslator()
@@ -216,6 +218,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
+     *
      * @param \Zend\Mvc\I18n\Translator $translator
      */
     public function setTranslator($translator)
@@ -224,7 +227,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * @param \ZfcRbac\Service\AuthorizationService $authorisationService
+     *
+     * @param \ZfcRbac\Service\AuthorizationService $authService
+     *
      */
     public function setAuthService($authService)
     {
@@ -232,7 +237,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * @return \ZfcRbac\Service\AuthorizationService
+     *
+     * @return \ZfcRbac\Service\AuthorizationService $authService
      */
     public function getAuthService()
     {
@@ -240,6 +246,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
+     *
      * Inject the service locator and auth service
      *
      * @param \Zend\ServiceManager\ServiceManager $sm ServiceManager
@@ -251,7 +258,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->setAuthService($sm->get('ZfcRbac\Service\AuthorizationService'));
 
         /** @var \Zend\Mvc\I18n\Translator $translator */
-        $translator  = $sm->get('translator');
+        $translator = $sm->get('translator');
         $this->setTranslator($translator);
     }
 
@@ -313,6 +320,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Setter for type
      *
      * @param int $type
+     *
+     * @return TableBuilder $this
      */
     public function setType($type)
     {
@@ -334,7 +343,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Return a setting or the default
      *
      * @param string $name
-     * @param mixed $default
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public function getSetting($name, $default = null)
@@ -376,6 +386,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Setter for rows
      *
      * @param array $rows
+     *
+     * @return TableBuilder $this
      */
     public function setRows($rows)
     {
@@ -396,7 +408,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Setter for footer
      *
-     * @param array $footer
+     *
+     * @return array footer
      */
     public function getFooter()
     {
@@ -407,6 +420,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Check if a table has an action
      *
      * @param string $name
+     *
      * @return boolean
      */
     public function hasAction($name)
@@ -474,7 +488,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         if (empty($this->contentHelper)) {
             if (!isset($this->applicationConfig['tables']['partials'][$this->contentType])) {
-
                 throw new \Exception('Table partial location not defined in config');
             }
 
@@ -531,7 +544,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Set a single variable
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function setVariable($name, $value)
     {
@@ -552,6 +565,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Get a single variable
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function getVariable($name)
@@ -719,8 +733,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Prepare the table
      *
      * @param string|array $config
-     * @param array $data
-     * @param array $params
+     * @param array        $data
+     * @param array        $params
+     *
      * @return \Common\Service\Table\TableBuilder
      */
     public function prepareTable($config, array $data = array(), array $params = array())
@@ -742,9 +757,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Build a table from a config file
      *
      * @param string|array $config
-     * @param array $data
-     * @param array $params
-     * @param boolean $render
+     * @param array        $data
+     * @param array        $params
+     * @param boolean      $render
+     *
      * @return string
      */
     public function buildTable($config, $data = array(), $params = array(), $render = true)
@@ -762,7 +778,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Load the configuration if it exists
      *
      * @param $config
+     *
      * @return bool
+     * @throws \Exception
      */
     public function loadConfig($config)
     {
@@ -839,6 +857,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $this->setActionFieldName($this->settings['crud']['action_field_name']);
         }
     }
+
     /**
      * Load data, set the rows and the total count for pagination
      *
@@ -965,7 +984,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      *  Useful for unit testing
      *
      * @param string $name
+     *
      * @return array
+     *
+     * @throws \Exception
      */
     public function getConfigFromFile($name)
     {
@@ -980,7 +1002,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $locations = array_reverse($this->applicationConfig['tables']['config']);
 
         foreach ($locations as $location) {
-
             $configFile = $location . $name . '.table.php';
 
             if (file_exists($configFile)) {
@@ -1010,7 +1031,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $columns = array();
 
         foreach ($this->footer as $column) {
-
             $columns[] = $this->renderTableFooterColumn($column);
         }
 
@@ -1023,6 +1043,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Render a single table footer column
      *
      * @param array $column
+     *
      * @return array
      */
     private function renderTableFooterColumn($column)
@@ -1065,6 +1086,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Render table footer columns
      *
      * @param array $columns
+     *
      * @return string
      */
     private function renderTableFooterColumns($columns)
@@ -1121,22 +1143,17 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private function whichType()
     {
         if (isset($this->variables['within_form']) && $this->variables['within_form'] == true) {
-
             return self::TYPE_FORM_TABLE;
         }
 
         if (isset($this->settings['crud']) && $this->shouldPaginate()) {
-
             return self::TYPE_HYBRID;
         }
 
         if (isset($this->settings['crud'])) {
-
             return self::TYPE_CRUD;
         }
-
         if ($this->shouldPaginate()) {
-
             return self::TYPE_PAGINATE;
         }
 
@@ -1146,8 +1163,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Wrapper for Content Helper renderLayout
      *
-     * @param string $name
-     * @return string
+     * @param $name
+     *
+     * @return mixed
+     * @throws \Exception
      */
     public function renderLayout($name)
     {
@@ -1218,6 +1237,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Render the dropdown version of the actions
      *
      * @param array $actions
+     *
      * @return string
      */
     public function renderDropdownActions($actions = array(), $links = [])
@@ -1246,8 +1266,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Render the button version of the actions
      *
      * @param array $actions
-     * @param int $collapseAt number of buttons to show before they are 'collapsed' into
-     * a 'more actions' dropdown
+     * @param int   $collapseAt number of buttons to show before they are 'collapsed' into
+     *                          a 'more actions' dropdown
+     *
      * @return string
      */
     public function renderButtonActions($actions = array(), $collapseAt = 0, $links = [])
@@ -1281,7 +1302,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $content = '';
 
         foreach ($links as $details) {
-
             $content .= $this->replaceContent('{{[elements/link]}}', $details);
         }
 
@@ -1319,7 +1339,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Render footer
      *
-     * @return string
+     * @return mixed|string
+     * @throws \Exception
      */
     public function renderFooter()
     {
@@ -1328,18 +1349,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         /**
-        Temporarily removed this, as if someone has set the limit to be more than the total, they would no longer see
-         the limit options to reduce
-        if (!in_array($this->getLimit(), $this->settings['paginate']['limit']['options'])) {
-            $this->settings['paginate']['limit']['options'][] = $this->getLimit();
-            sort($this->settings['paginate']['limit']['options']);
-        }
-
-
-        if ($this->total <= min($this->settings['paginate']['limit']['options'])) {
-            return '';
-        }
-        */
+         * Temporarily removed this, as if someone has set the limit to be more than the total, they would no longer see
+         * the limit options to reduce
+         * if (!in_array($this->getLimit(), $this->settings['paginate']['limit']['options'])) {
+         * $this->settings['paginate']['limit']['options'][] = $this->getLimit();
+         * sort($this->settings['paginate']['limit']['options']);
+         * }
+         *
+         *
+         * if ($this->total <= min($this->settings['paginate']['limit']['options'])) {
+         * return '';
+         * }
+         */
 
         return $this->renderLayout('pagination');
     }
@@ -1352,14 +1373,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function renderLimitOptions()
     {
         if (empty($this->settings['paginate']['limit']['options'])) {
-
             return '';
         }
 
         $content = '';
-
         foreach ($this->settings['paginate']['limit']['options'] as $option) {
-
             $class = '';
 
             $option = (string)$option;
@@ -1394,7 +1412,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $content = '';
 
         foreach ($options as $details) {
-
             if (is_null($details['page']) || (string)$this->getPage() == $details['page']) {
                 $details['option'] = $details['label'];
             } else {
@@ -1413,8 +1430,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Render a header column
      *
-     * @param array $column
+     * @param array  $column
      * @param string $wrapper
+     *
      * @return string
      */
     public function renderHeaderColumn($column, $wrapper = '{{[elements/th]}}')
@@ -1434,7 +1452,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (isset($column['sort'])) {
-
             if (isset($column['class'])) {
                 $column['class'] .= ' sortable';
             } else {
@@ -1444,14 +1461,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $column['order'] = 'ASC';
 
             if ($column['sort'] === $this->getSort()) {
-
                 if ($this->getOrder() === 'ASC') {
-
                     $column['order'] = 'DESC';
-
                     $column['class'] .= ' ascending';
                 } else {
-
                     $column['class'] .= ' descending';
                 }
             }
@@ -1467,7 +1480,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (isset($column['width']) && isset($this->widths[$column['width']])) {
-
             $column['width'] = $this->widths[$column['width']];
         }
 
@@ -1481,9 +1493,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Render a body column
      *
-     * @param array $row
-     * @param array $column
+     * @param array  $row
+     * @param array  $column
      * @param string $wrapper
+     *
      * @return string
      */
     public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
@@ -1493,7 +1506,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (isset($column['formatter'])) {
-
             $return = $this->callFormatter($column, $row);
 
             if (is_array($return)) {
@@ -1504,8 +1516,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             }
         }
 
-        if (
-            $this->contentType === self::CONTENT_TYPE_HTML
+        if ($this->contentType === self::CONTENT_TYPE_HTML
             && isset($column['type'])
             && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])
         ) {
@@ -1524,7 +1535,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (!isset($content) || (empty($content) && !in_array($content, [0, 0.0, '0']))) {
-            $content =  isset($column['name']) && isset($row[$column['name']]) ?
+            $content = isset($column['name']) && isset($row[$column['name']]) ?
                 $row[$column['name']] : '';
         }
 
@@ -1532,7 +1543,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         $replacements['attrs'] = '';
         if (isset($column['align'])) {
-            $replacements['attrs'] = ' class="'.$column['align'].'"';
+            $replacements['attrs'] = ' class="' . $column['align'] . '"';
         }
 
         if ($this->hasAnyTitle()) {
@@ -1569,7 +1580,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $content = '';
 
         if (count($this->getRows()) === 0) {
-
             $columns = $this->getColumns();
 
             if ($this->unfilteredTotal > 0) {
@@ -1615,8 +1625,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         if (is_string($column['formatter'])
             && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
-
-            $className =  '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
+            $className = '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
 
             $column['formatter'] = $className;
         }
@@ -1626,7 +1635,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (is_callable($column['formatter'])) {
-
             return call_user_func($column['formatter'], $data, $column, $this->getServiceLocator());
         }
 
@@ -1637,7 +1645,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Render an attribute string
      *
      * @param array $attrs
-     * @return string
+     *
+     * @return mixed
+     * @throws \Exception
      */
     public function renderAttributes($attrs = array())
     {
@@ -1648,8 +1658,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Replace vars into content
      *
      * @param string $content
-     * @param array $vars
+     * @param array  $vars
+     *
      * @return string
+     * @throws \Exception
      */
     public function replaceContent($content, $vars = array())
     {
@@ -1660,6 +1672,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Generate url
      *
      * @param array $data
+     *
      * @return string
      */
     private function generateUrl($data = array(), $route = null, $options = [], $reuseMatchedParams = true)
@@ -1676,9 +1689,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Generate pagination url. Strips the controller and action params from
      * the URL
      *
-     * @param array $data
+     * @param array  $data
      * @param string $route
-     * @param array $extendParams
+     * @param bool  $extendParams
+     *
      * @return string
      */
     private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
@@ -1724,8 +1738,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Format action content
      *
-     * @param array $actions
+     * @param array  $actions
      * @param string $overrideFormat
+     *
      * @return string
      */
     private function formatActionContent($actions, $overrideFormat, $collapseAt = 0, $newLinks = [])
@@ -1758,7 +1773,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $translator = $this->getServiceLocator()->get('translator');
 
         foreach ($actions as $name => $details) {
-
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
             $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
@@ -1802,7 +1816,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $translator = $this->getServiceLocator()->get('translator');
 
         foreach ($links as $name => $details) {
-
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
             $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
@@ -1893,16 +1906,31 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
 
+    /**
+     * @param $name
+     *
+     * @return mixed|null
+     *
+     */
     public function getColumn($name)
     {
         return ($this->hasColumn($name) ? $this->columns[$name] : null);
     }
 
+    /**
+     * @param $name
+     * @param $column
+     */
     public function setColumn($name, $column)
     {
         $this->columns[$name] = $column;
     }
 
+    /**
+     * @param $name
+     *
+     * @return bool
+     */
     public function hasColumn($name)
     {
         return isset($this->columns[$name]);
@@ -1920,10 +1948,15 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
     }
 
+    /**
+     * @param $column
+     *
+     * @return bool
+     */
     private function authorisedToView($column)
     {
         if (isset($column['permissionRequisites'])) {
-            foreach ((array) $column['permissionRequisites'] as $permission) {
+            foreach ((array)$column['permissionRequisites'] as $permission) {
                 if ($this->getAuthService()->isGranted($permission)) {
                     return true;
                 }
@@ -1935,12 +1968,22 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         return true;
     }
 
+    /**
+     * @param $column
+     *
+     * @return bool
+     */
     private function shouldHide($column)
     {
         return !($this->authorisedToView($column)) ||
-        ($this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled']);
+            ($this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled']);
     }
 
+    /**
+     * @param $row
+     *
+     * @return bool
+     */
     public function isRowDisabled($row)
     {
         if (!isset($this->settings['row-disabled-callback'])) {
@@ -1970,7 +2013,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     protected function setupDataAttributes()
     {
         if (isset($this->variables['dataAttributes']) && is_array($this->variables['dataAttributes'])) {
-
             $attrs = [];
             foreach ($this->variables['dataAttributes'] as $attribute => $value) {
                 $attrs[] = $attribute . '="' . (string)$value . '"';
@@ -2011,8 +2053,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $updatedColumns = [];
 
             foreach ($this->getColumns() as $column) {
-                if (
-                    isset($column['type'])
+                if (isset($column['type'])
                     && in_array($column['type'], $typesToRemove)
                     && !(
                         isset($column['keepForReadOnly'])
@@ -2031,7 +2072,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Set setting
      *
      * @param string $key   key
-     * @param mixed $value value
+     * @param mixed  $value value
      *
      * @return TableBuilder
      */

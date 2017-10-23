@@ -914,4 +914,3 @@ class FormErrorsTest extends MockeryTestCase
         return $text . '-translated';
     }
 }
-

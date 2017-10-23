@@ -21,6 +21,10 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
+    /**
+     * @param Form $form
+     * @param      $orgType
+     */
     public function lockPersonForm(Form $form, $orgType)
     {
         $fieldset = $form->get('data');
@@ -43,12 +47,20 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
         $form->setAttribute('locked', true);
     }
 
+    /**
+     * @param Form $form
+     * @param      $table
+     */
     public function lockPartnershipForm(Form $form, $table)
     {
         //$table->removeActions(); @todo check if removing this OK
         $table->removeColumn('select');
     }
 
+    /**
+     * @param Form $form
+     * @param      $table
+     */
     public function lockOrganisationForm(Form $form, $table)
     {
         //$table->removeActions(); @todo check if removing this OK

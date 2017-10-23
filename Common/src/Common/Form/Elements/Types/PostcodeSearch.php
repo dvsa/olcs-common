@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 use Zend\Form\Fieldset;
@@ -24,8 +25,8 @@ class PostcodeSearch extends Fieldset
     /**
      * Setup the elements
      *
-     * @param string $name
-     * @param array $options
+     * @param string $name    name
+     * @param array  $options options
      */
     public function __construct($name = null, $options = array())
     {
@@ -88,11 +89,19 @@ class PostcodeSearch extends Fieldset
         $this->add($manualLink);
     }
 
+    /**
+     * @param array|\Traversable $messages
+     *
+     * @return void|\Zend\Form\Element|\Zend\Form\ElementInterface|\Zend\Form\FieldsetInterface
+     */
     public function setMessages($messages)
     {
         $this->messages = $messages;
     }
 
+    /**
+     * @return array|\Traversable
+     */
     public function getMessages()
     {
         return $this->messages;

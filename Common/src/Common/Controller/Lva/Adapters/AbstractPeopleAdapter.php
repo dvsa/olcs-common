@@ -326,7 +326,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     /**
      * Abstract method implementation
      *
-     * @param Form $form
+     * @param Form $form form
      */
     public function alterAddOrEditFormForOrganisation(Form $form)
     {
@@ -643,6 +643,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return null;
     }
 
+    /**
+     * @param TableBuilder $table table
+     *
+     * @return TableBuilder
+     */
     public function amendLicencePeopleListTable(TableBuilder $table)
     {
         $table->setSetting(

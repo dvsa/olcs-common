@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\FormService\Form\Lva\People;
 
 use Common\Form\Form;
@@ -17,6 +18,13 @@ use Common\Form\Model\Form\Licence\AddPerson;
  */
 class LicenceAddPerson extends AbstractPeople
 {
+    /**
+     * Get the form
+     *
+     * @param array $params params
+     *
+     * @return Form $form form
+     */
     public function getForm(array $params = [])
     {
         $form = $this->getFormHelper()->createForm(AddPerson::class);
