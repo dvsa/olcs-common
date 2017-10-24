@@ -21,7 +21,7 @@ class AddPersonFormActions
 
 
     /**
-     * @Form\Attributes({"type":"reset","class":"", "id": "cancel"})
+     * @Form\Attributes({"type":"reset","class":"action--tertiary", "id": "cancel"})
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */

@@ -1621,7 +1621,13 @@ return [
     'licence_person-add-action-formTitleValueMr' => 'Mr',
     'licence_person-add-action-formTitleValueMrs' => 'Mrs',
     'licence_person-add-action-formTitleValueMs' => 'Ms',
+
+    'lva.section.title.add_director' => 'Add director',
+    'lva.section.title.add_partner' => 'Add partner',
+    'lva.section.title.add_person' => 'Add person', 
+    
     'continue.finance.history.button' => 'Continue to financial history',
+
     'list-of-convictions' => 'List of convictions',
     'llp-name' => 'LLP name',
     'llp-number' => 'LLP #',
