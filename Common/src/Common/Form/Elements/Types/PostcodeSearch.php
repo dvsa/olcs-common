@@ -12,7 +12,6 @@ use Zend\Form\Fieldset;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Button;
 use Zend\Form\Element\Select;
-use Common\Form\Elements\Types\HtmlTranslated;
 
 /**
  * PostcodeSearch fieldset
@@ -21,22 +20,27 @@ use Common\Form\Elements\Types\HtmlTranslated;
  */
 class PostcodeSearch extends Fieldset
 {
+    /** @var int Count the number of instances of this class */
+    private static $count = 0;
 
     /**
      * Setup the elements
      *
-     * @param string $name    name
-     * @param array  $options options
+     * @param null|int|string $name    Optional name for the element
+     * @param array           $options Optional options for the element
      */
     public function __construct($name = null, $options = array())
     {
         parent::__construct($name, $options);
 
+        self::$count++;
+
         $postcodeSearch = new Text('postcode');
         $postcodeSearch->setAttributes(
             array(
                 'class' => 'short js-input',
-                'data-container-class' => 'inline'
+                'data-container-class' => 'inline',
+                'id' => 'postcodeInput'. self::$count,
             )
         );
         $postcodeSearch->setOption('remove_if_readonly', true);
@@ -77,7 +81,9 @@ class PostcodeSearch extends Fieldset
         $this->add($selectButton);
 
         $manualLink = new HtmlTranslated('manual-link');
-        $manualLink->setValue('<p class="visually-hidden hint postcode-connectionLost">%s</p><p class="hint"><a href=#>%s</a></p>');
+        $manualLink->setValue(
+            '<p class="visually-hidden hint postcode-connectionLost">%s</p><p class="hint"><a href=#>%s</a></p>'
+        );
         $manualLink->setTokens(['postcode.error.not-available', 'postcode.address.manual_entry']);
         $manualLink->setAttributes(
             array(
@@ -90,9 +96,12 @@ class PostcodeSearch extends Fieldset
     }
 
     /**
-     * @param array|\Traversable $messages
+     * Set messages
+     * NB Not sure if this is used
      *
-     * @return void|\Zend\Form\Element|\Zend\Form\ElementInterface|\Zend\Form\FieldsetInterface
+     * @param mixed $messages Messages
+     *
+     * @return void
      */
     public function setMessages($messages)
     {
@@ -100,7 +109,10 @@ class PostcodeSearch extends Fieldset
     }
 
     /**
-     * @return array|\Traversable
+     * Get messages
+     * NB Not sure if this is used
+     *
+     * @return array
      */
     public function getMessages()
     {

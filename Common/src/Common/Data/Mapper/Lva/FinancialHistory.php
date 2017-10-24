@@ -15,14 +15,15 @@ namespace Common\Data\Mapper\Lva;
 class FinancialHistory
 {
     /**
-     * Map result
+     * Map from API data to form data
      *
-     * @param array $data
+     * @param array $data API data
      *
-     * @return array data
+     * @return array
      */
     public static function mapFromResult(array $data)
     {
+        $data['financialHistoryConfirmation']['insolvencyConfirmation'] = $data['insolvencyConfirmation'];
         return [
             'data' => $data
         ];

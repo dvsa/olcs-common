@@ -55,7 +55,7 @@ class LicenceVehicle
      *     "default_date": "now",
      *     "display_every_minute": true
      * })
-     * @Form\Filter({"name": "DateTimeSelectNullifier"})
+     * @Form\Filter({"name": "DateTimeSelect", "options": {"null_on_empty":true}})
      * @Form\Validator({"name": "\Common\Validator\Date"})
      * @Form\Validator({"name": "Date", "options": {"format": "Y-m-d H:i:s"}})
      */
