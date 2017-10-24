@@ -279,19 +279,12 @@ class ElasticSearch extends AbstractPlugin
 
         $this->setSearchTerm($incomingParameters['search']);
 
-        $key = md5($this->getContainerName() . '_' . str_replace(' ', '', $this->getSearchTerm()));
-        $container = new Container($key);
-
         /**
          * Now remove all the data we don't want in the query string.
          */
         $incomingParameters = array_diff_key($incomingParameters, array_flip($remove));
 
-        $incomingParameters = array_merge($container->getArrayCopy(), $incomingParameters);
-
-        $container->exchangeArray($incomingParameters);
-
-        return $container->getArrayCopy();
+        return $incomingParameters;
     }
 
     public function configureNavigation()
