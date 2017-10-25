@@ -22,8 +22,8 @@ class DataRetentionRuleAdminLink implements FormatterInterface
     {
         $urlHelper = $sm->get('Helper\Url');
         $url = $urlHelper->fromRoute(
-            'admin-dashboard/admin-data-retention/rule-admin-form',
-            ['dataRetentionRuleId' => $data['id']]
+            'admin-dashboard/admin-data-retention/rule-admin',
+            ['action' => 'edit', 'id' => $data['id']]
         );
 
         return '<a href="' . $url . '" class="js-modal-ajax">' . ucwords($data['description']) . '</a>';
