@@ -2574,7 +2574,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                ['content' => '<input type="radio" name="id" value="1"  />', 'attrs' => '']
+                ['content' => '<input type="radio" name="id" value="1" id="[id][1]" />', 'attrs' => '']
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2605,7 +2605,7 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                ['content' => '<input type="radio" name="table[id]" value="1"  />', 'attrs' => '']
+                ['content' => '<input type="radio" name="table[id]" value="1" id="table[id][1]" />', 'attrs' => '']
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
