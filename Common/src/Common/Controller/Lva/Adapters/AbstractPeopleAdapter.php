@@ -40,8 +40,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     public function loadPeopleData($lva, $id)
     {
-        //is variation controller?
-
         if ($lva === AbstractController::LVA_LIC) {
             $this->loadPeopleDataForLicence($id);
         } else {
