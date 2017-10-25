@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: shaunhare
- * Date: 17/10/2017
- * Time: 13:54
- */
 
 namespace CommonTest\Form\Model\Form\Licence;
 
