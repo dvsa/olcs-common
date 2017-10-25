@@ -66,6 +66,8 @@ class Selector extends AbstractType
             $idx = $column['idIndex'];
         }
 
+        $attributes[] = 'id="'. $fieldset . '[id][' . $data[$idx] .']"' ;
+
         return sprintf($this->format, $name, $data[$idx], implode(' ', $attributes));
     }
 }
