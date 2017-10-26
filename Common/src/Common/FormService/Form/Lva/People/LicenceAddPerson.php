@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Licence People
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
-
 namespace Common\FormService\Form\Lva\People;
 
 use Common\Form\Form;
@@ -13,8 +7,6 @@ use Common\Form\Model\Form\Licence\AddPerson;
 
 /**
  * Licence People
- *
- * @author Rob Caiger <rob@clocal.co.uk>
  */
 class LicenceAddPerson extends AbstractPeople
 {
