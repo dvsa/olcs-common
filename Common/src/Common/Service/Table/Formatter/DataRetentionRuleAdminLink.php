@@ -26,7 +26,7 @@ class DataRetentionRuleAdminLink implements FormatterInterface
             ['action' => 'edit', 'id' => $data['id']]
         );
 
-        return '<a href="' . $url . '" class="js-modal-ajax">' . htmlspecialchars(ucwords($data['description'])) . '</a>';
+        return '<a href="' . htmlspecialchars($url) . '" class="js-modal-ajax">' . htmlspecialchars(ucwords($data['description'])) . '</a>';
 
     }
 }
