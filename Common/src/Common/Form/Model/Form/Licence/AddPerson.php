@@ -15,7 +15,7 @@ class AddPerson
 
     /**
      * @Form\ComposedObject("Common\Form\Model\Form\Licence\Fieldset\Person")
-     * @Form\Attributes({"class":""})
+     * @Form\Attributes({"class":"add-another-group"})
      */
     public $data = null;
 

@@ -1347,21 +1347,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         if (!$this->shouldPaginate()) {
             return '';
         }
-
-        /**
-         * Temporarily removed this, as if someone has set the limit to be more than the total, they would no longer see
-         * the limit options to reduce
-         * if (!in_array($this->getLimit(), $this->settings['paginate']['limit']['options'])) {
-         * $this->settings['paginate']['limit']['options'][] = $this->getLimit();
-         * sort($this->settings['paginate']['limit']['options']);
-         * }
-         *
-         *
-         * if ($this->total <= min($this->settings['paginate']['limit']['options'])) {
-         * return '';
-         * }
-         */
-
         return $this->renderLayout('pagination');
     }
 
