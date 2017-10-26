@@ -12,8 +12,6 @@ use Zend\Form\Annotation as Form;
  */
 class People
 {
-
-
     /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TableRequiredPeople")

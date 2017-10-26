@@ -21,7 +21,6 @@ class TableRequiredPeople extends TableRequired
      */
     public $rows;
 
-
     /**
      * @Form\Options({"label":"row"})
      * @Form\Type("\Common\Form\Elements\Types\Table")

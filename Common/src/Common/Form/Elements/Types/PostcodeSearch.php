@@ -5,13 +5,13 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace Common\Form\Elements\Types;
 
 use Zend\Form\Fieldset;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Button;
 use Zend\Form\Element\Select;
+use Common\Form\Elements\Types\HtmlTranslated;
 
 /**
  * PostcodeSearch fieldset
