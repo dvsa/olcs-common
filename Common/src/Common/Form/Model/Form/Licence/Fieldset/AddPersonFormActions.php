@@ -11,7 +11,6 @@ use Zend\Form\Annotation as Form;
  */
 class AddPersonFormActions
 {
-
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({"label": "continue.finance.history.button"})
@@ -19,12 +18,10 @@ class AddPersonFormActions
      */
     public $continueToFinancialHistory = null;
 
-
     /**
      * @Form\Attributes({"type":"reset","class":"action--cancel", "id": "cancel"})
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
     public $cancel = null;
-
 }

@@ -5,6 +5,7 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
+
 namespace Common\Service\Lva;
 
 use Common\Service\Entity\OrganisationEntityService;
@@ -22,8 +23,10 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
     use ServiceLocatorAwareTrait;
 
     /**
-     * @param Form $form
-     * @param      $orgType
+     * @param Form  $form    form
+     * @param mixed $orgType organisation type
+     *
+     * @return void
      */
     public function lockPersonForm(Form $form, $orgType)
     {
@@ -48,8 +51,10 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * @param Form $form
-     * @param      $table
+     * @param Form  $form  form
+     * @param mixed $table table
+     *
+     * @return void
      */
     public function lockPartnershipForm(Form $form, $table)
     {
@@ -58,8 +63,10 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * @param Form $form
-     * @param      $table
+     * @param Form  $form  form
+     * @param mixed $table table
+     *
+     * @return void
      */
     public function lockOrganisationForm(Form $form, $table)
     {

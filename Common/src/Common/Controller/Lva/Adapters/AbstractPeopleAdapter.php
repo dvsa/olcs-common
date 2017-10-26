@@ -298,6 +298,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
 
     /**
      * Abstract Method implementation
+     *
+     * @return void
      */
     public function addMessages()
     {
@@ -325,6 +327,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      * Abstract method implementation
      *
      * @param Form $form form
+     *
+     * @return void
      */
     public function alterAddOrEditFormForOrganisation(Form $form)
     {
@@ -660,6 +664,4 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         );
         return $table;
     }
-
-
 }
