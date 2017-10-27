@@ -25,14 +25,14 @@ class FinancialHistoryData
      * @Form\Attributes({"value":"markup-application_previous-history_financial-history-finance-hint"})
      * @Form\Type("Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $hasAnyPerson = null;
+    public $financeHint = null;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      * @Form\Attributes({"value":"<h3 id=""mainq"">%s</h3>"})
      * @Form\Options({"tokens": {"application_previous-history_financial-history.intro"}})
      */
-    public $intro= null;
+    public $hasAnyPerson = null;
 
     /**
      * @Form\Annotations({"id":""})
