@@ -22,7 +22,7 @@ class DataRetentionRuleLink implements FormatterInterface
     {
         $urlHelper = $sm->get('Helper\Url');
         $url = $urlHelper->fromRoute(
-            'admin-dashboard/admin-data-retention/records',
+            'admin-dashboard/admin-data-retention/review/records',
             ['dataRetentionRuleId' => $data['id']]
         );
 
