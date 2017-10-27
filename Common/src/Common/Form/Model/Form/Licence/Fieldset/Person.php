@@ -29,7 +29,7 @@ class Person
      * @Form\Attributes({"id":"title","placeholder":""})
      * @Form\Options({
      *     "empty_option": "Please Select",
-     *     "label": "licence_person-add-action-formTitle",
+     *     "label": "Title",
      *     "label_attributes": {"class": "form-element__question"},
      *     "category":"person_title",
      * })
@@ -41,9 +41,9 @@ class Person
     /**
      * @Form\Attributes({"class":"long","id":"forename"})
      * @Form\Options({
-     *     "label":"licence_person-add-action-formFirstName",
+     *     "label":"First Name",
      *     "label_attributes": {"class": "form-element__question"},
-     *     "error-message": "person_forename-error"
+     *     "error-message": "Enter first name"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -54,9 +54,9 @@ class Person
     /**
      * @Form\Attributes({"class":"long","id":"familyname"})
      * @Form\Options({
-     *    "label":"licence_person-add-action-formSurname",
+     *    "label":"Last Name",
      *     "label_attributes": {"class": "form-element__question"},
-     *     "error-message": "person_familyName-error"
+     *     "error-message": "Enter last name"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -67,7 +67,7 @@ class Person
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({
-     *    "label":"licence_person-add-action-formOtherNames",
+     *    "label":"Other names (optional)",
      *     "label_attributes": {"class": "form-element__question"}
      * })
      * @Form\Required(false)
@@ -81,10 +81,10 @@ class Person
      * @Form\Required(true)
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
-     *     "label": "dob",
+     *     "label": "Date of Birth",
      *     "create_empty_option": false,
      *     "render_delimiters": "d m y",
-     *     "error-message": "person_birthDate-error",
+     *     "error-message": "Enter date of birth",
      *     "fieldset-attributes": {"id":"dob_day"}
      * })
      * @Form\Type("DateSelect")

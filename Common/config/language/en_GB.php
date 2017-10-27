@@ -1611,33 +1611,21 @@ return [
     'licence_goods-trailers_trailer.table.trailerNo' => 'Trailer number',
     'licence_type_of_licence_change' => 'Making changes to licence type will cause discs to be reissued and may cause other effects (e.g. re-issue of community licences)',
     'licence_type_of_licence_confirmation' => 'In order to change your type of licence you must create a variation application, Would you like to proceed?',
-    'licence_person-add-action-formDateOfBirth' => 'Date of birth',
-    'licence_person-add-action-formFirstName' => 'First name(s)',
-    'licence_person-add-action-formOtherNames' => 'Other names (optional)',
-    'licence_person-add-action-formOtherNames-hint' => 'Other names you\'ve been known by since you were 18',
-    'licence_person-add-action-formSurname' => 'Last name',
-    'licence_person-add-action-formTitle' => 'Title',
     'licence_person-add-action-formTitleValueMiss' => 'Miss',
     'licence_person-add-action-formTitleValueMr' => 'Mr',
     'licence_person-add-action-formTitleValueMrs' => 'Mrs',
     'licence_person-add-action-formTitleValueMs' => 'Ms',
-
     'lva.section.title.add_director' => 'Add director',
     'lva.section.title.add_partner' => 'Add partner',
     'lva.section.title.add_person' => 'Add person',
-
     'lva.section.title.add_person_org_t_rc' => 'Add a Director',
     'lva.section.title.add_person_org_t_p' => 'Add a Partner',
     'lva.section.title.add_person_org_t_pa' => 'Add a Responsible person',
     'lva.section.title.add_person_org_t_st' => 'Add a Owner',
-
     'licence_add-Person-PersonType-org_t_rc'=>'Director',
     'licence_add-Person-PersonType-org_t_p'=>'Partner',
     'licence_add-Person-PersonType-org_t_pa'=>'Responsible person',
     'licence_add-Person-PersonType-org_t_st'=>'Owner',
-
-    'continue.finance.history.button' => 'Continue to financial history',
-
     'list-of-convictions' => 'List of convictions',
     'llp-name' => 'LLP name',
     'llp-number' => 'LLP #',

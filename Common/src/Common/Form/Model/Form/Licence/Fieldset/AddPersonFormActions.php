@@ -13,14 +13,14 @@ class AddPersonFormActions
 {
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
-     * @Form\Options({"label": "continue.finance.history.button"})
+     * @Form\Options({"label": "Continue to financial history"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
     public $continueToFinancialHistory = null;
 
     /**
      * @Form\Attributes({"type":"reset","class":"action--cancel", "id": "cancel"})
-     * @Form\Options({"label": "cancel.button"})
+     * @Form\Options({"label": "Cancel"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
     public $cancel = null;
