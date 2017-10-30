@@ -96,6 +96,11 @@ class RefData
     const VARIATION_STATUS_UPDATED = 2;
 
     /**
+     * Variation types
+     */
+    const VARIATION_TYPE_DIRECTOR_CHANGE = 'vtyp_director_change';
+
+    /**
      * Condition and Undertakings
      */
     const ATTACHED_TO_LICENCE = 'cat_lic';

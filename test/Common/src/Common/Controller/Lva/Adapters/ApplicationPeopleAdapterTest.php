@@ -31,6 +31,9 @@ class ApplicationPeopleAdapterTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
     }
 
+    /**
+     *
+     */
     public function testAlterFormForOrganisationDoesNotAlterFormWithInForceLicences()
     {
         $this->sm->setService(
@@ -43,8 +46,11 @@ class ApplicationPeopleAdapterTest extends MockeryTestCase
         );
 
         $form = m::mock('Zend\Form\Form');
-        $table = m::mock();
+        $table = m::mock(Table::class);
 
+        $table->shouldReceive('getAction')->andReturn(['label'=>'']);
+        $table->shouldReceive('removeAction');
+        $table->shouldReceive('addAction');
         $this->assertNull($this->sut->alterFormForOrganisation($form, $table, 123));
     }
 
@@ -60,7 +66,11 @@ class ApplicationPeopleAdapterTest extends MockeryTestCase
         );
 
         $form = m::mock('Zend\Form\Form');
-        $table = m::mock();
+        $table = m::mock(Table::class);
+
+        $table->shouldReceive('getAction')->andReturn(['label'=>'']);
+        $table->shouldReceive('removeAction');
+        $table->shouldReceive('addAction');
 
         $this->assertNull($this->sut->alterFormForOrganisation($form, $table, 123));
     }

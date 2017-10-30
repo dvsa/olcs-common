@@ -143,4 +143,53 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             ]
         ];
     }
+
+    public function testGetAddLabelTextForOrganisationReturnsNullIfNoOrganisationType()
+    {
+        $this->assertNull($this->sut->getAddLabelTextForOrganisation());
+    }
+
+    /**
+     * @dataProvider dpTestAlterFormForOrganisation
+     */
+    public function testGetAddLabelTextForOrganisationReturnsAppropriateLabel($type, $expected)
+    {
+        $this->sut->shouldReceive('getOrganisationType')
+            ->andReturn($type)
+            ->twice()
+            ->getMock();
+        $this->assertEquals($expected, $this->sut->getAddLabelTextForOrganisation());
+    }
+
+
+    /**
+     * @dataProvider  dpTestAlterFormForOrganisation
+     */
+    public function testAmendLicencePeopleListTableAltersTable($type, $expected)
+    {
+
+        $settingsArray = [
+            'actions' => [
+                'add' => [
+                    'label' => $expected
+                ]
+            ]
+        ];
+
+        $this->sut->shouldReceive('getOrganisationType')
+            ->andReturn($type)
+            ->twice()
+            ->getMock();
+
+        $mockTable = m::mock(TableBuilder::class)
+            ->shouldReceive('setSetting')
+            ->with(
+                'crud',
+                $settingsArray
+            )
+            ->once()
+            ->andReturnSelf()
+            ->getMock();
+        $this->sut->amendLicencePeopleListTable($mockTable);
+    }
 }

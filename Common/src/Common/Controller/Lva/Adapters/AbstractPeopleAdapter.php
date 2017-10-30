@@ -27,8 +27,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     protected $tableData = [];
 
     private $licence;
-    private $application;
     private $data;
+    private $application;
 
     /**
      * Load the people dataa
@@ -163,11 +163,21 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->licence['organisation']['id'];
     }
 
+    /**
+     * Get the licence
+     *
+     * @return mixed
+     */
     public function getLicence()
     {
         return $this->licence;
     }
 
+    /**
+     * Get the Application
+     *
+     * @return mixed
+     */
     public function getApplication()
     {
         return $this->application;
@@ -193,6 +203,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->getOrganisationType() === \Common\RefData::ORG_TYPE_PARTNERSHIP;
     }
 
+    /**
+     * Check if has more than one suspended Curtailed licences
+     *
+     * @return mixed
+     */
     public function hasMoreThanOneValidCurtailedOrSuspendedLicences()
     {
         return $this->data['hasMoreThanOneValidCurtailedOrSuspendedLicences'];
@@ -225,6 +240,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return in_array($this->getOrganisationType(), $types, false);
     }
 
+    /**
+     * use Deltas
+     *
+     * @return bool
+     */
     public function useDeltas()
     {
         return (isset($this->data['useDeltas']) && $this->data['useDeltas']);
@@ -276,6 +296,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return (isset($this->getPeople()[0])) ? $this->getPeople()[0] : false;
     }
 
+    /**
+     * Abstract Method implementation
+     *
+     * @return void
+     */
     public function addMessages()
     {
     }
@@ -290,24 +315,30 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     public function alterFormForOrganisation(Form $form, $table)
     {
-        $type = [
-            \Common\RefData::ORG_TYPE_RC => 'lva.section.title.add_director',
-            \Common\RefData::ORG_TYPE_LLP => 'lva.section.title.add_partner',
-            \Common\RefData::ORG_TYPE_PARTNERSHIP => 'lva.section.title.add_partner',
-            \Common\RefData::ORG_TYPE_OTHER => 'lva.section.title.add_person',
-        ];
-        if (isset($type[$this->getOrganisationType()])) {
-            $action = $table->getAction('add');
-            $table->removeAction('add');
-            $action['label'] = $type[$this->getOrganisationType()];
-            $table->addAction('add', $action);
-        }
+        $labelTextForOrganisation = $this->getAddLabelTextForOrganisation();
+
+        $action = $table->getAction('add');
+        $table->removeAction('add');
+        $action['label'] = $labelTextForOrganisation;
+        $table->addAction('add', $action);
     }
 
+    /**
+     * Abstract method implementation
+     *
+     * @param Form $form form
+     *
+     * @return void
+     */
     public function alterAddOrEditFormForOrganisation(Form $form)
     {
     }
 
+    /**
+     * Can the form be modified
+     *
+     * @return bool
+     */
     public function canModify()
     {
         return true;
@@ -329,7 +360,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         if ($this->getOrganisationType() === RefData::ORG_TYPE_REGISTERED_COMPANY) {
             $table->setEmptyMessage('selfserve-app-subSection-your-business-people-ltd.table.empty-message');
         }
-
         return $table;
     }
 
@@ -427,7 +457,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         $response = $this->handleCommand($this->getDeleteCommand(['personIds' => $ids]));
         /* @var $response \Common\Service\Cqrs\Response */
         if (!$response->isOk()) {
-            throw new \RuntimeException('Error deleteing Org Person : '. print_r($response->getResult(), true));
+            throw new \RuntimeException('Error deleteing Org Person : ' . print_r($response->getResult(), true));
         }
 
         return true;
@@ -449,7 +479,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             )
         );
         if (!$response->isOk()) {
-            throw new \RuntimeException('Error restoring Person : '. print_r($response->getResult(), true));
+            throw new \RuntimeException('Error restoring Person : ' . print_r($response->getResult(), true));
         }
 
         return true;
@@ -466,7 +496,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     {
         $response = $this->handleCommand($this->getCreateCommand($data));
         if (!$response->isOk()) {
-            throw new \RuntimeException('Error creating Person : '. print_r($response->getResult(), true));
+            throw new \RuntimeException('Error creating Person : ' . print_r($response->getResult(), true));
         }
 
         return true;
@@ -483,7 +513,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     {
         $response = $this->handleCommand($this->getUpdateCommand($data));
         if (!$response->isOk()) {
-            throw new \RuntimeException('Error updating Person : '. print_r($response->getResult(), true));
+            throw new \RuntimeException('Error updating Person : ' . print_r($response->getResult(), true));
         }
 
         return true;
@@ -530,6 +560,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     }
 
 
+    /**
+     * Get the name of the table config
+     *
+     * @return string
+     */
     protected function getTableConfig()
     {
         return 'lva-people';
@@ -548,14 +583,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         $data = array();
 
         foreach ($orgData as $id => $row) {
-
             if (!isset($applicationData[$id])) {
-
                 // E for existing (No updates)
                 $row['action'] = self::ACTION_EXISTING;
                 $data[] = $row;
             } elseif ($applicationData[$id]['action'] === self::ACTION_UPDATED) {
-
                 $row['action'] = self::ACTION_CURRENT;
                 $data[] = $row;
             }
@@ -591,5 +623,45 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         }
 
         return $indexed;
+    }
+
+    /**
+     * Get the add label text
+     * Defaults to null if organisation type not set
+     *
+     * @return mixed | null or string
+     */
+    public function getAddLabelTextForOrganisation()
+    {
+        $type = [
+            RefData::ORG_TYPE_RC => 'lva.section.title.add_director',
+            RefData::ORG_TYPE_LLP => 'lva.section.title.add_partner',
+            RefData::ORG_TYPE_PARTNERSHIP => 'lva.section.title.add_partner',
+            RefData::ORG_TYPE_OTHER => 'lva.section.title.add_person',
+        ];
+        if (isset($type[$this->getOrganisationType()])) {
+            return $type[$this->getOrganisationType()];
+        }
+        return null;
+    }
+
+    /**
+     * @param TableBuilder $table table
+     *
+     * @return TableBuilder
+     */
+    public function amendLicencePeopleListTable(TableBuilder $table)
+    {
+        $table->setSetting(
+            'crud',
+            [
+                'actions' => [
+                    'add' => [
+                        'label' => $this->getAddLabelTextForOrganisation()
+                    ]
+                ]
+            ]
+        );
+        return $table;
     }
 }
