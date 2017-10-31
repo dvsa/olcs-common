@@ -3,8 +3,11 @@
 namespace CommonTest\Service\Data;
 
 use Common\Service\Data\SectionConfig;
+use Common\Util\LvaRoute;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Mvc\Router\Http\Segment;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Section Config Test
@@ -17,7 +20,8 @@ class SectionConfigTest extends MockeryTestCase
     {
         $sut = new SectionConfig();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        /** @var m\Mock|ServiceLocatorInterface $sm */
+        $sm = m::mock(ServiceLocatorInterface::class)
             ->shouldReceive('get')->with('Processing\VariationSection')
             ->getMock();
         $sut->setServiceLocator($sm);
@@ -99,6 +103,23 @@ class SectionConfigTest extends MockeryTestCase
                         $this->getTestChildRoute('unit_test_route', 'variation') +
                         $this->getTestChildRoute('unit_second_route', 'variation'),
                 ],
+                'lva-director_change' => [
+                    'type' => 'segment',
+                    'options' => [
+                        'route' => '/director-change/:application[/]',
+                        'constraints' => [
+                            'application' => '[0-9]+',
+                        ],
+                        'defaults' => [
+                            'controller' => 'LvaDirectorChange',
+                            'action' => 'index',
+                        ],
+                    ],
+                    'may_terminate' => true,
+                    'child_routes' => [] +
+                        $this->getTestChildRoute('unit_test_route', 'director_change') +
+                        $this->getTestChildRoute('unit_second_route', 'director_change'),
+                ],
             ],
             $actual
         );
@@ -107,22 +128,26 @@ class SectionConfigTest extends MockeryTestCase
     private function getTestChildRoute($key, $parent)
     {
         $route = str_replace('_', '-', $key);
-        $controller = str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+        $controller = sprintf(
+            'Lva%s/%s',
+            str_replace(' ', '', ucwords(str_replace('_', ' ', $parent))),
+            str_replace(' ', '', ucwords(str_replace('_', ' ', $key)))
+        );
 
         return [
             $key => [
-                'type' => \Common\Util\LvaRoute::class,
+                'type' => LvaRoute::class,
                 'options' => [
                     'route' => $route . '[/]',
                     'defaults' => [
-                        'controller' => 'Lva' . ucfirst($parent) . '/' . $controller,
+                        'controller' => $controller,
                         'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
                     'action' => [
-                        'type' => \Zend\Mvc\Router\Http\Segment::class,
+                        'type' => Segment::class,
                         'options' => [
                             'route' => ':action[/:child_id][/]',
                         ],
