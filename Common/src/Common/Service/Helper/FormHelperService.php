@@ -7,6 +7,7 @@ use Common\Service\Table\TableBuilder;
 use Zend\Form\Element;
 use Zend\Form\Element\Checkbox;
 use Zend\Form\Element\DateSelect;
+use Zend\Form\ElementInterface;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
@@ -17,7 +18,6 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Validator\ValidatorChain;
 use Zend\View\Model\ViewModel;
-use Zend\Validator\ValidatorInterface;
 
 /**
  * @internal All validations to do with empty fields must be done as a validator
@@ -193,9 +193,9 @@ class FormHelperService extends AbstractHelperService
     public function processAddressLookupForm(Form $form, Request $request)
     {
         $processed = false;
-        $modified  = false;
+        $modified = false;
         $fieldsets = $form->getFieldsets();
-        $post      = (array)$request->getPost();
+        $post = (array)$request->getPost();
 
         foreach ($fieldsets as $fieldset) {
             if ($result = $this->processAddressLookupFieldset($fieldset, $post, $form)) {
@@ -237,7 +237,7 @@ class FormHelperService extends AbstractHelperService
         if (!($fieldset instanceof Address)) {
             $data = isset($post[$name]) ? $post[$name] : [];
             $processed = false;
-            $modified  = false;
+            $modified = false;
 
             // @TODO possible bug :: Variable fieldset is introduced as a method parameter and overridden here
             foreach ($fieldset->getFieldsets() as $fieldset) {
@@ -362,9 +362,9 @@ class FormHelperService extends AbstractHelperService
     /**
      * Alter an elements label
      *
-     * @param \Zend\Form\Element $element Element
-     * @param string             $label   Label text
-     * @param int                $type    Alter type
+     * @param ElementInterface $element Element
+     * @param string           $label   Label text
+     * @param int              $type    Alter type
      *
      * @return void
      */
@@ -457,7 +457,7 @@ class FormHelperService extends AbstractHelperService
             $filter = $form->getInputFilter();
         }
 
-        /** @var \Zend\Form\ElementInterface $element */
+        /** @var ElementInterface $element */
         foreach ($form->getElements() as $key => $element) {
             $value = $element->getValue();
 
@@ -747,7 +747,7 @@ class FormHelperService extends AbstractHelperService
                 } else {
                     $companyNumber = str_pad($companyNumber, self::MAX_COMPANY_NUMBER_LENGTH, "0", STR_PAD_LEFT);
                 }
-                if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH  &&
+                if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH &&
                     strlen($companyNumber) <= self::MAX_COMPANY_NUMBER_LENGTH) {
                     list($result, $message) = $this->doCompanySearch($companyNumber);
                 }
@@ -809,7 +809,7 @@ class FormHelperService extends AbstractHelperService
      * Remove a value option from an element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string                            $index   Index
+     * @param string $index Index
      *
      * @return void
      */
@@ -827,7 +827,7 @@ class FormHelperService extends AbstractHelperService
      * Set current option of element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string                            $index   Index
+     * @param string $index Index
      *
      * @return void
      */
@@ -838,7 +838,7 @@ class FormHelperService extends AbstractHelperService
         if (isset($options[$index])) {
             $translator = $this->getServiceLocator()->get('Helper\Translation');
 
-            $options[$index] = $translator->translate($options[$index]) .' '.
+            $options[$index] = $translator->translate($options[$index]) . ' ' .
                 $translator->translate('current.option.suffix');
 
             $element->setValueOptions($options);
@@ -864,7 +864,7 @@ class FormHelperService extends AbstractHelperService
         $newValidatorChain = new ValidatorChain();
 
         foreach ($validatorChain->getValidators() as $validator) {
-            if (! ($validator['instance'] instanceof $validatorClass)) {
+            if (!($validator['instance'] instanceof $validatorClass)) {
                 $newValidatorChain->attach($validator['instance']);
             }
         }
@@ -953,7 +953,7 @@ class FormHelperService extends AbstractHelperService
         $postcodeValidator = new PostcodeValidator(['locale' => 'en-GB']);
         foreach ($data as $key => $datum) {
             if ($postcodeValidator->isValid($datum)) {
-                $postcode =  $datum;
+                $postcode = $datum;
                 unset($data[$key]);
             }
         }
@@ -1005,7 +1005,7 @@ class FormHelperService extends AbstractHelperService
      * Remove Value Option
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Element (Select|Radio)
-     * @param string                            $key     Key
+     * @param string $key Key
      *
      * @return void
      */
