@@ -96,7 +96,7 @@ class FinancialHistory extends AbstractFormService
     /**
      * Get a word to refer to people in charge of the organisation
      *
-     * @param $organisationType
+     * @param string $organisationType the organisation type
      *
      * @return string
      */
