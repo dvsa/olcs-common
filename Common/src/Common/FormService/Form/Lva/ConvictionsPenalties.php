@@ -33,7 +33,7 @@ class ConvictionsPenalties extends AbstractFormService
      *
      * @return \Zend\Form\Form
      */
-    protected function alterForm($form, $params)
+    protected function alterForm($form)
     {
         $dataTable = $form->get('data');
         $question = $dataTable->get('question');
