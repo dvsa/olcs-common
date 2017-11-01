@@ -42,7 +42,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         $this->alterFormForLva($form);
 
         if ($request->isPost()) {
-
             $crudAction = $this->getCrudAction(array($data['data']['table']));
 
             if ($crudAction !== null) {
@@ -50,7 +49,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             }
 
             if ($form->isValid()) {
-
                 $formData = $form->getData();
 
                 $dto = UpdatePreviousConvictions::create(
@@ -66,7 +64,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
                 $response = $this->handleCommand($dto);
 
                 if ($response->isOk()) {
-
                     if ($crudAction !== null) {
                         return $this->handleCrudAction($crudAction);
                     }
@@ -81,7 +78,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
         $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'convictions-penalties']);
 
-        return $this->render('convictions_penalties', $form);
+        return $this->render('lva-convictions_penalties', $form);
     }
 
     protected function getFormData($data)
