@@ -150,7 +150,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         }
 
         if ($request->isPost() && $form->isValid()) {
-
             $dtoData = $form->getData()['data'];
             $dtoData['application'] = $this->getApplicationId();
 
@@ -205,10 +204,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             ->createFormWithRequest('Lva\PreviousConviction', $this->getRequest());
     }
 
-    protected function handlePostSave($prefix = null, $options = [])
-    {
-        exit('handle post save');
-    }
 
 
 }
