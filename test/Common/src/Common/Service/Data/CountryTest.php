@@ -74,7 +74,7 @@ class CountryTest extends AbstractDataServiceTestCase
             ->getMock();
 
         $sut = new Country();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $this->assertEquals($results['results'], $sut->fetchListData([]));
     }
@@ -91,7 +91,7 @@ class CountryTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
         $sut = new Country();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $sut->fetchListData([]);
     }
