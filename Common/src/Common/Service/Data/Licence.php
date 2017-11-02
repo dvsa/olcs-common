@@ -2,6 +2,7 @@
 
 namespace Common\Service\Data;
 
+use Common\FormService\Form\Lva\People\LicenceAddPerson;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Licence\Licence as LicenceQry;
 use Dvsa\Olcs\Transfer\Query\Licence\OperatingCentres as OcQry;
