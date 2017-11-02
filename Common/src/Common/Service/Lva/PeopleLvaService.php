@@ -9,6 +9,7 @@
 namespace Common\Service\Lva;
 
 use Common\Service\Entity\OrganisationEntityService;
+use Zend\Form\FieldsetInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\Form\Form;
@@ -30,6 +31,7 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
      */
     public function lockPersonForm(Form $form, $orgType)
     {
+        /** @var FieldsetInterface $fieldset */
         $fieldset = $form->get('data');
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
@@ -72,5 +74,6 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
     {
         $table->removeActions();
         $table->removeColumn('select');
+        $table->removeColumn('actionLinks');
     }
 }
