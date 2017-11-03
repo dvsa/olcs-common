@@ -149,7 +149,7 @@ class RefDataTest extends AbstractDataServiceTestCase
             ->getMock();
 
         $sut = new RefData();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
         $this->mockServiceLocator
             ->shouldReceive('get')
             ->with('LanguagePreference')
@@ -178,7 +178,7 @@ class RefDataTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
         $sut = new RefData();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
         $this->mockServiceLocator
             ->shouldReceive('get')
             ->with('LanguagePreference')
