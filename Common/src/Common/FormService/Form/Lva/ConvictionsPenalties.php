@@ -10,7 +10,6 @@ namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
 use Common\RefData;
-use Zend\Form\Fieldset;
 
 /**
  * Convictions and Penalties Form
@@ -40,7 +39,7 @@ class ConvictionsPenalties extends AbstractFormService
      *
      * @return bool
      */
-    protected function isDirectorChange(array $params)
+    public function isDirectorChange(array $params)
     {
         return isset($params['variationType']) &&
             $params['variationType'] === RefData::VARIATION_TYPE_DIRECTOR_CHANGE;
@@ -57,14 +56,7 @@ class ConvictionsPenalties extends AbstractFormService
      */
     protected function alterForm($form, array $params)
     {
-        if ($this->isDirectorChange($params)) {
-            $dataTable = $form->get('data');
-            $this->alterFormQuestion($dataTable);
-            $this->alterFormHeading($dataTable, $params);
-            $this->alterFormButtons($form);
-            $this->alterConfirmation($form);
-            $this->getFormHelper()->remove($form, 'form-actions->save');
-        }
+        $this->changeFormForDirectorVariation($form, $params);
         return $form;
     }
 
@@ -122,5 +114,25 @@ class ConvictionsPenalties extends AbstractFormService
     {
         $question = $dataTable->get('question');
         $question->setLabel('');
+    }
+
+    /**
+     * Change the form for director variation
+     *
+     * @param \Zend\Form\Form $form   form
+     * @param array           $params params
+     *
+     * @return void
+     */
+    public function changeFormForDirectorVariation($form, array $params)
+    {
+        if ($this->isDirectorChange($params)) {
+            $dataTable = $form->get('data');
+            $this->alterFormQuestion($dataTable);
+            $this->alterFormHeading($dataTable, $params);
+            $this->alterFormButtons($form);
+            $this->alterConfirmation($form);
+            $this->getFormHelper()->remove($form, 'form-actions->save');
+        }
     }
 }

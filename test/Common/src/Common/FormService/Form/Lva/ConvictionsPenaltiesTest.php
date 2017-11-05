@@ -39,12 +39,12 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
     public function testAlterFormDoesNothingIfParamsNotSet()
     {
         $this->mockedForm->shouldNotReceive('get');
-        $this->sut->alterForm($this->mockedForm, []);
+        $this->sut->changeFormForDirectorVariation($this->mockedForm, []);
     }
 
     public function testAlterFormChangesLabelsForDirectorVariationType()
     {
-        $heading='selfserve-app-subSection-previous-history-criminal-conviction-hasConv';
+        $heading = 'selfserve-app-subSection-previous-history-criminal-conviction-hasConv';
         $this->mockedForm->shouldReceive('get')->with('data')->andReturn(
             m::mock(Fieldset::class)
                 ->shouldReceive('get')
@@ -57,7 +57,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
                 ->shouldReceive('getLabel')
                 ->andReturn($heading)
                 ->getMock()
-                ->shouldReceive('setLabel')->with($heading.'-'.RefData::ORG_TYPE_RC)
+                ->shouldReceive('setLabel')->with($heading . '-' . RefData::ORG_TYPE_RC)
                 ->getMock()
         )->getMock();
         $this->mockedForm->shouldReceive('get')
@@ -90,6 +90,21 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
 
         $params['variationType'] = RefData::VARIATION_TYPE_DIRECTOR_CHANGE;
         $params['organisationType'] = RefData::ORG_TYPE_RC;
-        $this->sut->alterForm($this->mockedForm, $params);
+        $this->sut->changeFormForDirectorVariation($this->mockedForm, $params);
+    }
+
+    public function testDirectChangeFalseIfNoParam()
+    {
+        $this->assertFalse($this->sut->isDirectorChange([]));
+    }
+
+    public function testDirectChangeFalseIfNotAppropriateParam()
+    {
+        $this->assertFalse($this->sut->isDirectorChange(['variationType' => 'inappropriate']));
+    }
+
+    public function testDirectChangeTrueIfNotAppropriateVariationType()
+    {
+        $this->assertTrue($this->sut->isDirectorChange(['variationType' => RefData::VARIATION_TYPE_DIRECTOR_CHANGE]));
     }
 }
