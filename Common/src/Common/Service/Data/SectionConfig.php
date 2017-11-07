@@ -233,7 +233,6 @@ class SectionConfig implements ServiceLocatorAwareInterface
             'restricted' => array(
                 array(
                     'application',
-                    'licence',
                     array(
                         LicenceEntityService::LICENCE_TYPE_RESTRICTED,
                         LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
