@@ -638,6 +638,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             RefData::ORG_TYPE_LLP => 'lva.section.title.add_partner',
             RefData::ORG_TYPE_PARTNERSHIP => 'lva.section.title.add_partner',
             RefData::ORG_TYPE_OTHER => 'lva.section.title.add_person',
+            RefData::ORG_TYPE_IRFO => 'lva.section.title.add_person'
         ];
         if (isset($type[$this->getOrganisationType()])) {
             return $type[$this->getOrganisationType()];
