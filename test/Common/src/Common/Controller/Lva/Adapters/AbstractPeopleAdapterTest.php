@@ -140,6 +140,10 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             'other' => [
                 \Common\RefData::ORG_TYPE_OTHER,
                 'lva.section.title.add_person'
+            ],
+            'irfo' => [
+                \Common\RefData::ORG_TYPE_IRFO,
+                'lva.section.title.add_person'
             ]
         ];
     }
