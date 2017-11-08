@@ -24,6 +24,8 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
     use ServiceLocatorAwareTrait;
 
     /**
+     * lock person form
+     *
      * @param Form  $form    form
      * @param mixed $orgType organisation type
      *
@@ -53,6 +55,8 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * lock the partnership form
+     *
      * @param Form  $form  form
      * @param mixed $table table
      *
@@ -65,6 +69,8 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * lock the organisation form
+     *
      * @param Form  $form  form
      * @param mixed $table table
      *

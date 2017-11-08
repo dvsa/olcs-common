@@ -21,6 +21,11 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
     protected $section = 'convictions_penalties';
     protected $baseRoute = 'lva-%s/convictions_penalties';
 
+    /**
+     * Index Action
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function indexAction()
     {
         $request = $this->getRequest();
@@ -42,7 +47,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         $this->alterFormForLva($form);
 
         if ($request->isPost()) {
-
             $crudAction = $this->getCrudAction(array($data['data']['table']));
 
             if ($crudAction !== null) {
@@ -50,7 +54,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
             }
 
             if ($form->isValid()) {
-
                 $formData = $form->getData();
 
                 $dto = UpdatePreviousConvictions::create(
@@ -66,7 +69,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
                 $response = $this->handleCommand($dto);
 
                 if ($response->isOk()) {
-
                     if ($crudAction !== null) {
                         return $this->handleCrudAction($crudAction);
                     }
@@ -81,9 +83,16 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
         $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'convictions-penalties']);
 
-        return $this->render('convictions_penalties', $form);
+        return $this->render('lva-convictions_penalties', $form);
     }
 
+    /**
+     * Get the correctly formatted data to populate the convictions form
+     *
+     * @param array $data data
+     *
+     * @return array
+     */
     protected function getFormData($data)
     {
         return array(
@@ -97,14 +106,22 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         );
     }
 
-    protected function getConvictionsPenaltiesForm($data)
+    /**
+     * Get the form used to input convictions
+     *
+     * @param array $data   data
+     * @param array $params params
+     *
+     * @return mixed
+     */
+    protected function getConvictionsPenaltiesForm($data, $params = [])
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)
-            ->getForm();
+            ->getForm($params);
 
         $formHelper->populateFormTable(
             $form->get('data')->get('table'),
@@ -115,22 +132,46 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         return $form;
     }
 
+    /**
+     * Get the data table used to display convictions
+     *
+     * @param array $data data
+     *
+     * @return mixed
+     */
     protected function getConvictionsPenaltiesTable($data)
     {
         return $this->getServiceLocator()->get('Table')
             ->prepareTable('lva-convictions-penalties', $data['previousConvictions']);
     }
 
+    /**
+     * Add a conviction
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function addAction()
     {
         return $this->addOrEdit('add');
     }
 
+    /**
+     * Edit a conviction
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     public function editAction()
     {
         return $this->addOrEdit('edit');
     }
 
+    /**
+     * handle post to edit or add conviction
+     *
+     * @param string $mode mode
+     *
+     * @return \Common\View\Model\Section|\Zend\Http\Response
+     */
     protected function addOrEdit($mode)
     {
         $request = $this->getRequest();
@@ -153,7 +194,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         }
 
         if ($request->isPost() && $form->isValid()) {
-
             $dtoData = $form->getData()['data'];
             $dtoData['application'] = $this->getApplicationId();
 
@@ -180,6 +220,11 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         return $this->render($mode . '_convictions_penalties', $form);
     }
 
+    /**
+     * Delete a conviction
+     *
+     * @return void
+     */
     protected function delete()
     {
         $dto = DeletePreviousConviction::create(
@@ -201,6 +246,11 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         return 'delete-conviction-penalty';
     }
 
+    /**
+     * Get the previous conviction input form
+     *
+     * @return mixed
+     */
     protected function getPreviousConvictionForm()
     {
         return $this->getServiceLocator()

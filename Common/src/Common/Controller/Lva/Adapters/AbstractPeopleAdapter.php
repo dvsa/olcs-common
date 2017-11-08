@@ -647,6 +647,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     }
 
     /**
+     * amend licence people list
+     *
      * @param TableBuilder $table table
      *
      * @return TableBuilder

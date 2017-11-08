@@ -99,7 +99,6 @@ trait CrudActionTrait
         if (empty($this->baseRoute)) {
             return null;
         }
-
         if (isset($this->lva)) {
             return sprintf($this->baseRoute, $this->lva);
         }

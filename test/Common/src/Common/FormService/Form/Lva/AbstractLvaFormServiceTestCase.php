@@ -9,6 +9,7 @@ namespace CommonTest\FormService\Form\Lva;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Form\Form;
 
 /**
  * Abstract LVA Form Service Test Case
@@ -41,7 +42,7 @@ abstract class AbstractLvaFormServiceTestCase extends MockeryTestCase
     public function testGetForm()
     {
         // Mocks
-        $mockForm = m::mock();
+        $mockForm = m::mock(Form::class)->shouldReceive('get')->withAnyArgs()->getMock();
 
         $this->formHelper->shouldReceive('createForm')
             ->with($this->formName)
