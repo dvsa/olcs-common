@@ -1602,6 +1602,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         return $this->getServiceLocator()->get('translator')->translate($message);
     }
+
     /**
      * Process the formatter
      *
