@@ -113,7 +113,7 @@ class ConvictionsPenalties extends AbstractFormService
     private function alterFormQuestion($dataTable)
     {
         $question = $dataTable->get('question');
-        $question->setLabel('you must declare any relevant convictions to the Traffic Commissioner');
+        $question->setLabel('');
     }
 
     /**
@@ -128,6 +128,7 @@ class ConvictionsPenalties extends AbstractFormService
     {
         if ($this->isDirectorChange($params)) {
             $dataTable = $form->get('data');
+            $dataTable->setAttribute('class', 'director-change');
             $this->alterFormQuestion($dataTable);
             $this->alterFormHeading($dataTable, $params);
             $this->alterFormButtons($form);

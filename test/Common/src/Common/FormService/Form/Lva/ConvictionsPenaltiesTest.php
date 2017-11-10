@@ -59,6 +59,9 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
                 ->getMock()
                 ->shouldReceive('setLabel')->with($heading . '-' . RefData::ORG_TYPE_RC)
                 ->getMock()
+                ->shouldReceive('setAttribute')
+                ->with('class', 'director-change')
+                ->getMock()
         )->getMock();
         $this->mockedForm->shouldReceive('get')
             ->with('form-actions')
