@@ -113,7 +113,7 @@ class ConvictionsPenalties extends AbstractFormService
     private function alterFormQuestion($dataTable)
     {
         $question = $dataTable->get('question');
-        $question->setLabel('');
+        $question->setLabel('you must declare any relevant convictions to the Traffic Commissioner');
     }
 
     /**
