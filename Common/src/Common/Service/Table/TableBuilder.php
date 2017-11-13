@@ -24,7 +24,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     const DEFAULT_LIMIT = 10;
     const DEFAULT_PAGE = 1;
 
-    const MAX_FORM_ACTIONS = 5;
+    const MAX_FORM_ACTIONS = 6;
 
     const ACTION_FORMAT_BUTTONS = 'buttons';
     const ACTION_FORMAT_DROPDOWN = 'dropdown';
