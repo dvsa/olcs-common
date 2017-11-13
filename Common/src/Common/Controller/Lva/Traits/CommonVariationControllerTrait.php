@@ -18,7 +18,7 @@ trait CommonVariationControllerTrait
      */
     protected function preDispatch()
     {
-        if ($this->isApplicationNew()) {
+        if (!$this->isApplicationVariation() || !$this->isVariationTypeCorrect()) {
             return $this->notFoundAction();
         }
 
@@ -76,5 +76,15 @@ trait CommonVariationControllerTrait
     protected function alterFormForLva(Form $form, $data = null)
     {
         return $this->getServiceLocator()->get('FormServiceManager')->get('lva-variation')->alterForm($form);
+    }
+
+    /**
+     * Determine if the variation type is correct for this controller
+     *
+     * @return bool
+     */
+    protected function isVariationTypeCorrect()
+    {
+        return $this->fetchDataForLva()['variationType'] === null;
     }
 }
