@@ -19,11 +19,8 @@ class PublicationNumber implements FormatterInterface
         if ($data['pubStatus']['id'] === 'pub_s_new') {
             return $data['publicationNo'];
         }
-
-        $uriPattern = $sm->get('Config')['document_share']['uri_pattern'];
-
-        $url = sprintf($uriPattern, $data['document']['identifier']);
-
+        
+        $url = sprintf('/file/%s', $data['document']['id']);
         return sprintf(
             '<a href="%s" data-file-url="%s" target="blank">%s</a>',
             $url,
