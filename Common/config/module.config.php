@@ -56,6 +56,9 @@ return array(
             'LvaApplication/TransportManagers' => [
                 Common\Controller\Lva\Delegators\ApplicationTransportManagerDelegator::class,
             ],
+            'LvaDirectorChange/People' => array(
+                'Common\Controller\Lva\Delegators\VariationPeopleDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
