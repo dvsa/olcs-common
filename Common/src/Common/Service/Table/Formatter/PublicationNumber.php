@@ -14,12 +14,19 @@ namespace Common\Service\Table\Formatter;
  */
 class PublicationNumber implements FormatterInterface
 {
-    public static function format($data, $column = array(), $sm = null)
+    /**
+     * Format
+     * 
+     * @param array $data The row data
+     *
+     * @return string
+     */
+    public static function format($data)
     {
         if ($data['pubStatus']['id'] === 'pub_s_new') {
             return $data['publicationNo'];
         }
-        
+
         $url = sprintf('/file/%s', $data['document']['id']);
         return sprintf(
             '<a href="%s" data-file-url="%s" target="blank">%s</a>',
