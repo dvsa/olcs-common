@@ -26,7 +26,7 @@ class PublicationNumber implements FormatterInterface
         if ($data['pubStatus']['id'] === 'pub_s_new') {
             return $data['publicationNo'];
         }
-        
+
         $url = sprintf('/file/%s', $data['document']['id']);
         return sprintf(
             '<a href="%s" data-file-url="%s" target="blank">%s</a>',
