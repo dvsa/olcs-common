@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Command\AbstractCommand;
 use Dvsa\Olcs\Transfer\Query\Licence\PsvDiscs;
@@ -243,6 +244,7 @@ abstract class AbstractDiscsController extends AbstractController
             $tableParams
         );
 
+
         return $this->alterTable($table, $tableParams);
     }
 
@@ -427,6 +429,14 @@ abstract class AbstractDiscsController extends AbstractController
                 'keepForReadOnly' => true,
             ]
         );
+        
+
+            if ($this->fetchDataForLva()['licenceType']['id'] !== RefData::LICENCE_TYPE_SPECIAL_RESTRICTED){
+
+                $table->setEmptyMessage("");
+
+            }
+
 
         return $table;
     }
