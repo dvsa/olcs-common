@@ -9,17 +9,25 @@ class AddPersonTest extends AbstractFormValidationTestCase
     /** @var string The class name of the form being tested */
     protected $formName = \Common\Form\Model\Form\Licence\AddPerson::class;
 
-    public function testContinueToFinancialHistory()
+    public function testSaveAndContinue()
     {
-        $element = ['form-actions', 'continueToFinancialHistory'];
-        $this->assertFormElementActionButton($element);
+        $this->assertFormElementActionButton(
+            ['form-actions', 'saveAndContinue']
+        );
     }
 
+    public function testSave()
+    {
+        $this->assertFormElementActionButton(
+            ['form-actions', 'save']
+        );
+    }
 
     public function testCancel()
     {
-        $element = ['form-actions', 'cancel'];
-        $this->assertFormElementActionButton($element);
+        $this->assertFormElementActionButton(
+            ['form-actions', 'cancel']
+        );
     }
 
     public function testTitle()
