@@ -93,16 +93,12 @@ abstract class AbstractController extends AbstractActionController
         if (!$routeMatch) {
             throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
         }
-
         $this->maybeTranslateForNi();
-
         $action = $routeMatch->getParam('action', 'not-found');
         $method = static::getMethodFromAction($action);
-
         if (!method_exists($this, $method)) {
             $method = 'notFoundAction';
         }
-
         if ($routeMatch->getParam('skipPreDispatch', false) || ($actionResponse = $this->preDispatch()) === null) {
             try {
                 $actionResponse = $this->$method();
@@ -111,9 +107,7 @@ abstract class AbstractController extends AbstractActionController
                 $actionResponse = $this->reload();
             }
         }
-
         $e->setResult($actionResponse);
-
         return $actionResponse;
     }
 

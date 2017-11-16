@@ -309,10 +309,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         if ($organisationTypeId !== RefData::ORG_TYPE_OTHER) {
             $table->removeColumn('position');
         }
-
-        if ($this->isExternal() && $this->lva === self::LVA_LIC && $table->getTotal() == 0) {
-            $form->remove('table');
-        }
     }
 
     /**

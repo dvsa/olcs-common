@@ -5,9 +5,11 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
+
 namespace Common\Service\Lva;
 
 use Common\Service\Entity\OrganisationEntityService;
+use Zend\Form\FieldsetInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\Form\Form;
@@ -21,8 +23,17 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
+    /**
+     * lock person form
+     *
+     * @param Form  $form    form
+     * @param mixed $orgType organisation type
+     *
+     * @return void
+     */
     public function lockPersonForm(Form $form, $orgType)
     {
+        /** @var FieldsetInterface $fieldset */
         $fieldset = $form->get('data');
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
@@ -43,15 +54,32 @@ class PeopleLvaService implements ServiceLocatorAwareInterface
         $form->setAttribute('locked', true);
     }
 
+    /**
+     * lock the partnership form
+     *
+     * @param Form  $form  form
+     * @param mixed $table table
+     *
+     * @return void
+     */
     public function lockPartnershipForm(Form $form, $table)
     {
         $table->removeActions();
         $table->removeColumn('select');
     }
 
+    /**
+     * lock the organisation form
+     *
+     * @param Form  $form  form
+     * @param mixed $table table
+     *
+     * @return void
+     */
     public function lockOrganisationForm(Form $form, $table)
     {
         $table->removeActions();
         $table->removeColumn('select');
+        $table->removeColumn('actionLinks');
     }
 }
