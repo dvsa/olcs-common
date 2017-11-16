@@ -163,8 +163,8 @@ abstract class AbstractDiscsController extends AbstractController
     }
 
     /**
-     * Process action Replace 
-     * 
+     * Process action Replace
+     *
      * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function replaceAction()
@@ -174,7 +174,7 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Process action Void
-     * 
+     *
      * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function voidAction()
@@ -200,8 +200,8 @@ abstract class AbstractDiscsController extends AbstractController
     }
 
     /**
-     * Get Table of disks form 
-     * 
+     * Get Table of disks form
+     *
      * @return \Common\Form\Form
      */
     protected function getDiscsForm()
@@ -226,7 +226,7 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Get disks table
-     * 
+     *
      * @return TableBuilder
      */
     protected function getDiscsTable()
@@ -243,7 +243,6 @@ abstract class AbstractDiscsController extends AbstractController
             $tableData,
             $tableParams
         );
-
 
         return $this->alterTable($table, $tableParams);
     }
@@ -301,7 +300,7 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Format disk number
-     * 
+     *
      * @param array $disc Disk data
      *
      * @return string
@@ -429,15 +428,10 @@ abstract class AbstractDiscsController extends AbstractController
                 'keepForReadOnly' => true,
             ]
         );
-        
 
-            if ($this->fetchDataForLva()['licenceType']['id'] !== RefData::LICENCE_TYPE_SPECIAL_RESTRICTED){
-
-                $table->setEmptyMessage("");
-
-            }
-
-
+        if ($this->fetchDataForLva()['licenceType']['id'] !== RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+            $table->setEmptyMessage("");
+        }
         return $table;
     }
 }
