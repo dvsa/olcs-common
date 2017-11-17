@@ -44,9 +44,7 @@ class IdentityProvider implements IdentityProviderInterface
             $response = $this->queryService->send(MyAccount::create([]));
 
             if (!$response->isOk()) {
-                throw new \Exception(
-                    'Unable to retrieve identity - '. implode("; ", $response->getResult()['messages'])
-                );
+                    $response->setResult(['userType' => User::USER_TYPE_NOT_IDENTIFIED]);
             }
 
             $data = $response->getResult();

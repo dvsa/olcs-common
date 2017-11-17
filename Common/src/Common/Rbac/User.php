@@ -15,6 +15,7 @@ class User implements IdentityInterface
     const USER_TYPE_OPERATOR = 'operator';
     const USER_TYPE_PARTNER = 'partner';
     const USER_TYPE_TRANSPORT_MANAGER = 'transport-manager';
+    const USER_TYPE_NOT_IDENTIFIED = 'not-identified';
 
     /**
      * @var int
@@ -166,5 +167,15 @@ class User implements IdentityInterface
     public function isAnonymous()
     {
         return (empty($this->userType) || ($this->userType === self::USER_TYPE_ANON));
+    }
+
+    /**
+     * Checks if user could not be verified
+     *
+     * @return bool
+     */
+    public function isNotIdentified()
+    {
+        return ($this->userType === self::USER_TYPE_NOT_IDENTIFIED);
     }
 }
