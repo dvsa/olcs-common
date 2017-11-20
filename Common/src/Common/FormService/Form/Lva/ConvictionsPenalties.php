@@ -101,7 +101,8 @@ class ConvictionsPenalties extends AbstractFormService
     {
         $label = $dataTable->getLabel();
         $dataTable->setLabel($label . '-' . $params['organisationType']);
-        $dataTable->setAttribute('class', 'five-eights');
+        $existingClasses = $dataTable->getAttribute('class');
+        $dataTable->setAttribute('class', $existingClasses .' five-eights');
     }
 
     /**
