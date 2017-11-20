@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva;
 
+use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Dvsa\Olcs\Transfer\Command\AbstractCommand;
 use Dvsa\Olcs\Transfer\Query\Licence\PsvDiscs;
@@ -162,8 +163,8 @@ abstract class AbstractDiscsController extends AbstractController
     }
 
     /**
-     * Process action Replace 
-     * 
+     * Process action Replace
+     *
      * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function replaceAction()
@@ -173,7 +174,7 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Process action Void
-     * 
+     *
      * @return \Common\View\Model\Section|\Zend\Http\Response
      */
     public function voidAction()
@@ -199,8 +200,8 @@ abstract class AbstractDiscsController extends AbstractController
     }
 
     /**
-     * Get Table of disks form 
-     * 
+     * Get Table of disks form
+     *
      * @return \Common\Form\Form
      */
     protected function getDiscsForm()
@@ -225,7 +226,7 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Get disks table
-     * 
+     *
      * @return TableBuilder
      */
     protected function getDiscsTable()
@@ -299,7 +300,7 @@ abstract class AbstractDiscsController extends AbstractController
 
     /**
      * Format disk number
-     * 
+     *
      * @param array $disc Disk data
      *
      * @return string
@@ -428,6 +429,9 @@ abstract class AbstractDiscsController extends AbstractController
             ]
         );
 
+        if ($this->fetchDataForLva()['licenceType']['id'] !== RefData::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+            $table->setEmptyMessage("");
+        }
         return $table;
     }
 }

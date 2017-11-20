@@ -21,36 +21,9 @@ class PublicationNumberTest extends MockeryTestCase
     /**
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $expected)
     {
-        $params = ['foo' => 'bar'];
-
-        $config = [
-            'document_share' => [
-                'uri_pattern' => '//foo/%s'
-            ]
-        ];
-
-        $pubService = m::mock();
-        $pubService->shouldReceive('getFilePathVariablesFromPublication')
-            ->with($data)
-            ->andReturn($params);
-
-        $sm = m::mock();
-        $sm->shouldReceive('get')
-            ->with('DataServiceManager')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('get')
-                ->with('Common\Service\Data\Publication')
-                ->andReturn($pubService)
-                ->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('Config')
-            ->andReturn($config);
-
-        $this->assertEquals($expected, PublicationNumber::format($data, $column, $sm));
+        $this->assertEquals($expected, PublicationNumber::format($data));
     }
 
     public function provider()
@@ -63,7 +36,6 @@ class PublicationNumberTest extends MockeryTestCase
                     ],
                     'publicationNo' => 12345
                 ],
-                [],
                 12345
             ],
             [
@@ -73,11 +45,11 @@ class PublicationNumberTest extends MockeryTestCase
                     ],
                     'publicationNo' => 12345,
                     'document' => [
-                        'identifier' => 'some/path/foo.rtf'
+                        'identifier' => 'some/path/foo.rtf',
+                        'id' => 987654
                     ]
                 ],
-                [],
-                '<a href="//foo/some/path/foo.rtf" data-file-url="//foo/some/path/foo.rtf" target="blank">'
+                '<a href="/file/987654" data-file-url="/file/987654" target="blank">'
                     . '12345</a>'
             ]
         ];
