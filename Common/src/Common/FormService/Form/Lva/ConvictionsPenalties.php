@@ -130,7 +130,8 @@ class ConvictionsPenalties extends AbstractFormService
     {
         if ($this->isDirectorChange($params)) {
             $dataTable = $form->get('data');
-            $dataTable->setAttribute('class', 'director-change');
+            $existingClasses = $dataTable->getAttribute('class');
+            $dataTable->setAttribute('class', $existingClasses.' director-change');
             $this->alterFormQuestion($dataTable);
             $this->alterFormHeading($dataTable, $params);
             $this->alterFormButtons($form);
