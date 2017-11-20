@@ -41,7 +41,8 @@ class IdentityProvider implements IdentityProviderInterface
     public function getIdentity()
     {
         if ($this->identity === null) {
-            $response = $this->queryService->send(MyAccount::create([]), true);
+            $this->queryService->setRecoverHttpClientException(true);
+            $response = $this->queryService->send(MyAccount::create([]));
 
             if (!$response->isOk()) {
                     $response->setResult(['userType' => User::USER_TYPE_NOT_IDENTIFIED]);

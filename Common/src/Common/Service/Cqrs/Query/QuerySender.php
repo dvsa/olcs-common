@@ -2,6 +2,8 @@
 
 namespace Common\Service\Cqrs\Query;
 
+
+use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -14,6 +16,8 @@ use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBu
  */
 class QuerySender implements FactoryInterface
 {
+    use RecoverHttpClientExceptionTrait;
+
     /**
      * @var TransferAnnotationBuilder
      */
@@ -34,14 +38,14 @@ class QuerySender implements FactoryInterface
 
     /**
      * @param QueryInterface $query
-     * @param bool           $recoverHttpClientException
      *
      * @return \Common\Service\Cqrs\Response
      */
-    public function send(QueryInterface $query, $recoverHttpClientException = false)
+    public function send(QueryInterface $query)
     {
         $query = $this->annotationBuilder->createQuery($query);
-        return $this->queryService->send($query,  $recoverHttpClientException);
+        $this->queryService->setRecoverHttpClientException($this->getRecoverHttpClientException());
+        return $this->queryService->send($query);
     }
 
     /**
