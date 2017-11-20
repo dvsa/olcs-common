@@ -45,7 +45,15 @@ class IdentityProvider implements IdentityProviderInterface
             $response = $this->queryService->send(MyAccount::create([]));
 
             if (!$response->isOk()) {
-                    $response->setResult(['userType' => User::USER_TYPE_NOT_IDENTIFIED]);
+                    $response->setResult(
+                        [
+                            'id' => null,
+                            'pid' => null,
+                            'userType' => User::USER_TYPE_NOT_IDENTIFIED,
+                            'loginId' => null,
+                            'roles' => []
+                        ]
+                    );
             }
 
             $data = $response->getResult();

@@ -34,7 +34,12 @@ class CachingQueryServiceTest extends MockeryTestCase
         $this->mockResult = m::mock(\Dvsa\Olcs\Api\Domain\Command\Result::class);
 
         $this->mockQS = m::mock(QueryServiceInterface::class);
-        $this->mockQS->shouldReceive('send')->with($this->mockQuery)->once()->andReturn($this->mockResult);
+        $this->mockQS
+            ->shouldReceive('setRecoverHttpClientException')
+            ->shouldReceive('send')
+            ->with($this->mockQuery)
+            ->once()
+            ->andReturn($this->mockResult);
 
         $this->sut = new CachingQueryService($this->mockQS, $this->mockCache);
     }

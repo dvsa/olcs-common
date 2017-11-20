@@ -133,7 +133,7 @@ class QueryService implements QueryServiceInterface
             return $response;
 
         } catch (HttpClientExceptionInterface $ex) {
-            if($this->getRecoverHttpClientException()) {
+            if ($this->getRecoverHttpClientException()) {
                 return new Response((new HttpResponse())->setStatusCode(HttpResponse::STATUS_CODE_500));
             }
             throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);

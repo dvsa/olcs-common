@@ -5,6 +5,7 @@ namespace CommonTest\Rbac;
 use Common\Rbac\User;
 use Common\Rbac\IdentityProvider;
 use Common\Service\Cqrs\Query\QuerySender;
+use Common\Service\Cqrs\Response;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 
@@ -42,7 +43,13 @@ class IdentityProviderTest extends TestCase
         $mockResponse->shouldReceive('isOk')->andReturn(true);
         $mockResponse->shouldReceive('getResult')->andReturn($data);
 
-        $this->queryService->shouldReceive('send')->once()->andReturn($mockResponse);
+        $this->queryService
+            ->shouldReceive('setRecoverHttpClientException')
+            ->once()
+            ->with(true)
+            ->shouldReceive('send')
+            ->once()
+            ->andReturn($mockResponse);
 
         $identity = $this->sut->getIdentity();
         $this->assertInstanceOf(User::class, $identity);
@@ -57,15 +64,38 @@ class IdentityProviderTest extends TestCase
         $this->assertEquals($identity, $this->sut->getIdentity());
     }
 
-    public function testGetIdentityThrowsUnableToRetrieveException()
+    public function testGetIdentitySetNotIdentifiedUser()
     {
+
+        $response = [
+            'id' => null,
+            'pid' => null,
+            'userType' => User::USER_TYPE_NOT_IDENTIFIED,
+            'loginId' => null,
+            'roles' => []
+        ];
+
         $mockResponse = m::mock();
-        $mockResponse->shouldReceive('getResult')->with()->once()->andReturn(['messages' => ['foo', 'bar']]);
+        $mockResponse->shouldReceive('getResult')->with()->once()->andReturn($response);
         $mockResponse->shouldReceive('isOk')->andReturn(false);
+        $mockResponse->shouldReceive('setResult')->with($response);
 
-        $this->queryService->shouldReceive('send')->once()->andReturn($mockResponse);
+        $this->queryService
+            ->shouldReceive('setRecoverHttpClientException')
+            ->once()
+            ->with(true)
+            ->shouldReceive('send')
+            ->once()
+            ->andReturn($mockResponse);
 
-        $this->setExpectedException(\Exception::class, 'Unable to retrieve identity - foo; bar');
-        $this->sut->getIdentity();
+        /**  @var \Common\Rbac\User $identity */
+        $identity = $this->sut->getIdentity();
+
+        $this->assertInstanceOf(User::class, $identity);
+        $this->assertNull($identity->getId());
+        $this->assertNull($identity->getPid());
+        $this->assertEquals(User::USER_TYPE_NOT_IDENTIFIED, $identity->getUserType());
+        $this->assertNull($identity->getUsername());
+        $this->assertEquals([], $identity->getRoles());
     }
 }

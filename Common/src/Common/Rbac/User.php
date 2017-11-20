@@ -60,7 +60,9 @@ class User implements IdentityInterface
     /**
      * Set id.
      *
-     * @param int $id
+     * @param int $id id
+     *
+     * @return int
      */
     public function setId($id)
     {
@@ -80,7 +82,9 @@ class User implements IdentityInterface
     /**
      * Set pid.
      *
-     * @param string $pid
+     * @param string $pid pid
+     *
+     * @return string
      */
     public function setPid($pid)
     {
@@ -100,7 +104,9 @@ class User implements IdentityInterface
     /**
      * Set user type.
      *
-     * @param string $userType
+     * @param string $userType user type
+     *
+     * @return string
      */
     public function setUserType($userType)
     {
@@ -120,7 +126,9 @@ class User implements IdentityInterface
     /**
      * Set username.
      *
-     * @param string $username
+     * @param string $username username
+     *
+     * @return string
      */
     public function setUsername($username)
     {
@@ -128,6 +136,8 @@ class User implements IdentityInterface
     }
 
     /**
+     * Get Roles
+     *
      * @return array
      */
     public function getRoles()
@@ -136,7 +146,11 @@ class User implements IdentityInterface
     }
 
     /**
-     * @param array $roles
+     * Set Roles
+     *
+     * @param array $roles roles
+     *
+     * @return array
      */
     public function setRoles($roles)
     {
@@ -144,6 +158,8 @@ class User implements IdentityInterface
     }
 
     /**
+     * Get User data
+     *
      * @return array
      */
     public function getUserData()
@@ -152,7 +168,11 @@ class User implements IdentityInterface
     }
 
     /**
-     * @param array $userData
+     * Set user data
+     *
+     * @param array $userData user data
+     *
+     * @return void
      */
     public function setUserData($userData)
     {

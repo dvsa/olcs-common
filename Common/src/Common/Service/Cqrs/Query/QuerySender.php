@@ -28,6 +28,13 @@ class QuerySender implements FactoryInterface
      */
     private $queryService;
 
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator serviceLocator
+     *
+     * @return mixed
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $this->queryService = $this->getQueryService($serviceLocator);
@@ -37,7 +44,9 @@ class QuerySender implements FactoryInterface
     }
 
     /**
-     * @param QueryInterface $query
+     * Send
+     *
+     * @param QueryInterface $query Query
      *
      * @return \Common\Service\Cqrs\Response
      */
@@ -51,7 +60,8 @@ class QuerySender implements FactoryInterface
     /**
      * Grab the appropriate query service from the service locator
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator serviceLocator
+     *
      * @return QueryService
      */
     protected function getQueryService(ServiceLocatorInterface $serviceLocator)

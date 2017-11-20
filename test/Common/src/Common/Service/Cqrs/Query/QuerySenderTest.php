@@ -48,7 +48,10 @@ class QuerySenderTest extends MockeryTestCase
             ->with($query)
             ->andReturn($constructedQuery);
 
-        $this->mockQueryService->shouldReceive('send')
+        $this->mockQueryService
+            ->shouldReceive('setRecoverHttpClientException')
+            ->once()
+            ->shouldReceive('send')
             ->once()
             ->with($constructedQuery)
             ->andReturn('RESULT');
