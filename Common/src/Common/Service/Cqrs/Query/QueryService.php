@@ -61,10 +61,11 @@ class QueryService implements QueryServiceInterface
      * Send a query and return the response
      *
      * @param QueryContainerInterface $query Query container
+     * @param bool                    $recoverHttpClientException
      *
      * @return Response
      */
-    public function send(QueryContainerInterface $query)
+    public function send(QueryContainerInterface $query, $recoverHttpClientException = false)
     {
         if (!$query->isValid()) {
             return $this->invalidResponse($query->getMessages(), HttpResponse::STATUS_CODE_422);
@@ -131,7 +132,10 @@ class QueryService implements QueryServiceInterface
             return $response;
 
         } catch (HttpClientExceptionInterface $ex) {
-            return new Response((new HttpResponse())->setStatusCode(500));
+            if($recoverHttpClientException) {
+                return new Response((new HttpResponse())->setStatusCode(HttpResponse::STATUS_CODE_500));
+            }
+            throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);
         }
     }
 }

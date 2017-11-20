@@ -34,12 +34,14 @@ class QuerySender implements FactoryInterface
 
     /**
      * @param QueryInterface $query
+     * @param bool           $recoverHttpClientException
+     *
      * @return \Common\Service\Cqrs\Response
      */
-    public function send(QueryInterface $query)
+    public function send(QueryInterface $query, $recoverHttpClientException = false)
     {
         $query = $this->annotationBuilder->createQuery($query);
-        return $this->queryService->send($query);
+        return $this->queryService->send($query,  $recoverHttpClientException);
     }
 
     /**
