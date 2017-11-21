@@ -28,7 +28,7 @@ use Common\Service\Table\TableBuilder;
  * @method \Common\Controller\Plugin\CurrentUser currentUser()
  * @method \Zend\Http\Response completeSection($section, $prg = [])
  * @method TableBuilder table()
- * 
+ *
  * @see   \Olcs\Controller\Lva\Traits\ApplicationControllerTrait::render
  * @method \Common\View\Model\Section render($titleSuffix, Form $form = null, $variables = [])
  */
@@ -40,6 +40,8 @@ abstract class AbstractController extends AbstractActionController
 
     const LOC_INTERNAL = 'internal';
     const LOC_EXTERNAL = 'external';
+
+    const FLASH_MESSENGER_CREATED_PERSON_NAMESPACE = 'createPerson';
 
     use Util\FlashMessengerTrait,
         GenericUpload;

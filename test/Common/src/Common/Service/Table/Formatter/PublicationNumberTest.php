@@ -49,7 +49,7 @@ class PublicationNumberTest extends MockeryTestCase
                         'id' => 987654
                     ]
                 ],
-                '<a href="/file/987654" data-file-url="/file/987654" target="blank">'
+                '<a href="/file/987654">'
                     . '12345</a>'
             ]
         ];

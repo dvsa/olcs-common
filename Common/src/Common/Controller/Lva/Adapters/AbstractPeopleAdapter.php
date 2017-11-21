@@ -7,6 +7,7 @@ use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 use Common\RefData;
 use Common\Service\Table\TableBuilder;
 use Zend\Form\Form;
+use Zend\Mvc\Controller\Plugin\FlashMessenger;
 
 /**
  * Abstract people adapter
@@ -371,9 +372,40 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     protected function getTableData()
     {
         if (empty($this->tableData)) {
-            $this->tableData = $this->formatTableData($this->getPeople());
+            $this->tableData = $this->addNewStatuses(
+                $this->formatTableData($this->getPeople())
+            );
         }
+
         return $this->tableData;
+    }
+
+    /**
+     * addNewStatuses function
+     *
+     * @param array $tableData Table Data
+     *
+     * @return array Table Data
+     */
+    private function addNewStatuses(array $tableData)
+    {
+        /** @var FlashMessenger $flashMessenger */
+        $flashMessenger = $this->getController()->plugin('FlashMessenger');
+        $newPersonIDs = $flashMessenger->getMessages(AbstractController::FLASH_MESSENGER_CREATED_PERSON_NAMESPACE);
+
+        $newTableData = [];
+
+        foreach ($tableData as $key => $person) {
+            if (in_array($person['id'], $newPersonIDs)) {
+                $person['status'] = 'new';
+            } else {
+                $person['status'] = null;
+            }
+
+            $newTableData[$key] = $person;
+        }
+
+        return $newTableData;
     }
 
     /**
@@ -546,6 +578,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return \Dvsa\Olcs\Transfer\Command\Licence\UpdatePeople::create($params);
     }
 
+
     /**
      * Get the backend command to delete a Person
      *
@@ -558,7 +591,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         $params['id'] = $this->getLicenceId();
         return \Dvsa\Olcs\Transfer\Command\Licence\DeletePeople::create($params);
     }
-
 
     /**
      * Get the name of the table config
