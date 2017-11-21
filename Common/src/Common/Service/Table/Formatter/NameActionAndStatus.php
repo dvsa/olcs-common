@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Name formatter
+ * Name Action And Status formatter
  */
 
 namespace Common\Service\Table\Formatter;
@@ -10,7 +10,7 @@ use Common\Util\Escape;
 use Zend\ServiceManager\ServiceManager;
 
 /**
- * Name formatter
+ * Name Action And Status formatter
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
