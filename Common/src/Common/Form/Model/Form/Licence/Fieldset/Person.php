@@ -83,7 +83,6 @@ class Person
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
      *     "label": "Date of Birth",
-     *     "label_attributes": {"class": "form-element__question"},
      *     "create_empty_option": true,
      *     "render_delimiters": false,
      *     "error-message": "Enter date of birth"
