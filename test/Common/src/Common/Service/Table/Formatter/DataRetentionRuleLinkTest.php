@@ -24,7 +24,7 @@ class DataRetentionRuleLinkTest extends \PHPUnit_Framework_TestCase
                 m::mock()
                     ->shouldReceive('fromRoute')
                     ->with(
-                        'admin-dashboard/admin-data-retention/records',
+                        'admin-dashboard/admin-data-retention/review/records',
                         ['dataRetentionRuleId' => 1]
                     )
                     ->andReturn('DATA_RETENTION_EDIT_URL')

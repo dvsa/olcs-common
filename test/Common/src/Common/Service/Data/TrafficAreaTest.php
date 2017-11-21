@@ -73,7 +73,7 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
             ->getMock();
 
         $sut = new TrafficArea();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $this->assertEquals($results['results'], $sut->fetchListData([]));
     }
@@ -90,7 +90,7 @@ class TrafficAreaTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
         $sut = new TrafficArea();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $sut->fetchListData([]);
     }

@@ -1212,7 +1212,11 @@ class TableBuilderTest extends MockeryTestCase
             'crud' => array(
                 'actions' => array(
                     'add' => array(),
-                    'edit' => array()
+                    'edit' => array(),
+                    'foo' => array(),
+                    'bar' => array(),
+                    'cake' => array(),
+                    'baz' => array(),
                 )
             )
         );
@@ -1260,7 +1264,8 @@ class TableBuilderTest extends MockeryTestCase
                     'foo' => array(),
                     'bar' => array(),
                     'cake' => array(),
-                    'baz' => array()
+                    'baz' => array(),
+                    'top' => array()
                 )
             )
         );

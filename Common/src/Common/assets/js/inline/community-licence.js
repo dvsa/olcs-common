@@ -41,4 +41,13 @@ OLCS.ready(function() {
       allow: ["cl_sts_active"]
     }
   });
+
+  OLCS.conditionalButton({
+    container: tableSelector,
+    label: "Annul",
+    predicate: {
+      attr: "status",
+      allow: ["cl_sts_active","cl_sts_pending"]
+    }
+  });
 });

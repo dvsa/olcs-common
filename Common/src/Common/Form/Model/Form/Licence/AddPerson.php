@@ -21,7 +21,7 @@ class AddPerson
 
     /**
      * @Form\Name("form-actions")
-     * @Form\ComposedObject("Common\Form\Model\Form\Licence\Fieldset\AddPersonFormActions")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;

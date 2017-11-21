@@ -77,7 +77,7 @@ class RoleTest extends AbstractDataServiceTestCase
             ->getMock();
 
         $sut = new Role();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $this->assertEquals($results['results'], $sut->fetchListData());
     }
@@ -94,7 +94,7 @@ class RoleTest extends AbstractDataServiceTestCase
             ->once()
             ->getMock();
         $sut = new Role();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $sut->fetchListData([]);
     }
