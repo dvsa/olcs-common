@@ -58,6 +58,8 @@ class FinancialHistory extends AbstractFormService
             /** @var HtmlTranslated $hasAnyPerson */
             $hasAnyPerson = $dataFieldset->get('hasAnyPerson');
 
+            $this->alterFormForDirectorChange($dataFieldset);
+
             $hasAnyPerson->setTokens(
                 [sprintf('Have any of the new %s been:', $this->getPersonDescription($data['organisationType']))]
             );
@@ -111,5 +113,17 @@ class FinancialHistory extends AbstractFormService
             default:
                 return 'people';
         }
+    }
+
+    /**
+     * Alter the form for director change only
+     *
+     * @param /Zend/Form $form form
+     *
+     * @return void
+     */
+    protected function alterFormForDirectorChange($dataFieldset)
+    {
+        $dataFieldset->remove('financialHistoryConfirmation');
     }
 }
