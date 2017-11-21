@@ -81,12 +81,9 @@ class ConvictionsPenalties extends AbstractFormService
      *
      * @return void
      */
-    private function alterConfirmation($form)
+    private function removeConfirmation($form)
     {
-        $form->get('convictionsConfirmation')->setLabel('I agree to:');
-        $form->get('convictionsConfirmation')
-            ->get('convictionsConfirmation')
-            ->setLabel('director-change-convictions-penalties-conformation');
+        $form->remove('convictionsConfirmation');
     }
 
     /**
@@ -132,7 +129,7 @@ class ConvictionsPenalties extends AbstractFormService
             $this->alterFormQuestion($dataTable);
             $this->alterFormHeading($dataTable, $params);
             $this->alterFormButtons($form);
-            $this->alterConfirmation($form);
+            $this->removeConfirmation($form);
             $this->getFormHelper()->remove($form, 'form-actions->save');
         }
     }
