@@ -142,10 +142,10 @@ class FinancialHistoryTest extends MockeryTestCase
             ->andReturn($mockForm);
 
         $this->formHelper->shouldReceive('remove')->once()->with($mockForm, 'data->financeHint');
+        $this->formHelper->shouldReceive('remove')->once()->with($mockForm, 'data->financialHistoryConfirmation');
 
         $mockForm->shouldReceive('get')->with('data')->andReturn($mockDataFieldset);
         $mockDataFieldset->shouldReceive('get')->with('hasAnyPerson')->andReturn($mockHasAnyPersonElement);
-
         $mockHasAnyPersonElement
             ->shouldReceive('setTokens')
             ->with([sprintf('Have any of the new %s been:', $personDescription)])

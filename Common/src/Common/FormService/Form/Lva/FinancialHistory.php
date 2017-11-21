@@ -51,14 +51,13 @@ class FinancialHistory extends AbstractFormService
 
         if (isset($data['variationType']) && $data['variationType'] == RefData::VARIATION_TYPE_DIRECTOR_CHANGE) {
             $this->getFormHelper()->remove($form, 'data->financeHint');
+            $this->getFormHelper()->remove($form, 'data->financialHistoryConfirmation');
 
             /** @var FieldsetInterface $dataFieldset */
             $dataFieldset = $form->get('data');
 
             /** @var HtmlTranslated $hasAnyPerson */
             $hasAnyPerson = $dataFieldset->get('hasAnyPerson');
-
-            $this->alterFormForDirectorChange($dataFieldset);
 
             $hasAnyPerson->setTokens(
                 [sprintf('Have any of the new %s been:', $this->getPersonDescription($data['organisationType']))]
@@ -113,17 +112,5 @@ class FinancialHistory extends AbstractFormService
             default:
                 return 'people';
         }
-    }
-
-    /**
-     * Alter the form for director change only
-     *
-     * @param /Zend/Form $form form
-     *
-     * @return void
-     */
-    protected function alterFormForDirectorChange($dataFieldset)
-    {
-        $dataFieldset->remove('financialHistoryConfirmation');
     }
 }
