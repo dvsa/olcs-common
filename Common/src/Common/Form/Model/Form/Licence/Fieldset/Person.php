@@ -34,7 +34,7 @@ class Person
      *     "category":"person_title",
      * })
      * @Form\Type("DynamicSelect")
-     * @Form\Required(false)
+     * @Form\Required(true)
      */
     public $title = null;
 
@@ -77,22 +77,22 @@ class Person
     public $otherName = null;
 
 
+
     /**
      * @Form\Required(true)
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
      *     "label": "Date of Birth",
-     *     "create_empty_option": false,
-     *     "render_delimiters": "d m y",
-     *     "error-message": "Enter date of birth",
-     *     "fieldset-attributes": {"id":"dob_day"}
+     *     "label_attributes": {"class": "form-element__question"},
+     *     "create_empty_option": true,
+     *     "render_delimiters": false,
+     *     "error-message": "Enter date of birth"
      * })
      * @Form\Type("DateSelect")
-     * @Form\Filter({"name":"DateSelect", "options":{"null_on_empty":true}})
-     * @Form\Validator({"name":"NotEmpty", "options": {"array"}})
+     * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Validator({"name": "\Common\Validator\Date"})
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
-     * @Form\Validator({"name":"\Common\Form\Elements\Validators\DateNotInFuture"})
+     * @Form\Validator({"name": "\Common\Form\Elements\Validators\DateNotInFuture"})
      */
     public $birthDate = null;
 }
