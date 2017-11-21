@@ -8,6 +8,7 @@ use Common\Service\Table\TableBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Form;
+use Zend\Mvc\Controller\Plugin\FlashMessenger;
 
 /**
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
@@ -20,6 +21,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
     /** @var  m\MockInterface | AbstractPeopleAdapter */
     private $sut;
+
     /** @var  m\MockInterface | AbstractPeopleAdapter */
     private $mockResp;
 
@@ -171,7 +173,6 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
      */
     public function testAmendLicencePeopleListTableAltersTable($type, $expected)
     {
-
         $settingsArray = [
             'actions' => [
                 'add' => [
@@ -194,6 +195,63 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             ->once()
             ->andReturnSelf()
             ->getMock();
+
         $this->sut->amendLicencePeopleListTable($mockTable);
+    }
+
+    public function testStatusesAreAddedToPeopleFromFlashMessenger()
+    {
+        $mockFM = m::mock(FlashMessenger::class);
+
+        $this->sut
+            ->shouldReceive('getController->plugin')
+            ->with('FlashMessenger')
+            ->andReturn($mockFM);
+
+        $mockTableBuilder = m::mock(TableBuilder::class);
+
+        $this->sut
+            ->shouldReceive('getServiceLocator->get')
+            ->with('Table')
+            ->andReturn($mockTableBuilder);
+
+        $mockFM
+            ->shouldReceive('getMessages')
+            ->with(AbstractController::FLASH_MESSENGER_CREATED_PERSON_NAMESPACE)
+            ->andReturn([53]);
+
+        $this->sut
+            ->shouldReceive('formatTableData')
+            ->andReturn(
+                [
+                    [
+                        'id' => 39
+                    ],
+                    [
+                        'id' => 53
+                    ]
+                ]
+            );
+
+        $expected = [
+            [
+                'id' => 39,
+                'status' => null
+            ],
+            [
+                'id' => 53,
+                'status' => 'new'
+            ]
+        ];
+
+        $mockTableBuilder
+            ->shouldReceive('prepareTable')
+            ->andReturnUsing(
+                function($tableConfig, $tableData) use ($expected) {
+                    $this->assertSame($expected, $tableData);
+                }
+            );
+
+        $this->sut->createTable();
     }
 }
