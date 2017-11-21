@@ -74,16 +74,8 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
                     )->getMock()
             )->getMock();
 
-        $this->mockedForm->shouldReceive('get')->with('convictionsConfirmation')->andReturn(
-            m::mock(Element::class)
-                ->shouldReceive('setLabel')
-                ->with('I agree to:')->getMock()
-                ->shouldReceive('get')->with('convictionsConfirmation')->andReturn(
-                    m::mock(Element::class)
-                        ->shouldReceive('setLabel')
-                        ->with('director-change-convictions-penalties-conformation')->getMock()
-                )->getMock()
-        )->getMock();
+        $this->mockedForm->shouldReceive('remove')->with('convictionsConfirmation')
+                ->getMock();
 
         $this->formHelper
             ->shouldReceive('remove')
