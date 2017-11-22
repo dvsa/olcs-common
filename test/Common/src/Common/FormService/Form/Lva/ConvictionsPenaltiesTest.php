@@ -57,7 +57,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
                 ->shouldReceive('getLabel')
                 ->andReturn($heading)
                 ->getMock()
-                ->shouldReceive('setLabel')->with($heading . '-' . RefData::ORG_TYPE_RC)
+                ->shouldReceive('setLabel')->with($heading . '-' . RefData::ORG_TYPE_RC."-dc")
                 ->shouldReceive('getAttribute')->with('class')->andReturn('')
                 ->shouldReceive('setAttribute')->with('class', ' five-eights')
                 ->getMock()
@@ -77,16 +77,8 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
                     )->getMock()
             )->getMock();
 
-        $this->mockedForm->shouldReceive('get')->with('convictionsConfirmation')->andReturn(
-            m::mock(Element::class)
-                ->shouldReceive('setLabel')
-                ->with('I agree to:')->getMock()
-                ->shouldReceive('get')->with('convictionsConfirmation')->andReturn(
-                    m::mock(Element::class)
-                        ->shouldReceive('setLabel')
-                        ->with('director-change-convictions-penalties-conformation')->getMock()
-                )->getMock()
-        )->getMock();
+        $this->mockedForm->shouldReceive('remove')->with('convictionsConfirmation')
+                ->getMock();
 
         $this->formHelper
             ->shouldReceive('remove')

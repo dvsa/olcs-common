@@ -51,6 +51,7 @@ class FinancialHistory extends AbstractFormService
 
         if (isset($data['variationType']) && $data['variationType'] == RefData::VARIATION_TYPE_DIRECTOR_CHANGE) {
             $this->getFormHelper()->remove($form, 'data->financeHint');
+            $this->getFormHelper()->remove($form, 'data->financialHistoryConfirmation');
 
             /** @var FieldsetInterface $dataFieldset */
             $dataFieldset = $form->get('data');
