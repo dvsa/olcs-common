@@ -12,8 +12,25 @@ interface QueryServiceInterface
     /**
      * Send a query and return the response
      *
-     * @param QueryContainerInterface $query
+     * @param QueryContainerInterface $query query
+     *
      * @return Response
      */
     public function send(QueryContainerInterface $query);
+
+    /**
+     * Set RecoverHttpClientException
+     *
+     * @param bool $value value
+     *
+     * @return void
+     */
+    public function setRecoverHttpClientException($value);
+
+    /**
+     * Get RecoverHttpClientException
+     *
+     * @return bool
+     */
+    public function getRecoverHttpClientException();
 }

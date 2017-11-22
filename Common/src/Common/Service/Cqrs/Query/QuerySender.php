@@ -2,6 +2,8 @@
 
 namespace Common\Service\Cqrs\Query;
 
+
+use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -14,6 +16,8 @@ use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBu
  */
 class QuerySender implements FactoryInterface
 {
+    use RecoverHttpClientExceptionTrait;
+
     /**
      * @var TransferAnnotationBuilder
      */
@@ -24,6 +28,13 @@ class QuerySender implements FactoryInterface
      */
     private $queryService;
 
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator serviceLocator
+     *
+     * @return mixed
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $this->queryService = $this->getQueryService($serviceLocator);
@@ -33,19 +44,24 @@ class QuerySender implements FactoryInterface
     }
 
     /**
-     * @param QueryInterface $query
+     * Send
+     *
+     * @param QueryInterface $query Query
+     *
      * @return \Common\Service\Cqrs\Response
      */
     public function send(QueryInterface $query)
     {
         $query = $this->annotationBuilder->createQuery($query);
+        $this->queryService->setRecoverHttpClientException($this->getRecoverHttpClientException());
         return $this->queryService->send($query);
     }
 
     /**
      * Grab the appropriate query service from the service locator
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $serviceLocator serviceLocator
+     *
      * @return QueryService
      */
     protected function getQueryService(ServiceLocatorInterface $serviceLocator)

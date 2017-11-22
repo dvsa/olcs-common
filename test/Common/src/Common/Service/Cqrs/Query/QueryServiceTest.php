@@ -122,6 +122,31 @@ class QueryServiceTest extends MockeryTestCase
         $this->sut->send($this->mockQueryCntr);
     }
 
+    public function testSendRecoverHttpClientException()
+    {
+        $this->mockQueryCntr
+            ->shouldReceive('isValid')->once()->andReturn(true)
+            ->shouldReceive('getRouteName')->once()->andReturn('unit_RouteName');
+
+        $this->sut->setRecoverHttpClientException(true);
+
+        $this->mockRouter->shouldReceive('assemble')->once();
+
+        $this->mockRequest
+            ->shouldReceive('setUri')->once()->andReturn()
+            ->shouldReceive('setMethod')->once()->andReturn();
+
+        $this->mockCli
+            ->shouldReceive('getAdapter')->once()->andReturn()
+            ->shouldReceive('resetParameters')
+            ->once()
+            ->andThrow(new \Zend\Http\Client\Exception\RuntimeException('unit_ExcMsg'));
+
+        $expectedResponse = new CqrsResponse((new HttpResponse())->setStatusCode(HttpResponse::STATUS_CODE_500));
+        $response = $this->sut->send($this->mockQueryCntr);
+        $this->assertEquals($expectedResponse, $response);
+    }
+
     public function testSendOk()
     {
         $this->mockQueryCntr
