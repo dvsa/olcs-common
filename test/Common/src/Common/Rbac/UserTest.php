@@ -36,5 +36,4 @@ class UserTest extends TestCase
         $this->assertFalse($this->sut->isNotIdentified());
 
     }
-
 }
