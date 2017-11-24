@@ -41,6 +41,6 @@ class PublicationNumber implements FormatterInterface
             $link = sprintf($linkPattern, $url, $url, $data['publicationNo']);
         }
 
-        return $link;
+        return htmlentities($link);
     }
 }
