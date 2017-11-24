@@ -23,7 +23,7 @@ class PublicationNumber implements FormatterInterface
      */
     public static function format($data)
     {
-        if ($data['pubStatus']['id'] !== 'pub_s_printed') {
+        if ($data['pubStatus']['id'] === 'pub_s_new') {
             return $data['publicationNo'];
         }
 

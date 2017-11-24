@@ -32,7 +32,7 @@ class PublicationNumberTest extends MockeryTestCase
             [
                 [
                     'pubStatus' => [
-                        'id' => 'pub_s_foo_status'
+                        'id' => 'pub_s_new'
                     ],
                     'publicationNo' => 12345
                 ],
@@ -41,7 +41,7 @@ class PublicationNumberTest extends MockeryTestCase
             [
                 [
                     'pubStatus' => [
-                        'id' => 'pub_s_printed'
+                        'id' => 'pub_s_something_else'
                     ],
                     'publicationNo' => 12345,
                     'document' => [
