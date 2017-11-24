@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Table\Formatter;
 
+use Common\Util\Escape;
+
 /**
  * Publication Number
  *
@@ -32,13 +34,13 @@ class PublicationNumber implements FormatterInterface
         $uriPattern = '/file/%s';
         $url = sprintf($uriPattern, $data['document']['id']);
         $linkPattern = '<a href="%s">%s</a>';
-        $link = sprintf($linkPattern, htmlentities($url), htmlentities($data['publicationNo']));
+        $link = sprintf($linkPattern, Escape::html($url), Escape::html($data['publicationNo']));
 
         if ($data['pubStatus']['id'] === 'pub_s_generated') {
             $uriPattern = $sm->get('Config')['document_share']['uri_pattern'];
             $url = sprintf($uriPattern, $data['document']['identifier']);
             $linkPattern = '<a href="%s" data-file-url="%s" target="blank">%s</a>';
-            $link = sprintf($linkPattern, htmlentities($url), htmlentities($url), htmlentities($data['publicationNo']));
+            $link = sprintf($linkPattern, Escape::html($url), Escape::html($url), Escape::html($data['publicationNo']));
         }
 
         return $link;
