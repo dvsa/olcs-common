@@ -15,6 +15,15 @@ $ni = array_merge(
         'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' => 'Please tick to confirm that you
             are aware that you must tell the DfI immediately of any relevant convictions that occur between the
             submission of your application and a decision being made on this application.',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_llp' => 'Do any of the partners or members you’ve named in your application have a conviction that the Traffic Regulator must be told about?',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_llp-dc' => 'Do any of the new directors have a conviction that the Traffic Regulator must be told about?',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_p' => 'Do any of the partners you’ve named in your application have a conviction that the Traffic Regulator must be told about?',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_p-dc' => 'Do any of the new directors have a conviction that the Traffic Regulator must be told about?',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_pa' => 'Do any of the responsible people you’ve named in your application have a conviction that the Traffic Regulator must be told about?',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_pa-dc' => 'Do any of the new directors have a conviction that the Traffic Regulator must be told about?',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_rc' => 'Do any of the new directors have a conviction that the Traffic Regulator must be told about?',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-org_t_rc-dc' =>'Do any of the new directors have a conviction that the Traffic Regulator must be told about?',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv-hint-director-change' => '<i class="icon exclamation selfservice-icon-important"><span class="visually-hidden">Important</span></i> <p>You must declare any relevant convictions to the Traffic Regulator</p>',
         'application_previous-history_licence-history_prevHasLicence' => 'Does anyone you\'ve named already have an operator\'s licence in Great Britain or Northern Ireland?',
         'application_previous-history_licence-history_prevHadLicence' => 'Has anyone you\'ve named ever had or applied for an operator\'s licence in Great Britain or Northern Ireland?',
         'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'Has anyone you\'ve named ever been disqualified from having an operator\'s licence in Great Britain or Northern Ireland?',
