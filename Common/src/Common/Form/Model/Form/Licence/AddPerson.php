@@ -14,8 +14,17 @@ class AddPerson
 {
 
     /**
-     * @Form\ComposedObject("Common\Form\Model\Form\Licence\Fieldset\Person")
-     * @Form\Attributes({"class":"add-another-group"})
+     * @Form\Attributes({"class":"add-multiple"})
+     * @Form\ComposedObject({
+     *     "target_object":"Common\Form\Model\Form\Licence\Fieldset\Person",
+     *     "is_collection":true,
+     *     "options":{
+     *         "count": 1,
+     *         "hint":"markup-add-another-director-hint",
+     *         "hint-position": "below",
+     *         "should_create_template": true,
+     *     }
+     * })
      */
     public $data = null;
 
