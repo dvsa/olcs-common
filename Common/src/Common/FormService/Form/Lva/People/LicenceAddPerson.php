@@ -45,6 +45,11 @@ class LicenceAddPerson extends AbstractPeople
         return $form;
     }
 
+    /**
+     * Add remove link
+     *
+     * @param Form $form
+     */
     private function addRemoveLink(Form $form)
     {
         /** @var Collection $fieldset */
