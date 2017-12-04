@@ -2,8 +2,11 @@
 
 namespace Common\FormService\Form\Lva\People;
 
+use Common\Form\Elements\Types\Html;
 use Common\Form\Form;
 use Common\Form\Model\Form\Licence\AddPerson;
+use Zend\Form\Element\Collection;
+use Zend\Form\FieldsetInterface;
 
 /**
  * Licence People
@@ -36,7 +39,24 @@ class LicenceAddPerson extends AbstractPeople
     protected function alterForm(Form $form, array $params = [])
     {
         $form = parent::alterForm($form, $params);
+        $this->addRemoveLink($form);
+
 
         return $form;
+    }
+
+    private function addRemoveLink(Form $form)
+    {
+        /** @var Collection $fieldset */
+        $fieldset = $form->getFieldsets()['data'];
+
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+
+        $removeLink = new Html('removeLink');
+        $removeLink->setValue('<a class="remove_link" href="#">' . $translator->translate('Remove this') . '</a>');
+
+        /** @var FieldsetInterface $targetElement */
+        $targetElement = $fieldset->getTargetElement();
+        $targetElement->add($removeLink, ['priority' => 1]);
     }
 }
