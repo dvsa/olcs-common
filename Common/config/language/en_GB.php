@@ -1619,7 +1619,7 @@ return [
     'lva.section.title.add_director' => 'Add director',
     'lva.section.title.add_partner' => 'Add partner',
     'lva.section.title.add_person' => 'Add person',
-    'lva.section.title.add_person_org_t_rc' => 'Add a Director',
+    'lva.section.title.add_person_org_t_rc' => 'Add a director',
     'lva.section.title.add_person_org_t_p' => 'Add a Partner',
     'lva.section.title.add_person_org_t_pa' => 'Add a Responsible person',
     'lva.section.title.add_person_org_t_st' => 'Add a Owner',
