@@ -23,6 +23,7 @@ class AddPerson
      *         "hint":"markup-add-another-director-hint",
      *         "hint-position": "below",
      *         "should_create_template": true,
+     *
      *     }
      * })
      */
@@ -34,4 +35,11 @@ class AddPerson
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
+
+
+    /**
+     * @Form\Attributes({"value":"1"})
+     * @Form\Type("Hidden")
+     */
+    public $personCount = 1;
 }
