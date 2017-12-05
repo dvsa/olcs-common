@@ -2,11 +2,9 @@
 
 namespace Common\FormService\Form\Lva\People;
 
-use Common\Form\Elements\Custom\DateSelect;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Form;
 use Common\Form\Model\Form\Licence\AddPerson;
-use Zend\Form\Element;
 use Zend\Form\Element\Collection;
 use Zend\Form\FieldsetInterface;
 
@@ -42,10 +40,10 @@ class LicenceAddPerson extends AbstractPeople
     {
         $form = parent::alterForm($form, $params);
 
-        $this->addFieldsetHeading($form, "stuff");
+        $this->addFieldsetHeading($form, $params['organisationType']);
         $this->addRemoveLink($form);
         $this->addClass($form);
-
+        $this->changeButtonForOrganisation($form, $params['organisationType']);
         return $form;
     }
 
@@ -58,7 +56,7 @@ class LicenceAddPerson extends AbstractPeople
     {
         $targetElement = $this->getTargetElementInCollection($form);
 
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $translator = $this->getTranslator();
 
         $removeLink = new Html('removeLink');
         $removeLink->setValue('<a href="#">' . $translator->translate('Remove this') . '</a>');
@@ -79,11 +77,10 @@ class LicenceAddPerson extends AbstractPeople
     {
         $targetElement = $this->getTargetElementInCollection($form);
 
-        $headingText = sprintf('<h2>%s</h2>', $organisationType);
+        $headingText = $this->getOrganisationHeading($organisationType);
 
         $heading = new Html('heading');
         $heading->setValue($headingText);
-
         $targetElement->add($heading, ['priority' => 2]);
     }
 
@@ -96,7 +93,7 @@ class LicenceAddPerson extends AbstractPeople
      */
     private function getTargetElementInCollection(Form $form)
     {
-        $fieldset = $this->getDataFieldsset($form);
+        $fieldset = $this->getDataFieldset($form);
 
         return $fieldset->getTargetElement();
     }
@@ -105,10 +102,10 @@ class LicenceAddPerson extends AbstractPeople
      * getDataFieldset
      *
      * @param Form $form Form
-
+     *
      * @return Collection
      */
-    private function getDataFieldsset(Form $form)
+    private function getDataFieldset(Form $form)
     {
         return $form->getFieldsets()['data'];
     }
@@ -120,9 +117,47 @@ class LicenceAddPerson extends AbstractPeople
      */
     private function addClass(Form $form)
     {
-        $dataFieldset = $this->getDataFieldsset($form);
+        $dataFieldset = $this->getDataFieldset($form);
 
         $existingClasses = $dataFieldset->getAttribute('class');
         $dataFieldset->setAttribute('class', $existingClasses . ' add-another-director-change');
+    }
+
+    /**
+     * Get the organisation specific heading
+     *
+     * @param $organisationType
+     *
+     * @return string
+     */
+    protected function getOrganisationHeading($organisationType)
+    {
+        $translator = $this->getTranslator();
+        $headingText = 'licence_add-Person-PersonType-';
+        $headingText = sprintf('<h2>%s</h2>', $translator->translate($headingText . $organisationType));
+        return $headingText;
+    }
+
+    /**
+     * Get the translator
+     *
+     * @return array|object
+     */
+    private function getTranslator()
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        return $translator;
+    }
+
+    /**
+     * Change the b utton text based on organisation
+     *
+     * @param Form   $form             form
+     * @param string $organisationType organisation type [org_t_rc etc]
+     */
+    private function changeButtonForOrganisation(Form $form, $organisationType)
+    {
+        $fieldset = $this->getDataFieldset($form);
+        $fieldset->setOption('hint', 'markup-add-another-director-hint-' . $organisationType);
     }
 }
