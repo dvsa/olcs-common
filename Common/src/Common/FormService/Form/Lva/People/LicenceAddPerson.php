@@ -64,7 +64,7 @@ class LicenceAddPerson extends AbstractPeople
         $removeLink->setValue('<a href="#">' . $translator->translate('Remove this') . '</a>');
         $removeLink->setAttribute('data-container-class', 'remove-link');
 
-        $targetElement->add($removeLink, ['priority' => 1, 'name' => 'aoue']);
+        $targetElement->add($removeLink, ['priority' => 1]);
     }
 
     /**
