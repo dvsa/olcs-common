@@ -41,9 +41,9 @@ class LicenceAddPerson extends AbstractPeople
     protected function alterForm(Form $form, array $params = [])
     {
         $form = parent::alterForm($form, $params);
+
         $this->addRemoveLink($form);
         $this->alterFormForAddAnother($form, "stuff");
-
 
         return $form;
     }
@@ -55,8 +55,7 @@ class LicenceAddPerson extends AbstractPeople
      */
     private function addRemoveLink(Form $form)
     {
-        /** @var Collection $fieldset */
-        $fieldset = $form->getFieldsets()['data'];
+        $targetElement = $this->getTargetElementInCollection($form);
 
         $translator = $this->getServiceLocator()->get('Helper\Translation');
 
@@ -64,8 +63,6 @@ class LicenceAddPerson extends AbstractPeople
         $removeLink->setValue('<a href="#">' . $translator->translate('Remove this') . '</a>');
         $removeLink->setAttribute('data-container-class', 'remove-link');
 
-        /** @var FieldsetInterface $targetElement */
-        $targetElement = $fieldset->getTargetElement();
         $targetElement->add($removeLink, ['priority' => 1, 'name' => 'aoue']);
     }
 
@@ -79,14 +76,31 @@ class LicenceAddPerson extends AbstractPeople
      */
     protected function alterFormForAddAnother(Form $form, $organisationType)
     {
-        /** @var Collection $fieldset */
-        $dataFieldset = $form->getFieldsets()['data'];
-        $existingClasses = $dataFieldset->getAttribute('class');
-        $dataFieldset->setAttribute('class', $existingClasses . ' add-another-director-change');
-        $targetElement = $dataFieldset->getTargetElement();
-        $heading = new Html('heading');
+        $targetElement = $this->getTargetElementInCollection($form);
+
         $headingText = sprintf('<h2>%s</h2>', $organisationType);
+
+        $heading = new Html('heading');
         $heading->setValue($headingText);
+
         $targetElement->add($heading, ['priority' => 2]);
+    }
+
+    /**
+     * getTargetElementInCollection
+     *
+     * @param Form $form Form
+     *
+     * @return FieldsetInterface
+     */
+    private function getTargetElementInCollection(Form $form)
+    {
+        /** @var Collection $fieldset */
+        $fieldset = $form->getFieldsets()['data'];
+
+        /** @var FieldsetInterface $targetElement */
+        $targetElement = $fieldset->getTargetElement();
+
+        return $targetElement;
     }
 }
