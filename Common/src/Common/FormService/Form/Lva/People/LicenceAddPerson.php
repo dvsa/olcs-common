@@ -42,8 +42,9 @@ class LicenceAddPerson extends AbstractPeople
     {
         $form = parent::alterForm($form, $params);
 
+        $this->addFieldsetHeading($form, "stuff");
         $this->addRemoveLink($form);
-        $this->alterFormForAddAnother($form, "stuff");
+        $this->addClass($form);
 
         return $form;
     }
@@ -74,7 +75,7 @@ class LicenceAddPerson extends AbstractPeople
      *
      * @return void
      */
-    protected function alterFormForAddAnother(Form $form, $organisationType)
+    protected function addFieldsetHeading(Form $form, $organisationType)
     {
         $targetElement = $this->getTargetElementInCollection($form);
 
@@ -95,12 +96,33 @@ class LicenceAddPerson extends AbstractPeople
      */
     private function getTargetElementInCollection(Form $form)
     {
-        /** @var Collection $fieldset */
-        $fieldset = $form->getFieldsets()['data'];
+        $fieldset = $this->getDataFieldsset($form);
 
-        /** @var FieldsetInterface $targetElement */
-        $targetElement = $fieldset->getTargetElement();
+        return $fieldset->getTargetElement();
+    }
 
-        return $targetElement;
+    /**
+     * getDataFieldset
+     *
+     * @param Form $form Form
+
+     * @return Collection
+     */
+    private function getDataFieldsset(Form $form)
+    {
+        return $form->getFieldsets()['data'];
+    }
+
+    /**
+     * addClass
+     *
+     * @param Form $form Form
+     */
+    private function addClass(Form $form)
+    {
+        $dataFieldset = $this->getDataFieldsset($form);
+
+        $existingClasses = $dataFieldset->getAttribute('class');
+        $dataFieldset->setAttribute('class', $existingClasses . ' add-another-director-change');
     }
 }
