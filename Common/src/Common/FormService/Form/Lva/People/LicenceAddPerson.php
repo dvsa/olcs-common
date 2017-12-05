@@ -2,9 +2,11 @@
 
 namespace Common\FormService\Form\Lva\People;
 
+use Common\Form\Elements\Custom\DateSelect;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Form;
 use Common\Form\Model\Form\Licence\AddPerson;
+use Zend\Form\Element;
 use Zend\Form\Element\Collection;
 use Zend\Form\FieldsetInterface;
 
@@ -40,6 +42,7 @@ class LicenceAddPerson extends AbstractPeople
     {
         $form = parent::alterForm($form, $params);
         $this->addRemoveLink($form);
+        $this->alterFormForAddAnother($form, "stuff");
 
 
         return $form;
@@ -64,5 +67,26 @@ class LicenceAddPerson extends AbstractPeople
         /** @var FieldsetInterface $targetElement */
         $targetElement = $fieldset->getTargetElement();
         $targetElement->add($removeLink, ['priority' => 1, 'name' => 'aoue']);
+    }
+
+    /**
+     * Alters the form for add another
+     *
+     * @param Form $form form
+     * @param string organisationHeading dynamic heading for organisation
+     *
+     * @return void
+     */
+    protected function alterFormForAddAnother(Form $form, $organisationType)
+    {
+        /** @var Collection $fieldset */
+        $dataFieldset = $form->getFieldsets()['data'];
+        $existingClasses = $dataFieldset->getAttribute('class');
+        $dataFieldset->setAttribute('class', $existingClasses . ' add-another-director-change');
+        $targetElement = $dataFieldset->getTargetElement();
+        $heading = new Html('heading');
+        $headingText = sprintf('<h2>%s</h2>', $organisationType);
+        $heading->setValue($headingText);
+        $targetElement->add($heading, ['priority' => 2]);
     }
 }
