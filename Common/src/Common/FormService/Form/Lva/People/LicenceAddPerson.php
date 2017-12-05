@@ -53,10 +53,11 @@ class LicenceAddPerson extends AbstractPeople
         $translator = $this->getServiceLocator()->get('Helper\Translation');
 
         $removeLink = new Html('removeLink');
-        $removeLink->setValue('<a class="remove_link" href="#">' . $translator->translate('Remove this') . '</a>');
+        $removeLink->setValue('<a href="#">' . $translator->translate('Remove this') . '</a>');
+        $removeLink->setAttribute('data-container-class', 'remove-link');
 
         /** @var FieldsetInterface $targetElement */
         $targetElement = $fieldset->getTargetElement();
-        $targetElement->add($removeLink, ['priority' => 1]);
+        $targetElement->add($removeLink, ['priority' => 1, 'name' => 'aoue']);
     }
 }
