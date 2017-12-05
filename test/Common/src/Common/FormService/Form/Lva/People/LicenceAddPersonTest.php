@@ -19,6 +19,8 @@ class LicenceAddPersonTest extends MockeryTestCase
     private $formHelper;
     private $fsm;
 
+    const TEST_ORGANISATION_TYPE = 'AOEOaedrTUIDAoeua';
+
     public function setUp()
     {
         $this->formHelper = m::mock(FormHelperService::class);
@@ -53,6 +55,7 @@ class LicenceAddPersonTest extends MockeryTestCase
         $targetElement = m::mock(AddPerson::class);
         $targetElement
             ->shouldReceive('add')
+            ->twice()
             ->with(anInstanceOf(Element::class), hasKeyValuePair('priority', integerValue()));
 
         $fieldset = m::mock(Fieldset::class);
@@ -70,6 +73,11 @@ class LicenceAddPersonTest extends MockeryTestCase
             ->once()
             ->with('class', 'existingClass add-another-director-change');
 
+        $fieldset
+            ->shouldReceive('setOption')
+            ->once()
+            ->with('hint', 'markup-add-another-director-hint-' . self::TEST_ORGANISATION_TYPE);
+
         $fieldsets = ['data' => $fieldset];
 
         $form = m::mock(Form::class);
@@ -81,7 +89,7 @@ class LicenceAddPersonTest extends MockeryTestCase
             ->with(AddPerson::class)
             ->andReturn($form);
 
-        $actual = $this->sut->getForm();
+        $actual = $this->sut->getForm(['organisationType' => self::TEST_ORGANISATION_TYPE]);
         $this->assertSame($form, $actual);
     }
 }
