@@ -9,6 +9,7 @@ class AddPersonTest extends AbstractFormValidationTestCase
     /** @var string The class name of the form being tested */
     protected $formName = \Common\Form\Model\Form\Licence\AddPerson::class;
 
+
     public function testSaveAndContinue()
     {
         $this->assertFormElementActionButton(
@@ -32,7 +33,7 @@ class AddPersonTest extends AbstractFormValidationTestCase
 
     public function testTitle()
     {
-        $element = ['data', 'title'];
+        $element = ['data','title'];
         $this->assertFormElementDynamicSelect($element);
     }
 
@@ -63,7 +64,7 @@ class AddPersonTest extends AbstractFormValidationTestCase
     public function testDateOfBirth()
     {
         $element = ['data', 'birthDate'];
-        $this->assertFormElementNotValid(
+       $this->assertFormElementNotValid(
             $element,
             [
 
