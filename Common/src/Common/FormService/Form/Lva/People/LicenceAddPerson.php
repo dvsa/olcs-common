@@ -50,7 +50,9 @@ class LicenceAddPerson extends AbstractPeople
     /**
      * Add remove link
      *
-     * @param Form $form
+     * @param Form $form Form
+     *
+     * @return void
      */
     private function addRemoveLink(Form $form)
     {
@@ -68,8 +70,8 @@ class LicenceAddPerson extends AbstractPeople
     /**
      * Alters the form for add another
      *
-     * @param Form $form form
-     * @param string organisationHeading dynamic heading for organisation
+     * @param Form   $form             form
+     * @param string $organisationType organisationHeading dynamic heading for organisation
      *
      * @return void
      */
@@ -114,6 +116,8 @@ class LicenceAddPerson extends AbstractPeople
      * addClass
      *
      * @param Form $form Form
+     *
+     * @return void
      */
     private function addClass(Form $form)
     {
@@ -126,7 +130,7 @@ class LicenceAddPerson extends AbstractPeople
     /**
      * Get the organisation specific heading
      *
-     * @param $organisationType
+     * @param string $organisationType Org type
      *
      * @return string
      */
@@ -154,6 +158,8 @@ class LicenceAddPerson extends AbstractPeople
      *
      * @param Form   $form             form
      * @param string $organisationType organisation type [org_t_rc etc]
+     *
+     * @return void
      */
     private function changeButtonForOrganisation(Form $form, $organisationType)
     {

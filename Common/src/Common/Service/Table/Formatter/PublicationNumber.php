@@ -16,7 +16,7 @@ class PublicationNumber implements FormatterInterface
 {
     /**
      * Format
-     * 
+     *
      * @param array $data The row data
      *
      * @return string
