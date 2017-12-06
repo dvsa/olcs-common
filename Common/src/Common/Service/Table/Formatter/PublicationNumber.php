@@ -18,7 +18,7 @@ class PublicationNumber implements FormatterInterface
 {
     /**
      * Format
-     * 
+     *
      * @param array                               $data   The row data
      * @param array                               $column [OPTIONAL]
      * @param \Zend\ServiceManager\ServiceManager $sm     [OPTIONAL]
