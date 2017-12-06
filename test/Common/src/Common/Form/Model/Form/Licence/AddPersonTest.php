@@ -1,4 +1,5 @@
 <?php
+
 namespace CommonTest\Form\Model\Form\Licence;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
@@ -35,5 +36,14 @@ class AddPersonTest extends AbstractFormValidationTestCase
     {
         $this->assertTrue($this->sut->has('data'));
         $this->assertInstanceOf(Collection::class, $this->sut->get("data"));
+        $this->assertArraySubset(
+            [
+                'count' => '1',
+                "hint" => "markup-add-another-director-hint",
+                "hint-position" => "below",
+                "should_create_template" => true,
+            ],
+            $this->sut->get('data')->getOptions()
+        );
     }
 }
