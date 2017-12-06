@@ -29,9 +29,11 @@ class LicenceAddPersonTest extends MockeryTestCase
         $translator = m::mock(TranslationHelperService::class);
         $translator
             ->shouldReceive('translate')
-            ->andReturnUsing(function ($string) {
-            return 'Welsh' . $string;
-        });
+            ->andReturnUsing(
+                function ($string) {
+                    return 'Welsh' . $string;
+                }
+            );
 
         $mockServiceLocator = m::mock(ServiceLocator::class);
         $mockServiceLocator
