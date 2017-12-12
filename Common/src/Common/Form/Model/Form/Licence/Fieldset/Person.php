@@ -41,7 +41,7 @@ class Person
     /**
      * @Form\Attributes({"class":"long","id":"forename"})
      * @Form\Options({
-     *     "label":"First Name",
+     *     "label":"First name",
      *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "Enter first name"
      * })
@@ -54,7 +54,7 @@ class Person
     /**
      * @Form\Attributes({"class":"long","id":"familyname"})
      * @Form\Options({
-     *    "label":"Last Name",
+     *    "label":"Last name",
      *     "label_attributes": {"class": "form-element__question"},
      *     "error-message": "Enter last name"
      * })
@@ -75,8 +75,6 @@ class Person
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":0,"max":35}})
      */
     public $otherName = null;
-
-
 
     /**
      * @Form\Required(true)
