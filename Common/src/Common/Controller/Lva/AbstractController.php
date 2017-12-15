@@ -316,7 +316,6 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
-
     }
 
     /**

@@ -6,10 +6,7 @@ $ni = array_merge(
     $gb,
     [
         'TM1_FORM_LINK' => 'https://www.infrastructure-ni.gov.uk/sites/default/files/publications/doe/tm%28ni%291-application-to-add-a-transport-manager-to-a-goods-vehicle-operator%27s-licence.pdf',
-        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'Has any person named in this
-            application (including partners, directors and Transport Managers); any company of which a person named on
-            this application is or has been a director; any parent company if you are a limited company; received any
-            penalties or have currently any unspent convictions?',
+        'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'Does anyone you’ve named in your application have a conviction that the Department for Infrastructure must be told about?',
         'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'Please add any relevant
             offences which must be declared to the DfI.',
         'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' => 'Please tick to confirm that you
