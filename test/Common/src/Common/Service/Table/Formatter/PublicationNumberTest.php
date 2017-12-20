@@ -41,16 +41,17 @@ class PublicationNumberTest extends MockeryTestCase
             ->with('DataServiceManager')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('get')
-                ->with('Common\Service\Data\Publication')
-                ->andReturn($pubService)
-                ->getMock()
+                    ->shouldReceive('get')
+                    ->with('Common\Service\Data\Publication')
+                    ->andReturn($pubService)
+                    ->getMock()
             )
             ->shouldReceive('get')
             ->with('Config')
             ->andReturn($config);
 
         $this->assertEquals($expected, PublicationNumber::format($data, $column, $sm));
+
     }
 
     public function provider()
@@ -69,15 +70,30 @@ class PublicationNumberTest extends MockeryTestCase
             [
                 [
                     'pubStatus' => [
+                        'id' => 'pub_s_generated'
+                    ],
+                    'publicationNo' => 12345,
+                    'document' => [
+                        'identifier' => 'some/path/foo.rtf',
+                        'id' => 987654
+                    ]
+                ],
+                [],
+                '<a href="//foo/some/path/foo.rtf" data-file-url="//foo/some/path/foo.rtf" target="blank">12345</a>'
+            ],
+            [
+                [
+                    'pubStatus' => [
                         'id' => 'pub_s_something_else'
                     ],
                     'publicationNo' => 12345,
                     'document' => [
-                        'identifier' => 'some/path/foo.rtf'
+                        'identifier' => 'some/path/foo.rtf',
+                        'id' => 987654
                     ]
                 ],
                 [],
-                '<a href="//foo/some/path/foo.rtf" data-file-url="//foo/some/path/foo.rtf" target="blank">'
+                '<a href="/file/987654">'
                     . '12345</a>'
             ]
         ];

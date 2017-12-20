@@ -42,6 +42,11 @@ class FinancialHistoryTest extends AbstractFormValidationTestCase
         $this->assertFormElementHidden(['data', 'version']);
     }
 
+    public function testFinanceHint()
+    {
+        $this->assertFormElementHtml(['data', 'financeHint']);
+    }
+
     public function testHasAnyPerson()
     {
         $this->assertFormElementHtml(['data', 'hasAnyPerson']);

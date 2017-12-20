@@ -1353,6 +1353,11 @@ return [
     'continuations.conditions-undertakings.conditions' => 'Amodau',
     'lva-operating-centre-radio-label' => '<p class="legend">Sut hoffech chi anfon eich hysbyseb?</p>',
     'lva-operating-centre-newspaper-advert' => '<p class="label newspaper-advert">Hysbyseb papur newyddion</p>',
+    'licence_person-add-action-formFirstName' => 'Enw(au) cyntaf',
+    'licence_person-add-action-formOtherNames' => 'Enwau eraill',
+    'licence_person-add-action-formSurname' => 'Cyfenw',
+    'licence_person-add-action-formTitle' => 'Teitl',
+    'licence_person-add-action-formDateOfBirth' => 'Dyddiad geni'
 
     // Potentially unused translations
 ];

@@ -362,7 +362,10 @@ class SectionConfig implements ServiceLocatorAwareInterface
             ),
             'variation' => array(
                 'identifier' => 'application'
-            )
+            ),
+            'director_change' => array(
+                'identifier' => 'application'
+            ),
         );
 
         $routes = array();
@@ -374,7 +377,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
             $routes[$baseRouteName] = array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => sprintf('/%s/:%s[/]', $type, $options['identifier']),
+                    'route' => sprintf('/%s/:%s[/]', $dashFilter->filter($type), $options['identifier']),
                     'constraints' => array(
                         $options['identifier'] => '[0-9]+'
                     ),

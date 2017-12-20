@@ -19,12 +19,12 @@ class Licence extends AbstractDataService
     protected $id;
 
     /**
-     * Fetch licence data
+     * Fetch the licence data
      *
-     * @param int|null $id Id
+     * @param null $id licence id
      *
-     * @return array
-     * @throw UnexpectedResponseException
+     * @return array|mixed|null
+     * @throws UnexpectedResponseException
      */
     public function fetchLicenceData($id = null)
     {
@@ -54,7 +54,8 @@ class Licence extends AbstractDataService
      *
      * @param int|null $id Id
      *
-     * @return array
+     * @return mixed|null
+     * @throws UnexpectedResponseException
      */
     public function fetchOperatingCentreData($id = null)
     {

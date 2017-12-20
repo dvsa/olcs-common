@@ -76,7 +76,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
             ->getMock();
 
         $sut = new Sut();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, $results);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $this->assertEquals($results['results'], $sut->fetchListData([]));
     }
@@ -94,7 +94,7 @@ class SiCategoryTypeTest extends AbstractDataServiceTestCase
             ->getMock();
 
         $sut = new Sut();
-        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse, []);
+        $this->mockHandleQuery($sut, $mockTransferAnnotationBuilder, $mockResponse);
 
         $sut->fetchListData([]);
     }

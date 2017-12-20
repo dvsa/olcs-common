@@ -2,6 +2,7 @@
 
 namespace Common\Service\Cqrs\Query;
 
+use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Zend\Cache\Storage\StorageInterface as CacheInterface;
 
@@ -12,6 +13,7 @@ use Zend\Cache\Storage\StorageInterface as CacheInterface;
 class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwareInterface
 {
     use \Zend\Log\LoggerAwareTrait;
+    use RecoverHttpClientExceptionTrait;
 
     /**
      * @var QueryServiceInterface
@@ -49,6 +51,7 @@ class CachingQueryService implements QueryServiceInterface, \Zend\Log\LoggerAwar
      */
     public function send(QueryContainerInterface $query)
     {
+        $this->queryService->setRecoverHttpClientException($this->getRecoverHttpClientException());
         if ($query->isMediumTermCachable()) {
             return $this->handlePersistentCache($query);
         }

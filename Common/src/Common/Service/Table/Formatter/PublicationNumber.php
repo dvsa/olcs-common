@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Table\Formatter;
 
+use Common\Util\Escape;
+
 /**
  * Publication Number
  *
@@ -14,21 +16,33 @@ namespace Common\Service\Table\Formatter;
  */
 class PublicationNumber implements FormatterInterface
 {
+    /**
+     * Format
+     *
+     * @param array                               $data   The row data
+     * @param array                               $column [OPTIONAL]
+     * @param \Zend\ServiceManager\ServiceManager $sm     [OPTIONAL]
+     *
+     * @return string
+     */
     public static function format($data, $column = array(), $sm = null)
     {
         if ($data['pubStatus']['id'] === 'pub_s_new') {
             return $data['publicationNo'];
         }
 
-        $uriPattern = $sm->get('Config')['document_share']['uri_pattern'];
+        $uriPattern = '/file/%s';
+        $url = sprintf($uriPattern, $data['document']['id']);
+        $linkPattern = '<a href="%s">%s</a>';
+        $link = sprintf($linkPattern, Escape::html($url), Escape::html($data['publicationNo']));
 
-        $url = sprintf($uriPattern, $data['document']['identifier']);
+        if ($data['pubStatus']['id'] === 'pub_s_generated') {
+            $uriPattern = $sm->get('Config')['document_share']['uri_pattern'];
+            $url = sprintf($uriPattern, $data['document']['identifier']);
+            $linkPattern = '<a href="%s" data-file-url="%s" target="blank">%s</a>';
+            $link = sprintf($linkPattern, Escape::html($url), Escape::html($url), Escape::html($data['publicationNo']));
+        }
 
-        return sprintf(
-            '<a href="%s" data-file-url="%s" target="blank">%s</a>',
-            $url,
-            $url,
-            $data['publicationNo']
-        );
+        return $link;
     }
 }

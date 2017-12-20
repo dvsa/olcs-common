@@ -21,9 +21,8 @@ return array(
     'columns' => array(
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnName',
-            'type' => 'Action',
-            'action' => 'edit',
-            'formatter' => 'Name'
+            'name' => 'name',
+            'formatter' => 'NameActionAndStatus'
         ),
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnHasOtherNames',

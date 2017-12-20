@@ -8,6 +8,7 @@ use Common\Service\Table\TableBuilder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Form;
+use Zend\Mvc\Controller\Plugin\FlashMessenger;
 
 /**
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
@@ -20,6 +21,7 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
 
     /** @var  m\MockInterface | AbstractPeopleAdapter */
     private $sut;
+
     /** @var  m\MockInterface | AbstractPeopleAdapter */
     private $mockResp;
 
@@ -140,7 +142,116 @@ class AbstractPeopleAdapterTest extends MockeryTestCase
             'other' => [
                 \Common\RefData::ORG_TYPE_OTHER,
                 'lva.section.title.add_person'
+            ],
+            'irfo' => [
+                \Common\RefData::ORG_TYPE_IRFO,
+                'lva.section.title.add_person'
             ]
         ];
+    }
+
+    public function testGetAddLabelTextForOrganisationReturnsNullIfNoOrganisationType()
+    {
+        $this->assertNull($this->sut->getAddLabelTextForOrganisation());
+    }
+
+    /**
+     * @dataProvider dpTestAlterFormForOrganisation
+     */
+    public function testGetAddLabelTextForOrganisationReturnsAppropriateLabel($type, $expected)
+    {
+        $this->sut->shouldReceive('getOrganisationType')
+            ->andReturn($type)
+            ->twice()
+            ->getMock();
+        $this->assertEquals($expected, $this->sut->getAddLabelTextForOrganisation());
+    }
+
+
+    /**
+     * @dataProvider  dpTestAlterFormForOrganisation
+     */
+    public function testAmendLicencePeopleListTableAltersTable($type, $expected)
+    {
+        $settingsArray = [
+            'actions' => [
+                'add' => [
+                    'label' => $expected
+                ]
+            ]
+        ];
+
+        $this->sut->shouldReceive('getOrganisationType')
+            ->andReturn($type)
+            ->twice()
+            ->getMock();
+
+        $mockTable = m::mock(TableBuilder::class)
+            ->shouldReceive('setSetting')
+            ->with(
+                'crud',
+                $settingsArray
+            )
+            ->once()
+            ->andReturnSelf()
+            ->getMock();
+
+        $this->sut->amendLicencePeopleListTable($mockTable);
+    }
+
+    public function testStatusesAreAddedToPeopleFromFlashMessenger()
+    {
+        $mockFM = m::mock(FlashMessenger::class);
+
+        $this->sut
+            ->shouldReceive('getController->plugin')
+            ->with('FlashMessenger')
+            ->andReturn($mockFM);
+
+        $mockTableBuilder = m::mock(TableBuilder::class);
+
+        $this->sut
+            ->shouldReceive('getServiceLocator->get')
+            ->with('Table')
+            ->andReturn($mockTableBuilder);
+
+        $mockFM
+            ->shouldReceive('getMessages')
+            ->with(AbstractController::FLASH_MESSENGER_CREATED_PERSON_NAMESPACE)
+            ->andReturn([53]);
+
+        $this->sut
+            ->shouldReceive('formatTableData')
+            ->andReturn(
+                [
+                    [
+                        'id' => 39
+                    ],
+                    [
+                        'id' => 53
+                    ]
+                ]
+            );
+
+        $expected = [
+            [
+                'id' => 39,
+                'status' => null
+            ],
+            [
+                'id' => 53,
+                'status' => 'new'
+            ]
+        ];
+
+        $mockTableBuilder
+            ->shouldReceive('prepareTable')
+            ->andReturnUsing(
+                function($tableConfig, $tableData) use ($expected) {
+                    $this->assertSame($expected, $tableData);
+                }
+            );
+
+        $this->sut->createTable();
     }
 }

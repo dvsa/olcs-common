@@ -28,7 +28,7 @@ use Common\Service\Table\TableBuilder;
  * @method \Common\Controller\Plugin\CurrentUser currentUser()
  * @method \Zend\Http\Response completeSection($section, $prg = [])
  * @method TableBuilder table()
- * 
+ *
  * @see   \Olcs\Controller\Lva\Traits\ApplicationControllerTrait::render
  * @method \Common\View\Model\Section render($titleSuffix, Form $form = null, $variables = [])
  */
@@ -40,6 +40,8 @@ abstract class AbstractController extends AbstractActionController
 
     const LOC_INTERNAL = 'internal';
     const LOC_EXTERNAL = 'external';
+
+    const FLASH_MESSENGER_CREATED_PERSON_NAMESPACE = 'createPerson';
 
     use Util\FlashMessengerTrait,
         GenericUpload;
@@ -93,16 +95,12 @@ abstract class AbstractController extends AbstractActionController
         if (!$routeMatch) {
             throw new Exception\DomainException('Missing route matches; unsure how to retrieve action');
         }
-
         $this->maybeTranslateForNi();
-
         $action = $routeMatch->getParam('action', 'not-found');
         $method = static::getMethodFromAction($action);
-
         if (!method_exists($this, $method)) {
             $method = 'notFoundAction';
         }
-
         if ($routeMatch->getParam('skipPreDispatch', false) || ($actionResponse = $this->preDispatch()) === null) {
             try {
                 $actionResponse = $this->$method();
@@ -111,9 +109,7 @@ abstract class AbstractController extends AbstractActionController
                 $actionResponse = $this->reload();
             }
         }
-
         $e->setResult($actionResponse);
-
         return $actionResponse;
     }
 
@@ -320,7 +316,6 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function alterFormForLva(Form $form, $data = null)
     {
-
     }
 
     /**

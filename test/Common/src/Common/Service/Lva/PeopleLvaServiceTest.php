@@ -5,12 +5,18 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
+
 namespace CommonTest\Service\Printing;
 
-use CommonTest\Bootstrap;
+use Common\Service\Helper\FormHelperService;
 use Common\Service\Lva\PeopleLvaService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
+use Zend\Form\Element;
+use Zend\Form\FieldsetInterface;
+use Zend\Form\Form;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Text\Table\Table;
 
 /**
  * People LVA Service tests
@@ -19,12 +25,15 @@ use Mockery as m;
  */
 class PeopleLvaServiceTest extends MockeryTestCase
 {
+    /** @var ServiceLocatorInterface|m\Mock */
     private $sm;
+
+    /** @var PeopleLvaService */
     private $sut;
 
     public function setup()
     {
-        $this->sm = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $this->sm = m::mock(ServiceLocatorInterface::class);
         $this->sut = new PeopleLvaService();
 
         $this->sut->setServiceLocator($this->sm);
@@ -32,61 +41,71 @@ class PeopleLvaServiceTest extends MockeryTestCase
 
     public function testLockPersonForm()
     {
-        $fieldset = m::mock()
-            ->shouldReceive('has')
-            ->with('title')
-            ->andReturn(true)
-            ->shouldReceive('has')
-            ->andReturn(false)
-            ->shouldReceive('get')
-            ->with('title')
-            ->andReturn('title')
-            ->getMock();
+        $mockTitleElement = m::Mock(Element::class);
 
-        $form = m::mock('Zend\Form\Form')
-            ->shouldReceive('get')
+        $fieldset = m::mock(FieldsetInterface::class);
+        $fieldset->shouldReceive('has')
+            ->with('title')
+            ->andReturn(true);
+        $fieldset->shouldReceive('has')
+            ->andReturn(false);
+        $fieldset->shouldReceive('get')
+            ->with('title')
+            ->andReturn($mockTitleElement);
+
+        /** @var Form|m\Mock $form */
+        $form = m::mock(Form::class);
+        $form->shouldReceive('get')
             ->with('data')
-            ->andReturn($fieldset)
-            ->shouldReceive('setAttribute')->with('locked', true)->once()
-            ->getMock();
+            ->andReturn($fieldset);
+        $form->shouldReceive('setAttribute')
+            ->with('locked', true)
+            ->once();
 
-        $this->setService(
-            'Helper\Form',
-            m::mock()
-            ->shouldReceive('lockElement')
-            ->with('title', 'people.org_t_rc.title.locked')
-            ->shouldReceive('disableElement')
+        $formHelperService = m::mock(FormHelperService::class);
+        $formHelperService->shouldReceive('lockElement')
+            ->with($mockTitleElement, 'people.org_t_rc.title.locked')
+            ->once();
+        $formHelperService->shouldReceive('disableElement')
             ->with($form, 'data->title')
-            ->shouldReceive('remove')
+            ->once();
+        $formHelperService->shouldReceive('remove')
             ->with($form, 'form-actions->submit')
-            ->getMock()
-        );
+            ->once();
+
+        $this->setService('Helper\Form', $formHelperService);
 
         $this->sut->lockPersonForm($form, 'org_t_rc');
     }
 
     public function testLockPartnershipForm()
     {
-        $form = m::mock('Zend\Form\Form');
+        /** @var Form|m\Mock $form */
+        $form = m::mock(Form::class);
 
-        $table = m::mock()
-            ->shouldReceive('removeActions')
-            ->shouldReceive('removeColumn')
+        $table = m::mock(Table::class);
+        $table->shouldReceive('removeActions')
+            ->once();
+        $table->shouldReceive('removeColumn')
             ->with('select')
-            ->getMock();
+            ->once();
 
         $this->sut->lockPartnershipForm($form, $table);
     }
 
     public function testLockOrganisationForm()
     {
-        $form = m::mock('Zend\Form\Form');
+        /** @var Form|m\Mock $form */
+        $form = m::mock(Form::class);
 
-        $table = m::mock()
-            ->shouldReceive('removeActions')
-            ->shouldReceive('removeColumn')
-            ->with('select')
-            ->getMock();
+        $table = m::mock();
+        $table->shouldReceive('removeActions')
+            ->once();
+        $table->shouldReceive('removeColumn')
+            ->with('select')->once();
+        $table->shouldReceive('removeColumn')
+            ->with('actionLinks')
+            ->once();
 
         $this->sut->lockOrganisationForm($form, $table);
     }

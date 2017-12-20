@@ -56,6 +56,9 @@ return array(
             'LvaApplication/TransportManagers' => [
                 Common\Controller\Lva\Delegators\ApplicationTransportManagerDelegator::class,
             ],
+            'LvaDirectorChange/People' => array(
+                'Common\Controller\Lva\Delegators\VariationPeopleDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -537,6 +540,7 @@ return array(
 
             // People form services
             'lva-licence-people' => LvaFormService\People\LicencePeople::class,
+            'lva-licence-addperson' => LvaFormService\People\LicenceAddPerson::class,
             'lva-variation-people' => LvaFormService\People\VariationPeople::class,
             'lva-application-people' => LvaFormService\People\ApplicationPeople::class,
             'lva-licence-sole_trader' => LvaFormService\People\SoleTrader\LicenceSoleTrader::class,

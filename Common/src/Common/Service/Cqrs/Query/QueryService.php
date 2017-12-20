@@ -6,6 +6,7 @@ use Common\Service\Cqrs\CqrsTrait;
 use Common\Service\Cqrs\Exception;
 use Common\Service\Cqrs\Response;
 use Common\Service\Helper\FlashMessengerHelperService;
+use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
 use Dvsa\Olcs\Transfer\Query\LoggerOmitResponseInterface;
 use Dvsa\Olcs\Transfer\Query\QueryContainerInterface;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
@@ -24,6 +25,7 @@ use Zend\Mvc\Router\RouteInterface;
 class QueryService implements QueryServiceInterface
 {
     use CqrsTrait;
+    use RecoverHttpClientExceptionTrait;
 
     /** @var RouteInterface */
     protected $router;
@@ -131,6 +133,9 @@ class QueryService implements QueryServiceInterface
             return $response;
 
         } catch (HttpClientExceptionInterface $ex) {
+            if ($this->getRecoverHttpClientException()) {
+                return new Response((new HttpResponse())->setStatusCode(HttpResponse::STATUS_CODE_500));
+            }
             throw new Exception($ex->getMessage(), HttpResponse::STATUS_CODE_500, $ex);
         }
     }
