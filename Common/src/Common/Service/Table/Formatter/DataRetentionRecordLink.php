@@ -274,7 +274,7 @@ class DataRetentionRecordLink implements FormatterInterface
                 $now = new \DateTime();
                 $reviewDate = new \DateTime($nextReviewDate);
                 $diff = $now->diff($reviewDate);
-                if($diff->invert === 1) {
+                if ($diff->invert === 1) {
                     $status = self::STATUS_REVIEW;
                 }
             }
