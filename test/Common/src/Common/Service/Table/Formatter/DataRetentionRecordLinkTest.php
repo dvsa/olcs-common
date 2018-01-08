@@ -131,6 +131,14 @@ class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
                 ],
                 DataRetentionRecordLink::STATUS_POSTPONED
             ],
+            'Licence entity type to review' => [
+                [
+                    'entityName' => 'licence',
+                    'actionConfirmation' => false,
+                    'nextReviewDate' => (new \DateTime())->format('Y-m-d')
+                ],
+                DataRetentionRecordLink::STATUS_REVIEW
+            ],
         ];
     }
 
