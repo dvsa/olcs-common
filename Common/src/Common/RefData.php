@@ -300,4 +300,10 @@ class RefData
 
     const CONTINUATION_STATUS_GENERATED = 'con_det_sts_printed';
     const CONTINUATION_STATUS_COMPLETE = 'con_det_sts_complete';
+
+    const PTR_ACTION_TO_BE_TAKEN_REVOKE = 'ptr_action_to_be_taken_revoke';
+    const PTR_ACTION_TO_BE_TAKEN_PI = 'ptr_action_to_be_taken_pi';
+    const PTR_ACTION_TO_BE_TAKEN_WARNING = 'ptr_action_to_be_taken_warning';
+    const PTR_ACTION_TO_BE_TAKEN_NFA = 'ptr_action_to_be_taken_nfa';
+    const PTR_ACTION_TO_BE_TAKEN_OTHER = 'ptr_action_to_be_taken_other';
 }
