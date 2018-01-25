@@ -57,7 +57,7 @@ class TransportManagerApplicationStatusTest extends MockeryTestCase
             );
 
         static::assertEquals(
-            '<span class="overview__status' . $expectedClass . '">_TRANSL_' . $status . '</span>',
+            '<span class="status' . $expectedClass . '">_TRANSL_' . $status . '</span>',
             $this->sut->__invoke($status, $status)
         );
     }

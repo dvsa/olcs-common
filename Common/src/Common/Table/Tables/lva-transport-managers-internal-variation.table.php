@@ -29,7 +29,9 @@ return array(
         array(
             'title' => 'DOB',
             'name' => 'dob',
-            'formatter' => 'Date',
+            'formatter' => 'TransportManagerDateOfBirth',
+            'internal' => true,
+            'lva' => 'variation',
         ),
         array(
             'type' => 'DeltaActionLinks',

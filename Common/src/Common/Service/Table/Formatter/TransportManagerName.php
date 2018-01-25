@@ -41,19 +41,17 @@ class TransportManagerName extends Name
                     break;
                 case 'variation':
                     $html = sprintf(
-                        '%s <a href="%s">%s</a> %s',
+                        '%s <a href="%s">%s</a>',
                         static::getActionName($data, $sm),
                         static::getInternalUrl($data, $sm),
-                        $name,
-                        static::getStatusHtml($data, $sm)
+                        $name
                     );
                     break;
                 case 'application':
                     $html = sprintf(
-                        '<a href="%s">%s</a> %s',
+                        '<a href="%s">%s</a>',
                         static::getInternalUrl($data, $sm),
-                        $name,
-                        static::getStatusHtml($data, $sm)
+                        $name
                     );
                     break;
             }
@@ -67,27 +65,24 @@ class TransportManagerName extends Name
                     // only hyperlink if Added or Updated
                     if (isset($data['action']) && ($data['action'] == 'A' || $data['action'] == 'U')) {
                         $html = sprintf(
-                            '%s <a href="%s">%s</a> %s',
+                            '%s <a href="%s">%s</a>',
                             static::getActionName($data, $sm),
                             static::getExternalUrl($data, $sm, $column['lva']),
-                            $name,
-                            static::getStatusHtml($data, $sm)
+                            $name
                         );
                     } else {
                         $html = sprintf(
-                            '%s %s %s',
+                            '%s %s',
                             static::getActionName($data, $sm),
-                            $name,
-                            static::getStatusHtml($data, $sm)
+                            $name
                         );
                     }
                     break;
                 case 'application':
                     $html = sprintf(
-                        '<a href="%s">%s</a> %s',
+                        '<a href="%s">%s</a>',
                         static::getExternalUrl($data, $sm, $column['lva']),
-                        $name,
-                        static::getStatusHtml($data, $sm)
+                        $name
                     );
                     break;
             }
@@ -158,23 +153,5 @@ class TransportManagerName extends Name
         $translator = $sm->get('Helper\Translation');
 
         return $translator->translate($statusMaps[$data['action']]);
-    }
-
-    /**
-     * Get the html for the status
-     *
-     * @param array                   $data Row Data
-     * @param ServiceLocatorInterface $sm   Service Manager
-     *
-     * @return string HTML
-     */
-    protected static function getStatusHtml($data, $sm)
-    {
-        $viewHelper = $sm->get('ViewHelperManager')->get('transportManagerApplicationStatus');
-
-        $id = (isset($data['status']['id'])) ? $data['status']['id'] : '';
-        $description = (isset($data['status']['description'])) ? $data['status']['description'] : '';
-
-        return $viewHelper->render($id, $description);
     }
 }
