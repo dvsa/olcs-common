@@ -24,7 +24,6 @@ class TransportManagerDateOfBirth extends Date
 
     protected static function shouldShowStatus($column = array())
     {
-
         if (!isset($column['internal']) || (!isset($column['lva']))) {
             return false;
         }
