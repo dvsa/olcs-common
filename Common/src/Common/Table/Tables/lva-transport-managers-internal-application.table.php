@@ -26,7 +26,9 @@ return array(
         array(
             'title' => 'DOB',
             'name' => 'dob',
-            'formatter' => 'Date',
+            'formatter' => 'TransportManagerDateOfBirth',
+            'internal' => true,
+            'lva' => 'application',
         ),
         array(
             'type' => 'ActionLinks',

@@ -13,7 +13,7 @@ return array(
                     'label' => 'action_links.remove',
                     'requireRows' => true
                 ),
-                'restore' => array( 
+                'restore' => array(
                     'requireRows' => true
                 ),
             )
@@ -38,7 +38,9 @@ return array(
         array(
             'title' => 'DOB',
             'name' => 'dob',
-            'formatter' => 'Date',
+            'formatter' => 'TransportManagerDateOfBirth',
+            'internal' => true,
+            'lva' => 'variation'
         ),
         array(
             'name' => 'select',

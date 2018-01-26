@@ -31,7 +31,7 @@ return array(
         array(
             'title' => 'DOB',
             'name' => 'dob',
-            'formatter' => 'Date',
+            'formatter' => 'TransportManagerDateOfBirth',
         ),
         array(
             'name' => 'select',
