@@ -14,7 +14,7 @@ class TransportManagerDateOfBirth extends Date
         $dob = parent::format($data, $column, $sm);
 
         if (self::shouldShowStatus($column)) {
-            $dob = sprintf($dob . " %s", self::getStatusHtml($data, $sm) );
+            $dob = sprintf($dob . " %s", self::getStatusHtml($data, $sm));
         }
 
         return $dob;
@@ -22,7 +22,8 @@ class TransportManagerDateOfBirth extends Date
     }
 
 
-    protected static function shouldShowStatus($column = array()) {
+    protected static function shouldShowStatus($column = array())
+    {
 
         $output = false;
 
@@ -30,31 +31,8 @@ class TransportManagerDateOfBirth extends Date
             return $output;
         }
 
-        if ($column['internal']) {
-            switch ($column['lva']) {
-                case 'licence':
-                    $output = false;
-                    break;
-                case 'variation':
-                    $output = true;
-                    break;
-                case 'application':
-                    $output = true;
-                    break;
-            }
-        } else {
-            // External
-            switch ($column['lva']) {
-                case 'licence':
-                    $output = false;
-                    break;
-                case 'variation':
-                    $output = true;
-                    break;
-                case 'application':
-                    $output = true;
-                    break;
-            }
+        if ($column['lva'] == 'variation' || $column['lva'] == 'application') {
+            $output = true;
         }
 
         return $output;

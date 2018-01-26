@@ -7,7 +7,6 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Entity\TransportManagerApplicationEntityService;
 
-
 class TransportManagerDateOfBirthTest extends MockeryTestCase
 {
     /** @var TransportManagerDateOfBirth */
