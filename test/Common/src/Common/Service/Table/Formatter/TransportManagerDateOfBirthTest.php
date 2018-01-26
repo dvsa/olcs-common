@@ -26,41 +26,6 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
         $this->sm->shouldReceive('get')->with('Helper\Url')->andReturn($this->mockUrlHelper);
     }
 
-    public function testFormatNoLvaLocation()
-    {
-        $data = [
-            'dob' => '1980-12-01'
-        ];
-        $column = [
-            'name' => 'dob'
-        ];
-        $expected = '01/12/1980';
-
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
-    }
-
-    public function testFormatApplicationInternal()
-    {
-        $data = [
-            'dob' => '1980-12-01',
-            'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
-                'description' => 'status description',
-            ]
-        ];
-        $column = [
-            'name' => 'dob',
-            'lva' => 'application',
-            'internal' => true,
-        ];
-
-        $expected = '01/12/1980 <STATUS HTML>';
-
-        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
-
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
-    }
-
     protected function mockGetStatusHtml($expectedStatusId, $expectedStatusDescription, $statusHtml = '<STATUS HTML>')
     {
         $mockViewHelperManager = m::mock();
@@ -82,138 +47,134 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
             ->andReturn($statusHtml);
     }
 
-    public function testFormatApplicationExternal()
+    /**
+     * Provider for testFormat
+     */
+    public function providerFormat()
     {
-        $data = [
-            'dob' => '1980-12-01',
-            'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
-                'description' => 'status description',
-            ],
-        ];
-        $column = [
-            'name' => 'dob',
-            'lva' => 'application',
-            'internal' => false,
-        ];
-        $expected = '01/12/1980 <STATUS HTML>';
-
-        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
-
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        return array(
+            array( // NoLvaLocation
+                array
+                (
+                    'data' => [
+                        'dob' => '1980-12-01'
+                    ],
+                    'column' => ['name' => 'dob']
+                ),
+                '01/12/1980'
+            ),
+            array( // ApplicationInternal
+                array
+                (
+                    'data' => [
+                        'dob' => '1980-12-01',
+                        'status' => [
+                            'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                            'description' => 'status description',
+                        ]
+                    ],
+                    'column' => [
+                        'name' => 'dob',
+                        'lva' => 'application',
+                        'internal' => true,
+                    ]
+                ),
+                '01/12/1980 <STATUS HTML>'
+            ),
+            array( // ApplicationExternal
+                array
+                (
+                    'data' => [
+                        'dob' => '1980-12-01',
+                        'status' => [
+                            'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                            'description' => 'status description',
+                        ]
+                    ],
+                    'column' => [
+                        'name' => 'dob',
+                        'lva' => 'application',
+                        'internal' => false,
+                    ]
+                ),
+                '01/12/1980 <STATUS HTML>'
+            ),
+            array( // VariationInternal
+                array
+                (
+                    'data' => [
+                        'dob' => '1980-12-01',
+                        'status' => [
+                            'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                            'description' => 'status description',
+                        ],
+                    ],
+                    'column' => [
+                        'name' => 'dob',
+                        'lva' => 'variation',
+                        'internal' => true,
+                    ]
+                ),
+                '01/12/1980 <STATUS HTML>'
+            ),
+            array( // VariationExternal
+                array
+                (
+                    'data' => [
+                        'dob' => '1980-12-01',
+                        'status' => [
+                            'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
+                            'description' => 'status description',
+                        ],
+                    ],
+                    'column' => [
+                        'name' => 'dob',
+                        'lva' => 'variation',
+                        'internal' => false,
+                    ]
+                ),
+                '01/12/1980 <STATUS HTML>'
+            ),
+            array( // LicenceInternal
+                array
+                (
+                    'data' => [
+                        'dob' => '1980-12-01'
+                    ],
+                    'column' => [
+                        'name' => 'dob',
+                        'lva' => 'licence',
+                        'internal' => true,
+                    ]
+                ),
+                '01/12/1980'
+            ),
+            array( // LicenceExternal
+                array
+                (
+                    'data' => [
+                        'dob' => '1980-12-01'
+                    ],
+                    'column' => [
+                        'name' => 'dob',
+                        'lva' => 'licence',
+                        'internal' => false,
+                    ]
+                ),
+                '01/12/1980'
+            )
+        );
     }
 
-    public function testFormatVariationInternal()
+    /**
+     * @dataProvider providerFormat
+     */
+    public function testFormat($testData, $expected)
     {
-        $data = [
-            'dob' => '1980-12-01',
-            'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
-                'description' => 'status description',
-            ],
-        ];
-        $column = [
-            'name' => 'dob',
-            'lva' => 'variation',
-            'internal' => true,
-        ];
-        $expected = '01/12/1980 <STATUS HTML>';
+        if (isset($testData['data']['status'])) {
+            $this->mockGetStatusHtml($testData['data']['status']['id'], $testData['data']['status']['description']);
+        }
 
-        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
-
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
-    }
-
-    public function testFormatVariationInternalInvalidAction()
-    {
-        $data = [
-            'dob' => '1980-12-01',
-            'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
-                'description' => 'status description',
-            ],
-        ];
-        $column = [
-            'name' => 'dob',
-            'lva' => 'variation',
-            'internal' => true,
-        ];
-        $expected = '01/12/1980 <STATUS HTML>';
-
-        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
-
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
-    }
-
-    public function testFormatVariationExternal()
-    {
-        $data = [
-            'dob' => '1980-12-01',
-            'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
-                'description' => 'status description',
-            ],
-        ];
-        $column = [
-            'name' => 'dob',
-            'lva' => 'variation',
-            'internal' => false,
-        ];
-        $expected = '01/12/1980 <STATUS HTML>';
-
-        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
-
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
-    }
-
-    public function testFormatVariationExternalNoLink()
-    {
-        $data = [
-            'dob' => '1980-12-01',
-            'status' => [
-                'id' => TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION,
-                'description' => 'status description',
-            ],
-        ];
-        $column = [
-            'name' => 'dob',
-            'lva' => 'variation',
-            'internal' => false,
-        ];
-        $expected = '01/12/1980 <STATUS HTML>';
-
-        $this->mockGetStatusHtml($data['status']['id'], $data['status']['description']);
-
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
-    }
-
-    public function testFormatLicenceInternal()
-    {
-        $data = [
-            'dob' => '1980-12-01'
-        ];
-        $column = [
-            'name' => 'dob',
-            'lva' => 'licence',
-            'internal' => true,
-        ];
-        $expected = '01/12/1980';
-
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
-    }
-
-    public function testFormatLicenceExternal()
-    {
-        $data = [
-            'dob' => '1980-12-01'
-        ];
-        $column = [
-            'name' => 'dob',
-            'lva' => 'licence',
-            'internal' => false,
-        ];
-        $expected = '01/12/1980';
-
-        $this->assertEquals($expected, $this->sut->format($data, $column, $this->sm));
+        $this->assertEquals($expected, $this->sut->format($testData['data'], $testData['column'], $this->sm));
     }
 }
