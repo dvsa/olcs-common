@@ -53,13 +53,39 @@ class TransportManagerDateOfBirthTest extends MockeryTestCase
     public function providerFormat()
     {
         return array(
-            array( // NoLvaLocation
+            array( // NoLvaNorInternal
                 array
                 (
                     'data' => [
                         'dob' => '1980-12-01'
                     ],
                     'column' => ['name' => 'dob']
+                ),
+                '01/12/1980'
+            ),
+            array( // LvaWithoutInternal
+                array
+                (
+                    'data' => [
+                        'dob' => '1980-12-01'
+                    ],
+                    'column' => [
+                        'name' => 'dob',
+                        'lva' => 'application'
+                    ]
+                ),
+                '01/12/1980'
+            ),
+            array( // NoLvaWithInternal
+                array
+                (
+                    'data' => [
+                        'dob' => '1980-12-01'
+                    ],
+                    'column' => [
+                        'name' => 'dob',
+                        'internal' => true
+                    ]
                 ),
                 '01/12/1980'
             ),
