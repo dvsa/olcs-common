@@ -17,7 +17,7 @@
                 <?php echo $this->translate('sidebar-variation-safety-and-maintenance'); ?>
             </a>
         </li>
-        <?php if ($this->numberOfLicences >= 1 || $this->numberOfApplications >= 1): ?>
+        <?php if (!$this->niFlag && ($this->numberOfLicences >= 1 || $this->numberOfApplications >= 1)): ?>
         <li class="links-list__item">
             <a href="<?php echo "https://public.govdelivery.com/accounts/UKOTC/subscriber/new"; ?>" target="_blank">
                 <?php echo $this->translate('Office of the Traffic Commissioner news alerts'); ?>
