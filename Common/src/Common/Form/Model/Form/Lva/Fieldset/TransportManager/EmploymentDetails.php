@@ -40,7 +40,10 @@ class EmploymentDetails
     public $position = null;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({
+     *     "class":"long",
+     *     "placeholder": "transport-manager.employment.form.hoursPerWeek.placeholder",
+     * })
      * @Form\Options({
      *     "label":"transport-manager.employment.form.hoursPerWeek",
      *     "short-label":"transport-manager.employment.form.hoursPerWeek"
@@ -50,7 +53,7 @@ class EmploymentDetails
      * @Form\Validator({
      *     "name":"Zend\Validator\StringLength",
      *     "options":{
-     *          "max":100,
+     *          "max":300,
      *     },
      * })
      */
