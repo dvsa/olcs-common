@@ -114,7 +114,8 @@ class ConvictionsPenalties extends AbstractFormService
     private function alterFormQuestion($dataTable)
     {
         $question = $dataTable->get('question');
-        $question->setLabel('');
+        // setting the label to a blank space because setting it to empty string would remove the <fieldset> wrapper
+        $question->setLabel(' ');
     }
 
     /**
@@ -151,13 +152,12 @@ class ConvictionsPenalties extends AbstractFormService
         $translator = $this->getTranslator();
         /** @var \Zend\Form\Fieldset $dataTable */
         $dataTable = $form->get('data');
-        $link = new Html('$link');
+        $link = new Html('link');
         $link->setValue(
             '<a href="' . $translator->translate('convictions-read-more-link') . '" target="_blank">' .
                     $translator->translate('Read more about convictions') .
             '</a>'
         );
-        $link->setAttribute('data-container-class', 'remove-link');
         $dataTable->add($link, ['priority' => 0]);
     }
 
