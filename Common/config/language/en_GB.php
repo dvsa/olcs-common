@@ -791,6 +791,7 @@ return [
     'conviction-history' => 'Conviction history',
     'conviction-notes' => 'Conviction Notes',
     'convictions' => 'Convictions',
+    'convictions-read-more-link' => 'https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/641626/gv79g-guidance-on-applying-for-a-goods-vehicle-operators-licence.pdf',
     'cookie-banner' => 'Vehicle Operator Licensing uses cookies.',
     'correspondence-address-form-button-find-address' => 'Find address',
     'correspondence-address-form-label-address1' => 'Address line 1',

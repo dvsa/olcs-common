@@ -10,6 +10,7 @@ namespace Common\FormService\Form\Lva;
 
 use Common\FormService\Form\AbstractFormService;
 use Common\RefData;
+use Common\Form\Elements\Types\Html;
 
 /**
  * Convictions and Penalties Form
@@ -57,6 +58,7 @@ class ConvictionsPenalties extends AbstractFormService
     protected function alterForm($form, array $params)
     {
         $this->changeFormForDirectorVariation($form, $params);
+        $this->addReadMoreLink($form);
         return $form;
     }
 
@@ -135,5 +137,38 @@ class ConvictionsPenalties extends AbstractFormService
             $this->removeConfirmation($form);
             $this->getFormHelper()->remove($form, 'form-actions->save');
         }
+    }
+
+    /**
+     * add read-more link
+     *
+     * @param \Zend\Form\Fieldset $form data table
+     *
+     * @return void
+     */
+    private function addReadMoreLink($form)
+    {
+        $translator = $this->getTranslator();
+        /** @var \Zend\Form\Fieldset $dataTable */
+        $dataTable = $form->get('data');
+        $link = new Html('$link');
+        $link->setValue(
+            '<a href="' . $translator->translate('convictions-read-more-link') . '" target="_blank">' .
+                    $translator->translate('Read more about convictions') .
+            '</a>'
+        );
+        $link->setAttribute('data-container-class', 'remove-link');
+        $dataTable->add($link, ['priority' => 0]);
+    }
+
+    /**
+     * Get the translator
+     *
+     * @return array|object
+     */
+    private function getTranslator()
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        return $translator;
     }
 }
