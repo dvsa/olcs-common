@@ -46,7 +46,8 @@ class EmploymentDetails
      * })
      * @Form\Options({
      *     "label":"transport-manager.employment.form.hoursPerWeek",
-     *     "short-label":"transport-manager.employment.form.hoursPerWeek"
+     *     "short-label":"transport-manager.employment.form.hoursPerWeek",
+     *     "error-message": "transport-manager.employment.form.hoursPerWeek.errorMessage",
      * })
      * @Form\Type("Textarea")
      * @Form\Required(true)
