@@ -8,6 +8,7 @@
 
 namespace CommonTest\FormService\Form\Lva;
 
+use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesData;
 use Common\FormService\Form\Lva\ConvictionsPenalties;
 use Common\RefData;
 use Zend\Form\Element;
@@ -15,6 +16,10 @@ use Zend\Form\Element\Radio;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 use Mockery as m;
+use Common\Service\Helper\TranslationHelperService;
+use Zend\Di\ServiceLocator;
+use Common\Service\Helper\FormHelperService;
+use Common\FormService\FormServiceManager;
 
 /**
  * Convictions & Penalties Form Service Test
@@ -33,8 +38,58 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
     public function setUp()
     {
         $this->mockedForm = m::mock(Form::class);
-        parent::setUp();
+        $this->formHelper = m::mock(FormHelperService::class);
+        $this->fsm = m::mock(FormServiceManager::class)->makePartial();
+
+        $translator = m::mock(TranslationHelperService::class);
+        $translator
+            ->shouldReceive('translate')
+            ->andReturnUsing(
+                function ($string) {
+                    return 'Welsh' . $string;
+                }
+            );
+
+        $mockServiceLocator = m::mock(ServiceLocator::class);
+        $mockServiceLocator
+            ->shouldReceive('get')
+            ->with('Helper\Translation')
+            ->andReturn($translator);
+
+        $this->fsm
+            ->shouldReceive('getServiceLocator')
+            ->andReturn($mockServiceLocator);
+
+        $class = $this->classToTest;
+        $this->sut = new $class();
+        $this->sut->setFormHelper($this->formHelper);
+        $this->sut->setFormServiceLocator($this->fsm);
     }
+
+    public function testGetForm()
+    {
+        $dataTable = m::mock(ConvictionsPenaltiesData::class);
+        $dataTable
+            ->shouldReceive('add')
+            ->with(anInstanceOf(Element::class), hasKeyValuePair('priority', integerValue()));
+
+        $form = m::mock(Form::class);
+        $form
+            ->shouldReceive('get')
+            ->with('data')
+            ->andReturn($dataTable);
+
+        $this->formHelper
+            ->shouldReceive('createForm')
+            ->once()
+            ->with($this->formName)
+            ->andReturn($form);
+
+        $actual = $this->sut->getForm();
+
+        $this->assertSame($form, $actual);
+    }
+
 
     public function testAlterFormDoesNothingIfParamsNotSet()
     {
@@ -52,7 +107,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
                 ->andReturn(
                     m::mock(Radio::class)
                         ->shouldReceive('setLabel')
-                        ->with('')->getMock()
+                        ->with(' ')->getMock()
                 )->getMock()
                 ->shouldReceive('getLabel')
                 ->andReturn($heading)
