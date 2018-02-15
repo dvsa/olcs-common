@@ -125,7 +125,7 @@ class TmEmploymentTest extends AbstractFormValidationTestCase
         $element = ['tm-employment-details', 'hoursPerWeek'];
         $this->assertFormElementIsRequired($element, true);
         $this->assertFormElementAllowEmpty($element, false);
-        $this->assertFormElementText($element, 0, 100);
+        $this->assertFormElementText($element, 0, 300);
     }
 
     public function testSubmit()
