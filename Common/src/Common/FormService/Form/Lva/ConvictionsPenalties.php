@@ -58,7 +58,6 @@ class ConvictionsPenalties extends AbstractFormService
     protected function alterForm($form, array $params)
     {
         $this->changeFormForDirectorVariation($form, $params);
-        $this->addReadMoreLink($form);
         return $form;
     }
 
@@ -114,8 +113,7 @@ class ConvictionsPenalties extends AbstractFormService
     private function alterFormQuestion($dataTable)
     {
         $question = $dataTable->get('question');
-        // setting the label to a blank space because setting it to empty string would remove the <fieldset> wrapper
-        $question->setLabel(' ');
+        $question->setLabel('');
     }
 
     /**
@@ -138,37 +136,5 @@ class ConvictionsPenalties extends AbstractFormService
             $this->removeConfirmation($form);
             $this->getFormHelper()->remove($form, 'form-actions->save');
         }
-    }
-
-    /**
-     * add read-more link
-     *
-     * @param \Zend\Form\Fieldset $form data table
-     *
-     * @return void
-     */
-    private function addReadMoreLink($form)
-    {
-        $translator = $this->getTranslator();
-        /** @var \Zend\Form\Fieldset $dataTable */
-        $dataTable = $form->get('data');
-        $link = new Html('link');
-        $link->setValue(
-            '<a href="' . $translator->translate('convictions-read-more-link') . '" target="_blank">' .
-                    $translator->translate('Read more about convictions') .
-            '</a>'
-        );
-        $dataTable->add($link, ['priority' => 0]);
-    }
-
-    /**
-     * Get the translator
-     *
-     * @return array|object
-     */
-    private function getTranslator()
-    {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-        return $translator;
     }
 }

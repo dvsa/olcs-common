@@ -38,32 +38,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
     public function setUp()
     {
         $this->mockedForm = m::mock(Form::class);
-        $this->formHelper = m::mock(FormHelperService::class);
-        $this->fsm = m::mock(FormServiceManager::class)->makePartial();
-
-        $translator = m::mock(TranslationHelperService::class);
-        $translator
-            ->shouldReceive('translate')
-            ->andReturnUsing(
-                function ($string) {
-                    return 'Welsh' . $string;
-                }
-            );
-
-        $mockServiceLocator = m::mock(ServiceLocator::class);
-        $mockServiceLocator
-            ->shouldReceive('get')
-            ->with('Helper\Translation')
-            ->andReturn($translator);
-
-        $this->fsm
-            ->shouldReceive('getServiceLocator')
-            ->andReturn($mockServiceLocator);
-
-        $class = $this->classToTest;
-        $this->sut = new $class();
-        $this->sut->setFormHelper($this->formHelper);
-        $this->sut->setFormServiceLocator($this->fsm);
+        parent::setUp();
     }
 
     public function testGetForm()
@@ -107,7 +82,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
                 ->andReturn(
                     m::mock(Radio::class)
                         ->shouldReceive('setLabel')
-                        ->with(' ')->getMock()
+                        ->with('')->getMock()
                 )->getMock()
                 ->shouldReceive('getLabel')
                 ->andReturn($heading)
