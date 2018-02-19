@@ -2861,7 +2861,7 @@ return [
     'transport-manager.employment.form.employerName' => 'Employer\'s name',
     'transport-manager.employment.form.hoursPerWeek.placeholder' => 'Max 300 characters',
     'transport-manager.employment.form.hoursPerWeek' => 'Which days and what hours do you work for this employer? (max 300 characters)',
-    'transport-manager.employment.form.hoursPerWeek.errorMessage' => 'Which days and what hours do you work for this employer is more than 300 characters long',
+    'transport-manager.employment.form.hoursPerWeek.errorMessage' => 'Which days and what hours do you work for this employer: is more than 300 characters long',
     'transport-manager.employment.form.position' => 'Your job title',
     'transport-manager.employment.save' => 'Save',
     'transport-manager.employments.table' => 'Other employment (optional)',
