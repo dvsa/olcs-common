@@ -8,6 +8,7 @@
 
 namespace CommonTest\FormService\Form\Lva;
 
+use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesData;
 use Common\FormService\Form\Lva\ConvictionsPenalties;
 use Common\RefData;
 use Zend\Form\Element;
@@ -15,6 +16,10 @@ use Zend\Form\Element\Radio;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 use Mockery as m;
+use Common\Service\Helper\TranslationHelperService;
+use Zend\Di\ServiceLocator;
+use Common\Service\Helper\FormHelperService;
+use Common\FormService\FormServiceManager;
 
 /**
  * Convictions & Penalties Form Service Test
@@ -35,6 +40,31 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         $this->mockedForm = m::mock(Form::class);
         parent::setUp();
     }
+
+    public function testGetForm()
+    {
+        $dataTable = m::mock(ConvictionsPenaltiesData::class);
+        $dataTable
+            ->shouldReceive('add')
+            ->with(anInstanceOf(Element::class), hasKeyValuePair('priority', integerValue()));
+
+        $form = m::mock(Form::class);
+        $form
+            ->shouldReceive('get')
+            ->with('data')
+            ->andReturn($dataTable);
+
+        $this->formHelper
+            ->shouldReceive('createForm')
+            ->once()
+            ->with($this->formName)
+            ->andReturn($form);
+
+        $actual = $this->sut->getForm();
+
+        $this->assertSame($form, $actual);
+    }
+
 
     public function testAlterFormDoesNothingIfParamsNotSet()
     {

@@ -25,6 +25,12 @@ class ConvictionsPenalties
     public $convictionsConfirmation = null;
 
     /**
+     * @Form\Name("convictionsReadMoreLink")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesReadMoreLink")
+     */
+    public $convictionsReadMoreLink = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})
