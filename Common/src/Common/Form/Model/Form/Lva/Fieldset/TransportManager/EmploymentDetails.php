@@ -40,17 +40,21 @@ class EmploymentDetails
     public $position = null;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({
+     *     "class":"long",
+     *     "placeholder": "transport-manager.employment.form.hoursPerWeek.placeholder",
+     * })
      * @Form\Options({
      *     "label":"transport-manager.employment.form.hoursPerWeek",
-     *     "short-label":"transport-manager.employment.form.hoursPerWeek"
+     *     "short-label":"transport-manager.employment.form.hoursPerWeek",
+     *     "error-message": "transport-manager.employment.form.hoursPerWeek.errorMessage",
      * })
      * @Form\Type("Textarea")
      * @Form\Required(true)
      * @Form\Validator({
      *     "name":"Zend\Validator\StringLength",
      *     "options":{
-     *          "max":100,
+     *          "max":300,
      *     },
      * })
      */
