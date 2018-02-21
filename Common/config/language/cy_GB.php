@@ -239,7 +239,7 @@ return [
     'business-details.name.locked' => 'Ni ellir newid enw\'r cwmni. Cysylltwch â\'r Swyddfa Drwyddedu Ganolog am gyngor pellach',
     'business-type' => 'Math o fusnes',
     'business-type.locked' => 'Ni ellir newid y math o fusnes. Cysylltwch â\'r Swyddfa Drwyddedu Ganolog i gael cyngor pellach.',
-    'business-type.locked.message' => 'I newid eich math o fusnes, e-bostiwch <a href="mailto:operatorlicensing@otc.gsi.gov.uk" aria-label="I newid eich math o fusnes, e-bostiwch operatorlicensing@otc.gsi.gov.uk">operatorlicensing@otc.gsi.gov.uk</a>.',
+    'business-type.locked.message' => 'I newid eich math o fusnes, e-bostiwch <a href="mailto:notifications@vehicle-operator-licensing.service.gov.uk" aria-label="I newid eich math o fusnes, e-bostiwch notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a>.',
     'busreg-tab-title-applications' => 'EBSR llwythiadau',
     'busreg-tab-title-registrations' => 'Cofrestriadau',
     'cancel' => 'Canslo',
