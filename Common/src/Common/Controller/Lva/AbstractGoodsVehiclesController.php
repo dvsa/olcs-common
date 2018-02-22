@@ -156,7 +156,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->traitHandleCrudAction(
             $crudActionData,
             [
-                'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
+                'add', 'print-vehicles', 'export', 'show-removed-vehicles', 'hide-removed-vehicles'
             ]
         );
     }
