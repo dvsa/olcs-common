@@ -3309,7 +3309,7 @@ return [
     'continuations.people-empty-table-message.org_t_rc' => 'There are no directors recorded on your licence',
     'continuations.people-empty-table-message.org_t_st' => 'There is no owner recorded on your licence',
     'continuations.step.header' => 'Step %s of %s',
-    'lva-operating-centre-radio-hint' => 'Uploading your financial information as soon as possible will help us process your application quickly.',
+    'lva-operating-centre-radio-hint' => 'Uploading your advert as soon as possible will help us process your application quickly.',
     'lva-operating-centre-radio-label' => '<p class="legend">How would you like to send your advert?</p>',
     'lva-operating-centre-newspaper-advert' => '<p class="label newspaper-advert">Newspaper advert</p>',
     'lva-operating-centre-newspaper-permission' => 'I acknowledge that:',
