@@ -156,7 +156,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->traitHandleCrudAction(
             $crudActionData,
             [
-                'add', 'print-vehicles', 'show-removed-vehicles', 'hide-removed-vehicles'
+                'add', 'print-vehicles', 'export', 'show-removed-vehicles', 'hide-removed-vehicles'
             ]
         );
     }
@@ -259,11 +259,14 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                         [
                             $result['totAuthVehicles'],
                             $this->url()->fromRoute(
-                                'lva-' . $this->lva . '/operating_centres', ['action' => null], [], true
+                                'lva-' . $this->lva .
+                                '/operating_centres',
+                                ['action' => null],
+                                [],
+                                true
                             )
                         ]
                     );
-
             } else {
                 $variation = $this->getServiceLocator()->get('Lva\Variation');
 
@@ -281,7 +284,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 ->addProminentErrorMessage($message);
 
             return $this->redirect()->toRouteAjax(
-                $this->getBaseRoute(), ['action' => null], ['query' => $request->getQuery()->toArray()], true
+                $this->getBaseRoute(),
+                ['action' => null],
+                ['query' => $request->getQuery()->toArray()],
+                true
             );
         }
 
@@ -326,11 +332,9 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             if ($response->isServerError()) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addCurrentErrorMessage('unknown-error');
             } else {
-
                 $messages = $response->getResult()['messages'];
 
                 if (isset($messages['VE-VRM-2'])) {
-
                     $confirm = new Checkbox(
                         'confirm-add',
                         ['label' => 'vehicle-belongs-to-another-licence-confirmation']
@@ -339,7 +343,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                     $confirm->setMessages([$this->formatConfirmationMessage($messages['VE-VRM-2'])]);
 
                     $form->get('licence-vehicle')->add($confirm);
-
                 } else {
                     $this->mapVehicleErrors($form, $messages);
                 }
@@ -659,8 +662,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             );
         }
 
-        if (
-            isset($params['allVehicleCount'])
+        if (isset($params['allVehicleCount'])
             && isset($params['activeVehicleCount'])
             && (int)$params['allVehicleCount'] > (int)$params['activeVehicleCount']
         ) {

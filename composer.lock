@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0a2ac943155847dc94f184712c5af454",
-    "content-hash": "6db79004824ae953606f93cf691aed45",
+    "hash": "36e0547ea311d6e40f12232f7e30aaad",
+    "content-hash": "ff09e03b2be075a5ddd8cac4a6d9c56f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1330,17 +1330,17 @@
     "packages-dev": [
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.9.3",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "95e1bae3182efc0f3422896a3236e991049dac69"
+                "reference": "d85d39da4576a6934b72480be6978fb10c860021"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/ezyang-htmlpurifier-95e1bae3182efc0f3422896a3236e991049dac69-zip-22dd16.tar",
-                "reference": "95e1bae3182efc0f3422896a3236e991049dac69",
-                "shasum": "b3008fd32e3e34dfa5d8973e1013c201c9feaaf2"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/ezyang-htmlpurifier-d85d39da4576a6934b72480be6978fb10c860021-zip-68f7aa.tar",
+                "reference": "d85d39da4576a6934b72480be6978fb10c860021",
+                "shasum": "70d5fd91e4d9b583fea8361f7011ef969473ad36"
             },
             "require": {
                 "php": ">=5.2"
@@ -1373,7 +1373,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2017-06-03 02:28:16"
+            "time": "2018-02-23 01:58:20"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -1621,7 +1621,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-testhelpers.git",
-                "reference": "2cac9a9cf7ced56e034b8f62da04a57feb184dae"
+                "reference": "f52e98ca3baa6217ea25f440c16694f13434d194"
             },
             "require": {
                 "php": ">=5.4"
@@ -1638,15 +1638,15 @@
                 }
             },
             "description": "OLCS Test helpers",
-            "time": "2018-01-31 15:58:29"
+            "time": "2018-02-14 22:07:06"
         },
         {
             "name": "olcs/olcs-transfer",
-            "version": "dev-release/4.33",
+            "version": "dev-release/4.34",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-                "reference": "fc74045f877793a33a0b50e8328145fc609dfbfd"
+                "reference": "ad247f73c355ebf2ba5aa89ad8c529a030a6eae3"
             },
             "require": {
                 "php": ">=5.4",
@@ -1684,15 +1684,15 @@
                 ]
             },
             "description": "OLCS Transfer",
-            "time": "2018-02-14 17:06:21"
+            "time": "2018-02-28 16:51:53"
         },
         {
             "name": "olcs/olcs-utils",
-            "version": "dev-release/4.33",
+            "version": "dev-release/4.34",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-utils.git",
-                "reference": "bad8d1535b43c64f98c9f3a3894d2ca97c983eec"
+                "reference": "2059764fcd2f3e216e871e5f4f36855f8f4ef074"
             },
             "require": {
                 "php": ">=5.4",
@@ -1701,7 +1701,7 @@
             "require-dev": {
                 "mockery/mockery": "~0.9.3",
                 "olcs/olcs-devtools": "dev-master",
-                "olcs/olcs-logging": "dev-release/4.33"
+                "olcs/olcs-logging": "dev-release/4.34"
             },
             "type": "library",
             "autoload": {
@@ -1730,7 +1730,7 @@
                 ]
             },
             "description": "OLCS Utils",
-            "time": "2018-02-14 17:07:46"
+            "time": "2018-02-28 16:53:19"
         },
         {
             "name": "pdepend/pdepend",
@@ -1986,17 +1986,17 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.7.4",
+            "version": "1.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "9f901e29c93dae4aa77c0bb161df4276f9c9a1be"
+                "reference": "dfd6be44111a7c41c2e884a336cc4f461b3b2401"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpspec-prophecy-9f901e29c93dae4aa77c0bb161df4276f9c9a1be-zip-663b52.tar",
-                "reference": "9f901e29c93dae4aa77c0bb161df4276f9c9a1be",
-                "shasum": "49acbc4bbbf4416256439c2baf4378bd0b7deb49"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpspec-prophecy-dfd6be44111a7c41c2e884a336cc4f461b3b2401-zip-b2cb0d.tar",
+                "reference": "dfd6be44111a7c41c2e884a336cc4f461b3b2401",
+                "shasum": "331ec76e8fa4649675973510d63eed8d00947f83"
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
@@ -2045,7 +2045,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2018-02-11 18:49:29"
+            "time": "2018-02-19 10:16:54"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3096,17 +3096,17 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.2.2",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1"
+                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/squizlabs-php_codesniffer-d7c00c3000ac0ce79c96fcbfef86b49a71158cd1-zip-8e52ca.tar",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
-                "shasum": "404a07ac0caa9489b7f523195ae0ac9e064b0c0f"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/squizlabs-php_codesniffer-4842476c434e375f9d3182ff7b89059583aa8b27-zip-e9f2be.tar",
+                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27",
+                "shasum": "aa09ec9c16555cff4655ee5a83e92224939524fe"
             },
             "require": {
                 "ext-simplexml": "*",
@@ -3115,7 +3115,7 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "bin": [
                 "bin/phpcs",
@@ -3143,7 +3143,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-12-19 21:44:46"
+            "time": "2018-02-20 21:35:23"
         },
         {
             "name": "symfony/config",
