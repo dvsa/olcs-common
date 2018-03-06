@@ -63,7 +63,7 @@ class HtmlTest extends PHPUnit_Framework_TestCase
 
     public function testThatHtmlCannotBeInjectedViaPopulateValues()
     {
-        $this->form->setData(['html' => self::MALICIOUS_HTML_PAYLOAD]);
+        $this->form->populateValues(['html' => self::MALICIOUS_HTML_PAYLOAD]);
         $this->assertSame(self::INITIAL_HTML_PAYLOAD, $this->render());
     }
 

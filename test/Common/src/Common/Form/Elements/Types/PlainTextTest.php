@@ -75,7 +75,7 @@ class PlainTextTest extends PHPUnit_Framework_TestCase
 
     public function testThatTextCannotBeInjectedViaPopulateValues()
     {
-        $this->form->setData(['text' => self::MALICIOUS_HTML_PAYLOAD]);
+        $this->form->populateValues(['text' => self::MALICIOUS_HTML_PAYLOAD]);
         $this->assertSame(self::INITIAL_TEXT_PAYLOAD, $this->render());
     }
 
