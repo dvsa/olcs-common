@@ -312,7 +312,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $this->prepareElement(\Common\Form\Elements\Types\TrafficAreaSet::class);
 
         $this->element
-            ->setValue('ABC')
+            ->setValue('<ABC>')
             ->setOption('hint-position', 'below');
 
         $viewHelper = $this->prepareViewHelper();
@@ -320,7 +320,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertEquals(
-            '<div class="label">ABC</div><div class="hint">Hint</div>',
+            '<div class="label">&lt;ABC&gt;</div><div class="hint">Hint</div>',
             $markup
         );
     }
