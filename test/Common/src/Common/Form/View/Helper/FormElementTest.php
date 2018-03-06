@@ -96,7 +96,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<a href="(.*)" class="(.*)">(.*)<\/a>$/');
+        $this->expectOutputRegex('/^<a href=".*" class="(.*)">(.*)<\/a>$/');
     }
 
     /**
@@ -112,6 +112,27 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputRegex('/^<a href="(.*)" class="(.*)">(.*)<\/a>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForActionLinkElementWithMaliciousUrl()
+    {
+        $this->prepareElement('\Common\Form\Elements\InputFilters\ActionLink');
+        $maliciousUrl = '<script>alert("url")</script>';
+        $this->element->setValue($maliciousUrl);
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex(
+            '/^<a href="' . preg_quote(
+                htmlspecialchars($maliciousUrl, ENT_QUOTES, 'utf-8'),
+                '/'
+            ) . '" class="class">(.*)<\/a>$/'
+        );
     }
 
     /**
