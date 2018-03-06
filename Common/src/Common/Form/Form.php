@@ -69,11 +69,11 @@ class Form extends ZendForm\Form
     public function populateValues($data, $onlyBase = false)
     {
         $populateDepth = &self::getPopulateDepth();
-        try{
-            $populateDepth +=1;
+        try {
+            $populateDepth += 1;
             parent::populateValues($data, $onlyBase);
         } finally {
-            $populateDepth -=1;
+            $populateDepth -= 1;
         }
     }
 

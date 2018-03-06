@@ -22,6 +22,8 @@ class Html extends Element
      * setValue
      *
      * @param mixed $value value
+     *
+     * @return void
      */
     public function setValue($value)
     {

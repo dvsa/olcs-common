@@ -5,6 +5,7 @@
  *
  * @author Someone <someone@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
 use Common\Form\Form;
@@ -32,6 +33,8 @@ class PlainText extends Element
      * setValue
      *
      * @param mixed $value value
+     *
+     * @return void
      */
     public function setValue($value)
     {
@@ -47,6 +50,7 @@ class PlainText extends Element
      * - label_attributes: attributes to use when the label is rendered
      *
      * @param  array|Traversable $options
+     *
      * @return Element|ElementInterface
      */
     public function setOptions($options)

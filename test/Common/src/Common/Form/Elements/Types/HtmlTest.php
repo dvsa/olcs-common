@@ -1,8 +1,6 @@
 <?php
 
-
 namespace CommonTest\Form\Elements\Types;
-
 
 use Common\Form\Elements\Types\Html;
 use Common\Form\Form;

@@ -2,7 +2,6 @@
 
 namespace CommonTest\Form\Elements\Types;
 
-
 use Common\Form\Elements\Types\PlainText;
 use Common\Form\Form;
 use Common\Form\View\Helper\FormElement;
