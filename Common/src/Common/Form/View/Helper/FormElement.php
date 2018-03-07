@@ -70,7 +70,7 @@ class FormElement extends ZendFormElement
 
             $markup = sprintf(
                 '<div class="label">%s</div>',
-                $view->translate($value)
+                htmlspecialchars($view->translate($value), ENT_QUOTES, 'utf-8')
             );
 
             return $this->attachHint($element, $markup);
@@ -83,7 +83,6 @@ class FormElement extends ZendFormElement
         }
 
         if ($element instanceof ActionLink) {
-
             $route = $element->getOption('route');
             if (!empty($route)) {
                 $url = $this->getView()->url($route, array(), array(), true);
@@ -105,11 +104,9 @@ class FormElement extends ZendFormElement
 
             $label = $this->getView()->translate($element->getLabel());
 
-            return '<a href="' . $url . '" class="' . $class . '"' . $target . '>' . $label . '</a>';
+            return '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'utf-8') . '" class="' . $class . '"' . $target . '>' . $label . '</a>';
         }
-
         if ($element instanceof HtmlTranslated) {
-
             if ($element instanceof GuidanceTranslated) {
                 $wrapper = self::GUIDANCE_WRAPPER;
             } else {
@@ -119,7 +116,6 @@ class FormElement extends ZendFormElement
             $tokens = $element->getTokens();
 
             if (is_array($tokens) && count($tokens)) {
-
                 $translated = [];
 
                 foreach ($tokens as $token) {

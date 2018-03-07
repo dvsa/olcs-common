@@ -2,6 +2,7 @@
 
 namespace Common\Form;
 
+use Common\Form\Elements\Types\Html;
 use ReflectionClass;
 use Zend\Form as ZendForm;
 
@@ -63,5 +64,34 @@ class Form extends ZendForm\Form
         }
 
         return parent::isValid();
+    }
+
+    public function populateValues($data, $onlyBase = false)
+    {
+        $populateDepth = &self::getPopulateDepth();
+        try {
+            $populateDepth += 1;
+            parent::populateValues($data, $onlyBase);
+        } finally {
+            $populateDepth -= 1;
+        }
+    }
+
+    /**
+     * A design flaw in @see Html means that JS may be injected into a rendered page by submitting it to such a 'field'
+     * This will function allows the Html to know that a value being set is coming from user data so it can prevent the
+     * injection.
+     *
+     * @return int
+     */
+    private static function &getPopulateDepth()
+    {
+        static $populateDepth = 0;
+        return $populateDepth;
+    }
+
+    public static function isPopulating()
+    {
+        return self::getPopulateDepth() !== 0;
     }
 }

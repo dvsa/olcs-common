@@ -5,9 +5,13 @@
  *
  * @author Someone <someone@valtech.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
+use Common\Form\Form;
+use Traversable;
 use Zend\Form\Element;
+use Zend\Form\ElementInterface;
 
 /**
  * Plain Text Element
@@ -26,11 +30,27 @@ class PlainText extends Element
     );
 
     /**
+     * setValue
+     *
+     * @param mixed $value value
+     *
+     * @return void
+     */
+    public function setValue($value)
+    {
+        /**  #OLCS-17989 - overridden to ensure any injection cannot happen **/
+        if (!Form::isPopulating()) {
+            parent::setValue($value);
+        }
+    }
+
+    /**
      * Set options for an element. Accepted options are:
      * - label: label to associate with the element
      * - label_attributes: attributes to use when the label is rendered
      *
      * @param  array|Traversable $options
+     *
      * @return Element|ElementInterface
      */
     public function setOptions($options)
