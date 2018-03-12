@@ -2,7 +2,6 @@
 
 namespace Common\Controller;
 
-use Olcs\Controller\Entity\ViewController;
 use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Zend\View\Model\ViewModel;
 

@@ -62,7 +62,6 @@ return array(
         'child_routes' => array(
             'guide' => array(
                 'type' => 'segment',
-                'may_terminate' => true,
                 'options' =>  array(
                     'route' => ':guide[/]',
                     'constraints' => [
