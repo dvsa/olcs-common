@@ -2,6 +2,7 @@
 
 namespace Common\Controller;
 
+use Olcs\Controller\Entity\ViewController;
 use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -22,6 +23,8 @@ class GuidesController extends ZendAbstractActionController
     const GUIDE_TERMS_AND_CONDITIONS = 'terms-and-conditions';
     const GUIDE_FINANCIAL_EVIDENCE = 'financial-evidence';
     const GUIDE_TRAFFIC_AREA = 'traffic-area';
+    const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_GB = 'convictions-and-penalties-guidance-gb';
+    const GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_NI = 'convictions-and-penalties-guidance-ni';
 
     protected $guideMap = [
         self::GUIDE_OC_ADV_GB_NEW => 'oc_advert',
@@ -32,11 +35,13 @@ class GuidesController extends ZendAbstractActionController
         self::GUIDE_TERMS_AND_CONDITIONS => 'default',
         self::GUIDE_FINANCIAL_EVIDENCE => 'default',
         self::GUIDE_TRAFFIC_AREA => 'default',
+        self::GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_GB => 'default',
+        self::GUIDE_CONVICTIONS_AND_PENALTIES_GUIDANCE_NI => 'default',
     ];
 
     public function indexAction()
     {
-        $guide = (string) $this->params('guide');
+        $guide = (string)$this->params('guide');
 
         if (!isset($this->guideMap[$guide])) {
             return $this->notFoundAction();
