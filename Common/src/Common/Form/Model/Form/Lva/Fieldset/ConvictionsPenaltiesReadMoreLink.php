@@ -10,9 +10,9 @@ use Zend\Form\Annotation as Form;
 class ConvictionsPenaltiesReadMoreLink
 {
     /**
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     * @Form\Attributes({"value":"<a href=""%s"" target=""_blank"">%s</h3>"})
-     * @Form\Options({"tokens": {"convictions-read-more-link","Read more about convictions"}})
+     * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
+     * @Form\Attributes({"target":"_blank"})
+     * @Form\Options({"label":"Read more about convictions"})
      */
     public $readMoreLink = null;
 }
