@@ -8,6 +8,7 @@
 
 namespace CommonTest\FormService\Form\Lva;
 
+use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesData;
 use Common\FormService\Form\Lva\ConvictionsPenalties;
 use Common\RefData;
@@ -20,6 +21,7 @@ use Common\Service\Helper\TranslationHelperService;
 use Zend\Di\ServiceLocator;
 use Common\Service\Helper\FormHelperService;
 use Common\FormService\FormServiceManager;
+use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesReadMoreLink;
 
 /**
  * Convictions & Penalties Form Service Test
@@ -48,11 +50,30 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
             ->shouldReceive('add')
             ->with(anInstanceOf(Element::class), hasKeyValuePair('priority', integerValue()));
 
+        $ConvictionsReadMoreLink = m::mock(ConvictionsPenaltiesReadMoreLink::class);
+        $ConvictionsReadMoreLink
+            ->shouldReceive('get')
+            ->with('readMoreLink')->andReturn(
+                m::mock(ActionLink::class)
+            );
+
         $form = m::mock(Form::class);
         $form
+            ->shouldReceive('get')->with('data')->andReturn($dataTable)
+            ->shouldReceive('get')->with('convictionsReadMoreLink')->andReturn(
+               $ConvictionsReadMoreLink)->getMock();
+
+        $translator = m::mock(TranslationHelperService::class);
+        $translator
+            ->shouldReceive('translate')
+            ->andReturn('convictions-and-penalties-guidance-ni');
+
+        $mockServiceLocator = m::mock(ServiceLocator::class);
+        $mockServiceLocator
             ->shouldReceive('get')
-            ->with('data')
-            ->andReturn($dataTable);
+            ->with('Helper\Url')
+            ->andReturn($translator);
+
 
         $this->formHelper
             ->shouldReceive('createForm')
