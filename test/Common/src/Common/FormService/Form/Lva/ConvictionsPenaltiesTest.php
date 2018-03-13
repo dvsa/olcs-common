@@ -22,6 +22,7 @@ use Zend\Di\ServiceLocator;
 use Common\Service\Helper\FormHelperService;
 use Common\FormService\FormServiceManager;
 use Common\Form\Model\Form\Lva\Fieldset\ConvictionsPenaltiesReadMoreLink;
+use Zend\Mvc\Controller\Plugin\Url;
 
 /**
  * Convictions & Penalties Form Service Test
@@ -45,6 +46,10 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
 
     public function testGetForm()
     {
+        $this->formHelper = m::mock(FormHelperService::class);
+        $this->fsm = m::mock(FormServiceManager::class)->makePartial();
+
+
         $dataTable = m::mock(ConvictionsPenaltiesData::class);
         $dataTable
             ->shouldReceive('add')
@@ -54,32 +59,51 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
         $ConvictionsReadMoreLink
             ->shouldReceive('get')
             ->with('readMoreLink')->andReturn(
-                m::mock(ActionLink::class)
-            );
+                m::mock(ActionLink::class)->shouldReceive('setValue')->once()->with('/guides/convictions-and-penalties-guidance-ni/')->getMock()
+
+            )->getMock();
 
         $form = m::mock(Form::class);
         $form
             ->shouldReceive('get')->with('data')->andReturn($dataTable)
             ->shouldReceive('get')->with('convictionsReadMoreLink')->andReturn(
-               $ConvictionsReadMoreLink)->getMock();
+                $ConvictionsReadMoreLink
+            )->getMock();
 
         $translator = m::mock(TranslationHelperService::class);
         $translator
             ->shouldReceive('translate')
             ->andReturn('convictions-and-penalties-guidance-ni');
 
-        $mockServiceLocator = m::mock(ServiceLocator::class);
-        $mockServiceLocator
-            ->shouldReceive('get')
-            ->with('Helper\Url')
-            ->andReturn($translator);
+        $mockUrl = m::mock();
+        $mockUrl
+            ->shouldReceive('fromRoute')
+            ->with(
+                'guides/guide',
+                ['guide' => 'convictions-and-penalties-guidance-ni']
+            )
+            ->once()
+            ->andReturn('/guides/convictions-and-penalties-guidance-ni/');
 
+
+        $mockServiceLocator = m::mock(ServiceLocator::class);
+
+
+        $mockServiceLocator->shouldReceive('get')->with('Helper\Translation')->once()->andReturn($translator);
+        $mockServiceLocator->shouldReceive('get')->with('Helper\Url')->once()->andReturn($mockUrl);
 
         $this->formHelper
             ->shouldReceive('createForm')
             ->once()
             ->with($this->formName)
             ->andReturn($form);
+
+        $this->fsm
+            ->shouldReceive('getServiceLocator')
+            ->andReturn($mockServiceLocator);
+
+        $this->sut->setFormHelper($this->formHelper);
+        $this->sut->setFormServiceLocator($this->fsm);
 
         $actual = $this->sut->getForm();
 
@@ -108,7 +132,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
                 ->shouldReceive('getLabel')
                 ->andReturn($heading)
                 ->getMock()
-                ->shouldReceive('setLabel')->with($heading . '-' . RefData::ORG_TYPE_RC."-dc")
+                ->shouldReceive('setLabel')->with($heading . '-' . RefData::ORG_TYPE_RC . "-dc")
                 ->shouldReceive('getAttribute')->with('class')->andReturn('')
                 ->shouldReceive('setAttribute')->with('class', ' five-eights')
                 ->getMock()
@@ -129,7 +153,7 @@ class ConvictionsPenaltiesTest extends AbstractLvaFormServiceTestCase
             )->getMock();
 
         $this->mockedForm->shouldReceive('remove')->with('convictionsConfirmation')
-                ->getMock();
+            ->getMock();
 
         $this->formHelper
             ->shouldReceive('remove')
