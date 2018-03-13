@@ -83,7 +83,6 @@ class FormElement extends ZendFormElement
         }
 
         if ($element instanceof ActionLink) {
-
             $route = $element->getOption('route');
             if (!empty($route)) {
                 $url = $this->getView()->url($route, array(), array(), true);
@@ -109,7 +108,6 @@ class FormElement extends ZendFormElement
         }
 
         if ($element instanceof HtmlTranslated) {
-
             if ($element instanceof GuidanceTranslated) {
                 $wrapper = self::GUIDANCE_WRAPPER;
             } else {
@@ -119,7 +117,6 @@ class FormElement extends ZendFormElement
             $tokens = $element->getTokens();
 
             if (is_array($tokens) && count($tokens)) {
-
                 $translated = [];
 
                 foreach ($tokens as $token) {
