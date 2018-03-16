@@ -96,7 +96,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<a href="(.*)" class="(.*)">(.*)<\/a>$/');
+        $this->expectOutputRegex('/^<a href=".*" class="(.*)">(.*)<\/a>$/');
     }
 
     /**
@@ -112,6 +112,27 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputRegex('/^<a href="(.*)" class="(.*)">(.*)<\/a>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForActionLinkElementWithMaliciousUrl()
+    {
+        $this->prepareElement('\Common\Form\Elements\InputFilters\ActionLink');
+        $maliciousUrl = '<script>alert("url")</script>';
+        $this->element->setValue($maliciousUrl);
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex(
+            '/^<a href="' . preg_quote(
+                htmlspecialchars($maliciousUrl, ENT_QUOTES, 'utf-8'),
+                '/'
+            ) . '" class="class">(.*)<\/a>$/'
+        );
     }
 
     /**
@@ -312,7 +333,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $this->prepareElement(\Common\Form\Elements\Types\TrafficAreaSet::class);
 
         $this->element
-            ->setValue('ABC')
+            ->setValue('<ABC>')
             ->setOption('hint-position', 'below');
 
         $viewHelper = $this->prepareViewHelper();
@@ -320,7 +341,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertEquals(
-            '<div class="label">ABC</div><div class="hint">Hint</div>',
+            '<div class="label">&lt;ABC&gt;</div><div class="hint">Hint</div>',
             $markup
         );
     }

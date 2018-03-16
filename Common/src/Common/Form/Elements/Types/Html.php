@@ -5,8 +5,10 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\Elements\Types;
 
+use Common\Form\Form;
 use Zend\Form\Element;
 
 /**
@@ -16,5 +18,18 @@ use Zend\Form\Element;
  */
 class Html extends Element
 {
-
+    /**
+     * setValue
+     *
+     * @param mixed $value value
+     *
+     * @return void
+     */
+    public function setValue($value)
+    {
+        /**  #OLCS-17989 - overridden to ensure any injection cannot happen **/
+        if (!Form::isPopulating()) {
+            parent::setValue($value);
+        }
+    }
 }

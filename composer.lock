@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "36e0547ea311d6e40f12232f7e30aaad",
-    "content-hash": "ff09e03b2be075a5ddd8cac4a6d9c56f",
+    "hash": "5f2d5eeb73adfccf18aa8c886b6d39ec",
+    "content-hash": "62c0be89962ddf03a27b80c7e88ef454",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -875,17 +875,17 @@
         },
         {
             "name": "symfony/debug",
-            "version": "v3.4.4",
+            "version": "v3.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "53f6af2805daf52a43b393b93d2f24925d35c937"
+                "reference": "9b1071f86e79e1999b3d3675d2e0e7684268b9bc"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-debug-53f6af2805daf52a43b393b93d2f24925d35c937-zip-5b4f76.tar",
-                "reference": "53f6af2805daf52a43b393b93d2f24925d35c937",
-                "shasum": "fed3890ac42d4f39b147355bb559751674fd30de"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-debug-9b1071f86e79e1999b3d3675d2e0e7684268b9bc-zip-82dbce.tar",
+                "reference": "9b1071f86e79e1999b3d3675d2e0e7684268b9bc",
+                "shasum": "87aec1a83175cb8d8ecf9b12015daedb5ac1533b"
             },
             "require": {
                 "php": "^5.5.9|>=7.0.8",
@@ -927,7 +927,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-18 22:16:57"
+            "time": "2018-02-28 21:49:22"
         },
         {
             "name": "symfony/filesystem",
@@ -1621,7 +1621,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-testhelpers.git",
-                "reference": "f52e98ca3baa6217ea25f440c16694f13434d194"
+                "reference": "ed4d129ea86cc08336b58db2b9bc1998de785436"
             },
             "require": {
                 "php": ">=5.4"
@@ -1638,15 +1638,15 @@
                 }
             },
             "description": "OLCS Test helpers",
-            "time": "2018-02-14 22:07:06"
+            "time": "2018-02-28 18:14:05"
         },
         {
             "name": "olcs/olcs-transfer",
-            "version": "dev-release/4.34",
+            "version": "dev-release/4.35",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-                "reference": "ad247f73c355ebf2ba5aa89ad8c529a030a6eae3"
+                "reference": "e79f5f1c76530e886b30e2dc8a6ce0e176d7704e"
             },
             "require": {
                 "php": ">=5.4",
@@ -1684,15 +1684,15 @@
                 ]
             },
             "description": "OLCS Transfer",
-            "time": "2018-02-28 16:51:53"
+            "time": "2018-03-13 18:31:13"
         },
         {
             "name": "olcs/olcs-utils",
-            "version": "dev-release/4.34",
+            "version": "dev-release/4.35",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-utils.git",
-                "reference": "2059764fcd2f3e216e871e5f4f36855f8f4ef074"
+                "reference": "27c4afef7c7da1ac3229a8f8d9cdd47b267ff424"
             },
             "require": {
                 "php": ">=5.4",
@@ -1701,7 +1701,7 @@
             "require-dev": {
                 "mockery/mockery": "~0.9.3",
                 "olcs/olcs-devtools": "dev-master",
-                "olcs/olcs-logging": "dev-release/4.34"
+                "olcs/olcs-logging": "dev-release/4.35"
             },
             "type": "library",
             "autoload": {
@@ -1730,7 +1730,7 @@
                 ]
             },
             "description": "OLCS Utils",
-            "time": "2018-02-28 16:53:19"
+            "time": "2018-03-13 18:32:40"
         },
         {
             "name": "pdepend/pdepend",
@@ -3147,7 +3147,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.8.34",
+            "version": "v2.8.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -3266,17 +3266,17 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.4.4",
+            "version": "v3.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "613e26310776f49a1773b6737c6bd554b8bc8c6f"
+                "reference": "a479817ce0a9e4adfd7d39c6407c95d97c254625"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-finder-613e26310776f49a1773b6737c6bd554b8bc8c6f-zip-a141c2.tar",
-                "reference": "613e26310776f49a1773b6737c6bd554b8bc8c6f",
-                "shasum": "895187c8b0cedc919ea0174f6ce9f8e34dbf9f25"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-finder-a479817ce0a9e4adfd7d39c6407c95d97c254625-zip-4a2925.tar",
+                "reference": "a479817ce0a9e4adfd7d39c6407c95d97c254625",
+                "shasum": "14acbe6272c352ad23c00a29f16588ecbc8a7fd6"
             },
             "require": {
                 "php": "^5.5.9|>=7.0.8"
@@ -3311,7 +3311,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-03 07:37:34"
+            "time": "2018-03-05 18:28:11"
         },
         {
             "name": "symfony/yaml",

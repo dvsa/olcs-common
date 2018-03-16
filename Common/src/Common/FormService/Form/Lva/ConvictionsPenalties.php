@@ -11,6 +11,7 @@ namespace Common\FormService\Form\Lva;
 use Common\FormService\Form\AbstractFormService;
 use Common\RefData;
 use Common\Form\Elements\Types\Html;
+use Dvsa\Olcs\Api\Entity\Licence;
 
 /**
  * Convictions and Penalties Form
@@ -58,6 +59,15 @@ class ConvictionsPenalties extends AbstractFormService
     protected function alterForm($form, array $params)
     {
         $this->changeFormForDirectorVariation($form, $params);
+        $getConvictionsReadMoreLink = $form->get('convictionsReadMoreLink')->get('readMoreLink');
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $routeParam = $translator->translate('convictions-and-penalties-guidance-route-param');
+        $getConvictionsReadMoreRoute = $this->getServiceLocator()->get('Helper\Url')->fromRoute(
+            'guides/guide',
+            ['guide' => $routeParam]
+        );
+        $getConvictionsReadMoreLink->setValue($getConvictionsReadMoreRoute);
+
         return $form;
     }
 
@@ -98,9 +108,9 @@ class ConvictionsPenalties extends AbstractFormService
     private function alterFormHeading($dataTable, array $params)
     {
         $label = $dataTable->getLabel();
-        $dataTable->setLabel($label . '-' . $params['organisationType']."-dc");
+        $dataTable->setLabel($label . '-' . $params['organisationType'] . "-dc");
         $existingClasses = $dataTable->getAttribute('class');
-        $dataTable->setAttribute('class', $existingClasses .' five-eights');
+        $dataTable->setAttribute('class', $existingClasses . ' five-eights');
     }
 
     /**
@@ -129,7 +139,7 @@ class ConvictionsPenalties extends AbstractFormService
         if ($this->isDirectorChange($params)) {
             $dataTable = $form->get('data');
             $existingClasses = $dataTable->getAttribute('class');
-            $dataTable->setAttribute('class', $existingClasses.' director-change');
+            $dataTable->setAttribute('class', $existingClasses . ' director-change');
             $this->alterFormQuestion($dataTable);
             $this->alterFormHeading($dataTable, $params);
             $this->alterFormButtons($form);

@@ -30,7 +30,7 @@ $ni = array_merge(
         'transport-manager.responsibilities.additional-information' => 'If you will spend less than the <a href="https://www.infrastructure-ni.gov.uk/sites/default/files/publications/doe/tm-ni-1g-guidance-notes-for-an-application-to-add-a-transport-manager-to-a-goods-vehicle-operator%27s-licence.pdf" target="black" rel="external">recommended amount of time</a> on your Transport Manager duties for the relevant licence(s) you need to tell us why. Your explanation should include details of driver, vehicle and licence administration, management and operations, compliance systems, and any relevant knowledge and skills you possess. If you have a document prepared you can upload it below.',
         'lva-transport-manager-licence-table-empty-message' => '<p class="article"><p class="important"><strong>You don’t have a Transport Manager specified. If you haven’t yet made an application to appoint a replacement you must contact us on {{OPERATOR_LICENSING_PHONE_NI}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL_NI}}">{{OPERATOR_LICENSING_EMAIL_NI}}</a></strong></p>',
         'delete.final-tm.confirmation.text' => 'You are removing your last Transport Manager. If you haven\'t yet made an application to appoint a replacement, you must contact us on {{OPERATOR_LICENSING_PHONE_NI}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL_NI}}">{{OPERATOR_LICENSING_EMAIL_NI}}</a>',
-        'convictions-read-more-link' => 'https://www.infrastructure-ni.gov.uk/sites/default/files/publications/infrastructure/gv-ni-79g-guidance-notes-for-a-goods-vehicle-operators-licence-application.pdf',
+        'convictions-and-penalties-guidance-route-param' => 'convictions-and-penalties-guidance-ni',
     ]
 );
 
