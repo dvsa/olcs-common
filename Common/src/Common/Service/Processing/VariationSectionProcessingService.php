@@ -51,6 +51,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         'discs' => [],
         'community_licences' => [],
         'safety' => [],
+        'ecmt' => [],
         'conditions_undertakings' => [],
         'financial_history' => [],
         'convictions_penalties' => [],
@@ -77,6 +78,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         'discs' => 'hasSavedSection',
         'community_licences' => 'hasSavedSection',
         'safety' => 'hasSavedSection',
+        'ecmt' => 'hasSavedSection',
         'conditions_undertakings' => 'hasUpdatedConditionsUndertakings',
         'financial_history' => 'hasUpdatedFinancialHistory',
         // @NOTE Not sure if we need this just yet
