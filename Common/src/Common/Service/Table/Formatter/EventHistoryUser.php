@@ -20,13 +20,13 @@ class EventHistoryUser implements FormatterInterface
      */
     public static function format($data, $column = [], $sm = null)
     {
-        if ($data['changeMadeBy'] !== null) {
-            return $data['changeMadeBy'];
-        }
-
         $internalMarker = isset($data['user']['team'])
             ? ' ' . $sm->get('Translator')->translate('internal.marker')
             : '';
+
+        if ($data['changeMadeBy'] !== null) {
+            return $data['changeMadeBy'] . $internalMarker;
+        }
 
         if (isset($data['user']['contactDetails']['person'])) {
             $person = $data['user']['contactDetails']['person'];

@@ -57,7 +57,8 @@ class EventHistoryUserTest extends MockeryTestCase
                                 'familyName' => 'Bar'
                             ]
                         ]
-                    ]
+                    ],
+                    'changeMadeBy' => null,
                 ],
                 'Foo Bar',
             ],
@@ -71,7 +72,8 @@ class EventHistoryUserTest extends MockeryTestCase
                             ]
                         ],
                         'team' => 'some team'
-                    ]
+                    ],
+                    'changeMadeBy' => null,
                 ],
                 'Foo Bar (internal)',
             ],
@@ -79,7 +81,8 @@ class EventHistoryUserTest extends MockeryTestCase
                 [
                     'user' => [
                         'loginId' => 'cake'
-                    ]
+                    ],
+                    'changeMadeBy' => null,
                 ],
                 'cake',
             ],
@@ -88,7 +91,8 @@ class EventHistoryUserTest extends MockeryTestCase
                     'user' => [
                         'loginId' => 'cake',
                         'team' => 'some team'
-                    ]
+                    ],
+                    'changeMadeBy' => null,
                 ],
                 'cake (internal)',
             ],
@@ -100,9 +104,39 @@ class EventHistoryUserTest extends MockeryTestCase
                         ],
                         'team' => 'some team',
                         'loginId' => 'cake'
-                    ]
+                    ],
+                    'changeMadeBy' => null,
                 ],
                 'cake (internal)',
+            ],
+            'external with change made by' => [
+                [
+                    'user' => [
+                        'contactDetails' => [
+                            'person' => [
+                                'forename' => 'Foo',
+                                'familyName' => 'Bar'
+                            ]
+                        ]
+                    ],
+                    'changeMadeBy' => 'Name Surname',
+                ],
+                'Name Surname',
+            ],
+            'internal with change made by' => [
+                [
+                    'user' => [
+                        'contactDetails' => [
+                            'person' => [
+                                'forename' => 'Foo',
+                                'familyName' => 'Bar'
+                            ]
+                        ],
+                        'team' => 'some team'
+                    ],
+                    'changeMadeBy' => 'Name Surname',
+                ],
+                'Name Surname (internal)',
             ],
         ];
     }
