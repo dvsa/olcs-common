@@ -24,6 +24,10 @@ class EventHistoryUser implements FormatterInterface
             ? ' ' . $sm->get('Translator')->translate('internal.marker')
             : '';
 
+        if ($data['changeMadeBy'] !== null) {
+            return $data['changeMadeBy'] . $internalMarker;
+        }
+
         if (isset($data['user']['contactDetails']['person'])) {
             $person = $data['user']['contactDetails']['person'];
             if (!empty($person['forename']) && !empty($person['familyName'])) {
