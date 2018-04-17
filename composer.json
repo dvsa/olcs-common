@@ -29,7 +29,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "zendframework/zendframework": "~2.4.0",
+        "zendframework/zendframework": "~3.0.0",
         "doctrine/doctrine-orm-module": "~0.9.0",
         "doctrine/annotations": "^1.2.3",
         "symfony/Filesystem": "~2.6.0",
@@ -39,9 +39,9 @@
         "olcs/olcs-devtools": "dev-master",
         "mockery/mockery": "~0.9.3",
         "mikey179/vfsStream": "~1.4.0",
-        "olcs/olcs-testhelpers": "dev-develop",
-        "olcs/olcs-transfer": "dev-develop",
-        "olcs/olcs-utils": "dev-develop",
+        "olcs/olcs-testhelpers": "dev-feature/OLCS-19144-ZF3",
+        "olcs/olcs-transfer": "dev-feature/OLCS-19144-ZF3",
+        "olcs/olcs-utils": "dev-feature/OLCS-19144-ZF3",
         "soflomo/purifier": "~0.1.0"
     },
     "autoload": {
