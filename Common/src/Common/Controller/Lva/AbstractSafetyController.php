@@ -179,7 +179,6 @@ abstract class AbstractSafetyController extends AbstractController
         $formMessages = [];
 
         if (isset($errors['safetyConfirmation'])) {
-
             foreach ($errors['safetyConfirmation'][0] as $key => $message) {
                 $formMessages['application']['safetyConfirmation'][] = $key;
             }
@@ -188,7 +187,6 @@ abstract class AbstractSafetyController extends AbstractController
         }
 
         if (isset($errors['tachographInsName'])) {
-
             foreach ($errors['tachographInsName'][0] as $key => $message) {
                 $formMessages['licence']['tachographInsName'][] = $key;
             }
