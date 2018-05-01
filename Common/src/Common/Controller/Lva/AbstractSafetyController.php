@@ -351,18 +351,30 @@ abstract class AbstractSafetyController extends AbstractController
         // load application/variation data
         $response = $this->handleQuery($dto);
         if ($response->isOk()) {
+            $translationHelper = $this->getServiceLocator()->get('Helper\Translation');
             $data = $response->getResult();
+
             $ref = $data['niFlag'] . '-' . $data['goodsOrPsv']['id'];
-            $hints = [
-                'N-' . \Common\RefData::LICENCE_CATEGORY_GOODS_VEHICLE => 'safety-inspector-external-hint-GB-goods',
-                'N-' . \Common\RefData::LICENCE_CATEGORY_PSV => 'safety-inspector-external-hint-GB-psv',
-                'Y-' . \Common\RefData::LICENCE_CATEGORY_GOODS_VEHICLE => 'safety-inspector-external-hint-NI-goods',
+            $links = [
+                'N-' . \Common\RefData::LICENCE_CATEGORY_GOODS_VEHICLE => 'safety-inspector-sample-contract-GV79-GB',
+                'N-' . \Common\RefData::LICENCE_CATEGORY_PSV => 'safety-inspector-sample-contract-PSV421-GB',
+                'Y-' . \Common\RefData::LICENCE_CATEGORY_GOODS_VEHICLE => 'safety-inspector-sample-contract-GV79-NI',
             ];
+
+            $hint = $translationHelper->translateReplace(
+                'safety-inspector-external-hint',
+                [$this->url()->fromRoute(
+                    'getfile',
+                    ['identifier' => base64_encode(
+                        $translationHelper->translate($links[$ref])
+                    )]
+                )]
+            );
 
             // Add a hint to the external radio
             /** @var \Zend\Form\Element\Radio $externalElement */
             $externalElement = $form->get('data')->get('isExternal');
-            $externalElement->setOption('hint', $hints[$ref]);
+            $externalElement->setOption('hint', $hint);
         }
     }
 
