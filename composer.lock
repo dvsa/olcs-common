@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "287021bf7852977dee57dea87cd46b27",
-    "content-hash": "b427055b6f2dc8df40778aa90de23fc4",
+    "hash": "707ab48de2d0b073fff0e34b233c2c0f",
+    "content-hash": "aea22dc332b648046300f3e44856473c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -875,17 +875,17 @@
         },
         {
             "name": "symfony/debug",
-            "version": "v3.4.8",
+            "version": "v3.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "9cf7c2271cfb89ef9727db1b740ca77be57bf9d7"
+                "reference": "1b95888cfd996484527cb41e8952d9a5eaf7454f"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-debug-9cf7c2271cfb89ef9727db1b740ca77be57bf9d7-zip-9df8e5.tar",
-                "reference": "9cf7c2271cfb89ef9727db1b740ca77be57bf9d7",
-                "shasum": "26a952fa4b81346c6acce88baf365d60a247146a"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/symfony-debug-1b95888cfd996484527cb41e8952d9a5eaf7454f-zip-971371.tar",
+                "reference": "1b95888cfd996484527cb41e8952d9a5eaf7454f",
+                "shasum": "4711fbee63f3ba3f2bef4e05947b2b63c1223bc3"
             },
             "require": {
                 "php": "^5.5.9|>=7.0.8",
@@ -927,7 +927,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-04-03 05:22:50"
+            "time": "2018-04-30 16:53:52"
         },
         {
             "name": "symfony/filesystem",
@@ -1157,34 +1157,35 @@
         },
         {
             "name": "zendframework/zendxml",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZendXml.git",
-                "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9"
+                "reference": "267db6a2c431a08a8f8ff0f1f4c302a5ba6f5b99"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/zendframework-zendxml-7b64507bc35d841c9c5802d67f6f87ef8e1a58c9-zip-41dd75.tar",
-                "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9",
-                "shasum": "b0c7a7d38a0663e3f4f5e8a511c644bdd989c9db"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/zendframework-zendxml-267db6a2c431a08a8f8ff0f1f4c302a5ba6f5b99-zip-32bcfd.tar",
+                "reference": "267db6a2c431a08a8f8ff0f1f4c302a5ba6f5b99",
+                "shasum": "5d81b0d891b3f4b0f6eec63b2abec42e0d5e8af8"
             },
             "require": {
-                "php": "^5.3.3 || ^7.0"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^3.7 || ^4.0",
-                "squizlabs/php_codesniffer": "^1.5"
+                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.4",
+                "zendframework/zend-coding-standard": "~1.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1.x-dev",
+                    "dev-develop": "1.2.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "ZendXml\\": "library/"
+                "psr-4": {
+                    "ZendXml\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1192,13 +1193,13 @@
                 "BSD-3-Clause"
             ],
             "description": "Utility library for XML usage, best practices, and security in PHP",
-            "homepage": "http://packages.zendframework.com/",
             "keywords": [
+                "ZendFramework",
                 "security",
                 "xml",
-                "zf2"
+                "zf"
             ],
-            "time": "2016-02-04 21:02:08"
+            "time": "2018-04-30 15:11:04"
         },
         {
             "name": "zf-commons/zfc-rbac",
@@ -1497,7 +1498,7 @@
             ],
             "authors": [
                 {
-                    "name": "Padraic Brady",
+                    "name": "Pádraic Brady",
                     "email": "padraic.brady@gmail.com",
                     "homepage": "http://blog.astrumfutura.com"
                 },
@@ -1621,7 +1622,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-testhelpers.git",
-                "reference": "2d865c8a2b4614be66433847d4fa14c1db93b291"
+                "reference": "95b64f1db03987fd820a26a7eb9d9f16b1a81726"
             },
             "require": {
                 "php": ">=5.4"
@@ -1638,15 +1639,15 @@
                 }
             },
             "description": "OLCS Test helpers",
-            "time": "2018-03-16 15:26:20"
+            "time": "2018-04-13 23:06:56"
         },
         {
             "name": "olcs/olcs-transfer",
-            "version": "dev-release/4.178",
+            "version": "dev-release/4.179",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-                "reference": "f6fc9508fc302361e5bacff1dc9965a096bf03fb"
+                "reference": "8af3dedb029913a42233533820eec81828757ca3"
             },
             "require": {
                 "php": ">=5.4",
@@ -1684,15 +1685,15 @@
                 ]
             },
             "description": "OLCS Transfer",
-            "time": "2018-04-13 15:26:24"
+            "time": "2018-05-01 10:09:25"
         },
         {
             "name": "olcs/olcs-utils",
-            "version": "dev-release/4.178",
+            "version": "dev-release/4.179",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-utils.git",
-                "reference": "7693c614cd0da49c16535c3054be72c26ddf923d"
+                "reference": "9b9d717a6c675f6daefdb2b0d41d39a21e61a845"
             },
             "require": {
                 "php": ">=5.4",
@@ -1701,7 +1702,7 @@
             "require-dev": {
                 "mockery/mockery": "~0.9.3",
                 "olcs/olcs-devtools": "dev-master",
-                "olcs/olcs-logging": "dev-release/4.178"
+                "olcs/olcs-logging": "dev-release/4.179"
             },
             "type": "library",
             "autoload": {
@@ -1730,7 +1731,7 @@
                 ]
             },
             "description": "OLCS Utils",
-            "time": "2018-04-13 15:27:27"
+            "time": "2018-05-01 10:11:03"
         },
         {
             "name": "pdepend/pdepend",
@@ -1986,23 +1987,23 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.7.5",
+            "version": "1.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "dfd6be44111a7c41c2e884a336cc4f461b3b2401"
+                "reference": "33a7e3c4fda54e912ff6338c48823bd5c0f0b712"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpspec-prophecy-dfd6be44111a7c41c2e884a336cc4f461b3b2401-zip-b2cb0d.tar",
-                "reference": "dfd6be44111a7c41c2e884a336cc4f461b3b2401",
-                "shasum": "331ec76e8fa4649675973510d63eed8d00947f83"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpspec-prophecy-33a7e3c4fda54e912ff6338c48823bd5c0f0b712-zip-d750f0.tar",
+                "reference": "33a7e3c4fda54e912ff6338c48823bd5c0f0b712",
+                "shasum": "6dea6f9e9b9f1e26d45efc7a1489c6fb00f282e8"
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
-                "sebastian/comparator": "^1.1|^2.0",
+                "sebastian/comparator": "^1.1|^2.0|^3.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
@@ -2045,7 +2046,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2018-02-19 10:16:54"
+            "time": "2018-04-18 13:57:24"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3147,7 +3148,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.8.38",
+            "version": "v2.8.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -3266,7 +3267,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.4.8",
+            "version": "v3.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
