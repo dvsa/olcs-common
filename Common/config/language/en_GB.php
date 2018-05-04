@@ -2873,6 +2873,7 @@ return [
     'transport-manager.employments.table.add' => 'Add other employment',
     'transport-manager.employments.table.empty' => 'If you work for anyone else on a regular basis, add their details here',
     'transport-manager.other-licence.form.hours-per-week' => 'How many hours per week do you work on this licence?',
+    'transport-manager.other-licence.form.hours-per-week.error_msg' => 'The hours worked must be entered as a number',
     'transport-manager.other-licence.form.lic-no' => 'Licence number',
     'transport-manager.other-licence.form.operating-centres' => 'Give the addresses of all the operating centres you’re responsible for',
     'transport-manager.other-licence.form.role' => 'Your role (optional)',
