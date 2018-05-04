@@ -97,11 +97,11 @@ class TmOtherLicenceDetails
      *     "id":"hoursPerWeek"
      * })
      * @Form\Options({"label":"transport-manager.other-licence.form.hours-per-week"})
-     * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      * @Form\Validator({"name":"Zend\Validator\LessThan", "options": {"max": 99.9,"inclusive":true}})
      * @Form\Validator({
      *     "name": "Zend\I18n\Validator\IsFloat",
      *     "options": {
+     *         "allow_empty" : false,
      *         "messages": {
      *             "notFloat": "transport-manager.other-licence.form.hours-per-week.error_msg",
      *         }
