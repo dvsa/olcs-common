@@ -54,7 +54,7 @@
         "preferred-install": "dist",
         "secure-http": false,
         "platform": {
-            "php": "7.1.15"
+            "php": "7.1.16"
         }
     },
     "scripts": {
