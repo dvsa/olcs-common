@@ -347,6 +347,7 @@ return [
     'application.delete' => 'Delete application',
     'application.new.button' => 'Apply for a new licence',
     'application.new.button.first' => 'Apply for a licence',
+    'application.permit.button' => 'Apply for a permit',
     'application.operating-centres' => 'Operating centres',
     'application.operating-centres.authorisation' => 'Operating centres &amp; authorisation',
     'application.operating-centres.financial-evidence' => 'Financial evidence',
