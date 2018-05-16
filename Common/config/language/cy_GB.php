@@ -20,6 +20,8 @@ return [
     'operatingCentres_totAuthTrailers-error' => 'Nodwch gyfanswm ôl-gerbydau',
     'Please Select' => 'Dewiswch',
     'Return to' => 'Dychwelwch i',
+    'Save and continue' => 'CY - Save & continue',
+    'Country' => 'CY - Country',
     'Sign in' => 'Mewngofnodwch',
     'Sign out' => 'Allgofnodi',
     'TMA_CHANGE_DETAILS' => 'Newid eich manylion',
@@ -1359,10 +1361,18 @@ return [
     'licence_person-add-action-formDateOfBirth' => 'Dyddiad geni',
 
     // Permits application
-    'permits.application.overwiew.title' => 'Cymraeg - Home',
-    'permits.application.overwiew.subtitle' => 'Cymraeg - Permits',
-    'permits.application.overwiew.button' => 'Cymraeg - Apply for a permit',
-    'permits.application.overwiew.no-permits' => 'Cymraeg - You haven\'t applied for any permits'
+    'permits.application.overwiew.title' => 'CY - Home',
+    'permits.application.overwiew.subtitle' => 'CY - Permits',
+    'permits.application.overwiew.button' => 'CY - Apply for a permit',
+    'permits.application.overwiew.no-permits' => 'CY - You haven\'t applied for any permits',
+    'permits.application.eligibility.title' => 'CY - International haulier permit',
+    'permits.application.eligibility.willCabotage.question' => 'CY - Will you be carrying out cabotage?',
+    'permits.application.eligibility.willCabotage.explanation' => 'CY - Transport goods between two places in the same country',
+    'permits.application.eligibility.meetsEuro6.question' => 'CY - Do your vehicles meet the environmentally compliant standard Euro 6?',
+    'permits.application.eligibility.meetsEuro6.link' => 'CY - Compliant standards',
+    'permits.application.eligibility.meetsEuro6.hidden' => 'CY - HIDDEN TEXT TO BE DISPLAYED WHEN Compliant Standards IS TOGGLED',
+    'permits.application.eligibility.country.question' => 'CY - Which countries will you be delivering to?',
+    'permits.application.eligibility.country.add' => 'CY - Add another country'
 
     // Potentially unused translations
 ];

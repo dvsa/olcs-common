@@ -99,6 +99,7 @@ return [
     'S41_APP_APPROVE_TM' => 'Please complete the Transport Managers section',
     'S41_APP_OUSTANDING_FEE' => 'You must process the application fee',
     'Save and continue' => 'Save & continue',
+    'Country' => 'Country',
     'Sign in' => 'Sign in',
     'Sign out' => 'Sign out',
     'TM1_FORM_LINK' => 'https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/193217/TM1_Form.pdf',
@@ -3333,7 +3334,18 @@ return [
     'permits.application.overwiew.title' => 'Home',
     'permits.application.overwiew.subtitle' => 'Permits',
     'permits.application.overwiew.button' => 'Apply for a permit',
-    'permits.application.overwiew.no-permits' => 'You haven\'t applied for any permits'
+    'permits.application.overwiew.no-permits' => 'You haven\'t applied for any permits',
+    'permits.application.eligibility.title' => 'International haulier permit',
+    'permits.application.eligibility.willCabotage.question' => 'Will you be carrying out cabotage?',
+    'permits.application.eligibility.willCabotage.explanation' => 'Transport goods between two places in the same country',
+    'permits.application.eligibility.meetsEuro6.question' => 'Do your vehicles meet the environmentally compliant standard Euro 6?',
+    'permits.application.eligibility.meetsEuro6.link' => 'Compliant standards',
+    'permits.application.eligibility.meetsEuro6.hidden' => 'HIDDEN TEXT TO BE DISPLAYED WHEN Compliant Standards IS TOGGLED',
+    'permits.application.eligibility.country.question' => 'Which countries will you be delivering to?',
+    'permits.application.eligibility.country.add' => 'Add another country',
+    'permits.application.eligibility.country.country' => 'Country'
+
+
 
 
     // Potentially unused translations
