@@ -3343,10 +3343,14 @@ return [
     'permits.application.eligibility.meetsEuro6.hidden' => 'HIDDEN TEXT TO BE DISPLAYED WHEN Compliant Standards IS TOGGLED',
     'permits.application.eligibility.country.question' => 'Which countries will you be delivering to?',
     'permits.application.eligibility.country.add' => 'Add another country',
-    'permits.application.eligibility.country.country' => 'Country'
+    'permits.application.eligibility.country.country' => 'Country',
 
-
-
+    'permits.application.ecmt.title' => 'You will need to apply for an annual ECMT permit',
+    'permits.application.ecmt.permits' => 'You can apply for up to %s permits',
+    'permits.application.ecmt.countries' => 'Which countries will you be delivering to?',
+    'permits.application.ecmt.select' => 'Select all the apply',
+    'How many trips will you be making' => 'How many trips will you be making?',
+    'What type of goods will you be carrying?' => 'What type of goods will you be carrying?'
 
     // Potentially unused translations
 ];
