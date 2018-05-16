@@ -786,6 +786,7 @@ return [
     'continuaton-generate-confirm' => 'Are you sure you want to generate (or regenerate) checklists for the selected licence(s)?',
     'continue.button' => 'Continue',
     'continue-to-payment.button' => 'Continue to payment',
+    'submit-and-pay.button' => 'Submit and pay',
     'conv-#' => 'Conv. #',
     'conv-description' => 'Conv. description',
     'conviction-date' => 'Conviction date',
