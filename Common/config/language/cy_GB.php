@@ -1356,7 +1356,13 @@ return [
     'licence_person-add-action-formOtherNames' => 'Enwau eraill',
     'licence_person-add-action-formSurname' => 'Cyfenw',
     'licence_person-add-action-formTitle' => 'Teitl',
-    'licence_person-add-action-formDateOfBirth' => 'Dyddiad geni'
+    'licence_person-add-action-formDateOfBirth' => 'Dyddiad geni',
+
+    // Permits application
+    'permits.application.overwiew.title' => 'Cymraeg - Home',
+    'permits.application.overwiew.subtitle' => 'Cymraeg - Permits',
+    'permits.application.overwiew.button' => 'Cymraeg - Apply for a permit',
+    'permits.application.overwiew.no-permits' => 'Cymraeg - You haven\'t applied for any permits'
 
     // Potentially unused translations
 ];

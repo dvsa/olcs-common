@@ -3327,5 +3327,13 @@ return [
     'lva-operating-centre-radio-label' => '<p class="legend">How would you like to send your advert?</p>',
     'lva-operating-centre-newspaper-advert' => '<p class="label newspaper-advert">Newspaper advert</p>',
     'lva-operating-centre-newspaper-permission' => 'I acknowledge that:',
+
+    // Permits application
+    'permits.application.overwiew.title' => 'Home',
+    'permits.application.overwiew.subtitle' => 'Permits',
+    'permits.application.overwiew.button' => 'Apply for a permit',
+    'permits.application.overwiew.no-permits' => 'You haven\'t applied for any permits'
+
+
     // Potentially unused translations
 ];
