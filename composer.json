@@ -9,7 +9,7 @@
         {
             "url": "http://devrepo.shd.ci.nonprod.dvsa.aws",
             "type": "composer"
-        },m
+        },
         {
             "type": "vcs",
             "url": "git@repo.shd.ci.nonprod.dvsa.aws:Permits/olcs-testhelpers.git"
