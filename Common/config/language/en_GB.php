@@ -3353,7 +3353,8 @@ return [
     'What type of goods will you be carrying?' => 'What type of goods will you be carrying?',
     'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?',
     'permits.application.declaration.title' => 'Declaration',
-    'permits.application.submitted.title' => 'Application submitted'
+    'permits.application.submitted.title' => 'Application submitted',
+    'permits.application.non-eligible.title' => 'Can you get an international haulier permit?'
 
     // Potentially unused translations
 ];
