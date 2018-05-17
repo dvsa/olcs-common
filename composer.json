@@ -8,7 +8,7 @@
         },
         {
             "url": "http://devrepo.shd.ci.nonprod.dvsa.aws",
-            "type": "composer"
+            "type": "composer",
         },
         {
             "type": "vcs",
