@@ -3351,8 +3351,8 @@ return [
     'permits.application.ecmt.select' => 'Select all the apply',
     'How many trips will you be making' => 'How many trips will you be making?',
     'What type of goods will you be carrying?' => 'What type of goods will you be carrying?',
-
-    'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?'
+    'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?',
+    'permits.application.declaration.title' => 'Declaration'
 
     // Potentially unused translations
 ];
