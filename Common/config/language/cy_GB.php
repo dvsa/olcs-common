@@ -1369,8 +1369,7 @@ return [
     'permits.application.eligibility.willCabotage.question' => 'CY - Will you be carrying out cabotage?',
     'permits.application.eligibility.willCabotage.explanation' => 'CY - Transport goods between two places in the same country',
     'permits.application.eligibility.meetsEuro6.question' => 'CY - Do your vehicles meet the environmentally compliant standard Euro 6?',
-    'permits.application.eligibility.meetsEuro6.link' => 'CY - Compliant standards',
-    'permits.application.eligibility.meetsEuro6.hidden' => 'CY - HIDDEN TEXT TO BE DISPLAYED WHEN Compliant Standards IS TOGGLED',
+    'permits.application.eligibility.meetsEuro6.link' => 'CY - Help with vehicle authorisation',
     'permits.application.eligibility.country.question' => 'CY - Which countries will you be delivering to?',
     'permits.application.eligibility.country.add' => 'CY - Add another country',
 
