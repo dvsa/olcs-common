@@ -3301,6 +3301,7 @@ return [
     'continuation.success.licence-documentation' => 'Your licence documentation and %s vehicle discs will be sent within 5 working days',
     'continuation.success.licence-documentation.zero.discs' => 'Your licence documentation will be issued within 5 working days',
     'continuation.success.finish' => 'Finish',
+    'continuation.success.pay' => 'Submit and pay',
     'continuation.declaration.print.licence_number' => 'Licence number',
     'continuation.declaration.print.licence_holder' => 'Licence holder',
     'continuation.declaration.print.return_to' => 'Return to',
