@@ -1379,6 +1379,10 @@ return [
     'permits.application.ecmt.countries' => 'CY - Which countries will you be delivering to?',
     'permits.application.ecmt.select' => 'CY - Select all the apply',
     'How many trips will you be making?' => 'CY - How many trips will you be making?',
-    'What type of goods will you be carrying?' => 'CY - What type of goods will you be carrying?'
+    'What type of goods will you be carrying?' => 'CY - What type of goods will you be carrying?',
+
+    'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?'
+
+
     // Potentially unused translations
 ];
