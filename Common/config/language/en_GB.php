@@ -3335,7 +3335,7 @@ return [
     'permits.application.overwiew.title' => 'Home',
     'permits.application.overwiew.subtitle' => 'Permits',
     'permits.application.overwiew.button' => 'Apply for a permit',
-    'permits.application.overwiew.no-permits' => 'You haven\'t applied for any permits',
+    'permits.application.overwiew.no-permits' => 'You haven\'t applied for any permits.',
     'permits.application.eligibility.title' => 'International haulier permit',
     'permits.application.eligibility.willCabotage.question' => 'Will you be carrying out cabotage?',
     'permits.application.eligibility.willCabotage.explanation' => 'Transport goods between two places in the same country',

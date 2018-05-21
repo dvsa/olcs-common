@@ -1364,7 +1364,7 @@ return [
     'permits.application.overwiew.title' => 'CY - Home',
     'permits.application.overwiew.subtitle' => 'CY - Permits',
     'permits.application.overwiew.button' => 'CY - Apply for a permit',
-    'permits.application.overwiew.no-permits' => 'CY - You haven\'t applied for any permits',
+    'permits.application.overwiew.no-permits' => 'CY - You haven\'t applied for any permits.',
     'permits.application.eligibility.title' => 'CY - International haulier permit',
     'permits.application.eligibility.willCabotage.question' => 'CY - Will you be carrying out cabotage?',
     'permits.application.eligibility.willCabotage.explanation' => 'CY - Transport goods between two places in the same country',
