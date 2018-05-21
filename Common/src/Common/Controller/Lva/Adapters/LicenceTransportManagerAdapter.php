@@ -2,6 +2,9 @@
 
 namespace Common\Controller\Lva\Adapters;
 
+use Dvsa\Olcs\Transfer\Command\TransportManagerLicence\Delete;
+use Dvsa\Olcs\Transfer\Command\Licence\DeleteUpdateOptOutTmLetter;
+
 /**
  * Licence Transport Manager Adapter
  *
@@ -38,15 +41,27 @@ class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @param array $ids           ids to be deleted
      * @param null  $applicationId not used here but needed to conform to interface
+     * @param mixed $optOut        data from InternalGenericDeleteConfirmation
+     * @param bool  $isLastTm      checks if last TM is being deleted from licence
      *
      * @return bool
      */
-    public function delete(array $ids, $applicationId)
+    public function delete(array $ids, $applicationId, $optOut, $isLastTm = null)
     {
-        $command = $this->transferAnnotationBuilder->createCommand(
-            \Dvsa\Olcs\Transfer\Command\TransportManagerLicence\Delete::create(['ids' => $ids])
-        );
-
+        if($isLastTm) {
+            $command = $this->transferAnnotationBuilder->createCommand(DeleteUpdateOptOutTmLetter::create(
+                [
+                    'ids' => $ids,
+                    'YesNo' => $optOut["YesNoRadio"]["yesNo"],
+                ]
+            ));
+        } else {
+            $command = $this->transferAnnotationBuilder->createCommand(Delete::create(['ids' => $ids]));
+        }
         return $this->commandSrv->send($command)->isOk();
     }
+
+
+
+
 }

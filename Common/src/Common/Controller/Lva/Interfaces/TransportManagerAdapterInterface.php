@@ -43,10 +43,11 @@ interface TransportManagerAdapterInterface extends AdapterInterface
      *
      * @param array $ids           array of ids to be deleted
      * @param int   $applicationId application id
+     * @param mixed $optOut data from InternalGenericDeleteConfirmation
      *
      * @return bool
      */
-    public function delete(array $ids, $applicationId);
+    public function delete(array $ids, $applicationId, $optOut, $isLastTm = null);
 
     /**
      * add messages

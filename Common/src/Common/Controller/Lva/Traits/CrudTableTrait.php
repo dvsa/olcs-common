@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Common\Form\Model\Fieldset\YesNoRadio;
 use Zend\Http\Response;
 
 /**
@@ -59,12 +60,12 @@ trait CrudTableTrait
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $response = $this->delete();
+            $yesNoRadioFormData = $request->getPost()->toArray();
+            $response = $this->delete($yesNoRadioFormData);
 
             if ($response instanceof Response) {
                 return $response;
             }
-
             if ($response === false) {
                 $this->deleteFailed();
             } else {
@@ -85,7 +86,7 @@ trait CrudTableTrait
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest('GenericDeleteConfirmation', $request);
+            ->createFormWithRequest($this->getDeleteConfirmationForm(), $request);
 
         $params = ['sectionText' => $this->getDeleteMessage()];
 
@@ -135,5 +136,18 @@ trait CrudTableTrait
     protected function getDeleteTitle()
     {
         return 'delete';
+    }
+
+    /**
+     * Return different form if last TM is being deleted
+     *
+     * @return string
+     */
+    private function getDeleteConfirmationForm() {
+        if ($this->isLastTmLicence()) {
+            return 'InternalGenericDeleteConfirmation';
+        }
+
+        return 'GenericDeleteConfirmation';
     }
 }
