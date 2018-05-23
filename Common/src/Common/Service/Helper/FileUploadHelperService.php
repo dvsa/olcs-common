@@ -5,6 +5,7 @@ namespace Common\Service\Helper;
 use Common\Exception\ConfigurationException;
 use Common\Exception\File\InvalidMimeException;
 use Common\Service\Table\Type\Selector;
+use Olcs\Logging\Log\Logger;
 use Zend\Form\ElementInterface;
 use Zend\Form\FormInterface;
 use Zend\Http\Request;
@@ -433,6 +434,12 @@ class FileUploadHelperService extends AbstractHelperService
             return false;
         } catch (\Exception $ex) {
             $this->failedUpload();
+            Logger::debug('FileUploadHelperService error', [
+                'callback' => $callback,
+                'Exception message' => $ex->getMessage(),
+                'StackTrace' => json_encode($ex->getTrace()),
+                'Filedata' => $fileData
+            ]);
 
             return false;
         }
