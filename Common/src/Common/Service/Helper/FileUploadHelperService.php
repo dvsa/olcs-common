@@ -471,12 +471,10 @@ class FileUploadHelperService extends AbstractHelperService
         $element = $this->getElement()->get('list');
 
         foreach ($element->getFieldsets() as $listFieldset) {
-
             $name = $listFieldset->getName();
 
             if (isset($postData['list'][$name]['remove'])
                 && !empty($postData['list'][$name]['remove'])) {
-
                 $success = call_user_func(
                     $callback,
                     $postData['list'][$name]['id']
