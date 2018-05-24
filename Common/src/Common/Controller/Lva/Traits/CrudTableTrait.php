@@ -2,7 +2,6 @@
 
 namespace Common\Controller\Lva\Traits;
 
-use Common\Form\Model\Fieldset\YesNoRadio;
 use Olcs\View\Model\ViewModel;
 use Zend\Http\Response;
 
@@ -140,7 +139,8 @@ trait CrudTableTrait
     }
 
     /**
-     * Return different form if last TM is being deleted
+     * Return form, this method has been overridden in Olcs\Controller\Lva\Licence\TransportManagersController which
+     * returns a different form if the last TM is being deleted.
      *
      * @return string
      */
