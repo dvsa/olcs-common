@@ -1377,11 +1377,12 @@ return [
     'permits.application.ecmt.permits' => 'CY - You can apply for up to %s permits',
     'permits.application.ecmt.countries' => 'CY - Which countries will you be delivering to?',
     'permits.application.ecmt.select' => 'CY - Select all that apply',
-    'How many trips will you be making?' => 'CY - How many trips will you be making?',
+    'How many trips will you be making' => 'CY - How many trips will be made by your company abroad over the next 12 months?',
     'What type of goods will you be carrying?' => 'CY - What type of goods will you be carrying?',
 
-    'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?'
+    'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?',
 
+    'permits.fields.number-of-trips.title' => 'CY - Delivering goods abroad',
 
     // Potentially unused translations
 ];

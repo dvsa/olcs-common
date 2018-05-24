@@ -3349,13 +3349,15 @@ return [
     'permits.application.ecmt.permits' => 'You can apply for up to %s permits',
     'permits.application.ecmt.countries' => 'Which countries will you be delivering to?',
     'permits.application.ecmt.select' => 'Select all that apply',
-    'How many trips will you be making' => 'How many trips will you be making?',
+    'How many trips will you be making' => 'How many trips will be made by your company abroad over the next 12 months?',
     'What type of goods will you be carrying?' => 'What type of goods will you be carrying?',
     'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?',
     'permits.application.declaration.title' => 'Declaration',
     'permits.application.submitted.title' => 'Application submitted',
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
     'permits.application.sector.hint' => 'For example, Wood',
+
+    'permits.fields.number-of-trips.title' => 'Delivering goods abroad',
 
     // Potentially unused translations
 ];
