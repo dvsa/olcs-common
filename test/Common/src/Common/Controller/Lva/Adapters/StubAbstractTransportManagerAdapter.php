@@ -31,7 +31,7 @@ class StubAbstractTransportManagerAdapter extends AbstractTransportManagerAdapte
         ];
     }
 
-    public function delete(array $ids, $applicationId, $optOut = null, $isLastTm = null)
+    public function delete(array $ids, $applicationId)
     {
     }
 }

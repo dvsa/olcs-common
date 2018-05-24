@@ -3,6 +3,7 @@
 namespace Common\Controller\Lva\Traits;
 
 use Common\Form\Model\Fieldset\YesNoRadio;
+use Olcs\View\Model\ViewModel;
 use Zend\Http\Response;
 
 /**
@@ -60,12 +61,12 @@ trait CrudTableTrait
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $yesNoRadioFormData = $request->getPost()->toArray();
-            $response = $this->delete($yesNoRadioFormData);
+            $response = $this->delete();
 
-            if ($response instanceof Response) {
+            if ($response instanceof Response || $response instanceof ViewModel) {
                 return $response;
             }
+
             if ($response === false) {
                 $this->deleteFailed();
             } else {
@@ -143,11 +144,8 @@ trait CrudTableTrait
      *
      * @return string
      */
-    private function getDeleteConfirmationForm() {
-        if ($this->isLastTmLicence()) {
-            return 'InternalGenericDeleteConfirmation';
-        }
-
+    protected function getDeleteConfirmationForm()
+    {
         return 'GenericDeleteConfirmation';
     }
 }

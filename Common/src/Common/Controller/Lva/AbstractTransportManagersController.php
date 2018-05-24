@@ -111,7 +111,6 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $data = (array)$request->getPost();
         $form->setData($data);
 
-        //todo remove - this method may be removing the validator
         // if is it not required to have at least one TM, then remove the validator
         if (!$this->getAdapter()->mustHaveAtLeastOneTm()) {
             $form->getInputFilter()->remove('table');
@@ -451,18 +450,14 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * Handle CrudTableTrait delete
      *
-     * @param $optOut licence.opt_out_tm_letter flag
-     *
      * @return void
      */
-    protected function delete($optOut = null)
+    protected function delete()
     {
-        // get ids to delete
-        //$ids = explode(',', $this->params('child_id'));
-        // @todo uncomment 
-        $ids = [1];
+         // get ids to delete
+        $ids = explode(',', $this->params('child_id'));
 
-        $this->getAdapter()->delete($ids, $this->getIdentifier(), $optOut, $this->isLastTmLicence());
+        $this->getAdapter()->delete($ids, $this->getIdentifier());
     }
 
     /**
@@ -494,7 +489,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
      *
      * @return bool
      */
-    protected function isLastTmLicence() {
+    protected function isLastTmLicence()
+    {
         if ($this->lva === 'licence'
             && $this->getAdapter()->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1) {
             return true;

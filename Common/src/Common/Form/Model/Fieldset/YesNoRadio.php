@@ -13,21 +13,9 @@ class YesNoRadio
     /**
      * @Form\Required(true)
      * @Form\Type("Common\Form\Elements\Types\RadioYesNo")
-     * @Form\Attributes({"class":"radio-button__container radio-button__container--inline"})
      * @Form\Options({
-     *     "empty_option": "Please select",
-     *     "label": "internal-delete.final-tm.confirmation-info.text",
-     *     "label_attributes": {"class": "form-element__label"},
-     *     "value_options":{0:"Yes", 1:"No"},
-     * })
-     * @Form\Validator({
-     *     "name": "Zend\Validator\NotEmpty",
-     *     "options": {
-     *         "allow_empty": false,
-     *         "messages": {
-     *             "isEmpty": "transport-manager.other-licence.form.hours-per-week.error_msg",
-     *         }
-     *     }
+     *     "error-message": "internal-delete-final-tm-letter-opt-out.validation-message",
+     *      "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
      * })
      */
     public $yesNo = null;
