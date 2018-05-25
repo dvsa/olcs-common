@@ -6,6 +6,7 @@ use Zend\Mvc\I18n\Translator;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 use Mockery as m;
+use Olcs\Logging\Log\Logger;
 
 error_reporting(-1);
 chdir(dirname(__DIR__));
@@ -46,6 +47,8 @@ class Bootstrap
         if (!defined('DATE_FORMAT')) {
             define('DATE_FORMAT', 'd/m/Y');
         }
+
+        self::setupLogger();
     }
 
     /**
@@ -126,6 +129,15 @@ class Bootstrap
     protected static function initAutoloader()
     {
         return require('vendor/autoload.php');
+    }
+
+    public static function setupLogger()
+    {
+        $logWriter = new \Zend\Log\Writer\Mock();
+        $logger = new \Zend\Log\Logger();
+        $logger->addWriter($logWriter);
+
+        Logger::setLogger($logger);
     }
 }
 

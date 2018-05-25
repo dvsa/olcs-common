@@ -454,7 +454,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
      */
     protected function delete()
     {
-        // get ids to delete
+         // get ids to delete
         $ids = explode(',', $this->params('child_id'));
 
         $this->getAdapter()->delete($ids, $this->getIdentifier());
@@ -477,12 +477,26 @@ abstract class AbstractTransportManagersController extends AbstractController im
      */
     protected function getDeleteMessage()
     {
-        if ($this->lva === 'licence'
-            && $this->getAdapter()->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1) {
+        if ($this->isLastTmLicence()) {
             return 'delete.final-tm.confirmation.text';
         }
 
         return 'delete.confirmation.text';
+    }
+
+    /**
+     * Checks if number of Tm's on licence = 1
+     *
+     * @return bool
+     */
+    protected function isLastTmLicence()
+    {
+        if ($this->lva === 'licence'
+            && $this->getAdapter()->getNumberOfRows($this->getIdentifier(), $this->getLicenceId()) === 1) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

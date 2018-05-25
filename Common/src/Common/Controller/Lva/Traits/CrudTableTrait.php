@@ -2,6 +2,7 @@
 
 namespace Common\Controller\Lva\Traits;
 
+use Olcs\View\Model\ViewModel;
 use Zend\Http\Response;
 
 /**
@@ -61,7 +62,7 @@ trait CrudTableTrait
         if ($request->isPost()) {
             $response = $this->delete();
 
-            if ($response instanceof Response) {
+            if ($response instanceof Response || $response instanceof ViewModel) {
                 return $response;
             }
 
@@ -85,7 +86,7 @@ trait CrudTableTrait
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest('GenericDeleteConfirmation', $request);
+            ->createFormWithRequest($this->getDeleteConfirmationForm(), $request);
 
         $params = ['sectionText' => $this->getDeleteMessage()];
 
@@ -135,5 +136,16 @@ trait CrudTableTrait
     protected function getDeleteTitle()
     {
         return 'delete';
+    }
+
+    /**
+     * Return form, this method has been overridden in Olcs\Controller\Lva\Licence\TransportManagersController which
+     * returns a different form if the last TM is being deleted.
+     *
+     * @return string
+     */
+    protected function getDeleteConfirmationForm()
+    {
+        return 'GenericDeleteConfirmation';
     }
 }
