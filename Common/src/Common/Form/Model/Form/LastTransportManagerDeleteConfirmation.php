@@ -10,7 +10,7 @@ use Zend\Form\Annotation as Form;
  * @Form\Attributes({"method":"post", "class":"js-modal-alert"})
  * @Form\Type("Common\Form\Form")
  */
-class InternalGenericDeleteConfirmation extends GenericDeleteConfirmation
+class LastTransportManagerDeleteConfirmation extends GenericDeleteConfirmation
 {
     /**
      * @Form\Name("YesNoRadio")
