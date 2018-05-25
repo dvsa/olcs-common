@@ -28,7 +28,7 @@
         },
         {
             "type": "vcs",
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-logging  .git"
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-logging.git"
         }
     ],
     "require": {
