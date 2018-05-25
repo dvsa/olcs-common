@@ -916,6 +916,7 @@ return [
     'delta_action_links.remove' => 'Remove',
     'delta_action_links.restore' => 'Restore',
     'description' => 'Description',
+    'digits.validation.zero-to-ninety-nine' => 'You must enter zero or greater value up to 99',
     'director' => 'Director',
     'disagree' => 'Disagree',
     'disqualification-column' => ' Disq.',
