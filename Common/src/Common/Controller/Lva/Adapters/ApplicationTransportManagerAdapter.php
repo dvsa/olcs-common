@@ -58,7 +58,7 @@ class ApplicationTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @return bool whether successful
      */
-    public function delete(array $ids, $applicationId, $yesNo = null)
+    public function delete(array $ids, $applicationId)
     {
         $command = $this->transferAnnotationBuilder->createCommand(
             \Dvsa\Olcs\Transfer\Command\TransportManagerApplication\Delete::create(['ids' => $ids])

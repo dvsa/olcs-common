@@ -47,7 +47,7 @@ interface TransportManagerAdapterInterface extends AdapterInterface
      *
      * @return bool
      */
-    public function delete(array $ids, $applicationId, $yesNo = null);
+    public function delete(array $ids, $applicationId);
 
     /**
      * add messages
