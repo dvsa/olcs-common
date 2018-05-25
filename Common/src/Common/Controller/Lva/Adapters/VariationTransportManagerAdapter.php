@@ -32,7 +32,7 @@ class VariationTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @param array $ids Transport Manager and Transport Manager Application ID's, Licence TM's are prefixed with "L"
      */
-    public function delete(array $ids, $applicationId, $yesNo = null)
+    public function delete(array $ids, $applicationId)
     {
         $tmlIds = [];
         $tmaIds = [];

@@ -5,6 +5,7 @@ namespace Common\Service\Helper;
 use Common\Exception\ConfigurationException;
 use Common\Exception\File\InvalidMimeException;
 use Common\Service\Table\Type\Selector;
+use Olcs\Logging\Log\Logger;
 use Zend\Form\ElementInterface;
 use Zend\Form\FormInterface;
 use Zend\Http\Request;
@@ -433,6 +434,12 @@ class FileUploadHelperService extends AbstractHelperService
             return false;
         } catch (\Exception $ex) {
             $this->failedUpload();
+            Logger::debug('FileUploadHelperService error', [
+                'callback' => $callback,
+                'Exception message' => $ex->getMessage(),
+                'StackTrace' => json_encode($ex->getTrace()),
+                'Filedata' => $fileData
+            ]);
 
             return false;
         }
@@ -464,12 +471,10 @@ class FileUploadHelperService extends AbstractHelperService
         $element = $this->getElement()->get('list');
 
         foreach ($element->getFieldsets() as $listFieldset) {
-
             $name = $listFieldset->getName();
 
             if (isset($postData['list'][$name]['remove'])
                 && !empty($postData['list'][$name]['remove'])) {
-
                 $success = call_user_func(
                     $callback,
                     $postData['list'][$name]['id']
