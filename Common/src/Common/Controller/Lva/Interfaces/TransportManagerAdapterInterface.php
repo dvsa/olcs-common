@@ -43,10 +43,11 @@ interface TransportManagerAdapterInterface extends AdapterInterface
      *
      * @param array $ids           array of ids to be deleted
      * @param int   $applicationId application id
+     * @param string $yesNo value of radio option for internal delete last TM form
      *
      * @return bool
      */
-    public function delete(array $ids, $applicationId);
+    public function delete(array $ids, $applicationId, $yesNo = null);
 
     /**
      * add messages

@@ -41,12 +41,12 @@ class LicenceTransportManagerAdapter extends AbstractTransportManagerAdapter
      *
      * @return bool
      */
-    public function delete(array $ids, $applicationId)
+    public function delete(array $ids, $applicationId, $yesNo = null)
     {
         $command = $this->transferAnnotationBuilder->createCommand(
             \Dvsa\Olcs\Transfer\Command\TransportManagerLicence\Delete::create(['ids' => $ids])
         );
-
+//TODO remove
         return $this->commandSrv->send($command)->isOk();
     }
 }
