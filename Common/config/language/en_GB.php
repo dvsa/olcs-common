@@ -3359,6 +3359,11 @@ return [
     'permits.page.field.number-of-trips' => 'How many trips will be made by your company abroad over the next 12 months?',
     'permits.page.title.sectors' => 'Nature of your business',
     'permits.page.field.sectors' => 'What type of goods will you carry over the next 12 months?',
+    'permits.page.title.number-of-trips' => 'Delivering goods abroad',
+    'permits.page.title.restricted-countries' => 'ECMT Restrictions',
+    'permits.page.field.restricted-countries' => 'Are you transporting goods to Austria, Greece, Hungary, Italy or Russia',
+    'permits.page.message.restricted-countries' => 'Austria, Greece, Hungary, Italy and Russia impose additional restrictions on the use of ECMT permits.',
+
     'permits.back-link' => 'Back',
 
     // Potentially unused translations

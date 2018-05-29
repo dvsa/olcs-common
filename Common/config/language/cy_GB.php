@@ -1383,6 +1383,10 @@ return [
     'permits.page.field.number-of-trips' => 'CY - How many trips will be made by your company abroad over the next 12 months?',
     'permits.page.title.sectors' => 'CY - Nature of your business',
     'permits.page.field.sectors' => 'CY - What type of goods will you carry over the next 12 months?',
+    'permits.page.title.restricted-countries' => 'CY - ECMT Restrictions',
+    'permits.page.field.restricted-countries' => 'CY - Are you transporting goods to Austria, Greece, Hungary, Italy or Russia',
+    'permits.page.message.restricted-countries' => 'CY - Austria, Greece, Hungary, Italy and Russia impose additional restrictions on the use of ECMT permits.',
+
     'permits.back-link' => 'Yn ôl',
     // Potentially unused translations
 ];
