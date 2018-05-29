@@ -3358,6 +3358,7 @@ return [
     'permits.application.sector.hint' => 'For example, Wood',
 
     'permits.fields.number-of-trips.title' => 'Delivering goods abroad',
+    'permits.back-link' => 'Back',
 
     // Potentially unused translations
 ];

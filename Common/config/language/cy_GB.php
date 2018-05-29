@@ -1383,6 +1383,6 @@ return [
     'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?',
 
     'permits.fields.number-of-trips.title' => 'CY - Delivering goods abroad',
-
+    'permits.back-link' => 'Yn ôl',
     // Potentially unused translations
 ];
