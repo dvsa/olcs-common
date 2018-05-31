@@ -3363,10 +3363,10 @@ return [
     'permits.page.field.restricted-countries' => 'Are you transporting goods to Austria, Greece, Hungary, Italy or Russia',
     'permits.page.message.restricted-countries' => 'Austria, Greece, Hungary, Italy and Russia impose additional restrictions on the use of ECMT permits.',
     'permits.page.title.summary' => 'Check your answers before sending your application',
-    'permits.page.field.restricted-countries' => 'Are you transporting goods to Austria, Greece, Hungary, Italy or Russia',
-    'permits.page.message.restricted-countries' => 'Austria, Greece, Hungary, Italy and Russia impose additional restrictions on the use of ECMT permits.',
+    'permits.page.message.summary' => 'Now send your application',
 
     'permits.back-link' => 'Back',
+    'permits.button.accept-and-continue' => 'Accept and continue',
 
     // Potentially unused translations
 ];
