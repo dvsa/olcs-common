@@ -1388,8 +1388,10 @@ return [
     'permits.page.message.restricted-countries' => 'CY - Austria, Greece, Hungary, Italy and Russia impose additional restrictions on the use of ECMT permits.',
     'permits.page.title.summary' => 'CY - Check your answers before sending your application',
     'permits.page.message.summary' => 'CY - Now send your application',
+    'permits.page.title.declaration' => 'CY - Declaration',
 
     'permits.back-link' => 'Yn ôl',
     'permits.button.accept-and-continue' => 'CY - Accept and continue',
+    'submit-and-pay.button' => 'CY - Submit and pay',
     // Potentially unused translations
 ];

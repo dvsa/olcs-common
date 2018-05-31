@@ -3350,7 +3350,6 @@ return [
     'permits.application.ecmt.countries' => 'Which countries will you be delivering to?',
     'permits.application.ecmt.select' => 'Select all that apply',
     'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?',
-    'permits.application.declaration.title' => 'Declaration',
     'permits.application.submitted.title' => 'Application submitted',
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
     'permits.application.sector.hint' => 'For example, Wood',
@@ -3364,6 +3363,7 @@ return [
     'permits.page.message.restricted-countries' => 'Austria, Greece, Hungary, Italy and Russia impose additional restrictions on the use of ECMT permits.',
     'permits.page.title.summary' => 'Check your answers before sending your application',
     'permits.page.message.summary' => 'Now send your application',
+    'permits.page.title.declaration' => 'Declaration',
 
     'permits.back-link' => 'Back',
     'permits.button.accept-and-continue' => 'Accept and continue',
