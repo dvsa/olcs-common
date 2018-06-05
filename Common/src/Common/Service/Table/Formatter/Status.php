@@ -70,7 +70,7 @@ class Status implements FormatterInterface
         }
 
         return vsprintf(
-          '<span class="overview__%s">%s</span></a>',
+          '<span class="overview__%s">%s</span>',
           [
             $statusClass,
             $translator->translate($row['status'])
