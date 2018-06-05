@@ -1378,6 +1378,7 @@ return [
     'permits.application.ecmt.countries' => 'CY - Which countries will you be delivering to?',
     'permits.application.ecmt.select' => 'CY - Select all that apply',
     'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?',
+    'permits.application.submitted.title' => 'CY - Application submitted',
 
     'permits.page.title.number-of-trips' => 'CY - Delivering goods abroad',
     'permits.page.field.number-of-trips' => 'CY - How many trips will be made by your company abroad over the next 12 months?',
