@@ -1362,7 +1362,7 @@ return [
 
     // Permits application
     'permits.application.overwiew.title' => 'CY - Home',
-    'permits.application.overwiew.subtitle' => 'CY - Permits',
+    'permits.application.overwiew.subtitle' => 'CY - Permits applications',
     'permits.application.overwiew.button' => 'CY - Apply for a permit',
     'permits.application.overwiew.no-permits' => 'CY - You haven\'t applied for any permits.',
     'permits.application.eligibility.title' => 'CY - International haulier permit',
