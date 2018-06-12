@@ -1394,5 +1394,7 @@ return [
     'permits.back-link' => 'Yn ôl',
     'permits.button.accept-and-continue' => 'CY - Accept and continue',
     'submit-and-pay.button' => 'CY - Submit and pay',
+    'permits.button.save-return-to-permits' => 'CY - Save and return to permits',
+
     // Potentially unused translations
 ];
