@@ -1368,8 +1368,9 @@ return [
     'permits.application.eligibility.title' => 'CY - International haulier permit',
     'permits.application.eligibility.willCabotage.question' => 'CY - Will you be carrying out cabotage?',
     'permits.application.eligibility.willCabotage.explanation' => 'CY - Transport goods between two places in the same country',
-    'permits.application.eligibility.meetsEuro6.question' => 'CY - Do your vehicles meet the environmentally compliant standard Euro 6?',
-    'permits.application.eligibility.meetsEuro6.link' => 'CY - Help with vehicle authorisation',
+    'permits.application.euro6.question' => 'CY - Do your vehicles meet Euro 6 emissions standards?',
+    'permits.application.euro6.link' => 'CY - Help with vehicle authorisation',
+    'permits.application.euro6.hint' => 'CY - ECMT permits can only be used by vehicles that meet Euro 6 standards',
     'permits.application.eligibility.country.question' => 'CY - Which countries will you be delivering to?',
     'permits.application.eligibility.country.add' => 'CY - Add another country',
 
