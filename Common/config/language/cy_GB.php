@@ -1389,7 +1389,7 @@ return [
     'permits.page.title.restricted-countries' => 'CY - ECMT Restrictions',
     'permits.page.field.restricted-countries' => 'CY - Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.message.restricted-countries' => 'CY - Austria, Greece, Hungary, Italy and Russia impose additional restrictions on the use of ECMT permits.',
-    'permits.page.title.summary' => 'CY - Check your answers before sending your application',
+    'permits.page.title.summary' => 'CY - Check your answers before submitting your permit',
     'permits.page.message.summary' => 'CY - Now send your application',
     'permits.page.title.declaration' => 'CY - Declaration',
 
