@@ -102,6 +102,10 @@ class Status extends AbstractHelper
             RefData::TRANSPORT_MANAGER_STATUS_CURRENT           => 'green',
             RefData::TRANSPORT_MANAGER_STATUS_DISQUALIFIED      => 'red',
             RefData::TRANSPORT_MANAGER_STATUS_REMOVED           => 'green',
+            // Feature Toggles
+            RefData::FT_ACTIVE                                  => 'green',
+            RefData::FT_INACTIVE                                => 'red',
+            RefData::FT_CONDITIONAL                             => 'orange',
         ];
 
         return !empty($colors[$id]) ? $colors[$id] : 'grey';

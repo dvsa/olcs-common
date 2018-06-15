@@ -330,4 +330,9 @@ class RefData
     const PERMIT_EXPIRED = 'permit_expired';
     const PERMIT_AWAITING = 'permit_awaiting';
     const PERMIT_NYS = 'permit_nys';
+
+    //feature toggle statuses
+    const FT_ACTIVE = 'always-active';
+    const FT_INACTIVE = 'inactive';
+    const FT_CONDITIONAL = 'conditionally-active';
 }
