@@ -170,7 +170,7 @@ class FormHelperService extends AbstractHelperService
      */
     private function findForm($formName)
     {
-        foreach (['Olcs', 'Common', 'Admin'] as $namespace) {
+        foreach (['Olcs', 'Common', 'Admin', 'Permits'] as $namespace) {
             $class = $namespace . '\Form\Model\Form\\' . $formName;
 
             if (class_exists($class)) {
@@ -1016,5 +1016,53 @@ class FormHelperService extends AbstractHelperService
         unset($options[$key]);
 
         $element->setValueOptions($options);
+    }
+
+    /**
+     * Transform a list retrieved from the database
+     * into a list of value options to be used
+     * by a MultiSelect field
+     *
+     * @param array $list
+     * @param string $displayFieldName
+     * @param string $separator
+     *
+     * @return array
+     */
+    public function transformListIntoValueOptions($list = array(), $displayFieldName = 'name', $separator = '|')
+    {
+        if(!is_string($displayFieldName) || !is_array($list)){
+            //throw exception?
+            return array();
+        }
+        $value_options = array();
+        foreach($list['results'] as $item)
+        {
+            //add display name to the key so that it can be used after submission
+            $value_options[$item['id'] . $separator . $item[$displayFieldName]] = $item[$displayFieldName];
+        }
+        return $value_options;
+    }
+
+    /**
+     * use a list retrieved from the database
+     * to populate the value options of a
+     * given field on a given form
+     *
+     * @param \Zend\Form $form
+     * @param string $formFieldName
+     * @param array $list
+     * @param string $displayFieldName
+     *
+     * @return form
+     */
+    public function setFormValueOptionsFromList($form, $formFieldName, $list, $displayFieldName = 'name')
+    {
+        $restrictedCountryList = $this->transformListIntoValueOptions($list, $displayFieldName);
+        $options = array();
+        $options['value_options'] = $restrictedCountryList;
+        $form->get($formFieldName)->setOptions($options);
+
+        return $form;
     }
 }
