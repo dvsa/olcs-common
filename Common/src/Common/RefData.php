@@ -322,4 +322,12 @@ class RefData
     const PTR_ACTION_TO_BE_TAKEN_WARNING = 'ptr_action_to_be_taken_warning';
     const PTR_ACTION_TO_BE_TAKEN_NFA = 'ptr_action_to_be_taken_nfa';
     const PTR_ACTION_TO_BE_TAKEN_OTHER = 'ptr_action_to_be_taken_other';
+
+    /**
+     * Permit statuses
+     */
+    const PERMIT_VALID = 'permit_valid';
+    const PERMIT_EXPIRED = 'permit_expired';
+    const PERMIT_AWAITING = 'permit_awaiting';
+    const PERMIT_NYS = 'permit_nys';
 }

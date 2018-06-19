@@ -32,12 +32,14 @@ class Status implements FormatterInterface
         $statusClass = 'status';
         switch ($row['status']) {
             case RefData::LICENCE_STATUS_VALID:
+            case RefData::PERMIT_VALID:
                 $statusClass .= ' green';
                 break;
             case RefData::LICENCE_STATUS_SUSPENDED:
             case RefData::LICENCE_STATUS_CURTAILED:
             case RefData::LICENCE_STATUS_UNDER_CONSIDERATION:
             case RefData::LICENCE_STATUS_GRANTED:
+            case RefData::PERMIT_AWAITING:
                 $statusClass .= ' orange';
                 break;
             case RefData::LICENCE_STATUS_SURRENDERED:
@@ -47,11 +49,14 @@ class Status implements FormatterInterface
             case RefData::LICENCE_STATUS_WITHDRAWN:
             case RefData::LICENCE_STATUS_REFUSED:
             case RefData::LICENCE_STATUS_NOT_TAKEN_UP:
+            case RefData::PERMIT_EXPIRED:
                 $statusClass .= ' red';
                 break;
             case RefData::LICENCE_STATUS_CANCELLED:
+            case RefData::PERMIT_NYS:
                 $statusClass .= ' grey';
                 break;
+
             default:
                 $statusClass .= ' grey';
                 break;

@@ -3376,5 +3376,10 @@ return [
     'permits.button.accept-and-continue' => 'Accept and continue',
     'permits.button.save-return-to-permits' => 'Save and return to permits',
 
+    'permit_valid' => 'Valid',
+    'permit_expired' => 'Expired',
+    'permit_awaiting' => 'Awaiting issue',
+    'permit_nys' => 'Not yet submitted',
+
     // Potentially unused translations
 ];
