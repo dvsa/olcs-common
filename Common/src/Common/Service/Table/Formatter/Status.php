@@ -31,28 +31,15 @@ class Status implements FormatterInterface
     {
         $statusClass = 'status';
         switch ($row['status']) {
-            case RefData::LICENCE_STATUS_VALID:
             case RefData::PERMIT_VALID:
                 $statusClass .= ' green';
                 break;
-            case RefData::LICENCE_STATUS_SUSPENDED:
-            case RefData::LICENCE_STATUS_CURTAILED:
-            case RefData::LICENCE_STATUS_UNDER_CONSIDERATION:
-            case RefData::LICENCE_STATUS_GRANTED:
             case RefData::PERMIT_AWAITING:
                 $statusClass .= ' orange';
                 break;
-            case RefData::LICENCE_STATUS_SURRENDERED:
-            case RefData::LICENCE_STATUS_REVOKED:
-            case RefData::LICENCE_STATUS_TERMINATED:
-            case RefData::LICENCE_STATUS_CONTINUATION_NOT_SOUGHT:
-            case RefData::LICENCE_STATUS_WITHDRAWN:
-            case RefData::LICENCE_STATUS_REFUSED:
-            case RefData::LICENCE_STATUS_NOT_TAKEN_UP:
             case RefData::PERMIT_EXPIRED:
                 $statusClass .= ' red';
                 break;
-            case RefData::LICENCE_STATUS_CANCELLED:
             case RefData::PERMIT_NYS:
                 $statusClass .= ' grey';
                 break;
@@ -61,18 +48,8 @@ class Status implements FormatterInterface
                 $statusClass .= ' grey';
                 break;
         }
-        $urlHelper = $serviceLocator->get('Helper\Url');
 
         $translator = $serviceLocator->get('translator');
-        if (isset($row['isExpired']) && $row['isExpired'] === true) {
-            $row['status'] = $translator->translate('licence.status.expired');
-            $statusClass = 'status red';
-        }
-
-        if (isset($row['isExpiring']) && $row['isExpiring'] === true) {
-            $row['status'] = $translator->translate('licence.status.expiring');
-            $statusClass = 'status red';
-        }
 
         return vsprintf(
           '<span class="overview__%s">%s</span>',
