@@ -591,7 +591,6 @@ return [
     'print-sign-return-declaration-form' => 'Printio, llofnodi a dychwelyd y ffurflen ddatganiad',
     'print-sign-return-declaration-form-text' => 'Rhaid i berchennog busnes neu gyfarwyddwr lofnodi\'r ffurflen ddatganiad a\'i hanfon at y <a href="{{OPENING_TIMES_LINK}}" target="_blank">Swyddfa Drwyddedu Ganolog</a>, os nad ydynt eisoes wedi gwneud hynny.',
     'print-sign-return-declaration-form-text-ni' => 'Rhaid i berchennog busnes neu gyfarwyddwr lofnodi\'r ffurflen ddatganiad a\'i hanfon at y <a href="{{OPENING_TIMES_LINK_NI}}" target="_blank">Swyddfa Drwyddedu Ganolog</a>, os nad ydynt eisoes wedi gwneud hynny.',
-    'privacy-and-cookies-title' => 'Preifatrwydd a Chwcis',
     'progress' => 'Cynnydd',
     'previousConvictionData_title-error' => 'Dewis teitl',
     'previousConvictionData_forename-error' => 'Nodi\'r enw cyntaf',
