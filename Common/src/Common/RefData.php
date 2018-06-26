@@ -173,6 +173,22 @@ class RefData
     const PERMISSION_SELFSERVE_EBSR_DOCUMENTS = 'selfserve-ebsr-documents';
 
     /**
+     * User Roles
+     */
+    const ROLE_INTERNAL_LIMITED_READ_ONLY = 'internal-limited-read-only';
+    const ROLE_INTERNAL_READ_ONLY = 'internal-read-only';
+    const ROLE_INTERNAL_CASE_WORKER = 'internal-case-worker';
+    const ROLE_INTERNAL_ADMIN = 'internal-admin';
+    const ROLE_OPERATOR_ADMIN = 'operator-admin';
+    const ROLE_OPERATOR_USER = 'operator-user';
+    const ROLE_OPERATOR_TM = 'operator-tm';
+    const ROLE_PARTNER_ADMIN = 'partner-admin';
+    const ROLE_PARTNER_USER = 'partner-user';
+    const ROLE_LOCAL_AUTHORITY_ADMIN = 'local-authority-admin';
+    const ROLE_LOCAL_AUTHORITY_USER = 'local-authority-user';
+    const ROLE_ANON = 'anon';
+
+    /**
      * User types
      */
     const USER_TYPE_INTERNAL = 'internal';
