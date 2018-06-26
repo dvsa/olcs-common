@@ -12,14 +12,14 @@
         },
         {
             "type": "vcs",
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:Permits/olcs-testhelpers.git"
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-testhelpers.git"
         },
         {
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:Permits/olcs-transfer.git",
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
             "type": "vcs"
         },
         {
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:Permits/olcs-utils.git",
+            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-utils.git",
             "type": "vcs"
         },
         {
