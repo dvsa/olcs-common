@@ -93,6 +93,7 @@ return array(
             'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
             'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
             'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
+            'featuresEnabled' => \Common\Controller\Plugin\FeaturesEnabledFactory::class,
         ]
     ),
     'console' => array(
