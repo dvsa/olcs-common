@@ -26,7 +26,6 @@ class UserTest extends TestCase
         $this->sut->setUserType(User::USER_TYPE_NOT_IDENTIFIED);
 
         $this->assertTrue($this->sut->isNotIdentified());
-
     }
 
     public function testIsNotIdentifiedFalse()
@@ -35,7 +34,6 @@ class UserTest extends TestCase
         $this->sut->setUserType(User::USER_TYPE_ANON);
 
         $this->assertFalse($this->sut->isNotIdentified());
-
     }
 
     public function testHasRole()
@@ -44,7 +42,6 @@ class UserTest extends TestCase
         $this->sut->setRoles($roles);
         $this->assertEquals($roles, $this->sut->getRoles());
         $this->assertTrue($this->sut->hasRole(RefData::ROLE_INTERNAL_CASE_WORKER));
-
     }
 
     public function testHasRoleFalse()
