@@ -33,12 +33,9 @@ class FeaturesEnabled extends AbstractPlugin
      */
     public function __invoke(array $toggleConfig, MvcEvent $e): bool
     {
-        if (empty($toggleConfig)) {
-            return true;
-        }
-
         $action = strtolower($e->getRouteMatch()->getParam('action'));
 
+        //check for config specific to the action
         if (isset($toggleConfig[$action])) {
             if (!empty($toggleConfig[$action])) {
                 return $this->querySender->featuresEnabled($toggleConfig[$action]);
@@ -47,6 +44,7 @@ class FeaturesEnabled extends AbstractPlugin
             return true;
         }
 
+        //we've nothing specific to the action, so check for a default
         if (isset($toggleConfig['default'])) {
             if (!empty($toggleConfig['default'])) {
                 return $this->querySender->featuresEnabled($toggleConfig['default']);
@@ -55,6 +53,7 @@ class FeaturesEnabled extends AbstractPlugin
             return true;
         }
 
-        return true;
+        //we don't have config set up, disable the controller by default
+        return false;
     }
 }
