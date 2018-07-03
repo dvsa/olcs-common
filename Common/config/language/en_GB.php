@@ -3359,7 +3359,7 @@ return [
 
     'permits.page.title.number-of-trips' => 'Delivering goods abroad',
     'permits.page.field.number-of-trips' => 'How many trips will be made by your company abroad over the next 12 months?',
-    'permits.page.title.euro6.emissions' => 'Euro 6 Emissions-VehicleOperator Licensing',
+    'permits.page.title.euro6.emissions' => 'Euro 6 Emissions -',
     'permits.page.title.sectors' => 'Nature of your business',
     'permits.page.field.sectors' => 'What type of goods will you carry over the next 12 months?',
     'permits.page.title.restricted-countries' => 'ECMT Restrictions -',
