@@ -2145,7 +2145,7 @@ return [
     'print-sign-return-declaration-form-text-ni' => 'A business owner or director must sign the declaration form and send it to the <a href="{{OPENING_TIMES_LINK_NI}}" target="_blank">Central Licensing Office</a>, if they haven\'t already.',
     'priority' => 'Priority',
     'cookies-title' => 'Cookies',
-    'privacy-notice-title' => 'Privacy',
+    'privacy-notice-title' => 'Privacy notice',
     'progress' => 'Progress',
     'prohibition-history' => 'Prohibition history',
     'previousConvictionData_title-error' => 'Choose title',
