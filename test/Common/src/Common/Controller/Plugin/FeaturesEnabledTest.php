@@ -36,9 +36,9 @@ class FeaturesEnabledTest extends MockeryTestCase
     /**
      * @dataProvider dpTestInvoke
      */
-    public function testInvoke($config, $checkedToggles, $expectedResult)
+    public function testInvoke($config, $checkedToggles, $expectedResult, $numChecks)
     {
-        $this->querySender->shouldReceive('featuresEnabled')->once()->with($checkedToggles)->andReturn($expectedResult);
+        $this->querySender->shouldReceive('featuresEnabled')->times($numChecks)->with($checkedToggles)->andReturn($expectedResult);
         $sut = new FeaturesEnabled($this->querySender);
         $this->assertEquals($expectedResult, $sut->__invoke($config, $this->mvcEvent));
     }
@@ -62,10 +62,22 @@ class FeaturesEnabledTest extends MockeryTestCase
             $this->action => $actionConfig
         ];
 
+        //empty action config
+        $emptyActionConfig = [
+            $this->action => []
+        ];
+
+        //action config only
+        $emptyDefaultConfig = [
+            'default' => []
+        ];
+
         return [
-            [$bothConfigs, $actionConfig, true],
-            [$defaultConfigOnly, $defaultConfig, false],
-            [$actionConfigOnly, $actionConfig, true],
+            [$bothConfigs, $actionConfig, true, 1],
+            [$defaultConfigOnly, $defaultConfig, false, 1],
+            [$actionConfigOnly, $actionConfig, true, 1],
+            [$emptyActionConfig, [], true, 0],
+            [$emptyDefaultConfig, [], true, 0],
         ];
     }
 }

@@ -26,7 +26,7 @@ class FeaturesEnabled extends AbstractPlugin
     }
 
     /**
-     * @param array    $features
+     * @param array    $toggleConfig
      * @param MvcEvent $e
      *
      * @return bool

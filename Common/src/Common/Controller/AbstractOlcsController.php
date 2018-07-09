@@ -32,8 +32,7 @@ abstract class AbstractOlcsController extends AbstractActionController
 
     public function onDispatch(MvcEvent $e)
     {
-        if ($this instanceof ToggleAwareInterface && !$this->featuresEnabled($this->toggleConfig, $e))
-        {
+        if ($this instanceof ToggleAwareInterface && !$this->featuresEnabled($this->toggleConfig, $e)) {
             return $this->notFoundAction();
         }
 
