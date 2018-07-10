@@ -3360,6 +3360,7 @@ return [
     'permits.page.field.number-of-trips' => 'How many trips will be made by your company abroad over the next 12 months?',
     'permits.page.euro6.emissions.title' => 'Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards.',
+    'permits.page.euro6.emissions.info' => 'If you intend to transport goods internationally across EU and the EEA, the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
     'permits.page.title.sectors' => 'Nature of your business',
     'permits.page.field.sectors' => 'What type of goods will you carry over the next 12 months?',
     'permits.page.title.restricted-countries' => 'ECMT Restrictions -',
