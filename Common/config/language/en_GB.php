@@ -3335,7 +3335,7 @@ return [
     'permits.application.overwiew.main-title' => 'Apply for a new ECMT permit',
     'permits.application.overwiew.title' => 'Home',
     'permits.application.overwiew.subtitle' => 'Permits applications',
-    'permits.application.overwiew.button' => 'Apply for a permit',
+    'permits.application.overwiew.button' => 'Apply for a new permit',
     'permits.application.overwiew.no-permits' => 'You haven\'t applied for any permits.',
     'permits.application.overwiew.has-permits' => 'Once permits are issued, they will be posted to you and last for 12 months.',
     'permits.application.eligibility.title' => 'International haulier permit',
