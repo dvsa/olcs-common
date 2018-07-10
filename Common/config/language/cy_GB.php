@@ -1402,5 +1402,7 @@ return [
     'submit-and-pay.button' => 'CY - Submit and pay',
     'permits.button.save-return-to-permits' => 'CY - Save and return to permits',
 
+    'permits.form.euro6.label' => 'CY - I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
+
     // Potentially unused translations
 ];

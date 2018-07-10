@@ -3381,5 +3381,6 @@ return [
     'permit_awaiting' => 'Awaiting issue',
     'permit_nys' => 'Not yet submitted',
 
+    'permits.form.euro6.label' => 'I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
     // Potentially unused translations
 ];
