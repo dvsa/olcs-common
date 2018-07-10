@@ -1401,6 +1401,7 @@ return [
     'permits.button.accept-and-continue' => 'CY - Accept and continue',
     'submit-and-pay.button' => 'CY - Submit and pay',
     'permits.button.save-return-to-permits' => 'CY - Save and return to permits',
+    'permits.button.save-return-to-overview' => 'CY - Save and return to overview',
 
     'permits.form.euro6.label' => 'CY - I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
 

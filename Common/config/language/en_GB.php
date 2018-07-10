@@ -3375,6 +3375,7 @@ return [
     'permits.back-link' => 'Back',
     'permits.button.accept-and-continue' => 'Accept and continue',
     'permits.button.save-return-to-permits' => 'Save and return to permits',
+    'permits.button.save-return-to-overview' => 'Save and return to overview',
 
     'permit_valid' => 'Valid',
     'permit_expired' => 'Expired',
