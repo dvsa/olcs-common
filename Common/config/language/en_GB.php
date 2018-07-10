@@ -3332,6 +3332,7 @@ return [
     'lva-operating-centre-newspaper-permission' => 'I acknowledge that:',
 
     // Permits application
+    'permits.application.overwiew.main-title' => 'Apply for a new ECMT permit',
     'permits.application.overwiew.title' => 'Home',
     'permits.application.overwiew.subtitle' => 'Permits applications',
     'permits.application.overwiew.button' => 'Apply for a permit',
