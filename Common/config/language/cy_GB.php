@@ -20,7 +20,7 @@ return [
     'operatingCentres_totAuthTrailers-error' => 'Nodwch gyfanswm ôl-gerbydau',
     'Please Select' => 'Dewiswch',
     'Return to' => 'Dychwelwch i',
-    'Save and continue' => 'CY - Save & continue',
+    'Save and continue' => 'CY - Save and continue',
     'Country' => 'CY - Country',
     'Sign in' => 'Mewngofnodwch',
     'Sign out' => 'Allgofnodi',

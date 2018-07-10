@@ -98,7 +98,7 @@ return [
     'S41_APP_APPROVE_OC' => 'Please complete the Operating Centres section',
     'S41_APP_APPROVE_TM' => 'Please complete the Transport Managers section',
     'S41_APP_OUSTANDING_FEE' => 'You must process the application fee',
-    'Save and continue' => 'Save & continue',
+    'Save and continue' => 'Save and continue',
     'Country' => 'Country',
     'Sign in' => 'Sign in',
     'Sign out' => 'Sign out',
