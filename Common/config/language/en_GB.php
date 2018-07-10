@@ -3341,7 +3341,6 @@ return [
     'permits.application.cabotage.question' => 'Will you be carrying out cabotage?',
     'permits.application.cabotage.hint' => 'You can\'t carry out cabotage with an ECMT permit.',
     'permits.application.cabotage.explanation' => 'Transport goods between two places in the same country',
-    'permits.application.euro6.question' => 'Do your vehicles meet Euro 6 emissions standards?',
     'permits.application.euro6.link' => 'Help with vehicle authorisation',
     'permits.application.euro6.hint' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
     'permits.application.eligibility.country.question' => 'Which countries will you be delivering to?',
@@ -3359,7 +3358,8 @@ return [
 
     'permits.page.title.number-of-trips' => 'Delivering goods abroad',
     'permits.page.field.number-of-trips' => 'How many trips will be made by your company abroad over the next 12 months?',
-    'permits.page.title.euro6.emissions' => 'Euro 6 Emissions -',
+    'permits.page.euro6.emissions.title' => 'Do your vehicles meet Euro 6 emissions standards? - ',
+    'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards.',
     'permits.page.title.sectors' => 'Nature of your business',
     'permits.page.field.sectors' => 'What type of goods will you carry over the next 12 months?',
     'permits.page.title.restricted-countries' => 'ECMT Restrictions -',

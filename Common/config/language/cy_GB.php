@@ -1369,7 +1369,6 @@ return [
     'permits.application.cabotage.question' => 'CY - Will you be carrying out cabotage?',
     'permits.application.cabotage.explanation' => 'CY - Transport goods between two places in the same country',
     'permits.application.cabotage.hint' => 'CY - You can\'t carry out cabotage with an ECMT permit.',
-    'permits.application.euro6.question' => 'CY - Do your vehicles meet Euro 6 emissions standards?',
     'permits.application.euro6.link' => 'CY - Help with vehicle authorisation',
     'permits.application.euro6.hint' => 'CY - ECMT permits can only be used by vehicles that meet Euro 6 standards',
     'permits.application.eligibility.country.question' => 'CY - Which countries will you be delivering to?',
@@ -1384,6 +1383,8 @@ return [
 
     'permits.page.title.number-of-trips' => 'CY - Delivering goods abroad',
     'permits.page.field.number-of-trips' => 'CY - How many trips will be made by your company abroad over the next 12 months?',
+    'permits.page.euro6.emissions.title' => 'CY - Do your vehicles meet Euro 6 emissions standards? - ',
+    'permits.page.euro6.emissions.question' => 'CY - ECMT permits can only be used by vehicles that meet Euro 6 standards.',
     'permits.page.title.sectors' => 'CY - Nature of your business',
     'permits.page.field.sectors' => 'CY - What type of goods will you carry over the next 12 months?',
     'permits.page.title.restricted-countries' => 'CY - ECMT Restrictions',
