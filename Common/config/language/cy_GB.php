@@ -1392,8 +1392,8 @@ return [
     'permits.page.restricted-countries.question' => 'CY - Do you intend to transport goods to Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.message.summary' => 'CY - Now send your application',
     'permits.page.title.declaration' => 'CY - Declaration',
-    'permits.page.title.fee' => 'Fee for ECMT permit ',
-    'permits.page.message.fee' => 'Keep your payment confirmation for future reference.',
+    'permits.page.title.fee' => 'CY - Fee for ECMT permit ',
+    'permits.page.message.fee' => 'CY - Keep your payment confirmation for future reference.',
 
     'permits.back-link' => 'Yn ôl',
     'permits.button.accept-and-continue' => 'CY - Accept and continue',
