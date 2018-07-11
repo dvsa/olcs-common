@@ -1403,7 +1403,10 @@ return [
 
     'permits.form.euro6.label' => 'CY - I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
     'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
+    'permits.form.trips.label' => 'CY - Number of trips',
 
     'error.messages.restricted.countries' => 'CY - Restricted countries',
+    'error.messages.restricted.countries' => 'Restricted countries',
+    'error.messages.trips' => 'CY - Number of trips',
     // Potentially unused translations
 ];
