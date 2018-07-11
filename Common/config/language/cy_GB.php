@@ -1407,6 +1407,7 @@ return [
     'permits.button.save-return-to-overview' => 'CY - Save and return to overview',
 
     'permits.form.euro6.label' => 'CY - I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
+    'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
 
     // Potentially unused translations
 ];
