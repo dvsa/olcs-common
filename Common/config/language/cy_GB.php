@@ -1376,8 +1376,8 @@ return [
     'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?',
     'permits.application.submitted.title' => 'CY - Application submitted',
 
-    'permits.page.title.number-of-trips' => 'CY - Delivering goods abroad',
-    'permits.page.field.number-of-trips' => 'CY - How many trips will be made by your company abroad over the next 12 months?',
+    'permits.page.number-of-trips.title' => 'CY - ECMT Permits - ',
+    'permits.page.number-of-trips.question' => 'CY - How many international trips were carried out over the past 12 months?',
     'permits.page.euro6.emissions.title' => 'CY - Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'CY - ECMT permits can only be used by vehicles that meet Euro 6 standards.',
     'permits.page.euro6.emissions.info' => 'CY - If you intend to transport goods internationally across EU and the EEA, the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
