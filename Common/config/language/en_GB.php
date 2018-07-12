@@ -3350,7 +3350,6 @@ return [
     'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?',
     'permits.application.submitted.title' => 'Application submitted',
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
-    'permits.application.sector.hint' => 'For example, Wood',
 
     'permits.page.number-of-trips.title' => 'ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'How many international trips were carried out over the past 12 months?',
@@ -3364,8 +3363,8 @@ return [
     'permits.page.ecmt.licence.info' => 'ECMT permits will be valid from January 2019 to December 2019.',
     'permits.page.international.journey.title' => 'Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'What percentage of your business is related to international journeys over the past 12 months?',
-    'permits.page.title.sectors' => 'Nature of your business',
-    'permits.page.field.sectors' => 'What type of goods will you carry over the next 12 months?',
+    'permits.page.sector.title' => 'ECMT Sectors - ',
+    'permits.page.sector.question' => 'Do you specialise in carrying goods for one specific sector?',
     'permits.page.restricted-countries.title' => 'Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
     'permits.page.restricted-countries.question' => 'Do you intend to transport goods to Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.title.summary' => 'Check your answers before submitting your permit',
