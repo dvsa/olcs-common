@@ -3367,6 +3367,9 @@ return [
     'permits.page.sector.question' => 'Do you specialise in carrying goods for one specific sector?',
     'permits.page.restricted-countries.title' => 'Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
     'permits.page.restricted-countries.question' => 'Do you intend to transport goods to Austria, Greece, Hungary, Italy or Russia?',
+    'permits.page.permits.required.title' => 'ECMT Permits Required - ',
+    'permits.page.permits.required.question' => 'How many permits does your business require?',
+    'permits.page.permits.required.info' => 'You can apply for up to 50 permits. This is based on the number of vehicles authorised for this.',
     'permits.page.title.summary' => 'Check your answers before submitting your permit',
     'permits.page.title.check-answers' => 'Check your answers',
     'permits.page.message.summary' => 'Now send your application',
@@ -3386,8 +3389,11 @@ return [
     'permits.form.euro6.label' => 'I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
     'permits.form.cabotage.label' => 'I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'permits.form.trips.label' => 'Number of trips',
+    'permits.form.permits.required.label' => 'Number of permits required',
     'error.messages.restricted.countries' => 'Restricted countries',
     'error.messages.trips' => 'Number of trips',
     'error.messages.sector' => 'Specialist sector',
+    'error.messages.permits.required' => 'Number of permits',
+
     // Potentially unused translations
 ];
