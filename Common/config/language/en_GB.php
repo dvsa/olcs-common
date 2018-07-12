@@ -3367,6 +3367,7 @@ return [
     'permits.page.restricted-countries.title' => 'Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
     'permits.page.restricted-countries.question' => 'Do you intend to transport goods to Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.title.summary' => 'Check your answers before submitting your permit',
+    'permits.page.title.check-answers' => 'Check your answers',
     'permits.page.message.summary' => 'Now send your application',
     'permits.page.title.declaration' => 'Declaration',
     'permits.page.title.fee' => 'Fee for ECMT permit ',
