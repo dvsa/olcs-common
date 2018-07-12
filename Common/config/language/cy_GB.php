@@ -1386,6 +1386,8 @@ return [
     'permits.page.ecmt.licence.title' => 'CY - Permits Home - ',
     'permits.page.ecmt.licence.question' => 'CY - Select which licence would you like the ECMT permit to be applied to',
     'permits.page.ecmt.licence.info' => 'CY - ECMT permits will be valid from January 2019 to December 2019.',
+    'permits.page.international.journey.title' => 'CY - Percentage of International Journey - ',
+    'permits.page.international.journey.question' => 'CY - What percentage of your business is related to international journeys over the past 12 months?',
     'permits.page.title.sectors' => 'CY - Nature of your business',
     'permits.page.field.sectors' => 'CY - What type of goods will you carry over the next 12 months?',
     'permits.page.restricted-countries.title' => 'CY - Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
