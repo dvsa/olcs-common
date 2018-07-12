@@ -3388,5 +3388,6 @@ return [
     'permits.form.trips.label' => 'Number of trips',
     'error.messages.restricted.countries' => 'Restricted countries',
     'error.messages.trips' => 'Number of trips',
+    'error.messages.sector' => 'Specialist sector',
     // Potentially unused translations
 ];

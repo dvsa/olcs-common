@@ -1412,5 +1412,6 @@ return [
     'error.messages.restricted.countries' => 'CY - Restricted countries',
     'error.messages.restricted.countries' => 'Restricted countries',
     'error.messages.trips' => 'CY - Number of trips',
+    'error.messages.sector' => 'CY - Specialist sector',
     // Potentially unused translations
 ];
