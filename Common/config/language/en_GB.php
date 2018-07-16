@@ -3340,6 +3340,7 @@ return [
 
     // Permits application
     'permits.application.overwiew.main-title' => 'Apply for a new ECMT permit',
+    'permits.application.ineligible' => 'You are not eligible for permits (text TBC)',
     'permits.application.overwiew.title' => 'Home',
     'permits.application.overwiew.subtitle' => 'Permits applications',
     'permits.application.overwiew.button' => 'Apply for a new permit',
