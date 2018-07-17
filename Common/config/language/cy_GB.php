@@ -1398,7 +1398,7 @@ return [
     'permits.page.permits.required.question' => 'CY - How many permits does your business require?',
     'permits.page.permits.required.info' => 'CY - You can apply for up to 50 permits. This is based on the number of vehicles authorised for this.',
     'permits.page.message.summary' => 'CY - Now send your application',
-    'permits.page.title.declaration' => 'CY - Declaration',
+    'permits.page.declaration.title' => 'CY - Declaration',
     'permits.page.title.fee' => 'CY - Fee for ECMT permit ',
     'permits.page.message.fee' => 'CY - Keep your payment confirmation for future reference.',
 
@@ -1416,6 +1416,7 @@ return [
     'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'permits.form.trips.label' => 'CY - Number of trips',
     'permits.form.permits.required.label' => 'CY - Number of permits required',
+    'permits.form.declaration.label' => 'CY - I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
     'error.messages.restricted.countries' => 'CY - Restricted countries',
     'error.messages.trips' => 'CY - Number of trips',
     'error.messages.sector' => 'CY - Specialist sector',
