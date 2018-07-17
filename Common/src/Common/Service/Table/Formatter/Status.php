@@ -55,7 +55,7 @@ class Status implements FormatterInterface
           '<span class="overview__%s">%s</span>',
           [
             $statusClass,
-            $translator->translate($row['status'])
+            $translator->translate($row['status']['description'])
           ]
         );
     }
