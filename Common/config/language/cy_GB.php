@@ -1398,7 +1398,8 @@ return [
     'permits.page.permits.required.question' => 'CY - How many permits does your business require?',
     'permits.page.permits.required.info' => 'CY - You can apply for up to 50 permits. This is based on the number of vehicles authorised for this.',
     'permits.page.message.summary' => 'CY - Now send your application',
-    'permits.page.declaration.title' => 'CY - Declaration',
+    'permits.page.declaration.title' => 'CY - Declaration - ',
+    'permits.page.declaration.question' => 'CY - Declaration',
     'permits.page.title.fee' => 'CY - Fee for ECMT permit ',
     'permits.page.message.fee' => 'CY - Keep your payment confirmation for future reference.',
 
