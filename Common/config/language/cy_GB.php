@@ -1421,7 +1421,7 @@ return [
     'permits.form.declaration.label' => 'CY - I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
     'error.messages.restricted.countries' => 'CY - Restricted countries',
     'error.messages.trips' => 'CY - Number of trips',
-    'error.messages.sector' => 'CY - Specialist sector',
+    'error.messages.sector' => 'CY - Select one specialist sector',
     'error.messages.permits.required' => 'CY - Number of permits',
 
     // Potentially unused translations
