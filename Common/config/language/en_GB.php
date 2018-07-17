@@ -3379,6 +3379,7 @@ return [
     'permits.page.message.fee' => 'Keep your payment confirmation for future reference.',
     'permits.back-link' => 'Back',
     'permits.button.accept-and-continue' => 'Accept and continue',
+    'permits.button.confirm-and-continue' => 'Confirm and continue',
     'permits.button.save-return-to-permits' => 'Save and return to permits',
     'permits.button.save-return-to-overview' => 'Save and return to overview',
 

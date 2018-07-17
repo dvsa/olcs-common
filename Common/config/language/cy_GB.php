@@ -1405,6 +1405,7 @@ return [
 
     'permits.back-link' => 'Yn ôl',
     'permits.button.accept-and-continue' => 'CY - Accept and continue',
+    'permits.button.confirm-and-continue' => 'CY - Confirm and continue',
     'submit-and-pay.button' => 'CY - Submit and pay',
     'permits.button.save-return-to-permits' => 'CY - Save and return to permits',
     'permits.button.save-return-to-overview' => 'CY - Save and return to overview',
