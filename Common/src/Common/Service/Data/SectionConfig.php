@@ -23,6 +23,36 @@ class SectionConfig implements ServiceLocatorAwareInterface
      * @var array
      */
     private $sections = array(
+
+      'ecmt_licence' => array(), //new
+      'euro6_emissions' => array(), //new
+      'cabotage' => array(), //new
+      'restricted_countries' => array(), //new
+      'trips' => array(), //new
+      'international_journey' => array(), //new
+      'sector' => array(), //new
+      'permits_required' => array(), //new
+      'check_answers' => array(
+        'prerequisite' => array(
+          array(
+            'ecmt_licence',
+            'euro6_emissions',
+            'cabotage',
+            'restricted_countries',
+            'trips',
+            'international_journey',
+            'sector',
+            'permits_required',
+          )
+        )
+      ), //new
+      'declaration' => array(
+        'prerequisite' => array(
+          'check_answers'
+        )
+      ), //new
+
+
         'type_of_licence' => array(),
         'business_type' => array(
             'prerequisite' => array(

@@ -3406,5 +3406,16 @@ return [
     'error.messages.sector' => 'Select one specialist sector',
     'error.messages.permits.required' => 'Number of permits',
 
+  'section.name.ecmt_licence' => 'Licence number',
+  'section.name.euro6_emissions' => 'Euro emission standards',
+  'section.name.cabotage' => 'Cabotage',
+  'section.name.restricted_countries' => 'Goods to limited countries',
+  'section.name.trips' => 'Annual trips abroad',
+  'section.name.international_journey' => 'Percentage of international journeys',
+  'section.name.sector' => 'Goods you carry abroad',
+  'section.name.permits_required' => 'Number of permits required',
+  'section.name.check_answers' => 'Check your answers',
+  'section.name.declaration' => 'Declaration',
+
     // Potentially unused translations
 ];
