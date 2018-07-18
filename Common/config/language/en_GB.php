@@ -3377,7 +3377,7 @@ return [
     'permits.page.restricted-countries.question' => 'Do you intend to transport goods to Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.permits.required.title' => 'ECMT Permits Required - ',
     'permits.page.permits.required.question' => 'How many permits does your business require?',
-    'permits.page.permits.required.info' => 'You can apply for up to 50 permits. This is based on the number of vehicles authorised for this.',
+    'permits.page.permits.required.info' => 'You can apply for up to %s permits. This is based on the number of vehicles authorised for this.',
     'permits.page.title.summary' => 'Check your answers before submitting your permit',
     'permits.page.title.check-answers' => 'Check your answers',
     'permits.page.message.summary' => 'Now send your application',
