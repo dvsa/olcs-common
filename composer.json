@@ -38,7 +38,7 @@
     "require": {
         "php": ">=5.4",
         "zendframework/zendframework": "~3.0.0",
-        "doctrine/doctrine-orm-module": "~0.10.0",
+        "doctrine/doctrine-orm-module": "^1.0.9",
         "doctrine/annotations": "^1.2.3",
         "symfony/Filesystem": "~2.6.0",
         "zf-commons/zfc-rbac": "~2.4.0"
