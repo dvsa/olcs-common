@@ -3361,6 +3361,8 @@ return [
     'permits.application.submitted.title' => 'Application submitted',
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
 
+    'permits.application.cancel-application' => 'Cancel application',
+
     'permits.page.number-of-trips.title' => 'ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'How many international trips were carried out over the past 12 months?',
     'permits.page.euro6.emissions.title' => 'Do your vehicles meet Euro 6 emissions standards? - ',
@@ -3399,6 +3401,7 @@ return [
     'permits.button.confirm-and-continue' => 'Confirm and continue',
     'permits.button.save-return-to-permits' => 'Save and return to permits',
     'permits.button.save-return-to-overview' => 'Save and return to overview',
+    'permits.button.cancel-return-to-overview' => 'Cancel',
 
     'permit_valid' => 'Valid',
     'permit_expired' => 'Expired',
@@ -3410,6 +3413,15 @@ return [
     'permits.form.trips.label' => 'Number of trips',
     'permits.form.permits.required.label' => 'Number of permits required',
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
+    'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
+    // 'permits.form.cancel_application.label' => [
+    //     'permits.form.cancel_application.label_top' => 'By continuing you confirm that:',
+    //     'permits.form.cancel_application.bullet' => [
+    //         'permits.form.cancel_application.bullet_1' => 'It will be cancelled completely and all your information will not be stored.',
+    //         'permits.form.cancel_application.bullet_2' => 'You will not be able to access it again.'
+    //     ]
+    // ],
+
     'error.messages.restricted.countries' => 'Restricted countries',
     'error.messages.trips' => 'Number of trips',
     'error.messages.sector' => 'Select one specialist sector',
