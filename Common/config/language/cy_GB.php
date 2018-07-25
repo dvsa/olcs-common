@@ -1386,7 +1386,7 @@ return [
     'permits.page.cabotage.title' => 'CY - Will you be carrying out cabotage? - ',
     'permits.page.cabotage.question' => 'CY - You can’t carry out cabotage with an ECMT permit',
     'permits.page.ecmt.licence.title' => 'CY - Permits Home - ',
-    'permits.page.ecmt.licence.question' => 'CY - Select which licence would you like the ECMT permit to be applied to',
+    'permits.page.ecmt.licence.question' => 'CY - Select which licence you would like the ECMT permit to be applied to',
     'permits.page.ecmt.licence.info' => 'CY - ECMT permits will be valid from January 2019 to December 2019.',
     'permits.page.international.journey.title' => 'CY - Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'CY - What percentage of your business is related to international journeys over the past 12 months?',
