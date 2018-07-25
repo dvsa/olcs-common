@@ -3365,6 +3365,7 @@ return [
     'permits.application.cancel-application.title' => 'Cancel Application - ',
     'permits.application.cancel-application.cancel' => 'Cancel',
     'permits.application.cancel-confirmation' => 'You have successfully cancelled your application',
+    'permits.application.cancel-confirmation.title' => 'Cancellation Successful - ',
 
     'permits.page.number-of-trips.title' => 'ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'How many international trips were carried out over the past 12 months?',

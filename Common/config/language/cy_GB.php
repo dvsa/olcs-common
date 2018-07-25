@@ -1380,6 +1380,8 @@ return [
 
     'permits.application.cancel-application' => 'CY - Cancel application',
     'permits.application.cancel-application.title' => 'CY - Cancel Application - ',
+    'permits.application.cancel-confirmation' => 'CY - You have successfully cancelled your application',
+    'permits.application.cancel-confirmation.title' => 'CY - Cancellation Successful - ',
 
     'permits.page.number-of-trips.title' => 'CY - ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'CY - How many international trips were carried out over the past 12 months?',
@@ -1421,6 +1423,7 @@ return [
     'permits.button.save-return-to-permits' => 'CY - Save and return to permits',
     'permits.button.save-return-to-overview' => 'CY - Save and return to overview',
     'permits.button.cancel-return-to-overview' => 'CY - Cancel',
+    'permits.button.confirm-cancel-finish' => 'CY - Finish',
 
     'permits.form.euro6.label' => 'CY - I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
     'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
