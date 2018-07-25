@@ -3429,7 +3429,8 @@ return [
     'error.messages.restricted.countries' => 'Restricted countries',
     'error.messages.restricted.countries.list' => 'You must select at least one country',
     'error.messages.trips' => 'Number of trips',
-    'error.messages.sector' => 'Select one specialist sector',
+    'error.messages.sector' => 'You must answer the question to continue',
+    'error.messages.sector.list' => 'You must select at least one sector',
     'error.messages.euro6' => 'You must tick the box to continue',
     'error.messages.permits.required' => 'Number of permits',
 
