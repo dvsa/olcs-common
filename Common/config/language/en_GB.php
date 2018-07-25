@@ -3429,6 +3429,7 @@ return [
     'error.messages.restricted.countries.list' => 'You must select at least one country',
     'error.messages.trips' => 'Number of trips',
     'error.messages.sector' => 'Select one specialist sector',
+    'error.messages.euro6' => 'You must tick the box to continue',
     'error.messages.permits.required' => 'Number of permits',
 
     'section.name.ecmt-licence' => 'Licence number',
