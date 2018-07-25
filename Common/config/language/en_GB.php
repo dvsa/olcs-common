@@ -3362,6 +3362,7 @@ return [
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
 
     'permits.application.cancel-application' => 'Cancel application',
+    'permits.application.cancel-confirmation' => 'You have successfully cancelled your application',
 
     'permits.page.number-of-trips.title' => 'ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'How many international trips were carried out over the past 12 months?',
@@ -3402,6 +3403,7 @@ return [
     'permits.button.save-return-to-permits' => 'Save and return to permits',
     'permits.button.save-return-to-overview' => 'Save and return to overview',
     'permits.button.cancel-return-to-overview' => 'Cancel',
+    'permits.button.confirm-cancel-finish' => 'Finish',
 
     'permit_valid' => 'Valid',
     'permit_expired' => 'Expired',
