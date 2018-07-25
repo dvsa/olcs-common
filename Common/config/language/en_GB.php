@@ -3418,6 +3418,7 @@ return [
     'permits.form.trips.label' => 'Number of trips',
     'permits.form.permits.required.label' => 'Number of permits required',
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
+    'error.messages.ecmt-licence' => 'You must select a licence',
     'error.messages.checkbox' => 'You must tick the box to continue',
     'error.messages.restricted.countries' => 'You must answer the question to continue',
     'error.messages.restricted.countries.list' => 'You must select at least one country',
