@@ -3426,6 +3426,7 @@ return [
     'permits.form.cancel_application.error_message' => 'You must select the checkbox to continue',
 
     'error.messages.restricted.countries' => 'Restricted countries',
+    'error.messages.restricted.countries.list' => 'You must select at least one country',
     'error.messages.trips' => 'Number of trips',
     'error.messages.sector' => 'Select one specialist sector',
     'error.messages.permits.required' => 'Number of permits',
