@@ -3420,6 +3420,7 @@ return [
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
     'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'Cancel application',
+    'permits.form.cancel_application.error_message' => 'You must select the checkbox to continue',
 
     'error.messages.restricted.countries' => 'Restricted countries',
     'error.messages.trips' => 'Number of trips',
