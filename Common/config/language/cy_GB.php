@@ -1434,10 +1434,19 @@ return [
     'permits.form.trips.label' => 'CY - Number of trips',
     'permits.form.permits.required.label' => 'CY - Number of permits required',
     'permits.form.declaration.label' => 'CY - I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
+
     'error.messages.restricted.countries' => 'CY - Restricted countries',
+    'error.messages.ecmt-licence' => 'CY - You must select a licence',
+    'error.messages.checkbox' => 'CY - You must tick the box to continue',
+    'error.messages.restricted.countries' => 'CY - You must answer the question to continue',
+    'error.messages.restricted.countries.list' => 'CY - You must select at least one country',
     'error.messages.trips' => 'CY - Number of trips',
-    'error.messages.sector' => 'CY - Select one specialist sector',
+    'error.messages.sector' => 'CY - You must answer the question to continue',
+    'error.messages.sector.list' => 'CY - You must select at least one sector',
+    'error.messages.euro6' => 'CY - You must tick the box to continue',
     'error.messages.permits.required' => 'CY - Number of permits',
+    'error.messages.international-journey' => 'CY - You must answer the question to continue',
+
     'permits.form.cancel_application.label' => 'CY - I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'CY - Cancel application',
     'permits.form.cancel_application.error_message' => 'CY - You must select the checkbox to continue'
