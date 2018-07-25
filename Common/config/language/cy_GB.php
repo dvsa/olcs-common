@@ -1378,6 +1378,9 @@ return [
     'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?',
     'permits.application.submitted.title' => 'CY - Application submitted',
 
+    'permits.application.cancel-application' => 'CY - Cancel application',
+    'permits.application.cancel-application.title' => 'CY - Cancel Application - ',
+
     'permits.page.number-of-trips.title' => 'CY - ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'CY - How many international trips were carried out over the past 12 months?',
     'permits.page.euro6.emissions.title' => 'CY - Do your vehicles meet Euro 6 emissions standards? - ',
@@ -1417,6 +1420,7 @@ return [
     'submit-and-pay.button' => 'CY - Submit and pay',
     'permits.button.save-return-to-permits' => 'CY - Save and return to permits',
     'permits.button.save-return-to-overview' => 'CY - Save and return to overview',
+    'permits.button.cancel-return-to-overview' => 'CY - Cancel',
 
     'permits.form.euro6.label' => 'CY - I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
     'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
@@ -1431,6 +1435,8 @@ return [
     'error.messages.trips' => 'CY - Number of trips',
     'error.messages.sector' => 'CY - Select one specialist sector',
     'error.messages.permits.required' => 'CY - Number of permits',
+    'permits.form.cancel_application.label' => 'CY - I confirm that I would like to cancel my application.',
+    'permits.form.cancel_application.button' => 'CY - Cancel application'
 
     'section.name.ecmt-licence' => 'CY - Licence number',
     'section.name.ecmt-euro6' => 'CY - Euro emission standards',

@@ -3362,6 +3362,8 @@ return [
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
 
     'permits.application.cancel-application' => 'Cancel application',
+    'permits.application.cancel-application.title' => 'Cancel Application - ',
+    'permits.application.cancel-application.cancel' => 'Cancel',
     'permits.application.cancel-confirmation' => 'You have successfully cancelled your application',
 
     'permits.page.number-of-trips.title' => 'ECMT Permits - ',
@@ -3416,13 +3418,7 @@ return [
     'permits.form.permits.required.label' => 'Number of permits required',
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
     'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
-    // 'permits.form.cancel_application.label' => [
-    //     'permits.form.cancel_application.label_top' => 'By continuing you confirm that:',
-    //     'permits.form.cancel_application.bullet' => [
-    //         'permits.form.cancel_application.bullet_1' => 'It will be cancelled completely and all your information will not be stored.',
-    //         'permits.form.cancel_application.bullet_2' => 'You will not be able to access it again.'
-    //     ]
-    // ],
+    'permits.form.cancel_application.button' => 'Cancel application',
 
     'error.messages.restricted.countries' => 'Restricted countries',
     'error.messages.trips' => 'Number of trips',
