@@ -3435,6 +3435,7 @@ return [
     'error.messages.sector.list' => 'You must select at least one sector',
     'error.messages.euro6' => 'You must tick the box to continue',
     'error.messages.permits.required' => 'Number of permits',
+    'error.messages.permits.required.not-digit' => 'You must enter a valid whole number',
     'error.messages.permits.required.too-small' => 'You must enter a number which is 1 or more',
     'error.messages.permits.required.too-large' => 'You must enter a number equal to or less than your total vehicle authority. You must correct it.',
     'error.messages.international-journey' => 'You must answer the question to continue',
