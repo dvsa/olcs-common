@@ -3430,7 +3430,7 @@ return [
     'error.messages.restricted.countries.list' => 'You must select at least one country',
     'error.messages.trips' => 'Number of trips',
     'error.messages.trips.too-small' => 'You must enter a number which can be %min% or more.',
-    'error.messages.trips.too-large' => 'You must enter a number which is bellow %max%',
+    'error.messages.trips.too-large' => 'You must enter a number which is below %max%',
     'error.messages.sector' => 'You must answer the question to continue',
     'error.messages.sector.list' => 'You must select at least one sector',
     'error.messages.euro6' => 'You must tick the box to continue',
