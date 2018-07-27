@@ -1416,7 +1416,6 @@ return [
     'permits.page.fee.number.permits' => 'CY - Number of permits required',
     'permits.page.fee.permit.fee.single' => 'CY - Application fee per permit',
     'permits.page.fee.permit.fee.total' => 'CY - Total application fee to be paid (non-refundable)',
-
     'permits.button.accept-and-continue' => 'CY - Accept and continue',
     'permits.button.confirm-and-continue' => 'CY - Confirm and continue',
     'submit-and-pay.button' => 'CY - Submit and pay',
@@ -1432,7 +1431,6 @@ return [
     'permits.form.permits.required.label' => 'CY - Number of permits required',
     'permits.form.declaration.label' => 'CY - I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
 
-    'error.messages.restricted.countries' => 'CY - Restricted countries',
     'error.messages.ecmt-licence' => 'CY - You must select a licence',
     'error.messages.checkbox' => 'CY - You must tick the box to continue',
     'error.messages.restricted.countries' => 'CY - You must answer the question to continue',
