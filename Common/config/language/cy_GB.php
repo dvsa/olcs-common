@@ -1429,9 +1429,6 @@ return [
     'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'permits.form.trips.label' => 'CY - Number of trips',
 
-    'permits.form.euro6.label' => 'CY - I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
-    'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
-    'permits.form.trips.label' => 'CY - Number of trips',
     'permits.form.permits.required.label' => 'CY - Number of permits required',
     'permits.form.declaration.label' => 'CY - I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
 
@@ -1449,7 +1446,7 @@ return [
 
     'permits.form.cancel_application.label' => 'CY - I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'CY - Cancel application',
-    'permits.form.cancel_application.error_message' => 'CY - You must select the checkbox to continue'
+    'permits.form.cancel_application.error_message' => 'CY - You must select the checkbox to continue',
 
     'section.name.ecmt-licence' => 'CY - Licence number',
     'section.name.ecmt-euro6' => 'CY - Euro emission standards',
