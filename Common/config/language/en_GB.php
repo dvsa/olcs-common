@@ -3426,5 +3426,9 @@ return [
     'section.name.ecmt-check-answers' => 'Check your answers',
     'section.name.ecmt-declaration' => 'Declaration',
 
+    'less.than.60%' => 'Less than 60%',
+    'from.60%.to.90%' => 'From 60% to 90%',
+    'more.than.90%' => 'More than 90%',
+
     // Potentially unused translations
 ];

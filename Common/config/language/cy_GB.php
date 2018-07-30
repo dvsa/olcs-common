@@ -1442,5 +1442,9 @@ return [
     'section.name.ecmt-no-of-permits' => 'CY - Number of permits required',
     'section.name.ecmt-check-answers' => 'CY - Check your answers',
     'section.name.ecmt-declaration' => 'CY - Declaration',
+    'less.than.60%' => 'CY - Less than 60%',
+    'from.60%.to.90%' => 'CY - From 60% to 90%',
+    'more.than.90%' => 'CY - More than 90%',
+
     // Potentially unused translations
 ];
