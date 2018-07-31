@@ -1243,6 +1243,7 @@ return [
     'Undertaking' => 'Ymgymeriadau',
     'Condition' => 'Amodau',
     'common.link.back.label' => 'Yn ôl',
+    'common.link.change.label' => 'Change',
     'None' => 'Dim',
     'Details' => 'Manylion',
     'Filters' => 'Hidlau',
@@ -1404,7 +1405,6 @@ return [
     'permits.page.title.fee' => 'CY - Fee for ECMT permit ',
     'permits.page.message.fee' => 'CY - Keep your payment confirmation for future reference.',
 
-    'permits.back-link' => 'Yn ôl',
     'permits.button.accept-and-continue' => 'CY - Accept and continue',
     'permits.button.confirm-and-continue' => 'CY - Confirm and continue',
     'submit-and-pay.button' => 'CY - Submit and pay',
@@ -1425,5 +1425,15 @@ return [
     'error.messages.sector' => 'CY - Select one specialist sector',
     'error.messages.permits.required' => 'CY - Number of permits',
 
+    'section.name.ecmt-licence' => 'CY - Licence number',
+    'section.name.ecmt-euro6' => 'CY - Euro emission standards',
+    'section.name.ecmt-cabotage' => 'CY - Cabotage',
+    'section.name.ecmt-countries' => 'CY - Goods to limited countries',
+    'section.name.ecmt-trips' => 'CY - Annual trips abroad',
+    'section.name.ecmt-international-journey' => 'CY - Percentage of international journeys',
+    'section.name.ecmt-sectors' => 'CY - Goods you carry abroad',
+    'section.name.ecmt-no-of-permits' => 'CY - Number of permits required',
+    'section.name.ecmt-check-answers' => 'CY - Check your answers',
+    'section.name.ecmt-declaration' => 'CY - Declaration',
     // Potentially unused translations
 ];
