@@ -3426,6 +3426,15 @@ return [
     'section.name.ecmt-check-answers' => 'Check your answers',
     'section.name.ecmt-declaration' => 'Declaration',
 
+    'check-answers.page.question.licence' => 'Licence selected',
+    'check-answers.page.question.euro6' => 'I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
+    'check-answers.page.question.cabotage' => 'I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
+    'check-answers.page.question.restricted-countries' => 'Do you intend to transport goods to Austria, Greece, Hungary, Italy or Russia?',
+    'check-answers.page.question.trips' => 'How many international trips were carried out over the past 12 months?',
+    'check-answers.page.question.internationalJourneys' => 'What percentage of your business is related to international journeys over the past 12 months?',
+    'check-answers.page.question.sector' => 'Do you specialise in carrying goods for one specific sector?',
+    'check-answers.page.question.permits-required' => 'How many permits does your business require?',
+
     'less.than.60%' => 'Less than 60%',
     'from.60%.to.90%' => 'From 60% to 90%',
     'more.than.90%' => 'More than 90%',
