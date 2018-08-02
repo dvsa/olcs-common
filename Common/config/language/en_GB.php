@@ -713,6 +713,7 @@ return [
     'cant-increase-total-vehicles' => 'In order to increase the total number of vehicles on the licence you must <a href="%s">create a variation application</a>',
     'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s" class="js-modal-ajax">create a variation application</a>',
     'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s" class="js-modal-ajax">create a variation application</a>',
+    'call-charges-info-link' => '{{CALL_CHARGES_INFO}}',
     'card-declined' => 'Please check that the details you entered were correct and try again.<br>Otherwise, contact the cardholder.',
     'case-associated-with' => 'Cases associated with %s',
     'case-details' => 'Case details',
