@@ -1378,6 +1378,8 @@ return [
     'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?',
     'permits.application.submitted.title' => 'CY - Application submitted',
 
+    'permits.link.ecmt.guidance' => '{{ECMT_PERMITS_GUIDANCE_LINK}}',
+
     'permits.application.cancel-application' => 'CY - Cancel application',
     'permits.application.cancel-application.title' => 'CY - Cancel Application - ',
     'permits.application.cancel-confirmation' => 'CY - You have successfully cancelled your application',

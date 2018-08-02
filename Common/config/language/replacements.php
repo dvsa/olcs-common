@@ -15,6 +15,8 @@ return [
     '{{VEHICLE_WEIGHT_LINK}}' => 'https://www.gov.uk/vehicle-weights-explained',
     '{{NI_VEHICLE_OPERATOR_LINK}}' => 'http://www.nidirect.gov.uk/index/information-and-services/motoring/driving'
         . '-for-a-living/goods-vehicle-operator-licensing.html',
+    '{{ECMT_PERMITS_GUIDANCE_LINK}}' =>
+        'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage',
     '{{VEHICLE_EXCEPTIONS}}' => 'https://www.gov.uk/being-a-goods-vehicle-operator/exemptions',
     '{{RULES_IN_NI}}' => 'http://www.nidirect.gov.uk/index/information-and-services/motoring/driving-for-a-living.htm',
     '{{EBSR_SUPPORT_NUMBER}}' => '0113 254 3200',
