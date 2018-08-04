@@ -331,6 +331,17 @@ class RefData
     const PERMIT_AWAITING = 'permit_awaiting';
     const PERMIT_NYS = 'permit_nys';
 
+    /**
+     * ECMT Permit application statuses
+     */
+    const ECMT_APP_STATUS_CANCELLED = 'ecmt_permit_cancelled';
+    const ECMT_APP_STATUS_NOT_YET_SUBMITTED = 'ecmt_permit_nys';
+    const ECMT_APP_STATUS_UNDER_CONSIDERATION = 'ecmt_permit_uc';
+    const ECMT_APP_STATUS_WITHDRAWN = 'ecmt_permit_withdrawn';
+    const ECMT_APP_STATUS_AWAITING_FEE = 'ecmt_permit_awaiting';
+    const ECMT_APP_STATUS_UNSUCCESSFUL = 'ecmt_permit_unsuccessful';
+    const ECMT_APP_STATUS_ISSUED = 'ecmt_permit_issued';
+
     //feature toggle statuses
     const FT_ACTIVE = 'always-active';
     const FT_INACTIVE = 'inactive';
