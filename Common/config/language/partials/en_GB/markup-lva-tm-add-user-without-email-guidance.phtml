@@ -3,25 +3,29 @@
 
 	<p>You can apply by post if you cannot use the online service, but this may take longer.</p>
 
-	<p class="info-box__text">You must submit a
+	<p>You must submit a
     <a href="<?php echo $this->url('getfile', ['identifier' => base64_encode($this->translate('tm-add-user-no-email-document-identifier'))]); ?>" download target="_blank">TM1 form.</a>
 	</p>
 
 	<p>If you live in England, Scotland or Wales, contact the Driver and Vehicle Standards Agency (DVSA) to request a form.</p>
 
+    <address class="address-container normalise-font">
 	<p><strong>DVSA customer service centre</strong><br>
 	Telephone: 0300 123 9000<br>
 	Monday to Friday, 7:30am to 6pm<br>
 	<a href="<?php echo $this->translate('call-charges-info-link'); ?>" target="_blank">Find out about call charges</a>
 	</p>
+    </address>
 
 	<p>Contact the Transport Regulation Unit if you live in Northern Ireland.</p>
 
+    <address class="address-container normalise-font">
 	<p><strong>Transport Regulation Unit</strong><br>
 	Telephone: 0300 200 7831<br>
 	Monday to Friday, 9am to 5pm<br>
 	<a href="<?php echo $this->translate('call-charges-info-link'); ?>" target="_blank">Find out about call charges</a>
 	</p>
+    </address>
 
 	<p>Send your completed form to the Office of the Traffic Commissioner. The address is on the form.</p>
 
