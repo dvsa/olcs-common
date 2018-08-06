@@ -3420,6 +3420,7 @@ return [
     'permits.form.cabotage.label' => 'I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'permits.form.trips.label' => 'Number of trips',
     'permits.form.permits.required.label' => 'Number of permits required',
+    'permits.form.check-answers.label' => 'I have checked my answers',
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
     'error.messages.ecmt-licence' => 'You must select a licence',
     'error.messages.checkbox' => 'You must tick the box to continue',
