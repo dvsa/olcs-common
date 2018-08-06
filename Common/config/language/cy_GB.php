@@ -1408,7 +1408,7 @@ return [
     'permits.page.permits.required.info' => 'CY - You can apply for up to 50 permits. This is based on the number of vehicles authorised for this.',
     'permits.page.message.summary' => 'CY - Now send your application',
     'permits.page.declaration.title' => 'CY - Declaration - ',
-    'permits.page.fee.title' => 'CY - Fees for ECMT permit ',
+    'permits.page.fee.title' => 'CY - Application fees for ECMT permit',
     'permits.page.fee.subtitle' => 'CY - This is a summary of the fees you are required to pay when submitting your application. The application fee is non-refundable.',
     'permits.page.fee.message' => 'CY - If your permit application is successful you will have to pay an issuing fee of £123.00 per permit at a later stage.',
     'permits.page.fee.application.reference' => 'CY - Application reference',
