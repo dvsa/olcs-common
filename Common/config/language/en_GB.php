@@ -3408,6 +3408,7 @@ return [
     'permits.button.confirm-and-continue' => 'Confirm and continue',
     'permits.button.save-return-to-permits' => 'Save and return to permits',
     'permits.button.save-return-to-overview' => 'Save and return to overview',
+    'permits.button.submit-and-pay' => 'Submit and pay',
     'permits.button.cancel-return-to-overview' => 'Cancel',
     'permits.button.confirm-cancel-finish' => 'Finish',
 

@@ -34,7 +34,7 @@ class LicencePermitReference implements FormatterInterface
             '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
             [
                 $urlHelper->fromRoute('permits/application-overview', ['id' => $row['id']]),
-                Escape::html($row['licence']['licNo'] . ' / ' . $row['id'])
+                Escape::html($row['applicationRef'])
             ]
         );
     }

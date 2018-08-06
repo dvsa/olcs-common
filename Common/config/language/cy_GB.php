@@ -1420,9 +1420,9 @@ return [
     'permits.page.fee.permit.fee.total' => 'CY - Total application fee to be paid (non-refundable)',
     'permits.button.accept-and-continue' => 'CY - Accept and continue',
     'permits.button.confirm-and-continue' => 'CY - Confirm and continue',
-    'submit-and-pay.button' => 'CY - Submit and pay',
     'permits.button.save-return-to-permits' => 'CY - Save and return to permits',
     'permits.button.save-return-to-overview' => 'CY - Save and return to overview',
+    'permits.button.submit-and-pay' => 'CY - Submit and pay',
     'permits.button.cancel-return-to-overview' => 'CY - Cancel',
     'permits.button.confirm-cancel-finish' => 'CY - Finish',
 

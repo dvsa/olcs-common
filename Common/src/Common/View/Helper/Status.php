@@ -106,6 +106,14 @@ class Status extends AbstractHelper
             RefData::FT_ACTIVE                                  => 'green',
             RefData::FT_INACTIVE                                => 'red',
             RefData::FT_CONDITIONAL                             => 'orange',
+            // ECMT
+            RefData::ECMT_STATUS_AWAITING_FEE                   => 'red',
+            RefData::ECMT_STATUS_UNDER_CONSIDERATION            => 'orange',
+            RefData::ECMT_STATUS_ISSUED                         => 'green',
+            RefData::ECMT_STATUS_WITHDRAWN                      => 'red',
+            RefData::ECMT_STATUS_NOT_YET_SUBMITTED              => 'grey',
+            RefData::ECMT_STATUS_UNSUCCESSFUL                   => 'grey',
+            RefData::ECMT_STATUS_CANCELLED                      => 'grey',
         ];
 
         return !empty($colors[$id]) ? $colors[$id] : 'grey';

@@ -346,4 +346,13 @@ class RefData
     const FT_ACTIVE = 'always-active';
     const FT_INACTIVE = 'inactive';
     const FT_CONDITIONAL = 'conditionally-active';
+
+    //ecmt application statuses
+    const ECMT_STATUS_CANCELLED = 'ecmt_permit_cancelled';
+    const ECMT_STATUS_NOT_YET_SUBMITTED = 'ecmt_permit_nys';
+    const ECMT_STATUS_UNDER_CONSIDERATION = 'ecmt_permit_uc';
+    const ECMT_STATUS_WITHDRAWN = 'ecmt_permit_withdrawn';
+    const ECMT_STATUS_AWAITING_FEE = 'ecmt_permit_awaiting';
+    const ECMT_STATUS_UNSUCCESSFUL = 'ecmt_permit_unsuccessful';
+    const ECMT_STATUS_ISSUED = 'ecmt_permit_issued';
 }
