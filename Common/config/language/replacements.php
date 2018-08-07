@@ -24,5 +24,6 @@ return [
     '{{OPERATOR_LICENSING_EMAIL}}' => 'notifications@vehicle-operator-licensing.service.gov.uk',
     '{{OPERATOR_LICENSING_PHONE}}' => '0300 123 9000',
     '{{OPERATOR_LICENSING_PHONE_NI}}' => '0300 200 7831',
-    '{{OPERATOR_LICENSING_EMAIL_NI}}' => 'niclo@dvsa.gov.uk'
+    '{{OPERATOR_LICENSING_EMAIL_NI}}' => 'niclo@dvsa.gov.uk',
+    '{{CALL_CHARGES_INFO}}' => 'https://www.gov.uk/call-charges'
 ];
