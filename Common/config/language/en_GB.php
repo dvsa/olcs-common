@@ -3397,7 +3397,7 @@ return [
     'permits.page.declaration.question' => 'Declaration',
     'permits.page.fee.title' => 'Application fees for ECMT permit',
     'permits.page.fee.subtitle' => 'The application fee is non-refundable.',
-    'permits.page.fee.message' => 'If your permit application is successful you will have to pay an issuing fee of %s per permit at a later stage.',
+    'permits.page.fee.message' => 'If your permit application is successful you will have to pay additional fees. These cost %s per permit awarded.',
     'permits.page.fee.application.reference' => 'Application reference',
     'permits.page.fee.application.date' => 'Application date',
     'permits.page.fee.permit.type' => 'Permit type',
