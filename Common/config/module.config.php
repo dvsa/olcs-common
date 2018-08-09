@@ -302,6 +302,8 @@ return array(
             'readonlyformtable' => ReadonlyFormHelper\FormTable::class,
             'readOnlyActions' => \Common\View\Helper\ReadOnlyActions::class,
 
+            'currencyFormatter' => \Common\View\Helper\CurrencyFormatter::class,
+
             // Extended form view helpers, to allow us to use alternative attributes that are not in ZF2's whitelist
             'formbutton'              => \Common\Form\View\Helper\Extended\FormButton::class,
             'formcaptcha'             => \Common\Form\View\Helper\Extended\FormCaptcha::class,
