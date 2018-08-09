@@ -21,10 +21,12 @@ class CurrencyFormatter extends AbstractHelper
      */
     public function __invoke(?string $value): string
     {
-        if (substr($value, strlen($value) - 3) === '.00') {
-            return sprintf("£" . substr($value, 0, strlen($value) - 3));
+        $validValue = $this->view->escapeHtml($value);
+
+        if (substr($validValue, strlen($validValue) - 3) === '.00') {
+            return sprintf("£" . substr($validValue, 0, strlen($validValue) - 3));
         }
 
-        return sprintf("£" . $value);
+        return sprintf("£" . $validValue);
     }
 }
