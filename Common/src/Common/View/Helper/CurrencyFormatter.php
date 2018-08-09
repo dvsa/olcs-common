@@ -2,7 +2,9 @@
 
 namespace Common\View\Helper;
 
+use Common\View\Helper\Traits\Utils;
 use Zend\View\Helper\AbstractHelper;
+use Zend\View\Helper\EscapeHtml;
 
 /**
  * Format Currency in the system appropriately
@@ -11,6 +13,7 @@ use Zend\View\Helper\AbstractHelper;
  */
 class CurrencyFormatter extends AbstractHelper
 {
+    use Utils;
 
     /**
      * Return a formatted Monetary Value
@@ -21,7 +24,7 @@ class CurrencyFormatter extends AbstractHelper
      */
     public function __invoke(?string $value): string
     {
-        $validValue = $this->view->escapeHtml($value);
+        $validValue = $this->escapeHtml($value);
 
         if (substr($validValue, strlen($validValue) - 3) === '.00') {
             return sprintf("£" . substr($validValue, 0, strlen($validValue) - 3));
