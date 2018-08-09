@@ -3463,5 +3463,8 @@ return [
     'from.60%.to.90%' => 'From 60% to 90%',
     'more.than.90%' => 'More than 90%',
 
+    'permits.page.ecmt.guidance.header.title' => 'ECMT Guidance - ',
+    'permits.page.ecmt.guidance.title' => 'Apply for a European Conference of Ministers of Transport (ECMT) Permit',
+    'permits.page.ecmt.guidance.subtitle' => 'ECMT permits are needed to transport goods across EU and non-EU countries for vehicles weighing above 3.5 tonnes.',
     // Potentially unused translations
 ];
