@@ -4,7 +4,6 @@ namespace Common\View\Helper;
 
 use Common\View\Helper\Traits\Utils;
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Helper\EscapeHtml;
 
 /**
  * Format Currency in the system appropriately
@@ -24,12 +23,10 @@ class CurrencyFormatter extends AbstractHelper
      */
     public function __invoke(?string $value): string
     {
-        $validValue = $this->escapeHtml($value);
-
-        if (substr($validValue, strlen($validValue) - 3) === '.00') {
-            return sprintf("£" . substr($validValue, 0, strlen($validValue) - 3));
+        if (substr($value, strlen($value) - 3) === '.00') {
+            return sprintf("£" . $this->escapeHtml(substr($value, 0, strlen($value) - 3)));
         }
 
-        return sprintf("£" . $validValue);
+        return sprintf("£" . $this->escapeHtml($value));
     }
 }
