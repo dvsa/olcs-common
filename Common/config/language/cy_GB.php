@@ -1442,7 +1442,7 @@ return [
     'error.messages.sector' => 'CY - You must answer the question to continue',
     'error.messages.sector.list' => 'CY - You must select at least one sector',
     'error.messages.euro6' => 'CY - You must tick the box to continue',
-    'error.messages.permits.required' => 'CY - Number of permits',
+    'error.messages.permits.required' => 'CY - Enter the number of permits you require. The number must be greater or equal to 1.',
     'error.messages.international-journey' => 'CY - You must answer the question to continue',
 
     'permits.form.cancel_application.label' => 'CY - I confirm that I would like to cancel my application.',
