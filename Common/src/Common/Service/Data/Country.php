@@ -52,7 +52,33 @@ class Country extends AbstractDataService implements ListData
             $data = $this->removeNonMemberStates($data);
         }
 
+        if ('ecmtConstraint' == $category) {
+            $data = $this->filterForEcmtConstraints($data);
+        }
+
         return $this->formatData($data);
+    }
+
+    /**
+     * Remove countries without ecmt country constraints
+     *
+     * @param array $data Data
+     *
+     * @return array
+     */
+    public function filterForEcmtConstraints($data)
+    {
+        $members = [];
+
+        foreach ($data as $state) {
+
+            if ($state['ecmtConstraint'] != null) {
+
+                $members[] = $state;
+            }
+        }
+
+        return $members;
     }
 
     /**
