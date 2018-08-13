@@ -3378,7 +3378,7 @@ return [
     'permits.page.number-of-trips.northern-ireland' => 'Please exclude journeys to the republic of Ireland in your calculation of annual trips.',
     'permits.page.euro6.emissions.title' => 'Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
-    'permits.page.euro6.emissions.info' => 'If you intend to transport goods internationally across the EU and EEA, the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
+    'permits.page.euro6.emissions.info' => 'If you intend to transport goods internationally across the European Union (EU) and European Economic Area (EEA), the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
     'permits.page.cabotage.title' => 'Will you be carrying out cabotage? - ',
     'permits.page.cabotage.question' => 'You can’t carry out cabotage with an ECMT permit',
     'permits.page.ecmt.licence.title' => 'Permits Home - ',
