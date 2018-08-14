@@ -6,7 +6,7 @@
     <ul>
         <?php
         foreach ($ecmtCountries as $country) {
-            echo "<li>" . $country . "</li>";
+            echo "<li>" . $this->escapeHtml($country) . "</li>";
         }
         ?>
     </ul>
