@@ -4,8 +4,8 @@
     <ul>
         <li>have a valid Standard International or Restricted Goods Operator Licence first before applying for an ECMT permit.</li>
         <li>apply for a separate permit for each goods operator licence that you intend to use to transport goods internationally.</li>
-        <li>pay a %s non-refundable application fee per every permit you apply for and agree that the %s application fee is strictly non-refundable</li>
-        <li>pay an additional %s Permit Issuing fee per permit within very strict payment deadlines if successfully awarded a permit or the permit will be reallocated.</li>
+        <li>pay a <?php echo $this->currencyFormatter($applicationFee); ?> non-refundable application fee per every permit you apply for and agree that the <?php echo $this->currencyFormatter($applicationFee); ?> application fee is strictly non-refundable</li>
+        <li>pay an additional <?php echo $this->currencyFormatter($issueFee); ?> Permit Issuing fee per permit within very strict payment deadlines if successfully awarded a permit or the permit will be reallocated.</li>
         <li>transport goods using the permit for one calendar year starting from 1 January to 31 December 2019</li>
         <li>understand the UK has only been allocated 1,224 permits so cannot be issued to all applicants due to limited number of permits available.</li>
         <li>use them for only the 43 countries listed above and allow you to transit through these 43 countries to reach another ECMT destination country only.</li>
@@ -58,16 +58,16 @@
     <h2>Next steps</h2>
     <p class = "extra-space">We will:</p>
     <ul>
-        <li>acknowledge and process your application and £10.00 non-refundable application fee.</li>
+        <li>acknowledge and process your application and <?php echo $this->currencyFormatter($applicationFee); ?> non-refundable application fee.</li>
         <li>tell you the outcome of your application and if it is successful, partially successful or unsuccessful.</li>
         <li>let you know the result by email.</li>
-        <li>take additional payment of the £123.00 Permit Issuing fee per permit (where you have been successful).</li>
+        <li>take additional payment of the <?php echo $this->currencyFormatter($issueFee); ?> Permit Issuing fee per permit (where you have been successful).</li>
     </ul>
 
     <h2>Successfully awarded permits</h2>
     <p class = "extra-space">You must:</p>
     <ul>
-        <li>pay a Permit Issuing fee of £123.00 per permit awarded.</li>
+        <li>pay a Permit Issuing fee of <?php echo $this->currencyFormatter($issueFee); ?> per permit awarded.</li>
         <li>pay for your allocated permits within 10 calendar days (TBC).</li>
         <li>sign for your permits delivered by first class recorded delivery.</li>
         <li>Must carry both your permit and corresponding logbook throughout the whole duration of your outward and return international journey.</li>
@@ -76,8 +76,8 @@
     <h2>Paying for an ECMT permit</h2>
     <p class = "extra-space">You must:</p>
     <ul>
-        <li>pay a £10.00 non-refundable fee for every permit that you apply for, irrespective of its outcome to cover processing costs.</li>
-        <li>pay an additional £123.00 permit issuing fee for all successful permit applications awarded.</li>
+        <li>pay a <?php echo $this->currencyFormatter($applicationFee); ?> non-refundable fee for every permit that you apply for, irrespective of its outcome to cover processing costs.</li>
+        <li>pay an additional <?php echo $this->currencyFormatter($issueFee); ?> permit issuing fee for all successful permit applications awarded.</li>
         <li>use a valid credit or debit card</li>
     </ul>
 
