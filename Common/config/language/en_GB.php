@@ -3384,7 +3384,7 @@ return [
     'permits.page.international.journey.title' => 'Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'What percentage of your business is related to international journeys over the past 12 months?',
     'permits.page.sector.title' => 'ECMT Sectors - ',
-    'permits.page.sector.question' => 'Do you specialise in carrying goods for one specific sector?',
+    'permits.page.sector.question' => 'Select one sector you mainly transport goods in',
     'permits.page.restricted-countries.title' => 'Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
     'permits.page.restricted-countries.question' => 'Do you intend to transport goods to Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.permits.required.title' => 'ECMT Permits Required - ',
