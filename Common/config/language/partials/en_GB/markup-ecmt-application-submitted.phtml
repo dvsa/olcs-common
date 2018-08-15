@@ -4,15 +4,17 @@
         Your reference number is <br>
         <strong class="heading-medium">%s</strong>
     </p>
+    <a href="https://83fhat.axshare.com/payment_receipt.html" target="_blank" style="color: #fff;">View Receipt</a>
 </div>
 <div class="actions-container">
     <h3 class="heading-small">What happens next?</h3>
-    <p>You will receive a confirmation email in the next few minutes and another email once the application has been processed.</p>
+    <?php echo $this->partial('en_GB/bullets/markup-ecmt-application-submitted'); ?>
 
+    <br />
     <div class="notice form-group">
         <i class="icon icon-important">
             <span class="visually-hidden">Warning</span>
         </i>
-        <p class="exclamation">You must ensure you have the correct permits when transporting goods abroad.</p>
+        <p class="exclamation">You must ensure that you have the correct permits in your vehicle when transporting goods internationally.</p>
     </div>
 </div>
