@@ -3391,8 +3391,7 @@ return [
     'permits.page.restricted-countries.title' => 'Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
     'permits.page.restricted-countries.question' => 'In the next 12 months are you transporting goods to Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.permits.required.title' => 'ECMT Permits Required - ',
-    'permits.page.permits.required.question' => 'How many permits does your business require?',
-    'permits.page.permits.required.info' => 'You can apply for up to %s permits. This is based on the number of vehicles authorised for this.',
+    'permits.page.permits.required.question' => 'How many permits do you require for this licence?',
     'permits.page.title.summary' => 'Check your answers before submitting your permit',
     'permits.page.title.check-answers' => 'Check your answers',
     'permits.page.message.summary' => 'Now send your application',
@@ -3474,5 +3473,7 @@ return [
     'permits.page.ecmt.guidance.header.title' => 'ECMT Guidance - ',
     'permits.page.ecmt.guidance.title' => 'Apply for a European Conference of Ministers of Transport (ECMT) Permit',
     'permits.page.ecmt.guidance.subtitle' => 'ECMT permits are needed to transport goods across EU and non-EU countries for vehicles weighing above 3.5 tonnes.',
+    'permits.form.permits-required.hint' => 'Up to %s permits are authorised for this licence.',
+    'permits.form.permits-required.fee.guidance' => 'There is a %s non-refundable application fee per permit required',
     // Potentially unused translations
 ];
