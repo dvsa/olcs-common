@@ -3374,7 +3374,7 @@ return [
     'permits.application.change-licence.title' => 'Change Licence - ',
 
     'permits.page.number-of-trips.title' => 'ECMT Permits - ',
-    'permits.page.number-of-trips.question' => 'How many international trips were carried out over the past 12 months?',
+    'permits.page.number-of-trips.question' => 'How many international trips did you make in the last 12 months using this licence?',
     'permits.page.number-of-trips.northern-ireland' => 'Please exclude journeys to the republic of Ireland in your calculation of annual trips.',
     'permits.page.euro6.emissions.title' => 'Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
@@ -3475,5 +3475,6 @@ return [
     'permits.page.ecmt.guidance.subtitle' => 'ECMT permits are needed to transport goods across EU and non-EU countries for vehicles weighing above 3.5 tonnes.',
     'permits.form.permits-required.hint' => 'Up to %s permits are authorised for this licence.',
     'permits.form.permits-required.fee.guidance' => 'There is a %s non-refundable application fee per permit required',
+    'permits.form.trips.hint' => 'A trip is a journey to a place and back again.',
     // Potentially unused translations
 ];
