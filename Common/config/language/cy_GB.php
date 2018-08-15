@@ -1385,6 +1385,10 @@ return [
     'permits.application.cancel-confirmation' => 'CY - You have successfully cancelled your application',
     'permits.application.cancel-confirmation.title' => 'CY - Cancellation Successful - ',
 
+    'permits.application.change-licence' => 'CY- Change Licence',
+    'permits.application.change-licence.title' => 'CY - Change Licence - ',
+
+
     'permits.page.number-of-trips.title' => 'CY - ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'CY - How many international trips were carried out over the past 12 months?',
     'permits.page.euro6.emissions.title' => 'CY - Do your vehicles meet Euro 6 emissions standards? - ',
@@ -1448,6 +1452,10 @@ return [
     'permits.form.cancel_application.label' => 'CY - I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'CY - Cancel application',
     'permits.form.cancel_application.error_message' => 'CY - You must select the checkbox to continue',
+
+    'permits.form.change_licence.label' => 'CY - I confirm that I would like to change the Licence for this application',
+    'permits.form.change_licence.button' => 'CY -Confirm Licence Change',
+    'permits.form.change_licence.error_message' => 'CY - You must select the checkbox to continue',
 
     'section.name.ecmt-licence' => 'CY - Licence number',
     'section.name.ecmt-euro6' => 'CY - Euro emission standards',

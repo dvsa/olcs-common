@@ -3370,6 +3370,9 @@ return [
     'permits.application.cancel-confirmation' => 'You have successfully cancelled your application',
     'permits.application.cancel-confirmation.title' => 'Cancellation Successful - ',
 
+    'permits.application.change-licence' => 'Change Licence',
+    'permits.application.change-licence.title' => 'Change Licence - ',
+
     'permits.page.number-of-trips.title' => 'ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'How many international trips were carried out over the past 12 months?',
     'permits.page.number-of-trips.northern-ireland' => 'Please exclude journeys to the republic of Ireland in your calculation of annual trips.',
@@ -3432,6 +3435,10 @@ return [
     'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'Cancel application',
     'permits.form.cancel_application.error_message' => 'You must select the checkbox to continue',
+
+    'permits.form.change_licence.label' => 'I confirm that I would like to change the Licence for this application',
+    'permits.form.change_licence.button' => 'Confirm Licence Change',
+    'permits.form.change_licence.error_message' => 'You must select the checkbox to continue',
 
     'error.messages.restricted.countries.list' => 'You must select at least one country',
     'error.messages.sector' => 'You must answer the question to continue',
