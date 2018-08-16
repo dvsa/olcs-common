@@ -3445,6 +3445,10 @@ return [
     'permits.form.cancel_application.error_message' => 'You must select the checkbox to continue',
     'permits.form.ecmt-licence.restricted-licence.hint' => 'You only need an ECMT permit for Austria, Belarus, Bulgaria, the Czech Republic, Estonia, Finland, France, Hungary, Italy, Lithuania, Poland, Russia, Sweden and Turkey',
 
+    'permits.form.withdraw_application.label' => 'I confirm that I would like to withdraw my application.',
+    'permits.form.withdraw_application.button' => 'Withdraw application',
+    'permits.form.withdraw_application.error_message' => 'Tick to confirm you want to withdraw your application',
+
     'permits.form.change_licence.label' => 'I confirm that I would like to change the Licence for this application',
     'permits.form.change_licence.button' => 'Confirm Licence Change',
     'permits.form.change_licence.error_message' => 'You must select the checkbox to continue',
