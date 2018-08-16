@@ -1469,6 +1469,10 @@ return [
     'error.messages.international-journey' => 'CY - Select the percentage of international journeys over the past 12 months',
     'error.messages.trips' => 'CY - Enter the number of trips you carried out over the past 12 months',
 
+    'permits.form.withdraw_application.label' => 'CY - I confirm that I would like to withdraw my application.',
+    'permits.form.withdraw_application.button' => 'CY - Withdraw application',
+    'permits.form.withdraw_application.error_message' => 'CY - Tick to confirm you want to withdraw your application',
+
     'section.name.ecmt-licence' => 'CY - Licence number',
     'section.name.ecmt-euro6' => 'CY - Euro emission standards',
     'section.name.ecmt-cabotage' => 'CY - Cabotage',
