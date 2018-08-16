@@ -3370,6 +3370,10 @@ return [
     'permits.application.cancel-confirmation' => 'You have successfully cancelled your application',
     'permits.application.cancel-confirmation.title' => 'Cancellation Successful - ',
 
+    'permits.application.withdraw-application' => 'Withdraw Application',
+    'permits.application.withdraw-application.title' => 'Withdraw Application - ',
+
+
     'permits.application.change-licence' => 'Change Licence',
     'permits.application.change-licence.title' => 'Change Licence - ',
 

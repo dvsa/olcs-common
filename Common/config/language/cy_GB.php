@@ -1385,6 +1385,9 @@ return [
     'permits.application.cancel-confirmation' => 'CY - You have successfully cancelled your application',
     'permits.application.cancel-confirmation.title' => 'CY - Cancellation Successful - ',
 
+    'permits.application.withdraw-application' => 'CY - Withdraw Application',
+    'permits.application.withdraw-application.title' => 'CY - Withdraw Application - ',
+
     'permits.application.change-licence' => 'CY- Change Licence',
     'permits.application.change-licence.title' => 'CY - Change Licence - ',
 
