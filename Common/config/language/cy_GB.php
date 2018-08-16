@@ -1387,6 +1387,10 @@ return [
 
     'permits.application.withdraw-application' => 'CY - Withdraw Application',
     'permits.application.withdraw-application.title' => 'CY - Withdraw Application - ',
+    'permits.application.withdraw-confirmation' => 'CY - Application withdrawn',
+    'permits.application.withdraw-confirmation.title' => 'CY - Withdrawal Successful - ',
+    'permits.application.withdraw-confirmation.success-1' => 'CY - You have successfully withdrawn your',
+    'permits.application.withdraw-confirmation.success-2' => 'CY - ECMT permit application number',
 
     'permits.application.change-licence' => 'CY- Change Licence',
     'permits.application.change-licence.title' => 'CY - Change Licence - ',
