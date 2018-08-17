@@ -3429,7 +3429,7 @@ return [
     'permits.form.permits.required.label' => 'Number of permits',
     'permits.form.check-answers.label' => 'I have checked my answers',
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
-    'error.messages.ecmt-licence' => 'You must select a licence',
+    'error.messages.ecmt-licence' => 'Select a licence',
     'error.messages.checkbox' => 'You must tick the box to continue',
     'error.messages.restricted.countries' => 'You must answer the question to continue',
     'error.messages.permits.required' => 'Enter the number of permits you require. The number must be greater or equal to 1.',
