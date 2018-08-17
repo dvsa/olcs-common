@@ -3449,6 +3449,7 @@ return [
     'error.messages.sector.list' => 'You must select at least one sector',
     'error.messages.euro6' => 'You must tick the box to continue',
     'error.messages.international-journey' => 'You must answer the question to continue',
+    'error.messages.trips' => 'Enter the number of trips you carried out over the past 12 months',
 
     'section.name.ecmt-licence' => 'Licence number',
     'section.name.ecmt-euro6' => 'Euro emission standards',
