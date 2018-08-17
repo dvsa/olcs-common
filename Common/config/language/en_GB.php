@@ -3383,6 +3383,7 @@ return [
     'permits.page.cabotage.question' => 'ECMT permits do not allow you to carry out cabotage',
     'permits.page.ecmt.licence.title' => 'Permits Home - ',
     'permits.page.ecmt.licence.question' => 'Select a licence you would like your ECMT permit to be applied to',
+    'permits.page.ecmt.licence.question.one.licence' => 'Permit application for licence %s',
     'permits.page.ecmt.licence.info' => 'ECMT permits will be valid for use from 1 January 2019 to 31 December 2019.',
     'permits.page.international.journey.title' => 'Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'In the last 12 months what portion of your journeys were international for this licence?',
