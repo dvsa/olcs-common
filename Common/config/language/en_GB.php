@@ -3433,7 +3433,7 @@ return [
     'error.messages.checkbox' => 'You must tick the box to continue',
     'error.messages.checkbox.euro6' => 'Tick to confirm your vehicle will meet Euro 6 emission standards',
     'error.messages.checkbox.cabotage' => 'Tick to confirm your vehicle will not undertake cabotage journey(s)',
-    'error.messages.restricted.countries' => 'You must answer the question to continue',
+    'error.messages.restricted.countries' => 'Select yes or no if you are transporting goods to any of these countries',
     'error.messages.permits.required' => 'Enter the number of permits you require. The number must be greater or equal to 1.',
     'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'Cancel application',
