@@ -3431,6 +3431,8 @@ return [
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
     'error.messages.ecmt-licence' => 'Select a licence',
     'error.messages.checkbox' => 'You must tick the box to continue',
+    'error.messages.checkbox.euro6' => 'Tick to confirm your vehicle will meet Euro 6 emission standards',
+    'error.messages.checkbox.cabotage' => 'Tick to confirm your vehicle will not undertake cabotage journey(s)',
     'error.messages.restricted.countries' => 'You must answer the question to continue',
     'error.messages.permits.required' => 'Enter the number of permits you require. The number must be greater or equal to 1.',
     'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
