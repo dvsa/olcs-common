@@ -3384,6 +3384,8 @@ return [
     'permits.page.ecmt.licence.title' => 'Permits Home - ',
     'permits.page.ecmt.licence.question' => 'Select a licence you would like your ECMT permit to be applied to',
     'permits.page.ecmt.licence.question.one.licence' => 'Permit application for licence %s',
+    'permits.page.ecmt.licence.saturated.one.licence' => 'Your licence has an active application',
+    'permits.page.ecmt.licence.saturated' => 'All licences have active applications',
     'permits.page.ecmt.licence.info' => 'ECMT permits will be valid for use from 1 January 2019 to 31 December 2019.',
     'permits.page.international.journey.title' => 'Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'In the last 12 months what portion of your journeys were international for this licence?',
