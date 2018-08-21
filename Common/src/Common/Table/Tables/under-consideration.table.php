@@ -11,6 +11,9 @@ return array(
     'columns' => array(
         array(
             'name' => 'applicationDetailsTitle',
+            'formatter' => function ($data) {
+                return '<b>' . $data['applicationDetailsTitle'] . '</b>';
+            },
         ),
         array(
             'name' => 'applicationDetailsAnswer',
