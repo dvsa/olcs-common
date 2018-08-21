@@ -3464,6 +3464,7 @@ return [
     'error.messages.trips' => 'Enter the number of trips you carried out over the past 12 months',
 
     'section.name.ecmt-licence' => 'Licence number',
+    'section.name.ecmt-add-licence' => 'Licence number',
     'section.name.ecmt-euro6' => 'Euro emission standards',
     'section.name.ecmt-cabotage' => 'Cabotage',
     'section.name.ecmt-countries' => 'Goods to limited countries',
@@ -3505,5 +3506,6 @@ return [
     'permits.page.ecmt.consideration.permits.required' => 'Permits required',
     'permits.page.ecmt.consideration.application.fee' => 'Application fee paid',
 
+    'no-organisation-error' => 'User is not associated with an organisation.',
     // Potentially unused translations
 ];
