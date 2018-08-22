@@ -29,6 +29,6 @@ class InternalLicencePermitReference implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
-        return $row['id'] . Escape::html($row['applicationRef']);
+        return Escape::html($row['applicationRef']);
     }
 }
