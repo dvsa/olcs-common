@@ -635,6 +635,8 @@ return [
     'lva.contact-details.phone-contact.table.col.number.title' => 'Number',
     'lva.contact-details.phone-contact.form.type.title' => 'Type',
     'lva.contact-details.phone-contact.form.number.title' => 'Number',
+    'lva.section.title.check_answers'=>'Check your Answers',
+    'transport-manager-save-return' => 'Save and return home',
     'application_your-business_business-type.contact-details.email' => 'Email address',
     'application_your-business_business-type.contact-details.fax-phone' => 'Fax number (optional)',
     'application_your-business_business-type.contact-details.hint' => 'Please enter at least one telephone number',
