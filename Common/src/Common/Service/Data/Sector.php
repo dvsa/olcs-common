@@ -36,10 +36,11 @@ class Sector extends AbstractDataService implements ListData
     /**
      * Fetch list options
      *
-     * @param string $category  Category
-     * @param bool   $useGroups Use groups
+     * @param string $category Category
+     * @param bool $useGroups Use groups
      *
      * @return array
+     * @throws UnexpectedResponseException
      */
     public function fetchListOptions($category, $useGroups = false)
     {
@@ -49,39 +50,15 @@ class Sector extends AbstractDataService implements ListData
             return [];
         }
 
-        /*if ('isMemberState' == $category) {
-            $data = $this->removeNonMemberStates($data);
-        }*/
-
         return $this->formatData($data);
     }
 
-    /**
-     * Remove non-member states
-     *
-     * @param array $data Data
-     *
-     * @return array
-     */
-    public function removeNonMemberStates($data)
-    {
-        $members = [];
-
-        foreach ($data as $state) {
-
-            if (trim($state['isMemberState']) == 'Y') {
-
-                $members[] = $state;
-            }
-        }
-
-        return $members;
-    }
 
     /**
      * Fetch list data
      *
      * @return array
+     * @throws UnexpectedResponseException
      */
     public function fetchListData()
     {
