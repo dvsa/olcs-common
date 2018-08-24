@@ -1487,5 +1487,6 @@ return [
     'from.60%.to.90%' => 'CY - From 60% to 90%',
     'more.than.90%' => 'CY - More than 90%',
 
+    'permits.link.return.to.dashboard' => 'CY - Return to permits dashboard'
     // Potentially unused translations
 ];

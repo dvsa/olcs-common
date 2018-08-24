@@ -3493,5 +3493,7 @@ return [
     'permits.form.permits-required.hint' => 'Up to %s permits are authorised for this licence.',
     'permits.form.permits-required.fee.guidance' => 'There is a %s non-refundable application fee per permit required',
     'permits.form.trips.hint' => 'A trip is a journey to a place and back again.',
+
+    'permits.link.return.to.dashboard' => 'Return to permits dashboard'
     // Potentially unused translations
 ];
