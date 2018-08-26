@@ -5,6 +5,7 @@
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
+
 namespace CommonTest\Data\Mapper\Lva;
 
 use Mockery as m;
@@ -40,5 +41,11 @@ class TransportManagerApplicationTest extends MockeryTestCase
 
         $errors = TransportManagerApplication::mapFromErrors($mockForm, $messages);
         $this->assertEquals($errors, $globalMessages);
+    }
+
+    public function testMapForSections()
+    {
+        $data = TransportManagerApplication::mapForSections(1);
+        $this->assertInternalType('array', $data);
     }
 }
