@@ -3495,6 +3495,6 @@ return [
     'permits.form.trips.hint' => 'A trip is a journey to a place and back again.',
 
     'permits.link.return.to.dashboard' => 'Return to permits dashboard',
-    'permits.page.ecmt.consideration.header' => 'Permit application for license'
+    'permits.page.ecmt.consideration.header' => 'Permit application for licence'
     // Potentially unused translations
 ];
