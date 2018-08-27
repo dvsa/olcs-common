@@ -3494,6 +3494,7 @@ return [
     'permits.form.permits-required.fee.guidance' => 'There is a %s non-refundable application fee per permit required',
     'permits.form.trips.hint' => 'A trip is a journey to a place and back again.',
 
-    'permits.link.return.to.dashboard' => 'Return to permits dashboard'
+    'permits.link.return.to.dashboard' => 'Return to permits dashboard',
+    'permits.page.ecmt.consideration.header' => 'Permit application for license'
     // Potentially unused translations
 ];

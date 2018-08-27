@@ -1487,6 +1487,7 @@ return [
     'from.60%.to.90%' => 'CY - From 60% to 90%',
     'more.than.90%' => 'CY - More than 90%',
 
-    'permits.link.return.to.dashboard' => 'CY - Return to permits dashboard'
+    'permits.link.return.to.dashboard' => 'CY - Return to permits dashboard',
+    'permits.page.ecmt.consideration.header' => 'CY - Permit application for license'
     // Potentially unused translations
 ];
