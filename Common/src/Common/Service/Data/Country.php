@@ -3,11 +3,8 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
-use Common\Service\Data\AbstractDataService;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\ContactDetail\CountryList;
-use Dvsa\Olcs\Transfer\Query\Permits\ConstrainedCountries;
-use Olcs\Logging\Log\Logger;
 
 /**
  * Class Country
@@ -44,11 +41,7 @@ class Country extends AbstractDataService implements ListData
      */
     public function fetchListOptions($category, $useGroups = false)
     {
-        if ('ecmtConstraint' === $category) {
-            $data = $this->fetchEcmtConstrainedCountries();
-        }else{
-            $data = $this->fetchListData();
-        }
+        $data = $this->fetchListData();
 
         if (!$data) {
             return [];
@@ -56,6 +49,10 @@ class Country extends AbstractDataService implements ListData
 
         if ('isMemberState' == $category) {
             $data = $this->removeNonMemberStates($data);
+        }
+
+        if ('ecmtConstraint' === $category) {
+            $data = $this->filterEcmtConstrained($data);
         }
 
         return $this->formatData($data);
@@ -85,6 +82,26 @@ class Country extends AbstractDataService implements ListData
     }
 
     /**
+     * Remove non-member states
+     *
+     * @param array $data Data
+     *
+     * @return array
+     */
+    private function filterEcmtConstrained($data)
+    {
+        $filtered = [];
+
+        foreach ($data as $state) {
+            if (!empty($state['constraints'])) {
+                $filtered[] = $state;
+            }
+        }
+
+        return $filtered;
+    }
+
+    /**
      * Fetch list data
      *
      * @return array
@@ -110,21 +127,6 @@ class Country extends AbstractDataService implements ListData
             }
         }
 
-        return $this->getData('Country');
-    }
-
-
-    public function fetchEcmtConstrainedCountries() {
-        $response = $this->handleQuery(ConstrainedCountries::create([]));
-
-        if (!$response->isOk()) {
-            throw new UnexpectedResponseException('unknown-error');
-        }
-        $this->setData('Country', false);
-
-        if (isset($response->getResult()['results'])) {
-            $this->setData('Country', $response->getResult()['results']);
-        }
         return $this->getData('Country');
     }
 }
