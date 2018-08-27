@@ -28,7 +28,7 @@ class EcmtLicence extends AbstractDataService implements ListData
 
         foreach ($data as $item) {
 
-            $licence = array();
+            $licence = [];
             $licence['value'] = $item['id'];
             $licence['label'] = $item['licNo'] . ' (' . $item['trafficArea'] . ')';
 
@@ -49,7 +49,7 @@ class EcmtLicence extends AbstractDataService implements ListData
                 ];
                 $optionData[] = $licence;
 
-                $licence = array();
+                $licence = [];
                 $licence['value'] = '';
                 $licence['label'] = 'permits.form.ecmt-licence.restricted-licence.hint';
                 $licence['label_attributes'] = [
