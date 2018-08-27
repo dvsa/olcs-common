@@ -1488,6 +1488,13 @@ return [
     'more.than.90%' => 'CY - More than 90%',
 
     'permits.link.return.to.dashboard' => 'CY - Return to permits dashboard',
-    'permits.page.ecmt.consideration.header' => 'CY - Permit application for licence'
+    'permits.page.ecmt.consideration.header' => 'CY - Permit application for licence',
+
+    'permits.page.ecmt.consideration.application.status' => 'CY - Application status',
+    'permits.page.ecmt.consideration.permit.type' => 'CY - Permit type',
+    'permits.page.ecmt.consideration.reference.number' => 'CY - Reference number',
+    'permits.page.ecmt.consideration.application.date' => 'CY - Application date',
+    'permits.page.ecmt.consideration.permits.required' => 'CY - Permits required',
+    'permits.page.ecmt.consideration.application.fee' => 'CY - Application fee paid',
     // Potentially unused translations
 ];

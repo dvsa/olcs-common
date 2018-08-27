@@ -3495,6 +3495,15 @@ return [
     'permits.form.trips.hint' => 'A trip is a journey to a place and back again.',
 
     'permits.link.return.to.dashboard' => 'Return to permits dashboard',
-    'permits.page.ecmt.consideration.header' => 'Permit application for licence'
+    'permits.page.ecmt.consideration.header' => 'Permit application for licence',
+
+
+    'permits.page.ecmt.consideration.application.status' => 'Application status',
+    'permits.page.ecmt.consideration.permit.type' => 'Permit type',
+    'permits.page.ecmt.consideration.reference.number' => 'Reference number',
+    'permits.page.ecmt.consideration.application.date' => 'Application date',
+    'permits.page.ecmt.consideration.permits.required' => 'Permits required',
+    'permits.page.ecmt.consideration.application.fee' => 'Application fee paid',
+
     // Potentially unused translations
 ];
