@@ -559,7 +559,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     /**
      * getTransportManagerApplication
      *
-     * @param $transportManagerApplicationId
+     * @param int $transportManagerApplicationId
      *
      * @return array|mixed
      */
