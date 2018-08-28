@@ -32,14 +32,6 @@ class EcmtLicence extends AbstractDataService implements ListData
             $licence['value'] = $item['id'];
             $licence['label'] = $item['licNo'] . ' (' . $item['trafficArea'] . ')';
 
-            if (count($data) === 1){
-                $licence['attributes'] = ['class' => 'visually-hidden'];
-                $licence['label_attributes'] = ['class' => 'visually-hidden'];
-                $licence['selected'] = true;
-                $optionData[] = $licence;
-                break;
-            }
-
             if($item['licenceType']['id'] === \Common\RefData::LICENCE_TYPE_RESTRICTED) {
                 $licence['attributes'] = [
                     'class' => 'input--trips restricted-licence '
