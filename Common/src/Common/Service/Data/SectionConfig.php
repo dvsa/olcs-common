@@ -381,7 +381,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 'identifier' => 'application'
             ),
             'transport_manager' => [
-                'identifier' =>'application'
+                'identifier' => 'application'
             ]
         );
 
