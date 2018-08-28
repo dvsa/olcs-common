@@ -45,7 +45,7 @@ class TransportManagerApplicationTest extends MockeryTestCase
 
     public function testMapForSections()
     {
-        
+
         $data = TransportManagerApplication::mapForSections(["__TEST__"]);
         $this->assertInternalType('array', $data);
     }

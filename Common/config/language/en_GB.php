@@ -2962,7 +2962,7 @@ return [
     'user-forgot-username.page.ask-admin.title' => 'Ask your administrator',
     'user-forgot-username.page.check-email.content' => 'Follow the link in the email to <a href="%s">sign in to your account</a>',
     'user-forgot-username.page.check-email.guidance' => 'If you\'re not a local authority or partner organisation, we have sent an email to <b class="js-email">%s</b> containing your username.',
-
+    'lva.section.transport-manager-check-answers-hint' =>'Before signing the application, make sure your details are correct.',
     'user-forgot-username.page.check-email.title' => 'Check your email',
     'user-name' => 'Username',
     'user-registration.field.businessType.label' => 'What type of business are you?',
