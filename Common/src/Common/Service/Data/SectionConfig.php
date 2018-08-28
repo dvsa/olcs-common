@@ -24,6 +24,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
      */
     private $sections = array(
         'type_of_licence' => array(),
+
         'business_type' => array(
             'prerequisite' => array(
                 'type_of_licence'
@@ -82,6 +83,18 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
+        'check_answers' =>[
+            'restricted' => array(
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+            )
+        ],
+        'confirmation' =>[
+            'restricted' => array(
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+            )
+        ],
         'vehicles' => array(
             'restricted' => array(
                 array(
@@ -241,6 +254,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 )
             )
         ),
+
         // external decalrations
         'undertakings' => [
             'restricted' => [
@@ -285,7 +299,6 @@ class SectionConfig implements ServiceLocatorAwareInterface
     protected function initSections()
     {
         if ($this->init === false) {
-
             $this->sections['financial_history']['restricted'][] = array(
                 'variation',
                 array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
@@ -366,6 +379,9 @@ class SectionConfig implements ServiceLocatorAwareInterface
             'director_change' => array(
                 'identifier' => 'application'
             ),
+            'transport_manager' => [
+                'identifier' =>'application'
+            ]
         );
 
         $routes = array();

@@ -635,6 +635,8 @@ return [
     'lva.contact-details.phone-contact.table.col.number.title' => 'Number',
     'lva.contact-details.phone-contact.form.type.title' => 'Type',
     'lva.contact-details.phone-contact.form.number.title' => 'Number',
+    'lva.section.title.check_answers'=>'Check your answers',
+    'transport-manager-save-return' => 'Save and return home',
     'application_your-business_business-type.contact-details.email' => 'Email address',
     'application_your-business_business-type.contact-details.fax-phone' => 'Fax number (optional)',
     'application_your-business_business-type.contact-details.hint' => 'Please enter at least one telephone number',
@@ -2961,7 +2963,7 @@ return [
     'user-forgot-username.page.ask-admin.title' => 'Ask your administrator',
     'user-forgot-username.page.check-email.content' => 'Follow the link in the email to <a href="%s">sign in to your account</a>',
     'user-forgot-username.page.check-email.guidance' => 'If you\'re not a local authority or partner organisation, we have sent an email to <b class="js-email">%s</b> containing your username.',
-
+    'lva.section.transport-manager-check-answers-hint' =>'Before signing the application, make sure your details are correct.',
     'user-forgot-username.page.check-email.title' => 'Check your email',
     'user-name' => 'Username',
     'user-registration.field.businessType.label' => 'What type of business are you?',

@@ -120,6 +120,24 @@ class SectionConfigTest extends MockeryTestCase
                         $this->getTestChildRoute('unit_test_route', 'director_change') +
                         $this->getTestChildRoute('unit_second_route', 'director_change'),
                 ],
+                'lva-transport_manager' => [
+                    'type' => 'segment',
+                    'options' => [
+                        'route' => '/transport-manager/:application[/]',
+                        'constraints' => [
+                            'application' => '[0-9]+',
+                        ],
+                        'defaults' => [
+                            'controller' => 'LvaTransportManager',
+                            'action' => 'index',
+                        ],
+                    ],
+                    'may_terminate' => true,
+                    'child_routes' => [] +
+                        $this->getTestChildRoute('unit_test_route', 'transport_manager') +
+                        $this->getTestChildRoute('unit_second_route', 'transport_manager'),
+                ],
+
             ],
             $actual
         );

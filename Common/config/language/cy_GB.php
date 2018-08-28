@@ -525,6 +525,8 @@ return [
     'lva.section.title.vehicles_declarations' => 'Datganiadau cerbyd',
     'lva.section.title.vehicles_psv' => 'Manylion cerbyd',
     'lva.section.title.voided_discs' => 'A ydych yn sicr yr hoffech ddirymu\'r disgiau hyn?',
+    'lva.section.title.check_answers'=>'Check your answers',
+    'lva.section.transport-manager-check-answers-hint' =>'Before signing the application, make sure your details are correct.',
     'manage-users.table.title.count' => 'Defnyddwyr',
     'manage-users.action.add' => 'Ychwanegu defnyddiwr newydd',
     'manage-users.table.column.permission.title' => 'Caniatâd',
