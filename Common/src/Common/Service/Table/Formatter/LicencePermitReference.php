@@ -30,10 +30,16 @@ class LicencePermitReference implements FormatterInterface
     public static function format($row, $column = null, $serviceLocator = null)
     {
         $urlHelper = $serviceLocator->get('Helper\Url');
+        $route = 'application-overview';
+
+        if ($row['isUnderConsideration']) {
+            $route = 'ecmt-under-consideration';
+        }
+
         return vsprintf(
             '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
             [
-                $urlHelper->fromRoute('permits/application-overview', ['id' => $row['id']]),
+                $urlHelper->fromRoute('permits/' . $route, ['id' => $row['id']]),
                 Escape::html($row['applicationRef'])
             ]
         );
