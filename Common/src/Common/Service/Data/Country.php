@@ -83,6 +83,7 @@ class Country extends AbstractDataService implements ListData
 
     /**
      * Remove non-member states
+     * @todo we're having to hard code constraints for now, while we sort what's likely a doctrine relationship problem
      *
      * @param array $data Data
      *
@@ -92,10 +93,19 @@ class Country extends AbstractDataService implements ListData
     {
         $filtered = [];
 
+        $constrainedCountries = [
+            'AT', 'GR', 'HU', 'IT', 'RU'
+        ];
+
         foreach ($data as $state) {
-            if (!empty($state['constraints'])) {
+            if (in_array($state['id'], $constrainedCountries)) {
                 $filtered[] = $state;
             }
+
+            //@todo reinstate the DB version when the time comes, and remove the above
+            //if (!empty($state['constraints'])) {
+                //$filtered[] = $state;
+            //}
         }
 
         return $filtered;
