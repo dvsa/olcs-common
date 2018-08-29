@@ -31,30 +31,20 @@ class EcmtLicence extends AbstractDataService implements ListData
             $licence = [];
             $licence['value'] = $item['id'];
             $licence['label'] = $item['licNo'] . ' (' . $item['trafficArea'] . ')';
+            $translationHelper = $this->getServiceLocator()->get('Helper\Translation');
 
             if($item['licenceType']['id'] === \Common\RefData::LICENCE_TYPE_RESTRICTED) {
+                $licence['label'] .= '<div class="restricted-licence-hint">' .
+                    $translationHelper->translate('permits.form.ecmt-licence.restricted-licence.hint') .
+                    '</div>';
                 $licence['attributes'] = [
                     'class' => 'input--trips restricted-licence '
                 ];
                 $licence['label_attributes'] = [
-                    'class' => 'form-control form-control--radio restricted-licence-label '
+                    'class' => 'form-control form-control--radio restricted-licence-input'
                 ];
-                $optionData[] = $licence;
-
-                $licence = [];
-                $licence['value'] = '';
-                $licence['label'] = 'permits.form.ecmt-licence.restricted-licence.hint';
-                $licence['label_attributes'] = [
-                    'class' => 'form-control form-control--radio restricted-licence-hint'
-                ];
-                $licence['attributes'] = [
-                    'class' => 'input--trips visually-hidden'
-                ];
-                $optionData[] = $licence;
-            } else {
-                $optionData[] = $licence;
             }
-
+            $optionData[] = $licence;
         }
 
         return $optionData;

@@ -27,7 +27,9 @@ class Sector extends AbstractDataService implements ListData
         $optionData = [];
 
         foreach ($data as $datum) {
-            $optionData[$datum['id']] = $datum['description'];
+            $optionData[$datum['id']] =
+                '<b>' . $datum['name'] . '</b>' .
+                '<p>' . $datum['description'] . '</p>';
         }
 
         return $optionData;
