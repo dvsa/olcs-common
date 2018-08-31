@@ -2022,7 +2022,7 @@ return [
     'overview.fieldset.check.welsh' => 'Welsh language',
     'owner' => 'Owner',
     'page.title.auth/forgot-password.index' => 'Reset your password',
-    'page.title.auth/login.index' => 'Sign in',
+    'page.title.auth/login.index' => 'Sign in to your Vehicle Operator Licensing account',
     'page.title.bus-registration.index' => 'Bus registrations',
     'page.title.change-password.index' => 'Change your password',
     'page.title.lva-licence/type_of_licence.index' => 'Type of licence',
