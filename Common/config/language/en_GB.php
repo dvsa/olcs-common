@@ -3405,6 +3405,7 @@ return [
     'permits.page.permits.required.question' => 'How many permits do you require for this licence?',
     'permits.page.title.summary' => 'Check your answers before submitting your permit',
     'permits.page.title.check-answers' => 'Check your answers-',
+    'permits.page.title.check-answers-heading' => 'Check your answers',
     'permits.page.message.summary' => 'Now send your application',
     'permits.page.declaration.title' => 'Declaration - ',
     'permits.page.declaration.question' => 'Declaration',
