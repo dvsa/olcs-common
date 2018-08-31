@@ -367,12 +367,14 @@ return array(
         'factories' => [
             'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory',
             'Common\Form\Element\DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckboxFactory',
-            'Common\Form\Element\DynamicRadio' => 'Common\Form\Element\DynamicRadioFactory'
+            'Common\Form\Element\DynamicRadio' => 'Common\Form\Element\DynamicRadioFactory',
+            'Common\Form\Element\DynamicRadioHtml' => 'Common\Form\Element\DynamicRadioHtmlFactory'
         ],
         'aliases' => [
             'DynamicSelect' => 'Common\Form\Element\DynamicSelect',
             'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox',
             'DynamicRadio' => 'Common\Form\Element\DynamicRadio',
+            'DynamicRadioHtml' => 'Common\Form\Element\DynamicRadioHtml',
             'OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ]
     ],

@@ -26,8 +26,20 @@ class Sector extends AbstractDataService implements ListData
     {
         $optionData = [];
 
-        foreach ($data as $datum) {
-            $optionData[$datum['id']] = $datum['description'];
+        foreach ($data as $item) {
+            $sector = [];
+            $sector['value'] = $item['id'];
+            $sector['label'] = $item['name'];
+            $sector['html_elements'] = [
+                'b' => [
+                    'content' => $item['name']
+                ],
+                'p' => [
+                    'content' => $item['description']
+                ]
+            ];
+            $sector['html_replace'] = true;
+            $optionData[] = $sector;
         }
 
         return $optionData;
