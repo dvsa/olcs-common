@@ -3509,5 +3509,9 @@ return [
     'permits.page.ecmt.consideration.application.fee' => 'Application fee paid',
 
     'no-organisation-error' => 'User is not associated with an organisation.',
+    'help-sign-in' => 'Help signing in',
+    'vol.create-account.label' => 'Create an account',
+    'to-get-started' => 'to get started.',
+
     // Potentially unused translations
 ];
