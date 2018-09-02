@@ -8,8 +8,6 @@ use Mockery as m;
 use Zend\Form\Element\Select;
 use Zend\Form\FormInterface;
 use Zend\InputFilter\InputFilterInterface;
-use Zend\Form\Element\MultiCheckbox;
-use Zend\Form\Form;
 
 /**
 * @covers \Common\Service\Helper\FormHelperService
@@ -1608,73 +1606,5 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->sut->removeValueOption($select, 'a');
 
         $this->assertEquals(['b' => 'B', 'c' => 'C'], $select->getValueOptions());
-    }
-
-    public function testSetFormValueOptionsFromList()
-    {
-        $this->markTestSkipped();
-        //Construct list in format expected from DB
-        $list = array(
-            'results' => array(
-                '0' => array(
-                    'id' => 'RB',
-                    'description' => 'first result'
-                    ),
-                '1' => array(
-                    'id' => 'EE',
-                    'description' => 'second result'
-                ),
-                '2' =>array(
-                    'id' => 'GG',
-                    'description' => 'third result'
-                ),
-            )
-        );
-
-        $expected_value_options = array(
-            'RB|first result' => 'first result',
-            'EE|second result' => 'second result',
-            'GG|third result' => 'third result',
-        );
-
-        //Construct form
-        $element = new MultiCheckBox('optionList');
-        $form = new Form('testForm');
-        $form->add($element);
-        $this->sut->setFormValueOptionsFromList($form,'optionList',$list,'description');
-        $this->assertEquals($form->get('optionList')->getOption('value_options'),$expected_value_options);
-    }
-
-    public function testTransformListIntoValueOptions()
-    {
-        //Construct list in format expected from DB
-        $list = array(
-            'results' => array(
-                '0' => array(
-                    'id' => 'RB',
-                    'description' => 'first result'
-                ),
-                '1' => array(
-                    'id' => 'EE',
-                    'description' => 'second result'
-                ),
-                '2' =>array(
-                    'id' => 'GG',
-                    'description' => 'third result'
-                ),
-            )
-        );
-
-        $expected_value_options = array(
-            'RB|first result' => 'first result',
-            'EE|second result' => 'second result',
-            'GG|third result' => 'third result',
-        );
-
-        $helperService = m::mock(\Common\Service\Helper\FormHelperService::class);
-
-        $helperService->shouldReceive('transformListIntoValueOptions')
-        ->with($list, 'description')
-        ->andReturn($expected_value_options);
     }
 }

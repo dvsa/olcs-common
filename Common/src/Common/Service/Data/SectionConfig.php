@@ -179,11 +179,6 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
-          'ecmt' => array(
-            'restricted' => array(
-              LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
-            )
-          ),
         'conditions_undertakings' => array(
             'restricted' => array(
                 array(
