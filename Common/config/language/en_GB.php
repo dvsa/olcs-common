@@ -3442,6 +3442,7 @@ return [
     'error.messages.checkbox' => 'You must tick the box to continue',
     'error.messages.checkbox.euro6' => 'Tick to confirm your vehicle will meet Euro 6 emission standards',
     'error.messages.checkbox.cabotage' => 'Tick to confirm your vehicle will not undertake cabotage journey(s)',
+    'error.messages.checkbox.declaration' => 'Please confirm the details you are providing are correct',
     'error.messages.restricted.countries' => 'Select yes or no if you are transporting goods to any of these countries',
     'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'Cancel application',
