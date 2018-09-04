@@ -5,7 +5,6 @@ $gb = include(__DIR__ . '/en_GB.php');
 $ni = array_merge(
     $gb,
     [
-        // remove
         'TM1_FORM_LINK' => 'https://www.infrastructure-ni.gov.uk/sites/default/files/publications/doe/tm%28ni%291-application-to-add-a-transport-manager-to-a-goods-vehicle-operator%27s-licence.pdf',
         'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'Does anyone you’ve named in your application have a conviction that the Department for Infrastructure must be told about?',
         'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'Please add any relevant

@@ -101,7 +101,6 @@ return [
     'Save and continue' => 'Save & continue',
     'Sign in' => 'Sign in',
     'Sign out' => 'Sign out',
-    // remove
     'TM1_FORM_LINK' => 'https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/193217/TM1_Form.pdf',
     'TMA_CHANGE_DETAILS' => 'Change your details',
     'TMA_WRONG_DETAILS' => '<h3>Wrong details</h3><p>If the Transport Manager\'s details are wrong, you\'ll need to contact them to make changes. They can still access their details through the original link.</p>',
@@ -3327,6 +3326,4 @@ return [
     'lva-operating-centre-newspaper-advert' => '<p class="label newspaper-advert">Newspaper advert</p>',
     'lva-operating-centre-newspaper-permission' => 'I acknowledge that:',
     // Potentially unused translations
-    // remove url:
-    // remove url: http://olcs-selfserve.olcs.gov.uk/variation/1000001/transport-managers/details/8/
 ];
