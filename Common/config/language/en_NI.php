@@ -5,6 +5,7 @@ $gb = include(__DIR__ . '/en_GB.php');
 $ni = array_merge(
     $gb,
     [
+        // remove
         'TM1_FORM_LINK' => 'https://www.infrastructure-ni.gov.uk/sites/default/files/publications/doe/tm%28ni%291-application-to-add-a-transport-manager-to-a-goods-vehicle-operator%27s-licence.pdf',
         'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'Does anyone you’ve named in your application have a conviction that the Department for Infrastructure must be told about?',
         'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'Please add any relevant
@@ -31,7 +32,6 @@ $ni = array_merge(
         'lva-transport-manager-licence-table-empty-message' => '<p class="article"><p class="important"><strong>You don’t have a Transport Manager specified. If you haven’t yet made an application to appoint a replacement you must contact us on {{OPERATOR_LICENSING_PHONE_NI}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL_NI}}">{{OPERATOR_LICENSING_EMAIL_NI}}</a></strong></p>',
         'delete.final-tm.confirmation.text' => 'You are removing your last Transport Manager. If you haven\'t yet made an application to appoint a replacement, you must contact us on {{OPERATOR_LICENSING_PHONE_NI}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL_NI}}">{{OPERATOR_LICENSING_EMAIL_NI}}</a>',
         'convictions-and-penalties-guidance-route-param' => 'convictions-and-penalties-guidance-ni',
-        'tm-add-user-no-email-document-identifier' => 'TM1_TM_Application_Form_NI.pdf',
     ]
 );
 

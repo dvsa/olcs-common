@@ -101,9 +101,9 @@ return [
     'Save and continue' => 'Save & continue',
     'Sign in' => 'Sign in',
     'Sign out' => 'Sign out',
+    // remove
     'TM1_FORM_LINK' => 'https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/193217/TM1_Form.pdf',
     'TMA_CHANGE_DETAILS' => 'Change your details',
-    'TMA_RESEND_TM1' => '<p>Alternatively they can <a href="%s" download>download a TM1 form (PDF 150KB)</a>.</p>',
     'TMA_WRONG_DETAILS' => '<h3>Wrong details</h3><p>If the Transport Manager\'s details are wrong, you\'ll need to contact them to make changes. They can still access their details through the original link.</p>',
     'Total number of vehicles: The input is not between \'1\' and \'1000000\', inclusively' => 'Total number of vehicles: You must have at least 1 vehicle',
     'VE-VRM_SECTION26' => 'Under Section 26 (23 NI) Direction this vehicle is suspended and cannot be added',
@@ -2775,7 +2775,6 @@ return [
     'tm-add-user-success-message-no-email' => 'The Transport Manager has been added to the application',
     'tm-add-user-username' => 'Username',
     'tm-add-user-username.hint' => 'Choose a unique username for your Transport Manager. They will need to use it when they sign in.',
-    'tm-add-user-no-email-document-identifier' => 'TM1_TM_Application_Form_GB.pdf',
     'tm-details-edit-form-link-text' => 'Edit form',
     'tm-details-heading' => 'Transport Manager form',
     'tm-details-licence-application-no' => 'Application number',
@@ -3328,4 +3327,6 @@ return [
     'lva-operating-centre-newspaper-advert' => '<p class="label newspaper-advert">Newspaper advert</p>',
     'lva-operating-centre-newspaper-permission' => 'I acknowledge that:',
     // Potentially unused translations
+    // remove url:
+    // remove url: http://olcs-selfserve.olcs.gov.uk/variation/1000001/transport-managers/details/8/
 ];
