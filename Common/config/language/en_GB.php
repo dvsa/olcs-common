@@ -3361,6 +3361,7 @@ return [
     'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?',
     'permits.application.submitted.title' => 'Application submitted-',
     'permits.application.fee.submitted.title' => 'Payment successful',
+    'permits.decline.submitted.title' => 'Permits removed',
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
 
     'permits.link.ecmt.guidance' => '{{ECMT_PERMITS_GUIDANCE_LINK}}',
