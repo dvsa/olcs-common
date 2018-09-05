@@ -384,7 +384,7 @@ return [
         'are true and the supporting evidence is correct and understand that it\'s an offence to make a false ' .
         'declaration. I agree to Vehicle Operator Licensing using my name, address and date of birth ' .
         'provided by GOV.UK Verify.',
-    'application.review-declarations.sign-button' => 'I agree - continue to GOV.UK Verify',
+    'application.review-declarations.sign-button' => 'I agree - continue',
     'application.review-declarations.review.business-owner' => 'the business owner',
     'application.review-declarations.review.director' => 'a director',
     'application.review-declarations.review.person' => 'a responsible person of the business',
