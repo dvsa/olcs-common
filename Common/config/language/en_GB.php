@@ -2771,7 +2771,7 @@ return [
     'tm-add-user-familyName' => 'Last name',
     'tm-add-user-forename' => 'First name',
     'tm-add-user-hasEmail' => 'Do they have an email address?',
-    'tm-add-user-success-message' => 'The user account has been created and form has been emailed to the transport manager',
+    'tm-add-user-success-message' => 'The transport manager\'s user account has been created and a link sent to them',
     'tm-add-user-success-message-no-email' => 'The Transport Manager has been added to the application',
     'tm-add-user-username' => 'Username',
     'tm-add-user-username.hint' => 'Choose a unique username for your Transport Manager. They will need to use it when they sign in.',
