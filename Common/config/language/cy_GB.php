@@ -23,7 +23,6 @@ return [
     'Sign in' => 'Mewngofnodwch',
     'Sign out' => 'Allgofnodi',
     'TMA_CHANGE_DETAILS' => 'Newid eich manylion',
-    'TMA_RESEND_TM1' => '<p>Fel arall gallant <a href="%s" download>lawrlwytho ffurflen TM1 (PDF 150KB)</a>.</p>',
     'TMA_WRONG_DETAILS' => '<h3>Cyfeiriad anghywir</h3><p>Os yw\'r manylion y Rheolwr Trafnidiaeth yn cyfeiriad, bydd angen i chi gysylltu â nhw i wneud newidiadau. Gellir Maent yn dal i gael mynediad i\'w manylion drwy\'r gwreiddiol ddolen.</p>',
     'Total number of vehicles: The input is not between \'1\' and \'1000000\', inclusively' => 'Cyfanswm cerbydau: Rhaid bod o leiaf 1 cerbyd gyda chi',
     'Value is required and can\'t be empty' => 'Gwerth yn ofynnol',
