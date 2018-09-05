@@ -943,7 +943,6 @@ return [
     'tm-add-user-familyName' => 'Cyfenw',
     'tm-add-user-forename' => 'Enw cyntaf',
     'tm-add-user-hasEmail' => 'A oes ganddynt gyfeiriad e-bost?',
-    'tm-add-user-success-message' => 'Mae\'r cyfrif defnyddiwr wedi\'i greu a mae ffurflen wedi\'i e-bostio at y rheolwr trafnidiaeth',
     'tm-add-user-username' => 'Enw defnyddiwr',
     'tm-add-user-username.hint' => 'Dewiswch enw defnyddiwr unigryw ar gyfer eich Rheolwr Trafnidiaeth. Bydd angen iddynt ei ddefnyddio wrth fewngofnodi.',
     'tm-details-licence-application-no' => 'Rhif y cais',
