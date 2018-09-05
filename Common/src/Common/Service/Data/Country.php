@@ -93,10 +93,11 @@ class Country extends AbstractDataService implements ListData
     {
         $filtered = [];
 
-        if (!empty($state['constraints'])) {
-            $filtered[] = $state;
+        foreach ($data as $state) {
+            if (!empty($state['constraints'])) {
+                $filtered[] = $state;
+            }
         }
-
         return $filtered;
     }
 
