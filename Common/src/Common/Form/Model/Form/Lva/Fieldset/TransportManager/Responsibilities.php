@@ -5,7 +5,7 @@ namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Attributes({"class":"table__form"})
+ * @Form\Attributes({"class":"table__form","id":"responsibilities"})
  * @Form\Name("responsibilities")
  */
 class Responsibilities
@@ -23,6 +23,7 @@ class Responsibilities
     public $version = null;
 
     /**
+     * @Form\Attributes({"data-section":"responsibilities"})
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.tm-type",
      *     "category": "tm_type",
@@ -42,12 +43,13 @@ class Responsibilities
      *     "category": "tmap_status"
      * })
      * @Form\Required(true)
-     * @Form\Attributes({"id":"","placeholder":"", "required":false})
+     * @Form\Attributes({"id":"","placeholder":"", "required":false, "data-section":"responsibilities"})
      * @Form\Type("DynamicSelect")
      */
     public $tmApplicationStatus = null;
 
     /**
+     * @Form\Attributes({"data-section":"responsibilities"})
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.is-owner",
      *     "value_options": {"Y":"Yes", "N":"No"},
@@ -59,14 +61,14 @@ class Responsibilities
 
     /**
      * @Form\Name("hoursOfWeek")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekRequired")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\HoursOfWeekRequired")
      */
     public $hoursOfWeek = null;
 
     /**
      * @Form\Name("otherLicences")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({"id":"otherLicences"})
+     * @Form\Attributes({"id":"otherLicences","data-section":"otherLicences"})
      */
     public $otherLicences = null;
 
@@ -76,6 +78,8 @@ class Responsibilities
      *      "class":"long",
      *      "label": "transport-manager.responsibilities.additional-information.title",
      *      "autocomplete": "nope",
+     *      "data-section":"additionalInformation",
+     *      "id":"additionalInformation"
      * })
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.additional-information",
@@ -95,7 +99,7 @@ class Responsibilities
     public $additionalInformation;
 
     /**
-     * @Form\Attributes({"id":"file", "class": "file-upload"})
+     * @Form\Attributes({"id":"file", "class": "file-upload", "data-section":"additionalInformation"})
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      */
     public $file = null;
