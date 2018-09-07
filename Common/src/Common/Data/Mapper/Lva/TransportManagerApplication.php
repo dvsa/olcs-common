@@ -68,7 +68,7 @@ class TransportManagerApplication
                     ['label' => 'Sunday', 'answer' => '8'],
 
                 ],
-                'change' => ['sectionName' => 'hoursPerWeek', 'backText' => '']
+                'change' => ['sectionName' => 'hoursOfWeek', 'backText' => '']
             ],
             [
                 'sectionHeading' => "Other Licences",
@@ -99,7 +99,7 @@ class TransportManagerApplication
                     ['label' => '', 'answer' => 'information added'],
 
                 ],
-                'change' => ['sectionName' => 'convictions', 'backText' => '']
+                'change' => ['sectionName' => 'previousConvictions', 'backText' => '']
             ],
             [
                 'sectionHeading' => "Revoked Curtailed or Suspended Licences",
@@ -107,7 +107,7 @@ class TransportManagerApplication
                     ['label' => '', 'answer' => 'information added'],
 
                 ],
-                'change' => ['sectionName' => 'revokedLicences', 'backText' => '']
+                'change' => ['sectionName' => 'previousLicences', 'backText' => '']
             ],
 
         ];
