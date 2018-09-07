@@ -52,6 +52,7 @@
         "olcs/olcs-utils": "dev-develop",
         "soflomo/purifier": "~0.1.0",
         "olcs/olcs-logging": "dev-develop"
+
     },
     "autoload": {
         "psr-0": {
@@ -63,7 +64,7 @@
         "preferred-install": "dist",
         "secure-http": false,
         "platform": {
-            "php": "7.1.16"
+            "php":"7.1.16"
         }
     },
     "scripts": {

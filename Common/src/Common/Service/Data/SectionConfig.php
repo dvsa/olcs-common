@@ -285,7 +285,6 @@ class SectionConfig implements ServiceLocatorAwareInterface
     protected function initSections()
     {
         if ($this->init === false) {
-
             $this->sections['financial_history']['restricted'][] = array(
                 'variation',
                 array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
