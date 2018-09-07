@@ -23,7 +23,6 @@ class Responsibilities
     public $version = null;
 
     /**
-     * @Form\Attributes({"data-section":"responsibilities"})
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.tm-type",
      *     "category": "tm_type",
@@ -43,13 +42,12 @@ class Responsibilities
      *     "category": "tmap_status"
      * })
      * @Form\Required(true)
-     * @Form\Attributes({"id":"","placeholder":"", "required":false, "data-section":"responsibilities"})
+     * @Form\Attributes({"id":"","placeholder":"", "required":false})
      * @Form\Type("DynamicSelect")
      */
     public $tmApplicationStatus = null;
 
     /**
-     * @Form\Attributes({"data-section":"responsibilities"})
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.is-owner",
      *     "value_options": {"Y":"Yes", "N":"No"},
@@ -61,14 +59,14 @@ class Responsibilities
 
     /**
      * @Form\Name("hoursOfWeek")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\HoursOfWeekRequired")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekRequired")
      */
     public $hoursOfWeek = null;
 
     /**
      * @Form\Name("otherLicences")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({"id":"otherLicences","data-section":"otherLicences"})
+     * @Form\Attributes({"id":"otherLicences"})
      */
     public $otherLicences = null;
 
@@ -78,7 +76,6 @@ class Responsibilities
      *      "class":"long",
      *      "label": "transport-manager.responsibilities.additional-information.title",
      *      "autocomplete": "nope",
-     *      "data-section":"additionalInformation",
      *      "id":"additionalInformation"
      * })
      * @Form\Options({
@@ -99,7 +96,7 @@ class Responsibilities
     public $additionalInformation;
 
     /**
-     * @Form\Attributes({"id":"file", "class": "file-upload", "data-section":"additionalInformation"})
+     * @Form\Attributes({"id":"file", "class": "file-upload"})
      * @Form\ComposedObject("\Common\Form\Model\Fieldset\MultipleFileUpload")
      */
     public $file = null;

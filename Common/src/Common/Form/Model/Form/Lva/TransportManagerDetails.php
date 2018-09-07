@@ -23,7 +23,7 @@ class TransportManagerDetails
 
     /**
      * @Form\Name("homeAddress")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\Address")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      * @Form\Options({
      *     "label":"lva-tm-details-details-homeAddress",
      *     "label_attributes": {
@@ -36,7 +36,7 @@ class TransportManagerDetails
 
     /**
      * @Form\Name("workAddress")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\Address")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      * @Form\Options({
      *     "label":"lva-tm-details-details-workAddress"
      * })
@@ -53,7 +53,7 @@ class TransportManagerDetails
     /**
      * @Form\Name("otherEmployment")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({"id":"otherEmployment","data-section":"otherEmployment"})
+     * @Form\Attributes({"id":"otherEmployment"})
      */
     public $otherEmployment = null;
 
@@ -66,7 +66,7 @@ class TransportManagerDetails
     /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TmDetailsFormActions")
-     * @Form\Attributes({"class":"actions-container","data-section":"actions-container"})
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

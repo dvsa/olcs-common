@@ -6,7 +6,7 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("lva-transport-manager-details")
- * @Form\Attributes({"data-section":"details", "id":"details"})
+ * @Form\Attributes({"id":"details"})
  */
 class Details
 {
