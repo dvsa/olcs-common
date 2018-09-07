@@ -1854,6 +1854,7 @@ return [
     'lva.section.title.transport-manager-application.print-sign' => 'Print, sign and return',
     'lva.section.title.transport-manager-application.resend-form' => 'Resend link ',
     'lva.section.title.transport-manager-application.review-and-submit' => 'Review and submit',
+    'lva.section.title.transport-manager-application.declaration' => 'Declaration',
     'lva.section.title.transport_managers' => 'Transport Managers',
     'lva.section.title.transport_managers-details' => 'Transport Manager details',
     'lva.section.title.transport_managers-details-OtherEmployments-success' => 'Employment saved successfully',

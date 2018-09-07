@@ -1,0 +1,40 @@
+<?php
+
+namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
+
+use Zend\Form\Annotation as Form;
+
+class ApplicationDeclaration
+{
+    /**
+     * @Form\Attributes({
+     *     "id":"","placeholder":"",
+     *     "class": "form"
+     * })
+     * @Form\Options({
+     *     "label": "application.signature.options.label",
+     *     "label_attributes": {
+     *         "class":"govuk-label govuk-radios__label govuk-label--s"
+     *     },
+     *     "value_options": {"Y": "application.signature.options.verify", "N": "application.signature.options.sign"},
+     *     "label_options": {
+     *         "disable_html_escape": "true"
+     *     },
+     *     "span": "askldjaksd"
+     * })
+     * @Form\Type("\Zend\Form\Element\Radio")
+     */
+    public $signatureOptions = null;
+
+    /**
+     * @Form\Attributes({"id":"declarationDownload"})
+     * @Form\Type("\Common\Form\Elements\Types\Html")
+     */
+    public $declarationDownload = null;
+
+    /**
+     * @Form\Attributes({"value": "markup-declaration-for-verify","data-container-class":"declarationForVerify"})
+     * @Form\Type("Common\Form\Elements\Types\GuidanceTranslated")
+     */
+    public $declarationForVerify = null;
+}
