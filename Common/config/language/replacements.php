@@ -15,6 +15,8 @@ return [
     '{{VEHICLE_WEIGHT_LINK}}' => 'https://www.gov.uk/vehicle-weights-explained',
     '{{NI_VEHICLE_OPERATOR_LINK}}' => 'http://www.nidirect.gov.uk/index/information-and-services/motoring/driving'
         . '-for-a-living/goods-vehicle-operator-licensing.html',
+    '{{ECMT_PERMITS_GUIDANCE_LINK}}' =>
+        'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage',
     '{{VEHICLE_EXCEPTIONS}}' => 'https://www.gov.uk/being-a-goods-vehicle-operator/exemptions',
     '{{RULES_IN_NI}}' => 'http://www.nidirect.gov.uk/index/information-and-services/motoring/driving-for-a-living.htm',
     '{{EBSR_SUPPORT_NUMBER}}' => '0113 254 3200',
@@ -24,5 +26,7 @@ return [
     '{{OPERATOR_LICENSING_EMAIL}}' => 'notifications@vehicle-operator-licensing.service.gov.uk',
     '{{OPERATOR_LICENSING_PHONE}}' => '0300 123 9000',
     '{{OPERATOR_LICENSING_PHONE_NI}}' => '0300 200 7831',
-    '{{OPERATOR_LICENSING_EMAIL_NI}}' => 'niclo@dvsa.gov.uk'
+    '{{OPERATOR_LICENSING_EMAIL_NI}}' => 'niclo@dvsa.gov.uk',
+    '{{STANDARD_INT_OPERATOR_LICENCE_LINK}}' =>
+        'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage#standard-international-operators-licence-for-road-transport',
 ];
