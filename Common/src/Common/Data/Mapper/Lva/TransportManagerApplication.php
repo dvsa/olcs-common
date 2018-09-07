@@ -46,7 +46,7 @@ class TransportManagerApplication
                     ['label' => 'Work Address', "answer" => ""],
 
                 ],
-                'change' => ['sectionLink' => 'test', 'backText' => '']
+                'change' => ['sectionName' => 'details', 'backText' => '']
             ],
             [
                 'sectionHeading' => "Responsibilities",
@@ -54,7 +54,7 @@ class TransportManagerApplication
                     ['label' => 'Which type of transport manager will you be for this licence ?', 'answer' => 'test'],
                     ['label' => 'test', 'answer' => 'Are you the person is our who will be the licenced Operator']
                 ],
-                'change' => ['sectionLink' => 'test2', 'backText' => '']
+                'change' => ['sectionName' => 'responsibilities', 'backText' => '']
             ],
             [
                 'sectionHeading' => "Hours per week",
@@ -68,14 +68,14 @@ class TransportManagerApplication
                     ['label' => 'Sunday', 'answer' => '8'],
 
                 ],
-                'change' => ['sectionLink' => 'test3', 'backText' => '']
+                'change' => ['sectionName' => 'hoursPerWeek', 'backText' => '']
             ],
             [
                 'sectionHeading' => "Other Licences",
                 'questions' => [
                     ['label' => '', 'answer' => 'non added'],
                 ],
-                'change' => ['sectionLink' => 'test4', 'backText' => '']
+                'change' => ['sectionName' => 'otherLicences', 'backText' => '']
             ],
             [
                 'sectionHeading' => "Additional Information",
@@ -83,7 +83,7 @@ class TransportManagerApplication
                     ['label' => 'Information', 'answer' => 'non added'],
                     ['label' => 'Files', 'answer' => 'non attached']
                 ],
-                'change' => ['sectionLink' => 'test4', 'backText' => '']
+                'change' => ['sectionName' => 'additionalInformation', 'backText' => '']
             ],
             [
                 'sectionHeading' => "Other Employment",
@@ -91,7 +91,7 @@ class TransportManagerApplication
                     ['label' => '', 'answer' => 'non added'],
 
                 ],
-                'change' => ['sectionLink' => 'test4', 'backText' => '']
+                'change' => ['sectionName' => 'otherEmployment', 'backText' => '']
             ],
             [
                 'sectionHeading' => "Convictions & Penalities",
@@ -99,7 +99,7 @@ class TransportManagerApplication
                     ['label' => '', 'answer' => 'information added'],
 
                 ],
-                'change' => ['sectionLink' => 'test5', 'backText' => '']
+                'change' => ['sectionName' => 'convictions', 'backText' => '']
             ],
             [
                 'sectionHeading' => "Revoked Curtailed or Suspended Licences",
@@ -107,7 +107,7 @@ class TransportManagerApplication
                     ['label' => '', 'answer' => 'information added'],
 
                 ],
-                'change' => ['sectionLink' => 'test6', 'backText' => '']
+                'change' => ['sectionName' => 'revokedLicences', 'backText' => '']
             ],
 
         ];
