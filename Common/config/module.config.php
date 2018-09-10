@@ -93,6 +93,7 @@ return array(
             'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
             'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
             'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
+            'featuresEnabled' => \Common\Controller\Plugin\FeaturesEnabledFactory::class,
         ]
     ),
     'console' => array(
@@ -300,6 +301,8 @@ return array(
             'readonlyformrow' => ReadonlyFormHelper\FormRow::class,
             'readonlyformtable' => ReadonlyFormHelper\FormTable::class,
             'readOnlyActions' => \Common\View\Helper\ReadOnlyActions::class,
+
+            'currencyFormatter' => \Common\View\Helper\CurrencyFormatter::class,
 
             // Extended form view helpers, to allow us to use alternative attributes that are not in ZF2's whitelist
             'formbutton'              => \Common\Form\View\Helper\Extended\FormButton::class,

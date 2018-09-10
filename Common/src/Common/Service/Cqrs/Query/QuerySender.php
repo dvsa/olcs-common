@@ -6,6 +6,7 @@ namespace Common\Service\Cqrs\Query;
 use Common\Service\Cqrs\RecoverHttpClientExceptionTrait;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Dvsa\Olcs\Transfer\Query\FeatureToggle\IsEnabled as IsEnabledQry;
 use Dvsa\Olcs\Transfer\Query\QueryInterface;
 use Dvsa\Olcs\Transfer\Util\Annotation\AnnotationBuilder as TransferAnnotationBuilder;
 
@@ -55,6 +56,18 @@ class QuerySender implements FactoryInterface
         $query = $this->annotationBuilder->createQuery($query);
         $this->queryService->setRecoverHttpClientException($this->getRecoverHttpClientException());
         return $this->queryService->send($query);
+    }
+
+    /**
+     * @todo not the right place for this, need to think what's best, but seems like it might be ok for now to avoid duplication
+     *
+     * @param array $features
+     *
+     * @return bool
+     */
+    public function featuresEnabled(array $features)
+    {
+        return $this->send(IsEnabledQry::create(['ids' => $features]))->getResult()['isEnabled'];
     }
 
     /**
