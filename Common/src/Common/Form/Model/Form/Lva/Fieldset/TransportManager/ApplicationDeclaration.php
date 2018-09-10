@@ -14,13 +14,12 @@ class ApplicationDeclaration
      * @Form\Options({
      *     "label": "application.signature.options.label",
      *     "label_attributes": {
-     *         "class":"govuk-label govuk-radios__label govuk-label--s"
+     *         "class":"form-control form-control--radio form-control--advanced"
      *     },
      *     "value_options": {"Y": "application.signature.options.verify", "N": "application.signature.options.sign"},
      *     "label_options": {
      *         "disable_html_escape": "true"
      *     },
-     *     "span": "askldjaksd"
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
