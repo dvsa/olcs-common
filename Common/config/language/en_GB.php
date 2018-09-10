@@ -3510,9 +3510,6 @@ return [
 
     'no-organisation-error' => 'User is not associated with an organisation.',
     'help-sign-in' => 'Help signing in',
-    'vol.create-account.label' => 'Create an account',
-    'to-get-started' => 'to get started.',
     'auth.login.termsAgreed' => 'By using the site you agree to the <a href="%s">terms and conditions</a>.',
-
     // Potentially unused translations
 ];
