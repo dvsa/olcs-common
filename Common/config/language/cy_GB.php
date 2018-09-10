@@ -1498,5 +1498,7 @@ return [
     'permits.page.ecmt.consideration.application.date' => 'CY - Application date',
     'permits.page.ecmt.consideration.permits.required' => 'CY - Permits required',
     'permits.page.ecmt.consideration.application.fee' => 'CY - Application fee paid',
+
+    'help-sign-in' => 'helpu i arwyddo',
     // Potentially unused translations
 ];

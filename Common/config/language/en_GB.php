@@ -2022,7 +2022,7 @@ return [
     'overview.fieldset.check.welsh' => 'Welsh language',
     'owner' => 'Owner',
     'page.title.auth/forgot-password.index' => 'Reset your password',
-    'page.title.auth/login.index' => 'Sign in',
+    'page.title.auth/login.index' => 'Sign in to your Vehicle Operator Licensing account',
     'page.title.bus-registration.index' => 'Bus registrations',
     'page.title.change-password.index' => 'Change your password',
     'page.title.lva-licence/type_of_licence.index' => 'Type of licence',
@@ -3509,5 +3509,7 @@ return [
     'permits.page.ecmt.consideration.application.fee' => 'Application fee paid',
 
     'no-organisation-error' => 'User is not associated with an organisation.',
+    'help-sign-in' => 'Help signing in',
+    'auth.login.termsAgreed' => 'By using the site you agree to the <a href="%s">terms and conditions</a>.',
     // Potentially unused translations
 ];
