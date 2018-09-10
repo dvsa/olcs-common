@@ -1501,21 +1501,18 @@ return [
 
     'help-sign-in' => 'helpu i arwyddo',
 
+    'permits.link.cancel.return.to.dashboard' => 'CY - Cancel and return to dashboard',
+    'permits.page.fee-part-successful.title' => 'CY - Issuing fee for ECMT permit',
 
+    'permits.page.ecmt.fee-part-successful.permit.validity' => 'CY - Permit start and end date',
+    'permits.page.ecmt.fee-part-successful.issuing.fee' => 'CY - Issuing fee per permit',
+    'permits.page.ecmt.fee-part-successful.issuing.fee.total' => 'CY - Total issuing fee to be paid',
+    'permits.page.ecmt.fee-part-successful.payment.due' => 'CY - Payment due by',
 
+    'permits.page.view.permits' => 'CY - view permits',
+    'permits.page.non.refundable' => '(CY - non-refundable)',
 
-    'permits.link.cancel.return.to.dashboard' => 'Cancel and return to dashboard',
-    'permits.page.fee-part-successful.title' => 'Issuing fee for ECMT permit',
-
-    'permits.page.ecmt.fee-part-successful.permit.validity' => 'Permit start and end date',
-    'permits.page.ecmt.fee-part-successful.issuing.fee' => 'Issuing fee per permit',
-    'permits.page.ecmt.fee-part-successful.issuing.fee.total' => 'Total issuing fee to be paid',
-    'permits.page.ecmt.fee-part-successful.payment.due' => 'Payment due by',
-
-    'permits.page.view.permits' => 'view permits',
-    'permits.page.non.refundable' => '(non-refundable)',
-
-    'permits.page.accept.and.pay' => 'Accept and pay',
-    'permits.page.decline.permits' => 'Decline permits',
+    'permits.page.accept.and.pay' => 'CY - Accept and pay',
+    'permits.page.decline.permits' => 'CY - Decline permits',
     // Potentially unused translations
 ];
