@@ -3521,5 +3521,10 @@ return [
     'permits.page.non.refundable' => '(non-refundable)',
     'permits.page.accept.and.pay' => 'Accept and pay',
     'permits.page.decline.permits' => 'Decline permits',
+    'permits.form.declined_permit.label' => 'Decline awarded permits',
+    'permits.form.declined_permit.error_message' => 'You must select the checkbox to continue',
+    'permits.form.declined_permit.label' => 'I confirm that I don\'t want awarded permits.',
+    'permits.page.declined_permit.title' => 'Decline awarded permits',
+    'permits.button.cancel-and-return' => 'Cancel and return',
     // Potentially unused translations
 ];

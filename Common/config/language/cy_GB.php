@@ -1508,5 +1508,9 @@ return [
     'permits.page.non.refundable' => 'CY -(CY -non-refundable)',
     'permits.page.accept.and.pay' => 'CY -Accept and pay',
     'permits.page.decline.permits' => 'CY -Decline permits',
+    'permits.form.declined_permit.error_message' => 'CY - You must select the checkbox to continue',
+    'permits.form.declined_permit.label' => 'CY - I confirm that I don\'t want awarded permits.',
+    'permits.page.declined_permit.title' => 'CY - Decline awarded permits',
+    'permits.button.cancel-and-return' => 'CY - Cancel and return',
     // Potentially unused translations
 ];
