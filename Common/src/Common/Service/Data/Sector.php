@@ -64,7 +64,7 @@ class Sector extends AbstractDataService implements ListData
     {
         if (is_null($this->getData('Sector'))) {
 
-            $dtoData = SectorsList::create(['sort' => 'description', 'order' => 'ASC']);
+            $dtoData = SectorsList::create(['sort' => 'displayOrder', 'order' => 'ASC']);
             $response = $this->handleQuery($dtoData);
 
             if (!$response->isOk()) {
