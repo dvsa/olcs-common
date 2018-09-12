@@ -1498,7 +1498,8 @@ return [
     'permits.page.ecmt.consideration.permits.required' => 'CY - Permits required',
     'permits.page.ecmt.consideration.application.fee' => 'CY - Application fee paid',
 
-    'help-sign-in' => 'helpu i arwyddo',    'permits.link.cancel.return.to.dashboard' => 'CY -Cancel and return to dashboard',
+    'help-sign-in' => 'helpu i arwyddo',
+    'permits.link.cancel.return.to.dashboard' => 'CY -Cancel and return to dashboard',
     'permits.page.fee-part-successful.title' => 'CY -Issuing fee for ECMT permit',
     'permits.page.ecmt.fee-part-successful.permit.validity' => 'CY -Permit start and end date',
     'permits.page.ecmt.fee-part-successful.issuing.fee' => 'CY -Issuing fee per permit',
