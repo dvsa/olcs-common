@@ -9,6 +9,7 @@
 namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\Details;
+use Common\Data\Mapper\Lva\TransportManager\Sections\HoursOfWork;
 use Common\Service\Helper\TranslationHelperService;
 
 /**
@@ -39,6 +40,9 @@ class TransportManagerApplication
         $details = (new Details(new TranslationHelperService()))->populate($transportManagerApplication);
         $blah =  $details->createSectionFormat();
         $count=0;
+        $hoursOfWork = (new HoursOfWork(new TranslationHelperService()))->populate($transportManagerApplication);
+        $hours = $hoursOfWork->createSectionFormat();
+
         foreach ($postData as $key => $value) {
             if (!in_array($key, ['security', 'form-actions'])) {
                 $sectionName = $key;

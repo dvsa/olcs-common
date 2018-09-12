@@ -6,7 +6,7 @@ namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 use Common\Category;
 
 
-class Details extends AbstractSection implements TransportManagerSectionInterface
+class Details extends AbstractSection
 {
 
     use SectionSerializeTrait;
@@ -147,9 +147,9 @@ class Details extends AbstractSection implements TransportManagerSectionInterfac
      * @param array $transportManagerApplication
      *
      *
-     * @return Details
+     * @return \Object;
      */
-    public function populate(array $transportManagerApplication): self
+    public function populate(array $transportManagerApplication)
     {
         $person = $transportManagerApplication['transportManager']['homeCd']['person'];
         $this->populatePersonDetails($person);
@@ -158,6 +158,8 @@ class Details extends AbstractSection implements TransportManagerSectionInterfac
 
         foreach (['homeCd', 'workCd'] as $addresses) {
             $address = $this->processAddress($transportManagerApplication['transportManager'][$addresses]['address']);
+
+           // $address = $this->populateTemplate($this->getTranslationTemplate() . "addressMarkup", $address);
             $this->{'set' . ucfirst($addresses)}($address);
         }
 
