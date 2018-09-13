@@ -18,7 +18,8 @@ class SafetyLicence
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      * @Form\Options({
-     *     "label": "application_vehicle-safety_safety.licence.label"
+     *     "label": "application_vehicle-safety_safety.licence.label",
+     *     "label_attributes": {"class": "form-element__question"},
      * })
      */
     public $safetyInspections = null;
