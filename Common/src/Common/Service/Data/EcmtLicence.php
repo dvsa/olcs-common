@@ -25,21 +25,20 @@ class EcmtLicence extends AbstractDataService implements ListData
     public function formatData(array $data)
     {
         $optionData = [];
-
         foreach ($data as $item) {
-
             $licence = [];
             $licence['value'] = $item['id'];
             $licence['label'] = $item['licNo'] . ' (' . $item['trafficArea'] . ')';
 
-            if($item['licenceType']['id'] === \Common\RefData::LICENCE_TYPE_RESTRICTED) {
+            if ($item['licenceType']['id'] === \Common\RefData::LICENCE_TYPE_RESTRICTED) {
                 $translationHelper = $this->getServiceLocator()->get(
                     'Helper\Translation'
                 );
                 $licence['html_elements'] = [
                     'div' => [
                         'content' => $translationHelper->translate(
-                        'permits.form.ecmt-licence.restricted-licence.hint'),
+                            'permits.form.ecmt-licence.restricted-licence.hint'
+                        ),
                         'class' => 'restricted-licence-hint'
                         ]
                 ];
@@ -82,12 +81,10 @@ class EcmtLicence extends AbstractDataService implements ListData
 
     public function fetchListData()
     {
-
         if (is_null($this->getData('Organisation'))) {
-
             $authenticationService = $this->getServiceLocator()->get('Common\Rbac\IdentityProvider');
             $user = $authenticationService->getIdentity();
-
+            
             if (empty($user->getUserData()['organisationUsers'])) {
                 throw new Exception('no-organisation-error');
             }

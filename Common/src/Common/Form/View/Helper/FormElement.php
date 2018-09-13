@@ -72,13 +72,18 @@ class FormElement extends ZendFormElement
             $search = [];
             $replace = [];
             $replaceValues = [];
-            foreach ($values as $value){
+            foreach ($values as $value) {
                 if (isset($value['html_elements'])) {
                     $theExtras = '';
                     foreach ($value['html_elements'] as $tag => $option) {
                         $class = isset($option['class']) ? $option['class'] : '';
-                        $theExtras .= sprintf('<%s class="%s">%s</%s>',
-                            $tag, $class, $option['content'], $tag);
+                        $theExtras .= sprintf(
+                            '<%s class="%s">%s</%s>',
+                            $tag,
+                            $class,
+                            $option['content'],
+                            $tag
+                        );
                     }
                     $search[] = '[#' . $value['value'] . ']';
                     $replace[] = $theExtras;
@@ -87,7 +92,6 @@ class FormElement extends ZendFormElement
                     } else {
                         $value['label'] = $value['label'] . '[#' . $value['value'] . ']';
                     }
-
                 }
                 $replaceValues[] = $value;
             }
