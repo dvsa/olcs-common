@@ -13,6 +13,8 @@ class HoursOfWork extends AbstractSection implements TransportManagerSectionInte
     private $hoursWed;
     private $hoursThu;
     private $hoursFri;
+    private $hoursSat;
+    private $hoursSun;
 
     /**
      * @param mixed $hoursMon
@@ -69,8 +71,7 @@ class HoursOfWork extends AbstractSection implements TransportManagerSectionInte
     {
         $this->hoursSun = $hoursSun;
     }
-    private $hoursSat;
-    private $hoursSun;
+
 
     public function populate(array $transportManagerApplication)
     {

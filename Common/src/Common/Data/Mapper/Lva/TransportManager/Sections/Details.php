@@ -192,7 +192,7 @@ class Details extends AbstractSection
     private function processDocuments(array $transportManagerApplication)
     {
         $hasDocument = false;
-        $documents = $transportManagerApplication['documents'];
+        $documents = $transportManagerApplication['transportManager']['documents'];
         foreach ($documents as $document) {
             if ($document['category']['id'] === Category::CATEGORY_TRANSPORT_MANAGER &&
                 $document['subCategory']['id'] === Category::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION
