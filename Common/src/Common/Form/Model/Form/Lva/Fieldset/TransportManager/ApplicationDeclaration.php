@@ -9,7 +9,8 @@ class ApplicationDeclaration
     /**
      * @Form\Attributes({
      *     "id":"","placeholder":"",
-     *     "class": "form"
+     *     "class": "form",
+     *     "value": "Y"
      * })
      * @Form\Options({
      *     "label": "application.signature.options.label",
