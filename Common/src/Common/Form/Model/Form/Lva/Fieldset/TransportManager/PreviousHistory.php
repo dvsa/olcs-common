@@ -18,6 +18,13 @@ class PreviousHistory
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
      * })
+     * @Form\Validator({
+     *     "name":"Common\Form\Elements\Validators\YesNoTableRequiredValidator",
+     *     "options": {
+     *          "table": "convictions",
+     *          "message":"transport-manager-details.form.convictions.required"
+     *     }
+     * })
      * @Form\Type("Radio")
      */
     public $hasConvictions = null;
@@ -39,6 +46,13 @@ class PreviousHistory
      *     "hint-class" : "",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
+     * })
+     * @Form\Validator({
+     *     "name":"Common\Form\Elements\Validators\YesNoTableRequiredValidator",
+     *     "options": {
+     *          "table": "previousLicences",
+     *          "message":"transport-manager-details.form.previouslicences.required"
+     *     }
      * })
      * @Form\Type("Radio")
      */
