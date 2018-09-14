@@ -7,7 +7,6 @@ use Common\Service\Data\AbstractDataService;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\Permits\SectorsList;
 
-
 /**
  * Class Sector
  *
@@ -26,8 +25,20 @@ class Sector extends AbstractDataService implements ListData
     {
         $optionData = [];
 
-        foreach ($data as $datum) {
-            $optionData[$datum['id']] = $datum['description'];
+        foreach ($data as $item) {
+            $sector = [];
+            $sector['value'] = $item['id'];
+            $sector['label'] = $item['name'];
+            $sector['html_elements'] = [
+                'b' => [
+                    'content' => $item['name']
+                ],
+                'p' => [
+                    'content' => $item['description']
+                ]
+            ];
+            $sector['html_replace'] = true;
+            $optionData[] = $sector;
         }
 
         return $optionData;
@@ -63,7 +74,6 @@ class Sector extends AbstractDataService implements ListData
     public function fetchListData()
     {
         if (is_null($this->getData('Sector'))) {
-
             $dtoData = SectorsList::create(['sort' => 'displayOrder', 'order' => 'ASC']);
             $response = $this->handleQuery($dtoData);
 
