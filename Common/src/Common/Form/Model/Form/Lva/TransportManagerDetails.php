@@ -51,11 +51,10 @@ class TransportManagerDetails
     public $responsibilities = null;
 
     /**
-     * @Form\Name("otherEmployment")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({"id":"otherEmployments"})
+     * @Form\Name("otherEmployments")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\OtherEmployments")
      */
-    public $otherEmployment = null;
+    public $otherEmployments = null;
 
     /**
      * @Form\Name("previousHistory")

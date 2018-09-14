@@ -52,7 +52,7 @@ class ConvictionsAndPenaltiesDetails
     /**
      * @Form\Attributes({"class":"long","id":"notes"})
      * @Form\Options({"label":"transport-manager.convictions-and-penalties.form.offence-details"})
-     * @Form\Type("Text")
+     * @Form\Type("Textarea")
      * @Form\Required(true)
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":1,"max":4000}})
      */

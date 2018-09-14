@@ -7,6 +7,7 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Attributes({"class":""})
  * @Form\Name("tm-employment-details")
+ * @Form\Options({"label": "transport-manager.employment.form.position.title"})
  */
 class EmploymentDetails
 {
