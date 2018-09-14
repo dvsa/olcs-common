@@ -33,14 +33,16 @@ class FormElement extends ZendFormElement
      *
      * @var string
      */
-    private static $format = '%s<div class="hint">%s</div>';
+    private static $format = '%s<div class="%s">%s</div>';
 
     /**
      * The form row output format.
      *
      * @var string
      */
-    private static $topFormat = '<p class="hint">%s</p>%s';
+    private static $topFormat = '<p class="%s">%s</p>%s';
+
+    private $hintClass = 'hint';
 
     /**
      * Render an element
@@ -206,12 +208,14 @@ class FormElement extends ZendFormElement
 
         $hint = $this->getView()->translate($element->getOption('hint'));
         $position = $element->getOption('hint-position');
+        $customClass = $element->getOption('hint-class');
+        $class = ($customClass === null) ? $this->hintClass : $customClass;
 
         if ($position === 'below') {
-            return sprintf(self::$format, $markup, $hint);
+            return sprintf(self::$format, $markup, $class, $hint);
         }
 
-        return sprintf(self::$topFormat, $hint, $markup);
+        return sprintf(self::$topFormat, $class, $hint, $markup);
     }
 
     /**
