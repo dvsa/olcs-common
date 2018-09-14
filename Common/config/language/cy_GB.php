@@ -1491,7 +1491,6 @@ return [
 
     'permits.link.return.to.dashboard' => 'CY - Return to permits dashboard',
     'permits.page.ecmt.consideration.header' => 'CY - Permit application for licence',
-
     'permits.page.ecmt.consideration.application.status' => 'CY - Application status',
     'permits.page.ecmt.consideration.permit.type' => 'CY - Permit type',
     'permits.page.ecmt.consideration.reference.number' => 'CY - Reference number',
@@ -1500,5 +1499,19 @@ return [
     'permits.page.ecmt.consideration.application.fee' => 'CY - Application fee paid',
 
     'help-sign-in' => 'helpu i arwyddo',
+    'permits.link.cancel.return.to.dashboard' => 'CY -Cancel and return to dashboard',
+    'permits.page.fee-part-successful.title' => 'CY -Issuing fee for ECMT permit',
+    'permits.page.ecmt.fee-part-successful.permit.validity' => 'CY -Permit start and end date',
+    'permits.page.ecmt.fee-part-successful.issuing.fee' => 'CY -Issuing fee per permit',
+    'permits.page.ecmt.fee-part-successful.issuing.fee.total' => 'CY -Total issuing fee to be paid',
+    'permits.page.ecmt.fee-part-successful.payment.due' => 'CY -Payment due by',
+    'permits.page.view.permits' => 'CY -view permits',
+    'permits.page.non.refundable' => 'CY -(CY -non-refundable)',
+    'permits.page.accept.and.pay' => 'CY -Accept and pay',
+    'permits.page.decline.permits' => 'CY -Decline permits',
+    'permits.form.declined_permit.error_message' => 'CY - You must select the checkbox to continue',
+    'permits.form.declined_permit.label' => 'CY - I confirm that I don\'t want awarded permits.',
+    'permits.page.declined_permit.title' => 'CY - Decline awarded permits',
+    'permits.button.cancel-and-return' => 'CY - Cancel and return',
     // Potentially unused translations
 ];

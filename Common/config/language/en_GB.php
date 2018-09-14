@@ -3360,6 +3360,8 @@ return [
     'permits.application.ecmt.select' => 'Select all that apply',
     'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?',
     'permits.application.submitted.title' => 'Application submitted-',
+    'permits.application.fee.submitted.title' => 'Payment successful',
+    'permits.decline.submitted.title' => 'Permits removed',
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
 
     'permits.link.ecmt.guidance' => '{{ECMT_PERMITS_GUIDANCE_LINK}}',
@@ -3497,20 +3499,32 @@ return [
     'permits.form.permits-required.hint' => 'Up to %s permits are authorised for this licence.',
     'permits.form.permits-required.fee.guidance' => 'There is a %s non-refundable application fee per permit required',
     'permits.form.trips.hint' => 'A trip is a journey to a place and back again.',
-
     'permits.link.return.to.dashboard' => 'Return to permits dashboard',
     'permits.page.ecmt.consideration.header' => 'Permit application for licence',
-
-
     'permits.page.ecmt.consideration.application.status' => 'Application status',
     'permits.page.ecmt.consideration.permit.type' => 'Permit type',
     'permits.page.ecmt.consideration.reference.number' => 'Reference number',
     'permits.page.ecmt.consideration.application.date' => 'Application date',
     'permits.page.ecmt.consideration.permits.required' => 'Permits required',
     'permits.page.ecmt.consideration.application.fee' => 'Application fee paid',
-
     'no-organisation-error' => 'User is not associated with an organisation.',
     'help-sign-in' => 'Help signing in',
     'auth.login.termsAgreed' => 'By using the site you agree to the <a href="%s">terms and conditions</a>.',
+
+    'permits.link.cancel.return.to.dashboard' => 'Cancel and return to dashboard',
+    'permits.page.fee-part-successful.title' => 'Issuing fee for ECMT permit',
+    'permits.page.ecmt.fee-part-successful.permit.validity' => 'Permit start and end date',
+    'permits.page.ecmt.fee-part-successful.issuing.fee' => 'Issuing fee per permit',
+    'permits.page.ecmt.fee-part-successful.issuing.fee.total' => 'Total issuing fee to be paid',
+    'permits.page.ecmt.fee-part-successful.payment.due' => 'Payment due by',
+    'permits.page.view.permits' => 'view permits',
+    'permits.page.non.refundable' => '(non-refundable)',
+    'permits.page.accept.and.pay' => 'Accept and pay',
+    'permits.page.decline.permits' => 'Decline permits',
+    'permits.form.declined_permit.label' => 'Decline awarded permits',
+    'permits.form.declined_permit.error_message' => 'You must select the checkbox to continue',
+    'permits.form.declined_permit.label' => 'I confirm that I don\'t want awarded permits.',
+    'permits.page.declined_permit.title' => 'Decline awarded permits',
+    'permits.button.cancel-and-return' => 'Cancel and return',
     // Potentially unused translations
 ];
