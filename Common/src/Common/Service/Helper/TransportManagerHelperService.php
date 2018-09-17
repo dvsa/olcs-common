@@ -159,6 +159,8 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
             $previousLicencesTable,
             'previousLicences'
         );
+
+        $this->setConvictionsReadMoreLink($fieldset);
     }
 
     public function alterPreviousHistoryFieldset($fieldset, $tmId)
@@ -264,5 +266,21 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         }
 
         return $data;
+    }
+
+    private function setConvictionsReadMoreLink($fieldset): void
+    {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+        $hasConvictions = $fieldset->get('hasConvictions');
+        $routeParam = $translator->translate('convictions-and-penalties-guidance-route-param');
+        $convictionsReadMoreRoute = $this->getServiceLocator()->get('Helper\Url')->fromRoute(
+            'guides/guide',
+            ['guide' => $routeParam]
+        );
+        $hint = $translator->translateReplace(
+            'transport-manager.convictions-and-penalties.form.radio.hint',
+            [$convictionsReadMoreRoute]
+        );
+        $hasConvictions->setOption('hint', $hint);
     }
 }
