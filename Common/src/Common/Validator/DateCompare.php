@@ -3,7 +3,6 @@
 namespace Common\Validator;
 
 use Common\Filter\DateTimeSelectNullifier;
-use Olcs\Logging\Log\Logger;
 
 /**
  * Class DateCompare - used to validate two dates via a legal operator:
