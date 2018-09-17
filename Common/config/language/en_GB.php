@@ -3368,9 +3368,10 @@ return [
 
     'permits.application.cancel-application' => 'Cancel application',
     'permits.application.cancel-application.title' => 'Cancel Application - ',
-    'permits.application.cancel-application.cancel' => 'Cancel',
-    'permits.application.cancel-confirmation' => 'You have successfully cancelled your application',
+    'permits.application.cancel-confirmation' => 'Application cancelled',
     'permits.application.cancel-confirmation.title' => 'Cancellation Successful - ',
+    'permits.application.cancel-confirmation.success-1' => 'You have cancelled your',
+    'permits.application.cancel-confirmation.success-2' => 'ECMT permits application number',
 
     'permits.application.withdraw-application' => 'Withdraw Application',
     'permits.application.withdraw-application.title' => 'Withdraw Application - ',

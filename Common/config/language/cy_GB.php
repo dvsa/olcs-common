@@ -1382,8 +1382,10 @@ return [
 
     'permits.application.cancel-application' => 'CY - Cancel application',
     'permits.application.cancel-application.title' => 'CY - Cancel Application - ',
-    'permits.application.cancel-confirmation' => 'CY - You have successfully cancelled your application',
+    'permits.application.cancel-confirmation' => 'CY - Application cancelled',
     'permits.application.cancel-confirmation.title' => 'CY - Cancellation Successful - ',
+    'permits.application.cancel-confirmation.success-1' => 'CY - You have cancelled your',
+    'permits.application.cancel-confirmation.success-2' => 'CY - ECMT permits application number',
 
     'permits.application.withdraw-application' => 'CY - Withdraw Application',
     'permits.application.withdraw-application.title' => 'CY - Withdraw Application - ',
