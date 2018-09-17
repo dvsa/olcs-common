@@ -2876,7 +2876,7 @@ return [
     'transport-manager.convictions-and-penalties.form.offence-details' => 'Offence details',
     'transport-manager.convictions-and-penalties.form.penalty' => 'Penalty',
     'transport-manager.convictions-and-penalties.form.radio.label' => 'Convictions and penalties',
-    'transport-manager.convictions-and-penalties.form.radio.hint' => 'Have you a conviction that the Traffic Commissioner must be told about?<p>Read more about <a href="%s">relevant convictions</a></p>',
+    'transport-manager.convictions-and-penalties.form.radio.hint' => 'Have you a conviction that the Traffic Commissioner must be told about?<p>Read more about <a href="%s" target="_blank">relevant convictions</a></p>',
     'transport-manager.convictionsandpenalties.table' => 'Convictions and penalties (optional)',
     'transport-manager.convictionsandpenalties.table.add' => 'Add convictions and penalties',
     'transport-manager.convictionsandpenalties.table.conviction-date' => 'Conviction date',

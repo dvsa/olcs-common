@@ -147,18 +147,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
             $tm['otherLicences']
         );
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        $formHelper->populateFormTable(
-            $fieldset->get('convictions'),
-            $convictionsAndPenaltiesTable,
-            'convictions'
-        );
-        $formHelper->populateFormTable(
-            $fieldset->get('previousLicences'),
-            $previousLicencesTable,
-            'previousLicences'
-        );
+        $this->populatePreviousHistoryTables($fieldset, $convictionsAndPenaltiesTable, $previousLicencesTable);
 
         $this->setConvictionsReadMoreLink($fieldset);
     }
@@ -168,19 +157,9 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         $transportManager = $this->getTransportManager($tmId);
         $convictionsAndPenaltiesTable = $this->getConvictionsAndPenaltiesTable($transportManager['id']);
         $previousLicencesTable = $this->getPreviousLicencesTable($transportManager['id']);
+        $this->populatePreviousHistoryTables($fieldset, $convictionsAndPenaltiesTable, $previousLicencesTable);
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        $formHelper->populateFormTable(
-            $fieldset->get('convictions'),
-            $convictionsAndPenaltiesTable,
-            'convictions'
-        );
-        $formHelper->populateFormTable(
-            $fieldset->get('previousLicences'),
-            $previousLicencesTable,
-            'previousLicences'
-        );
+        $this->setConvictionsReadMoreLink($fieldset);
 
         if (!is_null($transportManager['removedDate'])) {
             $fieldset->get('convictions')->get('table')->getTable()->setDisabled(true);
@@ -268,7 +247,7 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         return $data;
     }
 
-    private function setConvictionsReadMoreLink($fieldset): void
+    private function setConvictionsReadMoreLink(\Zend\Form\Fieldset $fieldset): void
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
         $hasConvictions = $fieldset->get('hasConvictions');
@@ -282,5 +261,21 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
             [$convictionsReadMoreRoute]
         );
         $hasConvictions->setOption('hint', $hint);
+    }
+
+    private function populatePreviousHistoryTables(\Zend\Form\Fieldset $fieldset, $convictionsAndPenaltiesTable, $previousLicencesTable): void
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper->populateFormTable(
+            $fieldset->get('convictions'),
+            $convictionsAndPenaltiesTable,
+            'convictions'
+        );
+        $formHelper->populateFormTable(
+            $fieldset->get('previousLicences'),
+            $previousLicencesTable,
+            'previousLicences'
+        );
     }
 }
