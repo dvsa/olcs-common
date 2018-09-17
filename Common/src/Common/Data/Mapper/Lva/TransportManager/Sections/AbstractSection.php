@@ -38,4 +38,30 @@ abstract class AbstractSection
     {
         return $this->getTranslationTemplate() . get_class($this);
     }
+
+    /**
+     * sortByCreated
+     *
+     * @param $items
+     *
+     * @return array
+     */
+    protected function sortByCreated(array $items): array
+    {
+        if (count($items) > 1) {
+            usort($items, function ($a, $b) {
+                return strtotime($b['createdOn']) - strtotime($a['createdOn']);
+            });
+        }
+        return $items;
+    }
+
+    protected function makeChangeAnswerSections(array $items): array
+    {
+        $questionSections = [];
+        foreach ($items as $question => $answer) {
+            $questionSections[] = ['label'=>$question, 'answer'=>$answer];
+        }
+        return $questionSections;
+    }
 }

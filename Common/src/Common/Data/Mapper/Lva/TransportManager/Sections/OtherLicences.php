@@ -4,6 +4,11 @@
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 
+/**
+ * Class OtherLicences
+ *
+ * @package Common\Data\Mapper\Lva\TransportManager\Sections
+ */
 class OtherLicences extends AbstractSection implements TransportManagerSectionInterface
 {
 
@@ -19,17 +24,13 @@ class OtherLicences extends AbstractSection implements TransportManagerSectionIn
             return $this;
         }
 
-        if (count($licences) > 1) {
-            usort($this->licences, function ($a, $b) {
-                return strtotime($b['createdOn']) - strtotime($a['createdOn']);
-            });
-        }
+        $licences = $this->sortByCreated($licences);
 
         foreach ($licences as $licence) {
             $this->licences[] = $licence['licNo'];
         }
-        $template = $this->getTranslationTemplate() . "-otherLicences-answer";
-        //$this->licences = populateTemplate($template, $this->licences);
+        $template = 'markup-'.$this->getTranslationTemplate() . "-otherLicences-answer";
+        $this->licences = populateTemplate($template, $this->licences);
         return $this;
     }
 }

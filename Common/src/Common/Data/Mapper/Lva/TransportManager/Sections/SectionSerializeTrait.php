@@ -8,6 +8,11 @@ trait SectionSerializeTrait
 {
 
 
+    /**
+     * sectionSerialize
+     * Method to prefix property values so these become translation strings in labels
+     * @return array
+     */
     public function sectionSerialize()
     {
         $templatePrefix = $this->getTranslationTemplate();
