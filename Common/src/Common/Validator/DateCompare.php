@@ -3,6 +3,7 @@
 namespace Common\Validator;
 
 use Common\Filter\DateTimeSelectNullifier;
+use Olcs\Logging\Log\Logger;
 
 /**
  * Class DateCompare - used to validate two dates via a legal operator:
@@ -64,6 +65,14 @@ class DateCompare extends AbstractCompare
     public function hasTime()
     {
         return $this->hasTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function formatDate($date)
+    {
+        return $date['year'] . "-" . $date['month'] . "-" . $date['day'];
     }
 
     /**
@@ -134,7 +143,14 @@ class DateCompare extends AbstractCompare
         //  get date(time) value
         $dateFormat = ($this->hasTime() ? self::DATETIME_FORMAT : self::DATE_FORMAT);
 
+        // If the value that we're passing in is an array, then we need to
+        // format it into a string for the createFromFormat function.
+        if (gettype($value) === "array") {
+            $value = $this->formatDate($value);
+        }
+
         $valueDate = \DateTime::createFromFormat($dateFormat, $value);
+
         if ($valueDate === false) {
             $this->error(self::NO_COMPARE); //@TO~DO~
             return false;
