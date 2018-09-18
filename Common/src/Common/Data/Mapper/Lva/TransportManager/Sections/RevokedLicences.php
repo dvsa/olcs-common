@@ -8,8 +8,12 @@ class RevokedLicences extends AbstractSection implements TransportManagerSection
 {
     use SectionSerializeTrait;
 
+    private $revokedLicences;
+
     public function populate(array $transportManagerApplication)
     {
+        $this->revokedLicences = 'None added';
+        $revokedLicemces = $transportManagerApplication['transportManager'][''];
 
     }
 }
