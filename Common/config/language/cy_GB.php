@@ -1515,5 +1515,8 @@ return [
     'permits.form.declined_permit.label' => 'CY - I confirm that I don\'t want awarded permits.',
     'permits.page.declined_permit.title' => 'CY - Decline awarded permits',
     'permits.button.cancel-and-return' => 'CY - Cancel and return',
+    'permits.ecmt.page.valid.title' => 'CY - %s ECMT Permits',
+    'permits.ecmt.page.valid.tableheader.ref' => 'CY - Permit number',
+    'permits.ecmt.page.valid.tableheader.countries' => 'CY - Excludes countries to',
     // Potentially unused translations
 ];

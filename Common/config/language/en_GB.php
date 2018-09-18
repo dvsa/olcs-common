@@ -3527,5 +3527,8 @@ return [
     'permits.form.declined_permit.label' => 'I confirm that I don\'t want awarded permits.',
     'permits.page.declined_permit.title' => 'Decline awarded permits',
     'permits.button.cancel-and-return' => 'Cancel and return',
+    'permits.ecmt.page.valid.title' => '%s ECMT Permits',
+    'permits.ecmt.page.valid.tableheader.ref' => 'Permit number',
+    'permits.ecmt.page.valid.tableheader.countries' => 'Excludes countries to',
     // Potentially unused translations
 ];
