@@ -40,7 +40,5 @@ class IrhpPermitStockType implements FormatterInterface
             $url,
             $data['irhpPermitType']['name']['description']
         );
-
-        // return Escape::html($data['irhpPermitType']['name']['description']);
     }
 }
