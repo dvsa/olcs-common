@@ -6,7 +6,6 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("lva-safety-licence")
- * @Form\Options({"label": "application_vehicle-safety_safety.licence.label"})
  */
 class SafetyLicence
 {
@@ -15,6 +14,15 @@ class SafetyLicence
      * @Form\Type("Hidden")
      */
     public $version = null;
+
+    /**
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     * @Form\Options({
+     *     "label": "application_vehicle-safety_safety.licence.label",
+     *     "label_attributes": {"class": "form-element__question"},
+     * })
+     */
+    public $safetyInspections = null;
 
     /**
      * @Form\Attributes({"class":"tiny", "id":""})

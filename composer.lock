@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2efd8064170a08038f70b4aae9507f3f",
-    "content-hash": "c8c21e8b95bb1fad059222fa95386064",
+    "hash": "e64321f9fb4d49b0deb60a19ab928879",
+    "content-hash": "331c571ca463246da227e6dba17a2c4f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1871,11 +1871,11 @@
         },
         {
             "name": "olcs/olcs-logging",
-            "version": "dev-release/4.188",
+            "version": "dev-release/4.189",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-logging.git",
-                "reference": "29a5cf3aee59ec90c31a677ca5007fb62b8a9f8f"
+                "reference": "0a9f4fb167a872a7a391a5ccf0fee37a3f4c5d66"
             },
             "require": {
                 "php": ">=5.4",
@@ -1919,7 +1919,7 @@
                 ]
             },
             "description": "Logging Module for Olcs",
-            "time": "2018-09-07 11:59:48"
+            "time": "2018-09-17 16:34:51"
         },
         {
             "name": "olcs/olcs-testhelpers",
@@ -1927,7 +1927,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-testhelpers.git",
-                "reference": "037b5729994eb7cf0c67573fc3d76904ed4f098a"
+                "reference": "cc234ec5ea2087b6e55fab0f8664b6467dcbfcac"
             },
             "require": {
                 "php": ">=5.4"
@@ -1944,15 +1944,15 @@
                 }
             },
             "description": "OLCS Test helpers",
-            "time": "2018-07-31 19:27:43"
+            "time": "2018-09-07 14:23:33"
         },
         {
             "name": "olcs/olcs-transfer",
-            "version": "dev-release/4.188",
+            "version": "dev-release/4.189",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-                "reference": "c4698cb825c35e001d7d84eb4789b52e2db5d85f"
+                "reference": "aa3b9713a901d15667afb3337edb83cef380c500"
             },
             "require": {
                 "php": ">=5.4",
@@ -1990,15 +1990,15 @@
                 ]
             },
             "description": "OLCS Transfer",
-            "time": "2018-09-07 12:03:29"
+            "time": "2018-09-17 16:37:01"
         },
         {
             "name": "olcs/olcs-utils",
-            "version": "dev-release/4.188",
+            "version": "dev-release/4.189",
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-utils.git",
-                "reference": "e64875aca6387cc7a83bf156ea17e5005c24d848"
+                "reference": "4b98dbd8883687dd90d11a9f6eb499143637f231"
             },
             "require": {
                 "php": ">=5.4",
@@ -2007,7 +2007,7 @@
             "require-dev": {
                 "mockery/mockery": "~0.9.3",
                 "olcs/olcs-devtools": "dev-master",
-                "olcs/olcs-logging": "dev-release/4.188"
+                "olcs/olcs-logging": "dev-release/4.189"
             },
             "type": "library",
             "autoload": {
@@ -2036,7 +2036,7 @@
                 ]
             },
             "description": "OLCS Utils",
-            "time": "2018-09-07 12:05:08"
+            "time": "2018-09-17 16:37:50"
         },
         {
             "name": "pdepend/pdepend",
