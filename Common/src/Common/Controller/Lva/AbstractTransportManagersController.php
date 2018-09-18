@@ -585,4 +585,27 @@ abstract class AbstractTransportManagersController extends AbstractController im
             . $transportManagerApplication['transportManager']['homeCd']['person']['familyName']
         );
     }
+
+    /**
+     * Update TMA status
+     *
+     * @param int    $tmaId     TM application id
+     * @param string $newStatus New status
+     * @param int    $version   Version
+     *
+     * @return bool
+     */
+    protected function updateTmaStatus($tmaId, $newStatus, $version = null)
+    {
+        $command = $this->getServiceLocator()->get('TransferAnnotationBuilder')
+            ->createCommand(
+                Command\TransportManagerApplication\UpdateStatus::create(
+                    ['id' => $tmaId, 'status' => $newStatus, 'version' => $version]
+                )
+            );
+        /* @var $response \Common\Service\Cqrs\Response */
+        $response = $this->getServiceLocator()->get('CommandService')->send($command);
+
+        return $response->isOk();
+    }
 }
