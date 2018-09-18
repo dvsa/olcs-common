@@ -152,12 +152,19 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         $this->setConvictionsReadMoreLink($fieldset);
     }
 
-    public function alterPreviousHistoryFieldset($fieldset, $tmId)
+    public function alterPreviousHistoryFieldset(\Zend\Form\Fieldset $fieldset, $tmId)
     {
         $transportManager = $this->getTransportManager($tmId);
         $convictionsAndPenaltiesTable = $this->getConvictionsAndPenaltiesTable($transportManager['id']);
         $previousLicencesTable = $this->getPreviousLicencesTable($transportManager['id']);
         $this->populatePreviousHistoryTables($fieldset, $convictionsAndPenaltiesTable, $previousLicencesTable);
+
+        $fieldset->get('hasConvictions')->unsetValueOption('Y');
+        $fieldset->get('hasConvictions')->unsetValueOption('N');
+        $fieldset->get('convictions')->removeAttribute('class');
+        $fieldset->get('hasPreviousLicences')->unsetValueOption('Y');
+        $fieldset->get('hasPreviousLicences')->unsetValueOption('N');
+        $fieldset->get('previousLicences')->removeAttribute('class');
 
         $this->setConvictionsReadMoreLink($fieldset);
 
