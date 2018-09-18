@@ -4,7 +4,6 @@ namespace Common\Form\Elements\Validators;
 
 use Zend\Validator\AbstractValidator;
 
-
 class YesNoTableRequiredValidator extends AbstractValidator
 {
 

@@ -150,8 +150,10 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         $mockTableBuilder = m::mock();
         $this->sm->setService('Table', $mockTableBuilder);
-
-        $mockTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder);
+        $tableData = [
+            'foo' => 'bar'
+        ];
+        $mockTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder, $tableData);
 
         $this->assertSame($mockTable, $this->sut->getConvictionsAndPenaltiesTable($tmId));
     }
@@ -162,17 +164,100 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         $mockTableBuilder = m::mock();
         $this->sm->setService('Table', $mockTableBuilder);
-
-        $mockTable = $this->expectGetPreviousLicencesTable($mockTableBuilder);
+        $tableData = [
+            'foo' => 'bar'
+        ];
+        $mockTable = $this->expectGetPreviousLicencesTable($mockTableBuilder, $tableData);
 
         $this->assertSame($mockTable, $this->sut->getPreviousLicencesTable($tmId));
     }
 
+    public function testAlterPreviousHistoryFieldsetTm()
+    {
+        $fieldset = m::mock(\Zend\Form\Fieldset::class);
+        $hasConvictions = m::mock(\Zend\Form\Fieldset::class);
+        $hasConvictions->shouldReceive('unsetValueOption')->with('Y');
+        $hasConvictions->shouldReceive('unsetValueOption')->with('N');
+        $hasConvictions->shouldReceive('setOption')->with('hint', 'string');
+        $convictions = m::mock(\Zend\Form\Fieldset::class);
+        $convictions->shouldReceive('removeAttribute')->with('class');
+        $hasPreviousLicences = m::mock(\Zend\Form\Fieldset::class);
+        $hasPreviousLicences->shouldReceive('unsetValueOption')->with('Y');
+        $hasPreviousLicences->shouldReceive('unsetValueOption')->with('N');
+        $previousLicences = m::mock(\Zend\Form\Fieldset::class);
+        $previousLicences->shouldReceive('removeAttribute')->with('class');
+        $fieldset->shouldReceive('get')->with('hasConvictions')->andReturn($hasConvictions);
+        $fieldset->shouldReceive('get')->with('convictions')->andReturn($convictions);
+        $fieldset->shouldReceive('get')->with('previousLicences')->andReturn($previousLicences);
+        $fieldset->shouldReceive('get')->with('hasPreviousLicences')->andReturn($hasPreviousLicences);
+
+        $mockTableBuilder = m::mock();
+        $this->sm->setService('Table', $mockTableBuilder);
+
+        $mockResponse = m::mock();
+
+        // Expectations
+        $this->tab->shouldReceive('createQuery')
+            ->with(\Dvsa\Olcs\Transfer\Query\Tm\TransportManager::class)
+            ->andReturn('TmQuery');
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+
+        $this->qs->shouldReceive('send')
+            ->with('TmQuery')
+            ->andReturn($mockResponse);
+
+        $tm = [
+            'previousConvictions' => [
+                'foo' => 'bar'
+            ],
+            'otherLicences' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $convictionTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder, $tm['previousConvictions']);
+        $licenceTable = $this->expectGetPreviousLicencesTable($mockTableBuilder, $tm['otherLicences']);
+
+        $mockFormHelper = m::mock(\Common\Form\View\Helper\Form::class);
+        $mockFormHelper->shouldReceive('populateFormTable')
+            ->once()
+            ->with($convictions, $convictionTable, 'convictions')
+            ->shouldReceive('populateFormTable')
+            ->once()
+            ->with($previousLicences, $licenceTable, 'previousLicences');
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $mockTranslator = m::mock(\Common\Service\Helper\TranslationHelperService::class);
+        $mockTranslator->shouldReceive('translate')->andReturn('string');
+        $mockTranslator->shouldReceive('translateReplace')->andReturn('string');
+        $this->sm->setService('Helper\Translation', $mockTranslator);
+
+        $mockUrl = m::mock(\Zend\View\Helper\Url::class);
+        $mockUrl->shouldReceive('fromRoute')->andReturn('string');
+        $this->sm->setService('Helper\Url', $mockUrl);
+
+        $this->sut->alterPreviousHistoryFieldsetTm($fieldset, $tm);
+    }
+
     public function testAlterPreviousHistoryFieldset()
     {
-        $convictionElement = m::mock();
-        $licenceElement = m::mock();
-        $fieldset = m::mock();
+        $fieldset = m::mock(\Zend\Form\Fieldset::class);
+        $hasConvictions = m::mock(\Zend\Form\Fieldset::class);
+        $hasConvictions->shouldReceive('unsetValueOption')->with('Y');
+        $hasConvictions->shouldReceive('unsetValueOption')->with('N');
+        $hasConvictions->shouldReceive('setOption')->with('hint', 'string');
+        $convictions = m::mock(\Zend\Form\Fieldset::class);
+        $convictions->shouldReceive('removeAttribute')->with('class');
+        $hasPreviousLicences = m::mock(\Zend\Form\Fieldset::class);
+        $hasPreviousLicences->shouldReceive('unsetValueOption')->with('Y');
+        $hasPreviousLicences->shouldReceive('unsetValueOption')->with('N');
+        $previousLicences = m::mock(\Zend\Form\Fieldset::class);
+        $previousLicences->shouldReceive('removeAttribute')->with('class');
+        $fieldset->shouldReceive('get')->with('hasConvictions')->andReturn($hasConvictions);
+        $fieldset->shouldReceive('get')->with('convictions')->andReturn($convictions);
+        $fieldset->shouldReceive('get')->with('previousLicences')->andReturn($previousLicences);
+        $fieldset->shouldReceive('get')->with('hasPreviousLicences')->andReturn($hasPreviousLicences);
+
         $tmId = 111;
 
         $mockTableBuilder = m::mock();
@@ -194,26 +279,33 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
             ->with('TmQuery')
             ->andReturn($mockResponse);
 
-        $fieldset->shouldReceive('get')
-            ->with('convictions')
-            ->andReturn($convictionElement)
-            ->shouldReceive('get')
-            ->with('previousLicences')
-            ->andReturn($licenceElement);
+        $tm = [
+            'previousConvictions' => [
+                'foo' => 'bar'
+            ],
+            'otherLicences' => [
+                'foo' => 'bar'
+            ]
+        ];
+        $convictionTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder, $tm['previousConvictions']);
+        $licenceTable = $this->expectGetPreviousLicencesTable($mockTableBuilder, $tm['otherLicences']);
 
-        $convictionTable = $this->expectedGetConvictionsAndPenaltiesTable($mockTableBuilder);
-        $licenceTable = $this->expectGetPreviousLicencesTable($mockTableBuilder);
-
-        $mockFormHelper = m::mock();
-
-        $this->sm->setService('Helper\Form', $mockFormHelper);
-
+        $mockFormHelper = m::mock(\Common\Form\View\Helper\Form::class);
         $mockFormHelper->shouldReceive('populateFormTable')
             ->once()
-            ->with($convictionElement, $convictionTable, 'convictions')
+            ->with($convictions, $convictionTable, 'convictions')
             ->shouldReceive('populateFormTable')
             ->once()
-            ->with($licenceElement, $licenceTable, 'previousLicences');
+            ->with($previousLicences, $licenceTable, 'previousLicences');
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $mockTranslator = m::mock(\Common\Service\Helper\TranslationHelperService::class);
+        $mockTranslator->shouldReceive('translate')->andReturn('string');
+        $mockTranslator->shouldReceive('translateReplace')->andReturn('string');
+        $this->sm->setService('Helper\Translation', $mockTranslator);
+
+        $mockUrl = m::mock(\Zend\View\Helper\Url::class);
+        $mockUrl->shouldReceive('fromRoute')->andReturn('string');
+        $this->sm->setService('Helper\Url', $mockUrl);
 
         $this->sut->alterPreviousHistoryFieldset($fieldset, $tmId);
     }
@@ -354,11 +446,8 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         return $mockTable;
     }
 
-    protected function expectedGetConvictionsAndPenaltiesTable($mockTableBuilder)
+    protected function expectedGetConvictionsAndPenaltiesTable($mockTableBuilder, $tableData)
     {
-        $tableData = [
-            'foo' => 'bar'
-        ];
 
         // Mocks
         $mockTable = m::mock();
@@ -387,7 +476,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         return $mockTable;
     }
 
-    protected function expectGetPreviousLicencesTable($mockTableBuilder)
+    protected function expectGetPreviousLicencesTable($mockTableBuilder, $tableData)
     {
         $tableData = [
             'foo' => 'bar'

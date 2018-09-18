@@ -235,7 +235,8 @@ class FormElement extends ZendFormElement
         }
 
         $hint = $this->getView()->translate($element->getOption('hint-below'));
-
-        return sprintf(self::$format, $markup, $hint);
+        $customClass = $element->getOption('hint-class');
+        $class = ($customClass === null) ? $this->hintClass : $customClass;
+        return sprintf(self::$format, $markup, $class, $hint);
     }
 }
