@@ -20,8 +20,6 @@ class YesNoTableRequiredValidator extends AbstractValidator
     }
 
     /**
-     * Custom validation for licence field
-     *
      * @param mixed $value
      * @param array $context
      * @return bool
