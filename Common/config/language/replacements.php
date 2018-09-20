@@ -30,4 +30,5 @@ return [
     '{{CALL_CHARGES_INFO}}' => 'https://www.gov.uk/call-charges',
     '{{STANDARD_INT_OPERATOR_LICENCE_LINK}}' =>
         'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage#standard-international-operators-licence-for-road-transport',
+    '{{VOL_CREATE_AN_ACCOUNT}}' => 'https://www.vehicle-operator-licensing.service.gov.uk/register',
 ];

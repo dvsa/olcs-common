@@ -36,6 +36,10 @@ class LicencePermitReference implements FormatterInterface
             $route = 'ecmt-under-consideration';
         }
 
+        if ($row['isAwaitingFee']) {
+            $route = 'ecmt-awaiting-fee';
+        }
+
         return vsprintf(
             '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
             [
