@@ -56,7 +56,16 @@ abstract class AbstractSection
         return $items;
     }
 
-    protected function makeChangeAnswerSections(array $items): array
+    public function makeSection(string $section, array $items) : array
+    {
+            return [
+                'sectionHeading' => $this->getTranslationTemplate().$section,
+                'questions' => $this->makeChangeAnswerSections($items),
+                'change' =>['sectionName' => $section, 'backText' => '']
+            ];
+    }
+
+    private function makeChangeAnswerSections(array $items): array
     {
         $questionSections = [];
         foreach ($items as $question => $answer) {

@@ -159,7 +159,7 @@ class Details extends AbstractSection
         foreach (['homeCd', 'workCd'] as $addresses) {
             $address = $this->processAddress($transportManagerApplication['transportManager'][$addresses]['address']);
 
-            $address = 'markup-'.$this->populateTemplate($this->getTranslationTemplate() . "answer-address", $address);
+            $address = $this->populateTemplate('markup-'.$this->getTranslationTemplate() . "answer-address", $address);
             $this->{'set' . ucfirst($addresses)}($address);
         }
 

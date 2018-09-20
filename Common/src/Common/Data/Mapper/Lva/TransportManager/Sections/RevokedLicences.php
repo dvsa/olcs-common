@@ -12,8 +12,21 @@ class RevokedLicences extends AbstractSection implements TransportManagerSection
 
     public function populate(array $transportManagerApplication)
     {
-        $this->revokedLicences = 'None added';
-        $revokedLicemces = $transportManagerApplication['transportManager'][''];
 
+        $revokedLicences = $transportManagerApplication['transportManager']['otherLicences'];
+
+        if (empty($revokedLicences)) {
+            $this->revokedLicences = 'None added';
+            return $this;
+        }
+
+        $licences = $this->sortByCreated($revokedLicences);
+
+        foreach ($licences as $licence) {
+            $this->revokedLicences[] = $licence['licNo'];
+        }
+        $template = 'markup-'.$this->getTranslationTemplate() . "answer-revokedLicences";
+        $this->revokedLicences = $this->populateTemplate($template, $this->revokedLicences);
+        return $this;
     }
 }

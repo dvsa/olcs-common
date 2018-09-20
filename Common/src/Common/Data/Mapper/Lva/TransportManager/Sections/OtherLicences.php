@@ -18,7 +18,7 @@ class OtherLicences extends AbstractSection implements TransportManagerSectionIn
 
     public function populate(array $transportManagerApplication)
     {
-        $licences = $transportManagerApplication['transportManager']['otherLicences'];
+        $licences = $transportManagerApplication['otherLicences'];
         if (empty($licences)) {
             $this->licences = 'None Added';
             return $this;
@@ -29,8 +29,8 @@ class OtherLicences extends AbstractSection implements TransportManagerSectionIn
         foreach ($licences as $licence) {
             $this->licences[] = $licence['licNo'];
         }
-        $template = 'markup-'.$this->getTranslationTemplate() . "-otherLicences-answer";
-        $this->licences = populateTemplate($template, $this->licences);
+        $template = 'markup-'.$this->getTranslationTemplate() . "answer-otherLicences";
+        $this->licences = $this->populateTemplate($template, $this->licences);
         return $this;
     }
 }
