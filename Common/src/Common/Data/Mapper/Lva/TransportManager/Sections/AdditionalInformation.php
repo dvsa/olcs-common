@@ -3,7 +3,6 @@
 
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
-
 class AdditionalInformation extends AbstractSection implements TransportManagerSectionInterface
 {
     use SectionSerializeTrait;
@@ -24,7 +23,7 @@ class AdditionalInformation extends AbstractSection implements TransportManagerS
                 \Common\Category::DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL &&
                 $document['application']['id'] === $transportManagerApplication['application']['id']
             ) {
-                $files ++;
+                $files++;
             }
         }
         $this->files = $files;

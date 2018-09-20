@@ -56,20 +56,20 @@ abstract class AbstractSection
         return $items;
     }
 
-    public function makeSection(string $section, array $items) : array
+    public function makeSection(string $section, array $items): array
     {
-            return [
-                'sectionHeading' => $this->getTranslationTemplate().$section,
-                'questions' => $this->makeChangeAnswerSections($items),
-                'change' =>['sectionName' => $section, 'backText' => '']
-            ];
+        return [
+            'sectionHeading' => $this->getTranslationTemplate() . $section,
+            'questions' => $this->makeChangeAnswerSections($items),
+            'change' => ['sectionName' => $section, 'backText' => '']
+        ];
     }
 
     private function makeChangeAnswerSections(array $items): array
     {
         $questionSections = [];
         foreach ($items as $question => $answer) {
-            $questionSections[] = ['label'=>$question, 'answer'=>$answer];
+            $questionSections[] = ['label' => $question, 'answer' => $answer];
         }
         return $questionSections;
     }

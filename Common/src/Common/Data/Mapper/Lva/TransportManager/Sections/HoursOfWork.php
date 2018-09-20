@@ -3,7 +3,6 @@
 
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
-
 class HoursOfWork extends AbstractSection implements TransportManagerSectionInterface
 {
     use SectionSerializeTrait;

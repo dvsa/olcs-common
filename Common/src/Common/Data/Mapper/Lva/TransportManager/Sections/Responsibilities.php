@@ -45,5 +45,4 @@ class Responsibilities extends AbstractSection implements TransportManagerSectio
 
         return $this;
     }
-
 }

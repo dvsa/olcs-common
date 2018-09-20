@@ -5,7 +5,6 @@ namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Category;
 
-
 class Details extends AbstractSection
 {
 
@@ -158,8 +157,10 @@ class Details extends AbstractSection
 
         foreach (['homeCd', 'workCd'] as $addresses) {
             $address = $this->processAddress($transportManagerApplication['transportManager'][$addresses]['address']);
-
-            $address = $this->populateTemplate('markup-'.$this->getTranslationTemplate() . "answer-address", $address);
+            $address = $this->populateTemplate(
+                'markup-' . $this->getTranslationTemplate() . "answer-address",
+                $address
+            );
             $this->{'set' . ucfirst($addresses)}($address);
         }
 
@@ -220,6 +221,8 @@ class Details extends AbstractSection
             }
         }
         $formattedAddress['country'] = $data['countryCode']['countryDesc'];
+        // push any blank lines to the end
+      //  array_diff($formattedAddress, array('')) + array_intersect($formattedAddress, array(''));
         return $formattedAddress;
     }
 }

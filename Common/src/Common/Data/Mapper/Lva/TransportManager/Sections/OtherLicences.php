@@ -3,7 +3,6 @@
 
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
-
 /**
  * Class OtherLicences
  *
@@ -29,7 +28,7 @@ class OtherLicences extends AbstractSection implements TransportManagerSectionIn
         foreach ($licences as $licence) {
             $this->licences[] = $licence['licNo'];
         }
-        $template = 'markup-'.$this->getTranslationTemplate() . "answer-otherLicences";
+        $template = 'markup-' . $this->getTranslationTemplate() . "answer-otherLicences";
         $this->licences = $this->populateTemplate($template, $this->licences);
         return $this;
     }
