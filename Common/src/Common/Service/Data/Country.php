@@ -93,21 +93,11 @@ class Country extends AbstractDataService implements ListData
     {
         $filtered = [];
 
-        $constrainedCountries = [
-            'AT', 'GR', 'HU', 'IT', 'RU'
-        ];
-
         foreach ($data as $state) {
-            if (in_array($state['id'], $constrainedCountries)) {
+            if (!empty($state['constraints'])) {
                 $filtered[] = $state;
             }
-
-            //@todo reinstate the DB version when the time comes, and remove the above
-            //if (!empty($state['constraints'])) {
-                //$filtered[] = $state;
-            //}
         }
-
         return $filtered;
     }
 

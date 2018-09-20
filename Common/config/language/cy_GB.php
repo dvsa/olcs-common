@@ -1396,6 +1396,8 @@ return [
     'permits.application.change-licence.title' => 'CY - Change Licence - ',
 
 
+    'permits.form.trips.guidance' => 'CY - We may contact you to verify the number of international trips provided if you state a high intensity of use of these licence.',
+    'permits.form.trips.hint' => 'CY - One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
     'permits.page.number-of-trips.title' => 'CY - ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'CY - How many international trips were carried out over the past 12 months?',
     'permits.page.euro6.emissions.title' => 'CY - Do your vehicles meet Euro 6 emissions standards? - ',
@@ -1491,12 +1493,27 @@ return [
 
     'permits.link.return.to.dashboard' => 'CY - Return to permits dashboard',
     'permits.page.ecmt.consideration.header' => 'CY - Permit application for licence',
-
     'permits.page.ecmt.consideration.application.status' => 'CY - Application status',
     'permits.page.ecmt.consideration.permit.type' => 'CY - Permit type',
     'permits.page.ecmt.consideration.reference.number' => 'CY - Reference number',
     'permits.page.ecmt.consideration.application.date' => 'CY - Application date',
     'permits.page.ecmt.consideration.permits.required' => 'CY - Permits required',
     'permits.page.ecmt.consideration.application.fee' => 'CY - Application fee paid',
+
+    'help-sign-in' => 'helpu i arwyddo',
+    'permits.link.cancel.return.to.dashboard' => 'CY -Cancel and return to dashboard',
+    'permits.page.fee-part-successful.title' => 'CY -Issuing fee for ECMT permit',
+    'permits.page.ecmt.fee-part-successful.permit.validity' => 'CY -Permit start and end date',
+    'permits.page.ecmt.fee-part-successful.issuing.fee' => 'CY -Issuing fee per permit',
+    'permits.page.ecmt.fee-part-successful.issuing.fee.total' => 'CY -Total issuing fee to be paid',
+    'permits.page.ecmt.fee-part-successful.payment.due' => 'CY -Payment due by',
+    'permits.page.view.permits' => 'CY -view permits',
+    'permits.page.non.refundable' => 'CY -(CY -non-refundable)',
+    'permits.page.accept.and.pay' => 'CY -Accept and pay',
+    'permits.page.decline.permits' => 'CY -Decline permits',
+    'permits.form.declined_permit.error_message' => 'CY - You must select the checkbox to continue',
+    'permits.form.declined_permit.label' => 'CY - I confirm that I don\'t want awarded permits.',
+    'permits.page.declined_permit.title' => 'CY - Decline awarded permits',
+    'permits.button.cancel-and-return' => 'CY - Cancel and return',
     // Potentially unused translations
 ];

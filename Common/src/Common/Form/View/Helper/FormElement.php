@@ -5,12 +5,14 @@ namespace Common\Form\View\Helper;
 use Common\Form\Elements\InputFilters\ActionLink;
 use Common\Form\Elements\Types\AttachFilesButton;
 use Common\Form\Elements\Types\GuidanceTranslated;
+use Common\Form\Elements\Types\Radio;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\Types\TrafficAreaSet;
+use Common\Form\Element\DynamicRadioHtml;
 use Zend\Form\ElementInterface;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Zend\Form\View\Helper\FormElement as ZendFormElement;
@@ -56,6 +58,7 @@ class FormElement extends ZendFormElement
      */
     public function render(ZendElementInterface $element)
     {
+
         if (!$element->getAttribute('id')) {
             $element->setAttribute('id', $element->getName());
         }
@@ -65,6 +68,41 @@ class FormElement extends ZendFormElement
         if (!method_exists($renderer, 'plugin')) {
             return '';
         }
+
+        if ($element instanceof DynamicRadioHtml) {
+            $values = $element->getValueOptions();
+            $search = [];
+            $replace = [];
+            $replaceValues = [];
+            foreach ($values as $value) {
+                if (isset($value['html_elements'])) {
+                    $theExtras = '';
+                    foreach ($value['html_elements'] as $tag => $option) {
+                        $class = isset($option['class']) ? $option['class'] : '';
+                        $theExtras .= sprintf(
+                            '<%s class="%s">%s</%s>',
+                            $tag,
+                            $class,
+                            $option['content'],
+                            $tag
+                        );
+                    }
+                    $search[] = '[#' . $value['value'] . ']';
+                    $replace[] = $theExtras;
+                    if (isset($value['html_replace']) && $value['html_replace']) {
+                        $value['label'] = '[#' . $value['value'] . ']';
+                    } else {
+                        $value['label'] = $value['label'] . '[#' . $value['value'] . ']';
+                    }
+                }
+                $replaceValues[] = $value;
+            }
+            $element->setValueOptions($replaceValues);
+            $renderedOptions = str_replace($search, $replace, parent::render($element));
+            $element->setValueOptions($values);
+            return $renderedOptions;
+        }
+
 
         if ($element instanceof TrafficAreaSet) {
             $value = $element->getValue();

@@ -114,6 +114,7 @@ class Status extends AbstractHelper
             RefData::ECMT_STATUS_NOT_YET_SUBMITTED              => 'grey',
             RefData::ECMT_STATUS_UNSUCCESSFUL                   => 'grey',
             RefData::ECMT_STATUS_CANCELLED                      => 'grey',
+            RefData::PERMIT_VALID                               => 'green',
         ];
 
         return !empty($colors[$id]) ? $colors[$id] : 'grey';
