@@ -478,10 +478,6 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
     protected function expectGetPreviousLicencesTable($mockTableBuilder, $tableData)
     {
-        $tableData = [
-            'foo' => 'bar'
-        ];
-
         // Mocks
         $mockTable = m::mock();
 

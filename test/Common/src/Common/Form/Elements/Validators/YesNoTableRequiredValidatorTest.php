@@ -48,15 +48,20 @@ class YesNoTableRequiredValidatorTest extends \PHPUnit_Framework_TestCase
                 true
             ],
             [
+                'Y',
+                ['testTable'=> ['rows' => 0]],
+                false
+            ],
+            [
                 'N',
                 ['testTable'=> ['rows' => 1]],
                 true
             ],
             [
-                'Y',
+                'N',
                 ['testTable'=> ['rows' => 0]],
-                false
-            ]
+                true
+            ],
         ];
     }
 }

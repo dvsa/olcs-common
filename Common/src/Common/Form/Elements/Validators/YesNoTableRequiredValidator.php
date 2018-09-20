@@ -26,7 +26,7 @@ class YesNoTableRequiredValidator extends AbstractValidator
      */
     public function isValid($value, $context = array())
     {
-        if ($context[$this->table]['rows'] < 1 && $value == 'Y') {
+        if ($context[$this->table]['rows'] === 0 && $value === 'Y') {
             $this->error('error');
             return false;
         }
