@@ -19,24 +19,23 @@ class OtherEmployment extends AbstractSection implements TransportManagerSection
         $noOfPreviousRoles = count($employments);
 
         for ($x = 0; ($x < $noOfPreviousRoles) && ($x < 3); $x++) {
-            $employmentData[] = $employments[$x]['employerName'];
-
+            $template = 'markup-' . $this->getTranslationTemplate() . "answer-otherEmployments";
+            $this->employments .= $this->populateTemplate($template, [$employments[$x]['employerName']]);
         }
 
+        $this->formatSuffix($noOfPreviousRoles);
 
-        $this->employments = $noOfPreviousRoles > 0 ? $this->format($employmentData, $noOfPreviousRoles) : 'None Added';
+        $this->employments = $noOfPreviousRoles > 0 ? $this->employments : 'None Added';
         return $this;
     }
 
-    private function format(array $employments, $noOfPreviousRoles): string
+    private function formatSuffix(int $noOfPreviousRoles): void
     {
         $suffix = '';
         if ($noOfPreviousRoles > 3) {
-            $suffix = sprintf('<span>and %d more</span>', $noOfPreviousRoles);
+            $suffix = sprintf('<span>and %d more</span>', $noOfPreviousRoles-3);
         }
-
-        $template = 'markup-' . $this->getTranslationTemplate() . "answer-otherEmployments";
-        return $this->populateTemplate($template, $employments) . $suffix;
+        $this->employments .= $suffix;
     }
 }
 

@@ -8,6 +8,7 @@
 
 namespace CommonTest\Data\Mapper\Lva;
 
+use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Data\Mapper\Lva\TransportManagerApplication;
@@ -45,8 +46,14 @@ class TransportManagerApplicationTest extends MockeryTestCase
 
     public function testMapForSections()
     {
-
-        $data = TransportManagerApplication::mapForSections(["__TEST__"]);
+        $translationHelper = m::mock(TranslationHelperService::class);
+        
+        $data = TransportManagerApplication::mapForSections(["__TEST__"], $translationHelper);
         $this->assertInternalType('array', $data);
+    }
+
+    public function transportMnagerDataProvider()
+    {
+        
     }
 }

@@ -26,12 +26,10 @@ class OtherLicences extends AbstractSection implements TransportManagerSectionIn
         $licences = $this->sortByCreated($licences);
 
         foreach ($licences as $licence) {
-            if (!empty($licence['licNo'])) {
-                $this->licences[] = $licence['licNo'];
-            }
+            $template = 'markup-' . $this->getTranslationTemplate() . "answer-otherLicences";
+            $this->licences .= $this->populateTemplate($template, [$licence['licNo']]);
         }
-        $template = 'markup-' . $this->getTranslationTemplate() . "answer-otherLicences";
-        $this->licences = $this->populateTemplate($template, $this->licences);
+
         return $this;
     }
 }
