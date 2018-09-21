@@ -2,9 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Common\Util\Escape;
 
 /**
  * IRHP Permit Stock table - Permit Type column formatter
