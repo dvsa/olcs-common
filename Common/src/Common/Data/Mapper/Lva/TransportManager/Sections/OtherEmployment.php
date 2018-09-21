@@ -35,7 +35,7 @@ class OtherEmployment extends AbstractSection implements TransportManagerSection
             $suffix = sprintf('<span>and %d more</span>', $noOfPreviousRoles);
         }
 
-        $template = 'markup-' . $this->getTranslationTemplate() . "-answer-otherEmployments";
+        $template = 'markup-' . $this->getTranslationTemplate() . "answer-otherEmployments";
         return $this->populateTemplate($template, $employments) . $suffix;
     }
 }
