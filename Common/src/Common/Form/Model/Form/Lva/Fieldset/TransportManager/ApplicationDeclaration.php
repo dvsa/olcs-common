@@ -9,7 +9,8 @@ class ApplicationDeclaration
     /**
      * @Form\Attributes({
      *     "id":"","placeholder":"",
-     *     "class": "form"
+     *     "class": "form",
+     *     "value": "Y"
      * })
      * @Form\Options({
      *     "label": "application.signature.options.label",
@@ -23,7 +24,7 @@ class ApplicationDeclaration
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
-    public $signatureOptions = null;
+    public $isDigitallySigned = null;
 
     /**
      * @Form\Attributes({"id":"declarationDownload"})
