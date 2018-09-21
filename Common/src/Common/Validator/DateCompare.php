@@ -135,6 +135,7 @@ class DateCompare extends AbstractCompare
         $dateFormat = ($this->hasTime() ? self::DATETIME_FORMAT : self::DATE_FORMAT);
 
         $valueDate = \DateTime::createFromFormat($dateFormat, $value);
+
         if ($valueDate === false) {
             $this->error(self::NO_COMPARE); //@TO~DO~
             return false;
