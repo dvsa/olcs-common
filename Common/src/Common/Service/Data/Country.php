@@ -3,7 +3,6 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
-use Common\Service\Data\AbstractDataService;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 use Dvsa\Olcs\Transfer\Query\ContactDetail\CountryList;
 
@@ -52,8 +51,13 @@ class Country extends AbstractDataService implements ListData
             $data = $this->removeNonMemberStates($data);
         }
 
+        if ('ecmtConstraint' === $category) {
+            $data = $this->filterEcmtConstrained($data);
+        }
+
         return $this->formatData($data);
     }
+
 
     /**
      * Remove non-member states
@@ -75,6 +79,26 @@ class Country extends AbstractDataService implements ListData
         }
 
         return $members;
+    }
+
+    /**
+     * Remove non-member states
+     * @todo we're having to hard code constraints for now, while we sort what's likely a doctrine relationship problem
+     *
+     * @param array $data Data
+     *
+     * @return array
+     */
+    private function filterEcmtConstrained($data)
+    {
+        $filtered = [];
+
+        foreach ($data as $state) {
+            if (!empty($state['constraints'])) {
+                $filtered[] = $state;
+            }
+        }
+        return $filtered;
     }
 
     /**

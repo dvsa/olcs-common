@@ -93,6 +93,7 @@ return array(
             'ElasticSearch' => 'Common\Controller\Plugin\ElasticSearchFactory',
             'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
             'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
+            'featuresEnabled' => \Common\Controller\Plugin\FeaturesEnabledFactory::class,
         ]
     ),
     'console' => array(
@@ -301,6 +302,8 @@ return array(
             'readonlyformtable' => ReadonlyFormHelper\FormTable::class,
             'readOnlyActions' => \Common\View\Helper\ReadOnlyActions::class,
 
+            'currencyFormatter' => \Common\View\Helper\CurrencyFormatter::class,
+
             // Extended form view helpers, to allow us to use alternative attributes that are not in ZF2's whitelist
             'formbutton'              => \Common\Form\View\Helper\Extended\FormButton::class,
             'formcaptcha'             => \Common\Form\View\Helper\Extended\FormCaptcha::class,
@@ -364,12 +367,14 @@ return array(
         'factories' => [
             'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory',
             'Common\Form\Element\DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckboxFactory',
-            'Common\Form\Element\DynamicRadio' => 'Common\Form\Element\DynamicRadioFactory'
+            'Common\Form\Element\DynamicRadio' => 'Common\Form\Element\DynamicRadioFactory',
+            'Common\Form\Element\DynamicRadioHtml' => 'Common\Form\Element\DynamicRadioHtmlFactory'
         ],
         'aliases' => [
             'DynamicSelect' => 'Common\Form\Element\DynamicSelect',
             'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox',
             'DynamicRadio' => 'Common\Form\Element\DynamicRadio',
+            'DynamicRadioHtml' => 'Common\Form\Element\DynamicRadioHtml',
             'OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ]
     ],
