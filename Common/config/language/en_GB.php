@@ -3411,7 +3411,7 @@ return [
     'permits.page.ecmt.licence.question.one.licence' => 'Permit application for licence %s',
     'permits.page.ecmt.licence.saturated.one.licence' => 'Your licence has an active application',
     'permits.page.ecmt.licence.saturated' => 'You have already applied against all your licences',
-    'permits.page.ecmt.licence.info' => 'ECMT permits will be valid for use from 1 January 2019 to 31 December 2019.',
+    'permits.page.ecmt.licence.info' => '%s permits will be valid for use from %s to %s.',
     'permits.page.international.journey.title' => 'Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'In the last 12 months what portion of your journeys were international for this licence?',
     'permits.page.international.journey.exclude' => 'Exclude journeys to the Republic of Ireland in your annual trips.',
