@@ -923,6 +923,9 @@ return [
     'delete' => 'Delete',
     'delete.confirmation.text' => 'This action is permanent and cannot be undone.',
     'delete.final-tm.confirmation.text' => 'You are removing your last Transport Manager. If you haven\'t yet made an application to appoint a replacement, you must contact us on {{OPERATOR_LICENSING_PHONE}} or at <a href="mailto:{{OPERATOR_LICENSING_EMAIL}}">{{OPERATOR_LICENSING_EMAIL}}</a>',
+    'internal-delete.final-tm.confirmation.text' => 'You are about to remove the last transport manager for this licence. Do you want to send a letter about this to the operator
+ to all known addresses? <br/> If yes, this will be automatically issued tomorrow.',
+    'internal-delete-final-tm-letter-opt-out.validation-message' => 'You must select an option',
     'deleting.all.vehicles.message' => 'If you are removing all the vehicles from your licence you must be aware that standard licence holders must be able to prove they have a formal arrangement for access at all times to at least one vehicle registered or in circulation.',
     'delta_action_links.remove' => 'Remove',
     'delta_action_links.restore' => 'Restore',
@@ -2890,6 +2893,7 @@ return [
     'transport-manager.employments.table.add' => 'Add other employment',
     'transport-manager.employments.table.empty' => 'If you work for anyone else on a regular basis, add their details here',
     'transport-manager.other-licence.form.hours-per-week' => 'How many hours per week do you work on this licence?',
+    'transport-manager.other-licence.form.hours-per-week.error_msg' => 'The hours worked must be entered as a number',
     'transport-manager.other-licence.form.lic-no' => 'Licence number',
     'transport-manager.other-licence.form.operating-centres' => 'Give the addresses of all the operating centres you’re responsible for',
     'transport-manager.other-licence.form.role' => 'Your role (optional)',
