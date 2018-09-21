@@ -22,9 +22,11 @@ class RevokedLicences extends AbstractSection implements TransportManagerSection
         $licences = $this->sortByCreated($revokedLicences);
 
         foreach ($licences as $licence) {
-            $this->revokedLicences[] = $licence['licNo'];
+            if (!empty($licence['licNo'])) {
+                $this->revokedLicences[] = $licence['licNo'];
+            }
         }
-        $template = 'markup-'.$this->getTranslationTemplate() . "answer-revokedLicences";
+        $template = 'markup-' . $this->getTranslationTemplate() . "answer-revokedLicences";
         $this->revokedLicences = $this->populateTemplate($template, $this->revokedLicences);
         return $this;
     }

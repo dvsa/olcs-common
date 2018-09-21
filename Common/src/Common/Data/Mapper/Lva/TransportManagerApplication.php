@@ -12,6 +12,7 @@ use Common\Data\Mapper\Lva\TransportManager\Sections\AdditionalInformation;
 use Common\Data\Mapper\Lva\TransportManager\Sections\ConvictionsPenalties;
 use Common\Data\Mapper\Lva\TransportManager\Sections\Details;
 use Common\Data\Mapper\Lva\TransportManager\Sections\HoursOfWork;
+use Common\Data\Mapper\Lva\TransportManager\Sections\OtherEmployment;
 use Common\Data\Mapper\Lva\TransportManager\Sections\OtherLicences;
 use Common\Data\Mapper\Lva\TransportManager\Sections\Responsibilities;
 use Common\Data\Mapper\Lva\TransportManager\Sections\RevokedLicences;
@@ -47,24 +48,29 @@ class TransportManagerApplication
         $details = (new Details($translationHelperService))->populate($transportManagerApplication);
         $detailsQuestions = $details->createSectionFormat();
         $data [] = $details->makeSection('Details', $detailsQuestions);
-        $hours = (new HoursOfWork($translationHelperService))->populate($transportManagerApplication);
-        $hoursQuestions = $hours->createSectionFormat();
-        $data [] = $hours->makeSection('HoursOfWork', $hoursQuestions);
         $responsibilities = (new Responsibilities($translationHelperService))->populate($transportManagerApplication);
         $responsibilitiesQuestions = $responsibilities->createSectionFormat();
         $data [] =$responsibilities->makeSection('Responsibilities', $responsibilitiesQuestions);
+        $hours = (new HoursOfWork($translationHelperService))->populate($transportManagerApplication);
+        $hoursQuestions = $hours->createSectionFormat();
+        $data [] = $hours->makeSection('HoursOfWork', $hoursQuestions);
         $licences =  (new OtherLicences($translationHelperService))->populate($transportManagerApplication);
         $licencesQuestions = $licences->createSectionFormat();
-        $data [] = $licences->makeSection('otherLicences', $licencesQuestions);
+        $data [] = $licences->makeSection('OtherLicences', $licencesQuestions);
         $additionalInfo = (new AdditionalInformation($translationHelperService))->populate($transportManagerApplication);
         $additionalInfoQuestions = $additionalInfo->createSectionFormat();
-        $data [] = $additionalInfo->makeSection('additionalInfo', $additionalInfoQuestions);
+        $data [] = $additionalInfo->makeSection('AdditionalInfo', $additionalInfoQuestions);
+
+        $otherEmployment = (new OtherEmployment($translationHelperService))->populate($transportManagerApplication);
+        $otherEmploymentQuestions = $otherEmployment->createSectionFormat();
+        $data [] = $otherEmployment->makeSection('OtherEmployment', $otherEmploymentQuestions);
+
         $convictions= (new ConvictionsPenalties($translationHelperService))->populate($transportManagerApplication);
         $convictionsQuestions = $convictions->createSectionFormat();
-        $data [] = $convictions->makeSection('convictions', $convictionsQuestions);
+        $data [] = $convictions->makeSection('Convictions', $convictionsQuestions);
         $revocations = (new RevokedLicences($translationHelperService))->populate($transportManagerApplication);
         $revocationQuestions = $revocations->createSectionFormat();
-        $data [] = $revocations->makeSection('revocations', $revocationQuestions);
+        $data [] = $revocations->makeSection('Revocations', $revocationQuestions);
 
         return $data;
     }
