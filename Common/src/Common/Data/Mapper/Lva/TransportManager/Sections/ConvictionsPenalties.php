@@ -15,7 +15,7 @@ class ConvictionsPenalties extends AbstractSection implements TransportManagerSe
         $convictions = $transportManagerApplication['transportManager']['previousConvictions'];
         $template = 'markup-' . $this->getTranslationTemplate() . "answer-convictions";
         foreach ($convictions as $conviction) {
-            $this->convictions[] = $this->populateTemplate(
+            $this->convictions .= $this->populateTemplate(
                 $template,
                 [
                     $conviction['categoryText'],
