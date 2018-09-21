@@ -1470,7 +1470,9 @@ return [
     'error.messages.sector.list' => 'CY - Select one main category for your licence',
     'error.messages.euro6' => 'CY - You must tick the box to continue',
     'error.messages.international-journey' => 'CY - Select the percentage of international journeys over the past 12 months',
-    'error.messages.trips' => 'CY - Enter the number of trips you carried out over the past 12 months',
+    'error.messages.trips.empty' => 'CY - Enter the number of trips you carried out over the past 12 months',
+    'error.messages.trips.not.between' => 'CY - You must enter a number which is below 999999',
+    'error.messages.trips.not.digits' => 'CY - You must enter a valid whole number',
 
     'permits.form.withdraw_application.label' => 'CY - I confirm that I would like to withdraw my application.',
     'permits.form.withdraw_application.button' => 'CY - Withdraw application',
