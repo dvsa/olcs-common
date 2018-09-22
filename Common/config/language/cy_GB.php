@@ -1363,10 +1363,10 @@ return [
 
     // Permits application
     'permits.application.ineligible' => 'CY - You are not eligible for permits (text TBC)',
-    'permits.application.overwiew.title' => 'CY - Home',
-    'permits.application.overwiew.subtitle' => 'CY - Permits applications',
-    'permits.application.overwiew.button' => 'CY - Apply for a new permit',
-    'permits.application.overwiew.no-permits' => 'CY - You haven\'t applied for any permits.',
+    'permits.application.overview.title' => 'CY - Home',
+    'permits.application.overview.subtitle' => 'CY - Permits applications',
+    'permits.application.overview.button' => 'CY - Apply for a new permit',
+    'permits.application.overview.no-permits' => 'CY - You haven\'t applied for any permits.',
     'permits.application.eligibility.title' => 'CY - International haulier permit',
     'permits.application.eligibility.country.question' => 'CY - Which countries will you be delivering to?',
     'permits.application.eligibility.country.add' => 'CY - Add another country',
