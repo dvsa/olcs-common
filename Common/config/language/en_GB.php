@@ -3473,7 +3473,9 @@ return [
     'error.messages.sector.list' => 'Select one main category for your licence',
     'error.messages.euro6' => 'You must tick the box to continue',
     'error.messages.international-journey' => 'Select the percentage of international journeys over the past 12 months',
-    'error.messages.trips' => 'Enter the number of trips you carried out over the past 12 months',
+    'error.messages.trips.empty' => 'Enter the number of trips you carried out over the past 12 months',
+    'error.messages.trips.not.between' => 'You must enter a number which is below 999999',
+    'error.messages.trips.not.digits' => 'You must enter a valid whole number',
 
     'section.name.ecmt-licence' => 'Licence number',
     'section.name.ecmt-add-licence' => 'Licence number',
