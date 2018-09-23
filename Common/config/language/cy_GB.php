@@ -1363,7 +1363,8 @@ return [
 
     // Permits application
     'permits.application.ineligible' => 'CY - You are not eligible for permits (text TBC)',
-    'permits.application.overview.title' => 'CY - Home',
+    'permits.application.overview.title' => 'CY - Application Overview',
+    'permits.application.overview.main' => 'CY - Apply for a new ECMT permit',
     'permits.application.overview.subtitle' => 'CY - Permits applications',
     'permits.application.overview.button' => 'CY - Apply for a new permit',
     'permits.application.overview.no-permits' => 'CY - You haven\'t applied for any permits.',
@@ -1376,7 +1377,12 @@ return [
     'permits.application.ecmt.countries' => 'CY - Which countries will you be delivering to?',
     'permits.application.ecmt.select' => 'CY - Select all that apply',
     'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?',
-    'permits.application.submitted.title' => 'CY - Application submitted',
+    'permits.application.submitted.title' => 'CY - Application submitted-',
+    'permits.application.submitted.main' => 'CY - Application submitted',
+    'permits.application.fee.submitted.title' => 'CY - Payment successful-',
+    'permits.application.fee.submitted.main' => 'CY - Payment successful',
+    'permits.decline.submitted.title' => 'CY - Permits removed-',
+    'permits.decline.submitted.main' => 'CY - Permits removed',
 
     'permits.link.ecmt.guidance' => '{{ECMT_PERMITS_GUIDANCE_LINK}}',
 
@@ -1402,6 +1408,7 @@ return [
     'permits.form.trips.hint' => 'CY - One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
     'permits.page.number-of-trips.title' => 'CY - ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'CY - How many international trips were carried out over the past 12 months?',
+    'permits.page.number-of-trips.northern-ireland' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.euro6.emissions.title' => 'CY - Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'CY - ECMT permits can only be used by vehicles that meet Euro 6 standards',
     'permits.page.euro6.emissions.info' => 'CY - If you intend to transport goods internationally across the EU and EEA, the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
@@ -1412,7 +1419,7 @@ return [
     'permits.page.ecmt.licence.question.one.licence' => 'CY - Permit application for licence %s',
     'permits.page.ecmt.licence.saturated.one.licence' => 'CY - Your licence has an active application',
     'permits.page.ecmt.licence.saturated' => 'CY - You have already applied against all your licences',
-    'permits.page.ecmt.licence.info' => 'CY - %s permits will be valid for use from %s to %s.',
+    'permits.page.ecmt.licence.info' => 'CY - %s Road Haulage Permits will be valid for use from %s to %s.',
     'permits.page.international.journey.title' => 'CY - Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'CY - What percentage of your business is related to international journeys over the past 12 months?',
     'permits.page.sector.title' => 'CY - ECMT Sectors - ',
@@ -1426,6 +1433,7 @@ return [
     'permits.page.permits.required.info' => 'CY - You can apply for up to 50 permits. This is based on the number of vehicles authorised for this.',
     'permits.page.message.summary' => 'CY - Now send your application',
     'permits.page.declaration.title' => 'CY - Declaration - ',
+    'permits.page.fee.main' => 'CY - Application fee for ECMT permit',
     'permits.page.fee.title' => 'CY - Application fees for ECMT permit',
     'permits.page.fee.subtitle' => 'CY - This is a summary of the fees you are required to pay when submitting your application. The application fee is non-refundable.',
     'permits.page.fee.message' => 'CY - If your permit application is successful you will have to pay an issuing fee of £123.00 per permit at a later stage.',
