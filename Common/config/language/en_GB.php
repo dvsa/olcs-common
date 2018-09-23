@@ -3461,6 +3461,7 @@ return [
     'error.messages.permits.required' => 'Enter the number of permits you require. The number must be greater or equal to 1.',
     'error.messages.permits.greater' => 'The input is not greater than 0',
     'error.messages.permits.less' => 'This number must be less than or equal to your number of authorised vehicles',
+    'error.messages.permits.not.digits' => 'You must enter a valid whole number',
     'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'Cancel application',
     'permits.form.cancel_application.error_message' => 'You must select the checkbox to continue',
