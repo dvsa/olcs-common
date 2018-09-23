@@ -3347,7 +3347,7 @@ return [
     // Permits application
     'permits.application.overview.main-title' => 'Application Overview-',
     'permits.application.ineligible' => 'You are not eligible for permits (text TBC)',
-    'permits.application.overview.title' => 'Application Overview-',
+    'permits.application.overview.title' => 'Home',
     'permits.application.overview.main' => 'Apply for a new ECMT permit',
     'permits.application.overview.subtitle' => 'Permits applications',
     'permits.application.overview.button' => 'Apply for a new permit',
@@ -3455,7 +3455,7 @@ return [
     'permits.form.permits.required.label' => 'Number of permits',
     'permits.form.check-answers.label' => 'I have checked my answers',
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
-    'error.messages.ecmt-licence' => 'Select a licence',
+    'error.messages.ecmt-licence' => 'Select a licence you would like your ECMT permit to be applied to',
     'error.messages.checkbox' => 'You must tick the box to continue',
     'error.messages.checkbox.euro6' => 'Tick to confirm your vehicle will meet Euro 6 emission standards',
     'error.messages.checkbox.cabotage' => 'Tick to confirm your vehicle will not undertake cabotage journey(s)',
