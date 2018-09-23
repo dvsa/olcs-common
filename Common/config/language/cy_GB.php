@@ -1406,7 +1406,8 @@ return [
     'permits.application.window-closed' => 'CY - The ECMT permit application window has now closed.',
     'permits.application.window-closed.title' => 'CY - The ECMT permit application window has now closed - ',
 
-    'permits.form.trips.guidance' => 'CY - We may contact you to verify the number of international trips provided if you state a high intensity of use of these licence.',
+    'permits.form.trips.guidance' => 'CY - You have stated a high intensity of use of these permits. Please check the details are correct. We may contact you to verify this information',
+    'permits.form.intljourney.guidance' => 'CY - You have stated a high percentage of international journeys for this licence. Please check the details are correct. We may contact you to verify this information',
     'permits.form.trips.hint' => 'CY - One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
     'permits.page.number-of-trips.title' => 'CY - ECMT Permits - ',
     'permits.page.number-of-trips.question' => 'CY - How many international trips were carried out over the past 12 months?',
