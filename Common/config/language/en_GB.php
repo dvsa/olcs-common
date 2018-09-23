@@ -3392,6 +3392,9 @@ return [
     'permits.application.change-licence' => 'Change Licence',
     'permits.application.change-licence.title' => 'Change Licence - ',
 
+    'permits.application.window-closed' => 'The ECMT permit application window has now closed.',
+    'permits.application.window-closed.title' => 'The ECMT permit application window has now closed - ',
+
     'permits.page.number-of-trips.title' => 'How many international trips were carried out over the past 12 months?-',
     'permits.page.number-of-trips.question' => 'How many international trips did you make in the last 12 months using this licence?',
     'permits.page.number-of-trips.northern-ireland' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',

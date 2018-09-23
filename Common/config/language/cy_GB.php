@@ -1403,6 +1403,8 @@ return [
     'permits.application.change-licence' => 'CY- Change Licence',
     'permits.application.change-licence.title' => 'CY - Change Licence - ',
 
+    'permits.application.window-closed' => 'CY - The ECMT permit application window has now closed.',
+    'permits.application.window-closed.title' => 'CY - The ECMT permit application window has now closed - ',
 
     'permits.form.trips.guidance' => 'CY - We may contact you to verify the number of international trips provided if you state a high intensity of use of these licence.',
     'permits.form.trips.hint' => 'CY - One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
