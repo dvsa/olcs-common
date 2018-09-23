@@ -1412,7 +1412,7 @@ return [
     'permits.page.ecmt.licence.question.one.licence' => 'CY - Permit application for licence %s',
     'permits.page.ecmt.licence.saturated.one.licence' => 'CY - Your licence has an active application',
     'permits.page.ecmt.licence.saturated' => 'CY - You have already applied against all your licences',
-    'permits.page.ecmt.licence.info' => 'CY - %s permits will be valid for use from %s to %s.',
+    'permits.page.ecmt.licence.info' => 'CY - %s Road Haulage Permits will be valid for use from %s to %s.',
     'permits.page.international.journey.title' => 'CY - Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'CY - What percentage of your business is related to international journeys over the past 12 months?',
     'permits.page.sector.title' => 'CY - ECMT Sectors - ',
