@@ -69,6 +69,15 @@ class TransportManagerApplicationTest extends MockeryTestCase
                 [
                     'isOwner' => '__TEST__',
                     'tmType' => ['description' => '__TEST__'],
+                    'hoursMon' => '__TEST__',
+                    'hoursTue' => '__TEST__',
+                    'hoursWed' => '__TEST__',
+                    'hoursThu' => '__TEST__',
+                    'hoursFri' => '__TEST__',
+                    'hoursSat' => '__TEST__',
+                    'hoursSun' => '__TEST__',
+                    'otherLicences' => [
+                    ],
                     'transportManager' =>
                         [
 

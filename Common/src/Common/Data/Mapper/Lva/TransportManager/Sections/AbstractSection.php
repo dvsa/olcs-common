@@ -34,11 +34,6 @@ abstract class AbstractSection
         return $this->sectionSerialize();
     }
 
-    protected function getSection()
-    {
-        return $this->getTranslationTemplate() . get_class($this);
-    }
-
     /**
      * sortByCreated
      *
