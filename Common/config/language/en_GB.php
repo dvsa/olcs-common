@@ -3391,7 +3391,7 @@ return [
 
     'permits.page.number-of-trips.title' => 'How many international trips were carried out over the past 12 months?-',
     'permits.page.number-of-trips.question' => 'How many international trips did you make in the last 12 months using this licence?',
-    'permits.page.number-of-trips.northern-ireland' => 'Please exclude journeys to the republic of Ireland in your calculation of annual trips.',
+    'permits.page.number-of-trips.northern-ireland' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.euro6.emissions.title' => 'Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
     'permits.page.euro6.emissions.info' => 'If you intend to transport goods internationally across the European Union (EU) and European Economic Area (EEA), the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
