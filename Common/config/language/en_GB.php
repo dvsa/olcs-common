@@ -3547,5 +3547,7 @@ return [
     'permits.form.declined_permit.label' => 'I confirm that I don\'t want awarded permits.',
     'permits.page.declined_permit.title' => 'Decline awarded permits',
     'permits.button.cancel-and-return' => 'Cancel and return',
+
+    'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'Windows which are active or have ended cannot be deleted'
     // Potentially unused translations
 ];
