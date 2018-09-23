@@ -56,12 +56,12 @@ abstract class AbstractSection
         return $items;
     }
 
-    public function makeSection(string $section, array $items): array
+    public function makeSection(string $section, array $items, $changeName): array
     {
         return [
             'sectionHeading' => $this->getTranslationTemplate() . $section,
             'questions' => $this->makeChangeAnswerSections($items),
-            'change' => ['sectionName' => $section, 'backText' => '']
+            'change' => ['sectionName' => $changeName, 'backText' => '']
         ];
     }
 

@@ -47,36 +47,31 @@ class TransportManagerApplication
         $data  = [];
         $details = (new Details($translationHelperService))->populate($transportManagerApplication);
         $detailsQuestions = $details->createSectionFormat();
-        $data [] = $details->makeSection('Details', $detailsQuestions);
+        $data [] = $details->makeSection('Details', $detailsQuestions, 'details');
         $responsibilities = (new Responsibilities($translationHelperService))->populate($transportManagerApplication);
         $responsibilitiesQuestions = $responsibilities->createSectionFormat();
-        $data [] =$responsibilities->makeSection('Responsibilities', $responsibilitiesQuestions);
+        $data [] =$responsibilities->makeSection('Responsibilities', $responsibilitiesQuestions, 'responsibilities');
         $hours = (new HoursOfWork($translationHelperService))->populate($transportManagerApplication);
         $hoursQuestions = $hours->createSectionFormat();
-        $data [] = $hours->makeSection('HoursOfWork', $hoursQuestions);
+        $data [] = $hours->makeSection('HoursOfWork', $hoursQuestions, 'responsibilities');
         $licences =  (new OtherLicences($translationHelperService))->populate($transportManagerApplication);
         $licencesQuestions = $licences->createSectionFormat();
-        $data [] = $licences->makeSection('OtherLicences', $licencesQuestions);
+        $data [] = $licences->makeSection('OtherLicences', $licencesQuestions, 'otherLicences');
         $additionalInfo = (new AdditionalInformation($translationHelperService))->populate($transportManagerApplication);
         $additionalInfoQuestions = $additionalInfo->createSectionFormat();
-        $data [] = $additionalInfo->makeSection('AdditionalInfo', $additionalInfoQuestions);
+        $data [] = $additionalInfo->makeSection('AdditionalInfo', $additionalInfoQuestions, 'responsibilities');
 
         $otherEmployment = (new OtherEmployment($translationHelperService))->populate($transportManagerApplication);
         $otherEmploymentQuestions = $otherEmployment->createSectionFormat();
-        $data [] = $otherEmployment->makeSection('OtherEmployment', $otherEmploymentQuestions);
+        $data [] = $otherEmployment->makeSection('OtherEmployment', $otherEmploymentQuestions, 'otherEmployment');
 
         $convictions= (new ConvictionsPenalties($translationHelperService))->populate($transportManagerApplication);
         $convictionsQuestions = $convictions->createSectionFormat();
-        $data [] = $convictions->makeSection('Convictions', $convictionsQuestions);
+        $data [] = $convictions->makeSection('Convictions', $convictionsQuestions, 'previousConvictions');
         $revocations = (new RevokedLicences($translationHelperService))->populate($transportManagerApplication);
         $revocationQuestions = $revocations->createSectionFormat();
-        $data [] = $revocations->makeSection('Revocations', $revocationQuestions);
+        $data [] = $revocations->makeSection('Revocations', $revocationQuestions, 'previousLicences');
 
         return $data;
-    }
-
-    public static function getDefaultText()
-    {
-        return 'None added';
     }
 }

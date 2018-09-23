@@ -44,16 +44,25 @@ class TransportManagerApplicationTest extends MockeryTestCase
         $this->assertEquals($errors, $globalMessages);
     }
 
-    public function testMapForSections()
+    /**
+     * testMapForSections
+     * @param $data
+     * @dataProvider transportManagerDataProvider
+     */
+    public function testMapForSections($data)
     {
         $translationHelper = m::mock(TranslationHelperService::class);
-        
-        $data = TransportManagerApplication::mapForSections(["__TEST__"], $translationHelper);
+
+        $data = TransportManagerApplication::mapForSections(["transportManager"=>$data], $translationHelper);
         $this->assertInternalType('array', $data);
     }
 
-    public function transportMnagerDataProvider()
+    public function transportManagerDataProvider()
     {
-        
+        return [
+            [
+
+            ]
+        ];
     }
 }
