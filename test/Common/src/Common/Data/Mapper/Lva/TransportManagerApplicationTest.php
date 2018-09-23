@@ -46,14 +46,19 @@ class TransportManagerApplicationTest extends MockeryTestCase
 
     /**
      * testMapForSections
+     *
      * @param $data
+     *
      * @dataProvider transportManagerDataProvider
      */
     public function testMapForSections($data)
     {
         $translationHelper = m::mock(TranslationHelperService::class);
 
-        $data = TransportManagerApplication::mapForSections(["transportManager"=>$data], $translationHelper);
+        $translationHelper->shouldReceive(
+            'translateReplace'
+        )->twice()->andReturn('');
+        $data = TransportManagerApplication::mapForSections($data, $translationHelper);
         $this->assertInternalType('array', $data);
     }
 
@@ -61,7 +66,35 @@ class TransportManagerApplicationTest extends MockeryTestCase
     {
         return [
             [
+                [
+                    'isOwner' => '__TEST__',
+                    'tmType' => ['description' => '__TEST__'],
+                    'transportManager' =>
+                        [
 
+                            'documents' => [],
+                            'homeCd' => [
+                                'emailAddress' => '__TEST__',
+                                'address' => [
+                                    'countryCode' => [
+                                        'countryDesc' => '__TEST__'
+                                    ],
+                                ],
+
+                                'person' => [
+                                    'forename' => '__TEST__',
+                                    'familyName' => '__TEST__',
+                                ]
+                            ],
+                            'workCd' => [
+                                'address' => [
+                                    'countryCode' => [
+                                        'countryDesc' => '__TEST__'
+                                    ],
+                                ]
+                            ]
+                        ]
+                ]
             ]
         ];
     }
