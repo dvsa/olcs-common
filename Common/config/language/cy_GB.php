@@ -1363,7 +1363,8 @@ return [
 
     // Permits application
     'permits.application.ineligible' => 'CY - You are not eligible for permits (text TBC)',
-    'permits.application.overview.title' => 'CY - Home',
+    'permits.application.overview.title' => 'CY - Application Overview',
+    'permits.application.overview.main' => 'CY - Apply for a new ECMT permit',
     'permits.application.overview.subtitle' => 'CY - Permits applications',
     'permits.application.overview.button' => 'CY - Apply for a new permit',
     'permits.application.overview.no-permits' => 'CY - You haven\'t applied for any permits.',
@@ -1376,7 +1377,12 @@ return [
     'permits.application.ecmt.countries' => 'CY - Which countries will you be delivering to?',
     'permits.application.ecmt.select' => 'CY - Select all that apply',
     'permits.application.eligibility.eligible.title' => 'CY - Can you get an international haulier permit?',
-    'permits.application.submitted.title' => 'CY - Application submitted',
+    'permits.application.submitted.title' => 'CY - Application submitted-',
+    'permits.application.submitted.main' => 'CY - Application submitted',
+    'permits.application.fee.submitted.title' => 'CY - Payment successful-',
+    'permits.application.fee.submitted.main' => 'CY - Payment successful',
+    'permits.decline.submitted.title' => 'CY - Permits removed-',
+    'permits.decline.submitted.main' => 'CY - Permits removed',
 
     'permits.link.ecmt.guidance' => '{{ECMT_PERMITS_GUIDANCE_LINK}}',
 
@@ -1427,6 +1433,7 @@ return [
     'permits.page.permits.required.info' => 'CY - You can apply for up to 50 permits. This is based on the number of vehicles authorised for this.',
     'permits.page.message.summary' => 'CY - Now send your application',
     'permits.page.declaration.title' => 'CY - Declaration - ',
+    'permits.page.fee.main' => 'CY - Application fee for ECMT permit',
     'permits.page.fee.title' => 'CY - Application fees for ECMT permit',
     'permits.page.fee.subtitle' => 'CY - This is a summary of the fees you are required to pay when submitting your application. The application fee is non-refundable.',
     'permits.page.fee.message' => 'CY - If your permit application is successful you will have to pay an issuing fee of £123.00 per permit at a later stage.',
