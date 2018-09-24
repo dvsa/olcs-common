@@ -32,6 +32,6 @@ class OtherEmploymentsTest extends MockeryTestCase
         );
 
         $this->assertInstanceOf(OtherEmployment::class, $actual);
-
+        $this->assertEquals(['lva-tmverify-details-checkanswer-employments' => 'None Added'], $actual->sectionSerialize());
     }
 }
