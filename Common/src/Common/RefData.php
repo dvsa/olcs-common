@@ -342,6 +342,14 @@ class RefData
     const ECMT_APP_STATUS_UNSUCCESSFUL = 'ecmt_permit_unsuccessful';
     const ECMT_APP_STATUS_ISSUED = 'ecmt_permit_issued';
 
+    /**
+     * ECMT Permit application international journey percentages
+     */
+    const ECMT_APP_JOURNEY_LESS_60 = 'inter_journey_less_60';
+    const ECMT_APP_JOURNEY_60_90 = 'inter_journey_60_90';
+    const ECMT_APP_JOURNEY_OVER_90 = 'inter_journey_more_90';
+
+
     //feature toggle statuses
     const FT_ACTIVE = 'always-active';
     const FT_INACTIVE = 'inactive';
