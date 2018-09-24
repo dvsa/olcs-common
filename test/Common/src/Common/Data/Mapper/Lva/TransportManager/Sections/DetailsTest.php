@@ -153,28 +153,28 @@ class DetailsTest extends MockeryTestCase
         ];
         $this->mockTranslator->shouldReceive(
             'translateReplace'
-        )->with('markup-lva-tmverify-details-checkanswer-answer-details', [1])->once()->andReturn('__TEST__');
-        $this->mockTranslator->shouldReceive(
-            'translateReplace'
         )->with('markup-lva-tmverify-details-checkanswer-answer-address', [
             'country' => '__TEST__',
-        ])->once()->andReturn('__TEST__');
+        ])->times(2)->andReturn('__TEST__');
         $actual = $this->sut->populate($data);
-        $this->assertEquals([], $actual->sectionSerialize());
+
+        $this->assertContains($expected, $actual->sectionSerialize());
     }
 
     public function dpCertificates()
     {
         return
             [
-                [[], 'None Added'],
+                [[], 'No certificates attached'],
 
                 [
-                    'application' => ['id' => 1],
-                    'category' => ['id' => 5],
-                    'subCategory' => ['id' => 98]
-                ],
-                []
+                    [
+                        'application' => ['id' => 1],
+                        'category' => ['id' => 5],
+                        'subCategory' => ['id' => 98]
+                    ],
+                    'Certificate Added'
+                ]
 
             ];
     }
