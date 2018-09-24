@@ -8,7 +8,6 @@ use Common\Service\Helper\TranslationHelperService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
-
 class AdditionalInformationTest extends MockeryTestCase
 {
     private $mockTranslator;
@@ -34,5 +33,4 @@ class AdditionalInformationTest extends MockeryTestCase
             $this->assertNotEmpty($property);
         }
     }
-
 }

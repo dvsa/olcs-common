@@ -3,7 +3,6 @@
 
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
-
 class OtherEmployment extends AbstractSection implements TransportManagerSectionInterface
 {
 
@@ -38,4 +37,5 @@ class OtherEmployment extends AbstractSection implements TransportManagerSection
         $this->employments .= $suffix;
     }
 }
+
 

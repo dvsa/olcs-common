@@ -733,7 +733,6 @@ class FormHelperService extends AbstractHelperService
         $companyNumber = $data[$detailsFieldset]['companyNumber']['company_number'];
         if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH &&
             strlen($companyNumber) <= self::MAX_COMPANY_NUMBER_LENGTH) {
-
             list($result, $message) = $this->doCompanySearch($companyNumber);
 
             // company not found so let's try alternative search with/without leading zero
@@ -750,7 +749,6 @@ class FormHelperService extends AbstractHelperService
             }
 
             if (isset($result) && $result['Count'] === 1) {
-
                 $form->get($detailsFieldset)->get('name')->setValue($result['Results'][0]['CompanyName']);
 
                 if ($addressFieldset && isset($result['Results'][0]['RegAddress']['AddressLine'])) {

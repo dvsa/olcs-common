@@ -4,7 +4,6 @@
 namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Data\Mapper\Lva\TransportManager\Sections\ConvictionsPenalties;
-use Common\Data\Mapper\Lva\TransportManager\Sections\OtherLicences;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 
@@ -40,6 +39,5 @@ class ConvictionsPenaltiesTest extends m\Adapter\Phpunit\MockeryTestCase
             ]
         );
         $this->assertInstanceOf(ConvictionsPenalties::class, $actual);
-
     }
 }
