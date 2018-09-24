@@ -41,11 +41,28 @@ class OtherEmploymentsTest extends MockeryTestCase
             'translateReplace'
         )->with('markup-lva-tmverify-details-checkanswer-answer-otherEmployments', ['__TEST__'])->once()->andReturn('__TEST__');
 
+        $this->mockTranslator->shouldReceive(
+            'translateReplace'
+        )->with('markup-lva-tmverify-details-checkanswer-answer-otherEmployments', ['__TEST__'])->once()->andReturn('__TEST__');
+
+        $this->mockTranslator->shouldReceive(
+            'translateReplace'
+        )->with('markup-lva-tmverify-details-checkanswer-answer--otherEmployments-more', [1])->once()->andReturn('__TEST__');
+
         $actual = $this->sut->populate(
             [
                 'transportManager' =>[
                     'employments'=>[
                         0 =>[
+                            'employerName' =>'__TEST__'
+                        ],
+                        1 =>[
+                            'employerName' =>'__TEST__'
+                        ],
+                        2 =>[
+                            'employerName' =>'__TEST__'
+                        ],
+                        3 =>[
                             'employerName' =>'__TEST__'
                         ]
                     ]
@@ -56,4 +73,5 @@ class OtherEmploymentsTest extends MockeryTestCase
         $this->assertInstanceOf(OtherEmployment::class, $actual);
         $this->assertEquals(['lva-tmverify-details-checkanswer-employments' => '__TEST__'], $actual->sectionSerialize());
     }
+
 }

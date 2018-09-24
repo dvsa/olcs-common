@@ -22,15 +22,40 @@ class AdditionalInformationTest extends MockeryTestCase
     public function testObjectPopulated()
     {
         $actual = $this->sut->populate([
-            'transportManager' =>[
+
+            'transportManager' => [
                 'documents' => []
             ],
-            'additionalInformation'=>'__TEST__',
+            'additionalInformation' => '__TEST__',
 
-            ]);
+        ]);
         $this->assertInstanceOf(AdditionalInformation::class, $actual);
         foreach (get_object_vars($this->sut) as $property) {
             $this->assertNotEmpty($property);
         }
+    }
+
+    public function testObjectPopulatedDocuments()
+    {
+        $actual = $this->sut->populate([
+            'application' => ['id' => 1],
+            'transportManager' => [
+                'documents' => [
+
+                    [
+                        'application' => ['id' => 1],
+                        'category' => ['id' => 5],
+                        'subCategory' => ['id' => 100]
+                    ]
+                ]
+            ],
+            'additionalInformation' => '__TEST__',
+
+        ]);
+        $this->assertInstanceOf(AdditionalInformation::class, $actual);
+        $this->assertEquals([
+            'lva-tmverify-details-checkanswer-additionalInformation' => 'Details added',
+            'lva-tmverify-details-checkanswer-files' => 1,
+        ], $actual->sectionSerialize());
     }
 }
