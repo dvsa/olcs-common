@@ -32,8 +32,6 @@ class OtherEmploymentsTest extends MockeryTestCase
         );
 
         $this->assertInstanceOf(OtherEmployment::class, $actual);
-        foreach (get_object_vars($this->sut) as $property) {
-            $this->assertNotEmpty($property);
-        }
+
     }
 }

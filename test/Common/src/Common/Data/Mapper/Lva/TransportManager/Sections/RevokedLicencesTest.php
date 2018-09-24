@@ -24,7 +24,7 @@ class RevokedLicencesTest extends MockeryTestCase
     {
         $actual = $this->sut->populate(
             [
-                'transportManager' =>[
+                'transportManager' => [
                     'otherLicences' => [
                     ],
                 ]
@@ -32,6 +32,33 @@ class RevokedLicencesTest extends MockeryTestCase
         );
         $this->assertInstanceOf(RevokedLicences::class, $actual);
 
-        $this->assertEquals(['lva-tmverify-details-checkanswer-revokedLicences' => 'None Added'], $actual->sectionSerialize());
+        $this->assertEquals(
+            ['lva-tmverify-details-checkanswer-revokedLicences' => 'None Added'],
+            $actual->sectionSerialize()
+        );
+    }
+
+    public function testPopulatedObjectWithLicences()
+    {
+        $this->mockTranslator->shouldReceive(
+            'translateReplace'
+        )->with(
+            'markup-lva-tmverify-details-checkanswer-answer-revokedLicences',
+            ['OB123']
+        )->once()->andReturn('__TEST__');
+
+        $actual = $this->sut->populate(
+            [
+                'transportManager' => [
+                    'otherLicences' => [
+                        ['licNo' => 'OB123']
+                    ],
+
+                ]
+            ]
+        );
+        $this->assertInstanceOf(RevokedLicences::class, $actual);
+
+        $this->assertEquals(['lva-tmverify-details-checkanswer-revokedLicences' => '__TEST__'], $actual->sectionSerialize());
     }
 }
