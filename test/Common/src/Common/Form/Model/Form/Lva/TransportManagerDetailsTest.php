@@ -266,7 +266,7 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
     public function testHasOtherLicences()
     {
-        $element = [ 'responsibilities', 'hasOtherLicences'];
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'hasOtherLicences'];
         $this->assertFormElementIsRequired($element, true);
     }
 

@@ -22,7 +22,7 @@ OLCS.ready(function() {
       },
         "optionalData": {
             "selector:#otherLicences": function () {
-                return OLCS.formHelper.isChecked("responsibilities", "hasOtherLicences", "Y");
+                return OLCS.formHelper.isChecked("responsibilities[otherLicencesFieldset]", "hasOtherLicences", "Y");
             },
             "selector:#otherEmployments": function () {
                 return OLCS.formHelper.isChecked("otherEmployments", "hasOtherEmployment", "Y");
