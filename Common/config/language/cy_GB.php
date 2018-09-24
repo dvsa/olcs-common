@@ -1469,7 +1469,7 @@ return [
     'error.messages.checkbox.cabotage' => 'CY - Tick to confirm your vehicle will not undertake cabotage journey(s)',
     'error.messages.checkbox.declaration' => 'CY - Please confirm the details you are providing are correct',
     'error.messages.restricted.countries' => 'CY - Select yes or no if you are transporting goods to any of these countries',
-    'error.messages.permits.required' => 'CY - Enter the number of permits you require. The number must be greater or equal to 1.',
+    'error.messages.permits.required' => 'CY - Enter the number of permits you require. The number must be at least 1.',
     'error.messages.permits.greater' => 'CY - The input is not greater than 0',
     'error.messages.permits.less' => 'CY - This number must be less than or equal to your number of authorised vehicles',
     'error.messages.permits.not.digits' => 'CY - You must enter a valid whole number',
