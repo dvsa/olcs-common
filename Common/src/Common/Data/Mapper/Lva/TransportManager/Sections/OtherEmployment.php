@@ -13,7 +13,6 @@ class OtherEmployment extends AbstractSection implements TransportManagerSection
 
     public function populate(array $transportManagerApplication)
     {
-        $employmentData = [];
         $employments = $transportManagerApplication['transportManager']['employments'];
         $employments = $this->sortByCreated($employments);
         $noOfPreviousRoles = count($employments);

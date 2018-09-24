@@ -78,9 +78,13 @@ class TransportManagerApplicationTest extends MockeryTestCase
                     'hoursSun' => '__TEST__',
                     'otherLicences' => [
                     ],
+                    'additionalInformation'=>'__TEST__',
+
                     'transportManager' =>
                         [
-
+                            'otherLicences' =>[],
+                            'employments'=>[],
+                            'previousConvictions' => [],
                             'documents' => [],
                             'homeCd' => [
                                 'emailAddress' => '__TEST__',
