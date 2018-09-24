@@ -104,12 +104,14 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
 
         // Mocks
         $mockTmTypeField = m::mock(\Zend\Form\Element::class);
+        $mockOtherLicenceFieldset = m::mock(\Zend\Form\Fieldset::class);
         $mockOtherLicenceField = m::mock(\Zend\Form\Fieldset::class);
+        $mockOtherLicenceFieldset->shouldReceive('get')->with('otherLicences')->andReturn($mockOtherLicenceField);
 
         // Expectations
         $fieldset
             ->shouldReceive('get')->with('tmType')->andReturn($mockTmTypeField)
-            ->shouldReceive('get')->with('otherLicences')->andReturn($mockOtherLicenceField);
+            ->shouldReceive('get')->with('otherLicencesFieldset')->andReturn($mockOtherLicenceFieldset);
 
         $this->mockFormHlp
             ->shouldReceive('removeOption')->once()->with($mockTmTypeField, 'tm_t_b')
