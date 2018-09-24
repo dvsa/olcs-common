@@ -114,4 +114,55 @@ class DetailsTest extends MockeryTestCase
 
         $this->assertEquals('__TEST__', $this->sut->populate($data)->getHomeCd());
     }
+
+    /**
+     * @dataProvider  dpCertificates
+     */
+    public function testCertificate($docs, $expected)
+    {
+        $data = [
+            'transportManager' =>
+                [
+                    'documents' => $docs,
+                    'homeCd' => [
+                        'emailAddress' => '__TEST__',
+                        'address' => [
+                            'countryCode' => [
+                                'countryDesc' => '__TEST__'
+                            ],
+                        ],
+
+                        'person' => [
+                            'forename' => '__TEST__',
+                            'familyName' => '__TEST__',
+                        ]
+                    ],
+                    'workCd' => [
+                        'address' => [
+                            'countryCode' => [
+                                'countryDesc' => '__TEST__'
+                            ],
+                        ]
+                    ]
+                ]
+        ];
+        $actual = $this->sut->populate($data);
+        $this->assertEquals($expected,$actual->sectionSerialize());
+    }
+
+    public function dpCertificates()
+    {
+        return
+            [
+                [[],'None Added'],
+
+                [
+                    'application' => ['id' => 1],
+                    'category' => ['id' => 5],
+                    'subCategory' => ['id' => 98]
+                ],
+                []
+
+            ];
+    }
 }

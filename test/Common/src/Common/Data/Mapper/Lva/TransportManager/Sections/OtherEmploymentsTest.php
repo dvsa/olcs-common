@@ -41,29 +41,30 @@ class OtherEmploymentsTest extends MockeryTestCase
             'translateReplace'
         )->with('markup-lva-tmverify-details-checkanswer-answer-otherEmployments', ['__TEST__'])->once()->andReturn('__TEST__');
 
-        $this->mockTranslator->shouldReceive(
-            'translateReplace'
-        )->with('markup-lva-tmverify-details-checkanswer-answer-otherEmployments', ['__TEST__'])->once()->andReturn('__TEST__');
 
         $this->mockTranslator->shouldReceive(
             'translateReplace'
-        )->with('markup-lva-tmverify-details-checkanswer-answer--otherEmployments-more', [1])->once()->andReturn('__TEST__');
+        )->with('markup-lva-tmverify-details-checkanswer-answer-otherEmployments-more', [1])->once()->andReturn('__TEST__');
 
         $actual = $this->sut->populate(
             [
                 'transportManager' =>[
                     'employments'=>[
                         0 =>[
-                            'employerName' =>'__TEST__'
+                            'employerName' =>'__TEST__',
+                            'createdOn'=>1,
                         ],
                         1 =>[
-                            'employerName' =>'__TEST__'
+                            'employerName' =>'__TEST__',
+                            'createdOn'=>3,
                         ],
                         2 =>[
-                            'employerName' =>'__TEST__'
+                            'employerName' =>'__TEST__',
+                            'createdOn'=>2,
                         ],
                         3 =>[
-                            'employerName' =>'__TEST__'
+                            'employerName' =>'__TEST__',
+                            'createdOn'=>4,
                         ]
                     ]
                 ]
@@ -71,7 +72,6 @@ class OtherEmploymentsTest extends MockeryTestCase
         );
 
         $this->assertInstanceOf(OtherEmployment::class, $actual);
-        $this->assertEquals(['lva-tmverify-details-checkanswer-employments' => '__TEST__'], $actual->sectionSerialize());
+        $this->assertEquals(['lva-tmverify-details-checkanswer-employments' => '__TEST____TEST____TEST____TEST__'], $actual->sectionSerialize());
     }
-
 }
