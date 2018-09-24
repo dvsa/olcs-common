@@ -5,7 +5,7 @@ namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Attributes({"class":"table__form"})
+ * @Form\Attributes({"class":"table__form","id":"previousHistory"})
  * @Form\Name("previousHistory")
  */
 class PreviousHistory

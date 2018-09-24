@@ -53,24 +53,24 @@ class TransportManagerApplication
         $data [] =$responsibilities->makeSection('Responsibilities', $responsibilitiesQuestions, 'responsibilities');
         $hours = (new HoursOfWork($translationHelperService))->populate($transportManagerApplication);
         $hoursQuestions = $hours->createSectionFormat();
-        $data [] = $hours->makeSection('HoursOfWork', $hoursQuestions, 'responsibilities');
+        $data [] = $hours->makeSection('HoursOfWork', $hoursQuestions, 'hoursOfWeek');
         $licences =  (new OtherLicences($translationHelperService))->populate($transportManagerApplication);
         $licencesQuestions = $licences->createSectionFormat();
-        $data [] = $licences->makeSection('OtherLicences', $licencesQuestions, 'otherLicences');
+        $data [] = $licences->makeSection('OtherLicences', $licencesQuestions, 'hasOtherLicences');
         $additionalInfo = (new AdditionalInformation($translationHelperService))->populate($transportManagerApplication);
         $additionalInfoQuestions = $additionalInfo->createSectionFormat();
-        $data [] = $additionalInfo->makeSection('AdditionalInfo', $additionalInfoQuestions, 'responsibilities');
+        $data [] = $additionalInfo->makeSection('AdditionalInfo', $additionalInfoQuestions, 'additionalInformation');
 
         $otherEmployment = (new OtherEmployment($translationHelperService))->populate($transportManagerApplication);
         $otherEmploymentQuestions = $otherEmployment->createSectionFormat();
-        $data [] = $otherEmployment->makeSection('OtherEmployment', $otherEmploymentQuestions, 'otherEmployment');
+        $data [] = $otherEmployment->makeSection('OtherEmployment', $otherEmploymentQuestions, 'hasOtherEmployments');
 
         $convictions= (new ConvictionsPenalties($translationHelperService))->populate($transportManagerApplication);
         $convictionsQuestions = $convictions->createSectionFormat();
-        $data [] = $convictions->makeSection('Convictions', $convictionsQuestions, 'previousConvictions');
+        $data [] = $convictions->makeSection('Convictions', $convictionsQuestions, 'previousHistory');
         $revocations = (new RevokedLicences($translationHelperService))->populate($transportManagerApplication);
         $revocationQuestions = $revocations->createSectionFormat();
-        $data [] = $revocations->makeSection('Revocations', $revocationQuestions, 'previousLicences');
+        $data [] = $revocations->makeSection('Revocations', $revocationQuestions, 'previousHistory');
 
         return $data;
     }

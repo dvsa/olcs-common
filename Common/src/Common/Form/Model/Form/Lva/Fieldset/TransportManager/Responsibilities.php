@@ -60,37 +60,15 @@ class Responsibilities
     /**
      * @Form\Name("hoursOfWeek")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekRequired")
+     * @Form\Attributes({"id":"hoursOfWeek"})
      */
     public $hoursOfWeek = null;
 
     /**
-     * @Form\Options({
-     *     "label": "transport-manager.other-licence.form.radio.label",
-     *     "hint" : "transport-manager.other-licence.form.radio.hint",
-     *     "hint-class" : "",
-     *     "value_options": {"Y":"Yes", "N":"No"},
-     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
-     * })
-     * @Form\Validator({
-     *     "name":"Common\Form\Elements\Validators\YesNoTableRequiredValidator",
-     *     "options": {
-     *          "table": "otherLicences",
-     *          "message":"transport-manager-details.form.otherLicences.required"
-     *     }
-     * })
-     * @Form\Type("Radio")
+     * @Form\Name("otherLicencesFieldset")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\OtherLicencesFieldset")
      */
-    public $hasOtherLicences = null;
-
-    /**
-     * @Form\Name("otherLicences")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({
-     *     "id":"otherLicences",
-     *     "class": "help__text help__text--removePadding"
-     * })
-     */
-    public $otherLicences = null;
+    public $otherLicencesFieldset = null;
 
     /**
      * @Form\Type("TextArea")
@@ -98,13 +76,13 @@ class Responsibilities
      *      "class":"long",
      *      "label": "transport-manager.responsibilities.additional-information.title",
      *      "autocomplete": "nope",
-     *      "id":"additionalInformation"
      * })
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.additional-information",
      *     "label_options": {
      *         "disable_html_escape": "true"
-     *     }
+     *     },
+     *     "label_attributes": {"id":"additionalInformation"}
      * })
      * @Form\Required(false)
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})

@@ -5,15 +5,15 @@ namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Attributes({"class":"table__form","id":"hasOtherEmployments"})
- * @Form\Name("otherEmployments")
+ * @Form\Attributes({"class":"table__form","id":"hasOtherLicences"})
+ * @Form\Name("otherLicencesFieldset")
  */
-class OtherEmployments
+class OtherLicencesFieldset
 {
     /**
      * @Form\Options({
-     *     "label": "transport-manager.employment.form.radio.label",
-     *     "hint" : "transport-manager.employment.form.radio.hint",
+     *     "label": "transport-manager.other-licence.form.radio.label",
+     *     "hint" : "transport-manager.other-licence.form.radio.hint",
      *     "hint-class" : "",
      *     "value_options": {"Y":"Yes", "N":"No"},
      *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
@@ -21,21 +21,21 @@ class OtherEmployments
      * @Form\Validator({
      *     "name":"Common\Form\Elements\Validators\YesNoTableRequiredValidator",
      *     "options": {
-     *          "table": "otherEmployment",
-     *          "message":"transport-manager-details.form.employment.required"
+     *          "table": "otherLicences",
+     *          "message":"transport-manager-details.form.otherLicences.required"
      *     }
      * })
      * @Form\Type("Radio")
      */
-    public $hasOtherEmployment = null;
+    public $hasOtherLicences = null;
 
     /**
-     * @Form\Name("otherEmployment")
+     * @Form\Name("otherLicences")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
      * @Form\Attributes({
-     *      "id":"otherEmployments",
-     *      "class": "help__text help__text--removePadding"
+     *     "id":"otherLicences",
+     *     "class": "help__text help__text--removePadding"
      * })
      */
-    public $otherEmployment = null;
+    public $otherLicences = null;
 }
