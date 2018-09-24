@@ -272,18 +272,18 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
     public function testOtherLicencesTable()
     {
-        $element = [ 'responsibilities', 'otherLicences', 'table' ];
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'otherLicences', 'table' ];
         $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementTable($element);
 
-        $element = [ 'responsibilities', 'otherLicences', 'action' ];
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'otherLicences', 'action' ];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'responsibilities', 'otherLicences', 'id' ];
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'otherLicences', 'id' ];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'responsibilities', 'otherLicences', 'rows' ];
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'otherLicences', 'rows' ];
         $this->assertFormElementHidden($element);
     }
 
