@@ -3461,7 +3461,7 @@ return [
     'error.messages.checkbox.cabotage' => 'Tick to confirm your vehicle will not undertake cabotage journey(s)',
     'error.messages.checkbox.declaration' => 'Please confirm the details you are providing are correct',
     'error.messages.restricted.countries' => 'Select yes or no if you are transporting goods to any of these countries',
-    'error.messages.permits.required' => 'Enter the number of permits you require. The number must be greater or equal to 1.',
+    'error.messages.permits.required' => 'Enter the number of permits you require. The number must be at least 1.',
     'error.messages.permits.greater' => 'The input is not greater than 0',
     'error.messages.permits.less' => 'This number must be less than or equal to your number of authorised vehicles',
     'error.messages.permits.not.digits' => 'You must enter a valid whole number',
