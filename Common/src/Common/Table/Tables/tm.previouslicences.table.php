@@ -2,8 +2,7 @@
 
 return array(
     'variables' => array(
-        'title' => 'transport-manager.previouslicences.table',
-        'empty_message' => 'transport-manager.previouslicences.table.empty',
+        'empty_message' => false,
         'within_form' => true
     ),
     'settings' => array(

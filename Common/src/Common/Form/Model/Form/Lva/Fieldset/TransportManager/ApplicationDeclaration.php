@@ -24,7 +24,7 @@ class ApplicationDeclaration
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      */
-    public $signatureOptions = null;
+    public $isDigitallySigned = null;
 
     /**
      * @Form\Attributes({"id":"declarationDownload"})

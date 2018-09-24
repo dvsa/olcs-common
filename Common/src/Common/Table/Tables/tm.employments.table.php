@@ -2,9 +2,8 @@
 
 return array(
     'variables' => array(
-        'title' => 'transport-manager.employments.table',
         'within_form' => true,
-        'empty_message' => 'transport-manager.employments.table.empty',
+        'empty_message' => false,
     ),
     'settings' => array(
         'crud' => array(

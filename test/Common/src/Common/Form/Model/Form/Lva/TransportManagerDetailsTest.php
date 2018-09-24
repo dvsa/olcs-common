@@ -264,6 +264,12 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementIsRequired($element, false);
     }
 
+    public function testHasOtherLicences()
+    {
+        $element = [ 'responsibilities', 'hasOtherLicences'];
+        $this->assertFormElementIsRequired($element, true);
+    }
+
     public function testOtherLicencesTable()
     {
         $element = [ 'responsibilities', 'otherLicences', 'table' ];
@@ -314,9 +320,15 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementText($element, 0, 4000);
     }
 
+    public function testHasOtherEmployment()
+    {
+        $element = [ 'otherEmployments', 'hasOtherEmployment'];
+        $this->assertFormElementIsRequired($element, true);
+    }
+
     public function testOtherEmployment()
     {
-        $element = [ 'otherEmployment', 'table' ];
+        $element = [ 'otherEmployments', 'otherEmployment', 'table' ];
         $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementTable($element);
@@ -324,20 +336,32 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
     public function testOtherEmploymentAction()
     {
-        $element = [ 'otherEmployment', 'action' ];
+        $element = [ 'otherEmployments', 'otherEmployment', 'action' ];
         $this->assertFormElementHidden($element);
     }
 
     public function testOtherEmploymentRows()
     {
-        $element = [ 'otherEmployment', 'rows' ];
+        $element = [ 'otherEmployments', 'otherEmployment', 'rows' ];
         $this->assertFormElementHidden($element);
     }
 
     public function testOtherEmploymentId()
     {
-        $element = [ 'otherEmployment', 'id' ];
+        $element = [ 'otherEmployments', 'otherEmployment', 'id' ];
         $this->assertFormElementHidden($element);
+    }
+
+    public function testHasConvictions()
+    {
+        $element = [ 'previousHistory', 'hasConvictions'];
+        $this->assertFormElementIsRequired($element, true);
+    }
+
+    public function testHasPreviousLicences()
+    {
+        $element = [ 'previousHistory', 'hasPreviousLicences'];
+        $this->assertFormElementIsRequired($element, true);
     }
 
     public function testPreviousHistoryConvictionsTable()
