@@ -3365,6 +3365,7 @@ return [
     'permits.application.ecmt.countries' => 'Which countries will you be delivering to?',
     'permits.application.ecmt.select' => 'Select all that apply',
     'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?',
+    'permits.application.submitted.title' => 'Application submitted-',
     'permits.application.submitted.main' => 'Application submitted',
     'permits.application.fee.submitted.title' => 'Payment successful-',
     'permits.application.fee.submitted.main' => 'Payment successful',
