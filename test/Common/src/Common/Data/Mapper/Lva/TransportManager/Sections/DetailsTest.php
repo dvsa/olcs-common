@@ -18,6 +18,7 @@ class DetailsTest extends MockeryTestCase
      */
     public function setUp()
     {
+
         $this->mockTranslator = m::mock(TranslationHelperService::class);
         $this->sut = new Details($this->mockTranslator);
     }
@@ -120,15 +121,14 @@ class DetailsTest extends MockeryTestCase
         ], $this->sut->populate($data)->sectionSerialize());
     }
 
-    /**
-     * @dataProvider  dpCertificates
-     */
-    public function testCertificate($docs, $expected)
+
+
+    public function testCertificateNotAdded()
     {
         $data = [
             'transportManager' =>
                 [
-                    'documents' => $docs,
+                    'documents' => [],
                     'homeCd' => [
                         'emailAddress' => '__TEST__',
                         'address' => [
@@ -151,6 +151,7 @@ class DetailsTest extends MockeryTestCase
                     ]
                 ]
         ];
+
         $this->mockTranslator->shouldReceive(
             'translateReplace'
         )->with('markup-lva-tmverify-details-checkanswer-answer-address', [
@@ -158,24 +159,61 @@ class DetailsTest extends MockeryTestCase
         ])->times(2)->andReturn('__TEST__');
         $actual = $this->sut->populate($data);
 
-        $this->assertContains($expected, $actual->sectionSerialize());
+        $this->assertContains('No certificates attached', $actual->sectionSerialize());
     }
 
-    public function dpCertificates()
+
+    public function testCertificateAdded()
     {
-        return
-            [
-                [[], 'No certificates attached'],
-
+        $data = [
+            'transportManager' =>
                 [
-                    [
-                        'application' => ['id' => 1],
-                        'category' => ['id' => 5],
-                        'subCategory' => ['id' => 98]
-                    ],
-                    'Certificate Added'
-                ]
+                    'documents' => [
 
-            ];
+
+                            [
+                                'application' => ['id' => 1],
+                                'category' => ['id' => 5],
+                                'subCategory' => ['id' => 98]
+                            ]
+
+                    ],
+                    'homeCd' => [
+                        'emailAddress' => '__TEST__',
+                        'address' => [
+                            'countryCode' => [
+                                'countryDesc' => '__TEST__'
+                            ],
+                        ],
+
+                        'person' => [
+                            'forename' => '__TEST__',
+                            'familyName' => '__TEST__',
+                        ]
+                    ],
+                    'workCd' => [
+                        'address' => [
+                            'countryCode' => [
+                                'countryDesc' => '__TEST__'
+                            ],
+                        ]
+                    ]
+                ]
+        ];
+
+        $this->mockTranslator->shouldReceive(
+            'translateReplace'
+        )->with('markup-lva-tmverify-details-checkanswer-answer-address', [
+            'country' => '__TEST__',
+        ])->times(2)->andReturn('__TEST__');
+        $actual = $this->sut->populate($data);
+
+        $this->assertEquals('Certificate Added', $actual->sectionSerialize()['lva-tmverify-details-checkanswer-certificate']);
+    }
+
+
+    public function tearDown()
+    {
+        $this->mockTranslator = null;
     }
 }
