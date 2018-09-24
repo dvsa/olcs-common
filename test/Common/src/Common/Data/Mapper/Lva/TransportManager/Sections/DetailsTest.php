@@ -59,4 +59,45 @@ class DetailsTest extends MockeryTestCase
             $this->assertNotEmpty($property);
         }
     }
+
+    public function testFormatAddress()
+    {
+        $data = ['transportManager' =>
+                [
+                    'documents' => [],
+                    'homeCd' => [
+                        'emailAddress' => '__TEST__',
+                        'address' => [
+                            'addressLine1' =>'test',
+                            'addressLine2' =>'test',
+                            'addressLine3' =>'test',
+                            'addressLine4' =>'test',
+                            'Town' =>'test',
+                            'postcode'
+                            ''=>'',
+                            'countryCode' => [
+                                'countryDesc' => '__TEST__'
+                            ],
+                        ],
+
+                        'person' => [
+                            'forename' => '__TEST__',
+                            'familyName' => '__TEST__',
+                        ]
+                    ],
+                    'workCd' => [
+                        'address' => [
+                            'countryCode' => [
+                                'countryDesc' => '__TEST__'
+                            ],
+                        ]
+                    ]
+                ]
+            ];
+
+        $this->mockTranslator->shouldReceive(
+            'translateReplace'
+        )->with([])->twice()->andReturn('');
+        $this->sut->populate($data)->getHomeCd();
+    }
 }

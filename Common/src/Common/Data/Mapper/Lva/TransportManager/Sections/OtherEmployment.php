@@ -37,5 +37,3 @@ class OtherEmployment extends AbstractSection implements TransportManagerSection
         $this->employments .= $suffix;
     }
 }
-
-
