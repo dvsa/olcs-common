@@ -105,7 +105,13 @@ class DetailsTest extends MockeryTestCase
             'postcode' => 'test',
             'country' => '__TEST__',
             'addressLine3' => '',
-        ])->twice()->andReturn('__TEST__');
+        ])->once()->andReturn('__TEST__');
+        $this->mockTranslator->shouldReceive(
+            'translateReplace'
+        )->with('markup-lva-tmverify-details-checkanswer-answer-address', [
+            'country' => '__TEST__',
+        ])->once()->andReturn('__TEST__');
+        
         $this->assertEquals('__TEST__', $this->sut->populate($data)->getHomeCd());
     }
 }
