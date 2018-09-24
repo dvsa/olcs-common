@@ -222,12 +222,8 @@ class Details extends AbstractSection
         }
         $formattedAddress['country'] = $data['countryCode']['countryDesc'];
         // push any blank lines to the end
-        usort($formattedAddress, function ($x, $y) {
-            if (empty($x) | empty($y)) {
-                return 1;
-            }
-            return 0;
-        });
+        $formattedAddress = array_diff($formattedAddress, array(''))
+            + array_intersect($formattedAddress, array(''));
         return $formattedAddress;
     }
 }

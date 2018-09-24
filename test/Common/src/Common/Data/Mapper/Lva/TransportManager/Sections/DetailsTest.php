@@ -62,19 +62,20 @@ class DetailsTest extends MockeryTestCase
 
     public function testFormatAddress()
     {
-        $data = ['transportManager' =>
+        $data = [
+            'transportManager' =>
                 [
                     'documents' => [],
                     'homeCd' => [
                         'emailAddress' => '__TEST__',
                         'address' => [
-                            'addressLine1' =>'test',
-                            'addressLine2' =>'test',
-                            'addressLine3' =>'test',
-                            'addressLine4' =>'test',
-                            'Town' =>'test',
-                            'postcode'
-                            ''=>'',
+                            'addressLine1' => 'addressLine1',
+                            'addressLine2' => 'addressLine2',
+                            'addressLine3' => '',
+                            'addressLine4' => 'addressLine4',
+                            'Town' => 'test',
+                            'postcode' => 'test',
+                            '' => '',
                             'countryCode' => [
                                 'countryDesc' => '__TEST__'
                             ],
@@ -93,11 +94,18 @@ class DetailsTest extends MockeryTestCase
                         ]
                     ]
                 ]
-            ];
+        ];
 
         $this->mockTranslator->shouldReceive(
             'translateReplace'
-        )->with([])->twice()->andReturn('');
-        $this->sut->populate($data)->getHomeCd();
+        )->with('markup-lva-tmverify-details-checkanswer-answer-address', [
+            'addressLine1' => 'addressLine1',
+            'addressLine2' => 'addressLine2',
+            'addressLine4' => 'addressLine4',
+            'postcode' => 'test',
+            'country' => '__TEST__',
+            'addressLine3' => '',
+        ])->twice()->andReturn('__TEST__');
+        $this->assertEquals('__TEST__', $this->sut->populate($data)->getHomeCd());
     }
 }
