@@ -15,7 +15,7 @@ class RevokedLicences extends AbstractSection implements TransportManagerSection
         $revokedLicences = $transportManagerApplication['transportManager']['otherLicences'];
 
         if (empty($revokedLicences)) {
-            $this->revokedLicences = 'None added';
+            $this->revokedLicences = 'None Added';
             return $this;
         }
 
