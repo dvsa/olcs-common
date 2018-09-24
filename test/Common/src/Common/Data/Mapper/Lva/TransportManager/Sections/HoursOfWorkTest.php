@@ -22,9 +22,7 @@ class HoursOfWorkTest extends MockeryTestCase
 
     public function testPopulateObject()
     {
-        $this->mockTranslator->shouldNotReceive(
-            'translateReplace'
-        );
+
         $actual = $this->sut->populate(
             [
                 'hoursMon' => '__TEST__',
@@ -37,8 +35,6 @@ class HoursOfWorkTest extends MockeryTestCase
             ]
         );
         $this->assertInstanceOf(HoursOfWork::class, $actual);
-        foreach (get_object_vars($this->sut) as $property) {
-            $this->assertNotEmpty($property);
-        }
+        $this->assertNotEmpty($actual->sectionSerialize());
     }
 }

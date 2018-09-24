@@ -39,7 +39,7 @@ class OtherEmploymentsTest extends MockeryTestCase
     {
         $this->mockTranslator->shouldReceive(
             'translateReplace'
-        )->with('markup-lva-tmverify-details-checkanswer-answer-otherEmployments', ['__TEST__'])->once()->andReturn('__TEST__');
+        )->with('markup-lva-tmverify-details-checkanswer-answer-otherEmployments', ['__TEST__'])->times(3)->andReturn('__TEST__');
 
 
         $this->mockTranslator->shouldReceive(

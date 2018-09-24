@@ -55,9 +55,6 @@ class DetailsTest extends MockeryTestCase
         ]);
 
         $this->assertInstanceOf(Details::class, $actual);
-        foreach (get_object_vars($this->sut) as $property) {
-            $this->assertNotEmpty($property);
-        }
     }
 
     public function testFormatAddress()
@@ -112,7 +109,15 @@ class DetailsTest extends MockeryTestCase
             'country' => '__TEST__',
         ])->once()->andReturn('__TEST__');
 
-        $this->assertEquals('__TEST__', $this->sut->populate($data)->getHomeCd());
+        $this->assertEquals([
+            'lva-tmverify-details-checkanswer-name' => '__TEST__ __TEST__',
+            'lva-tmverify-details-checkanswer-birthDate' => null,
+            'lva-tmverify-details-checkanswer-birthPlace' => null,
+            'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
+            'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',
+            'lva-tmverify-details-checkanswer-homeCd' => '__TEST__',
+            'lva-tmverify-details-checkanswer-workCd' => '__TEST__',
+        ], $this->sut->populate($data)->sectionSerialize());
     }
 
     /**
@@ -146,15 +151,23 @@ class DetailsTest extends MockeryTestCase
                     ]
                 ]
         ];
+        $this->mockTranslator->shouldReceive(
+            'translateReplace'
+        )->with('markup-lva-tmverify-details-checkanswer-answer-details', [1])->once()->andReturn('__TEST__');
+        $this->mockTranslator->shouldReceive(
+            'translateReplace'
+        )->with('markup-lva-tmverify-details-checkanswer-answer-address', [
+            'country' => '__TEST__',
+        ])->once()->andReturn('__TEST__');
         $actual = $this->sut->populate($data);
-        $this->assertEquals($expected,$actual->sectionSerialize());
+        $this->assertEquals([], $actual->sectionSerialize());
     }
 
     public function dpCertificates()
     {
         return
             [
-                [[],'None Added'],
+                [[], 'None Added'],
 
                 [
                     'application' => ['id' => 1],
