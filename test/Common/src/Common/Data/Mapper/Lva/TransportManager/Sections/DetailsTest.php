@@ -27,10 +27,12 @@ class DetailsTest extends MockeryTestCase
     {
         $this->mockTranslator->shouldReceive(
             'translateReplace'
-        )->twice()->andReturn('');
+        )->twice()->andReturn('__TEST__');
+
         $actual = $this->sut->populate([
             'transportManager' =>
                 [
+
                     'documents' => [],
                     'homeCd' => [
                         'emailAddress' => '__TEST__',
@@ -43,6 +45,8 @@ class DetailsTest extends MockeryTestCase
                         'person' => [
                             'forename' => '__TEST__',
                             'familyName' => '__TEST__',
+                            'birthDate'=>'__TEST__',
+                            'birthPlace' =>'__TEST__',
                         ]
                     ],
                     'workCd' => [
@@ -56,6 +60,15 @@ class DetailsTest extends MockeryTestCase
         ]);
 
         $this->assertInstanceOf(Details::class, $actual);
+        $this->assertEquals([
+            'lva-tmverify-details-checkanswer-name' => '__TEST__ __TEST__',
+            'lva-tmverify-details-checkanswer-birthDate' => '__TEST__',
+            'lva-tmverify-details-checkanswer-birthPlace' => '__TEST__',
+            'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
+            'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',
+            'lva-tmverify-details-checkanswer-homeCd' => '__TEST__',
+            'lva-tmverify-details-checkanswer-workCd' => '__TEST__',
+        ], $actual->sectionSerialize());
     }
 
     public function testFormatAddress()
@@ -122,7 +135,6 @@ class DetailsTest extends MockeryTestCase
     }
 
 
-
     public function testCertificateNotAdded()
     {
         $data = [
@@ -171,11 +183,11 @@ class DetailsTest extends MockeryTestCase
                     'documents' => [
 
 
-                            [
-                                'application' => ['id' => 1],
-                                'category' => ['id' => 5],
-                                'subCategory' => ['id' => 98]
-                            ]
+                        [
+                            'application' => ['id' => 1],
+                            'category' => ['id' => 5],
+                            'subCategory' => ['id' => 98]
+                        ]
 
                     ],
                     'homeCd' => [
@@ -208,7 +220,8 @@ class DetailsTest extends MockeryTestCase
         ])->times(2)->andReturn('__TEST__');
         $actual = $this->sut->populate($data);
 
-        $this->assertEquals('Certificate Added', $actual->sectionSerialize()['lva-tmverify-details-checkanswer-certificate']);
+        $this->assertEquals('Certificate Added',
+            $actual->sectionSerialize()['lva-tmverify-details-checkanswer-certificate']);
     }
 
 

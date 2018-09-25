@@ -57,7 +57,10 @@ class TransportManagerApplicationTest extends MockeryTestCase
 
         $translationHelper->shouldReceive(
             'translateReplace'
-        )->twice()->andReturn('');
+        )->twice()->andReturn('__TEST__');
+        $translationHelper->shouldReceive(
+            'translate'
+        )->times(22)->andReturn('__TEST__');
         $data = TransportManagerApplication::mapForSections($data, $translationHelper);
         $this->assertInternalType('array', $data);
     }

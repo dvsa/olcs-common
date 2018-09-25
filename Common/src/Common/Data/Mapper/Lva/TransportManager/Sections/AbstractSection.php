@@ -64,7 +64,7 @@ abstract class AbstractSection
     {
         $questionSections = [];
         foreach ($items as $question => $answer) {
-            $questionSections[] = ['label' => $question, 'answer' => $answer];
+            $questionSections[] = ['label' => $question, 'answer' => $this->translator->translate($answer)];
         }
         return $questionSections;
     }
