@@ -76,7 +76,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                     'isAwaitingFee' => true,
                     'isValid' => false
                 ],
-                '<a class="overview__link" href="http://selfserve/permits/ecmt-awaiting-fee/7">' . 
+                '<a class="overview__link" href="http://selfserve/permits/ecmt-awaiting-fee/7">' .
                     '<span class="overview__link--underline">ECMT&gt;3456789</span></a>'
             ],
             [
