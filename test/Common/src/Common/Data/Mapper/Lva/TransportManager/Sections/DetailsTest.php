@@ -45,8 +45,8 @@ class DetailsTest extends MockeryTestCase
                         'person' => [
                             'forename' => '__TEST__',
                             'familyName' => '__TEST__',
-                            'birthDate'=>'__TEST__',
-                            'birthPlace' =>'__TEST__',
+                            'birthDate' => '__TEST__',
+                            'birthPlace' => '__TEST__',
                         ]
                     ],
                     'workCd' => [
@@ -220,8 +220,10 @@ class DetailsTest extends MockeryTestCase
         ])->times(2)->andReturn('__TEST__');
         $actual = $this->sut->populate($data);
 
-        $this->assertEquals('Certificate Added',
-            $actual->sectionSerialize()['lva-tmverify-details-checkanswer-certificate']);
+        $this->assertEquals(
+            'Certificate Added',
+            $actual->sectionSerialize()['lva-tmverify-details-checkanswer-certificate']
+        );
     }
 
 
