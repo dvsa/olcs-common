@@ -1534,7 +1534,9 @@ return [
     'permits.form.declined_permit.label' => 'CY - I confirm that I don\'t want awarded permits.',
     'permits.page.declined_permit.title' => 'CY - Decline awarded permits',
     'permits.button.cancel-and-return' => 'CY - Cancel and return',
-
-    'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'CY - Windows which are active or have ended cannot be deleted'
+    'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'CY - Windows which are active or have ended cannot be deleted',
+    'permits.ecmt.page.valid.title' => 'CY - %s ECMT Permits',
+    'permits.ecmt.page.valid.tableheader.ref' => 'CY - Permit number',
+    'permits.ecmt.page.valid.tableheader.countries' => 'CY - Excludes countries to',
     // Potentially unused translations
 ];

@@ -40,6 +40,10 @@ class LicencePermitReference implements FormatterInterface
             $route = 'ecmt-awaiting-fee';
         }
 
+        if ($row['isValid']) {
+            $route = 'ecmt-valid-permits';
+        }
+
         return vsprintf(
             '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
             [
