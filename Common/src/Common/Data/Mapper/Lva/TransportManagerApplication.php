@@ -8,6 +8,16 @@
 
 namespace Common\Data\Mapper\Lva;
 
+use Common\Data\Mapper\Lva\TransportManager\Sections\AdditionalInformation;
+use Common\Data\Mapper\Lva\TransportManager\Sections\ConvictionsPenalties;
+use Common\Data\Mapper\Lva\TransportManager\Sections\Details;
+use Common\Data\Mapper\Lva\TransportManager\Sections\HoursOfWork;
+use Common\Data\Mapper\Lva\TransportManager\Sections\OtherEmployment;
+use Common\Data\Mapper\Lva\TransportManager\Sections\OtherLicences;
+use Common\Data\Mapper\Lva\TransportManager\Sections\Responsibilities;
+use Common\Data\Mapper\Lva\TransportManager\Sections\RevokedLicences;
+use Common\Service\Helper\TranslationHelperService;
+
 /**
  * Transport Manager Application
  *
@@ -31,87 +41,37 @@ class TransportManagerApplication
         return $errors;
     }
 
-    public static function mapForSections(array $transportManagerApplication): array
+    public static function mapForSections(array $transportManagerApplication, TranslationHelperService $translationHelperService): array
     {
-        return [
-            [
-                'sectionHeading' => "Your Details",
-                'questions' => [
-                    ['label' => 'name', 'answer' => 'Phil Jowett'],
-                    ['label' => 'Date of Birth', 'answer' => '11/11/2000'],
-                    ['label' => 'Place of Birth', 'answer' => 'Nottingham'],
-                    ['label' => 'Email Address', 'answer' => 'Nottingham'],
-                    ['label' => 'Certificate of professional competence', 'answer' => 'certificate attached'],
-                    ['label' => 'Home Address', "answer" => ""],
-                    ['label' => 'Work Address', "answer" => ""],
 
-                ],
-                'change' => ['sectionLink' => 'test', 'backText' => '']
-            ],
-            [
-                'sectionHeading' => "Responsibilities",
-                'questions' => [
-                    ['label' => 'Which type of transport manager will you be for this licence ?', 'answer' => 'test'],
-                    ['label' => 'test', 'answer' => 'Are you the person is our who will be the licenced Operator']
-                ],
-                'change' => ['sectionLink' => 'test2', 'backText' => '']
-            ],
-            [
-                'sectionHeading' => "Hours per week",
-                'questions' => [
-                    ['label' => 'Monday', 'answer' => '8'],
-                    ['label' => 'Tuesday', 'answer' => '8'],
-                    ['label' => 'Wednesday', 'answer' => '8'],
-                    ['label' => 'Thursday', 'answer' => '8'],
-                    ['label' => 'Friday', 'answer' => '8'],
-                    ['label' => 'Saturday', 'answer' => '8'],
-                    ['label' => 'Sunday', 'answer' => '8'],
+        $data  = [];
+        $details = (new Details($translationHelperService))->populate($transportManagerApplication);
+        $detailsQuestions = $details->createSectionFormat();
+        $data [] = $details->makeSection('Details', $detailsQuestions, 'details');
+        $responsibilities = (new Responsibilities($translationHelperService))->populate($transportManagerApplication);
+        $responsibilitiesQuestions = $responsibilities->createSectionFormat();
+        $data [] =$responsibilities->makeSection('Responsibilities', $responsibilitiesQuestions, 'responsibilities');
+        $hours = (new HoursOfWork($translationHelperService))->populate($transportManagerApplication);
+        $hoursQuestions = $hours->createSectionFormat();
+        $data [] = $hours->makeSection('HoursOfWork', $hoursQuestions, 'hoursOfWeek');
+        $licences =  (new OtherLicences($translationHelperService))->populate($transportManagerApplication);
+        $licencesQuestions = $licences->createSectionFormat();
+        $data [] = $licences->makeSection('OtherLicences', $licencesQuestions, 'hasOtherLicences');
+        $additionalInfo = (new AdditionalInformation($translationHelperService))->populate($transportManagerApplication);
+        $additionalInfoQuestions = $additionalInfo->createSectionFormat();
+        $data [] = $additionalInfo->makeSection('AdditionalInfo', $additionalInfoQuestions, 'additionalInformation');
 
-                ],
-                'change' => ['sectionLink' => 'test3', 'backText' => '']
-            ],
-            [
-                'sectionHeading' => "Other Licences",
-                'questions' => [
-                    ['label' => '', 'answer' => 'non added'],
-                ],
-                'change' => ['sectionLink' => 'test4', 'backText' => '']
-            ],
-            [
-                'sectionHeading' => "Additional Information",
-                'questions' => [
-                    ['label' => 'Information', 'answer' => 'non added'],
-                    ['label' => 'Files', 'answer' => 'non attached']
-                ],
-                'change' => ['sectionLink' => 'test4', 'backText' => '']
-            ],
-            [
-                'sectionHeading' => "Other Employment",
-                'questions' => [
-                    ['label' => '', 'answer' => 'non added'],
+        $otherEmployment = (new OtherEmployment($translationHelperService))->populate($transportManagerApplication);
+        $otherEmploymentQuestions = $otherEmployment->createSectionFormat();
+        $data [] = $otherEmployment->makeSection('OtherEmployment', $otherEmploymentQuestions, 'hasOtherEmployments');
 
-                ],
-                'change' => ['sectionLink' => 'test4', 'backText' => '']
-            ],
-            [
-                'sectionHeading' => "Convictions & Penalities",
-                'questions' => [
-                    ['label' => '', 'answer' => 'information added'],
+        $convictions= (new ConvictionsPenalties($translationHelperService))->populate($transportManagerApplication);
+        $convictionsQuestions = $convictions->createSectionFormat();
+        $data [] = $convictions->makeSection('Convictions', $convictionsQuestions, 'previousHistory');
+        $revocations = (new RevokedLicences($translationHelperService))->populate($transportManagerApplication);
+        $revocationQuestions = $revocations->createSectionFormat();
+        $data [] = $revocations->makeSection('Revocations', $revocationQuestions, 'previousHistory');
 
-                ],
-                'change' => ['sectionLink' => 'test5', 'backText' => '']
-            ],
-            [
-                'sectionHeading' => "Revoked Curtailed or Suspended Licences",
-                'questions' => [
-                    ['label' => '', 'answer' => 'information added'],
-
-                ],
-                'change' => ['sectionLink' => 'test6', 'backText' => '']
-            ],
-
-        ];
-
-        //return $transportManagerApplication;
+        return $data;
     }
 }
