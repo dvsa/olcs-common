@@ -3476,7 +3476,7 @@ return [
     'permits.form.withdraw_application.button' => 'Withdraw application',
     'permits.form.withdraw_application.error_message' => 'Tick to confirm you want to withdraw your application',
 
-    'permits.form.change_licence.label' => 'I confirm that I would like to change the Licence for this application',
+    'permits.form.change_licence.label' => 'I confirm that I would like to change the licence to %s',
     'permits.form.change_licence.button' => 'Confirm Licence Change',
     'permits.form.change_licence.error_message' => 'You must select the checkbox to continue',
 
