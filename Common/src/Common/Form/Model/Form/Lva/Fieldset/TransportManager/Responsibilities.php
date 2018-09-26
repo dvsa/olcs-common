@@ -51,7 +51,10 @@ class Responsibilities
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.is-owner",
      *     "value_options": {"Y":"Yes", "N":"No"},
-     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "hint" : "transport-manager.responsibilities.is-owner.no.hint",
+     *     "hint-position" : "below",
+     *     "hint-class" : "hint hint__below hint__black hintNoOwner",
      * })
      * @Form\Type("Radio")
      */

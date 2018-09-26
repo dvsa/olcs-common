@@ -33,6 +33,11 @@ OLCS.ready(function() {
             "selector:#previousLicences": function () {
                 return OLCS.formHelper.isChecked("previousHistory", "hasPreviousLicences", "Y");
             },
+        },
+        "isOwner": {
+            "selector:.hintNoOwner": function () {
+                return OLCS.formHelper.isChecked("responsibilities", "isOwner", "N");
+            },
         }
     }
   });
