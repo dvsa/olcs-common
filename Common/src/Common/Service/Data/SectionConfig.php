@@ -95,6 +95,12 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ],
+        'tm_declaration' =>[
+            'restricted' => array(
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+            )
+        ],
         'confirmation' =>[
             'restricted' => array(
                 LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,

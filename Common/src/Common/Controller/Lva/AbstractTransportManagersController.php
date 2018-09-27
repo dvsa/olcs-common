@@ -23,7 +23,8 @@ abstract class AbstractTransportManagersController extends AbstractController im
     AdapterAwareInterface,
     FactoryInterface
 {
-    use Traits\CrudTableTrait;
+    use Traits\CrudTableTrait,
+        Traits\TransportManagerApplicationTrait;
 
     protected $section = 'transport_managers';
     protected $lva = 'application';
@@ -554,35 +555,5 @@ abstract class AbstractTransportManagersController extends AbstractController im
         }
 
         return false;
-    }
-
-    /**
-     * getTransportManagerApplication
-     *
-     * @param int $transportManagerApplicationId
-     *
-     * @return array|mixed
-     */
-    protected function getTransportManagerApplication($transportManagerApplicationId): array
-    {
-        $transportManagerApplication = $this->handleQuery(
-            GetDetails::create(['id' => $transportManagerApplicationId])
-        )->getResult();
-        return $transportManagerApplication;
-    }
-
-    /**
-     * getTmName
-     *
-     * @param array $transportManagerApplication
-     *
-     * @return string
-     */
-    protected function getTmName(array $transportManagerApplication)
-    {
-        return trim(
-            $transportManagerApplication['transportManager']['homeCd']['person']['forename'] . ' '
-            . $transportManagerApplication['transportManager']['homeCd']['person']['familyName']
-        );
     }
 }
