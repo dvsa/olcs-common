@@ -61,5 +61,4 @@ trait TransportManagerApplicationTrait
         }
         return self::LVA_APP;
     }
-
 }
