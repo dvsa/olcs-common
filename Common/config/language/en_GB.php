@@ -3522,6 +3522,7 @@ return [
     'permits.form.intljourney.guidance' => 'You have stated a high percentage of international journeys for this licence. Please check the details are correct. We may contact you to verify this information',
     'permits.form.trips.hint' => 'One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
     'permits.link.return.to.dashboard' => 'Return to permits dashboard',
+    'permits.link.return.to.fee.overview' => 'Return to fee overview',
     'permits.page.ecmt.consideration.header' => 'Permit application for licence',
     'permits.page.ecmt.consideration.application.status' => 'Application status',
     'permits.page.ecmt.consideration.permit.type' => 'Permit type',

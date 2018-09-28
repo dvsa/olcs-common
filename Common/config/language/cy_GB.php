@@ -1511,6 +1511,7 @@ return [
     'no-organisation-error' => 'CY - User is not associated with an organisation.',
 
     'permits.link.return.to.dashboard' => 'CY - Return to permits dashboard',
+    'permits.link.return.to.fee.overview' => 'CY - Return to fee overview',
     'permits.page.ecmt.consideration.header' => 'CY - Permit application for licence',
     'permits.page.ecmt.consideration.application.status' => 'CY - Application status',
     'permits.page.ecmt.consideration.permit.type' => 'CY - Permit type',
