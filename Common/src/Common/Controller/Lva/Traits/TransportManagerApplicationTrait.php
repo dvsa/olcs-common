@@ -3,16 +3,18 @@
 namespace Common\Controller\Lva\Traits;
 
 use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails;
+use Zend\Mvc\MvcEvent;
 
 trait TransportManagerApplicationTrait
 {
     protected $tma;
 
-    protected function preDispatch()
+    public function onDispatch(MvcEvent $e)
     {
         $tmaId = (int)$this->params('child_id');
         $this->tma = $this->getTransportManagerApplication($tmaId);
         $this->lva = $this->returnApplicationOrVariation();
+        parent::onDispatch($e);
     }
 
     /**
