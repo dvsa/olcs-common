@@ -89,7 +89,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ],
-        'declaration' =>[
+        'operator_declaration' =>[
             'restricted' => array(
                 LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
                 LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
