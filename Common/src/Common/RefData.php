@@ -334,13 +334,13 @@ class RefData
     /**
      * ECMT Permit application statuses
      */
-    const ECMT_APP_STATUS_CANCELLED = 'ecmt_permit_cancelled';
-    const ECMT_APP_STATUS_NOT_YET_SUBMITTED = 'ecmt_permit_nys';
-    const ECMT_APP_STATUS_UNDER_CONSIDERATION = 'ecmt_permit_uc';
-    const ECMT_APP_STATUS_WITHDRAWN = 'ecmt_permit_withdrawn';
-    const ECMT_APP_STATUS_AWAITING_FEE = 'ecmt_permit_awaiting';
-    const ECMT_APP_STATUS_UNSUCCESSFUL = 'ecmt_permit_unsuccessful';
-    const ECMT_APP_STATUS_ISSUED = 'ecmt_permit_issued';
+    const ECMT_APP_STATUS_CANCELLED = 'permit_app_cancelled';
+    const ECMT_APP_STATUS_NOT_YET_SUBMITTED = 'permit_app_nys';
+    const ECMT_APP_STATUS_UNDER_CONSIDERATION = 'permit_app_uc';
+    const ECMT_APP_STATUS_WITHDRAWN = 'permit_app_withdrawn';
+    const ECMT_APP_STATUS_AWAITING_FEE = 'permit_app_awaiting';
+    const ECMT_APP_STATUS_UNSUCCESSFUL = 'permit_app_unsuccessful';
+    const ECMT_APP_STATUS_ISSUED = 'permit_app_issued';
 
     /**
      * ECMT Permit application international journey percentages
@@ -356,11 +356,11 @@ class RefData
     const FT_CONDITIONAL = 'conditionally-active';
 
     //ecmt application statuses
-    const ECMT_STATUS_CANCELLED = 'ecmt_permit_cancelled';
-    const ECMT_STATUS_NOT_YET_SUBMITTED = 'ecmt_permit_nys';
-    const ECMT_STATUS_UNDER_CONSIDERATION = 'ecmt_permit_uc';
-    const ECMT_STATUS_WITHDRAWN = 'ecmt_permit_withdrawn';
-    const ECMT_STATUS_AWAITING_FEE = 'ecmt_permit_awaiting';
-    const ECMT_STATUS_UNSUCCESSFUL = 'ecmt_permit_unsuccessful';
-    const ECMT_STATUS_ISSUED = 'ecmt_permit_issued';
+    const ECMT_STATUS_CANCELLED = 'permit_app_cancelled';
+    const ECMT_STATUS_NOT_YET_SUBMITTED = 'permit_app_nys';
+    const ECMT_STATUS_UNDER_CONSIDERATION = 'permit_app_uc';
+    const ECMT_STATUS_WITHDRAWN = 'permit_app_withdrawn';
+    const ECMT_STATUS_AWAITING_FEE = 'permit_app_awaiting';
+    const ECMT_STATUS_UNSUCCESSFUL = 'permit_app_unsuccessful';
+    const ECMT_STATUS_ISSUED = 'permit_app_issued';
 }
