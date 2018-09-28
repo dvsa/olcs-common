@@ -6,14 +6,6 @@ use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails;
 
 trait TransportManagerApplicationTrait
 {
-    protected $tma;
-
-    public function preDispatch()
-    {
-        $tmaId = (int)$this->params('child_id');
-        $this->tma = $this->getTransportManagerApplication($tmaId);
-        $this->lva = $this->returnApplicationOrVariation();
-    }
 
     /**
      * getTransportManagerApplication
@@ -43,21 +35,6 @@ trait TransportManagerApplicationTrait
             $transportManagerApplication['transportManager']['homeCd']['person']['forename'] . ' '
             . $transportManagerApplication['transportManager']['homeCd']['person']['familyName']
         );
-    }
-
-    /**
-     * Returns "application" or "variation"
-     *
-     * @param array $tma
-     *
-     * @return string
-     */
-    protected function returnApplicationOrVariation(): string
-    {
-        if ($this->tma["application"]["isVariation"]) {
-            return self::LVA_VAR;
-        }
-        return self::LVA_APP;
     }
 
 }
