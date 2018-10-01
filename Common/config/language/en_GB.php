@@ -3375,6 +3375,7 @@ return [
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
 
     'permits.link.ecmt.guidance' => '{{ECMT_PERMITS_GUIDANCE_LINK}}',
+    'permits.link.ecmt.terms-and-conditions' => '{{ECMT_PERMITS_TERMS_AND_CONDITIONS}}',
 
     'permits.application.cancel-application' => 'Cancel application',
     'permits.application.cancel-application.title' => 'Cancel Application - ',

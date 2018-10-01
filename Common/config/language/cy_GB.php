@@ -1385,6 +1385,7 @@ return [
     'permits.decline.submitted.main' => 'CY - Permits removed',
 
     'permits.link.ecmt.guidance' => '{{ECMT_PERMITS_GUIDANCE_LINK}}',
+    'permits.link.ecmt.terms-and-conditions' => '{{ECMT_PERMITS_TERMS_AND_CONDITIONS}}',
 
     'permits.application.cancel-application' => 'CY - Cancel application',
     'permits.application.cancel-application.title' => 'CY - Cancel Application - ',
