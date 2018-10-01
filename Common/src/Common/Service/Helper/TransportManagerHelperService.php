@@ -55,19 +55,11 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         ];
     }
 
-    /**
-     * Alter Responsibilities Fieldset
-     *
-     * @param Fieldset     $fieldset           Fieldset element
-     * @param TableBuilder $otherLicencesTable Other lics table
-     *
-     * @return void
-     */
-    public function alterResponsibilitiesFieldset(Fieldset $fieldset, TableBuilder $otherLicencesTable)
+    public function alterResponsibilitiesFieldset(Fieldset $fieldset, TableBuilder $otherLicencesTable, $otherLicencesField)
     {
         $this->formHelper->removeOption($fieldset->get('tmType'), 'tm_t_b');
 
-        $this->formHelper->populateFormTable($fieldset->get('otherLicencesFieldset')->get('otherLicences'), $otherLicencesTable);
+        $this->formHelper->populateFormTable($otherLicencesField, $otherLicencesTable);
     }
 
     public function getResponsibilityFileData($tmId)

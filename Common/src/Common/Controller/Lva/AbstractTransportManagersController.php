@@ -23,8 +23,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     AdapterAwareInterface,
     FactoryInterface
 {
-    use Traits\CrudTableTrait,
-        Traits\TransportManagerApplicationTrait;
+    use Traits\CrudTableTrait;
 
     protected $section = 'transport_managers';
     protected $lva = 'application';

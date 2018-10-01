@@ -117,7 +117,7 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
             ->shouldReceive('removeOption')->once()->with($mockTmTypeField, 'tm_t_b')
             ->shouldReceive('populateFormTable')->once()->with($mockOtherLicenceField, $otherLicencesTable);
 
-        $this->sut->alterResponsibilitiesFieldset($fieldset, $otherLicencesTable);
+        $this->sut->alterResponsibilitiesFieldset($fieldset, $otherLicencesTable, $mockOtherLicenceField);
     }
 
     public function testGetResponsibilityFileData()
