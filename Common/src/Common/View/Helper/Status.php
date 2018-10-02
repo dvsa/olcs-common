@@ -109,14 +109,13 @@ class Status extends AbstractHelper
             // Permit
             RefData::PERMIT_APP_STATUS_AWAITING_FEE             => 'red',
             RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION      => 'orange',
-            RefData::PERMIT_APP_STATUS_ISSUED                   => 'green',
             RefData::PERMIT_APP_STATUS_ISSUING                  => 'green',
             RefData::PERMIT_APP_STATUS_WITHDRAWN                => 'red',
-            RefData::PERMIT_APP_STATUS_DECLINED                 => 'red',
             RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED        => 'grey',
             RefData::PERMIT_APP_STATUS_UNSUCCESSFUL             => 'grey',
             RefData::PERMIT_APP_STATUS_CANCELLED                => 'grey',
             RefData::PERMIT_APP_STATUS_VALID                    => 'green',
+            RefData::PERMIT_APP_STATUS_FEE_PAID                 => 'green',
         ];
 
         return !empty($colors[$id]) ? $colors[$id] : 'grey';
