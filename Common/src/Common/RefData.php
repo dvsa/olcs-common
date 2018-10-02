@@ -339,11 +339,10 @@ class RefData
     const PERMIT_APP_STATUS_UNDER_CONSIDERATION = 'permit_app_uc';
     const PERMIT_APP_STATUS_WITHDRAWN = 'permit_app_withdrawn';
     const PERMIT_APP_STATUS_AWAITING_FEE = 'permit_app_awaiting';
+    const PERMIT_APP_STATUS_FEE_PAID = 'permit_app_fee_paid';
     const PERMIT_APP_STATUS_UNSUCCESSFUL = 'permit_app_unsuccessful';
     const PERMIT_APP_STATUS_ISSUING = 'permit_app_issuing';
-    const PERMIT_APP_STATUS_ISSUED = 'permit_app_issued';
     const PERMIT_APP_STATUS_VALID = 'permit_app_valid';
-    const PERMIT_APP_STATUS_DECLINED = 'permit_app_declined';
 
     /**
      * ECMT Permit application international journey percentages
