@@ -4,6 +4,7 @@ namespace Common\Service\Helper;
 
 use Common\Service\Data\CategoryDataService;
 use Common\Service\Table\TableBuilder;
+use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -55,19 +56,14 @@ class TransportManagerHelperService extends AbstractHelperService implements Fac
         ];
     }
 
-    /**
-     * Alter Responsibilities Fieldset
-     *
-     * @param Fieldset     $fieldset           Fieldset element
-     * @param TableBuilder $otherLicencesTable Other lics table
-     *
-     * @return void
-     */
-    public function alterResponsibilitiesFieldset(Fieldset $fieldset, TableBuilder $otherLicencesTable)
+    public function removeTmTypeBothOption(Element $tmType)
     {
-        $this->formHelper->removeOption($fieldset->get('tmType'), 'tm_t_b');
+        $this->formHelper->removeOption($tmType, 'tm_t_b');
+    }
 
-        $this->formHelper->populateFormTable($fieldset->get('otherLicencesFieldset')->get('otherLicences'), $otherLicencesTable);
+    public function populateOtherLicencesTable(Fieldset $otherLicencesField, TableBuilder $otherLicencesTable)
+    {
+        $this->formHelper->populateFormTable($otherLicencesField, $otherLicencesTable);
     }
 
     public function getResponsibilityFileData($tmId)

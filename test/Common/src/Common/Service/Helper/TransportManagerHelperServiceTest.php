@@ -94,30 +94,28 @@ class TransportManagerHelperServiceTest extends MockeryTestCase
         $this->assertEquals($expected, $response);
     }
 
-    public function testAlterResponsibilitiesFieldset()
+    public function testRemoveTmTypeBothOption()
     {
-        // Params
-        /** @var \Zend\Form\Fieldset::class $fieldset */
-        $fieldset = m::mock(\Zend\Form\Fieldset::class);
-        /** @var TableBuilder $otherLicencesTable */
-        $otherLicencesTable = m::mock(TableBuilder::class);
-
-        // Mocks
+        /** @var \Zend\Form\Element $mockTmTypeField */
         $mockTmTypeField = m::mock(\Zend\Form\Element::class);
-        $mockOtherLicenceFieldset = m::mock(\Zend\Form\Fieldset::class);
-        $mockOtherLicenceField = m::mock(\Zend\Form\Fieldset::class);
-        $mockOtherLicenceFieldset->shouldReceive('get')->with('otherLicences')->andReturn($mockOtherLicenceField);
-
-        // Expectations
-        $fieldset
-            ->shouldReceive('get')->with('tmType')->andReturn($mockTmTypeField)
-            ->shouldReceive('get')->with('otherLicencesFieldset')->andReturn($mockOtherLicenceFieldset);
 
         $this->mockFormHlp
-            ->shouldReceive('removeOption')->once()->with($mockTmTypeField, 'tm_t_b')
+            ->shouldReceive('removeOption')->once()->with($mockTmTypeField, 'tm_t_b');
+
+        $this->sut->removeTmTypeBothOption($mockTmTypeField);
+    }
+
+    public function testPopulateOtherLicencesTable()
+    {
+        /** @var TableBuilder $otherLicencesTable */
+        $otherLicencesTable = m::mock(TableBuilder::class);
+        /** @var \Zend\Form\Fieldset $mockOtherLicenceField */
+        $mockOtherLicenceField = m::mock(\Zend\Form\Fieldset::class);
+
+        $this->mockFormHlp
             ->shouldReceive('populateFormTable')->once()->with($mockOtherLicenceField, $otherLicencesTable);
 
-        $this->sut->alterResponsibilitiesFieldset($fieldset, $otherLicencesTable);
+        $this->sut->populateOtherLicencesTable($mockOtherLicenceField, $otherLicencesTable);
     }
 
     public function testGetResponsibilityFileData()
