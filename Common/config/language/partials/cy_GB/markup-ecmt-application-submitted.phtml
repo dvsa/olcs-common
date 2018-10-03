@@ -1,19 +1,20 @@
-<?php $title = $this->translate('permits.application.submitted.title'); ?>
 <div class="govuk-box-highlight">
-    <h1 class="js-title"><?php echo $this->escapeHtml($title); ?></h1>
+    <h1 class="js-title">%s</h1>
     <p>
-        CY - Your reference number is <br>
-        <strong class="heading-medium">84051</strong>
+        CY - Your application reference number is <br>
+        <strong class="heading-medium">%s</strong>
     </p>
+    <a href="%s" target="_blank" style="color: #fff;">CY - View Receipt</a>
 </div>
 <div class="actions-container">
     <h3 class="heading-small">CY - What happens next?</h3>
-    <p>CY - You will receive a confirmation email in the next few minutes and another email once the application has been processed.</p>
+    <?php echo $this->partial('en_GB/bullets/markup-ecmt-application-submitted'); ?>
 
+    <br />
     <div class="notice form-group">
         <i class="icon icon-important">
-            <span class="visually-hidden">Warning</span>
+            <span class="visually-hidden">CY - Warning</span>
         </i>
-        <p class="exclamation">CY - You must ensure you have the correct permits when transporting goods abroad.</p>
+        <p class="exclamation">CY - You must ensure that you have the correct permits in your vehicle when transporting goods internationally.</p>
     </div>
 </div>

@@ -341,25 +341,26 @@ class RefData
     /**
      * ECMT Permit application statuses
      */
-    const ECMT_APP_STATUS_CANCELLED = 'ecmt_permit_cancelled';
-    const ECMT_APP_STATUS_NOT_YET_SUBMITTED = 'ecmt_permit_nys';
-    const ECMT_APP_STATUS_UNDER_CONSIDERATION = 'ecmt_permit_uc';
-    const ECMT_APP_STATUS_WITHDRAWN = 'ecmt_permit_withdrawn';
-    const ECMT_APP_STATUS_AWAITING_FEE = 'ecmt_permit_awaiting';
-    const ECMT_APP_STATUS_UNSUCCESSFUL = 'ecmt_permit_unsuccessful';
-    const ECMT_APP_STATUS_ISSUED = 'ecmt_permit_issued';
+    const PERMIT_APP_STATUS_CANCELLED = 'permit_app_cancelled';
+    const PERMIT_APP_STATUS_NOT_YET_SUBMITTED = 'permit_app_nys';
+    const PERMIT_APP_STATUS_UNDER_CONSIDERATION = 'permit_app_uc';
+    const PERMIT_APP_STATUS_WITHDRAWN = 'permit_app_withdrawn';
+    const PERMIT_APP_STATUS_AWAITING_FEE = 'permit_app_awaiting';
+    const PERMIT_APP_STATUS_FEE_PAID = 'permit_app_fee_paid';
+    const PERMIT_APP_STATUS_UNSUCCESSFUL = 'permit_app_unsuccessful';
+    const PERMIT_APP_STATUS_ISSUING = 'permit_app_issuing';
+    const PERMIT_APP_STATUS_VALID = 'permit_app_valid';
+
+    /**
+     * ECMT Permit application international journey percentages
+     */
+    const ECMT_APP_JOURNEY_LESS_60 = 'inter_journey_less_60';
+    const ECMT_APP_JOURNEY_60_90 = 'inter_journey_60_90';
+    const ECMT_APP_JOURNEY_OVER_90 = 'inter_journey_more_90';
+
 
     //feature toggle statuses
     const FT_ACTIVE = 'always-active';
     const FT_INACTIVE = 'inactive';
     const FT_CONDITIONAL = 'conditionally-active';
-
-    //ecmt application statuses
-    const ECMT_STATUS_CANCELLED = 'ecmt_permit_cancelled';
-    const ECMT_STATUS_NOT_YET_SUBMITTED = 'ecmt_permit_nys';
-    const ECMT_STATUS_UNDER_CONSIDERATION = 'ecmt_permit_uc';
-    const ECMT_STATUS_WITHDRAWN = 'ecmt_permit_withdrawn';
-    const ECMT_STATUS_AWAITING_FEE = 'ecmt_permit_awaiting';
-    const ECMT_STATUS_UNSUCCESSFUL = 'ecmt_permit_unsuccessful';
-    const ECMT_STATUS_ISSUED = 'ecmt_permit_issued';
 }

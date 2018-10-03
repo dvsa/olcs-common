@@ -17,6 +17,8 @@ return [
         . '-for-a-living/goods-vehicle-operator-licensing.html',
     '{{ECMT_PERMITS_GUIDANCE_LINK}}' =>
         'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage',
+    '{{ECMT_PERMITS_TERMS_AND_CONDITIONS}}' =>
+        'https://www.vehicle-operator-licensing.service.gov.uk/terms-and-conditions/',
     '{{VEHICLE_EXCEPTIONS}}' => 'https://www.gov.uk/being-a-goods-vehicle-operator/exemptions',
     '{{RULES_IN_NI}}' => 'http://www.nidirect.gov.uk/index/information-and-services/motoring/driving-for-a-living.htm',
     '{{EBSR_SUPPORT_NUMBER}}' => '0113 254 3200',
@@ -31,4 +33,5 @@ return [
     '{{STANDARD_INT_OPERATOR_LICENCE_LINK}}' =>
         'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage#standard-international-operators-licence-for-road-transport',
     '{{VOL_CREATE_AN_ACCOUNT}}' => 'https://www.vehicle-operator-licensing.service.gov.uk/register',
+    '{{ESSENTIALS_ROAD_HAULAGE}}' => 'https://www.gov.uk/guidance/the-essentials-of-international-road-haulage',
 ];

@@ -2,8 +2,7 @@
 
 namespace Common\Service\Table\Formatter;
 
-use Zend\ServiceManager\ServiceManager;
-use Common\Util\Escape;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * IRHP Permit Stock table - Permit Type column formatter
@@ -17,12 +16,27 @@ class IrhpPermitStockType implements FormatterInterface
      *
      * Returns the title of the ECMT Permit
      *
-     * @param array          $data
+     * @param array                     $data
+     * @param array                     $column The column data.
+     * @param ServiceLocatorInterface   $sm     The service manager.
      *
      * @return string
      */
-    public static function format($data)
+    public static function format($data, $column = array(), ServiceLocatorInterface $sm = null)
     {
-        return Escape::html($data['irhpPermitType']['name']['description']);
+        unset($column);
+
+        $url = $sm->get('Helper\Url')->fromRoute(
+            'admin-dashboard/admin-permits/permits-system-settings',
+            [
+                'permitStockId' => $data['id'],
+            ]
+        );
+
+        return sprintf(
+            '<a class="strong" href="%s">%s</a>',
+            $url,
+            $data['irhpPermitType']['name']['description']
+        );
     }
 }

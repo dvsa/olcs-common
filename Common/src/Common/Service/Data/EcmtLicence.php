@@ -24,16 +24,20 @@ class EcmtLicence extends AbstractDataService implements ListData
      */
     public function formatData(array $data)
     {
+        $translationHelper = $this->getServiceLocator()->get(
+            'Helper\Translation'
+        );
+
         $optionData = [];
         foreach ($data as $item) {
             $licence = [];
             $licence['value'] = $item['id'];
-            $licence['label'] = $item['licNo'] . ' (' . $item['trafficArea'] . ')';
+            $licence['label'] = $item['licNo'] .
+                ' ' . $translationHelper->translate($item['licenceType']['id']) .
+                ' (' . $item['trafficArea'] . ')';
 
             if ($item['licenceType']['id'] === \Common\RefData::LICENCE_TYPE_RESTRICTED) {
-                $translationHelper = $this->getServiceLocator()->get(
-                    'Helper\Translation'
-                );
+
                 $licence['html_elements'] = [
                     'div' => [
                         'content' => $translationHelper->translate(
