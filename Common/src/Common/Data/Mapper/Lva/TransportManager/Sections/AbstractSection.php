@@ -11,6 +11,8 @@ abstract class AbstractSection
 
     private $translationTemplate = 'lva-tmverify-details-checkanswer-';
 
+    private $displayChangeLinkInHeading = true;
+
     public function __construct(TranslationHelperService $translator)
     {
         $this->translator = $translator;
@@ -56,6 +58,7 @@ abstract class AbstractSection
         return [
             'sectionHeading' => $this->getTranslationTemplate() . $section,
             'questions' => $this->makeChangeAnswerSections($items),
+            'changeLinkInHeading' => $this->displayChangeLinkInHeading,
             'change' => ['sectionName' => $changeName, 'backText' => '']
         ];
     }
@@ -64,7 +67,11 @@ abstract class AbstractSection
     {
         $questionSections = [];
         foreach ($items as $question => $answer) {
-            $questionSections[] = ['label' => $question, 'answer' => $this->translator->translate($answer)];
+            $questionSections[] = [
+                'label' => $question,
+                'answer' => $this->translator->translate($answer),
+                'changeLinkInHeading' => $this->displayChangeLinkInHeading
+            ];
         }
         return $questionSections;
     }
