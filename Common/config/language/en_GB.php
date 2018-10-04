@@ -2974,7 +2974,7 @@ return [
     'transport-manager.responsibilities.hours-per-week' => 'Hours per week',
     'transport-manager.responsibilities.hours-per-week-subtitle' => 'How many hours will you spend on your Transport Manager duties?',
     'transport-manager.responsibilities.is-owner' => 'Are you the owner/director of the organisation applying for the Vehicle Operator Licence?',
-    'transport-manager.responsibilities.is-owner.no.hint' => 'When you submit your application an owner/director for the company will need to login, approve and co-sign it',
+    'transport-manager.responsibilities.is-owner.no.hint' => 'When you submit your application an owner/director for the company will need to login, approve and co-sign it.',
     'transport-manager.responsibilities.print' => 'Print',
     'transport-manager.responsibilities.save' => 'Save',
     'transport-manager.responsibilities.table.applications' => 'Applications',
