@@ -71,9 +71,7 @@ class Country extends AbstractDataService implements ListData
         $members = [];
 
         foreach ($data as $state) {
-
             if (trim($state['isMemberState']) == 'Y') {
-
                 $members[] = $state;
             }
         }
