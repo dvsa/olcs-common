@@ -1479,7 +1479,7 @@ return [
     'permits.form.cancel_application.error_message' => 'CY - You must select the checkbox to continue',
     'permits.form.ecmt-licence.restricted-licence.hint' => 'CY - You are applying for an ECMT permit for a Restricted licence. Please note, you only need an ECMT permit for a restricted licence if you intend to travel to: Austria, Belarus, Bulgaria, the Czech Republic, Estonia, Finland, France, Hungary, Italy, Lithuania, Poland, Russia, Sweden and Turkey.',
 
-    'permits.form.change_licence.label' => 'CY - I confirm that I would like to change the Licence for this application',
+    'permits.form.change_licence.label' => 'CY - I confirm that I would like to change the licence to %s',
     'permits.form.change_licence.button' => 'CY - Confirm Licence Change',
     'permits.form.change_licence.error_message' => 'CY - You must select the checkbox to continue',
 
