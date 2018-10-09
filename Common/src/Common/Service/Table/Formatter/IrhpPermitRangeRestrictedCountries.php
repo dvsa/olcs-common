@@ -31,6 +31,8 @@ class IrhpPermitRangeRestrictedCountries implements FormatterInterface
             $countryNames[] = Escape::html($country['countryDesc']);
         }
 
+        sort($countryNames, SORT_STRING);
+
         return implode(', ', $countryNames);
     }
 }
