@@ -42,5 +42,7 @@ trait StoredCardsTrait
             array_unshift($options, 'form.fee-stored-cards.option1');
             $form->get('storedCards')->get('card')->setValueOptions($options);
         }
+
+
     }
 }

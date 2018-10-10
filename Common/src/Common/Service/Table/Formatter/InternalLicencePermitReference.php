@@ -9,6 +9,7 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
+use Olcs\Logging\Log\Logger;
 
 /**
  * Status formatter
@@ -29,6 +30,12 @@ class InternalLicencePermitReference implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
-        return Escape::html($row['applicationRef']);
+        $urlHelper = $serviceLocator->get('Helper\Url');
+        $url = $urlHelper->fromRoute('licence/permits', [
+            'licence' => $row['licence']['id'],
+            'action' => 'edit',
+            'permitid' => $row['id']
+        ]);
+        return '<a href="'.$url.'">'.Escape::html($row['applicationRef']).'</a>';
     }
 }
