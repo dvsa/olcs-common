@@ -3402,7 +3402,6 @@ return [
     'permits.page.number-of-trips.northern-ireland' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.euro6.emissions.title' => 'Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
-    'permits.page.euro6.emissions.info' => 'If you intend to transport goods internationally across the European Union (EU) and European Economic Area (EEA), the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
     'permits.page.cabotage.title' => 'Will you be carrying out cabotage? - ',
     'permits.page.cabotage.question' => 'ECMT permits do not allow you to carry out cabotage',
     'permits.page.ecmt.licence.title' => 'Select Licence-',
@@ -3451,7 +3450,7 @@ return [
     'permit_awaiting' => 'Awaiting issue',
     'permit_nys' => 'Not yet submitted',
 
-    'permits.form.euro6.label' => 'I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
+    'permits.form.euro6.label' => 'I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
     'permits.form.cabotage.label' => 'I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'permits.form.trips.label' => 'Number of trips',
     'permits.form.permits.required.label' => 'Number of permits',
@@ -3502,7 +3501,7 @@ return [
     'section.name.ecmt-declaration' => 'Declaration',
 
     'check-answers.page.question.licence' => 'Licence selected',
-    'check-answers.page.question.euro6' => 'I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
+    'check-answers.page.question.euro6' => 'I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
     'check-answers.page.question.cabotage' => 'I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'check-answers.page.question.restricted-countries' => 'In the next 12 months are you transporting goods to Austria, Greece, Hungary, Italy or Russia?',
     'check-answers.page.question.trips' => 'How many international trips did you make in the last 12 months using this licence?',
