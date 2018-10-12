@@ -50,4 +50,6 @@ class Category
 
     const BUS_SUB_CATEGORY_EBSR = 36;
     const BUS_SUB_CATEGORY_TRANSXCHANGE_FILE = 107;
+
+    const DOC_SUB_CATEGORY_PERMITS = 196;
 }
