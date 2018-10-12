@@ -1415,7 +1415,6 @@ return [
     'permits.page.number-of-trips.northern-ireland' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.euro6.emissions.title' => 'CY - Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'CY - ECMT permits can only be used by vehicles that meet Euro 6 standards',
-    'permits.page.euro6.emissions.info' => 'CY - If you intend to transport goods internationally across the EU and EEA, the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
     'permits.page.cabotage.title' => 'CY - Will you be carrying out cabotage? - ',
     'permits.page.cabotage.question' => 'CY - You can’t carry out cabotage with an ECMT permit',
     'permits.page.ecmt.licence.title' => 'CY - Permits Home - ',
@@ -1457,7 +1456,7 @@ return [
     'permits.button.cancel-return-to-overview' => 'CY - Cancel',
     'permits.button.confirm-cancel-finish' => 'CY - Finish',
 
-    'permits.form.euro6.label' => 'CY - I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
+    'permits.form.euro6.label' => 'CY - I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
     'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'permits.form.trips.label' => 'CY - Number of trips',
 
