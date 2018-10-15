@@ -2861,7 +2861,7 @@ return [
     'transport-manager-add' => 'Or add a new Transport Manager',
     'transport-manager-application.edit-form.confirmation' => 'Are you sure you want to edit this form?',
     'transport-manager-application.resend-form.error' => 'The form has not been emailed',
-    'transport-manager-application.resend-form.success' => 'The form has been emailed',
+    'transport-manager-application.resend-form.success' => 'The link has been e-mailed',
     'transport-manager-back-text-admin' => 'Back to Transport Managers',
     'transport-manager-back-text-tm' => 'Back to Home',
     'transport-manager-choose' => 'Choose a Transport Manager who\'s already registered',
