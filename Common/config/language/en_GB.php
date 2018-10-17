@@ -3551,7 +3551,8 @@ return [
     'permits.button.cancel-and-return' => 'Cancel and return',
     'permits.ecmt.page.valid.title' => '%s ECMT Permits',
     'permits.ecmt.page.valid.tableheader.ref' => 'Permit number',
-    'permits.ecmt.page.valid.tableheader.countries' => 'Excludes countries to',
+    'permits.ecmt.page.valid.tableheader.countries' => 'Not valid for travel to',
+    'permits.ecmt.page.valid.tableheader.no.countries' => 'No exclusions',
 
     'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'Windows which are active or have ended cannot be deleted',
     'irhp-permit-stock-cannot-delete-active-dependencies' => 'This Permit Stock cannot be deleted as there are active dependencies',
