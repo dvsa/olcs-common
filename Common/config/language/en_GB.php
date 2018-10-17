@@ -3555,5 +3555,6 @@ return [
 
     'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'Windows which are active or have ended cannot be deleted',
     'irhp-permit-stock-cannot-delete-active-dependencies' => 'This Permit Stock cannot be deleted as there are active dependencies',
+    'irhp-permit-range-cannot-delete-active-dependencies' => 'This Permit Range cannot be deleted as there are active dependencies'
     // Potentially unused translations
 ];
