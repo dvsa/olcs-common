@@ -2,6 +2,8 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Util\Escape;
+
 /**
  * IRHP Permit Sector table - Sector Name column formatter
  *
@@ -21,9 +23,9 @@ class IrhpPermitSectorName implements FormatterInterface
     public static function format($data)
     {
         if (strlen($data['sector']['description']) < 1) {
-            return $data['sector']['name'];
+            return Escape::html($data['sector']['name']);
         }
 
-        return $data['sector']['name'] . ": " . $data['sector']['description'];
+        return Escape::html($data['sector']['name']) . ": " . Escape::html($data['sector']['description']);
     }
 }
