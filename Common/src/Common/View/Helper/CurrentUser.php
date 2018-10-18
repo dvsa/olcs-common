@@ -132,6 +132,13 @@ class CurrentUser extends AbstractHelper
         return (!empty($userData['userType']) && ($userData['userType'] === User::USER_TYPE_PARTNER));
     }
 
+    public function isTransportManager()
+    {
+        $userData = $this->getUserData();
+
+        return (!empty($userData['userType']) && ($userData['userType'] === User::USER_TYPE_TRANSPORT_MANAGER));
+    }
+
     /**
      * Get the user's unique id
      *
