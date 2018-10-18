@@ -32,24 +32,24 @@ class LicencePermitReference implements FormatterInterface
         $urlHelper = $serviceLocator->get('Helper\Url');
         $route = 'application-overview';
 
-        if ($row['isUnderConsideration']) {
+        if ($row['isValid']) {
+            $route = 'ecmt-valid-permits';
+        } elseif ($row['isFeePaid'] || $row['isIssueInProgress']) {
+            $route = null;
+        } elseif ($row['isAwaitingFee']) {
+            $route = 'ecmt-awaiting-fee';
+        } elseif ($row['isUnderConsideration']) {
             $route = 'ecmt-under-consideration';
         }
 
-        if ($row['isAwaitingFee']) {
-            $route = 'ecmt-awaiting-fee';
-        }
-
-        if ($row['isValid']) {
-            $route = 'ecmt-valid-permits';
-        }
-
-        return vsprintf(
-            '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
-            [
-                $urlHelper->fromRoute('permits/' . $route, ['id' => $row['id']]),
-                Escape::html($row['applicationRef'])
-            ]
-        );
+        return isset($route)
+            ? vsprintf(
+                '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
+                [
+                    $urlHelper->fromRoute('permits/' . $route, ['id' => $row['id']]),
+                    Escape::html($row['applicationRef'])
+                ]
+            )
+            : Escape::html($row['applicationRef']);
     }
 }
