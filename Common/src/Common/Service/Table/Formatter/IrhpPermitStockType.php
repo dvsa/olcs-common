@@ -26,11 +26,9 @@ class IrhpPermitStockType implements FormatterInterface
     {
         unset($column);
 
-        $url = $sm->get('Helper\Url')->fromRoute(
-            'admin-dashboard/admin-permits/permits-system-settings',
-            [
-                'permitStockId' => $data['id'],
-            ]
+        $url = $sm->get(
+            'Helper\Url')->fromRoute("admin-dashboard/admin-permits/permit-windows",
+            ['stockId' => $data['id']]
         );
 
         $canDelete = $data['canDelete'];
