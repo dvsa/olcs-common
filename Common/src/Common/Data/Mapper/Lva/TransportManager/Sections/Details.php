@@ -4,7 +4,6 @@
 namespace Common\Data\Mapper\Lva\TransportManager\Sections;
 
 use Common\Category;
-use Dvsa\Olcs\Api\Domain\Util\DateTime\DateTime;
 
 class Details extends AbstractSection
 {
@@ -49,7 +48,7 @@ class Details extends AbstractSection
                 'markup-' . $this->getTranslationTemplate() . "answer-address",
                 $address
             );
-            $this->birthDate = (new DateTime($this->birthDate))->format('d-m-Y');
+            $this->birthDate = (new \DateTime($this->birthDate))->format('d-m-Y');
             $this->$addresses = $address;
         }
 
