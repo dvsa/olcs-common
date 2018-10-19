@@ -960,7 +960,6 @@ return [
     'trafficAreaSet.trafficArea' => 'Ardal draffig',
     'translate-to-welsh' => 'Anfon gohebiaeth yn Gymraeg',
     'transport-manager-add' => 'Neu ychwanegu Rheolwr Trafnidiaeth newydd',
-    'transport-manager-application.resend-form.success' => 'Mae\'r ffurflen wedi ei e-bostio',
     'transport-manager-back-text-admin' => 'Yn ôl at Reolwyr Trafnidiaeth',
     'transport-manager-back-text-tm' => 'Yn ôl i’r hafan',
     'transport-manager-choose' => 'Dewis Rheolwr Trafnidiaeth sydd eisoes weedi\'i gofrestru',
