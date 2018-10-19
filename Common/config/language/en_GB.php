@@ -1904,7 +1904,7 @@ return [
     'lva-tmverify-details-checkanswer-workCd' => 'Work Address',
     'lva-tmverify-details-checkanswer-Responsibilities' => 'Responsibilities',
     'lva-tmverify-details-checkanswer-typeOfTransportManager'=>'Which type of transport manager will you be for this licence ?',
-    'lva-tmverify-details-checkanswer-ownerTm' => 'Are you the person is our who will be the licenced Operator ?',
+    'lva-tmverify-details-checkanswer-ownerTm' => 'Are you the person who is or who will be the licenced Operator ?',
     'lva-tmverify-details-checkanswer-HoursOfWork' => 'Hours per week',
     'lva-tmverify-details-checkanswer-hoursMon'=>'Monday',
     'lva-tmverify-details-checkanswer-hoursTue'=>'Tuesday',
