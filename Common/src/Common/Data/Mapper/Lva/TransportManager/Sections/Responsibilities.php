@@ -12,9 +12,9 @@ class Responsibilities extends AbstractSection implements TransportManagerSectio
 {
     use SectionSerializeTrait;
 
-    private $ownerTm;
-
     private $typeOfTransportManager;
+
+    private $ownerTm;
 
     /**
      * @param mixed $ownerTm
