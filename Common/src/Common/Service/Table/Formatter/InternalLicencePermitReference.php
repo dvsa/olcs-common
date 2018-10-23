@@ -9,7 +9,6 @@
 namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
-use Olcs\Logging\Log\Logger;
 
 /**
  * Status formatter
