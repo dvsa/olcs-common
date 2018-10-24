@@ -5,16 +5,16 @@ namespace Common\Service\Table\Formatter;
 use Common\Util\Escape;
 
 /**
- * IRHP Permit Sector table - Quota Number column formatter
+ * IRHP Permit Jurisdiction Table - Permit Number column formatter
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class IrhpPermitSectorQuota implements FormatterInterface
+class IrhpPermitJurisdictionPermitNumber implements FormatterInterface
 {
     /**
      * Format
      *
-     * Returns an editable Sector Quota Number
+     * Returns an editable Jurisdiction Permit Number
      *
      * @param array $data
      *
@@ -23,12 +23,12 @@ class IrhpPermitSectorQuota implements FormatterInterface
     public static function format($data)
     {
         $quotaNumber = $data['quotaNumber'] ? Escape::html($data['quotaNumber']) : 0;
-        $sectorId = Escape::html($data['sector']['id']);
+        $trafficAreaId = Escape::html($data['trafficArea']['id']);
 
         return sprintf(
-            "<input type='number' value='%s' name='sectors[%s]' />",
+            "<input type='number' value='%s' name='trafficAreas[%s]' />",
             $quotaNumber,
-            $sectorId
+            $trafficAreaId
         );
     }
 }
