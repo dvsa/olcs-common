@@ -1537,7 +1537,8 @@ return [
     'permits.button.cancel-and-return' => 'CY - Cancel and return',
     'permits.ecmt.page.valid.title' => 'CY - %s ECMT Permits',
     'permits.ecmt.page.valid.tableheader.ref' => 'CY - Permit number',
-    'permits.ecmt.page.valid.tableheader.countries' => 'CY - Excludes countries to',
+    'permits.ecmt.page.valid.tableheader.countries' => 'CY - Not valid for travel to',
+    'permits.ecmt.page.valid.tableheader.no.countries' => 'CY - No exclusions',
 
     'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'CY - Windows which are active or have ended cannot be deleted',
     'irhp-permit-stock-cannot-delete-active-dependencies' => 'CY - This Permit Stock cannot be deleted as there are active dependencies',
