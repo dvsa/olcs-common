@@ -88,7 +88,7 @@ class EcmtLicence extends AbstractDataService implements ListData
         if (is_null($this->getData('Organisation'))) {
             $authenticationService = $this->getServiceLocator()->get('Common\Rbac\IdentityProvider');
             $user = $authenticationService->getIdentity();
-            
+
             if (empty($user->getUserData()['organisationUsers'])) {
                 throw new Exception('no-organisation-error');
             }

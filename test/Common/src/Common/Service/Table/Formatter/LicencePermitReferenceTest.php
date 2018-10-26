@@ -53,7 +53,9 @@ class LicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>1234567',
                     'isUnderConsideration' => false,
                     'isAwaitingFee' => false,
-                    'isValid' => false
+                    'isFeePaid' => false,
+                    'isIssueInProgress' => false,
+                    'isValid' => false,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/application-overview/3">' .
                     '<span class="overview__link--underline">ECMT&gt;1234567</span></a>'
@@ -63,7 +65,9 @@ class LicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>2345678',
                     'isUnderConsideration' => true,
                     'isAwaitingFee' => false,
-                    'isValid' => false
+                    'isFeePaid' => false,
+                    'isIssueInProgress' => false,
+                    'isValid' => false,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-under-consideration/5">' .
                     '<span class="overview__link--underline">ECMT&gt;2345678</span></a>'
@@ -74,10 +78,36 @@ class LicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>3456789',
                     'isUnderConsideration' => false,
                     'isAwaitingFee' => true,
-                    'isValid' => false
+                    'isFeePaid' => false,
+                    'isIssueInProgress' => false,
+                    'isValid' => false,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-awaiting-fee/7">' .
                     '<span class="overview__link--underline">ECMT&gt;3456789</span></a>'
+            ],
+            [
+                [
+                    'id' => '8',
+                    'applicationRef' => 'ECMT>3456789',
+                    'isUnderConsideration' => false,
+                    'isAwaitingFee' => false,
+                    'isFeePaid' => true,
+                    'isIssueInProgress' => false,
+                    'isValid' => false,
+                ],
+                'ECMT&gt;3456789'
+            ],
+            [
+                [
+                    'id' => '8',
+                    'applicationRef' => 'ECMT>3456789',
+                    'isUnderConsideration' => false,
+                    'isAwaitingFee' => false,
+                    'isFeePaid' => false,
+                    'isIssueInProgress' => true,
+                    'isValid' => false,
+                ],
+                'ECMT&gt;3456789'
             ],
             [
                 [
@@ -85,7 +115,9 @@ class LicencePermitReferenceTest extends MockeryTestCase
                     'applicationRef' => 'ECMT>4567890',
                     'isUnderConsideration' => false,
                     'isAwaitingFee' => false,
-                    'isValid' => true
+                    'isFeePaid' => false,
+                    'isIssueInProgress' => false,
+                    'isValid' => true,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-valid-permits/9">' .
                     '<span class="overview__link--underline">ECMT&gt;4567890</span></a>'

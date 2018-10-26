@@ -3394,7 +3394,7 @@ return [
     // Permits application
     'permits.application.overview.main-title' => 'Application Overview-',
     'permits.application.ineligible' => 'You are not eligible for permits (text TBC)',
-    'permits.application.overview.title' => 'Home',
+    'permits.application.overview.title' => 'Application overview - ',
     'permits.application.overview.main' => 'Apply for a new ECMT permit',
     'permits.application.overview.subtitle' => 'Permits applications',
     'permits.application.overview.button' => 'Apply for a new permit',
@@ -3449,7 +3449,6 @@ return [
     'permits.page.number-of-trips.northern-ireland' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.euro6.emissions.title' => 'Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
-    'permits.page.euro6.emissions.info' => 'If you intend to transport goods internationally across the European Union (EU) and European Economic Area (EEA), the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
     'permits.page.cabotage.title' => 'Will you be carrying out cabotage? - ',
     'permits.page.cabotage.question' => 'ECMT permits do not allow you to carry out cabotage',
     'permits.page.ecmt.licence.title' => 'Select Licence-',
@@ -3498,7 +3497,7 @@ return [
     'permit_awaiting' => 'Awaiting issue',
     'permit_nys' => 'Not yet submitted',
 
-    'permits.form.euro6.label' => 'I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
+    'permits.form.euro6.label' => 'I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
     'permits.form.cabotage.label' => 'I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'permits.form.trips.label' => 'Number of trips',
     'permits.form.permits.required.label' => 'Number of permits',
@@ -3523,7 +3522,7 @@ return [
     'permits.form.withdraw_application.button' => 'Withdraw application',
     'permits.form.withdraw_application.error_message' => 'Tick to confirm you want to withdraw your application',
 
-    'permits.form.change_licence.label' => 'I confirm that I would like to change the Licence for this application',
+    'permits.form.change_licence.label' => 'I confirm that I would like to change the licence to %s',
     'permits.form.change_licence.button' => 'Confirm Licence Change',
     'permits.form.change_licence.error_message' => 'You must select the checkbox to continue',
 
@@ -3549,7 +3548,7 @@ return [
     'section.name.ecmt-declaration' => 'Declaration',
 
     'check-answers.page.question.licence' => 'Licence selected',
-    'check-answers.page.question.euro6' => 'I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
+    'check-answers.page.question.euro6' => 'I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
     'check-answers.page.question.cabotage' => 'I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'check-answers.page.question.restricted-countries' => 'In the next 12 months are you transporting goods to Austria, Greece, Hungary, Italy or Russia?',
     'check-answers.page.question.trips' => 'How many international trips did you make in the last 12 months using this licence?',
@@ -3597,9 +3596,13 @@ return [
     'permits.form.declined_permit.label' => 'I confirm that I don\'t want awarded permits.',
     'permits.page.declined_permit.title' => 'Decline awarded permits',
     'permits.button.cancel-and-return' => 'Cancel and return',
-    'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'Windows which are active or have ended cannot be deleted',
     'permits.ecmt.page.valid.title' => '%s ECMT Permits',
     'permits.ecmt.page.valid.tableheader.ref' => 'Permit number',
-    'permits.ecmt.page.valid.tableheader.countries' => 'Excludes countries to',
+    'permits.ecmt.page.valid.tableheader.countries' => 'Not valid for travel to',
+    'permits.ecmt.page.valid.tableheader.no.countries' => 'No exclusions',
+
+    'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'Windows which are active or have ended cannot be deleted',
+    'irhp-permit-stock-cannot-delete-active-dependencies' => 'This Permit Stock cannot be deleted as there are active dependencies',
+    'irhp-permit-range-cannot-delete-active-dependencies' => 'This Permit Range cannot be deleted as there are active dependencies'
     // Potentially unused translations
 ];

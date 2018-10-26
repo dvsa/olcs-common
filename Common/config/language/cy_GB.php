@@ -1362,7 +1362,7 @@ return [
 
     // Permits application
     'permits.application.ineligible' => 'CY - You are not eligible for permits (text TBC)',
-    'permits.application.overview.title' => 'CY - Home',
+    'permits.application.overview.title' => 'Application overview - ',
     'permits.application.overview.main' => 'CY - Apply for a new ECMT permit',
     'permits.application.overview.subtitle' => 'CY - Permits applications',
     'permits.application.overview.button' => 'CY - Apply for a new permit',
@@ -1414,7 +1414,6 @@ return [
     'permits.page.number-of-trips.northern-ireland' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.euro6.emissions.title' => 'CY - Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'CY - ECMT permits can only be used by vehicles that meet Euro 6 standards',
-    'permits.page.euro6.emissions.info' => 'CY - If you intend to transport goods internationally across the EU and EEA, the vehicle(s) you intend to use must meet and comply to all Euro 6 emission standards.',
     'permits.page.cabotage.title' => 'CY - Will you be carrying out cabotage? - ',
     'permits.page.cabotage.question' => 'CY - You can’t carry out cabotage with an ECMT permit',
     'permits.page.ecmt.licence.title' => 'CY - Permits Home - ',
@@ -1456,7 +1455,7 @@ return [
     'permits.button.cancel-return-to-overview' => 'CY - Cancel',
     'permits.button.confirm-cancel-finish' => 'CY - Finish',
 
-    'permits.form.euro6.label' => 'CY - I confirm that my ECMT permit(s) will only be used by vehicle(s) that are environmentally compliant to Euro 6 emissions standards.',
+    'permits.form.euro6.label' => 'CY - I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
     'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
     'permits.form.trips.label' => 'CY - Number of trips',
 
@@ -1478,7 +1477,7 @@ return [
     'permits.form.cancel_application.error_message' => 'CY - You must select the checkbox to continue',
     'permits.form.ecmt-licence.restricted-licence.hint' => 'CY - You are applying for an ECMT permit for a Restricted licence. Please note, you only need an ECMT permit for a restricted licence if you intend to travel to: Austria, Belarus, Bulgaria, the Czech Republic, Estonia, Finland, France, Hungary, Italy, Lithuania, Poland, Russia, Sweden and Turkey.',
 
-    'permits.form.change_licence.label' => 'CY - I confirm that I would like to change the Licence for this application',
+    'permits.form.change_licence.label' => 'CY - I confirm that I would like to change the licence to %s',
     'permits.form.change_licence.button' => 'CY - Confirm Licence Change',
     'permits.form.change_licence.error_message' => 'CY - You must select the checkbox to continue',
 
@@ -1535,9 +1534,13 @@ return [
     'permits.form.declined_permit.label' => 'CY - I confirm that I don\'t want awarded permits.',
     'permits.page.declined_permit.title' => 'CY - Decline awarded permits',
     'permits.button.cancel-and-return' => 'CY - Cancel and return',
-    'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'CY - Windows which are active or have ended cannot be deleted',
     'permits.ecmt.page.valid.title' => 'CY - %s ECMT Permits',
     'permits.ecmt.page.valid.tableheader.ref' => 'CY - Permit number',
-    'permits.ecmt.page.valid.tableheader.countries' => 'CY - Excludes countries to',
+    'permits.ecmt.page.valid.tableheader.countries' => 'CY - Not valid for travel to',
+    'permits.ecmt.page.valid.tableheader.no.countries' => 'CY - No exclusions',
+
+    'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'CY - Windows which are active or have ended cannot be deleted',
+    'irhp-permit-stock-cannot-delete-active-dependencies' => 'CY - This Permit Stock cannot be deleted as there are active dependencies',
+    'irhp-permit-range-cannot-delete-active-dependencies' => 'CY - This Permit Range cannot be deleted as there are active dependencies',
     // Potentially unused translations
 ];

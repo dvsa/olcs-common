@@ -26,15 +26,15 @@ class IrhpPermitStockType implements FormatterInterface
     {
         unset($column);
 
-        $url = $sm->get('Helper\Url')->fromRoute(
-            'admin-dashboard/admin-permits/permits-system-settings',
-            [
-                'permitStockId' => $data['id'],
-            ]
+        $url = $sm->get(
+            'Helper\Url')->fromRoute("admin-dashboard/admin-permits/permit-range",
+            ['stockId' => $data['id']]
         );
 
+        $canDelete = $data['canDelete'];
+
         return sprintf(
-            '<a class="strong" href="%s">%s</a>',
+            "<a class='strong' data-stock-delete='$canDelete' href='%s'>%s</a>",
             $url,
             $data['irhpPermitType']['name']['description']
         );

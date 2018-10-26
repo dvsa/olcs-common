@@ -264,6 +264,36 @@ class CurrentUserTest extends MockeryTestCase
     }
 
     /**
+     * @dataProvider provideIsTransportManager
+     * @param $userData
+     * @param $expected
+     */
+    public function testIsTransportManager($userData, $expected)
+    {
+        $identity = new User();
+        $identity->setUserData($userData);
+
+        $mockAuthService = m::mock(AuthorizationService::class);
+        $mockAuthService->shouldReceive('getIdentity')->andReturn($identity);
+
+        $sut = new CurrentUser($mockAuthService);
+
+        $this->assertEquals($expected, $sut->isTransportManager());
+    }
+
+    public function provideIsTransportManager()
+    {
+        return [
+            [[], false],
+            [['userType' => User::USER_TYPE_ANON], false],
+            [['userType' => User::USER_TYPE_OPERATOR], false],
+            [['userType' => User::USER_TYPE_LOCAL_AUTHORITY], false],
+            [['userType' => User::USER_TYPE_PARTNER], false],
+            [['userType' => User::USER_TYPE_TRANSPORT_MANAGER], true],
+        ];
+    }
+
+    /**
      * @dataProvider provideGetUniqueId
      * @param $userData
      * @param $expected
