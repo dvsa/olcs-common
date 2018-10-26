@@ -8,6 +8,8 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\Util\Escape;
+
 /**
  * Nullable Number formatter
  *
@@ -26,6 +28,7 @@ class NullableNumber implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         if (!is_null($data[$column['name']])) {
+            //return $data[$column['name']];
             return Escape::html($data[$column['name']]);
         }
         return 0;
