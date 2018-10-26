@@ -19,7 +19,26 @@ OLCS.ready(function() {
         "selector:.tm-details-declaration-external": function() {
           return F.isChecked("responsibilities", "tmType", "tm_t_e");
         }
-      }
+      },
+        "optionalData": {
+            "selector:#otherLicences": function () {
+                return OLCS.formHelper.isChecked("responsibilities[otherLicencesFieldset]", "hasOtherLicences", "Y");
+            },
+            "selector:#otherEmployments": function () {
+                return OLCS.formHelper.isChecked("otherEmployments", "hasOtherEmployment", "Y");
+            },
+            "selector:#previousConvictions": function () {
+                return OLCS.formHelper.isChecked("previousHistory", "hasConvictions", "Y");
+            },
+            "selector:#previousLicences": function () {
+                return OLCS.formHelper.isChecked("previousHistory", "hasPreviousLicences", "Y");
+            },
+        },
+        "isOwner": {
+            "selector:.hintNoOwner": function () {
+                return OLCS.formHelper.isChecked("responsibilities", "isOwner", "N");
+            },
+        }
     }
   });
 

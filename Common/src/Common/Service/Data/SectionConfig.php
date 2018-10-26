@@ -24,6 +24,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
      */
     private $sections = array(
         'type_of_licence' => array(),
+
         'business_type' => array(
             'prerequisite' => array(
                 'type_of_licence'
@@ -241,6 +242,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 )
             )
         ),
+
         // external decalrations
         'undertakings' => [
             'restricted' => [
@@ -365,6 +367,9 @@ class SectionConfig implements ServiceLocatorAwareInterface
             'director_change' => array(
                 'identifier' => 'application'
             ),
+            'transport_manager' => [
+                'identifier' => 'application'
+            ]
         );
 
         $routes = array();

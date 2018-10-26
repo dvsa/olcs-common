@@ -29,6 +29,7 @@ return [
     '{{OPERATOR_LICENSING_PHONE}}' => '0300 123 9000',
     '{{OPERATOR_LICENSING_PHONE_NI}}' => '0300 200 7831',
     '{{OPERATOR_LICENSING_EMAIL_NI}}' => 'niclo@dvsa.gov.uk',
+    '{{CALL_CHARGES_INFO}}' => 'https://www.gov.uk/call-charges',
     '{{STANDARD_INT_OPERATOR_LICENCE_LINK}}' =>
         'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage#standard-international-operators-licence-for-road-transport',
     '{{VOL_CREATE_AN_ACCOUNT}}' => 'https://www.vehicle-operator-licensing.service.gov.uk/register',

@@ -101,6 +101,13 @@ class RefData
     const VARIATION_TYPE_DIRECTOR_CHANGE = 'vtyp_director_change';
 
     /**
+     * Transport Manager Application
+     */
+    const TMA_SIGN_AS_TM = 'tma_sign_as_tm';
+    const TMA_SIGN_AS_OP = 'tma_sign_as_op';
+    const TMA_SIGN_AS_TM_OP = 'tma_sign_as_top';
+
+    /**
      * Condition and Undertakings
      */
     const ATTACHED_TO_LICENCE = 'cat_lic';

@@ -14,8 +14,11 @@ class TransportManagerApplicationStatus extends AbstractHelper
 {
     protected static $statusColors = [
         TransportManagerApplicationEntityService::STATUS_INCOMPLETE => 'red',
+        TransportManagerApplicationEntityService::STATUS_DETAILS_SUBMITTED => 'red',
+        TransportManagerApplicationEntityService::STATUS_DETAILS_CHECKED => 'red',
         TransportManagerApplicationEntityService::STATUS_AWAITING_SIGNATURE => 'orange',
         TransportManagerApplicationEntityService::STATUS_TM_SIGNED => 'orange',
+        TransportManagerApplicationEntityService::STATUS_OPERATOR_APPROVED => 'orange',
         TransportManagerApplicationEntityService::STATUS_OPERATOR_SIGNED => 'green',
         TransportManagerApplicationEntityService::STATUS_POSTAL_APPLICATION => 'green',
         TransportManagerApplicationEntityService::STATUS_RECEIVED => 'green',

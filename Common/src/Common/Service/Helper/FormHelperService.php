@@ -193,9 +193,9 @@ class FormHelperService extends AbstractHelperService
     public function processAddressLookupForm(Form $form, Request $request)
     {
         $processed = false;
-        $modified  = false;
+        $modified = false;
         $fieldsets = $form->getFieldsets();
-        $post      = (array)$request->getPost();
+        $post = (array)$request->getPost();
 
         foreach ($fieldsets as $fieldset) {
             if ($result = $this->processAddressLookupFieldset($fieldset, $post, $form)) {
@@ -237,7 +237,7 @@ class FormHelperService extends AbstractHelperService
         if (!($fieldset instanceof Address)) {
             $data = isset($post[$name]) ? $post[$name] : [];
             $processed = false;
-            $modified  = false;
+            $modified = false;
 
             // @TODO possible bug :: Variable fieldset is introduced as a method parameter and overridden here
             foreach ($fieldset->getFieldsets() as $fieldset) {
@@ -258,14 +258,12 @@ class FormHelperService extends AbstractHelperService
 
         // If we have clicked the find address button
         if (isset($post[$name]['searchPostcode']['search']) && !empty($post[$name]['searchPostcode']['search'])) {
-
             $this->processPostcodeSearch($fieldset, $post, $name);
             return true;
         }
 
         // If we have selected an address
         if (isset($post[$name]['searchPostcode']['select']) && !empty($post[$name]['searchPostcode']['select'])) {
-
             $this->removeAddressSelectFields($fieldset);
 
             // manipulate the current level of post data, bearing in mind
@@ -296,7 +294,6 @@ class FormHelperService extends AbstractHelperService
 
         // If we haven't entered a postcode
         if (empty($postcode)) {
-
             $this->removeAddressSelectFields($fieldset);
 
             $fieldset->get('searchPostcode')->setMessages(array('Please enter a postcode'));
@@ -315,7 +312,6 @@ class FormHelperService extends AbstractHelperService
 
         // If we haven't found any addresses
         if (empty($addressList)) {
-
             $this->removeAddressSelectFields($fieldset);
 
             $fieldset->get('searchPostcode')->setMessages(array('postcode.error.no-addresses-found'));
@@ -737,7 +733,6 @@ class FormHelperService extends AbstractHelperService
         $companyNumber = $data[$detailsFieldset]['companyNumber']['company_number'];
         if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH &&
             strlen($companyNumber) <= self::MAX_COMPANY_NUMBER_LENGTH) {
-
             list($result, $message) = $this->doCompanySearch($companyNumber);
 
             // company not found so let's try alternative search with/without leading zero
@@ -747,14 +742,13 @@ class FormHelperService extends AbstractHelperService
                 } else {
                     $companyNumber = str_pad($companyNumber, self::MAX_COMPANY_NUMBER_LENGTH, "0", STR_PAD_LEFT);
                 }
-                if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH  &&
+                if (strlen($companyNumber) >= self::MIN_COMPANY_NUMBER_LENGTH &&
                     strlen($companyNumber) <= self::MAX_COMPANY_NUMBER_LENGTH) {
                     list($result, $message) = $this->doCompanySearch($companyNumber);
                 }
             }
 
             if (isset($result) && $result['Count'] === 1) {
-
                 $form->get($detailsFieldset)->get('name')->setValue($result['Results'][0]['CompanyName']);
 
                 if ($addressFieldset && isset($result['Results'][0]['RegAddress']['AddressLine'])) {
@@ -809,7 +803,7 @@ class FormHelperService extends AbstractHelperService
      * Remove a value option from an element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string                            $index   Index
+     * @param string $index Index
      *
      * @return void
      */
@@ -827,7 +821,7 @@ class FormHelperService extends AbstractHelperService
      * Set current option of element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string                            $index   Index
+     * @param string $index Index
      *
      * @return void
      */
@@ -838,7 +832,7 @@ class FormHelperService extends AbstractHelperService
         if (isset($options[$index])) {
             $translator = $this->getServiceLocator()->get('Helper\Translation');
 
-            $options[$index] = $translator->translate($options[$index]) .' '.
+            $options[$index] = $translator->translate($options[$index]) . ' ' .
                 $translator->translate('current.option.suffix');
 
             $element->setValueOptions($options);
@@ -864,7 +858,7 @@ class FormHelperService extends AbstractHelperService
         $newValidatorChain = new ValidatorChain();
 
         foreach ($validatorChain->getValidators() as $validator) {
-            if (! ($validator['instance'] instanceof $validatorClass)) {
+            if (!($validator['instance'] instanceof $validatorClass)) {
                 $newValidatorChain->attach($validator['instance']);
             }
         }
@@ -953,7 +947,7 @@ class FormHelperService extends AbstractHelperService
         $postcodeValidator = new PostcodeValidator(['locale' => 'en-GB']);
         foreach ($data as $key => $datum) {
             if ($postcodeValidator->isValid($datum)) {
-                $postcode =  $datum;
+                $postcode = $datum;
                 unset($data[$key]);
             }
         }
@@ -1005,7 +999,7 @@ class FormHelperService extends AbstractHelperService
      * Remove Value Option
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Element (Select|Radio)
-     * @param string                            $key     Key
+     * @param string $key Key
      *
      * @return void
      */

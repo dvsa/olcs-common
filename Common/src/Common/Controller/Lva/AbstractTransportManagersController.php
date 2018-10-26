@@ -7,7 +7,9 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Common\Controller\Lva\Interfaces\AdapterInterface;
 use Common\Data\Mapper\Lva\NewTmUser as NewTmUserMapper;
 use Common\Data\Mapper\Lva\TransportManagerApplication as TransportManagerApplicationMapper;
+use Common\Data\Mapper\Lva\TransportManagerApplication;
 use Dvsa\Olcs\Transfer\Command;
+use Dvsa\Olcs\Transfer\Query\TransportManagerApplication\GetDetails;
 use Dvsa\Olcs\Transfer\Query\User\UserSelfserve;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -88,7 +90,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
             ->get('lva-' . $this->lva . '-transport_managers')
             ->getForm();
 
-        $table = $this->getAdapter()->getTable('lva-transport-managers-'. $this->location .'-'. $this->lva);
+        $table = $this->getAdapter()->getTable('lva-transport-managers-' . $this->location . '-' . $this->lva);
         $tableData = $this->getAdapter()->getTableData($this->getIdentifier(), $this->getLicenceId());
         if ($tableData === null) {
             return $this->notFoundAction();
@@ -98,7 +100,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
         $this->getServiceLocator()->get('FormServiceManager')
-            ->get('Lva\\'. ucfirst($this->lva))
+            ->get('Lva\\' . ucfirst($this->lva))
             ->alterForm($form);
 
         /** @var \Zend\Http\Request $request */
@@ -436,9 +438,9 @@ abstract class AbstractTransportManagersController extends AbstractController im
         $response = $this->getServiceLocator()->get('QueryService')->send($query);
         $options = [];
         foreach ($response->getResult()['results'] as $user) {
-            $name = $user['contactDetails']['person']['forename'] .' '. $user['contactDetails']['person']['familyName'];
+            $name = $user['contactDetails']['person']['forename'] . ' ' . $user['contactDetails']['person']['familyName'];
             if (empty(trim($name))) {
-                $name = 'User ID '. $user['id'];
+                $name = 'User ID ' . $user['id'];
             }
             $options[$user['id']] = $name;
         }
@@ -454,7 +456,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
      */
     protected function delete()
     {
-         // get ids to delete
+        // get ids to delete
         $ids = explode(',', $this->params('child_id'));
 
         $this->getAdapter()->delete($ids, $this->getIdentifier());
@@ -547,7 +549,7 @@ abstract class AbstractTransportManagersController extends AbstractController im
     {
         foreach ($data as $tmId => $row) {
             if ($row['id'] === $tmlId) {
-                return $data[$tmId .'a']['id'];
+                return $data[$tmId . 'a']['id'];
             }
         }
 

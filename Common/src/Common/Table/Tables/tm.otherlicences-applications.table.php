@@ -2,9 +2,8 @@
 
 return array(
     'variables' => array(
-        'title' => 'transport-manager.otherlicences.table',
         'within_form' => true,
-        'empty_message' => 'transport-manager.otherlicences.table.empty',
+        'empty_message' => false,
     ),
     'settings' => array(
         'crud' => array(

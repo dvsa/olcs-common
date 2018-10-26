@@ -264,20 +264,26 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementIsRequired($element, false);
     }
 
+    public function testHasOtherLicences()
+    {
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'hasOtherLicences'];
+        $this->assertFormElementIsRequired($element, true);
+    }
+
     public function testOtherLicencesTable()
     {
-        $element = [ 'responsibilities', 'otherLicences', 'table' ];
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'otherLicences', 'table' ];
         $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementTable($element);
 
-        $element = [ 'responsibilities', 'otherLicences', 'action' ];
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'otherLicences', 'action' ];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'responsibilities', 'otherLicences', 'id' ];
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'otherLicences', 'id' ];
         $this->assertFormElementHidden($element);
 
-        $element = [ 'responsibilities', 'otherLicences', 'rows' ];
+        $element = [ 'responsibilities', 'otherLicencesFieldset', 'otherLicences', 'rows' ];
         $this->assertFormElementHidden($element);
     }
 
@@ -314,9 +320,15 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
         $this->assertFormElementText($element, 0, 4000);
     }
 
+    public function testHasOtherEmployment()
+    {
+        $element = [ 'otherEmployments', 'hasOtherEmployment'];
+        $this->assertFormElementIsRequired($element, true);
+    }
+
     public function testOtherEmployment()
     {
-        $element = [ 'otherEmployment', 'table' ];
+        $element = [ 'otherEmployments', 'otherEmployment', 'table' ];
         $this->assertFormElementIsRequired($element, false);
         $this->assertFormElementAllowEmpty($element, true);
         $this->assertFormElementTable($element);
@@ -324,20 +336,32 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
     public function testOtherEmploymentAction()
     {
-        $element = [ 'otherEmployment', 'action' ];
+        $element = [ 'otherEmployments', 'otherEmployment', 'action' ];
         $this->assertFormElementHidden($element);
     }
 
     public function testOtherEmploymentRows()
     {
-        $element = [ 'otherEmployment', 'rows' ];
+        $element = [ 'otherEmployments', 'otherEmployment', 'rows' ];
         $this->assertFormElementHidden($element);
     }
 
     public function testOtherEmploymentId()
     {
-        $element = [ 'otherEmployment', 'id' ];
+        $element = [ 'otherEmployments', 'otherEmployment', 'id' ];
         $this->assertFormElementHidden($element);
+    }
+
+    public function testHasConvictions()
+    {
+        $element = [ 'previousHistory', 'hasConvictions'];
+        $this->assertFormElementIsRequired($element, true);
+    }
+
+    public function testHasPreviousLicences()
+    {
+        $element = [ 'previousHistory', 'hasPreviousLicences'];
+        $this->assertFormElementIsRequired($element, true);
     }
 
     public function testPreviousHistoryConvictionsTable()

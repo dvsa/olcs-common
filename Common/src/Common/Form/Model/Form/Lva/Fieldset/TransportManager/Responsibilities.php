@@ -5,7 +5,7 @@ namespace Common\Form\Model\Form\Lva\Fieldset\TransportManager;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Attributes({"class":"table__form"})
+ * @Form\Attributes({"class":"table__form","id":"responsibilities"})
  * @Form\Name("responsibilities")
  */
 class Responsibilities
@@ -51,7 +51,10 @@ class Responsibilities
      * @Form\Options({
      *     "label": "transport-manager.responsibilities.is-owner",
      *     "value_options": {"Y":"Yes", "N":"No"},
-     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"}
+     *     "label_attributes": {"class": "form-control form-control--radio form-control--inline"},
+     *     "hint" : "transport-manager.responsibilities.is-owner.no.hint",
+     *     "hint-position" : "below",
+     *     "hint-class" : "hint hint__below hint__black hintNoOwner",
      * })
      * @Form\Type("Radio")
      */
@@ -60,15 +63,15 @@ class Responsibilities
     /**
      * @Form\Name("hoursOfWeek")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\HoursOfWeekRequired")
+     * @Form\Attributes({"id":"hoursOfWeek"})
      */
     public $hoursOfWeek = null;
 
     /**
-     * @Form\Name("otherLicences")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     * @Form\Attributes({"id":"otherLicences"})
+     * @Form\Name("otherLicencesFieldset")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TransportManager\OtherLicencesFieldset")
      */
-    public $otherLicences = null;
+    public $otherLicencesFieldset = null;
 
     /**
      * @Form\Type("TextArea")
@@ -81,7 +84,8 @@ class Responsibilities
      *     "label": "transport-manager.responsibilities.additional-information",
      *     "label_options": {
      *         "disable_html_escape": "true"
-     *     }
+     *     },
+     *     "label_attributes": {"id":"additionalInformation"}
      * })
      * @Form\Required(false)
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
