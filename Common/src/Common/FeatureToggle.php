@@ -14,4 +14,8 @@ class FeatureToggle
     const SELFSERVE_PERMITS = 'ss_permits';
     const BACKEND_ECMT = 'back_ecmt';
     const BACKEND_PERMITS = 'back_permits';
+
+    const INTERNAL_SURRENDER = 'internal_surrender';
+    const SELFSERVE_SURRENDER = 'ss_surrender';
+    const BACKEND_SURRENDER = 'back_surrender';
 }
