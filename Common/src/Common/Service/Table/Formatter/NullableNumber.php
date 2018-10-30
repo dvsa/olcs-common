@@ -27,8 +27,9 @@ class NullableNumber implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        if (!is_null($data[$column['name']])) {
-            return Escape::html($data[$column['name']]);
+        $name = $data[$column['name']];
+        if (!is_null($name)) {
+            return Escape::html($name);
         }
         return 0;
     }
