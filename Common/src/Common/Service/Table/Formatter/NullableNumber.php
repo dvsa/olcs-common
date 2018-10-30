@@ -18,7 +18,7 @@ use Common\Util\Escape;
 class NullableNumber implements FormatterInterface
 {
     /**
-     * Comment value
+     * Transforms null into 0 for display
      *
      * @param array $data
      * @param array $column
