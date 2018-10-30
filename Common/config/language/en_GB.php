@@ -1614,6 +1614,7 @@ return [
     'licence.overview.saved' => 'Your changes have been saved',
     'licence.overview.title' => 'View your licence',
     'licence.print' => 'Print licence',
+    'licence.apply-to-surrender' => 'Apply to surrender licence',
     'licence.print.failed' => 'Licence failed to print',
     'licence.print.success' => 'Licence printed successfully',
     'licence.surrender' => 'Surrender licence',
