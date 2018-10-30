@@ -4,8 +4,6 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\NullableNumber;
 
-use Mockery as m;
-
 /**
  * Class NullableNumberTest
  *
