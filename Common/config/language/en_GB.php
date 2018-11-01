@@ -3435,8 +3435,7 @@ return [
     'permits.application.withdraw-application.title' => 'Withdraw Application - ',
     'permits.application.withdraw-confirmation' => 'Application withdrawn',
     'permits.application.withdraw-confirmation.title' => 'Withdrawal Successful - ',
-    'permits.application.withdraw-confirmation.success-1' => 'You have successfully withdrawn your',
-    'permits.application.withdraw-confirmation.success-2' => 'ECMT permit application number',
+    'permits.application.withdraw-confirmation.success' => 'Permit application number',
 
     'permits.application.change-licence' => 'Change Licence',
     'permits.application.change-licence.title' => 'Change Licence - ',
