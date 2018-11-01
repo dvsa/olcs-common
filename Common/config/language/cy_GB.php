@@ -1539,8 +1539,8 @@ return [
     'permits.ecmt.page.valid.tableheader.countries' => 'CY - Not valid for travel to',
     'permits.ecmt.page.valid.tableheader.no.countries' => 'CY - No exclusions',
 
-    'permits.check-answers.page.question.licence' => 'CY - Licence selected',
-    'govuk.warning.component.title' => 'CY - Warning',
+    'permits.check-answers.page.question.licence' => 'Licence selected',
+    'govuk.warning.component.title' => 'Warning',
 
     'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'CY - Windows which are active or have ended cannot be deleted',
     'irhp-permit-stock-cannot-delete-active-dependencies' => 'CY - This Permit Stock cannot be deleted as there are active dependencies',
