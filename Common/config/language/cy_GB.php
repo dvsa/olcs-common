@@ -1406,7 +1406,7 @@ return [
     'permits.application.window-closed' => 'CY - The ECMT permit application window has now closed.',
     'permits.application.window-closed.title' => 'CY - The ECMT permit application window has now closed - ',
 
-    'permits.form.trips.warning' => 'CY - You have stated a high intensity of use of these permits. Check the details are correct. We may contact you to verify this information.',
+    'permits.form.trips.warning' => 'You have stated a high intensity of use of these permits. Check the details are correct. We may contact you to verify this information.',
     'permits.form.intljourney.guidance' => 'CY - You have stated a high percentage of international journeys for this licence. Please check the details are correct. We may contact you to verify this information',
     'permits.form.trips.hint' => 'CY - One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
     'permits.page.number-of-trips.title' => 'CY - ECMT Permits - ',
@@ -1423,9 +1423,9 @@ return [
     'permits.page.ecmt.licence.saturated' => 'CY - You have already applied against all your licences',
     'permits.page.ecmt.licence.info' => 'CY - %s Road Haulage Permits will be valid for use from %s to %s.',
     'permits.page.international.journey.title' => 'CY - Percentage of International Journey - ',
-    'permits.page.international.journey.question' => 'CY - In the last 12 months, what percentage of international trips did you make using this licence?',
+    'permits.page.international.journey.question' => 'In the last 12 months, what percentage of international trips did you make using this licence?',
     'permits.page.sector.title' => 'CY - ECMT Sectors - ',
-    'permits.page.sector.question' => 'CY - Select one sector you mainly transport goods in using this licence',
+    'permits.page.sector.question' => 'Select one sector you mainly transport goods in using this licence',
     'permits.page.title.sectors' => 'CY - Nature of your business',
     'permits.page.field.sectors' => 'CY - What type of goods will you carry over the next 12 months?',
     'permits.page.restricted-countries.title' => 'CY - Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
@@ -1456,7 +1456,7 @@ return [
     'permits.button.confirm-cancel-finish' => 'CY - Finish',
 
     'permits.form.euro6.label' => 'CY - I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
-    'permits.form.cabotage.label' => 'CY - I confirm that I will not undertake any cabotage journeys using an ECMT permit.',
+    'permits.form.cabotage.label' => 'I confirm that I will not undertake any cabotage journeys using an ECMT permit.',
     'permits.form.trips.label' => 'CY - Number of trips',
 
     'permits.form.permits.required.label' => 'CY - Number of permits required',
