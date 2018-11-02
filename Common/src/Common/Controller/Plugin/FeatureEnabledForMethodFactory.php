@@ -5,18 +5,19 @@ namespace Common\Controller\Plugin;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class FeaturesEnabledFactory implements FactoryInterface
+class FeaturesEnabledForMethodFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return FeaturesEnabled
+     * @return FeaturesEnabledForMethod
      */
-    public function createService(ServiceLocatorInterface $serviceLocator): FeaturesEnabled
+    public function createService(ServiceLocatorInterface $serviceLocator): FeaturesEnabledForMethod
     {
-        return new FeaturesEnabled(
+        return new FeaturesEnabledForMethod(
             $serviceLocator->getServiceLocator()->get('QuerySender')
-        );    }
+        );
+    }
 }
