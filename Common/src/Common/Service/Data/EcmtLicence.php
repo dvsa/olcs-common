@@ -32,12 +32,13 @@ class EcmtLicence extends AbstractDataService implements ListData
         foreach ($data as $item) {
             $licence = [];
             $licence['value'] = $item['id'];
+            $licence['hasActiveEcmtApplication'] = $item['hasActiveEcmtApplication'];
             $licence['label'] = $item['licNo'] .
                 ' ' . $translationHelper->translate($item['licenceType']['id']) .
                 ' (' . $item['trafficArea'] . ')';
 
             if ($item['licenceType']['id'] === \Common\RefData::LICENCE_TYPE_RESTRICTED) {
-
+                // @todo: Remove following logic - should be defined in a view, not a data service.
                 $licence['html_elements'] = [
                     'div' => [
                         'content' => $translationHelper->translate(

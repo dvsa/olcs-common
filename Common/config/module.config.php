@@ -347,6 +347,7 @@ return array(
             'currentUser' => \Common\View\Helper\CurrentUserFactory::class,
             'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
             'linkBack' => Common\View\Helper\LinkBack::class,
+            'translateReplace' => \Common\View\Helper\TranslateReplace::class,
         ),
     ),
     'view_manager' => array(

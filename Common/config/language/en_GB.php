@@ -3436,8 +3436,7 @@ return [
     'permits.application.withdraw-application.title' => 'Withdraw Application - ',
     'permits.application.withdraw-confirmation' => 'Application withdrawn',
     'permits.application.withdraw-confirmation.title' => 'Withdrawal Successful - ',
-    'permits.application.withdraw-confirmation.success-1' => 'You have successfully withdrawn your',
-    'permits.application.withdraw-confirmation.success-2' => 'ECMT permit application number',
+    'permits.application.withdraw-confirmation.success' => 'Permit application number',
 
     'permits.application.change-licence' => 'Change Licence',
     'permits.application.change-licence.title' => 'Change Licence - ',
@@ -3447,22 +3446,23 @@ return [
 
     'permits.page.number-of-trips.title' => 'How many international trips were carried out over the past 12 months?-',
     'permits.page.number-of-trips.question' => 'How many international trips did you make in the last 12 months using this licence?',
-    'permits.page.number-of-trips.northern-ireland' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
+    'permits.page.number-of-trips.northern-ireland.warning' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.euro6.emissions.title' => 'Do your vehicles meet Euro 6 emissions standards? - ',
     'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
     'permits.page.cabotage.title' => 'Will you be carrying out cabotage? - ',
     'permits.page.cabotage.question' => 'ECMT permits do not allow you to carry out cabotage',
-    'permits.page.ecmt.licence.title' => 'Select Licence-',
+    'permits.page.ecmt.licence.title' => 'Select Licence - ',
+    'permits.page.ecmt.licence.browser.title' => 'Permits Home - ',
     'permits.page.ecmt.licence.question' => 'Select a licence you would like your ECMT permit to be applied to',
     'permits.page.ecmt.licence.question.one.licence' => 'Permit application for licence %s',
     'permits.page.ecmt.licence.saturated.one.licence' => 'Your licence has an active application',
     'permits.page.ecmt.licence.saturated' => 'You have already applied against all your licences',
     'permits.page.ecmt.licence.info' => '%s Road Haulage Permits will be valid for use from %s to %s.',
     'permits.page.international.journey.title' => 'Percentage of International Journey - ',
-    'permits.page.international.journey.question' => 'In the last 12 months what portion of your journeys were international for this licence?',
+    'permits.page.international.journey.question' => 'In the last 12 months, what percentage of international trips did you make using this licence?',
     'permits.page.international.journey.exclude' => 'Exclude journeys to the Republic of Ireland in your annual trips.',
     'permits.page.sector.title' => 'Sectors you specialise in carrying goods-',
-    'permits.page.sector.question' => 'Select one sector you mainly transport goods in',
+    'permits.page.sector.question' => 'Select one sector you mainly transport goods in using this licence',
     'permits.page.restricted-countries.title' => 'Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
     'permits.page.restricted-countries.question' => 'In the next 12 months are you transporting goods to Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.permits.required.title' => 'ECMT Permits Required - ',
@@ -3499,7 +3499,7 @@ return [
     'permit_nys' => 'Not yet submitted',
 
     'permits.form.euro6.label' => 'I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
-    'permits.form.cabotage.label' => 'I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
+    'permits.form.cabotage.label' => 'I confirm that I will not undertake any cabotage journeys using an ECMT permit.',
     'permits.form.trips.label' => 'Number of trips',
     'permits.form.permits.required.label' => 'Number of permits',
     'permits.form.check-answers.label' => 'I have checked my answers',
@@ -3548,15 +3548,6 @@ return [
     'section.name.ecmt-check-answers' => 'Check your answers',
     'section.name.ecmt-declaration' => 'Declaration',
 
-    'check-answers.page.question.licence' => 'Licence selected',
-    'check-answers.page.question.euro6' => 'I confirm that my ECMT permits will only be used by vehicles that are environmentally compliant with Euro 6 emissions standards.',
-    'check-answers.page.question.cabotage' => 'I confirm that I will not undertake a cabotage journey(s) with an ECMT permit.',
-    'check-answers.page.question.restricted-countries' => 'In the next 12 months are you transporting goods to Austria, Greece, Hungary, Italy or Russia?',
-    'check-answers.page.question.trips' => 'How many international trips did you make in the last 12 months using this licence?',
-    'check-answers.page.question.internationalJourneys' => 'In the last 12 months what portion of your journeys were international for this licence?',
-    'check-answers.page.question.sector' => 'Select one sector you mainly transport goods in',
-    'check-answers.page.question.permits-required' => 'How many permits do you require for this licence?',
-
     'less.than.60%' => 'Less than 60%',
     'from.60%.to.90%' => 'From 60% to 90%',
     'more.than.90%' => 'More than 90%',
@@ -3566,8 +3557,8 @@ return [
     'permits.page.ecmt.guidance.subtitle' => 'ECMT permits are needed to transport goods across EU and non-EU countries for vehicles weighing above 3.5 tonnes.',
     'permits.form.permits-required.hint' => 'Up to %s permits are authorised for this licence.',
     'permits.form.permits-required.fee.guidance' => 'There is a %s non-refundable application fee per permit required',
-    'permits.form.trips.guidance' => 'You have stated a high intensity of use of these permits. Please check the details are correct. We may contact you to verify this information',
-    'permits.form.intljourney.guidance' => 'You have stated a high percentage of international journeys for this licence. Please check the details are correct. We may contact you to verify this information',
+    'permits.form.trips.warning' => 'You have stated a high intensity of use of these permits. Check the details are correct. We may contact you to verify this information.',
+    'permits.form.intljourney.warning' => 'You have stated a high percentage of international journeys for this licence. Check the details are correct. We may contact you to verify this information.',
     'permits.form.trips.hint' => 'One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
     'permits.link.return.to.dashboard' => 'Return to permits dashboard',
     'permits.link.return.to.fee.overview' => 'Return to fee overview',
@@ -3602,8 +3593,15 @@ return [
     'permits.ecmt.page.valid.tableheader.countries' => 'Not valid for travel to',
     'permits.ecmt.page.valid.tableheader.no.countries' => 'No exclusions',
 
+    'permits.check-answers.page.question.licence' => 'Licence selected',
+    'govuk.warning.component.title' => 'Warning',
+
     'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'Windows which are active or have ended cannot be deleted',
     'irhp-permit-stock-cannot-delete-active-dependencies' => 'This Permit Stock cannot be deleted as there are active dependencies',
-    'irhp-permit-range-cannot-delete-active-dependencies' => 'This Permit Range cannot be deleted as there are active dependencies'
+    'irhp-permit-range-cannot-delete-active-dependencies' => 'This Permit Range cannot be deleted as there are active dependencies',
+
+    'ERR_PERMIT_PRINTING_MAX_BATCH_SIZE_REACHED' => 'Too many permits selected for printing in one batch.',
+    'ERR_PERMIT_PRINTING_ALREADY_IN_PROGRESS' => 'Printing already in progress.',
+
     // Potentially unused translations
 ];

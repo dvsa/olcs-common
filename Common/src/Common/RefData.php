@@ -358,6 +358,11 @@ class RefData
     const ECMT_APP_JOURNEY_60_90 = 'inter_journey_60_90';
     const ECMT_APP_JOURNEY_OVER_90 = 'inter_journey_more_90';
 
+    const IRHP_PERMIT_STATUS_PENDING            = 'irhp_permit_pending';
+    const IRHP_PERMIT_STATUS_AWAITING_PRINTING  = 'irhp_permit_awaiting_printing';
+    const IRHP_PERMIT_STATUS_PRINTING           = 'irhp_permit_printing';
+    const IRHP_PERMIT_STATUS_PRINTED            = 'irhp_permit_printed';
+    const IRHP_PERMIT_STATUS_ERROR              = 'irhp_permit_error';
 
     //feature toggle statuses
     const FT_ACTIVE = 'always-active';
