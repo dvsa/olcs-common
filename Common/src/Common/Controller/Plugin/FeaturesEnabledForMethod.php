@@ -26,7 +26,7 @@ class FeaturesEnabledForMethod extends AbstractPlugin
     }
 
     /**
-     * @param array    $toggleConfig
+     * @param array  $toggleConfig
      * @param string $method
      *
      * @return bool
@@ -41,17 +41,6 @@ class FeaturesEnabledForMethod extends AbstractPlugin
 
             return true;
         }
-
-        //we've nothing specific to the action, so check for a default
-        if (isset($toggleConfig['default'])) {
-            if (!empty($toggleConfig['default'])) {
-                return $this->querySender->featuresEnabled($toggleConfig['default']);
-            }
-
-            return true;
-        }
-
-        //we don't have config set up, disable the controller by default
         return false;
     }
 }

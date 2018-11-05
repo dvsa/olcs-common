@@ -18,5 +18,6 @@ class FeaturesEnabledFactory implements FactoryInterface
     {
         return new FeaturesEnabled(
             $serviceLocator->getServiceLocator()->get('QuerySender')
-        );    }
+        );
+    }
 }
