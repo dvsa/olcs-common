@@ -94,6 +94,7 @@ return array(
             'handleQuery' => \Common\Controller\Plugin\HandleQueryFactory::class,
             'handleCommand' => \Common\Controller\Plugin\HandleCommandFactory::class,
             'featuresEnabled' => \Common\Controller\Plugin\FeaturesEnabledFactory::class,
+            'featuresEnabledForMethod' => \Common\Controller\Plugin\FeaturesEnabledForMethodFactory::class,
         ]
     ),
     'console' => array(
