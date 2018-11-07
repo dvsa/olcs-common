@@ -33,6 +33,7 @@ class EcmtLicence extends AbstractDataService implements ListData
             $licence = [];
             $licence['value'] = $item['id'];
             $licence['hasActiveEcmtApplication'] = $item['hasActiveEcmtApplication'];
+            $licence['attributes']['aria-labelledby'] = 'EcmtLicence';
             $licence['label'] = $item['licNo'] .
                 ' ' . $translationHelper->translate($item['licenceType']['id']) .
                 ' (' . $item['trafficArea'] . ')';
