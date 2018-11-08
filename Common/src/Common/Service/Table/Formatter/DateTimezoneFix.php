@@ -21,12 +21,11 @@ class DateTimezoneFix implements FormatterInterface
      */
     public static function format($data, $column = array())
     {
-        if (!isset($column['dateformat'])) {
+        if (empty($column['dateformat'])) {
             $column['dateformat'] = \DATETIME_FORMAT;
         }
 
-        if (
-            isset($data[$column['name']]) &&
+        if (isset($data[$column['name']]) &&
             !is_null($data[$column['name']]) &&
             $data[$column['name']] !== ''
         ) {

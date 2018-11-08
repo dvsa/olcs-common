@@ -73,24 +73,24 @@ class DateTimezoneFixTest extends \PHPUnit_Framework_TestCase
                 [
                     'name' => 'startDate',
                 ],
-                '01/01/2018',
+                '01/01/2018 00:00',
             ],
             'Empty Date Format Column' => [
                 [
                     'startDate' => '2018-01-01T00:00:00+0000',
                 ],
                 [
-                    'dateFormat' => '',
+                    'dateformat' => '',
                     'name' => 'startDate',
                 ],
-                '01/01/2018',
+                '01/01/2018 00:00',
             ],
             'Complete Valid Data' => [
                 [
                     'startDate' => '2018-01-01T00:00:00+0000',
                 ],
                 [
-                    'dateFormat' => 'd/m/Y',
+                    'dateformat' => 'd/m/Y',
                     'name' => 'startDate',
                 ],
                 '01/01/2018',
@@ -100,7 +100,7 @@ class DateTimezoneFixTest extends \PHPUnit_Framework_TestCase
                     'startDate' => '2018-01-01T22:00:00+0000',
                 ],
                 [
-                    'dateFormat' => 'd/m/Y',
+                    'dateformat' => 'd/m/Y',
                     'name' => 'startDate',
                 ],
                 '01/01/2018',
@@ -110,7 +110,7 @@ class DateTimezoneFixTest extends \PHPUnit_Framework_TestCase
                     'startDate' => '2018-01-01T23:59:59+0000',
                 ],
                 [
-                    'dateFormat' => 'd/m/Y',
+                    'dateformat' => 'd/m/Y',
                     'name' => 'startDate',
                 ],
                 '01/01/2018',
