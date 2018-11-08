@@ -22,7 +22,7 @@ class DateTimezoneFix implements FormatterInterface
     public static function format($data, $column = array())
     {
         if (!isset($column['dateformat'])) {
-            $column['dateformat'] = \DATE_FORMAT;
+            $column['dateformat'] = \DATETIME_FORMAT;
         }
 
         if (
