@@ -1,7 +1,7 @@
 <?php
 
 /**
- * constrainedCountriesList.php
+ * ConstrainedCountriesList.php
  */
 namespace Common\Service\Table\Formatter;
 
@@ -32,7 +32,7 @@ class ConstrainedCountriesList implements FormatterInterface
         foreach ($data['constrainedCountries'] as $country) {
             $c[] = Escape::html($country['countryDesc']);
         }
-        $return = empty($c) ? 'No exclusions' : implode(', ', $c);
-        return $return;
+
+        return empty($c) ? 'No exclusions' : implode(', ', $c);
     }
 }
