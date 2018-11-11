@@ -3395,7 +3395,7 @@ return [
 
     // Permits application
     'permits.application.overview.main-title' => 'Application Overview-',
-    'permits.application.ineligible' => 'You are not eligible for permits (text TBC)',
+    'permits.application.ineligible' => 'You are not eligible for permits',
     'permits.application.overview.title' => 'Application overview - ',
     'permits.application.overview.main' => 'Apply for a new ECMT permit',
     'permits.application.overview.subtitle' => 'Permits applications',
