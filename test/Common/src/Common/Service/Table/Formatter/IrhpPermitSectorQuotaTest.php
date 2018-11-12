@@ -36,20 +36,16 @@ class IrhpPermitSectorQuotaTest extends PHPUnit_Framework_TestCase
             'Empty Quota Number' => [
                 [
                     'quotaNumber' => '',
-                    'sector' => [
-                        'id' => '1',
-                    ],
+                    'id' => 111,
                 ],
-                "<input type='number' value='0' name='sectors[1]' />"
+                "<input type='number' value='0' name='sectors[111]' />"
             ],
             'Non-Empty Quota Number' => [
                 [
                     'quotaNumber' => '100',
-                    'sector' => [
-                        'id' => '1',
-                    ],
+                    'id' => 222,
                 ],
-                "<input type='number' value='100' name='sectors[1]' />"
+                "<input type='number' value='100' name='sectors[222]' />"
             ],
         ];
     }

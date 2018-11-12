@@ -23,12 +23,12 @@ class IrhpPermitJurisdictionPermitNumber implements FormatterInterface
     public static function format($data)
     {
         $quotaNumber = $data['quotaNumber'] ? Escape::html($data['quotaNumber']) : 0;
-        $trafficAreaId = Escape::html($data['trafficArea']['id']);
+        $id = Escape::html($data['id']);
 
         return sprintf(
             "<input type='number' value='%s' name='trafficAreas[%s]' />",
             $quotaNumber,
-            $trafficAreaId
+            $id
         );
     }
 }

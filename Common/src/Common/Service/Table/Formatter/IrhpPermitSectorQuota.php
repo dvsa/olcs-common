@@ -23,12 +23,12 @@ class IrhpPermitSectorQuota implements FormatterInterface
     public static function format($data)
     {
         $quotaNumber = $data['quotaNumber'] ? Escape::html($data['quotaNumber']) : 0;
-        $sectorId = Escape::html($data['sector']['id']);
+        $id = Escape::html($data['id']);
 
         return sprintf(
             "<input type='number' value='%s' name='sectors[%s]' />",
             $quotaNumber,
-            $sectorId
+            $id
         );
     }
 }

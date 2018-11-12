@@ -363,6 +363,8 @@ class RefData
     const IRHP_PERMIT_STATUS_PRINTING           = 'irhp_permit_printing';
     const IRHP_PERMIT_STATUS_PRINTED            = 'irhp_permit_printed';
     const IRHP_PERMIT_STATUS_ERROR              = 'irhp_permit_error';
+    const IRHP_PERMIT_STATUS_CEASED             = 'irhp_permit_ceased';
+    const IRHP_PERMIT_STATUS_ISSUED             = 'irhp_permit_issued';
 
     //feature toggle statuses
     const FT_ACTIVE = 'always-active';
