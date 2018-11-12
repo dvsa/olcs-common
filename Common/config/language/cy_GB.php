@@ -1361,7 +1361,7 @@ return [
     'licence_person-add-action-formDateOfBirth' => 'Dyddiad geni',
 
     // Permits application
-    'permits.application.ineligible' => 'CY - You are not eligible for permits (text TBC)',
+    'permits.application.ineligible' => 'CY - You are not eligible for permits',
     'permits.application.overview.title' => 'Application overview - ',
     'permits.application.overview.main' => 'CY - Apply for a new ECMT permit',
     'permits.application.overview.subtitle' => 'CY - Permits applications',
