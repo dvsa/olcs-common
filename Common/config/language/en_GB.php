@@ -1618,6 +1618,7 @@ return [
     'licence.print.failed' => 'Licence failed to print',
     'licence.print.success' => 'Licence printed successfully',
     'licence.surrender' => 'Surrender licence',
+    'licence.surrender.start' => 'Start Now',
     'licence.surrender.start.title.psv' => 'Apply to surrender your public service vehicle operators licence',
     'licence.surrender.start.title.gv' => 'Apply to surrender your goods vehicle operators licence',
     'licence.surrender.start.cancel.bus' => '<p>You will need to cancel all registered bus services.</p>',
