@@ -5,34 +5,35 @@ namespace Common\Data\Mapper\Licence\Surrender\Sections;
 class LicenceDetails extends AbstractSection
 {
 
-    protected $heading = 'Licence details';
+    protected $heading = 'licence-details';
 
-    protected function makeQuestions(array $licence) {
+    protected function makeQuestions() {
 
         $questions = [];
 
         $questions[] = [
-            'label' => 'Licence number',
-            'answer' => $licence['licNo'],
+            'label' => $this->translator->translate('licence-number-full'),
+            'answer' => $this->licence['licNo'],
             'changeLinkInHeading' => $this->displayChangeLinkInHeading
         ];
 
         $questions[] = [
-            'label' => 'Name of licence holder',
-            'answer' => $licence['organisation']['name'],
+            'label' => $this->translator->translate('name-of-licence-holder'),
+            'answer' => $this->licence['organisation']['name'],
             'changeLinkInHeading' => $this->displayChangeLinkInHeading
         ];
 
-        if (count($licence['organisation']['tradingNames'])) {
-
-            foreach ($licence['organisation']['tradingNames'] as $tradingData) {
-                $tradingNames = $tradingData['name'];
+        if (count($this->licence['organisation']['tradingNames'])) {
+            $tradingNames = [];
+            foreach ($this->licence['organisation']['tradingNames'] as $tradingData) {
+                $tradingNames[] = $tradingData['name'];
             }
 
-            $tradingName = implode(', ', $tradingNames);
+            $tradingName = implode(',<br>', $tradingNames);
+            $tradingNameLabel = count($tradingNames) > 1 ? 'trading-names' : 'trading-name';
 
             $questions[] = [
-                'label' => 'Trading name',
+                'label' => $this->translator->translate($tradingNameLabel),
                 'answer' => $tradingName,
                 'changeLinkInHeading' => $this->displayChangeLinkInHeading
             ];
