@@ -3481,6 +3481,7 @@ return [
     'permits.page.fee.application.date' => 'Application date',
     'permits.page.fee.permit.type' => 'Permit type',
     'permits.page.fee.permit.validity' => 'Permit start and end date',
+    'permits.page.fee.permit.validity.dates' => '%s to %s',
     'permits.page.fee.number.permits' => 'Permits required',
     'permits.page.fee.per-permit' => ' (per permit)',
     'permits.page.fee.permit.fee.total' => 'Total application fee to be paid',

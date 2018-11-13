@@ -23,7 +23,8 @@ class TranslateReplace extends AbstractHelper implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $sl)
     {
-        $this->translator = $sl->getServiceLocator()->get('Helper/Translation');
+
+        $this->translator = $sl->getServiceLocator()->get('Helper\Translation');
 
         return $this;
     }

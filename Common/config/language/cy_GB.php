@@ -1443,6 +1443,7 @@ return [
     'permits.page.fee.application.date' => 'CY - Application date',
     'permits.page.fee.permit.type' => 'CY - Permit type',
     'permits.page.fee.permit.validity' => 'CY - Permit start and end date',
+    'permits.page.fee.permit.validity.dates' => '%s to %s',
     'permits.page.fee.number.permits' => 'CY - Permits required',
     'permits.page.fee.per-permit' => ' CY - (per permit)',
     'permits.page.fee.permit.fee.total' => 'CY - Total application fee to be paid',
