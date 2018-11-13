@@ -35,7 +35,7 @@ class ContactDetails extends AbstractSection
         ];
 
         $questions[] = [
-            'label' => $this->translator->translate('email'),
+            'label' => $this->translator->translate('Email'),
             'answer' => $this->licence['correspondenceCd']['emailAddress'],
             'changeLinkInHeading' => $this->displayChangeLinkInHeading
         ];

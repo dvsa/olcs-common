@@ -3191,7 +3191,6 @@ return [
     'continuations.business-details.organisation-name' => 'Organisation name',
     'contact-number' => 'Contact number',
     'contact-number-optional' => 'Contact number (optional)',
-    'email' => 'Email',
     'secondary-contact-number' => 'Secondary contact number',
     'secondary-contact-number-optional' => 'Secondary contact number (optional)',
     'upload_evidence_validator_please_upload_advert' => 'Upload the advert',
