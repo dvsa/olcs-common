@@ -1,13 +1,13 @@
 <?php
 
 namespace Common\Data\Mapper\Licence\Surrender\Sections;
-use Common\Service\Helper\UrlHelperService as UrlHelper;
 
 class CorrespondenceAddress extends AbstractSection
 {
     protected $heading = 'correspondence-address';
 
-    protected function makeQuestions() {
+    protected function makeQuestions()
+    {
 
         $questions = [];
 
@@ -48,5 +48,4 @@ class CorrespondenceAddress extends AbstractSection
                 '#correspondenceAddress'
         ];
     }
-
 }

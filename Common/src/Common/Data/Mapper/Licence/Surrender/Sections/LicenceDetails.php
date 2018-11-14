@@ -7,7 +7,8 @@ class LicenceDetails extends AbstractSection
 
     protected $heading = 'licence-details';
 
-    protected function makeQuestions() {
+    protected function makeQuestions()
+    {
 
         $questions = [];
 
