@@ -715,6 +715,21 @@ class FormHelperService extends AbstractHelperService
     }
 
     /**
+     * Remove multiple fieldsets
+     *
+     * @param \Zend\Form\FormInterface $form     Form
+     * @param array                    $fieldset   Names of Fieldset
+     *
+     * @return void
+     */
+    public function removeFieldsets(Form $form, array $fieldsets): void
+    {
+        foreach ($fieldsets as $fieldset) {
+            $this->remove($form, $fieldset);
+        }
+    }
+
+    /**
      * Check for company number lookups
      *
      * @param \Zend\Form\FormInterface $form            Form
