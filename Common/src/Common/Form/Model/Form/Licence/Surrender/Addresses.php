@@ -2,7 +2,6 @@
 
 namespace Common\Form\Model\Form\Licence\Surrender;
 
-
 use Zend\Form\Annotation as Form;
 
 /**
