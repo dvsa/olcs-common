@@ -13,8 +13,8 @@ class ReviewContactDetails
     public static function makeSections(
         array $licence,
         \Zend\Mvc\Controller\Plugin\Url $urlHelper,
-        TranslationHelperService $translator): array
-    {
+        TranslationHelperService $translator
+    ): array {
         $licenceDetails = new LicenceDetails($licence, $urlHelper, $translator);
         $correspondenceAddress = new CorrespondenceAddress($licence, $urlHelper, $translator);
         $contactDetails = new ContactDetails($licence, $urlHelper, $translator);
@@ -27,5 +27,4 @@ class ReviewContactDetails
 
         return $sections;
     }
-
 }

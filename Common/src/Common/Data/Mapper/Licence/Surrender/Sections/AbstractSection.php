@@ -1,12 +1,9 @@
 <?php
 
 namespace Common\Data\Mapper\Licence\Surrender\Sections;
+
 use Common\Service\Helper\TranslationHelperService;
 
-/**
- * Class AbstractSection
- * @method \Zend\Mvc\Controller\Plugin\Url url()
- */
 abstract class AbstractSection
 {
     protected $displayChangeLinkInHeading = true;
@@ -20,8 +17,8 @@ abstract class AbstractSection
     public function __construct(
         array $licence,
         \Zend\Mvc\Controller\Plugin\Url $urlHelper,
-        TranslationHelperService $translator)
-    {
+        TranslationHelperService $translator
+    ) {
         $this->licence = $licence;
         $this->urlHelper = $urlHelper;
         $this->translator = $translator;
