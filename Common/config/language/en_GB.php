@@ -1618,6 +1618,7 @@ return [
     'licence.print.failed' => 'Licence failed to print',
     'licence.print.success' => 'Licence printed successfully',
     'licence.surrender' => 'Surrender licence',
+    'licence.surrender.contact-details-changed' => 'Your contact details have been successfully changed',
     'licence.apply-to-change' => 'Apply to change this licence',
     'licence.vehicles-trailers.share-info' => 'Tick the box to confirm that you wish to share this information with the Driver and Vehicle Standards Agency (DVSA). Your data will be used for its purposes, eg test history reports or your Operator Compliance Risk Score (OCRS). You must keep this information up to date. If you don’t, you may receive an inaccurate test history report or OCRS.',
     'licence.vehicles_transfer.form.licence' => 'To which licence would you like to transfer the selected vehicle(s)?',
