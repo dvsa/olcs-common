@@ -45,7 +45,7 @@ class CorrespondenceAddress extends AbstractSection
     {
         return [
             'sectionLink' => $this->urlHelper->fromRoute(
-                    'licence/surrender/start',
+                    'licence/surrender/address-details',
                     [
                         'licence' => $this->licence['id']
                     ]
