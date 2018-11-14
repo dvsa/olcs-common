@@ -44,12 +44,8 @@ class CorrespondenceAddress extends AbstractSection
     protected function makeChangeLink()
     {
         return [
-            'sectionLink' => $this->urlHelper->fromRoute(
-                    'licence/surrender/address-details',
-                    [
-                        'licence' => $this->licence['id']
-                    ]
-                ) . "#" . 'correspondenceAddress'
+            'sectionLink' => $this->urlHelper->fromRoute('licence/surrender/address-details', [], [], true) .
+                '#correspondenceAddress'
         ];
     }
 

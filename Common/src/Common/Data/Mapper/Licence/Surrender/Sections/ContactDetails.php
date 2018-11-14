@@ -46,12 +46,8 @@ class ContactDetails extends AbstractSection
     protected function makeChangeLink()
     {
         return [
-            'sectionLink' => $this->urlHelper->fromRoute(
-                    'licence/surrender/address-details',
-                    [
-                        'licence' => $this->licence['id']
-                    ]
-                ) . "#" . 'contactDetails'
+            'sectionLink' => $this->urlHelper->fromRoute('licence/surrender/address-details', [], [], true) .
+                '#contactDetails'
         ];
     }
 
