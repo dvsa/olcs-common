@@ -17,6 +17,7 @@ class DateTimezoneFix implements FormatterInterface
      *
      * @param array $data
      * @param array $column
+     *
      * @return string
      */
     public static function format($data, $column = array())
@@ -25,8 +26,7 @@ class DateTimezoneFix implements FormatterInterface
             $column['dateformat'] = \DATE_FORMAT;
         }
 
-        if (
-            isset($data[$column['name']]) &&
+        if (isset($data[$column['name']]) &&
             !is_null($data[$column['name']]) &&
             $data[$column['name']] !== ''
         ) {
