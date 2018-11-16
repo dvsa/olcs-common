@@ -1658,6 +1658,8 @@ return [
     'licence_add-Person-PersonType-org_t_st'=>'Owner',
     'licence_add-Person-PersonType-org_t_ir' => 'Person',
     'licence_add-Person-PersonType-org_t_llp' => 'Partner',
+    'licence.surrender.already.applied' => 'You have already applied to surrender this licence.',
+
     'list-of-convictions' => 'List of convictions',
     'llp-name' => 'LLP name',
     'llp-number' => 'LLP #',

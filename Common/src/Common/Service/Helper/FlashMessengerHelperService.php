@@ -99,6 +99,7 @@ class FlashMessengerHelperService extends AbstractHelperService
         return $this->getFlashMessenger()->addWarningMessage($message);
     }
 
+
     /**
      * Add a info message
      *

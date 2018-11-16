@@ -424,6 +424,7 @@ return [
     'licence_goods-trailers_trailer.table.title' => 'Ôl-gerbydau',
     'licence_goods-trailers_trailer.table.trailerNo' => 'Rhif ôl-gerbyd',
     'licence_type_of_licence_confirmation' => 'Er mwyn newid math eich trwydded rhaid ichi greu cais am amrywiad. Hoffech chi symud ymlaen?',
+    'licence.surrender.already.applied' => 'You have already applied to surrender this licence.',
     'llp-number' => 'PAC #',
     'lookup-advance-search-submit' => 'Chwilio',
     'lookup-basic-search-submit' => 'Chwilio',
