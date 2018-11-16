@@ -48,11 +48,8 @@ class AddressDetails implements MapperInterface
         $contacts = [];
 
         foreach ($data["correspondenceCd"]["phoneContacts"] as $phoneContact) {
-            $phoneType = (
-            isset(self::$typeMap[$phoneContact['phoneContactType']['id']])
-                ? self::$typeMap[$phoneContact['phoneContactType']['id']]
-                : ''
-            );
+
+            $phoneType = self::$typeMap[$phoneContact['phoneContactType']['id']] ?? '';
 
             $contacts += [
                 $phoneType => $phoneContact['phoneNumber'],
