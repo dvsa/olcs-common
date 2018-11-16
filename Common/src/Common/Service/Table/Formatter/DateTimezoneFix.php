@@ -17,6 +17,7 @@ class DateTimezoneFix implements FormatterInterface
      *
      * @param array $data
      * @param array $column
+     *
      * @return string
      */
     public static function format($data, $column = array())
