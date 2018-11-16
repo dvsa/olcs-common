@@ -239,7 +239,6 @@ class FormHelperService extends AbstractHelperService
             $processed = false;
             $modified = false;
 
-            // @TODO possible bug :: Variable fieldset is introduced as a method parameter and overridden here
             foreach ($fieldset->getFieldsets() as $fieldset) {
                 if ($result = $this->processAddressLookupFieldset($fieldset, $data, $form)) {
                     $processed = true;
@@ -803,7 +802,7 @@ class FormHelperService extends AbstractHelperService
      * Remove a value option from an element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string $index Index
+     * @param string                            $index   Index
      *
      * @return void
      */
@@ -821,7 +820,7 @@ class FormHelperService extends AbstractHelperService
      * Set current option of element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string $index Index
+     * @param string                            $index   Index
      *
      * @return void
      */
@@ -999,7 +998,7 @@ class FormHelperService extends AbstractHelperService
      * Remove Value Option
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Element (Select|Radio)
-     * @param string $key Key
+     * @param string                            $key     Key
      *
      * @return void
      */
