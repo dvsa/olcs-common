@@ -239,7 +239,6 @@ class FormHelperService extends AbstractHelperService
             $processed = false;
             $modified = false;
 
-            // @TODO possible bug :: Variable fieldset is introduced as a method parameter and overridden here
             foreach ($fieldset->getFieldsets() as $fieldset) {
                 if ($result = $this->processAddressLookupFieldset($fieldset, $data, $form)) {
                     $processed = true;
@@ -715,21 +714,6 @@ class FormHelperService extends AbstractHelperService
     }
 
     /**
-     * Remove multiple fieldsets
-     *
-     * @param \Zend\Form\FormInterface $form     Form
-     * @param array                    $fieldsets Names of Fieldset
-     *
-     * @return void
-     */
-    public function removeFieldsets(Form $form, array $fieldsets): void
-    {
-        foreach ($fieldsets as $fieldset) {
-            $this->remove($form, $fieldset);
-        }
-    }
-
-    /**
      * Check for company number lookups
      *
      * @param \Zend\Form\FormInterface $form            Form
@@ -818,7 +802,7 @@ class FormHelperService extends AbstractHelperService
      * Remove a value option from an element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string    $index Index
+     * @param string                            $index   Index
      *
      * @return void
      */
@@ -836,7 +820,7 @@ class FormHelperService extends AbstractHelperService
      * Set current option of element
      *
      * @param \Zend\Form\Element\(Select|Radio) $element Select element or a Radio group
-     * @param string                            $index    Index
+     * @param string                            $index   Index
      *
      * @return void
      */

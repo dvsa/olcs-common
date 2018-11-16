@@ -31,6 +31,5 @@ class ReviewContactDetailsTest extends AbstractReviewContactDetailsTest
         ];
 
         $this->assertSame($expected, $sections);
-
     }
 }

@@ -28,5 +28,4 @@ class CorrespondenceAddressTest extends AbstractReviewContactDetailsTest
 
         $this->assertSame($expected, $section);
     }
-
 }

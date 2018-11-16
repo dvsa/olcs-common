@@ -1607,43 +1607,4 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $this->assertEquals(['b' => 'B', 'c' => 'C'], $select->getValueOptions());
     }
-
-    public function testremoveFieldsets()
-    {
-        $form = m::mock('Zend\Form\Form');
-
-        $form->shouldReceive('get')
-            ->with('foo')
-            ->andReturnSelf()
-            ->getMock()
-            ->shouldReceive('remove')
-            ->with('foo');
-
-        $form->shouldReceive('get')
-            ->with('bar')
-            ->andReturnSelf()
-            ->getMock()
-            ->shouldReceive('remove')
-            ->with('bar');
-
-        $filter = m::mock('Zend\InputFilter\InputFilter');
-        $filter->shouldReceive('get')
-            ->with('bar')
-            ->andReturnSelf()
-            ->getMock()
-            ->shouldReceive('remove')
-            ->with('bar');
-
-        $filter->shouldReceive('get')
-            ->with('foo')
-            ->andReturnSelf()
-            ->getMock()
-            ->shouldReceive('remove')
-            ->with('foo');
-
-        $form->shouldReceive('getInputFilter')
-            ->andReturn($filter);
-
-        $this->sut->removeFieldsets($form, ['foo', 'bar']);
-    }
 }
