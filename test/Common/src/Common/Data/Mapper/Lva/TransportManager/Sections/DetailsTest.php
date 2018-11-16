@@ -62,7 +62,7 @@ class DetailsTest extends MockeryTestCase
         $this->assertInstanceOf(Details::class, $actual);
         $this->assertEquals([
             'lva-tmverify-details-checkanswer-name' => '__TEST__ __TEST__',
-            'lva-tmverify-details-checkanswer-birthDate' => '15-10-2000',
+            'lva-tmverify-details-checkanswer-birthDate' => '15 Oct 2000',
             'lva-tmverify-details-checkanswer-birthPlace' => '__TEST__',
             'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
             'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',
@@ -126,7 +126,7 @@ class DetailsTest extends MockeryTestCase
 
         $this->assertEquals([
             'lva-tmverify-details-checkanswer-name' => '__TEST__ __TEST__',
-            'lva-tmverify-details-checkanswer-birthDate' => '15-10-2000',
+            'lva-tmverify-details-checkanswer-birthDate' => '15 Oct 2000',
             'lva-tmverify-details-checkanswer-birthPlace' => null,
             'lva-tmverify-details-checkanswer-emailAddress' => '__TEST__',
             'lva-tmverify-details-checkanswer-certificate' => 'No certificates attached',

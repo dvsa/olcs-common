@@ -6,6 +6,11 @@ return [
     'Application reference' => 'Cyfeirnod cais',
     'Confirm' => 'Cadarnhau',
     'Continue' => 'Parhau',
+    'correspondence-address' => 'Cyfeiriad gohebiaeth',
+    'contact-details' => 'Manylion cysylltu',
+    'name-of-licence-holder' => 'Enw deiliad y drwydded',
+    'trading-name' => 'Enw masnachu',
+    'trading-names' => 'Enwau masnachu',
     'Date' => 'Dyddiad',
     'ERR_OC_PERMISSION' => 'Rhaid nodi’r blwch hwn i barhau',
     'ERR_OC_T_1' => 'Os ydych yn gwneud cais am un ganolfan weithredu yn unig, rhaid i gyfanswm yr ôl-gerbydau awdurdodedig fod yr un peth ag yn eich canolfan weithredu',
@@ -1362,7 +1367,7 @@ return [
     'licence_person-add-action-formDateOfBirth' => 'Dyddiad geni',
 
     // Permits application
-    'permits.application.ineligible' => 'CY - You are not eligible for permits (text TBC)',
+    'permits.application.ineligible' => 'CY - You are not eligible for permits',
     'permits.application.overview.title' => 'Application overview - ',
     'permits.application.overview.main' => 'CY - Apply for a new ECMT permit',
     'permits.application.overview.subtitle' => 'CY - Permits applications',

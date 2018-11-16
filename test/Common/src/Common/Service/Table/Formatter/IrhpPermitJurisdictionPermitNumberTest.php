@@ -37,20 +37,16 @@ class IrhpPermitJurisdictionPermitNumberTest extends MockeryTestCase
             'Empty Quota Number' => [
                 [
                     'quotaNumber' => '',
-                    'trafficArea' => [
-                        'id' => 'B',
-                    ],
+                    'id' => 111,
                 ],
-                "<input type='number' value='0' name='trafficAreas[B]' />"
+                "<input type='number' value='0' name='trafficAreas[111]' />"
             ],
             'Non-Empty Quota Number' => [
                 [
                     'quotaNumber' => '100',
-                    'trafficArea' => [
-                        'id' => 'B',
-                    ],
+                    'id' => 222,
                 ],
-                "<input type='number' value='100' name='trafficAreas[B]' />"
+                "<input type='number' value='100' name='trafficAreas[222]' />"
             ],
         ];
     }
