@@ -24,7 +24,7 @@ class LicenceDetails extends AbstractSection
             'changeLinkInHeading' => $this->displayChangeLinkInHeading
         ];
 
-        if (count($this->licence['organisation']['tradingNames'])) {
+        if (!empty($this->licence['organisation']['tradingNames'])) {
             $tradingNames = [];
             foreach ($this->licence['organisation']['tradingNames'] as $tradingData) {
                 $tradingNames[] = $tradingData['name'];
