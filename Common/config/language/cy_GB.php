@@ -1550,6 +1550,9 @@ return [
     'permits.ecmt.page.valid.tableheader.ref' => 'Permit number',
     'permits.ecmt.page.valid.tableheader.countries' => 'Not valid for travel to',
     'permits.ecmt.page.valid.tableheader.no.countries' => 'No exclusions',
+    'waived-paid-permits.page.fee-part-successful.title' => 'Accept or Decline ECMT permits',
+    'waived.paid.permits.page.ecmt.fee-part-successful.payment.due' => 'Acceptance required by',
+    'permits.application.fee.submitted.main.paid.waived' => 'Acceptance successful',
 
     'permits.check-answers.page.question.licence' => 'Licence selected',
     'govuk.warning.component.title' => 'Warning',
