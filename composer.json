@@ -51,7 +51,8 @@
         "olcs/olcs-transfer": "dev-develop",
         "olcs/olcs-utils": "dev-develop",
         "soflomo/purifier": "~0.1.0",
-        "olcs/olcs-logging": "dev-develop"
+        "olcs/olcs-logging": "dev-develop",
+        "xificurk/phpstan-shim": "^0.10.4"
 
     },
     "autoload": {
