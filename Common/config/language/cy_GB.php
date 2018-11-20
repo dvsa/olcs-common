@@ -1446,7 +1446,7 @@ return [
     'permits.page.fee.main' => 'Application fee for ECMT permit',
     'permits.page.fee.title' => 'Application fees for ECMT permit',
     'permits.page.fee.subtitle' => 'This is a summary of the fees you are required to pay when submitting your application. The application fee is non-refundable.',
-    'permits.page.fee.message' => 'If your permit application is successful you will have to pay an issuing fee of £123.00 per permit at a later stage.',
+    'permits.page.fee.message' => 'If your permit application is successful you will have to pay additional fees. These cost %s per permit awarded.',
     'permits.page.fee.application.reference' => 'Application reference',
     'permits.page.fee.application.date' => 'Application date',
     'permits.page.fee.permit.type' => 'Permit type',
