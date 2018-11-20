@@ -3608,6 +3608,7 @@ return [
     'permits.page.ecmt.fee-part-successful.issuing.fee' => 'Issuing fee per permit',
     'permits.page.ecmt.fee-part-successful.issuing.fee.total' => 'Total issuing fee to be paid',
     'permits.page.ecmt.fee-part-successful.payment.due' => 'Payment due by',
+    'permits.page.ecmt.fee-part-successful.fee.total.value' => '%s (non-refundable)',
     'permits.page.view.permits' => 'view permits',
     'permits.page.non.refundable' => '(non-refundable)',
     'permits.page.accept.and.pay' => 'Accept and pay',
