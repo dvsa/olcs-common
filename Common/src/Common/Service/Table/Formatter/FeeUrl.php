@@ -37,6 +37,7 @@ class FeeUrl implements FormatterInterface
             case 'operator/fees':
             case 'licence/bus-fees':
             case 'licence/fees':
+            case 'licence/irhp-fees':
             case 'lva-application/fees':
                 $url = $urlHelper->fromRoute(
                     $matchedRouteName.'/fee_action',
