@@ -58,7 +58,10 @@ class LicenceAddPersonTest extends MockeryTestCase
         $targetElement
             ->shouldReceive('add')
             ->twice()
-            ->with(anInstanceOf(Element::class), hasKeyValuePair('priority', integerValue()));
+            ->with(
+                \Hamcrest\Matchers::anInstanceOf(Element::class),
+                \Hamcrest\Matchers::hasKeyValuePair('priority', \Hamcrest\Matchers::integerValue())
+            );
 
         $fieldset = m::mock(Fieldset::class);
         $fieldset
