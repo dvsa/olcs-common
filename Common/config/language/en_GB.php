@@ -72,6 +72,8 @@ return [
     'ERR_TA_PSV_INTERNAL' => 'The operator already has a PSV application or licence within the %s traffic area',
     'ERR_TA_PSV_SR_EXTERNAL' => 'You already have a PSV Special restricted application or licence within the %s traffic area',
     'ERR_TA_PSV_SR_INTERNAL' => 'The operator already has a PSV Special restricted application or licence within the %s traffic area',
+    'ERR_TA_PSV_RES_EXTERNAL' => 'You already have a PSV Restricted application or licence within the %s traffic area',
+    'ERR_TA_PSV_RES_INTERNAL' => 'The operator already has a PSV Restricted application or licence within the %s traffic area',
     'ERR_UNLICENCED_ORG' => 'The organisation is unlicenced',
     'ERR_USERNAME_EXISTS' => 'Username is already taken',
     'ERR_USERNAME_REQUIRED' => 'Username is required',

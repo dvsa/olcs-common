@@ -147,7 +147,6 @@ class OperatingCentre implements MapperInterface
         $formMessages = [];
 
         if (isset($errors['noOfVehiclesRequired'])) {
-
             foreach ($errors['noOfVehiclesRequired'] as $key => $message) {
                 $formMessages['data']['noOfVehiclesRequired'][] = $message;
             }
@@ -156,7 +155,6 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['noOfTrailersRequired'])) {
-
             foreach ($errors['noOfTrailersRequired'] as $key => $message) {
                 $formMessages['data']['noOfTrailersRequired'][] = $message;
             }
@@ -165,7 +163,6 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['adPlacedIn'])) {
-
             foreach ($errors['adPlacedIn'] as $key => $message) {
                 $formMessages['advertisements']['adPlacedIn'][] = $message;
             }
@@ -174,7 +171,6 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['adPlacedDate'])) {
-
             foreach ($errors['adPlacedDate'] as $key => $message) {
                 $formMessages['advertisements']['adPlacedDate'][] = $message;
             }
@@ -183,7 +179,6 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['file'])) {
-
             foreach ($errors['file'] as $key => $message) {
                 $formMessages['advertisements']['file']['upload'][] = $message;
             }
@@ -192,13 +187,11 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['postcode'])) {
-
             foreach ($errors['postcode'] as $key => $message) {
-
                 foreach ($message as $k => $v) {
                     if ($k === 'ERR_OC_PC_TA_GB') {
                         $message[$k] = $translator->translateReplace($k, [$taGuidesUrl]);
-                    } elseif ($k === 'ERR_TA_GOODS' || $k === 'ERR_TA_PSV' || $k === 'ERR_TA_PSV_SR') {
+                    } elseif (in_array($k, OperatingCentres::API_ERR_KEYS)) {
                         $message[$k] = $translator->translateReplace($k .'_'. strtoupper($location), [$v]);
                     }
                 }
@@ -210,7 +203,6 @@ class OperatingCentre implements MapperInterface
         }
 
         if (isset($errors['permission'])) {
-
             foreach ($errors['permission'] as $key => $message) {
                 $formMessages['data']['permission']['permission'][] = $message;
             }
