@@ -2,9 +2,7 @@
 
 namespace CommonTest\Data\Mapper\Licence\Surrender;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-
-class AbstractReviewContactDetailsTest extends MockeryTestCase
+trait ReviewContactDetailsMocksAndExpectationsTrait
 {
     protected function mockLicence(): array
     {
