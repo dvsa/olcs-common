@@ -543,10 +543,9 @@ class LicenceEntityService extends AbstractLvaEntityService
         );
 
         if (empty($licence['licNo'])) {
-
             $licenceGen = $this->getServiceLocator()->get('Entity\LicenceNoGen')->save(array('licence' => $licenceId));
 
-            if (!isset($licenceGen['id']) ) {
+            if (!isset($licenceGen['id'])) {
                 throw new Exceptions\UnexpectedResponseException('Error generating licence');
             }
 
