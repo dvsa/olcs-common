@@ -5,12 +5,15 @@ namespace CommonTest\Data\Mapper\Licence\Surrender\Sections;
 
 use Common\Data\Mapper\Licence\Surrender\Sections\CorrespondenceAddress;
 use Common\Service\Helper\TranslationHelperService;
-use CommonTest\Data\Mapper\Licence\Surrender\AbstractReviewContactDetailsTest;
+use CommonTest\Data\Mapper\Licence\Surrender\ReviewContactDetailsMocksAndExpectationsTrait;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Zend\Mvc\Controller\Plugin\Url;
 
-class CorrespondenceAddressTest extends AbstractReviewContactDetailsTest
+class CorrespondenceAddressTest extends MockeryTestCase
 {
+    use ReviewContactDetailsMocksAndExpectationsTrait;
+
     public function testMakeQuestions()
     {
         $mockTranslator = m::mock(TranslationHelperService::class);
@@ -24,7 +27,7 @@ class CorrespondenceAddressTest extends AbstractReviewContactDetailsTest
         $sut = new CorrespondenceAddress($mockLicence, $mockUrlHelper, $mockTranslator);
         $section = $sut->makeSection();
 
-        $expected = $this->expectedForCorrespondenceAddress($mockLicence);
+        $expected = $this->expectedForCorrespondenceAddress();
 
         $this->assertSame($expected, $section);
     }

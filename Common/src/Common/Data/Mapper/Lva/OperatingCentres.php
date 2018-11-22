@@ -14,7 +14,7 @@ use Zend\Form\FormInterface;
  */
 class OperatingCentres implements MapperInterface
 {
-    const API_ERR_KEYS = ['ERR_TA_GOODS', 'ERR_TA_PSV', 'ERR_TA_PSV_SR'];
+    const API_ERR_KEYS = ['ERR_TA_GOODS', 'ERR_TA_PSV', 'ERR_TA_PSV_SR', 'ERR_TA_PSV_RES'];
 
     /**
      * Map Form and Api data
