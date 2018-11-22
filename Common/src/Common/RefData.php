@@ -58,6 +58,7 @@ class RefData
     const LICENCE_STATUS_VALID = 'lsts_valid';
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
     const LICENCE_STATUS_GRANTED = 'lsts_granted';
+    const LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION = 'lsts_surr_consideration';
     const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
     const LICENCE_STATUS_WITHDRAWN = 'lsts_withdrawn';
     const LICENCE_STATUS_REFUSED = 'lsts_refused';

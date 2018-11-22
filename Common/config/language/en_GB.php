@@ -1709,6 +1709,7 @@ return [
     'lsts_refused' => 'Refused',
     'lsts_revoked' => 'Revoked',
     'lsts_surrendered' => 'Surrendered',
+    'lsts_surr_consideration' => 'Surrender under consideration',
     'lsts_suspended' => 'Suspended',
     'lsts_terminated' => 'Terminated',
     'lsts_unlicenced' => 'Unlicenced',
