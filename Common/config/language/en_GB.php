@@ -3618,7 +3618,6 @@ return [
     'permits.page.non.refundable' => '(non-refundable)',
     'permits.page.accept.and.pay' => 'Accept and pay',
     'permits.page.decline.permits' => 'Decline permits',
-    'permits.form.declined_permit.label' => 'Decline awarded permits',
     'permits.form.declined_permit.error_message' => 'You must select the checkbox to continue',
     'permits.form.declined_permit.label' => 'I confirm that I don\'t want awarded permits.',
     'permits.page.declined_permit.title' => 'Decline awarded permits',
@@ -3627,6 +3626,9 @@ return [
     'permits.ecmt.page.valid.tableheader.ref' => 'Permit number',
     'permits.ecmt.page.valid.tableheader.countries' => 'Not valid for travel to',
     'permits.ecmt.page.valid.tableheader.no.countries' => 'No exclusions',
+    'waived-paid-permits.page.fee-part-successful.title' => 'Accept or Decline ECMT permits',
+    'waived.paid.permits.page.ecmt.fee-part-successful.payment.due' => 'Acceptance required by',
+    'permits.application.fee.submitted.main.paid.waived' => 'Acceptance successful',
 
     'permits.check-answers.page.question.licence' => 'Licence selected',
     'govuk.warning.component.title' => 'Warning',
