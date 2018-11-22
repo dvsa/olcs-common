@@ -3495,6 +3495,7 @@ return [
     'permits.page.sector.question' => 'Select one sector you mainly transport goods in using this licence',
     'permits.page.restricted-countries.title' => 'Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
     'permits.page.restricted-countries.question' => 'In the next 12 months are you transporting goods to Austria, Greece, Hungary, Italy or Russia?',
+    'permits.page.restricted-countries.hint' => 'Select the countries that apply.',
     'permits.page.permits.required.title' => 'ECMT Permits Required - ',
     'permits.page.permits.required.question' => 'How many permits do you require for this licence?',
     'permits.page.title.summary' => 'Check your answers before submitting your permit',
