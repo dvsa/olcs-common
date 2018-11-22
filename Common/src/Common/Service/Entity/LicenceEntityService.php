@@ -447,19 +447,11 @@ class LicenceEntityService extends AbstractLvaEntityService
         return count($data['licenceVehicles']);
     }
 
-    public function getVehiclesPsvTotal($id, $type)
+    public function getVehiclesPsvTotal($id)
     {
-        // PSV type no longer exists so ignore the type parameter
-
         $data = $this->getAll($id, $this->vehiclesPsvTotalBundle);
 
-        $count = 0;
-
-        foreach ($data['licenceVehicles'] as $vehicle) {
-            $count++;
-        }
-
-        return $count;
+        return count($data['licenceVehicles']);
     }
 
     public function getTotalAuths($id)
