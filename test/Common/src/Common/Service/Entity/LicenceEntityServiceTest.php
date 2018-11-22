@@ -271,7 +271,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetVehiclesPsvTotal()
     {
         $id = 7;
-        $type = 1;
 
         $response = array(
             'licenceVehicles' => array(
@@ -314,7 +313,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Licence', 'GET', ['id' => $id, 'limit' => 'all'])
             ->will($this->returnValue($response));
 
-        $this->assertEquals(5, $this->sut->getVehiclesPsvTotal($id, $type));
+        $this->assertEquals(5, $this->sut->getVehiclesPsvTotal($id));
     }
 
     /**

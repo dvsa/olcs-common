@@ -34,6 +34,7 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_VALID = 'lsts_valid';
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
     const LICENCE_STATUS_GRANTED = 'lsts_granted';
+    const LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION = 'lsts_surr_consideration';
     const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
     const LICENCE_STATUS_WITHDRAWN = 'lsts_withdrawn';
     const LICENCE_STATUS_REFUSED = 'lsts_refused';
@@ -446,19 +447,11 @@ class LicenceEntityService extends AbstractLvaEntityService
         return count($data['licenceVehicles']);
     }
 
-    public function getVehiclesPsvTotal($id, $type)
+    public function getVehiclesPsvTotal($id)
     {
-        // PSV type no longer exists so ignore the type parameter
-
         $data = $this->getAll($id, $this->vehiclesPsvTotalBundle);
 
-        $count = 0;
-
-        foreach ($data['licenceVehicles'] as $vehicle) {
-            $count++;
-        }
-
-        return $count;
+        return count($data['licenceVehicles']);
     }
 
     public function getTotalAuths($id)
@@ -542,10 +535,9 @@ class LicenceEntityService extends AbstractLvaEntityService
         );
 
         if (empty($licence['licNo'])) {
-
             $licenceGen = $this->getServiceLocator()->get('Entity\LicenceNoGen')->save(array('licence' => $licenceId));
 
-            if (!isset($licenceGen['id']) ) {
+            if (!isset($licenceGen['id'])) {
                 throw new Exceptions\UnexpectedResponseException('Error generating licence');
             }
 
