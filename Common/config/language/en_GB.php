@@ -2748,7 +2748,6 @@ return [
     'sidebar-variation-advertise-gb' => 'How to advertise your goods application (GB)',
     'sidebar-variation-advertise-ni' => 'How to advertise your goods application (NI)',
     'sidebar-variation-being-an-operator' => 'Being a goods vehicle operator',
-    'sidebar-variation-financial-evidence' => 'How to provide financial evidence',
     'sidebar-variation-public-service' => 'PSV (Public Service Vehicle) operator licences',
     'sidebar-variation-safety-and-maintenance' => 'Commercial vehicle safety and maintenance guides',
     'signin-or-register-text' => 'Sign in or <a href="%s">create an account</a> to get started.',
