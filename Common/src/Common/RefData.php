@@ -366,6 +366,12 @@ class RefData
     const IRHP_PERMIT_STATUS_CEASED             = 'irhp_permit_ceased';
     const IRHP_PERMIT_STATUS_ISSUED             = 'irhp_permit_issued';
 
+    /**
+     * ECMT Permit application sources
+     */
+    const ECMT_APP_SOURCE_SELFSERVE = 'app_source_selfserve';
+    const ECMT_APP_SOURCE_INTERNAL = 'app_source_internal';
+
     //feature toggle statuses
     const FT_ACTIVE = 'always-active';
     const FT_INACTIVE = 'inactive';

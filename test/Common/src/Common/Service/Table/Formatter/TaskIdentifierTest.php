@@ -323,6 +323,24 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                 '<a href="#">1234/5</a>',
                 array('case' => 5, 'action' => 'details')
             ),
+            // Permits
+            23 => array(
+                array(
+                    'linkDisplay' => 'OG4569803/6',
+                    'linkType' => 'ECMT Permit Application',
+                    'linkId' => 6,
+                    'licenceId' => 106,
+                ),
+                array(),
+                'licence/permits',
+                'permitid',
+                '<a href="correctUrl">OG4569803/6</a>',
+                array(
+                    'permitid' => 6,
+                    'licence' => 106,
+                    'action' => 'edit'
+                )
+            ),
         );
     }
 }
