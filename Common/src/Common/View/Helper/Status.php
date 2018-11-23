@@ -79,6 +79,7 @@ class Status extends AbstractHelper
             RefData::LICENCE_STATUS_VALID                       => 'green',
             RefData::LICENCE_STATUS_SUSPENDED                   => 'orange',
             RefData::LICENCE_STATUS_CURTAILED                   => 'orange',
+            RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION => 'green',
             RefData::LICENCE_STATUS_SURRENDERED                 => 'red',
             RefData::LICENCE_STATUS_REVOKED                     => 'red',
             RefData::LICENCE_STATUS_TERMINATED                  => 'red',
@@ -89,7 +90,7 @@ class Status extends AbstractHelper
             RefData::LICENCE_STATUS_REFUSED                     => 'red',
             RefData::LICENCE_STATUS_NOT_TAKEN_UP                => 'red',
             RefData::LICENCE_STATUS_CANCELLED                   => 'grey',
-            // Application statuses @todo double check these colours
+            // Application statuses
             RefData::APPLICATION_STATUS_NOT_SUBMITTED           => 'grey',
             RefData::APPLICATION_STATUS_GRANTED                 => 'orange',
             RefData::APPLICATION_STATUS_UNDER_CONSIDERATION     => 'orange',
