@@ -5,11 +5,14 @@ namespace CommonTest\Data\Mapper\Licence\Surrender;
 
 use Common\Data\Mapper\Licence\Surrender\ReviewContactDetails;
 use Common\Service\Helper\TranslationHelperService;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Zend\Mvc\Controller\Plugin\Url;
 
-class ReviewContactDetailsTest extends AbstractReviewContactDetailsTest
+class ReviewContactDetailsTest extends MockeryTestCase
 {
+    use ReviewContactDetailsMocksAndExpectationsTrait;
+
     public function testMakeSections()
     {
         $mockTranslator = m::mock(TranslationHelperService::class);

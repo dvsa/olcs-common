@@ -1436,6 +1436,7 @@ return [
     'permits.page.field.sectors' => 'What type of goods will you carry over the next 12 months?',
     'permits.page.restricted-countries.title' => 'Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
     'permits.page.restricted-countries.question' => 'Do you intend to transport goods to Austria, Greece, Hungary, Italy or Russia?',
+    'permits.page.restricted-countries.hint' => 'Select the countries that apply.',
     'permits.page.permits.required.title' => 'ECMT Permits Required - ',
     'permits.page.permits.required.question' => 'How many permits does your business require?',
     'permits.page.permits.required.info' => 'You can apply for up to 50 permits. This is based on the number of vehicles authorised for this.',
@@ -1550,6 +1551,9 @@ return [
     'permits.ecmt.page.valid.tableheader.ref' => 'Permit number',
     'permits.ecmt.page.valid.tableheader.countries' => 'Not valid for travel to',
     'permits.ecmt.page.valid.tableheader.no.countries' => 'No exclusions',
+    'waived-paid-permits.page.fee-part-successful.title' => 'Accept or Decline ECMT permits',
+    'waived.paid.permits.page.ecmt.fee-part-successful.payment.due' => 'Acceptance required by',
+    'permits.application.fee.submitted.main.paid.waived' => 'Acceptance successful',
 
     'permits.check-answers.page.question.licence' => 'Licence selected',
     'govuk.warning.component.title' => 'Warning',
