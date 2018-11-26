@@ -919,7 +919,6 @@ return [
     'sidebar-variation-advertise-gb' => 'Sut i hysbysebu\'ch cais nwyddau (PF)',
     'sidebar-variation-advertise-ni' => 'Sut i hysbysebu\'ch cais nwyddau (GI)',
     'sidebar-variation-being-an-operator' => 'Bod yn weithredwr cerbyd nwyddau',
-    'sidebar-variation-financial-evidence' => 'Sut mae darparu tystiolaeth ariannol',
     'sidebar-variation-public-service' => 'Trwyddedau gweithredu Cerbyd Gwasanaeth Cyhoeddus',
     'sidebar-variation-safety-and-maintenance' => 'Canllawiau diogelwch cerbydau a chynhaliaeth',
     'signin-or-register-text' => 'Mewngofnodi neu <a href="%s">greu cyfrif</a> i ddechrau.',
