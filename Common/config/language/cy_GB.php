@@ -1404,11 +1404,22 @@ return [
     'permits.application.withdraw-confirmation.title' => 'Withdrawal Successful - ',
     'permits.application.withdraw-confirmation.success' => 'Permit application number',
 
-    'permits.application.change-licence' => 'Change Licence',
-    'permits.application.change-licence.title' => 'Change Licence - ',
+    'permits.page.change-licence.question' => 'Change Licence',
+    'permits.page.change-licence.browser.title' => 'Change Licence',
+    'permits.page.change-licence.bullet.list.title' => 'When changing the Licence for this application be aware that',
+    'permits.form.change_licence.label' => 'I confirm that I would like to change the licence to %s',
+    'permits.form.change_licence.button' => 'Confirm Licence Change',
+    'permits.form.change_licence.error_message' => 'You must select the checkbox to continue',
 
     'permits.application.window-closed' => 'The ECMT permit application window has now closed.',
     'permits.application.window-closed.title' => 'The ECMT permit application window has now closed - ',
+
+    'permits.page.dashboard.browser.title' => 'Permits Home - ',
+    'permits.page.licence.browser.title' => 'Select Licence',
+    'permits.page.licence.question' => 'Select a licence you would like your ECMT permit to be applied to',
+    'permits.page.licence.question.one.licence' => 'Permit application for licence %s',
+    'permits.page.licence.saturated.one.licence' => 'Your licence has an active application',
+    'permits.page.licence.saturated' => 'You have already applied against all your licences',
 
     'permits.form.trips.warning' => 'You have stated a high intensity of use of these permits. Please check the details are correct. We may contact you to verify this information',
     'permits.form.intljourney.guidance' => 'You have stated a high percentage of international journeys for this licence. Please check the details are correct. We may contact you to verify this information',
@@ -1475,7 +1486,7 @@ return [
     'permits.form.permits.required.label' => 'Number of permits',
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
 
-    'error.messages.ecmt-licence' => 'Select a licence you would like your ECMT permit to be applied to',
+    'error.messages.licence' => 'Select a licence you would like your permit to be applied to',
     'error.messages.checkbox' => 'You must tick the box to continue',
     'error.messages.checkbox.euro6' => 'Tick to confirm your vehicle will meet Euro 6 emission standards',
     'error.messages.checkbox.cabotage' => 'Tick to confirm your vehicle will not undertake cabotage journey(s)',
@@ -1488,7 +1499,7 @@ return [
     'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'Cancel application',
     'permits.form.cancel_application.error_message' => 'You must select the checkbox to continue',
-    'permits.form.ecmt-licence.restricted-licence.hint' => 'You are applying for an ECMT permit for a Restricted licence. Please note, you only need an ECMT permit for a restricted licence if you intend to travel to: Austria, Belarus, Bulgaria, the Czech Republic, Estonia, Finland, France, Hungary, Italy, Lithuania, Poland, Russia, Sweden and Turkey.',
+    'permits.form.ecmt-licence.restricted-licence.hint' => 'Please note, you only need an ECMT permit for a restricted licence if you intend to travel to: Austria, Belarus, Bulgaria, the Czech Republic, Estonia, Finland, France, Hungary, Italy, Lithuania, Poland, Russia, Sweden and Turkey.',
 
     'permits.form.change_licence.label' => 'I confirm that I would like to change the licence to %s',
     'permits.form.change_licence.button' => 'Confirm Licence Change',
@@ -1507,7 +1518,7 @@ return [
     'permits.form.withdraw_application.button' => 'Withdraw application',
     'permits.form.withdraw_application.error_message' => 'Tick to confirm you want to withdraw your application',
 
-    'section.name.ecmt-licence' => 'Licence number',
+    'section.name.licence' => 'Licence number',
     'section.name.ecmt-euro6' => 'Euro emission standards',
     'section.name.ecmt-cabotage' => 'Cabotage',
     'section.name.ecmt-countries' => 'Goods to limited countries',
