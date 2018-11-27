@@ -33,7 +33,7 @@ class DecompressUploadToTmpTest extends MockeryTestCase
 
         $mockFileSystem = m::mock('Common\Filesystem\Filesystem');
         $mockFileSystem->shouldReceive('createTmpDir')->with($tmpDir, 'zip')->andReturn($extractDir);
-        $mockFileSystem->shouldReceive('remove')->with($tmpDir);
+        $mockFileSystem->shouldReceive('remove')->with($extractDir);
 
         $sut = new DecompressUploadToTmp();
         $sut->setDecompressFilter($mockFilter);

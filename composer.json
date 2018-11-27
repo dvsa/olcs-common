@@ -45,7 +45,6 @@
     },
     "require-dev": {
         "olcs/olcs-devtools": "dev-master",
-        "mockery/mockery": "~0.9.3",
         "mikey179/vfsStream": "~1.4.0",
         "olcs/olcs-testhelpers": "dev-develop",
         "olcs/olcs-transfer": "dev-develop",
@@ -53,8 +52,8 @@
         "soflomo/purifier": "~0.1.0",
         "olcs/olcs-logging": "dev-develop",
         "phpstan/phpstan-shim": "^0.10.5",
-        "phpstan/phpstan-mockery": "^0.10.2"
-
+        "phpstan/phpstan-mockery": "^0.10.2",
+        "mockery/mockery": "^1.2"
     },
     "autoload": {
         "psr-0": {
