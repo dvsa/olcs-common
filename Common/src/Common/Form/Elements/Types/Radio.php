@@ -64,7 +64,7 @@ class Radio extends ZendRadio
             ];
             $optionSpec['label_attributes'] = [
                 'for' => $id,
-                'class' => 'radio-button__label',
+                'class' => 'form-control form-control--radio radio-button__label',
             ];
         }
 
