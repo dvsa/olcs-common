@@ -367,9 +367,6 @@ class SectionConfig implements ServiceLocatorAwareInterface
             'director_change' => array(
                 'identifier' => 'application'
             ),
-            'transport_manager' => [
-                'identifier' => 'application'
-            ]
         );
 
         $routes = array();
