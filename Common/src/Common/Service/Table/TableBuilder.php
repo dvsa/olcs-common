@@ -1486,7 +1486,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param string $wrapper
      * @return string
      */
-    public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
+    public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}', $customAttributes = [])
     {
         if ($this->shouldHide($column)) {
             return;
@@ -1528,21 +1528,47 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 $row[$column['name']] : '';
         }
 
-        $replacements = array('content' => $content);
+        $replacements = [
+            'content' => $content,
+            'attrs' => $this->processBodyColumnAttributes($column, $customAttributes)
+        ];
 
-        $replacements['attrs'] = '';
+        return $this->replaceContent($wrapper, $replacements);
+    }
+
+    private function processBodyColumnAttributes($column, $customAttributes) : string
+    {
+        $plainAttributes = '';
+
+        $columnAttributes = [];
+
         if (isset($column['align'])) {
-            $replacements['attrs'] = ' class="'.$column['align'].'"';
+            $columnAttributes['class'] = $column['align'];
         }
 
         if ($this->hasAnyTitle()) {
             $dataHeading = isset($column['title'])
                 ? $this->getServiceLocator()->get('translator')->translate($column['title'])
                 : '';
-            $replacements['attrs'] .= ' data-heading="' . strip_tags($dataHeading) . '"';
+            $columnAttributes['data-heading'] = strip_tags($dataHeading);
         }
 
-        return $this->replaceContent($wrapper, $replacements);
+        foreach ($customAttributes as $attribute => $value) {
+            if (isset($columnAttributes[$attribute]) && !empty($columnAttributes[$attribute])) {
+                $columnAttributes[$attribute] .= ' ' . $value;
+            } else {
+                $columnAttributes[$attribute] = $value;
+            }
+        }
+
+        foreach ($columnAttributes as $attribute => $value) {
+            if (empty(trim($value))) {
+                continue;
+            }
+            $plainAttributes .= ' ' . $attribute . '="' . $value . '" ';
+        }
+
+        return $plainAttributes;
     }
 
     /**
