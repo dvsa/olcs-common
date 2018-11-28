@@ -3478,6 +3478,7 @@ return [
 
     'permits.page.number-of-trips.title' => 'How many international trips were carried out over the past 12 months?-',
     'permits.page.number-of-trips.question' => 'How many international trips did you make in the last 12 months using this licence?',
+    'permits.page.number-of-trips.guidance' => 'If you have not made any international journeys in the last 12 months, you are unlikely to be awarded an ECMT permit. We intend to prioritise applications from hauliers who make the most international journeys.',
     'permits.page.number-of-trips.northern-ireland.warning' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.euro6.emissions.browser.title' => 'Do your vehicles meet Euro 6 emissions standards?',
     'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
