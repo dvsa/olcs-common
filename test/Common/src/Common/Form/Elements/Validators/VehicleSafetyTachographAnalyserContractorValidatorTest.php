@@ -14,7 +14,7 @@ use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorVal
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VehicleSafetyTachographAnalyserContractorValidatorTest extends \PHPUnit_Framework_TestCase
+class VehicleSafetyTachographAnalyserContractorValidatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Set up the validator

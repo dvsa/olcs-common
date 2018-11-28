@@ -6,6 +6,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 use Common\Service\Table\Formatter\OrganisationLink;
 
@@ -14,7 +15,7 @@ use Common\Service\Table\Formatter\OrganisationLink;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class OrganisationLinkTest extends \PHPUnit_Framework_TestCase
+class OrganisationLinkTest extends TestCase
 {
     public function testFormat()
     {

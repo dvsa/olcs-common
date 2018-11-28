@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Form\Elements\InputFilters;
 
-use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\InputFilters\TableRequired;
 use Common\Form\Elements\Validators\TableRequiredValidator;
 
@@ -16,7 +15,7 @@ use Common\Form\Elements\Validators\TableRequiredValidator;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TableRequiredTest extends PHPUnit_Framework_TestCase
+class TableRequiredTest extends \PHPUnit\Framework\TestCase
 {
     /**+
      * Holds the element

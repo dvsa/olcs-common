@@ -15,7 +15,7 @@ use Common\Util\RestClient;
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
-class RestClientTest extends \PHPUnit_Framework_TestCase
+class RestClientTest extends \PHPUnit\Framework\TestCase
 {
 
     public $handleReponseMethods = array(

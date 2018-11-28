@@ -85,7 +85,7 @@ class LicenceTest extends AbstractDataServiceTestCase
 
     public function testFetchLicenceDataWithException()
     {
-        $this->setExpectedException(UnexpectedResponseException::class);
+        $this->expectException(UnexpectedResponseException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 
@@ -147,7 +147,7 @@ class LicenceTest extends AbstractDataServiceTestCase
 
     public function testFetchOperatingCentresDataWithException()
     {
-        $this->setExpectedException(UnexpectedResponseException::class);
+        $this->expectException(UnexpectedResponseException::class);
         $mockTransferAnnotationBuilder = m::mock()
             ->shouldReceive('createQuery')->once()->andReturn('query')->getMock();
 

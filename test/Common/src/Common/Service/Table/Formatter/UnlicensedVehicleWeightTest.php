@@ -6,6 +6,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 use Common\Service\Table\Formatter\UnlicensedVehicleWeight;
 
@@ -14,7 +15,7 @@ use Common\Service\Table\Formatter\UnlicensedVehicleWeight;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class UnlicensedVehicleWeightTest extends \PHPUnit_Framework_TestCase
+class UnlicensedVehicleWeightTest extends TestCase
 {
     /**
      * @dataProvider formatProvider

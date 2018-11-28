@@ -14,7 +14,7 @@ use Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationVa
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class VehicleUndertakingsNoLimousineConfirmationValidatorTest extends \PHPUnit_Framework_TestCase
+class VehicleUndertakingsNoLimousineConfirmationValidatorTest extends \PHPUnit\Framework\TestCase
 {
     public function testIsValidWhenValid()
     {
