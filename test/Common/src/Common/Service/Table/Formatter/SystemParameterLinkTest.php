@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 use Common\Service\Table\Formatter\SystemParameterLink;
 
@@ -16,7 +17,7 @@ use Common\Service\Table\Formatter\SystemParameterLink;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class SystemParameterLinkTest extends \PHPUnit_Framework_TestCase
+class SystemParameterLinkTest extends TestCase
 {
 
     public function testFormat()

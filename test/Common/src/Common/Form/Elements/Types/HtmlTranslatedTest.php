@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Form\Elements\Types;
 
-use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Types\HtmlTranslated;
 
 /**
@@ -15,11 +14,11 @@ use Common\Form\Elements\Types\HtmlTranslated;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class HtmlTranslatedTest extends PHPUnit_Framework_TestCase
+class HtmlTranslatedTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Placeholder
-     * 
+     *
      */
     public function testElement()
     {

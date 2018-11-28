@@ -10,14 +10,13 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
 use Common\Service\Table\Formatter\TransactionAmount;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Transaction Amount formatter test
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionAmountTest extends PHPUnit_Framework_TestCase
+class TransactionAmountTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\Address;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class AddressTest extends \PHPUnit_Framework_TestCase
+class AddressTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

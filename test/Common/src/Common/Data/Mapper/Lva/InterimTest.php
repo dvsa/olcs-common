@@ -9,7 +9,6 @@ namespace CommonTest\Data\Mapper\Lva;
 
 use Mockery as m;
 use Common\Service\Helper\FlashMessengerHelperService;
-use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\Interim;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 

@@ -8,9 +8,8 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\IrhpPermitJurisdictionTrafficArea;
-use PHPUnit_Framework_TestCase;
 
-class IrhpPermitJurisdictionTrafficAreaTest extends PHPUnit_Framework_TestCase
+class IrhpPermitJurisdictionTrafficAreaTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test the format method

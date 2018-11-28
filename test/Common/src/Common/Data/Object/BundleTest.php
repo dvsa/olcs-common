@@ -3,13 +3,12 @@
 namespace CommonTest\Data\Object;
 
 use Common\Data\Object\Bundle;
-use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Class BundleTest
  * @package CommonTest\Data\Object
  */
-class BundleTest extends TestCase
+class BundleTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provideJsonEncode

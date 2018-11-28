@@ -15,7 +15,7 @@ use Common\Util\RestClient;
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
-class RestClientTest extends \PHPUnit_Framework_TestCase
+class RestClientTest extends \PHPUnit\Framework\TestCase
 {
 
     public $handleReponseMethods = array(
@@ -169,6 +169,9 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         $mock->request('GET', 'licence', array('id' => 7));
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testGetResponseHelper()
     {
         $mock = $this->getSutMock(null);
@@ -315,12 +318,18 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         $mock->prepareRequest('GET', 'licence', array('id' => 7));
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testGetAccept()
     {
         $mock = $this->getSutMock(null);
         $mock->getAccept();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testGetClientRequest()
     {
         $mock = $this->getSutMock(null);

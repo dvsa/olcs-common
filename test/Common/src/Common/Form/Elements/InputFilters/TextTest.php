@@ -7,7 +7,7 @@ use Common\Form\Elements\InputFilters;
 /**
  * @covers \Common\Form\Elements\InputFilters\Text
  */
-class TextTest extends \PHPUnit_Framework_TestCase
+class TextTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  InputFilters\Text */
     private $filter;

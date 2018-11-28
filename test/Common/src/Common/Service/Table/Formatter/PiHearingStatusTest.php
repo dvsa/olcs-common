@@ -6,12 +6,11 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\PiHearingStatus;
-use PHPUnit_Framework_TestCase;
 
 /**
  * PI Hearing status formatter test
  */
-class PiHearingStatusTest extends PHPUnit_Framework_TestCase
+class PiHearingStatusTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test the format method
