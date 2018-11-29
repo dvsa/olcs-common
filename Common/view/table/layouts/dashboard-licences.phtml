@@ -16,7 +16,7 @@
             <tr <?php if ($this->object->isRowDisabled($row)): ?>class="disabled"<?php endif; ?>>
                 <?php
                 foreach ($this->object->getColumns() as $column) {
-                    $attributes = ['class' => 'random'];
+                    $attributes = [];
                     if (
                         $row['status']['id'] === LicenceEntityService::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION &&
                         $column['name'] === 'type'
