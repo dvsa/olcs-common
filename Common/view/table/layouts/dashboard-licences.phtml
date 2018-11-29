@@ -1,0 +1,45 @@
+<?php use Common\Service\Entity\LicenceEntityService; ?>
+<?php echo $this->object->renderLayout('default-header'); ?>
+<div class="table__wrapper">
+    <table <?php echo $this->object->renderAttributes($this->object->getAttributes()); ?>>
+        <thead>
+        <tr>
+            <?php
+            foreach ($this->object->getColumns() as $column) {
+                echo $this->object->renderHeaderColumn($column, '{{[elements/th]}}');
+            }
+            ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->object->getRows() as $row) { ?>
+            <tr <?php if ($this->object->isRowDisabled($row)): ?>class="disabled"<?php endif; ?>>
+                <?php
+                foreach ($this->object->getColumns() as $column) {
+                    $attributes = [];
+                    if (
+                        $row['status']['id'] === LicenceEntityService::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION &&
+                        $column['name'] === 'type'
+                    ) {
+                        continue;
+                    }
+
+                    if (
+                        $row['status']['id'] === LicenceEntityService::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION &&
+                        $column['name'] === 'licNo'
+                    ) {
+                        $attributes['colspan'] = '2';
+                    }
+                    echo $this->object->renderBodyColumn($row, $column, '{{[elements/td]}}', $attributes);
+                }
+                ?>
+            </tr>
+            <?php
+        }
+        echo $this->object->renderExtraRows();
+        ?>
+        </tbody>
+        <?php echo $this->object->renderTableFooter(); ?>
+    </table>
+</div>
+<?php echo $this->object->renderFooter();
