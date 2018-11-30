@@ -382,7 +382,7 @@ class RefData
     const SURRENDER_STATUS_START='surrender_status_start';
     const SURRENDER_STATUS_CONTACTS_COMPLETE='surrender_status_contacts_complete';
     const SURRENDER_STATUS_DISCS_COMPLETE='surrender_status_discs_complete';
-    const SURRENDER_STATUS_LIC_DOCS_COMPLETE='surrender_status_lic_docs_completE';
+    const SURRENDER_STATUS_LIC_DOCS_COMPLETE='surrender_status_lic_docs_complete';
     const SURRENDER_STATUS_COMM_LIC_DOCS_COMPLETE='surrender_status_comm_lic_docs_complete';
     const SURRENDER_STATUS_DETAILS_CONFIRMED='surrender_status_details_confirmed';
     const SURRENDER_STATUS_SUBMITTED='surrender_status_submitted';
