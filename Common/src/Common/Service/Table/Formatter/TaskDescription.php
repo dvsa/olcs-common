@@ -24,7 +24,7 @@ class TaskDescription implements FormatterInterface
      * @return string
      * @inheritdoc
      */
-    public static function format ($row, $column = array(), $serviceLocator = null)
+    public static function format($row, $column = array(), $serviceLocator = null)
     {
         $router     = $serviceLocator->get('router');
         $request    = $serviceLocator->get('request');
@@ -48,6 +48,13 @@ class TaskDescription implements FormatterInterface
                 $routeParams = [
                     'type'    => 'busreg',
                     'typeId'  => $params['busRegId'],
+                    'licence' => $params['licence']
+                ];
+                break;
+            case 'licence/irhp-processing/tasks':
+                $routeParams = [
+                    'type'    => 'ecmtpermitapplication',
+                    'typeId'  => $params['permitid'],
                     'licence' => $params['licence']
                 ];
                 break;
@@ -77,10 +84,7 @@ class TaskDescription implements FormatterInterface
                 'query' => $request->getQuery()->toArray()
             ]
         );
-        return '<a href="'
-            . $url
-            . '" class=js-modal-ajax>'
-            . $row['description']
-            . '</a>';
+
+        return sprintf('<a href="%s" class="js-modal-ajax">%s</a>', $url, $row['description']);
     }
 }
