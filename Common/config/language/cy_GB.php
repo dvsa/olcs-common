@@ -1531,7 +1531,7 @@ return [
     'permits.page.ecmt.consideration.application.date' => 'Application date',
     'permits.page.ecmt.consideration.permits.required' => 'Permits required',
     'permits.page.ecmt.consideration.application.fee' => 'Application fee paid',
-    'permits.page.ecmt.consideration.response-date' => 'We will get back to you by <strong>%s</strong>.',
+    'permits.page.ecmt.consideration.response-date' => 'We will get back to you after the application window has closed and your application has been processed.',
 
     'help-sign-in' => 'helpu i arwyddo',
     'permits.link.cancel.return.to.dashboard' => 'Cancel and return to dashboard',

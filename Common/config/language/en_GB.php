@@ -3608,7 +3608,7 @@ return [
     'permits.page.ecmt.consideration.application.date' => 'Application date',
     'permits.page.ecmt.consideration.permits.required' => 'Permits required',
     'permits.page.ecmt.consideration.application.fee' => 'Application fee paid',
-    'permits.page.ecmt.consideration.response-date' => 'We will get back to you by <strong>%s</strong>.',
+    'permits.page.ecmt.consideration.response-date' => 'We will get back to you after the application window has closed and your application has been processed.',
     'no-organisation-error' => 'User is not associated with an organisation.',
     'help-sign-in' => 'Help signing in',
     'auth.login.termsAgreed' => 'By using the site you agree to the <a href="%s">terms and conditions</a>.',
