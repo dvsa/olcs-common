@@ -82,7 +82,10 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             if (isset($optionSpec['attributes'])) {
                 $inputAttributes = array_merge($inputAttributes, $optionSpec['attributes']);
             }
-            $childContent = $this->processChildContent($optionSpec);
+            $childContent = null;
+            if (isset($optionSpec['childContent'])) {
+                $childContent = $this->processChildContent($optionSpec);
+            }
 
             if (in_array($value, $selectedOptions)) {
                 $selected = true;
@@ -110,13 +113,15 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             }
 
             $labelOpen = $labelHelper->openTag($labelAttributes);
-            $template  = $labelOpen . '%s%s' . $labelClose;
+
             switch ($labelPosition) {
                 case self::LABEL_PREPEND:
+                    $template  = '<div>' . $labelOpen . '%s' . $labelClose . '%s</div>' ;
                     $markup = sprintf($template, $label, $input);
                     break;
                 case self::LABEL_APPEND:
                 default:
+                    $template  = '<div>%s' . $labelOpen . '%s' . $labelClose .'</div>';
                     $markup = sprintf($template, $input, $label);
                     break;
             }
@@ -131,8 +136,9 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         return implode($this->getSeparator(), $combinedMarkup);
     }
 
-    protected function processChildContent(array $optionSpec): string
+    protected function processChildContent(array $optionSpec): ? string
     {
+
         $childHtml = null;
 
         $childContent = $optionSpec['childContent'];
