@@ -48,12 +48,16 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 unset($attributes['id']);
             }
 
-            $value           = '';
-            $label           = '';
-            $inputAttributes = $attributes;
-            $labelAttributes = $globalLabelAttributes;
-            $selected        = (isset($inputAttributes['selected']) && $inputAttributes['type'] != 'radio' && $inputAttributes['selected']);
-            $disabled        = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
+            $value             = '';
+            $label             = '';
+            $hint              = '';
+            $hintAttributes    = '';
+            $childContent      = null;
+            $inputAttributes   = $attributes;
+            $labelAttributes   = $globalLabelAttributes;
+            $wrapperAttributes = '';
+            $selected          = (isset($inputAttributes['selected']) && $inputAttributes['type'] != 'radio' && $inputAttributes['selected']);
+            $disabled          = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
 
             if (is_scalar($optionSpec)) {
                 $optionSpec = array(
@@ -67,6 +71,12 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             }
             if (isset($optionSpec['label'])) {
                 $label = $optionSpec['label'];
+            }
+            if (isset($optionSpec['hint_attributes'])) {
+                $hintAttributes = $this->createAttributesString($optionSpec['hint_attributes']);
+            }
+            if (isset($optionSpec['hint'])) {
+                $hint = $this->wrapWithTag($optionSpec['hint'], $hintAttributes);
             }
             if (isset($optionSpec['selected'])) {
                 $selected = $optionSpec['selected'];
@@ -82,7 +92,9 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             if (isset($optionSpec['attributes'])) {
                 $inputAttributes = array_merge($inputAttributes, $optionSpec['attributes']);
             }
-            $childContent = null;
+            if (isset($optionSpec['wrapper_attributes'])) {
+                $wrapperAttributes = $this->createAttributesString($optionSpec['wrapper_attributes']);
+            }
             if (isset($optionSpec['childContent'])) {
                 $childContent = $this->processChildContent($optionSpec);
             }
@@ -116,17 +128,17 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
 
             switch ($labelPosition) {
                 case self::LABEL_PREPEND:
-                    $template  = '<div>' . $labelOpen . '%s' . $labelClose . '%s</div>' ;
-                    $markup = sprintf($template, $label, $input);
+                    $template  = $labelOpen . '%s' . $labelClose . '%s%s';
+                    $markup = sprintf($template, $label, $input, $hint);
                     break;
                 case self::LABEL_APPEND:
                 default:
-                    $template  = '<div>%s' . $labelOpen . '%s' . $labelClose .'</div>';
-                    $markup = sprintf($template, $input, $label);
+                    $template  = '%s' . $labelOpen . '%s' . $labelClose . '%s';
+                    $markup = sprintf($template, $input, $label, $hint);
                     break;
             }
 
-            $combinedMarkup[] = $markup;
+            $combinedMarkup[] = $this->wrapWithTag($markup, $wrapperAttributes);
 
             if($childContent) {
                 $combinedMarkup[] = $childContent;
@@ -136,36 +148,27 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         return implode($this->getSeparator(), $combinedMarkup);
     }
 
+    protected function wrapWithTag($content, $attributes = '', $tag = 'div')
+    {
+        return '<' . $tag . ' ' . $attributes . '>' . $content . '</' . $tag . '>';
+    }
+
     protected function processChildContent(array $optionSpec): ? string
     {
-
         $childHtml = null;
-
+        $attributes = '';
         $childContent = $optionSpec['childContent'];
-
         if (isset($childContent)) {
             $annotationBuilder = new AnnotationBuilder();
             $contentForm = $annotationBuilder->createForm($childContent['content']);
             $formHelper = new Form();
             $formHelper->setView($this->getView());
             $form = $formHelper->render($contentForm, false);
-            $childHtml = '<div';
             if (isset($childContent['attributes'])) {
-                $attributes = $childContent['attributes'];
-
-                if (isset($attributes['id'])) {
-                    $childHtml .= ' id = "' . $attributes['id'] . '"';
-                }
-
-                if (isset($attributes['class'])) {
-                    $childHtml .= ' class = "' . $attributes['class'] . '"';
-                }
+                $attributes = $this->createAttributesString($childContent['attributes']);
             }
-
-            $childHtml .= '>' . $form . '</div>';
-
+            $childHtml = $this->wrapWithTag($form, $attributes);
         }
-
         return $childHtml;
     }
 }

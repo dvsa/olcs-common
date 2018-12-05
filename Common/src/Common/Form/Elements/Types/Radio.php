@@ -57,14 +57,20 @@ class Radio extends ZendRadio
             }
 
             $id = $this->uniqid .'_'. $optionSpec['value'];
+            $optionSpec['wrapper_attributes'] = [
+                'class' => 'govuk-radios__item',
+            ];
             $optionSpec['attributes'] = [
                 'id' => $id,
-                'class' => 'radio-button',
+                'class' => 'govuk-radios__input',
                 'data-show-element' => "#${id}_content",
             ];
             $optionSpec['label_attributes'] = [
                 'for' => $id,
-                'class' => 'form-control form-control--radio radio-button__label',
+                'class' => 'govuk-label govuk-radios__label',
+            ];
+            $optionSpec['hint_attributes'] = [
+                'class' => 'govuk-hint govuk-radios__hint',
             ];
         }
 
