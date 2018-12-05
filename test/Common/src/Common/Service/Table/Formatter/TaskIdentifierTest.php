@@ -332,7 +332,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceId' => 106,
                 ),
                 array(),
-                'licence/permits',
+                'licence/permits/application',
                 'permitid',
                 '<a href="correctUrl">OG4569803/6</a>',
                 array(
