@@ -8,7 +8,7 @@ use Common\Form\Element\DynamicSelectFactory;
  * Class DynamicSelectFactoryTest
  * @package CommonTest\Form\Element
  */
-class DynamicSelectFactoryTest extends \PHPUnit_Framework_TestCase
+class DynamicSelectFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreateService()
     {

@@ -11,7 +11,7 @@ use Zend\Form\View\Helper;
  *
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-class FormElementTest extends \PHPUnit_Framework_TestCase
+class FormElementTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \Zend\Form\Element

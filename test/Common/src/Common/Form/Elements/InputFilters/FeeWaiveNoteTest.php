@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Form\Elements\InputFilters;
 
-use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\InputFilters\FeeWaiveNote;
 
 /**
@@ -15,7 +14,7 @@ use Common\Form\Elements\InputFilters\FeeWaiveNote;
  *
  * @author Alex Peshkov <alex.peshkov@clocal.co.uk>
  */
-class FeeWaiveNoteTest extends PHPUnit_Framework_TestCase
+class FeeWaiveNoteTest extends \PHPUnit\Framework\TestCase
 {
     /**+
      * Holds the element

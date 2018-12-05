@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Data\Mapper\Lva;
 
-use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\CompanySubsidiary;
 
 /**
@@ -15,7 +14,7 @@ use Common\Data\Mapper\Lva\CompanySubsidiary;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CompanySubsidiaryTest extends PHPUnit_Framework_TestCase
+class CompanySubsidiaryTest extends \PHPUnit\Framework\TestCase
 {
     public function testMapFromResult()
     {

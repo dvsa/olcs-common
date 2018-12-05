@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Data\Mapper\Lva;
 
-use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\FinancialHistory;
 
 /**
@@ -15,7 +14,7 @@ use Common\Data\Mapper\Lva\FinancialHistory;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class FinancialHistoryTest extends PHPUnit_Framework_TestCase
+class FinancialHistoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testMapFromResult()
     {

@@ -199,7 +199,7 @@ class EventHistoryDescriptionTest extends MockeryTestCase
      */
     public function testFormatWithException()
     {
-        $this->setExpectedException(\Exception::class);
+        $this->expectException(\Exception::class);
         $mockRequest = m::mock();
 
         $mockRouter = m::mock()

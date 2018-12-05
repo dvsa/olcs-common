@@ -7,7 +7,7 @@ use Common\Service\Table\Formatter\DataRetentionRuleIsEnabled;
 /**
  * DataRetentionRule Link test
  */
-class DataRetentionRuleIsEnabledTest extends \PHPUnit_Framework_TestCase
+class DataRetentionRuleIsEnabledTest extends \PHPUnit\Framework\TestCase
 {
     public function testIsEnabledFalse()
     {

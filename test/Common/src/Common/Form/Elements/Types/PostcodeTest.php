@@ -3,13 +3,12 @@
 namespace CommonTest\Form\Elements\Types;
 
 use Common\Form\Elements\Types\PostcodeSearch;
-use PHPUnit_Framework_TestCase;
 use Zend\Form\Element\Text;
 
 /**
  * PostcodeTest
  */
-class PostcodeTest extends PHPUnit_Framework_TestCase
+class PostcodeTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructorPostcodeElement()
     {

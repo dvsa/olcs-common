@@ -19,7 +19,7 @@ class FormFileUploadListTest extends MockeryTestCase
 {
     public function testRenderInvalidElement()
     {
-        $this->setExpectedException(\Exception::class, 'Parameter must be instance of ' . FileUploadList::class);
+        $this->expectException(\Exception::class, 'Parameter must be instance of ' . FileUploadList::class);
 
         $sut = new FormFileUploadList();
         $sut->render(m::mock(FieldsetInterface::class));

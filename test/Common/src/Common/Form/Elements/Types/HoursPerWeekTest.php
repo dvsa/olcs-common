@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Form\Elements\Types;
 
-use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Types\HoursPerWeek;
 
 /**
@@ -15,7 +14,7 @@ use Common\Form\Elements\Types\HoursPerWeek;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class HoursPerWeekTest extends PHPUnit_Framework_TestCase
+class HoursPerWeekTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test get messages

@@ -8,7 +8,6 @@
 
 namespace CommonTest\View\Helper;
 
-use PHPUnit_Framework_TestCase;
 use \Common\View\Helper\Address;
 
 /**
@@ -16,7 +15,7 @@ use \Common\View\Helper\Address;
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class AddressTest extends PHPUnit_Framework_TestCase
+class AddressTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Setup the view helper

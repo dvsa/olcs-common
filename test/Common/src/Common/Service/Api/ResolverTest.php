@@ -3,14 +3,13 @@
 
 namespace CommonTest\Service\Api;
 
-use PHPUnit_Framework_TestCase as TestCase;
 use Common\Service\Api\Resolver;
 
 /**
  * Class ResolverTest
  * @package CommonTest\Service\Api
  */
-class ResolverTest extends TestCase
+class ResolverTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetClient()
     {
