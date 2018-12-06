@@ -14,7 +14,7 @@ use Common\Form\Elements\InputFilters;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class TextRequiredTest extends \PHPUnit\Framework\TestCase
+class TextRequiredTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * test setup

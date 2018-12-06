@@ -3,13 +3,14 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use PHPUnit_Framework_TestCase as TestCase;
 use Common\Service\Table\Formatter\ConvictionDescription;
 
 /**
  * Class ConvictionDescriptionTest
  * @package CommonTest\Service\Table\Formatter
  */
-class ConvictionDescriptionTest extends \PHPUnit\Framework\TestCase
+class ConvictionDescriptionTest extends TestCase
 {
     /**
      * @dataProvider convictionDataProvider

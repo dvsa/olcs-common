@@ -8,6 +8,7 @@
  */
 namespace CommonTest\Data\Mapper\Lva;
 
+use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\GoodsVehiclesVehicle;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;

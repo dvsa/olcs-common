@@ -7,12 +7,14 @@
  */
 namespace CommonTest\Controller\Traits;
 
+use PHPUnit_Framework_TestCase;
+
 /**
  * Generic Edit Action Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GenericEditActionTest extends \PHPUnit\Framework\TestCase
+class GenericEditActionTest extends PHPUnit_Framework_TestCase
 {
     private $sut;
 

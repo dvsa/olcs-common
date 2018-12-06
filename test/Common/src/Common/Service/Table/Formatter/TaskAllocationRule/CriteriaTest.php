@@ -9,7 +9,7 @@ use Common\Service\Table\Formatter\TaskAllocationRule\Criteria;
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class CriteriaTest extends \PHPUnit\Framework\TestCase
+class CriteriaTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test the format method

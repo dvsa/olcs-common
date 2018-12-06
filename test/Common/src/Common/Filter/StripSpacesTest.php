@@ -4,7 +4,7 @@ namespace CommonTest\Filter;
 
 use Common\Filter\StripSpaces;
 
-class StripSpacesTest extends \PHPUnit\Framework\TestCase
+class StripSpacesTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideFilter

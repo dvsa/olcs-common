@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Data\Mapper\Lva;
 
+use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\BusinessType;
 
 /**
@@ -14,7 +15,7 @@ use Common\Data\Mapper\Lva\BusinessType;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class BusinessTypeTest extends \PHPUnit\Framework\TestCase
+class BusinessTypeTest extends PHPUnit_Framework_TestCase
 {
     public function testMapFromResult()
     {

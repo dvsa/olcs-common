@@ -17,7 +17,7 @@ use Zend\ServiceManager\ServiceManager;
  * @covers Common\Controller\Lva\Factories\Adapter\VariationTransportManagerAdapterFactory
  * @covers Common\Controller\Lva\Factories\Adapter\LicenceTransportManagerAdapterFactory
  */
-class TransportManagerAdapterFactoryTest extends MockeryTestCase
+class TransportManagerAdapterFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /** @var ServiceManager */
     protected $sm;

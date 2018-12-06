@@ -82,7 +82,7 @@ class FormServiceManagerTest extends MockeryTestCase
 
     public function testValidatePluginInvalid()
     {
-        $this->expectException('\Zend\ServiceManager\Exception\RuntimeException');
+        $this->setExpectedException('\Zend\ServiceManager\Exception\RuntimeException');
 
         $plugin = m::mock();
 

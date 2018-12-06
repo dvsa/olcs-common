@@ -7,12 +7,14 @@
  */
 namespace CommonTest\Controller\Traits;
 
+use PHPUnit_Framework_TestCase;
+
 /**
  * Generic Add Action Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GenericAddActionTest extends \PHPUnit\Framework\TestCase
+class GenericAddActionTest extends PHPUnit_Framework_TestCase
 {
     private $sut;
 

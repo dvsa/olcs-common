@@ -8,6 +8,7 @@
 
 namespace CommonTest\View\Helper;
 
+use PHPUnit_Framework_TestCase;
 use \Common\View\Helper\AddTags;
 
 /**
@@ -15,7 +16,7 @@ use \Common\View\Helper\AddTags;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class AddTagsTest extends \PHPUnit\Framework\TestCase
+class AddTagsTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideStrings

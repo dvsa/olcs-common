@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\Elements\Validators;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Validators\DateNotInFuture;
 
 /**
@@ -14,7 +15,7 @@ use Common\Form\Elements\Validators\DateNotInFuture;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DateNotInFutureTest extends \PHPUnit\Framework\TestCase
+class DateNotInFutureTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {

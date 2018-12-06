@@ -11,7 +11,7 @@ use Common\Service\Table\Formatter\NullableNumber;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class NullableNumberTest extends \PHPUnit\Framework\TestCase
+class NullableNumberTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test the format method

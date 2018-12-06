@@ -9,7 +9,7 @@ use \Zend\Validator\StringLength;
  * Test MultiCheckboxempty InputFilter
  * @covers \Common\Form\Elements\InputFilters\MultiCheckboxEmpty
  */
-class MultiCheckboxEmptyTest extends \PHPUnit\Framework\TestCase
+class MultiCheckboxEmptyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * test setup

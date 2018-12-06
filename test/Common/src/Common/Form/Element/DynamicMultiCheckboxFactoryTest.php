@@ -8,7 +8,7 @@ use Common\Form\Element\DynamicMultiCheckboxFactory;
  * Class DynamicMultiCheckboxFactoryTest
  * @package CommonTest\Form\Element
  */
-class DynamicMultiCheckboxFactoryTest extends \PHPUnit\Framework\TestCase
+class DynamicMultiCheckboxFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateService()
     {

@@ -14,7 +14,7 @@ use Common\Service\Script\ScriptFactory;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class ScriptFactoryTest extends \PHPUnit\Framework\TestCase
+class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
 {
     protected $config = [];
 

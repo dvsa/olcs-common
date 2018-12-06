@@ -7,9 +7,10 @@ use Common\Form\Form;
 use Common\Form\View\Helper\FormElement;
 use Common\Form\View\Helper\FormPlainText;
 use Mockery;
+use PHPUnit_Framework_TestCase;
 use Zend\View\Renderer\PhpRenderer;
 
-class PlainTextTest extends \PHPUnit\Framework\TestCase
+class PlainTextTest extends PHPUnit_Framework_TestCase
 {
     const INITIAL_TEXT_PAYLOAD = 'TEST';
     const UPDATED_TEXT_PAYLOAD = 'TEST 2';

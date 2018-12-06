@@ -9,13 +9,14 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
 use Common\Service\Table\Formatter\TransactionStatus as Sut;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Transaction status formatter test
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionStatusTest extends \PHPUnit\Framework\TestCase
+class TransactionStatusTest extends PHPUnit_Framework_TestCase
 {
 
     /**

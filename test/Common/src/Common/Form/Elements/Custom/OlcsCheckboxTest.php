@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\Elements\Custom;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Custom\OlcsCheckbox;
 use Zend\Validator as ZendValidator;
 
@@ -15,7 +16,7 @@ use Zend\Validator as ZendValidator;
  *
  * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
-class OlcsCheckboxTest extends \PHPUnit\Framework\TestCase
+class OlcsCheckboxTest extends PHPUnit_Framework_TestCase
 {
     /**+
      * Holds the element
@@ -43,5 +44,6 @@ class OlcsCheckboxTest extends \PHPUnit\Framework\TestCase
             $this->element->getLabelOption('label_position')
         );
         $this->assertTrue($this->element->getLabelOption('always_wrap'));
+
     }
 }

@@ -9,7 +9,7 @@ use Common\Validator\Date;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DateTest extends \PHPUnit\Framework\TestCase
+class DateTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Date

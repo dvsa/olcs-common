@@ -109,7 +109,7 @@ class LanguageTest extends MockeryTestCase
 
         $this->sut->createService($this->sm);
 
-        $this->expectException('\Exception');
+        $this->setExpectedException('\Exception');
 
         $this->sut->setPreference('XX');
     }

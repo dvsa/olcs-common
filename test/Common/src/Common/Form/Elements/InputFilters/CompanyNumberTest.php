@@ -3,6 +3,7 @@
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters\CompanyNumber;
+use PHPUnit_Framework_TestCase;
 use Zend\I18n\Validator\Alnum;
 use Zend\Validator\StringLength;
 
@@ -10,7 +11,7 @@ use Zend\Validator\StringLength;
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  * @covers Common\Form\Elements\InputFilters\CompanyNumber
  */
-class CompanyNumberTest extends \PHPUnit\Framework\TestCase
+class CompanyNumberTest extends PHPUnit_Framework_TestCase
 {
     /** @var  CompanyNumber */
     private $element;

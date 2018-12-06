@@ -4,12 +4,11 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\DataRetentionRuleLink;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * DataRetentionRule Link test
  */
-class DataRetentionRuleLinkTest extends TestCase
+class DataRetentionRuleLinkTest extends \PHPUnit_Framework_TestCase
 {
     public function testFormat()
     {

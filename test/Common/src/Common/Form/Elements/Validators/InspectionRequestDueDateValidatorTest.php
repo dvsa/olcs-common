@@ -14,7 +14,7 @@ use Common\Form\Elements\Validators\InspectionRequestDueDate;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class InspectionRequestDueDateValidatorTest extends \PHPUnit\Framework\TestCase
+class InspectionRequestDueDateValidatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Set up the validator

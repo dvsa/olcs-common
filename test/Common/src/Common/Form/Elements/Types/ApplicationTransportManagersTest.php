@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\Elements\Types;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Types\ApplicationTransportManagers;
 
 /**
@@ -14,7 +15,7 @@ use Common\Form\Elements\Types\ApplicationTransportManagers;
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class ApplicationTransportManagersTest extends \PHPUnit\Framework\TestCase
+class ApplicationTransportManagersTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test the element configuration

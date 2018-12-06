@@ -2,6 +2,7 @@
 
 namespace CommonTest\Data\Mapper\Lva;
 
+use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\FinancialEvidence;
 use Common\RefData;
 
@@ -10,7 +11,7 @@ use Common\RefData;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class FinancialEvidenceTest extends \PHPUnit\Framework\TestCase
+class FinancialEvidenceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider mapFromResultProvider
