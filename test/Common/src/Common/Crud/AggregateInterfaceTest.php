@@ -7,13 +7,15 @@
  */
 namespace CommonTest\Crud;
 
+use PHPUnit_Framework_TestCase;
+
 /**
  * Class AggregateInterfaceTest
  *
  * @package CommonTest\Crud
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class AggregateInterfaceTest extends \PHPUnit\Framework\TestCase
+class AggregateInterfaceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Tests the aggregate interface and in turn also tests the individual interfaces.

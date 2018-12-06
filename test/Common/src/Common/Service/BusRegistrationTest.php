@@ -4,12 +4,13 @@
 namespace CommonTest\Service;
 
 use Common\Service\BusRegistration;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Class BusRegistrationTest
  * @package CommonTest\Service
  */
-class BusRegistrationTest extends \PHPUnit\Framework\TestCase
+class BusRegistrationTest extends TestCase
 {
     public function testCreateNew()
     {

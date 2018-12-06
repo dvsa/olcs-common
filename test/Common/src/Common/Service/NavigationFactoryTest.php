@@ -4,7 +4,6 @@ namespace CommonTest\Service;
 
 use Common\Service\NavigationFactory;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Service\ServiceManagerConfig;
@@ -14,7 +13,7 @@ use Zend\ServiceManager\ServiceManager;
  * Class NavigationFactoryTest
  * @package OlcsTest\Service
  */
-class NavigationFactoryTest extends TestCase
+class NavigationFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Zend\ServiceManager\ServiceManager

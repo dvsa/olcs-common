@@ -7,12 +7,14 @@
  */
 namespace CommonTest\Controller\Traits;
 
+use PHPUnit_Framework_TestCase;
+
 /**
  * Generic Delete Action Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GenericDeleteActionTest extends \PHPUnit\Framework\TestCase
+class GenericDeleteActionTest extends PHPUnit_Framework_TestCase
 {
     private $sut;
 

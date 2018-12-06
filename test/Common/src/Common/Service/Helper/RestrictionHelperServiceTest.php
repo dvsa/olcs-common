@@ -8,13 +8,14 @@
 namespace CommonTest\Service\Helper;
 
 use Common\Service\Helper\RestrictionHelperService;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Restriction Helper Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class RestrictionHelperServiceTest extends \PHPUnit\Framework\TestCase
+class RestrictionHelperServiceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Setup the helper

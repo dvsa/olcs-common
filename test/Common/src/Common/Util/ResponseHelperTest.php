@@ -12,7 +12,7 @@ namespace CommonTest\Controller\Util;
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
-class ResponseHelperTest extends \PHPUnit\Framework\TestCase
+class ResponseHelperTest extends \PHPUnit_Framework_TestCase
 {
 
     public $handleReponseMethods = array(
@@ -28,8 +28,7 @@ class ResponseHelperTest extends \PHPUnit\Framework\TestCase
         }
 
         return $this->createPartialMock(
-            '\Common\Util\ResponseHelper',
-            $methods
+            '\Common\Util\ResponseHelper', $methods
         );
     }
 

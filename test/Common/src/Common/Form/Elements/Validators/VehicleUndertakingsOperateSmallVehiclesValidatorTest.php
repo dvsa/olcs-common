@@ -14,7 +14,7 @@ use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValid
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
-class VehicleUndertakingsOperateSmallVehiclesValidatorTest extends \PHPUnit\Framework\TestCase
+class VehicleUndertakingsOperateSmallVehiclesValidatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Set up the validator

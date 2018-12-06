@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\Elements\Types;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Types\MultipleFileUpload;
 
 /**
@@ -14,7 +15,7 @@ use Common\Form\Elements\Types\MultipleFileUpload;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class MultipleFileUploadTest extends \PHPUnit\Framework\TestCase
+class MultipleFileUploadTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test the element configuration

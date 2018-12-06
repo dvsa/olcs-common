@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\Elements\Types;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Types\Table;
 
 /**
@@ -14,7 +15,7 @@ use Common\Form\Elements\Types\Table;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TableTest extends \PHPUnit\Framework\TestCase
+class TableTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test setTable

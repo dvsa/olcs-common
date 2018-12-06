@@ -8,6 +8,7 @@
  */
 namespace CommonTest\Form\Elements\Validators;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator;
 
 /**
@@ -16,7 +17,7 @@ use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgree
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHPUnit\Framework\TestCase
+class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {

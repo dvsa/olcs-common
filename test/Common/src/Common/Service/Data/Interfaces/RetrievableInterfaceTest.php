@@ -2,13 +2,15 @@
 
 namespace CommonTest\Service\Data\Interfaces;
 
+use PHPUnit_Framework_TestCase;
+
 /**
 * Class RetrievableInterfaceTest
 *
 * @package CommonTest\Service\Data
 * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
 */
-class RetrievableInterfaceTest extends \PHPUnit\Framework\TestCase
+class RetrievableInterfaceTest extends PHPUnit_Framework_TestCase
 {
      /**
      * Tests the retrievable interface

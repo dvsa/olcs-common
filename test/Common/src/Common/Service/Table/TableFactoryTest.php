@@ -15,7 +15,7 @@ use Common\Service\Table\TableFactory;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TableFactoryTest extends \PHPUnit\Framework\TestCase
+class TableFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test createService

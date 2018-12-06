@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Table\Formatter;
 
+use PHPUnit_Framework_TestCase;
 use Common\Service\Table\Formatter\TaskOwner;
 
 /**
@@ -14,7 +15,7 @@ use Common\Service\Table\Formatter\TaskOwner;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TaskOwnerTest extends \PHPUnit\Framework\TestCase
+class TaskOwnerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider providerFormat

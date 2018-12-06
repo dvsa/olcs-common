@@ -8,7 +8,7 @@ use Common\Filter\DateSelectNullifier;
  * Class DateSelectNullifierTest
  * @package CommonTest\Filter
  */
-class DateSelectNullifierTest extends \PHPUnit\Framework\TestCase
+class DateSelectNullifierTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideFilter

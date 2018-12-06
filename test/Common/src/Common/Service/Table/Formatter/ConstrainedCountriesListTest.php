@@ -10,7 +10,7 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\ConstrainedCountriesList;
 
-class ConstrainedCountriesListTest extends \PHPUnit\Framework\TestCase
+class ConstrainedCountriesListTest extends \PHPUnit_Framework_TestCase
 {
     public function testFormat()
     {

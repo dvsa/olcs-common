@@ -8,13 +8,14 @@
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\EqualSum;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Equal Sum Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class EqualSumTest extends \PHPUnit\Framework\TestCase
+class EqualSumTest extends PHPUnit_Framework_TestCase
 {
     protected $sut;
 

@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Section\VehicleSafety\Vehicle\Formatter;
 
+use PHPUnit_Framework_TestCase;
 use Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm;
 
 /**
@@ -14,7 +15,7 @@ use Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VrmTest extends \PHPUnit\Framework\TestCase
+class VrmTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @group VrmFormatter

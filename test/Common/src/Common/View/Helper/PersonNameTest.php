@@ -8,6 +8,7 @@
 
 namespace CommonTest\View\Helper;
 
+use PHPUnit_Framework_TestCase;
 use \Common\View\Helper\PersonName;
 
 /**
@@ -15,7 +16,7 @@ use \Common\View\Helper\PersonName;
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class PersonNameTest extends \PHPUnit\Framework\TestCase
+class PersonNameTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Setup the view helper

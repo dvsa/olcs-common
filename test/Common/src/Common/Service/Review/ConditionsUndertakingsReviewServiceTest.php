@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Review;
 
+use PHPUnit_Framework_TestCase;
 use Common\Service\Review\ConditionsUndertakingsReviewService;
 use Common\Service\Entity\ConditionUndertakingEntityService as Condition;
 
@@ -15,7 +16,7 @@ use Common\Service\Entity\ConditionUndertakingEntityService as Condition;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ConditionsUndertakingsReviewServiceTest extends \PHPUnit\Framework\TestCase
+class ConditionsUndertakingsReviewServiceTest extends PHPUnit_Framework_TestCase
 {
     protected $sut;
 

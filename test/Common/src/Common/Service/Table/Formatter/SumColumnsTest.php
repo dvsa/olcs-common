@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\SumColumns;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class SumColumnsTest extends \PHPUnit\Framework\TestCase
+class SumColumnsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

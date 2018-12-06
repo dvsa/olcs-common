@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\TaskDate;
  *
  * @author Nick payne <nick.payne@valtech.co.uk>
  */
-class TaskDateTest extends \PHPUnit\Framework\TestCase
+class TaskDateTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

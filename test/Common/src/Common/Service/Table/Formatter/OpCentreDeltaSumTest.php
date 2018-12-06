@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\Sum;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class OpCentreDeltaSumTest extends \PHPUnit\Framework\TestCase
+class OpCentreDeltaSumTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider testFormatDataProvider

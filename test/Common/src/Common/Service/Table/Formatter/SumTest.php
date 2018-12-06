@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\Sum;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class SumTest extends \PHPUnit\Framework\TestCase
+class SumTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

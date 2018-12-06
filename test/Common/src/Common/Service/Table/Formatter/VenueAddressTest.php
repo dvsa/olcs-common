@@ -6,11 +6,12 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\VenueAddress;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Venue Address formatter test
  */
-class VenueAddressTest extends \PHPUnit\Framework\TestCase
+class VenueAddressTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test the format method

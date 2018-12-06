@@ -6,9 +6,8 @@ namespace CommonTest\Data\Mapper\Lva\TransportManager\Sections;
 use Common\Data\Mapper\Lva\TransportManager\Sections\ConvictionsPenalties;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
-class ConvictionsPenaltiesTest extends TestCase
+class ConvictionsPenaltiesTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     private $sut;
     private $mockTranslator;

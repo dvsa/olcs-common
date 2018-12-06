@@ -10,7 +10,7 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\DateTimezoneFix;
 
-class DateTimezoneFixTest extends \PHPUnit\Framework\TestCase
+class DateTimezoneFixTest extends \PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
     {

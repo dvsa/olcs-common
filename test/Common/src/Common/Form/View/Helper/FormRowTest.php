@@ -12,7 +12,7 @@ use Common\Form\View\Helper as CommonHelper;
  * @covers \Common\Form\View\Helper\FormRow
  * @covers \Common\Form\View\Helper\Extended\FormRow
  */
-class FormRowTest extends \PHPUnit\Framework\TestCase
+class FormRowTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Prepare element for test

@@ -6,13 +6,12 @@ use Common\Controller\FileController;
 use Common\Service\Cqrs\Response;
 use Dvsa\Olcs\Transfer\Query as TransferQry;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Zend\Mvc\Controller\Plugin;
 
 /**
  * @covers Common\Controller\FileController
  */
-class FileControllerTest extends TestCase
+class FileControllerTest extends \PHPUnit_Framework_TestCase
 {
     /** @var  m\MockInterface */
     private $mockParams;
@@ -134,7 +133,7 @@ class FileControllerTest extends TestCase
 
         $this->sut->shouldReceive('handleQuery')->once()->andReturn($mockResp);
 
-        static::expectException(\RuntimeException::class, 'Error downloading file');
+        static::setExpectedException(\RuntimeException::class, 'Error downloading file');
 
         static::assertEquals('EXPECTED_ERR_NOT_FOUND', $this->sut->downloadAction());
     }

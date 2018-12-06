@@ -5,7 +5,6 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Table\Formatter\OcComplaints;
 
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Class OcComplaintsTest
@@ -14,7 +13,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class OcComplaintsTest extends TestCase
+class OcComplaintsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider testFormatDataProvider

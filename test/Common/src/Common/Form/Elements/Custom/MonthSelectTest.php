@@ -14,7 +14,7 @@ use Common\Form\Elements\Custom\MonthSelect;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class MonthSelectTest extends \PHPUnit\Framework\TestCase
+class MonthSelectTest extends \PHPUnit_Framework_TestCase
 {
     protected $sut;
 

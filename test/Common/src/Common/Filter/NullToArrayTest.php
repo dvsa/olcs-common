@@ -9,7 +9,7 @@ use Common\Filter\NullToArray;
  * @package CommonTest\Filter
  * @covers \Common\Filter\NullToArray
  */
-class NullToArrayTest extends \PHPUnit\Framework\TestCase
+class NullToArrayTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider getValueDataProvider

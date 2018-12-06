@@ -52,6 +52,7 @@ class SearchTypeTest extends TestCase
         $sut->setNavigationFactory($mockNavFactory);
 
         $this->assertEquals('navigation', $sut->getNavigation());
+
     }
 
     public function testFetchListOptions()
