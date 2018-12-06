@@ -6,14 +6,13 @@ use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
 use Common\Form\InsufficientFinancesForm;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * InsufficientFinancesFormTest
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class InsufficientFinancesFormTest extends TestCase
+class InsufficientFinancesFormTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
 {
     /**
      * @var InsufficientFinancesForm

@@ -6,12 +6,14 @@
  */
 namespace CommonTest\Service\Table;
 
+use PHPUnit_Framework_TestCase as TestCase;
+
 /**
  * Table Builder Interface Test
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class TableBuilderAwareInterfaceTest extends \PHPUnit\Framework\TestCase
+class TableBuilderAwareInterfaceTest extends TestCase
 {
     /**
      * Tests the trait's get and set methods.

@@ -4,7 +4,6 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\DataRetentionRecordLink;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Zend\Mvc\Controller\Plugin\Url;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Common\View\Helper\Status as StatusHelper;
@@ -12,7 +11,7 @@ use Common\View\Helper\Status as StatusHelper;
 /**
  * DataRetentionRecord Link test
  */
-class DataRetentionRecordLinkTest extends TestCase
+class DataRetentionRecordLinkTest extends \PHPUnit_Framework_TestCase
 {
     const ORGANISATION_NAME = 'DVSA';
 

@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\TransactionAmountSum;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionAmountSumTest extends \PHPUnit\Framework\TestCase
+class TransactionAmountSumTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

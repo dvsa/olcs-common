@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Helper;
 
 use CommonTest\Bootstrap;
+use PHPUnit_Framework_TestCase;
 use Common\Service\Helper\RestHelperService;
 
 /**
@@ -15,7 +16,7 @@ use Common\Service\Helper\RestHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class RestHelperServiceTest extends \PHPUnit\Framework\TestCase
+class RestHelperServiceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Holds the SUT

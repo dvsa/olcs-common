@@ -8,13 +8,14 @@
 namespace CommonTest\Service\Helper;
 
 use Common\Service\Helper\OppositionHelperService;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Opposition Helper Service Test
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class OppositionHelperServiceTest extends \PHPUnit\Framework\TestCase
+class OppositionHelperServiceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Setup the helper

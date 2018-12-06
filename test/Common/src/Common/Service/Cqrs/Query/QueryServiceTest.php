@@ -96,7 +96,7 @@ class QueryServiceTest extends MockeryTestCase
             ->once()
             ->andThrow(new \Zend\Mvc\Router\Exception\RuntimeException('unit_ExcMsg'));
 
-        $this->expectException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_404);
+        $this->setExpectedException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_404);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -118,7 +118,7 @@ class QueryServiceTest extends MockeryTestCase
             ->once()
             ->andThrow(new \Zend\Http\Client\Exception\RuntimeException('unit_ExcMsg'));
 
-        $this->expectException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_500);
+        $this->setExpectedException(Exception::class, 'unit_ExcMsg', HttpResponse::STATUS_CODE_500);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -225,7 +225,7 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setStream')->once()->with('unit_IsStream')
             ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
 
-        $this->expectException(Exception\NotFoundException::class, 'API responded with a 404 Not Found : '. $uri);
+        $this->setExpectedException(Exception\NotFoundException::class, 'API responded with a 404 Not Found : '. $uri);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -265,7 +265,7 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setStream')->once()->with('unit_IsStream')
             ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
 
-        $this->expectException(Exception\AccessDeniedException::class, 'BODY : '. $uri);
+        $this->setExpectedException(Exception\AccessDeniedException::class, 'BODY : '. $uri);
         $this->sut->send($this->mockQueryCntr);
     }
 
@@ -305,7 +305,7 @@ class QueryServiceTest extends MockeryTestCase
             ->shouldReceive('setStream')->once()->with('unit_IsStream')
             ->shouldReceive('send')->once()->with($this->mockRequest)->andReturn($mockResp);
 
-        $this->expectException(Exception::class, 'BODY : '. $uri);
+        $this->setExpectedException(Exception::class, 'BODY : '. $uri);
         $this->sut->send($this->mockQueryCntr);
     }
 }

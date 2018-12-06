@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Data\Mapper\Lva;
 
+use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\GoodsVehicles;
 
 /**
@@ -14,7 +15,7 @@ use Common\Data\Mapper\Lva\GoodsVehicles;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GoodsVehiclesTest extends \PHPUnit\Framework\TestCase
+class GoodsVehiclesTest extends PHPUnit_Framework_TestCase
 {
     public function testMapFromResult()
     {

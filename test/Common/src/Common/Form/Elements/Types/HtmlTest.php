@@ -6,9 +6,10 @@ use Common\Form\Elements\Types\Html;
 use Common\Form\Form;
 use Common\Form\View\Helper\FormElement;
 use Mockery;
+use PHPUnit_Framework_TestCase;
 use Zend\View\Renderer\PhpRenderer;
 
-class HtmlTest extends \PHPUnit\Framework\TestCase
+class HtmlTest extends PHPUnit_Framework_TestCase
 {
     const INITIAL_HTML_PAYLOAD = '<em>TEST</em>';
     const UPDATED_HTML_PAYLOAD = '<em>TEST 2</em>';

@@ -32,6 +32,7 @@ class FileUploadCountTest extends MockeryTestCase
         $valid = $sut->isValid(null, $context);
 
         $this->assertSame($expected, $valid);
+
     }
 
     public function dataProviderTestIsValid()
@@ -57,7 +58,7 @@ class FileUploadCountTest extends MockeryTestCase
     public function testSetMinInvalid()
     {
         $sut = new FileUploadCount(['min' => 1]);
-        $this->expectException(\Zend\Validator\Exception\InvalidArgumentException::class);
+        $this->setExpectedException(\Zend\Validator\Exception\InvalidArgumentException::class);
         $sut->setMin('X');
     }
 }

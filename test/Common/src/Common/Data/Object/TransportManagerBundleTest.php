@@ -3,13 +3,14 @@
 namespace CommonTest\Data\Object;
 
 use Common\Data\Object\Bundle\TransportManager;
+use PHPUnit_Framework_TestCase as TestCase;
 use CommonTest\Bootstrap;
 
 /**
  * Class TransportManagerBundleTest
  * @package CommonTest\Data\Object
  */
-class TransportManagerBundleTest extends \PHPUnit\Framework\TestCase
+class TransportManagerBundleTest extends TestCase
 {
     /**
      * @group transportManagerBundle

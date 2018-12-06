@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\TaskCheckbox;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TaskCheckboxTest extends \PHPUnit\Framework\TestCase
+class TaskCheckboxTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

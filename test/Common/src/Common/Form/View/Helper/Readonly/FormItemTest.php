@@ -4,11 +4,12 @@ namespace CommonTest\Form\View\Helper\Readonly;
 
 use Common\Form\Elements;
 use Common\Form\View\Helper\Readonly\FormItem;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * @covers \Common\Form\View\Helper\Readonly\FormItem
  */
-class FormItemTest extends \PHPUnit\Framework\TestCase
+class FormItemTest extends TestCase
 {
     public function testInvokeSelf()
     {

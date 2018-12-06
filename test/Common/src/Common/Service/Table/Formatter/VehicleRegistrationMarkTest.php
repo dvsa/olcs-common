@@ -3,10 +3,11 @@
 namespace Common\Service\Table\Formatter;
 
 use Mockery;
+use PHPUnit_Framework_TestCase;
 use Zend\I18n\Translator\TranslatorInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class VehicleRegistrationMarkTest extends \PHPUnit\Framework\TestCase
+class VehicleRegistrationMarkTest extends PHPUnit_Framework_TestCase
 {
     /** @var Mockery\MockInterface */
     private $mockServiceManager;

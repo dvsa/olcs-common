@@ -10,7 +10,7 @@ use Common\Form\Elements\Custom\YearSelect;
 /**
  * Year Select Test
  */
-class YearSelectTest extends \PHPUnit\Framework\TestCase
+class YearSelectTest extends \PHPUnit_Framework_TestCase
 {
     protected $sut;
 

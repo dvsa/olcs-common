@@ -75,7 +75,7 @@ class CommandServiceTest extends MockeryTestCase
         $this->mockRouter->shouldReceive('assemble')->andThrow(new RouterRuntimeException('err_message'));
         $this->mockFlashMsgr->shouldReceive('addErrorMessage')->with('DEBUG: err_message');
 
-        $this->expectException(Exception::class, 'err_message', 404);
+        $this->setExpectedException(Exception::class, 'err_message', 404);
         $this->sut->send($this->mockCmd);
     }
 
@@ -104,7 +104,7 @@ class CommandServiceTest extends MockeryTestCase
             ->shouldReceive('getAdapter')->once()->andReturn()
             ->shouldReceive('send')->once()->andReturn($mockResp);
 
-        $this->expectException(
+        $this->setExpectedException(
             Exception\NotFoundException::class,
             "API responded with a 404 Not Found : unit_uri"
         );
@@ -124,7 +124,7 @@ class CommandServiceTest extends MockeryTestCase
             ->shouldReceive('getAdapter')->once()->andReturn()
             ->shouldReceive('send')->once()->andReturn($mockResp);
 
-        $this->expectException(Exception\AccessDeniedException::class, "HTTP BODY : unit_uri");
+        $this->setExpectedException(Exception\AccessDeniedException::class, "HTTP BODY : unit_uri");
         $this->sut->send($this->mockCmd);
     }
 
@@ -141,7 +141,7 @@ class CommandServiceTest extends MockeryTestCase
             ->shouldReceive('getAdapter')->once()->andReturn()
             ->shouldReceive('send')->once()->andReturn($mockResp);
 
-        $this->expectException(Exception::class, "HTTP BODY : unit_uri");
+        $this->setExpectedException(Exception::class, "HTTP BODY : unit_uri");
         $this->sut->send($this->mockCmd);
     }
 
@@ -154,13 +154,13 @@ class CommandServiceTest extends MockeryTestCase
             ->shouldReceive('getAdapter')->once()->andReturn()
             ->shouldReceive('send')->once()->andThrow(RuntimeException::class, 'ERROR');
 
-        $this->expectException(Exception::class, "ERROR");
+        $this->setExpectedException(Exception::class, "ERROR");
         $this->sut->send($this->mockCmd);
     }
 
     public function testSend409()
     {
-        $this->expectException(ResourceConflictException::class, 'Resource conflict');
+        $this->setExpectedException(ResourceConflictException::class, 'Resource conflict');
 
         $this->mockCmd->shouldReceive('isValid')->once()->andReturn(true);
         $this->mockRouter->shouldReceive('assemble')->once()->andReturn('unit_uri');

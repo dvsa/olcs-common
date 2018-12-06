@@ -4,10 +4,9 @@ namespace CommonTest\Form\View\Helper;
 
 use Common\Form\View\Helper\FormRadioOption;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Zend\Form\Element\Radio;
 
-class FormRadioOptionTest extends TestCase
+class FormRadioOptionTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     /**
      * @var FormRadioOption

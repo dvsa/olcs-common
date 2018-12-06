@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\AddressLines;
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class AddressLinesTest extends \PHPUnit\Framework\TestCase
+class AddressLinesTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

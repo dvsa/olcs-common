@@ -2,6 +2,7 @@
 
 namespace CommonTest\Form\Elements\Types;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Types\FileUploadList;
 
 /**
@@ -9,7 +10,7 @@ use Common\Form\Elements\Types\FileUploadList;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FileUploadListTest extends \PHPUnit\Framework\TestCase
+class FileUploadListTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test the element configuration

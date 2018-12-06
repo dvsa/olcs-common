@@ -2,6 +2,7 @@
 
 namespace CommonTest\Data\Mapper\Lva;
 
+use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\CommunityLicence;
 
 /**
@@ -9,7 +10,7 @@ use Common\Data\Mapper\Lva\CommunityLicence;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class CommunityLicenceMapperTest extends \PHPUnit\Framework\TestCase
+class CommunityLicenceMapperTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider dataProvider

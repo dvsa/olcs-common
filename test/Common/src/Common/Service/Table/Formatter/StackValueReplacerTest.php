@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Table\Formatter;
 
+use PHPUnit_Framework_TestCase;
 use Common\Service\Table\Formatter\StackValueReplacer;
 use CommonTest\Bootstrap;
 use Common\Service\Helper\StackHelperService;
@@ -16,7 +17,7 @@ use Common\Service\Helper\StackHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class StackValueReplacerTest extends \PHPUnit\Framework\TestCase
+class StackValueReplacerTest extends PHPUnit_Framework_TestCase
 {
     public function testFormat()
     {

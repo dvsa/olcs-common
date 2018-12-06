@@ -2,6 +2,7 @@
 
 namespace CommonTest\Filter;
 
+use PHPUnit_Framework_TestCase;
 use Common\Filter\DateTimeSelectNullifier;
 
 /**
@@ -9,7 +10,7 @@ use Common\Filter\DateTimeSelectNullifier;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DateTimeSelectNullifierTest extends \PHPUnit\Framework\TestCase
+class DateTimeSelectNullifierTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @group filter

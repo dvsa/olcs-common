@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\Elements\Validators\Messages;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
 
 /**
@@ -14,7 +15,7 @@ use Common\Form\Elements\Validators\Messages\GenericValidationMessage;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GenericValidationMessageTest extends \PHPUnit\Framework\TestCase
+class GenericValidationMessageTest extends PHPUnit_Framework_TestCase
 {
     protected $message;
 

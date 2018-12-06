@@ -8,6 +8,7 @@
 
 namespace CommonTest\View\Helper;
 
+use PHPUnit_Framework_TestCase;
 use \Common\View\Helper\ApplicationName;
 
 /**
@@ -15,7 +16,7 @@ use \Common\View\Helper\ApplicationName;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationNameTest extends \PHPUnit\Framework\TestCase
+class ApplicationNameTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Setup the view helper

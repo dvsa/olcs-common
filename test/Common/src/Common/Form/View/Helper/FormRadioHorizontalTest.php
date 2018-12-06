@@ -4,11 +4,10 @@ namespace CommonTest\Form\View\Helper;
 
 use Common\Form\View\Helper\FormRadioHorizontal;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Zend\Form\ElementInterface;
 use Zend\View\Renderer\RendererInterface;
 
-class FormRadioHorizontalTest extends TestCase
+class FormRadioHorizontalTest extends m\Adapter\Phpunit\MockeryTestCase
 {
     /**
      * @var FormRadioHorizontal

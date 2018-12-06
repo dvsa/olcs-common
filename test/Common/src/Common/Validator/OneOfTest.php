@@ -7,7 +7,7 @@ use Common\Validator\OneOf;
 /**
  * Class OneOfTest test
  */
-class OneOfTest extends \PHPUnit\Framework\TestCase
+class OneOfTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test setOptions

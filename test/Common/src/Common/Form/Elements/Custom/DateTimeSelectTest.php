@@ -7,7 +7,7 @@ use Common\Form\Elements\Custom\DateTimeSelect;
 /**
  * DateTimeSelect Test
  */
-class DateTimeSelectTest extends \PHPUnit\Framework\TestCase
+class DateTimeSelectTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var DateTimeSelect

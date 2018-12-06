@@ -96,7 +96,7 @@ class GenericUploadTest extends MockeryTestCase
 
     public function testUploadFileServerFail()
     {
-        $this->expectException(\Exception::class);
+        $this->setExpectedException(\Exception::class);
 
         $this->mockResp
             ->shouldReceive('isOk')->andReturn(false)
@@ -111,7 +111,7 @@ class GenericUploadTest extends MockeryTestCase
 
     public function testUploadFileInvalidMime()
     {
-        $this->expectException(InvalidMimeException::class);
+        $this->setExpectedException(InvalidMimeException::class);
 
         $this->mockResp
             ->shouldReceive('isClientError')->andReturn(true)
@@ -133,7 +133,7 @@ class GenericUploadTest extends MockeryTestCase
 
     public function testUploadFileInvalidEbrsMime()
     {
-        $this->expectException(InvalidMimeException::class, 'EXPECT_ERROR_MESSAGE');
+        $this->setExpectedException(InvalidMimeException::class, 'EXPECT_ERROR_MESSAGE');
 
         $this->mockResp
             ->shouldReceive('isClientError')->andReturn(true)

@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Service\Table\Formatter;
 
+use PHPUnit_Framework_TestCase;
 use Common\Service\Table\Formatter\StackValue;
 use CommonTest\Bootstrap;
 use Common\Service\Helper\StackHelperService;
@@ -16,11 +17,11 @@ use Common\Service\Helper\StackHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class StackValueTest extends \PHPUnit\Framework\TestCase
+class StackValueTest extends PHPUnit_Framework_TestCase
 {
     public function testFormatWithoutStack()
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->setExpectedException('\InvalidArgumentException');
         $data = [];
         $column = [];
         $sm = Bootstrap::getServiceManager();

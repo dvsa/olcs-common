@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\Elements\Validators;
 
+use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Validators\CantIncreaseValidator;
 
 /**
@@ -14,7 +15,7 @@ use Common\Form\Elements\Validators\CantIncreaseValidator;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CantIncreaseValidatorTest extends \PHPUnit\Framework\TestCase
+class CantIncreaseValidatorTest extends PHPUnit_Framework_TestCase
 {
     protected $validator;
 

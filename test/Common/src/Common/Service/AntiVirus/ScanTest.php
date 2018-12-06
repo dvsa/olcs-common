@@ -56,14 +56,14 @@ class ScanTest extends MockeryTestCase
 
     public function testIsCleanMissingCommand()
     {
-        $this->expectException(\Common\Exception\ConfigurationException::class, 'Scan cliCommand is not set');
+        $this->setExpectedException(\Common\Exception\ConfigurationException::class, 'Scan cliCommand is not set');
         $this->sut->isClean('foo.bar');
     }
 
     public function testIsCleanMissingCommandReplacement()
     {
         $this->sut->setCliCommand('XXX');
-        $this->expectException(
+        $this->setExpectedException(
             \Common\Exception\ConfigurationException::class,
             '%s must be in the cliCommand, this is where the file to be scanned is inserted'
         );
@@ -73,14 +73,14 @@ class ScanTest extends MockeryTestCase
     public function testIsCleanFileNotString()
     {
         $this->sut->setCliCommand('scan %s');
-        $this->expectException(\InvalidArgumentException::class, 'file to scan must be a string');
+        $this->setExpectedException(\InvalidArgumentException::class, 'file to scan must be a string');
         $this->sut->isClean(1);
     }
 
     public function testIsCleanFileNotExists()
     {
         $this->sut->setCliCommand('scan %s');
-        $this->expectException(\InvalidArgumentException::class, 'Cannot scan \'foo.bar\' as it does not exist');
+        $this->setExpectedException(\InvalidArgumentException::class, 'Cannot scan \'foo.bar\' as it does not exist');
         $this->sut->isClean('foo.bar');
     }
 

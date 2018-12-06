@@ -8,8 +8,9 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\IrhpPermitSectorName;
+use PHPUnit_Framework_TestCase;
 
-class IrhpPermitSectorNameTest extends \PHPUnit\Framework\TestCase
+class IrhpPermitSectorNameTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test the format method

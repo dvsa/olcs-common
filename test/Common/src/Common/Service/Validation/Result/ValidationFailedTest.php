@@ -5,8 +5,8 @@ namespace CommonTest\Validation\Result;
 
 use Common\Service\Validation\Result\ValidationFailed;
 use Common\Service\Validation\CommandInterface;
+use PHPUnit_Framework_TestCase as TestCase;
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Class ValidationFailedTest

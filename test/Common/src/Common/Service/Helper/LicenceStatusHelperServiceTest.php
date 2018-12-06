@@ -34,7 +34,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
 
     public function testIsLicenceActiveThrowsException()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->setExpectedException('InvalidArgumentException');
 
         $helperService = new LicenceStatusHelperService();
         $helperService->isLicenceActive();
@@ -398,7 +398,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
 
     public function testRemoveStatusRulesByLicenceAndTypeThrowsException()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->setExpectedException('InvalidArgumentException');
 
         $this->sut->removeStatusRulesByLicenceAndType();
     }

@@ -8,13 +8,14 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\FeeStatus;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Fee status formatter test
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FeeStatusTest extends \PHPUnit\Framework\TestCase
+class FeeStatusTest extends PHPUnit_Framework_TestCase
 {
 
     /**

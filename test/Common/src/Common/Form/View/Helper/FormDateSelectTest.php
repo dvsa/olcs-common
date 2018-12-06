@@ -74,7 +74,7 @@ class FormDateSelectTest extends MockeryTestCase
 
     public function testRenderWrongElement()
     {
-        $this->expectException(\Zend\Form\Exception\InvalidArgumentException::class);
+        $this->setExpectedException(\Zend\Form\Exception\InvalidArgumentException::class);
 
         $element = new Text('date');
 
@@ -83,7 +83,7 @@ class FormDateSelectTest extends MockeryTestCase
 
     public function testRenderElementWithNoName()
     {
-        $this->expectException(\Zend\Form\Exception\DomainException::class);
+        $this->setExpectedException(\Zend\Form\Exception\DomainException::class);
 
         $element = new DateSelect(null);
 
