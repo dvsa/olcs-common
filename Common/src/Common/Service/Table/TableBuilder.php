@@ -474,7 +474,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         if (empty($this->contentHelper)) {
             if (!isset($this->applicationConfig['tables']['partials'][$this->contentType])) {
-
                 throw new \Exception('Table partial location not defined in config');
             }
 
@@ -980,7 +979,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $locations = array_reverse($this->applicationConfig['tables']['config']);
 
         foreach ($locations as $location) {
-
             $configFile = $location . $name . '.table.php';
 
             if (file_exists($configFile)) {
@@ -1010,7 +1008,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $columns = array();
 
         foreach ($this->footer as $column) {
-
             $columns[] = $this->renderTableFooterColumn($column);
         }
 
@@ -1102,7 +1099,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         if ((!isset($this->variables['within_form']) || $this->variables['within_form'] == false)
             && isset($this->settings['crud'])) {
-
             return $this->renderLayout('crud');
         }
 
@@ -1121,22 +1117,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private function whichType()
     {
         if (isset($this->variables['within_form']) && $this->variables['within_form'] == true) {
-
             return self::TYPE_FORM_TABLE;
         }
 
         if (isset($this->settings['crud']) && $this->shouldPaginate()) {
-
             return self::TYPE_HYBRID;
         }
 
         if (isset($this->settings['crud'])) {
-
             return self::TYPE_CRUD;
         }
 
         if ($this->shouldPaginate()) {
-
             return self::TYPE_PAGINATE;
         }
 
@@ -1281,7 +1273,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $content = '';
 
         foreach ($links as $details) {
-
             $content .= $this->replaceContent('{{[elements/link]}}', $details);
         }
 
@@ -1352,14 +1343,12 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function renderLimitOptions()
     {
         if (empty($this->settings['paginate']['limit']['options'])) {
-
             return '';
         }
 
         $content = '';
 
         foreach ($this->settings['paginate']['limit']['options'] as $option) {
-
             $class = '';
 
             $option = (string)$option;
@@ -1394,7 +1383,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $content = '';
 
         foreach ($options as $details) {
-
             if (is_null($details['page']) || (string)$this->getPage() == $details['page']) {
                 $details['option'] = $details['label'];
             } else {
@@ -1434,7 +1422,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (isset($column['sort'])) {
-
             if (isset($column['class'])) {
                 $column['class'] .= ' sortable';
             } else {
@@ -1444,14 +1431,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $column['order'] = 'ASC';
 
             if ($column['sort'] === $this->getSort()) {
-
                 if ($this->getOrder() === 'ASC') {
-
                     $column['order'] = 'DESC';
-
                     $column['class'] .= ' ascending';
                 } else {
-
                     $column['class'] .= ' descending';
                 }
             }
@@ -1467,7 +1450,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (isset($column['width']) && isset($this->widths[$column['width']])) {
-
             $column['width'] = $this->widths[$column['width']];
         }
 
@@ -1486,14 +1468,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param string $wrapper
      * @return string
      */
-    public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
+    public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}', $customAttributes = [])
     {
         if ($this->shouldHide($column)) {
             return;
         }
 
         if (isset($column['formatter'])) {
-
             $return = $this->callFormatter($column, $row);
 
             if (is_array($return)) {
@@ -1504,8 +1485,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             }
         }
 
-        if (
-            $this->contentType === self::CONTENT_TYPE_HTML
+        if ($this->contentType === self::CONTENT_TYPE_HTML
             && isset($column['type'])
             && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])
         ) {
@@ -1528,21 +1508,47 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 $row[$column['name']] : '';
         }
 
-        $replacements = array('content' => $content);
+        $replacements = [
+            'content' => $content,
+            'attrs' => $this->processBodyColumnAttributes($column, $customAttributes)
+        ];
 
-        $replacements['attrs'] = '';
+        return $this->replaceContent($wrapper, $replacements);
+    }
+
+    private function processBodyColumnAttributes($column, $customAttributes) : string
+    {
+        $plainAttributes = '';
+
+        $columnAttributes = [];
+
         if (isset($column['align'])) {
-            $replacements['attrs'] = ' class="'.$column['align'].'"';
+            $columnAttributes['class'] = $column['align'];
         }
 
         if ($this->hasAnyTitle()) {
             $dataHeading = isset($column['title'])
                 ? $this->getServiceLocator()->get('translator')->translate($column['title'])
                 : '';
-            $replacements['attrs'] .= ' data-heading="' . strip_tags($dataHeading) . '"';
+            $columnAttributes['data-heading'] = strip_tags($dataHeading);
         }
 
-        return $this->replaceContent($wrapper, $replacements);
+        foreach ($customAttributes as $attribute => $value) {
+            if (isset($columnAttributes[$attribute]) && !empty($columnAttributes[$attribute])) {
+                $columnAttributes[$attribute] .= ' ' . $value;
+            } else {
+                $columnAttributes[$attribute] = $value;
+            }
+        }
+
+        foreach ($columnAttributes as $attribute => $value) {
+            if (empty(trim($value))) {
+                continue;
+            }
+            $plainAttributes .= ' ' . $attribute . '="' . $value . '"';
+        }
+
+        return $plainAttributes;
     }
 
     /**
@@ -1569,7 +1575,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $content = '';
 
         if (count($this->getRows()) === 0) {
-
             $columns = $this->getColumns();
 
             if ($this->unfilteredTotal > 0) {
@@ -1615,7 +1620,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         if (is_string($column['formatter'])
             && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
-
             $className =  '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
 
             $column['formatter'] = $className;
@@ -1626,7 +1630,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         if (is_callable($column['formatter'])) {
-
             return call_user_func($column['formatter'], $data, $column, $this->getServiceLocator());
         }
 
@@ -1686,17 +1689,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         /** @var \Zend\Mvc\Controller\Plugin\Url $url */
         $url = $this->getUrl();
-
-        /** @var \Zend\Mvc\MvcEvent $event */
-        //$event = $url->getController()->getEvent();
-
-        /** @var \Zend\Mvc\Router\Http\TreeRouteStack $router */
-        //$router = $event->getRouter();
-
-        /** @var \Zend\Mvc\Router\Http\RouteMatch $routeMatch */
-        //$routeMatch = $event->getRouteMatch();
-
-        //$currentRouteName = $routeMatch->getMatchedRouteName();
 
         /**
          * This is the query information to add to the existing route/url.
@@ -1758,7 +1750,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $translator = $this->getServiceLocator()->get('translator');
 
         foreach ($actions as $name => $details) {
-
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
             $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
@@ -1802,7 +1793,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $translator = $this->getServiceLocator()->get('translator');
 
         foreach ($links as $name => $details) {
-
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
             $label = isset($details['label']) ? $translator->translate($details['label']) : $value;
@@ -1970,7 +1960,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     protected function setupDataAttributes()
     {
         if (isset($this->variables['dataAttributes']) && is_array($this->variables['dataAttributes'])) {
-
             $attrs = [];
             foreach ($this->variables['dataAttributes'] as $attribute => $value) {
                 $attrs[] = $attribute . '="' . (string)$value . '"';
@@ -2011,8 +2000,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $updatedColumns = [];
 
             foreach ($this->getColumns() as $column) {
-                if (
-                    isset($column['type'])
+                if (isset($column['type'])
                     && in_array($column['type'], $typesToRemove)
                     && !(
                         isset($column['keepForReadOnly'])

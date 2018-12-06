@@ -2379,6 +2379,41 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
+     * Test renderBodyColumn with data custom attributes
+     */
+    public function testRenderBodyColumnWithAttributes()
+    {
+        $row = array(
+            'foo' => 'bar'
+        );
+
+        $column = array(
+            'name' => 'foo',
+            'align' => 'centre'
+        );
+
+        $customAttributes = ['colspan' => '2', 'class' => 'a-class', 'data-empty' => ' '];
+
+        $mockContentHelper = $this->createPartialMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with('{{[elements/td]}}', array('content' => 'bar', 'attrs' => ' class="centre a-class" colspan="2"'));
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'getColumns'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->expects($this->once())
+            ->method('getColumns')
+            ->will($this->returnValue([$column]));
+
+        $table->renderBodyColumn($row, $column, '{{[elements/td]}}', $customAttributes);
+    }
+
+    /**
      * Test renderBodyColumn Custom Wrapper
      */
     public function testRenderBodyColumnCustomWrapper()

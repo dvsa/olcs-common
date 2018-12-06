@@ -9,7 +9,7 @@ use Common\Service\Table\Formatter\TaskAllocationRule\User;
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test the format method

@@ -6,6 +6,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 use Common\Service\Table\Formatter\SeriousInfringementLink;
 
@@ -14,7 +15,7 @@ use Common\Service\Table\Formatter\SeriousInfringementLink;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class SeriousInfringementLinkTest extends \PHPUnit_Framework_TestCase
+class SeriousInfringementLinkTest extends TestCase
 {
     public function testFormat()
     {

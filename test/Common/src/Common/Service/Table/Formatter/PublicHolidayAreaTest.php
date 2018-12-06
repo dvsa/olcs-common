@@ -4,11 +4,12 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\PublicHolidayArea;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * @covers Common\Service\Table\Formatter\PublicHolidayArea
  */
-class PublicHolidayAreaTest extends \PHPUnit_Framework_TestCase
+class PublicHolidayAreaTest extends TestCase
 {
     /**
      * @dataProvider dpTestFormat

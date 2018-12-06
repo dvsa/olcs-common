@@ -9,7 +9,7 @@ use Common\Exception\BailOutException;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class BailOutExceptionTest extends \PHPUnit_Framework_TestCase
+class BailOutExceptionTest extends \PHPUnit\Framework\TestCase
 {
     public function testException()
     {

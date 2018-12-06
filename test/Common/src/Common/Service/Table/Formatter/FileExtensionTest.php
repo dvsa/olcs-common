@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\FileExtension;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class FileExtensionTest extends \PHPUnit_Framework_TestCase
+class FileExtensionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test the format method

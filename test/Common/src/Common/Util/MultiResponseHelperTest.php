@@ -3,7 +3,6 @@
 
 namespace CommonTest\Controller\Util;
 
-use PHPUnit_Framework_TestCase as TestCase;
 use Common\Util\MultiResponseHelper;
 use Zend\Http\Response;
 
@@ -11,7 +10,7 @@ use Zend\Http\Response;
  * Class MultiResponseHelperTest
  * @package CommonTest\Controller\Util
  */
-class MultiResponseHelperTest extends TestCase
+class MultiResponseHelperTest extends \PHPUnit\Framework\TestCase
 {
     public function testHandleResponse()
     {

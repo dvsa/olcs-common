@@ -7,7 +7,7 @@ use Common\Util\FileContent;
 /**
  * @covers \Common\Util\FileContent
  */
-class FileContentTest extends \PHPUnit_Framework_TestCase
+class FileContentTest extends \PHPUnit\Framework\TestCase
 {
     public function testFileContent()
     {

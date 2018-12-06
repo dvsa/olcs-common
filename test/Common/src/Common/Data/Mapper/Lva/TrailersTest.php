@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Data\Mapper\Lva;
 
-use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\Trailers;
 
 /**
@@ -15,7 +14,7 @@ use Common\Data\Mapper\Lva\Trailers;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TrailersTest extends PHPUnit_Framework_TestCase
+class TrailersTest extends \PHPUnit\Framework\TestCase
 {
     public function testMapFromResult()
     {

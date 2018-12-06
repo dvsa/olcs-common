@@ -7,14 +7,13 @@
 namespace CommonTest\Service\Table;
 
 use Common\Service\Table\TableBuilder;
-use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Table Builder Trait Test
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class TableBuilderAwareTraitTest extends TestCase
+class TableBuilderAwareTraitTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Tests the trait's get and set methods.
@@ -23,7 +22,14 @@ class TableBuilderAwareTraitTest extends TestCase
     {
         $tableBuilder = $this->createMock(
             '\Common\Service\Table\TableBuilder',
-            [], [], '', false, true, true, false, false
+            [],
+            [],
+            '',
+            false,
+            true,
+            true,
+            false,
+            false
         );
 
         /** @var \Common\Service\Table\TableBuilderAwareTrait $trait */

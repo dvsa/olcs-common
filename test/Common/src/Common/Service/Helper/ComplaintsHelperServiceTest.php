@@ -8,14 +8,13 @@
 namespace CommonTest\Service\Helper;
 
 use Common\Service\Helper\ComplaintsHelperService;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Complaints Helper Service Test
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class ComplaintsHelperServiceTest extends PHPUnit_Framework_TestCase
+class ComplaintsHelperServiceTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Setup the helper

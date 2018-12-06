@@ -8,6 +8,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Entity\ConditionUndertakingEntityService;
 use Common\Service\Table\Formatter\OcConditions;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Class OcConditionsTest
@@ -16,7 +17,7 @@ use Mockery as m;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class OcConditionsTest extends \PHPUnit_Framework_TestCase
+class OcConditionsTest extends TestCase
 {
     /**
      * @dataProvider testFormatDataProvider

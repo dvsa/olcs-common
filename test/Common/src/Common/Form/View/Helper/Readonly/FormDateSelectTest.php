@@ -3,8 +3,8 @@
 namespace CommonTest\Form\View\Helper\Readonly;
 
 use Common\Form\View\Helper\Readonly\FormDateSelect;
-use PHPUnit_Framework_TestCase as TestCase;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Class FormdateSelectTest

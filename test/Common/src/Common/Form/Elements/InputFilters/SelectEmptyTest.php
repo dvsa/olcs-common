@@ -9,7 +9,7 @@ use \Zend\Validator\StringLength;
  * Test SelectEmpty InputFilter
  * @covers \Common\Form\Elements\InputFilters\SelectEmpty
  */
-class SelectEmptyTest extends \PHPUnit_Framework_TestCase
+class SelectEmptyTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * test setup

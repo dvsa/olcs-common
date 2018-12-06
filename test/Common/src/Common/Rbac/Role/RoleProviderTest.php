@@ -75,7 +75,7 @@ class RoleProviderTest extends TestCase
 
     public function testGetUserDataThrowsUnableToRetrieveException()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException('RuntimeException');
 
         $mockResponse = m::mock();
         $mockResponse->shouldReceive('isOk')->andReturn(false);

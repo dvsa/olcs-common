@@ -10,6 +10,7 @@ namespace CommonTest\Service\Table;
 
 use Common\Service\Table\ContentHelper;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Content Helper Test
@@ -17,7 +18,7 @@ use Mockery as m;
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 
-class ContentHelperTest extends \PHPUnit_Framework_TestCase
+class ContentHelperTest extends TestCase
 {
 
     /**
