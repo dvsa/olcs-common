@@ -110,6 +110,9 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             $inputAttributes['checked'] = $selected;
             $inputAttributes['disabled'] = $disabled;
 
+            $inputAttributes = $this->maybeAddInputId($inputAttributes);
+            $labelAttributes['for'] = $inputAttributes['id'];
+
             $input = sprintf(
                 '<input %s%s',
                 $this->createAttributesString($inputAttributes),
@@ -202,5 +205,17 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         }
 
         return $valueOptions;
+    }
+
+    /**
+     * @param $inputAttributes
+     * @return mixed
+     */
+    protected function maybeAddInputId($inputAttributes)
+    {
+        if (!isset($inputAttributes['id'])) {
+            $inputAttributes['id'] = uniqid();
+        }
+        return $inputAttributes;
     }
 }

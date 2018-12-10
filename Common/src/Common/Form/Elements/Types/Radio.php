@@ -57,15 +57,9 @@ class Radio extends ZendRadio
             }
 
             $id = $this->uniqid . '_' . $optionSpec['value'];
-            $optionSpec['wrapper_attributes'] = [
-                'class' => 'wrapper',
-            ];
             $optionSpec['attributes'] = [
                 'id' => $id,
                 'data-show-element' => "#${id}_content",
-            ];
-            $optionSpec['label_attributes'] = [
-                'for' => $id,
             ];
         }
 
