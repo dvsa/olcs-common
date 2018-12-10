@@ -67,6 +67,8 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 );
             }
 
+            $optionSpec = $this->addGovUkRadioStyles($optionSpec);
+
             if (isset($optionSpec['value'])) {
                 $value = $optionSpec['value'];
             }
@@ -169,5 +171,36 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         }
         $childHtml = $this->wrapWithTag($form, $attributes);
         return $childHtml;
+    }
+
+    protected function addGovUkRadioStyles($valueOptions)
+    {
+
+        $gdsAttributes = [
+            'wrapper_attributes' => [
+                'class' => 'govuk-radios__item',
+            ],
+            'attributes' => [
+                'class' => 'govuk-radios__input',
+            ],
+            'label_attributes' => [
+                'class' => 'govuk-label govuk-radios__label',
+            ],
+            'hint_attributes' => [
+                'class' => 'govuk-hint govuk-radios__hint',
+            ],
+        ];
+
+        foreach ($gdsAttributes as $key => $attributes) {
+            if(isset($valueOptions[$key]) && isset($valueOptions[$key]['class'])) {
+                $valueOptions[$key]['class'] .= ' ' . $attributes['class'];
+            } elseif(isset($valueOptions[$key])) {
+                $valueOptions[$key] = array_merge($valueOptions[$key], $attributes);
+            } else {
+                $valueOptions[$key] = $attributes;
+            }
+        }
+
+        return $valueOptions;
     }
 }
