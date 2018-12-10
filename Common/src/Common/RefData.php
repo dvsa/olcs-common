@@ -352,6 +352,10 @@ class RefData
     const PERMIT_APP_STATUS_ISSUING = 'permit_app_issuing';
     const PERMIT_APP_STATUS_VALID = 'permit_app_valid';
 
+    const PERMIT_APP_WITHDRAW_REASON_UNPAID = 'permits_app_withdraw_not_paid';
+    const PERMIT_APP_WITHDRAW_REASON_DECLINED = 'permits_app_withdraw_declined';
+    const PERMIT_APP_WITHDRAW_REASON_USER = 'permits_app_withdraw_by_user';
+
     /**
      * ECMT Permit application international journey percentages
      */
