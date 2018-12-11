@@ -12,7 +12,6 @@ use Common\Form\View\Helper\Form;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\Element\MultiCheckbox as MultiCheckboxElement;
-use Zend\View\Renderer\PhpRenderer;
 
 /**
  * Here we extend the View helper to allow us to add attributes that aren't in ZF2's whitelist
@@ -31,6 +30,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         $labelPosition = $this->getLabelPosition();
         $globalLabelAttributes = [];
         $closingBracket = $this->getInlineClosingBracket();
+        $radiosWrapperAttributes = $this->makeRadiosWrapperAttributes($attributes);
 
         if ($element instanceof LabelAwareInterface) {
             $globalLabelAttributes = $element->getLabelAttributes();
@@ -40,7 +40,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             $globalLabelAttributes = $this->labelAttributes;
         }
 
-        $combinedMarkup = array();
+        $combinedMarkup = [];
         $count = 0;
 
         foreach ($options as $key => $optionSpec) {
@@ -56,7 +56,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             $childContent = null;
             $inputAttributes = $attributes;
             $labelAttributes = $globalLabelAttributes;
-            $wrapperAttributes = '';
+            $itemWrapperAttributes = '';
             $selected = (isset($inputAttributes['selected']) && $inputAttributes['type'] != 'radio' && $inputAttributes['selected']);
             $disabled = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
 
@@ -95,8 +95,8 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             if (isset($optionSpec['attributes'])) {
                 $inputAttributes = array_merge($inputAttributes, $optionSpec['attributes']);
             }
-            if (isset($optionSpec['wrapper_attributes'])) {
-                $wrapperAttributes = $this->createAttributesString($optionSpec['wrapper_attributes']);
+            if (isset($optionSpec['item_wrapper_attributes'])) {
+                $itemWrapperAttributes = $this->createAttributesString($optionSpec['item_wrapper_attributes']);
             }
             if (isset($optionSpec['childContent'])) {
                 $childContent = $this->processChildContent($optionSpec);
@@ -144,14 +144,16 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                     break;
             }
 
-            $combinedMarkup[] = $this->wrapWithTag($markup, $wrapperAttributes);
+            $combinedMarkup[] = $this->wrapWithTag($markup, $itemWrapperAttributes);
 
             if ($childContent) {
                 $combinedMarkup[] = $childContent;
             }
         }
 
-        return implode($this->getSeparator(), $combinedMarkup);
+        $outputMarkup = $this->wrapWithTag(implode($this->getSeparator(), $combinedMarkup), $radiosWrapperAttributes);
+
+        return $outputMarkup;
     }
 
     protected function wrapWithTag($content, $attributes = '', $tag = 'div')
@@ -180,7 +182,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
     {
 
         $gdsAttributes = [
-            'wrapper_attributes' => [
+            'item_wrapper_attributes' => [
                 'class' => 'govuk-radios__item',
             ],
             'attributes' => [
@@ -217,5 +219,24 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             $inputAttributes['id'] = uniqid();
         }
         return $inputAttributes;
+    }
+
+    protected function makeRadiosWrapperAttributes(array $attributes): array
+    {
+        $radiosWrapperAttributes = [
+            'class' => 'govuk-radios'
+        ];
+
+        if (isset($attributes['radios_wrapper_attributes'])) {
+            foreach ($attributes['radios_wrapper_attributes'] as $key => $value) {
+                if (isset($radiosWrapperAttributes[$key])) {
+                    $radiosWrapperAttributes[$key] = $radiosWrapperAttributes[$key] . ' ' . $value;
+                } else {
+                    $radiosWrapperAttributes[$key] = $value;
+                }
+            }
+        }
+
+        return $radiosWrapperAttributes;
     }
 }
