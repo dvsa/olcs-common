@@ -24,13 +24,10 @@ $dataGroupAttribute = empty($dataGroup) ? '' : 'data-group="' . $dataGroup . '"'
             <?php echo $errors ?>
         <?php endif; ?>
 
-        <?php foreach ($radioElement->getValueOptions() as $valueOption) : ?>
-            <div class="radio-button__container">
-                <?php echo $this->formRadioOption($radioElement, $valueOption['value']) ?>
-            </div>
-
-            <?php
-            $contentElementName = $valueOption['value'] .'Content';
+        <?php
+        foreach ($radioElement->getValueOptions() as $valueOption) {
+            echo $this->formRadioOption($radioElement, $valueOption['value']);
+            $contentElementName = $valueOption['value'] . 'Content';
             if ($element->has($contentElementName)) {
                 echo $this->render(
                     'partials/form/radio-content',
@@ -43,9 +40,8 @@ $dataGroupAttribute = empty($dataGroup) ? '' : 'data-group="' . $dataGroup . '"'
                     )
                 );
             }
-            ?>
-        <?php endforeach; ?>
-
+        }
+        ?>
     </fieldset>
 </div>
 
