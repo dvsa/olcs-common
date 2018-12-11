@@ -30,12 +30,12 @@ class FormRadioOptionTest extends m\Adapter\Phpunit\MockeryTestCase
 
         $rendered = $this->sut->__invoke($radioElement, 'B');
         $this->assertSame(
-            '<input type="radio" name="NAME" value="B"><label>bbb</label>',
+            '<input type="radio" name="NAME" value="B"><div ><label>bbb</label></div>',
             $rendered
         );
         $rendered = $this->sut->__invoke($radioElement, 'A');
         $this->assertSame(
-            '<input type="radio" name="NAME" value="A"><label>aaa</label>',
+            '<input type="radio" name="NAME" value="A"><div ><label>aaa</label></div>',
             $rendered
         );
     }

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Form\View\Helper\Extended;
 
 use Common\Form\View\Helper\Form;
@@ -25,11 +26,11 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
     protected function renderOptions(MultiCheckboxElement $element, array $options, array $selectedOptions, array $attributes)
     {
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
-        $labelHelper      = $this->getLabelHelper();
-        $labelClose       = $labelHelper->closeTag();
-        $labelPosition    = $this->getLabelPosition();
-        $globalLabelAttributes = array();
-        $closingBracket   = $this->getInlineClosingBracket();
+        $labelHelper = $this->getLabelHelper();
+        $labelClose = $labelHelper->closeTag();
+        $labelPosition = $this->getLabelPosition();
+        $globalLabelAttributes = [];
+        $closingBracket = $this->getInlineClosingBracket();
 
         if ($element instanceof LabelAwareInterface) {
             $globalLabelAttributes = $element->getLabelAttributes();
@@ -40,7 +41,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         }
 
         $combinedMarkup = array();
-        $count          = 0;
+        $count = 0;
 
         foreach ($options as $key => $optionSpec) {
             $count++;
@@ -48,16 +49,16 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 unset($attributes['id']);
             }
 
-            $value             = '';
-            $label             = '';
-            $hint              = '';
-            $hintAttributes    = '';
-            $childContent      = null;
-            $inputAttributes   = $attributes;
-            $labelAttributes   = $globalLabelAttributes;
+            $value = '';
+            $label = '';
+            $hint = '';
+            $hintAttributes = '';
+            $childContent = null;
+            $inputAttributes = $attributes;
+            $labelAttributes = $globalLabelAttributes;
             $wrapperAttributes = '';
-            $selected          = (isset($inputAttributes['selected']) && $inputAttributes['type'] != 'radio' && $inputAttributes['selected']);
-            $disabled          = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
+            $selected = (isset($inputAttributes['selected']) && $inputAttributes['type'] != 'radio' && $inputAttributes['selected']);
+            $disabled = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
 
             if (is_scalar($optionSpec)) {
                 $optionSpec = array(
@@ -65,6 +66,8 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                     'value' => $key
                 );
             }
+
+            $optionSpec = $this->addGovUkRadioStyles($optionSpec);
 
             if (isset($optionSpec['value'])) {
                 $value = $optionSpec['value'];
@@ -103,9 +106,12 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 $selected = true;
             }
 
-            $inputAttributes['value']    = $value;
-            $inputAttributes['checked']  = $selected;
+            $inputAttributes['value'] = $value;
+            $inputAttributes['checked'] = $selected;
             $inputAttributes['disabled'] = $disabled;
+
+            $inputAttributes = $this->maybeAddInputId($inputAttributes);
+            $labelAttributes['for'] = $inputAttributes['id'];
 
             $input = sprintf(
                 '<input %s%s',
@@ -120,7 +126,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 );
             }
 
-            if (! $element instanceof LabelAwareInterface || ! $element->getLabelOption('disable_html_escape')) {
+            if (!$element instanceof LabelAwareInterface || !$element->getLabelOption('disable_html_escape')) {
                 $label = $escapeHtmlHelper($label);
             }
 
@@ -128,19 +134,19 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
 
             switch ($labelPosition) {
                 case self::LABEL_PREPEND:
-                    $template  = $labelOpen . '%s' . $labelClose . '%s%s';
+                    $template = $labelOpen . '%s' . $labelClose . '%s%s';
                     $markup = sprintf($template, $label, $input, $hint);
                     break;
                 case self::LABEL_APPEND:
                 default:
-                    $template  = '%s' . $labelOpen . '%s' . $labelClose . '%s';
+                    $template = '%s' . $labelOpen . '%s' . $labelClose . '%s';
                     $markup = sprintf($template, $input, $label, $hint);
                     break;
             }
 
             $combinedMarkup[] = $this->wrapWithTag($markup, $wrapperAttributes);
 
-            if($childContent) {
+            if ($childContent) {
                 $combinedMarkup[] = $childContent;
             }
         }
@@ -153,22 +159,63 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         return '<' . $tag . ' ' . $attributes . '>' . $content . '</' . $tag . '>';
     }
 
-    protected function processChildContent(array $optionSpec): ? string
+    protected function processChildContent(array $optionSpec): ?string
     {
         $childHtml = null;
         $attributes = '';
         $childContent = $optionSpec['childContent'];
-        if (isset($childContent)) {
-            $annotationBuilder = new AnnotationBuilder();
-            $contentForm = $annotationBuilder->createForm($childContent['content']);
-            $formHelper = new Form();
-            $formHelper->setView($this->getView());
-            $form = $formHelper->render($contentForm, false);
-            if (isset($childContent['attributes'])) {
-                $attributes = $this->createAttributesString($childContent['attributes']);
-            }
-            $childHtml = $this->wrapWithTag($form, $attributes);
+        $annotationBuilder = new AnnotationBuilder();
+        $contentForm = $annotationBuilder->createForm($childContent['content']);
+        $formHelper = new Form();
+        $formHelper->setView($this->getView());
+        $form = $formHelper->render($contentForm, false);
+        if (isset($childContent['attributes'])) {
+            $attributes = $this->createAttributesString($childContent['attributes']);
         }
+        $childHtml = $this->wrapWithTag($form, $attributes);
         return $childHtml;
+    }
+
+    protected function addGovUkRadioStyles($valueOptions)
+    {
+
+        $gdsAttributes = [
+            'wrapper_attributes' => [
+                'class' => 'govuk-radios__item',
+            ],
+            'attributes' => [
+                'class' => 'govuk-radios__input',
+            ],
+            'label_attributes' => [
+                'class' => 'govuk-label govuk-radios__label',
+            ],
+            'hint_attributes' => [
+                'class' => 'govuk-hint govuk-radios__hint',
+            ],
+        ];
+
+        foreach ($gdsAttributes as $key => $attributes) {
+            if(isset($valueOptions[$key]) && isset($valueOptions[$key]['class'])) {
+                $valueOptions[$key]['class'] .= ' ' . $attributes['class'];
+            } elseif(isset($valueOptions[$key])) {
+                $valueOptions[$key] = array_merge($valueOptions[$key], $attributes);
+            } else {
+                $valueOptions[$key] = $attributes;
+            }
+        }
+
+        return $valueOptions;
+    }
+
+    /**
+     * @param $inputAttributes
+     * @return mixed
+     */
+    protected function maybeAddInputId($inputAttributes)
+    {
+        if (!isset($inputAttributes['id'])) {
+            $inputAttributes['id'] = uniqid();
+        }
+        return $inputAttributes;
     }
 }

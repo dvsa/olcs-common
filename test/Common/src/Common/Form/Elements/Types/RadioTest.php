@@ -48,21 +48,33 @@ class RadioTest extends PHPUnit_Framework_TestCase
                 'A' => [
                     'label' => 'aaa',
                     'value' => 'A',
+                    'wrapper_attributes' => [
+                        'class' => 'govuk-radios__item',
+                    ],
                     'attributes' => [
-                        'class' => 'radio-button',
+                        'class' => 'govuk-radios__input',
                     ],
                     'label_attributes' => [
-                        'class' => 'radio-button__label',
+                        'class' => 'govuk-label govuk-radios__label',
+                    ],
+                    'hint_attributes' => [
+                        'class' => 'govuk-hint govuk-radios__hint',
                     ],
                 ],
                 'B' => [
                     'label' => 'bbb',
                     'value' => 'B',
+                    'wrapper_attributes' => [
+                        'class' => 'govuk-radios__item',
+                    ],
                     'attributes' => [
-                        'class' => 'radio-button',
+                        'class' => 'govuk-radios__input',
                     ],
                     'label_attributes' => [
-                        'class' => 'radio-button__label',
+                        'class' => 'govuk-label govuk-radios__label',
+                    ],
+                    'hint_attributes' => [
+                        'class' => 'govuk-hint govuk-radios__hint',
                     ],
                 ],
             ],
