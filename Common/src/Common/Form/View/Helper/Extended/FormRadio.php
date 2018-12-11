@@ -151,7 +151,10 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             }
         }
 
-        $outputMarkup = $this->wrapWithTag(implode($this->getSeparator(), $combinedMarkup), $radiosWrapperAttributes);
+        $outputMarkup = $this->wrapWithTag(
+            implode($this->getSeparator(), $combinedMarkup),
+            $this->createAttributesString($radiosWrapperAttributes)
+        );
 
         return $outputMarkup;
     }
