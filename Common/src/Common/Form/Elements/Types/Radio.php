@@ -50,17 +50,24 @@ class Radio extends ZendRadio
     {
         foreach ($options as $key => &$optionSpec) {
             if (is_scalar($optionSpec)) {
-                $optionSpec = array(
+                $optionSpec = [
                     'label' => $optionSpec,
                     'value' => $key
-                );
+                ];
             }
 
-            $id = $this->uniqid . '_' . $optionSpec['value'];
-            $optionSpec['attributes'] = [
+            if (!isset($optionSpec['attributes'])) {
+                $optionSpec['attributes'] = [];
+            }
+
+            $id = $optionSpec['attributes']['id'] ?? $this->uniqid . '_' . $optionSpec['value'];
+
+            $defaultAttributes = [
                 'id' => $id,
                 'data-show-element' => "#${id}_content",
             ];
+
+            $optionSpec['attributes'] = array_merge($defaultAttributes, $optionSpec['attributes']);
         }
 
         parent::setValueOptions($options);
