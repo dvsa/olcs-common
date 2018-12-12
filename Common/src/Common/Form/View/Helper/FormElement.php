@@ -222,7 +222,8 @@ class FormElement extends ZendFormElement
 
         // If the element has errors, then add a class to the elements HTML
         if (!empty($element->getMessages())) {
-            $element->setAttribute('class', 'error__input');
+            $attribute = $element->getAttribute('class');
+            $element->setAttribute('class', $attribute . ' error__input');
         }
 
         $html = $this->attachHint($element, parent::render($element));
