@@ -5,7 +5,6 @@ namespace CommonTest\View\Helper;
 use Common\View\Helper\UniqidGenerator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-
 class UniqidGeneratorTest extends MockeryTestCase
 {
 
