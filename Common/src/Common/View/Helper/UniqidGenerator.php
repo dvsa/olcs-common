@@ -6,7 +6,7 @@ class UniqidGenerator
 {
     protected $id;
 
-    public function __construct(string $prefix = '',  bool $more_entropy = false)
+    public function __construct(string $prefix = '', bool $more_entropy = false)
     {
         $this->id = uniqid($prefix, $more_entropy);
     }
@@ -16,7 +16,7 @@ class UniqidGenerator
         return $this->id;
     }
 
-    public function regenerateId(string $prefix = '',  bool $more_entropy = false)
+    public function regenerateId(string $prefix = '', bool $more_entropy = false)
     {
         $this->id = uniqid($prefix, $more_entropy);
         return $this->id;
