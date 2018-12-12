@@ -48,34 +48,10 @@ class RadioTest extends PHPUnit_Framework_TestCase
                 'A' => [
                     'label' => 'aaa',
                     'value' => 'A',
-                    'wrapper_attributes' => [
-                        'class' => 'govuk-radios__item',
-                    ],
-                    'attributes' => [
-                        'class' => 'govuk-radios__input',
-                    ],
-                    'label_attributes' => [
-                        'class' => 'govuk-label govuk-radios__label',
-                    ],
-                    'hint_attributes' => [
-                        'class' => 'govuk-hint govuk-radios__hint',
-                    ],
                 ],
                 'B' => [
                     'label' => 'bbb',
                     'value' => 'B',
-                    'wrapper_attributes' => [
-                        'class' => 'govuk-radios__item',
-                    ],
-                    'attributes' => [
-                        'class' => 'govuk-radios__input',
-                    ],
-                    'label_attributes' => [
-                        'class' => 'govuk-label govuk-radios__label',
-                    ],
-                    'hint_attributes' => [
-                        'class' => 'govuk-hint govuk-radios__hint',
-                    ],
                 ],
             ],
             $valueOptions
@@ -83,12 +59,10 @@ class RadioTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($valueOptions['A']['attributes']['id']);
         $this->assertNotEmpty($valueOptions['A']['attributes']['data-show-element']);
-        $this->assertNotEmpty($valueOptions['A']['label_attributes']['for']);
         $this->assertStringEndsWith('_A', $valueOptions['A']['attributes']['id']);
 
         $this->assertNotEmpty($valueOptions['B']['attributes']['id']);
         $this->assertNotEmpty($valueOptions['B']['attributes']['data-show-element']);
-        $this->assertNotEmpty($valueOptions['B']['label_attributes']['for']);
         $this->assertStringEndsWith('_B', $valueOptions['B']['attributes']['id']);
 
         $this->assertNotSame($valueOptions['A']['attributes']['id'], $valueOptions['B']['attributes']['id']);

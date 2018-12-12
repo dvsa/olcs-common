@@ -831,7 +831,7 @@ class FormHelperService extends AbstractHelperService
         if (isset($options[$index])) {
             $translator = $this->getServiceLocator()->get('Helper\Translation');
 
-            if(is_array($options[$index])) {
+            if (is_array($options[$index])) {
                 $options[$index]['label'] = $translator->translate($options[$index]['label']) . ' ' .
                     $translator->translate('current.option.suffix');
             } else {
