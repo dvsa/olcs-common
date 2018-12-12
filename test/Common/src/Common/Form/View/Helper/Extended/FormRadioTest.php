@@ -3,6 +3,7 @@
 namespace CommonTest\Form\View\Helper\Extended;
 
 use Common\Form\View\Helper\FormRow;
+use Common\View\Helper\UniqidGenerator;
 use CommonTest\Form\View\Helper\Extended\Stub\FormRadioChildContentStub;
 use CommonTest\Form\View\Helper\Extended\Stub\FormRadioStub;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -19,7 +20,12 @@ class FormRadioTest extends MockeryTestCase
     public function testRenderOptions($options, $selectedOptions, $attributes, $globalAttributes, $labelPosition, $expected)
     {
         $_SERVER['REQUEST_URI'] = '/test/uri';
-        $sut = new FormRadioStub();
+        $idGenerator = null;
+        if (!empty($options) && !isset($attributes['id'])) {
+            $idGenerator = m::mock(UniqidGenerator::class);
+            $idGenerator->shouldReceive('getId')->once()->andReturn('generated_id');
+        }
+        $sut = new FormRadioStub($idGenerator);
         $translator = m::mock(TranslatorInterface::class);
         $translator->shouldReceive('translate')->andReturnUsing(function ($string, $domain) {
             return $string;
@@ -43,7 +49,7 @@ class FormRadioTest extends MockeryTestCase
         $element = new MultiCheckbox();
 
         $output = $sut->renderOptions($element, $options, $selectedOptions, $attributes);
-        $this->assertSame($expected, $output);
+        $this->assertSame($expected, html_entity_decode($output));
     }
 
     public function renderOptionsProvider()
@@ -67,6 +73,7 @@ class FormRadioTest extends MockeryTestCase
                         ],
                         'attributes' => [
                             'class' => 'input_class',
+                            'id' => 'aaa_id',
                         ],
                         'label_attributes' => [
                             'class' => 'label_class',
@@ -82,10 +89,7 @@ class FormRadioTest extends MockeryTestCase
                             'class' => 'wrapper_class',
                         ],
                         'attributes' => [
-                            'class' => 'input_class',
-                        ],
-                        'label_attributes' => [
-                            'class' => 'label_class',
+                            'id' => 'bbb_id',
                         ],
                         'hint_attributes' => [
                             'class' => 'hint_class',
@@ -95,11 +99,15 @@ class FormRadioTest extends MockeryTestCase
                 'selectedOptions' => [],
                 'attributes' => [
                     'id' => 'input_id',
-                    'class' => 'input class'
+                    'class' => 'input class',
+                    'radios_wrapper_attributes' => [
+                        'class' => 'radios_wrapper_class',
+                        'data-something' => "some_data"
+                    ],
                 ],
                 'globalAttributes' => null,
                 'labelPosition' => FormRadioStub::LABEL_PREPEND,
-                'expected' => '<div class="wrapper_class"><label class="label_class">aaa</label><input id="input_id" class="input_class" value="A"></div><div class="wrapper_class"><label class="label_class">bbb</label><input class="input_class" value="B"></div>'
+                'expected' => '<div class="govuk-radios radios_wrapper_class" data-something="some_data"><div class="govuk-radios__item"><label class="label_class govuk-label govuk-radios__label" for="aaa_id">aaa</label><input id="aaa_id" class="input_class govuk-radios__input" value="A"></div><div class="govuk-radios__item"><label class="govuk-label govuk-radios__label" for="bbb_id">bbb</label><input class="govuk-radios__input" id="bbb_id" value="B"></div></div>'
             ],
             'options_set_2' => [
                 'options' => [
@@ -132,12 +140,11 @@ class FormRadioTest extends MockeryTestCase
                 ],
                 'selectedOptions' => ['B'],
                 'attributes' => [
-                    'id' => 'input_id',
                     'class' => 'input class'
                 ],
                 'globalAttributes' => [],
                 'labelPosition' => null,
-                'expected' => '<div class="wrapper_class"><input id="input_id" class="input_class" value="B" checked="checked"><label class="label_class">bbb</label><div class="hint_class">hint_text</div></div><div id="child_id" class="child_class">child_row</div>'
+                'expected' => '<div class="govuk-radios"><div class="govuk-radios__item"><input class="input_class govuk-radios__input" value="B" checked="checked" id="generated_id"><label class="label_class govuk-label govuk-radios__label" for="generated_id">bbb</label><div class="hint_class govuk-hint govuk-radios__hint">hint_text</div></div><div id="child_id" class="child_class">child_row</div></div>'
             ],
         ];
     }

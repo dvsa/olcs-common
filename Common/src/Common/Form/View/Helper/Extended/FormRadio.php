@@ -9,7 +9,9 @@
 namespace Common\Form\View\Helper\Extended;
 
 use Common\Form\View\Helper\Form;
+use Common\View\Helper\UniqidGenerator;
 use Zend\Form\Annotation\AnnotationBuilder;
+use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\Element\MultiCheckbox as MultiCheckboxElement;
 
@@ -21,6 +23,18 @@ use Zend\Form\Element\MultiCheckbox as MultiCheckboxElement;
 class FormRadio extends \Zend\Form\View\Helper\FormRadio
 {
     use PrepareAttributesTrait;
+
+    /** @var UniqidGenerator */
+    protected $idGenerator;
+
+    /**
+     * FormRadio constructor.
+     * @param UniqidGenerator $idGenerator
+     */
+    public function __construct(UniqidGenerator $idGenerator = null)
+    {
+        $this->idGenerator = $idGenerator ?? new UniqidGenerator();
+    }
 
     protected function renderOptions(MultiCheckboxElement $element, array $options, array $selectedOptions, array $attributes)
     {
@@ -151,10 +165,14 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             }
         }
 
-        $outputMarkup = $this->wrapWithTag(
-            implode($this->getSeparator(), $combinedMarkup),
-            $this->createAttributesString($radiosWrapperAttributes)
-        );
+        $outputMarkup = implode($this->getSeparator(), $combinedMarkup);
+
+        if ($outputMarkup !== '') {
+            $outputMarkup = $this->wrapWithTag(
+                $outputMarkup,
+                $this->createAttributesString($radiosWrapperAttributes)
+            );
+        }
 
         return $outputMarkup;
     }
@@ -200,9 +218,9 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         ];
 
         foreach ($gdsAttributes as $key => $attributes) {
-            if(isset($valueOptions[$key]) && isset($valueOptions[$key]['class'])) {
+            if (isset($valueOptions[$key]) && isset($valueOptions[$key]['class'])) {
                 $valueOptions[$key]['class'] .= ' ' . $attributes['class'];
-            } elseif(isset($valueOptions[$key])) {
+            } elseif (isset($valueOptions[$key])) {
                 $valueOptions[$key] = array_merge($valueOptions[$key], $attributes);
             } else {
                 $valueOptions[$key] = $attributes;
@@ -219,7 +237,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
     protected function maybeAddInputId($inputAttributes)
     {
         if (!isset($inputAttributes['id'])) {
-            $inputAttributes['id'] = uniqid();
+            $inputAttributes['id'] = $this->idGenerator->getId();
         }
         return $inputAttributes;
     }

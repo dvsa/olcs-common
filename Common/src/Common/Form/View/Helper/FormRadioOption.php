@@ -32,17 +32,10 @@ class FormRadioOption extends \Common\Form\View\Helper\Extended\FormRadio
         // Only want to render one option, so store all options in tmp varaiable
         $savedOptions = $element->getValueOptions();
         $element->setValueOptions([$key => $savedOptions[$key]]);
-
         $rendered = $this->render($element);
 
         // put original value options back
         $element->setValueOptions($savedOptions);
-
-        // Change the rendered HTML, by moving the input outside of the label
-        preg_match('/<input.*?>/', $rendered, $matches);
-        $input = $matches[0];
-        $rendered = $input . str_replace($input, '', $rendered);
-
         return $rendered;
     }
 }
