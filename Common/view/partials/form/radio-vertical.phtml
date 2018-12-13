@@ -3,7 +3,8 @@
 $element = $this->element;
 
 /** @var \Zend\Form\Element\Radio $radioElement */
-$radioElement = $element->get('radio');
+$radioElementName = $element->getOption('radio-element') ?? 'radio';
+$radioElement = $element->get($radioElementName);
 $errors = $this->formElementErrors()->render($radioElement);
 $hasValidationError = !empty($errors);
 $dataGroup = $element->getOption('fieldset-data-group');
