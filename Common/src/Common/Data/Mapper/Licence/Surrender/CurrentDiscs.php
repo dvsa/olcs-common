@@ -41,12 +41,28 @@ class CurrentDiscs implements MapperInterface
 
     public static function mapFromForm(array $data): array
     {
-        return [
-            'discDestroyed' => $data['possessionSection']['possessionInfo']['discDestroyed'],
-            'discLost' => $data['lostSection']['lostInfo']['discLost'],
-            'discLostInfo' => $data['lostSection']['lostInfo']['lostInfo'],
-            'discStolen' => $data['stolenSection']['stolenInfo']['discStolen'],
-            'discStolenInfo' => $data['stolenSection']['stolenInfo']['stolenInfo']
-        ];
+
+        $possessionData = $data['possessionSection']['possessionInfo'];
+        $lostData = $data['lostSection']['lostInfo'];
+        $stolenData = $data['stolenSection']['stolenInfo'];
+
+        $return = [];
+        if (!empty($possessionData['discDestroyed'])) {
+            $return['discDestroyed'] = $possessionData['discDestroyed'];
+        }
+        if (!empty($lostData['discLost'])) {
+            $return ['discLost'] = $lostData['discLost'];
+        }
+        if (!empty($lostData['lostInfo'])) {
+            $return ['discLostInfo'] = $lostData['lostInfo'];
+        }
+        if (!empty($stolenData['discStolen'])) {
+            $return['discStolen'] = $stolenData['discStolen'];
+        }
+        if (!empty($stolenData['discStolen'])) {
+            $return['discStolenInfo'] = $stolenData['discStolen'];
+        }
+
+        return $return;
     }
 }
