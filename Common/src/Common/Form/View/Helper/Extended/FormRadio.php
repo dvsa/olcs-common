@@ -63,11 +63,10 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 unset($attributes['id']);
             }
 
-            $value = '';
-            $label = '';
+            $value = $optionSpec['value'] ?? '';
+            $label = $optionSpec['label'] ?? '';
             $hint = '';
             $hintAttributes = '';
-            $childContent = null;
             $inputAttributes = $attributes;
             $labelAttributes = $globalLabelAttributes;
             $itemWrapperAttributes = '';
@@ -83,12 +82,6 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
 
             $optionSpec = $this->addGovUkRadioStyles($optionSpec);
 
-            if (isset($optionSpec['value'])) {
-                $value = $optionSpec['value'];
-            }
-            if (isset($optionSpec['label'])) {
-                $label = $optionSpec['label'];
-            }
             if (isset($optionSpec['hint_attributes'])) {
                 $hintAttributes = $this->createAttributesString($optionSpec['hint_attributes']);
             }
@@ -111,9 +104,6 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             }
             if (isset($optionSpec['item_wrapper_attributes'])) {
                 $itemWrapperAttributes = $this->createAttributesString($optionSpec['item_wrapper_attributes']);
-            }
-            if (isset($optionSpec['childContent'])) {
-                $childContent = $this->processChildContent($optionSpec);
             }
 
             if (in_array($value, $selectedOptions)) {
@@ -159,10 +149,6 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
             }
 
             $combinedMarkup[] = $this->wrapWithTag($markup, $itemWrapperAttributes);
-
-            if ($childContent) {
-                $combinedMarkup[] = $childContent;
-            }
         }
 
         $outputMarkup = implode($this->getSeparator(), $combinedMarkup);
@@ -180,23 +166,6 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
     protected function wrapWithTag($content, $attributes = '', $tag = 'div')
     {
         return '<' . $tag . ' ' . $attributes . '>' . $content . '</' . $tag . '>';
-    }
-
-    protected function processChildContent(array $optionSpec): ?string
-    {
-        $childHtml = null;
-        $attributes = '';
-        $childContent = $optionSpec['childContent'];
-        $annotationBuilder = new AnnotationBuilder();
-        $contentForm = $annotationBuilder->createForm($childContent['content']);
-        $formHelper = new Form();
-        $formHelper->setView($this->getView());
-        $form = $formHelper->render($contentForm, false);
-        if (isset($childContent['attributes'])) {
-            $attributes = $this->createAttributesString($childContent['attributes']);
-        }
-        $childHtml = $this->wrapWithTag($form, $attributes);
-        return $childHtml;
     }
 
     protected function addGovUkRadioStyles($valueOptions)
