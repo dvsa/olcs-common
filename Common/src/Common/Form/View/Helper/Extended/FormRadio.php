@@ -63,8 +63,8 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
                 unset($attributes['id']);
             }
 
-            $value = $optionSpec['value'] ?? '';
-            $label = $optionSpec['label'] ?? '';
+            $value = '';
+            $label = '';
             $hint = '';
             $hintAttributes = '';
             $inputAttributes = $attributes;
@@ -82,6 +82,12 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
 
             $optionSpec = $this->addGovUkRadioStyles($optionSpec);
 
+            if (isset($optionSpec['value'])) {
+                $value = $optionSpec['value'];
+            }
+            if (isset($optionSpec['label'])) {
+                $label = $optionSpec['label'];
+            }
             if (isset($optionSpec['hint_attributes'])) {
                 $hintAttributes = $this->createAttributesString($optionSpec['hint_attributes']);
             }

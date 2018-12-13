@@ -129,13 +129,6 @@ class FormRadioTest extends MockeryTestCase
                         'hint_attributes' => [
                             'class' => 'hint_class',
                         ],
-                        'childContent' => [
-                            'content' => FormRadioChildContentStub::class,
-                            'attributes' => [
-                                'id' => 'child_id',
-                                'class' => 'child_class',
-                            ]
-                        ]
                     ],
                 ],
                 'selectedOptions' => ['B'],
@@ -144,7 +137,7 @@ class FormRadioTest extends MockeryTestCase
                 ],
                 'globalAttributes' => [],
                 'labelPosition' => null,
-                'expected' => '<div class="govuk-radios"><div class="govuk-radios__item"><input class="input_class govuk-radios__input" value="B" checked="checked" id="generated_id"><label class="label_class govuk-label govuk-radios__label" for="generated_id">bbb</label><div class="hint_class govuk-hint govuk-radios__hint">hint_text</div></div><div id="child_id" class="child_class">child_row</div></div>'
+                'expected' => '<div class="govuk-radios"><div class="govuk-radios__item"><input class="input_class govuk-radios__input" value="B" checked="checked" id="generated_id"><label class="label_class govuk-label govuk-radios__label" for="generated_id">bbb</label><div class="hint_class govuk-hint govuk-radios__hint">hint_text</div></div></div>'
             ],
         ];
     }
