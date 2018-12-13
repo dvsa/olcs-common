@@ -36,8 +36,12 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         $this->idGenerator = $idGenerator ?? new UniqidGenerator();
     }
 
-    protected function renderOptions(MultiCheckboxElement $element, array $options, array $selectedOptions, array $attributes)
-    {
+    protected function renderOptions(
+        MultiCheckboxElement $element,
+        array $options,
+        array $selectedOptions,
+        array $attributes
+    ) {
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper = $this->getLabelHelper();
         $labelClose = $labelHelper->closeTag();
@@ -169,12 +173,12 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         return $outputMarkup;
     }
 
-    protected function wrapWithTag($content, $attributes = '', $tag = 'div')
+    protected function wrapWithTag(string $content, string $attributes = '', string $tag = 'div'): string
     {
         return '<' . $tag . ' ' . $attributes . '>' . $content . '</' . $tag . '>';
     }
 
-    protected function addGovUkRadioStyles($valueOptions)
+    protected function addGovUkRadioStyles(array $valueOptions): array
     {
 
         $gdsAttributes = [
@@ -205,11 +209,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
         return $valueOptions;
     }
 
-    /**
-     * @param $inputAttributes
-     * @return mixed
-     */
-    protected function maybeAddInputId($inputAttributes)
+    protected function maybeAddInputId(array $inputAttributes): array
     {
         if (!isset($inputAttributes['id'])) {
             $inputAttributes['id'] = $this->idGenerator->getId();
