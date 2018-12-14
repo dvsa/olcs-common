@@ -1444,8 +1444,8 @@ return [
     'permits.page.ecmt.licence.info' => '%s Road Haulage Permits will be valid for use from %s to %s.',
     'permits.page.international.journey.title' => 'Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'In the last 12 months, what percentage of international trips did you make using this licence?',
-    'permits.page.sector.title' => 'ECMT Sectors - ',
-    'permits.page.sector.question' => 'Select one sector you mainly transport goods in using this licence',
+    'permits.page.sectors.browser.title' => 'Sectors you specialise in carrying goods',
+    'permits.page.sectors.question' => 'Select one sector you mainly transport goods in using this licence',
     'permits.page.title.sectors' => 'Nature of your business',
     'permits.page.field.sectors' => 'What type of goods will you carry over the next 12 months?',
     'permits.page.restricted-countries.title' => 'Are you transporting goods to a restricted country such as Austria, Greece, Hungary, Italy or Russia? -',
@@ -1566,6 +1566,8 @@ return [
     'permits.application.fee.submitted.main.paid.waived' => 'Acceptance successful',
 
     'permits.check-answers.page.question.licence' => 'Licence selected',
+    'permits.page.check-answers.browser.title' => 'Check your answers',
+    'permits.page.check-answers.title' => 'Check your answers',
     'govuk.warning.component.title' => 'Warning',
 
     'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'Windows which are active or have ended cannot be deleted',
