@@ -209,7 +209,7 @@ class FormRadio extends \Zend\Form\View\Helper\FormRadio
     protected function maybeAddInputId(array $inputAttributes): array
     {
         if (!isset($inputAttributes['id'])) {
-            $inputAttributes['id'] = $this->idGenerator->getId();
+            $inputAttributes['id'] = $this->idGenerator->generateId();
         }
         return $inputAttributes;
     }

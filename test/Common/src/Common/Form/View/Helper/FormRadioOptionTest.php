@@ -19,7 +19,7 @@ class FormRadioOptionTest extends TestCase
     public function testInvoke()
     {
         $idGenerator = m::mock(UniqidGenerator::class);
-        $idGenerator->shouldReceive('getId')->twice()->andReturn('generated_id');
+        $idGenerator->shouldReceive('generateId')->twice()->andReturn('generated_id');
         $sut = new FormRadioOption($idGenerator);
         $radioElement = new Radio('NAME');
         $radioElement->setValueOptions(['A' => 'aaa', 'B' => 'bbb']);

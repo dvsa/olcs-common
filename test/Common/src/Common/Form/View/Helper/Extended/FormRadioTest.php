@@ -23,7 +23,7 @@ class FormRadioTest extends MockeryTestCase
         $idGenerator = null;
         if (!empty($options) && !isset($attributes['id'])) {
             $idGenerator = m::mock(UniqidGenerator::class);
-            $idGenerator->shouldReceive('getId')->once()->andReturn('generated_id');
+            $idGenerator->shouldReceive('generateId')->once()->andReturn('generated_id');
         }
         $sut = new FormRadioStub($idGenerator);
         $translator = m::mock(TranslatorInterface::class);

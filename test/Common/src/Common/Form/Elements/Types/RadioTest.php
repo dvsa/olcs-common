@@ -4,7 +4,6 @@ namespace CommonTest\Form\Elements\Types;
 
 use Common\View\Helper\UniqidGenerator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Types\Radio;
 use Mockery as m;
 
@@ -31,7 +30,7 @@ class RadioTest extends MockeryTestCase
     public function testSetValueOptions()
     {
         $idGenerator = m::mock(UniqidGenerator::class);
-        $idGenerator->shouldReceive('regenerateId')->twice()->andReturn('generated_id');
+        $idGenerator->shouldReceive('generateId')->twice()->andReturn('generated_id');
         $sut = new Radio(null, [], $idGenerator);
 
         $sut->setValueOptions(

@@ -57,7 +57,7 @@ class Radio extends ZendRadio
                 $optionSpec['attributes'] = [];
             }
 
-            $id = $optionSpec['attributes']['id'] ?? $this->idGenerator->regenerateId() . '_' . $optionSpec['value'];
+            $id = $optionSpec['attributes']['id'] ?? $this->idGenerator->generateId() . '_' . $optionSpec['value'];
 
             $defaultAttributes = [
                 'id' => $id,
