@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Service\Helper;
 
-use PHPUnit_Framework_TestCase;
 use Common\Service\Helper\StackHelperService;
 
 /**
@@ -15,7 +14,7 @@ use Common\Service\Helper\StackHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class StackHelperServiceTest extends PHPUnit_Framework_TestCase
+class StackHelperServiceTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Holds the SUT

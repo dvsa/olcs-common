@@ -12,7 +12,7 @@ namespace CommonTest\Controller\Util;
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
-class ResponseHelperTest extends \PHPUnit_Framework_TestCase
+class ResponseHelperTest extends \PHPUnit\Framework\TestCase
 {
 
     public $handleReponseMethods = array(
@@ -28,10 +28,14 @@ class ResponseHelperTest extends \PHPUnit_Framework_TestCase
         }
 
         return $this->createPartialMock(
-            '\Common\Util\ResponseHelper', $methods
+            '\Common\Util\ResponseHelper',
+            $methods
         );
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testSetResponse()
     {
         $mock = $this->createMock('\Common\Util\ResponseHelper', null);
@@ -39,6 +43,9 @@ class ResponseHelperTest extends \PHPUnit_Framework_TestCase
         $mock->setResponse($response);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testGetResponse()
     {
         $mock = $this->createMock('\Common\Util\ResponseHelper', null);
@@ -46,18 +53,27 @@ class ResponseHelperTest extends \PHPUnit_Framework_TestCase
         $mock->getResponse();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testSetMethod()
     {
         $mock = $this->createMock('\Common\Util\ResponseHelper', null);
         $mock->setMethod('blah');
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testSetParams()
     {
         $mock = $this->createMock('\Common\Util\ResponseHelper', null);
         $mock->setParams(array(1, 2, 3));
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testSetData()
     {
         $mock = $this->createMock('\Common\Util\ResponseHelper', null);
@@ -313,6 +329,9 @@ class ResponseHelperTest extends \PHPUnit_Framework_TestCase
         $mock->handleResponse();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testCheckForValidResponseBody()
     {
         $mock = $this->getSutMock([]);

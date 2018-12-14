@@ -14,7 +14,7 @@ use Common\Service\Table\Formatter\FeeAmountSum;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FeeAmountSumTest extends \PHPUnit_Framework_TestCase
+class FeeAmountSumTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

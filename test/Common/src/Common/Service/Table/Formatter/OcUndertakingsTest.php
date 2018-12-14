@@ -8,6 +8,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Entity\ConditionUndertakingEntityService;
 use Common\Service\Table\Formatter\OcUndertakings;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Class  OcUndertakingsTest
@@ -16,17 +17,17 @@ use Mockery as m;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class OcUndertakingsTest extends \PHPUnit_Framework_TestCase
+class OcUndertakingsTest extends TestCase
 {
     /**
-     * @dataProvider testFormatDataProvider
+     * @dataProvider dpFormatDataProvider
      */
     public function testFormat($data, $conditions)
     {
         $this->assertEquals(OcUndertakings::format($data), $conditions);
     }
 
-    public function testFormatDataProvider()
+    public function dpFormatDataProvider()
     {
         return array(
             array(

@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Form\Elements\Validators;
 
-use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Validators\ChequeDate;
 
 /**
@@ -15,7 +14,7 @@ use Common\Form\Elements\Validators\ChequeDate;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class ChequeDateTest extends PHPUnit_Framework_TestCase
+class ChequeDateTest extends \PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

@@ -3,6 +3,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 use Common\Service\Table\Formatter\ConditionsUndertakingsType;
 
@@ -11,7 +12,7 @@ use Common\Service\Table\Formatter\ConditionsUndertakingsType;
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class ConditionsUndertakingsTypeTest extends \PHPUnit_Framework_TestCase
+class ConditionsUndertakingsTypeTest extends TestCase
 {
     public function testFormatNoS4()
     {

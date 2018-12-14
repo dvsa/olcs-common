@@ -4,11 +4,12 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\SystemInfoMessageLink;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * @covers Common\Service\Table\Formatter\SystemInfoMessageLink
  */
-class SystemInfoMessageLinkTest extends \PHPUnit_Framework_TestCase
+class SystemInfoMessageLinkTest extends TestCase
 {
     const EXPECT_URL = 'unit_Url';
     const ID = 9999;

@@ -8,7 +8,7 @@ use Common\Service\Table\Formatter\Translate;
 /**
  * @covers Common\Service\Table\Formatter\Translate
  */
-class TranslateTest extends \PHPUnit_Framework_TestCase
+class TranslateTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provider

@@ -104,7 +104,7 @@ abstract class AbstractEntityServiceTestCase extends MockeryTestCase
         $callAutoload = true,
         $mockedMethods = array(),
         $cloneArguments = false
-    ) {
+    ): \PHPUnit\Framework\MockObject\MockObject {
         $mock = parent::getMockForAbstractClass(
             $originalClassName,
             $arguments,

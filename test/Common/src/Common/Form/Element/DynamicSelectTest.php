@@ -4,12 +4,13 @@ namespace CommonTest\Form\Element;
 
 use Common\Form\Element\DynamicSelect;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Class DynamicSelectTest
  * @package CommonTest\Form\Element
  */
-class DynamicSelectTest extends \PHPUnit_Framework_TestCase
+class DynamicSelectTest extends TestCase
 {
     public function testSetOptions()
     {

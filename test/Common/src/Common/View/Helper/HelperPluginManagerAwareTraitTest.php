@@ -5,7 +5,7 @@ namespace CommonTest\View\Helper;
 /**
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class HelperPluginManagerAwareTraitTest extends \PHPUnit_Framework_TestCase
+class HelperPluginManagerAwareTraitTest extends \PHPUnit\Framework\TestCase
 {
     public function testTrait()
     {

@@ -15,10 +15,10 @@ use Common\Service\Table\Formatter\Sum;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class OpCentreDeltaSumTest extends \PHPUnit_Framework_TestCase
+class OpCentreDeltaSumTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @dataProvider testFormatDataProvider
+     * @dataProvider dpFormatDataProvider
      */
     public function testFormat($data, $expected)
     {
@@ -29,7 +29,7 @@ class OpCentreDeltaSumTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(OpCentreDeltaSum::format($data, $column), $expected);
     }
 
-    public function testFormatDataProvider()
+    public function dpFormatDataProvider()
     {
         return array(
             array(

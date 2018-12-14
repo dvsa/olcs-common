@@ -15,7 +15,7 @@ use Common\Service\Table\Formatter\DocumentSubcategory;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class DocumentSubcategoryTest extends \PHPUnit_Framework_TestCase
+class DocumentSubcategoryTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

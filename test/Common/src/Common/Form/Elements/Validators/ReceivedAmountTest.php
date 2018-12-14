@@ -14,7 +14,7 @@ use Common\Form\Elements\Validators\ReceivedAmount as Sut;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class ReceivedAmountTest extends \PHPUnit_Framework_TestCase
+class ReceivedAmountTest extends \PHPUnit\Framework\TestCase
 {
     protected $sut;
 

@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Service\Table\Formatter;
 
-use PHPUnit_Framework_TestCase;
 use Common\Service\Table\Formatter\LicenceTypeShort;
 use Common\Service\Entity\LicenceEntityService;
 
@@ -16,7 +15,7 @@ use Common\Service\Entity\LicenceEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceTypeShortTest extends PHPUnit_Framework_TestCase
+class LicenceTypeShortTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provider
