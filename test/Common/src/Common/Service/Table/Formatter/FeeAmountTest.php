@@ -9,14 +9,13 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\FeeAmount;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Fee Amount formatter test
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class FeeAmountTest extends PHPUnit_Framework_TestCase
+class FeeAmountTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

@@ -14,7 +14,7 @@ use Common\Form\Elements\Validators\WithdrawnDate;
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class WithdrawnDateValidatorTest extends \PHPUnit_Framework_TestCase
+class WithdrawnDateValidatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Set up the validator

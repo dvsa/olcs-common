@@ -44,7 +44,7 @@ class ApplicationLvaAdapterTest extends MockeryTestCase
 
     public function testGetIdentifierThrowsException()
     {
-        $this->setExpectedException('\Exception', 'Can\'t get the application id from this controller');
+        $this->expectException('\Exception', 'Can\'t get the application id from this controller');
 
         $id = null;
 

@@ -6,6 +6,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 use Common\Service\Table\Formatter\LicenceNumberLink;
 
@@ -14,7 +15,7 @@ use Common\Service\Table\Formatter\LicenceNumberLink;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class LicenceNumberLinkTest extends \PHPUnit_Framework_TestCase
+class LicenceNumberLinkTest extends TestCase
 {
     /**
      * @dataProvider formatProvider

@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Service\Table\Formatter;
 
-use PHPUnit_Framework_TestCase;
 use Common\Service\Table\Formatter\VehicleDiscNo;
 
 /**
@@ -15,7 +14,7 @@ use Common\Service\Table\Formatter\VehicleDiscNo;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VehicleDiscNoTest extends PHPUnit_Framework_TestCase
+class VehicleDiscNoTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provider

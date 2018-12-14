@@ -6,9 +6,10 @@ use Common\Controller\Plugin\FeaturesEnabledForMethod;
 use Common\Controller\Plugin\FeaturesEnabledForMethodFactory;
 use Common\Service\Cqrs\Query\QuerySender;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class FeaturesEnabledForMethodFactoryTest extends m\Adapter\Phpunit\MockeryTestCase
+class FeaturesEnabledForMethodFactoryTest extends TestCase
 {
     public function testCreateService()
     {

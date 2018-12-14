@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Data\Mapper\Lva;
 
-use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\Lva\TypeOfLicence;
 
 /**
@@ -15,7 +14,7 @@ use Common\Data\Mapper\Lva\TypeOfLicence;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TypeOfLicenceTest extends PHPUnit_Framework_TestCase
+class TypeOfLicenceTest extends \PHPUnit\Framework\TestCase
 {
     public function testMapFromResult()
     {

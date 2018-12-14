@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Service\Helper;
 
-use PHPUnit_Framework_TestCase;
 use Common\Service\Helper\AddressHelperService;
 
 /**
@@ -15,7 +14,7 @@ use Common\Service\Helper\AddressHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
+class AddressHelperServiceTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Holds the service
