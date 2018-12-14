@@ -1639,6 +1639,7 @@ return [
     'licence.surrender.declaration.sign' => 'I agree - Continue',
     'licence.surrender.current_discs.title' => 'Current discs held against this licence',
     'licence.surrender.current_discs.content' => '<p>Our records show that you have <strong>%s</strong> current vehicle discs.</p><p>Please provide details of what you are going to do with all of the current discs associated to this licence.</p>',
+    'licence.surrender.current_discs.disc_count_mismatch' => 'Total number of discs does not match the amount on your licence',
     'licence.apply-to-change' => 'Apply to change this licence',
     'licence.vehicles-trailers.share-info' => 'Tick the box to confirm that you wish to share this information with the Driver and Vehicle Standards Agency (DVSA). Your data will be used for its purposes, eg test history reports or your Operator Compliance Risk Score (OCRS). You must keep this information up to date. If you don’t, you may receive an inaccurate test history report or OCRS.',
     'licence.vehicles_transfer.form.licence' => 'To which licence would you like to transfer the selected vehicle(s)?',
