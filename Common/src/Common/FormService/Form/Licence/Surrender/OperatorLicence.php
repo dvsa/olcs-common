@@ -15,12 +15,12 @@ class OperatorLicence extends AbstractFormService
      *
      * @return Form
      */
-    public function getForm($data)
+    public function getForm()
     {
 
         $form = $this->getFormHelper()->createForm(OperatorLicenceForm::class);
 
-        $this->alterForm($form, $data);
+        $this->alterForm($form);
 
         return $form;
     }
@@ -33,12 +33,9 @@ class OperatorLicence extends AbstractFormService
      *
      * @return void
      */
-    protected function alterForm($form, $data)
+    protected function alterForm($form)
     {
         $form->get('form-actions')->get('submit')->setLabel('Save and continue');
-//        $form->setValidationGroup()
-
-
 
     }
 }
