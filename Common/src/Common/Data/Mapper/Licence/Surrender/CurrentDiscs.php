@@ -18,22 +18,22 @@ class CurrentDiscs implements MapperInterface
             'version' => $data['version'],
             'possessionSection' => [
                 'inPossession' => $inPossession,
-                'possessionInfo' => [
-                    'discDestroyed' => $data['discDestroyed'] ?? null
+                'info' => [
+                    'number' => $data['discDestroyed'] ?? null
                 ]
             ],
             'lostSection' => [
                 'lost' => $lost,
-                'lostInfo' => [
-                    'discLost' => $data['discLost'] ?? null,
-                    'lostInfo' => $data['discLostInfo'] ?? null
+                'info' => [
+                    'number' => $data['discLost'] ?? null,
+                    'details' => $data['discLostInfo'] ?? null
                 ]
             ],
             'stolenSection' => [
                 'stolen' => $stolen,
-                'stolenInfo' => [
-                    'discStolen' => $data['discStolen'] ?? null,
-                    'stolenInfo' => $data['discStolenInfo'] ?? null
+                'info' => [
+                    'number' => $data['discStolen'] ?? null,
+                    'details' => $data['discStolenInfo'] ?? null
                 ]
             ]
         ];
@@ -42,25 +42,25 @@ class CurrentDiscs implements MapperInterface
     public static function mapFromForm(array $data): array
     {
 
-        $possessionData = $data['possessionSection']['possessionInfo'];
-        $lostData = $data['lostSection']['lostInfo'];
-        $stolenData = $data['stolenSection']['stolenInfo'];
+        $possessionData = $data['possessionSection']['info'];
+        $lostData = $data['lostSection']['info'];
+        $stolenData = $data['stolenSection']['info'];
 
         $return = [];
-        if (!empty($possessionData['discDestroyed'])) {
-            $return['discDestroyed'] = $possessionData['discDestroyed'];
+        if (!empty($possessionData['number'])) {
+            $return['discDestroyed'] = $possessionData['number'];
         }
-        if (!empty($lostData['discLost'])) {
-            $return ['discLost'] = $lostData['discLost'];
+        if (!empty($lostData['number'])) {
+            $return ['discLost'] = $lostData['number'];
         }
-        if (!empty($lostData['lostInfo'])) {
-            $return ['discLostInfo'] = $lostData['lostInfo'];
+        if (!empty($lostData['details'])) {
+            $return ['discLostInfo'] = $lostData['details'];
         }
-        if (!empty($stolenData['discStolen'])) {
-            $return['discStolen'] = $stolenData['discStolen'];
+        if (!empty($stolenData['number'])) {
+            $return['discStolen'] = $stolenData['number'];
         }
-        if (!empty($stolenData['discStolen'])) {
-            $return['discStolenInfo'] = $stolenData['discStolen'];
+        if (!empty($stolenData['details'])) {
+            $return['discStolenInfo'] = $stolenData['details'];
         }
 
         return $return;
