@@ -9,7 +9,7 @@ $hasValidationError = !empty($errors);
 ?>
 
 <div class="<?php echo ($hasValidationError) ? 'field error__wrapper' : 'field' ?>">
-    <fieldset class="radio-button__fieldset">
+    <fieldset class="radio-button__fieldset radio-button__fieldset--horizontal">
         <legend><?php echo $this->translate($element->getLabel()) ?></legend>
 
         <?php if ($element->getOption('hint')) : ?>

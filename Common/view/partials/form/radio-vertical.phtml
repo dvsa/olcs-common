@@ -3,7 +3,8 @@
 $element = $this->element;
 
 /** @var \Zend\Form\Element\Radio $radioElement */
-$radioElement = $element->get('radio');
+$radioElementName = $element->getOption('radio-element') ?? 'radio';
+$radioElement = $element->get($radioElementName);
 $errors = $this->formElementErrors()->render($radioElement);
 $hasValidationError = !empty($errors);
 $dataGroup = $element->getOption('fieldset-data-group');
@@ -11,7 +12,7 @@ $dataGroupAttribute = empty($dataGroup) ? '' : 'data-group="' . $dataGroup . '"'
 ?>
 
 <div class="<?php echo ($hasValidationError) ? 'field error__wrapper' : 'field' ?>">
-    <fieldset class="radio-button__fieldset" <?php echo $dataGroupAttribute; ?>>
+    <fieldset class="radio-button__fieldset radio-button__fieldset--vertical" <?php echo $dataGroupAttribute; ?>>
         <legend>
             <?php echo $this->translate($element->getLabel()); ?>
         </legend>
@@ -23,14 +24,10 @@ $dataGroupAttribute = empty($dataGroup) ? '' : 'data-group="' . $dataGroup . '"'
         <?php if ($hasValidationError) : ?>
             <?php echo $errors ?>
         <?php endif; ?>
-
-        <?php foreach ($radioElement->getValueOptions() as $valueOption) : ?>
-            <div class="radio-button__container">
-                <?php echo $this->formRadioOption($radioElement, $valueOption['value']) ?>
-            </div>
-
-            <?php
-            $contentElementName = $valueOption['value'] .'Content';
+        <?php
+        foreach ($radioElement->getValueOptions() as $valueOption) {
+            echo $this->formRadioOption($radioElement, $valueOption['value']);
+            $contentElementName = $valueOption['value'] . 'Content';
             if ($element->has($contentElementName)) {
                 echo $this->render(
                     'partials/form/radio-content',
@@ -43,9 +40,8 @@ $dataGroupAttribute = empty($dataGroup) ? '' : 'data-group="' . $dataGroup . '"'
                     )
                 );
             }
-            ?>
-        <?php endforeach; ?>
-
+        }
+        ?>
     </fieldset>
 </div>
 

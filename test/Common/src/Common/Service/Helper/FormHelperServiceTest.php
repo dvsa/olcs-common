@@ -1436,6 +1436,34 @@ class FormHelperServiceTest extends MockeryTestCase
         $this->sut->setCurrentOption($element, $index);
     }
 
+    public function testSetCurrentOptionWithArrayOption()
+    {
+        $this->mockTransSrv
+            ->shouldReceive('translate')->with('current.option.suffix')->andReturn('(current)')
+            ->shouldReceive('translate')->with('foo')->andReturn('foo-translated');
+
+        $index = 'index_a';
+
+        $options = [
+            'index_a' => ['label' => 'foo'],
+            'index_b' => 'bar',
+        ];
+
+        /** @var Select|\Mockery\MockInterface $element */
+        $element = m::mock(Select::class);
+        $element->shouldReceive('getValueOptions')
+            ->andReturn($options)
+            ->shouldReceive('setValueOptions')
+            ->with([
+                'index_a' => [
+                    'label' => 'foo-translated (current)'
+                ],
+                'index_b' => 'bar'
+            ]);
+
+        $this->sut->setCurrentOption($element, $index);
+    }
+
     public function testCreateFormWithRequest()
     {
         $sut = m::mock(FormHelperService::class)->makePartial();

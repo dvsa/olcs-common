@@ -2,6 +2,7 @@
 
 namespace Common\Form\Elements\Types;
 
+use Common\View\Helper\UniqidGenerator;
 use Zend\Form\Element\Radio as ZendRadio;
 
 /**
@@ -9,18 +10,14 @@ use Zend\Form\Element\Radio as ZendRadio;
  */
 class Radio extends ZendRadio
 {
-    private $uniqid;
 
-    /**
-     * Initial value options
-     *
-     * @return void
-     */
-    public function init()
+    /** @var UniqidGenerator */
+    protected $idGenerator;
+
+    public function __construct($name = null, $options = [], UniqidGenerator $idGenerator = null)
     {
-        $this->uniqid = uniqid();
-
-        parent::init();
+        $this->idGenerator = $idGenerator ?? new UniqidGenerator();
+        return parent::__construct($name, $options);
     }
 
     /**
@@ -50,22 +47,24 @@ class Radio extends ZendRadio
     {
         foreach ($options as $key => &$optionSpec) {
             if (is_scalar($optionSpec)) {
-                $optionSpec = array(
+                $optionSpec = [
                     'label' => $optionSpec,
                     'value' => $key
-                );
+                ];
             }
 
-            $id = $this->uniqid .'_'. $optionSpec['value'];
-            $optionSpec['attributes'] = [
+            if (!isset($optionSpec['attributes'])) {
+                $optionSpec['attributes'] = [];
+            }
+
+            $id = $optionSpec['attributes']['id'] ?? $this->idGenerator->generateId() . '_' . $optionSpec['value'];
+
+            $defaultAttributes = [
                 'id' => $id,
-                'class' => 'radio-button',
                 'data-show-element' => "#${id}_content",
             ];
-            $optionSpec['label_attributes'] = [
-                'for' => $id,
-                'class' => 'radio-button__label',
-            ];
+
+            $optionSpec['attributes'] = array_merge($defaultAttributes, $optionSpec['attributes']);
         }
 
         parent::setValueOptions($options);
