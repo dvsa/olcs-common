@@ -2,6 +2,7 @@
 
 namespace Common\Form\Elements\Types;
 
+use Common\View\Helper\UniqidGenerator;
 use Zend\Form\Element\Radio as ZendRadio;
 
 /**
@@ -9,18 +10,14 @@ use Zend\Form\Element\Radio as ZendRadio;
  */
 class Radio extends ZendRadio
 {
-    private $uniqid;
 
-    /**
-     * Initial value options
-     *
-     * @return void
-     */
-    public function init()
+    /** @var UniqidGenerator */
+    protected $idGenerator;
+
+    public function __construct($name = null, $options = [], UniqidGenerator $idGenerator = null)
     {
-        $this->uniqid = uniqid();
-
-        parent::init();
+        $this->idGenerator = $idGenerator ?? new UniqidGenerator();
+        return parent::__construct($name, $options);
     }
 
     /**
@@ -60,7 +57,7 @@ class Radio extends ZendRadio
                 $optionSpec['attributes'] = [];
             }
 
-            $id = $optionSpec['attributes']['id'] ?? $this->uniqid . '_' . $optionSpec['value'];
+            $id = $optionSpec['attributes']['id'] ?? $this->idGenerator->regenerateId() . '_' . $optionSpec['value'];
 
             $defaultAttributes = [
                 'id' => $id,
