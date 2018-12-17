@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Service\Helper;
 
-use PHPUnit_Framework_TestCase;
 use Common\Service\Helper\StringHelperService;
 
 /**
@@ -15,7 +14,7 @@ use Common\Service\Helper\StringHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class StringHelperServiceTest extends PHPUnit_Framework_TestCase
+class StringHelperServiceTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Holds the SUT

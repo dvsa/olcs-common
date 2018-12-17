@@ -7,7 +7,7 @@ use Common\Form\Elements\Custom\DateSelect;
 /**
  * @covers \Common\Form\Elements\Custom\DateSelect
  */
-class DateSelectTest extends \PHPUnit_Framework_TestCase
+class DateSelectTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  DateSelect */
     private $sut;

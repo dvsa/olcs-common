@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Data\Mapper;
 
-use PHPUnit_Framework_TestCase;
 use Common\Data\Mapper\LetterGenerationDocument;
 
 /**
@@ -15,7 +14,7 @@ use Common\Data\Mapper\LetterGenerationDocument;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LetterGenerationDocumentTest extends PHPUnit_Framework_TestCase
+class LetterGenerationDocumentTest extends \PHPUnit\Framework\TestCase
 {
     public function testMapFromResult()
     {

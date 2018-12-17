@@ -7,7 +7,6 @@
  */
 namespace CommonTest\FormService;
 
-use PHPUnit_Framework_TestCase;
 use CommonTest\Bootstrap;
 use Common\FormService\FormServiceManagerFactory;
 
@@ -16,7 +15,7 @@ use Common\FormService\FormServiceManagerFactory;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormServiceManagerFactoryTest extends PHPUnit_Framework_TestCase
+class FormServiceManagerFactoryTest extends \PHPUnit\Framework\TestCase
 {
     protected $sut;
 

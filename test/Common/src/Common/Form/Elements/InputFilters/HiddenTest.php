@@ -9,7 +9,7 @@ use \Zend\Validator\StringLength;
  * Test Hidden InputFilter
  * @covers \Common\Form\Elements\InputFilters\Hidden
  */
-class HiddenTest extends \PHPUnit_Framework_TestCase
+class HiddenTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * test setup

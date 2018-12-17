@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Form\Elements\InputFilters;
 
-use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\InputFilters\VehicleSafetyTachographAnalyserContractor;
 use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorValidator;
 
@@ -16,7 +15,7 @@ use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorVal
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VehicleSafetyTachographAnalyserContractorTest extends PHPUnit_Framework_TestCase
+class VehicleSafetyTachographAnalyserContractorTest extends \PHPUnit\Framework\TestCase
 {
     /**+
      * Holds the element

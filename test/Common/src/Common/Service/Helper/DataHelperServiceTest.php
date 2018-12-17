@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Service\Helper;
 
-use PHPUnit_Framework_TestCase;
 use Common\Service\Helper\DataHelperService;
 
 /**
@@ -15,7 +14,7 @@ use Common\Service\Helper\DataHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DataHelperServiceTest extends PHPUnit_Framework_TestCase
+class DataHelperServiceTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Holds the SUT

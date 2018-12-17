@@ -9,14 +9,13 @@ namespace CommonTest\Service\Table\Formatter;
 
 use Common\RefData;
 use Common\Service\Table\Formatter\TransactionFeeAllocatedAmount as Sut;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Transaction fee allocated amount formatter test
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class TransactionFeeAllocatedAmountTest extends PHPUnit_Framework_TestCase
+class TransactionFeeAllocatedAmountTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

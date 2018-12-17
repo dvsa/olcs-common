@@ -3,14 +3,13 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
-use PHPUnit_Framework_TestCase as TestCase;
 use Common\Service\Table\Formatter\Comment;
 
 /**
  * Class CommentTest
  * @package CommonTest\Service\Table\Formatter
  */
-class CommentTest extends TestCase
+class CommentTest extends \PHPUnit\Framework\TestCase
 {
     public function testFormat()
     {

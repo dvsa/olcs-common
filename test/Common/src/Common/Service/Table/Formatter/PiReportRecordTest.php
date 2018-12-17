@@ -6,6 +6,7 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 use Common\Service\Table\Formatter\PiReportRecord;
 
@@ -14,7 +15,7 @@ use Common\Service\Table\Formatter\PiReportRecord;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class PiReportRecordTest extends \PHPUnit_Framework_TestCase
+class PiReportRecordTest extends TestCase
 {
     /**
      * Test the format method

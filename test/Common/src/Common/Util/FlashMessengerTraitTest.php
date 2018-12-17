@@ -14,14 +14,20 @@ namespace CommonTest\Controller\Util;
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
+class FlashMessengerTraitTest extends \PHPUnit\Framework\TestCase
 {
     private $sut;
 
     public function setUp()
     {
         $this->sut = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait', array(), '', true, true, true, array(
+            '\Common\Util\FlashMessengerTrait',
+            array(),
+            '',
+            true,
+            true,
+            true,
+            array(
                 'getFlashMessenger'
             )
         );
@@ -34,7 +40,13 @@ class FlashMessengerTraitTest extends \PHPUnit_Framework_TestCase
     public function testGetFlashMessenger()
     {
         $this->sut = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait', array(), '', true, true, true, array(
+            '\Common\Util\FlashMessengerTrait',
+            array(),
+            '',
+            true,
+            true,
+            true,
+            array(
                 'plugin'
             )
         );

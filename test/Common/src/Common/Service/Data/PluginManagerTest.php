@@ -43,6 +43,9 @@ class PluginManagerTest extends MockeryTestCase
         $this->assertEquals('service', $sut->get('testService'));
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testInitializeRestClientInterface()
     {
         $mockPlugin = m::mock('stdClass');

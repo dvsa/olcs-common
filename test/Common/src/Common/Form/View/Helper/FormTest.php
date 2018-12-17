@@ -5,6 +5,7 @@ namespace CommonTest\Form\View\Helper;
 use Common\Form\View\Helper;
 use Common\Form\View\Helper\Form as FormViewHelper;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Zend\Form\Element;
 use Zend\Form\ElementInterface;
 use Zend\Form\FieldsetInterface;
@@ -15,7 +16,7 @@ use Zend\View\Renderer\PhpRenderer;
 /**
  * @covers \Common\Form\View\Helper\Form
  */
-class FormTest extends m\Adapter\Phpunit\MockeryTestCase
+class FormTest extends TestCase
 {
     /** @var \Zend\Form\Form */
     protected $form;
