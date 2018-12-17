@@ -36,6 +36,5 @@ class OperatorLicence extends AbstractFormService
     protected function alterForm($form)
     {
         $form->get('form-actions')->get('submit')->setLabel('Save and continue');
-
     }
 }
