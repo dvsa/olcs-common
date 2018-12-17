@@ -9,6 +9,7 @@
 namespace CommonTest\FormService\Form;
 
 use Common\FormService\Form\Licence\Surrender\OperatorLicence;
+use Common\RefData;
 use PHPUnit\Framework\TestCase;
 use Mockery as m;
 use \Olcs\Form\Model\Form\Surrender\OperatorLicence as OperatorLicenceForm;
@@ -45,5 +46,23 @@ class OperatorLicenceTest extends TestCase
 
         $form = $this->sut->getForm();
         $this->assertInstanceOf(\Common\Form\Form::class, $form);
+    }
+
+    public function testSetStatus()
+    {
+        $form = m::mock(\Common\Form\Form::class);
+        $apiData["licenceDocumentStatus"]["id"] = RefData::SURRENDER_DOC_STATUS_DESTROYED;
+
+        $this->formHelper->shouldReceive('createForm')->once()
+            ->with(OperatorLicenceForm::class)
+            ->andReturn($form);
+
+        $radioButtonObj = m::mock(\Common\Form\Elements\Types\Radio::class);
+        $radioButtonObj->shouldReceive('setValue')->with('possession');
+
+        $form->shouldReceive('get')->with('operatorLicenceDocument')->andReturnSelf();
+        $form->shouldReceive('get')->with('licenceDocument')->andReturn($radioButtonObj);
+
+        $this->sut->setStatus($form, $apiData);
     }
 }

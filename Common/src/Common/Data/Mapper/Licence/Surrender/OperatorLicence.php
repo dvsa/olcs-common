@@ -68,5 +68,4 @@ class OperatorLicence
         }
         return $formData;
     }
-
 }
