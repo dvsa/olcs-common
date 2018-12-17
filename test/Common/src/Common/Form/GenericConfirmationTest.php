@@ -6,13 +6,14 @@ use Zend\View\HelperPluginManager;
 use Zend\Form\View\Helper as ZendHelper;
 use Common\Form\View\Helper as CommonHelper;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * GenericConfirmationTest
  *
  * @author Mat Evans <mat.evans@valtech.co.uk>
  */
-class GenericConfirmationTest extends \Mockery\Adapter\Phpunit\MockeryTestCase
+class GenericConfirmationTest extends TestCase
 {
     /**
      * @var \Common\Form\GenericConfirmation

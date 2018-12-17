@@ -58,6 +58,9 @@ class AbstractTransportManagerAdapterTest extends MockeryTestCase
         static::assertFalse($this->sut->mustHaveAtLeastOneTm());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testAddMessages()
     {
         // no assertion as its a no op

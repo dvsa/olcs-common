@@ -2,9 +2,8 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\NameActionAndStatus;
-use PHPUnit_Framework_TestCase;
 
-class NameActionAndStatusTest extends PHPUnit_Framework_TestCase
+class NameActionAndStatusTest extends \PHPUnit\Framework\TestCase
 {
     const TEST_ID = 12345;
     const TEST_TITLE = 'TEST_TITLE';

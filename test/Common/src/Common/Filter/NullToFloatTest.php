@@ -9,7 +9,7 @@ use Common\Filter\NullToFloat;
  * @package CommonTest\Filter
  * @covers \Common\Filter\NullToFloat
  */
-class NullToFloatTest extends \PHPUnit_Framework_TestCase
+class NullToFloatTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider getValueDataProvider

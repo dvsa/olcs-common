@@ -11,13 +11,14 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Table\Formatter\SlaTargetDate;
 use CommonTest\Bootstrap;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * SlaTargetDate formatter test
  *
  * @author Shaun Lizzio <shaun@lizzio.co.uk>
  */
-class SlaTargetDateTest extends \PHPUnit_Framework_TestCase
+class SlaTargetDateTest extends TestCase
 {
     protected $sm;
 

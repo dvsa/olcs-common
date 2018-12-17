@@ -2,83 +2,82 @@
 
 namespace CommonTest\Form\Elements\Types;
 
-use PHPUnit_Framework_TestCase;
+use Common\View\Helper\UniqidGenerator;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Form\Elements\Types\Radio;
+use Mockery as m;
 
 /**
  * RadioTest
  */
-class RadioTest extends PHPUnit_Framework_TestCase
+class RadioTest extends MockeryTestCase
 {
-    /**
-     * @var Radio
-     */
-    private $sut;
-
-    public function setup()
-    {
-        $this->sut = new Radio();
-    }
-
     public function testSetName()
     {
-        $this->sut->setName('FOO');
-        $this->assertSame('FOO', $this->sut->getAttribute('id'));
+        $sut = new Radio();
+        $sut->setName('FOO');
+        $this->assertSame('FOO', $sut->getAttribute('id'));
     }
 
     public function testSetNameIdAlreadySet()
     {
-        $this->sut->setAttribute('id', 'NOT-FOO');
-        $this->sut->setName('FOO');
-        $this->assertSame('NOT-FOO', $this->sut->getAttribute('id'));
+        $sut = new Radio();
+        $sut->setAttribute('id', 'NOT-FOO');
+        $sut->setName('FOO');
+        $this->assertSame('NOT-FOO', $sut->getAttribute('id'));
     }
 
     public function testSetValueOptions()
     {
-        $this->sut->init();
+        $idGenerator = m::mock(UniqidGenerator::class);
+        $idGenerator->shouldReceive('generateId')->twice()->andReturn('generated_id');
+        $sut = new Radio(null, [], $idGenerator);
 
-        $this->sut->setValueOptions(
-            ['A' => 'aaa', 'B' => 'bbb']
+        $sut->setValueOptions(
+            [
+                'A' => 'aaa',
+                'B' => 'bbb',
+                'C' => [
+                    'label' => 'ccc',
+                    'value' => 'C_value',
+                    'attributes' => [
+                        'id' => 'custom_id',
+                        'class' => 'custom_class'
+                    ]
+                ]
+            ]
         );
 
-        $valueOptions = $this->sut->getValueOptions();
+        $valueOptions = $sut->getValueOptions();
 
-        $this->assertArraySubset(
-            [
-                'A' => [
-                    'label' => 'aaa',
-                    'value' => 'A',
-                    'attributes' => [
-                        'class' => 'radio-button',
-                    ],
-                    'label_attributes' => [
-                        'class' => 'radio-button__label',
-                    ],
-                ],
-                'B' => [
-                    'label' => 'bbb',
-                    'value' => 'B',
-                    'attributes' => [
-                        'class' => 'radio-button',
-                    ],
-                    'label_attributes' => [
-                        'class' => 'radio-button__label',
-                    ],
+        $expected = [
+            'A' => [
+                'label' => 'aaa',
+                'value' => 'A',
+                'attributes' => [
+                    'id' => 'generated_id_A',
+                    'data-show-element' => '#generated_id_A_content',
                 ],
             ],
-            $valueOptions
-        );
+            'B' => [
+                'label' => 'bbb',
+                'value' => 'B',
+                'attributes' => [
+                    'id' => 'generated_id_B',
+                    'data-show-element' => '#generated_id_B_content',
+                ],
+            ],
+            'C' => [
+                'label' => 'ccc',
+                'value' => 'C_value',
+                'attributes' => [
+                    'id' => 'custom_id',
+                    'data-show-element' => '#custom_id_content',
+                    'class' => 'custom_class',
+                ],
+            ],
+        ];
 
-        $this->assertNotEmpty($valueOptions['A']['attributes']['id']);
-        $this->assertNotEmpty($valueOptions['A']['attributes']['data-show-element']);
-        $this->assertNotEmpty($valueOptions['A']['label_attributes']['for']);
-        $this->assertStringEndsWith('_A', $valueOptions['A']['attributes']['id']);
-
-        $this->assertNotEmpty($valueOptions['B']['attributes']['id']);
-        $this->assertNotEmpty($valueOptions['B']['attributes']['data-show-element']);
-        $this->assertNotEmpty($valueOptions['B']['label_attributes']['for']);
-        $this->assertStringEndsWith('_B', $valueOptions['B']['attributes']['id']);
-
-        $this->assertNotSame($valueOptions['A']['attributes']['id'], $valueOptions['B']['attributes']['id']);
+        $this->assertSame($expected, $valueOptions);
     }
 }

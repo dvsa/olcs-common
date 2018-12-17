@@ -8,7 +8,6 @@
 namespace CommonTest\Service\Helper;
 
 use CommonTest\Bootstrap;
-use PHPUnit_Framework_TestCase;
 use Common\Service\Helper\TranslationHelperService;
 
 /**
@@ -16,7 +15,7 @@ use Common\Service\Helper\TranslationHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TranslationHelperServiceTest extends PHPUnit_Framework_TestCase
+class TranslationHelperServiceTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Holds the SUT

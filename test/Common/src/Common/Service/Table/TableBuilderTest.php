@@ -457,6 +457,7 @@ class TableBuilderTest extends MockeryTestCase
     /**
      * Test loadParams Without Url
      *
+     * @doesNotPerformAssertions
      */
     public function testLoadParamsWithoutUrl()
     {

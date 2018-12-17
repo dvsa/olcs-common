@@ -30,7 +30,7 @@ class InternalLicencePermitReference implements FormatterInterface
     public static function format($row, $column = null, $serviceLocator = null)
     {
         $urlHelper = $serviceLocator->get('Helper\Url');
-        $url = $urlHelper->fromRoute('licence/permits/edit', [
+        $url = $urlHelper->fromRoute('licence/permits/application', [
             'licence' => $row['licence']['id'],
             'action' => 'edit',
             'permitid' => $row['id']

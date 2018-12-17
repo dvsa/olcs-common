@@ -7,14 +7,12 @@
  */
 namespace CommonTest\Controller\Traits;
 
-use PHPUnit_Framework_TestCase;
-
 /**
  * Generic Index Action Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GenericIndexActionTest extends PHPUnit_Framework_TestCase
+class GenericIndexActionTest extends \PHPUnit\Framework\TestCase
 {
     private $sut;
 
