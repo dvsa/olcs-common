@@ -6,17 +6,12 @@ class UniqidGenerator
 {
     protected $id;
 
-    public function __construct(string $prefix = '', bool $more_entropy = false)
-    {
-        $this->id = uniqid($prefix, $more_entropy);
-    }
-
-    public function getId()
+    public function getLastId()
     {
         return $this->id;
     }
 
-    public function regenerateId(string $prefix = '', bool $more_entropy = false)
+    public function generateId(string $prefix = '', bool $more_entropy = false)
     {
         $this->id = uniqid($prefix, $more_entropy);
         return $this->id;

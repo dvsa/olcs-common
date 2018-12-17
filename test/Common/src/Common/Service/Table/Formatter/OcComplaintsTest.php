@@ -5,6 +5,7 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Table\Formatter\OcComplaints;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 
 /**
  * Class OcComplaintsTest
@@ -13,17 +14,17 @@ use Mockery as m;
  *
  * @package CommonTest\Service\Table\Formatter
  */
-class OcComplaintsTest extends \PHPUnit_Framework_TestCase
+class OcComplaintsTest extends TestCase
 {
     /**
-     * @dataProvider testFormatDataProvider
+     * @dataProvider dpFormatDataProvider
      */
     public function testFormat($data, $complaints)
     {
         $this->assertEquals(OcComplaints::format($data), $complaints);
     }
 
-    public function testFormatDataProvider()
+    public function dpFormatDataProvider()
     {
         return array(
             array(

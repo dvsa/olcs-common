@@ -2,7 +2,6 @@
 
 namespace CommonTest\View\Helper;
 
-use PHPUnit_Framework_TestCase;
 use \Common\View\Helper\CurrencyFormatter;
 
 /**
@@ -10,7 +9,7 @@ use \Common\View\Helper\CurrencyFormatter;
  *
  * @author Scott Callaway <scott.callaway@capgemini.com>
  */
-class CurrencyFormatterTest extends PHPUnit_Framework_TestCase
+class CurrencyFormatterTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Setup the view helper

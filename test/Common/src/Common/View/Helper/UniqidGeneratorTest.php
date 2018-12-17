@@ -8,19 +8,24 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 class UniqidGeneratorTest extends MockeryTestCase
 {
 
-    public function testGetId()
+    public function testGetLastId()
     {
         $sut = new UniqidGenerator();
-        $this->assertTrue(is_string($sut->getId()));
+        $id = $sut->generateId();
+        $this->assertSame($id, $sut->getLastId());
     }
 
-    public function testRegenerateId()
+    public function testGenerateId()
     {
         $sut = new UniqidGenerator();
-        $id = trim($sut->getId());
+        $id = trim($sut->generateId());
         $this->assertTrue(is_string($id) && !empty($id));
-        $newId = trim($sut->regenerateId());
-        $this->assertTrue(is_string($newId) && !empty($newId));
-        $this->assertNotEquals($id, $newId);
+        $secondId = trim($sut->generateId());
+        $this->assertTrue(is_string($secondId) && !empty($secondId));
+        $thirdId = trim($sut->generateId());
+        $this->assertTrue(is_string($thirdId) && !empty($thirdId));
+        $this->assertNotEquals($id, $secondId);
+        $this->assertNotEquals($id, $thirdId);
+        $this->assertNotEquals($secondId, $thirdId);
     }
 }

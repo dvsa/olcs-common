@@ -3,13 +3,12 @@
 namespace CommonTest\Service;
 
 use Common\Service\Cases;
-use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Class CasesTest
  * @package CommonTest\Service
  */
-class CasesTest extends TestCase
+class CasesTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreateNrCase()
     {

@@ -9,7 +9,7 @@ use org\bovigo\vfs\vfsStream;
  * Class FilesystemTest
  * @package CommonTest\Filesystem
  */
-class FilesystemTest extends \PHPUnit_Framework_TestCase
+class FilesystemTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreateTmpDir()
     {

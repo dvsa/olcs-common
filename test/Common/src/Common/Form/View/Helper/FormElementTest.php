@@ -11,7 +11,7 @@ use Zend\Form\View\Helper;
  *
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-class FormElementTest extends \PHPUnit_Framework_TestCase
+class FormElementTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var \Zend\Form\Element
@@ -519,7 +519,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $markup = $viewHelper($this->element, 'formCollection', '/');
 
         $this->assertSame(
-            '<p class="hint">Hint</p><input type="text" name="test" class="error__input" id="test" value="">',
+            '<p class="hint">Hint</p><input type="text" name="test" class="class&#x20;error__input" id="test" value="">',
             $markup
         );
     }

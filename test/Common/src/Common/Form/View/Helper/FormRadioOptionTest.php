@@ -5,9 +5,10 @@ namespace CommonTest\Form\View\Helper;
 use Common\Form\View\Helper\FormRadioOption;
 use Common\View\Helper\UniqidGenerator;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Zend\Form\Element\Radio;
 
-class FormRadioOptionTest extends m\Adapter\Phpunit\MockeryTestCase
+class FormRadioOptionTest extends TestCase
 {
     public function testInvokeNull()
     {
@@ -18,7 +19,7 @@ class FormRadioOptionTest extends m\Adapter\Phpunit\MockeryTestCase
     public function testInvoke()
     {
         $idGenerator = m::mock(UniqidGenerator::class);
-        $idGenerator->shouldReceive('getId')->twice()->andReturn('generated_id');
+        $idGenerator->shouldReceive('generateId')->twice()->andReturn('generated_id');
         $sut = new FormRadioOption($idGenerator);
         $radioElement = new Radio('NAME');
         $radioElement->setValueOptions(['A' => 'aaa', 'B' => 'bbb']);

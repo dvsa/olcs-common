@@ -8,14 +8,13 @@
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\PrinterException;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Printer exception formatter test
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class PrinterExceptionTest extends PHPUnit_Framework_TestCase
+class PrinterExceptionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test the format method

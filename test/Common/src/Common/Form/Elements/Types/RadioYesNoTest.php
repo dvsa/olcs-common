@@ -2,13 +2,12 @@
 
 namespace CommonTest\Form\Elements\Types;
 
-use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\Types\RadioYesNo;
 
 /**
  * RadioYesNoTest
  */
-class RadioYesNoTest extends PHPUnit_Framework_TestCase
+class RadioYesNoTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var RadioYesNo

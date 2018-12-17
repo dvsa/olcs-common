@@ -8,7 +8,6 @@
 
 namespace CommonTest\View\Helper;
 
-use PHPUnit_Framework_TestCase;
 use \Common\View\Helper\Version;
 
 /**
@@ -16,7 +15,7 @@ use \Common\View\Helper\Version;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VersionTest extends PHPUnit_Framework_TestCase
+class VersionTest extends \PHPUnit\Framework\TestCase
 {
     protected $viewHelper;
 

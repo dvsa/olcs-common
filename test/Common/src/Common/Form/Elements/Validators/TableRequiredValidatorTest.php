@@ -11,7 +11,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TableRequiredValidatorTest extends \PHPUnit_Framework_TestCase
+class TableRequiredValidatorTest extends MockeryTestCase
 {
     /**
      * Set up the validator
