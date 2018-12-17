@@ -392,7 +392,7 @@ class RefData
     const SURRENDER_STATUS_SUBMITTED='surrender_status_submitted';
     const SURRENDER_STATUS_SIGNED='surrender_status_signed';
     const SURRENDER_STATUS_APPROVED='surrender_status_approved';
-    const SURRENDER_DOC_STATUS_DESTROYED='doc_status_destroyed';
-    const SURRENDER_DOC_STATUS_LOST='doc_status_lost';
-    const SURRENDER_DOC_STATUS_STOLEN='doc_status_stolen';
+    const SURRENDER_DOC_STATUS_DESTROYED='doc_sts_destroyed';
+    const SURRENDER_DOC_STATUS_LOST='doc_sts_lost';
+    const SURRENDER_DOC_STATUS_STOLEN='doc_sts_stolen';
 }
