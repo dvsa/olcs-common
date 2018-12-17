@@ -159,9 +159,7 @@ class CurrentDiscsTest extends MockeryTestCase
                 ]
             ],
             [
-                'apiData' => [
-
-                ],
+                'apiData' => [],
                 'formData' => [
                     'version' => 1,
                     'possessionSection' => [
@@ -188,6 +186,4 @@ class CurrentDiscsTest extends MockeryTestCase
             ]
         ];
     }
-
-
 }
