@@ -17,7 +17,7 @@ $name = $element->getName();
            for="<?php echo $element->getAttribute("id"); ?>">
         <?php echo $this->translate($element->getLabel()); ?>
     </label>
-    <div class="checkbox__hidden-content help__text" id="<?php echo $name; ?>-hidden">
+    <div class="checkbox__hidden-content help__text" id="<?php echo $element->getAttribute("id"); ?>-hidden">
         <?php echo $this->partial($this->content, ['data' => $this->data]); ?>
     </div>
 </div>
