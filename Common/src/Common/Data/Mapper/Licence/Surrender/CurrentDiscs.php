@@ -41,28 +41,57 @@ class CurrentDiscs implements MapperInterface
 
     public static function mapFromForm(array $data): array
     {
-
+        $inPossession = $data['possessionSection']['inPossession'] == "Y" ? true:false;
         $possessionData = $data['possessionSection']['info'];
-        $lostData = $data['lostSection']['info'];
-        $stolenData = $data['stolenSection']['info'];
+        $lost = $data['lostSection']['lost'] == "Y" ? true:false;
+        $stolen = $data['stolenSection']['stolen'] == "Y" ? true:false;
 
         $return = [];
-        if (!empty($possessionData['number'])) {
+        $self = new self();
+        if ($inPossession && !empty($possessionData['number'])) {
             $return['discDestroyed'] = $possessionData['number'];
+        } else {
+            $return['discDestroyed'] = null;
         }
-        if (!empty($lostData['number'])) {
-            $return ['discLost'] = $lostData['number'];
+        if ($lost) {
+            $lostData = $self->getLostInfo($data['lostSection']['info']);
+            $return = array_merge($return, $lostData);
+        } else {
+            $return['discLost'] = null;
+            $return['discLostInfo'] = null;
         }
-        if (!empty($lostData['details'])) {
-            $return ['discLostInfo'] = $lostData['details'];
-        }
-        if (!empty($stolenData['number'])) {
-            $return['discStolen'] = $stolenData['number'];
-        }
-        if (!empty($stolenData['details'])) {
-            $return['discStolenInfo'] = $stolenData['details'];
+        if ($stolen) {
+            $stolenData = $self->getStolenInfo($data['stolenSection']['info']);
+            $return = array_merge($return, $stolenData);
+        } else {
+            $return['discStolen'] = null;
+            $return['discStolenInfo'] = null;
         }
 
+        return $return;
+    }
+
+    public function getLostInfo(array $section): array
+    {
+        $return = [];
+        if (!empty($section['number'])) {
+            $return['discLost'] = $section['number'];
+        }
+        if (!empty($section['details'])) {
+            $return['discLostInfo'] = $section['details'];
+        }
+        return $return;
+    }
+
+    public function getStolenInfo(array $section): array
+    {
+        $return = [];
+        if (!empty($section['number'])) {
+            $return['discStolen'] = $section['number'];
+        }
+        if (!empty($section['details'])) {
+            $return['discStolenInfo'] = $section['details'];
+        }
         return $return;
     }
 }
