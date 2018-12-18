@@ -37,8 +37,6 @@ class OperatorLicence extends AbstractFormService
 
         $formRadio = $form->get('operatorLicenceDocument')->get('licenceDocument');
         $formRadio->setValue($var);
-
-        return $form;
     }
 
     /**
