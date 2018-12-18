@@ -27,7 +27,7 @@ class OperatorLicenceTest extends TestCase
         $this->sut->setFormServiceLocator($fsm);
     }
 
-    public function testAlterForm()
+    public function testGetForm()
     {
         $form = m::mock(\Common\Form\Form::class);
 
@@ -51,11 +51,8 @@ class OperatorLicenceTest extends TestCase
     public function testSetStatus()
     {
         $form = m::mock(\Common\Form\Form::class);
-        $apiData["licenceDocumentStatus"]["id"] = RefData::SURRENDER_DOC_STATUS_DESTROYED;
 
-        $this->formHelper->shouldReceive('createForm')->once()
-            ->with(OperatorLicenceForm::class)
-            ->andReturn($form);
+        $apiData["licenceDocumentStatus"]["id"] = RefData::SURRENDER_DOC_STATUS_DESTROYED;
 
         $radioButtonObj = m::mock(\Common\Form\Elements\Types\Radio::class);
         $radioButtonObj->shouldReceive('setValue')->with('possession');
@@ -64,5 +61,7 @@ class OperatorLicenceTest extends TestCase
         $form->shouldReceive('get')->with('licenceDocument')->andReturn($radioButtonObj);
 
         $this->sut->setStatus($form, $apiData);
+
+        $this->assertSame($radioButtonObj, $form->get('licenceDocument'));
     }
 }
