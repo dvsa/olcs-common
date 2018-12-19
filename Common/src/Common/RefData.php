@@ -383,16 +383,16 @@ class RefData
     const FT_CONDITIONAL = 'conditionally-active';
 
     //Surrenders
-    const SURRENDER_STATUS_START='surrender_status_start';
-    const SURRENDER_STATUS_CONTACTS_COMPLETE='surrender_status_contacts_complete';
-    const SURRENDER_STATUS_DISCS_COMPLETE='surrender_status_discs_complete';
-    const SURRENDER_STATUS_LIC_DOCS_COMPLETE='surrender_status_lic_docs_complete';
-    const SURRENDER_STATUS_COMM_LIC_DOCS_COMPLETE='surrender_status_comm_lic_docs_complete';
-    const SURRENDER_STATUS_DETAILS_CONFIRMED='surrender_status_details_confirmed';
-    const SURRENDER_STATUS_SUBMITTED='surrender_status_submitted';
-    const SURRENDER_STATUS_SIGNED='surrender_status_signed';
-    const SURRENDER_STATUS_APPROVED='surrender_status_approved';
-    const SURRENDER_DOC_STATUS_DESTROYED='doc_status_destroyed';
-    const SURRENDER_DOC_STATUS_LOST='doc_status_lost';
-    const SURRENDER_DOC_STATUS_STOLEN='doc_status_stolen';
+    const SURRENDER_STATUS_START='surr_sts_start';
+    const SURRENDER_STATUS_CONTACTS_COMPLETE='surr_sts_contacts_complete';
+    const SURRENDER_STATUS_DISCS_COMPLETE='surr_sts_discs_complete';
+    const SURRENDER_STATUS_LIC_DOCS_COMPLETE='surr_sts_lic_docs_complete';
+    const SURRENDER_STATUS_COMM_LIC_DOCS_COMPLETE='surr_sts_comm_lic_docs_complete';
+    const SURRENDER_STATUS_DETAILS_CONFIRMED='surr_sts_details_confirmed';
+    const SURRENDER_STATUS_SUBMITTED='surr_sts_submitted';
+    const SURRENDER_STATUS_SIGNED='surr_sts_signed';
+    const SURRENDER_STATUS_APPROVED='surr_sts_approved';
+    const SURRENDER_DOC_STATUS_DESTROYED='doc_sts_destroyed';
+    const SURRENDER_DOC_STATUS_LOST='doc_sts_lost';
+    const SURRENDER_DOC_STATUS_STOLEN='doc_sts_stolen';
 }
