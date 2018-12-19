@@ -57,9 +57,6 @@ class OperatorLicenceTest extends TestCase
 
         $apiData["licenceDocumentStatus"]["id"] = $status;
 
-//        $radioButtonObj = m::mock(\Common\Form\Elements\Types\Radio::class);
-//        $radioButtonObj->shouldReceive('setValue')->with($radioValue);
-
         $radioButtonObj = new \Common\Form\Elements\Types\Radio();
 
         $form->shouldReceive('get')->with('operatorLicenceDocument')->andReturnSelf();
