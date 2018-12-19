@@ -159,7 +159,13 @@ class CurrentDiscsTest extends MockeryTestCase
                 ]
             ],
             [
-                'apiData' => [],
+                'apiData' => [
+                    'discDestroyed' => null,
+                    'discLost' => null,
+                    'discLostInfo' => null,
+                    'discStolen' => null,
+                    'discStolenInfo' => null,
+                ],
                 'formData' => [
                     'version' => 1,
                     'possessionSection' => [
@@ -180,6 +186,70 @@ class CurrentDiscsTest extends MockeryTestCase
                         'info' => [
                             'number' => null,
                             'details' => null,
+                        ],
+                    ],
+                ]
+            ],
+            [
+                'apiData' => [
+                    'discDestroyed' => null,
+                    'discLost' => 4,
+                    'discLostInfo' => 'it was lost',
+                    'discStolen' => null,
+                    'discStolenInfo' => null,
+                ],
+                'formData' => [
+                    'version' => 1,
+                    'possessionSection' => [
+                        'inPossession' => 'N',
+                        'info' => [
+                            'number' => 1,
+                        ],
+                    ],
+                    'lostSection' => [
+                        'lost' => 'Y',
+                        'info' => [
+                            'number' => 4,
+                            'details' => 'it was lost',
+                        ],
+                    ],
+                    'stolenSection' => [
+                        'stolen' => 'N',
+                        'info' => [
+                            'number' => null,
+                            'details' => null,
+                        ],
+                    ],
+                ]
+            ],
+            [
+                'apiData' => [
+                    'discDestroyed' => null,
+                    'discLost' => null,
+                    'discLostInfo' => null,
+                    'discStolen' => 3,
+                    'discStolenInfo' => 'someone stole it',
+                ],
+                'formData' => [
+                    'version' => 1,
+                    'possessionSection' => [
+                        'inPossession' => 'N',
+                        'info' => [
+                            'number' => 1,
+                        ],
+                    ],
+                    'lostSection' => [
+                        'lost' => 'N',
+                        'info' => [
+                            'number' => 4,
+                            'details' => 'it was lost',
+                        ],
+                    ],
+                    'stolenSection' => [
+                        'stolen' => 'Y',
+                        'info' => [
+                            'number' => 3,
+                            'details' => 'someone stole it',
                         ],
                     ],
                 ]
