@@ -48,20 +48,43 @@ class OperatorLicenceTest extends TestCase
         $this->assertInstanceOf(\Common\Form\Form::class, $form);
     }
 
-    public function testSetStatus()
+    /**
+     * @dataProvider dpTestSetStatus
+     */
+    public function testSetStatus($status, $radioValue)
     {
         $form = m::mock(\Common\Form\Form::class);
 
-        $apiData["licenceDocumentStatus"]["id"] = RefData::SURRENDER_DOC_STATUS_DESTROYED;
+        $apiData["licenceDocumentStatus"]["id"] = $status;
 
-        $radioButtonObj = m::mock(\Common\Form\Elements\Types\Radio::class);
-        $radioButtonObj->shouldReceive('setValue')->with('possession');
+//        $radioButtonObj = m::mock(\Common\Form\Elements\Types\Radio::class);
+//        $radioButtonObj->shouldReceive('setValue')->with($radioValue);
+
+        $radioButtonObj = new \Common\Form\Elements\Types\Radio();
 
         $form->shouldReceive('get')->with('operatorLicenceDocument')->andReturnSelf();
         $form->shouldReceive('get')->with('licenceDocument')->andReturn($radioButtonObj);
 
         $this->sut->setStatus($form, $apiData);
 
-        $this->assertSame($radioButtonObj, $form->get('licenceDocument'));
+        $this->assertEquals($radioButtonObj->getValue(), $radioValue);
+    }
+
+    public function dpTestSetStatus()
+    {
+        return [
+          [
+              'status' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
+              'radio_value' => 'possession'
+          ],
+          [
+              'status' => RefData::SURRENDER_DOC_STATUS_LOST,
+              'radio_value' =>'lost'
+          ],
+          [
+              'status' => RefData::SURRENDER_DOC_STATUS_STOLEN,
+              'radio_value' => 'stolen'
+          ]
+        ];
     }
 }
