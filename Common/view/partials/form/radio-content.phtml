@@ -3,10 +3,7 @@
 $element = $this->element;
 $id = $this->id;
 ?>
-<div
-    class="govuk-radios__conditional <?php echo !$this->currentUser()->isInternalUser() ? 'help__text' : ''; ?>"
-    id="<?php echo $id ?>"
->
+<div class="govuk-radios__conditional govuk-body" id="<?php echo $id ?>">
     <?php
     if ($element instanceof \Zend\Form\Fieldset) {
         echo $this->formCollection($element);
