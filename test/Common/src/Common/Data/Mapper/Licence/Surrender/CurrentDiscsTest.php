@@ -32,7 +32,7 @@ class CurrentDiscsTest extends MockeryTestCase
     public function dpMapFromResult()
     {
         return [
-            [
+            'case_01' => [
                 'apiData' => [
                     "id" => 5,
                     "licence_id" => 70,
@@ -76,7 +76,7 @@ class CurrentDiscsTest extends MockeryTestCase
                     ],
                 ]
             ],
-            [
+            'case_02' => [
                 'apiData' => [
                     "id" => 5,
                     "licence_id" => 70,
@@ -126,7 +126,7 @@ class CurrentDiscsTest extends MockeryTestCase
     public function dpMapFromForm()
     {
         return [
-            [
+            'case_01' => [
                 'apiData' => [
                     "discDestroyed" => 1,
                     "discLost" => 2,
@@ -158,7 +158,7 @@ class CurrentDiscsTest extends MockeryTestCase
                     ],
                 ]
             ],
-            [
+            'case_02' => [
                 'apiData' => [
                     'discDestroyed' => null,
                     'discLost' => null,
@@ -190,7 +190,7 @@ class CurrentDiscsTest extends MockeryTestCase
                     ],
                 ]
             ],
-            [
+            'case_03' => [
                 'apiData' => [
                     'discDestroyed' => null,
                     'discLost' => 4,
@@ -222,7 +222,7 @@ class CurrentDiscsTest extends MockeryTestCase
                     ],
                 ]
             ],
-            [
+            'case_04' => [
                 'apiData' => [
                     'discDestroyed' => null,
                     'discLost' => null,
