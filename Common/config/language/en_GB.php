@@ -3513,12 +3513,13 @@ return [
     'permits.page.cabotage.browser.title' => 'Will you be carrying out cabotage?',
     'permits.page.cabotage.question' => 'ECMT permits do not allow you to carry out cabotage',
     'permits.page.cabotage.guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between 2 points in the same country carried out by a vehicle that is not registered in that country.',
-
     'permits.page.number-of-trips.title' => 'How many international trips were carried out over the past 12 months?-',
     'permits.page.number-of-trips.question' => 'How many international trips did you make in the last 12 months using this licence?',
     'permits.page.number-of-trips.northern-ireland.warning' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
     'permits.page.number-of-trips.guidance' => 'If you have not made any international journeys in the last 12 months, you are unlikely to be awarded an ECMT permit. We intend to prioritise applications from hauliers who make the most international journeys.',
-
+    'permits.page.type.title' => 'Select Permit Type',
+    'permits.page.type.hint' => 'Further <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">guidance on permits</a> is available on GOV.UK.',
+    'permits.page.type.question' => 'What type of permit do you need?',
     'permits.page.international.journey.title' => 'Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'In the last 12 months, what percentage of international trips did you make using this licence?',
     'permits.page.international.journey.exclude' => 'Exclude journeys to the Republic of Ireland in your annual trips.',
@@ -3560,6 +3561,7 @@ return [
     'permits.page.fee.permit.fee.non-refundable' => ' (non-refundable)',
     'permits.button.accept-and-continue' => 'Accept and continue',
     'permits.button.confirm-and-continue' => 'Confirm and continue',
+    'permits.button.continue' => 'Continue',
     'permits.button.save-return-to-permits' => 'Save and return to permits',
     'permits.button.save-return-to-overview' => 'Save and return to overview',
     'permits.button.submit-and-pay' => 'Submit and pay',
@@ -3597,6 +3599,7 @@ return [
     'permits.form.withdraw_application.error_message' => 'Tick to confirm you want to withdraw your application',
 
     'error.messages.restricted.countries.list' => 'You must select at least one country',
+    'error.messages.type' => 'You must select an option to continue',
     'error.messages.sector' => 'You must answer the question to continue',
     'error.messages.sector.list' => 'Select one main category for your licence',
     'error.messages.euro6' => 'You must tick the box to continue',
