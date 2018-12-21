@@ -57,14 +57,21 @@ class TypeOfLicence
      *      "label": "application_type-of-licence_licence-type.data.licenceType",
      *      "label_attributes": {"class": "form-control form-control--radio"},
      *      "hint": "markup-typeOfLicence_licenceType-hint",
+     *      "item_wrapper_attributes":{"class":"test"},
      *      "value_options": {
      *          \Common\RefData::LICENCE_TYPE_RESTRICTED: "Restricted",
      *          \Common\RefData::LICENCE_TYPE_STANDARD_NATIONAL: "Standard National",
      *          \Common\RefData::LICENCE_TYPE_STANDARD_INTERNATIONAL: "Standard International",
-     *          \Common\RefData::LICENCE_TYPE_SPECIAL_RESTRICTED: "Special Restricted",
+     *         "Special Restricted":{
+     *              "value": "ltyp_sr",
+     *               "label":"Special Restricted",
+     *               "attributes":{"id":"ltyp_sr_radio"},
+     *               "item_wrapper_attributes":{"id":"ltyp_sr_radio_group"}
+     *              }
      *      },
+     *
      * })
-     * @Form\Type("Radio")
+     * @Form\Type("\Common\Form\Elements\Types\Radio")
      */
     public $licenceType = null;
 }
