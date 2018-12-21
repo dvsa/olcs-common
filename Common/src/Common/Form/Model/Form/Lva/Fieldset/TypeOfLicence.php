@@ -57,7 +57,6 @@ class TypeOfLicence
      *      "label": "application_type-of-licence_licence-type.data.licenceType",
      *      "label_attributes": {"class": "form-control form-control--radio"},
      *      "hint": "markup-typeOfLicence_licenceType-hint",
-     *      "item_wrapper_attributes":{"class":"test"},
      *      "value_options": {
      *          \Common\RefData::LICENCE_TYPE_RESTRICTED: "Restricted",
      *          \Common\RefData::LICENCE_TYPE_STANDARD_NATIONAL: "Standard National",
