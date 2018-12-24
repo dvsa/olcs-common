@@ -3469,16 +3469,16 @@ return [
     'permits.application.ecmt.select' => 'Select all that apply',
     'permits.application.eligibility.eligible.title' => 'Can you get an international haulier permit?',
 
-    'permits.application.submitted.title' => 'Application submitted-',
+    'permits.application.submitted.title' => 'Application submitted',
     'permits.application.submitted.main' => 'Application submitted',
 
-    'permits.decline.submitted.title' => 'Permits removed-',
+    'permits.decline.submitted.title' => 'Permits removed',
     'permits.decline.submitted.main' => 'Permits removed',
-    'permits.application.cancel-application.title' => 'Cancel application-',
+    'permits.application.cancel-application.title' => 'Cancel application',
     'permits.application.cancel-application' => 'Cancel application',
 
 
-    'permits.application.fee.submitted.title' => 'Payment successful-',
+    'permits.application.fee.submitted.title' => 'Payment successful',
     'permits.application.fee.submitted.main' => 'Payment successful',
 
     'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
