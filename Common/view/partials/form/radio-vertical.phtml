@@ -25,9 +25,9 @@ $dataGroupAttribute = empty($dataGroup) ? '' : 'data-group="' . $dataGroup . '"'
             <?php echo $errors ?>
         <?php endif; ?>
         <?php
-        foreach ($radioElement->getValueOptions() as $valueOption) {
-            echo $this->formRadioOption($radioElement, $valueOption['value']);
-            $contentElementName = $valueOption['value'] . 'Content';
+        foreach ($radioElement->getValueOptions() as $key => $valueOption) {
+            echo $this->formRadioOption($radioElement, $key);
+            $contentElementName = $key . 'Content';
             if ($element->has($contentElementName)) {
                 echo $this->render(
                     'partials/form/radio-content',
