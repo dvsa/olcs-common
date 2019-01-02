@@ -446,6 +446,7 @@ return [
     'licence.surrender.current_discs.stolen.details.hint' => 'For stolen documents you must provide the Crime Reference Number.',
     'licence.surrender.current_discs.stolen.details.stringLengthTooShort' => "You must enter details about the stolen discs.",
     'licence.surrender.current_discs.stolen.number.emptyMessage' => 'You must enter the number of discs stolen.',
+    'licence.surrender.destroy.title' => 'Now securely destroy your licence documentation',
     'llp-number' => 'PAC #',
     'lookup-advance-search-submit' => 'Chwilio',
     'lookup-basic-search-submit' => 'Chwilio',
