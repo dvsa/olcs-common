@@ -13,7 +13,7 @@ $dataGroupAttribute = empty($dataGroup) ? '' : 'data-group="' . $dataGroup . '"'
 
 <div class="<?php echo ($hasValidationError) ? 'field error__wrapper' : 'field' ?>">
     <fieldset class="radio-button__fieldset radio-button__fieldset--vertical" <?php echo $dataGroupAttribute; ?>>
-        <legend class="<?php echo $element->getLabelAttributes()['class']; ?>">
+        <legend class="<?php echo $element->getLabelAttributes()['class'] ?? ''; ?>">
             <?php echo $this->translate($element->getLabel()); ?>
         </legend>
 
