@@ -1660,6 +1660,8 @@ return [
     'licence.surrender.operator_licence.stolen.label' => 'Stolen',
     'licence.surrender.operator_licence.return_to_current_discs.link' => 'Return to current discs',
     'licence.surrender.destroy.title' => 'Now securely destroy your licence documentation',
+    'licence.surrender.print-sign-return.form.title.psv' => 'Application to surrender your Public Service Vehicle Operator\'s Licence',
+    'licence.surrender.print-sign-return.form.title.gv' => 'Application to surrender your Goods Vehicle Operator\'s Licence',
     'licence.apply-to-change' => 'Apply to change this licence',
     'licence.vehicles-trailers.share-info' => 'Tick the box to confirm that you wish to share this information with the Driver and Vehicle Standards Agency (DVSA). Your data will be used for its purposes, eg test history reports or your Operator Compliance Risk Score (OCRS). You must keep this information up to date. If you don’t, you may receive an inaccurate test history report or OCRS.',
     'licence.vehicles_transfer.form.licence' => 'To which licence would you like to transfer the selected vehicle(s)?',
