@@ -1603,6 +1603,13 @@ return [
     'waived.paid.permits.page.ecmt.fee-part-successful.payment.due' => 'Acceptance required by',
     'permits.application.fee.submitted.main.paid.waived' => 'Acceptance successful',
 
+    'permits.page.confirmation.application-submitted.title' => 'Application Submitted',
+    'permits.page.confirmation.application-submitted.browser.title' => 'Application Submitted',
+    'permits.page.confirmation.issue-submitted.title' => 'Permit Issue Accepted',
+    'permits.page.confirmation.issue-submitted.browser.title' => 'Permit Issue Accepted',
+    'permits.page.confirmation.bullet.list.title' => 'What happens next',
+    'permits.page.confirmation.submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
+
     'permits.check-answers.page.question.licence' => 'Licence selected',
     'permits.page.check-answers.browser.title' => 'Check your answers',
     'permits.page.check-answers.title' => 'Check your answers',
