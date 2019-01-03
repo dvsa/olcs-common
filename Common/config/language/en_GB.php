@@ -1660,7 +1660,6 @@ return [
     'licence.surrender.operator_licence.stolen.label' => 'Stolen',
     'licence.surrender.community_licence.heading'=>'Where is your community licence documentation?',
     'licence.surrender.community_licence.possession.note'=>'You must destroy all community licence documents and certified copies',
-    'licence.surrender.community_licence.save.continue'=>'Save and Continue',
     'licence.surrender.community_licence.return_to_operator.licence.link' => 'Return to operator licence',
     'licence.surrender.operator_licence.return_to_current_discs.link' => 'Return to current discs',
     'licence.surrender.destroy.title' => 'Now securely destroy your licence documentation',
