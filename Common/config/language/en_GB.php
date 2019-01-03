@@ -3486,26 +3486,23 @@ return [
     'permits.page.confirmation.email-sent' => 'We have sent you a confirmation email.',
     'permits.page.confirmation.finish' => 'Finish',
 
-    'permits.page.confirmation.cancel.title' => 'Application cancelled',
+    'permits.page.confirmation.cancel.title' => 'Application Cancelled',
     'permits.page.confirmation.cancel.browser.title' => 'Cancellation Successful',
-    'permits.page.confirmation.cancel.bullet.list.title' => 'What happens next',
 
-    'permits.page.confirmation.withdraw.title' => 'Application withdrawn',
+    'permits.page.confirmation.withdraw.title' => 'Application Withdrawn',
     'permits.page.confirmation.withdraw.browser.title' => 'Withdrawal Successful',
-    'permits.page.confirmation.withdraw.bullet.list.title' => 'What happens next',
 
-    'permits.page.confirmation.decline.title' => 'Application withdrawn',
+    'permits.page.confirmation.decline.title' => 'Application Withdrawn',
     'permits.page.confirmation.decline.browser.title' => 'Withdrawal Successful',
-    'permits.page.confirmation.decline.bullet.list.title' => 'What happens next',
 
-    'permits.page.confirmation.submitted.title' => 'Application submitted',
-    'permits.page.confirmation.submitted.browser.title' => 'Application submitted',
-    'permits.page.confirmation.submitted.bullet.list.title' => 'What happens next',
+    'permits.page.confirmation.application-submitted.title' => 'Application Submitted',
+    'permits.page.confirmation.application-submitted.browser.title' => 'Application Submitted',
+
+    'permits.page.confirmation.issue-submitted.title' => 'Permit Issue Accepted',
+    'permits.page.confirmation.issue-submitted.browser.title' => 'Permit Issue Accepted',
+
+    'permits.page.confirmation.bullet.list.title' => 'What happens next',
     'permits.page.confirmation.submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
-
-    'permits.page.confirmation.fee-waived-submitted.title' => 'Application submitted',
-    'permits.page.confirmation.fee-waived-submitted.browser.title' => 'Application submitted',
-    'permits.page.confirmation.fee-waived-submitted.bullet.list.title' => 'What happens next',
 
     'permits.page.change-licence.question' => 'Change Licence',
     'permits.page.change-licence.browser.title' => 'Change Licence',
