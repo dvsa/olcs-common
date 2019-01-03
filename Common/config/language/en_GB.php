@@ -3626,7 +3626,7 @@ return [
     'section.name.licence' => 'Licence number',
     'section.name.ecmt-euro6' => 'Euro emission standards',
     'section.name.ecmt-cabotage' => 'Cabotage',
-    'section.name.ecmt-countries' => 'Goods to limited countries',
+    'section.name.ecmt-countries' => 'Countries with limited permits',
     'section.name.ecmt-trips' => 'Annual trips abroad',
     'section.name.ecmt-international-journey' => 'Percentage of international journeys',
     'section.name.ecmt-sectors' => 'Goods you carry abroad',
