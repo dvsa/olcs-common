@@ -17,56 +17,54 @@ class CommunityLicence implements MapperInterface
      */
     public static function mapFromForm(array $formData): array
     {
-        $mappedData = static::mapCommunityLicenceDocumentStatusandDetails($formData);
-        return [
-            'communityLicenceDocumentStatus' => $mappedData[0],
-            'communityLicenceDocumentInfo' => $mappedData[1],
+        $mappedData = [
+            'possession' => [
+                'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
+                'communityLicenceDocumentInfo' => null
+            ],
+            'lost' => [
+                'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_LOST,
+                'communityLicenceDocumentInfo' => $formData['communityLicence']['lostContent']['details']
+            ],
+            'stolen' => [
+                'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_STOLEN,
+                'communityLicenceDocumentInfo' => $formData['communityLicence']['stolenContent']['details']
+            ],
         ];
-    }
-
-    private static function mapCommunityLicenceDocumentStatusandDetails($formData): array
-    {
-        $communityLicenceDocumentStatus = $formData['communityLicence']['communityLicenceDocument'];
-        $communityLicenceDocumentStatusDetails = "";
-
-        switch ($communityLicenceDocumentStatus) {
-            case 'possession':
-                $communityLicenceDocumentStatus = RefData::SURRENDER_DOC_STATUS_DESTROYED;
-                $communityLicenceDocumentStatusDetails = null;
-                break;
-            case 'lost':
-                $communityLicenceDocumentStatus = RefData::SURRENDER_DOC_STATUS_LOST;
-                $communityLicenceDocumentStatusDetails = $formData['communityLicence']['lostContent']['details'];
-                break;
-            case 'stolen':
-                $communityLicenceDocumentStatus = RefData::SURRENDER_DOC_STATUS_STOLEN;
-                $communityLicenceDocumentStatusDetails = $formData['communityLicence']['stolenContent']['details'];
-                break;
-        }
-
-
-        return [$communityLicenceDocumentStatus, $communityLicenceDocumentStatusDetails];
+        return $mappedData[$formData['communityLicence']['communityLicenceDocument']];
     }
 
     public static function mapFromResult(array $data)
     {
         $licenceDocumentStatus = $data["communityLicenceDocumentStatus"]["id"];
 
-        $formData = [];
+        $formData = [
+            RefData::SURRENDER_DOC_STATUS_DESTROYED =>
+                [
+                    'communityLicence' => [
+                        'communityLicenceDocument' => 'possession'
+                    ]
+                ],
+            RefData::SURRENDER_DOC_STATUS_LOST =>
+                [
+                    'communityLicence' => [
+                        'communityLicenceDocument' => 'lost',
+                        'lostContent' => [
+                            'details' => $data["communityLicenceDocumentInfo"]
+                        ]
+                    ]
+                ],
+            RefData::SURRENDER_DOC_STATUS_STOLEN =>
+                [
+                    'communityLicence' => [
+                        'communityLicenceDocument' => 'stolen',
+                        'stolenContent' => [
+                            'details' => $data["communityLicenceDocumentInfo"]
+                        ]
+                    ]
+                ],
+        ];
 
-        switch ($licenceDocumentStatus) {
-            case RefData::SURRENDER_DOC_STATUS_DESTROYED:
-                $formData['communityLicence']['communityLicenceDocument'] = 'possession';
-                break;
-            case RefData::SURRENDER_DOC_STATUS_LOST:
-                $formData['communityLicence']['communityLicenceDocument'] = 'lost';
-                $formData['communityLicence']['lostContent']['details'] = $data["communityLicenceDocumentInfo"];
-                break;
-            case RefData::SURRENDER_DOC_STATUS_STOLEN:
-                $formData['communityLicence']['communityLicenceDocument'] = 'stolen';
-                $formData['communityLicence']['stolenContent']['details'] = $data["communityLicenceDocumentInfo"];
-                break;
-        }
-        return $formData;
+        return $formData[$licenceDocumentStatus];
     }
 }
