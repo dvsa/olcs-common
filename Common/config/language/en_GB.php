@@ -1663,6 +1663,7 @@ return [
     'licence.surrender.community_licence.return_to_operator.licence.link' => 'Return to operator licence',
     'licence.surrender.operator_licence.return_to_current_discs.link' => 'Return to current discs',
     'licence.surrender.destroy.title' => 'Now securely destroy your licence documentation',
+    'licence.surrender.print-sign-return.page.title' => 'What you need to do next',
     'licence.surrender.print-sign-return.form.title.psv' => 'Application to surrender your Public Service Vehicle Operator\'s Licence',
     'licence.surrender.print-sign-return.form.title.gv' => 'Application to surrender your Goods Vehicle Operator\'s Licence',
     'licence.apply-to-change' => 'Apply to change this licence',
