@@ -450,6 +450,7 @@ return [
     'licence.surrender.community_licence.heading'=>'Where is your community licence documentation?',
     'licence.surrender.community_licence.possession.note'=>'You must destroy all community licence documents and certified copies',
     'licence.surrender.community_licence.return_to_operator.licence.link' => 'Return to operator licence',
+    'licence.surrender.print-sign-return.form.error' =>'Sorry, there is a problem with the service. Your data has been saved. Try again later.',
     'llp-number' => 'PAC #',
     'lookup-advance-search-submit' => 'Chwilio',
     'lookup-basic-search-submit' => 'Chwilio',
