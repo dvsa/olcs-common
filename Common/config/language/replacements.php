@@ -34,4 +34,6 @@ return [
         'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage#standard-international-operators-licence-for-road-transport',
     '{{VOL_CREATE_AN_ACCOUNT}}' => 'https://www.vehicle-operator-licensing.service.gov.uk/register',
     '{{ESSENTIALS_ROAD_HAULAGE}}' => 'https://www.gov.uk/guidance/the-essentials-of-international-road-haulage',
+    '{{IRHP_GUIDANCE_LINK}}' =>
+        'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage',
 ];
