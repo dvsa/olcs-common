@@ -2,11 +2,11 @@
 
 namespace CommonTest\Data\Mapper\Licence\Surrender;
 
-use Common\Data\Mapper\Licence\Surrender\OperatorLicence;
+use Common\Data\Mapper\Licence\Surrender\CommunityLicence;
 use Common\RefData;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-class OperatorLicenceTest extends MockeryTestCase
+class CommunityLicenceTest extends MockeryTestCase
 {
     /**
      * @dataProvider dpTestMapFromForm
@@ -15,7 +15,7 @@ class OperatorLicenceTest extends MockeryTestCase
     {
         static::assertEquals(
             $mappedData,
-            OperatorLicence::mapFromForm($formData)
+            CommunityLicence::mapFromForm($formData)
         );
     }
 
@@ -26,7 +26,7 @@ class OperatorLicenceTest extends MockeryTestCase
     {
         static::assertEquals(
             $mappedApiData,
-            OperatorLicence::mapFromResult($apiData)
+            CommunityLicence::mapFromResult($apiData)
         );
     }
 
@@ -37,9 +37,9 @@ class OperatorLicenceTest extends MockeryTestCase
                 [
                     'form_data' =>
                         [
-                            'operatorLicenceDocument' =>
+                            'communityLicence' =>
                                 [
-                                    'licenceDocument' => 'lost',
+                                    'communityLicenceDocument' => 'lost',
                                     'lostContent' =>
                                         [
                                             'details' => 'lost info'
@@ -52,17 +52,17 @@ class OperatorLicenceTest extends MockeryTestCase
                         ],
                     'mapped_form_data' =>
                         [
-                            'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_LOST,
-                            'licenceDocumentInfo' => 'lost info'
+                            'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_LOST,
+                            'communityLicenceDocumentInfo' => 'lost info'
                         ],
                 ],
             'case_02' =>
                 [
                     'form_data' =>
                         [
-                            'operatorLicenceDocument' =>
+                            'communityLicence' =>
                                 [
-                                    'licenceDocument' => 'stolen',
+                                    'communityLicenceDocument' => 'stolen',
                                     'stolenContent' =>
                                         [
                                             'details' => 'stolen info'
@@ -75,17 +75,17 @@ class OperatorLicenceTest extends MockeryTestCase
                         ],
                     'mapped_form_data' =>
                         [
-                            'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_STOLEN,
-                            'licenceDocumentInfo' => 'stolen info'
+                            'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_STOLEN,
+                            'communityLicenceDocumentInfo' => 'stolen info'
                         ],
                 ],
             'case_03' =>
                 [
                     'form_data' =>
                         [
-                            'operatorLicenceDocument' =>
+                            'communityLicence' =>
                                 [
-                                    'licenceDocument' => 'possession',
+                                    'communityLicenceDocument' => 'possession',
                                     'lostContent' =>
                                         [
                                             'details' => 'lost info'
@@ -99,8 +99,8 @@ class OperatorLicenceTest extends MockeryTestCase
                         ],
                     'mapped_form_data' =>
                         [
-                            'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
-                            'licenceDocumentInfo' => null
+                            'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
+                            'communityLicenceDocumentInfo' => null
                         ],
                 ],
         ];
@@ -113,9 +113,9 @@ class OperatorLicenceTest extends MockeryTestCase
                 [
                     'mapped_api_data' =>
                         [
-                            'operatorLicenceDocument' =>
+                            'communityLicence' =>
                                 [
-                                    'licenceDocument' => 'lost',
+                                    'communityLicenceDocument' => 'lost',
                                     'lostContent' =>
                                         [
                                             'details' => 'lost info'
@@ -123,20 +123,20 @@ class OperatorLicenceTest extends MockeryTestCase
                                 ],
                         ],
                     'api_data' => [
-                        'licenceDocumentStatus' =>
+                        'communityLicenceDocumentStatus' =>
                             [
                                 'id' => RefData::SURRENDER_DOC_STATUS_LOST,
                             ],
-                        'licenceDocumentInfo' => 'lost info'
+                        'communityLicenceDocumentInfo' => 'lost info'
                     ],
                 ],
             'case_02' =>
                 [
                     'mapped_api_data' =>
                         [
-                            'operatorLicenceDocument' =>
+                            'communityLicence' =>
                                 [
-                                    'licenceDocument' => 'stolen',
+                                    'communityLicenceDocument' => 'stolen',
                                     'stolenContent' =>
                                         [
                                             'details' => 'stolen info'
@@ -145,29 +145,29 @@ class OperatorLicenceTest extends MockeryTestCase
                         ],
                     'api_data' =>
                         [
-                            'licenceDocumentStatus' =>
+                            'communityLicenceDocumentStatus' =>
                                 [
                                     'id' => RefData::SURRENDER_DOC_STATUS_STOLEN,
                                 ],
-                            'licenceDocumentInfo' => 'stolen info'
+                            'communityLicenceDocumentInfo' => 'stolen info'
                         ],
                 ],
             'case_03' =>
                 [
                     'mapped_api_data' =>
                         [
-                            'operatorLicenceDocument' =>
+                            'communityLicence' =>
                                 [
-                                    'licenceDocument' => 'possession',
+                                    'communityLicenceDocument' => 'possession',
                                 ],
                         ],
                     'api_data' =>
                         [
-                            'licenceDocumentStatus' =>
+                            'communityLicenceDocumentStatus' =>
                                 [
                                     'id' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
                                 ],
-                            'licenceDocumentInfo' => null
+                            'communityLicenceDocumentInfo' => null
                         ],
                 ]
         ];
