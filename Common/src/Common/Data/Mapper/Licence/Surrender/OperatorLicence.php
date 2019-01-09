@@ -5,7 +5,7 @@ namespace Common\Data\Mapper\licence\Surrender;
 use Common\RefData;
 use Common\Data\Mapper\MapperInterface;
 
-class Operatorlicence implements MapperInterface
+class OperatorLicence implements MapperInterface
 {
     /**
      * Map data from form to DTO
