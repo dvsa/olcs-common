@@ -3449,6 +3449,13 @@ return [
     'lva-operating-centre-newspaper-permission' => 'I acknowledge that:',
 
     // Permits application
+    'permits.irhp-application.overview.title' => 'Application overview - ',
+    'permits.irhp-application.overview.main' => 'Apply for a permit',
+    'permits.irhp-application.overview.complete-all-sections' => 'You must complete all of the sections to apply for a new permit.',
+    'permits.irhp-application.overview.further-guidance' => 'Further <a href="{{IRHP_GUIDANCE_LINK}}">guidance on permits</a> is available on GOV.UK.',
+    'permits.irhp-application.status.question' => 'Application status',
+    'permits.irhp-application.cancel.question' => 'Cancel Application',
+
     'permits.application.overview.main-title' => 'Application Overview-',
     'permits.application.ineligible' => 'You are not eligible for permits',
     'permits.application.overview.title' => 'Application overview - ',
@@ -3635,6 +3642,12 @@ return [
     'section.name.ecmt-no-of-permits' => 'Number of permits required',
     'section.name.ecmt-check-answers' => 'Check your answers',
     'section.name.ecmt-declaration' => 'Declaration',
+
+    'section.name.application/licence' => 'Licence number',
+    'section.name.application/countries' => 'Countries where you need a permit',
+    'section.name.application/no-of-permits' => 'Number of permits required',
+    'section.name.application/check-answers' => 'Check your answers',
+    'section.name.application/declaration' => 'Declaration',
 
     'less.than.60%' => 'Less than 60%',
     'from.60%.to.90%' => 'From 60% to 90%',
