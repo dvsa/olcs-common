@@ -26,9 +26,11 @@ class IrhpPermitStockType implements FormatterInterface
     {
         unset($column);
 
-        $url = $sm->get(
-            'Helper\Url')->fromRoute("admin-dashboard/admin-permits/permit-range",
-            ['stockId' => $data['id']]
+        $url = $sm->get('Helper\Url')->fromRoute(
+            'admin-dashboard/admin-permits/ranges',
+            [
+                'stockId' => $data['id']
+            ]
         );
 
         $canDelete = $data['canDelete'];
