@@ -35,7 +35,11 @@ class OperatorLicence implements MapperInterface
 
     public static function mapFromResult(array $data)
     {
-        $licenceDocumentStatus = $data["licenceDocumentStatus"]["id"];
+        $licenceDocumentStatus = $data["licenceDocumentStatus"]["id"] ?? null;
+
+        if (is_null($licenceDocumentStatus)) {
+            return [];
+        }
 
         $formData = [
             RefData::SURRENDER_DOC_STATUS_DESTROYED =>
