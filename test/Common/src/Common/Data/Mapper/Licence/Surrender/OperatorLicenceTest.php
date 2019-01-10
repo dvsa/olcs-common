@@ -20,13 +20,13 @@ class OperatorLicenceTest extends MockeryTestCase
     }
 
     /**
-     * @dataProvider dpTestMapFromApi
+     * @dataProvider dpTestMapFromResult
      */
-    public function testMapFromApi($mappedApiData, $apiData)
+    public function testMapFromResult($mappedApiData, $apiData)
     {
         static::assertEquals(
             $mappedApiData,
-            OperatorLicence::mapFromApi($apiData)
+            OperatorLicence::mapFromResult($apiData)
         );
     }
 
@@ -43,7 +43,11 @@ class OperatorLicenceTest extends MockeryTestCase
                                     'lostContent' =>
                                         [
                                             'details' => 'lost info'
-                                        ]
+                                        ],
+                                    'stolenContent' =>
+                                        [
+                                            'details' => ''
+                                        ],
                                 ],
                         ],
                     'mapped_form_data' =>
@@ -62,7 +66,11 @@ class OperatorLicenceTest extends MockeryTestCase
                                     'stolenContent' =>
                                         [
                                             'details' => 'stolen info'
-                                        ]
+                                        ],
+                                    'lostContent' =>
+                                        [
+                                            'details' => ''
+                                        ],
                                 ],
                         ],
                     'mapped_form_data' =>
@@ -78,7 +86,16 @@ class OperatorLicenceTest extends MockeryTestCase
                             'operatorLicenceDocument' =>
                                 [
                                     'licenceDocument' => 'possession',
+                                    'lostContent' =>
+                                        [
+                                            'details' => 'lost info'
+                                        ],
+                                    'stolenContent' =>
+                                        [
+                                            'details' => ''
+                                        ],
                                 ],
+
                         ],
                     'mapped_form_data' =>
                         [
@@ -86,10 +103,26 @@ class OperatorLicenceTest extends MockeryTestCase
                             'licenceDocumentInfo' => null
                         ],
                 ],
+                'case_04' =>
+                [
+                    'form_data' =>
+                        [
+                            'operatorLicenceDocument' =>
+                                [
+                                    'licenceDocument' => 'possession'
+                                ],
+
+                        ],
+                    'mapped_form_data' =>
+                        [
+                            'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
+                            'licenceDocumentInfo' => null
+                        ],
+                ]
         ];
     }
 
-    public function dpTestMapFromApi()
+    public function dpTestMapFromResult()
     {
         return [
             'case_01' =>
@@ -98,7 +131,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => RefData::SURRENDER_DOC_STATUS_LOST,
+                                    'licenceDocument' => 'lost',
                                     'lostContent' =>
                                         [
                                             'details' => 'lost info'
@@ -119,7 +152,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => RefData::SURRENDER_DOC_STATUS_STOLEN,
+                                    'licenceDocument' => 'stolen',
                                     'stolenContent' =>
                                         [
                                             'details' => 'stolen info'
@@ -141,7 +174,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
+                                    'licenceDocument' => 'possession',
                                 ],
                         ],
                     'api_data' =>
@@ -150,6 +183,7 @@ class OperatorLicenceTest extends MockeryTestCase
                                 [
                                     'id' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
                                 ],
+                            'licenceDocumentInfo' => null
                         ],
                 ]
         ];

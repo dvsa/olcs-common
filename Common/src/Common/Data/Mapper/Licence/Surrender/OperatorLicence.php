@@ -1,11 +1,11 @@
 <?php
 
-
-namespace Common\Data\Mapper\Licence\Surrender;
+namespace Common\Data\Mapper\licence\Surrender;
 
 use Common\RefData;
+use Common\Data\Mapper\MapperInterface;
 
-class OperatorLicence
+class OperatorLicence implements MapperInterface
 {
     /**
      * Map data from form to DTO
@@ -16,56 +16,54 @@ class OperatorLicence
      */
     public static function mapFromForm(array $formData): array
     {
-        return [
-            'licenceDocumentStatus' => self::mapLicenceDocumentStatusandDetails($formData)[0],
-            'licenceDocumentInfo' => self::mapLicenceDocumentStatusandDetails($formData)[1],
+        $mappedData = [
+            'possession' => [
+                'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
+                'licenceDocumentInfo' => null
+            ],
+            'lost' => [
+                'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_LOST,
+                'licenceDocumentInfo' => $formData['operatorLicenceDocument']['lostContent']['details'] ?? null
+            ],
+            'stolen' => [
+                'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_STOLEN,
+                'licenceDocumentInfo' => $formData['operatorLicenceDocument']['stolenContent']['details'] ?? null
+            ],
         ];
+        return $mappedData[$formData['operatorLicenceDocument']['licenceDocument']];
     }
 
-    private static function mapLicenceDocumentStatusandDetails($formData): array
+    public static function mapFromResult(array $data)
     {
-        $licenceDocumentStatus = $formData['operatorLicenceDocument']['licenceDocument'];
-        $licenceDocumentStatusDetails = "";
+        $licenceDocumentStatus = $data["licenceDocumentStatus"]["id"];
 
-        switch ($licenceDocumentStatus) {
-            case 'possession':
-                $licenceDocumentStatus = RefData::SURRENDER_DOC_STATUS_DESTROYED;
-                $licenceDocumentStatusDetails = null;
-                break;
-            case 'lost':
-                $licenceDocumentStatus = RefData::SURRENDER_DOC_STATUS_LOST;
-                $licenceDocumentStatusDetails = $formData['operatorLicenceDocument']['lostContent']['details'];
-                break;
-            case 'stolen':
-                $licenceDocumentStatus = RefData::SURRENDER_DOC_STATUS_STOLEN;
-                $licenceDocumentStatusDetails = $formData['operatorLicenceDocument']['stolenContent']['details'];
-                break;
-        }
+        $formData = [
+            RefData::SURRENDER_DOC_STATUS_DESTROYED =>
+                [
+                    'operatorLicenceDocument' => [
+                        'licenceDocument' => 'possession'
+                    ]
+                ],
+            RefData::SURRENDER_DOC_STATUS_LOST =>
+                [
+                    'operatorLicenceDocument' => [
+                        'licenceDocument' => 'lost',
+                        'lostContent' => [
+                            'details' => $data["licenceDocumentInfo"]
+                        ]
+                    ]
+                ],
+            RefData::SURRENDER_DOC_STATUS_STOLEN =>
+                [
+                    'operatorLicenceDocument' => [
+                        'licenceDocument' => 'stolen',
+                        'stolenContent' => [
+                            'details' => $data["licenceDocumentInfo"]
+                        ]
+                    ]
+                ],
+        ];
 
-
-        return [$licenceDocumentStatus, $licenceDocumentStatusDetails];
-    }
-
-    public static function mapFromApi($apiData)
-    {
-
-        $licenceDocumentStatus = $apiData["licenceDocumentStatus"]["id"];
-
-        $formData = [];
-
-        switch ($licenceDocumentStatus) {
-            case RefData::SURRENDER_DOC_STATUS_DESTROYED:
-                $formData['operatorLicenceDocument']['licenceDocument'] = RefData::SURRENDER_DOC_STATUS_DESTROYED;
-                break;
-            case RefData::SURRENDER_DOC_STATUS_LOST:
-                $formData['operatorLicenceDocument']['licenceDocument'] = RefData::SURRENDER_DOC_STATUS_LOST;
-                $formData['operatorLicenceDocument']['lostContent']['details'] = $apiData["licenceDocumentInfo"];
-                break;
-            case RefData::SURRENDER_DOC_STATUS_STOLEN:
-                $formData['operatorLicenceDocument']['licenceDocument'] = RefData::SURRENDER_DOC_STATUS_STOLEN;
-                $formData['operatorLicenceDocument']['stolenContent']['details'] = $apiData["licenceDocumentInfo"];
-                break;
-        }
-        return $formData;
+        return $formData[$licenceDocumentStatus];
     }
 }
