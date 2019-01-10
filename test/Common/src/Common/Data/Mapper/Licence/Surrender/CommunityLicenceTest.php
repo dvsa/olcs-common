@@ -3,173 +3,101 @@
 namespace CommonTest\Data\Mapper\Licence\Surrender;
 
 use Common\Data\Mapper\Licence\Surrender\CommunityLicence;
-use Common\RefData;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class CommunityLicenceTest extends MockeryTestCase
 {
-    /**
-     * @dataProvider dpTestMapFromForm
-     */
-    public function testMapFromForm($formData, $mappedData)
-    {
-        static::assertEquals(
-            $mappedData,
-            CommunityLicence::mapFromForm($formData)
-        );
-    }
 
     /**
-     * @dataProvider dpTestMapFromResult
+     * @dataProvider resultData
+     *
+     * @param $apiData
+     * @param $formData
      */
-    public function testMapFromResult($mappedApiData, $apiData)
+    public function testMapFromResult($apiData, $formData)
     {
         static::assertEquals(
-            $mappedApiData,
+            $formData,
             CommunityLicence::mapFromResult($apiData)
         );
     }
 
-    public function dpTestMapFromForm()
+    /**
+     * @dataProvider  resultData
+     * @param $apiData
+     * @param $formData
+     */
+    public function testMapFromForm($apiData, $formData)
+    {
+        $apiData['communityLicenceDocumentStatus'] = $apiData['communityLicenceDocumentStatus']['id'];
+
+        static::assertEquals(
+            $apiData,
+            CommunityLicence::mapFromForm($formData)
+        );
+    }
+
+    public function resultData()
     {
         return [
-            'case_01' =>
-                [
-                    'form_data' =>
-                        [
-                            'communityLicence' =>
-                                [
-                                    'communityLicenceDocument' => 'lost',
-                                    'lostContent' =>
-                                        [
-                                            'details' => 'lost info'
-                                        ],
-                                    'stolenContent' =>
-                                        [
-                                            'details' => ''
-                                        ],
-                                ],
-                        ],
-                    'mapped_form_data' =>
-                        [
-                            'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_LOST,
-                            'communityLicenceDocumentInfo' => 'lost info'
-                        ],
-                ],
-            'case_02' =>
-                [
-                    'form_data' =>
-                        [
-                            'communityLicence' =>
-                                [
-                                    'communityLicenceDocument' => 'stolen',
-                                    'stolenContent' =>
-                                        [
-                                            'details' => 'stolen info'
-                                        ],
-                                    'lostContent' =>
-                                        [
-                                            'details' => ''
-                                        ],
-                                ],
-                        ],
-                    'mapped_form_data' =>
-                        [
-                            'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_STOLEN,
-                            'communityLicenceDocumentInfo' => 'stolen info'
-                        ],
-                ],
-            'case_03' =>
-                [
-                    'form_data' =>
-                        [
-                            'communityLicence' =>
-                                [
-                                    'communityLicenceDocument' => 'possession',
-                                    'lostContent' =>
-                                        [
-                                            'details' => 'lost info'
-                                        ],
-                                    'stolenContent' =>
-                                        [
-                                            'details' => ''
-                                        ],
-                                ],
+            'possession' => [
+                'apiData' => [
 
-                        ],
-                    'mapped_form_data' =>
-                        [
-                            'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
-                            'communityLicenceDocumentInfo' => null
-                        ],
+                    "communityLicenceDocumentStatus" => ['id' => 'doc_sts_destroyed'],
+                    "communityLicenceDocumentInfo" => null,
+
                 ],
+                'formData' => [
+                    'communityLicence' => [
+                        'communityLicenceDocument' => 'possession'
+                    ]
+                ]
+            ],
+            'lost' => [
+                'apiData' => [
+
+                    "communityLicenceDocumentStatus" => ['id' => 'doc_sts_lost'],
+                    "communityLicenceDocumentInfo" => 'lost info',
+
+                ],
+                'formData' => [
+                    'communityLicence' => [
+                        'communityLicenceDocument' => 'lost',
+                        'lostContent' => [
+                            'details' => 'lost info'
+                        ]
+                    ]
+                ]
+            ],
+            'stolen' => [
+                'apiData' => [
+
+                    "communityLicenceDocumentStatus" => ['id' => 'doc_sts_stolen'],
+                    "communityLicenceDocumentInfo" => 'stolen info',
+
+                ],
+                'formData' => [
+                    'communityLicence' => [
+                        'communityLicenceDocument' => 'stolen',
+                        'stolenContent' => [
+                            'details' => 'stolen info'
+                        ]
+                    ]
+                ]
+            ],
         ];
     }
 
-    public function dpTestMapFromResult()
+    public function getStatusForId(string $id)
     {
-        return [
-            'case_01' =>
-                [
-                    'mapped_api_data' =>
-                        [
-                            'communityLicence' =>
-                                [
-                                    'communityLicenceDocument' => 'lost',
-                                    'lostContent' =>
-                                        [
-                                            'details' => 'lost info'
-                                        ]
-                                ],
-                        ],
-                    'api_data' => [
-                        'communityLicenceDocumentStatus' =>
-                            [
-                                'id' => RefData::SURRENDER_DOC_STATUS_LOST,
-                            ],
-                        'communityLicenceDocumentInfo' => 'lost info'
-                    ],
-                ],
-            'case_02' =>
-                [
-                    'mapped_api_data' =>
-                        [
-                            'communityLicence' =>
-                                [
-                                    'communityLicenceDocument' => 'stolen',
-                                    'stolenContent' =>
-                                        [
-                                            'details' => 'stolen info'
-                                        ]
-                                ],
-                        ],
-                    'api_data' =>
-                        [
-                            'communityLicenceDocumentStatus' =>
-                                [
-                                    'id' => RefData::SURRENDER_DOC_STATUS_STOLEN,
-                                ],
-                            'communityLicenceDocumentInfo' => 'stolen info'
-                        ],
-                ],
-            'case_03' =>
-                [
-                    'mapped_api_data' =>
-                        [
-                            'communityLicence' =>
-                                [
-                                    'communityLicenceDocument' => 'possession',
-                                ],
-                        ],
-                    'api_data' =>
-                        [
-                            'communityLicenceDocumentStatus' =>
-                                [
-                                    'id' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
-                                ],
-                            'communityLicenceDocumentInfo' => null
-                        ],
-                ]
-        ];
+        switch ($id) {
+            case 'doc_sts_destroyed':
+                return 'possession';
+            case 'doc_sts_lost':
+                return 'lost';
+            case 'doc_sts_stolen':
+                return 'stolen';
+        }
+        return '';
     }
 }
