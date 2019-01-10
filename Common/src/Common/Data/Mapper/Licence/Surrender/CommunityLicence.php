@@ -24,11 +24,11 @@ class CommunityLicence implements MapperInterface
             ],
             'lost' => [
                 'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_LOST,
-                'communityLicenceDocumentInfo' => $formData['communityLicence']['lostContent']['details']
+                'communityLicenceDocumentInfo' => $formData['communityLicence']['lostContent']['details'] ?? null
             ],
             'stolen' => [
                 'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_STOLEN,
-                'communityLicenceDocumentInfo' => $formData['communityLicence']['stolenContent']['details']
+                'communityLicenceDocumentInfo' => $formData['communityLicence']['stolenContent']['details'] ?? null
             ],
         ];
         return $mappedData[$formData['communityLicence']['communityLicenceDocument']];
