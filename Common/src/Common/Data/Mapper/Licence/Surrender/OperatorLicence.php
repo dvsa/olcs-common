@@ -30,8 +30,6 @@ class OperatorLicence implements MapperInterface
                 'licenceDocumentInfo' => $formData['operatorLicenceDocument']['stolenContent']['details']
             ],
         ];
-
-        $test = $mappedData[$formData['operatorLicenceDocument']['licenceDocument']];
         return $mappedData[$formData['operatorLicenceDocument']['licenceDocument']];
     }
 
