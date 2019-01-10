@@ -23,11 +23,11 @@ class OperatorLicence implements MapperInterface
             ],
             'lost' => [
                 'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_LOST,
-                'licenceDocumentInfo' => $formData['operatorLicenceDocument']['lostContent']['details']
+                'licenceDocumentInfo' => $formData['operatorLicenceDocument']['lostContent']['details'] ?? null
             ],
             'stolen' => [
                 'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_STOLEN,
-                'licenceDocumentInfo' => $formData['operatorLicenceDocument']['stolenContent']['details']
+                'licenceDocumentInfo' => $formData['operatorLicenceDocument']['stolenContent']['details'] ?? null
             ],
         ];
         return $mappedData[$formData['operatorLicenceDocument']['licenceDocument']];

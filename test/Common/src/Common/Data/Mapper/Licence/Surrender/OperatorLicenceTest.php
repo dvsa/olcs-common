@@ -103,6 +103,22 @@ class OperatorLicenceTest extends MockeryTestCase
                             'licenceDocumentInfo' => null
                         ],
                 ],
+                'case_04' =>
+                [
+                    'form_data' =>
+                        [
+                            'operatorLicenceDocument' =>
+                                [
+                                    'licenceDocument' => 'possession'
+                                ],
+
+                        ],
+                    'mapped_form_data' =>
+                        [
+                            'licenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_DESTROYED,
+                            'licenceDocumentInfo' => null
+                        ],
+                ]
         ];
     }
 
