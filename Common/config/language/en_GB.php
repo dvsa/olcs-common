@@ -1664,8 +1664,6 @@ return [
     'licence.surrender.operator_licence_stolen.text_area.stringLengthTooShort'=>'Provide details about the incident when your operator licence was stolen. Include the crime reference number',
     'licence.surrender.operator_licence_stolen.text_area.stringLengthTooLong'=>'You can only enter 500 characters.',
     'licence.surrender.operator_licence_stolen.text_area.empty' => 'Provide details about the incident when your operator licence was stolen. Include the crime reference number',
-
-
     'licence.surrender.community_licence.heading'=>'Where is your community licence documentation?',
     'licence.surrender.community_licence.possession.note'=>'You must destroy all community licence documents and certified copies',
     'licence.surrender.community_licence.return_to_operator.licence.link' => 'Return to operator licence',
