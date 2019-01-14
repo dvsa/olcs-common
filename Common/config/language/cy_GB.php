@@ -455,7 +455,7 @@ return [
     'licence.surrender.operator_licence.title' => 'Where is your operator licence document?',
     'licence.surrender.operator_licence.possession.note' => 'You must destroy your operator licence.',
     'licence.surrender.operator_licence.lost.note' => 'Please provide details of lost documents.',
-    'licence.surrender.operator_licence_lost.text_area.hint' => 'Don\'t personal or financial information, e.g. your National Insurance Number or credit card details. (Max 500 chars.)',
+    'licence.surrender.operator_licence_lost.text_area.hint' => 'Don\'t enter personal or financial information, e.g. your National Insurance Number or credit card details. (Max 500 chars.)',
     'licence.surrender.operator_licence_stolen.text_area.hint' => 'For stolen documents you must provide the Crime Reference Number. (Max 500 chars.)',
     'licence.surrender.licence.stolen.note' => 'Please provide details of stolen documents.',
     'licence.surrender.operator_licence.possession.label' => 'In your possession',
