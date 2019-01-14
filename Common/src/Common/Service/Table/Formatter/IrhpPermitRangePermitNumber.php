@@ -25,8 +25,10 @@ class IrhpPermitRangePermitNumber implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
+        unset($column);
+
         $url = $sm->get('Helper\Url')->fromRoute(
-            'admin-dashboard/admin-permits/permit-range',
+            'admin-dashboard/admin-permits/ranges',
             [
                 'stockId' => $data['irhpPermitStock']['id'],
                 'action' => 'edit',
