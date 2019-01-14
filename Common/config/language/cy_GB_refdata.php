@@ -338,5 +338,8 @@ return [
     'Current' => 'Cyfredol',
     'Disqualified' => 'Anghymhwyso',
     'ebsr-variation-short-notice' => 'Hysbysiad byr',
+    'Less than 60%' => 'Llai na 60%',
+    '60% to 90%' => 'O 60% i 90%',
+    'More than 90%' => 'Mwy na 90%',
     // Potentially unused translations
 ];
