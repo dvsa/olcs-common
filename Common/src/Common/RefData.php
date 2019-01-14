@@ -395,4 +395,7 @@ class RefData
     const SURRENDER_DOC_STATUS_DESTROYED='doc_sts_destroyed';
     const SURRENDER_DOC_STATUS_LOST='doc_sts_lost';
     const SURRENDER_DOC_STATUS_STOLEN='doc_sts_stolen';
+
+    //IRHP Permit Type
+    const IRHP_BILATERAL_PERMIT_TYPE_ID = 4;
 }
