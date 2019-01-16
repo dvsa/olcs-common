@@ -6,7 +6,11 @@ use Common\Service\Helper\TranslationHelperService;
 
 abstract class AbstractSection
 {
+    use MakeSectionTrait;
+
     protected $displayChangeLinkInHeading = true;
+
+
 
     protected $heading;
 
@@ -22,18 +26,6 @@ abstract class AbstractSection
         $this->licence = $licence;
         $this->urlHelper = $urlHelper;
         $this->translator = $translator;
-    }
-
-    public function makeSection()
-    {
-        $questions = $this->makeQuestions();
-
-        return [
-            'sectionHeading' => $this->translator->translate($this->heading),
-            'changeLinkInHeading' => $this->displayChangeLinkInHeading,
-            'change' => $this->makeChangeLink(),
-            'questions' => $questions
-        ];
     }
 
     abstract protected function makeQuestions();
