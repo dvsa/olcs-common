@@ -1641,8 +1641,8 @@ return [
     'irhp-permit-stock-cannot-delete-active-dependencies' => 'Ni ellir dileu\'r Stoc Hawlenni hon gan fod yna ddibyniaethau gweithredol',
     'irhp-permit-range-cannot-delete-active-dependencies' => 'Ni ellir dileu\'r Ystod Hawlenni hon gan fod yna ddibyniaethau gweithredol',
 
-    'permits.irhp.application.question.countries' => 'CY - Select the country you are transporting goods to',
-    'permits.irhp.application.question.no-of-permits' => 'CY - How many permits do you require?',
-    'permits.irhp.application.answers.no-of-permits' => 'CY - %s permits for %s in %s',
+    'permits.irhp.application.question.countries' => 'Select the country you are transporting goods to',
+    'permits.irhp.application.question.no-of-permits' => 'How many permits do you require?',
+    'permits.irhp.application.answers.no-of-permits' => '%s permits for %s in %s',
     // Potentially unused translations
 ];
