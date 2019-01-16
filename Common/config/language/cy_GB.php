@@ -1531,6 +1531,12 @@ return [
     'permits.page.fee.permit.fee.non-refundable' => ' (ni ellir ei ad-dalu)',
     'permits.page.cancel.question' => 'Canslo cais',
     'permits.page.cancel.browser.title' => 'Canslo Cais',
+
+    'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
+    'permits.page.bilateral.no-of-permits.question' => 'For each country, how many permits do you require?',
+    'permits.page.bilateral.no-of-permits.guidance' => 'Up to %s permits are authorised for this licence for each country for each year. There is an £%s permit fee to pay for each permit.',
+    'permits.page.bilateral.no-of-permits.additional-guidance' => 'You can apply for permits for all countries you may need for the whole year.',
+
     'permits.button.accept-and-continue' => 'Derbyn a pharhau',
     'permits.button.confirm-and-continue' => 'Cadarnhau a pharhau',
     'permits.button.continue' => 'Pharhau',

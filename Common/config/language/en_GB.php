@@ -3594,6 +3594,12 @@ return [
     'permits.page.fee.per-permit' => ' (per permit)',
     'permits.page.fee.permit.fee.total' => 'Total application fee to be paid',
     'permits.page.fee.permit.fee.non-refundable' => ' (non-refundable)',
+
+    'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
+    'permits.page.bilateral.no-of-permits.question' => 'For each country, how many permits do you require?',
+    'permits.page.bilateral.no-of-permits.guidance' => 'Up to %s permits are authorised for this licence for each country for each year. There is an £%s permit fee to pay for each permit.',
+    'permits.page.bilateral.no-of-permits.additional-guidance' => 'You can apply for permits for all countries you may need for the whole year.',
+
     'permits.button.accept-and-continue' => 'Accept and continue',
     'permits.button.confirm-and-continue' => 'Confirm and continue',
     'permits.button.continue' => 'Continue',
