@@ -3723,8 +3723,5 @@ return [
     'permits.irhp.application.question.countries' => 'Select the country you are transporting goods to',
     'permits.irhp.application.question.no-of-permits' => 'How many permits do you require?',
     'permits.irhp.application.answers.no-of-permits' => '%s permits for %s in %s',
-
-
-
     // Potentially unused translations
 ];
