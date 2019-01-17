@@ -30,7 +30,7 @@ class OperatorLicence implements MapperInterface
                 'licenceDocumentInfo' => $formData['operatorLicenceDocument']['stolenContent']['details'] ?? null
             ],
         ];
-        return $mappedData[$formData['operatorLicenceDocument']['licenceDocument']];
+        return $mappedData[$formData['operatorLicenceDocument']['operatorLicenceDocument']];
     }
 
     public static function mapFromResult(array $data)
@@ -45,13 +45,13 @@ class OperatorLicence implements MapperInterface
             RefData::SURRENDER_DOC_STATUS_DESTROYED =>
                 [
                     'operatorLicenceDocument' => [
-                        'licenceDocument' => 'possession'
+                        'operatorLicenceDocument' => 'possession'
                     ]
                 ],
             RefData::SURRENDER_DOC_STATUS_LOST =>
                 [
                     'operatorLicenceDocument' => [
-                        'licenceDocument' => 'lost',
+                        'operatorLicenceDocument' => 'lost',
                         'lostContent' => [
                             'details' => $data["licenceDocumentInfo"]
                         ]
@@ -60,7 +60,7 @@ class OperatorLicence implements MapperInterface
             RefData::SURRENDER_DOC_STATUS_STOLEN =>
                 [
                     'operatorLicenceDocument' => [
-                        'licenceDocument' => 'stolen',
+                        'operatorLicenceDocument' => 'stolen',
                         'stolenContent' => [
                             'details' => $data["licenceDocumentInfo"]
                         ]

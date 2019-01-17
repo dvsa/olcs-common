@@ -1678,6 +1678,21 @@ return [
     'licence.surrender.print-sign-return.form.title.psv' => 'Application to surrender your Public Service Vehicle Operator\'s Licence',
     'licence.surrender.print-sign-return.form.title.gv' => 'Application to surrender your Goods Vehicle Operator\'s Licence',
     'licence.surrender.print-sign-return.form.error' =>'Sorry, there is a problem with the service. Your data has been saved. Try again later.',
+
+    'licence.surrender.review.heading' => 'Review your surrender information',
+    'licence.surrender.review.discs.heading' =>'Current discs',
+    'licence.surrender.review.documents.heading' =>'Documentation',
+    'licence.surrender.review.label.discs.possession' =>'Number destroyed',
+    'licence.surrender.review.label.discs.lost'=>'Number lost',
+    'licence.surrender.review.label.discs.stolen'=>'Number stolen',
+    'surrender.review.label.documents.operatorLicenceDocument' =>'Operator licence',
+    'surrender.review.label.documents.communityLicenceDocument' =>'Community licence and all certified copies',
+    'licence.surrender.review.label.documents.answerlost' => 'lost',
+    'licence.surrender.review.label.documents.answerstolen'=>'stolen',
+    'licence.surrender.review.label.documents.answerpossession' =>'destroyed',
+    'licence.surrender.review.label.documents.answer' =>'unknown',
+
+
     'licence.apply-to-change' => 'Apply to change this licence',
     'licence.vehicles-trailers.share-info' => 'Tick the box to confirm that you wish to share this information with the Driver and Vehicle Standards Agency (DVSA). Your data will be used for its purposes, eg test history reports or your Operator Compliance Risk Score (OCRS). You must keep this information up to date. If you don’t, you may receive an inaccurate test history report or OCRS.',
     'licence.vehicles_transfer.form.licence' => 'To which licence would you like to transfer the selected vehicle(s)?',

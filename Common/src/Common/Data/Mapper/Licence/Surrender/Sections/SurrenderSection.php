@@ -3,19 +3,23 @@
 
 namespace Common\Data\Mapper\Licence\Surrender\Sections;
 
-
 use Common\Data\Mapper\Licence\Surrender\CommunityLicence;
 use Common\Data\Mapper\Licence\Surrender\CurrentDiscs;
 use Common\Data\Mapper\licence\Surrender\OperatorLicence;
 use Common\Service\Helper\TranslationHelperService;
 use Zend\Mvc\Controller\Plugin\Url;
 
+/**
+ * Class SurrenderSection
+ *
+ * @package Common\Data\Mapper\Licence\Surrender\Sections
+ */
 class SurrenderSection
 {
     use MakeSectionTrait;
 
-    const DISC_SECTION = 'CurrentDiscs';
-    const DOCUMENTS_SECTION = ['OperatorLicence', 'CommunityLicence'];
+    const DISC_SECTION = 'current-discs';
+    const DOCUMENTS_SECTION = 'Documents';
 
     private $heading;
 
@@ -32,6 +36,7 @@ class SurrenderSection
      */
     private $translator;
     private $section;
+
 
     public function __construct(
         array $data,
@@ -54,43 +59,71 @@ class SurrenderSection
         $this->heading = $heading;
     }
 
+    /**
+     * @return array
+     */
     protected function makeQuestions(): array
     {
         return $this->getDataForSection($this->section);
     }
 
+    /**
+     * @param $section
+     *
+     * @return array
+     */
     private function getDataForSection($section): array
     {
+        $questions = [];
         switch ($section) {
             case self::DISC_SECTION:
-                $data = CurrentDiscs::mapFromResult($this->data);
-
-                
+                $data = CurrentDiscs::mapFromResult($this->data['surrender']);
+                $discInformation = array_column($data, 'info');
+                $sections = ['possession', 'lost', 'stolen'];
+                foreach ($discInformation as $k => $currentDiscs) {
+                    $labelSuffix = $sections[$k];
                     $questions [] = [
-                        'label' => $this->translator->translate(''),
-                        'answer' => $this->data[''],
-                        'changeLinkInHeading' => $this->displayChangeLinkInHeading
+                        'label' => $this->translator->translate('licence.surrender.review.label.discs.' . $labelSuffix),
+                        'answer' => $currentDiscs['number'] ?? '0',
+                        'changeLinkInHeading' => $this->displayChangeLinkInHeading,
+                        'change' => $this->makeChangeLink()
                     ];
                 }
-
-
                 break;
             case self::DOCUMENTS_SECTION:
-                $data = [
-                    'operatorLicence' => OperatorLicence::mapFromResult($this->data),
-                    'communityLicence' => CommunityLicence::mapFromResult($this->data)
-                ];
+                $operatorLicence = OperatorLicence::mapFromResult($this->data['surrender']);
+                $data['operatorLicenceDocument'] = $operatorLicence;
+
+                if ($this->data['licence']['isInternationalLicence']) {
+                    $data['communityLicenceDocument'] = CommunityLicence::mapFromResult($this->data['surrender']);
+                }
+                foreach ($data as $k => $document) {
+                    $questions [] = [
+                        'label' => $this->translator->translate('surrender.review.label.documents.' . $k),
+                        'answer' => $this->translator->translate('licence.surrender.review.label.documents.answer'.$document[$k][$k] ?? ''),
+                        'changeLinkInHeading' => $this->displayChangeLinkInHeading,
+                        'change' => $this->makeChangeLink($k)
+                    ];
+                }
                 break;
 
         }
-        return [];
+        return $questions;
     }
 
 
-    protected function makeChangeLink()
+    protected function makeChangeLink($label = null)
     {
-        if ($this->section === self::DISC_SECTION) {
-            return false;
+        $returnRoutes = [
+            'operatorLicenceDocument' => 'operator-licence',
+            'communityLicenceDocument' => 'community-licence'
+        ];
+        $changeLink = 'licence/surrender/current-discs/GET';
+        if ($this->section === self::DOCUMENTS_SECTION && !is_null($label)) {
+            $changeLink = 'licence/surrender/' . $returnRoutes[$label] . '/GET';
         }
+        return [
+            'sectionLink' => $this->urlHelper->fromRoute($changeLink, [], [], true)
+        ];
     }
 }

@@ -8,10 +8,6 @@ abstract class AbstractSection
 {
     use MakeSectionTrait;
 
-    protected $displayChangeLinkInHeading = true;
-
-
-
     protected $heading;
 
     protected $urlHelper;

@@ -4,6 +4,8 @@ namespace Common\Data\Mapper\Licence\Surrender\Sections;
 
 trait MakeSectionTrait
 {
+    protected $displayChangeLinkInHeading = true;
+
     public function makeSection()
     {
         $questions = $this->makeQuestions();
