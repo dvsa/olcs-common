@@ -48,7 +48,7 @@ class CommunityLicenceTest extends MockeryTestCase
 
                 ],
                 'formData' => [
-                    'communityLicence' => [
+                    'communityLicenceDocument' => [
                         'communityLicenceDocument' => 'possession'
                     ]
                 ]
@@ -61,7 +61,7 @@ class CommunityLicenceTest extends MockeryTestCase
 
                 ],
                 'formData' => [
-                    'communityLicence' => [
+                    'communityLicenceDocument' => [
                         'communityLicenceDocument' => 'lost',
                         'lostContent' => [
                             'details' => 'lost info'
@@ -77,7 +77,7 @@ class CommunityLicenceTest extends MockeryTestCase
 
                 ],
                 'formData' => [
-                    'communityLicence' => [
+                    'communityLicenceDocument' => [
                         'communityLicenceDocument' => 'stolen',
                         'stolenContent' => [
                             'details' => 'stolen info'

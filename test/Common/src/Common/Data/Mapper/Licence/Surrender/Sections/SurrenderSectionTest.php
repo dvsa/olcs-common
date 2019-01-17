@@ -20,7 +20,6 @@ class SurrenderSectionTest extends MockeryTestCase
     public function setUp()
     {
         $this->mockTranslator = m::mock(TranslationHelperService::class);
-        $this->mockTranslator->shouldReceive('translate')->with('DISCHEADING')->andReturn('DISCHEADING');
         $this->mockUrlHelper = m::mock(Url::class);
     }
 
@@ -29,7 +28,12 @@ class SurrenderSectionTest extends MockeryTestCase
      */
     public function testDiscsSurrenderSection($data, $expected)
     {
-        $mockSurrender = $data;
+        $mockSurrender = ['surrender' => $data];
+        $this->mockTranslator->shouldReceive('translate')->with('DISCHEADING')->andReturn('DISCHEADING');
+        $this->mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.discs.possession')->andReturn($expected[0]['label']);
+        $this->mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.discs.lost')->andReturn($expected[1]['label']);
+        $this->mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.discs.stolen')->andReturn($expected[2]['label']);
+        $this->mockUrlHelper->shouldReceive('fromRoute')->with('licence/surrender/current-discs/GET', [], [], true);
 
         $sut = new SurrenderSection(
             $mockSurrender,
@@ -42,7 +46,7 @@ class SurrenderSectionTest extends MockeryTestCase
         $expected = [
             'sectionHeading' => 'DISCHEADING',
             'changeLinkInHeading' => true,
-            'change' => false,
+            'change'=> ['sectionLink' => null],
             'questions' => $expected
         ];
         $this->assertSame($expected, $sut->makeSection());
@@ -52,13 +56,15 @@ class SurrenderSectionTest extends MockeryTestCase
     {
         $changeLinkInHeading = true;
         return [
+
             'DestroyedDiscs' => [
                 [
+                    'discDestroyed' => '10',
                     'version' => 1,
                     'possessionSection' => [
                         'inPossession' => 'Y',
                         'info' => [
-                            'number' => 10
+                            'number' => '10'
                         ]
                     ],
                     'lostSection' => [
@@ -80,18 +86,21 @@ class SurrenderSectionTest extends MockeryTestCase
                 [
                     [
                         'label' => 'Number destroyed',
-                        'answer' => 10,
-                        'changeLinkInHeading' => $changeLinkInHeading
+                        'answer' => '10',
+                        'changeLinkInHeading' => $changeLinkInHeading,
+                        'change' => ['sectionLink' => null]
                     ],
                     [
                         'label' => 'Number lost',
-                        'answer' => 0,
-                        'changeLinkInHeading' => $changeLinkInHeading
+                        'answer' => '0',
+                        'changeLinkInHeading' => $changeLinkInHeading,
+                        'change' => ['sectionLink' => null]
                     ],
                     [
                         'label' => 'Number stolen',
-                        'answer' => 0,
-                        'changeLinkInHeading' => $changeLinkInHeading
+                        'answer' => '0',
+                        'changeLinkInHeading' => $changeLinkInHeading,
+                        'change' => ['sectionLink' => null ]
                     ]
                 ]
 

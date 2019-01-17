@@ -16,9 +16,19 @@ class ReviewDetails
         array $surrender
     ): array {
         $licenceDetails = new LicenceDetails($licence, $urlHelper, $translator);
-        $discDetails = new SurrenderSection($surrender, $urlHelper, $translator, SurrenderSection::DISC_SECTION);
+        $discDetails = new SurrenderSection(
+            $surrender,
+            $urlHelper,
+            $translator,
+            SurrenderSection::DISC_SECTION
+        );
         $discDetails->setHeading('licence.surrender.review.discs.heading');
-        $documentDetails = new SurrenderSection($surrender, $urlHelper, $translator, SurrenderSection::DOCUMENTS_SECTION);
+        $documentDetails = new SurrenderSection(
+            $surrender,
+            $urlHelper,
+            $translator,
+            SurrenderSection::DOCUMENTS_SECTION
+        );
         $documentDetails->setHeading('licence.surrender.review.documents.heading');
         $documentDetails->setDisplayChangeLinkInHeading(false);
         $sections = [
