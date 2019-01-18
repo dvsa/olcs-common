@@ -23,21 +23,33 @@ class ReviewDetails
             SurrenderSection::DISC_SECTION
         );
         $discDetails->setHeading('licence.surrender.review.discs.heading');
-        $documentDetails = new SurrenderSection(
+        $operatorLicenceDetails = new SurrenderSection(
             $surrender,
             $urlHelper,
             $translator,
-            SurrenderSection::DOCUMENTS_SECTION
+            SurrenderSection::OPERATORLICENCE_SECTION
         );
-        $documentDetails->setHeading('licence.surrender.review.documents.heading');
-        $documentDetails->setDisplayChangeLinkInHeading(false);
+        $operatorLicenceDetails->setHeading('licence.surrender.review.documents.operatorlicence.heading');
+        $operatorLicenceDetails->setDisplayChangeLinkInHeading(true);
+
         $sections = [
             $licenceDetails->makeSection(),
             $discDetails->makeSection(),
-            $documentDetails->makeSection(),
+            $operatorLicenceDetails->makeSection(),
 
         ];
 
+        if ($surrender['licence']['isInternationalLicence']) {
+            $communityLicenceDetails = new SurrenderSection(
+                $surrender,
+                $urlHelper,
+                $translator,
+                SurrenderSection::COMMUNITYLICENCE_SECTION
+            );
+            $communityLicenceDetails->setHeading('licence.surrender.review.documents.communitylicence.heading');
+            $communityLicenceDetails->setDisplayChangeLinkInHeading(true);
+            array_push($sections, $communityLicenceDetails->makeSection());
+        }
         return $sections;
     }
 }
