@@ -105,7 +105,7 @@ class SurrenderSection
         $changeLink = 'licence/surrender/current-discs/review/GET';
 
         if ($this->section !== self::DISC_SECTION && !is_null($label)) {
-            $changeLink = 'licence/surrender/' . $returnRoutes[$label] . '/GET';
+            $changeLink = 'licence/surrender/' . $returnRoutes[$label] . '/review/GET';
         } elseif (is_null($label)) {
             return $this->makeChangeLink(array_search($this->section, $returnRoutes));
         }
