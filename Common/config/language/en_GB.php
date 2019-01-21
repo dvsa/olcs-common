@@ -3730,5 +3730,8 @@ return [
     'ERR_PERMIT_PRINTING_MAX_BATCH_SIZE_REACHED' => 'Too many permits selected for printing in one batch.',
     'ERR_PERMIT_PRINTING_ALREADY_IN_PROGRESS' => 'Printing already in progress.',
 
+    'permits.irhp.application.question.countries' => 'Select the country you are transporting goods to',
+    'permits.irhp.application.question.no-of-permits' => 'How many permits do you require?',
+    'permits.irhp.application.answers.no-of-permits' => '%s permits for %s in %s',
     // Potentially unused translations
 ];
