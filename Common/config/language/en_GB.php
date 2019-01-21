@@ -1678,7 +1678,6 @@ return [
     'licence.surrender.print-sign-return.form.title.psv' => 'Application to surrender your Public Service Vehicle Operator\'s Licence',
     'licence.surrender.print-sign-return.form.title.gv' => 'Application to surrender your Goods Vehicle Operator\'s Licence',
     'licence.surrender.print-sign-return.form.error' =>'Sorry, there is a problem with the service. Your data has been saved. Try again later.',
-
     'licence.surrender.review.heading' => 'Review your surrender information',
     'licence.surrender.review.discs.heading' =>'Current discs',
     'licence.surrender.review.documents.operatorlicence.heading' =>'Operator Licence',
@@ -1693,7 +1692,10 @@ return [
     'licence.surrender.review.label.documents.answerpossession' =>'to be destroyed',
     'licence.surrender.review.label.documents.answer' =>'unknown',
     'licence.surrender.review.action' => 'Confirm and continue',
-
+    'licence.surrender.information_changed.heading.psv' => 'Application to surrender a public service vehicle operator\'s licence',
+    'licence.surrender.information_changed.heading.gv' => 'Application to surrender a goods vehicle operator\'s licence',
+    'licence.surrender.information_changed.start_again' => 'Start again',
+    'licence.surrender.information_changed.review_continue' => 'Review and continue',
     'licence.apply-to-change' => 'Apply to change this licence',
     'licence.vehicles-trailers.share-info' => 'Tick the box to confirm that you wish to share this information with the Driver and Vehicle Standards Agency (DVSA). Your data will be used for its purposes, eg test history reports or your Operator Compliance Risk Score (OCRS). You must keep this information up to date. If you don’t, you may receive an inaccurate test history report or OCRS.',
     'licence.vehicles_transfer.form.licence' => 'To which licence would you like to transfer the selected vehicle(s)?',
@@ -3610,6 +3612,12 @@ return [
     'permits.page.fee.per-permit' => ' (per permit)',
     'permits.page.fee.permit.fee.total' => 'Total application fee to be paid',
     'permits.page.fee.permit.fee.non-refundable' => ' (non-refundable)',
+
+    'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
+    'permits.page.bilateral.no-of-permits.question' => 'For each country, how many permits do you require?',
+    'permits.page.bilateral.no-of-permits.guidance' => 'Up to %s permits are authorised for this licence for each country for each year. There is an £%s permit fee to pay for each permit.',
+    'permits.page.bilateral.no-of-permits.additional-guidance' => 'You can apply for permits for all countries you may need for the whole year.',
+
     'permits.button.accept-and-continue' => 'Accept and continue',
     'permits.button.confirm-and-continue' => 'Confirm and continue',
     'permits.button.continue' => 'Continue',
@@ -3736,5 +3744,8 @@ return [
     'ERR_PERMIT_PRINTING_MAX_BATCH_SIZE_REACHED' => 'Too many permits selected for printing in one batch.',
     'ERR_PERMIT_PRINTING_ALREADY_IN_PROGRESS' => 'Printing already in progress.',
 
+    'permits.irhp.application.question.countries' => 'Select the country you are transporting goods to',
+    'permits.irhp.application.question.no-of-permits' => 'How many permits do you require?',
+    'permits.irhp.application.answers.no-of-permits' => '%s permits for %s in %s',
     // Potentially unused translations
 ];
