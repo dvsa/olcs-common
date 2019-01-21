@@ -261,14 +261,20 @@ class SurrenderSectionTest extends MockeryTestCase
     }
 
     /**
-     * @dataProvider documentSections
+     * @dataProvider operatorLicenceSection
      */
     public function testOperatorLicence($data, $expected)
     {
         $mockSurrender = ['surrender' => $data];
         $this->mockTranslator->shouldReceive('translate')->with('DOCUMENTHEADING')->andReturn('DOCUMENTHEADING');
         $this->mockTranslator->shouldReceive('translate')->with('surrender.review.label.documents.operatorLicenceDocument')->andReturn($expected[0]['label']);
-        $this->mockTranslator->shouldReceive('translate')->with('licence.surrender.review.label.documents.answerpossession')->andReturn($expected[0]['answer']);
+
+        // use this to get the appropriate translation key
+        $translationString = $this->getTranslationStrings($this->dataDescription());
+
+        $this->mockTranslator->shouldReceive('translate')->with($translationString)->andReturn($expected[0]['answer']);
+
+
         $this->mockUrlHelper->shouldReceive('fromRoute')->with('licence/surrender/operator-licence/review/GET', [], [], true)->andReturn($expected[0]['change']['sectionLink']);
 
 
@@ -290,12 +296,12 @@ class SurrenderSectionTest extends MockeryTestCase
         $this->assertSame($expected, $sut->makeSection());
     }
 
-    public function documentSections()
+    public function operatorLicenceSection()
     {
         $changeLinkInHeading = true;
         return [
 
-            'OperatorLicence' => [
+            'OperatorLicenceDestroyed' => [
                 [
 
                     'licenceDocumentStatus' =>
@@ -312,6 +318,167 @@ class SurrenderSectionTest extends MockeryTestCase
                         'answer' => 'to be destroyed',
                         'changeLinkInHeading' => $changeLinkInHeading,
                         'change' => ['sectionLink' => 'operator-licence']
+                    ]
+                ]
+
+            ],
+            'OperatorLicenceLost' => [
+                [
+
+                    'licenceDocumentStatus' =>
+                        [
+                            'id' => RefData::SURRENDER_DOC_STATUS_LOST,
+                        ],
+                    'licenceDocumentInfo' => 'lost content'
+
+                ],
+
+                [
+                    [
+                        'label' => 'Operator licence',
+                        'answer' => 'lost',
+                        'changeLinkInHeading' => $changeLinkInHeading,
+                        'change' => ['sectionLink' => 'operator-licence']
+                    ]
+                ]
+
+            ],
+            'OperatorLicenceStolen' => [
+                [
+
+                    'licenceDocumentStatus' =>
+                        [
+                            'id' => RefData::SURRENDER_DOC_STATUS_STOLEN,
+                        ],
+                    'licenceDocumentInfo' => 'stolen content'
+
+                ],
+
+                [
+                    [
+                        'label' => 'Operator licence',
+                        'answer' => 'stolen',
+                        'changeLinkInHeading' => $changeLinkInHeading,
+                        'change' => ['sectionLink' => 'operator-licence']
+                    ]
+                ]
+
+            ],
+
+        ];
+    }
+
+    private function getTranslationStrings(string $dataDescription):string
+    {
+        $translations = [
+            'OperatorLicenceLost'=>'licence.surrender.review.label.documents.answerlost',
+            'OperatorLicenceDestroyed'=>'licence.surrender.review.label.documents.answerpossession',
+            'OperatorLicenceStolen' =>'licence.surrender.review.label.documents.answerstolen',
+            'communityLicenceDestroyed' =>'licence.surrender.review.label.documents.answerpossession',
+            'communityLicenceStolen' =>'licence.surrender.review.label.documents.answerstolen',
+            'communityLicenceLost' =>'licence.surrender.review.label.documents.answerlost',
+
+        ];
+        return $translations[$dataDescription];
+    }
+
+    /**
+     * @dataProvider communityLicenceSection
+     */
+    public function testCommunityLicence($data, $expected)
+    {
+        $mockSurrender = ['surrender' => $data];
+        $this->mockTranslator->shouldReceive('translate')->with('DOCUMENTHEADING')->andReturn('DOCUMENTHEADING');
+        $this->mockTranslator->shouldReceive('translate')->with('surrender.review.label.documents.communityLicenceDocument')->andReturn($expected[0]['label']);
+
+        // use this to get the appropriate translation key
+        $translationString = $this->getTranslationStrings($this->dataDescription());
+
+        $this->mockTranslator->shouldReceive('translate')->with($translationString)->andReturn($expected[0]['answer']);
+
+
+        $this->mockUrlHelper->shouldReceive('fromRoute')->with('licence/surrender/community-licence/review/GET', [], [], true)->andReturn($expected[0]['change']['sectionLink']);
+
+
+        $sut = new SurrenderSection(
+            $mockSurrender,
+            $this->mockUrlHelper,
+            $this->mockTranslator,
+            SurrenderSection::COMMUNITYLICENCE_SECTION
+        );
+
+        $sut->setHeading('DOCUMENTHEADING');
+        $sut->setDisplayChangeLinkInHeading(true);
+        $expected = [
+            'sectionHeading' => 'DOCUMENTHEADING',
+            'changeLinkInHeading' => true,
+            'change'=> ['sectionLink' => $expected[0]['change']['sectionLink']],
+            'questions' => $expected
+        ];
+        $this->assertSame($expected, $sut->makeSection());
+    }
+
+    public function communityLicenceSection()
+    {
+        $changeLinkInHeading = true;
+        return [
+
+            'communityLicenceDestroyed' => [
+                [
+
+                    "communityLicenceDocumentStatus" => ['id' => 'doc_sts_destroyed'],
+                    "communityLicenceDocumentInfo" => null,
+
+                ],
+
+                [
+                    [
+                        'label' => 'Community licence',
+                        'answer' => 'to be destroyed',
+                        'changeLinkInHeading' => $changeLinkInHeading,
+                        'change' => ['sectionLink' => 'community-licence']
+                    ]
+                ]
+
+            ],
+            'communityLicenceLost' => [
+                [
+
+                    'communityLicenceDocumentStatus' =>
+                        [
+                            'id' => RefData::SURRENDER_DOC_STATUS_LOST,
+                        ],
+                    'communityLicenceDocumentInfo' => 'lost content'
+
+                ],
+
+                [
+                    [
+                        'label' => 'Community licence',
+                        'answer' => 'lost',
+                        'changeLinkInHeading' => $changeLinkInHeading,
+                        'change' => ['sectionLink' => 'community-licence']
+                    ]
+                ]
+
+            ],
+            'communityLicenceStolen' => [
+                [
+
+                    'communityLicenceDocumentStatus' =>
+                        [
+                            'id' => RefData::SURRENDER_DOC_STATUS_STOLEN,
+                        ],
+                    'communityLicenceDocumentInfo' => 'stolen content'
+
+                ],
+
+                [
+                    [
+                        'label' => 'Community licence',
+                        'answer' => 'stolen',
+                        'changeLinkInHeading' => $changeLinkInHeading,
+                        'change' => ['sectionLink' => 'community-licence']
                     ]
                 ]
 
