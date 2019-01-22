@@ -24,14 +24,14 @@ class CommunityLicence implements MapperInterface
             ],
             'lost' => [
                 'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_LOST,
-                'communityLicenceDocumentInfo' => $formData['communityLicence']['lostContent']['details'] ?? null
+                'communityLicenceDocumentInfo' => $formData['communityLicenceDocument']['lostContent']['details'] ?? null
             ],
             'stolen' => [
                 'communityLicenceDocumentStatus' => RefData::SURRENDER_DOC_STATUS_STOLEN,
-                'communityLicenceDocumentInfo' => $formData['communityLicence']['stolenContent']['details'] ?? null
+                'communityLicenceDocumentInfo' => $formData['communityLicenceDocument']['stolenContent']['details'] ?? null
             ],
         ];
-        return $mappedData[$formData['communityLicence']['communityLicenceDocument']];
+        return $mappedData[$formData['communityLicenceDocument']['communityLicenceDocument']];
     }
 
     public static function mapFromResult(array $data)
@@ -45,13 +45,13 @@ class CommunityLicence implements MapperInterface
         $formData = [
             RefData::SURRENDER_DOC_STATUS_DESTROYED =>
                 [
-                    'communityLicence' => [
+                    'communityLicenceDocument' => [
                         'communityLicenceDocument' => 'possession'
                     ]
                 ],
             RefData::SURRENDER_DOC_STATUS_LOST =>
                 [
-                    'communityLicence' => [
+                    'communityLicenceDocument' => [
                         'communityLicenceDocument' => 'lost',
                         'lostContent' => [
                             'details' => $data["communityLicenceDocumentInfo"]
@@ -60,7 +60,7 @@ class CommunityLicence implements MapperInterface
                 ],
             RefData::SURRENDER_DOC_STATUS_STOLEN =>
                 [
-                    'communityLicence' => [
+                    'communityLicenceDocument' => [
                         'communityLicenceDocument' => 'stolen',
                         'stolenContent' => [
                             'details' => $data["communityLicenceDocumentInfo"]

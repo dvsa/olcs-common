@@ -39,7 +39,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => 'lost',
+                                    'operatorLicenceDocument' => 'lost',
                                     'lostContent' =>
                                         [
                                             'details' => 'lost info'
@@ -62,7 +62,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => 'stolen',
+                                    'operatorLicenceDocument' => 'stolen',
                                     'stolenContent' =>
                                         [
                                             'details' => 'stolen info'
@@ -85,7 +85,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => 'possession',
+                                    'operatorLicenceDocument' => 'possession',
                                     'lostContent' =>
                                         [
                                             'details' => 'lost info'
@@ -109,7 +109,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => 'possession'
+                                    'operatorLicenceDocument' => 'possession'
                                 ],
 
                         ],
@@ -131,7 +131,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => 'lost',
+                                    'operatorLicenceDocument' => 'lost',
                                     'lostContent' =>
                                         [
                                             'details' => 'lost info'
@@ -152,7 +152,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => 'stolen',
+                                    'operatorLicenceDocument' => 'stolen',
                                     'stolenContent' =>
                                         [
                                             'details' => 'stolen info'
@@ -174,7 +174,7 @@ class OperatorLicenceTest extends MockeryTestCase
                         [
                             'operatorLicenceDocument' =>
                                 [
-                                    'licenceDocument' => 'possession',
+                                    'operatorLicenceDocument' => 'possession',
                                 ],
                         ],
                     'api_data' =>
