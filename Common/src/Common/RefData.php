@@ -332,6 +332,11 @@ class RefData
     const PTR_ACTION_TO_BE_TAKEN_OTHER = 'ptr_action_to_be_taken_other';
 
     /**
+     * Permit Types
+     */
+    const PERMIT_TYPE_ECMT = 'permit_ecmt';
+
+    /**
      * Permit statuses
      */
     const PERMIT_VALID = 'permit_valid';

@@ -3549,12 +3549,12 @@ return [
     'permits.form.change_licence.button' => 'Confirm Licence Change',
     'permits.form.change_licence.error_message' => 'You must select the checkbox to continue',
 
-    'permits.application.window-closed' => 'The ECMT permit application window has now closed.',
-    'permits.application.window-closed.title' => 'The ECMT permit application window has now closed - ',
+    'permits.application.window-closed' => 'Sorry, the service is unavailable',
+    'permits.application.window-closed.title' => 'The Permit application window has now closed',
 
     'permits.page.dashboard.browser.title' => 'Permits Home - ',
     'permits.page.licence.browser.title' => 'Select Licence',
-    'permits.page.licence.question' => 'Select a licence you would like your ECMT permit to be applied to',
+    'permits.page.licence.question' => 'Select a licence you would like your permit to be applied to',
     'permits.page.licence.question.one.licence' => 'Permit application for licence %s',
     'permits.page.licence.saturated.one.licence' => 'Your licence has an active application',
     'permits.page.licence.saturated' => 'You have already applied against all your licences',
