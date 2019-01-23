@@ -1471,18 +1471,16 @@ return [
     'permits.form.change_licence.button' => 'Cadarnhau Newid Trwydded',
     'permits.form.change_licence.error_message' => 'Rhaid ichi ddewis y blwch ticio i barhau',
 
-    'permits.application.window-closed' => 'Mae\'r ffenestr cais trwydded ECMT bellach wedi cau.',
-    'permits.application.window-closed.title' => 'Mae\'r ffenestr cais trwydded ECMT bellach wedi cau',
+    'permits.application.window-closed' => 'Sorry, the service is unavailable',
+    'permits.application.window-closed.title' => 'The Permit application window has now closed',
 
     'permits.form.trips.guidance' => 'Rydych wedi nodi defnydd dwysedd uchel o\'r hawlenni hyn. Gwiriwch fod y manylion yn gywir. Efallai y byddwn yn cysylltu â chi i wirio\'r wybodaeth hon',
     'permits.form.intljourney.guidance' => 'Rydych wedi nodi canran uchel o deithiau rhyngwladol ar gyfer y drwydded hon. Gwiriwch fod y manylion yn gywir. Efallai y byddwn yn cysylltu â chi i wirio\'r wybodaeth hon',
     'permits.form.intljourney.warning' => 'Rydych wedi nodi canran uchel o deithiau rhyngwladol ar gyfer y drwydded hon. Gwiriwch fod y manylion yn gywir. Efallai y byddwn yn cysylltu â chi i wirio\'r wybodaeth hon',
 
-    'permits.page.ecmt.licence.title' => 'Dewis Trwydded-',
-
     'permits.page.dashboard.browser.title' => 'Permits Home',
     'permits.page.licence.browser.title' => 'Dewis Trwydded',
-    'permits.page.licence.question' => 'Dewiswch drwydded yr hoffech i\'ch trwydded ECMT gael ei ategu iddo',
+    'permits.page.licence.question' => 'Dewiswch drwydded yr hoffech i\'ch trwydded gael ei ategu iddo',
     'permits.page.licence.question.one.licence' => 'Permit application for licence %s',
     'permits.page.licence.saturated.one.licence' => 'Your licence has an active application',
     'permits.page.licence.saturated' => 'Rydych wedi gwneud cais ar gyfer eich holl drwyddedau eisoes',
@@ -1506,7 +1504,6 @@ return [
     'permits.page.type.title' => 'Select Permit Type',
     'permits.page.type.hint' => 'Further <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">guidance on permits</a> is available on GOV.UK.',
     'permits.page.type.question' => 'What type of permit do you need?',
-    'permits.page.ecmt.licence.title' => 'Dewis Trwydded',
     'permits.page.ecmt.licence.browser.title' => 'Permits Home',
     'permits.page.ecmt.licence.question' => 'Dewiswch drwydded yr hoffech i\'ch trwydded ECMT gael ei ategu iddo',
     'permits.page.ecmt.licence.question.one.licence' => 'Cais hawlen ar gyfer trwydded %s',
