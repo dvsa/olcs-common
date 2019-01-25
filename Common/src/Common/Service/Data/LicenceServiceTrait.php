@@ -70,6 +70,7 @@ trait LicenceServiceTrait
     {
         $this->setLicenceService($serviceLocator->get('\Common\Service\Data\Licence'));
 
+
         return $this;
     }
 }
