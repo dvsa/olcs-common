@@ -3618,6 +3618,10 @@ return [
     'permits.page.bilateral.no-of-permits.guidance' => 'Up to %s permits are authorised for this licence for each country for each year. There is an £%s permit fee to pay for each permit.',
     'permits.page.bilateral.no-of-permits.additional-guidance' => 'You can apply for permits for all countries you may need for the whole year.',
 
+    'permits.page.bilateral.countries.browser.title' => 'Select the country you are transporting goods to',
+    'permits.page.bilateral.countries.question' => 'Select the country you are transporting goods to',
+    'permits.page.bilateral.countries.hint' => 'You can apply for permits for all countries you may need for the whole year.',
+
     'permits.button.accept-and-continue' => 'Accept and continue',
     'permits.button.confirm-and-continue' => 'Confirm and continue',
     'permits.button.continue' => 'Continue',
@@ -3648,6 +3652,7 @@ return [
     'error.messages.permits.greater' => 'The input is not greater than 0',
     'error.messages.permits.less' => 'This number must be less than or equal to your number of authorised vehicles',
     'error.messages.permits.not.digits' => 'You must enter a valid whole number',
+    'error.messages.permits.countries' => 'Select at least one country',
     'permits.form.cancel_application.label' => 'I confirm that I would like to cancel my application.',
     'permits.form.cancel_application.button' => 'Cancel application',
     'permits.form.cancel_application.error_message' => 'You must select the checkbox to continue',
