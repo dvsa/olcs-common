@@ -69,8 +69,6 @@ trait LicenceServiceTrait
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $this->setLicenceService($serviceLocator->get('\Common\Service\Data\Licence'));
-
-
         return $this;
     }
 }
