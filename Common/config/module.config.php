@@ -187,6 +187,7 @@ return array(
             'Common\Service\Data\Role' => 'Common\Service\Data\Role',
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
+            \Common\Service\Data\Surrender::class =>\Common\Service\Data\Surrender::class,
             'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             Common\Service\Data\SiCategoryType::class => Common\Service\Data\SiCategoryType::class,
             'staticList' => Common\Service\Data\StaticList::class,
