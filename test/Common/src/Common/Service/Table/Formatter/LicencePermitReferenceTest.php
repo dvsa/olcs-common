@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\RefData;
 use Common\Service\Table\Formatter\LicencePermitReference;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Mockery as m;
@@ -20,19 +21,22 @@ class LicencePermitReferenceTest extends MockeryTestCase
      */
     public function testFormat($row, $expectedOutput)
     {
-        $urlHelper = m::mock(UrlHelperService::class);
+        $urlHelper = m::mock(UrlHelper::class);
         $urlHelper->shouldReceive('fromRoute')
             ->with('permits/application-overview', ['id' => 3])
-            ->andReturn('http://selfserve/permits/application-overview/3');
-        $urlHelper->shouldReceive('fromRoute')
+            ->andReturn('http://selfserve/permits/application-overview/3')
+            ->shouldReceive('fromRoute')
             ->with('permits/ecmt-under-consideration', ['id' => 5])
-            ->andReturn('http://selfserve/permits/ecmt-under-consideration/5');
-        $urlHelper->shouldReceive('fromRoute')
+            ->andReturn('http://selfserve/permits/ecmt-under-consideration/5')
+            ->shouldReceive('fromRoute')
             ->with('permits/ecmt-awaiting-fee', ['id' => 7])
-            ->andReturn('http://selfserve/permits/ecmt-awaiting-fee/7');
-        $urlHelper->shouldReceive('fromRoute')
+            ->andReturn('http://selfserve/permits/ecmt-awaiting-fee/7')
+            ->shouldReceive('fromRoute')
             ->with('permits/ecmt-valid-permits', ['id' => 9])
-            ->andReturn('http://selfserve/permits/ecmt-valid-permits/9');
+            ->andReturn('http://selfserve/permits/ecmt-valid-permits/9')
+            ->shouldReceive('fromRoute')
+            ->with('permits/application', ['id' => 100])
+            ->andReturn('http://selfserve/permits/application/100');
 
         $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get')->with('Helper\Url')->andReturn($urlHelper);
@@ -121,6 +125,29 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-valid-permits/9">' .
                     '<span class="overview__link--underline">ECMT&gt;4567890</span></a>'
+            ],
+            'IRHP app - not yet submitted' => [
+                [
+                    'id' => 100,
+                    'applicationRef' => 'IRHP>ABC100',
+                    'irhpPermitType' => [
+                        'id' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    ],
+                    'isNotYetSubmitted' => true,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/application/100">' .
+                    '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
+            ],
+            'IRHP app - any other' => [
+                [
+                    'id' => 200,
+                    'applicationRef' => 'IRHP>ABC200',
+                    'irhpPermitType' => [
+                        'id' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    ],
+                    'isNotYetSubmitted' => false,
+                ],
+                'IRHP&gt;ABC200'
             ]
         ];
     }
