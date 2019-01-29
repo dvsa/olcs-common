@@ -3752,5 +3752,6 @@ return [
     'permits.irhp.application.question.countries' => 'Select the country you are transporting goods to',
     'permits.irhp.application.question.no-of-permits' => 'How many permits do you require?',
     'permits.irhp.application.answers.no-of-permits' => '%s permits for %s in %s',
+    'permits.irhp.bilateral.already-applied' => 'There is an active permit application for this licence click ‘Save and continue’ again to access this application'
     // Potentially unused translations
 ];

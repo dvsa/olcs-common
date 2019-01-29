@@ -335,6 +335,7 @@ class RefData
      * Permit Types
      */
     const PERMIT_TYPE_ECMT = 'permit_ecmt';
+    const PERMIT_TYPE_ANNUAL_BILATERAL = 'permit_annual_bilateral';
 
     /**
      * Permit statuses
