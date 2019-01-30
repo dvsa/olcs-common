@@ -3754,11 +3754,11 @@ return [
     'permits.irhp.application.answers.no-of-permits' => '%s permits for %s in %s',
 
     'permits.irhp.valid.permits.title' => 'Annual Bilateral permits (EU and EEA)',
-    'permits.irhp.valid.permits.table.col1' => 'Permit',
-    'permits.irhp.valid.permits.table.col2' => 'Country',
-    'permits.irhp.valid.permits.table.col3' => 'Application',
-    'permits.irhp.valid.permits.table.col4' => 'Start date',
-    'permits.irhp.valid.permits.table.col5' => 'Expiry date',
+    'permits.irhp.valid.permits.table.permit' => 'Permit',
+    'permits.irhp.valid.permits.table.country' => 'Country',
+    'permits.irhp.valid.permits.table.application' => 'Application',
+    'permits.irhp.valid.permits.table.start-date' => 'Start date',
+    'permits.irhp.valid.permits.table.expiry-date' => 'Expiry date',
 
     'permits.irhp.bilateral.already-applied' => 'There is an active permit application for this licence click ‘Save and continue’ again to access this application'
     // Potentially unused translations
