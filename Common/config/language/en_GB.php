@@ -2745,7 +2745,7 @@ return [
     'selfserve-app-subSection-your-business-people-tableHeaderPartnersMembers' => 'Partners or members',
     'selfserve-app-subSection-your-business-people-tableHeaderPeople' => 'Responsible people',
     'selfserve-business-registered-company-description' => 'If you don\'t have your company number, or you\'re having problems retrieving your company details, enter them below.',
-    'selfserve-card-payments-disabled' => 'Online payments is currently unavailable. Please try again later or contact <a href="tel:01132543200">0113 254 3200</a>. You’ll need your card details and fee reference.',
+    'selfserve-card-payments-disabled' => 'Online payments is currently unavailable. Please try again later or contact <a href="tel:01133051101">0113 305 1101</a>. You’ll need your card details and fee reference.',
     'selfserve-dashboard-submission-date' => 'Submission date',
     'selfserve-dashboard-target-not-yet-submitted' => 'Not yet submitted',
     'selfserve-dashboard-target-renewal-date' => 'Expiry date',
