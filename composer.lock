@@ -1408,17 +1408,17 @@
         },
         {
             "name": "zendframework/zendxml",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZendXml.git",
-                "reference": "267db6a2c431a08a8f8ff0f1f4c302a5ba6f5b99"
+                "reference": "eceab37a591c9e140772a1470338258857339e00"
             },
             "dist": {
                 "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/zendframework-zendxml-267db6a2c431a08a8f8ff0f1f4c302a5ba6f5b99-zip-32bcfd.tar",
-                "reference": "267db6a2c431a08a8f8ff0f1f4c302a5ba6f5b99",
-                "shasum": "5d81b0d891b3f4b0f6eec63b2abec42e0d5e8af8"
+                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/zendframework-zendxml-eceab37a591c9e140772a1470338258857339e00-zip-020fc8.tar",
+                "reference": "eceab37a591c9e140772a1470338258857339e00",
+                "shasum": "565d5fa1244393a09481e72cd6cda9c6b173cecf"
             },
             "require": {
                 "php": "^5.6 || ^7.0"
@@ -1430,8 +1430,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev",
-                    "dev-develop": "1.2.x-dev"
+                    "dev-master": "1.2.x-dev",
+                    "dev-develop": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -1450,7 +1450,7 @@
                 "xml",
                 "zf"
             ],
-            "time": "2018-04-30T15:11:04+00:00"
+            "time": "2019-01-22T19:42:14+00:00"
         },
         {
             "name": "zf-commons/zfc-rbac",
@@ -1636,10 +1636,10 @@
                 "reference": "776503d3a8e85d4f9a1148614f95b7a608b046ad"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/hamcrest-hamcrest-php-776503d3a8e85d4f9a1148614f95b7a608b046ad-zip-a48af8.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/776503d3a8e85d4f9a1148614f95b7a608b046ad",
                 "reference": "776503d3a8e85d4f9a1148614f95b7a608b046ad",
-                "shasum": "9532f8ec8017b20d8512b766a83782dcbbfbc5af"
+                "shasum": ""
             },
             "require": {
                 "php": "^5.3|^7.0"
@@ -1770,10 +1770,10 @@
                 "reference": "100633629bf76d57430b86b7098cd6beb996a35a"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/mockery-mockery-100633629bf76d57430b86b7098cd6beb996a35a-zip-f18966.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/100633629bf76d57430b86b7098cd6beb996a35a",
                 "reference": "100633629bf76d57430b86b7098cd6beb996a35a",
-                "shasum": "f9fa927d4f1749a208f1291597c47d0fa4d54874"
+                "shasum": ""
             },
             "require": {
                 "hamcrest/hamcrest-php": "~2.0",
@@ -1882,12 +1882,6 @@
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-coding-standards.git",
                 "reference": "d07fc9a07d5bbf93ead0a8527172ace93de409d8"
             },
-            "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/olcs-coding-standards-1.2.1-4097ef.tar",
-                "reference": "d07fc9a07d5bbf93ead0a8527172ace93de409d8",
-                "shasum": "5159e82f1ee59877dd78575a538b744c69f46af7"
-            },
             "type": "library",
             "description": "OLCS CodeSniffer and MessDetector rule sets",
             "time": "2018-03-13T16:45:48+00:00"
@@ -1927,7 +1921,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-logging.git",
-                "reference": "e519ef56bd69b593267a146bfee06c8f75869406"
+                "reference": "4fe8f0aff0bc225d79ea4af4496d9997f76bf210"
             },
             "require": {
                 "php": ">=5.4",
@@ -1974,7 +1968,7 @@
                 ]
             },
             "description": "Logging Module for Olcs",
-            "time": "2019-01-14T17:27:53+00:00"
+            "time": "2019-01-21T15:53:58+00:00"
         },
         {
             "name": "olcs/olcs-testhelpers",
@@ -1982,7 +1976,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-testhelpers.git",
-                "reference": "9cae334adf4af4c8c6c640f34b1dbb2c8f19feb3"
+                "reference": "064d259a13abf87391ab7f298c79ed5cfab47908"
             },
             "require": {
                 "php": ">=5.4"
@@ -1999,7 +1993,7 @@
                 }
             },
             "description": "OLCS Test helpers",
-            "time": "2019-01-07T06:55:27+00:00"
+            "time": "2019-01-21T15:53:54+00:00"
         },
         {
             "name": "olcs/olcs-transfer",
@@ -2007,7 +2001,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-                "reference": "f5a6400be124c91bac24f6bf7cee084495eddc19"
+                "reference": "5aaf5fca092002798487b535a21acfe65f9a14a0"
             },
             "require": {
                 "php": ">=5.4",
@@ -2048,7 +2042,7 @@
                 ]
             },
             "description": "OLCS Transfer",
-            "time": "2019-01-16T11:49:18+00:00"
+            "time": "2019-01-28T12:34:55+00:00"
         },
         {
             "name": "olcs/olcs-utils",
@@ -2056,7 +2050,7 @@
             "source": {
                 "type": "git",
                 "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-utils.git",
-                "reference": "975b8acb5ef48f40e3fce5f220e111623bede23e"
+                "reference": "fd7c5a99879b3597c5067edd352e9365b41f1ad0"
             },
             "require": {
                 "php": ">=5.4",
@@ -2097,7 +2091,7 @@
                 ]
             },
             "description": "OLCS Utils",
-            "time": "2019-01-14T17:28:09+00:00"
+            "time": "2019-01-21T15:53:45+00:00"
         },
         {
             "name": "pdepend/pdepend",
@@ -2531,10 +2525,10 @@
                 "reference": "14d568b6b56c957c9ae5330603303a367b21f0e9"
             },
             "dist": {
-                "type": "tar",
-                "url": "http://devrepo.shd.ci.nonprod.dvsa.aws/dist/phpstan-phpstan-mockery-14d568b6b56c957c9ae5330603303a367b21f0e9-zip-2bda4d.tar",
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan-mockery/zipball/14d568b6b56c957c9ae5330603303a367b21f0e9",
                 "reference": "14d568b6b56c957c9ae5330603303a367b21f0e9",
-                "shasum": "d7b547e34a20713202ea90edab4152f9f8c50e2a"
+                "shasum": ""
             },
             "require": {
                 "nikic/php-parser": "^4.0",
