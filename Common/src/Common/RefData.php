@@ -335,6 +335,7 @@ class RefData
      * Permit Types
      */
     const PERMIT_TYPE_ECMT = 'permit_ecmt';
+    const ECMT_PERMIT_TYPE_ID = 1;
 
     /**
      * Permit statuses
