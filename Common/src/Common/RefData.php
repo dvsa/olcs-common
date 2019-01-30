@@ -391,6 +391,7 @@ class RefData
     const SURRENDER_STATUS_DETAILS_CONFIRMED='surr_sts_details_confirmed';
     const SURRENDER_STATUS_SUBMITTED='surr_sts_submitted';
     const SURRENDER_STATUS_SIGNED='surr_sts_signed';
+    const SURRENDER_STATUS_WITHDRAWN='surr_sts_withdrawn';
     const SURRENDER_STATUS_APPROVED='surr_sts_approved';
     const SURRENDER_DOC_STATUS_DESTROYED='doc_sts_destroyed';
     const SURRENDER_DOC_STATUS_LOST='doc_sts_lost';
