@@ -23,20 +23,23 @@ class LicencePermitReferenceTest extends MockeryTestCase
     {
         $urlHelper = m::mock(UrlHelper::class);
         $urlHelper->shouldReceive('fromRoute')
-            ->with('permits/application-overview', ['id' => 3])
+            ->with('permits/application-overview', ['id' => 3, 'licence' => 200])
             ->andReturn('http://selfserve/permits/application-overview/3')
             ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-under-consideration', ['id' => 5])
+            ->with('permits/ecmt-under-consideration', ['id' => 5, 'licence' => 200])
             ->andReturn('http://selfserve/permits/ecmt-under-consideration/5')
             ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-awaiting-fee', ['id' => 7])
+            ->with('permits/ecmt-awaiting-fee', ['id' => 7, 'licence' => 200])
             ->andReturn('http://selfserve/permits/ecmt-awaiting-fee/7')
             ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-valid-permits', ['id' => 9])
+            ->with('permits/ecmt-valid-permits', ['id' => 9, 'licence' => 200])
             ->andReturn('http://selfserve/permits/ecmt-valid-permits/9')
             ->shouldReceive('fromRoute')
-            ->with('permits/application', ['id' => 100])
-            ->andReturn('http://selfserve/permits/application/100');
+            ->with('permits/application', ['id' => 100, 'licence' => 200])
+            ->andReturn('http://selfserve/permits/application/100')
+            ->shouldReceive('fromRoute')
+            ->with('permits/valid', ['id' => 105, 'licence' => 200])
+            ->andReturn('http://selfserve/permits/valid/105');
 
         $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get')->with('Helper\Url')->andReturn($urlHelper);
@@ -53,75 +56,69 @@ class LicencePermitReferenceTest extends MockeryTestCase
         return [
             [
                 [
-                    'id' => '3',
+                    'id' => 3,
+                    'licenceId' => 200,
+                    'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>1234567',
-                    'isUnderConsideration' => false,
-                    'isAwaitingFee' => false,
-                    'isFeePaid' => false,
-                    'isIssueInProgress' => false,
-                    'isValid' => false,
+                    'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/application-overview/3">' .
                     '<span class="overview__link--underline">ECMT&gt;1234567</span></a>'
             ],
             [
-                [   'id' => '5',
+                [   'id' => 5,
+                    'licenceId' => 200,
+                    'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>2345678',
-                    'isUnderConsideration' => true,
-                    'isAwaitingFee' => false,
-                    'isFeePaid' => false,
-                    'isIssueInProgress' => false,
-                    'isValid' => false,
+                    'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-under-consideration/5">' .
                     '<span class="overview__link--underline">ECMT&gt;2345678</span></a>'
             ],
             [
                 [
-                    'id' => '7',
+                    'id' => 7,
+                    'licenceId' => 200,
+                    'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>3456789',
-                    'isUnderConsideration' => false,
-                    'isAwaitingFee' => true,
-                    'isFeePaid' => false,
-                    'isIssueInProgress' => false,
-                    'isValid' => false,
+                    'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_AWAITING_FEE,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-awaiting-fee/7">' .
                     '<span class="overview__link--underline">ECMT&gt;3456789</span></a>'
             ],
             [
                 [
-                    'id' => '8',
+                    'id' => 8,
+                    'licenceId' => 200,
+                    'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>3456789',
-                    'isUnderConsideration' => false,
-                    'isAwaitingFee' => false,
-                    'isFeePaid' => true,
-                    'isIssueInProgress' => false,
-                    'isValid' => false,
+                    'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_FEE_PAID,
                 ],
                 'ECMT&gt;3456789'
             ],
             [
                 [
-                    'id' => '8',
+                    'id' => 8,
+                    'licenceId' => 200,
+                    'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>3456789',
-                    'isUnderConsideration' => false,
-                    'isAwaitingFee' => false,
-                    'isFeePaid' => false,
-                    'isIssueInProgress' => true,
-                    'isValid' => false,
+                    'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_ISSUING,
                 ],
                 'ECMT&gt;3456789'
             ],
             [
                 [
-                    'id' => '9',
+                    'id' => 9,
+                    'licenceId' => 200,
+                    'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>4567890',
-                    'isUnderConsideration' => false,
-                    'isAwaitingFee' => false,
-                    'isFeePaid' => false,
-                    'isIssueInProgress' => false,
-                    'isValid' => true,
+                    'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_VALID,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-valid-permits/9">' .
                     '<span class="overview__link--underline">ECMT&gt;4567890</span></a>'
@@ -129,26 +126,71 @@ class LicencePermitReferenceTest extends MockeryTestCase
             'IRHP app - not yet submitted' => [
                 [
                     'id' => 100,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
                     'applicationRef' => 'IRHP>ABC100',
-                    'irhpPermitType' => [
-                        'id' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
-                    ],
-                    'isNotYetSubmitted' => true,
+                    'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/application/100">' .
                     '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
             ],
-            'IRHP app - any other' => [
+            'IRHP app - under consideration' => [
                 [
-                    'id' => 200,
-                    'applicationRef' => 'IRHP>ABC200',
-                    'irhpPermitType' => [
-                        'id' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
-                    ],
-                    'isNotYetSubmitted' => false,
+                    'id' => 101,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC101',
+                    'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION,
                 ],
-                'IRHP&gt;ABC200'
-            ]
+                'IRHP&gt;ABC101'
+            ],
+            'IRHP app - awaiting fee' => [
+                [
+                    'id' => 102,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC102',
+                    'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_AWAITING_FEE,
+                ],
+                'IRHP&gt;ABC102'
+            ],
+            'IRHP app - fee paid' => [
+                [
+                    'id' => 103,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC103',
+                    'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_FEE_PAID,
+                ],
+                'IRHP&gt;ABC103'
+            ],
+            'IRHP app - issuing' => [
+                [
+                    'id' => 104,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC104',
+                    'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_ISSUING,
+                ],
+                'IRHP&gt;ABC104'
+            ],
+            'IRHP app - valid' => [
+                [
+                    'id' => 105,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC105',
+                    'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_VALID,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/valid/105">' .
+                    '<span class="overview__link--underline">IRHP&gt;</span></a>'
+            ],
         ];
     }
 }

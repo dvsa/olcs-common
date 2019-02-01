@@ -31,7 +31,7 @@ class InternalLicencePermitReference implements FormatterInterface
     {
         $urlHelper = $serviceLocator->get('Helper\Url');
         $url = $urlHelper->fromRoute('licence/permits/application', [
-            'licence' => $row['licence']['id'],
+            'licence' => $row['licenceId'],
             'action' => 'edit',
             'permitid' => $row['id']
         ]);
