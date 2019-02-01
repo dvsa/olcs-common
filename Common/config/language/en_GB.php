@@ -1623,6 +1623,7 @@ return [
     'licence.overview.title' => 'View your licence',
     'licence.print' => 'Print licence',
     'licence.apply-to-surrender' => 'Apply to surrender licence',
+    'licence.continue-surrender-application' => 'Continue with application to surrender licence',
     'licence.print.failed' => 'Licence failed to print',
     'licence.print.success' => 'Licence printed successfully',
     'licence.surrender' => 'Surrender licence',
