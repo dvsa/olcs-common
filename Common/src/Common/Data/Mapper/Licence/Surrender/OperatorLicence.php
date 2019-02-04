@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Data\Mapper\licence\Surrender;
+namespace Common\Data\Mapper\Licence\Surrender;
 
 use Common\RefData;
 use Common\Data\Mapper\MapperInterface;
