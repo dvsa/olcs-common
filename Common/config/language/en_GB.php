@@ -3534,11 +3534,13 @@ return [
     'permits.page.confirmation.decline.title' => 'Application Withdrawn',
     'permits.page.confirmation.decline.browser.title' => 'Withdrawal Successful',
 
-    'permits.page.confirmation.application-submitted.title' => 'Application Submitted',
-    'permits.page.confirmation.application-submitted.browser.title' => 'Application Submitted',
+    'permits.page.confirmation.application-submitted.title' => 'Application submitted',
+    'permits.page.confirmation.application-submitted.browser.title' => 'Application submitted',
 
     'permits.page.confirmation.issue-submitted.title' => 'Permit Issue Accepted',
     'permits.page.confirmation.issue-submitted.browser.title' => 'Permit Issue Accepted',
+
+    'permits.page.confirmation.bilateral.what-happens-next' => 'We will now post your paper permit by first class recorded delivery within the next 3 working days.',
 
     'permits.page.confirmation.bullet.list.title' => 'What happens next',
     'permits.page.confirmation.submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
@@ -3609,7 +3611,7 @@ return [
     'permits.page.fee.permit.type' => 'Permit type',
     'permits.page.fee.permit.validity' => 'Permit start and end date',
     'permits.page.fee.permit.validity.dates' => '%s to %s',
-    'permits.page.fee.number.permits' => 'Permits required',
+    'permits.page.fee.number.permits' => 'Number of permits required',
     'permits.page.fee.per-permit' => ' (per permit)',
     'permits.page.fee.permit.fee.total' => 'Total application fee to be paid',
     'permits.page.fee.permit.fee.non-refundable' => ' (non-refundable)',
