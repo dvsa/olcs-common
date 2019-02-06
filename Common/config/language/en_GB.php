@@ -3615,6 +3615,8 @@ return [
     'permits.page.fee.per-permit' => ' (per permit)',
     'permits.page.fee.permit.fee.total' => 'Total application fee to be paid',
     'permits.page.fee.permit.fee.non-refundable' => ' (non-refundable)',
+    'permits.page.irhp-fee.permit.fee' => 'Permit fee',
+    'permits.page.irhp-fee.guidance' => 'The permit fee is non-refundable',
 
     'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
     'permits.page.bilateral.no-of-permits.question' => 'For each country, how many permits do you require?',
