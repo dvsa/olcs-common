@@ -8,6 +8,7 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\RefData;
 use Common\Util\Escape;
 
 /**
@@ -17,6 +18,21 @@ use Common\Util\Escape;
  */
 class LicencePermitReference implements FormatterInterface
 {
+    private static $routes = [
+        RefData::ECMT_PERMIT_TYPE_ID => [
+            RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application-overview',
+            RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION => 'ecmt-under-consideration',
+            RefData::PERMIT_APP_STATUS_AWAITING_FEE => 'ecmt-awaiting-fee',
+            RefData::PERMIT_APP_STATUS_FEE_PAID => null,
+            RefData::PERMIT_APP_STATUS_ISSUING => null,
+            RefData::PERMIT_APP_STATUS_VALID => 'ecmt-valid-permits',
+        ],
+        RefData::IRHP_BILATERAL_PERMIT_TYPE_ID => [
+            RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
+            RefData::PERMIT_APP_STATUS_VALID => 'valid',
+        ],
+    ];
+
     /**
      * status
      *
@@ -29,32 +45,22 @@ class LicencePermitReference implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
-        if (isset($row['irhpPermitType'])) {
-            // IRHP app
-            if ($row['isNotYetSubmitted']) {
-                $route = 'application';
-            }
-        } else {
-            // ECMT app
-            $route = 'application-overview';
-
-            if ($row['isValid']) {
-                $route = 'ecmt-valid-permits';
-            } elseif ($row['isFeePaid'] || $row['isIssueInProgress']) {
-                $route = null;
-            } elseif ($row['isAwaitingFee']) {
-                $route = 'ecmt-awaiting-fee';
-            } elseif ($row['isUnderConsideration']) {
-                $route = 'ecmt-under-consideration';
-            }
-        }
+        // find a route for the type and status
+        $route = isset(static::$routes[$row['typeId']][$row['statusId']])
+            ? static::$routes[$row['typeId']][$row['statusId']] : null;
 
         return isset($route)
             ? vsprintf(
                 '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
                 [
-                    $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, ['id' => $row['id']]),
-                    Escape::html($row['applicationRef'])
+                    $serviceLocator->get('Helper\Url')->fromRoute(
+                        'permits/' . $route,
+                        [
+                            'id' => $row['id'],
+                            'licence' => $row['licenceId'],
+                        ]
+                    ),
+                    ($route === 'valid') ? Escape::html($row['licNo']) : Escape::html($row['applicationRef'])
                 ]
             )
             : Escape::html($row['applicationRef']);

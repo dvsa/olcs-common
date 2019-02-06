@@ -31,7 +31,7 @@ class IssuedPermitLicencePermitReference implements FormatterInterface
     {
         $urlHelper = $serviceLocator->get('Helper\Url');
         $url = $urlHelper->fromRoute('licence/irhp-permits', [
-            'licence' => $row['licence']['id'],
+            'licence' => $row['licenceId'],
             'permitid' => $row['id']
         ]);
         return '<a href="'.$url.'">'.Escape::html($row['applicationRef']).'</a>';
