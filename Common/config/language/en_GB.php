@@ -3705,6 +3705,7 @@ return [
     'permits.link.return.to.dashboard' => 'Return to permits dashboard',
     'permits.link.return.to.fee.overview' => 'Return to fee overview',
     'permits.page.ecmt.consideration.header' => 'Permit application for licence',
+    'permits.page.ecmt.consideration.title' => 'Application details',
     'permits.page.ecmt.consideration.application.status' => 'Application status',
     'permits.page.ecmt.consideration.permit.type' => 'Permit type',
     'permits.page.ecmt.consideration.reference.number' => 'Reference number',
