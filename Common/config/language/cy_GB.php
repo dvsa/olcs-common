@@ -1821,8 +1821,6 @@ return [
     'continuations.people-empty-table-message.org_t_st' => 'Ni chofnodir unrhyw berchennog ar eich trwydded',
     'lva-operating-centre-radio-hint' => 'Bydd llwytho’ch gwybodaeth ariannol cyn gynted â phosibl yn ein helpu i brosesu’ch cais yn gyflym.',
 
-
-
     'payment-cancelled' => 'Taliad wedi ei ganslo',
     'payment-completed' => 'Taliad wedi ei gwblhau',
     'selfserve-dashboard-target-renewal-date' => 'Dyddiad dod i ben',
@@ -1830,8 +1828,6 @@ return [
     'application.status' => 'Statws cais',
     'upload_evidence_validator_please_upload_advert' => 'Llwytho’rr hysbyseb',
     'page.title.continuation/checklist/people.people' => 'Adolygu trwydded',
-
-
 
     // Potentially unused translations
 ];
