@@ -1547,8 +1547,15 @@ return [
 
     'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
     'permits.page.bilateral.no-of-permits.question' => 'For each country, how many permits do you require?',
-    'permits.page.bilateral.no-of-permits.guidance' => 'Up to %s permits are authorised for this licence for each country for each year. There is an £%s permit fee to pay for each permit.',
-    'permits.page.bilateral.no-of-permits.additional-guidance' => 'You can apply for permits for all countries you may need for the whole year.',
+    'permits.page.bilateral.no-of-permits.guidance' => 'You are authorised up to <strong>%s permits</strong> per country per year. There is a £5 fee for this application. Each permit costs <strong>£45</strong>.',
+    'permits.page.bilateral.no-of-permits.additional-guidance' => '<strong>If you do not require permits for a particular year, enter 0.</strong>',
+    'permits.page.bilateral.no-of-permits.for-year' => 'for %s',
+    'permits.page.bilateral.no-of-permits.all-issued' => 'for %s<br>You cannot request any more permits. All %s have been issued.',
+    'permits.page.bilateral.no-of-permits.multiple-issued' => '%d is the maximum you can apply for. %d permits have already been issued.',
+    'permits.page.bilateral.no-of-permits.one-issued' => '%d is the maximum you can apply for. 1 permit has already been issued.',
+    'permits.page.bilateral.no-of-permits.none-issued' => '%d is the maximum you can apply for.',
+    'permits.page.bilateral.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
+    'permits.page.bilateral.no-of-permits.error.general' => 'Enter the number of permits you require, or enter 0',
 
     'permits.button.accept-and-continue' => 'Derbyn a pharhau',
     'permits.button.confirm-and-continue' => 'Cadarnhau a pharhau',
