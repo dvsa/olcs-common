@@ -103,8 +103,7 @@ class NoOfPermits
         $guidanceValue = $translator->translateReplace(
             'permits.page.bilateral.no-of-permits.guidance',
             [
-                $irhpApplication['licence']['totAuthVehicles'],
-                self::PERMIT_FEE_IN_POUNDS
+                $irhpApplication['licence']['totAuthVehicles']
             ]
         );
 

@@ -1569,7 +1569,7 @@ return [
 
     'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
     'permits.page.bilateral.no-of-permits.question' => 'For each country, how many permits do you require?',
-    'permits.page.bilateral.no-of-permits.guidance' => 'You are authorised up to <strong>%s permits</strong> per country per year. There is a £5 fee for this application. Each permit costs <strong>£45</strong>.',
+    'permits.page.bilateral.no-of-permits.guidance' => 'You are authorised up to <strong>%s permits</strong> per country per year. There is a <strong>£50</strong> fee per permit.',
     'permits.page.bilateral.no-of-permits.additional-guidance' => '<strong>If you do not require permits for a particular year, enter 0.</strong>',
     'permits.page.bilateral.no-of-permits.for-year' => 'for %s',
     'permits.page.bilateral.no-of-permits.all-issued' => 'for %s<br>You cannot request any more permits. All %s have been issued.',
