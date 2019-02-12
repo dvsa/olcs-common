@@ -1854,10 +1854,9 @@ return [
     'transport-manager.employment.form.hoursPerWeek.placeholder' => '300 llythyren ar y mwyaf',
     'transport-manager.employment.form.hoursPerWeek' => 'Ar ba ddiwrnodau a pha oriau rydych yn gweithio ar gyfer y cyflogwr hwn? (300 llythyren ar y mwyaf)',
     'transport-manager.employment.form.hoursPerWeek.errorMessage' => 'Pa ddiwrnodau a pha oriau rydych yn gweithio ar gyfer y cyflogwr hwn sy’n fwy na 300 llythyren',
-
     'user-forgot-username.form.text.for-la-partner' => 'Os ydych yn awdurdod lleol neu’n sefydliad partner bydd angen i chi e-bostio <a href="mailto:notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a> i adfer eich enw defnyddiwr.',
     'user-forgot-not-la-partner-text' => 'Os nad ydych yn awdurdod lleol neu’n sefydliad partner, rydym wedi anfon e-bost i <b class="js-email">%s</b> yn cynnwys eich enw defnyddiwr. Os nad yw ein he-bost yn ymddangos yn eich mewnflwch o fewn 5 munud, gwiriwch eich ffolder Spam neu Sgrwtsh neu cysylltwch â’ch adran TG am gymorth. Os yw ein he-bost yn eich ffolder Spam neu Sgrwtsh, dylech newid eich gosodiadau e-bost fel bod e-byst pellach wrthym ni yn cyrraedd eich mewnflwch. Os oes gennych broblemau wrth arwyddo mewn neu os nad ydych wedi derbyn ein he-bost, bydd angen i chi gysylltu â <a href="mailto:notifications@vehicle-operator-licensing.service.gov.uk">notifications@vehicle-operator-licensing.service.gov.uk</a>',
     'user-forgot-username.page.check-email.guidance' => 'Os nad ydych yn awdurdod lleol neu’n sefydliad partner, rydym wedi anfon e-bost i <b class="js-email">%s</b> yn cynnwys eich enw defnyddiwr.',
-
+    'continue.finance.history.button' => 'Parhau i hanes ariannol',
     // Potentially unused translations
 ];
