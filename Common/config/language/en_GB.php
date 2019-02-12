@@ -3769,7 +3769,7 @@ return [
     'permits.irhp.valid.permits.table.start-date' => 'Start date',
     'permits.irhp.valid.permits.table.expiry-date' => 'Expiry date',
 
-    'permits.irhp.bilateral.already-applied' => 'There is an active permit application for this licence click ‘Save and continue’ again to access this application'
+    'permits.irhp.bilateral.already-applied' => 'There is an active permit application for this licence click ‘Save and continue’ again to access this application',
 
     'continuations.vehicles.weight-kg' => 'kg',
     // Potentially unused translations
