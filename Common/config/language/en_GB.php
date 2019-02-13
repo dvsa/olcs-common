@@ -3747,30 +3747,25 @@ return [
     'waived-paid-permits.page.fee-part-successful.title' => 'Accept or Decline ECMT permits',
     'waived.paid.permits.page.ecmt.fee-part-successful.payment.due' => 'Acceptance required by',
     'permits.application.fee.submitted.main.paid.waived' => 'Acceptance successful',
-
     'permits.check-answers.page.question.licence' => 'Licence selected',
     'govuk.warning.component.title' => 'Warning',
-
     'irhp-permit-windows-cannot-delete-past-or-active-windows' => 'Windows which are active or have ended cannot be deleted',
     'irhp-permit-stock-cannot-delete-active-dependencies' => 'This Permit Stock cannot be deleted as there are active dependencies',
     'irhp-permit-range-cannot-delete-active-dependencies' => 'This Permit Range cannot be deleted as there are active dependencies',
-
     'ERR_PERMIT_PRINTING_MAX_BATCH_SIZE_REACHED' => 'Too many permits selected for printing in one batch.',
     'ERR_PERMIT_PRINTING_ALREADY_IN_PROGRESS' => 'Printing already in progress.',
-
     'permits.irhp.application.question.countries' => 'Select the country you are transporting goods to',
     'permits.irhp.application.question.no-of-permits' => 'How many permits do you require?',
     'permits.irhp.application.answers.no-of-permits' => '%s permits for %s in %s',
-
     'permits.irhp.valid.permits.title' => 'Annual Bilateral permits (EU and EEA)',
     'permits.irhp.valid.permits.table.permit' => 'Permit',
     'permits.irhp.valid.permits.table.country' => 'Country',
     'permits.irhp.valid.permits.table.application' => 'Application',
     'permits.irhp.valid.permits.table.start-date' => 'Start date',
     'permits.irhp.valid.permits.table.expiry-date' => 'Expiry date',
-
     'permits.irhp.bilateral.already-applied' => 'There is an active permit application for this licence click ‘Save and continue’ again to access this application',
-
     'continuations.vehicles.weight-kg' => 'kg',
+    'continue.finance.history.button' => 'Continue to financial history',
+
     // Potentially unused translations
 ];
