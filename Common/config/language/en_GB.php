@@ -3617,6 +3617,7 @@ return [
     'permits.page.fee.permit.validity.dates' => '%s to %s',
     'permits.page.fee.number.permits' => 'Number of permits required',
     'permits.page.fee.per-permit' => '%s x %s (per permit) <a class="govuk-link govuk-!-display-block" href="%s">View Permits</a>',
+    'permits.page.fee.number.permits.value' => '%s x %s (per permit)',
     'permits.page.fee.permit.fee.total' => 'Total application fee to be paid',
     'permits.page.fee.permit.fee.non-refundable' => '%s (non-refundable)',
     'permits.page.irhp-fee.permit.fee' => 'Permit fee',
