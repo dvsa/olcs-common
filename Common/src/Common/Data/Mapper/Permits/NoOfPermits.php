@@ -14,15 +14,13 @@ use RuntimeException;
  */
 class NoOfPermits
 {
-    // TODO: this shouldn't be here
-    const PERMIT_FEE_IN_POUNDS = 45;
-
     /**
      * @param array $data
      * @param $form
      * @param TranslationHelperService $translator
      * @param string $irhpApplicationDataKey
      * @param string $irhpMaxPermitsByStockDataKey
+     * @param string $feePerPermitDataKey
      *
      * @return array
      */
@@ -31,7 +29,8 @@ class NoOfPermits
         $form,
         TranslationHelperService $translator,
         $irhpApplicationDataKey,
-        $irhpMaxPermitsByStockDataKey
+        $irhpMaxPermitsByStockDataKey,
+        $feePerPermitDataKey
     ) {
         $irhpApplication = $data[$irhpApplicationDataKey];
 
@@ -103,7 +102,8 @@ class NoOfPermits
         $guidanceValue = $translator->translateReplace(
             'permits.page.bilateral.no-of-permits.guidance',
             [
-                $irhpApplication['licence']['totAuthVehicles']
+                $irhpApplication['licence']['totAuthVehicles'],
+                $data[$feePerPermitDataKey]['feePerPermit']
             ]
         );
 
