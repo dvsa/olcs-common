@@ -249,28 +249,24 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if ($officeCopy) {
             $table->removeAction('office-licence-add');
         }
-        if (
-                !$this->checkTableForLicences(
-                    $table,
-                    [
-                        CommunityLicEntityService::STATUS_PENDING,
-                        CommunityLicEntityService::STATUS_ACTIVE,
-                        CommunityLicEntityService::STATUS_WITHDRAWN,
-                        CommunityLicEntityService::STATUS_SUSPENDED
-                    ]
-                )
-            ) {
+        if (!$this->checkTableForLicences(
+            $table,
+            [
+                CommunityLicEntityService::STATUS_PENDING,
+                CommunityLicEntityService::STATUS_ACTIVE,
+                CommunityLicEntityService::STATUS_WITHDRAWN,
+                CommunityLicEntityService::STATUS_SUSPENDED
+            ]
+        )) {
             $table->removeAction('void');
         }
-        if (
-                !$this->checkTableForLicences(
-                    $table,
-                    [
-                        CommunityLicEntityService::STATUS_WITHDRAWN,
-                        CommunityLicEntityService::STATUS_SUSPENDED
-                    ]
-                )
-            ) {
+        if (!$this->checkTableForLicences(
+            $table,
+            [
+                CommunityLicEntityService::STATUS_WITHDRAWN,
+                CommunityLicEntityService::STATUS_SUSPENDED
+            ]
+        )) {
             $table->removeAction('restore');
         }
         if (!$this->checkTableForLicences($table, [CommunityLicEntityService::STATUS_ACTIVE])) {
@@ -305,7 +301,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      *
      * @return \Zend\Http\Response
      */
-    public function officeLicenceAddAction()
+    public function addOfficeLicenceAction()
     {
         if ($this->lva === 'licence') {
             $create = [
@@ -361,13 +357,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $view->setTemplate('partials/form');
 
         if ($request->isPost()) {
-
             $identifier = $this->getIdentifier();
-
             $data = (array)$request->getPost();
             $form->setData($data);
             if ($form->isValid()) {
-
                 if ($this->lva === 'licence') {
                     $create = [
                         'licence' => $licenceId,
@@ -540,10 +533,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $this->alterEditSuspensionForm($form);
 
         if ($request->isPost() && $form->isValid()) {
-
             $dtoData = CommunityLicMapper::mapFromForm($data, $this->params('child_id'));
             $response = $this->sendCommand(EditSuspensionDto::create($dtoData));
-
             if ($response->isOk()) {
                 $result = $response->getResult();
                 if (isset($result['messages']) && count($result['messages'])) {
@@ -552,7 +543,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                 }
                 return $this->redirectToIndex();
             }
-
             $this->displayErrors($response);
         }
         $this->placeholder()->setPlaceholder('contentTitle', 'Community licence suspension details');
@@ -680,7 +670,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Render Confirmation
-     * 
+     *
      * @param string $message Message
      *
      * @return \Common\View\Model\Section
