@@ -494,6 +494,7 @@ return [
     'licence.surrender.internal.surrender.error.open_case_active_bus' => 'You cannot surrender a licence with open cases or active bus registrations',
     'licence.surrender.internal.withdraw.confirm.message' => 'Are you sure you wish to withdraw the application to surrender licence %s?',
     'licence.surrender.internal.withdraw.error' => 'There was an error withdrawing the surrender',
+    'licence-status.surrender.message.withdrawn' => 'The surrender has been withdrawn',
     'llp-number' => 'PAC #',
     'lookup-advance-search-submit' => 'Chwilio',
     'lookup-basic-search-submit' => 'Chwilio',
