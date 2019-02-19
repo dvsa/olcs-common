@@ -30,11 +30,13 @@ class NoOfPermitsTest extends TestCase
         $for2019Html = 'for 2019';
         $for2020Html = 'for 2020';
 
+        $feePerPermit = 65;
+
         $translationHelperService = m::mock(TranslationHelperService::class);
         $translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.guidance',
-                [12]
+                [12, $feePerPermit]
             )
             ->andReturn($translatedGuidanceText);
         $translationHelperService->shouldReceive('translateReplace')
@@ -82,6 +84,9 @@ class NoOfPermitsTest extends TestCase
             ->andReturn($for2020Html);
 
         $data = [
+            'feePerPermit' => [
+                'feePerPermit' => $feePerPermit
+            ],
             'application' => [
                 'irhpPermitType' => [
                     'id' => 4
@@ -159,7 +164,8 @@ class NoOfPermitsTest extends TestCase
             $form,
             $translationHelperService,
             'application',
-            'maxPermitsByStock'
+            'maxPermitsByStock',
+            'feePerPermit'
         );
 
         $this->assertCount(0, $form->getElements());
@@ -267,6 +273,13 @@ class NoOfPermitsTest extends TestCase
         $form = new Form();
         $translationHelperService = m::mock(TranslationHelperService::class);
 
-        $data = NoOfPermits::mapForFormOptions($data, $form, $translationHelperService, 'application', 'maxPermitsByStock');
+        $data = NoOfPermits::mapForFormOptions(
+            $data,
+            $form,
+            $translationHelperService,
+            'application',
+            'maxPermitsByStock',
+            'feePerPermit'
+        );
     }
 }
