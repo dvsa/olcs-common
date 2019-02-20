@@ -68,7 +68,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             $crudAction = $this->getCrudAction([$data['table']]);
 
             if ($crudAction !== null) {
-                return $this->handleCrudAction($crudAction, ['add', 'office-licence-add']);
+                return $this->handleCrudAction($crudAction, ['add', 'add office licence']);
             }
 
             return $this->completeSection('community_licences');
