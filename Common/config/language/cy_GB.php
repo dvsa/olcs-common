@@ -1527,7 +1527,7 @@ return [
     'permits.page.cabotage.title' => 'A fyddwch chi\'n cynnal masnach arforol?',
     'permits.page.cabotage.browser.title' => 'Cabotage',
     'permits.page.cabotage.question' => 'Nid yw hawlenni ECMT yn caniatáu i chi gynnal masnach arforol',
-    'permits.page.cabotage.guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between 2 points in the same country carried out by a vehicle that is not registered in that country.',
+    'permits.page.cabotage.guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
     'permits.page.type.title' => 'Select Permit Type',
     'permits.page.type.hint' => 'Further <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">guidance on permits</a> is available on GOV.UK.',
     'permits.page.type.question' => 'What type of permit do you need?',
