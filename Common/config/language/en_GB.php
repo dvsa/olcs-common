@@ -3574,7 +3574,7 @@ return [
     'permits.page.euro6.emissions.guidance.line.2' => 'This includes any vehicles you currently own or lease, or are intending to buy or lease in the future.',
     'permits.page.cabotage.browser.title' => 'Cabotage',
     'permits.page.cabotage.question' => 'ECMT permits do not allow you to carry out cabotage',
-    'permits.page.cabotage.guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between 2 points in the same country carried out by a vehicle that is not registered in that country.',
+    'permits.page.cabotage.guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
     'permits.page.number-of-trips.title' => 'Number of annual trips abroad - ',
     'permits.page.number-of-trips.question' => 'How many international trips did you make in the last 12 months using this licence?',
     'permits.page.number-of-trips.northern-ireland.warning' => 'You must exclude all journeys made from Northern Ireland to the Republic of Ireland.',
