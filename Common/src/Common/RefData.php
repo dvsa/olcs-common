@@ -409,4 +409,8 @@ class RefData
     // IRHP Permit Fee Types
     const IRHP_GV_APPLICATION_FEE_TYPE = 'IRHPGVAPP';
     const IRHP_GV_ISSUE_FEE_TYPE = 'IRHPGVISSUE';
+
+    const EMISSIONS_CATEGORY_EURO5 = 'emissions_cat_euro5';
+    const EMISSIONS_CATEGORY_EURO6 = 'emissions_cat_euro6';
+    const EMISSIONS_CATEGORY_NA = 'emissions_cat_na';
 }
