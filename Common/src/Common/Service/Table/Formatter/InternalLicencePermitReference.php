@@ -8,6 +8,7 @@
 
 namespace Common\Service\Table\Formatter;
 
+use Common\RefData;
 use Common\Util\Escape;
 
 /**
@@ -29,12 +30,34 @@ class InternalLicencePermitReference implements FormatterInterface
      */
     public static function format($row, $column = null, $serviceLocator = null)
     {
-        $urlHelper = $serviceLocator->get('Helper\Url');
-        $url = $urlHelper->fromRoute('licence/permits/application', [
-            'licence' => $row['licenceId'],
-            'action' => 'edit',
-            'permitid' => $row['id']
-        ]);
-        return '<a href="'.$url.'">'.Escape::html($row['applicationRef']).'</a>';
+        // find a route for the type
+        switch ($row['typeId']) {
+            case RefData::ECMT_PERMIT_TYPE_ID:
+                $route = 'licence/permits/application';
+                $params = [
+                    'licence' => $row['licenceId'],
+                    'action' => 'edit',
+                    'permitid' => $row['id']
+                ];
+                break;
+            case RefData::IRHP_BILATERAL_PERMIT_TYPE_ID:
+                $route = 'licence/irhp-application/application';
+                $params = [
+                    'licence' => $row['licenceId'],
+                    'action' => 'edit',
+                    'irhpAppId' => $row['id']
+                ];
+                break;
+        }
+
+        return isset($route)
+            ? vsprintf(
+                '<a href="%s">%s</a>',
+                [
+                    $serviceLocator->get('Helper\Url')->fromRoute($route, $params),
+                    Escape::html($row['applicationRef'])
+                ]
+            )
+            : Escape::html($row['applicationRef']);
     }
 }

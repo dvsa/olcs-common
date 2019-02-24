@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Table\Formatter;
 
+use Common\RefData;
 use Common\Service\Table\Formatter\InternalLicencePermitReference;
 use Common\Service\Helper\UrlHelperService as UrlHelper;
 use Mockery as m;
@@ -21,7 +22,10 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
         $urlHelper = m::mock(UrlHelper::class);
         $urlHelper->shouldReceive('fromRoute')
             ->with('licence/permits/application', ['action' => 'edit', 'permitid' => 3, 'licence' => 200])
-            ->andReturn('http://selfserve/permits/application-overview/3');
+            ->andReturn('INTERNAL_ECMT_URL')
+            ->shouldReceive('fromRoute')
+            ->with('licence/irhp-application/application', ['action' => 'edit', 'irhpAppId' => 4, 'licence' => 200])
+            ->andReturn('INTERNAL_IRHP_URL');
 
         $sm = m::mock(ServiceLocatorInterface::class);
         $sm->shouldReceive('get')->with('Helper\Url')->andReturn($urlHelper);
@@ -36,13 +40,32 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
     public function scenariosProvider()
     {
         return [
-            [
+            'ecmt' => [
                 [
                     'id' => 3,
+                    'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
                     'licenceId' => 200,
                     'applicationRef' => 'ECMT>1234567',
                 ],
-                '<a href="http://selfserve/permits/application-overview/3">ECMT&gt;1234567</a>'
+                '<a href="INTERNAL_ECMT_URL">ECMT&gt;1234567</a>'
+            ],
+            'irhp' => [
+                [
+                    'id' => 4,
+                    'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    'licenceId' => 200,
+                    'applicationRef' => 'IRHP>1234567',
+                ],
+                '<a href="INTERNAL_IRHP_URL">IRHP&gt;1234567</a>'
+            ],
+            'unknown' => [
+                [
+                    'id' => 1,
+                    'typeId' => 'unknown',
+                    'licenceId' => 200,
+                    'applicationRef' => 'UNKNOWN>1234567',
+                ],
+                'UNKNOWN&gt;1234567'
             ],
         ];
     }
