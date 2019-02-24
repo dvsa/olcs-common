@@ -1628,7 +1628,7 @@ return [
     'error.messages.restricted.countries.list' => 'Rhaid ichi ddewis o leiaf un gwlad',
     'error.messages.type' => 'You must select an option to continue',
     'error.messages.sector' => 'Rhaid ichi ateb y cwestiwn i barhau',
-    'error.messages.sector.list' => 'Dewisiwch un prif gategori ar gyfer eich trwydded',
+    'error.messages.sector.list' => 'Select one main sector only',
     'error.messages.euro6' => 'Rhaid ichi dicio\'r blwch i barhau',
     'error.messages.international-journey' => 'Dewisiwch canran y siwrnai rhyngwladol yn ystod y 12 mis diwethaf',
     'error.messages.trips.empty' => 'Nodwch nifer y teithiau a wnaethoch yn ystod y 12 mis diwethaf',
