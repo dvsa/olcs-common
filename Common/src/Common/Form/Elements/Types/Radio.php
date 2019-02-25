@@ -2,15 +2,14 @@
 
 namespace Common\Form\Elements\Types;
 
+use Common\Form\Element\ErrorOverrideRadio;
 use Common\View\Helper\UniqidGenerator;
-use Zend\Form\Element\Radio as ZendRadio;
 
 /**
  * Radio form element
  */
-class Radio extends ZendRadio
+class Radio extends ErrorOverrideRadio
 {
-
     /** @var UniqidGenerator */
     protected $idGenerator;
 

@@ -1610,7 +1610,7 @@ return [
     'permits.form.declaration.label' => 'Rwy\'n datgan fod y datganiadau a\'r wybodaeth a ddarparwyd yn wir a bod fy nghais yn gywir. Rwy\'n deall ei bod yn drosedd i wneud datganiad ffug er mwyn cael hawlen.',
 
     'error.messages.ecmt-licence' => 'Dewiswch drwydded yr hoffech i\'ch trwydded ECMT gael ei ategu iddo',
-    'error.messages.licence' => 'Dewiswch drwydded yr hoffech i\'ch trwydded ECMT gael ei ategu iddo',
+    'error.messages.licence' => 'Select a licence',
     'error.messages.checkbox' => 'Rhaid ichi dicio\'r blwch i barhau',
     'error.messages.checkbox.euro-emissions' => 'Ticiwch i gadarnhau y bydd eich cerbyd yn bodloni safonau allyriadau Ewro 6',
     'error.messages.checkbox.cabotage' => 'Ticiwch i gadarnhau na fydd eich cerbyd yn ymgymryd â siwrnai masnach arforol',
