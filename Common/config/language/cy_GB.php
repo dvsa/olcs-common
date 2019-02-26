@@ -107,7 +107,7 @@ return [
     'application_operating-centres_authorisation.table.vehicles' => 'Cerbydau',
     'application_previous-history_financial-history.finance.administration' => 'ynghlwm â busnes sydd wedi neu yn mynd i ddwylo’r gweinyddwyr neu i Drefniant Gwirfoddol ar ran Cwmni?',
     'application_previous-history_financial-history.finance.bankrupt' => 'wedi datgan methdaliad neu eu hystâd wedi’i gipio neu’n destun Trefniant Gwirfoddol ar ran Unigolyn?',
-    'application_previous-history_financial-history.finance.disqualified' => 'Disqualification Act 1986?	yn anghymwys i weithredu fel cyfarwyddwr cwmni neu i reoli cwmni dan Ddeddf Anghymwyso Cyfarwyddwyr Cwmni 1986?',
+    'application_previous-history_financial-history.finance.disqualified' => 'yn anghymwys i weithredu fel cyfarwyddwr cwmni neu i reoli cwmni dan Ddeddf Anghymwyso Cyfarwyddwyr Cwmni 1986?',
     'application_previous-history_financial-history.finance.liquidation' => 'ynghlwm â busnes sydd wedi ei neu ar fin ei ddiddymu, ac mewn dyled?',
     'application_previous-history_financial-history.finance.receivership' => 'ynghlwm â busnes sydd wedi neu’n mynd i law’r derbynnydd?',
     'application_previous-history_financial-history.insolvencyConfirmation.title' => 'i ddweud wrth y Comisiynydd Trafnidiaeth ar unwaith ynghylch unrhyw drafodion ansolfedd sy’n digwydd rhwng cyflwyno’r cais hwn a phan wneir y penderfyniad',
