@@ -99,18 +99,20 @@ class NoOfPermits
         $fieldset->add($permitsRequiredFieldset);
         $form->add($fieldset);
 
-        $guidanceValue = $translator->translateReplace(
-            'permits.page.bilateral.no-of-permits.guidance',
-            [
-                $irhpApplication['licence']['totAuthVehicles'],
-                $data[$feePerPermitDataKey]['feePerPermit']
-            ]
-        );
+        if (isset($data[$feePerPermitDataKey])) {
+            $guidanceValue = $translator->translateReplace(
+                'permits.page.bilateral.no-of-permits.guidance',
+                [
+                    $irhpApplication['licence']['totAuthVehicles'],
+                    $data[$feePerPermitDataKey]['feePerPermit']
+                ]
+            );
 
-        $data['guidance'] = [
-            'value' => $guidanceValue,
-            'disableHtmlEscape' => true
-        ];
+            $data['guidance'] = [
+                'value' => $guidanceValue,
+                'disableHtmlEscape' => true
+            ];
+        }
 
         return $data;
     }
