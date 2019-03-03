@@ -64,15 +64,11 @@ class LicenceNumberAndStatus implements FormatterInterface
         $urlHelper = $serviceLocator->get('Helper\Url');
 
         $translator = $serviceLocator->get('translator');
-        if (isset($row['isExpired']) && $row['isExpired'] === true) {
-            $row['status']['description'] = $translator->translate('licence.status.expired');
-            $statusClass = 'status red';
+
+        if ($row['status']['id'] !== RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION) {
+            list($row, $statusClass) = self::changeStateIfExpired($row, $translator, $statusClass);
         }
 
-        if (isset($row['isExpiring']) && $row['isExpiring'] === true) {
-            $row['status']['description'] = $translator->translate('licence.status.expiring');
-            $statusClass = 'status red';
-        }
 
         $markup = $activeLink ?
             self::markupWithLink($row, $urlHelper, $statusClass) :
@@ -105,5 +101,27 @@ class LicenceNumberAndStatus implements FormatterInterface
                 $row['status']['description']
             ]
         );
+    }
+
+    /**
+     * @param $row
+     * @param $translator
+     *
+     * @param $statusClass
+     *
+     * @return array
+     */
+    protected static function changeStateIfExpired($row, $translator, $statusClass): array
+    {
+        if (isset($row['isExpired']) && $row['isExpired'] === true) {
+            $row['status']['description'] = $translator->translate('licence.status.expired');
+            $statusClass = 'status red';
+        }
+
+        if (isset($row['isExpiring']) && $row['isExpiring'] === true) {
+            $row['status']['description'] = $translator->translate('licence.status.expiring');
+            $statusClass = 'status red';
+        }
+        return array($row, $statusClass);
     }
 }
