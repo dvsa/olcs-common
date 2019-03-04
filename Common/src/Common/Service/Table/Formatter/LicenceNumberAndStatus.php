@@ -66,7 +66,7 @@ class LicenceNumberAndStatus implements FormatterInterface
         $translator = $serviceLocator->get('translator');
 
         if ($row['status']['id'] !== RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION) {
-            list($row, $statusClass) = self::changeStateIfExpired($row, $translator, $statusClass);
+            [$row, $statusClass] = self::changeStateIfExpired($row, $translator, $statusClass);
         }
 
 
