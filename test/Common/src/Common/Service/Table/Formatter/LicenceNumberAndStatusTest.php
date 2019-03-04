@@ -263,6 +263,22 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                 '<a class="overview__link" href="lva-licence/2"><span class="overview__link--underline">OB123</span> '.
                     '<span class="overview__status red">TRANSLATED_licence.status.expiring</span></a>',
             ],
+            'Expiring but Surrendered' =>[
+                [
+                    'status' => [
+                        'id' => RefData::LICENCE_STATUS_SURRENDER_UNDER_CONSIDERATION,
+                        'description' => 'Surrender under consideration'
+                    ],
+                    'licNo' => 'OB123',
+                    'id' => 2,
+                    'isExpiring' => true,
+                ],
+                '<div class="overview__link"><span class="overview__link">OB123</span> '.
+                '<span class="overview__status green">Surrender under consideration</span></div>',
+            ],
+
+
+
         ];
     }
 }
