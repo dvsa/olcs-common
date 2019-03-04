@@ -276,9 +276,6 @@ class LicenceNumberAndStatusTest extends MockeryTestCase
                 '<div class="overview__link"><span class="overview__link">OB123</span> '.
                 '<span class="overview__status green">Surrender under consideration</span></div>',
             ],
-
-
-
         ];
     }
 }

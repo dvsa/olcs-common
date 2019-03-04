@@ -122,6 +122,6 @@ class LicenceNumberAndStatus implements FormatterInterface
             $row['status']['description'] = $translator->translate('licence.status.expiring');
             $statusClass = 'status red';
         }
-        return array($row, $statusClass);
+        return [$row, $statusClass];
     }
 }
