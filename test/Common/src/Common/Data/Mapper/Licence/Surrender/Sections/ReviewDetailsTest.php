@@ -47,7 +47,7 @@ class ReviewDetailsTest extends TestCase
 
 
         if ($typeOfLicence === 'StandardInternational') {
-            $mockSurrender['licence']['isInternationalLicence'] = true;
+            $mockSurrender['surrender']['isInternationalLicence'] = true;
             $this->mockUrlHelperFromRoute($mockUrlHelper, 'licence/surrender/community-licence/review/GET', 2);
             $this->mockTranslatorForCommunityLicence($mockTranslator);
             array_push($expected, $this->expectedCommunityLicence());
@@ -86,7 +86,6 @@ class ReviewDetailsTest extends TestCase
 
 
         return [
-            'licence' => ['isInternationalLicence' => false],
             'surrender' => [
                 'version' => '1',
                 'licence' => $this->mockLicence(),
@@ -100,6 +99,7 @@ class ReviewDetailsTest extends TestCase
                 'licenceDocumentInfo' => null,
                 'communityLicenceDocumentStatus'=> ['id' => 'doc_sts_destroyed'],
                 'communityLicenceDocumentInfo' => null,
+                'isInternationalLicence' => false
             ]
         ];
     }

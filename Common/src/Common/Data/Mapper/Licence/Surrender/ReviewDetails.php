@@ -39,7 +39,7 @@ class ReviewDetails
 
         ];
 
-        if ($surrender['licence']['isInternationalLicence']) {
+        if ($surrender['surrender']['isInternationalLicence']) {
             $communityLicenceDetails = new SurrenderSection(
                 $surrender,
                 $urlHelper,
