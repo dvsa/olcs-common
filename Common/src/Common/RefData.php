@@ -405,6 +405,7 @@ class RefData
 
     //IRHP Permit Type
     const IRHP_BILATERAL_PERMIT_TYPE_ID = 4;
+    const IRHP_MULTILATERAL_PERMIT_TYPE_ID = 5;
 
     // IRHP Permit Fee Types
     const IRHP_GV_APPLICATION_FEE_TYPE = 'IRHPGVAPP';
