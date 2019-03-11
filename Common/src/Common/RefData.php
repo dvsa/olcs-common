@@ -357,6 +357,7 @@ class RefData
     const PERMIT_APP_STATUS_UNSUCCESSFUL = 'permit_app_unsuccessful';
     const PERMIT_APP_STATUS_ISSUING = 'permit_app_issuing';
     const PERMIT_APP_STATUS_VALID = 'permit_app_valid';
+    const PERMIT_APP_STATUS_EXPIRED = 'permit_app_expired';
 
     const PERMIT_APP_WITHDRAW_REASON_UNPAID = 'permits_app_withdraw_not_paid';
     const PERMIT_APP_WITHDRAW_REASON_DECLINED = 'permits_app_withdraw_declined';
@@ -376,6 +377,8 @@ class RefData
     const IRHP_PERMIT_STATUS_ERROR              = 'irhp_permit_error';
     const IRHP_PERMIT_STATUS_CEASED             = 'irhp_permit_ceased';
     const IRHP_PERMIT_STATUS_ISSUED             = 'irhp_permit_issued';
+    const IRHP_PERMIT_STATUS_TERMINATED         = 'irhp_permit_terminated';
+    const IRHP_PERMIT_STATUS_EXPIRED            = 'irhp_permit_expired';
 
     /**
      * ECMT Permit application sources
