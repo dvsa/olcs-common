@@ -1,0 +1,21 @@
+<?php
+
+namespace CommonTest\Controller\Traits\Stubs;
+
+use Common\Controller\Lva\Traits\MethodToggleTrait;
+
+class MethodToggleTraitStub
+{
+    use MethodToggleTrait;
+
+    protected $methodToggles = [
+        'default' => 'some-feature-toggle'
+    ];
+
+    public $someMethodString = 'method was not called';
+
+    public function someMethod()
+    {
+        $this->someMethodString = 'method was called';
+    }
+}
