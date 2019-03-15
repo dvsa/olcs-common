@@ -87,6 +87,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /** @var  \Common\Service\Helper\TranslationHelperService */
     private $hlpTranslator;
 
+
     /**
      * On Dispatch
      *
@@ -323,7 +324,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     $fm,
                     $translator,
                     $this->location,
-                    $taGuidesUrl
+                    $taGuidesUrl,
+                    $this->isExternal()
                 );
             }
         }
@@ -444,7 +446,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     $fm,
                     $translator,
                     $this->location,
-                    $taGuidesUrl
+                    $taGuidesUrl,
+                    $this->isExternal()
                 );
             }
         }

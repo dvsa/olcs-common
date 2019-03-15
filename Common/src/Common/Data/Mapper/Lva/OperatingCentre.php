@@ -3,8 +3,10 @@
 namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
+use Common\Form\Elements\Custom\OlcsCheckbox;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
+use Zend\Form\Element\Hidden;
 use Zend\Form\Form;
 use Common\RefData;
 
@@ -142,7 +144,8 @@ class OperatingCentre implements MapperInterface
         FlashMessengerHelperService $fm,
         TranslationHelperService $translator,
         $location,
-        $taGuidesUrl
+        $taGuidesUrl,
+        $isExternal
     ) {
         $formMessages = [];
 
@@ -180,6 +183,7 @@ class OperatingCentre implements MapperInterface
 
         if (isset($errors['file'])) {
             foreach ($errors['file'] as $key => $message) {
+                OperatingCentre::
                 $formMessages['advertisements']['file']['upload'][] = $message;
             }
 
@@ -191,12 +195,27 @@ class OperatingCentre implements MapperInterface
                 foreach ($message as $k => $v) {
                     if ($k === 'ERR_OC_PC_TA_GB') {
                         $message[$k] = $translator->translateReplace($k, [$taGuidesUrl]);
+                        if (!$isExternal) {
+                            $confirm = new OlcsCheckbox(
+                                'confirm-add',
+                                ['label' => 'I confirm I wish to use this address']
+                            );
+                            $confirm->setMessages([ $translator->translate($k."-internalwarning")]);
+                            $confirm->setValue($k);
+                            $form->get('form-actions')->add($confirm, ['priority' => 20]);
+
+                        }
+
+
                     } elseif (in_array($k, OperatingCentres::API_ERR_KEYS)) {
-                        $message[$k] = $translator->translateReplace($k .'_'. strtoupper($location), [$v]);
+                        $message[$k] = $translator->translateReplace($k . '_' . strtoupper($location), [$v]);
                     }
                 }
-
-                $formMessages['address']['postcode'][] = $message;
+                if (!$isExternal) {
+                    $formMessages['form-actions'][] = $message;
+                } else {
+                    $formMessages['address']['postcode'][] = $message;
+                }
             }
 
             unset($errors['postcode']);
