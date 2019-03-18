@@ -63,6 +63,7 @@ class OperatingCentreTest extends MockeryTestCase
                 'adPlacedContent' => [
                     'adPlacedIn' => 'Donny Star',
                     'adPlacedDate' => '2015-01-01'
+
                 ]
             ]
         ];
@@ -117,7 +118,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_NOW,
                     'adPlacedIn' => 'Donny Star',
-                    'adPlacedDate' => '2015-01-01'
+                    'adPlacedDate' => '2015-01-01',
+                    'taIsOverridden' => 'N'
+
                 ]
             ],
             [
@@ -147,7 +150,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_POST,
                     'adPlacedIn' => 'Donny Star',
-                    'adPlacedDate' => '2015-01-01'
+                    'adPlacedDate' => '2015-01-01',
+                    'taIsOverridden' => 'N'
+
                 ]
             ],
             [
@@ -177,7 +182,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_LATER,
                     'adPlacedIn' => 'Donny Star',
-                    'adPlacedDate' => '2015-01-01'
+                    'adPlacedDate' => '2015-01-01',
+                    'taIsOverridden' => 'N'
+
                 ]
             ]
         ];
@@ -261,7 +268,7 @@ class OperatingCentreTest extends MockeryTestCase
             ->once()
             ->with('bar');
 
-        OperatingCentre::mapFormErrors($form, $errors, $fm, $th, $location, 'url');
+        OperatingCentre::mapFormErrors($form, $errors, $fm, $th, $location, 'url', true);
     }
 
     /**

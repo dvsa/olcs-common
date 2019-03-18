@@ -36,13 +36,13 @@ class Address
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "addressLine1",
      *   "data-container-class" : "compound"
      * })
      * @Form\Options({
      *     "label":"address_addressLines",
-     *     "error-message" : "address_addressLine1-error", 
+     *     "error-message" : "address_addressLine1-error",
      *     "label_attributes": {
      *         "aria-label": "Enter address manually. Address line one"
      *     },
@@ -56,7 +56,7 @@ class Address
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -69,7 +69,7 @@ class Address
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })

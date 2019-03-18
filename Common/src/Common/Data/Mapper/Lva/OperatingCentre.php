@@ -248,7 +248,6 @@ class OperatingCentre implements MapperInterface
             );
             $confirm->setMessages([$translator->translate($k . "-internalwarning")]);
             $form->get('form-actions')->add($confirm, ['priority' => 20]);
-
         }
     }
 }
