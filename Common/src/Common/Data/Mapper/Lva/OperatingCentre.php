@@ -69,6 +69,7 @@ class OperatingCentre implements MapperInterface
      */
     public static function mapFromForm(array $data)
     {
+        $overridden = (isset($data['isTaOverridden']) && $data['isTaOverridden'] === "1") ? 'Y' : 'N';
         $mappedData = [
             'version' => $data['version'],
             'address' => isset($data['address']) ? $data['address'] : null,
@@ -77,7 +78,8 @@ class OperatingCentre implements MapperInterface
             'permission' => null,
             'adPlaced' => null,
             'adPlacedIn' => null,
-            'adPlacedDate' => null
+            'adPlacedDate' => null,
+            'taIsOverridden' =>  $overridden
         ];
 
         $mappedData = array_merge($mappedData, $data['data']);
@@ -195,18 +197,7 @@ class OperatingCentre implements MapperInterface
                 foreach ($message as $k => $v) {
                     if ($k === 'ERR_OC_PC_TA_GB') {
                         $message[$k] = $translator->translateReplace($k, [$taGuidesUrl]);
-                        if (!$isExternal) {
-                            $confirm = new OlcsCheckbox(
-                                'confirm-add',
-                                ['label' => 'I confirm I wish to use this address']
-                            );
-                            $confirm->setMessages([ $translator->translate($k."-internalwarning")]);
-                            $confirm->setValue($k);
-                            $form->get('form-actions')->add($confirm, ['priority' => 20]);
-
-                        }
-
-
+                        self::setConfirmation($form, $translator, $isExternal, $k);
                     } elseif (in_array($k, OperatingCentres::API_ERR_KEYS)) {
                         $message[$k] = $translator->translateReplace($k . '_' . strtoupper($location), [$v]);
                     }
@@ -236,5 +227,28 @@ class OperatingCentre implements MapperInterface
         }
 
         $form->setMessages($formMessages);
+    }
+
+    /**
+     * @param Form                     $form
+     * @param TranslationHelperService $translator
+     * @param                          $isExternal
+     * @param string                   $k
+     */
+    protected static function setConfirmation(
+        Form $form,
+        TranslationHelperService $translator,
+        $isExternal,
+        string $k
+    ): void {
+        if (!$isExternal) {
+            $confirm = new OlcsCheckbox(
+                'confirm-add',
+                ['label' => $translator->translate($k . '-confirm')]
+            );
+            $confirm->setMessages([$translator->translate($k . "-internalwarning")]);
+            $form->get('form-actions')->add($confirm, ['priority' => 20]);
+
+        }
     }
 }
