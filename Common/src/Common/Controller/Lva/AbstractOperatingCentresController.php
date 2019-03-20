@@ -140,7 +140,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ->setData($data);
 
         if ($request->isPost()) {
-
             $crudAction = $this->getCrudAction([$data['table']]);
 
             if ($crudAction !== null) {
@@ -151,7 +150,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
             }
 
             if ($form->isValid()) {
-
                 $response = $this->processUpdateOc($form, $crudAction);
 
                 if ($response !== null) {
@@ -297,7 +295,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
-
             $formData = array_merge($form->getData(), ['isTaOverridden' => $request->getPost('form-actions')['confirm-add']]);
             $dtoData = OperatingCentre::mapFromForm($formData);
             $dtoData[$this->getIdentifierIndex()] = $this->getIdentifier();
@@ -326,8 +323,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     $fm,
                     $translator,
                     $this->location,
-                    $taGuidesUrl,
-                    $this->isExternal()
+                    $taGuidesUrl
                 );
             }
         }
@@ -414,7 +410,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
-
             $dtoData = OperatingCentre::mapFromForm($form->getData());
             if (!$resultData['canUpdateAddress']) {
                 unset($dtoData['address']);
@@ -448,8 +443,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     $fm,
                     $translator,
                     $this->location,
-                    $taGuidesUrl,
-                    $this->isExternal()
+                    $taGuidesUrl
                 );
             }
         }

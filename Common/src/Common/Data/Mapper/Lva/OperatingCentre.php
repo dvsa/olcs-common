@@ -6,7 +6,6 @@ use Common\Data\Mapper\MapperInterface;
 use Common\Form\Elements\Custom\OlcsCheckbox;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
-use Zend\Form\Element\Hidden;
 use Zend\Form\Form;
 use Common\RefData;
 
@@ -20,6 +19,8 @@ class OperatingCentre implements MapperInterface
     const VALUE_OPTION_AD_PLACED_NOW = 'adPlaced';
     const VALUE_OPTION_AD_POST = 'adSendByPost';
     const VALUE_OPTION_AD_UPLOAD_LATER = 'adPlacedLater';
+    const LOC_INTERNAL = 'internal';
+    const LOC_EXTERNAL = 'external';
 
     /**
      * Map from result
@@ -146,8 +147,7 @@ class OperatingCentre implements MapperInterface
         FlashMessengerHelperService $fm,
         TranslationHelperService $translator,
         $location,
-        $taGuidesUrl,
-        $isExternal
+        $taGuidesUrl
     ) {
         $formMessages = [];
 
@@ -191,6 +191,7 @@ class OperatingCentre implements MapperInterface
 
             unset($errors['file']);
         }
+        $isExternal = ($location === self::LOC_EXTERNAL);
 
         if (isset($errors['postcode'])) {
             foreach ($errors['postcode'] as $key => $message) {

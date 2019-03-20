@@ -3,11 +3,15 @@
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\OperatingCentre;
+use Common\Form\Elements\Custom\OlcsCheckbox;
+use Hamcrest\Core\AnyOf;
+use Zend\Form\Form;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\RefData;
+
 
 /**
  * Operating Centre Test
@@ -192,7 +196,7 @@ class OperatingCentreTest extends MockeryTestCase
 
     public function testMapFormErrors()
     {
-        $location = 'EXTERNAL';
+        $location = 'external';
         $form = m::mock(\Zend\Form\Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);
         $th = m::mock(TranslationHelperService::class);
@@ -268,7 +272,7 @@ class OperatingCentreTest extends MockeryTestCase
             ->once()
             ->with('bar');
 
-        OperatingCentre::mapFormErrors($form, $errors, $fm, $th, $location, 'url', true);
+        OperatingCentre::mapFormErrors($form, $errors, $fm, $th, $location, 'url');
     }
 
     /**
@@ -337,6 +341,94 @@ class OperatingCentreTest extends MockeryTestCase
                     'bar' => 'cake'
                 ]
             ],
+        ];
+    }
+
+    /**
+     * @dataProvider dpConfirmation
+     */
+    public function testMapFormErrorsConfirmation($location, $expected)
+    {
+        $form = m::mock(Form::class);
+        $errors = [
+            'postcode' => [
+                [
+                    'ERR_OC_PC_TA_GB' => [
+                        'current' => "current",
+                        'oc' => "oc"
+                    ]
+                ]
+            ]
+        ];
+        $mockFm = m::mock(FlashMessengerHelperService::class);
+        $mockTranslatorService = m::mock(TranslationHelperService::class);
+        $taGuidesUrl = "__TEST__";
+
+        $mockTranslatorService->shouldReceive('translateReplace')
+            ->with('ERR_OC_PC_TA_GB', ['__TEST__'])
+            ->andReturn('translated');
+
+        $mockTranslatorService->shouldReceive('translateReplace')
+            ->with('ERR_TA_PSV_SR_EXTERNAL', ['Foo'])
+            ->andReturn('translated 2');
+
+        if ($location === 'internal') {
+            $mockTranslatorService->shouldReceive('translate')->with('ERR_OC_PC_TA_GB-confirm')->once();
+            $mockTranslatorService->shouldReceive('translate')->with('ERR_OC_PC_TA_GB-internalwarning')->once();
+            $form->shouldReceive('get')->once()->andReturnSelf();
+            $form->shouldReceive('add')->once();
+        }
+
+        $form->shouldReceive('setMessages')->once()->with($expected);
+
+        OperatingCentre::mapFormErrors($form, $errors, $mockFm, $mockTranslatorService, $location, $taGuidesUrl);
+    }
+
+    public function dpConfirmation()
+    {
+
+        return [
+
+            'externalUser' => [
+
+                OperatingCentre::LOC_EXTERNAL,
+                [
+                    'address' =>
+                        [
+                            'postcode' =>
+                                [
+                                    0 =>
+                                        [
+                                            'ERR_OC_PC_TA_GB' => 'translated',
+                                        ],
+                                ],
+                        ],
+                ]
+            ],
+            'internalUserConfirmed' => [
+                OperatingCentre::LOC_INTERNAL,
+                [
+                    'form-actions' =>
+                        [
+                            0 =>
+                                [
+                                    'ERR_OC_PC_TA_GB' => 'translated'
+                                ],
+                        ],
+                ]
+            ],
+            'internalUserNotConfirmed' => [
+                OperatingCentre::LOC_INTERNAL,
+                [
+                    'form-actions' =>
+                        [
+                            0 =>
+                                [
+                                    'ERR_OC_PC_TA_GB' => 'translated'
+                                ],
+                        ],
+                ]
+            ]
         ];
     }
 }
