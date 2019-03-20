@@ -36,13 +36,13 @@ class Address
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "addressLine1",
      *   "data-container-class" : "compound"
      * })
      * @Form\Options({
      *     "label":"address_addressLines",
-     *     "error-message" : "address_addressLine1-error", 
+     *     "error-message" : "address_addressLine1-error",
      *     "label_attributes": {
      *         "aria-label": "Enter address manually. Address line one"
      *     },
@@ -56,7 +56,7 @@ class Address
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -69,7 +69,7 @@ class Address
 
     /**
      * @Form\Attributes({
-     *   "class" : "long", 
+     *   "class" : "long",
      *   "id" : "",
      *   "data-container-class" : "compound"
      * })
@@ -111,11 +111,13 @@ class Address
      *     "short-label":"address_postcode",
      *     "error-message" : "address_postcode-error",
      * })
+     *
      * @Form\Type("Text")
      * @Form\Required(true)
      * @Form\Attributes({"id":"postcode", "required":false})
      * @Form\Validator({"name":"Zend\Validator\NotEmpty","options":{"null"}})
      * @Form\Validator({"name":"Dvsa\Olcs\Transfer\Validators\Postcode"})
+     * @Flags({"priority": 1000})
      */
     public $postcode = null;
 
@@ -132,6 +134,7 @@ class Address
      *     "service_name": "Common\Service\Data\Country"
      * })
      * @Form\Type("DynamicSelect")
+     * @Flags({"priority": 2})
      */
     public $countryCode = null;
 }
