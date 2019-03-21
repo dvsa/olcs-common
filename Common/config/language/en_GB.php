@@ -46,8 +46,6 @@ return [
     'ERR_OC_CL_1' => 'The number of community licences must not exceed the the total number of vehicles',
     'ERR_OC_EA_EMPTY' => 'Please select an enforcement area',
     'ERR_OC_PC_TA_GB' => 'This operating centre is in a different traffic area from your other centres. You\'ll have to apply for a separate licence. <a href="%s" target="_blank">Read more about traffic areas</a>',
-    'ERR_OC_PC_TA_GB-internalwarning' => 'This operating centre is in a different traffic area from the other centres.',
-    'ERR_OC_PC_TA_GB-confirm' => 'I confirm I wish to use this address for the operating centre',
     'ERR_OC_PC_TA_NI' => 'Your Operating Centre must be located in Northern Ireland',
     'ERR_OC_TA_NI_APP' => 'Your operating centre must be in Great Britain. If you need to operate within Northern Ireland, please cancel this application and create a new one selecting Northern Ireland in the Type of Licence page',
     'ERR_OC_PERMISSION' => 'Check box to continue',

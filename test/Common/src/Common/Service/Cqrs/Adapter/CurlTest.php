@@ -35,10 +35,10 @@ class CurlTest extends MockeryTestCase
         //  curl returns headers and call CURLOPT_HEADERFUNCTION function only for http|ftp protocols,
         //  so need need make request to http host, and that is incorrect in unit tests.
         //  in real life it will not empty, because curl will put headers in response.
-        /*$this->expectException(
+        $this->expectException(
             \Zend\Http\Client\Adapter\Exception\RuntimeException::class,
             'Error in cURL request: '
-        );*/
+        );
 
         $vfs = vfsStream::setup('temp');
         $tmpFileTrg = vfsStream::newFile('stream')->withContent('unit_test_content_2')->at($vfs)->url();
