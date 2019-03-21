@@ -3,6 +3,7 @@
 namespace Common\Data\Mapper\Lva;
 
 use Common\Data\Mapper\MapperInterface;
+use Common\Form\Elements\Custom\OlcsCheckbox;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Zend\Form\Form;
@@ -18,6 +19,8 @@ class OperatingCentre implements MapperInterface
     const VALUE_OPTION_AD_PLACED_NOW = 'adPlaced';
     const VALUE_OPTION_AD_POST = 'adSendByPost';
     const VALUE_OPTION_AD_UPLOAD_LATER = 'adPlacedLater';
+    const LOC_INTERNAL = 'internal';
+    const LOC_EXTERNAL = 'external';
 
     /**
      * Map from result
@@ -67,6 +70,7 @@ class OperatingCentre implements MapperInterface
      */
     public static function mapFromForm(array $data)
     {
+        $overridden = (isset($data['isTaOverridden']) && $data['isTaOverridden'] === "1") ? 'Y' : 'N';
         $mappedData = [
             'version' => $data['version'],
             'address' => isset($data['address']) ? $data['address'] : null,
@@ -75,7 +79,8 @@ class OperatingCentre implements MapperInterface
             'permission' => null,
             'adPlaced' => null,
             'adPlacedIn' => null,
-            'adPlacedDate' => null
+            'adPlacedDate' => null,
+            'taIsOverridden' =>  $overridden
         ];
 
         $mappedData = array_merge($mappedData, $data['data']);
@@ -180,23 +185,29 @@ class OperatingCentre implements MapperInterface
 
         if (isset($errors['file'])) {
             foreach ($errors['file'] as $key => $message) {
+                OperatingCentre::
                 $formMessages['advertisements']['file']['upload'][] = $message;
             }
 
             unset($errors['file']);
         }
+        $isExternal = ($location === self::LOC_EXTERNAL);
 
         if (isset($errors['postcode'])) {
             foreach ($errors['postcode'] as $key => $message) {
                 foreach ($message as $k => $v) {
                     if ($k === 'ERR_OC_PC_TA_GB') {
                         $message[$k] = $translator->translateReplace($k, [$taGuidesUrl]);
+                        self::setConfirmation($form, $translator, $isExternal, $k);
                     } elseif (in_array($k, OperatingCentres::API_ERR_KEYS)) {
-                        $message[$k] = $translator->translateReplace($k .'_'. strtoupper($location), [$v]);
+                        $message[$k] = $translator->translateReplace($k . '_' . strtoupper($location), [$v]);
                     }
                 }
-
-                $formMessages['address']['postcode'][] = $message;
+                if (!$isExternal) {
+                    $formMessages['form-actions'][] = $message;
+                } else {
+                    $formMessages['address']['postcode'][] = $message;
+                }
             }
 
             unset($errors['postcode']);
@@ -217,5 +228,27 @@ class OperatingCentre implements MapperInterface
         }
 
         $form->setMessages($formMessages);
+    }
+
+    /**
+     * @param Form                     $form
+     * @param TranslationHelperService $translator
+     * @param                          $isExternal
+     * @param string                   $k
+     */
+    protected static function setConfirmation(
+        Form $form,
+        TranslationHelperService $translator,
+        $isExternal,
+        string $k
+    ): void {
+        if (!$isExternal) {
+            $confirm = new OlcsCheckbox(
+                'confirm-add',
+                ['label' => $translator->translate($k . '-confirm')]
+            );
+            $confirm->setMessages([$translator->translate($k . "-internalwarning")]);
+            $form->get('form-actions')->add($confirm, ['priority' => 20]);
+        }
     }
 }
