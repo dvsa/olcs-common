@@ -332,12 +332,6 @@ class RefData
     const PTR_ACTION_TO_BE_TAKEN_OTHER = 'ptr_action_to_be_taken_other';
 
     /**
-     * Permit Types
-     */
-    const PERMIT_TYPE_ECMT = 'permit_ecmt';
-    const ECMT_PERMIT_TYPE_ID = 1;
-
-    /**
      * Permit statuses
      */
     const PERMIT_VALID = 'permit_valid';
@@ -407,6 +401,9 @@ class RefData
     const SURRENDER_DOC_STATUS_STOLEN='doc_sts_stolen';
 
     //IRHP Permit Type
+    const PERMIT_TYPE_ECMT = 'permit_ecmt';
+    const ECMT_PERMIT_TYPE_ID = 1;
+    const ECMT_SHORT_TERM_PERMIT_TYPE_ID = 2;
     const IRHP_BILATERAL_PERMIT_TYPE_ID = 4;
     const IRHP_MULTILATERAL_PERMIT_TYPE_ID = 5;
 
