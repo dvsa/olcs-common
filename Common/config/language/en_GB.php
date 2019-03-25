@@ -3715,6 +3715,7 @@ return [
     'section.name.ecmt-declaration' => 'Declaration',
 
     'section.name.application/licence' => 'Licence number',
+    'section.name.application/emissions' => 'Euro emission standards',
     'section.name.application/countries' => 'Countries where you need a permit',
     'section.name.application/no-of-permits' => 'Number of permits required',
     'section.name.application/check-answers' => 'Check your answers',
