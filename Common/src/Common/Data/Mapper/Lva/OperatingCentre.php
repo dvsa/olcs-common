@@ -185,7 +185,6 @@ class OperatingCentre implements MapperInterface
 
         if (isset($errors['file'])) {
             foreach ($errors['file'] as $key => $message) {
-                OperatingCentre::
                 $formMessages['advertisements']['file']['upload'][] = $message;
             }
 
