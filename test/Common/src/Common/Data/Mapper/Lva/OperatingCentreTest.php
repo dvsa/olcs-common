@@ -3,6 +3,9 @@
 namespace CommonTest\Data\Mapper\Lva;
 
 use Common\Data\Mapper\Lva\OperatingCentre;
+use Common\Form\Elements\Custom\OlcsCheckbox;
+use Hamcrest\Core\AnyOf;
+use Zend\Form\Form;
 use Common\Service\Helper\FlashMessengerHelperService;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
@@ -63,6 +66,7 @@ class OperatingCentreTest extends MockeryTestCase
                 'adPlacedContent' => [
                     'adPlacedIn' => 'Donny Star',
                     'adPlacedDate' => '2015-01-01'
+
                 ]
             ]
         ];
@@ -117,7 +121,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_NOW,
                     'adPlacedIn' => 'Donny Star',
-                    'adPlacedDate' => '2015-01-01'
+                    'adPlacedDate' => '2015-01-01',
+                    'taIsOverridden' => 'N'
+
                 ]
             ],
             [
@@ -147,7 +153,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_POST,
                     'adPlacedIn' => 'Donny Star',
-                    'adPlacedDate' => '2015-01-01'
+                    'adPlacedDate' => '2015-01-01',
+                    'taIsOverridden' => 'N'
+
                 ]
             ],
             [
@@ -177,7 +185,9 @@ class OperatingCentreTest extends MockeryTestCase
                     'permission' => 'Y',
                     'adPlaced' => RefData::AD_UPLOAD_LATER,
                     'adPlacedIn' => 'Donny Star',
-                    'adPlacedDate' => '2015-01-01'
+                    'adPlacedDate' => '2015-01-01',
+                    'taIsOverridden' => 'N'
+
                 ]
             ]
         ];
@@ -185,7 +195,7 @@ class OperatingCentreTest extends MockeryTestCase
 
     public function testMapFormErrors()
     {
-        $location = 'EXTERNAL';
+        $location = OperatingCentre::LOC_EXTERNAL;
         $form = m::mock(\Zend\Form\Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);
         $th = m::mock(TranslationHelperService::class);
@@ -330,6 +340,94 @@ class OperatingCentreTest extends MockeryTestCase
                     'bar' => 'cake'
                 ]
             ],
+        ];
+    }
+
+    /**
+     * @dataProvider dpConfirmation
+     */
+    public function testMapFormErrorsConfirmation($location, $expected)
+    {
+        $form = m::mock(Form::class);
+        $errors = [
+            'postcode' => [
+                [
+                    'ERR_OC_PC_TA_GB' => [
+                        'current' => "current",
+                        'oc' => "oc"
+                    ]
+                ]
+            ]
+        ];
+        $mockFm = m::mock(FlashMessengerHelperService::class);
+        $mockTranslatorService = m::mock(TranslationHelperService::class);
+        $taGuidesUrl = "__TEST__";
+
+        $mockTranslatorService->shouldReceive('translateReplace')
+            ->with('ERR_OC_PC_TA_GB', ['__TEST__'])
+            ->andReturn('translated');
+
+        $mockTranslatorService->shouldReceive('translateReplace')
+            ->with('ERR_TA_PSV_SR_EXTERNAL', ['Foo'])
+            ->andReturn('translated 2');
+
+        if ($location === OperatingCentre::LOC_INTERNAL) {
+            $mockTranslatorService->shouldReceive('translate')->with('ERR_OC_PC_TA_GB-confirm')->once();
+            $mockTranslatorService->shouldReceive('translate')->with('ERR_OC_PC_TA_GB-internalwarning')->once();
+            $form->shouldReceive('get')->once()->andReturnSelf();
+            $form->shouldReceive('add')->once();
+        }
+
+        $form->shouldReceive('setMessages')->once()->with($expected);
+
+        OperatingCentre::mapFormErrors($form, $errors, $mockFm, $mockTranslatorService, $location, $taGuidesUrl);
+    }
+
+    public function dpConfirmation()
+    {
+
+        return [
+
+            'externalUser' => [
+
+                OperatingCentre::LOC_EXTERNAL,
+                [
+                    'address' =>
+                        [
+                            'postcode' =>
+                                [
+                                    0 =>
+                                        [
+                                            'ERR_OC_PC_TA_GB' => 'translated',
+                                        ],
+                                ],
+                        ],
+                ]
+            ],
+            'internalUserConfirmed' => [
+                OperatingCentre::LOC_INTERNAL,
+                [
+                    'form-actions' =>
+                        [
+                            0 =>
+                                [
+                                    'ERR_OC_PC_TA_GB' => 'translated'
+                                ],
+                        ],
+                ]
+            ],
+            'internalUserNotConfirmed' => [
+                OperatingCentre::LOC_INTERNAL,
+                [
+                    'form-actions' =>
+                        [
+                            0 =>
+                                [
+                                    'ERR_OC_PC_TA_GB' => 'translated'
+                                ],
+                        ],
+                ]
+            ]
         ];
     }
 }

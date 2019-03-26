@@ -87,6 +87,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /** @var  \Common\Service\Helper\TranslationHelperService */
     private $hlpTranslator;
 
+
     /**
      * On Dispatch
      *
@@ -139,7 +140,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ->setData($data);
 
         if ($request->isPost()) {
-
             $crudAction = $this->getCrudAction([$data['table']]);
 
             if ($crudAction !== null) {
@@ -150,7 +150,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
             }
 
             if ($form->isValid()) {
-
                 $response = $this->processUpdateOc($form, $crudAction);
 
                 if ($response !== null) {
@@ -296,9 +295,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
-
-            $dtoData = OperatingCentre::mapFromForm($form->getData());
+            $formData = array_merge($form->getData(), ['isTaOverridden' => $request->getPost('form-actions')['confirm-add']]);
+            $dtoData = OperatingCentre::mapFromForm($formData);
             $dtoData[$this->getIdentifierIndex()] = $this->getIdentifier();
+
 
             $dtoClass = $this->createCommandMap[$this->lva];
             $response = $this->handleCommand($dtoClass::create($dtoData));
@@ -410,7 +410,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
-
             $dtoData = OperatingCentre::mapFromForm($form->getData());
             if (!$resultData['canUpdateAddress']) {
                 unset($dtoData['address']);
