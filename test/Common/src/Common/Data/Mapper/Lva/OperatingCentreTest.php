@@ -195,7 +195,7 @@ class OperatingCentreTest extends MockeryTestCase
 
     public function testMapFormErrors()
     {
-        $location = 'external';
+        $location = OperatingCentre::LOC_EXTERNAL;
         $form = m::mock(\Zend\Form\Form::class);
         $fm = m::mock(FlashMessengerHelperService::class);
         $th = m::mock(TranslationHelperService::class);
@@ -371,7 +371,7 @@ class OperatingCentreTest extends MockeryTestCase
             ->with('ERR_TA_PSV_SR_EXTERNAL', ['Foo'])
             ->andReturn('translated 2');
 
-        if ($location === 'internal') {
+        if ($location === OperatingCentre::LOC_INTERNAL) {
             $mockTranslatorService->shouldReceive('translate')->with('ERR_OC_PC_TA_GB-confirm')->once();
             $mockTranslatorService->shouldReceive('translate')->with('ERR_OC_PC_TA_GB-internalwarning')->once();
             $form->shouldReceive('get')->once()->andReturnSelf();

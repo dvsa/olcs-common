@@ -71,6 +71,7 @@ class OperatingCentre implements MapperInterface
     public static function mapFromForm(array $data)
     {
         $overridden = (isset($data['isTaOverridden']) && $data['isTaOverridden'] === "1") ? 'Y' : 'N';
+
         $mappedData = [
             'version' => $data['version'],
             'address' => isset($data['address']) ? $data['address'] : null,
