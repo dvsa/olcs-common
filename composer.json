@@ -40,8 +40,9 @@
         "zendframework/zendframework": "~2.4.0",
         "doctrine/doctrine-orm-module": "~0.10.0",
         "doctrine/annotations": "^1.2.3",
-        "symfony/Filesystem": "~2.6.0",
-        "zf-commons/zfc-rbac": "~2.5.0"
+        "symfony/Filesystem": "~3.0.0",
+        "zf-commons/zfc-rbac": "~2.5.0",
+        "elendev/nexus-composer-push": "^0.0.4"
     },
     "require-dev": {
         "olcs/olcs-devtools": "dev-master",
