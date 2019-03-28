@@ -76,5 +76,13 @@
         "coverage": "vendor/bin/phpunit -c test/phpunit.xml --coverage-html ./test/coverage/html",
         "sonar": "vendor/bin/phpunit -c test/phpunit.xml --coverage-clover ./test/coverage/coverage-report.clover --log-junit ./test/coverage/log.junit",
         "update-syms": "vendor/bin/composer-update-syms"
+    },
+    "extra": {
+        "nexus-push": {
+            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/OLCS/olcs/olcs-common",
+            "ignore-dirs": [
+                "test"
+            ]
+        }
     }
 }
