@@ -27,7 +27,15 @@ class LicencePermitReference implements FormatterInterface
             RefData::PERMIT_APP_STATUS_ISSUING => null,
             RefData::PERMIT_APP_STATUS_VALID => 'ecmt-valid-permits',
         ],
+        RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID => [
+            RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
+            RefData::PERMIT_APP_STATUS_VALID => 'valid',
+        ],
         RefData::IRHP_BILATERAL_PERMIT_TYPE_ID => [
+            RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
+            RefData::PERMIT_APP_STATUS_VALID => 'valid',
+        ],
+        RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID => [
             RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
             RefData::PERMIT_APP_STATUS_VALID => 'valid',
         ],
