@@ -40,7 +40,9 @@ class InternalLicencePermitReference implements FormatterInterface
                     'permitid' => $row['id']
                 ];
                 break;
+            case RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID:
             case RefData::IRHP_BILATERAL_PERMIT_TYPE_ID:
+            case RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID:
                 $route = 'licence/irhp-application/application';
                 $params = [
                     'licence' => $row['licenceId'],
