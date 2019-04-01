@@ -10,15 +10,37 @@ use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
 use RuntimeException;
+use Zend\Form\Element\Submit;
+use Zend\Form\Fieldset;
 
 /**
  * NoOfPermitsTest
  */
 class NoOfPermitsTest extends TestCase
 {
+    private $form;
+
+    public function setUp()
+    {
+        $submitButton = new Submit();
+        $submitButton->setName('SubmitButton');
+        $submitButton->setValue('Save and continue');
+
+        $saveAndReturnButton = new Submit();
+        $saveAndReturnButton->setName('SaveAndReturnButton');
+        $saveAndReturnButton->setValue('Save and return to overview');
+
+        $submitFieldset = new Fieldset('Submit');
+        $submitFieldset->add($submitButton);
+        $submitFieldset->add($saveAndReturnButton);
+
+        $this->form = new Form();
+        $this->form->add($submitFieldset);
+    }
+
     public function testMapForFormOptions()
     {
-        $form = new Form();
+        $form = $this->form;
 
         $translatedGuidanceText = 'translatedGuidanceText';
         $italy2020Hint = '12 is the maximum you can apply for.';
@@ -156,7 +178,13 @@ class NoOfPermitsTest extends TestCase
                     9 => 4,
                     10 => 0
                 ]
-            ]
+            ],
+            'browserTitle' => 'permits.page.bilateral.no-of-permits.browser.title',
+            'question' => 'permits.page.bilateral.no-of-permits.question',
+            'additionalGuidance' => [
+                'value' => 'permits.page.bilateral.no-of-permits.additional-guidance',
+                'disableHtmlEscape' => true
+            ],
         ];
 
         $data = NoOfPermits::mapForFormOptions(
@@ -170,7 +198,6 @@ class NoOfPermitsTest extends TestCase
 
         $this->assertCount(0, $form->getElements());
         $formFieldsets = $form->getFieldsets();
-        $this->assertCount(1, $formFieldsets);
         $this->assertArrayHasKey('fields', $formFieldsets);
 
         $fields = $formFieldsets['fields'];
@@ -246,14 +273,290 @@ class NoOfPermitsTest extends TestCase
             $italyElementHorizontalRule->getValue()
         );
 
-        $this->assertArrayHasKey('guidance', $data);
+        $this->assertArrayHasKey('Submit', $formFieldsets);
+        $submitFieldsetElements = $formFieldsets['Submit']->getElements();
 
+        $submitButton = $submitFieldsetElements['SubmitButton'];
         $this->assertEquals(
-            $data['guidance'],
+            'SubmitButton',
+            $submitButton->getName()
+        );
+        $this->assertEquals(
+            'Save and continue',
+            $submitButton->getValue()
+        );
+
+        $saveAndReturnButton = $submitFieldsetElements['SaveAndReturnButton'];
+        $this->assertEquals(
+            'SaveAndReturnButton',
+            $saveAndReturnButton->getName()
+        );
+        $this->assertEquals(
+            'Save and return to overview',
+            $saveAndReturnButton->getValue()
+        );
+
+        $this->assertArrayHasKey('guidance', $data);
+        $this->assertEquals(
             [
                 'value' => $translatedGuidanceText,
                 'disableHtmlEscape' => true
-            ]
+            ],
+            $data['guidance']
+        );
+
+        $this->assertArrayHasKey('browserTitle', $data);
+        $this->assertEquals(
+            'permits.page.bilateral.no-of-permits.browser.title',
+            $data['browserTitle']
+        );
+
+        $this->assertArrayHasKey('question', $data);
+        $this->assertEquals(
+            'permits.page.bilateral.no-of-permits.question',
+            $data['question']
+        );
+
+        $this->assertArrayHasKey('additionalGuidance', $data);
+        $this->assertEquals(
+            [
+                'value' => 'permits.page.bilateral.no-of-permits.additional-guidance',
+                'disableHtmlEscape' => true
+            ],
+            $data['additionalGuidance']
+        );
+    }
+
+    public function testAllAllowablePermitsIssued()
+    {
+        $form = $this->form;
+        $feePerPermit = 65;
+
+        $translatedGuidanceText = 'translatedGuidanceText';
+        $html2018 = 'for 2018<br>You cannot request any more permits. All 12 have been issued.';
+        $html2019 = 'for 2019<br>You cannot request any more permits. All 12 have been issued.';
+        $html2020 = 'for 2020<br>You cannot request any more permits. All 12 have been issued.';
+
+        $translationHelperService = m::mock(TranslationHelperService::class);
+
+        $translationHelperService->shouldReceive('translateReplace')
+            ->with(
+                'permits.page.bilateral.no-of-permits.guidance',
+                [12, $feePerPermit]
+            )
+            ->andReturn($translatedGuidanceText);
+        $translationHelperService->shouldReceive('translateReplace')
+            ->with(
+                'permits.page.bilateral.no-of-permits.all-issued',
+                [2018, 12]
+            )
+            ->andReturn($html2018);
+        $translationHelperService->shouldReceive('translateReplace')
+            ->with(
+                'permits.page.bilateral.no-of-permits.all-issued',
+                [2019, 12]
+            )
+            ->andReturn($html2019);
+        $translationHelperService->shouldReceive('translateReplace')
+            ->with(
+                'permits.page.bilateral.no-of-permits.all-issued',
+                [2020, 12]
+            )
+            ->andReturn($html2020);
+
+        $data = [
+            'feePerPermit' => [
+                'feePerPermit' => $feePerPermit
+            ],
+            'application' => [
+                'irhpPermitType' => [
+                    'id' => 4
+                ],
+                'licence' => [
+                    'totAuthVehicles' => 12
+                ],
+                'irhpPermitApplications' => [
+                    [
+                        'permitsRequired' => null,
+                        'irhpPermitWindow' => [
+                            'irhpPermitStock' => [
+                                'id' => 7,
+                                'validFrom' => '2020-03-30',
+                                'country' => [
+                                    'id' => 'IT',
+                                    'countryDesc' => 'Italy'
+                                ]
+                            ]
+                        ]
+                    ],
+                    [
+                        'permitsRequired' => null,
+                        'irhpPermitWindow' => [
+                            'irhpPermitStock' => [
+                                'id' => 8,
+                                'validFrom' => '2019-12-31',
+                                'country' => [
+                                    'id' => 'IT',
+                                    'countryDesc' => 'Italy'
+                                ]
+                            ]
+                        ]
+                    ],
+                    [
+                        'permitsRequired' => null,
+                        'irhpPermitWindow' => [
+                            'irhpPermitStock' => [
+                                'id' => 9,
+                                'validFrom' => '2018-08-31',
+                                'country' => [
+                                    'id' => 'FR',
+                                    'countryDesc' => 'France'
+                                ]
+                            ]
+                        ]
+                    ],
+                    [
+                        'permitsRequired' => null,
+                        'irhpPermitWindow' => [
+                            'irhpPermitStock' => [
+                                'id' => 10,
+                                'validFrom' => '2019-12-01',
+                                'country' => [
+                                    'id' => 'FR',
+                                    'countryDesc' => 'France'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'maxPermitsByStock' => [
+                'result' => [
+                    7 => 0,
+                    8 => 0,
+                    9 => 0,
+                    10 => 0
+                ]
+            ],
+            'browserTitle' => 'permits.page.bilateral.no-of-permits.browser.title',
+            'question' => 'permits.page.bilateral.no-of-permits.question',
+            'additionalGuidance' => [
+                'value' => 'permits.page.bilateral.no-of-permits.additional-guidance',
+                'disableHtmlEscape' => true
+            ],
+        ];
+
+        $data = NoOfPermits::mapForFormOptions(
+            $data,
+            $form,
+            $translationHelperService,
+            'application',
+            'maxPermitsByStock',
+            'feePerPermit'
+        );
+
+        $this->assertCount(0, $form->getElements());
+        $formFieldsets = $form->getFieldsets();
+        $this->assertArrayHasKey('fields', $formFieldsets);
+
+        $fields = $formFieldsets['fields'];
+        $this->assertCount(0, $fields->getElements());
+        $fieldsFieldsets = $fields->getFieldsets();
+        $this->assertCount(1, $fieldsFieldsets);
+        $this->assertArrayHasKey('permitsRequired', $fieldsFieldsets);
+
+        $permitsRequired = $fieldsFieldsets['permitsRequired'];
+        $permitsRequiredFieldsets = $permitsRequired->getFieldsets();
+        $this->assertEquals(['FR', 'IT'], array_keys($permitsRequiredFieldsets));
+
+        $franceFieldset = $permitsRequiredFieldsets['FR'];
+        $this->assertEquals('France', $franceFieldset->getLabel());
+        $this->assertCount(0, $franceFieldset->getFieldsets());
+
+        $franceElements = $franceFieldset->getElements();
+        $this->assertEquals(['2018', '2019', 'FRhorizontalrule'], array_keys($franceElements));
+
+        $franceElement2018 = $franceElements['2018'];
+        $this->assertInstanceOf(HtmlElement::class, $franceElement2018);
+        $this->assertEquals('<p class="no-more-available">' . $html2018. '</p>', $franceElement2018->getValue());
+
+        $franceElement2019 = $franceElements['2019'];
+        $this->assertInstanceOf(HtmlElement::class, $franceElement2019);
+        $this->assertEquals('<p class="no-more-available">' . $html2019. '</p>', $franceElement2019->getValue());
+
+        $this->assertEquals(
+            '<hr class="govuk-section-break govuk-section-break--visible">',
+            $franceElements['FRhorizontalrule']->getValue()
+        );
+
+        $italyFieldset = $permitsRequiredFieldsets['IT'];
+        $this->assertEquals('Italy', $italyFieldset->getLabel());
+        $this->assertCount(0, $italyFieldset->getFieldsets());
+
+        $italyElements = $italyFieldset->getElements();
+        $this->assertEquals(['2019','2020','IThorizontalrule'], array_keys($italyElements));
+
+        $italyElement2019 = $italyElements['2019'];
+        $this->assertInstanceOf(HtmlElement::class, $italyElement2019);
+        $this->assertEquals('<p class="no-more-available">' . $html2019. '</p>', $italyElement2019->getValue());
+
+        $italyElement2020 = $italyElements['2020'];
+        $this->assertInstanceOf(HtmlElement::class, $italyElement2020);
+        $this->assertEquals('<p class="no-more-available">' . $html2020. '</p>', $italyElement2020->getValue());
+
+        $this->assertEquals(
+            '<hr class="govuk-section-break govuk-section-break--visible">',
+            $italyElements['IThorizontalrule']->getValue()
+        );
+
+        $this->assertArrayHasKey('Submit', $formFieldsets);
+        $submitFieldsetElements = $formFieldsets['Submit']->getElements();
+
+        $submitButton = $submitFieldsetElements['SubmitButton'];
+        $this->assertEquals(
+            'SelectOtherCountriesButton',
+            $submitButton->getName()
+        );
+        $this->assertEquals(
+            'permits.page.bilateral.no-of-permits.button.select-other-countries',
+            $submitButton->getValue()
+        );
+
+        $saveAndReturnButton = $submitFieldsetElements['SaveAndReturnButton'];
+        $this->assertEquals(
+            'CancelButton',
+            $saveAndReturnButton->getName()
+        );
+        $this->assertEquals(
+            'permits.page.bilateral.no-of-permits.button.cancel',
+            $saveAndReturnButton->getValue()
+        );
+
+        $this->assertArrayHasKey('guidance', $data);
+        $this->assertEquals(
+            [
+                'value' => 'permits.page.bilateral.no-of-permits.maximum-authorised.guidance',
+                'disableHtmlEscape' => true
+            ],
+            $data['guidance']
+        );
+
+        $this->assertArrayHasKey('browserTitle', $data);
+        $this->assertEquals(
+            'permits.page.bilateral.no-of-permits.maximum-authorised.browser.title',
+            $data['browserTitle']
+        );
+
+        $this->assertArrayHasKey('question', $data);
+        $this->assertEquals(
+            'permits.page.bilateral.no-of-permits.maximum-authorised.question',
+            $data['question']
+        );
+
+        $this->assertArrayHasKey('additionalGuidance', $data);
+        $this->assertEquals(
+            [],
+            $data['additionalGuidance']
         );
     }
 

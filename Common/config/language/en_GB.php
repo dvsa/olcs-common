@@ -3638,8 +3638,11 @@ return [
     'permits.page.irhp-fee.guidance' => 'The permit fee is non-refundable',
 
     'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
+    'permits.page.bilateral.no-of-permits.maximum-authorised.browser.title' => 'You cannot apply for any more permits for these countries',
     'permits.page.bilateral.no-of-permits.question' => 'For each country, how many permits do you require?',
+    'permits.page.bilateral.no-of-permits.maximum-authorised.question' => 'You cannot apply for any more permits for these countries',
     'permits.page.bilateral.no-of-permits.guidance' => 'You are authorised up to <strong>%s permits</strong> per country per year. There is a <strong>£%s</strong> fee per permit.',
+    'permits.page.bilateral.no-of-permits.maximum-authorised.guidance' => '<p>You\'ve already been issued with the maximum number of permits authorised for these countries using this licence. You can either:</p><ul><li>Apply for permits for other countries, or</li><li>start a new application and apply for these countries but using another operator licence.</li></ul><p>If you\'ve received the maximum number of permits for all countries, you should no longer proceed with this application.</p>',
     'permits.page.bilateral.no-of-permits.additional-guidance' => '<strong>If you do not require permits for a particular year, enter 0.</strong>',
     'permits.page.bilateral.no-of-permits.for-year' => 'for %s',
     'permits.page.bilateral.no-of-permits.all-issued' => 'for %s<br>You cannot request any more permits. All %s have been issued.',
@@ -3648,6 +3651,8 @@ return [
     'permits.page.bilateral.no-of-permits.none-issued' => '%d is the maximum you can apply for.',
     'permits.page.bilateral.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
     'permits.page.bilateral.no-of-permits.error.general' => 'Enter the number of permits you require, or enter 0',
+    'permits.page.bilateral.no-of-permits.button.select-other-countries' => 'Select other countries',
+    'permits.page.bilateral.no-of-permits.button.cancel' => 'Cancel',
 
     'permits.page.bilateral.countries.browser.title' => 'Select the country you are transporting goods to',
     'permits.page.bilateral.countries.question' => 'Select the country you are transporting goods to',

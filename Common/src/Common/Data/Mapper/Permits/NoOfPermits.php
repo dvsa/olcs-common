@@ -44,6 +44,7 @@ class NoOfPermits
 
         $formElements = [];
 
+        $totalMaxPermits = 0;
         foreach ($irhpApplication['irhpPermitApplications'] as $irhpPermitApplication) {
             $irhpPermitStock = $irhpPermitApplication['irhpPermitWindow']['irhpPermitStock'];
             $validFromTimestamp = strtotime($irhpPermitStock['validFrom']);
@@ -55,6 +56,7 @@ class NoOfPermits
             $validFromYear = date('Y', $validFromTimestamp);
             $countryId = $country['id'];
             $countryName = $country['countryDesc'];
+            $totalMaxPermits += $maxPermits;
 
             if (!isset($formElements[$countryId])) {
                 $formElements[$countryId] = [
@@ -100,18 +102,20 @@ class NoOfPermits
         $form->add($fieldset);
 
         if (isset($data[$feePerPermitDataKey])) {
-            $guidanceValue = $translator->translateReplace(
-                'permits.page.bilateral.no-of-permits.guidance',
-                [
-                    $irhpApplication['licence']['totAuthVehicles'],
-                    $data[$feePerPermitDataKey]['feePerPermit']
-                ]
-            );
-
             $data['guidance'] = [
-                'value' => $guidanceValue,
+                'value' => $translator->translateReplace(
+                    'permits.page.bilateral.no-of-permits.guidance',
+                    [
+                        $irhpApplication['licence']['totAuthVehicles'],
+                        $data[$feePerPermitDataKey]['feePerPermit']
+                    ]
+                ),
                 'disableHtmlEscape' => true
             ];
+        }
+
+        if ($totalMaxPermits == 0) {
+            $data = self::applyMaxAllowablePermitsChanges($data, $form);
         }
 
         return $data;
@@ -229,5 +233,44 @@ class NoOfPermits
 
         $element->setValue('<p class="no-more-available">' . $translated . '</p>');
         return $element;
+    }
+
+    /**
+     * Apply changes to the data and form to reflect the fact that no more permits can be applied for in the scope of
+     * the selected countries
+     *
+     * @param array $data
+     * @param mixed $form
+     *
+     * @return array
+     */
+    private static function applyMaxAllowablePermitsChanges(array $data, $form)
+    {
+        $data['browserTitle'] = 'permits.page.bilateral.no-of-permits.maximum-authorised.browser.title';
+        $data['question'] = 'permits.page.bilateral.no-of-permits.maximum-authorised.question';
+        $data['additionalGuidance'] = [];
+
+        $data['guidance'] = [
+            'value' => 'permits.page.bilateral.no-of-permits.maximum-authorised.guidance',
+            'disableHtmlEscape' => true
+        ];
+
+        $formFieldsets = $form->getFieldsets();
+
+        // 'Submit' fieldset isn't present when called from internal
+        if (isset($formFieldsets['Submit'])) {
+            $submitFieldset = $formFieldsets['Submit'];
+            $submitFieldsetElements = $submitFieldset->getElements();
+
+            $submitButtonElement = $submitFieldsetElements['SubmitButton'];
+            $submitButtonElement->setName('SelectOtherCountriesButton');
+            $submitButtonElement->setValue('permits.page.bilateral.no-of-permits.button.select-other-countries');
+
+            $saveAndReturnButtonElement = $submitFieldsetElements['SaveAndReturnButton'];
+            $saveAndReturnButtonElement->setName('CancelButton');
+            $saveAndReturnButtonElement->setValue('permits.page.bilateral.no-of-permits.button.cancel');
+        }
+
+        return $data;
     }
 }
