@@ -54,7 +54,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
     public function scenariosProvider()
     {
         return [
-            [
+            'ECMT Annual - not yet submitted' => [
                 [
                     'id' => 3,
                     'licenceId' => 200,
@@ -66,7 +66,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 '<a class="overview__link" href="http://selfserve/permits/application-overview/3">' .
                     '<span class="overview__link--underline">ECMT&gt;1234567</span></a>'
             ],
-            [
+            'ECMT Annual - under consideration' => [
                 [   'id' => 5,
                     'licenceId' => 200,
                     'licNo' => 'ECMT>',
@@ -77,7 +77,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-under-consideration/5">' .
                     '<span class="overview__link--underline">ECMT&gt;2345678</span></a>'
             ],
-            [
+            'ECMT Annual - awaiting fee' => [
                 [
                     'id' => 7,
                     'licenceId' => 200,
@@ -89,7 +89,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-awaiting-fee/7">' .
                     '<span class="overview__link--underline">ECMT&gt;3456789</span></a>'
             ],
-            [
+            'ECMT Annual - fee paid' => [
                 [
                     'id' => 8,
                     'licenceId' => 200,
@@ -100,7 +100,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 ],
                 'ECMT&gt;3456789'
             ],
-            [
+            'ECMT Annual - issuing' => [
                 [
                     'id' => 8,
                     'licenceId' => 200,
@@ -111,7 +111,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 ],
                 'ECMT&gt;3456789'
             ],
-            [
+            'ECMT Annual - valid' => [
                 [
                     'id' => 9,
                     'licenceId' => 200,
@@ -123,7 +123,75 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 '<a class="overview__link" href="http://selfserve/permits/ecmt-valid-permits/9">' .
                     '<span class="overview__link--underline">ECMT&gt;4567890</span></a>'
             ],
-            'IRHP app - not yet submitted' => [
+            'ECMT Short Term app - not yet submitted' => [
+                [
+                    'id' => 100,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC100',
+                    'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/application/100">' .
+                    '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
+            ],
+            'ECMT Short Term app - under consideration' => [
+                [
+                    'id' => 101,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC101',
+                    'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION,
+                ],
+                'IRHP&gt;ABC101'
+            ],
+            'ECMT Short Term app - awaiting fee' => [
+                [
+                    'id' => 102,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC102',
+                    'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_AWAITING_FEE,
+                ],
+                'IRHP&gt;ABC102'
+            ],
+            'ECMT Short Term app - fee paid' => [
+                [
+                    'id' => 103,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC103',
+                    'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_FEE_PAID,
+                ],
+                'IRHP&gt;ABC103'
+            ],
+            'ECMT Short Term app - issuing' => [
+                [
+                    'id' => 104,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC104',
+                    'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_ISSUING,
+                ],
+                'IRHP&gt;ABC104'
+            ],
+            'ECMT Short Term app - valid' => [
+                [
+                    'id' => 105,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC105',
+                    'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_VALID,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/valid/105">' .
+                    '<span class="overview__link--underline">IRHP&gt;</span></a>'
+            ],
+            'IRHP Bilateral app - not yet submitted' => [
                 [
                     'id' => 100,
                     'licenceId' => 200,
@@ -135,7 +203,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 '<a class="overview__link" href="http://selfserve/permits/application/100">' .
                     '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
             ],
-            'IRHP app - under consideration' => [
+            'IRHP Bilateral app - under consideration' => [
                 [
                     'id' => 101,
                     'licenceId' => 200,
@@ -146,7 +214,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 ],
                 'IRHP&gt;ABC101'
             ],
-            'IRHP app - awaiting fee' => [
+            'IRHP Bilateral app - awaiting fee' => [
                 [
                     'id' => 102,
                     'licenceId' => 200,
@@ -157,7 +225,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 ],
                 'IRHP&gt;ABC102'
             ],
-            'IRHP app - fee paid' => [
+            'IRHP Bilateral app - fee paid' => [
                 [
                     'id' => 103,
                     'licenceId' => 200,
@@ -168,7 +236,7 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 ],
                 'IRHP&gt;ABC103'
             ],
-            'IRHP app - issuing' => [
+            'IRHP Bilateral app - issuing' => [
                 [
                     'id' => 104,
                     'licenceId' => 200,
@@ -179,13 +247,81 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 ],
                 'IRHP&gt;ABC104'
             ],
-            'IRHP app - valid' => [
+            'IRHP Bilateral app - valid' => [
                 [
                     'id' => 105,
                     'licenceId' => 200,
                     'licNo' => 'IRHP>',
                     'applicationRef' => 'IRHP>ABC105',
                     'typeId' => RefData::IRHP_BILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_VALID,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/valid/105">' .
+                    '<span class="overview__link--underline">IRHP&gt;</span></a>'
+            ],
+            'IRHP Multilateral app - not yet submitted' => [
+                [
+                    'id' => 100,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC100',
+                    'typeId' => RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/application/100">' .
+                    '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
+            ],
+            'IRHP Multilateral app - under consideration' => [
+                [
+                    'id' => 101,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC101',
+                    'typeId' => RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION,
+                ],
+                'IRHP&gt;ABC101'
+            ],
+            'IRHP Multilateral app - awaiting fee' => [
+                [
+                    'id' => 102,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC102',
+                    'typeId' => RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_AWAITING_FEE,
+                ],
+                'IRHP&gt;ABC102'
+            ],
+            'IRHP Multilateral app - fee paid' => [
+                [
+                    'id' => 103,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC103',
+                    'typeId' => RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_FEE_PAID,
+                ],
+                'IRHP&gt;ABC103'
+            ],
+            'IRHP Multilateral app - issuing' => [
+                [
+                    'id' => 104,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC104',
+                    'typeId' => RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_ISSUING,
+                ],
+                'IRHP&gt;ABC104'
+            ],
+            'IRHP Multilateral app - valid' => [
+                [
+                    'id' => 105,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC105',
+                    'typeId' => RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID,
                     'statusId' => RefData::PERMIT_APP_STATUS_VALID,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/valid/105">' .
