@@ -38,7 +38,7 @@ class NoOfPermitsMinTest extends \PHPUnit\Framework\TestCase
     public function testMessageTemplates()
     {
         $expectedValue = [
-            GreaterThan::NOT_GREATER_INCLUSIVE => 'permits.page.bilateral.no-of-permits.error.general'
+            GreaterThan::NOT_GREATER_INCLUSIVE => 'permits.page.no-of-permits.error.general'
         ];
 
         $this->assertEquals(

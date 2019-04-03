@@ -17,7 +17,7 @@ use Zend\Validator\GreaterThan;
 class NoOfPermitsMin extends GreaterThan
 {
     protected $messageTemplates = [
-        self::NOT_GREATER_INCLUSIVE => 'permits.page.bilateral.no-of-permits.error.general'
+        self::NOT_GREATER_INCLUSIVE => 'permits.page.no-of-permits.error.general'
     ];
 
     public function __construct()

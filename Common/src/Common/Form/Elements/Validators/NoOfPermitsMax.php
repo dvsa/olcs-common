@@ -17,7 +17,7 @@ use Zend\Validator\LessThan;
 class NoOfPermitsMax extends LessThan
 {
     protected $messageTemplates = [
-        self::NOT_LESS_INCLUSIVE => 'permits.page.bilateral.no-of-permits.error.max-exceeded'
+        self::NOT_LESS_INCLUSIVE => 'permits.page.no-of-permits.error.max-exceeded'
     ];
 
     public function __construct($max)

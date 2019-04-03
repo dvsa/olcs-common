@@ -15,7 +15,7 @@ class NoOfPermitsNotEmpty extends NotEmpty
      * @var array
      */
     protected $messageTemplates = [
-        self::IS_EMPTY => 'permits.page.bilateral.no-of-permits.error.general',
+        self::IS_EMPTY => 'permits.page.no-of-permits.error.general',
         self::INVALID  => 'Invalid type given. String, integer, float, boolean or array expected',
     ];
 }

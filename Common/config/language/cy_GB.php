@@ -1581,18 +1581,6 @@ return [
     'permits.page.cancel.question' => 'Canslo cais',
     'permits.page.cancel.browser.title' => 'Canslo Cais',
 
-    'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
-    'permits.page.bilateral.no-of-permits.question' => 'For each country, how many permits do you require?',
-    'permits.page.bilateral.no-of-permits.guidance' => 'You are authorised up to <strong>%s permits</strong> per country per year. There is a <strong>£%s</strong> fee per permit.',
-    'permits.page.bilateral.no-of-permits.additional-guidance' => '<strong>If you do not require permits for a particular year, enter 0.</strong>',
-    'permits.page.bilateral.no-of-permits.for-year' => 'for %s',
-    'permits.page.bilateral.no-of-permits.all-issued' => 'for %s<br>You cannot request any more permits. All %s have been issued.',
-    'permits.page.bilateral.no-of-permits.multiple-issued' => '%d is the maximum you can apply for. %d permits have already been issued.',
-    'permits.page.bilateral.no-of-permits.one-issued' => '%d is the maximum you can apply for. 1 permit has already been issued.',
-    'permits.page.bilateral.no-of-permits.none-issued' => '%d is the maximum you can apply for.',
-    'permits.page.bilateral.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
-    'permits.page.bilateral.no-of-permits.error.general' => 'Enter the number of permits you require, or enter 0',
-
     'permits.button.accept-and-continue' => 'Derbyn a pharhau',
     'permits.button.confirm-and-continue' => 'Cadarnhau a pharhau',
     'permits.button.continue' => 'Pharhau',

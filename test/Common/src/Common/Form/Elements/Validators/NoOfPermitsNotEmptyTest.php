@@ -38,7 +38,7 @@ class NoOfPermitsNotEmptyTest extends \PHPUnit\Framework\TestCase
     public function testMessageTemplates()
     {
         $expectedValue = [
-            NotEmpty::IS_EMPTY => 'permits.page.bilateral.no-of-permits.error.general',
+            NotEmpty::IS_EMPTY => 'permits.page.no-of-permits.error.general',
             NotEmpty::INVALID => 'Invalid type given. String, integer, float, boolean or array expected'
         ];
 

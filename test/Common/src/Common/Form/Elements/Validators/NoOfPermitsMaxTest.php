@@ -38,7 +38,7 @@ class NoOfPermitsMaxTest extends \PHPUnit\Framework\TestCase
     public function testMessageTemplates()
     {
         $expectedValue = [
-            LessThan::NOT_LESS_INCLUSIVE => 'permits.page.bilateral.no-of-permits.error.max-exceeded'
+            LessThan::NOT_LESS_INCLUSIVE => 'permits.page.no-of-permits.error.max-exceeded'
         ];
 
         $this->assertEquals(
