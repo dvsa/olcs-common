@@ -410,7 +410,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
-            $dtoData = OperatingCentre::mapFromForm($form->getData());
+            $formData = array_merge($form->getData(), ['isTaOverridden' => $request->getPost('form-actions')['confirm-add']]);
+            $dtoData = OperatingCentre::mapFromForm($formData);
             if (!$resultData['canUpdateAddress']) {
                 unset($dtoData['address']);
             }
