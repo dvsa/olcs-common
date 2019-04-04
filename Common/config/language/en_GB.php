@@ -3548,7 +3548,7 @@ return [
     'permits.page.confirmation.issue-submitted.title' => 'Permit Issue Accepted',
     'permits.page.confirmation.issue-submitted.browser.title' => 'Permit Issue Accepted',
 
-    'permits.page.confirmation.bilateral.what-happens-next' => 'We will now post your paper permit by first class recorded delivery within the next 3 working days.',
+    'permits.page.confirmation.bilateral.what-happens-next' => 'Your permits will be grouped together under the same licence number that you applied with.<p>We will now post your paper permit within the next 3 working days.</p>',
 
     'permits.page.confirmation.bullet.list.title' => 'What happens next',
     'permits.page.confirmation.submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
