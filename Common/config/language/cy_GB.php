@@ -1708,7 +1708,6 @@ return [
     'permits.irhp.application.question.no-of-permits' => 'How many permits do you require?',
     'permits.irhp.application.answers.no-of-permits' => '%s permits for %s in %s',
 
-    'permits.irhp.valid.permits.title' => 'Annual Bilateral permits (EU and EEA)',
     'permits.irhp.valid.permits.table.permit' => 'Permit',
     'permits.irhp.valid.permits.table.country' => 'Country',
     'permits.irhp.valid.permits.table.application' => 'Application',
