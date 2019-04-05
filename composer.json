@@ -1,5 +1,5 @@
 {
-    "name": "olcs/OlcsCommon",
+    "name": "olcs/olcscommon",
     "description": "Common library for the OLCS Project",
     "type": "library",
     "repositories": [
@@ -7,32 +7,12 @@
             "packagist": false
         },
         {
-            "url": "http://devrepo.shd.ci.nonprod.dvsa.aws",
+            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/OLCS",
             "type": "composer"
         },
         {
-            "type": "vcs",
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-testhelpers.git"
-        },
-        {
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-transfer.git",
-            "type": "vcs"
-        },
-        {
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-utils.git",
-            "type": "vcs"
-        },
-        {
-            "type": "vcs",
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-devtools.git"
-        },
-        {
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-coding-standards.git",
-            "type": "vcs"
-        },
-        {
-            "type": "vcs",
-            "url": "git@repo.shd.ci.nonprod.dvsa.aws:olcs/olcs-logging.git"
+            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/Packagist-Proxy",
+            "type": "composer"
         }
     ],
     "require": {
@@ -40,17 +20,17 @@
         "zendframework/zendframework": "~2.4.0",
         "doctrine/doctrine-orm-module": "~0.10.0",
         "doctrine/annotations": "^1.2.3",
-        "symfony/Filesystem": "~3.0.0",
+        "symfony/filesystem": "~3.0.0",
         "zf-commons/zfc-rbac": "~2.5.0",
         "elendev/nexus-composer-push": "^0.0.4"
     },
     "require-dev": {
-        "olcs/olcs-devtools": "dev-master",
-        "mikey179/vfsStream": "~1.4.0",
-        "olcs/olcs-testhelpers": "dev-develop",
-        "olcs/olcs-transfer": "dev-develop",
-        "olcs/olcs-utils": "dev-develop",
-        "olcs/olcs-logging": "dev-develop",
+        "olcs/olcs-devtools": "^4.203",
+        "mikey179/vfsstream": "~1.4.0",
+        "olcs/olcs-testhelpers": "^4.203",
+        "olcs/olcs-transfer": "^4.203",
+        "olcs/olcs-utils": "^4.203",
+        "olcs/olcs-logging": "^4.203",
         "phpstan/phpstan-shim": "^0.10.5",
         "phpstan/phpstan-mockery": "^0.10.2",
         "mockery/mockery": "^1.2",
@@ -60,13 +40,15 @@
         "psr-0": {
             "Common\\": "Common/src/"
         },
-        "classmap": ["./Common/Module.php"]
+        "classmap": [
+            "./Common/Module.php"
+        ]
     },
     "config": {
         "preferred-install": "dist",
         "secure-http": false,
         "platform": {
-            "php":"7.1.16"
+            "php": "7.1.16"
         }
     },
     "scripts": {
