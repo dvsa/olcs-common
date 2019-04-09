@@ -5,7 +5,7 @@ namespace PermitsTest\Data\Mapper\Permits;
 use Common\Form\Form;
 use Common\Form\Elements\Custom\NoOfPermits as NoOfPermitsElement;
 use Common\Form\Elements\Types\Html as HtmlElement;
-use Common\Data\Mapper\Permits\NoOfPermits;
+use Common\Data\Mapper\Permits\BilateralNoOfPermits;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Common\Service\Helper\TranslationHelperService;
 use Mockery as m;
@@ -14,9 +14,9 @@ use Zend\Form\Element\Submit;
 use Zend\Form\Fieldset;
 
 /**
- * NoOfPermitsTest
+ * BilateralNoOfPermitsTest
  */
-class NoOfPermitsTest extends TestCase
+class BilateralNoOfPermitsTest extends TestCase
 {
     private $form;
 
@@ -63,19 +63,19 @@ class NoOfPermitsTest extends TestCase
             ->andReturn($translatedGuidanceText);
         $translationHelperService->shouldReceive('translateReplace')
             ->with(
-                'permits.page.bilateral.no-of-permits.none-issued',
+                'permits.page.no-of-permits.none-issued',
                 [12]
             )
             ->andReturn($italy2020Hint);
         $translationHelperService->shouldReceive('translateReplace')
             ->with(
-                'permits.page.bilateral.no-of-permits.one-issued',
+                'permits.page.no-of-permits.one-issued',
                 [11]
             )
             ->andReturn($italy2019Hint);
         $translationHelperService->shouldReceive('translateReplace')
             ->with(
-                'permits.page.bilateral.no-of-permits.multiple-issued',
+                'permits.page.no-of-permits.multiple-issued',
                 [4, 8]
             )
             ->andReturn($france2018Hint);
@@ -179,15 +179,9 @@ class NoOfPermitsTest extends TestCase
                     10 => 0
                 ]
             ],
-            'browserTitle' => 'permits.page.bilateral.no-of-permits.browser.title',
-            'question' => 'permits.page.bilateral.no-of-permits.question',
-            'additionalGuidance' => [
-                'value' => 'permits.page.bilateral.no-of-permits.additional-guidance',
-                'disableHtmlEscape' => true
-            ],
         ];
 
-        $data = NoOfPermits::mapForFormOptions(
+        $data = BilateralNoOfPermits::mapForFormOptions(
             $data,
             $form,
             $translationHelperService,
@@ -316,15 +310,6 @@ class NoOfPermitsTest extends TestCase
             'permits.page.bilateral.no-of-permits.question',
             $data['question']
         );
-
-        $this->assertArrayHasKey('additionalGuidance', $data);
-        $this->assertEquals(
-            [
-                'value' => 'permits.page.bilateral.no-of-permits.additional-guidance',
-                'disableHtmlEscape' => true
-            ],
-            $data['additionalGuidance']
-        );
     }
 
     public function testAllAllowablePermitsIssued()
@@ -446,7 +431,7 @@ class NoOfPermitsTest extends TestCase
             ],
         ];
 
-        $data = NoOfPermits::mapForFormOptions(
+        $data = BilateralNoOfPermits::mapForFormOptions(
             $data,
             $form,
             $translationHelperService,
@@ -528,7 +513,7 @@ class NoOfPermitsTest extends TestCase
             $saveAndReturnButton->getName()
         );
         $this->assertEquals(
-            'permits.page.bilateral.no-of-permits.button.cancel',
+            'permits.page.no-of-permits.button.cancel',
             $saveAndReturnButton->getValue()
         );
 
@@ -576,7 +561,7 @@ class NoOfPermitsTest extends TestCase
         $form = new Form();
         $translationHelperService = m::mock(TranslationHelperService::class);
 
-        $data = NoOfPermits::mapForFormOptions(
+        $data = BilateralNoOfPermits::mapForFormOptions(
             $data,
             $form,
             $translationHelperService,
