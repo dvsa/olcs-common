@@ -3799,5 +3799,8 @@ return [
     'continuations.vehicles.weight-kg' => 'kg',
     'continue.finance.history.button' => 'Continue to financial history',
 
+    'permits.check-your-answers.countries' => '%s permits for %s in %s',
+    'permits.check-your-answers.no-of-permits' => '%s permits in %s',
+
     // Potentially unused translations
 ];
