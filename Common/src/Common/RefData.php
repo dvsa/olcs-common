@@ -168,6 +168,7 @@ class RefData
     const PERMISSION_SELFSERVE_LVA = 'selfserve-lva';
     const PERMISSION_SELFSERVE_TM_DASHBOARD = 'selfserve-tm-dashboard';
     const PERMISSION_SELFSERVE_DASHBOARD = 'selfserve-nav-dashboard';
+    const PERMISSION_SYSTEM_ADMIN = 'system-admin';
     const PERMISSION_INTERNAL_ADMIN = 'internal-admin';
     const PERMISSION_INTERNAL_EDIT = 'internal-edit';
     const PERMISSION_INTERNAL_VIEW = 'internal-view';
