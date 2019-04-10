@@ -1,5 +1,5 @@
 {
-    "name": "olcs/olcscommon",
+    "name": "olcs/olcs-common",
     "description": "Common library for the OLCS Project",
     "type": "library",
     "repositories": [
@@ -62,10 +62,7 @@
     },
     "extra": {
         "nexus-push": {
-            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/olcs-common",
-            "ignore-dirs": [
-                "test"
-            ]
+            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/olcs-common"
         }
     }
 }
