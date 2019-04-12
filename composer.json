@@ -22,10 +22,10 @@
         "doctrine/annotations": "^1.2.3",
         "symfony/filesystem": "~3.0.0",
         "zf-commons/zfc-rbac": "~2.5.0",
-        "elendev/nexus-composer-push": "^0.0.4"
+        "elendev/nexus-composer-push": "^0.1"
     },
     "require-dev": {
-        "olcs/olcs-devtools": "^4.203",
+        "olcs/olcs-devtools": "^4.205",
         "mikey179/vfsstream": "~1.4.0",
         "olcs/olcs-testhelpers": "^4.203",
         "olcs/olcs-transfer": "^4.203",
@@ -62,7 +62,12 @@
     },
     "extra": {
         "nexus-push": {
-            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/olcs-common"
+            "url": "http://nexus.shd.ci.nonprod.dvsa.aws/repository/olcs-common",
+            "ignore": [
+                "composer.phar",
+                "build.xml",
+                "composer-update.sh"
+            ]
         }
     }
 }
