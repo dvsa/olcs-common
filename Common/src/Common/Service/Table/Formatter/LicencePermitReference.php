@@ -57,18 +57,31 @@ class LicencePermitReference implements FormatterInterface
         $route = isset(static::$routes[$row['typeId']][$row['statusId']])
             ? static::$routes[$row['typeId']][$row['statusId']] : null;
 
+        if (!isset($route)) {
+            return Escape::html($row['applicationRef']);
+        }
+
+        // default to application
+        $params = [
+            'id' => $row['id'],
+        ];
+        $linkText = $row['applicationRef'];
+
+        if ($route === 'valid') {
+            // specific for valid IRHP application
+            $params = [
+                'licence' => $row['licenceId'],
+                'type' => $row['typeId'],
+            ];
+            $linkText = $row['licNo'];
+        }
+
         return isset($route)
             ? vsprintf(
                 '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
                 [
-                    $serviceLocator->get('Helper\Url')->fromRoute(
-                        'permits/' . $route,
-                        [
-                            'id' => $row['id'],
-                            'licence' => $row['licenceId'],
-                        ]
-                    ),
-                    ($route === 'valid') ? Escape::html($row['licNo']) : Escape::html($row['applicationRef'])
+                    $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params),
+                    Escape::html($linkText)
                 ]
             )
             : Escape::html($row['applicationRef']);

@@ -23,22 +23,22 @@ class LicencePermitReferenceTest extends MockeryTestCase
     {
         $urlHelper = m::mock(UrlHelper::class);
         $urlHelper->shouldReceive('fromRoute')
-            ->with('permits/application-overview', ['id' => 3, 'licence' => 200])
+            ->with('permits/application-overview', ['id' => 3])
             ->andReturn('http://selfserve/permits/application-overview/3')
             ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-under-consideration', ['id' => 5, 'licence' => 200])
+            ->with('permits/ecmt-under-consideration', ['id' => 5])
             ->andReturn('http://selfserve/permits/ecmt-under-consideration/5')
             ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-awaiting-fee', ['id' => 7, 'licence' => 200])
+            ->with('permits/ecmt-awaiting-fee', ['id' => 7])
             ->andReturn('http://selfserve/permits/ecmt-awaiting-fee/7')
             ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-valid-permits', ['id' => 9, 'licence' => 200])
+            ->with('permits/ecmt-valid-permits', ['id' => 9])
             ->andReturn('http://selfserve/permits/ecmt-valid-permits/9')
             ->shouldReceive('fromRoute')
-            ->with('permits/application', ['id' => 100, 'licence' => 200])
+            ->with('permits/application', ['id' => 100])
             ->andReturn('http://selfserve/permits/application/100')
             ->shouldReceive('fromRoute')
-            ->with('permits/valid', ['id' => 105, 'licence' => 200])
+            ->with('permits/valid', ['licence' => 200, 'type' => $row['typeId']])
             ->andReturn('http://selfserve/permits/valid/105');
 
         $sm = m::mock(ServiceLocatorInterface::class);
