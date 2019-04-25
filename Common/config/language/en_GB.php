@@ -2858,6 +2858,7 @@ return [
     'subtitle-condition-text' => 'Please enter condition details',
     'subtitle-undertaking-text' => 'Please enter undertaking details',
     'successful-changes' => 'Your changes have been successfully saved',
+    'unsuccessful-changes' => 'There was an issue saving your change try again',
     'summary' => 'Summary',
     'summary-application-actions-transport-managers' => 'Approve any outstanding Transport Manager applications',
     'summary-dashboard.button' => 'Take me to my dashboard',
