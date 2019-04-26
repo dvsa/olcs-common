@@ -3645,7 +3645,6 @@ return [
     'permits.page.bilateral.no-of-permits.maximum-authorised.question' => 'You cannot apply for any more permits for these countries',
     'permits.page.bilateral.no-of-permits.guidance' => 'You are authorised up to <strong>%s permits</strong> per country per year. There is a <strong>£%s</strong> fee per permit.',
     'permits.page.bilateral.no-of-permits.maximum-authorised.guidance' => '<p>You\'ve already been issued with the maximum number of permits authorised for these countries using this licence. You can either:</p><ul><li>Apply for permits for other countries, or</li><li>start a new application and apply for these countries but using another operator licence.</li></ul><p>If you\'ve received the maximum number of permits for all countries, you should no longer proceed with this application.</p>',
-    'permits.page.bilateral.no-of-permits.additional-guidance' => '<strong>If you do not require permits for a particular year, enter 0.</strong>',
     'permits.page.bilateral.no-of-permits.for-year' => 'for %s',
     'permits.page.bilateral.no-of-permits.all-issued' => 'for %s<br>You cannot request any more permits. All %s have been issued.',
     'permits.page.bilateral.no-of-permits.button.select-other-countries' => 'Select other countries',
@@ -3654,10 +3653,11 @@ return [
     'permits.page.multilateral.no-of-permits.maximum-authorised.browser.title' => 'You cannot apply for any more permits',
     'permits.page.multilateral.no-of-permits.question' => 'How many permits do you require for this licence?',
     'permits.page.multilateral.no-of-permits.maximum-authorised.question' => 'You cannot apply for any more permits',
-    'permits.page.multilateral.no-of-permits.guidance' => 'You are authorised up to <strong>%s permits</strong> per year, using this licence.',
     'permits.page.multilateral.no-of-permits.maximum-authorised.guidance' => '<p>You\'ve already been issued with the maximum number of authorised permits using this licence. To obtain further permits, you\'ll need to start a new application using another operator licence.</p>',
     'permits.page.multilateral.no-of-permits.for-year' => 'Number of permits for %s',
     'permits.page.multilateral.no-of-permits.all-issued' => 'Number of permits for %s<br>You cannot request any more permits. All %s have been issued.',
+    'permits.page.multilateral.no-of-permits.permit-fees' => 'Permit fees:',
+    'permits.page.multilateral.no-of-permits.fee-per-year' => '<strong>£%s</strong> per permit required for use in %s.',
 
     'permits.page.no-of-permits.multiple-issued' => '%d is the maximum you can apply for. %d permits have already been issued.',
     'permits.page.no-of-permits.one-issued' => '%d is the maximum you can apply for. 1 permit has already been issued.',
@@ -3666,6 +3666,7 @@ return [
     'permits.page.no-of-permits.error.general' => 'Enter the number of permits you require, or enter 0',
     'permits.page.no-of-permits.error.at-least-one' => 'You need to apply for at least 1 permit',
     'permits.page.no-of-permits.button.cancel' => 'Cancel',
+    'permits.page.no-of-permits.banner' => 'If you do not require permits for a particular year, enter 0.',
 
     'permits.page.bilateral.countries.browser.title' => 'Select the country you are transporting goods to',
     'permits.page.bilateral.countries.question' => 'Select the country you are transporting goods to',

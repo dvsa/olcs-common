@@ -42,7 +42,10 @@ class MultilateralNoOfPermitsTest extends TestCase
     {
         $form = $this->form;
 
-        $translatedGuidanceText = 'translatedGuidanceText';
+        $translatedGuidanceText = 'Permit fees:<br>' .
+            '<strong>£166</strong> per permit required for use in 2018.<br>' .
+            '<strong>£133</strong> per permit required for use in 2019.<br>' .
+            '<strong>£100</strong> per permit required for use in 2020.';
 
         $for2018Hint = '4 is the maximum number you can apply for. 8 permits have already been issued.';
         $for2019Hint = '11 is the maximum you can apply for. 1 permit has already been issued.';
@@ -108,9 +111,37 @@ class MultilateralNoOfPermitsTest extends TestCase
             )
             ->andReturn($label2020Html);
 
+        $translationHelperService->shouldReceive('translate')
+            ->with('permits.page.multilateral.no-of-permits.permit-fees')
+            ->andReturn('Permit fees:');
+
+        $translationHelperService->shouldReceive('translateReplace')
+            ->with(
+                'permits.page.multilateral.no-of-permits.fee-per-year',
+                [100, 2020]
+            )
+            ->andReturn('<strong>£100</strong> per permit required for use in 2020.');
+
+        $translationHelperService->shouldReceive('translateReplace')
+            ->with(
+                'permits.page.multilateral.no-of-permits.fee-per-year',
+                [133, 2019]
+            )
+            ->andReturn('<strong>£133</strong> per permit required for use in 2019.');
+
+        $translationHelperService->shouldReceive('translateReplace')
+            ->with(
+                'permits.page.multilateral.no-of-permits.fee-per-year',
+                [166, 2018]
+            )
+            ->andReturn('<strong>£166</strong> per permit required for use in 2018.');
+
         $data = [
             'feePerPermit' => [
-                'feePerPermit' => 'Not applicable'
+                4 => 100,
+                5 => 133,
+                6 => 166,
+                7 => 199,
             ],
             'application' => [
                 'irhpPermitType' => [
@@ -121,6 +152,7 @@ class MultilateralNoOfPermitsTest extends TestCase
                 ],
                 'irhpPermitApplications' => [
                     [
+                        'id' => 4,
                         'permitsRequired' => 7,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -131,6 +163,7 @@ class MultilateralNoOfPermitsTest extends TestCase
                         ]
                     ],
                     [
+                        'id' => 5,
                         'permitsRequired' => 3,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -141,6 +174,7 @@ class MultilateralNoOfPermitsTest extends TestCase
                         ]
                     ],
                     [
+                        'id' => 6,
                         'permitsRequired' => null,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -151,6 +185,7 @@ class MultilateralNoOfPermitsTest extends TestCase
                         ]
                     ],
                     [
+                        'id' => 7,
                         'permitsRequired' => 4,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -403,6 +438,29 @@ class MultilateralNoOfPermitsTest extends TestCase
             'permits.page.no-of-permits.button.cancel',
             $saveAndReturnButton->getValue()
         );
+
+        $this->assertArrayHasKey('guidance', $data);
+        $this->assertEquals(
+            [
+                'value' => 'permits.page.multilateral.no-of-permits.maximum-authorised.guidance',
+                'disableHtmlEscape' => true
+            ],
+            $data['guidance']
+        );
+
+        $this->assertArrayHasKey('browserTitle', $data);
+        $this->assertEquals(
+            'permits.page.multilateral.no-of-permits.maximum-authorised.browser.title',
+            $data['browserTitle']
+        );
+
+        $this->assertArrayHasKey('question', $data);
+        $this->assertEquals(
+            'permits.page.multilateral.no-of-permits.maximum-authorised.question',
+            $data['question']
+        );
+
+        $this->assertArrayNotHasKey('banner', $data);
     }
 
     public function testExceptionOnIncorrectPermitType()
