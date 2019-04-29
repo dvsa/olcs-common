@@ -3664,6 +3664,7 @@ return [
     'permits.page.no-of-permits.none-issued' => '%d is the maximum you can apply for.',
     'permits.page.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
     'permits.page.no-of-permits.error.general' => 'Enter the number of permits you require, or enter 0',
+    'permits.page.no-of-permits.error.at-least-one' => 'You need to apply for at least 1 permit',
     'permits.page.no-of-permits.button.cancel' => 'Cancel',
 
     'permits.page.bilateral.countries.browser.title' => 'Select the country you are transporting goods to',

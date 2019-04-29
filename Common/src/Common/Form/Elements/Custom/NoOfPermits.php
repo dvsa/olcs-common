@@ -39,4 +39,14 @@ class NoOfPermits extends ZendElement implements InputProviderInterface
             ]
         ];
     }
+
+    /**
+     * Returns true if the element has a non-zero value
+     *
+     * @return bool
+     */
+    public function hasNonZeroValue()
+    {
+        return $this->getValue() != 0;
+    }
 }
