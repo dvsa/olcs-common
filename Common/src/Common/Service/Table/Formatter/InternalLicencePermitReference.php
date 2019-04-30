@@ -41,6 +41,7 @@ class InternalLicencePermitReference implements FormatterInterface
                 ];
                 break;
             case RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID:
+            case RefData::ECMT_REMOVAL_PERMIT_TYPE_ID:
             case RefData::IRHP_BILATERAL_PERMIT_TYPE_ID:
             case RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID:
                 $route = 'licence/irhp-application/application';

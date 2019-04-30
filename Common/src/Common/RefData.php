@@ -405,6 +405,7 @@ class RefData
     const PERMIT_TYPE_ECMT = 'permit_ecmt';
     const ECMT_PERMIT_TYPE_ID = 1;
     const ECMT_SHORT_TERM_PERMIT_TYPE_ID = 2;
+    const ECMT_REMOVAL_PERMIT_TYPE_ID = 3;
     const IRHP_BILATERAL_PERMIT_TYPE_ID = 4;
     const IRHP_MULTILATERAL_PERMIT_TYPE_ID = 5;
 
