@@ -58,6 +58,15 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
                 ],
                 '<a href="INTERNAL_IRHP_URL">IRHP&gt;1234567</a>'
             ],
+            'ECMT Removal' => [
+                [
+                    'id' => 4,
+                    'typeId' => RefData::ECMT_REMOVAL_PERMIT_TYPE_ID,
+                    'licenceId' => 200,
+                    'applicationRef' => 'IRHP>1234567',
+                ],
+                '<a href="INTERNAL_IRHP_URL">IRHP&gt;1234567</a>'
+            ],
             'IRHP Bilateral' => [
                 [
                     'id' => 4,
