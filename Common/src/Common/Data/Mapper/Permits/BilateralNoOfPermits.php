@@ -39,17 +39,21 @@ class BilateralNoOfPermits extends AbstractNoOfPermits
         array $data,
         TranslationHelperService $translator,
         $irhpApplicationDataKey,
-        $feePerPermitDataKey
+        $feePerPermitDataKey,
+        $maxPermitsByStockDataKey
     ) {
         $data['browserTitle'] = 'permits.page.bilateral.no-of-permits.browser.title';
         $data['question'] = 'permits.page.bilateral.no-of-permits.question';
 
         if (isset($data[$feePerPermitDataKey])) {
+            $feePerPermit = $data[$feePerPermitDataKey];
+            $firstFeePerPermitKey = array_keys($feePerPermit)[0];
+
             $guidanceValue = $translator->translateReplace(
                 'permits.page.bilateral.no-of-permits.guidance',
                 [
                     $data[$irhpApplicationDataKey]['licence']['totAuthVehicles'],
-                    $data[$feePerPermitDataKey]['feePerPermit']
+                    $feePerPermit[$firstFeePerPermitKey]
                 ]
             );
 

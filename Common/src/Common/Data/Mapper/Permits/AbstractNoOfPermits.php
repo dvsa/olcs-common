@@ -22,7 +22,7 @@ abstract class AbstractNoOfPermits
      * @param $form
      * @param TranslationHelperService $translator
      * @param string $irhpApplicationDataKey
-     * @param string $irhpMaxPermitsByStockDataKey
+     * @param string $maxPermitsByStockDataKey
      * @param string $feePerPermitDataKey
      *
      * @return array
@@ -32,7 +32,7 @@ abstract class AbstractNoOfPermits
         $form,
         TranslationHelperService $translator,
         $irhpApplicationDataKey,
-        $irhpMaxPermitsByStockDataKey,
+        $maxPermitsByStockDataKey,
         $feePerPermitDataKey
     ) {
         $irhpApplication = $data[$irhpApplicationDataKey];
@@ -43,7 +43,7 @@ abstract class AbstractNoOfPermits
         }
 
         $irhpPermitApplications = $irhpApplication['irhpPermitApplications'];
-        $maxPermitsByStock = $data[$irhpMaxPermitsByStockDataKey]['result'];
+        $maxPermitsByStock = $data[$maxPermitsByStockDataKey]['result'];
 
         $permitsRequiredFieldset = new Fieldset('permitsRequired');
         static::populatePermitsRequiredFieldset(
@@ -58,33 +58,25 @@ abstract class AbstractNoOfPermits
         $fieldset->add($permitsRequiredFieldset);
         $form->add($fieldset);
 
-        $data = static::postProcessData($data, $translator, $irhpApplicationDataKey, $feePerPermitDataKey);
+        $data = static::postProcessData(
+            $data,
+            $translator,
+            $irhpApplicationDataKey,
+            $feePerPermitDataKey,
+            $maxPermitsByStockDataKey
+        );
 
-        if (static::getTotalMaxPermits($irhpPermitApplications, $maxPermitsByStock) == 0) {
+        $availableStockCount = static::getAvailableStockCount($irhpPermitApplications, $maxPermitsByStock);
+
+        if ($availableStockCount > 1) {
+            $data['banner'] = 'permits.page.no-of-permits.banner';
+        }
+
+        if ($availableStockCount == 0) {
             $data = static::applyMaxAllowableChanges($data, $form);
         }
 
         return $data;
-    }
-
-    /**
-     * Gets the total number of permits of this type that can be applied for
-     *
-     * @param array $irhpPermitApplications
-     * @param array $maxPermitsByStock
-     *
-     * @return int
-     */
-    protected static function getTotalMaxPermits(array $irhpPermitApplications, array $maxPermitsByStock)
-    {
-        $totalMaxPermits = 0;
-
-        foreach ($irhpPermitApplications as $irhpPermitApplication) {
-            $irhpPermitStockId = $irhpPermitApplication['irhpPermitWindow']['irhpPermitStock']['id'];
-            $totalMaxPermits += $maxPermitsByStock[$irhpPermitStockId];
-        }
-
-        return $totalMaxPermits;
     }
 
     /**
@@ -212,8 +204,6 @@ abstract class AbstractNoOfPermits
             static::TRANSLATION_KEY_PERMIT_TYPE
         );
 
-        $data['additionalGuidance'] = [];
-
         $data['guidance'] = [
             'value' => sprintf(
                 'permits.page.%s.no-of-permits.maximum-authorised.guidance',
@@ -236,6 +226,30 @@ abstract class AbstractNoOfPermits
         }
 
         return $data;
+    }
+
+    /**
+     * Gets the total number of stocks available for entry (i.e. the number of visible input boxes)
+     *
+     * @param array $irhpPermitApplications
+     * @param array $maxPermitsByStock
+     *
+     * @return int
+     */
+    protected static function getAvailableStockCount(array $irhpPermitApplications, array $maxPermitsByStock)
+    {
+        $availableStockCount = 0;
+
+        foreach ($irhpPermitApplications as $irhpPermitApplication) {
+            $stockId = $irhpPermitApplication['irhpPermitWindow']['irhpPermitStock']['id'];
+            $maxPermits = $maxPermitsByStock[$stockId];
+
+            if ($maxPermits > 0) {
+                $availableStockCount++;
+            }
+        }
+
+        return $availableStockCount;
     }
 
     /**
@@ -262,6 +276,7 @@ abstract class AbstractNoOfPermits
      * @param TranslationHelperService $translator
      * @param string $irhpApplicationDataKey
      * @param string $feePerPermitDataKey
+     * @param string $maxPermitsByStockDataKey
      *
      * @return array
      */
@@ -269,7 +284,8 @@ abstract class AbstractNoOfPermits
         array $data,
         TranslationHelperService $translator,
         $irhpApplicationDataKey,
-        $feePerPermitDataKey
+        $feePerPermitDataKey,
+        $maxPermitsByStockDataKey
     );
 
     /**

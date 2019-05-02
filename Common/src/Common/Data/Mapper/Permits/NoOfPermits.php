@@ -16,7 +16,7 @@ class NoOfPermits
      * @param $form
      * @param TranslationHelperService $translator
      * @param string $irhpApplicationDataKey
-     * @param string $irhpMaxPermitsByStockDataKey
+     * @param string $maxPermitsByStockDataKey
      * @param string $feePerPermitDataKey
      *
      * @return array
@@ -26,7 +26,7 @@ class NoOfPermits
         $form,
         TranslationHelperService $translator,
         $irhpApplicationDataKey,
-        $irhpMaxPermitsByStockDataKey,
+        $maxPermitsByStockDataKey,
         $feePerPermitDataKey
     ) {
         $permitTypeId = $data[$irhpApplicationDataKey]['irhpPermitType']['id'];
@@ -38,7 +38,7 @@ class NoOfPermits
                     $form,
                     $translator,
                     $irhpApplicationDataKey,
-                    $irhpMaxPermitsByStockDataKey,
+                    $maxPermitsByStockDataKey,
                     $feePerPermitDataKey
                 );
             case RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID:
@@ -47,7 +47,7 @@ class NoOfPermits
                     $form,
                     $translator,
                     $irhpApplicationDataKey,
-                    $irhpMaxPermitsByStockDataKey,
+                    $maxPermitsByStockDataKey,
                     $feePerPermitDataKey
                 );
             default:

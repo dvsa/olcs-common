@@ -107,7 +107,10 @@ class BilateralNoOfPermitsTest extends TestCase
 
         $data = [
             'feePerPermit' => [
-                'feePerPermit' => $feePerPermit
+                4 => $feePerPermit,
+                5 => $feePerPermit,
+                6 => $feePerPermit,
+                7 => $feePerPermit,
             ],
             'application' => [
                 'irhpPermitType' => [
@@ -118,6 +121,7 @@ class BilateralNoOfPermitsTest extends TestCase
                 ],
                 'irhpPermitApplications' => [
                     [
+                        'id' => 4,
                         'permitsRequired' => 7,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -131,6 +135,7 @@ class BilateralNoOfPermitsTest extends TestCase
                         ]
                     ],
                     [
+                        'id' => 5,
                         'permitsRequired' => 7,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -144,6 +149,7 @@ class BilateralNoOfPermitsTest extends TestCase
                         ]
                     ],
                     [
+                        'id' => 6,
                         'permitsRequired' => null,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -157,6 +163,7 @@ class BilateralNoOfPermitsTest extends TestCase
                         ]
                     ],
                     [
+                        'id' => 7,
                         'permitsRequired' => 4,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -310,6 +317,9 @@ class BilateralNoOfPermitsTest extends TestCase
             'permits.page.bilateral.no-of-permits.question',
             $data['question']
         );
+
+        $this->assertArrayHasKey('banner', $data);
+        $this->assertEquals('permits.page.no-of-permits.banner', $data['banner']);
     }
 
     public function testAllAllowablePermitsIssued()
@@ -351,7 +361,10 @@ class BilateralNoOfPermitsTest extends TestCase
 
         $data = [
             'feePerPermit' => [
-                'feePerPermit' => $feePerPermit
+                4 => $feePerPermit,
+                5 => $feePerPermit,
+                6 => $feePerPermit,
+                7 => $feePerPermit,
             ],
             'application' => [
                 'irhpPermitType' => [
@@ -362,6 +375,7 @@ class BilateralNoOfPermitsTest extends TestCase
                 ],
                 'irhpPermitApplications' => [
                     [
+                        'id' => 4,
                         'permitsRequired' => null,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -375,6 +389,7 @@ class BilateralNoOfPermitsTest extends TestCase
                         ]
                     ],
                     [
+                        'id' => 5,
                         'permitsRequired' => null,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -388,6 +403,7 @@ class BilateralNoOfPermitsTest extends TestCase
                         ]
                     ],
                     [
+                        'id' => 6,
                         'permitsRequired' => null,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -401,6 +417,7 @@ class BilateralNoOfPermitsTest extends TestCase
                         ]
                     ],
                     [
+                        'id' => 7,
                         'permitsRequired' => null,
                         'irhpPermitWindow' => [
                             'irhpPermitStock' => [
@@ -425,10 +442,6 @@ class BilateralNoOfPermitsTest extends TestCase
             ],
             'browserTitle' => 'permits.page.bilateral.no-of-permits.browser.title',
             'question' => 'permits.page.bilateral.no-of-permits.question',
-            'additionalGuidance' => [
-                'value' => 'permits.page.bilateral.no-of-permits.additional-guidance',
-                'disableHtmlEscape' => true
-            ],
         ];
 
         $data = BilateralNoOfPermits::mapForFormOptions(
@@ -538,11 +551,7 @@ class BilateralNoOfPermitsTest extends TestCase
             $data['question']
         );
 
-        $this->assertArrayHasKey('additionalGuidance', $data);
-        $this->assertEquals(
-            [],
-            $data['additionalGuidance']
-        );
+        $this->assertArrayNotHasKey('banner', $data);
     }
 
     public function testExceptionOnIncorrectPermitType()
