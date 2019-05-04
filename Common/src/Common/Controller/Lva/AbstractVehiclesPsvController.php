@@ -426,7 +426,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                 'export',
                 [
                     'requireRows' => true,
-                    'class' => ' more-actions__item js-disable-crud'
+                    'class' => ' more-actions__item js-disable-crud action--secondary'
                 ]
             );
         }
@@ -571,7 +571,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     {
         $params = [];
 
-        $files = ['lva-crud', 'vehicle-psv'];
+        $files = ['lva-crud', 'vehicle-psv', 'vehicles'];
 
         $searchForm = $this->getVehcileSearchForm($headerData);
         if ($searchForm) {

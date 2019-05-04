@@ -566,7 +566,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-vehicles-than-authorisation');
         }
 
-        $files = ['lva-crud', 'vehicle-goods'];
+        $files = ['lva-crud', 'vehicle-goods', 'vehicles'];
         $params = [
             'mainWrapperCssClass' => 'full-width',
         ];
@@ -624,7 +624,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 [
                     'label' => 'vehicle_table_action.reprint.label',
                     'requireRows' => true,
-                    'class' => ' more-actions__item',
+                    'class' => ' more-actions__item action--secondary',
                 ]
             );
         }
@@ -634,7 +634,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 'transfer',
                 [
                     'label' => 'vehicle_table_action.transfer.label',
-                    'class' => ' more-actions__item js-require--multiple',
+                    'class' => ' more-actions__item js-require--multiple action--secondary',
                     'requireRows' => true,
                 ]
             );
@@ -646,7 +646,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 [
                     'label' => 'vehicle_table_action.export.label',
                     'requireRows' => true,
-                    'class' => ' more-actions__item js-disable-crud',
+                    'class' => ' more-actions__item js-disable-crud action--secondary',
                 ]
             );
         }
@@ -657,7 +657,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
                 [
                     'label' => 'vehicle_table_action.print-vehicles.label',
                     'requireRows' => true,
-                    'class' => ' more-actions__item',
+                    'class' => ' more-actions__item action--secondary',
                 ]
             );
         }
