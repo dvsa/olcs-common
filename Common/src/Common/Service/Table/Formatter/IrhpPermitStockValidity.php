@@ -26,6 +26,10 @@ class IrhpPermitStockValidity implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
+        if (is_null($data['validFrom']) || is_null($data['validTo'])) {
+            return 'N/A';
+        }
+
         $validFrom = DateFormatter::format(['validFrom' => $data['validFrom']], $column, $sm);
         $validTo = DateFormatter::format(['validFrom' => $data['validTo']], $column, $sm);
 
