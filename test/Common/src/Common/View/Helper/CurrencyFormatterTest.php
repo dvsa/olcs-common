@@ -23,29 +23,27 @@ class CurrencyFormatterTest extends \PHPUnit\Framework\TestCase
      * Test invoke
      * @dataProvider currencyDataProvider
      */
-    public function testInvokeDefaultFields($input, $expected)
+    public function testInvokeDefaultFields($value, $expected)
     {
-        $this->assertEquals($expected, $this->viewHelper->__invoke($input['value']));
+        $viewHelper = $this->viewHelper;
+        $this->assertEquals($expected, $viewHelper($value));
     }
 
     public function currencyDataProvider()
     {
         return [
-            [
-                // Full length fee ending in '00'
-                ['value' => '10.00'],
-                '£10'
-            ],
-            [
-                // Single digit fee
-                ['value' => '1'],
-                '£1'
-            ],
-            [
-                // Full length fee ending in non-'00'
-                ['value' => '10.56'],
-                '£10.56'
-            ]
+            ['10.00', '£10'],                // Full length fee ending in '00'
+            ['1', '£1'],                     // Single digit fee
+            ['10.56', '£10.56'],             // Full length fee ending in non-'00'
+            ['3000', '£3,000'],              // Thousands without pence
+            ['3000.00', '£3,000'],           // Thousands with explicit zero pence
+            ['3000.56', '£3,000.56'],        // Thousands with non-zero pence
+            ['24567', '£24,567'],            // Tens of thousands without pence
+            ['24567.00', '£24,567'],         // Tens of thousands with explicit zero pence
+            ['24567.22', '£24,567.22'],      // Tens of thousands with non-zero pence
+            ['ABCXYZ', '£ABC,XYZ'],          // Unexpected input format
+            ['ABC', '£ABC'],                 // Unexpected input format
+            ['ABC.DEF.HIJ', '£ABC.DEF.HIJ'], // Unexpected input format
         ];
     }
 }

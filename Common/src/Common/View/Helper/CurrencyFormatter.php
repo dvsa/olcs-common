@@ -12,6 +12,8 @@ use Zend\View\Helper\AbstractHelper;
  */
 class CurrencyFormatter extends AbstractHelper
 {
+    const PREFIX = '£';
+
     use Utils;
 
     /**
@@ -23,10 +25,23 @@ class CurrencyFormatter extends AbstractHelper
      */
     public function __invoke(?string $value): string
     {
-        if (substr($value, strlen($value) - 3) === '.00') {
-            return sprintf("£" . $this->escapeHtml(substr($value, 0, strlen($value) - 3)));
+        $components = explode('.', $value);
+        if (count($components) > 2) {
+            return self::PREFIX . $value;
         }
 
-        return sprintf("£" . $this->escapeHtml($value));
+        $pounds = strrev(wordwrap(strrev($components[0]), 3, ',', true));
+        $pence = '00';
+
+        if (count($components) == 2) {
+            $pence = $components[1];
+        }
+
+        $formatted = self::PREFIX . $pounds;
+        if ($pence != '00') {
+            $formatted .= '.' . $pence;
+        }
+
+        return $this->escapeHtml($formatted);
     }
 }

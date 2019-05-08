@@ -383,6 +383,7 @@ class TableBuilderTest extends MockeryTestCase
         $table->loadData($data);
 
         $this->assertEquals(array(), $table->getRows());
+        $this->assertFalse($table->hasRows());
 
         $this->assertEquals(0, $table->getTotal());
     }
@@ -402,6 +403,7 @@ class TableBuilderTest extends MockeryTestCase
         $table->loadData($data);
 
         $this->assertEquals($data, $table->getRows());
+        $this->assertTrue($table->hasRows());
 
         $this->assertEquals(2, $table->getTotal());
     }
@@ -425,6 +427,7 @@ class TableBuilderTest extends MockeryTestCase
         $table->loadData($data);
 
         $this->assertEquals($data, $table->getRows());
+        $this->assertTrue($table->hasRows());
 
         $this->assertEquals(1, $table->getTotal());
         self::assertEquals(self::TRANSLATED . 'Thing', $table->getVariable('title'));
