@@ -615,7 +615,6 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     /**
      * Get table filter parameter
-     * 
      * @return array
      */
     protected function getFilters()

@@ -839,7 +839,6 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
     protected function postSave($section)
     {
         // @NOTE Prevents postSave from doing anything as this section has been migrated
-        // @todo remove me once all sections have been migrated
     }
 
     /**
