@@ -18,12 +18,12 @@ return array(
                 ),
                 'delete' => array(
                     'label' => 'action_links.remove',
-                    'class' => ' more-actions__item',
+                    'class' => ' more-actions__item action--secondary',
                     'requireRows' => true
                 ),
                 'transfer' => array(
                     'label' => 'Transfer',
-                    'class' => ' more-actions__item js-require--multiple',
+                    'class' => ' more-actions__item js-require--multiple action--secondary',
                     'requireRows' => true,
                     'id' => 'transferSmall'
                 )

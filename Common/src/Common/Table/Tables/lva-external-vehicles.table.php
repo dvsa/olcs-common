@@ -17,7 +17,7 @@ return array(
                 'add' => array(),
                 'delete' => array(
                     'label' => 'action_links.remove',
-                    'class' => ' more-actions__item',
+                    'class' => 'more-actions__item action--secondary',
                     'requireRows' => true
                 ),
                 // @note other actions may be added dynamically,
