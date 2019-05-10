@@ -3638,8 +3638,12 @@ return [
     'permits.page.fee.number.permits.value' => '%s x %s (per permit)',
     'permits.page.fee.permit.fee.total' => 'Total application fee to be paid',
     'permits.page.fee.permit.fee.non-refundable' => '%s (non-refundable)',
+
     'permits.page.irhp-fee.permit.fee' => 'Permit fee',
     'permits.page.irhp-fee.guidance' => 'The permit fee is non-refundable',
+    'permits.page.irhp-fee.fee-summary' => 'Fee summary',
+    'permits.page.irhp-fee.fee-breakdown' => 'Fee breakdown',
+    'permits.page.irhp-fee.permit.fee.total' => 'Total fee to be paid',
 
     'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
     'permits.page.bilateral.no-of-permits.maximum-authorised.browser.title' => 'You cannot apply for any more permits for these countries',
@@ -3813,6 +3817,13 @@ return [
     'permits.irhp.valid.permits.table.start-date' => 'Start date',
     'permits.irhp.valid.permits.table.expiry-date' => 'Expiry date',
     'permits.irhp.valid.permits.table.issue-date' => 'Issue date',
+
+    'permits.irhp.fee-breakdown.year' => 'Year',
+    'permits.irhp.fee-breakdown.validity-period' => 'Validity period',
+    'permits.irhp.fee-breakdown.validity-period.cell' => '%s to %s',
+    'permits.irhp.fee-breakdown.fee-per-permit' => 'Fee per permit',
+    'permits.irhp.fee-breakdown.number-of-permits' => 'Number of permits',
+    'permits.irhp.fee-breakdown.total-fee' => 'Total fee',
 
     'permits.irhp.bilateral.already-applied' => 'There is an active permit application for this licence click ‘Save and continue’ again to access this application',
     'continuations.vehicles.weight-kg' => 'kg',

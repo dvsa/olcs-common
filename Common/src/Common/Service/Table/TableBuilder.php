@@ -605,6 +605,16 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
+     * Whether the table has any rows
+     *
+     * @return bool
+     */
+    public function hasRows()
+    {
+        return count($this->rows) > 0;
+    }
+
+    /**
      * Get total
      *
      * @return int
