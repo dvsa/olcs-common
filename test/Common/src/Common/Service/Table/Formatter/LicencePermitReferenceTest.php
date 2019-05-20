@@ -327,6 +327,74 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 '<a class="overview__link" href="http://selfserve/permits/valid/105">' .
                     '<span class="overview__link--underline">IRHP&gt;</span></a>'
             ],
+            'IRHP Ecmt removal - not yet submitted' => [
+                [
+                    'id' => 100,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC100',
+                    'typeId' => RefData::ECMT_REMOVAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/application/100">' .
+                '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
+            ],
+            'IRHP Ecmt removal - under consideration' => [
+                [
+                    'id' => 101,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC101',
+                    'typeId' => RefData::ECMT_REMOVAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION,
+                ],
+                'IRHP&gt;ABC101'
+            ],
+            'IRHP Ecmt removal - awaiting fee' => [
+                [
+                    'id' => 102,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC102',
+                    'typeId' => RefData::ECMT_REMOVAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_AWAITING_FEE,
+                ],
+                'IRHP&gt;ABC102'
+            ],
+            'IRHP Ecmt removal - fee paid' => [
+                [
+                    'id' => 103,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC103',
+                    'typeId' => RefData::ECMT_REMOVAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_FEE_PAID,
+                ],
+                'IRHP&gt;ABC103'
+            ],
+            'IRHP Ecmt removal - issuing' => [
+                [
+                    'id' => 104,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC104',
+                    'typeId' => RefData::ECMT_REMOVAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_ISSUING,
+                ],
+                'IRHP&gt;ABC104'
+            ],
+            'IRHP Ecmt removal - valid' => [
+                [
+                    'id' => 105,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC105',
+                    'typeId' => RefData::ECMT_REMOVAL_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_VALID,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/valid/105">' .
+                '<span class="overview__link--underline">IRHP&gt;</span></a>'
+            ],
         ];
     }
 }

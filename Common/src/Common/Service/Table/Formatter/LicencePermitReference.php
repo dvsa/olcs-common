@@ -31,6 +31,10 @@ class LicencePermitReference implements FormatterInterface
             RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
             RefData::PERMIT_APP_STATUS_VALID => 'valid',
         ],
+        RefData::ECMT_REMOVAL_PERMIT_TYPE_ID => [
+            RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
+            RefData::PERMIT_APP_STATUS_VALID => 'valid',
+        ],
         RefData::IRHP_BILATERAL_PERMIT_TYPE_ID => [
             RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
             RefData::PERMIT_APP_STATUS_VALID => 'valid',
