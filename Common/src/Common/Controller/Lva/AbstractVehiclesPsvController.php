@@ -571,7 +571,7 @@ abstract class AbstractVehiclesPsvController extends AbstractController
     {
         $params = [];
 
-        $files = ['lva-crud', 'vehicle-psv', 'vehicles'];
+        $files = $this->getScripts();
 
         $searchForm = $this->getVehcileSearchForm($headerData);
         if ($searchForm) {
@@ -650,5 +650,10 @@ abstract class AbstractVehiclesPsvController extends AbstractController
             $filters['vrm'] = $query['vehicleSearch']['vrm'];
         }
         return $filters;
+    }
+
+    protected function getScripts()
+    {
+        return ['lva-crud', 'vehicle-psv'];
     }
 }

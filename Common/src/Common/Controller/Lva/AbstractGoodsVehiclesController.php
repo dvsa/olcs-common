@@ -566,7 +566,7 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-vehicles-than-authorisation');
         }
 
-        $files = ['lva-crud', 'vehicle-goods', 'vehicles'];
+        $files = $this->getScripts();
         $params = [
             'mainWrapperCssClass' => 'full-width',
         ];
@@ -582,6 +582,10 @@ abstract class AbstractGoodsVehiclesController extends AbstractController
         return $this->render('vehicles', $form, $params);
     }
 
+    protected function getScripts()
+    {
+        return ['lva-crud', 'vehicle-goods'];
+    }
     /**
      * Build table
      *
