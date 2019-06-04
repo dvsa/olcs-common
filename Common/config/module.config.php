@@ -4,6 +4,7 @@ use Common\Service\Data\Search\SearchType;
 use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
+use Common\Service\Qa as QaService;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -191,6 +192,10 @@ return array(
             'Common\Service\Data\Application' => 'Common\Service\Data\Application',
             Common\Service\Data\SiCategoryType::class => Common\Service\Data\SiCategoryType::class,
             'staticList' => Common\Service\Data\StaticList::class,
+            'QaCheckboxFactory' => QaService\CheckboxFactory::class,
+            'QaTextFactory' => QaService\TextFactory::class,
+            'QaFieldsetFactory' => QaService\FieldsetFactory::class,
+            'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -232,6 +237,13 @@ return array(
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             \Common\Rbac\IdentityProvider::class => \Common\Rbac\IdentityProviderFactory::class,
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
+            'QaCheckboxFieldsetPopulator' => QaService\CheckboxFieldsetPopulatorFactory::class,
+            'QaTextFieldsetPopulator' => QaService\TextFieldsetPopulatorFactory::class,
+            'QaFieldsetAdder' => QaService\FieldsetAdderFactory::class,
+            'QaFieldsetGenerator' => QaService\FieldsetGeneratorFactory::class,
+            'QaFieldsetPopulatorProvider' => QaService\FieldsetPopulatorProviderFactory::class,
+            'QaTranslateableTextHandler' => QaService\TranslateableTextHandlerFactory::class,
+
         )
     ),
     /*'search' => [
