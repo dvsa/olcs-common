@@ -19,3 +19,4 @@ Common/data
 .vscode
 test/coverage/
 .scannerwork/
+composer.lock
