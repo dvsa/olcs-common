@@ -22,9 +22,10 @@ class InternalLicenceNumberLink implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
+        $licenceNo = $data['licence']['licNo'];
         $urlHelper = $sm->get('Helper\Url');
         $url = $urlHelper->fromRoute('lva-licence', array('licence' => $data['licence']['id']));
 
-        return '<a href="' . $url . '">' . $data['licence']['licNo'] . '</a>';
+        return '<a href="' . $url . '" title="Licence details for '. $licenceNo .'">' . $licenceNo . '</a>';
     }
 }
