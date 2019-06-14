@@ -42,7 +42,7 @@ class InternalLicenceNumberLinkTest extends TestCase
                     ->andReturn('LICENCE_URL')
                     ->getMock()
             );
-        $expected = '<a href="LICENCE_URL">1</a>';
+        $expected = '<a href="LICENCE_URL" title="Licence details for 1">1</a>';
         $this->assertEquals($expected, InternalLicenceNumberLink::format($licence, array(), $sm->getMock()));
     }
 }
