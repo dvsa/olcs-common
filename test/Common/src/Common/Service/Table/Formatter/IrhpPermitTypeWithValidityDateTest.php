@@ -41,7 +41,7 @@ class IrhpPermitTypeWithValidityDateTest extends MockeryTestCase
                     'typeDescription' => 'Annual ECMT>',
                     'stockValidTo' => '2019-12-31',
                 ],
-                'Annual ECMT&gt;',
+                'Annual ECMT&gt; 2019',
             ],
             'ECMT Short Term - without validity date' => [
                 [
