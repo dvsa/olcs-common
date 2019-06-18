@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Form\View\Helper;
+namespace CommonTest\Service\Qa;
 
 use Common\Service\Qa\FieldsetFactory;
 use Common\Service\Qa\FieldsetGenerator;

@@ -1,8 +1,9 @@
 <?php
 
-namespace CommonTest\Form\View\Helper;
+namespace CommonTest\Service\Qa;
 
 use Common\Service\Helper\TranslationHelperService;
+use Common\Service\Qa\FormattedTranslateableTextParametersGenerator;
 use Common\Service\Qa\TranslateableTextHandler;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -19,9 +20,16 @@ class TranslateableTextHandlerTest extends MockeryTestCase
         $translateableTextKey = 'textKey';
 
         $translateableTextParameters = [
-            'textParam1',
-            'textParam2'
+            [
+                'value' => '38.00',
+                'formatter' => 'currency'
+            ],
+            [
+                'textParam2'
+            ]
         ];
+
+        $formattedTranslateableTextParameters = ['38', 'textParam2'];
 
         $translateableText = [
             'key' => $translateableTextKey,
@@ -32,10 +40,18 @@ class TranslateableTextHandlerTest extends MockeryTestCase
 
         $translationHelper = m::mock(TranslationHelperService::class);
         $translationHelper->shouldReceive('translateReplace')
-            ->with($translateableTextKey, $translateableTextParameters)
+            ->with($translateableTextKey, $formattedTranslateableTextParameters)
             ->andReturn($translated);
 
-        $sut = new TranslateableTextHandler($translationHelper);
+        $formattedTranslateableTextParametersGenerator = m::mock(FormattedTranslateableTextParametersGenerator::class);
+        $formattedTranslateableTextParametersGenerator->shouldReceive('generate')
+            ->with($translateableTextParameters)
+            ->andReturn($formattedTranslateableTextParameters);
+
+        $sut = new TranslateableTextHandler(
+            $formattedTranslateableTextParametersGenerator,
+            $translationHelper
+        );
 
         $this->assertEquals(
             $translated,

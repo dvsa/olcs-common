@@ -3844,9 +3844,11 @@ return [
 
     'qanda.ecmt-removal.no-of-permits.question-short' => 'Number of permits required',
     'qanda.ecmt-removal.no-of-permits.question' => 'How many permits do you require for this licence?',
-    'qanda.ecmt-removal.no-of-permits.guidance' => 'There is an <strong>&pound;%s</strong> fee per permit.',
+    'qanda.ecmt-removal.no-of-permits.guidance' => 'There is an <strong>%s</strong> fee per permit.',
     'qanda.ecmt-removal.no-of-permits.textbox.label' => 'Number of permits',
     'qanda.ecmt-removal.no-of-permits.textbox.hint' => 'You can apply for up to %s permits currently.',
+    'qanda.ecmt-removal.no-of-permits.error.enter-permits-required' => 'Enter the number of permits you require',
+    'qanda.ecmt-removal.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
 
     // Potentially unused translations
 ];

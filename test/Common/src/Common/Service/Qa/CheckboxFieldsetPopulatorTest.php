@@ -1,6 +1,6 @@
 <?php
 
-namespace CommonTest\Form\View\Helper;
+namespace CommonTest\Service\Qa;
 
 use Common\Form\Elements\InputFilters\SingleCheckbox;
 use Common\Service\Qa\CheckboxFactory;

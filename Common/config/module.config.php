@@ -243,7 +243,9 @@ return array(
             'QaFieldsetGenerator' => QaService\FieldsetGeneratorFactory::class,
             'QaFieldsetPopulatorProvider' => QaService\FieldsetPopulatorProviderFactory::class,
             'QaTranslateableTextHandler' => QaService\TranslateableTextHandlerFactory::class,
-
+            'QaTranslateableTextParameterHandler' => QaService\TranslateableTextParameterHandlerFactory::class,
+            'QaFormattedTranslateableTextParametersGenerator' =>
+                QaService\FormattedTranslateableTextParametersGeneratorFactory::class,
         )
     ),
     /*'search' => [

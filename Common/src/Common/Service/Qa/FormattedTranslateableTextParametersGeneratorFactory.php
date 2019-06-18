@@ -5,7 +5,7 @@ namespace Common\Service\Qa;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class TranslateableTextHandlerFactory implements FactoryInterface
+class FormattedTranslateableTextParametersGeneratorFactory implements FactoryInterface
 {
     /**
      * Create service
@@ -16,9 +16,8 @@ class TranslateableTextHandlerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new TranslateableTextHandler(
-            $serviceLocator->get('QaFormattedTranslateableTextParametersGenerator'),
-            $serviceLocator->get('Helper\Translation')
+        return new FormattedTranslateableTextParametersGenerator(
+            $serviceLocator->get('QaTranslateableTextParameterHandler')
         );
     }
 }
