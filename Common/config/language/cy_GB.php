@@ -448,6 +448,8 @@ return [
     'licence-type' => 'Math o drwydded',
     'licence.grace-periods.table.status' => 'Statws',
     'licence.overview.licence-no' => 'Rhif y drwydded',
+    'licence.overview.title' => 'View and Amend your licence',
+    'licence.overview.hintText' => 'Select a section to view and change your licence information',
     'licence.vehicles-trailers.share-info' => 'Ticiwch y blwch i gadarnhau eich bod am rannu\'r wybodaeth hon gyda\'r Asiantaeth Safonau Gyrwyr a Cherbydau (DVSA). Defnyddir eich data at ei ddibenion, e.e. adroddiadau hanes profion neu eich Sgôr Risg Cydymffurfiad Gweithredwr (OCRS). Rhaid ichi gadw\'r wybodaeth hon yn gyfredol. Os na wnewch, efallai byddwch yn derbyn adroddiad hanes profion neu OCRS anghywir.',
     'licence_goods-trailers_trailer.form.add.trailernumber' => 'Rhif ôl-gerbyd',
     'licence_goods-trailers_trailer.table.specified' => 'Dyddiad penodedig',
