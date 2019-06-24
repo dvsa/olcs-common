@@ -1625,7 +1625,7 @@ return [
     'licence.overview.licence-no' => 'Licence number',
     'licence.overview.save.failed' => 'There was a problem saving the data',
     'licence.overview.saved' => 'Your changes have been saved',
-    'licence.overview.title' => 'View and Amend your licence',
+    'licence.overview.title' => 'View and amend your licence',
     'licence.overview.hintText' => 'Select a section to view and change your licence information',
     'licence.print' => 'Print licence',
     'licence.apply-to-surrender' => 'Apply to surrender licence',
