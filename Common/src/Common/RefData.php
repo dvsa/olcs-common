@@ -416,4 +416,10 @@ class RefData
     const EMISSIONS_CATEGORY_EURO5 = 'emissions_cat_euro5';
     const EMISSIONS_CATEGORY_EURO6 = 'emissions_cat_euro6';
     const EMISSIONS_CATEGORY_NA = 'emissions_cat_na';
+
+    // Question data types
+    const QUESTION_TYPE_STRING = 'question_type_string';
+    const QUESTION_TYPE_INTEGER = 'question_type_integer';
+    const QUESTION_TYPE_BOOLEAN = 'question_type_boolean';
+    const QUESTION_TYPE_CUSTOM = 'question_type_custom';
 }
