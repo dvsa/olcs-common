@@ -1947,7 +1947,7 @@ return [
     'email.last-tm-operator-notification.subject' => 'Brys: Dileu\'r Rheolwr Trafnidiaeth diwethaf',
     'confirm-and-continue' => 'Cadarnhau a pharhau',
     'licence.surrender.review_contact_details.title' => 'Adolygu eich gwybodaeth gyswllt',
-    'licence.surrender.review_contact_details.content' => 'Mae\'r wybodaeth ddilynol wedi\'i hadfer o gofnod eich trwydded. Cadarnhewch ei bod yn gywir ac yn gyfoes. Gallwch ddiwygio unrhyw adran trwy glicio ar y ddolen \\\'Newid\\\'.',
+    'licence.surrender.review_contact_details.content' => 'Mae\'r wybodaeth ddilynol wedi\'i hadfer o gofnod eich trwydded. Cadarnhewch ei bod yn gywir ac yn gyfoes. Gallwch ddiwygio unrhyw adran trwy glicio ar y ddolen \'Newid\'.',
     'licence.surrender.review_contact_details.note' => 'Sylwer: mae\'n dramgwydd troseddol i roi gwybodaeth ffug yn y cais hwn.',
     'secondary-contact-number' => 'Rhif cyswllt eilaidd',
     'licence.surrender.start.title.psv' => 'Gwneud cais i ildio’ch trwydded gweithredwr cerbyd gwasanaeth cyhoeddus\'',
