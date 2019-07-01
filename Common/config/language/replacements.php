@@ -36,4 +36,5 @@ return [
     '{{ESSENTIALS_ROAD_HAULAGE}}' => 'https://www.gov.uk/guidance/the-essentials-of-international-road-haulage',
     '{{IRHP_GUIDANCE_LINK}}' =>
         'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage',
+    '{{IRHP_REMOVAL_GUIDANCE_LINK}}' => 'https://www.gov.uk/guidance/international-road-haulage-removal-permits',
 ];
