@@ -3832,13 +3832,13 @@ return [
     'permits.check-your-answers.no-of-permits' => '%s permits in %s',
 
     'qanda.ecmt-removal.removal-eligibility.question-short' => 'Removals eligibility',
-    'qanda.ecmt-removal.removal-eligibility.question' => 'Removal permits can only be used for removal operations using specialised equipment and staff',
+    'qanda.ecmt-removal.removal-eligibility.question' => 'Confirm you will only use removal permits for removal operations using specialised equipment and staff',
     'qanda.ecmt-removal.removal-eligibility.additional-guidance' => 'You may only use ECMT international removal permits for laden or empty journeys carried out by specialist removal companies to move household goods and business possessions.',
     'qanda.ecmt-removal.removal-eligibility.checkbox.label' => 'I confirm that I will only use an ECMT international removal permit to move household goods or business possessions and that I will use specialised equipment and staff for removal operations.',
     'qanda.ecmt-removal.removal-eligibility.checkbox.not-checked-message' => 'Tick to confirm you will only use your Removal permits to move household goods or business possessions',
 
     'qanda.ecmt-removal.cabotage.question-short' => 'Cabotage',
-    'qanda.ecmt-removal.cabotage.question' => 'Removal permits do not allow you to carry out cabotage',
+    'qanda.ecmt-removal.cabotage.question' => 'Confirm you will not use removal permits to carry out cabotage',
     'qanda.ecmt-removal.cabotage.additional-guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
     'qanda.ecmt-removal.cabotage.checkbox.label' => 'I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.',
     'qanda.ecmt-removal.cabotage.checkbox.not-checked-message' => 'Tick to confirm your vehicle will not undertake cabotage journeys',
