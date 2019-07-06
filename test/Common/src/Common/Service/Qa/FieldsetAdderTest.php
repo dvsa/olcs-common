@@ -17,7 +17,39 @@ use Zend\Form\Form;
  */
 class FieldsetAdderTest extends MockeryTestCase
 {
-    public function testAdd()
+    private $fieldsetName;
+
+    private $fieldset;
+
+    private $fieldsetGenerator;
+
+    private $form;
+
+    private $validatorsAdder;
+
+    private $sut;
+
+    public function setUp()
+    {
+        $this->fieldsetName = 'fieldsetName';
+
+        $this->fieldset = m::mock(Fieldset::class);
+        $this->fieldset->shouldReceive('getName')
+            ->andReturn($this->fieldsetName);
+
+        $this->fieldsetGenerator = m::mock(FieldsetGenerator::class);
+
+        $this->form = m::mock(Form::class);
+        $this->form->shouldReceive('add')
+            ->with($this->fieldset)
+            ->once();
+
+        $this->validatorsAdder = m::mock(ValidatorsAdder::class);
+
+        $this->sut = new FieldsetAdder($this->fieldsetGenerator, $this->validatorsAdder);
+    }
+
+    public function testAddWithValidators()
     {
         $validatorsOptions = [
             [
@@ -33,29 +65,32 @@ class FieldsetAdderTest extends MockeryTestCase
             'validators' => $validatorsOptions
         ];
 
-        $fieldsetName = 'fieldsetName';
-
-        $fieldset = m::mock(Fieldset::class);
-        $fieldset->shouldReceive('getName')
-            ->andReturn($fieldsetName);
-
-        $fieldsetGenerator = m::mock(FieldsetGenerator::class);
-        $fieldsetGenerator->shouldReceive('generate')
+        $this->fieldsetGenerator->shouldReceive('generate')
             ->with($options)
             ->once()
-            ->andReturn($fieldset);
+            ->andReturn($this->fieldset);
 
-        $form = m::mock(Form::class);
-        $form->shouldReceive('add')
-            ->with($fieldset)
+        $this->validatorsAdder->shouldReceive('add')
+            ->with($this->form, $this->fieldsetName, $validatorsOptions)
             ->once();
 
-        $validatorsAdder = m::mock(ValidatorsAdder::class);
-        $validatorsAdder->shouldReceive('add')
-            ->with($form, $fieldsetName, $validatorsOptions)
-            ->once();
+        $this->sut->add($this->form, $options);
+    }
 
-        $sut = new FieldsetAdder($fieldsetGenerator, $validatorsAdder);
-        $sut->add($form, $options);
+    public function testAddWithNoValidators()
+    {
+        $options = [
+            'validators' => []
+        ];
+
+        $this->fieldsetGenerator->shouldReceive('generate')
+            ->with($options)
+            ->once()
+            ->andReturn($this->fieldset);
+
+        $this->validatorsAdder->shouldReceive('add')
+            ->never();
+
+        $this->sut->add($this->form, $options);
     }
 }

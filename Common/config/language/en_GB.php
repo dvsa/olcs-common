@@ -3873,5 +3873,16 @@ return [
     'qanda.ecmt-short-term.emissions.checkbox.label' => 'I confirm that I will only use my ECMT permits with vehicles that are environmentally compliant with the minimum Euro emissions standards that the permit allows.',
     'qanda.ecmt-short-term.emissions.checkbox.not-checked-message' => 'Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.',
 
+    'qanda.ecmt-short-term.number-of-permits.question-short' => 'Number of permits required',
+    'qanda.ecmt-short-term.number-of-permits.question' => 'How many permits do you require for this licence?',
+    'qanda.ecmt-short-term.number-of-permits.guidance' => '<p>There is a <strong>%s</strong> fee per permit required.</p><p>You can only use Short-term permits for <strong>30 consecutive days</strong> from the start date you choose, during the calendar year they have been issued.</p>',
+    'qanda.ecmt-short-term.number-of-permits.annotation' => '<p><strong>Number of permits for %s</strong><br><span class="govuk-hint">%s is the maximum you can apply for this year</span></p>',
+    'qanda.ecmt-short-term.number-of-permits.label.euro5' => 'for Euro5 minimum emission standard',
+    'qanda.ecmt-short-term.number-of-permits.label.euro6' => 'for Euro6 minimum emission standard',
+    'qanda-ecmt-short-term.number-of-permits.error.total-max-exceeded' => 'You have exceeded the maximum you can apply for',
+    'qanda-ecmt-short-term.number-of-permits.error.total-min-exceeded' => 'Enter the number of permits you require. The number must be at least 1.',
+    'qanda-ecmt-short-term.number-of-permits.error.category-max-exceeded' => 'There are only %s permits available for the selected emissions standard',
+    'qanda-ecmt-short-term.number-of-permits.error.category-not-whole-number' => 'You must enter a valid whole number',
+
     // Potentially unused translations
 ];

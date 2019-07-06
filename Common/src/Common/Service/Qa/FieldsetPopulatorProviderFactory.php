@@ -21,6 +21,7 @@ class FieldsetPopulatorProviderFactory implements FactoryInterface
         $populators = [
             'checkbox' => 'QaCheckboxFieldsetPopulator',
             'text' => 'QaTextFieldsetPopulator',
+            'ecmt_st_no_of_permits' => 'QaEcmtShortTermNoOfPermitsFieldsetPopulator'
         ];
 
         foreach ($populators as $type => $serviceName) {

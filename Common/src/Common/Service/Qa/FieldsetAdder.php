@@ -34,6 +34,9 @@ class FieldsetAdder
     {
         $fieldset = $this->fieldsetGenerator->generate($options);
         $form->add($fieldset);
-        $this->validatorsAdder->add($form, $fieldset->getName(), $options['validators']);
+
+        if (count($options['validators'])) {
+            $this->validatorsAdder->add($form, $fieldset->getName(), $options['validators']);
+        }
     }
 }
