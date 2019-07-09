@@ -461,7 +461,7 @@ return [
     'licence.surrender.declaration.form.header' => '<h3>Llofnodwch eich datganiad ar-lein gan ddefnyddio GOV.UKVerify</h3><p>Bydd angen i chi brofi eich hunaniaeth gyda GOV.UK Verify neu hunaniaeth ddigidol o wlad Ewropeaidd arall.</p>',
     'licence.surrender.declaration.sign' => 'Rwy\'n cytuno - Parhewch',
     'licence.surrender.current_discs.title' => 'Disgiau cyfredol a ddelir yn erbyn y drwydded hon',
-    'licence.surrender.current_discs.content' => '<p>Mae ein cofnodion yn dangos bod gennych <strong>%s</strong> ddisgiau cerbyd cyfredol. </p><p>Darparwch fanylion yr hyn y byddwch yn ei wneud gyda\'r holl ddisgiau cyfredol sy\'n gysylltiedig â\'r drwydded hon.</p>',
+    'licence.surrender.current_discs.content' => '<h2 class="govuk-heading-m">Mae ein cofnodion yn dangos bod gennych %s ddisgiau cerbyd cyfredol. </h2><p>Darparwch fanylion yr hyn y byddwch yn ei wneud gyda\'r holl ddisgiau cyfredol sy\'n gysylltiedig â\'r drwydded hon.</p>',
     'licence.surrender.current_discs.disc_count_mismatch' => 'Nid yw cyfanswm y disgiau yn cyd-fynd â\'r nifer ar eich trwydded',
     'licence.surrender.current_discs.number.greaterThanMessage' => 'Dylai\'r nifer o ddisgiau fod yn fwy na %min%.',
     'licence.surrender.current_discs.details.stringLengthTooLong' => 'Gallwch nodi 500 o nodau yn unig',

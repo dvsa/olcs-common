@@ -1645,7 +1645,7 @@ return [
     'licence.surrender.declaration.form.header' => '<h3>Sign your declaration online using GOV.UK Verify</h3><p>You\'ll need to prove your identity with GOV.UK Verify or a digital identity from another European country.</p>',
     'licence.surrender.declaration.sign' => 'I agree - Continue',
     'licence.surrender.current_discs.title' => 'Current discs held against this licence',
-    'licence.surrender.current_discs.content' => '<p>Our records show that you have <strong>%s</strong> current vehicle discs.</p><p>Please provide details of what you are going to do with all of the current discs associated to this licence.</p>',
+    'licence.surrender.current_discs.content' => '<h2 class="govuk-heading-m">Our records show that you have %s current vehicle discs.</h2><p>Please provide details of what you are going to do with all of the current discs associated to this licence.</p>',
     'licence.surrender.current_discs.disc_count_mismatch' => 'Total number of discs does not match the amount on your licence.',
     'licence.surrender.current_discs.number.greaterThanMessage' => "The number of discs should be more than %min%.",
     'licence.surrender.current_discs.details.stringLengthTooLong' => "You can only enter 500 characters.",
