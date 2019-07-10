@@ -3849,5 +3849,29 @@ return [
     'qanda.ecmt-removal.no-of-permits.error.enter-permits-required' => 'Enter the number of permits you require',
     'qanda.ecmt-removal.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
 
+    'qanda.ecmt-short-term.permit-usage.question-short' => 'Where to use your permits',
+    'qanda.ecmt-short-term.permit-usage.question' => 'You can only apply for these permits to transit through EU countries to non-EU countries',
+    'qanda.ecmt-short-term.permit-usage.additional-guidance' => '<p>Short-term ECMT permits are only required when transiting through EU countries to non-EU countries, including Switzerland.</p><p>You must fill in the permit logbook with full details of the entire journey.</p>',
+    'qanda.ecmt-short-term.permit-usage.checkbox.label' => 'I confirm that I am applying for Short-term ECMT permits to transit through EU countries to non-EU countries, including Switzerland.',
+    'qanda.ecmt-short-term.permit-usage.checkbox.not-checked-message' => 'Tick to confirm you understand how to use your permit.',
+
+    'qanda.ecmt-short-term.cabotage.question-short' => 'Cabotage',
+    'qanda.ecmt-short-term.cabotage.question' => 'Short-term ECMT permits do not allow you to carry out cabotage',
+    'qanda.ecmt-short-term.cabotage.additional-guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
+    'qanda.ecmt-short-term.cabotage.checkbox.label' => 'I confirm that I will not undertake cabotage journeys using this type of permit.',
+    'qanda.ecmt-short-term.cabotage.checkbox.not-checked-message' => 'Tick to confirm your vehicle will not undertake cabotage journeys.',
+
+    'qanda.ecmt-short-term.certificates.question-short' => 'Certificates required',
+    'qanda.ecmt-short-term.certificates.question' => 'Mandatory ECMT certificates for vehicles and trailers you intend to use',
+    'qanda.ecmt-short-term.certificates.additional-guidance' => '<p>If your permit application is successful, you are required to have the appropriate ECMT <b>Certificate of Compliance</b> and <b>Certificate of Roadworthiness</b> for each vehicle and trailer you intend to use.</p><p>You must carry the certificates that match your vehicle and trailer, for the whole of your journey.</p><p>If you don\'t already have them,<a href="https://www.gov.uk/guidance/ecmt-international-road-haulage-permits#rules-for-using-the-permits" target="_blank">find out how to get the certificates (opens in new window)</a>.</p>',
+    'qanda.ecmt-short-term.certificates.checkbox.label' => 'I understand that I must obtain and carry the appropriate ECMT Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer I intend to use with this permit.',
+    'qanda.ecmt-short-term.certificates.checkbox.not-checked-message' => 'Tick to confirm you understand that each vehicle and trailer must have the matching certificates.',
+    
+    'qanda.ecmt-short-term.emissions.question-short' => 'Euro emission standards',
+    'qanda.ecmt-short-term.emissions.question' => 'You must only use the appropriate Euro emission standards vehicles that the permit allows',
+    'qanda.ecmt-short-term.emissions.additional-guidance' => '<p>If you transport goods using an ECMT permit, the vehicles you intend to use must meet and comply with the minimum Euro emission standards that the permit allocated to you allows.</p><p>This includes any vehicles you currently own or lease, or are intending to buy or lease in the future.</p>',
+    'qanda.ecmt-short-term.emissions.checkbox.label' => 'I confirm that I will only use my ECMT permits with vehicles that are environmentally compliant with the minimum Euro emissions standards that the permit allows.',
+    'qanda.ecmt-short-term.emissions.checkbox.not-checked-message' => 'Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.',
+
     // Potentially unused translations
 ];
