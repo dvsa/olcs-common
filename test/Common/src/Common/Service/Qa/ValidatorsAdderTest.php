@@ -66,10 +66,15 @@ class ValidatorsAdderTest extends MockeryTestCase
             ->with('qaElement')
             ->andReturn($qaElementInput);
 
-        $formInputFilter = m::mock(InputFilterInterface::class);
-        $formInputFilter->shouldReceive('get')
+        $qaFieldsetInputFilter = m::mock(InputFilterInterface::class);
+        $qaFieldsetInputFilter->shouldReceive('get')
             ->with($fieldsetName)
             ->andReturn($fieldsetInputFilter);
+
+        $formInputFilter = m::mock(InputFilterInterface::class);
+        $formInputFilter->shouldReceive('get')
+            ->with('qa')
+            ->andReturn($qaFieldsetInputFilter);
 
         $form = m::mock(Form::class);
         $form->shouldReceive('getInputFilter')
