@@ -246,6 +246,8 @@ return array(
             'QaTranslateableTextParameterHandler' => QaService\TranslateableTextParameterHandlerFactory::class,
             'QaFormattedTranslateableTextParametersGenerator' =>
                 QaService\FormattedTranslateableTextParametersGeneratorFactory::class,
+            'QaEcmtShortTermNoOfPermitsFieldsetPopulator' =>
+                QaService\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulatorFactory::class,
         )
     ),
     /*'search' => [
