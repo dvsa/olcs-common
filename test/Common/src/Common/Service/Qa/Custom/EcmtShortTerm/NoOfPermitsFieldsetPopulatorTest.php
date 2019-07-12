@@ -18,12 +18,18 @@ use Zend\Form\Fieldset;
  */
 class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    /**
+     * @dataProvider dpTestPopulate
+     */
+    public function testPopulate($year, $line1TranslationKey)
     {
-        $year = 2015;
         $maxPermitted = 17;
-        $translatedHtml = '<p><strong>Number of permits for 2015</strong><br>' .
+
+        $expectedHtml = '<p><strong>Number of permits for 2015</strong><br>' .
             '<span class="govuk-hint">17 is the maximum you can apply for this year</span></p>';
+
+        $translatedLine1 = 'Number of permits for 2015';
+        $translatedLine2 = '17 is the maximum you can apply for this year';
 
         $emissionsCategory1Name = 'requiredEuro5';
         $emissionsCategory1LabelTranslationKey = 'qanda.ecmt-short-term.number-of-permits.label.euro5';
@@ -59,10 +65,16 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
         $translator = m::mock(TranslationHelperService::class);
         $translator->shouldReceive('translateReplace')
             ->with(
-                'qanda.ecmt-short-term.number-of-permits.annotation',
-                [$year, $maxPermitted]
+                $line1TranslationKey,
+                [$year]
             )
-            ->andReturn($translatedHtml);
+            ->andReturn($translatedLine1);
+        $translator->shouldReceive('translateReplace')
+            ->with(
+                'qanda.ecmt-short-term.number-of-permits.annotation.line-2',
+                [$maxPermitted]
+            )
+            ->andReturn($translatedLine2);
         $translator->shouldReceive('translateReplace')
             ->with(
                 'qanda-ecmt-short-term.number-of-permits.error.category-max-exceeded',
@@ -84,7 +96,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                     'name' => 'annotation',
                     'type' => Html::class,
                     'attributes' => [
-                        'value' => $translatedHtml
+                        'value' => $expectedHtml
                     ]
                 ]
             )
@@ -142,5 +154,14 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
 
         $noOfPermitsFieldsetPopulator = new NoOfPermitsFieldsetPopulator($translator);
         $noOfPermitsFieldsetPopulator->populate($fieldset, $options);
+    }
+
+    public function dpTestPopulate()
+    {
+        return [
+            [2019, 'qanda.ecmt-short-term.number-of-permits.annotation.line-1.2019'],
+            [2020, 'qanda.ecmt-short-term.number-of-permits.annotation.line-1.other'],
+            [2021, 'qanda.ecmt-short-term.number-of-permits.annotation.line-1.other']
+        ];
     }
 }

@@ -32,13 +32,24 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
      */
     public function populate(Fieldset $fieldset, array $options)
     {
-        $htmlValue = $this->translator->translateReplace(
-            'qanda.ecmt-short-term.number-of-permits.annotation',
-            [
-                $options['year'],
-                $options['maxPermitted']
-            ]
+        $year = $options['year'];
+
+        $line1TranslationKey = 'qanda.ecmt-short-term.number-of-permits.annotation.line-1.other';
+        if ($year == 2019) {
+            $line1TranslationKey = 'qanda.ecmt-short-term.number-of-permits.annotation.line-1.2019';
+        }
+
+        $line1 = $this->translator->translateReplace(
+            $line1TranslationKey,
+            [$year]
         );
+
+        $line2 = $this->translator->translateReplace(
+            'qanda.ecmt-short-term.number-of-permits.annotation.line-2',
+            [$options['maxPermitted']]
+        );
+
+        $htmlValue = sprintf('<p><strong>%s</strong><br><span class="govuk-hint">%s</span></p>', $line1, $line2);
 
         $fieldset->add(
             [
