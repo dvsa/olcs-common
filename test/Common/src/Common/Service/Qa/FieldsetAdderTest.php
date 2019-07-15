@@ -37,12 +37,17 @@ class FieldsetAdderTest extends MockeryTestCase
         $this->fieldset->shouldReceive('getName')
             ->andReturn($this->fieldsetName);
 
+        $qaFieldset = m::mock(Fieldset::class);
+        $qaFieldset->shouldReceive('add')
+            ->with($this->fieldset)
+            ->once();
+
         $this->fieldsetGenerator = m::mock(FieldsetGenerator::class);
 
         $this->form = m::mock(Form::class);
-        $this->form->shouldReceive('add')
-            ->with($this->fieldset)
-            ->once();
+        $this->form->shouldReceive('get')
+            ->with('qa')
+            ->andReturn($qaFieldset);
 
         $this->validatorsAdder = m::mock(ValidatorsAdder::class);
 

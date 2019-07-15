@@ -44,8 +44,11 @@ class NoOfPermitsCombinedTotalValidator
     {
         $total = 0;
         foreach ($context as $name => $value) {
-            if ((substr($name, 0, 8) == 'required') && is_string($value) && ctype_digit($value)) {
-                $total += intval($value);
+            if ((substr($name, 0, 8) == 'required') && is_string($value)) {
+                $trimmedValue = trim($value);
+                if (ctype_digit($trimmedValue)) {
+                    $total += intval($value);
+                }
             }
         }
 

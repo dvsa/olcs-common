@@ -3855,10 +3855,9 @@ return [
     'qanda.ecmt-removal.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
 
     'qanda.ecmt-short-term.permit-usage.question-short' => 'Where to use your permits',
-    'qanda.ecmt-short-term.permit-usage.question' => 'You can only apply for these permits to transit through EU countries to non-EU countries',
-    'qanda.ecmt-short-term.permit-usage.additional-guidance' => '<p>Short-term ECMT permits are only required when transiting through EU countries to non-EU countries, including Switzerland.</p><p>You must fill in the permit logbook with full details of the entire journey.</p>',
-    'qanda.ecmt-short-term.permit-usage.checkbox.label' => 'I confirm that I am applying for Short-term ECMT permits to transit through EU countries to non-EU countries, including Switzerland.',
-    'qanda.ecmt-short-term.permit-usage.checkbox.not-checked-message' => 'Tick to confirm you understand how to use your permit.',
+    'qanda.ecmt-short-term.permit-usage.question' => 'You can only apply for these permits for cross-trade between two EU countries or transit to non-EU countries',
+    'qanda.ecmt-short-term.permit-usage.additional-guidance' => '<p>Short-term ECMT permits are only required for Transit or cross-trade.</p><p>Transit is when you are transiting through EU countries to non-EU countries, including Switzerland.</p><p>Cross-trade is the haulage of goods for hire or reward between two EU countries by a vehicle registered in a different EU country.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
+    'qanda.ecmt-short-term.permit-usage.not-selected-message' => 'You must select an option',
 
     'qanda.ecmt-short-term.cabotage.question-short' => 'Cabotage',
     'qanda.ecmt-short-term.cabotage.question' => 'Short-term ECMT permits do not allow you to carry out cabotage',

@@ -25,15 +25,15 @@ class FieldsetAdder
     }
 
     /**
-     * Add a fieldset to the specified form based on the supplied options array
+     * Add a question fieldset to the specified qa fieldset based on the supplied options array
      *
-     * @param mixed Form
+     * @param mixed $form
      * @param array $options
      */
     public function add($form, array $options)
     {
         $fieldset = $this->fieldsetGenerator->generate($options);
-        $form->add($fieldset);
+        $form->get('qa')->add($fieldset);
 
         if (count($options['validators'])) {
             $this->validatorsAdder->add($form, $fieldset->getName(), $options['validators']);
