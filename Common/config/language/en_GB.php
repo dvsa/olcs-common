@@ -3816,9 +3816,11 @@ return [
     'permits.irhp.valid.permits.table.country' => 'Country',
     'permits.irhp.valid.permits.table.application' => 'Application',
     'permits.irhp.valid.permits.table.application-no' => 'Application number',
+    'permits.irhp.valid.permits.table.emissions-standard' => 'Minimum emissions standard',
     'permits.irhp.valid.permits.table.start-date' => 'Start date',
     'permits.irhp.valid.permits.table.expiry-date' => 'Expiry date',
     'permits.irhp.valid.permits.table.issue-date' => 'Issue date',
+    'permits.irhp.valid.permits.table.use-by-date' => 'Use by',
 
     'permits.irhp.fee-breakdown.year' => 'Year',
     'permits.irhp.fee-breakdown.validity-period' => 'Validity period',
