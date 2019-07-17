@@ -3593,6 +3593,7 @@ return [
     'permits.page.type.question' => 'What type of permit do you need?',
     'permits.page.year.browser.title' => 'Select which year you want permits for',
     'permits.page.year.question' => 'Select which year you want permits for',
+    'permits.page.year.ecmt-short-term.label.2019' => '1st November to 31st December 2019',
     'permits.page.year.hint.one-year-available' => 'Currently, there is only one year available to apply.',
     'permits.page.year.hint.multiple-years-available' => 'You will need to apply separately for each year you want permits for.',
     'permits.page.select.year.must.choose' => 'You must select one year to continue',
