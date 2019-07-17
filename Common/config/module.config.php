@@ -250,6 +250,8 @@ return array(
                 QaService\FormattedTranslateableTextParametersGeneratorFactory::class,
             'QaEcmtShortTermNoOfPermitsFieldsetPopulator' =>
                 QaService\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulatorFactory::class,
+            'QaEcmtShortTermPermitUsageFieldsetPopulator' =>
+                QaService\Custom\EcmtShortTerm\PermitUsageFieldsetPopulatorFactory::class,
         )
     ),
     /*'search' => [
