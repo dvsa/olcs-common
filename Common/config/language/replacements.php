@@ -37,4 +37,6 @@ return [
     '{{IRHP_GUIDANCE_LINK}}' =>
         'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage',
     '{{IRHP_REMOVAL_GUIDANCE_LINK}}' => 'https://www.gov.uk/guidance/international-road-haulage-removal-permits',
+    '{{SHORT_TERM_ECMT_EMAIL}}' => 'shorttermecmt@dvsa.gov.uk',
+
 ];

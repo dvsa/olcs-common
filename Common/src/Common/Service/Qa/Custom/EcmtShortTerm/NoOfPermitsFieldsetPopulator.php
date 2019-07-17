@@ -49,16 +49,10 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
             [$options['maxPermitted']]
         );
 
-        $htmlValue = sprintf('<p><strong>%s</strong><br><span class="govuk-hint">%s</span></p>', $line1, $line2);
-
-        $fieldset->add(
-            [
-                'name' => 'annotation',
-                'type' => Html::class,
-                'attributes' => [
-                    'value' => $htmlValue
-                ]
-            ]
+        $this->addHtml(
+            $fieldset,
+            'annotation',
+            sprintf('<p><strong>%s</strong><br><span class="govuk-hint">%s</span></p>', $line1, $line2)
         );
 
         $fieldset->add(
@@ -94,5 +88,36 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
                 ]
             );
         }
+
+        if ($year == 2019) {
+            $this->addHtml(
+                $fieldset,
+                'euro52019Info',
+                sprintf(
+                    '<p>%s</p>',
+                    $this->translator->translate('qanda.ecmt-short-term.number-of-permits.euro5-2019-info')
+                )
+            );
+        }
+    }
+
+    /**
+     * Populate the fieldset with a HTML element containing the specified markup
+     *
+     * @param Fieldset $fieldset
+     * @param string $name
+     * @param string $markup
+     */
+    private function addHtml(Fieldset $fieldset, $name, $markup)
+    {
+        $fieldset->add(
+            [
+                'name' => $name,
+                'type' => Html::class,
+                'attributes' => [
+                    'value' => $markup
+                ]
+            ]
+        );
     }
 }
