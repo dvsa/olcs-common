@@ -13,7 +13,7 @@ class ValidatorsAdder
      */
     public function add($form, $fieldsetName, array $validators)
     {
-        $input = $form->getInputFilter()->get($fieldsetName)->get('qaElement');
+        $input = $form->getInputFilter()->get('qa')->get($fieldsetName)->get('qaElement');
         $input->setContinueIfEmpty(true);
         $validatorChain = $input->getValidatorChain();
 

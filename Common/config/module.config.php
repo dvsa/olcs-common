@@ -194,6 +194,7 @@ return array(
             'staticList' => Common\Service\Data\StaticList::class,
             'QaCheckboxFactory' => QaService\CheckboxFactory::class,
             'QaTextFactory' => QaService\TextFactory::class,
+            'QaRadioFactory' => QaService\RadioFactory::class,
             'QaFieldsetFactory' => QaService\FieldsetFactory::class,
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
         ),
@@ -239,6 +240,7 @@ return array(
             \Common\Service\AntiVirus\Scan::class => \Common\Service\AntiVirus\Scan::class,
             'QaCheckboxFieldsetPopulator' => QaService\CheckboxFieldsetPopulatorFactory::class,
             'QaTextFieldsetPopulator' => QaService\TextFieldsetPopulatorFactory::class,
+            'QaRadioFieldsetPopulator' => QaService\RadioFieldsetPopulatorFactory::class,
             'QaFieldsetAdder' => QaService\FieldsetAdderFactory::class,
             'QaFieldsetGenerator' => QaService\FieldsetGeneratorFactory::class,
             'QaFieldsetPopulatorProvider' => QaService\FieldsetPopulatorProviderFactory::class,
@@ -246,6 +248,8 @@ return array(
             'QaTranslateableTextParameterHandler' => QaService\TranslateableTextParameterHandlerFactory::class,
             'QaFormattedTranslateableTextParametersGenerator' =>
                 QaService\FormattedTranslateableTextParametersGeneratorFactory::class,
+            'QaEcmtShortTermNoOfPermitsFieldsetPopulator' =>
+                QaService\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulatorFactory::class,
         )
     ),
     /*'search' => [
