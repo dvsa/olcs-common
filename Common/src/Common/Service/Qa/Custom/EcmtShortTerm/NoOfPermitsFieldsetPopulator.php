@@ -94,7 +94,7 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
                 $fieldset,
                 'euro52019Info',
                 sprintf(
-                    '<p>%s</p>',
+                    '<p><strong>%s</strong></p>',
                     $this->translator->translate('qanda.ecmt-short-term.number-of-permits.euro5-2019-info')
                 )
             );
