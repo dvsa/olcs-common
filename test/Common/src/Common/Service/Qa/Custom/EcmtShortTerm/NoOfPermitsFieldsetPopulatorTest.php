@@ -171,7 +171,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                     'name' => 'euro52019Info',
                     'type' => Html::class,
                     'attributes' => [
-                        'value' => '<p>euro5 2019 info</p>'
+                        'value' => '<p><strong>euro5 2019 info</strong></p>'
                     ]
                 ]
             )
