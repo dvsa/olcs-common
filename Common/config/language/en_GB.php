@@ -3860,6 +3860,7 @@ return [
     'continue.finance.history.button' => 'Continue to financial history',
 
     'permits.check-your-answers.countries' => '%s permits for %s in %s',
+    'permits.check-your-answers.no-of-permits.year' => 'Permits for %d',
     'permits.check-your-answers.no-of-permits' => '%s permits in %s',
 
     'qanda.ecmt-removal.removal-eligibility.question-short' => 'Removals eligibility',
@@ -3920,6 +3921,10 @@ return [
     'qanda-ecmt-short-term.number-of-permits.error.total-min-exceeded' => 'Enter the number of permits you require. The number must be at least 1.',
     'qanda-ecmt-short-term.number-of-permits.error.category-max-exceeded' => 'There are only %s permits available for the selected emissions standard',
     'qanda-ecmt-short-term.number-of-permits.error.category-not-whole-number' => 'You must enter a valid whole number',
+
+    'st_permit_usage_transit_only' => 'Transit only',
+    'st_permit_usage_cross_trade_only' => 'Cross-trade only',
+    'st_permit_usage_both' => 'Both transit and cross-trade',
 
     // Potentially unused translations
 ];
