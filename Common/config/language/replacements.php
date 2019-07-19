@@ -17,6 +17,8 @@ return [
         . '-for-a-living/goods-vehicle-operator-licensing.html',
     '{{ECMT_PERMITS_GUIDANCE_LINK}}' =>
         'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage',
+    '{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}' =>
+        'https://www.gov.uk/guidance/ecmt-international-road-haulage-permits',
     '{{ECMT_PERMITS_TERMS_AND_CONDITIONS}}' =>
         'https://www.vehicle-operator-licensing.service.gov.uk/terms-and-conditions/',
     '{{VEHICLE_EXCEPTIONS}}' => 'https://www.gov.uk/being-a-goods-vehicle-operator/exemptions',
