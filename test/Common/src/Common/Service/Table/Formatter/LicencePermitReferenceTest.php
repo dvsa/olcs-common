@@ -38,6 +38,12 @@ class LicencePermitReferenceTest extends MockeryTestCase
             ->with('permits/application', ['id' => 100])
             ->andReturn('http://selfserve/permits/application/100')
             ->shouldReceive('fromRoute')
+            ->with('permits/application/under-consideration', ['id' => 101])
+            ->andReturn('http://selfserve/permits/application/101/under-consideration')
+            ->shouldReceive('fromRoute')
+            ->with('permits/application/fee', ['id' => 102])
+            ->andReturn('http://selfserve/permits/application/102/fee')
+            ->shouldReceive('fromRoute')
             ->with('permits/valid', ['licence' => 200, 'type' => $row['typeId']])
             ->andReturn('http://selfserve/permits/valid/105');
 
@@ -144,7 +150,8 @@ class LicencePermitReferenceTest extends MockeryTestCase
                     'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
                     'statusId' => RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION,
                 ],
-                'IRHP&gt;ABC101'
+                '<a class="overview__link" href="http://selfserve/permits/application/101/under-consideration">' .
+                    '<span class="overview__link--underline">IRHP&gt;ABC101</span></a>'
             ],
             'ECMT Short Term app - awaiting fee' => [
                 [
@@ -155,7 +162,8 @@ class LicencePermitReferenceTest extends MockeryTestCase
                     'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
                     'statusId' => RefData::PERMIT_APP_STATUS_AWAITING_FEE,
                 ],
-                'IRHP&gt;ABC102'
+                '<a class="overview__link" href="http://selfserve/permits/application/102/fee">' .
+                    '<span class="overview__link--underline">IRHP&gt;ABC102</span></a>'
             ],
             'ECMT Short Term app - fee paid' => [
                 [
