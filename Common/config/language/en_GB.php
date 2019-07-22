@@ -863,6 +863,7 @@ return [
     'dashboard-nav-documents' => 'Documents',
     'dashboard-nav-fees' => 'Fees',
     'dashboard-nav-licences' => 'Licences',
+    'dashboard-nav-permits' => 'Permits',
     'dashboard-no-licences-text' => 'The organisation doesn\'t have any Vehicle Operator licences yet',
     'dashboard-table-applications' => 'Applications for a new licence',
     'dashboard-table-applications-appId' => 'Application reference',

@@ -279,6 +279,7 @@ return [
     'dashboard-nav-documents' => 'Dogfennau',
     'dashboard-nav-fees' => 'Ffioedd',
     'dashboard-nav-licences' => 'Trwyddedu',
+    'dashboard-nav-permits' => 'Hawlenni',
     'dashboard-no-licences-text' => 'Nid oes gan y sefydliad unrhyw drwyddedau Gweithredwr Cerbyd eto',
     'dashboard-table-applications' => 'Ceisiadau newydd',
     'dashboard-table-applications-appId' => 'Rhif y cais',
