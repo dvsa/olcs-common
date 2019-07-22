@@ -3510,10 +3510,7 @@ return [
     'permits.application.overview.complete-all-sections' => 'You must complete all of the sections to apply for a new permit.',
     'permits.application.overview.further-guidance' => 'Further <a href=%s>guidance on ECMT permits</a> is available on GOV.UK.',
     'permits.application.overview.button' => 'Apply for a new permit',
-    'permits.application.overview.no-application' => 'You haven\'t applied for any permits.',
     'permits.application.overview.no-permits' => 'You don\'t have any active Permits',
-    'permits.application.overview.has-permits' => 'Once permits are issued, they will be posted to you and last for 12 months.',
-    'permits.application.overview.transport-goods-abroad' => 'If you wish to transport goods internationally, you can apply for a new permit to do so.',
     'permits.application.overview.progress' => 'Progress',
     'permits.application.overview.fee-per-permit' => 'Fee per permit',
     'permits.application.overview.total-application-fee' => 'Total application fee:',
@@ -3521,7 +3518,6 @@ return [
     'permits.application.eligibility.title' => 'International haulier permit',
     'permits.application.eligibility.country.question' => 'Which countries will you be delivering to?',
     'permits.application.eligibility.country.add' => 'Add another country',
-    'permits.application.eligibility.country.country' => 'Country',
 
     'permits.application.ecmt.title' => 'You will need to apply for an annual ECMT permit',
     'permits.application.ecmt.permits' => 'You can apply for up to %s permits',
@@ -3532,13 +3528,10 @@ return [
     'permits.application.fee.submitted.title' => 'Payment successful-',
     'permits.application.fee.submitted.main' => 'Payment successful',
 
-    'permits.application.non-eligible.title' => 'Can you get an international haulier permit?',
-
     'permits.link.ecmt.guidance' => '{{ECMT_PERMITS_GUIDANCE_LINK}}',
     'permits.link.ecmt.terms-and-conditions' => '{{ECMT_PERMITS_TERMS_AND_CONDITIONS}}',
 
     'permits.page.confirmation.reference' => 'Your reference number',
-    'permits.page.confirmation.email-sent' => 'We have sent you a confirmation email.',
     'permits.page.confirmation.finish' => 'Finish',
 
     'permits.page.confirmation.cancel.title' => 'Application Cancelled',
@@ -3577,7 +3570,6 @@ return [
     'permits.page.licence.question.one.licence' => 'Permit application for licence %s',
     'permits.page.licence.saturated.one.licence' => 'Your licence has an active application',
     'permits.page.licence.saturated' => 'You have already applied against all your licences',
-    'permits.page.licence.info' => '%s Road Haulage Permits will be valid for use from %s to %s.',
     'permits.page.euro-emissions.browser.title' => 'Euro emission standards',
     'permits.page.euro6.emissions.question' => 'ECMT permits can only be used by vehicles that meet Euro 6 standards',
     'permits.page.euro6.emissions.guidance.line.1' => 'If you intend to transport goods internationally the vehicles you intend to use must meet and comply to all Euro 6 emission standards.',
@@ -3605,7 +3597,6 @@ return [
     'permits.page.select.year.must.choose' => 'You must select one year to continue',
     'permits.page.international.journey.title' => 'Percentage of International Journey - ',
     'permits.page.international.journey.question' => 'In the last 12 months, what percentage of international trips did you make using this licence?',
-    'permits.page.international.journey.exclude' => 'Exclude journeys to the Republic of Ireland in your annual trips.',
     'permits.page.sectors.browser.title' => 'Sectors you specialise in carrying goods',
     'permits.page.sectors.question' => 'Select one sector you mainly transport goods in using this licence',
     'permits.page.restricted-countries.title' => 'Countries with limited permits - ',
@@ -3657,7 +3648,6 @@ return [
     'permits.page.fee.permit.fee.non-refundable' => '%s (non-refundable)',
 
     'permits.page.irhp-fee.permit.fee' => 'Permit fee',
-    'permits.page.irhp-fee.guidance' => 'The permit fee is non-refundable',
     'permits.page.irhp-fee.fee-summary' => 'Fee summary',
     'permits.page.irhp-fee.fee-breakdown' => 'Fee breakdown',
     'permits.page.irhp-fee.permit.fee.total' => 'Total fee to be paid',
@@ -3715,7 +3705,6 @@ return [
     'permits.form.cabotage.label' => 'I confirm that I will not undertake any cabotage journeys using an ECMT permit.',
     'permits.form.trips.label' => 'Number of trips',
     'permits.form.permits.required.label' => 'Number of permits',
-    'permits.form.check-answers.label' => 'I have checked my answers',
     'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
     'error.messages.licence' => 'Select a licence',
     'error.messages.checkbox' => 'You must tick the box to continue',
