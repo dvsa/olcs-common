@@ -459,7 +459,7 @@ return [
     'licence_type_of_licence_confirmation' => 'Er mwyn newid math eich trwydded rhaid ichi greu cais am amrywiad. Hoffech chi symud ymlaen?',
     'licence.surrender.already.applied' => 'Rydych eisoes wedi gwneud cais i ildio\'r drwydded hon.\'',
     'licence.surrender.declaration.title' => 'Datganiad',
-    'licence.surrender.declaration.form.header' => '<h3>Llofnodwch eich datganiad ar-lein gan ddefnyddio GOV. UKVerify</h3><p>Bydd angen i chi brofi eich hunaniaeth gyda GOV.UK Verify neu hunaniaeth ddigidol o wlad Ewropeaidd arall.</p>',
+    'licence.surrender.declaration.form.header' => '<h3>Llofnodwch eich datganiad ar-lein gan ddefnyddio GOV.UK Verify</h3><p>Bydd angen i chi brofi eich hunaniaeth gyda GOV.UK Verify neu hunaniaeth ddigidol o wlad Ewropeaidd arall.</p>',
     'licence.surrender.declaration.sign' => 'Rwy\'n cytuno - Parhewch',
     'licence.surrender.document.lost.details.hint' => 'Esboniwch yr amgylchiadau sy \' n arwain at golli eich dogfennau. Peidiwch â chynnwys manylion personol na gwybodaeth ariannol (uchafswm o 500 o chars).',
     'licence.surrender.current_discs.title' => 'Disgiau cyfredol a ddelir yn erbyn y drwydded hon',
