@@ -512,6 +512,7 @@ return [
     'licence.surrender.review.label.discs.stolen' => 'Nifer wedi \' u dwyn',
     'licence.surrender.start.title.gv' => 'Gwneud cais i ildio\'ch trwydded gweithredwr cerbyd nwyddau',
     'licence.surrender.start.cancel.bus' => '<p>Bydd angen i chi ganslo pob gwasanaeth bws cofrestredig.</p>',
+    'licence.surrender.start' => 'Ddechrau nawr.',
     'surrender.review.label.documents.operatorLicenceDocument' => 'Trwydded gweithredwr',
     'surrender.review.label.documents.communityLicenceDocument' => 'Trwydded gymunedol a phob copi ardystiedig',
     'licence.surrender.review.label.documents.answerlost' => 'Colli',
