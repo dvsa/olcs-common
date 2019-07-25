@@ -3638,6 +3638,7 @@ return [
     'permits.page.fee.application.reference' => 'Application reference',
     'permits.page.fee.application.date' => 'Application date',
     'permits.page.fee.application.fee.per.permit' => 'Application fee per permit',
+    'permits.page.fee.permit.status' => 'Application status',
     'permits.page.fee.permit.type' => 'Permit type',
     'permits.page.fee.permit.year' => 'Permit year',
     'permits.page.fee.permit.validity' => 'Permit start and end date',
@@ -3651,6 +3652,7 @@ return [
     'permits.page.fee.per-permit' => '%s x %s (per permit) <a class="govuk-link govuk-!-display-block" href="%s">View Permits</a>',
     'permits.page.fee.number.permits.value' => '%s x %s (per permit)',
     'permits.page.fee.permit.fee.total' => 'Total application fee to be paid',
+    'permits.page.fee.permit.fee.paid.total' => 'Total application fee paid',
     'permits.page.fee.permit.fee.non-refundable' => '%s (non-refundable)',
 
     'permits.page.irhp-fee.permit.fee' => 'Permit fee',
@@ -3831,6 +3833,11 @@ return [
     'permits.irhp.valid.permits.table.expiry-date' => 'Expiry date',
     'permits.irhp.valid.permits.table.issue-date' => 'Issue date',
     'permits.irhp.valid.permits.table.use-by-date' => 'Use by',
+
+    'permits.irhp.under-consideration.browser.title' => 'Application under consideration - ',
+    'permits.irhp.under-consideration.header' => 'Permit application for licence',
+    'permits.irhp.under-consideration.title' => 'Application details',
+    'permits.irhp.under-consideration.response-date' => 'We will get back to you after the application window has closed and your application has been processed.',
 
     'permits.irhp.fee-breakdown.year' => 'Year',
     'permits.irhp.fee-breakdown.validity-period' => 'Validity period',
