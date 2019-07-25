@@ -1,6 +1,6 @@
 <?php
 
-$gb = include(__DIR__ . '/cy_gb.bak.php');
+$gb = include(__DIR__ . '/cy_GB.php');
 
 $ni = array_merge(
     $gb,

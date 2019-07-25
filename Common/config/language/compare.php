@@ -33,7 +33,7 @@ if ($argc > 2) {
 if ($argv[1] === 'e') {
     $count = 0;
     $english = include('en_GB.php');
-    $welsh = include('cy_gb.bak.php');
+    $welsh = include('cy_GB.php');
     $welsh_without_english = array_diff_key($welsh, $english);
 
     echo sprintf("Current missing English translations (%d):\n", count($welsh_without_english));
@@ -47,7 +47,7 @@ if ($argv[1] === 'e') {
 
 if ($argv[1] === 'w') {
     $english = include('en_GB.php');
-    $welsh = include('cy_gb.bak.php');
+    $welsh = include('cy_GB.php');
     $english_without_welsh = array_diff_key($english, $welsh);
 
     echo sprintf("Current missing Welsh translations (%d):\n", count($english_without_welsh));
@@ -61,7 +61,7 @@ if ($argv[1] === 'w') {
 
 if ($argv[1] === 'u') {
     $english = include('en_GB.php');
-    $welsh = include('cy_gb.bak.php');
+    $welsh = include('cy_GB.php');
     echo sprintf("Current untranslated Welsh (%d):\n", count(preg_grep("/(CY - )/", $welsh)));
     echo "||Message key||English||Welsh\n";
 
@@ -83,7 +83,7 @@ if ($argv[1] === 'u') {
 
 if ($argv[1] === 'us') {
     $english = include('en_GB.php');
-    $welsh = include('cy_gb.bak.php');
+    $welsh = include('cy_GB.php');
     echo "Current untranslated Welsh where 'CY - ' prefix is missing:\n";
     echo "||Message key||English||Welsh\n";
 
@@ -103,7 +103,7 @@ if ($argv[1] === 'us') {
 
 if ($argv[1] === 's') {
     $english = include('en_GB.php');
-    $welsh = include('cy_gb.bak.php');
+    $welsh = include('cy_GB.php');
     echo "Insert Statements:\n";
 
     foreach ($english as $key => $value) {
@@ -122,7 +122,7 @@ if ($argv[1] === 's') {
 
 if ($argv[1] === 'd') {
     $english = include('en_GB.php');
-    $welsh = include('cy_gb.bak.php');
+    $welsh = include('cy_GB.php');
     echo "Differing translations:\n";
 
     foreach ($welsh as $key => $value) {
