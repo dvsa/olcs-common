@@ -333,6 +333,7 @@ return [
     'delta_action_links.remove' => 'Tynnu i ffwrdd',
     'delta_action_links.restore' => 'Adfer',
     'Documents' => 'Dogfennau',
+    'licence-details' => 'Manylion y drwydded',
     'documents.unknown-file-description' => 'Dogfen',
     'driver-and-vehicle-standards-agency' => 'Driver and Vehicle Standards Agency',
     'entity-details-nav-contact-details' => 'Manylion cysylltu',
