@@ -514,7 +514,6 @@ return [
     'licence.surrender.start.title.gv' => 'Gwneud cais i ildio\'ch trwydded gweithredwr cerbyd nwyddau',
     'licence.surrender.start.cancel.bus' => '<p>Bydd angen i chi ganslo pob gwasanaeth bws cofrestredig.</p>',
     'licence.surrender.start' => 'Ddechrau nawr.',
-    'application-review-licence-history-will-surrender' => 'Will this licence be surrendered if this application is granted?',
     'application-review-licence-history-will-surrender' => 'A fydd y drwydded hon yn cael ei hildio os caniateir y cais hwn?',
     'licence-status.surrender.date.label' => 'Dyddiad ildio',
     'licence-status.surrender.message.save.success' => 'Ildiwyd y drwydded',
