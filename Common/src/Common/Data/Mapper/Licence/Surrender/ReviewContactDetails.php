@@ -10,7 +10,7 @@ use Common\Service\Helper\TranslationHelperService;
 class ReviewContactDetails
 {
 
-    public static function  makeSections(
+    public static function makeSections(
         array $licence,
         \Zend\Mvc\Controller\Plugin\Url $urlHelper,
         TranslationHelperService $translator
