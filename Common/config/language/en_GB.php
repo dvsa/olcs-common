@@ -3555,7 +3555,7 @@ return [
     'permits.page.confirmation.irhp-submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
     'permits.page.confirmation.irhp-submitted.bullet.list.title' => 'What happens next',
     'permits.page.confirmation.irhp-submitted.what-happens-next' => 'Your permits will be grouped together under the same licence number that you applied with.<p>We will now post your paper permit within the next 3 working days.</p>',
-    'permits.page.confirmation.irhp-submitted.under-consideration.what-happens-next' => 'Your permit application is under consideration and will now be processed. We\'ll let you know the result of your permit application in the next 10 days.<p>You can check your application status on the next page.</p>',
+    'permits.page.confirmation.irhp-submitted.under-consideration.what-happens-next' => 'Your permit application is under consideration and will now be processed. We\'ll let you know the result of your permit application in the next 10 working days.<p>You can check your application status on the next page.</p>',
 
     'permits.page.confirmation.bullet.list.title' => 'What happens next',
     'permits.page.confirmation.submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
@@ -3597,7 +3597,7 @@ return [
     'permits.page.type.question' => 'What type of permit do you need?',
     'permits.page.year.browser.title' => 'Select which year you want permits for',
     'permits.page.year.question' => 'Select which year you want permits for',
-    'permits.page.year.ecmt-short-term.label.2019' => '1st November to 31st December 2019',
+    'permits.page.year.ecmt-short-term.label.2019' => '1 November to 31 December 2019',
     'permits.page.year.hint.one-year-available' => 'Currently, there is only one year available to apply.',
     'permits.page.year.hint.multiple-years-available' => 'You will need to apply separately for each year you want permits for.',
     'permits.page.select.year.must.choose' => 'You must select one year to continue',
@@ -3873,10 +3873,10 @@ return [
     'qanda.ecmt-removal.no-of-permits.error.enter-permits-required' => 'Enter the number of permits you require',
     'qanda.ecmt-removal.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
 
-    'qanda.ecmt-short-term.permit-usage.question-short' => 'Where to use your permits',
+    'qanda.ecmt-short-term.permit-usage.question-short' => 'How to use your permits',
     'qanda.ecmt-short-term.permit-usage.question' => 'You can only apply for these permits for cross-trade between two EU countries or transit to non-EU countries',
     'qanda.ecmt-short-term.permit-usage.additional-guidance' => '<p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU/EEA countries, such as Switzerland, or if your journey includes more than two onward legs (cross-trade) to other EU/EEA countries.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
-    'qanda.ecmt-short-term.permit-usage.additional-guidance.2019' => '<p>Most journeys won’t need an ECMT permit during 2019. Check on <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}">gov.uk</a> which permits you may need.</p><p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU/EEA countries, such as Switzerland, or if your journey includes more than two onward legs (cross-trade) to other EU/EEA countries.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
+    'qanda.ecmt-short-term.permit-usage.additional-guidance.2019' => '<p>Most journeys won’t need an ECMT permit during 2019. Check on <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}">GOV.UK</a> which permits you may need.</p><p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU/EEA countries, including Switzerland, or if your journey includes more than two onward legs (cross-trade) to other EU/EEA countries.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
     'qanda.ecmt-short-term.permit-usage.not-selected-message' => 'You must select an option',
     'qanda.ecmt-short-term-permit-usage.footer-annotation' => 'We may contact you to verify your application.',
 
