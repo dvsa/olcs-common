@@ -1660,6 +1660,7 @@ return [
     'licence.surrender.current_discs.destroy.number.label'=>'Number of discs you will destroy',
     'licence.surrender.current_discs.lost.label'=>'Number of discs lost',
     'licence.surrender.current_discs.in_possession.label'=>'In your possession',
+    'licence.surrender.current_discs.lost.details.hint' =>'Don’t include personal or financial information, eg your National Insurance number or credit card details.',
     'licence.surrender.current_discs.stolen.details.hint' => 'For stolen documents you must provide the Crime Reference Number. (Max 500 chars.)',
     'licence.surrender.current_discs.stolen.details.stringLengthTooShort' => "You must enter details about the stolen discs.",
     'licence.surrender.current_discs.stolen.number.emptyMessage' => 'You must enter the number of discs stolen.',
