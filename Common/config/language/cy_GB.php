@@ -1622,7 +1622,7 @@ return [
     'permits.page.fee.permit.type' => 'Math o hawlen',
     'permits.page.fee.permit.validity' => 'Dyddiad dechrau a dod i ben yr hawlen',
     'permits.page.fee.permit.validity.dates' => '%s to %s',
-    'permits.page.fee.number.permits' => 'Hawlenni sydd eu hangen',
+    'permits.page.fee.number.permits.required' => 'Hawlenni sydd eu hangen',
     'permits.page.fee.per-permit' => '%s x %s (fesul trwydded) <a class="govuk-link govuk-!-display-block" href="%s">View Permits</a>',
     'permits.page.fee.number.permits.value' => '%s x %s (fesul trwydded)',
     'permits.page.fee.permit.fee.total' => 'Cyfanswm y ffi cais i\'w dalu',
