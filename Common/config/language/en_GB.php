@@ -3807,6 +3807,8 @@ return [
     'permits.page.accept' => 'Accept',
     'permits.page.accept.and.pay' => 'Accept and pay',
     'permits.page.decline.permits' => 'Decline permits',
+    'permits.page.confirmation.view.download' => 'View and download',
+    'permits.page.confirmation.your.receipt' => 'your receipt',
     'permits.form.declined_permit.error_message' => 'You must select the checkbox to continue',
     'permits.form.declined_permit.label' => 'I confirm that I don\'t want awarded permits.',
     'permits.page.declined_permit.title' => 'Decline awarded permits',
