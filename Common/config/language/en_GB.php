@@ -82,6 +82,8 @@ return [
     'ERR_USERNAME_EXISTS' => 'Username is already taken',
     'ERR_USERNAME_REQUIRED' => 'Username is required',
     'ERR_USER_HAS_OPEN_TASK' => 'The user could not be deleted due to tasks still being open',
+    'ERR_IRHP_GRANT_TOO_MANY_PERMITS' => 'Insufficient permit availability to grant this application',
+    'ERR_IRHP_GRANT_CANNOT_GRANT' => 'This application cannot be granted',
     'FhAdditionalInfo.api.validation.too_short' => 'You selected \'yes\' in one of the provided questions, so the input has to be at least 150 characters long',
     'FhAdditionalInfo.validation.too_short' => 'You selected \'yes\' in one of the provided questions, so the input has to be at least %min% characters long',
     'FhAdditionalInfo.validation.is_empty' => 'You selected \'yes\' in one of the provided questions, so value is required and can\'t be empty',
