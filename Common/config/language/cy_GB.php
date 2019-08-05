@@ -1633,8 +1633,6 @@ return [
     'permits.page.confirmation.irhp-submitted.what-happens-next' => ' Byddwn yn anfon eich hawlen bapur atoch gan ddefnyddio post dosbarth cyntaf, wedi ei gofnodi, o fewn y 3 diwrnod gwaith nesaf.',
     'permits.page.confirmation.reference' => 'Rhif eich cyfeirnod',
     'permits.page.confirmation.finish' => 'Gorffen',
-    'permits.page.confirmation.decline.title' => 'Cais wedi ei Dynnu yn ôl',
-    'permits.page.confirmation.decline.browser.title' => 'Tynnu yn ôl yn Llwyddiannus',
     'permits.button.accept-and-continue' => 'Derbyn a pharhau',
     'permits.button.confirm-and-continue' => 'Cadarnhau a pharhau',
     'permits.button.continue' => 'Pharhau',
