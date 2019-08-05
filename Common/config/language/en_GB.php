@@ -3912,7 +3912,7 @@ return [
 
     'qanda.ecmt-short-term.number-of-permits.question-short' => 'Number of permits required',
     'qanda.ecmt-short-term.number-of-permits.question' => 'How many permits do you require for this licence?',
-    'qanda.ecmt-short-term.number-of-permits.guidance' => '<p>There is a <strong>%s</strong> fee per permit required. This consists of a %s application fee and a %s issue fee. The issue fee is payable if you are granted permits.</p><p>You will need to pay the %s application fee per permit when submitting your application. The application fee is non-refundable.</p><p>You can only use Short-term permits for <strong>30 consecutive days</strong> from the start date you choose, during the calendar year they have been issued.</p>',
+    'qanda.ecmt-short-term.number-of-permits.guidance' => '<p>You will have to pay the <strong>%s non-refundable application fee</strong> per permit when submitting your application.</p><p>If your application is successful, you will have to pay an <strong>additional %s issuing fee</strong> per permit granted.</p>',
     'qanda.ecmt-short-term.number-of-permits.annotation.line-1.2019' => 'Number of permits for November and December %s',
     'qanda.ecmt-short-term.number-of-permits.annotation.line-1.other' => 'Number of permits for %s',
     'qanda.ecmt-short-term.number-of-permits.annotation.line-2' => '%s is the maximum you can apply for this year',
