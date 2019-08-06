@@ -3702,6 +3702,9 @@ return [
     'permits.page.bilateral.countries.question' => 'Select the country you are transporting goods to',
     'permits.page.bilateral.countries.hint' => 'You can apply for permits for all countries you may need for the whole year.',
 
+    'permits.page.irhp-window-closed.title' => 'The application period has now closed',
+    'permits.page.irhp-window-closed.browser.title' => 'The application period has now closed',
+
     'permits.button.accept-and-continue' => 'Accept and continue',
     'permits.button.confirm-and-continue' => 'Confirm and continue',
     'permits.button.continue' => 'Continue',
