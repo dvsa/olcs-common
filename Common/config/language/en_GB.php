@@ -3544,8 +3544,8 @@ return [
     'permits.page.confirmation.withdraw.title' => 'Application Withdrawn',
     'permits.page.confirmation.withdraw.browser.title' => 'Withdrawal Successful',
 
-    'permits.page.confirmation.decline.title' => 'Application Withdrawn',
-    'permits.page.confirmation.decline.browser.title' => 'Withdrawal Successful',
+    'permits.page.confirmation.decline.title' => 'Permits declined',
+    'permits.page.confirmation.decline.browser.title' => 'Permits declined',
 
     'permits.page.confirmation.application-submitted.title' => 'Application submitted',
     'permits.page.confirmation.application-submitted.browser.title' => 'Application submitted',
