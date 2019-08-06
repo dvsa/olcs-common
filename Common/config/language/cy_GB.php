@@ -1630,7 +1630,6 @@ return [
     'permits.page.cancel.question' => 'Canslo cais',
     'permits.page.cancel.browser.title' => 'Canslo Cais',
     'permits.page.cancel.bullet.list.title' => 'Trwy barhau rydych yn cadarnhau bod',
-    'permits.page.confirmation.irhp-submitted.what-happens-next' => ' Byddwn yn anfon eich hawlen bapur atoch gan ddefnyddio post dosbarth cyntaf, wedi ei gofnodi, o fewn y 3 diwrnod gwaith nesaf.',
     'permits.page.confirmation.reference' => 'Rhif eich cyfeirnod',
     'permits.page.confirmation.finish' => 'Gorffen',
     'permits.page.confirmation.decline.title' => 'Cais wedi ei Dynnu yn ôl',
