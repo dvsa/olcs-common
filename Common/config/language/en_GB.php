@@ -3501,7 +3501,7 @@ return [
     'permits.irhp-application.overview.title' => 'Application overview - ',
     'permits.irhp-application.overview.main' => 'Apply for a permit',
     'permits.irhp-application.overview.complete-all-sections' => 'You must complete all of the sections to apply for a new permit.',
-    'permits.irhp-application.overview.further-guidance' => 'Further <a href="{{IRHP_GUIDANCE_LINK}}">guidance on permits</a> is available on GOV.UK.',
+    'permits.irhp-application.overview.further-guidance' => 'Further <a href="{{IRHP_GUIDANCE_LINK}}" target="_blank">guidance on permits</a> is available on GOV.UK.',
     'permits.irhp-application.status.question' => 'Application status',
     'permits.irhp-application.cancel.question' => 'Cancel Application',
 
@@ -3673,7 +3673,7 @@ return [
     'permits.page.irhp-fee.fee-summary' => 'Fee summary',
     'permits.page.irhp-fee.fee-breakdown' => 'Fee breakdown',
     'permits.page.irhp-fee.permit.fee.total' => 'Total fee to be paid',
-    'permits.page.irhp-fee.message' => 'If your permit application is successful, you will have to pay an additional <a href="{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}#fees">issuing fee per permit</a> required.',
+    'permits.page.irhp-fee.message' => 'If your permit application is successful, you will have to pay an additional <a href="{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}#fees" target="_blank">issuing fee per permit</a> required.',
 
     'permits.page.bilateral.no-of-permits.browser.title' => 'For each country, how many permits do you require?',
     'permits.page.bilateral.no-of-permits.maximum-authorised.browser.title' => 'You cannot apply for any more permits for these countries',
@@ -3901,7 +3901,7 @@ return [
     'qanda.ecmt-short-term.permit-usage.question-short' => 'How to use your permits',
     'qanda.ecmt-short-term.permit-usage.question' => 'You can only apply for these permits for cross-trade between two EU countries or transit to non-EU countries',
     'qanda.ecmt-short-term.permit-usage.additional-guidance' => '<p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU or EEA countries, including Switzerland, or if your journey includes more than two cross-trade trips between two EU or EEA countries, within 7 days of leaving the UK.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
-    'qanda.ecmt-short-term.permit-usage.additional-guidance.2019' => '<p>Most journeys won’t need an ECMT permit during 2019. Check on <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}">GOV.UK</a> which permits you may need.</p><p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU/EEA countries, including Switzerland, or if your journey includes more than two onward legs (cross-trade) to other EU/EEA countries.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
+    'qanda.ecmt-short-term.permit-usage.additional-guidance.2019' => '<p>Most journeys won’t need an ECMT permit during 2019. Check on <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">GOV.UK</a> which permits you may need.</p><p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU/EEA countries, including Switzerland, or if your journey includes more than two onward legs (cross-trade) to other EU/EEA countries.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
     'qanda.ecmt-short-term.permit-usage.not-selected-message' => 'You must select an option',
     'qanda.ecmt-short-term-permit-usage.footer-annotation' => 'We may contact you to verify your application.',
 
