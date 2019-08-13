@@ -25,6 +25,7 @@ class FileController extends ZendAbstractActionController
     {
         $identifier = $this->params()->fromRoute('identifier');
         $isInline = (bool)$this->params()->fromQuery('inline');
+        $isSlug = (bool)$this->params()->fromQuery('slug');
 
         if (is_numeric($identifier)) {
             $query = Download::create(
@@ -34,12 +35,12 @@ class FileController extends ZendAbstractActionController
                     'isStream' => true,
                 ]
             );
-
         } else {
             // if not a number then we assume it must be a guide document
             $query = DownloadGuide::create(
                 [
                     'identifier' => base64_decode($identifier),
+                    'isSlug' => $isSlug,
                     'isInline' => $isInline,
                     'isStream' => true,
                 ]

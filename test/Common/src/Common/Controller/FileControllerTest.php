@@ -34,7 +34,8 @@ class FileControllerTest extends TestCase
 
         $this->mockParams
             ->shouldReceive('fromRoute')->once()->with('identifier')->andReturn($id)
-            ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(1);
+            ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(1)
+            ->shouldReceive('fromQuery')->once()->with('slug')->andReturn(0);
 
         $origResponse = new \Zend\Http\Response();
         $origResponse->getHeaders()->addHeaderLine('should', 'not-appear');
@@ -80,7 +81,8 @@ class FileControllerTest extends TestCase
 
         $this->mockParams
             ->shouldReceive('fromRoute')->once()->with('identifier')->andReturn(base64_encode($identifier))
-            ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(0);
+            ->shouldReceive('fromQuery')->once()->with('inline')->andReturn(0)
+            ->shouldReceive('fromQuery')->once()->with('slug')->andReturn(1);
 
         $origResponse = new \Zend\Http\Response();
         $origResponse->getHeaders()->addHeaderLine('should', 'not-appear');
@@ -102,9 +104,10 @@ class FileControllerTest extends TestCase
                 function ($arg) use ($identifier, $mockResp) {
                     static::assertInstanceOf(TransferQry\Document\DownloadGuide::class, $arg);
 
-                    /** @var TransferQry\Document\Download $arg */
+                    /** @var TransferQry\Document\DownloadGuide $arg */
                     static::assertEquals($identifier, $arg->getIdentifier());
                     static::assertFalse($arg->isInline());
+                    static::assertTrue($arg->getIsSlug());
 
                     return $mockResp;
                 }
