@@ -33,11 +33,23 @@ class FeeUrl implements FormatterInterface
         $matchedRouteName = $routeMatch->getMatchedRouteName();
         $query      = $request->getQuery()->toArray();
 
+        // OLCS-24863 - the code below is because of the changes introduced by OLCS-23728
+        // where some routing was changed to '.../table', so the following code "correct" it
+        switch ($matchedRouteName) {
+            case 'licence/irhp-application-fees/table':
+                $matchedRouteName = 'licence/irhp-application-fees';
+                break;
+            case 'licence/irhp-fees/table':
+                $matchedRouteName = 'licence/irhp-fees';
+                break;
+        }
+
         switch ($matchedRouteName) {
             case 'operator/fees':
             case 'licence/bus-fees':
             case 'licence/fees':
             case 'licence/irhp-fees':
+            case 'licence/irhp-application-fees':
             case 'lva-application/fees':
                 $url = $urlHelper->fromRoute(
                     $matchedRouteName.'/fee_action',

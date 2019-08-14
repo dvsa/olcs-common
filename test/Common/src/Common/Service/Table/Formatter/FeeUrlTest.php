@@ -126,6 +126,26 @@ class FeeUrlTest extends MockeryTestCase
                 ['fee' => '99', 'action' => 'edit-fee'],
                 '<a href="the_url">bus reg fee</a>',
             ],
+            'ECMT fee link' => [
+                [
+                    'id' => '99',
+                    'description' => 'ECMT fee',
+                ],
+                'licence/irhp-fees/table',
+                'licence/irhp-fees/fee_action',
+                ['fee' => '99', 'action' => 'edit-fee'],
+                '<a href="the_url">ECMT fee</a>',
+            ],
+            'IRHP fee link' => [
+                [
+                    'id' => '99',
+                    'description' => 'IRHP fee',
+                ],
+                'licence/irhp-application-fees/table',
+                'licence/irhp-application-fees/fee_action',
+                ['fee' => '99', 'action' => 'edit-fee'],
+                '<a href="the_url">IRHP fee</a>',
+            ],
             'misc fee' => [
                 [
                     'id' => '99',
