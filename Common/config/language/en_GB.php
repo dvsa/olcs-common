@@ -2830,6 +2830,7 @@ return [
     'sidebar-applying-for-variation' => 'Applying for a variation',
     'sidebar-variation-advertise-gb' => 'How to advertise your goods application (GB)',
     'sidebar-variation-advertise-ni' => 'How to advertise your goods application (NI)',
+    'sidebar-more-information' => 'More information',
     'sidebar-variation-being-an-operator' => 'Being a goods vehicle operator',
     'sidebar-variation-public-service' => 'PSV (Public Service Vehicle) operator licences',
     'sidebar-variation-safety-and-maintenance' => 'Commercial vehicle safety and maintenance guides',
