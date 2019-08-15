@@ -1,20 +1,16 @@
 <?php
 
 switch ($guide) {
-    case 'advertising-your-operating-centre-gb-var':
-        $identifier = 'Advert_template_GB_Var.pdf';
+    case 'advertising-your-operating-centre-gb-var': // Advert_template_GB_Var.pdf
+    case 'advertising-your-operating-centre-ni-new': // Advert_Template_NI_New.pdf
+    case 'advertising-your-operating-centre-ni-var': // Advert_template_NI_Var.pdf
+        $identifier = $guide;
         break;
-    case 'advertising-your-operating-centre-ni-new':
-        $identifier = 'Advert_Template_NI_New.pdf';
-        break;
-    case 'advertising-your-operating-centre-ni-var':
-        $identifier = 'Advert_template_NI_Var.pdf';
-        break;
-    default:
-        $identifier = 'Advert_Template_GB_New.pdf';
+    default: // Advert_Template_GB_New.pdf
+        $identifier = 'default-guide-oc-advert-gb-new';
 }
 
-$url = $this->url('getfile', ['identifier' => base64_encode($identifier)]);
+$url = $this->url('getfile', ['identifier' => base64_encode($identifier)], ['query' => ['slug' => 1]]);
 
 $this->placeholder('ADVERT_TEMPLATE_LINK')->set($url);
 
