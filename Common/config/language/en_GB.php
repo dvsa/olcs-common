@@ -3880,18 +3880,21 @@ return [
     'permits.check-your-answers.no-of-permits' => '%s permits in %s',
 
     'qanda.ecmt-removal.removal-eligibility.question-short' => 'Removals eligibility',
+    'qanda.ecmt-removal.removal-eligibility.question-summary' => 'Confirm you will only use removal permits for removal operations using specialised equipment and staff',
     'qanda.ecmt-removal.removal-eligibility.question' => 'Confirm you will only use removal permits for removal operations using specialised equipment and staff',
     'qanda.ecmt-removal.removal-eligibility.additional-guidance' => 'You may only use ECMT international removal permits for laden or empty journeys carried out by specialist removal companies to move household goods and business possessions.',
     'qanda.ecmt-removal.removal-eligibility.checkbox.label' => 'I confirm that I will only use an ECMT international removal permit to move household goods or business possessions and that I will use specialised equipment and staff for removal operations.',
     'qanda.ecmt-removal.removal-eligibility.checkbox.not-checked-message' => 'Tick to confirm you will only use your Removal permits to move household goods or business possessions',
 
     'qanda.ecmt-removal.cabotage.question-short' => 'Cabotage',
+    'qanda.ecmt-removal.cabotage.question-summary' => 'Confirm you will not use removal permits to carry out cabotage',
     'qanda.ecmt-removal.cabotage.question' => 'Confirm you will not use removal permits to carry out cabotage',
     'qanda.ecmt-removal.cabotage.additional-guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
     'qanda.ecmt-removal.cabotage.checkbox.label' => 'I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.',
     'qanda.ecmt-removal.cabotage.checkbox.not-checked-message' => 'Tick to confirm your vehicle will not undertake cabotage journeys',
 
     'qanda.ecmt-removal.no-of-permits.question-short' => 'Number of permits required',
+    'qanda.ecmt-removal.no-of-permits.question-summary' => 'How many permits do you require for this licence?',
     'qanda.ecmt-removal.no-of-permits.question' => 'How many permits do you require for this licence?',
     'qanda.ecmt-removal.no-of-permits.guidance' => 'There is an <strong>%s</strong> fee per permit.',
     'qanda.ecmt-removal.no-of-permits.textbox.label' => 'Number of permits',
@@ -3900,6 +3903,7 @@ return [
     'qanda.ecmt-removal.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
 
     'qanda.ecmt-short-term.permit-usage.question-short' => 'How to use your permits',
+    'qanda.ecmt-short-term.permit-usage.question-summary' => 'You can only apply for these permits for cross-trade between two EU countries or transit to non-EU countries',
     'qanda.ecmt-short-term.permit-usage.question' => 'You can only apply for these permits for cross-trade between two EU countries or transit to non-EU countries',
     'qanda.ecmt-short-term.permit-usage.additional-guidance' => '<p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU or EEA countries, including Switzerland, or if your journey includes more than two cross-trade trips between two EU or EEA countries, within 7 days of leaving the UK.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
     'qanda.ecmt-short-term.permit-usage.additional-guidance.2019' => '<p>Most journeys won’t need an ECMT permit during 2019. Check on <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">GOV.UK</a> which permits you may need.</p><p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU or EEA countries, including Switzerland, or if your journey includes more than two cross-trade trips between two EU or EEA countries, within 7 days of leaving the UK.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
@@ -3907,24 +3911,28 @@ return [
     'qanda.ecmt-short-term-permit-usage.footer-annotation' => 'We may contact you to verify your application.',
 
     'qanda.ecmt-short-term.cabotage.question-short' => 'Cabotage',
+    'qanda.ecmt-short-term.cabotage.question-summary' => 'Short-term ECMT permits do not allow you to carry out cabotage',
     'qanda.ecmt-short-term.cabotage.question' => 'Short-term ECMT permits do not allow you to carry out cabotage',
     'qanda.ecmt-short-term.cabotage.additional-guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
     'qanda.ecmt-short-term.cabotage.checkbox.label' => 'I confirm that I will not undertake cabotage journeys using this type of permit.',
     'qanda.ecmt-short-term.cabotage.checkbox.not-checked-message' => 'Tick to confirm your vehicle will not undertake cabotage journeys.',
 
     'qanda.ecmt-short-term.certificates.question-short' => 'Certificates required',
+    'qanda.ecmt-short-term.certificates.question-summary' => 'Mandatory ECMT certificates for vehicles and trailers you intend to use',
     'qanda.ecmt-short-term.certificates.question' => 'Mandatory ECMT certificates for vehicles and trailers you intend to use',
     'qanda.ecmt-short-term.certificates.additional-guidance' => '<p>If your permit application is successful, you are required to have the appropriate ECMT <b>Certificate of Compliance</b> and <b>Certificate of Roadworthiness</b> for each vehicle and trailer you intend to use.</p><p>You must carry the certificates that match your vehicle and trailer, for the whole of your journey.</p><p>If you don\'t already have them, <a href="{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}#rules-for-using-the-permits" target="_blank">find out how to get the certificates (opens in new window)</a>.</p>',
     'qanda.ecmt-short-term.certificates.checkbox.label' => 'I understand that I must obtain and carry the appropriate ECMT Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer I intend to use with this permit.',
     'qanda.ecmt-short-term.certificates.checkbox.not-checked-message' => 'Tick to confirm you understand that each vehicle and trailer must have the matching certificates.',
     
     'qanda.ecmt-short-term.emissions.question-short' => 'Euro emission standards',
+    'qanda.ecmt-short-term.emissions.question-summary' => 'You must only use the appropriate Euro emission standards vehicles that the permit allows',
     'qanda.ecmt-short-term.emissions.question' => 'You must only use the appropriate Euro emission standards vehicles that the permit allows',
     'qanda.ecmt-short-term.emissions.additional-guidance' => '<p>If you transport goods using an ECMT permit, the vehicles you intend to use must meet and comply with the minimum Euro emission standards that the permit allocated to you allows.</p><p>This includes any vehicles you currently own or lease, or are intending to buy or lease in the future.</p>',
     'qanda.ecmt-short-term.emissions.checkbox.label' => 'I confirm that I will only use my ECMT permits with vehicles that are environmentally compliant with the minimum Euro emissions standards that the permit allows.',
     'qanda.ecmt-short-term.emissions.checkbox.not-checked-message' => 'Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.',
 
     'qanda.ecmt-short-term.number-of-permits.question-short' => 'Number of permits required',
+    'qanda.ecmt-short-term.number-of-permits.question-summary' => 'How many permits do you require for this licence?',
     'qanda.ecmt-short-term.number-of-permits.question' => 'How many permits do you require for this licence?',
     'qanda.ecmt-short-term.number-of-permits.guidance' => '<p>You will have to pay the <strong>%s non-refundable application fee</strong> per permit when submitting your application.</p><p>If your application is successful, you will have to pay an <strong>additional %s issuing fee</strong> per permit granted.</p>',
     'qanda.ecmt-short-term.number-of-permits.annotation.line-1.2019' => 'Number of permits for November and December %s',
