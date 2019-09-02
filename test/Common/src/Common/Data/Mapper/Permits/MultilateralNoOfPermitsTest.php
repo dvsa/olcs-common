@@ -2,12 +2,12 @@
 
 namespace PermitsTest\Data\Mapper\Permits;
 
-use Common\Form\Form;
+use Common\Data\Mapper\Permits\MultilateralNoOfPermits;
 use Common\Form\Elements\Custom\NoOfPermits as NoOfPermitsElement;
 use Common\Form\Elements\Types\Html as HtmlElement;
-use Common\Data\Mapper\Permits\MultilateralNoOfPermits;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
+use Common\Form\Form;
 use Common\Service\Helper\TranslationHelperService;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use RuntimeException;
 use Zend\Form\Element\Submit;
@@ -19,6 +19,10 @@ use Zend\Form\Fieldset;
 class MultilateralNoOfPermitsTest extends TestCase
 {
     private $form;
+
+    private $translationHelperService;
+
+    private $multilateralNoOfPermits;
 
     public function setUp()
     {
@@ -36,6 +40,9 @@ class MultilateralNoOfPermitsTest extends TestCase
 
         $this->form = new Form();
         $this->form->add($submitFieldset);
+
+        $this->translationHelperService = m::mock(TranslationHelperService::class);
+        $this->multilateralNoOfPermits = new MultilateralNoOfPermits($this->translationHelperService);
     }
 
     public function testMapForFormOptions()
@@ -57,79 +64,77 @@ class MultilateralNoOfPermitsTest extends TestCase
 
         $for2021Html = 'Number of permits for 2021<br>You cannot request any more permits. All 12 have been issued.';
 
-        $translationHelperService = m::mock(TranslationHelperService::class);
-
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.guidance',
                 [12]
             )
             ->andReturn($translatedGuidanceText);
 
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.no-of-permits.multiple-issued',
                 [4, 8]
             )
             ->andReturn($for2018Hint);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.no-of-permits.one-issued',
                 [11]
             )
             ->andReturn($for2019Hint);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.no-of-permits.none-issued',
                 [12]
             )
             ->andReturn($for2020Hint);
 
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.all-issued',
                 [2021, 12]
             )
             ->andReturn($for2021Html);
 
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.for-year',
                 [2018]
             )
             ->andReturn($label2018Html);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.for-year',
                 [2019]
             )
             ->andReturn($label2019Html);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.for-year',
                 [2020]
             )
             ->andReturn($label2020Html);
 
-        $translationHelperService->shouldReceive('translate')
+        $this->translationHelperService->shouldReceive('translate')
             ->with('permits.page.multilateral.no-of-permits.permit-fees')
             ->andReturn('Permit fees:');
 
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.fee-per-year',
                 [100, 2020]
             )
             ->andReturn('<strong>£100</strong> per permit required for use in 2020.');
 
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.fee-per-year',
                 [133, 2019]
             )
             ->andReturn('<strong>£133</strong> per permit required for use in 2019.');
 
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.fee-per-year',
                 [166, 2018]
@@ -207,10 +212,9 @@ class MultilateralNoOfPermitsTest extends TestCase
             ],
         ];
 
-        $data = MultilateralNoOfPermits::mapForFormOptions(
+        $data = $this->multilateralNoOfPermits->mapForFormOptions(
             $data,
             $form,
-            $translationHelperService,
             'application',
             'maxPermitsByStock',
             'feePerPermit'
@@ -310,28 +314,26 @@ class MultilateralNoOfPermitsTest extends TestCase
         $for2019Html = 'Number of permits for 2019<br>You cannot request any more permits. All 12 have been issued.';
         $for2020Html = 'Number of permits for 2020<br>You cannot request any more permits. All 12 have been issued.';
 
-        $translationHelperService = m::mock(TranslationHelperService::class);
-
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.guidance',
                 [12]
             )
             ->andReturn($translatedGuidanceText);
 
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.all-issued',
                 [2018, 12]
             )
             ->andReturn($for2018Html);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.all-issued',
                 [2019, 12]
             )
             ->andReturn($for2019Html);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.multilateral.no-of-permits.all-issued',
                 [2020, 12]
@@ -391,10 +393,9 @@ class MultilateralNoOfPermitsTest extends TestCase
             ],
         ];
 
-        $data = MultilateralNoOfPermits::mapForFormOptions(
+        $data = $this->multilateralNoOfPermits->mapForFormOptions(
             $data,
             $form,
-            $translationHelperService,
             'application',
             'maxPermitsByStock',
             'feePerPermit'
@@ -477,12 +478,10 @@ class MultilateralNoOfPermitsTest extends TestCase
         ];
 
         $form = new Form();
-        $translationHelperService = m::mock(TranslationHelperService::class);
 
-        $data = MultilateralNoOfPermits::mapForFormOptions(
+        $data = $this->multilateralNoOfPermits->mapForFormOptions(
             $data,
             $form,
-            $translationHelperService,
             'application',
             'maxPermitsByStock',
             'feePerPermit'

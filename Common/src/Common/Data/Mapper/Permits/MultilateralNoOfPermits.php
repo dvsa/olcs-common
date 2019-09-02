@@ -14,9 +14,20 @@ class MultilateralNoOfPermits extends AbstractNoOfPermits
     const PERMIT_TYPE_ID = RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID;
     const TRANSLATION_KEY_PERMIT_TYPE = 'multilateral';
 
-    protected static function populatePermitsRequiredFieldset(
+    /**
+     * Create service instance
+     *
+     * @param TranslationHelperService $translator
+     *
+     * @return MultilateralNoOfPermits
+     */
+    public function __construct(TranslationHelperService $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    protected function populatePermitsRequiredFieldset(
         Fieldset $permitsRequiredFieldset,
-        TranslationHelperService $translator,
         array $irhpPermitApplications,
         array $maxPermitsByStock,
         $totAuthVehicles
@@ -41,15 +52,14 @@ class MultilateralNoOfPermits extends AbstractNoOfPermits
 
         ksort($formElements);
 
-        self::populateYearFieldset($permitsRequiredFieldset, $formElements, $translator);
+        $this->populateYearFieldset($permitsRequiredFieldset, $formElements);
     }
 
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected static function postProcessData(
+    protected function postProcessData(
         array $data,
-        TranslationHelperService $translator,
         $irhpApplicationDataKey,
         $feePerPermitDataKey,
         $maxPermitsByStockDataKey
@@ -58,11 +68,10 @@ class MultilateralNoOfPermits extends AbstractNoOfPermits
         $data['question'] = 'permits.page.multilateral.no-of-permits.question';
 
         if (isset($data[$feePerPermitDataKey])) {
-            $guidanceLines = static::generateGuidanceLines(
+            $guidanceLines = $this->generateGuidanceLines(
                 $data[$feePerPermitDataKey],
                 $data[$irhpApplicationDataKey]['irhpPermitApplications'],
-                $data[$maxPermitsByStockDataKey]['result'],
-                $translator
+                $data[$maxPermitsByStockDataKey]['result']
             );
 
             $data['guidance'] = [
@@ -81,15 +90,13 @@ class MultilateralNoOfPermits extends AbstractNoOfPermits
      * @param array $feesPerPermit
      * @param array $irhpPermitApplications
      * @param array $maxPermitsByStock
-     * @param TranslationHelperService $translator
      *
      * @return array
      */
-    protected static function generateGuidanceLines(
+    protected function generateGuidanceLines(
         array $feesPerPermit,
         array $irhpPermitApplications,
-        array $maxPermitsByStock,
-        TranslationHelperService $translator
+        array $maxPermitsByStock
     ) {
         $guidanceItems = [];
         foreach ($irhpPermitApplications as $irhpPermitApplication) {
@@ -106,10 +113,10 @@ class MultilateralNoOfPermits extends AbstractNoOfPermits
 
         $guidanceLines = [];
         if (count($guidanceItems) > 0) {
-            $guidanceLines [] = $translator->translate('permits.page.multilateral.no-of-permits.permit-fees');
+            $guidanceLines [] = $this->translator->translate('permits.page.multilateral.no-of-permits.permit-fees');
 
             foreach ($guidanceItems as $validFromYear => $feePerPermit) {
-                $guidanceLines[] = $translator->translateReplace(
+                $guidanceLines[] = $this->translator->translateReplace(
                     'permits.page.multilateral.no-of-permits.fee-per-year',
                     [$feePerPermit, $validFromYear]
                 );
@@ -119,7 +126,7 @@ class MultilateralNoOfPermits extends AbstractNoOfPermits
         return $guidanceLines;
     }
 
-    protected static function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset)
+    protected function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset)
     {
         $submitFieldset->remove('SubmitButton');
     }

@@ -83,12 +83,12 @@ class SurrenderSection
                 $questions = $this->createDiscSection($discInformation);
                 break;
             case self::OPERATORLICENCE_SECTION:
-                $operatorLicence = OperatorLicence::mapFromResult($this->data['surrender']);
+                $operatorLicence = (new OperatorLicence())->mapFromResult($this->data['surrender']);
                 $data['operatorLicenceDocument'] = $operatorLicence;
                 $questions = $this->createDocumentQuestions($data);
                 break;
             case self::COMMUNITYLICENCE_SECTION:
-                $data['communityLicenceDocument'] = CommunityLicence::mapFromResult($this->data['surrender']);
+                $data['communityLicenceDocument'] = (new CommunityLicence())->mapFromResult($this->data['surrender']);
                 $questions = $this->createDocumentQuestions($data);
                 break;
         }

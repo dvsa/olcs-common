@@ -8,6 +8,13 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class OperatorLicenceTest extends MockeryTestCase
 {
+    private $operatorLicence;
+
+    public function setUp()
+    {
+        $this->operatorLicence = new OperatorLicence();
+    }
+
     /**
      * @dataProvider dpTestMapFromForm
      */
@@ -15,7 +22,7 @@ class OperatorLicenceTest extends MockeryTestCase
     {
         static::assertEquals(
             $mappedData,
-            OperatorLicence::mapFromForm($formData)
+            $this->operatorLicence->mapFromForm($formData)
         );
     }
 
@@ -26,7 +33,7 @@ class OperatorLicenceTest extends MockeryTestCase
     {
         static::assertEquals(
             $mappedApiData,
-            OperatorLicence::mapFromResult($apiData)
+            $this->operatorLicence->mapFromResult($apiData)
         );
     }
 
