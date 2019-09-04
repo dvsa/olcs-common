@@ -3898,10 +3898,10 @@ return [
     'qanda.ecmt-removal.no-of-permits.error.enter-permits-required' => 'Enter the number of permits you require',
     'qanda.ecmt-removal.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
 
-    'qanda.ecmt-short-term.permit-usage.question-short' => 'How to use your permits',
-    'qanda.ecmt-short-term.permit-usage.question' => 'You can only apply for these permits for cross-trade between two EU countries or transit to non-EU countries',
+    'qanda.ecmt-short-term.permit-usage.question-short' => 'How will you use the permits',
+    'qanda.ecmt-short-term.permit-usage.question' => 'How will you use your Short-term ECMT permits?',
     'qanda.ecmt-short-term.permit-usage.additional-guidance' => '<p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU or EEA countries, including Switzerland, or if your journey includes more than two cross-trade trips between two EU or EEA countries, within 7 days of leaving the UK.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
-    'qanda.ecmt-short-term.permit-usage.additional-guidance.2019' => '<p>Most journeys won’t need an ECMT permit during 2019. Check on <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">GOV.UK</a> which permits you may need.</p><p>Short-term ECMT permits are only required when transiting through EU or EEA countries to non-EU or EEA countries, including Switzerland, or if your journey includes more than two cross-trade trips between two EU or EEA countries, within 7 days of leaving the UK.</p><p>You must fill in the permit logbook with full details of the entire journey.</p><p>Confirm how you will be using short term permits:</p>',
+    'qanda.ecmt-short-term.permit-usage.additional-guidance.2019' => '<p>Most journeys won’t need an ECMT permit during 2019. Check which permits you may need on <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">GOV.UK</a> (opens in new window).</p><p>Short-term ECMT permits are only required for:</p><ul class="govuk-list govuk-list--bullet"><li>transiting through EU or EEA countries to non-EU or EEA countries who are ECMT members, including Switzerland</li><li>or if your journey includes more than two cross-trade trips between two EU or EEA countries, within 7 days of leaving the UK</li></ul><p>Confirm how you will be using short term permits:</p>',
     'qanda.ecmt-short-term.permit-usage.not-selected-message' => 'You must select an option',
     'qanda.ecmt-short-term-permit-usage.footer-annotation' => 'We may contact you to verify your application.',
 
@@ -3913,7 +3913,7 @@ return [
 
     'qanda.ecmt-short-term.certificates.question-short' => 'Certificates required',
     'qanda.ecmt-short-term.certificates.question' => 'Mandatory ECMT certificates for vehicles and trailers you intend to use',
-    'qanda.ecmt-short-term.certificates.additional-guidance' => '<p>If your permit application is successful, you are required to have the appropriate ECMT <b>Certificate of Compliance</b> and <b>Certificate of Roadworthiness</b> for each vehicle and trailer you intend to use.</p><p>You must carry the certificates that match your vehicle and trailer, for the whole of your journey.</p><p>If you don\'t already have them, <a href="{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}#rules-for-using-the-permits" target="_blank">find out how to get the certificates (opens in new window)</a>.</p>',
+    'qanda.ecmt-short-term.certificates.additional-guidance' => '<p>If your permit application is successful, you are required to have the appropriate ECMT <b>Certificate of Compliance</b> and <b>Certificate of Roadworthiness</b> for each vehicle and trailer you intend to use.</p><p>You must carry the certificates that match your vehicle and trailer, for the whole of your journey.</p><p>If you don\'t already have them, <a href="{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}#rules-for-using-the-permits" target="_blank">find out how to get the certificates</a> (opens in new window).</p>',
     'qanda.ecmt-short-term.certificates.checkbox.label' => 'I understand that I must obtain and carry the appropriate ECMT Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer I intend to use with this permit.',
     'qanda.ecmt-short-term.certificates.checkbox.not-checked-message' => 'Tick to confirm you understand that each vehicle and trailer must have the matching certificates.',
     
