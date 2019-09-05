@@ -75,13 +75,22 @@ class LicencePermitReference implements FormatterInterface
         ];
         $linkText = $row['applicationRef'];
 
-        if ($route === 'valid') {
-            // specific for valid IRHP application
-            $params = [
-                'licence' => $row['licenceId'],
-                'type' => $row['typeId'],
-            ];
-            $linkText = $row['licNo'];
+        switch ($route) {
+            case 'valid':
+                // specific for valid IRHP application
+                $params = [
+                    'licence' => $row['licenceId'],
+                    'type' => $row['typeId'],
+                ];
+                $linkText = $row['licNo'];
+                break;
+            case 'ecmt-valid-permits':
+                // specific for valid ECMT application
+                $params = [
+                    'licence' => $row['licenceId'],
+                ];
+                $linkText = $row['licNo'];
+                break;
         }
 
         return isset($route)

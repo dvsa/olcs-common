@@ -32,8 +32,8 @@ class LicencePermitReferenceTest extends MockeryTestCase
             ->with('permits/ecmt-awaiting-fee', ['id' => 7])
             ->andReturn('http://selfserve/permits/ecmt-awaiting-fee/7')
             ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-valid-permits', ['id' => 9])
-            ->andReturn('http://selfserve/permits/ecmt-valid-permits/9')
+            ->with('permits/ecmt-valid-permits', ['licence' => 200])
+            ->andReturn('http://selfserve/permits/ecmt-valid-permits/200')
             ->shouldReceive('fromRoute')
             ->with('permits/application', ['id' => 100])
             ->andReturn('http://selfserve/permits/application/100')
@@ -126,8 +126,8 @@ class LicencePermitReferenceTest extends MockeryTestCase
                     'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
                     'statusId' => RefData::PERMIT_APP_STATUS_VALID,
                 ],
-                '<a class="overview__link" href="http://selfserve/permits/ecmt-valid-permits/9">' .
-                    '<span class="overview__link--underline">ECMT&gt;4567890</span></a>'
+                '<a class="overview__link" href="http://selfserve/permits/ecmt-valid-permits/200">' .
+                    '<span class="overview__link--underline">ECMT&gt;</span></a>'
             ],
             'ECMT Short Term app - not yet submitted' => [
                 [

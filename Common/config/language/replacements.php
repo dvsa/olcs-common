@@ -38,6 +38,10 @@ return [
     '{{ESSENTIALS_ROAD_HAULAGE}}' => 'https://www.gov.uk/guidance/the-essentials-of-international-road-haulage',
     '{{IRHP_GUIDANCE_LINK}}' =>
         'https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage',
+    '{{ECMT_RULES_FOR_USING_PERMITS_GUIDANCE_LINK}}' =>
+        'https://www.gov.uk/guidance/ecmt-international-road-haulage-permits#rules-for-using-the-permits',
+    '{{ECMT_FEES_FOR_PERMITS_GUIDANCE_LINK}}' =>
+        'https://www.gov.uk/guidance/ecmt-international-road-haulage-permits#fees',
     '{{IRHP_REMOVAL_GUIDANCE_LINK}}' => 'https://www.gov.uk/guidance/international-road-haulage-removal-permits',
     '{{SHORT_TERM_ECMT_EMAIL}}' => 'shorttermecmt@dvsa.gov.uk',
 

@@ -23,7 +23,12 @@ class IrhpPermitTypeWithValidityDate implements FormatterInterface
     {
         $value = $data[$column['name']];
 
-        if (($data['typeId'] == RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID) && !empty($data['stockValidTo'])) {
+        $validityYearTypeIds = [
+            RefData::ECMT_PERMIT_TYPE_ID,
+            RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
+        ];
+
+        if (in_array($data['typeId'], $validityYearTypeIds) && !empty($data['stockValidTo'])) {
             $date = Date::format(
                 $data,
                 [
