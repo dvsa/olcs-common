@@ -3505,6 +3505,7 @@ return [
     'permits.irhp-application.status.question' => 'Application status',
     'permits.irhp-application.cancel.question' => 'Cancel Application',
 
+    'permits.application.browser.title.error' => 'Error',
     'permits.application.overview.main-title' => 'Application Overview-',
     'permits.application.ineligible' => 'You are not eligible for permits',
     'permits.application.overview.browser.title' => 'Application overview',
