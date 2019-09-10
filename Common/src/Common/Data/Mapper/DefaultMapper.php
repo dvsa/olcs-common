@@ -7,7 +7,7 @@ use Zend\Form\FormInterface;
 /**
  * Default data mapper
  */
-class DefaultMapper implements MapperInterface
+class DefaultMapper
 {
     /**
      * Should map data from a result array into an array suitable for a form
@@ -16,7 +16,7 @@ class DefaultMapper implements MapperInterface
      *
      * @return array
      */
-    public static function mapFromResult(array $data): array
+    public function mapFromResult(array $data): array
     {
         return ['fields' => $data];
     }
@@ -28,7 +28,7 @@ class DefaultMapper implements MapperInterface
      *
      * @return array
      */
-    public static function mapFromForm(array $data): array
+    public function mapFromForm(array $data): array
     {
         return $data['fields'];
     }
@@ -42,7 +42,7 @@ class DefaultMapper implements MapperInterface
      *
      * @return array
      */
-    public static function mapFromErrors(FormInterface $form, array $errors): array
+    public function mapFromErrors(FormInterface $form, array $errors): array
     {
         return $errors;
     }

@@ -7,6 +7,12 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class CommunityLicenceTest extends MockeryTestCase
 {
+    private $communityLicence;
+
+    public function setUp()
+    {
+        $this->communityLicence = new CommunityLicence();
+    }
 
     /**
      * @dataProvider resultData
@@ -18,7 +24,7 @@ class CommunityLicenceTest extends MockeryTestCase
     {
         static::assertEquals(
             $formData,
-            CommunityLicence::mapFromResult($apiData)
+            $this->communityLicence->mapFromResult($apiData)
         );
     }
 
@@ -33,7 +39,7 @@ class CommunityLicenceTest extends MockeryTestCase
 
         static::assertEquals(
             $apiData,
-            CommunityLicence::mapFromForm($formData)
+            $this->communityLicence->mapFromForm($formData)
         );
     }
 

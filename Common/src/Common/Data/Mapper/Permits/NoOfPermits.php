@@ -3,7 +3,6 @@
 namespace Common\Data\Mapper\Permits;
 
 use Common\RefData;
-use Common\Service\Helper\TranslationHelperService;
 use RuntimeException;
 
 /**
@@ -11,47 +10,52 @@ use RuntimeException;
  */
 class NoOfPermits
 {
+    /** @var array */
+    private $mappings = [];
+
     /**
      * @param array $data
-     * @param $form
-     * @param TranslationHelperService $translator
+     * @param mixed $form
      * @param string $irhpApplicationDataKey
      * @param string $maxPermitsByStockDataKey
      * @param string $feePerPermitDataKey
      *
      * @return array
+     *
+     * @throws RuntimeException
      */
-    public static function mapForFormOptions(
+    public function mapForFormOptions(
         array $data,
         $form,
-        TranslationHelperService $translator,
         $irhpApplicationDataKey,
         $maxPermitsByStockDataKey,
         $feePerPermitDataKey
     ) {
         $permitTypeId = $data[$irhpApplicationDataKey]['irhpPermitType']['id'];
 
-        switch ($permitTypeId) {
-            case RefData::IRHP_BILATERAL_PERMIT_TYPE_ID:
-                return BilateralNoOfPermits::mapForFormOptions(
-                    $data,
-                    $form,
-                    $translator,
-                    $irhpApplicationDataKey,
-                    $maxPermitsByStockDataKey,
-                    $feePerPermitDataKey
-                );
-            case RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID:
-                return MultilateralNoOfPermits::mapForFormOptions(
-                    $data,
-                    $form,
-                    $translator,
-                    $irhpApplicationDataKey,
-                    $maxPermitsByStockDataKey,
-                    $feePerPermitDataKey
-                );
-            default:
-                throw new RuntimeException('Unsupported permit type ' . $permitTypeId);
+        if (!isset($this->mappings[$permitTypeId])) {
+            throw new RuntimeException('Unsupported permit type ' . $permitTypeId);
         }
+
+        $mapper = $this->mappings[$permitTypeId];
+
+        return $mapper->mapForFormOptions(
+            $data,
+            $form,
+            $irhpApplicationDataKey,
+            $maxPermitsByStockDataKey,
+            $feePerPermitDataKey
+        );
+    }
+
+    /**
+     * Register a mapper class against a permit type
+     *
+     * @param int $permitTypeId
+     * @param mixed $mapper
+     */
+    public function registerMapper($permitTypeId, $mapper)
+    {
+        $this->mappings[$permitTypeId] = $mapper;
     }
 }

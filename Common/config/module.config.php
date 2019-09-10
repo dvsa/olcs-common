@@ -5,6 +5,8 @@ use Common\FormService\Form\Lva as LvaFormService;
 use Common\FormService\Form\Continuation as ContinuationFormService;
 use Common\Form\View\Helper\Readonly as ReadonlyFormHelper;
 use Common\Service\Qa as QaService;
+use Common\Data\Mapper\Permits as PermitsMapper;
+use Common\Data\Mapper\Licence\Surrender as SurrenderMapper;
 
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
@@ -197,6 +199,10 @@ return array(
             'QaRadioFactory' => QaService\RadioFactory::class,
             'QaFieldsetFactory' => QaService\FieldsetFactory::class,
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
+
+            Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
+            SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
+            SurrenderMapper\CommunityLicence::class => SurrenderMapper\CommunityLicence::class,
         ),
         'factories' => array(
             'CommandSender' => \Common\Service\Cqrs\Command\CommandSender::class,
@@ -252,6 +258,10 @@ return array(
                 QaService\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulatorFactory::class,
             'QaEcmtShortTermPermitUsageFieldsetPopulator' =>
                 QaService\Custom\EcmtShortTerm\PermitUsageFieldsetPopulatorFactory::class,
+    
+            PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
+            PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,
+            PermitsMapper\MultilateralNoOfPermits::class => PermitsMapper\MultilateralNoOfPermitsFactory::class,
         )
     ),
     /*'search' => [

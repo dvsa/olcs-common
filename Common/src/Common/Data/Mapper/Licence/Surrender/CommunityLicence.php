@@ -3,10 +3,9 @@
 
 namespace Common\Data\Mapper\Licence\Surrender;
 
-use Common\Data\Mapper\MapperInterface;
 use Common\RefData;
 
-class CommunityLicence implements MapperInterface
+class CommunityLicence
 {
     /**
      * Map data from form to DTO
@@ -15,7 +14,7 @@ class CommunityLicence implements MapperInterface
      *
      * @return array
      */
-    public static function mapFromForm(array $formData): array
+    public function mapFromForm(array $formData): array
     {
         $mappedData = [
             'possession' => [
@@ -34,7 +33,7 @@ class CommunityLicence implements MapperInterface
         return $mappedData[$formData['communityLicenceDocument']['communityLicenceDocument']];
     }
 
-    public static function mapFromResult(array $data)
+    public function mapFromResult(array $data)
     {
         $licenceDocumentStatus = $data["communityLicenceDocumentStatus"]["id"] ?? null;
 

@@ -15,14 +15,25 @@ class BilateralNoOfPermits extends AbstractNoOfPermits
     const PERMIT_TYPE_ID = RefData::IRHP_BILATERAL_PERMIT_TYPE_ID;
     const TRANSLATION_KEY_PERMIT_TYPE = 'bilateral';
 
-    protected static function populatePermitsRequiredFieldset(
+    /**
+     * Create service instance
+     *
+     * @param TranslationHelperService $translator
+     *
+     * @return BilateralNoOfPermits
+     */
+    public function __construct(TranslationHelperService $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    protected function populatePermitsRequiredFieldset(
         Fieldset $permitsRequiredFieldset,
-        TranslationHelperService $translator,
         array $irhpPermitApplications,
         array $maxPermitsByStock,
         $totAuthVehicles
     ) {
-        $formElements = self::generateFormElementData(
+        $formElements = $this->generateFormElementData(
             $irhpPermitApplications,
             $maxPermitsByStock,
             $totAuthVehicles
@@ -30,14 +41,13 @@ class BilateralNoOfPermits extends AbstractNoOfPermits
 
         foreach ($formElements as $formElement) {
             $permitsRequiredFieldset->add(
-                self::createCountryFieldset($formElement, $translator)
+                $this->createCountryFieldset($formElement)
             );
         }
     }
 
-    protected static function postProcessData(
+    protected function postProcessData(
         array $data,
-        TranslationHelperService $translator,
         $irhpApplicationDataKey,
         $feePerPermitDataKey,
         $maxPermitsByStockDataKey
@@ -49,7 +59,7 @@ class BilateralNoOfPermits extends AbstractNoOfPermits
             $feePerPermit = $data[$feePerPermitDataKey];
             $firstFeePerPermitKey = array_keys($feePerPermit)[0];
 
-            $guidanceValue = $translator->translateReplace(
+            $guidanceValue = $this->translator->translateReplace(
                 'permits.page.bilateral.no-of-permits.guidance',
                 [
                     $data[$irhpApplicationDataKey]['licence']['totAuthVehicles'],
@@ -76,7 +86,7 @@ class BilateralNoOfPermits extends AbstractNoOfPermits
      *
      * @return array
      */
-    private static function generateFormElementData(
+    private function generateFormElementData(
         array $irhpPermitApplications,
         array $maxPermitsByStock,
         $totAuthVehicles
@@ -132,18 +142,17 @@ class BilateralNoOfPermits extends AbstractNoOfPermits
      * Creates and returns a Fieldset object corresponding to the provided country data
      *
      * @param array $country
-     * @param TranslationHelperService $translator
      *
      * @return Fieldset
      */
-    private static function createCountryFieldset(array $country, TranslationHelperService $translator): Fieldset
+    private function createCountryFieldset(array $country): Fieldset
     {
         $countryId = $country['id'];
         $countryName = $country['name'];
         $elementName = $countryId;
 
         $fieldset = new Fieldset($elementName, ['label' => $countryName]);
-        self::populateYearFieldset($fieldset, $country['years'], $translator, static::TRANSLATION_KEY_PERMIT_TYPE);
+        $this->populateYearFieldset($fieldset, $country['years'], static::TRANSLATION_KEY_PERMIT_TYPE);
 
         $horizontalRule = new Html($country['id'] . 'horizontalrule');
         $horizontalRule->setValue('<hr class="govuk-section-break govuk-section-break--visible">');
@@ -152,7 +161,7 @@ class BilateralNoOfPermits extends AbstractNoOfPermits
         return $fieldset;
     }
 
-    protected static function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset)
+    protected function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset)
     {
         $submitFieldsetElements = $submitFieldset->getElements();
         $submitButtonElement = $submitFieldsetElements['SubmitButton'];

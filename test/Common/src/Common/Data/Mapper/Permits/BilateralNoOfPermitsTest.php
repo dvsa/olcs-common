@@ -2,12 +2,12 @@
 
 namespace PermitsTest\Data\Mapper\Permits;
 
-use Common\Form\Form;
+use Common\Data\Mapper\Permits\BilateralNoOfPermits;
 use Common\Form\Elements\Custom\NoOfPermits as NoOfPermitsElement;
 use Common\Form\Elements\Types\Html as HtmlElement;
-use Common\Data\Mapper\Permits\BilateralNoOfPermits;
-use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
+use Common\Form\Form;
 use Common\Service\Helper\TranslationHelperService;
+use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
 use RuntimeException;
 use Zend\Form\Element\Submit;
@@ -19,6 +19,10 @@ use Zend\Form\Fieldset;
 class BilateralNoOfPermitsTest extends TestCase
 {
     private $form;
+
+    private $translationHelperService;
+
+    private $bilateralNoOfPermits;
 
     public function setUp()
     {
@@ -36,6 +40,9 @@ class BilateralNoOfPermitsTest extends TestCase
 
         $this->form = new Form();
         $this->form->add($submitFieldset);
+
+        $this->translationHelperService = m::mock(TranslationHelperService::class);
+        $this->bilateralNoOfPermits = new BilateralNoOfPermits($this->translationHelperService);
     }
 
     public function testMapForFormOptions()
@@ -54,51 +61,50 @@ class BilateralNoOfPermitsTest extends TestCase
 
         $feePerPermit = 65;
 
-        $translationHelperService = m::mock(TranslationHelperService::class);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.guidance',
                 [12, $feePerPermit]
             )
             ->andReturn($translatedGuidanceText);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.no-of-permits.none-issued',
                 [12]
             )
             ->andReturn($italy2020Hint);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.no-of-permits.one-issued',
                 [11]
             )
             ->andReturn($italy2019Hint);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.no-of-permits.multiple-issued',
                 [4, 8]
             )
             ->andReturn($france2018Hint);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.all-issued',
                 [2019, 12]
             )
             ->andReturn($france2019Html);
 
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.for-year',
                 [2018]
             )
             ->andReturn($for2018Html);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.for-year',
                 [2019]
             )
             ->andReturn($for2019Html);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.for-year',
                 [2020]
@@ -188,10 +194,9 @@ class BilateralNoOfPermitsTest extends TestCase
             ],
         ];
 
-        $data = BilateralNoOfPermits::mapForFormOptions(
+        $data = $this->bilateralNoOfPermits->mapForFormOptions(
             $data,
             $form,
-            $translationHelperService,
             'application',
             'maxPermitsByStock',
             'feePerPermit'
@@ -332,27 +337,25 @@ class BilateralNoOfPermitsTest extends TestCase
         $html2019 = 'for 2019<br>You cannot request any more permits. All 12 have been issued.';
         $html2020 = 'for 2020<br>You cannot request any more permits. All 12 have been issued.';
 
-        $translationHelperService = m::mock(TranslationHelperService::class);
-
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.guidance',
                 [12, $feePerPermit]
             )
             ->andReturn($translatedGuidanceText);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.all-issued',
                 [2018, 12]
             )
             ->andReturn($html2018);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.all-issued',
                 [2019, 12]
             )
             ->andReturn($html2019);
-        $translationHelperService->shouldReceive('translateReplace')
+        $this->translationHelperService->shouldReceive('translateReplace')
             ->with(
                 'permits.page.bilateral.no-of-permits.all-issued',
                 [2020, 12]
@@ -444,10 +447,9 @@ class BilateralNoOfPermitsTest extends TestCase
             'question' => 'permits.page.bilateral.no-of-permits.question',
         ];
 
-        $data = BilateralNoOfPermits::mapForFormOptions(
+        $data = $this->bilateralNoOfPermits->mapForFormOptions(
             $data,
             $form,
-            $translationHelperService,
             'application',
             'maxPermitsByStock',
             'feePerPermit'
@@ -568,12 +570,10 @@ class BilateralNoOfPermitsTest extends TestCase
         ];
 
         $form = new Form();
-        $translationHelperService = m::mock(TranslationHelperService::class);
 
-        $data = BilateralNoOfPermits::mapForFormOptions(
+        $data = $this->bilateralNoOfPermits->mapForFormOptions(
             $data,
             $form,
-            $translationHelperService,
             'application',
             'maxPermitsByStock',
             'feePerPermit'

@@ -17,20 +17,21 @@ abstract class AbstractNoOfPermits
     const PERMIT_TYPE_ID = 'changeMe';
     const TRANSLATION_KEY_PERMIT_TYPE = 'changeMe';
 
+    /** @var TranslationHelperService */
+    protected $translator;
+
     /**
      * @param array $data
      * @param $form
-     * @param TranslationHelperService $translator
      * @param string $irhpApplicationDataKey
      * @param string $maxPermitsByStockDataKey
      * @param string $feePerPermitDataKey
      *
      * @return array
      */
-    public static function mapForFormOptions(
+    public function mapForFormOptions(
         array $data,
         $form,
-        TranslationHelperService $translator,
         $irhpApplicationDataKey,
         $maxPermitsByStockDataKey,
         $feePerPermitDataKey
@@ -46,9 +47,8 @@ abstract class AbstractNoOfPermits
         $maxPermitsByStock = $data[$maxPermitsByStockDataKey]['result'];
 
         $permitsRequiredFieldset = new Fieldset('permitsRequired');
-        static::populatePermitsRequiredFieldset(
+        $this->populatePermitsRequiredFieldset(
             $permitsRequiredFieldset,
-            $translator,
             $irhpPermitApplications,
             $maxPermitsByStock,
             $irhpApplication['licence']['totAuthVehicles']
@@ -58,22 +58,21 @@ abstract class AbstractNoOfPermits
         $fieldset->add($permitsRequiredFieldset);
         $form->add($fieldset);
 
-        $data = static::postProcessData(
+        $data = $this->postProcessData(
             $data,
-            $translator,
             $irhpApplicationDataKey,
             $feePerPermitDataKey,
             $maxPermitsByStockDataKey
         );
 
-        $availableStockCount = static::getAvailableStockCount($irhpPermitApplications, $maxPermitsByStock);
+        $availableStockCount = $this->getAvailableStockCount($irhpPermitApplications, $maxPermitsByStock);
 
         if ($availableStockCount > 1) {
             $data['banner'] = 'permits.page.no-of-permits.banner';
         }
 
         if ($availableStockCount == 0) {
-            $data = static::applyMaxAllowableChanges($data, $form);
+            $data = $this->applyMaxAllowableChanges($data, $form);
         }
 
         return $data;
@@ -84,18 +83,14 @@ abstract class AbstractNoOfPermits
      *
      * @param Fieldset $fieldset
      * @param array $years
-     * @param TranslationHelperService $translator
      */
-    protected static function populateYearFieldset(
-        Fieldset $fieldset,
-        array $years,
-        TranslationHelperService $translator
-    ) {
+    protected function populateYearFieldset(Fieldset $fieldset, array $years)
+    {
         foreach ($years as $yearAttributes) {
             if ($yearAttributes['maxPermits'] > 0) {
-                $element = static::createNoOfPermitsElement($yearAttributes, $translator);
+                $element = $this->createNoOfPermitsElement($yearAttributes);
             } else {
-                $element = static::createHtmlElement($yearAttributes, $translator);
+                $element = $this->createHtmlElement($yearAttributes);
             }
 
             $fieldset->add($element);
@@ -106,19 +101,16 @@ abstract class AbstractNoOfPermits
      * Creates and returns a NoOfPermitsElement object corresponding to the provided year attributes
      *
      * @param array $yearAttributes
-     * @param TranslationHelperService $translator
      *
      * @return NoOfPermitsElement
      */
-    private static function createNoOfPermitsElement(
-        array $yearAttributes,
-        TranslationHelperService $translator
-    ): NoOfPermitsElement {
+    private function createNoOfPermitsElement(array $yearAttributes): NoOfPermitsElement
+    {
         $validFromYear = $yearAttributes['validFromYear'];
         $maxPermits = $yearAttributes['maxPermits'];
         $issuedPermits = $yearAttributes['issuedPermits'];
 
-        $label = $translator->translateReplace(
+        $label = $this->translator->translateReplace(
             'permits.page.' . static::TRANSLATION_KEY_PERMIT_TYPE . '.no-of-permits.for-year',
             [$validFromYear]
         );
@@ -130,19 +122,19 @@ abstract class AbstractNoOfPermits
 
         switch ($issuedPermits) {
             case 0:
-                $hint = $translator->translateReplace(
+                $hint = $this->translator->translateReplace(
                     'permits.page.no-of-permits.none-issued',
                     [$maxPermits]
                 );
                 break;
             case 1:
-                $hint = $translator->translateReplace(
+                $hint = $this->translator->translateReplace(
                     'permits.page.no-of-permits.one-issued',
                     [$maxPermits]
                 );
                 break;
             default:
-                $hint = $translator->translateReplace(
+                $hint = $this->translator->translateReplace(
                     'permits.page.no-of-permits.multiple-issued',
                     [$maxPermits, $issuedPermits]
                 );
@@ -164,15 +156,14 @@ abstract class AbstractNoOfPermits
      * Creates and returns a Html object corresponding to the provided year attributes
      *
      * @param array $yearAttributes
-     * @param TranslationHelperService $translator
      *
      * @return Html
      */
-    private static function createHtmlElement(array $yearAttributes, TranslationHelperService $translator): Html
+    private function createHtmlElement(array $yearAttributes): Html
     {
         $element = new Html($yearAttributes['validFromYear']);
 
-        $translated = $translator->translateReplace(
+        $translated = $this->translator->translateReplace(
             'permits.page.' . static::TRANSLATION_KEY_PERMIT_TYPE . '.no-of-permits.all-issued',
             [
                 $yearAttributes['validFromYear'],
@@ -192,7 +183,7 @@ abstract class AbstractNoOfPermits
      *
      * @return array
      */
-    protected static function applyMaxAllowableChanges(array $data, $form)
+    protected function applyMaxAllowableChanges(array $data, $form)
     {
         $data['browserTitle'] = sprintf(
             'permits.page.%s.no-of-permits.maximum-authorised.browser.title',
@@ -217,7 +208,7 @@ abstract class AbstractNoOfPermits
         // 'Submit' fieldset isn't present when called from internal
         if (isset($formFieldsets['Submit'])) {
             $submitFieldset = $formFieldsets['Submit'];
-            static::alterSubmitFieldsetOnMaxAllowable($submitFieldset);
+            $this->alterSubmitFieldsetOnMaxAllowable($submitFieldset);
 
             $submitFieldsetElements = $submitFieldset->getElements();
             $saveAndReturnButtonElement = $submitFieldsetElements['SaveAndReturnButton'];
@@ -236,7 +227,7 @@ abstract class AbstractNoOfPermits
      *
      * @return int
      */
-    protected static function getAvailableStockCount(array $irhpPermitApplications, array $maxPermitsByStock)
+    protected function getAvailableStockCount(array $irhpPermitApplications, array $maxPermitsByStock)
     {
         $availableStockCount = 0;
 
@@ -256,14 +247,12 @@ abstract class AbstractNoOfPermits
      * Populate the fieldset with the set of fields required for this permit type
      *
      * @param Fieldset $permitsRequiredFieldset
-     * @param TranslationHelperService $translator
      * @param array $irhpPermitApplications
      * @param array $maxPermitsByStock
      * @param int $totAuthVehicles
      */
-    abstract protected static function populatePermitsRequiredFieldset(
+    abstract protected function populatePermitsRequiredFieldset(
         Fieldset $permitsRequiredFieldset,
-        TranslationHelperService $translator,
         array $irhpPermitApplications,
         array $maxPermitsByStock,
         $totAuthVehicles
@@ -273,16 +262,14 @@ abstract class AbstractNoOfPermits
      * Perform any changes to the data specific to this permit type
      *
      * @param array $data
-     * @param TranslationHelperService $translator
      * @param string $irhpApplicationDataKey
      * @param string $feePerPermitDataKey
      * @param string $maxPermitsByStockDataKey
      *
      * @return array
      */
-    abstract protected static function postProcessData(
+    abstract protected function postProcessData(
         array $data,
-        TranslationHelperService $translator,
         $irhpApplicationDataKey,
         $feePerPermitDataKey,
         $maxPermitsByStockDataKey
@@ -293,5 +280,5 @@ abstract class AbstractNoOfPermits
      *
      * @param Fieldset $submitFieldset
      */
-    abstract protected static function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset);
+    abstract protected function alterSubmitFieldsetOnMaxAllowable(Fieldset $submitFieldset);
 }
