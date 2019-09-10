@@ -1,7 +1,8 @@
 <?php
 
-namespace Common\Service\Qa\Custom\EcmtShortTerm;
+namespace Common\Form\Elements\Custom;
 
+use Common\Form\Elements\Validators\NoOfPermitsCombinedTotalValidator;
 use Zend\Form\Element\Hidden;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\Callback;
@@ -23,7 +24,7 @@ class NoOfPermitsCombinedTotalElement extends Hidden implements InputProviderInt
                         'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateMax'],
                         'callbackOptions' => [$this->options['maxPermitted']],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda-ecmt-short-term.number-of-permits.error.total-max-exceeded'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.max-exceeded'
                         ]
                     ]
                 ],
@@ -32,7 +33,7 @@ class NoOfPermitsCombinedTotalElement extends Hidden implements InputProviderInt
                     'options' => [
                         'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateMin'],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda-ecmt-short-term.number-of-permits.error.total-min-exceeded'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.min-exceeded'
                         ]
                     ]
                 ],

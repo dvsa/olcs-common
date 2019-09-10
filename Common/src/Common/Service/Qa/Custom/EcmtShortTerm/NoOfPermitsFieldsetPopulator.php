@@ -2,6 +2,7 @@
 
 namespace Common\Service\Qa\Custom\EcmtShortTerm;
 
+use Common\Form\Elements\Custom\NoOfPermitsCombinedTotalElement;
 use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\FieldsetPopulatorInterface;

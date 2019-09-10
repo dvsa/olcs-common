@@ -2,11 +2,11 @@
 
 namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
 
+use Common\Form\Elements\Custom\NoOfPermitsCombinedTotalElement;
 use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulator;
 use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsElement;
-use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsCombinedTotalElement;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;

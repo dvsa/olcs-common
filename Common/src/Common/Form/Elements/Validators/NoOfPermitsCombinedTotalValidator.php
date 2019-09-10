@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Service\Qa\Custom\EcmtShortTerm;
+namespace Common\Form\Elements\Validators;
 
 class NoOfPermitsCombinedTotalValidator
 {

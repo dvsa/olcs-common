@@ -1,9 +1,9 @@
 <?php
 
-namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
+namespace CommonTest\Form\Elements\Custom;
 
-use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsCombinedTotalElement;
-use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsCombinedTotalValidator;
+use Common\Form\Elements\Custom\NoOfPermitsCombinedTotalElement;
+use Common\Form\Elements\Validators\NoOfPermitsCombinedTotalValidator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Validator\Callback;
 
@@ -33,7 +33,7 @@ class NoOfPermitsCombinedTotalElementTest extends MockeryTestCase
                         'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateMax'],
                         'callbackOptions' => [$maxPermitted],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda-ecmt-short-term.number-of-permits.error.total-max-exceeded'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.max-exceeded'
                         ]
                     ]
                 ],
@@ -42,7 +42,7 @@ class NoOfPermitsCombinedTotalElementTest extends MockeryTestCase
                     'options' => [
                         'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateMin'],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda-ecmt-short-term.number-of-permits.error.total-min-exceeded'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.min-exceeded'
                         ]
                     ]
                 ],
