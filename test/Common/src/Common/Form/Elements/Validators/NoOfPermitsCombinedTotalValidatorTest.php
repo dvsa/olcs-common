@@ -1,8 +1,8 @@
 <?php
 
-namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
+namespace CommonTest\Form\Elements\Validators;
 
-use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsCombinedTotalValidator;
+use Common\Form\Elements\Validators\NoOfPermitsCombinedTotalValidator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Validator\Callback;
 

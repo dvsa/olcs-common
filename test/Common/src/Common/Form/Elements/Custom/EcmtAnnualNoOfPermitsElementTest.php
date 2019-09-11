@@ -2,30 +2,22 @@
 
 namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
 
-use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsElement;
+use Common\Form\Elements\Custom\EcmtAnnualNoOfPermitsElement;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Filter\StringTrim;
 use Zend\Validator\Digits;
-use Zend\Validator\LessThan;
 use Zend\Validator\StringLength;
 
 /**
- * NoOfPermitsElementTest
+ * EcmtAnnualNoOfPermitsElementTest
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class NoOfPermitsElementTest extends MockeryTestCase
+class EcmtAnnualNoOfPermitsElementTest extends MockeryTestCase
 {
     public function testGetInputSpecification()
     {
         $name = 'euro5Required';
-        $max = 13;
-        $maxExceededErrorMessage = 'There are only 13 permits available for the selected emissions standard';
-
-        $options = [
-            'max' => $max,
-            'maxExceededErrorMessage' => $maxExceededErrorMessage
-        ];
 
         $expectedInputSpecification = [
             'name' => $name,
@@ -53,25 +45,14 @@ class NoOfPermitsElementTest extends MockeryTestCase
                         ]
                     ]
                 ],
-                [
-                    'name' => LessThan::class,
-                    'options' => [
-                        'max' => $max,
-                        'inclusive' => true,
-                        'messages' => [
-                            LessThan::NOT_LESS_INCLUSIVE => $maxExceededErrorMessage
-                        ]
-                    ]
-                ]
             ]
         ];
 
-        $noOfPermitsElement = new NoOfPermitsElement($name);
-        $noOfPermitsElement->setOptions($options);
+        $ecmtAnnualNoOfPermitsElement = new EcmtAnnualNoOfPermitsElement($name);
 
         $this->assertEquals(
             $expectedInputSpecification,
-            $noOfPermitsElement->getInputSpecification()
+            $ecmtAnnualNoOfPermitsElement->getInputSpecification()
         );
     }
 }

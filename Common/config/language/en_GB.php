@@ -3700,8 +3700,10 @@ return [
     'permits.page.no-of-permits.one-issued' => '%d is the maximum you can apply for. 1 permit has already been issued.',
     'permits.page.no-of-permits.none-issued' => '%d is the maximum you can apply for.',
     'permits.page.no-of-permits.error.max-exceeded' => 'You have exceeded the maximum you can apply for',
+    'permits.page.no-of-permits.error.min-exceeded' => 'Enter the number of permits you require. The number must be at least 1.',
     'permits.page.no-of-permits.error.general' => 'Enter the number of permits you require, or enter 0',
     'permits.page.no-of-permits.error.at-least-one' => 'You need to apply for at least 1 permit',
+    'permits.page.no-of-permits.error.not-whole-number' => 'You must enter a valid whole number',
     'permits.page.no-of-permits.button.cancel' => 'Cancel',
     'permits.page.no-of-permits.banner' => 'If you do not require permits for a particular year, enter 0.',
     //ecmt 19-20 changes
@@ -3952,8 +3954,6 @@ return [
     'qanda.ecmt-short-term.number-of-permits.euro5-2019-info' => 'If you require Euro 5 emission standard permits please contact us at {{SHORT_TERM_ECMT_EMAIL}}',
     'qanda.ecmt-short-term.number-of-permits.label.euro5' => 'for Euro 5 minimum emission standard',
     'qanda.ecmt-short-term.number-of-permits.label.euro6' => 'for Euro 6 minimum emission standard',
-    'qanda-ecmt-short-term.number-of-permits.error.total-max-exceeded' => 'You have exceeded the maximum you can apply for',
-    'qanda-ecmt-short-term.number-of-permits.error.total-min-exceeded' => 'Enter the number of permits you require. The number must be at least 1.',
     'qanda-ecmt-short-term.number-of-permits.error.category-max-exceeded' => 'There are only %s permits available for the selected emissions standard',
     'qanda-ecmt-short-term.number-of-permits.error.category-not-whole-number' => 'You must enter a valid whole number',
 

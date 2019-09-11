@@ -1,15 +1,14 @@
 <?php
 
-namespace Common\Service\Qa\Custom\EcmtShortTerm;
+namespace Common\Form\Elements\Custom;
 
 use Zend\Filter\StringTrim;
 use Zend\Form\Element\Text;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\Digits;
-use Zend\Validator\LessThan;
 use Zend\Validator\StringLength;
 
-class NoOfPermitsElement extends Text implements InputProviderInterface
+class EcmtAnnualNoOfPermitsElement extends Text implements InputProviderInterface
 {
     const MAX_LENGTH = 4;
 
@@ -48,16 +47,6 @@ class NoOfPermitsElement extends Text implements InputProviderInterface
                         ]
                     ]
                 ],
-                [
-                    'name' => LessThan::class,
-                    'options' => [
-                        'max' => $this->options['max'],
-                        'inclusive' => true,
-                        'messages' => [
-                            LessThan::NOT_LESS_INCLUSIVE => $this->options['maxExceededErrorMessage']
-                        ]
-                    ]
-                ]
             ],
         ];
     }
