@@ -3646,7 +3646,7 @@ return [
     'permits.page.fee.main' => 'Application fee for ECMT permit',
     'permits.page.fee.browser.title' => 'Application fee',
     'permits.page.issue-fee.title' => 'Permit fee - ',
-    'permits.page.fee.message' => 'If your permit application is successful, you will have to pay an additional <a href="{{ECMT_FEES_FOR_PERMITS_GUIDANCE_LINK}}">issuing fee per permit</a> required.',
+    'permits.page.fee.message' => 'If your permit application is successful, you will have to pay an additional <a href="{{ECMT_FEES_FOR_PERMITS_GUIDANCE_LINK}}" target="_blank">issuing fee per permit</a> required.',
     'permits.page.fee.application.reference' => 'Application reference',
     'permits.page.fee.application.date' => 'Application date',
     'permits.page.fee.application.fee.per.permit' => 'Application fee per permit',
