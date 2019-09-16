@@ -61,8 +61,11 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
                 'name' => 'combinedTotalChecker',
                 'type' => NoOfPermitsCombinedTotalElement::class,
                 'options' => [
-                    'maxPermitted' => $options['maxPermitted']
-                ]
+                    'maxPermitted' => $options['maxPermitted'],
+                    'label_attributes' => [
+                        'id' => $options['emissionsCategories'][0]['name']
+                    ]
+                ],
             ]
         );
 
@@ -84,6 +87,7 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
                         'maxExceededErrorMessage' => $maxExceededErrorMessage
                     ],
                     'attributes' => [
+                        'id' => $category['name'],
                         'value' => $category['value']
                     ]
                 ]

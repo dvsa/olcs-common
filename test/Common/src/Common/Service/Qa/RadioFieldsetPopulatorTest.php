@@ -20,8 +20,28 @@ class RadioFieldsetPopulatorTest extends MockeryTestCase
     public function testPopulate()
     {
         $valueOptions = [
-            'permit_app_uc' => 'Under Consideration',
-            'permit_app_nys' => 'Not Yet Submitted'
+            [
+                'value' => 'permit_app_uc',
+                'label' => 'Under Consideration'
+            ],
+            [
+                'value' => 'permit_app_nys',
+                'label' => 'Not Yet Submitted'
+            ]
+        ];
+
+        $updatedValueOptions = [
+            [
+                'value' => 'permit_app_uc',
+                'label' => 'Under Consideration',
+                'attributes' => [
+                    'id' => 'qaElement'
+                ]
+            ],
+            [
+                'value' => 'permit_app_nys',
+                'label' => 'Not Yet Submitted'
+            ]
         ];
 
         $value = 'permit_app_uc';
@@ -44,7 +64,7 @@ class RadioFieldsetPopulatorTest extends MockeryTestCase
 
         $radio = m::mock(Radio::class);
         $radio->shouldReceive('setValueOptions')
-            ->with($valueOptions)
+            ->with($updatedValueOptions)
             ->once();
         $radio->shouldReceive('setValue')
             ->with($value)

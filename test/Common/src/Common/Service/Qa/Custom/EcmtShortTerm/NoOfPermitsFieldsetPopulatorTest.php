@@ -106,7 +106,10 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                     'name' => 'combinedTotalChecker',
                     'type' => NoOfPermitsCombinedTotalElement::class,
                     'options' => [
-                        'maxPermitted' => $this->maxPermitted
+                        'maxPermitted' => $this->maxPermitted,
+                        'label_attributes' => [
+                            'id' => $this->emissionsCategory1Name
+                        ]
                     ]
                 ]
             )
@@ -124,6 +127,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                         'maxExceededErrorMessage' => $this->emissionsCategory1MaxExceededError
                     ],
                     'attributes' => [
+                        'id' => $this->emissionsCategory1Name,
                         'value' => $this->emissionsCategory1Value
                     ]
                 ]
@@ -142,6 +146,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                         'maxExceededErrorMessage' => $this->emissionsCategory2MaxExceededError
                     ],
                     'attributes' => [
+                        'id' => $this->emissionsCategory2Name,
                         'value' => $this->emissionsCategory2Value
                     ]
                 ]

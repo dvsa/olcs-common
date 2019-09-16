@@ -40,6 +40,10 @@ class RadioFieldsetPopulator implements FieldsetPopulatorInterface
 
         $notSelectedMessage = $this->translateableTextHandler->translate($options['notSelectedMessage']);
 
+        $options['options'][0]['attributes'] = [
+            'id' => 'qaElement'
+        ];
+
         $radio->setValueOptions($options['options']);
         $radio->setValue($options['value']);
         $radio->setOption('not_selected_message', $notSelectedMessage);
