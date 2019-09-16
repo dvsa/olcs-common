@@ -2,6 +2,7 @@
 
 namespace Common\Service\Cqrs\Query;
 
+use Zend\Cache\Storage\Adapter\Redis;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -19,7 +20,7 @@ class CachingQueryServiceFactory implements FactoryInterface
     {
         $service = new CachingQueryService(
             $serviceLocator->get(QueryService::class),
-            $serviceLocator->get('Cache')
+            $serviceLocator->get(Redis::class)
         );
 
         $service->setLogger($serviceLocator->get('Logger'));
