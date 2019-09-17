@@ -1396,7 +1396,12 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             if (is_null($details['page']) || (string)$this->getPage() == $details['page']) {
                 $details['option'] = $details['label'];
             } else {
-                $details['link'] = $this->generatePaginationUrl(array('page' => $details['page']));
+                $details['link'] = $this->generatePaginationUrl(
+                    array(
+                        'page' => $details['page'],
+                        'limit' => $this->getLimit()
+                    )
+                );
                 $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
             }
 
