@@ -5,19 +5,20 @@ namespace Common\Service\Qa\Custom\EcmtShortTerm;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class NoOfPermitsFieldsetPopulatorFactory implements FactoryInterface
+class RestrictedCountriesFieldsetPopulatorFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return NoOfPermitsFieldsetPopulator
+     * @return RestrictedCountriesFieldsetPopulator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new NoOfPermitsFieldsetPopulator(
-            $serviceLocator->get('Helper\Translation')
+        return new RestrictedCountriesFieldsetPopulator(
+            $serviceLocator->get('QaEcmtShortTermYesNoRadioFactory'),
+            $serviceLocator->get('QaEcmtShortTermRestrictedCountriesMultiCheckboxFactory')
         );
     }
 }

@@ -199,6 +199,9 @@ return array(
             'QaRadioFactory' => QaService\RadioFactory::class,
             'QaFieldsetFactory' => QaService\FieldsetFactory::class,
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
+            'QaEcmtShortTermYesNoRadioFactory' => QaService\Custom\EcmtShortTerm\YesNoRadioFactory::class,
+            'QaEcmtShortTermRestrictedCountriesMultiCheckboxFactory'
+                => QaService\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckboxFactory::class,
 
             Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
             SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
@@ -258,6 +261,8 @@ return array(
                 QaService\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulatorFactory::class,
             'QaEcmtShortTermPermitUsageFieldsetPopulator' =>
                 QaService\Custom\EcmtShortTerm\PermitUsageFieldsetPopulatorFactory::class,
+            'QaEcmtShortTermRestrictedCountriesFieldsetPopulator' =>
+                QaService\Custom\EcmtShortTerm\RestrictedCountriesFieldsetPopulatorFactory::class,
     
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,

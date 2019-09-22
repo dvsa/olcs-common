@@ -71,7 +71,7 @@ class FieldsetAdderTest extends MockeryTestCase
         ];
 
         $this->fieldsetGenerator->shouldReceive('generate')
-            ->with($options)
+            ->with($this->form, $options)
             ->once()
             ->andReturn($this->fieldset);
 
@@ -89,7 +89,7 @@ class FieldsetAdderTest extends MockeryTestCase
         ];
 
         $this->fieldsetGenerator->shouldReceive('generate')
-            ->with($options)
+            ->with($this->form, $options)
             ->once()
             ->andReturn($this->fieldset);
 

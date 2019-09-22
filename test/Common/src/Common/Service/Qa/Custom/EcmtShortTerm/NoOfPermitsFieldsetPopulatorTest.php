@@ -10,6 +10,7 @@ use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsElement;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
+use Zend\Form\Form;
 
 /**
  * NoOfPermitsFieldsetPopulatorTest
@@ -42,6 +43,8 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
     private $fieldset;
 
     private $noOfPermitsFieldsetPopulator;
+
+    private $form;
 
     public function setUp()
     {
@@ -154,6 +157,8 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
             ->once()
             ->ordered();
 
+        $this->form = m::mock(Form::class);
+
         $this->noOfPermitsFieldsetPopulator = new NoOfPermitsFieldsetPopulator($this->translator);
     }
 
@@ -202,7 +207,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
             ]
         ];
 
-        $this->noOfPermitsFieldsetPopulator->populate($this->fieldset, $options);
+        $this->noOfPermitsFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
     /**
@@ -236,7 +241,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
             ]
         ];
 
-        $this->noOfPermitsFieldsetPopulator->populate($this->fieldset, $options);
+        $this->noOfPermitsFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
     public function dpTestPopulateNot2019()

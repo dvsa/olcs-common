@@ -28,10 +28,11 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Populate the fieldset with elements based on the supplied options array
      *
+     * @param mixed $form
      * @param Fieldset $fieldset
      * @param array $options
      */
-    public function populate(Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options)
     {
         $year = $options['year'];
 
