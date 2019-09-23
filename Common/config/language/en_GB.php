@@ -3786,10 +3786,6 @@ return [
     'section.name.application/check-answers' => 'Check your answers',
     'section.name.application/declaration' => 'Declaration',
 
-    'less.than.60%' => 'Less than 60%',
-    'from.60%.to.90%' => 'From 60% to 90%',
-    'more.than.90%' => 'More than 90%',
-
     'permits.page.ecmt.guidance.header.title' => 'ECMT Guidance - ',
     'permits.page.ecmt.guidance.title' => 'Apply for a European Conference of Ministers of Transport (ECMT) Permit',
     'permits.page.ecmt.guidance.subtitle' => 'ECMT permits are needed to transport goods across EU and non-EU countries for vehicles weighing above 3.5 tonnes.',
@@ -3962,5 +3958,8 @@ return [
     'st_permit_usage_cross_trade_only' => 'Cross-trade only',
     'st_permit_usage_both' => 'Both transit and cross-trade',
 
+    'inter_journey_less_60' => 'Less than 60%',
+    'inter_journey_60_90' => '60% to 90%',
+    'inter_journey_more_90' => 'More than 90%',
     // Potentially unused translations
 ];
