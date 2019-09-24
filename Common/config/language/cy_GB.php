@@ -1682,9 +1682,6 @@ return [
     'section.name.application/no-of-permits' => 'Nifer o hawlenni sydd eu hangen',
     'section.name.application/check-answers' => 'Gwiriwch eich atebion',
     'section.name.application/declaration' => 'Datganiad',
-    'less.than.60%' => 'Llai na 60%',
-    'from.60%.to.90%' => 'O 60% i 90%',
-    'more.than.90%' => 'Mwy na 90%',
     'no-organisation-error' => 'Nid yw\'r defnyddiwr yn gysylltiedig â sefydliad.',
     'permits.page.ecmt.guidance.header.title' => 'Canllaw ECMT - ',
     'permits.page.ecmt.guidance.title' => 'Ceisio am Hawlen Cynhadledd Ewropeaidd Gweinidogion Trafnidiaeth (ECMT)',
@@ -1953,4 +1950,8 @@ return [
     'ERR_TA_PSV_RES_EXTERNAL' => 'Mae gennych eisoes gais neu drwydded Gyfyngedig PSV o fewn yr ardal draffig %s',
     'ERR_TA_PSV_RES_INTERNAL' => 'Mae gan y gweithredwr eisoes gais neu drwydded Gyfyngedig PSV o fewn yr ardal draffig % s',
     'auth.change-password.failed.reason.The provided new password was found in the password history for the user' => 'Rydych wedi defnyddio\'r cyfrinair hwn o\'r blaen. Dewiswch un newydd.',
+
+    'inter_journey_less_60' => 'Llai na 60%',
+    'inter_journey_60_90' => 'O 60% i 90%',
+    'inter_journey_more_90' => 'Mwy na 90%',
 ];
