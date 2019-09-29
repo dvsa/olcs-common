@@ -3608,8 +3608,6 @@ return [
     'permits.page.type.question' => 'What type of permit do you need?',
     'permits.page.year.browser.title' => 'Select which year you want permits for',
     'permits.page.year.question' => 'Select which year you want permits for',
-    'permits.page.year.ecmt-short-term.option.hint.2019' => 'Permits for use between 1 November to 31 December %s',
-    'permits.page.year.ecmt-short-term.option.hint.not-2019' => 'Permits for use between 1 January to 31 December %s',
     'permits.page.year.ecmt-short-term.guidance' => 'You can only use Short-term permits for <strong>30 consecutive days</strong> from the start date you choose, during the calendar year they\'ve been issued for.',
 
     'permits.page.year.browser.title.one-year-available' => 'Currently, there is only one year available to apply for',
