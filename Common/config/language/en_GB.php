@@ -3605,6 +3605,7 @@ return [
     'permits.page.type.title' => 'Select Permit Type',
     'permits.page.type.hint' => 'Further <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">guidance on permits</a> is available on GOV.UK.',
     'permits.page.type.question' => 'What type of permit do you need?',
+    'permits.page.year.browser.title' => 'Select which year you want permits for',
     'permits.page.year.question' => 'Select which year you want permits for',
     'permits.page.year.ecmt-short-term.option.hint.2019' => 'Permits for use between 1 November to 31 December %s',
     'permits.page.year.ecmt-short-term.option.hint.not-2019' => 'Permits for use between 1 January to 31 December %s',
