@@ -3887,7 +3887,8 @@ return [
     'permits.irhp.under-consideration.browser.title' => 'Application under consideration - ',
     'permits.irhp.under-consideration.header' => 'Permit application for licence',
     'permits.irhp.under-consideration.title' => 'Application details',
-    'permits.irhp.under-consideration.response-date' => 'We will get back to you after the application window has closed and your application has been processed.',
+    'permits.irhp.under-consideration.response-date.app_business_process_apsg' => 'We will get back to you after the application period has closed and your application has been processed.',
+    'permits.irhp.under-consideration.response-date.app_business_process_apgg' => 'We will get back to you 10 working days after the application submission date.',
 
     'permits.page.irhp.awaiting-fee.browser.title' => 'Permit fee',
     'permits.page.irhp.awaiting-fee.title' => 'Permit fee',
