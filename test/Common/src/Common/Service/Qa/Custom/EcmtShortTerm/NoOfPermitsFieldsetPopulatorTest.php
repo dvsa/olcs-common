@@ -19,24 +19,25 @@ use Zend\Form\Form;
  */
 class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
 {
-    private $maxPermitted;
+    private $maxPermitted = 17;
 
     private $expectedHtml;
 
-    private $translatedLine1;
-    private $translatedLine2;
+    private $translatedInset = '<p>You must choose between Euro 5 and Euro 6.</p>';
+    private $translatedLine1 = 'Number of permits';
+    private $translatedLine2 = '17 is the maximum you can apply for.';
 
-    private $emissionsCategory1Name;
-    private $emissionsCategory1LabelTranslationKey;
-    private $emissionsCategory1MaxValue;
-    private $emissionsCategory1Value;
-    private $emissionsCategory1MaxExceededError;
+    private $emissionsCategory1Name = 'requiredEuro5';
+    private $emissionsCategory1LabelTranslationKey = 'qanda.ecmt-short-term.number-of-permits.label.euro5';
+    private $emissionsCategory1MaxValue = '27';
+    private $emissionsCategory1Value = '14';
+    private $emissionsCategory1MaxExceededError = 'qanda.ecmt-short-term.number-of-permits.error.authorisation-max-exceeded';
 
-    private $emissionsCategory2Name;
-    private $emissionsCategory2LabelTranslationKey;
-    private $emissionsCategory2MaxValue;
-    private $emissionsCategory2Value;
-    private $emissionsCategory2MaxExceededError;
+    private $emissionsCategory2Name = 'requiredEuro6';
+    private $emissionsCategory2LabelTranslationKey = 'qanda.ecmt-short-term.number-of-permits.label.euro6';
+    private $emissionsCategory2MaxValue = '12';
+    private $emissionsCategory2Value = '3';
+    private $emissionsCategory2MaxExceededError = 'There are only 12 permits available for the selected emissions standard';
 
     private $translator;
 
@@ -48,27 +49,17 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
 
     public function setUp()
     {
-        $this->maxPermitted = 17;
-
-        $this->expectedHtml = '<p><strong>Number of permits for 2015</strong><br>' .
-            '<span class="govuk-hint">17 is the maximum you can apply for this year</span></p>';
-
-        $this->translatedLine1 = 'Number of permits for 2015';
-        $this->translatedLine2 = '17 is the maximum you can apply for this year';
-
-        $this->emissionsCategory1Name = 'requiredEuro5';
-        $this->emissionsCategory1LabelTranslationKey = 'qanda.ecmt-short-term.number-of-permits.label.euro5';
-        $this->emissionsCategory1MaxValue = '27';
-        $this->emissionsCategory1Value = '14';
-        $this->emissionsCategory1MaxExceededError = 'There are only 27 permits available for the selected emissions standard';
-
-        $this->emissionsCategory2Name = 'requiredEuro6';
-        $this->emissionsCategory2LabelTranslationKey = 'qanda.ecmt-short-term.number-of-permits.label.euro6';
-        $this->emissionsCategory2MaxValue = '12';
-        $this->emissionsCategory2Value = '3';
-        $this->emissionsCategory2MaxExceededError = 'There are only 12 permits available for the selected emissions standard';
+        $this->expectedHtml = '<div class="govuk-inset-text"><p>You must choose between Euro 5 and Euro 6.</p></div>' .
+            '<p><strong>Number of permits</strong><br>' .
+            '<span class="govuk-hint">17 is the maximum you can apply for.</span></p>';
 
         $this->translator = m::mock(TranslationHelperService::class);
+        $this->translator->shouldReceive('translate')
+            ->with('qanda.ecmt-short-term.number-of-permits.inset')
+            ->andReturn($this->translatedInset);
+        $this->translator->shouldReceive('translate')
+            ->with('qanda.ecmt-short-term.number-of-permits.annotation.line-1')
+            ->andReturn($this->translatedLine1);
         $this->translator->shouldReceive('translateReplace')
             ->with(
                 'qanda.ecmt-short-term.number-of-permits.annotation.line-2',
@@ -77,13 +68,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
             ->andReturn($this->translatedLine2);
         $this->translator->shouldReceive('translateReplace')
             ->with(
-                'qanda-ecmt-short-term.number-of-permits.error.category-max-exceeded',
-                [$this->emissionsCategory1MaxValue]
-            )
-            ->andReturn($this->emissionsCategory1MaxExceededError);
-        $this->translator->shouldReceive('translateReplace')
-            ->with(
-                'qanda-ecmt-short-term.number-of-permits.error.category-max-exceeded',
+                'qanda.ecmt-short-term.number-of-permits.error.category-max-exceeded',
                 [$this->emissionsCategory2MaxValue]
             )
             ->andReturn($this->emissionsCategory2MaxExceededError);
@@ -109,7 +94,6 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                     'name' => 'combinedTotalChecker',
                     'type' => NoOfPermitsCombinedTotalElement::class,
                     'options' => [
-                        'maxPermitted' => $this->maxPermitted,
                         'label_attributes' => [
                             'id' => $this->emissionsCategory1Name
                         ]
@@ -126,7 +110,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
                     'name' => $this->emissionsCategory1Name,
                     'options' => [
                         'label' => $this->emissionsCategory1LabelTranslationKey,
-                        'max' => $this->emissionsCategory1MaxValue,
+                        'max' => $this->maxPermitted,
                         'maxExceededErrorMessage' => $this->emissionsCategory1MaxExceededError
                     ],
                     'attributes' => [
@@ -164,13 +148,6 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
 
     public function testPopulate2019()
     {
-        $this->translator->shouldReceive('translateReplace')
-            ->with(
-                'qanda.ecmt-short-term.number-of-permits.annotation.line-1.2019',
-                [2019]
-            )
-            ->andReturn($this->translatedLine1);
-
         $this->translator->shouldReceive('translate')
             ->with('qanda.ecmt-short-term.number-of-permits.euro5-2019-info')
             ->andReturn('euro5 2019 info');
@@ -215,13 +192,6 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
      */
     public function testPopulateNot2019($year)
     {
-        $this->translator->shouldReceive('translateReplace')
-            ->with(
-                'qanda.ecmt-short-term.number-of-permits.annotation.line-1.other',
-                [$year]
-            )
-            ->andReturn($this->translatedLine1);
-
         $options = [
             'year' => $year,
             'maxPermitted' => $this->maxPermitted,
@@ -247,8 +217,8 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
     public function dpTestPopulateNot2019()
     {
         return [
-            [2018],
-            [2020]
+            [2020],
+            [2021]
         ];
     }
 }

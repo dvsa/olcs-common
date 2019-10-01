@@ -34,35 +34,28 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
-        $year = $options['year'];
-
-        $line1TranslationKey = 'qanda.ecmt-short-term.number-of-permits.annotation.line-1.other';
-        if ($year == 2019) {
-            $line1TranslationKey = 'qanda.ecmt-short-term.number-of-permits.annotation.line-1.2019';
-        }
-
-        $line1 = $this->translator->translateReplace(
-            $line1TranslationKey,
-            [$year]
-        );
+        $inset = $this->translator->translate('qanda.ecmt-short-term.number-of-permits.inset');
+        $line1 = $this->translator->translate('qanda.ecmt-short-term.number-of-permits.annotation.line-1');
 
         $line2 = $this->translator->translateReplace(
             'qanda.ecmt-short-term.number-of-permits.annotation.line-2',
             [$options['maxPermitted']]
         );
 
-        $this->addHtml(
-            $fieldset,
-            'annotation',
-            sprintf('<p><strong>%s</strong><br><span class="govuk-hint">%s</span></p>', $line1, $line2)
+        $html = sprintf(
+            '<div class="govuk-inset-text">%s</div><p><strong>%s</strong><br><span class="govuk-hint">%s</span></p>',
+            $inset,
+            $line1,
+            $line2
         );
+
+        $this->addHtml($fieldset, 'annotation', $html);
 
         $fieldset->add(
             [
                 'name' => 'combinedTotalChecker',
                 'type' => NoOfPermitsCombinedTotalElement::class,
                 'options' => [
-                    'maxPermitted' => $options['maxPermitted'],
                     'label_attributes' => [
                         'id' => $options['emissionsCategories'][0]['name']
                     ]
@@ -70,13 +63,21 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
             ]
         );
 
+        $maxAuthorisedVehicles = $options['maxPermitted'];
+
         foreach ($options['emissionsCategories'] as $category) {
             $categoryMaxValue = $category['maxValue'];
 
-            $maxExceededErrorMessage = $this->translator->translateReplace(
-                'qanda-ecmt-short-term.number-of-permits.error.category-max-exceeded',
-                [$categoryMaxValue]
-            );
+            $fieldMaxValue = $maxAuthorisedVehicles;
+            $maxExceededErrorMessage = 'qanda.ecmt-short-term.number-of-permits.error.authorisation-max-exceeded';
+
+            if ($maxAuthorisedVehicles > $categoryMaxValue) {
+                $fieldMaxValue = $categoryMaxValue;
+                $maxExceededErrorMessage = $this->translator->translateReplace(
+                    'qanda.ecmt-short-term.number-of-permits.error.category-max-exceeded',
+                    [$categoryMaxValue]
+                );
+            }
 
             $fieldset->add(
                 [
@@ -84,7 +85,7 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
                     'name' => $category['name'],
                     'options' => [
                         'label' => $category['labelTranslationKey'],
-                        'max' => $categoryMaxValue,
+                        'max' => $fieldMaxValue,
                         'maxExceededErrorMessage' => $maxExceededErrorMessage
                     ],
                     'attributes' => [
@@ -95,7 +96,7 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
             );
         }
 
-        if ($year == 2019) {
+        if ($options['year'] == 2019) {
             $this->addHtml(
                 $fieldset,
                 'euro52019Info',

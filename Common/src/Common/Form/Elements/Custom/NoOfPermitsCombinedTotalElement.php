@@ -21,19 +21,19 @@ class NoOfPermitsCombinedTotalElement extends Hidden implements InputProviderInt
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateMax'],
-                        'callbackOptions' => [$this->options['maxPermitted']],
+                        'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateNonZeroValuePresent'],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.max-exceeded'
+                            Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.no-fields-populated'
                         ]
-                    ]
+                    ],
+                    'break_chain_on_failure' => true
                 ],
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateMin'],
+                        'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateMultipleNonZeroValuesNotPresent'],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.min-exceeded'
+                            Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.two-or-more-fields-populated'
                         ]
                     ]
                 ],
