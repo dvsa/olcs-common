@@ -1559,7 +1559,6 @@ return [
     'permits.page.dashboard.browser.title' => 'Permits Home',
     'permits.page.licence.browser.title' => 'Dewis Trwydded',
     'permits.page.licence.question' => 'Dewiswch drwydded yr hoffech i\'ch trwydded gael ei ategu iddo',
-    'permits.page.licence.question.one.licence' => 'Permit application for licence %s',
     'permits.page.licence.saturated.one.licence' => 'Your licence has an active application',
     'permits.page.licence.saturated' => 'Rydych wedi gwneud cais ar gyfer eich holl drwyddedau eisoes',
     'permits.form.trips.warning' => 'Rydych wedi nodi defnydd dwysedd uchel o\'r hawlenni hyn. Gwiriwch fod y manylion yn gywir. Efallai y byddwn yn cysylltu â chi i wirio\'r wybodaeth hon',
