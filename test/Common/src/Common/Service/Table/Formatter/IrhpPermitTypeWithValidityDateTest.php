@@ -5,6 +5,8 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\RefData;
 use Common\Service\Table\Formatter\IrhpPermitTypeWithValidityDate;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Irhp Permit Type With Validity Date test
@@ -19,9 +21,18 @@ class IrhpPermitTypeWithValidityDateTest extends MockeryTestCase
         $column = ['name' => 'typeDescription'];
 
         $sut = new IrhpPermitTypeWithValidityDate();
+
+        $sm = m::mock(ServiceLocatorInterface::class);
+        $sm->allows('get->translate')
+            ->andReturnUsing(
+                function ($key) {
+                    return '_TRNSLT_' . $key;
+                }
+            );
+
         $this->assertEquals(
             $expectedOutput,
-            $sut->format($row, $column)
+            $sut->format($row, $column, $sm)
         );
     }
 
@@ -50,13 +61,22 @@ class IrhpPermitTypeWithValidityDateTest extends MockeryTestCase
                 ],
                 'Short-term ECMT&gt;',
             ],
-            'ECMT Short Term - with validity date' => [
+            'ECMT Short Term - with validity date 2019' => [
                 [
                     'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
                     'typeDescription' => 'Short-term ECMT>',
                     'stockValidTo' => '2019-12-31',
                 ],
                 'Short-term ECMT&gt; 2019',
+            ],
+            'ECMT Short Term - with validity date 2020' => [
+                [
+                    'typeId' => RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
+                    'typeDescription' => 'Short-term ECMT>',
+                    'stockValidTo' => '2020-12-31',
+                    'periodNameKey' => 'imATranslationKey'
+                ],
+                'Short-term ECMT&gt; _TRNSLT_imATranslationKey',
             ],
             'IRHP Bilateral - without validity date' => [
                 [

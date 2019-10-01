@@ -23,12 +23,7 @@ class IrhpPermitTypeWithValidityDate implements FormatterInterface
     {
         $value = $data[$column['name']];
 
-        $validityYearTypeIds = [
-            RefData::ECMT_PERMIT_TYPE_ID,
-            RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID,
-        ];
-
-        if (in_array($data['typeId'], $validityYearTypeIds) && !empty($data['stockValidTo'])) {
+        if ($data['typeId'] == RefData::ECMT_PERMIT_TYPE_ID && !empty($data['stockValidTo'])) {
             $date = Date::format(
                 $data,
                 [
@@ -37,8 +32,17 @@ class IrhpPermitTypeWithValidityDate implements FormatterInterface
                 ],
                 $sm
             );
-
             $value = sprintf('%s %s', $value, $date);
+        }
+
+        if ($data['typeId'] == RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID && !empty($data['stockValidTo'])) {
+            switch (date('Y', strtotime($data['stockValidTo']))) {
+                case '2019':
+                    $value = sprintf('%s %s', $value, '2019');
+                    break;
+                default:
+                    $value = sprintf('%s %s', $value, $sm->get('translator')->translate($data['periodNameKey']));
+            }
         }
 
         return Escape::html($value);
