@@ -16,7 +16,7 @@ class FieldsetAdder
      * @param FieldsetGenerator $fieldsetGenerator
      * @param ValidatorsAdder $validatorsAdder
      *
-     * @return CheckboxFieldsetPopulator
+     * @return FieldsetAdder
      */
     public function __construct(FieldsetGenerator $fieldsetGenerator, ValidatorsAdder $validatorsAdder)
     {
@@ -32,7 +32,7 @@ class FieldsetAdder
      */
     public function add($form, array $options)
     {
-        $fieldset = $this->fieldsetGenerator->generate($options);
+        $fieldset = $this->fieldsetGenerator->generate($form, $options);
         $form->get('qa')->add($fieldset);
 
         if (count($options['validators'])) {

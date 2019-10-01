@@ -9,6 +9,7 @@ use Common\Service\Qa\RadioFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
+use Zend\Form\Form;
 
 /**
  * PermitUsageFieldsetPopulatorTest
@@ -24,11 +25,13 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
             'key2' => 'value2'
         ];
 
+        $form = m::mock(Form::class);
+
         $fieldset = m::mock(Fieldset::class);
 
         $radioFieldsetPopulator = m::mock(RadioFieldsetPopulator::class);
         $radioFieldsetPopulator->shouldReceive('populate')
-            ->with($fieldset, $options)
+            ->with($form, $fieldset, $options)
             ->once()
             ->ordered()
             ->globally();
@@ -52,7 +55,8 @@ class PermitUsageFieldsetPopulatorTest extends MockeryTestCase
             ->ordered()
             ->globally();
 
+
         $permitUsageFieldsetPopulator = new PermitUsageFieldsetPopulator($radioFieldsetPopulator, $translator);
-        $permitUsageFieldsetPopulator->populate($fieldset, $options);
+        $permitUsageFieldsetPopulator->populate($form, $fieldset, $options);
     }
 }

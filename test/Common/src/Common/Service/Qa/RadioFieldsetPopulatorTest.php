@@ -9,6 +9,7 @@ use Common\Service\Qa\TranslateableTextHandler;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
+use Zend\Form\Form;
 
 /**
  * RadioFieldsetPopulatorTest
@@ -88,7 +89,9 @@ class RadioFieldsetPopulatorTest extends MockeryTestCase
             ->with($radio)
             ->once();
 
+        $form = m::mock(Form::class);
+
         $sut = new RadioFieldsetPopulator($radioFactory, $translateableTextHandler);
-        $sut->populate($fieldset, $options);
+        $sut->populate($form, $fieldset, $options);
     }
 }

@@ -9,6 +9,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Element\Text;
 use Zend\Form\Fieldset;
+use Zend\Form\Form;
 
 /**
  * TextFieldsetPopulatorTest
@@ -81,8 +82,10 @@ class TextFieldsetPopulatorTest extends MockeryTestCase
             ->with($text)
             ->once();
 
+        $form = m::mock(Form::class);
+
         $sut = new TextFieldsetPopulator($textFactory, $translateableTextHandler);
-        $sut->populate($fieldset, $options);
+        $sut->populate($form, $fieldset, $options);
     }
 
     public function testPopulateWithoutHint()
@@ -127,7 +130,9 @@ class TextFieldsetPopulatorTest extends MockeryTestCase
             ->with($text)
             ->once();
 
+        $form = m::mock(Form::class);
+
         $sut = new TextFieldsetPopulator($textFactory, $translateableTextHandler);
-        $sut->populate($fieldset, $options);
+        $sut->populate($form, $fieldset, $options);
     }
 }

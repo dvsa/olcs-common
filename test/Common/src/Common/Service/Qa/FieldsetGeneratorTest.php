@@ -9,6 +9,7 @@ use Common\Service\Qa\FieldsetPopulatorProvider;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
+use Zend\Form\Form;
 
 /**
  * FieldsetGeneratorTest
@@ -36,15 +37,17 @@ class FieldsetGeneratorTest extends MockeryTestCase
 
         $fieldset = m::mock(Fieldset::class);
 
+        $form = m::mock(Form::class);
+
         $fieldsetFactory = m::mock(FieldsetFactory::class);
         $fieldsetFactory->shouldReceive('create')
-            ->with($fieldsetName)
+            ->with($fieldsetName, $elementType)
             ->once()
             ->andReturn($fieldset);
 
         $fieldsetPopulator = m::mock(FieldsetPopulatorInterface::class);
         $fieldsetPopulator->shouldReceive('populate')
-            ->with($fieldset, $elementOptions)
+            ->with($form, $fieldset, $elementOptions)
             ->once();
 
         $fieldsetPopulatorProvider = m::mock(FieldsetPopulatorProvider::class);
@@ -57,7 +60,7 @@ class FieldsetGeneratorTest extends MockeryTestCase
 
         $this->assertSame(
             $fieldset,
-            $sut->generate($options)
+            $sut->generate($form, $options)
         );
     }
 }

@@ -12,7 +12,7 @@ class PermitUsageFieldsetPopulatorFactory implements FactoryInterface
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return PermitUsageFieldsetPopulatorFactory
+     * @return PermitUsageFieldsetPopulator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

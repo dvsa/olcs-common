@@ -9,6 +9,7 @@ use Common\Service\Qa\TranslateableTextHandler;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
+use Zend\Form\Form;
 
 /**
  * CheckboxFieldsetPopulatorTest
@@ -94,8 +95,10 @@ class CheckboxFieldsetPopulatorTest extends MockeryTestCase
             ->with($checkbox)
             ->once();
 
+        $form = m::mock(Form::class);
+
         $sut = new CheckboxFieldsetPopulator($checkboxFactory, $translateableTextHandler);
-        $sut->populate($fieldset, $options);
+        $sut->populate($form, $fieldset, $options);
     }
 
     public function dpTestPopulate()

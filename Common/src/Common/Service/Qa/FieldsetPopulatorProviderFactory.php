@@ -24,6 +24,7 @@ class FieldsetPopulatorProviderFactory implements FactoryInterface
             'radio' => 'QaRadioFieldsetPopulator',
             'ecmt_st_no_of_permits' => 'QaEcmtShortTermNoOfPermitsFieldsetPopulator',
             'ecmt_st_permit_usage' => 'QaEcmtShortTermPermitUsageFieldsetPopulator',
+            'ecmt_st_restricted_countries' => 'QaEcmtShortTermRestrictedCountriesFieldsetPopulator',
         ];
 
         foreach ($populators as $type => $serviceName) {

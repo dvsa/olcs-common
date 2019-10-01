@@ -35,12 +35,13 @@ class PermitUsageFieldsetPopulator implements FieldsetPopulatorInterface
     /**
      * Populate the fieldset with elements based on the supplied options array
      *
+     * @param mixed $form
      * @param Fieldset $fieldset
      * @param array $options
      */
-    public function populate(Fieldset $fieldset, array $options)
+    public function populate($form, Fieldset $fieldset, array $options)
     {
-        $this->radioFieldsetPopulator->populate($fieldset, $options);
+        $this->radioFieldsetPopulator->populate($form, $fieldset, $options);
 
         $markup = sprintf(
             '<p><br><strong>%s</strong></p>',
