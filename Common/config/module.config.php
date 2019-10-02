@@ -263,6 +263,8 @@ return array(
                 QaService\Custom\EcmtShortTerm\PermitUsageFieldsetPopulatorFactory::class,
             'QaEcmtShortTermRestrictedCountriesFieldsetPopulator' =>
                 QaService\Custom\EcmtShortTerm\RestrictedCountriesFieldsetPopulatorFactory::class,
+            'QaEcmtShortTermAnnualTripsAbroadFieldsetPopulator' =>
+                QaService\Custom\EcmtShortTerm\AnnualTripsAbroadFieldsetPopulatorFactory::class,
     
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,

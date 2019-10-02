@@ -25,6 +25,7 @@ class FieldsetPopulatorProviderFactory implements FactoryInterface
             'ecmt_st_no_of_permits' => 'QaEcmtShortTermNoOfPermitsFieldsetPopulator',
             'ecmt_st_permit_usage' => 'QaEcmtShortTermPermitUsageFieldsetPopulator',
             'ecmt_st_restricted_countries' => 'QaEcmtShortTermRestrictedCountriesFieldsetPopulator',
+            'ecmt_st_annual_trips_abroad' => 'QaEcmtShortTermAnnualTripsAbroadFieldsetPopulator',
         ];
 
         foreach ($populators as $type => $serviceName) {
