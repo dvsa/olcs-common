@@ -3561,7 +3561,8 @@ return [
     'permits.page.confirmation.irhp-submitted.bullet.list.title' => 'What happens next',
     'permits.page.confirmation.irhp-submitted.what-happens-next' => 'Your valid permits will be grouped together under the same licence number that you applied with.<p>We will now post your paper permit and corresponding logbook within the next 3 working days.</p>',
     'permits.page.confirmation.irhp-submitted.ecmt-removal.what-happens-next' => 'Your valid permits will be grouped together under the same licence number that you applied with.<p>We will now post your paper permit within the next 3 working days.</p>',
-    'permits.page.confirmation.irhp-submitted.under-consideration.what-happens-next' => 'Your permit application is under consideration and will now be processed. We\'ll let you know the result of your permit application in the next 10 working days.<p>You can check your application status on the next page.</p>',
+    'permits.page.confirmation.irhp-submitted.under-consideration.what-happens-next.app_business_process_apgg' => 'Your permit application is under consideration and will now be processed. We will get back to you 10 working days after the application submission date.<p>You can check your application status on the next page.</p>',
+    'permits.page.confirmation.irhp-submitted.under-consideration.what-happens-next.app_business_process_apsg' => 'Your permit application is under consideration and will now be processed. We will get back to you after the application period has closed and your application has been processed.<p>You can check your application status on the next page.</p>',
     'permits.page.confirmation.irhp-payment-successful.browser.title' => 'Payment successful',
     'permits.page.confirmation.irhp-payment-successful.title' => 'Payment successful',
 
