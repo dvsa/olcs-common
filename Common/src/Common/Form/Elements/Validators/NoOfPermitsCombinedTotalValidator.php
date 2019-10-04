@@ -5,31 +5,33 @@ namespace Common\Form\Elements\Validators;
 class NoOfPermitsCombinedTotalValidator
 {
     /**
-     * Verify that the total requested number of permits across all emission types is greater than zero
+     * Verify that the number of non-zero values found is greater than 0
      *
      * @param mixed $value
      * @param array $context
      *
      * @return bool
      */
-    public static function validateMin($value, $context)
+    public static function validateNonZeroValuePresent($value, $context)
     {
-        return (self::getTotal($context) >= 1);
+        $nonZeroValuesFound = self::getNonZeroValuesFound($context);
+
+        return $nonZeroValuesFound > 0;
     }
 
     /**
-     * Verify that the total requested number of permits across all emission types is less than or equal to the
-     * provided maxValue
+     * Verify that the number of non-zero values found is less than 2
      *
      * @param mixed $value
      * @param array $context
-     * @param int $maxValue
      *
      * @return bool
      */
-    public static function validateMax($value, $context, $maxValue)
+    public static function validateMultipleNonZeroValuesNotPresent($value, $context)
     {
-        return (self::getTotal($context) <= $maxValue);
+        $nonZeroValuesFound = self::getNonZeroValuesFound($context);
+
+        return $nonZeroValuesFound <= 1;
     }
 
     /**
@@ -40,18 +42,21 @@ class NoOfPermitsCombinedTotalValidator
      *
      * @return int
      */
-    private static function getTotal($context)
+    private static function getNonZeroValuesFound($context)
     {
-        $total = 0;
+        $nonZeroValuesFound = 0;
+
         foreach ($context as $name => $value) {
             if ((substr($name, 0, 8) == 'required') && is_string($value)) {
                 $trimmedValue = trim($value);
                 if (ctype_digit($trimmedValue)) {
-                    $total += intval($value);
+                    if (intval($trimmedValue) > 0) {
+                        $nonZeroValuesFound++;
+                    }
                 }
             }
         }
 
-        return $total;
+        return $nonZeroValuesFound;
     }
 }

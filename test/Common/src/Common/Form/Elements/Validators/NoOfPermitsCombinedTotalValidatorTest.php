@@ -13,47 +13,97 @@ use Zend\Validator\Callback;
  */
 class NoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
 {
-    public function testValidateMinTrue()
+    /**
+     * @dataProvider dpValidateNonZeroValuePresentSuccess
+     */
+    public function testValidateNonZeroValuePresentSuccess($context)
     {
-        $context = [
-            'requiredEuro5' => null,
-            'requiredEuro6' => '0',
-            'otherField1' => '26'
-        ];
-
-        $this->assertFalse(NoOfPermitsCombinedTotalValidator::validateMin(3, $context));
+        $this->assertTrue(
+            NoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
+        );
     }
 
-    public function testValidateMinFalse()
+    public function dpValidateNonZeroValuePresentSuccess()
     {
-        $context = [
-            'requiredEuro5' => '0',
-            'requiredEuro6' => '1',
-            'otherField' => '26'
+        return [
+            [['submit' => 'xyz', 'requiredEuro5' => '0', 'requiredEuro6' => '7']],
+            [['submit' => 'xyz', 'requiredEuro5' => '3', 'requiredEuro6' => '0']],
+            [['submit' => 'xyz', 'requiredEuro5' => '', 'requiredEuro6' => '1']],
+            [['submit' => 'xyz', 'requiredEuro5' => '2', 'requiredEuro6' => '']],
+            [['submit' => 'xyz', 'requiredEuro5' => 'foo', 'requiredEuro6' => '1']],
+            [['submit' => 'xyz', 'requiredEuro5' => '2', 'requiredEuro6' => 'bar']],
+            [['submit' => 'xyz', 'requiredEuro5' => '2', 'requiredEuro6' => '4']],
+            [['submit' => 'xyz', 'requiredEuro5' => '1']],
+            [['submit' => 'xyz', 'requiredEuro6' => '8']],
         ];
-
-        $this->assertTrue(NoOfPermitsCombinedTotalValidator::validateMin(3, $context));
     }
 
-    public function testValidateMaxTrue()
+    /**
+     * @dataProvider dpValidateNonZeroValuePresentFailure
+     */
+    public function testValidateNonZeroValuePresentFailure($context)
     {
-        $context = [
-            'requiredEuro5' => '3',
-            'requiredEuro6' => '2',
-            'otherField' => '26'
-        ];
-
-        $this->assertTrue(NoOfPermitsCombinedTotalValidator::validateMax(3, $context, 5));
+        $this->assertFalse(
+            NoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
+        );
     }
 
-    public function testValidateMaxFalse()
+    public function dpValidateNonZeroValuePresentFailure()
     {
-        $context = [
-            'requiredEuro5' => '3',
-            'requiredEuro6' => '2',
-            'otherField' => '26'
+        return [
+            [['submit' => 'xyz', 'requiredEuro5' => '0', 'requiredEuro6' => '0']],
+            [['submit' => 'xyz', 'requiredEuro5' => 'foo', 'requiredEuro6' => '0']],
+            [['submit' => 'xyz', 'requiredEuro5' => '', 'requiredEuro6' => '0']],
+            [['submit' => 'xyz', 'requiredEuro5' => '0', 'requiredEuro6' => 'bar']],
+            [['submit' => 'xyz', 'requiredEuro5' => '0', 'requiredEuro6' => '']],
+            [['submit' => 'xyz', 'requiredEuro5' => '']],
+            [['submit' => 'xyz', 'requiredEuro5' => 'bar']],
+            [['submit' => 'xyz', 'requiredEuro6' => '0']],
         ];
+    }
 
-        $this->assertFalse(NoOfPermitsCombinedTotalValidator::validateMax(3, $context, 4));
+    /**
+     * @dataProvider dpValidateMultipleNonZeroValuesNotPresentSuccess
+     */
+    public function testValidateMultipleNonZeroValuesNotPresentSuccess($context)
+    {
+        $this->assertTrue(
+            NoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
+        );
+    }
+
+    public function dpValidateMultipleNonZeroValuesNotPresentSuccess()
+    {
+        return [
+            [['submit' => 'xyz', 'requiredEuro5' => '0', 'requiredEuro6' => '0']],
+            [['submit' => 'xyz', 'requiredEuro5' => 'foo', 'requiredEuro6' => '0']],
+            [['submit' => 'xyz', 'requiredEuro5' => '0', 'requiredEuro6' => '7']],
+            [['submit' => 'xyz', 'requiredEuro5' => '3', 'requiredEuro6' => '0']],
+            [['submit' => 'xyz', 'requiredEuro5' => '', 'requiredEuro6' => '1']],
+            [['submit' => 'xyz', 'requiredEuro5' => '2', 'requiredEuro6' => '']],
+            [['submit' => 'xyz', 'requiredEuro5' => 'foo', 'requiredEuro6' => '1']],
+            [['submit' => 'xyz', 'requiredEuro5' => '2', 'requiredEuro6' => 'bar']],
+            [['submit' => 'xyz', 'requiredEuro5' => '1']],
+            [['submit' => 'xyz', 'requiredEuro6' => '8']],
+        ];
+    }
+
+    /**
+     * @dataProvider dpValidateMultipleNonZeroValuesNotPresentFailure
+     */
+    public function testValidateMultipleNonZeroValuesNotPresentFailure($context)
+    {
+        $this->assertFalse(
+            NoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
+        );
+    }
+
+    public function dpValidateMultipleNonZeroValuesNotPresentFailure()
+    {
+        return [
+            [['submit' => 'xyz', 'requiredEuro5' => '2', 'requiredEuro6' => '7']],
+            [['submit' => 'xyz', 'requiredEuro5' => '7', 'requiredEuro6' => '2']],
+            [['submit' => 'xyz', 'requiredEuro5' => '1', 'requiredEuro6' => '1']],
+        ];
     }
 }
