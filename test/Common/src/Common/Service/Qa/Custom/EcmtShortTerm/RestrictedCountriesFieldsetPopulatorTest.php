@@ -5,10 +5,10 @@ namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
 use Common\Service\Qa\Custom\EcmtShortTerm\RestrictedCountriesFieldsetPopulator;
 use Common\Service\Qa\Custom\EcmtShortTerm\YesNoRadio;
 use Common\Service\Qa\Custom\EcmtShortTerm\YesNoRadioFactory;
+use Common\Service\Qa\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckbox;
 use Common\Service\Qa\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckboxFactory;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Form\Element\MultiCheckbox;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 
@@ -71,18 +71,12 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
         $yesNoRadio->shouldReceive('setStandardValueOptions')
             ->withNoArgs()
             ->once();
-        $yesNoRadio->shouldReceive('setOption')
-            ->with('form', $form)
-            ->once();
-        $yesNoRadio->shouldReceive('setOption')
-            ->with('fieldsetName', $fieldsetName)
-            ->once();
         $yesNoRadio->shouldReceive('setValue')
             ->with(null)
             ->once();
 
-        $multiCheckbox = m::mock(MultiCheckbox::class);
-        $multiCheckbox->shouldReceive('setValueOptions')
+        $restrictedCountriesMultiCheckbox = m::mock(RestrictedCountriesMultiCheckbox::class);
+        $restrictedCountriesMultiCheckbox->shouldReceive('setValueOptions')
             ->with($expectedValueOptions)
             ->once();
 
@@ -97,7 +91,7 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
             ->once()
             ->ordered();
         $fieldset->shouldReceive('add')
-            ->with($multiCheckbox)
+            ->with($restrictedCountriesMultiCheckbox)
             ->once()
             ->ordered();
 
@@ -111,7 +105,11 @@ class RestrictedCountriesFieldsetPopulatorTest extends MockeryTestCase
         $restrictedCountriesMultiCheckboxFactory->shouldReceive('create')
             ->with($multiCheckboxName)
             ->once()
-            ->andReturn($multiCheckbox);
+            ->andReturn($restrictedCountriesMultiCheckbox);
+
+        $yesNoRadio->shouldReceive('setOption')
+            ->with('yesContentElement', $restrictedCountriesMultiCheckbox)
+            ->once();
 
         $restrictedCountriesFieldsetPopulator = new RestrictedCountriesFieldsetPopulator(
             $yesNoRadioFactory,

@@ -46,8 +46,7 @@ class YesNoRadio extends Radio
 
         $spec['validators'] = [
             new YesNoRadioValidator(
-                $this->options['form'],
-                $this->options['fieldsetName']
+                $this->options['yesContentElement']
             )
         ];
 

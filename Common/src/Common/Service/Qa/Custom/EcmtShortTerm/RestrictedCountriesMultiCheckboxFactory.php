@@ -2,8 +2,6 @@
 
 namespace Common\Service\Qa\Custom\EcmtShortTerm;
 
-use Zend\Form\Element\MultiCheckbox;
-
 class RestrictedCountriesMultiCheckboxFactory
 {
     /**
@@ -11,11 +9,11 @@ class RestrictedCountriesMultiCheckboxFactory
      *
      * @param string $name
      *
-     * @return MultiCheckbox
+     * @return RestrictedCountriesMultiCheckbox
      */
     public function create($name)
     {
-        $restrictedCountries = new MultiCheckbox($name);
+        $restrictedCountries = new RestrictedCountriesMultiCheckbox($name);
 
         $restrictedCountries->setOptions(
             [

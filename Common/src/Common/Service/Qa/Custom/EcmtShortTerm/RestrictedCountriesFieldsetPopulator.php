@@ -17,7 +17,7 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
      * Create service instance
      *
      * @param YesNoRadioFactory $yesNoRadioFactory
-     * @param RestrictedCountriesMultiCheckboxFactory
+     * @param RestrictedCountriesMultiCheckboxFactory $restrictedCountriesMultiCheckboxFactory
      *
      * @return RestrictedCountriesFieldsetPopulator
      */
@@ -40,8 +40,6 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
     {
         $yesNoRadio = $this->yesNoRadioFactory->create('restrictedCountries');
         $yesNoRadio->setStandardValueOptions();
-        $yesNoRadio->setOption('form', $form);
-        $yesNoRadio->setOption('fieldsetName', $fieldset->getName());
 
         $optionsYesNo = $options['yesNo'];
         $yesNoRadio->setValue(is_null($optionsYesNo) ? null : $optionsYesNo === true);
@@ -57,6 +55,7 @@ class RestrictedCountriesFieldsetPopulator implements FieldsetPopulatorInterface
 
         $restrictedCountries = $this->restrictedCountriesMultiCheckboxFactory->create('yesContent');
         $restrictedCountries->setValueOptions($valueOptions);
+        $yesNoRadio->setOption('yesContentElement', $restrictedCountries);
 
         $fieldset->add($yesNoRadio);
         $fieldset->add($restrictedCountries);
