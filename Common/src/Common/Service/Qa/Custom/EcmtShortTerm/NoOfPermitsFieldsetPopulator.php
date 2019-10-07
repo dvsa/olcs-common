@@ -2,7 +2,7 @@
 
 namespace Common\Service\Qa\Custom\EcmtShortTerm;
 
-use Common\Form\Elements\Custom\NoOfPermitsCombinedTotalElement;
+use Common\Form\Elements\Custom\EcmtShortTermNoOfPermitsCombinedTotalElement;
 use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\FieldsetPopulatorInterface;
@@ -54,7 +54,7 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
         $fieldset->add(
             [
                 'name' => 'combinedTotalChecker',
-                'type' => NoOfPermitsCombinedTotalElement::class,
+                'type' => EcmtShortTermNoOfPermitsCombinedTotalElement::class,
                 'options' => [
                     'label_attributes' => [
                         'id' => $options['emissionsCategories'][0]['name']

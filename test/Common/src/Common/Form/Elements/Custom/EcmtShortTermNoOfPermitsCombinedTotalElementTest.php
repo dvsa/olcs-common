@@ -2,17 +2,17 @@
 
 namespace CommonTest\Form\Elements\Custom;
 
-use Common\Form\Elements\Custom\NoOfPermitsCombinedTotalElement;
-use Common\Form\Elements\Validators\NoOfPermitsCombinedTotalValidator;
+use Common\Form\Elements\Custom\EcmtShortTermNoOfPermitsCombinedTotalElement;
+use Common\Form\Elements\Validators\EcmtShortTermNoOfPermitsCombinedTotalValidator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Validator\Callback;
 
 /**
- * NoOfPermitsCombinedTotalElementTest
+ * EcmtShortTermNoOfPermitsCombinedTotalElementTest
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class NoOfPermitsCombinedTotalElementTest extends MockeryTestCase
+class EcmtShortTermNoOfPermitsCombinedTotalElementTest extends MockeryTestCase
 {
     public function testGetInputSpecification()
     {
@@ -25,7 +25,10 @@ class NoOfPermitsCombinedTotalElementTest extends MockeryTestCase
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateNonZeroValuePresent'],
+                        'callback' => [
+                            EcmtShortTermNoOfPermitsCombinedTotalValidator::class,
+                            'validateNonZeroValuePresent'
+                        ],
                         'messages' => [
                             Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.no-fields-populated'
                         ]
@@ -35,7 +38,10 @@ class NoOfPermitsCombinedTotalElementTest extends MockeryTestCase
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateMultipleNonZeroValuesNotPresent'],
+                        'callback' => [
+                            EcmtShortTermNoOfPermitsCombinedTotalValidator::class,
+                            'validateMultipleNonZeroValuesNotPresent'
+                        ],
                         'messages' => [
                             Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.two-or-more-fields-populated'
                         ]
@@ -44,7 +50,7 @@ class NoOfPermitsCombinedTotalElementTest extends MockeryTestCase
             ],
         ];
 
-        $noOfPermitsCombinedTotalElement = new NoOfPermitsCombinedTotalElement($name);
+        $noOfPermitsCombinedTotalElement = new EcmtShortTermNoOfPermitsCombinedTotalElement($name);
 
         $this->assertEquals(
             $expectedInputSpecification,

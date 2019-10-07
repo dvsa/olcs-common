@@ -2,16 +2,16 @@
 
 namespace CommonTest\Form\Elements\Validators;
 
-use Common\Form\Elements\Validators\NoOfPermitsCombinedTotalValidator;
+use Common\Form\Elements\Validators\EcmtShortTermNoOfPermitsCombinedTotalValidator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Validator\Callback;
 
 /**
- * NoOfPermitsCombinedTotalValidatorTest
+ * EcmtShortTermNoOfPermitsCombinedTotalValidatorTest
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class NoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
+class EcmtShortTermNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
 {
     /**
      * @dataProvider dpValidateNonZeroValuePresentSuccess
@@ -19,7 +19,7 @@ class NoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
     public function testValidateNonZeroValuePresentSuccess($context)
     {
         $this->assertTrue(
-            NoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
+            EcmtShortTermNoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
         );
     }
 
@@ -44,7 +44,7 @@ class NoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
     public function testValidateNonZeroValuePresentFailure($context)
     {
         $this->assertFalse(
-            NoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
+            EcmtShortTermNoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
         );
     }
 
@@ -68,7 +68,7 @@ class NoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
     public function testValidateMultipleNonZeroValuesNotPresentSuccess($context)
     {
         $this->assertTrue(
-            NoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
+            EcmtShortTermNoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
         );
     }
 
@@ -94,7 +94,7 @@ class NoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
     public function testValidateMultipleNonZeroValuesNotPresentFailure($context)
     {
         $this->assertFalse(
-            NoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
+            EcmtShortTermNoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
         );
     }
 
