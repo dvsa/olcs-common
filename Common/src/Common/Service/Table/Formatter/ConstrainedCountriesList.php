@@ -26,13 +26,18 @@ class ConstrainedCountriesList implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        unset($column);
+        $columnName = $column['name'] ?? 'constrainedCountries';
+        $translator = $sm->get('translator');
 
-        $c = [];
-        foreach ($data['constrainedCountries'] as $country) {
-            $c[] = Escape::html($country['countryDesc']);
+        if (empty($data[$columnName])) {
+            return $translator->translate('no.constrained.countries');
         }
 
-        return empty($c) ? 'No exclusions' : implode(', ', $c);
+        $c = [];
+        foreach ($data[$columnName] as $country) {
+            $c[] = $translator->translate($country['countryDesc']);
+        }
+
+        return Escape::html(implode(', ', $c));
     }
 }

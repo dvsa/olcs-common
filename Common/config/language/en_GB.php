@@ -3859,7 +3859,6 @@ return [
     'permits.ecmt.page.unpaid.tableheader.permit' => 'Permit',
     'permits.ecmt.page.unpaid.tableheader.min-emission' => 'Minimum emission standard',
     'permits.ecmt.page.unpaid.tableheader.countries' => 'Not valid for travel to',
-    'permits.ecmt.page.unpaid.no.countries' => 'No exclusions',
 
     'waived-paid-permits.page.fee-part-successful.title' => 'Accept or Decline permits',
     'waived.paid.permits.page.ecmt.fee-part-successful.payment.due' => 'Acceptance required by',
@@ -3884,6 +3883,11 @@ return [
     'permits.irhp.valid.permits.table.expiry-date' => 'Expiry date',
     'permits.irhp.valid.permits.table.issue-date' => 'Issue date',
     'permits.irhp.valid.permits.table.use-by-date' => 'Use by',
+
+    'permits.irhp.unpaid.permits.table.permit' => 'Permit',
+    'permits.irhp.unpaid.permits.table.min-emission' => 'Minimum emission standard',
+    'permits.irhp.unpaid.permits.table.countries' => 'Not valid to travel to',
+    'no.constrained.countries' => 'No exclusions',
 
     'permits.irhp.under-consideration.browser.title' => 'Application under consideration - ',
     'permits.irhp.under-consideration.header' => 'Permit application for licence',
