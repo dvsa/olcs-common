@@ -2,7 +2,7 @@
 
 namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
 
-use Common\Form\Elements\Custom\NoOfPermitsCombinedTotalElement;
+use Common\Form\Elements\Custom\EcmtShortTermNoOfPermitsCombinedTotalElement;
 use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulator;
@@ -92,7 +92,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
             ->with(
                 [
                     'name' => 'combinedTotalChecker',
-                    'type' => NoOfPermitsCombinedTotalElement::class,
+                    'type' => EcmtShortTermNoOfPermitsCombinedTotalElement::class,
                     'options' => [
                         'label_attributes' => [
                             'id' => $this->emissionsCategory1Name

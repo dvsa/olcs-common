@@ -2,7 +2,7 @@
 
 namespace Common\Form\Elements\Validators;
 
-class NoOfPermitsCombinedTotalValidator
+class EcmtShortTermNoOfPermitsCombinedTotalValidator
 {
     /**
      * Verify that the number of non-zero values found is greater than 0

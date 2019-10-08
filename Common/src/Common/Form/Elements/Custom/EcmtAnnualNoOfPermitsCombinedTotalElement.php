@@ -2,12 +2,12 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Common\Form\Elements\Validators\NoOfPermitsCombinedTotalValidator;
+use Common\Form\Elements\Validators\EcmtAnnualNoOfPermitsCombinedTotalValidator;
 use Zend\Form\Element\Hidden;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\Callback;
 
-class NoOfPermitsCombinedTotalElement extends Hidden implements InputProviderInterface
+class EcmtAnnualNoOfPermitsCombinedTotalElement extends Hidden implements InputProviderInterface
 {
     /**
      * {@inheritdoc}
@@ -21,19 +21,19 @@ class NoOfPermitsCombinedTotalElement extends Hidden implements InputProviderInt
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateNonZeroValuePresent'],
+                        'callback' => [EcmtAnnualNoOfPermitsCombinedTotalValidator::class, 'validateMax'],
+                        'callbackOptions' => [$this->options['maxPermitted']],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.no-fields-populated'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.max-exceeded'
                         ]
-                    ],
-                    'break_chain_on_failure' => true
+                    ]
                 ],
                 [
                     'name' => Callback::class,
                     'options' => [
-                        'callback' => [NoOfPermitsCombinedTotalValidator::class, 'validateMultipleNonZeroValuesNotPresent'],
+                        'callback' => [EcmtAnnualNoOfPermitsCombinedTotalValidator::class, 'validateMin'],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.two-or-more-fields-populated'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.min-exceeded'
                         ]
                     ]
                 ],
