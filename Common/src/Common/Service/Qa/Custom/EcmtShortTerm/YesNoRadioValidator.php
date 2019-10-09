@@ -6,33 +6,32 @@ use Zend\Validator\AbstractValidator;
 
 class YesNoRadioValidator extends AbstractValidator
 {
-    /** @var mixed */
-    private $form;
-
-    /** @var string */
-    private $fieldsetName;
+    /** @var RestrictedCountriesMultiCheckbox */
+    private $yesContentElement;
 
     /**
      * Create service instance
      *
-     * @param mixed $form
-     * @param string $fieldsetName
+     * @param RestrictedCountriesMultiCheckbox $yesContentElement
      *
      * @return YesNoRadioValidator
      */
-    public function __construct($form, $fieldsetName)
+    public function __construct($yesContentElement)
     {
-        $this->form = $form;
-        $this->fieldsetName = $fieldsetName;
+        $this->yesContentElement = $yesContentElement;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isValid($value)
+    public function isValid($value, $context = null)
     {
-        if ($value == 0) {
-            $this->form->getInputFilter()->get('qa')->get($this->fieldsetName)->get('yesContent')->setRequired(false);
+        if ($value == 1 && is_null($context['yesContent'])) {
+            $this->yesContentElement->setMessages(
+                ['qanda.ecmt-short-term.restricted-countries.error.select-countries']
+            );
+    
+            return false;
         }
 
         return true;

@@ -2,13 +2,10 @@
 
 namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
 
+use Common\Service\Qa\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckbox;
 use Common\Service\Qa\Custom\EcmtShortTerm\YesNoRadioValidator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\InputFilter\Input;
-use Zend\InputFilter\InputFilter;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
 
 /**
  * YesNoRadioValidatorTest
@@ -17,55 +14,56 @@ use Zend\Form\Form;
  */
 class YesNoRadioValidatorTest extends MockeryTestCase
 {
-    private $form;
-
-    private $fieldsetName;
+    private $yesContentElement;
 
     private $yesNoRadioValidator;
 
     public function setUp()
     {
-        $this->form = m::mock(Form::class);
+        $this->yesContentElement = m::mock(RestrictedCountriesMultiCheckbox::class);
 
-        $this->fieldsetName = 'fieldset12';
-
-        $this->yesNoRadioValidator = new YesNoRadioValidator($this->form, $this->fieldsetName);
+        $this->yesNoRadioValidator = new YesNoRadioValidator($this->yesContentElement);
     }
 
-    public function testRemoveRequiredWhenValueZero()
+    /**
+     * @dataProvider dpIsValidTrue
+     */
+    public function testIsValidTrue($value, $context)
     {
-        $yesContentInput = m::mock(Input::class);
-        $yesContentInput->shouldReceive('setRequired')
-            ->with(false)
-            ->once();
-
-        $fieldsetInput = m::mock(Input::class);
-        $fieldsetInput->shouldReceive('get')
-            ->with('yesContent')
-            ->andReturn($yesContentInput);
-
-        $qaInput = m::mock(Input::class);
-        $qaInput->shouldReceive('get')
-            ->with($this->fieldsetName)
-            ->andReturn($fieldsetInput);
-
-        $inputFilter = m::mock(InputFilter::clasS);
-        $inputFilter->shouldReceive('get')
-            ->with('qa')
-            ->andReturn($qaInput);
-
-        $this->form->shouldReceive('getInputFilter')
-            ->andReturn($inputFilter);
-
         $this->assertTrue(
-            $this->yesNoRadioValidator->isValid(0)
+            $this->yesNoRadioValidator->isValid($value, $context)
         );
     }
 
-    public function testNoActionWhenValueNotZero()
+    public function dpIsValidTrue()
     {
-        $this->assertTrue(
-            $this->yesNoRadioValidator->isValid(1)
+        return [
+            [
+                'value' => 1,
+                'context' => [
+                    'yesContent' => ['RU', 'IT']
+                ]
+            ],
+            [
+                'value' => 0,
+                'context' => [
+                    'yesContent' => null
+                ]
+            ]
+        ];
+    }
+
+    public function testIsValidFalseSetMessages()
+    {
+        $value = 1;
+        $context = ['yesContent' => null];
+
+        $this->yesContentElement->shouldReceive('setMessages')
+            ->with(['qanda.ecmt-short-term.restricted-countries.error.select-countries'])
+            ->once();
+
+        $this->assertFalse(
+            $this->yesNoRadioValidator->isValid($value, $context)
         );
     }
 }
