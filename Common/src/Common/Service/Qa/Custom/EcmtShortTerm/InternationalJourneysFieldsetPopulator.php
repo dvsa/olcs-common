@@ -7,28 +7,29 @@ use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\RadioFieldsetPopulator;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Fieldset;
-use Zend\View\Helper\Partial;
 
 class InternationalJourneysFieldsetPopulator implements FieldsetPopulatorInterface
 {
     /** @var RadioFieldsetPopulator */
     private $radioFieldsetPopulator;
 
-    /** @var Partial */
-    private $partial;
+    /** @var NiWarningConditionalAdder */
+    private $niWarningConditionalAdder;
 
     /**
      * Create service instance
      *
      * @param RadioFieldsetPopulator $radioFieldsetPopulator
-     * @param Partial $partial
+     * @param NiWarningConditionalAdder $niWarningConditionalAdder
      *
      * @return InternationalJourneysFieldsetPopulator
      */
-    public function __construct(RadioFieldsetPopulator $radioFieldsetPopulator, Partial $partial)
-    {
+    public function __construct(
+        RadioFieldsetPopulator $radioFieldsetPopulator,
+        NiWarningConditionalAdder $niWarningConditionalAdder
+    ) {
         $this->radioFieldsetPopulator = $radioFieldsetPopulator;
-        $this->partial = $partial;
+        $this->niWarningConditionalAdder = $niWarningConditionalAdder;
     }
 
     /**
@@ -40,22 +41,7 @@ class InternationalJourneysFieldsetPopulator implements FieldsetPopulatorInterfa
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
-        if ($options['showNiWarning']) {
-            $markup = $this->partial->__invoke(
-                'partials/warning-component',
-                ['translationKey' => 'permits.page.number-of-trips.northern-ireland.warning']
-            );
-
-            $fieldset->add(
-                [
-                    'name' => 'niWarning',
-                    'type' => Html::class,
-                    'attributes' => [
-                        'value' => $markup
-                    ]
-                ]
-            );
-        }
+        $this->niWarningConditionalAdder->addIfRequired($fieldset, $options['showNiWarning']);
 
         $fieldset->add(
             [
