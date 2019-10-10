@@ -3986,6 +3986,8 @@ return [
     'qanda.ecmt-short-term.annual-trips-abroad.textbox.label' => 'Number of trips',
     'qanda.ecmt-short-term.annual-trips-abroad.textbox.hint' => 'One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
     'qanda.ecmt-short-term.annual-trips-abroad.error.enter-digits' => 'Enter the number of trips you carried out over the past 12 months',
+    'qanda.ecmt-short-term.annual-trips-abroad.error.not-whole-number' => 'You must enter a valid whole number',
+    'qanda.ecmt-short-term.annual-trips-abroad.error.max-exceeded' => 'You must enter a number which is below 999999',
 
     'qanda.ecmt-short-term.percentage-international-journeys.question-short' => 'Percentage of international journeys',
     'qanda.ecmt-short-term.percentage-international-journeys.question' => 'In the last 12 months, what percentage of international trips did you make using this licence?',
