@@ -3993,6 +3993,10 @@ return [
     'qanda.ecmt-short-term.percentage-international-journeys.question' => 'In the last 12 months, what percentage of international trips did you make using this licence?',
     'qanda.ecmt-short-term.percentage-international-journeys.not-selected-message' => 'Select the percentage of international journeys over the past 12 months',
 
+    'qanda.ecmt-short-term.sectors.question-short' => 'Goods you carry abroad',
+    'qanda.ecmt-short-term.sectors.question' => 'Select one sector you mainly transport goods in using this licence',
+    'qanda.ecmt-short-term.sectors.not-selected-message' => 'Select one main sector only',
+
     'st_permit_usage_transit_only' => 'Transit only',
     'st_permit_usage_cross_trade_only' => 'Cross-trade only',
     'st_permit_usage_both' => 'Both transit and cross-trade',
