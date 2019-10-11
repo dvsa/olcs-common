@@ -423,4 +423,8 @@ class RefData
     const QUESTION_TYPE_INTEGER = 'question_type_integer';
     const QUESTION_TYPE_BOOLEAN = 'question_type_boolean';
     const QUESTION_TYPE_CUSTOM = 'question_type_custom';
+
+    // user operating system
+    const USER_OS_TYPE_WINDOWS_7 = 'windows_7';
+    const USER_OS_TYPE_WINDOWS_10 = 'windows_10';
 }
