@@ -202,6 +202,8 @@ return array(
             'QaEcmtShortTermYesNoRadioFactory' => QaService\Custom\EcmtShortTerm\YesNoRadioFactory::class,
             'QaEcmtShortTermRestrictedCountriesMultiCheckboxFactory'
                 => QaService\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckboxFactory::class,
+            'QaEcmtShortTermInternationalJourneysIsValidHandler' =>
+                QaService\Custom\EcmtShortTerm\InternationalJourneysIsValidHandler::class,
 
             Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
             SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
@@ -265,6 +267,10 @@ return array(
                 QaService\Custom\EcmtShortTerm\RestrictedCountriesFieldsetPopulatorFactory::class,
             'QaEcmtShortTermAnnualTripsAbroadFieldsetPopulator' =>
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadFieldsetPopulatorFactory::class,
+            'QaEcmtShortTermInternationalJourneysFieldsetPopulator' =>
+                QaService\Custom\EcmtShortTerm\InternationalJourneysFieldsetPopulatorFactory::class,
+            'QaEcmtShortTermInternationalJourneysDataHandler' =>
+                QaService\Custom\EcmtShortTerm\InternationalJourneysDataHandlerFactory::class,
     
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,
