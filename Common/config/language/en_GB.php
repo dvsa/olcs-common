@@ -3876,6 +3876,7 @@ return [
     'permits.irhp.valid.permits.table.permit' => 'Permit',
     'permits.irhp.valid.permits.table.permit-no' => 'Permit number',
     'permits.irhp.valid.permits.table.country' => 'Country',
+    'permits.irhp.valid.permits.table.constrained.countries' => 'Not valid to travel to',
     'permits.irhp.valid.permits.table.application' => 'Application',
     'permits.irhp.valid.permits.table.application-no' => 'Application number',
     'permits.irhp.valid.permits.table.emissions-standard' => 'Minimum emissions standard',
