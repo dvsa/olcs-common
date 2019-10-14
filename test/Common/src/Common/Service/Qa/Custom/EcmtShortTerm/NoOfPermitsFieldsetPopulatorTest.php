@@ -75,6 +75,10 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
 
         $this->fieldset = m::mock(Fieldset::class);
 
+        $this->fieldset->shouldReceive('setAttribute')
+            ->with('id', 'st-number-of-permits')
+            ->once();
+
         $this->fieldset->shouldReceive('add')
             ->with(
                 [
