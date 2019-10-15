@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * Fieldset Populator test
+ *
+ * @author Jonathan Thomas <jonathan@opalise.co.uk>
+ */
+namespace CommonTest\Service\Qa;
+
+use Common\Service\Qa\FieldsetAdder;
+use Common\Service\Qa\FieldsetPopulator;
+use Common\Service\Qa\ValidatorsAdder;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Zend\Form\Fieldset;
+
+/**
+ * Fieldset Populator Test
+ *
+ * @author Jonathan Thomas <jonathan@opalise.co.uk>
+ */
+class FieldsetPopulatorTest extends MockeryTestCase
+{
+    public function testPopulate()
+    {
+        $applicationStep1 = [
+            'step1Attribute1' => 'step1Value1',
+            'step1Attribute2' => 'step1Value2'
+        ];
+
+        $applicationStep2 = [
+            'step2Attribute1' => 'step2Value1',
+            'step2Attribute2' => 'step2Value2'
+        ];
+
+        $applicationSteps = [
+            $applicationStep1,
+            $applicationStep2
+        ];
+
+        $fieldset = m::mock(Fieldset::class);
+
+        $fieldsetAdder = m::mock(FieldsetAdder::class);
+        $fieldsetAdder->shouldReceive('add')
+            ->with($fieldset, $applicationStep1)
+            ->once()
+            ->globally()
+            ->ordered();
+        $fieldsetAdder->shouldReceive('add')
+            ->with($fieldset, $applicationStep2)
+            ->once()
+            ->globally()
+            ->ordered();
+
+        $validatorsAdder = m::mock(ValidatorsAdder::class);
+        $validatorsAdder->shouldReceive('add')
+            ->with($fieldset, $applicationStep1)
+            ->once()
+            ->globally()
+            ->ordered();
+        $validatorsAdder->shouldReceive('add')
+            ->with($fieldset, $applicationStep2)
+            ->once()
+            ->globally()
+            ->ordered();
+
+        $fieldsetPopulator = new FieldsetPopulator($fieldsetAdder, $validatorsAdder);
+        $fieldsetPopulator->populate($fieldset, $applicationSteps);
+    }
+}
