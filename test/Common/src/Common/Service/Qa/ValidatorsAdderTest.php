@@ -17,6 +17,17 @@ use Zend\Validator\ValidatorChain;
  */
 class ValidatorsAdderTest extends MockeryTestCase
 {
+    private $form;
+
+    private $sut;
+
+    public function setUp()
+    {
+        $this->form = m::mock(Form::class);
+
+        $this->sut = new ValidatorsAdder();
+    }
+
     public function testAdd()
     {
         $fieldsetName = 'fields123';
@@ -33,14 +44,17 @@ class ValidatorsAdderTest extends MockeryTestCase
             'inclusive' => true
         ];
          
-        $validators = [
-            [
-                'rule' => $betweenValidatorRule,
-                'params' => $betweenValidatorParams
-            ],
-            [
-                'rule' => $greaterThanValidatorRule,
-                'params' => $greaterThanValidatorParams
+        $options = [
+            'fieldsetName' => $fieldsetName,
+            'validators' => [
+                [
+                    'rule' => $betweenValidatorRule,
+                    'params' => $betweenValidatorParams
+                ],
+                [
+                    'rule' => $greaterThanValidatorRule,
+                    'params' => $greaterThanValidatorParams
+                ]
             ]
         ];
 
@@ -76,14 +90,24 @@ class ValidatorsAdderTest extends MockeryTestCase
             ->with('qa')
             ->andReturn($qaFieldsetInputFilter);
 
-        $form = m::mock(Form::class);
-        $form->shouldReceive('getInputFilter')
+        $this->form->shouldReceive('getInputFilter')
             ->withNoArgs()
             ->andReturn($formInputFilter);
 
         $qaElementInput = m::mock(InputInterface::class);
 
-        $sut = new ValidatorsAdder();
-        $sut->add($form, $fieldsetName, $validators);
+        $this->sut->add($this->form, $options);
+    }
+
+    public function testAddWithNoValidators()
+    {
+        $options = [
+            'validators' => []
+        ];
+
+        $this->form->shouldReceive('getInputFilter')
+            ->never();
+
+        $this->sut->add($this->form, $options);
     }
 }

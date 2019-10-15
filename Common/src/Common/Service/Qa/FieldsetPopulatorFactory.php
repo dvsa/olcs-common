@@ -5,19 +5,20 @@ namespace Common\Service\Qa;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class FieldsetAdderFactory implements FactoryInterface
+class FieldsetPopulatorFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return FieldsetAdder
+     * @return FieldsetPopulator
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new FieldsetAdder(
-            $serviceLocator->get('QaFieldsetGenerator')
+        return new FieldsetPopulator(
+            $serviceLocator->get('QaFieldsetAdder'),
+            $serviceLocator->get('QaValidatorsAdder')
         );
     }
 }
