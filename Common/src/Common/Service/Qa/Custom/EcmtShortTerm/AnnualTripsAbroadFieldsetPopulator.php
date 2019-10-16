@@ -6,6 +6,7 @@ use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Common\Service\Qa\TextFieldsetPopulator;
+use Zend\Form\Element\Hidden;
 use Zend\Form\Fieldset;
 
 class AnnualTripsAbroadFieldsetPopulator implements FieldsetPopulatorInterface
@@ -16,20 +17,26 @@ class AnnualTripsAbroadFieldsetPopulator implements FieldsetPopulatorInterface
     /** @var TranslationHelperService */
     private $translator;
 
+    /** @var NiWarningConditionalAdder */
+    private $niWarningConditionalAdder;
+
     /**
      * Create service instance
      *
      * @param TextFieldsetPopulator $textFieldsetPopulator
      * @param TranslationHelperService $translator
+     * @param NiWarningConditionalAdder $niWarningConditionalAdder
      *
      * @return AnnualTripsAbroadFieldsetPopulator
      */
     public function __construct(
         TextFieldsetPopulator $textFieldsetPopulator,
-        TranslationHelperService $translator
+        TranslationHelperService $translator,
+        NiWarningConditionalAdder $niWarningConditionalAdder
     ) {
         $this->textFieldsetPopulator = $textFieldsetPopulator;
         $this->translator = $translator;
+        $this->niWarningConditionalAdder = $niWarningConditionalAdder;
     }
 
     /**
@@ -41,18 +48,35 @@ class AnnualTripsAbroadFieldsetPopulator implements FieldsetPopulatorInterface
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
-        $markup = $this->translator->translate('markup-ecmt-trips-hint');
+        $this->niWarningConditionalAdder->addIfRequired($fieldset, $options['showNiWarning']);
+
+        $guidanceBlueMarkup = sprintf(
+            '<div class="guidance-blue">%s</div>',
+            $this->translator->translate('qanda.ecmt-short-term.annual-trips-abroad.guidance')
+        );
+
+        $ecmtTripsHintMarkup = $this->translator->translate('markup-ecmt-trips-hint');
 
         $fieldset->add(
             [
                 'name' => 'hint',
                 'type' => Html::class,
                 'attributes' => [
-                    'value' => $markup
+                    'value' => $guidanceBlueMarkup . $ecmtTripsHintMarkup
                 ]
             ]
         );
 
-        $this->textFieldsetPopulator->populate($form, $fieldset, $options);
+        $fieldset->add(
+            [
+                'name' => 'warningVisible',
+                'type' => Hidden::class,
+                'attributes' => [
+                    'value' => 0
+                ]
+            ]
+        );
+
+        $this->textFieldsetPopulator->populate($form, $fieldset, $options['text']);
     }
 }

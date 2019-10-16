@@ -5,20 +5,19 @@ namespace Common\Service\Qa\Custom\EcmtShortTerm;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class InternationalJourneysFieldsetPopulatorFactory implements FactoryInterface
+class NiWarningConditionalAdderFactory implements FactoryInterface
 {
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return InternationalJourneysFieldsetPopulator
+     * @return NiWarningConditionalAdder
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new InternationalJourneysFieldsetPopulator(
-            $serviceLocator->get('QaRadioFieldsetPopulator'),
-            $serviceLocator->get('QaEcmtShortTermNiWarningConditionalAdder')
+        return new NiWarningConditionalAdder(
+            $serviceLocator->get('ViewHelperManager')->get('partial')
         );
     }
 }
