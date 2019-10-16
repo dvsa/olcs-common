@@ -34,6 +34,8 @@ class NoOfPermitsFieldsetPopulator implements FieldsetPopulatorInterface
      */
     public function populate($form, Fieldset $fieldset, array $options)
     {
+        $fieldset->setAttribute('id', 'st-number-of-permits');
+
         $inset = $this->translator->translate('qanda.ecmt-short-term.number-of-permits.inset');
         $line1 = $this->translator->translate('qanda.ecmt-short-term.number-of-permits.annotation.line-1');
 
