@@ -7,21 +7,16 @@ class FieldsetAdder
     /** @var FieldsetGenerator */
     private $fieldsetGenerator;
 
-    /** @var ValidatorsAdder */
-    private $validatorsAdder;
-
     /**
      * Create service instance
      *
      * @param FieldsetGenerator $fieldsetGenerator
-     * @param ValidatorsAdder $validatorsAdder
      *
      * @return FieldsetAdder
      */
-    public function __construct(FieldsetGenerator $fieldsetGenerator, ValidatorsAdder $validatorsAdder)
+    public function __construct(FieldsetGenerator $fieldsetGenerator)
     {
         $this->fieldsetGenerator = $fieldsetGenerator;
-        $this->validatorsAdder = $validatorsAdder;
     }
 
     /**
@@ -34,9 +29,5 @@ class FieldsetAdder
     {
         $fieldset = $this->fieldsetGenerator->generate($form, $options);
         $form->get('qa')->add($fieldset);
-
-        if (count($options['validators'])) {
-            $this->validatorsAdder->add($form, $fieldset->getName(), $options['validators']);
-        }
     }
 }
