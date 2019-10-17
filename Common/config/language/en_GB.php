@@ -3582,7 +3582,6 @@ return [
     'permits.page.dashboard.browser.title' => 'Permits Home - ',
     'permits.page.licence.browser.title' => 'Select Licence',
     'permits.page.licence.question' => 'Select a licence you would like your permit to be applied to',
-    'permits.page.licence.question.one.licence' => 'Permit application for licence %s',
     'permits.page.licence.saturated.one.licence' => 'Your licence has an active application',
     'permits.page.licence.saturated' => 'You have already applied against all your licences',
     'permits.page.euro-emissions.browser.title' => 'Euro emission standards',
@@ -3608,8 +3607,6 @@ return [
     'permits.page.type.question' => 'What type of permit do you need?',
     'permits.page.year.browser.title' => 'Select which year you want permits for',
     'permits.page.year.question' => 'Select which year you want permits for',
-    'permits.page.year.ecmt-short-term.option.hint.2019' => 'Permits for use between 1 November to 31 December %s',
-    'permits.page.year.ecmt-short-term.option.hint.not-2019' => 'Permits for use between 1 January to 31 December %s',
     'permits.page.year.ecmt-short-term.guidance' => 'You can only use Short-term permits for <strong>30 consecutive days</strong> from the start date you choose, during the calendar year they\'ve been issued for.',
 
     'permits.page.year.browser.title.one-year-available' => 'Currently, there is only one year available to apply for',
@@ -3731,6 +3728,12 @@ return [
 
     'permits.page.irhp-window-closed.title' => 'The application period has now closed',
     'permits.page.irhp-window-closed.browser.title' => 'The application period has now closed',
+
+    'permits.page.irhp-not-eligible.title' => 'You are not eligible to apply for this type of permit',
+    'permits.page.irhp-not-eligible.browser.title' => 'You are not eligible to apply for this type of permit',
+
+    'permits.page.irhp-no-licences.title' => 'You have no available licences to make a permit application',
+    'permits.page.irhp-no-licences.browser.title' => 'You have no available licences to make a permit application',
 
     'permits.button.accept-and-continue' => 'Accept and continue',
     'permits.button.confirm-and-continue' => 'Confirm and continue',
