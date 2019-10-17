@@ -7,10 +7,8 @@ use Common\Service\Qa\DataHandlerInterface;
 use RuntimeException;
 use Zend\Form\Fieldset;
 
-class QaForm extends Form
+class QaForm extends BaseQaForm
 {
-    const QA_FIELDSET_NAME = 'qa';
-
     const QUESTION_FIELDSET_PREFIX = 'fieldset';
 
     /** @var array */
@@ -29,21 +27,8 @@ class QaForm extends Form
      */
     public function setData($data)
     {
-        if (!array_key_exists(self::QA_FIELDSET_NAME, $data)) {
-            $data[self::QA_FIELDSET_NAME] = [];
-        }
-
-        foreach ($this->get(self::QA_FIELDSET_NAME)->getFieldsets() as $fieldset) {
-            $fieldsetName = $fieldset->getName();
-            if (!array_key_exists($fieldsetName, $data[self::QA_FIELDSET_NAME])) {
-                $data[self::QA_FIELDSET_NAME][$fieldsetName] = [];
-            }
-            if (!array_key_exists('qaElement', $data[self::QA_FIELDSET_NAME][$fieldsetName])) {
-                $data[self::QA_FIELDSET_NAME][$fieldsetName]['qaElement'] = '';
-            }
-        }
-
-        parent::setData($data);
+        $data = $this->updateDataForQa($data);
+        $this->callParentSetData($data);
     }
 
     /**
@@ -178,5 +163,15 @@ class QaForm extends Form
     protected function callParentIsValid()
     {
         return parent::isValid();
+    }
+
+    /**
+     * Call the setData function of the parent class (to assist in unit testing)
+     *
+     * @param mixed $data
+     */
+    protected function callParentSetData($data)
+    {
+        return parent::setData($data);
     }
 }
