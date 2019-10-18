@@ -8,7 +8,6 @@ use Common\Service\Qa\DataHandlerInterface;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
-use Zend\Form\Element\Text;
 
 /**
  * QaFormTest
@@ -17,100 +16,30 @@ use Zend\Form\Element\Text;
  */
 class QaFormTest extends MockeryTestCase
 {
-    public function testSetDataQaElementPresent()
+    public function testSetData()
     {
-        $qaFieldset12 = new Fieldset('fieldset12');
-        $qaFieldset12->add(new Text('qaElement'));
-
-        $qaFieldset50 = new Fieldset('fieldset50');
-        $qaFieldset50->add(new Text('qaElement'));
-
-        $qaFieldset84 = new Fieldset('fieldset84');
-        $qaFieldset84->add(new Text('qaElement'));
-
-        $qaFieldset = new Fieldset('qa');
-
-        $qaFieldset->add($qaFieldset12);
-        $qaFieldset->add($qaFieldset50);
-        $qaFieldset->add($qaFieldset84);
-
-        $form = new QaForm();
-        $form->add($qaFieldset);
-
         $unprocessedData = [
-            'qa' => [
-                'fieldset12' => [
-                    'qaElement' => 'test'
-                ]
-            ]
+            'unprocessedKey1' => 'unprocessedValue1',
+            'unprocessedKey2' => 'unprocessedValue2'
         ];
 
-        $expectedProcessedData = [
-            'qa' => [
-                'fieldset12' => [
-                    'qaElement' => 'test'
-                ],
-                'fieldset50' => [
-                    'qaElement' => ''
-                ],
-                'fieldset84' => [
-                    'qaElement' => ''
-                ]
-            ]
+        $processedData = [
+            'processedKey1' => 'unprocessedValue1',
+            'processedKey2' => 'unprocessedValue2'
         ];
 
-        $form->setData($unprocessedData);
-        $form->isValid();
+        $qaForm = m::mock(QaForm::class)
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+        $qaForm->shouldReceive('updateDataForQa')
+            ->with($unprocessedData)
+            ->once()
+            ->andReturn($processedData);
+        $qaForm->shouldReceive('callParentSetData')
+            ->with($processedData)
+            ->once();
 
-        $this->assertEquals(
-            $expectedProcessedData,
-            $form->getData()
-        );
-    }
-
-    public function testSetDataQaElementNotPresent()
-    {
-        $qaFieldset12 = new Fieldset('fieldset12');
-        $qaFieldset12->add(new Text('qaElement'));
-
-        $qaFieldset50 = new Fieldset('fieldset50');
-        $qaFieldset50->add(new Text('qaElement'));
-
-        $qaFieldset84 = new Fieldset('fieldset84');
-        $qaFieldset84->add(new Text('qaElement'));
-
-        $qaFieldset = new Fieldset('qa');
-
-        $qaFieldset->add($qaFieldset12);
-        $qaFieldset->add($qaFieldset50);
-        $qaFieldset->add($qaFieldset84);
-
-        $form = new QaForm();
-        $form->add($qaFieldset);
-
-        $unprocessedData = [];
-
-        $expectedProcessedData = [
-            'qa' => [
-                'fieldset12' => [
-                    'qaElement' => ''
-                ],
-                'fieldset50' => [
-                    'qaElement' => ''
-                ],
-                'fieldset84' => [
-                    'qaElement' => ''
-                ]
-            ]
-        ];
-
-        $form->setData($unprocessedData);
-        $form->isValid();
-
-        $this->assertEquals(
-            $expectedProcessedData,
-            $form->getData()
-        );
+        $qaForm->setData($unprocessedData);
     }
 
     public function testSetDataForRedisplayWithHandler()
