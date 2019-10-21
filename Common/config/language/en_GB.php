@@ -3942,7 +3942,7 @@ return [
     'qanda.ecmt-short-term.permit-usage.question-short' => 'How will you use the permits',
     'qanda.ecmt-short-term.permit-usage.question' => 'How will you use your Short-term ECMT permits?',
 
-    'qanda.ecmt-short-term.permit-usage.additional-guidance' => '<p>Most journeys won’t need an ECMT permit between November 2019 and July 2020. Check which permits you may need on <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">GOV.UK</a> (opens in new window).</p><p>From November 2019, Short-term ECMT permits will be required for transiting through EU or EEA countries to non-EU or EEA countries who are ECMT members, including Switzerland .</p><p>You will also need a Short-term ECMT permit if:</p><ul class="govuk-list"><li>between November 2019 and February 2020, your journey includes more than two cross-trade trips between two EU or EEA countries, within 7 days of leaving the UK</li><li>between March and May 2020, your journey includes more than one cross-trade trips between two EU or EEA countries, within 7 days of leaving the UK</li><li>from June 2020 onwards, you do any cross-trade trip</li></ul><p>Confirm how you will be using short-term permits:</p>',
+    'qanda.ecmt-short-term.permit-usage.additional-guidance' => '<p>Most journeys won’t need an ECMT permit between November 2019 and July 2020. Check which permits you may need on <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">GOV.UK</a> (opens in new window).</p><p>From November 2019, Short-term ECMT permits will be required for transiting through EU or EEA countries to non-EU or EEA countries who are ECMT members, including Switzerland .</p><p>You will also need a Short-term ECMT permit if:</p><ul class="govuk-list"><li>between November 2019 and February 2020, your journey includes more than two cross-trade trips between two EU or EEA countries, within 7 days of leaving the UK</li></ul><p>Confirm how you will be using short-term permits:</p>',
 
     'qanda.ecmt-short-term.permit-usage.not-selected-message' => 'You must select an option',
     'qanda.ecmt-short-term-permit-usage.footer-annotation' => 'We may contact you to verify your application.',
@@ -3987,7 +3987,7 @@ return [
 
     'qanda.ecmt-short-term.annual-trips-abroad.question-short' => 'Annual trips abroad',
     'qanda.ecmt-short-term.annual-trips-abroad.question' => 'How many international trips did you make in the last 12 months using this licence?',
-    'qanda.ecmt-short-term.annual-trips-abroad.guidance' => 'If you have not done any international trips in the last 12 months, you are unlikely to be awarded an ECMT permit. We intend to prioritise applications from hauliers who make the most international journeys.',
+    'qanda.ecmt-short-term.annual-trips-abroad.guidance' => '<p>You will be required to provide evidence of the trips you made in the last 12 months.</p><p>If you have not done any international trips, you are unlikely to be awarded an ECMT permit. We intend to prioritise applications from hauliers who make the most international journeys.</p>',
     'qanda.ecmt-short-term.annual-trips-abroad.textbox.label' => 'Number of trips',
     'qanda.ecmt-short-term.annual-trips-abroad.textbox.hint' => 'One trip includes the outward and return journey, even if you pick up and drop off goods at different points or places along your journey.',
     'qanda.ecmt-short-term.annual-trips-abroad.error.enter-digits' => 'Enter the number of trips you carried out over the past 12 months',
