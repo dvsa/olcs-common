@@ -3664,6 +3664,7 @@ return [
     'permits.page.fee.permit.status' => 'Application status',
     'permits.page.fee.permit.type' => 'Permit type',
     'permits.page.fee.permit.year' => 'Permit year',
+    'permits.page.fee.permit.period' => 'Permit period',
     'permits.page.fee.permit.validity' => 'Permit start and end date',
     'permits.page.fee.permit.validity.dates' => '%s to %s',
     'permits.page.fee.number.permits' => 'Number of permits',
