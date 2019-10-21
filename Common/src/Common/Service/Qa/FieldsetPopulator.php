@@ -29,11 +29,12 @@ class FieldsetPopulator
      *
      * @param mixed $form
      * @param array $applicationSteps
+     * @param string $usageContext
      */
-    public function populate($form, array $applicationSteps)
+    public function populate($form, array $applicationSteps, $usageContext)
     {
         foreach ($applicationSteps as $applicationStep) {
-            $this->fieldsetAdder->add($form, $applicationStep);
+            $this->fieldsetAdder->add($form, $applicationStep, $usageContext);
         }
 
         foreach ($applicationSteps as $applicationStep) {

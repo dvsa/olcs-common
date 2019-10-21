@@ -4,30 +4,46 @@ namespace Common\Service\Qa;
 
 class FieldsetAdder
 {
-    /** @var FieldsetGenerator */
-    private $fieldsetGenerator;
+    /** @var FieldsetPopulatorProvider */
+    private $fieldsetPopulatorProvider;
+
+    /** @var FieldsetFactory */
+    private $fieldsetFactory;
 
     /**
      * Create service instance
      *
-     * @param FieldsetGenerator $fieldsetGenerator
+     * @param FieldsetPopulatorProvider $fieldsetPopulatorProvider
+     * @param FieldsetFactory $fieldsetFactory
      *
      * @return FieldsetAdder
      */
-    public function __construct(FieldsetGenerator $fieldsetGenerator)
-    {
-        $this->fieldsetGenerator = $fieldsetGenerator;
+    public function __construct(
+        FieldsetPopulatorProvider $fieldsetPopulatorProvider,
+        FieldsetFactory $fieldsetFactory
+    ) {
+        $this->fieldsetPopulatorProvider = $fieldsetPopulatorProvider;
+        $this->fieldsetFactory = $fieldsetFactory;
     }
 
     /**
-     * Add a question fieldset to the specified qa fieldset based on the supplied options array
+     * Add a question fieldset to the qa fieldset based on the supplied options array
      *
      * @param mixed $form
      * @param array $options
+     * @param string $usageContext
      */
-    public function add($form, array $options)
+    public function add($form, array $options, $usageContext)
     {
-        $fieldset = $this->fieldsetGenerator->generate($form, $options);
+        $fieldset = $this->fieldsetFactory->create($options['fieldsetName'], $options['type']);
+
+        if ($usageContext == UsageContext::CONTEXT_INTERNAL) {
+            $fieldset->setLabel($options['shortName']);
+        }
+
+        $fieldsetPopulator = $this->fieldsetPopulatorProvider->get($options['type']);
+        $fieldsetPopulator->populate($form, $fieldset, $options['element']);
+
         $form->get('qa')->add($fieldset);
     }
 }

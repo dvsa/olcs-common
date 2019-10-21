@@ -9,6 +9,7 @@ namespace CommonTest\Service\Qa;
 
 use Common\Service\Qa\FieldsetAdder;
 use Common\Service\Qa\FieldsetPopulator;
+use Common\Service\Qa\UsageContext;
 use Common\Service\Qa\ValidatorsAdder;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -21,7 +22,10 @@ use Zend\Form\Fieldset;
  */
 class FieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulate()
+    /**
+     * @dataProvider dpTestPopulate
+     */
+    public function testPopulate($usageContext)
     {
         $applicationStep1 = [
             'step1Attribute1' => 'step1Value1',
@@ -42,12 +46,12 @@ class FieldsetPopulatorTest extends MockeryTestCase
 
         $fieldsetAdder = m::mock(FieldsetAdder::class);
         $fieldsetAdder->shouldReceive('add')
-            ->with($fieldset, $applicationStep1)
+            ->with($fieldset, $applicationStep1, $usageContext)
             ->once()
             ->globally()
             ->ordered();
         $fieldsetAdder->shouldReceive('add')
-            ->with($fieldset, $applicationStep2)
+            ->with($fieldset, $applicationStep2, $usageContext)
             ->once()
             ->globally()
             ->ordered();
@@ -65,6 +69,14 @@ class FieldsetPopulatorTest extends MockeryTestCase
             ->ordered();
 
         $fieldsetPopulator = new FieldsetPopulator($fieldsetAdder, $validatorsAdder);
-        $fieldsetPopulator->populate($fieldset, $applicationSteps);
+        $fieldsetPopulator->populate($fieldset, $applicationSteps, $usageContext);
+    }
+
+    public function dpTestPopulate()
+    {
+        return [
+            [UsageContext::CONTEXT_SELFSERVE],
+            [UsageContext::CONTEXT_INTERNAL],
+        ];
     }
 }

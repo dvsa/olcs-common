@@ -2,8 +2,11 @@
 
 namespace CommonTest\Service\Qa;
 
+use Common\Service\Qa\FieldsetFactory;
 use Common\Service\Qa\FieldsetAdder;
-use Common\Service\Qa\FieldsetGenerator;
+use Common\Service\Qa\FieldsetPopulatorInterface;
+use Common\Service\Qa\FieldsetPopulatorProvider;
+use Common\Service\Qa\UsageContext;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
@@ -16,34 +19,77 @@ use Zend\Form\Form;
  */
 class FieldsetAdderTest extends MockeryTestCase
 {
-    public function testAdd()
+    private $options;
+
+    private $fieldset;
+
+    private $form;
+
+    private $sut;
+
+    private $shortName = 'Cabotage';
+
+    public function setUp()
     {
-        $options = [
-            'prop1' => 'value1',
-            'prop2' => 'value2'
+        $fieldsetName = 'fields123';
+
+        $elementType = 'elementType';
+
+        $elementOptions = [
+            'elementProperty1' => 'elementValue1',
+            'elementProperty2' => 'elementValue2'
         ];
 
-        $fieldset = m::mock(Fieldset::class);
+        $this->options = [
+            'fieldsetName' => $fieldsetName,
+            'shortName' => $this->shortName,
+            'type' => $elementType,
+            'element' => $elementOptions
+        ];
 
-        $qaFieldset = m::mock(Fieldset::class);
-        $qaFieldset->shouldReceive('add')
-            ->with($fieldset)
+        $this->fieldset = m::mock(Fieldset::class);
+
+        $qaWrapperFieldset = m::mock(Fieldset::class);
+        $qaWrapperFieldset->shouldReceive('add')
+            ->with($this->fieldset)
             ->once();
 
-        $fieldsetGenerator = m::mock(FieldsetGenerator::class);
-
-        $form = m::mock(Form::class);
-        $form->shouldReceive('get')
+        $this->form = m::mock(Form::class);
+        $this->form->shouldReceive('get')
             ->with('qa')
-            ->andReturn($qaFieldset);
+            ->andReturn($qaWrapperFieldset);
 
-        $sut = new FieldsetAdder($fieldsetGenerator);
-
-        $fieldsetGenerator->shouldReceive('generate')
-            ->with($form, $options)
+        $fieldsetFactory = m::mock(FieldsetFactory::class);
+        $fieldsetFactory->shouldReceive('create')
+            ->with($fieldsetName, $elementType)
             ->once()
-            ->andReturn($fieldset);
+            ->andReturn($this->fieldset);
 
-        $sut->add($form, $options);
+        $fieldsetPopulator = m::mock(FieldsetPopulatorInterface::class);
+        $fieldsetPopulator->shouldReceive('populate')
+            ->with($this->form, $this->fieldset, $elementOptions)
+            ->once();
+
+        $fieldsetPopulatorProvider = m::mock(FieldsetPopulatorProvider::class);
+        $fieldsetPopulatorProvider->shouldReceive('get')
+            ->with($elementType)
+            ->once()
+            ->andReturn($fieldsetPopulator);
+
+        $this->sut = new FieldsetAdder($fieldsetPopulatorProvider, $fieldsetFactory);
+    }
+
+    public function testAddSelfserve()
+    {
+        $this->sut->add($this->form, $this->options, UsageContext::CONTEXT_SELFSERVE);
+    }
+
+    public function testAddInternal()
+    {
+        $this->fieldset->shouldReceive('setLabel')
+            ->with($this->shortName)
+            ->once();
+
+        $this->sut->add($this->form, $this->options, UsageContext::CONTEXT_INTERNAL);
     }
 }
