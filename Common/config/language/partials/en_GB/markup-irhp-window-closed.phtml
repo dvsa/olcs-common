@@ -1,3 +1,12 @@
-<p class="govuk-body">The application period for Short-term ECMT permits closed as all permits currently available have been issued.</p>
-<p class="govuk-body">Future application windows will be advertised along the year.</p>
-<p class="govuk-body">Please bookmark and revisit the <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">International Road Haulage guidance page</a> for future reference and the latest information on permits.</p>
+<?php echo $this->permitsBackLink('common.link.back.label', 'permits'); ?>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            <?php echo $this->escapeHtml($this->translate('permits.page.irhp-window-closed.title')); ?>
+        </h1>
+        <?php echo $this->translate('markup-irhp-permits-exhausted'); ?>
+        <a class="govuk-link govuk-!-display-block govuk-body" href="<?php echo $this->url('permits'); ?>">
+            <?php echo $this->escapeHtml($this->translate('permits.link.return.to.dashboard')); ?>
+        </a>
+    </div>
+</div>
