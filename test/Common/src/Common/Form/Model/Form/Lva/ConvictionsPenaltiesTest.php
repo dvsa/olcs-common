@@ -57,6 +57,11 @@ class ConvictionsPenaltiesTest extends AbstractFormValidationTestCase
         );
     }
 
+    public function testConvictionsReadMoreLink()
+    {
+        $this->assertFormElementActionLink(['convictionsReadMoreLink', 'readMoreLink']);
+    }
+
     public function testSaveAndContinue()
     {
         $this->assertFormElementActionButton(

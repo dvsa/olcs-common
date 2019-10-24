@@ -3,8 +3,6 @@
 namespace CommonTest\Form\Model\Form\Lva;
 
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Common\Form\Elements\Types\AttachFilesButton;
-use Common\Form\Elements\InputFilters\ActionButton;
 
 /**
  * Class FinancialEvidenceTest
@@ -25,17 +23,8 @@ class FinancialEvidenceTest extends AbstractFormValidationTestCase
 
     public function testEvidenceFile()
     {
-        $element = ['evidence', 'files', 'file'];
-        $this->assertFormElementRequired($element, false);
-        $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementType($element, AttachFilesButton::class);
-
-        $element = ['evidence', 'files', '__messages__'];
-        $this->assertFormElementHidden($element);
-
-        $element = ['evidence', 'files', 'upload'];
-        $this->assertFormElementType($element, ActionButton::class);
-        $this->assertFormElementRequired($element, false);
+        $element = ['evidence', 'files'];
+        $this->assertFormElementMultipleFileUpload($element);
     }
 
     public function testUploadNow()

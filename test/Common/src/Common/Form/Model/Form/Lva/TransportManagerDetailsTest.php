@@ -2,14 +2,7 @@
 
 namespace CommonTest\Form\Model\Form\Lva;
 
-use Common\Form\Elements\InputFilters\ActionButton;
-use Common\Form\Elements\Types\AttachFilesButton;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Zend\Form\Element\File;
-use Zend\Form\Exception\InvalidArgumentException;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\Input;
-use Zend\InputFilter\InputFilter;
 
 /**
  * Class TransportManagerDetailsTest
@@ -63,17 +56,8 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
     public function testCertificateFileUpload()
     {
-        $element = [ 'details', 'certificate', 'file' ];
-        $this->assertFormElementIsRequired($element, false);
-        $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementType($element, AttachFilesButton::class);
-
-        $element = [ 'details', 'certificate', '__messages__' ];
-        $this->assertFormElementHidden($element);
-
-        $element = [ 'details', 'certificate', 'upload' ];
-        $this->assertFormElementType($element, ActionButton::class);
-        $this->assertFormElementIsRequired($element, false);
+        $element = ['details', 'certificate'];
+        $this->assertFormElementMultipleFileUpload($element);
     }
 
     public function testHomeAddress()
@@ -251,17 +235,8 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
 
     public function testLicenceFileUpload()
     {
-        $element = [ 'responsibilities', 'file', 'file' ];
-        $this->assertFormElementIsRequired($element, false);
-        $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementType($element, AttachFilesButton::class);
-
-        $element = [ 'responsibilities', 'file', '__messages__' ];
-        $this->assertFormElementHidden($element);
-
-        $element = [ 'responsibilities', 'file', 'upload' ];
-        $this->assertFormElementType($element, ActionButton::class);
-        $this->assertFormElementIsRequired($element, false);
+        $element = ['responsibilities', 'file'];
+        $this->assertFormElementMultipleFileUpload($element);
     }
 
     public function testHasOtherLicences()
