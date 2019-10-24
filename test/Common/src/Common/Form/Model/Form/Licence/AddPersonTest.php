@@ -31,6 +31,12 @@ class AddPersonTest extends AbstractFormValidationTestCase
         );
     }
 
+    public function testPersonCount()
+    {
+        $element = ['personCount'];
+        $this->assertFormElementHidden($element);
+    }
+
     public function testHasDataCollection()
     {
         $this->assertTrue($this->sut->has('data'));

@@ -2,48 +2,55 @@
 namespace CommonTest\Form\Model\Form\Licence\Fieldset;
 
 use Common\Form\Elements\Validators\DateNotInFuture;
-use Common\Form\Model\Form\Licence\Fieldset\Person;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
 
 class PersonTest extends AbstractFormValidationTestCase
 {
     /** @var string The class name of the form being tested */
-    protected $formName = Person::class;
+    // tested against a stub of the form which contains the fieldset to be tested
+    // as \Common\Form\Model\Form\Licence\AddPerson uses the fieldset as a collection
+    // which is not currently supported by the AbstractFormValidationTestCase
+    protected $formName = PersonFormStub::class;
 
     public function testId()
     {
-        $element = ['id'];
+        $element = ['data', 'id'];
+        $this->assertFormElementHidden($element);
+    }
+
+    public function testVersion()
+    {
+        $element = ['data', 'version'];
         $this->assertFormElementHidden($element);
     }
 
     public function testTitle()
     {
-        $element = ['title'];
+        $element = ['data', 'title'];
         $this->assertFormElementDynamicSelect($element);
     }
 
     public function testForename()
     {
-        $element = ['forename'];
+        $element = ['data', 'forename'];
         $this->assertFormElementText($element, 1, 35);
     }
 
     public function testFamilyName()
     {
-        $element = ['familyName'];
+        $element = ['data', 'familyName'];
         $this->assertFormElementText($element, 1, 35);
     }
 
     public function testOtherName()
     {
-        $element = ['otherName'];
+        $element = ['data', 'otherName'];
         $this->assertFormElementText($element);
     }
 
     public function testDateOfBirth()
     {
-        $this->markTestSkipped('This test does not work due to an annotation (prefer_form_input_filter)');
-        $element = ['birthDate'];
+        $element = ['data', 'birthDate'];
         $this->assertFormElementNotValid(
             $element,
             [

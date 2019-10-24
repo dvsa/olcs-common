@@ -2,15 +2,9 @@
 
 namespace CommonTest\Form\Model\Form\Lva;
 
-use Common\Form\Elements\Types\FileUploadList;
 use Common\Validator\Date;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
-use Common\Form\Elements\Types\AttachFilesButton;
-use Common\Form\Elements\InputFilters\ActionButton;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
-use Common\Validator\OneOf;
-use Zend\Validator\NotEmpty;
-use Zend\Form\Element\Hidden;
 
 /**
  * Class OperatingCentreTest
@@ -162,22 +156,22 @@ class OperatingCentreTest extends AbstractFormValidationTestCase
         );
     }
 
+    public function testAdvertisementsAdSendByPostContent()
+    {
+        $element = ['advertisements', 'adSendByPostContent'];
+        $this->assertFormElementHtml($element);
+    }
+
+    public function testAdvertisementsAdPlacedLaterContent()
+    {
+        $element = ['advertisements', 'adPlacedLaterContent'];
+        $this->assertFormElementHtml($element);
+    }
+
     public function testAdvertisementsMultiFileUploadControls()
     {
-        $element = [ 'advertisements', 'adPlacedContent', 'file', 'file' ];
-        $this->assertFormElementIsRequired($element, false);
-        $this->assertFormElementAllowEmpty($element, true);
-        $this->assertFormElementType($element, AttachFilesButton::class);
-
-        $element = [ 'advertisements', 'adPlacedContent', 'file', '__messages__' ];
-        $this->assertFormElementHidden($element);
-
-        $element = [ 'advertisements', 'adPlacedContent', 'file', 'list' ];
-        $this->assertFormElementType($element, FileUploadList::class);
-
-        $element = [ 'advertisements', 'adPlacedContent', 'file', 'upload' ];
-        $this->assertFormElementType($element, ActionButton::class);
-        $this->assertFormElementIsRequired($element, false);
+        $element = ['advertisements', 'adPlacedContent', 'file'];
+        $this->assertFormElementMultipleFileUpload($element);
     }
 
     public function testAdvertisementsFileUploadCount()
