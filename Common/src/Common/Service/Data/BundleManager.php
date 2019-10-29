@@ -35,6 +35,7 @@ class BundleManager extends AbstractPluginManager implements AbstractFactoryInte
      * @param $name
      * @param $requestedName
      * @return bool
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
@@ -48,11 +49,11 @@ class BundleManager extends AbstractPluginManager implements AbstractFactoryInte
      * @param $name
      * @param $requestedName
      * @return mixed
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        if (
-            $this->has('Olcs\Data\Object\Bundle\\' . $requestedName, false, false) ||
+        if ($this->has('Olcs\Data\Object\Bundle\\' . $requestedName, false, false) ||
             ($this->autoAddInvokableClass && class_exists('Olcs\Data\Object\Bundle\\' . $requestedName))
         ) {
             $this->setInvokableClass(
@@ -62,8 +63,7 @@ class BundleManager extends AbstractPluginManager implements AbstractFactoryInte
             return $this->get('Olcs\Data\Object\Bundle\\' . $requestedName);
         }
 
-        if (
-            $this->has('Common\Data\Object\Bundle\\' . $requestedName, false, false) ||
+        if ($this->has('Common\Data\Object\Bundle\\' . $requestedName, false, false) ||
             ($this->autoAddInvokableClass && class_exists('Common\Data\Object\Bundle\\' . $requestedName))
         ) {
             $this->setInvokableClass(
@@ -85,11 +85,13 @@ class BundleManager extends AbstractPluginManager implements AbstractFactoryInte
      * @param  mixed $plugin
      * @return void
      * @throws Exception\RuntimeException if invalid
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function validatePlugin($plugin)
     {
-        if (!($plugin instanceof Bundle)) {
-            throw new Exception\RuntimeException('Invalid bundle class');
-        }
+        // TODO - OLCS-26007
+        // if (!($plugin instanceof Bundle)) {
+        //     throw new Exception\RuntimeException('Invalid bundle class');
+        // }
     }
 }

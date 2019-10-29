@@ -16,6 +16,8 @@ class BundleManagerTest extends TestCase
 {
     public function testValidatePlugin()
     {
+        $this->markTestSkipped('TODO - OLCS-26007');
+
         $sut = new BundleManager();
         $sut->validatePlugin(new Bundle());
 

@@ -2,7 +2,10 @@
 
 namespace CommonTest\Form\Model\Form\Lva;
 
+use Common\Form\Elements\Validators\SumContext;
 use Olcs\TestHelpers\FormTester\AbstractFormValidationTestCase;
+use Zend\I18n\Validator\IsFloat;
+use Zend\Validator\Between;
 
 /**
  * Class TransportManagerDetailsTest
@@ -160,8 +163,9 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
             $element,
             'abc',
             [
-                \Zend\I18n\Validator\IsFloat::NOT_FLOAT,
-                \Common\Form\Elements\Validators\SumContext::BELOW_MIN,
+                IsFloat::NOT_FLOAT,
+                Between::VALUE_NOT_NUMERIC,
+                SumContext::BELOW_MIN,
             ]
         );
         $this->assertFormElementValid($element, 1.1);
@@ -172,7 +176,8 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
             $element,
             'abc',
             [
-                \Zend\I18n\Validator\IsFloat::NOT_FLOAT,
+                IsFloat::NOT_FLOAT,
+                Between::VALUE_NOT_NUMERIC,
             ]
         );
         $this->assertFormElementValid($element, 1.1);
@@ -183,7 +188,8 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
             $element,
             'abc',
             [
-                \Zend\I18n\Validator\IsFloat::NOT_FLOAT,
+                IsFloat::NOT_FLOAT,
+                Between::VALUE_NOT_NUMERIC,
             ]
         );
         $this->assertFormElementValid($element, 1.1);
@@ -194,7 +200,8 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
             $element,
             'abc',
             [
-                \Zend\I18n\Validator\IsFloat::NOT_FLOAT,
+                IsFloat::NOT_FLOAT,
+                Between::VALUE_NOT_NUMERIC,
             ]
         );
         $this->assertFormElementValid($element, 1.1);
@@ -205,7 +212,8 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
             $element,
             'abc',
             [
-                \Zend\I18n\Validator\IsFloat::NOT_FLOAT,
+                IsFloat::NOT_FLOAT,
+                Between::VALUE_NOT_NUMERIC,
             ]
         );
         $this->assertFormElementValid($element, 1.1);
@@ -216,7 +224,8 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
             $element,
             'abc',
             [
-                \Zend\I18n\Validator\IsFloat::NOT_FLOAT,
+                IsFloat::NOT_FLOAT,
+                Between::VALUE_NOT_NUMERIC,
             ]
         );
         $this->assertFormElementValid($element, 1.1);
@@ -227,7 +236,8 @@ class TransportManagerDetailsTest extends AbstractFormValidationTestCase
             $element,
             'abc',
             [
-                \Zend\I18n\Validator\IsFloat::NOT_FLOAT,
+                IsFloat::NOT_FLOAT,
+                Between::VALUE_NOT_NUMERIC,
             ]
         );
         $this->assertFormElementValid($element, 1.1);

@@ -410,6 +410,7 @@ return array(
             'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
             'linkBack' => Common\View\Helper\LinkBack::class,
             'translateReplace' => \Common\View\Helper\TranslateReplace::class,
+            'Common\View\Helper\FlashMessenger' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
         ),
     ),
     'view_manager' => array(
