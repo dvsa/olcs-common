@@ -10,6 +10,7 @@ namespace CommonTest\View\Helper;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\View\Helper\FlashMessenger;
+use Common\Service\Helper\FlashMessengerHelperService;
 use Mockery as m;
 
 /**
@@ -26,23 +27,22 @@ class FlashMessengerTest extends MockeryTestCase
      */
     private $sut;
 
-    private $sm;
+    private $flashMessengerHelperService;
 
     private $mockPluginManager;
 
     public function setUp()
     {
         $this->mockPluginManager = m::mock('\Zend\Mvc\Controller\Plugin\FlashMessenger');
-        $this->sm = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
+        $this->flashMessengerHelperService = m::mock(FlashMessengerHelperService::class);
 
         $mockTranslator = m::mock('\Zend\I18n\Translator\Translator');
         $mockTranslator->shouldReceive('translate')
             ->andReturnUsing(array($this, 'translate'));
 
-        $this->sut = new FlashMessenger();
+        $this->sut = new FlashMessenger($this->flashMessengerHelperService);
         $this->sut->setPluginFlashMessenger($this->mockPluginManager);
         $this->sut->setTranslator($mockTranslator);
-        $this->sut->setServiceLocator($this->sm);
     }
 
     /**
@@ -80,15 +80,8 @@ class FlashMessengerTest extends MockeryTestCase
      */
     public function testRenderWithoutMessages()
     {
-        $mockFlashMessenger = m::mock();
-        $mockFlashMessenger->shouldReceive('getCurrentMessages')
+        $this->flashMessengerHelperService->shouldReceive('getCurrentMessages')
             ->andReturn([]);
-
-        $this->sm->shouldReceive('getServiceLocator')
-            ->andReturnSelf()
-            ->shouldReceive('get')
-            ->with('Helper\FlashMessenger')
-            ->andReturn($mockFlashMessenger);
 
         $this->mockPluginManager->shouldReceive('getMessagesFromNamespace')
             ->andReturn([])
@@ -106,15 +99,8 @@ class FlashMessengerTest extends MockeryTestCase
      */
     public function testInvokeWithoutMessages()
     {
-        $mockFlashMessenger = m::mock();
-        $mockFlashMessenger->shouldReceive('getCurrentMessages')
+        $this->flashMessengerHelperService->shouldReceive('getCurrentMessages')
             ->andReturn([]);
-
-        $this->sm->shouldReceive('getServiceLocator')
-            ->andReturnSelf()
-            ->shouldReceive('get')
-            ->with('Helper\FlashMessenger')
-            ->andReturn($mockFlashMessenger);
 
         $this->mockPluginManager->shouldReceive('getMessagesFromNamespace')
             ->andReturn([])
@@ -134,15 +120,8 @@ class FlashMessengerTest extends MockeryTestCase
      */
     public function testRenderWithMessages()
     {
-        $mockFlashMessenger = m::mock();
-        $mockFlashMessenger->shouldReceive('getCurrentMessages')
+        $this->flashMessengerHelperService->shouldReceive('getCurrentMessages')
             ->andReturn(['foo']);
-
-        $this->sm->shouldReceive('getServiceLocator')
-            ->andReturnSelf()
-            ->shouldReceive('get')
-            ->with('Helper\FlashMessenger')
-            ->andReturn($mockFlashMessenger);
 
         $this->mockPluginManager->shouldReceive('getMessagesFromNamespace')
             ->andReturn(['bar'])
