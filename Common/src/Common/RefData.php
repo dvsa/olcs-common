@@ -427,4 +427,9 @@ class RefData
     // user operating system
     const USER_OS_TYPE_WINDOWS_7 = 'windows_7';
     const USER_OS_TYPE_WINDOWS_10 = 'windows_10';
+
+    // Business process
+    const BUSINESS_PROCESS_APG = 'app_business_process_apg';
+    const BUSINESS_PROCESS_APGG = 'app_business_process_apgg';
+    const BUSINESS_PROCESS_APSG = 'app_business_process_apsg';
 }
