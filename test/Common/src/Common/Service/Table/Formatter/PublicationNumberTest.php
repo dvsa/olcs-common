@@ -26,7 +26,10 @@ class PublicationNumberTest extends MockeryTestCase
         $params = ['foo' => 'bar'];
 
         $config = [
-            'document_share' => [
+            'windows_7_document_share' => [
+                'uri_pattern' => '//foo/%s'
+            ],
+            'windows_10_document_share' => [
                 'uri_pattern' => '//foo/%s'
             ]
         ];
@@ -51,7 +54,6 @@ class PublicationNumberTest extends MockeryTestCase
             ->andReturn($config);
 
         $this->assertEquals($expected, PublicationNumber::format($data, $column, $sm));
-
     }
 
     public function provider()
@@ -75,7 +77,8 @@ class PublicationNumberTest extends MockeryTestCase
                     'publicationNo' => 12345,
                     'document' => [
                         'identifier' => 'some/path/foo.rtf',
-                        'id' => 987654
+                        'id' => 987654,
+                        'osType' =>'windows_7'
                     ]
                 ],
                 [],
@@ -89,7 +92,8 @@ class PublicationNumberTest extends MockeryTestCase
                     'publicationNo' => 12345,
                     'document' => [
                         'identifier' => 'some/path/foo.rtf',
-                        'id' => 987654
+                        'id' => 987654,
+                        'osType' =>'windows_10'
                     ]
                 ],
                 [],
