@@ -295,8 +295,8 @@ class Module
         }
 
         /* @var $request \Zend\Http\PhpEnvironment\Request */
-        if ($request->getHeaders()->get('xforwardedhost')) {
-            $host = $request->getHeaders()->get('xforwardedhost')->getFieldValue();
+        if ($request->getHeaders()->get('x-forwarded-host')) {
+            $host = $request->getHeaders()->get('x-forwarded-host')->getFieldValue();
 
             $hosts = explode(',', $host);
             if (!empty($hosts)) {
@@ -305,8 +305,8 @@ class Module
 
             Logger::debug(
                 sprintf(
-                    'Request host set from xforwardedhost header to %s setting host to %s',
-                    $request->getHeaders()->get('xforwardedhost')->getFieldValue(),
+                    'Request host set from x-forwarded-host header to %s setting host to %s',
+                    $request->getHeaders()->get('x-forwarded-host')->getFieldValue(),
                     $host
                 )
             );
@@ -315,8 +315,8 @@ class Module
 
         // if X-Forwarded-Proto Header exists (ie from AWS ELB) then set the request as this so that route
         // generated URLS will have the correct scheme
-        if ($request->getHeaders()->get('xforwardedproto')) {
-            $proto = $request->getHeaders()->get('xforwardedproto')->getFieldValue();
+        if ($request->getHeaders()->get('x-forwarded-proto')) {
+            $proto = $request->getHeaders()->get('x-forwarded-proto')->getFieldValue();
 
             Logger::debug(
                 sprintf(
