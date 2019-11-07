@@ -332,7 +332,6 @@ return array(
             'version' => 'Common\View\Helper\Version',
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
-            'flashMessengerAll' => 'Common\View\Helper\FlashMessenger',
             'addTags' => 'Common\View\Helper\AddTags',
             'transportManagerApplicationStatus' => 'Common\View\Helper\TransportManagerApplicationStatus',
             'status' => 'Common\View\Helper\Status',
@@ -398,7 +397,7 @@ return array(
             'systemInfoMessages' => \Common\View\Factory\Helper\SystemInfoMessagesFactory::class,
             'linkBack' => Common\View\Helper\LinkBack::class,
             'translateReplace' => \Common\View\Helper\TranslateReplace::class,
-            'Common\View\Helper\FlashMessenger' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
+            'flashMessengerAll' => \Common\View\Factory\Helper\FlashMessengerFactory::class,
         ),
     ),
     'view_manager' => array(
