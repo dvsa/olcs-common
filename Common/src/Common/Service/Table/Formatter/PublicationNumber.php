@@ -39,7 +39,10 @@ class PublicationNumber implements FormatterInterface
         if ($data['pubStatus']['id'] === 'pub_s_generated') {
 
             $osType = $data['document']['osType'] ?? 'windows_7';
-            $uriPattern = $sm->get('Config')[$osType.'_document_share']['uri_pattern'];
+
+            $documentConfig = $sm->get('Config');
+
+            $uriPattern = $documentConfig[$osType.'_document_share']['uri_pattern']?? $documentConfig['document_share']['uri_pattern'];
 
             $url = sprintf($uriPattern, $data['document']['identifier']);
             $linkPattern = '<a href="%s" data-file-url="%s" target="blank">%s</a>';
