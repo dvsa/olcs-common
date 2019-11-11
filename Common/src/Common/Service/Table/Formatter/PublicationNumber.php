@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Service\Table\Formatter;
 
 use Common\Util\Escape;
@@ -38,11 +39,11 @@ class PublicationNumber implements FormatterInterface
 
         if ($data['pubStatus']['id'] === 'pub_s_generated') {
 
-            $osType = $data['document']['osType'] ?? 'windows_7';
+            $osType = $data['document']['osType']['id'] ?? 'windows_7';
 
             $documentConfig = $sm->get('Config');
 
-            $uriPattern = $documentConfig[$osType.'_document_share']['uri_pattern']?? $documentConfig['document_share']['uri_pattern'];
+            $uriPattern = $documentConfig[$osType . '_document_share']['uri_pattern'] ?? $documentConfig['document_share']['uri_pattern'];
 
             $url = sprintf($uriPattern, $data['document']['identifier']);
             $linkPattern = '<a href="%s" data-file-url="%s" target="blank">%s</a>';
