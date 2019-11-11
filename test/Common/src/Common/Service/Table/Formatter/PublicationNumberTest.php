@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace CommonTest\Service\Table\Formatter;
 
 use Common\Service\Table\Formatter\PublicationNumber;
@@ -69,7 +70,7 @@ class PublicationNumberTest extends MockeryTestCase
                     ]
                 ]
             ],
-            "document-webdav-10" =>  [
+            "document-webdav-10" => [
                 [
                     'pubStatus' => [
                         'id' => 'pub_s_generated'
@@ -78,7 +79,9 @@ class PublicationNumberTest extends MockeryTestCase
                     'document' => [
                         'identifier' => 'some/path/foo.rtf',
                         'id' => 987654,
-                        'osType' =>'windows_10'
+                        'osType' => [
+                            'id' => 'windows_10'
+                        ]
                     ]
                 ],
                 [],
@@ -92,7 +95,7 @@ class PublicationNumberTest extends MockeryTestCase
                     ]
                 ]
             ],
-            "document-docman-7" =>  [
+            "document-docman-7" => [
                 [
                     'pubStatus' => [
                         'id' => 'pub_s_generated'
@@ -101,7 +104,9 @@ class PublicationNumberTest extends MockeryTestCase
                     'document' => [
                         'identifier' => 'some/path/foo.rtf',
                         'id' => 987654,
-                        'osType' =>'windows_7'
+                        'osType' => [
+                            'id' => 'windows_7'
+                        ]
                     ]
                 ],
                 [],
@@ -124,12 +129,14 @@ class PublicationNumberTest extends MockeryTestCase
                     'document' => [
                         'identifier' => 'some/path/foo.rtf',
                         'id' => 987654,
-                        'osType' =>'windows_7'
+                        'osType' => [
+                            'id' => 'windows_7'
+                        ]
                     ]
                 ],
                 [],
                 '<a href="/file/987654">'
-                    . '12345</a>',
+                . '12345</a>',
                 [
                     'document_share' => [
                         'uri_pattern' => '//foo/%s'
