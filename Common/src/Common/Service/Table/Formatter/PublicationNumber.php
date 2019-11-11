@@ -38,7 +38,6 @@ class PublicationNumber implements FormatterInterface
         $link = sprintf($linkPattern, Escape::html($url), Escape::html($data['publicationNo']));
 
         if ($data['pubStatus']['id'] === 'pub_s_generated') {
-
             $osType = $data['document']['osType']['id'] ?? 'windows_7';
 
             $documentConfig = $sm->get('Config');
