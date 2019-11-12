@@ -79,10 +79,9 @@ class PublicationNumberTest extends MockeryTestCase
                     'document' => [
                         'identifier' => 'some/path/foo.rtf',
                         'id' => 987654,
-                        'osType' => [
-                            'id' => 'windows_10'
-                        ]
-                    ]
+
+                    ],
+                    'osType' => 'windows_10'
                 ],
                 [],
                 '<a href="//foo/some/path/foo.rtf" data-file-url="//foo/some/path/foo.rtf" target="blank">12345</a>',
@@ -103,11 +102,9 @@ class PublicationNumberTest extends MockeryTestCase
                     'publicationNo' => 12345,
                     'document' => [
                         'identifier' => 'some/path/foo.rtf',
-                        'id' => 987654,
-                        'osType' => [
-                            'id' => 'windows_7'
-                        ]
-                    ]
+                        'id' => 987654
+                    ],
+                    'osType' =>'windows_7'
                 ],
                 [],
                 '<a href="//win7foo/some/path/foo.rtf" data-file-url="//win7foo/some/path/foo.rtf" target="blank">12345</a>',
@@ -129,9 +126,7 @@ class PublicationNumberTest extends MockeryTestCase
                     'document' => [
                         'identifier' => 'some/path/foo.rtf',
                         'id' => 987654,
-                        'osType' => [
-                            'id' => 'windows_7'
-                        ]
+                        'osType' =>  'windows_7'
                     ]
                 ],
                 [],
