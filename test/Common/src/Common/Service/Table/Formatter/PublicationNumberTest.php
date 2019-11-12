@@ -125,9 +125,8 @@ class PublicationNumberTest extends MockeryTestCase
                     'publicationNo' => 12345,
                     'document' => [
                         'identifier' => 'some/path/foo.rtf',
-                        'id' => 987654,
-                        'osType' =>  'windows_7'
-                    ]
+                        'id' => 987654
+                    ],
                 ],
                 [],
                 '<a href="/file/987654">'
