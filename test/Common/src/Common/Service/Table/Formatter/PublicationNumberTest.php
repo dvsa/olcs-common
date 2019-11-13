@@ -81,10 +81,10 @@ class PublicationNumberTest extends MockeryTestCase
                         'id' => 987654,
 
                     ],
-                    'osType' => 'windows_10'
+                    'userOsType' => ['id'=>'windows_10']
                 ],
                 [],
-                '<a href="//foo/some/path/foo.rtf" data-file-url="//foo/some/path/foo.rtf" target="blank">12345</a>',
+                '<a href="//foo/some/path/foo.rtf" data-file-url="//foo/some/path/foo.rtf" data-os-type="windows_10" target="blank">12345</a>',
                 [
                     'windows_7_document_share' => [
                         'uri_pattern' => '//win7foo/%s'
@@ -104,10 +104,10 @@ class PublicationNumberTest extends MockeryTestCase
                         'identifier' => 'some/path/foo.rtf',
                         'id' => 987654
                     ],
-                    'osType' =>'windows_7'
+                    'userOsType' => ['id'=>'windows_7']
                 ],
                 [],
-                '<a href="//win7foo/some/path/foo.rtf" data-file-url="//win7foo/some/path/foo.rtf" target="blank">12345</a>',
+                '<a href="//win7foo/some/path/foo.rtf" data-file-url="//win7foo/some/path/foo.rtf" data-os-type="windows_7" target="blank">12345</a>',
                 [
                     'windows_7_document_share' => [
                         'uri_pattern' => '//win7foo/%s'
