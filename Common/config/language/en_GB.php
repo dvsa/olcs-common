@@ -3952,11 +3952,12 @@ return [
     'qanda.ecmt-short-term.cabotage.checkbox.label' => 'I confirm that I will not undertake cabotage journeys using this type of permit.',
     'qanda.ecmt-short-term.cabotage.checkbox.not-checked-message' => 'Tick to confirm your vehicle will not undertake cabotage journeys.',
 
-    'qanda.ecmt-short-term.certificates.question-short' => 'Certificates required',
-    'qanda.ecmt-short-term.certificates.question' => 'Mandatory ECMT certificates for vehicles and trailers you intend to use',
-    'qanda.ecmt-short-term.certificates.additional-guidance' => '<p>If your permit application is successful, you are required to have the appropriate ECMT <b>Certificate of Compliance</b> and <b>Certificate of Roadworthiness</b> for each vehicle and trailer you intend to use.</p><p>You must carry the certificates that match your vehicle and trailer, for the whole of your journey.</p><p>If you don\'t already have them, <a href="{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}#rules-for-using-the-permits" target="_blank">find out how to get the certificates</a> (opens in new window).</p>',
-    'qanda.ecmt-short-term.certificates.checkbox.label' => 'I understand that I must obtain and carry the appropriate ECMT Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer I intend to use with this permit.',
-    'qanda.ecmt-short-term.certificates.checkbox.not-checked-message' => 'Tick to confirm you understand that each vehicle and trailer must have the matching certificates.',
+    'qanda.common.certificates.question-short' => 'Certificates required',
+    'qanda.common.certificates.question' => 'Mandatory ECMT certificates for vehicles and trailers you intend to use',
+    'qanda.common.certificates.additional-guidance' => '<p>If your permit application is successful, you are required to have the appropriate ECMT <b>Certificate of Compliance</b> and <b>Certificate of Roadworthiness</b> for each vehicle and trailer you intend to use.</p><p>You must carry the certificates that match your vehicle and trailer, for the whole of your journey.</p><p>If you don\'t already have them, <a href="{{ECMT_PERMITS_FURTHER_GUIDANCE_LINK}}#rules-for-using-the-permits" target="_blank">find out how to get the certificates</a> (opens in new window).</p>',
+    'qanda.common.certificates.additional-guidance.ecmt-removal' => '<p>If your permit application is successful, you are required to have the appropriate ECMT <b>Certificate of Compliance</b> and <b>Certificate of Roadworthiness</b> for each vehicle and trailer you intend to use.</p><p>You must carry the certificates that match your vehicle and trailer, for the whole of your journey.</p><p>If you don\'t already have them, <a href="{{IRHP_REMOVAL_GUIDANCE_LINK}}" target="_blank">find out how to get the certificates</a> (opens in new window).</p>',
+    'qanda.common.certificates.checkbox.label' => 'I understand that I must obtain and carry the appropriate ECMT Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer I intend to use with this permit.',
+    'qanda.common.certificates.checkbox.not-checked-message' => 'Tick to confirm you understand that each vehicle and trailer must have the matching certificates.',
     
     'qanda.ecmt-short-term.emissions.question-short' => 'Euro emission standards',
     'qanda.ecmt-short-term.emissions.question' => 'You must only use the appropriate Euro emission standards vehicles that the permit allows',
