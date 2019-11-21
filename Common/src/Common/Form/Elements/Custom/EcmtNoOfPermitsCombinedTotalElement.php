@@ -2,12 +2,12 @@
 
 namespace Common\Form\Elements\Custom;
 
-use Common\Form\Elements\Validators\EcmtShortTermNoOfPermitsCombinedTotalValidator;
+use Common\Form\Elements\Validators\EcmtNoOfPermitsCombinedTotalValidator;
 use Zend\Form\Element\Hidden;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\Callback;
 
-class EcmtShortTermNoOfPermitsCombinedTotalElement extends Hidden implements InputProviderInterface
+class EcmtNoOfPermitsCombinedTotalElement extends Hidden implements InputProviderInterface
 {
     /**
      * {@inheritdoc}
@@ -22,11 +22,11 @@ class EcmtShortTermNoOfPermitsCombinedTotalElement extends Hidden implements Inp
                     'name' => Callback::class,
                     'options' => [
                         'callback' => [
-                            EcmtShortTermNoOfPermitsCombinedTotalValidator::class,
+                            EcmtNoOfPermitsCombinedTotalValidator::class,
                             'validateNonZeroValuePresent'
                         ],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.no-fields-populated'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.no-fields-populated'
                         ]
                     ],
                     'break_chain_on_failure' => true
@@ -35,11 +35,11 @@ class EcmtShortTermNoOfPermitsCombinedTotalElement extends Hidden implements Inp
                     'name' => Callback::class,
                     'options' => [
                         'callback' => [
-                            EcmtShortTermNoOfPermitsCombinedTotalValidator::class,
+                            EcmtNoOfPermitsCombinedTotalValidator::class,
                             'validateMultipleNonZeroValuesNotPresent'
                         ],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.two-or-more-fields-populated'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.two-or-more-fields-populated'
                         ]
                     ]
                 ],

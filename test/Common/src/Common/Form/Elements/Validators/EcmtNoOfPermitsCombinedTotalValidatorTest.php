@@ -2,16 +2,16 @@
 
 namespace CommonTest\Form\Elements\Validators;
 
-use Common\Form\Elements\Validators\EcmtShortTermNoOfPermitsCombinedTotalValidator;
+use Common\Form\Elements\Validators\EcmtNoOfPermitsCombinedTotalValidator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Validator\Callback;
 
 /**
- * EcmtShortTermNoOfPermitsCombinedTotalValidatorTest
+ * EcmtNoOfPermitsCombinedTotalValidatorTest
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class EcmtShortTermNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
+class EcmtNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
 {
     /**
      * @dataProvider dpValidateNonZeroValuePresentSuccess
@@ -19,7 +19,7 @@ class EcmtShortTermNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
     public function testValidateNonZeroValuePresentSuccess($context)
     {
         $this->assertTrue(
-            EcmtShortTermNoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
+            EcmtNoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
         );
     }
 
@@ -44,7 +44,7 @@ class EcmtShortTermNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
     public function testValidateNonZeroValuePresentFailure($context)
     {
         $this->assertFalse(
-            EcmtShortTermNoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
+            EcmtNoOfPermitsCombinedTotalValidator::validateNonZeroValuePresent(null, $context)
         );
     }
 
@@ -68,7 +68,7 @@ class EcmtShortTermNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
     public function testValidateMultipleNonZeroValuesNotPresentSuccess($context)
     {
         $this->assertTrue(
-            EcmtShortTermNoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
+            EcmtNoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
         );
     }
 
@@ -94,7 +94,7 @@ class EcmtShortTermNoOfPermitsCombinedTotalValidatorTest extends MockeryTestCase
     public function testValidateMultipleNonZeroValuesNotPresentFailure($context)
     {
         $this->assertFalse(
-            EcmtShortTermNoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
+            EcmtNoOfPermitsCombinedTotalValidator::validateMultipleNonZeroValuesNotPresent(null, $context)
         );
     }
 

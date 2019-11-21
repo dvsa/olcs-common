@@ -2,17 +2,17 @@
 
 namespace CommonTest\Form\Elements\Custom;
 
-use Common\Form\Elements\Custom\EcmtShortTermNoOfPermitsCombinedTotalElement;
-use Common\Form\Elements\Validators\EcmtShortTermNoOfPermitsCombinedTotalValidator;
+use Common\Form\Elements\Custom\EcmtNoOfPermitsCombinedTotalElement;
+use Common\Form\Elements\Validators\EcmtNoOfPermitsCombinedTotalValidator;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Validator\Callback;
 
 /**
- * EcmtShortTermNoOfPermitsCombinedTotalElementTest
+ * EcmtNoOfPermitsCombinedTotalElementTest
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class EcmtShortTermNoOfPermitsCombinedTotalElementTest extends MockeryTestCase
+class EcmtNoOfPermitsCombinedTotalElementTest extends MockeryTestCase
 {
     public function testGetInputSpecification()
     {
@@ -26,11 +26,11 @@ class EcmtShortTermNoOfPermitsCombinedTotalElementTest extends MockeryTestCase
                     'name' => Callback::class,
                     'options' => [
                         'callback' => [
-                            EcmtShortTermNoOfPermitsCombinedTotalValidator::class,
+                            EcmtNoOfPermitsCombinedTotalValidator::class,
                             'validateNonZeroValuePresent'
                         ],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.no-fields-populated'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.no-fields-populated'
                         ]
                     ],
                     'break_chain_on_failure' => true
@@ -39,22 +39,22 @@ class EcmtShortTermNoOfPermitsCombinedTotalElementTest extends MockeryTestCase
                     'name' => Callback::class,
                     'options' => [
                         'callback' => [
-                            EcmtShortTermNoOfPermitsCombinedTotalValidator::class,
+                            EcmtNoOfPermitsCombinedTotalValidator::class,
                             'validateMultipleNonZeroValuesNotPresent'
                         ],
                         'messages' => [
-                            Callback::INVALID_VALUE => 'qanda.ecmt-short-term.number-of-permits.error.two-or-more-fields-populated'
+                            Callback::INVALID_VALUE => 'permits.page.no-of-permits.error.two-or-more-fields-populated'
                         ]
                     ]
                 ],
             ],
         ];
 
-        $noOfPermitsCombinedTotalElement = new EcmtShortTermNoOfPermitsCombinedTotalElement($name);
+        $ecmtNoOfPermitsCombinedTotalElement = new EcmtNoOfPermitsCombinedTotalElement($name);
 
         $this->assertEquals(
             $expectedInputSpecification,
-            $noOfPermitsCombinedTotalElement->getInputSpecification()
+            $ecmtNoOfPermitsCombinedTotalElement->getInputSpecification()
         );
     }
 }
