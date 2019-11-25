@@ -199,6 +199,7 @@ return array(
             'QaRadioFactory' => QaService\RadioFactory::class,
             'QaFieldsetFactory' => QaService\FieldsetFactory::class,
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
+            'QaBaseDateFieldsetPopulator' => QaService\BaseDateFieldsetPopulator::class,
             'QaEcmtShortTermYesNoRadioFactory' => QaService\Custom\EcmtShortTerm\YesNoRadioFactory::class,
             'QaEcmtShortTermRestrictedCountriesMultiCheckboxFactory'
                 => QaService\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckboxFactory::class,
@@ -206,6 +207,7 @@ return array(
                 QaService\Custom\EcmtShortTerm\InternationalJourneysIsValidHandler::class,
             'QaEcmtShortTermAnnualTripsAbroadIsValidHandler' =>
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadIsValidHandler::class,
+            'QaDateTimeFactory' => QaService\DateTimeFactory::class,
 
             Common\Data\Mapper\DefaultMapper::class => Common\Data\Mapper\DefaultMapper::class,
             SurrenderMapper\OperatorLicence::class => SurrenderMapper\OperatorLicence::class,
@@ -271,6 +273,8 @@ return array(
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadFieldsetPopulatorFactory::class,
             'QaEcmtShortTermInternationalJourneysFieldsetPopulator' =>
                 QaService\Custom\EcmtShortTerm\InternationalJourneysFieldsetPopulatorFactory::class,
+            'QaEcmtRemovalPermitStartDateFieldsetPopulator' =>
+                QaService\Custom\EcmtRemoval\PermitStartDateFieldsetPopulatorFactory::class,
             'QaEcmtShortTermNiWarningConditionalAdder' =>
                 QaService\Custom\EcmtShortTerm\NiWarningConditionalAdderFactory::class,
             'QaEcmtShortTermInternationalJourneysDataHandler' =>
@@ -455,6 +459,10 @@ return array(
             'Date' => 'Common\Form\Elements\Validators\Date',
             'DateInFuture' => 'Common\Validator\DateInFuture',
             'DateCompareWithInterval' => 'Common\Validator\DateCompareWithInterval',
+        ],
+        'factories' => [
+            QaService\DateNotInPastValidator::class => QaService\DateNotInPastValidatorFactory::class,
+            QaService\Custom\EcmtRemoval\DateBeforeValidator::class => QaService\Custom\EcmtRemoval\DateBeforeValidatorFactory::class,
         ]
     ],
     'filters' => [

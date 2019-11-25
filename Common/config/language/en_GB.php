@@ -4005,6 +4005,15 @@ return [
     'qanda.ecmt-short-term.sectors.question' => 'Select one sector you mainly transport goods in using this licence',
     'qanda.ecmt-short-term.sectors.not-selected-message' => 'Select one main sector only',
 
+    'qanda.ecmt-removal.permit-start-date.hint.line-1' => 'Choose any date up to 60 days ahead.',
+    'qanda.ecmt-removal.permit-start-date.hint.line-2' => 'For example, 10 12 2019.',
+    'qanda.ecmt-removal.permit-start-date.question-short' => 'Permit start date',
+    'qanda.ecmt-removal.permit-start-date.question' => 'When do you need your permits to be valid from?',
+    'qanda.ecmt-removal.permit-start-date.error.in-past' => 'Permit start date must be today or in the future',
+    'qanda.ecmt-removal.permit-start-date.error.too-far-away' => 'Permit start date must be before %dateMustBeBefore%',
+
+    'qanda.date.error.invalid-date' => 'Enter a valid date',
+
     'st_permit_usage_transit_only' => 'Transit only',
     'st_permit_usage_cross_trade_only' => 'Cross-trade only',
     'st_permit_usage_both' => 'Both transit and cross-trade',
