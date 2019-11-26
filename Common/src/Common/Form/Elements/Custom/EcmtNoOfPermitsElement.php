@@ -6,9 +6,10 @@ use Zend\Filter\StringTrim;
 use Zend\Form\Element\Text;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\Digits;
+use Zend\Validator\LessThan;
 use Zend\Validator\StringLength;
 
-class EcmtAnnualNoOfPermitsElement extends Text implements InputProviderInterface
+class EcmtNoOfPermitsElement extends Text implements InputProviderInterface
 {
     const MAX_LENGTH = 4;
 
@@ -47,6 +48,16 @@ class EcmtAnnualNoOfPermitsElement extends Text implements InputProviderInterfac
                         ]
                     ]
                 ],
+                [
+                    'name' => LessThan::class,
+                    'options' => [
+                        'max' => $this->options['max'],
+                        'inclusive' => true,
+                        'messages' => [
+                            LessThan::NOT_LESS_INCLUSIVE => $this->options['maxExceededErrorMessage']
+                        ]
+                    ]
+                ]
             ],
         ];
     }

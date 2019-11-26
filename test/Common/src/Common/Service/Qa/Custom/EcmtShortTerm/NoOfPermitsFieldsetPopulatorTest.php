@@ -2,11 +2,11 @@
 
 namespace CommonTest\Service\Qa\Custom\EcmtShortTerm;
 
-use Common\Form\Elements\Custom\EcmtShortTermNoOfPermitsCombinedTotalElement;
 use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsFieldsetPopulator;
-use Common\Service\Qa\Custom\EcmtShortTerm\NoOfPermitsElement;
+use Common\Form\Elements\Custom\EcmtNoOfPermitsCombinedTotalElement;
+use Common\Form\Elements\Custom\EcmtNoOfPermitsElement;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
@@ -96,7 +96,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
             ->with(
                 [
                     'name' => 'combinedTotalChecker',
-                    'type' => EcmtShortTermNoOfPermitsCombinedTotalElement::class,
+                    'type' => EcmtNoOfPermitsCombinedTotalElement::class,
                     'options' => [
                         'label_attributes' => [
                             'id' => $this->emissionsCategory1Name
@@ -110,7 +110,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
         $this->fieldset->shouldReceive('add')
             ->with(
                 [
-                    'type' => NoOfPermitsElement::class,
+                    'type' => EcmtNoOfPermitsElement::class,
                     'name' => $this->emissionsCategory1Name,
                     'options' => [
                         'label' => $this->emissionsCategory1LabelTranslationKey,
@@ -129,7 +129,7 @@ class NoOfPermitsFieldsetPopulatorTest extends MockeryTestCase
         $this->fieldset->shouldReceive('add')
             ->with(
                 [
-                    'type' => NoOfPermitsElement::class,
+                    'type' => EcmtNoOfPermitsElement::class,
                     'name' => $this->emissionsCategory2Name,
                     'options' => [
                         'label' => $this->emissionsCategory2LabelTranslationKey,

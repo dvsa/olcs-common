@@ -1,29 +1,34 @@
 <?php
 
-namespace Common\Service\Qa\Custom\EcmtShortTerm;
+namespace CommonTest\Form\Elements\Custom;
 
+use Common\Form\Elements\Custom\EcmtNoOfPermitsElement;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Filter\StringTrim;
-use Zend\Form\Element\Text;
-use Zend\InputFilter\InputProviderInterface;
 use Zend\Validator\Digits;
 use Zend\Validator\LessThan;
 use Zend\Validator\StringLength;
 
-class NoOfPermitsElement extends Text implements InputProviderInterface
+/**
+ * EcmtNoOfPermitsElementTest
+ *
+ * @author Jonathan Thomas <jonathan@opalise.co.uk>
+ */
+class EcmtNoOfPermitsElementTest extends MockeryTestCase
 {
-    const MAX_LENGTH = 4;
-
-    protected $attributes = [
-        'maxLength' => self::MAX_LENGTH
-    ];
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getInputSpecification()
+    public function testGetInputSpecification()
     {
-        return [
-            'name' => $this->getName(),
+        $name = 'euro5Required';
+        $max = 13;
+        $maxExceededErrorMessage = 'There are only 13 permits available for the selected emissions standard';
+
+        $options = [
+            'max' => $max,
+            'maxExceededErrorMessage' => $maxExceededErrorMessage
+        ];
+
+        $expectedInputSpecification = [
+            'name' => $name,
             'required' => false,
             'filters' => [
                 [
@@ -35,7 +40,7 @@ class NoOfPermitsElement extends Text implements InputProviderInterface
                     'name' => StringLength::class,
                     'options' => [
                         'min' => 1,
-                        'max' => self::MAX_LENGTH,
+                        'max' => 4,
                         'break_chain_on_failure' => true,
                     ]
                 ],
@@ -51,14 +56,22 @@ class NoOfPermitsElement extends Text implements InputProviderInterface
                 [
                     'name' => LessThan::class,
                     'options' => [
-                        'max' => $this->options['max'],
+                        'max' => $max,
                         'inclusive' => true,
                         'messages' => [
-                            LessThan::NOT_LESS_INCLUSIVE => $this->options['maxExceededErrorMessage']
+                            LessThan::NOT_LESS_INCLUSIVE => $maxExceededErrorMessage
                         ]
                     ]
                 ]
-            ],
+            ]
         ];
+
+        $ecmtNoOfPermitsElement = new EcmtNoOfPermitsElement($name);
+        $ecmtNoOfPermitsElement->setOptions($options);
+
+        $this->assertEquals(
+            $expectedInputSpecification,
+            $ecmtNoOfPermitsElement->getInputSpecification()
+        );
     }
 }

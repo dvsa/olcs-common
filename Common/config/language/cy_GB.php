@@ -1690,7 +1690,6 @@ return [
     'permits.page.ecmt.guidance.title' => 'Ceisio am Hawlen Cynhadledd Ewropeaidd Gweinidogion Trafnidiaeth (ECMT)',
     'permits.page.ecmt.guidance.subtitle' => 'Rhaid cael hawlenni ECMT i gludo nwyddau ar draws gwledydd yr UE a gwledydd nad ydynt yn yr UE ar gyfer cerbydau sy’n pwyso dros 3.5 tunnell.',
     'permits.form.permits-required.hint' => 'Mae hyd at %s o hawlenni wedi eu hawdurdodi ar gyfer y drwydded hon.',
-    'permits.form.permits-required.fee.guidance' => 'Rhaid wrth ffi geisio %s na ellir ei had-dalu ar gyfer pob hawlen',
     'permits.link.return.to.dashboard' => 'Dychwelyd i\'r dangosfwrdd hawlenni',
     'permits.link.return.to.fee.overview' => 'Dychwelyd i drosolwg ffioedd',
     'permits.page.ecmt.consideration.header' => 'Cais hawlen ar gyfer trwydded',
