@@ -1595,7 +1595,7 @@ return [
     'permits.page.title.summary' => 'Gwiriwch eich atebion cyn cyflwyno’ch hawlen',
     'permits.page.field.sectors' => 'What type of goods will you carry over the next 12 months?',
     'permits.page.restricted-countries.title' => 'Countries with limited permits - ',
-    'permits.page.restricted-countries.question' => 'Yn ystod y 12 mis nesaf ydych chi\'n cludo nwyddau i Awstria, Gwlad Groeg, Hwngari, yr Eidal neu Rwsia?',
+    'permits.page.restricted-countries.question' => 'A fyddwch chi\'n cludo nwyddau i Awstria, Gwlad Groeg, Hwngari, yr Eidal neu Rwsia?',
     'permits.page.restricted-countries.hint' => 'Select the countries that apply.',
     'permits.page.restricted-countries.guidance.line.1' => 'There is a very small number of permits available for these five countries.',
     'permits.page.restricted-countries.guidance.line.2' => 'If you are allocated a permit, we cannot guarantee that your country selections will be included on any permit or that it will allow you to travel to these countries.',

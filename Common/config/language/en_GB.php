@@ -3632,7 +3632,7 @@ return [
     'permits.page.sectors.question' => 'Select one sector you mainly transport goods in using this licence',
     'permits.page.restricted-countries.title' => 'Countries with limited permits - ',
     'permits.page.restricted-countries.title.euro5' => 'You are not allowed to travel to or transit through Austria, Greece, Hungary, Italy or Russia using these permits',
-    'permits.page.restricted-countries.question' => 'In the next 12 months are you transporting goods to Austria, Greece, Hungary, Italy or Russia?',
+    'permits.page.restricted-countries.question' => 'Will you be transporting goods to Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.restricted-countries.hint' => 'Select the countries that apply.',
     'permits.page.restricted-countries.guidance.line.1' => 'There is a very small number of permits available for these countries. We cannot guarantee if you receive a permit that it will allow you to travel to these countries.',
     'permits.page.permits.required.title' => 'ECMT Permits Required - ',
