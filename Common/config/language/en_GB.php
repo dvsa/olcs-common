@@ -3632,7 +3632,7 @@ return [
     'permits.page.sectors.question' => 'Select one sector you mainly transport goods in using this licence',
     'permits.page.restricted-countries.title' => 'Countries with limited permits - ',
     'permits.page.restricted-countries.title.euro5' => 'You are not allowed to travel to or transit through Austria, Greece, Hungary, Italy or Russia using these permits',
-    'permits.page.restricted-countries.question' => 'In the next 12 months are you transporting goods to Austria, Greece, Hungary, Italy or Russia?',
+    'permits.page.restricted-countries.question' => 'Will you be transporting goods to Austria, Greece, Hungary, Italy or Russia?',
     'permits.page.restricted-countries.hint' => 'Select the countries that apply.',
     'permits.page.restricted-countries.guidance.line.1' => 'There is a very small number of permits available for these countries. We cannot guarantee if you receive a permit that it will allow you to travel to these countries.',
     'permits.page.permits.required.title' => 'ECMT Permits Required - ',
@@ -3779,7 +3779,7 @@ return [
     'permits.form.withdraw_application.button' => 'Withdraw application',
     'permits.form.withdraw_application.error_message' => 'Tick to confirm you want to withdraw your application',
 
-    'error.messages.restricted.countries.list' => 'You must select at least one country',
+    'error.messages.restricted.countries.list' => 'Select at least one country',
     'error.messages.type' => 'You must select an option to continue',
     'error.messages.sector' => 'You must answer the question to continue',
     'error.messages.sector.list' => 'Select one main sector only',
@@ -3986,7 +3986,7 @@ return [
     'qanda.ecmt-short-term.restricted-countries.question' => 'Will you be transporting goods to Greece, Hungary, Italy or Russia?',
     'qanda.ecmt-short-term.restricted-countries.question.ecmt-short-term-2020-apsg-without-sectors' => 'Will you be transiting through to transport goods to a non EU EEA country or carrying out a third cross-trade journey within one week to Greece, Hungary or Italy or transporting goods to Russia?',
     'qanda.ecmt-short-term.restricted-countries.guidance' => '<p>There is a very small number of permits available for these countries.</p><p>We cannot guarantee if you receive a permit that it will allow you to travel to these countries.</p><p>Short-term permits do not allow journeys to Austria.</p>',
-    'qanda.ecmt-short-term.restricted-countries.error.select-countries' => 'You must select at least one country',
+    'qanda.ecmt-short-term.restricted-countries.error.select-countries' => 'Select at least one country',
 
     'qanda.ecmt-short-term.annual-trips-abroad.question-short' => 'Annual trips abroad',
     'qanda.ecmt-short-term.annual-trips-abroad.question' => 'How many international trips did you make in the last 12 months using this licence?',
