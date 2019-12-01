@@ -5,7 +5,8 @@ namespace Common\Service\Data;
 use Common\Data\Object\Bundle;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception;
+use Zend\ServiceManager\Exception\InvalidServiceException;
+use Zend\ServiceManager\Exception\RuntimeException;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -14,6 +15,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class BundleManager extends AbstractPluginManager implements AbstractFactoryInterface
 {
+    protected $instanceOf = Bundle::class;
+
     public function __construct()
     {
         parent::__construct();
@@ -77,21 +80,28 @@ class BundleManager extends AbstractPluginManager implements AbstractFactoryInte
     }
 
     /**
-     * Validate the plugin
-     *
-     * Checks that the filter loaded is either a valid callback or an instance
-     * of FilterInterface.
-     *
-     * @param  mixed $plugin
-     * @return void
-     * @throws Exception\RuntimeException if invalid
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * {@inheritdoc}
      */
-    public function validatePlugin($plugin)
+    public function validate($instance)
     {
-        // TODO - OLCS-26007
-        // if (!($plugin instanceof Bundle)) {
-        //     throw new Exception\RuntimeException('Invalid bundle class');
-        // }
+        if (! $instance instanceof $this->instanceOf) {
+            throw new InvalidServiceException(sprintf(
+                'Invalid plugin "%s" created; not an instance of %s',
+                get_class($instance),
+                $this->instanceOf
+            ));
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validatePlugin($instance)
+    {
+        try {
+            $this->validate($instance);
+        } catch (InvalidServiceException $e) {
+            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 }
