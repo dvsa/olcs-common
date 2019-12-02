@@ -422,6 +422,7 @@ class RefData
     const QUESTION_TYPE_STRING = 'question_type_string';
     const QUESTION_TYPE_INTEGER = 'question_type_integer';
     const QUESTION_TYPE_BOOLEAN = 'question_type_boolean';
+    const QUESTION_TYPE_DATE = 'question_type_date';
     const QUESTION_TYPE_CUSTOM = 'question_type_custom';
 
     // user operating system
