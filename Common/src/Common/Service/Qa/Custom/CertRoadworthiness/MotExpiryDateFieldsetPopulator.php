@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Service\Qa\Custom\EcmtRemoval;
+namespace Common\Service\Qa\Custom\CertRoadworthiness;
 
 use Common\Service\Qa\Custom\Common\DateSelectMustBeBefore;
 use Common\Form\Elements\Types\Html;
@@ -8,7 +8,7 @@ use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\FieldsetPopulatorInterface;
 use Zend\Form\Fieldset;
 
-class PermitStartDateFieldsetPopulator implements FieldsetPopulatorInterface
+class MotExpiryDateFieldsetPopulator implements FieldsetPopulatorInterface
 {
     /** @var TranslationHelperService */
     private $translator;
@@ -18,7 +18,7 @@ class PermitStartDateFieldsetPopulator implements FieldsetPopulatorInterface
      *
      * @param TranslationHelperService $translator
      *
-     * @return PermitStartDateFieldsetPopulator
+     * @return MotExpiryDateFieldsetPopulator
      */
     public function __construct(TranslationHelperService $translator)
     {
@@ -35,9 +35,8 @@ class PermitStartDateFieldsetPopulator implements FieldsetPopulatorInterface
     public function populate($form, Fieldset $fieldset, array $options)
     {
         $markup = sprintf(
-            '<div class="govuk-hint">%s<br>%s</div>',
-            $this->translator->translate('qanda.ecmt-removal.permit-start-date.hint.line-1'),
-            $this->translator->translate('qanda.ecmt-removal.permit-start-date.hint.line-2')
+            '<div class="govuk-hint">%s</div>',
+            $this->translator->translate('qanda.certificate-of-roadworthiness.mot-expiry-date.hint')
         );
 
         $fieldset->add(
@@ -56,9 +55,9 @@ class PermitStartDateFieldsetPopulator implements FieldsetPopulatorInterface
                 'type' => DateSelectMustBeBefore::class,
                 'options' => [
                     'dateMustBeBefore' => $options['dateThreshold'],
-                    'invalidDateKey' => 'qanda.ecmt-removal.permit-start-date.error.date-invalid',
-                    'dateInPastKey' => 'qanda.ecmt-removal.permit-start-date.error.date-in-past',
-                    'dateNotBeforeKey' => 'qanda.ecmt-removal.permit-start-date.error.date-too-far'
+                    'invalidDateKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-invalid',
+                    'dateInPastKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-in-past',
+                    'dateNotBeforeKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-too-far'
                 ],
                 'attributes' => [
                     'value' => $options['date']['value']

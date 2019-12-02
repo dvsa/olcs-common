@@ -2,6 +2,7 @@
 
 namespace Common\Service\Qa;
 
+use DateTime;
 use Zend\Validator\AbstractValidator;
 
 class DateNotInPastValidator extends AbstractValidator
@@ -10,7 +11,7 @@ class DateNotInPastValidator extends AbstractValidator
 
     /** @var array */
     protected $messageTemplates = [
-        self::ERR_DATE_IN_PAST => 'qanda.ecmt-removal.permit-start-date.error.in-past'
+        self::ERR_DATE_IN_PAST => 'Date is in the past'
     ];
 
     /** @var DateTimeFactory */
@@ -20,14 +21,15 @@ class DateNotInPastValidator extends AbstractValidator
      * Create service instance
      *
      * @param DateTimeFactory $dateTimeFactory
+     * @param array $options
      *
      * @return DateNotInPastValidator
      */
-    public function __construct(DateTimeFactory $dateTimeFactory)
+    public function __construct(DateTimeFactory $dateTimeFactory, array $options)
     {
         $this->dateTimeFactory = $dateTimeFactory;
 
-        parent::__construct();
+        parent::__construct($options);
     }
 
     /**
@@ -36,8 +38,9 @@ class DateNotInPastValidator extends AbstractValidator
     public function isValid($value)
     {
         $formattedCurrentDateTime = $this->dateTimeFactory->create()->format('Y-m-d');
+        $formattedValue = (new DateTime($value))->format('Y-m-d');
 
-        $valid = $value >= $formattedCurrentDateTime;
+        $valid = $formattedValue >= $formattedCurrentDateTime;
         if (!$valid) {
             $this->error(self::ERR_DATE_IN_PAST);
         }

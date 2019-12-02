@@ -4,10 +4,9 @@ namespace CommonTest\Service\Qa;
 
 use Common\Service\Qa\DateNotInPastValidator;
 use Common\Service\Qa\DateSelect;
-use Common\Service\Qa\DateSelectFilter;
+use Common\Service\Qa\DateValidator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Zend\Validator\Date as DateValidator;
 
 /**
  * DateSelectTest
@@ -67,13 +66,22 @@ class DateSelectTest extends MockeryTestCase
     public function testGetInputSpecification()
     {
         $name = 'foo';
+        $invalidDateKey = 'qanda.date.error.invalid-date';
+        $dateInPastKey = 'qanda.date.error.date-in-past';
+
+        $options = [
+            'invalidDateKey' => $invalidDateKey,
+            'dateInPastKey' => $dateInPastKey
+        ];
+
+        $this->dateSelect->setOptions($options);
 
         $expectedSpecification = [
             'name' => $name,
             'required' => false,
             'filters' => [
                 [
-                    'name' => DateSelectFilter::class
+                    'name' => 'DateSelect'
                 ]
             ],
             'validators' => [
@@ -83,12 +91,17 @@ class DateSelectTest extends MockeryTestCase
                         'format' => 'Y-m-d',
                         'break_chain_on_failure' => true,
                         'messages' => [
-                            DateValidator::INVALID_DATE => 'qanda.date.error.invalid-date'
+                            DateValidator::INVALID_DATE => $invalidDateKey
                         ]
                     ]
                 ],
                 [
-                    'name' => DateNotInPastValidator::class
+                    'name' => DateNotInPastValidator::class,
+                    'options' => [
+                        'messages' => [
+                            DateNotInPastValidator::ERR_DATE_IN_PAST => $dateInPastKey
+                        ]
+                    ]
                 ]
             ]
         ];

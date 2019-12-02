@@ -1,8 +1,8 @@
 <?php
 
-namespace CommonTest\Service\Qa\Custom\EcmtRemoval;
+namespace CommonTest\Service\Qa\Custom\Common;
 
-use Common\Service\Qa\Custom\EcmtRemoval\DateBeforeValidator;
+use Common\Service\Qa\Custom\Common\DateBeforeValidator;
 use Common\Service\Qa\DateTimeFactory;
 use DateTime;
 use IntlDateFormatter;
@@ -86,7 +86,7 @@ class DateBeforeValidatorTest extends MockeryTestCase
         );
 
         $expectedMessages = [
-            DateBeforeValidator::ERR_DATE_NOT_BEFORE => 'qanda.ecmt-removal.permit-start-date.error.too-far-away'
+            DateBeforeValidator::ERR_DATE_NOT_BEFORE => 'Date is too far away'
         ];
 
         $this->assertEquals(

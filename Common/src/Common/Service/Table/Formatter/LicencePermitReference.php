@@ -47,6 +47,12 @@ class LicencePermitReference implements FormatterInterface
             RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
             RefData::PERMIT_APP_STATUS_VALID => 'valid',
         ],
+        RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID => [
+            RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
+        ],
+        RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID => [
+            RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
+        ],
     ];
 
     /**

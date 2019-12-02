@@ -23,12 +23,14 @@ class DateNotInPastValidatorTest extends MockeryTestCase
 
     public function setUp()
     {
+        $options = [];
+
         $dateTimeFactory = m::mock(DateTimeFactory::class);
         $dateTimeFactory->shouldReceive('create->format')
             ->with('Y-m-d')
             ->andReturn('2019-11-27');
 
-        $this->dateNotInPastValidator = new DateNotInPastValidator($dateTimeFactory);
+        $this->dateNotInPastValidator = new DateNotInPastValidator($dateTimeFactory, $options);
     }
     
     /**
@@ -61,7 +63,7 @@ class DateNotInPastValidatorTest extends MockeryTestCase
         );
 
         $expectedMessages = [
-            DateNotInPastValidator::ERR_DATE_IN_PAST => 'qanda.ecmt-removal.permit-start-date.error.in-past'
+            DateNotInPastValidator::ERR_DATE_IN_PAST => 'Date is in the past'
         ];
 
         $this->assertEquals(

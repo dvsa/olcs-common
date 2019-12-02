@@ -403,6 +403,30 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 '<a class="overview__link" href="http://selfserve/permits/valid/105">' .
                 '<span class="overview__link--underline">IRHP&gt;</span></a>'
             ],
+            'Certificate of Roadworthiness for vehicle - not yet submitted' => [
+                [
+                    'id' => 100,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC100',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/application/100">' .
+                '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
+            ],
+            'Certificate of Roadworthiness for vehicle - not yet submitted' => [
+                [
+                    'id' => 100,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC100',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED,
+                ],
+                '<a class="overview__link" href="http://selfserve/permits/application/100">' .
+                '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
+            ],
         ];
     }
 }
