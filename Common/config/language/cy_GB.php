@@ -1574,7 +1574,6 @@ return [
     'permits.page.cabotage.browser.title' => 'Cabotage',
     'permits.page.cabotage.question' => 'Nid yw hawlenni ECMT yn caniatáu i chi gynnal masnach arforol',
     'permits.page.cabotage.guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
-    'permits.page.type.title' => 'Select Permit Type',
     'permits.page.type.hint' => 'Mae <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">cyfarwyddyd pellach ar hawlenni</a> ar gael ar GOV.UK.',
     'permits.page.stock.select.option.1' => 'Trwyddedau ar gyfer teithiau sy\'n cychwyn rhwng 1 Chwefror a 31 Mawrth 2020',
     'permits.page.stock.select.option.2' => 'Trwyddedau ar gyfer teithiau sy\'n cychwyn rhwng 1 Ebrill a 31 Mai 2020',
