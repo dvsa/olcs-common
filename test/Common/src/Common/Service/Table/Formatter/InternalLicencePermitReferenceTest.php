@@ -85,6 +85,24 @@ class InternalLicencePermitReferenceTest extends MockeryTestCase
                 ],
                 '<a href="INTERNAL_IRHP_URL">IRHP&gt;1234567</a>'
             ],
+            'Certificate of Roadworthiness - Vehicle' => [
+                [
+                    'id' => 4,
+                    'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                    'licenceId' => 200,
+                    'applicationRef' => 'IRHP>1234567',
+                ],
+                '<a href="INTERNAL_IRHP_URL">IRHP&gt;1234567</a>'
+            ],
+            'Certificate of Roadworthiness - Trailer' => [
+                [
+                    'id' => 4,
+                    'typeId' => RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID,
+                    'licenceId' => 200,
+                    'applicationRef' => 'IRHP>1234567',
+                ],
+                '<a href="INTERNAL_IRHP_URL">IRHP&gt;1234567</a>'
+            ],
             'unknown' => [
                 [
                     'id' => 1,
