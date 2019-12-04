@@ -415,17 +415,127 @@ class LicencePermitReferenceTest extends MockeryTestCase
                 '<a class="overview__link" href="http://selfserve/permits/application/100">' .
                 '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
             ],
-            'Certificate of Roadworthiness for vehicle - not yet submitted' => [
+            'Certificate of Roadworthiness for vehicle - under consideration' => [
+                [
+                    'id' => 101,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC101',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION,
+                ],
+                'IRHP&gt;ABC101'
+            ],
+            'Certificate of Roadworthiness for vehicle - awaiting fee' => [
+                [
+                    'id' => 102,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC102',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_AWAITING_FEE,
+                ],
+                'IRHP&gt;ABC102'
+            ],
+            'Certificate of Roadworthiness for vehicle - fee paid' => [
+                [
+                    'id' => 103,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC103',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_FEE_PAID,
+                ],
+                'IRHP&gt;ABC103'
+            ],
+            'Certificate of Roadworthiness for vehicle - issuing' => [
+                [
+                    'id' => 104,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC104',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_ISSUING,
+                ],
+                'IRHP&gt;ABC104'
+            ],
+            'Certificate of Roadworthiness for vehicle - valid' => [
+                [
+                    'id' => 105,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC105',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_VALID,
+                ],
+                'IRHP&gt;'
+            ],
+            'Certificate of Roadworthiness for trailer - not yet submitted' => [
                 [
                     'id' => 100,
                     'licenceId' => 200,
                     'licNo' => 'IRHP>',
                     'applicationRef' => 'IRHP>ABC100',
-                    'typeId' => RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                    'typeId' => RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID,
                     'statusId' => RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED,
                 ],
                 '<a class="overview__link" href="http://selfserve/permits/application/100">' .
                 '<span class="overview__link--underline">IRHP&gt;ABC100</span></a>'
+            ],
+            'Certificate of Roadworthiness for trailer - under consideration' => [
+                [
+                    'id' => 101,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC101',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION,
+                ],
+                'IRHP&gt;ABC101'
+            ],
+            'Certificate of Roadworthiness for trailer - awaiting fee' => [
+                [
+                    'id' => 102,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC102',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_AWAITING_FEE,
+                ],
+                'IRHP&gt;ABC102'
+            ],
+            'Certificate of Roadworthiness for trailer - fee paid' => [
+                [
+                    'id' => 103,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC103',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_FEE_PAID,
+                ],
+                'IRHP&gt;ABC103'
+            ],
+            'Certificate of Roadworthiness for trailer - issuing' => [
+                [
+                    'id' => 104,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC104',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_ISSUING,
+                ],
+                'IRHP&gt;ABC104'
+            ],
+            'Certificate of Roadworthiness for trailer - valid' => [
+                [
+                    'id' => 105,
+                    'licenceId' => 200,
+                    'licNo' => 'IRHP>',
+                    'applicationRef' => 'IRHP>ABC105',
+                    'typeId' => RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID,
+                    'statusId' => RefData::PERMIT_APP_STATUS_VALID,
+                ],
+                'IRHP&gt;'
             ],
         ];
     }
