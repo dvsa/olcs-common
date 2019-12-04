@@ -277,14 +277,6 @@ class Module
         $missingTranslationProcessor = $sm->get('Utils\MissingTranslationProcessor');
         $missingTranslationProcessor->attach($eventManager);
 
-        // Add a logger so that missing translations can be recorded
-        $request = $sm->get('Request');
-        if ($request instanceof \Zend\Http\PhpEnvironment\Request) {
-            $missingTranslationProcessor->setTranslationLogger(
-                new \Dvsa\Olcs\Utils\Translation\TranslatorLogger($sm->get('logger'), $request)
-            );
-        }
-
         $translator->enableEventManager();
         $translator->setEventManager($eventManager);
     }
