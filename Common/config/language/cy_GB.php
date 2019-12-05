@@ -1622,7 +1622,7 @@ return [
     'permits.page.fee.permit.fee.non-refundable' => '%s (ni ellir ei ad-dalu)',
     'permits.page.cancel.question' => 'Canslo cais',
     'permits.page.cancel.browser.title' => 'Canslo Cais',
-    'permits.page.cancel.bullet.list.title' => 'Trwy barhau rydych yn cadarnhau bod',
+    'permits.page.cancel.bullet.list.title' => 'Drwy ganslo rydych yn cadarnhau bod',
     'permits.page.confirmation.reference' => 'Rhif eich cyfeirnod',
     'permits.page.confirmation.finish' => 'Gorffen',
     'permits.button.accept-and-continue' => 'Derbyn a pharhau',
@@ -1760,6 +1760,9 @@ return [
     'permits.irhp.valid.permits.table.start-date' => 'Start date',
     'permits.irhp.valid.permits.table.expiry-date' => 'Expiry date',
     'permits.irhp.bilateral.already-applied' => 'There is an active permit application for this licence click ‘Save and continue’ again to access this application',
+    'qanda.ecmt-removal.removal-eligibility.question' => 'Dim ond ar gyfer gweithrediadau symud y gellir defnyddio trwyddedau symud, gan ddefnyddio offer arbenigol a staff',
+    'qanda.ecmt-removal.cabotage.question' => 'Nid yw trwyddedau symud yn caniatáu ichi gynnal cabotage',
+    
     'message.file-upload-error.lengthtoolong' => 'Ni all enw’r ffeil fod yn fwy na 200 o nodau o ran hyd.',
     'lva.section.title.delete-oc' => 'Ydych chi\'n siŵr eich bod am gael gwared â\'r ganolfan weithredu hon',
     'lva.section.title.delete-tm' => 'Ydych chi\'n siŵr eich bod am gael gwared â\'r Rheolwr Trafnidiaeth hwn',
