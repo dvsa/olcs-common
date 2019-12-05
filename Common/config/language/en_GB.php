@@ -685,7 +685,7 @@ return [
     'approve-tm.title' => 'Approve Transport Managers',
     'approve-tm.table.column.name.title' => 'Name',
     'approve-tm.table.column.dob.title' => 'Date of birth',
-    'approve-tm.table.column.actions.title' => 'actions',
+    'approve-tm.table.column.actions.title' => 'Actions',
     'approve-tm.table.action.view-details' => 'View details',
     'approve.button' => 'Cancel',
     'apsts_cancelled' => 'Cancelled',
