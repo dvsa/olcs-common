@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Status formatter
+ * Internal licence permit reference formatter
  *
  * @author Tonci Vidovic <tonci.vidovic@capgemini.com>
  */
@@ -12,9 +12,7 @@ use Common\RefData;
 use Common\Util\Escape;
 
 /**
- * Status formatter
- *
- *
+ * Internal licence permit reference formatter
  */
 class InternalLicencePermitReference implements FormatterInterface
 {
@@ -44,6 +42,8 @@ class InternalLicencePermitReference implements FormatterInterface
             case RefData::ECMT_REMOVAL_PERMIT_TYPE_ID:
             case RefData::IRHP_BILATERAL_PERMIT_TYPE_ID:
             case RefData::IRHP_MULTILATERAL_PERMIT_TYPE_ID:
+            case RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID:
+            case RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID:
                 $route = 'licence/irhp-application/application';
                 $params = [
                     'licence' => $row['licenceId'],
