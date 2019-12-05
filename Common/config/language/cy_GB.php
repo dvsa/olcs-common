@@ -1705,7 +1705,7 @@ return [
     'permits.page.bilateral.countries.browser.title' => 'Dewiswch y wlad rydych yn cludo nwyddau iddi',
     'permits.page.bilateral.countries.question' => 'Dewiswch y wlad rydych yn cludo nwyddau iddi',
     'permits.page.bilateral.countries.hint' => 'Medrwch geisio am hawlenni y gall fod eu hangen arnoch am y flwyddyn gyfan.',
-    'permits.page.bilateral.no-of-permits.browser.title' => 'Ar gyfer pob gwlad, faint o hawlenni sydd eu hangen arnoch?'
+    'permits.page.bilateral.no-of-permits.browser.title' => 'Ar gyfer pob gwlad, faint o hawlenni sydd eu hangen arnoch?',
     'permits.page.bilateral.no-of-permits.question' => 'Ar gyfer pob gwlad, faint o hawlenni sydd eu hangen arnoch?',
     'permits.page.bilateral.no-of-permits.guidance' => 'Rydych wedi\'ch awdurdodi i gael hyd at <strong>%s hawlen</strong>fesul gwlad y flwyddyn. Mae ffi o <strong>£%s</strong> fesul hawlen.',
     'help-sign-in' => 'helpu i arwyddo',
