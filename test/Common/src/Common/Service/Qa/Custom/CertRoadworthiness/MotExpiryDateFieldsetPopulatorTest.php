@@ -1,22 +1,22 @@
 <?php
 
-namespace CommonTest\Service\Qa\Custom\EcmtRemoval;
+namespace CommonTest\Service\Qa\Custom\CertRoadworthiness;
 
 use Common\Form\Elements\Types\Html;
 use Common\Service\Helper\TranslationHelperService;
 use Common\Service\Qa\Custom\Common\DateSelectMustBeBefore;
-use Common\Service\Qa\Custom\EcmtRemoval\PermitStartDateFieldsetPopulator;
+use Common\Service\Qa\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulator;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 
 /**
- * PermitStartDateFieldsetPopulatorTest
+ * MotExpiryDateFieldsetPopulatorTest
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class PermitStartDateFieldsetPopulatorTest extends MockeryTestCase
+class MotExpiryDateFieldsetPopulatorTest extends MockeryTestCase
 {
     public function testPopulate()
     {
@@ -25,14 +25,10 @@ class PermitStartDateFieldsetPopulatorTest extends MockeryTestCase
 
         $translator = m::mock(TranslationHelperService::class);
         $translator->shouldReceive('translate')
-            ->with('qanda.ecmt-removal.permit-start-date.hint.line-1')
-            ->andReturn('Choose any date up to 60 days ahead.');
-        $translator->shouldReceive('translate')
-            ->with('qanda.ecmt-removal.permit-start-date.hint.line-2')
+            ->with('qanda.certificate-of-roadworthiness.mot-expiry-date.hint')
             ->andReturn('For example, 10 12 2019.');
 
-        $expectedMarkup = '<div class="govuk-hint">Choose any date up to 60 days ahead.<br>' .
-            'For example, 10 12 2019.</div>';
+        $expectedMarkup = '<div class="govuk-hint">For example, 10 12 2019.</div>';
 
         $expectedHtmlSpecification = [
             'name' => 'hint',
@@ -56,9 +52,9 @@ class PermitStartDateFieldsetPopulatorTest extends MockeryTestCase
             'type' => DateSelectMustBeBefore::class,
             'options' => [
                 'dateMustBeBefore' => $dateMustBeBefore,
-                'invalidDateKey' => 'qanda.ecmt-removal.permit-start-date.error.date-invalid',
-                'dateInPastKey' => 'qanda.ecmt-removal.permit-start-date.error.date-in-past',
-                'dateNotBeforeKey' => 'qanda.ecmt-removal.permit-start-date.error.date-too-far'
+                'invalidDateKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-invalid',
+                'dateInPastKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-in-past',
+                'dateNotBeforeKey' => 'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-too-far'
             ],
             'attributes' => [
                 'value' => $requestedDate
@@ -71,7 +67,7 @@ class PermitStartDateFieldsetPopulatorTest extends MockeryTestCase
             ->globally()
             ->ordered();
 
-        $permitStartDateFieldsetPopulator = new PermitStartDateFieldsetPopulator($translator);
+        $motExpiryDateFieldsetPopulator = new MotExpiryDateFieldsetPopulator($translator);
 
         $options = [
             'dateThreshold' => $dateMustBeBefore,
@@ -80,6 +76,6 @@ class PermitStartDateFieldsetPopulatorTest extends MockeryTestCase
             ]
         ];
 
-        $permitStartDateFieldsetPopulator->populate($form, $fieldset, $options);
+        $motExpiryDateFieldsetPopulator->populate($form, $fieldset, $options);
     }
 }

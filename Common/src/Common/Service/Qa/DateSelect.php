@@ -3,7 +3,6 @@
 namespace Common\Service\Qa;
 
 use Zend\Form\Element\DateSelect as ZendDateSelect;
-use Zend\Validator\Date as DateValidator;
 
 class DateSelect extends ZendDateSelect
 {
@@ -51,7 +50,7 @@ class DateSelect extends ZendDateSelect
             'required' => false,
             'filters' => [
                 [
-                    'name' => DateSelectFilter::class,
+                    'name' => 'DateSelect',
                 ]
             ],
             'validators' => [
@@ -61,12 +60,17 @@ class DateSelect extends ZendDateSelect
                         'format' => 'Y-m-d',
                         'break_chain_on_failure' => true,
                         'messages' => [
-                            DateValidator::INVALID_DATE => 'qanda.date.error.invalid-date'
+                            DateValidator::INVALID_DATE => $this->options['invalidDateKey']
                         ]
                     ]
                 ],
                 [
-                    'name' => DateNotInPastValidator::class
+                    'name' => DateNotInPastValidator::class,
+                    'options' => [
+                        'messages' => [
+                            DateNotInPastValidator::ERR_DATE_IN_PAST => $this->options['dateInPastKey']
+                        ]
+                    ]
                 ]
             ]
         ];

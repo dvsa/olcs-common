@@ -2,8 +2,6 @@
 
 namespace Common\Service\Qa;
 
-use Zend\Form\Element\Text;
-
 class TextFactory
 {
     /**

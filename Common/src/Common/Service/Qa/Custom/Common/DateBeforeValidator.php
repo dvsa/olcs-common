@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Service\Qa\Custom\EcmtRemoval;
+namespace Common\Service\Qa\Custom\Common;
 
 use Common\Service\Qa\DateTimeFactory;
 use DateTime;
@@ -20,7 +20,7 @@ class DateBeforeValidator extends AbstractValidator
 
     /** @var array */
     protected $messageTemplates = [
-        self::ERR_DATE_NOT_BEFORE => 'qanda.ecmt-removal.permit-start-date.error.too-far-away'
+        self::ERR_DATE_NOT_BEFORE => 'Date is too far away'
     ];
 
     /** @var array */
@@ -51,8 +51,9 @@ class DateBeforeValidator extends AbstractValidator
     public function isValid($value)
     {
         $dateMustBeBefore = $this->getOption('dateMustBeBefore');
+        $formattedValue = (new DateTime($value))->format('Y-m-d');
 
-        $valid = $value < $dateMustBeBefore;
+        $valid = $formattedValue < $dateMustBeBefore;
         if (!$valid) {
             $dateMustBeBeforeDateTime = $this->dateTimeFactory->create($dateMustBeBefore);
 

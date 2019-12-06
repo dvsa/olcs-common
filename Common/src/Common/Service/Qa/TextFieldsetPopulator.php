@@ -40,9 +40,11 @@ class TextFieldsetPopulator implements FieldsetPopulatorInterface
         $text = $this->textFactory->create('qaElement');
         $text->setValue($options['value']);
 
-        $text->setLabel(
-            $this->translateableTextHandler->translate($options['label'])
-        );
+        if (isset($options['label'])) {
+            $text->setLabel(
+                $this->translateableTextHandler->translate($options['label'])
+            );
+        }
 
         if (isset($options['hint'])) {
             $text->setOptions(

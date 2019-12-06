@@ -1,24 +1,25 @@
 <?php
 
-namespace CommonTest\Service\Qa\Custom\EcmtRemoval;
+namespace CommonTest\Service\Qa\Custom\Common;
 
-use Common\Service\Qa\Custom\EcmtRemoval\DateBeforeValidator;
-use Common\Service\Qa\Custom\EcmtRemoval\DateSelect;
+use Common\Service\Qa\Custom\Common\DateBeforeValidator;
+use Common\Service\Qa\Custom\Common\DateSelectMustBeBefore;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * DateSelectTest
+ * DateSelectMustBeBeforeTest
  *
  * @author Jonathan Thomas <jonathan@opalise.co.uk>
  */
-class DateSelectTest extends MockeryTestCase
+class DateSelectMustBeBeforeTest extends MockeryTestCase
 {
     public function testGetInputSpecification()
     {
         $dateMustBeBefore = '2020-05-02';
+        $dateNotBeforeKey = 'date.not.before.key';
 
-        $dateSelect = m::mock(DateSelect::class)->makePartial()
+        $dateSelectMustBeBefore = m::mock(DateSelectMustBeBefore::class)->makePartial()
             ->shouldAllowMockingProtectedMethods();
 
         $parentInputSpecification = [
@@ -42,7 +43,7 @@ class DateSelectTest extends MockeryTestCase
             ]
         ];
 
-        $dateSelect->shouldReceive('callParentGetInputSpecification')
+        $dateSelectMustBeBefore->shouldReceive('callParentGetInputSpecification')
             ->andReturn($parentInputSpecification);
 
         $expectedInputSpecification = [
@@ -62,7 +63,10 @@ class DateSelectTest extends MockeryTestCase
                 [
                     'name' => DateBeforeValidator::class,
                     'options' => [
-                        'dateMustBeBefore' => $dateMustBeBefore
+                        'dateMustBeBefore' => $dateMustBeBefore,
+                        'messages' => [
+                            DateBeforeValidator::ERR_DATE_NOT_BEFORE => $dateNotBeforeKey
+                        ]
                     ]
                 ]
             ],
@@ -73,14 +77,15 @@ class DateSelectTest extends MockeryTestCase
         ];
 
         $options = [
-            'dateMustBeBefore' => $dateMustBeBefore
+            'dateMustBeBefore' => $dateMustBeBefore,
+            'dateNotBeforeKey' => $dateNotBeforeKey
         ];
 
-        $dateSelect->setOptions($options);
+        $dateSelectMustBeBefore->setOptions($options);
 
         $this->assertEquals(
             $expectedInputSpecification,
-            $dateSelect->getInputSpecification()
+            $dateSelectMustBeBefore->getInputSpecification()
         );
     }
 }

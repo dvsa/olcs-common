@@ -199,7 +199,6 @@ return array(
             'QaRadioFactory' => QaService\RadioFactory::class,
             'QaFieldsetFactory' => QaService\FieldsetFactory::class,
             'QaValidatorsAdder' => QaService\ValidatorsAdder::class,
-            'QaBaseDateFieldsetPopulator' => QaService\BaseDateFieldsetPopulator::class,
             'QaEcmtShortTermYesNoRadioFactory' => QaService\Custom\EcmtShortTerm\YesNoRadioFactory::class,
             'QaEcmtShortTermRestrictedCountriesMultiCheckboxFactory'
                 => QaService\Custom\EcmtShortTerm\RestrictedCountriesMultiCheckboxFactory::class,
@@ -281,6 +280,8 @@ return array(
                 QaService\Custom\EcmtShortTerm\InternationalJourneysDataHandlerFactory::class,
             'QaEcmtShortTermAnnualTripsAbroadDataHandler' =>
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadDataHandlerFactory::class,
+            'QaCertRoadworthinessMotExpiryDateFieldsetPopulator' =>
+                QaService\Custom\CertRoadworthiness\MotExpiryDateFieldsetPopulatorFactory::class,
     
             PermitsMapper\NoOfPermits::class => PermitsMapper\NoOfPermitsFactory::class,
             PermitsMapper\BilateralNoOfPermits::class => PermitsMapper\BilateralNoOfPermitsFactory::class,
@@ -462,7 +463,7 @@ return array(
         ],
         'factories' => [
             QaService\DateNotInPastValidator::class => QaService\DateNotInPastValidatorFactory::class,
-            QaService\Custom\EcmtRemoval\DateBeforeValidator::class => QaService\Custom\EcmtRemoval\DateBeforeValidatorFactory::class,
+            QaService\Custom\Common\DateBeforeValidator::class => QaService\Custom\Common\DateBeforeValidatorFactory::class,
         ]
     ],
     'filters' => [

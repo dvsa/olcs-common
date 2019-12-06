@@ -18,121 +18,136 @@ use Zend\Form\Form;
  */
 class TextFieldsetPopulatorTest extends MockeryTestCase
 {
-    public function testPopulateWithHint()
+    private $text;
+
+    private $translateableTextHandler;
+
+    private $form;
+
+    private $fieldset;
+
+    private $textFieldsetPopulator;
+
+    private $labelOptions = [
+        'key' => 'labelKey',
+        'parameters' => [
+            'labelParam1',
+            'labelParam2'
+        ],
+    ];
+
+    private $translatedLabel = 'translatedLabel';
+
+    private $hintOptions = [
+        'key' => 'hintKey',
+        'parameters' => [
+            'hintParam1',
+            'hintParam2'
+        ],
+    ];
+
+    private $translatedHint = 'translatedHint';
+
+    private $value = 'value';
+
+    public function setUp()
     {
-        $textValue = 'textValue';
+        $this->text = m::mock(Text::class);
+        $this->text->shouldReceive('setValue')
+            ->with($this->value)
+            ->once();
 
-        $hintOptions = [
-            'key' => 'hintKey',
-            'parameters' => [
-                'hintParam1',
-                'hintParam2'
-            ],
-        ];
+        $textFactory = m::mock(TextFactory::class);
+        $textFactory->shouldReceive('create')
+            ->with('qaElement')
+            ->once()
+            ->andReturn($this->text);
 
-        $translatedHint = 'translatedHint';
+        $this->translateableTextHandler = m::mock(TranslateableTextHandler::class);
 
-        $labelOptions = [
-            'key' => 'labelKey',
-            'parameters' => [
-                'labelParam1',
-                'labelParam2'
-            ],
-        ];
+        $this->form = m::mock(Form::class);
 
-        $translatedLabel = 'translatedLabel';
+        $this->fieldset = m::mock(Fieldset::class);
+        $this->fieldset->shouldReceive('add')
+            ->with($this->text)
+            ->once();
 
+        $this->textFieldsetPopulator = new TextFieldsetPopulator(
+            $textFactory,
+            $this->translateableTextHandler
+        );
+    }
+
+    public function testPopulateWithLabelAndHint()
+    {
         $options = [
-            'value' => $textValue,
-            'label' => $labelOptions,
-            'hint' => $hintOptions,
+            'label' => $this->labelOptions,
+            'hint' => $this->hintOptions,
+            'value' => $this->value
         ];
+
+        $this->translateableTextHandler->shouldReceive('translate')
+            ->with($this->labelOptions)
+            ->andReturn($this->translatedLabel);
+
+        $this->translateableTextHandler->shouldReceive('translate')
+            ->with($this->hintOptions)
+            ->andReturn($this->translatedHint);
+
+        $this->text->shouldReceive('setLabel')
+            ->with($this->translatedLabel)
+            ->once();
 
         $expectedTextOptions = [
-            'hint' => $translatedHint,
+            'hint' => $this->translatedHint,
             'hint-class' => 'govuk-hint'
         ];
 
-        $text = m::mock(SingleText::class);
-        $text->shouldReceive('setLabel')
-            ->with($translatedLabel)
-            ->once();
-        $text->shouldReceive('setOptions')
+        $this->text->shouldReceive('setOptions')
             ->with($expectedTextOptions)
             ->once();
-        $text->shouldReceive('setValue')
-            ->with($textValue)
-            ->once();
 
-        $textFactory = m::mock(TextFactory::class);
-        $textFactory->shouldReceive('create')
-            ->once()
-            ->andReturn($text);
-
-        $translateableTextHandler = m::mock(TranslateableTextHandler::class);
-        $translateableTextHandler->shouldReceive('translate')
-            ->with($labelOptions)
-            ->andReturn($translatedLabel);
-        $translateableTextHandler->shouldReceive('translate')
-            ->with($hintOptions)
-            ->andReturn($translatedHint);
-
-        $fieldset = m::mock(Fieldset::class);
-        $fieldset->shouldReceive('add')
-            ->with($text)
-            ->once();
-
-        $form = m::mock(Form::class);
-
-        $sut = new TextFieldsetPopulator($textFactory, $translateableTextHandler);
-        $sut->populate($form, $fieldset, $options);
+        $this->textFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 
-    public function testPopulateWithoutHint()
+    public function testPopulateWithLabelOnly()
     {
-        $textValue = 'textValue';
-
-        $labelOptions = [
-            'key' => 'labelKey',
-            'parameters' => [
-                'labelParam1',
-                'labelParam2'
-            ],
-        ];
-
-        $translatedLabel = 'translatedLabel';
-
         $options = [
-            'value' => $textValue,
-            'label' => $labelOptions
+            'label' => $this->labelOptions,
+            'value' => $this->value
         ];
 
-        $text = m::mock(SingleText::class);
-        $text->shouldReceive('setLabel')
-            ->with($translatedLabel)
-            ->once();
-        $text->shouldReceive('setValue')
-            ->with($textValue)
-            ->once();
+        $this->translateableTextHandler->shouldReceive('translate')
+            ->with($this->labelOptions)
+            ->andReturn($this->translatedLabel);
 
-        $textFactory = m::mock(TextFactory::class);
-        $textFactory->shouldReceive('create')
-            ->once()
-            ->andReturn($text);
-
-        $translateableTextHandler = m::mock(TranslateableTextHandler::class);
-        $translateableTextHandler->shouldReceive('translate')
-            ->with($labelOptions)
-            ->andReturn($translatedLabel);
-
-        $fieldset = m::mock(Fieldset::class);
-        $fieldset->shouldReceive('add')
-            ->with($text)
+        $this->text->shouldReceive('setLabel')
+            ->with($this->translatedLabel)
             ->once();
 
-        $form = m::mock(Form::class);
+        $this->textFieldsetPopulator->populate($this->form, $this->fieldset, $options);
+    }
 
-        $sut = new TextFieldsetPopulator($textFactory, $translateableTextHandler);
-        $sut->populate($form, $fieldset, $options);
+    public function testPopulateWithHintOnly()
+    {
+        $options = [
+            'hint' => $this->hintOptions,
+            'value' => $this->value
+        ];
+
+        $this->translateableTextHandler->shouldReceive('translate')
+            ->with($this->hintOptions)
+            ->andReturn($this->translatedHint);
+
+        $expectedTextOptions = [
+            'hint' => $this->translatedHint,
+            'hint-class' => 'govuk-hint'
+        ];
+
+        $this->text->shouldReceive('setOptions')
+            ->with($expectedTextOptions)
+            ->once();
+
+        $this->textFieldsetPopulator->populate($this->form, $this->fieldset, $options);
     }
 }

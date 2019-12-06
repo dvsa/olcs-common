@@ -4009,8 +4009,48 @@ return [
     'qanda.ecmt-removal.permit-start-date.hint.line-2' => 'For example, 10 12 2019.',
     'qanda.ecmt-removal.permit-start-date.question-short' => 'Permit start date',
     'qanda.ecmt-removal.permit-start-date.question' => 'When do you need your permits to be valid from?',
-    'qanda.ecmt-removal.permit-start-date.error.in-past' => 'Permit start date must be today or in the future',
-    'qanda.ecmt-removal.permit-start-date.error.too-far-away' => 'Permit start date must be before %dateMustBeBefore%',
+    'qanda.ecmt-removal.permit-start-date.error.date-invalid' => 'Enter a valid permit start date and include a day, month and year',
+    'qanda.ecmt-removal.permit-start-date.error.date-in-past' => 'Permit start date must be today or in the future',
+    'qanda.ecmt-removal.permit-start-date.error.date-too-far' => 'Permit start date must be before %dateMustBeBefore%',
+
+    'qanda.certificate-of-roadworthiness.registration-number.question-short' => 'Registration number',
+    'qanda.certificate-of-roadworthiness.vehicle.registration-number.question' => 'Enter the vehicle registration number',
+    'qanda.certificate-of-roadworthiness.vehicle.registration-number.textbox.hint' => 'For example, BD51SMR (number plate)',
+    'qanda.certificate-of-roadworthiness.registration-number.error.check-correct' => 'Check that the registration number plate you entered is correct',
+    'qanda.certificate-of-roadworthiness.registration-number.error.enter-number' => 'Enter the registration number plate',
+
+    'qanda.certificate-of-roadworthiness.certificate-of-compliance-number.question-short' => 'Certificate of Compliance number',
+    'qanda.certificate-of-roadworthiness.vehicle.certificate-of-compliance-number.question' => 'Enter the vehicle Certificate of Compliance number (optional)',
+    'qanda.certificate-of-roadworthiness.vehicle.certificate-of-compliance-number.textbox.hint' => 'This information is provided by the vehicle manufacturer. If you do not have it already, you can manually add it when you receive the paper certificate.',
+
+    'qanda.certificate-of-roadworthiness.make-and-model.question-short' => 'Make and model',
+    'qanda.certificate-of-roadworthiness.vehicle.make-and-model.question' => 'Enter the vehicle make and model',
+    'qanda.certificate-of-roadworthiness.vehicle.make-and-model.textbox.hint' => 'You can find this information on the vehicle registration document V5C.',
+    'qanda.certificate-of-roadworthiness.vehicle.make-and-model.error.enter-make-and-model' => 'Enter the vehicle make and model',
+
+    'qanda.certificate-of-roadworthiness.vehicle-identification-number.question-short' => 'Vehicle identification number',
+    'qanda.certificate-of-roadworthiness.vehicle.vehicle-identification-number.question' => 'Enter the vehicle identification number (VIN)',
+    'qanda.certificate-of-roadworthiness.vehicle.vehicle-identification-number.textbox.hint' => 'You can find this information on the vehicle registration document V5C or MOT certificate.',
+    'qanda.certificate-of-roadworthiness.vehicle.vehicle-identification-number.error.enter-number' => 'Enter the vehicle identification number',
+    'qanda.certificate-of-roadworthiness.vehicle.vehicle-identification-number.error.too-long' => 'Vehicle identification number must be 17 characters or fewer',
+
+    'qanda.certificate-of-roadworthiness.vehicle-engine-number.question-short' => 'Engine number',
+    'qanda.certificate-of-roadworthiness.vehicle-engine-number.question' => 'Enter the vehicle engine number',
+    'qanda.certificate-of-roadworthiness.vehicle-engine-number.textbox.hint' => 'You can find this information on the vehicle registration document V5C.',
+    'qanda.certificate-of-roadworthiness.vehicle-engine-number.error.enter-number' => 'Enter the vehicle engine number',
+
+    'qanda.certificate-of-roadworthiness.vehicle-engine-type.question-short' => 'Engine type',
+    'qanda.certificate-of-roadworthiness.vehicle-engine-type.question' => 'Enter the vehicle engine type',
+    'qanda.certificate-of-roadworthiness.vehicle-engine-type.textbox.hint' => 'For most vehicles this information is on the vehicle registration document V5C. If you cannot find it, you can ask the manufacturer’s local dealer.',
+    'qanda.certificate-of-roadworthiness.vehicle-engine-type.error.enter-type' => 'Enter the vehicle engine type',
+
+    'qanda.certificate-of-roadworthiness.mot-expiry-date.question-short' => 'MOT expiry date',
+    'qanda.certificate-of-roadworthiness.vehicle.mot-expiry-date.question' => 'Enter the vehicle\'s MOT expiry date',
+    'qanda.certificate-of-roadworthiness.mot-expiry-date.additional-guidance' => 'The Certificate of Roadworthiness expires on the same day as the MOT. You can check it on <a href="https://www.gov.uk/check-mot-history" target="_blank">GOV.UK.</a>',
+    'qanda.certificate-of-roadworthiness.mot-expiry-date.hint' => 'For example, 31 3 1980',
+    'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-invalid' => 'Enter a valid MOT expiry date and include a day, month and year',
+    'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-in-past' => 'Expiry date must be today or in the future',
+    'qanda.certificate-of-roadworthiness.mot-expiry-date.error.date-too-far' => 'Expiry date must be before %dateMustBeBefore%',
 
     'qanda.date.error.invalid-date' => 'Enter a valid date',
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Service\Qa\Custom\EcmtRemoval;
+namespace Common\Service\Qa\Custom\Common;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Common\Service\Qa\Custom\EcmtRemoval;
+namespace Common\Service\Qa\Custom\Common;
 
 use Common\Service\Qa\DateSelect as BaseDateSelect;
 
-class DateSelect extends BaseDateSelect
+class DateSelectMustBeBefore extends BaseDateSelect
 {
     /**
      * {@inheritdoc}
@@ -16,7 +16,10 @@ class DateSelect extends BaseDateSelect
         $inputSpecification['validators'][] = [
             'name' => DateBeforeValidator::class,
             'options' => [
-                'dateMustBeBefore' => $this->options['dateMustBeBefore']
+                'dateMustBeBefore' => $this->options['dateMustBeBefore'],
+                'messages' => [
+                    DateBeforeValidator::ERR_DATE_NOT_BEFORE => $this->options['dateNotBeforeKey']
+                ]
             ]
         ];
 

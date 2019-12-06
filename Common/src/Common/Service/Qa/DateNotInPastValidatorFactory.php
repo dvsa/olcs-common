@@ -7,6 +7,21 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class DateNotInPastValidatorFactory implements FactoryInterface
 {
+    /** @var array */
+    private $options;
+
+    /**
+     * Create factory instance (used by zf2 to pass in options from input specification)
+     *
+     * @param array $options
+     *
+     * @return DateNotInPastValidatorFactory
+     */
+    public function __construct(array $options)
+    {
+        $this->options = $options;
+    }
+
     /**
      * Create service
      *
@@ -17,7 +32,8 @@ class DateNotInPastValidatorFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new DateNotInPastValidator(
-            $serviceLocator->getServiceLocator()->get('QaDateTimeFactory')
+            $serviceLocator->getServiceLocator()->get('QaDateTimeFactory'),
+            $this->options
         );
     }
 }
