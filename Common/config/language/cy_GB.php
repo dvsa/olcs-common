@@ -1574,7 +1574,6 @@ return [
     'permits.page.cabotage.browser.title' => 'Cabotage',
     'permits.page.cabotage.question' => 'Nid yw hawlenni ECMT yn caniatáu i chi gynnal masnach arforol',
     'permits.page.cabotage.guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
-    'permits.page.type.title' => 'Select Permit Type',
     'permits.page.type.hint' => 'Mae <a href="{{ECMT_PERMITS_GUIDANCE_LINK}}" target="_blank">cyfarwyddyd pellach ar hawlenni</a> ar gael ar GOV.UK.',
     'permits.page.stock.select.option.1' => 'Trwyddedau ar gyfer teithiau sy\'n cychwyn rhwng 1 Chwefror a 31 Mawrth 2020',
     'permits.page.stock.select.option.2' => 'Trwyddedau ar gyfer teithiau sy\'n cychwyn rhwng 1 Ebrill a 31 Mai 2020',
@@ -1706,7 +1705,7 @@ return [
     'permits.page.bilateral.countries.browser.title' => 'Dewiswch y wlad rydych yn cludo nwyddau iddi',
     'permits.page.bilateral.countries.question' => 'Dewiswch y wlad rydych yn cludo nwyddau iddi',
     'permits.page.bilateral.countries.hint' => 'Medrwch geisio am hawlenni y gall fod eu hangen arnoch am y flwyddyn gyfan.',
-    'permits.page.bilateral.no-of-permits.browser.title' => 'Ar gyfer pob gwlad, faint o hawlenni sydd eu hangen arnoch?'
+    'permits.page.bilateral.no-of-permits.browser.title' => 'Ar gyfer pob gwlad, faint o hawlenni sydd eu hangen arnoch?',
     'permits.page.bilateral.no-of-permits.question' => 'Ar gyfer pob gwlad, faint o hawlenni sydd eu hangen arnoch?',
     'permits.page.bilateral.no-of-permits.guidance' => 'Rydych wedi\'ch awdurdodi i gael hyd at <strong>%s hawlen</strong>fesul gwlad y flwyddyn. Mae ffi o <strong>£%s</strong> fesul hawlen.',
     'help-sign-in' => 'helpu i arwyddo',
