@@ -71,15 +71,30 @@ class LicencePermitReference implements FormatterInterface
         $route = isset(static::$routes[$row['typeId']][$row['statusId']])
             ? static::$routes[$row['typeId']][$row['statusId']] : null;
 
+        $text = $row['applicationRef'];
+
         if (!isset($route)) {
-            return Escape::html($row['applicationRef']);
+            if ($row['statusId'] == RefData::PERMIT_APP_STATUS_VALID
+                && in_array(
+                    $row['typeId'],
+                    [
+                        RefData::CERT_ROADWORTHINESS_VEHICLE_PERMIT_TYPE_ID,
+                        RefData::CERT_ROADWORTHINESS_TRAILER_PERMIT_TYPE_ID,
+                    ]
+                )
+            ) {
+                // Certificate of Roadworthiness doesn't have valid page itself
+                // but it is still grouped by licence number
+                $text = $row['licNo'];
+            }
+
+            return Escape::html($text);
         }
 
         // default to application
         $params = [
             'id' => $row['id'],
         ];
-        $linkText = $row['applicationRef'];
 
         switch ($route) {
             case 'valid':
@@ -88,25 +103,23 @@ class LicencePermitReference implements FormatterInterface
                     'licence' => $row['licenceId'],
                     'type' => $row['typeId'],
                 ];
-                $linkText = $row['licNo'];
+                $text = $row['licNo'];
                 break;
             case 'ecmt-valid-permits':
                 // specific for valid ECMT application
                 $params = [
                     'licence' => $row['licenceId'],
                 ];
-                $linkText = $row['licNo'];
+                $text = $row['licNo'];
                 break;
         }
 
-        return isset($route)
-            ? vsprintf(
-                '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
-                [
-                    $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params),
-                    Escape::html($linkText)
-                ]
-            )
-            : Escape::html($row['applicationRef']);
+        return vsprintf(
+            '<a class="overview__link" href="%s"><span class="overview__link--underline">%s</span></a>',
+            [
+                $serviceLocator->get('Helper\Url')->fromRoute('permits/' . $route, $params),
+                Escape::html($text)
+            ]
+        );
     }
 }
