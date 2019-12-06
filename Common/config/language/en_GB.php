@@ -3558,6 +3558,8 @@ return [
     'permits.page.confirmation.irhp-submitted.browser.title' => 'Application submitted',
     'permits.page.confirmation.irhp-submitted.title' => 'Application submitted',
     'permits.page.confirmation.irhp-submitted.warning' => 'You must ensure that you have the correct permits in your vehicle when transporting goods internationally.',
+    'permits.page.confirmation.irhp-submitted.certificate.warning' => 'Make sure your email, address and contact details are up-to-date on your operator\'s licence records.',
+    'permits.page.confirmation.irhp-submitted.certificate.information' => 'We will now post your certificates within the next 10 working days.',
     'permits.page.confirmation.irhp-submitted.bullet.list.title' => 'What happens next',
     'permits.page.confirmation.irhp-submitted.what-happens-next' => 'Your valid permits will be grouped together under the same licence number that you applied with.<p>We will now post your paper permit and corresponding logbook within the next 3 working days.</p>',
     'permits.page.confirmation.irhp-submitted.ecmt-removal.what-happens-next' => 'Your valid permits will be grouped together under the same licence number that you applied with.<p>We will now post your paper permit within the next 3 working days.</p>',
