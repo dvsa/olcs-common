@@ -3759,7 +3759,7 @@ return [
     'permits.form.cabotage.label' => 'I confirm that I will not undertake any cabotage journeys using an ECMT permit.',
     'permits.form.trips.label' => 'Number of trips',
     'permits.form.permits.required.label' => 'Number of permits',
-    'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.',
+    'permits.form.declaration.label' => 'I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit or certificate.',
     'permits.form.checked.label' => 'Checked',
     'error.messages.licence' => 'Select a licence',
     'error.messages.checkbox' => 'You must tick the box to continue',
