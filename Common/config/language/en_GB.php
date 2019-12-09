@@ -77,7 +77,7 @@ return [
     'ERR_TA_PSV_RES_EXTERNAL' => 'You already have a PSV Restricted application or licence within the %s traffic area',
     'ERR_TA_PSV_RES_INTERNAL' => 'The operator already has a PSV Restricted application or licence within the %s traffic area',
     'ERR_UNLICENCED_ORG' => 'The organisation is unlicenced',
-    'ERR_ROLES_PERMISSION' => 'Your current role does not allow you to set the selected role for this user.',
+    'ERR_ROLES_PERMISSION' => 'You are not authorised to make changes to this user\'s details.',
     'ERR_ROLES_PERMISSION_LAST_USER' => 'This is the last user which holds the role therefore the role cannot be changed.',
     'ERR_USERNAME_EXISTS' => 'Username is already taken',
     'ERR_USERNAME_REQUIRED' => 'Username is required',
