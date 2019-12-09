@@ -3552,8 +3552,8 @@ return [
     'permits.page.confirmation.application-submitted.title' => 'Application submitted',
     'permits.page.confirmation.application-submitted.browser.title' => 'Application submitted',
 
-    'permits.page.confirmation.issue-submitted.title' => 'Permit Issue Accepted',
-    'permits.page.confirmation.issue-submitted.browser.title' => 'Permit Issue Accepted',
+    'permits.page.confirmation.issue-submitted.title' => 'Payment successful',
+    'permits.page.confirmation.issue-submitted.browser.title' => 'Payment successful',
 
     'permits.page.confirmation.irhp-submitted.browser.title' => 'Application submitted',
     'permits.page.confirmation.irhp-submitted.title' => 'Application submitted',
