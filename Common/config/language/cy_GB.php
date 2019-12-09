@@ -1638,7 +1638,6 @@ return [
     'permits.form.cabotage.label' => 'Rwy\'n cadarnhau na fyddaf yn ymgymryd â siwrnai masnach arforol gyda hawlen ECMT',
     'permits.form.trips.label' => 'Nifer o deithiau',
     'permits.form.permits.required.label' => 'Nifer yr hawlenni',
-    'permits.form.declaration.label' => 'Rwy\'n datgan fod y datganiadau a\'r wybodaeth a ddarparwyd yn wir a bod fy nghais yn gywir. Rwy\'n deall ei bod yn drosedd i wneud datganiad ffug er mwyn cael hawlen.',
     'error.messages.ecmt-licence' => 'Dewiswch drwydded yr hoffech i\'ch trwydded ECMT gael ei ategu iddo',
     'error.messages.licence' => 'Dewiswch drwydded',
     'error.messages.checkbox' => 'Rhaid ichi dicio\'r blwch i barhau',
