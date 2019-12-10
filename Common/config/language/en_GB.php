@@ -4045,6 +4045,7 @@ return [
     'qanda.certificate-of-roadworthiness.vehicle.vehicle-identification-number.error.enter-number' => 'Enter the vehicle identification number',
     'qanda.certificate-of-roadworthiness.trailer.vehicle-identification-number.error.enter-number' => 'Enter the trailer\'s vehicle identification number',
     'qanda.certificate-of-roadworthiness.vehicle.vehicle-identification-number.error.too-long' => 'Vehicle identification number must be 17 characters or fewer',
+    'qanda.certificate-of-roadworthiness.trailer.vehicle-identification-number.error.too-long' => 'Vehicle identification number must be 17 characters or fewer',
 
     'qanda.certificate-of-roadworthiness.vehicle-engine-number.question-short' => 'Engine number',
     'qanda.certificate-of-roadworthiness.vehicle-engine-number.question' => 'Enter the vehicle engine number',
