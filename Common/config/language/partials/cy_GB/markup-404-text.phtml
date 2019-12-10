@@ -4,4 +4,7 @@
 <ul>
     <li>pa dudalen oeddech chi arni</li>
     <li>a beth oeddech chi’n ei geisio ei wneud</li>
+    <?php if (!empty($correlationId)): ?>
+        <li>gan ddyfynnu cyfeirnod <?php echo $this->escapeHtml($correlationId); ?></li>
+    <?php endif; ?>
 </ul>
