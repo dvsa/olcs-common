@@ -4007,6 +4007,15 @@ return [
     'qanda.ecmt-short-term.sectors.question' => 'Select one sector you mainly transport goods in using this licence',
     'qanda.ecmt-short-term.sectors.not-selected-message' => 'Select one main sector only',
 
+    'qanda.ecmt-short-term.earliest-permit-date.question-short' => 'Date you need a permit',
+    'qanda.ecmt-short-term.earliest-permit-date.question' => 'How soon do you need a permit?',
+    'qanda.ecmt-short-term.earliest-permit-date.additional-guidance' => 'This information will help DVSA prioritise urgent requests. Consider jobs you already have scheduled or contracts you have in place that will require this permit.',
+    'qanda.ecmt-short-term.earliest-permit-date.inset' => 'Note that the date you choose will not define when you will get your permits nor when your permits will start to be valid from.',
+    'qanda.ecmt-short-term.earliest-permit-date.hint.line-1' => 'Choose the earliest date you need one of the permits required.',
+    'qanda.ecmt-short-term.earliest-permit-date.hint.line-2' => 'Use the following date format, 10 1 2020.',
+    'qanda.ecmt-short-term.earliest-permit-date.error.date-invalid' => 'Enter a valid date and include a day, month and year',
+    'qanda.ecmt-short-term.earliest-permit-date.error.date-in-past' => 'Date must be today or in the future',
+
     'qanda.ecmt-removal.permit-start-date.hint.line-1' => 'Choose any date up to 60 days ahead.',
     'qanda.ecmt-removal.permit-start-date.hint.line-2' => 'For example, 10 12 2019.',
     'qanda.ecmt-removal.permit-start-date.question-short' => 'Permit start date',

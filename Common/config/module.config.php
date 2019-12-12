@@ -272,6 +272,8 @@ return array(
                 QaService\Custom\EcmtShortTerm\AnnualTripsAbroadFieldsetPopulatorFactory::class,
             'QaEcmtShortTermInternationalJourneysFieldsetPopulator' =>
                 QaService\Custom\EcmtShortTerm\InternationalJourneysFieldsetPopulatorFactory::class,
+            'QaEcmtShortTermEarliestPermitDateFieldsetPopulator' =>
+                QaService\Custom\EcmtShortTerm\EarliestPermitDateFieldsetPopulatorFactory::class,
             'QaEcmtRemovalPermitStartDateFieldsetPopulator' =>
                 QaService\Custom\EcmtRemoval\PermitStartDateFieldsetPopulatorFactory::class,
             'QaEcmtShortTermNiWarningConditionalAdder' =>
