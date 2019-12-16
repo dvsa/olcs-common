@@ -2,6 +2,8 @@
 
 namespace Common\Service\Qa;
 
+use Dvsa\Olcs\Transfer\Filter\Vrm as VrmFilter;
+
 class ValidatorsAdder
 {
     /**
@@ -22,6 +24,13 @@ class ValidatorsAdder
             $validatorChain = $input->getValidatorChain();
 
             foreach ($validators as $validator) {
+                // tactical fix to allow entry of lower case registration number in certificate of
+                // roadworthiness journey. To be fixed correctly when we have more time
+                if ($validator['rule'] == '\Dvsa\Olcs\Transfer\Validators\Vrm') {
+                    $filterChain = $input->getFilterChain();
+                    $filterChain->attachByName(VrmFilter::class);
+                }
+
                 $validatorChain->attachByName(
                     $validator['rule'],
                     $validator['params']
