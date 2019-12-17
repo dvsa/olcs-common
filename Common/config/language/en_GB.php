@@ -3953,9 +3953,9 @@ return [
     'qanda.ecmt-short-term-permit-usage.footer-annotation' => 'We may contact you to verify your application.',
 
     'qanda.ecmt-short-term.cabotage.question-short' => 'Cabotage',
-    'qanda.ecmt-short-term.cabotage.question' => 'Short-term ECMT permits do not allow you to carry out cabotage',
+    'qanda.ecmt-short-term.cabotage.question' => 'ECMT permits do not allow you to carry out cabotage',
     'qanda.ecmt-short-term.cabotage.additional-guidance' => 'Cabotage is the haulage and moving of goods for hire or reward between two points in the same country, carried out by a vehicle that is not registered in that country.',
-    'qanda.ecmt-short-term.cabotage.checkbox.label' => 'I confirm that I will not undertake cabotage journeys using this type of permit.',
+    'qanda.ecmt-short-term.cabotage.checkbox.label' => 'I confirm that I will not undertake cabotage journeys using an ECMT permit.',
     'qanda.ecmt-short-term.cabotage.checkbox.not-checked-message' => 'Tick to confirm your vehicle will not undertake cabotage journeys.',
 
     'qanda.common.certificates.question-short' => 'Certificates required',
@@ -3986,8 +3986,10 @@ return [
 
     'qanda.ecmt-short-term.restricted-countries.question-short' => 'Countries with limited permits',
     'qanda.ecmt-short-term.restricted-countries.question' => 'Will you be transporting goods to Greece, Hungary, Italy or Russia?',
+    'qanda.ecmt-annual.restricted-countries.question' => 'Will you be transporting goods to Austria, Greece, Hungary, Italy or Russia?',
     'qanda.ecmt-short-term.restricted-countries.question.ecmt-short-term-2020-apsg-without-sectors' => 'Will you be transiting through to transport goods to a non EU EEA country or carrying out a third cross-trade journey within one week to Greece, Hungary or Italy or transporting goods to Russia?',
     'qanda.ecmt-short-term.restricted-countries.guidance' => '<p>There is a very small number of permits available for these countries.</p><p>We cannot guarantee if you receive a permit that it will allow you to travel to these countries.</p><p>Short-term permits do not allow journeys to Austria.</p>',
+    'qanda.ecmt-annual.restricted-countries.guidance' => 'There is a very small number of permits available for these countries. We cannot guarantee if you receive a permit that it will allow you to travel to these countries.',
     'qanda.ecmt-short-term.restricted-countries.error.select-countries' => 'Select at least one country',
 
     'qanda.ecmt-short-term.annual-trips-abroad.question-short' => 'Annual trips abroad',
