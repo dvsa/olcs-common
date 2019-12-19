@@ -191,6 +191,23 @@ class EventHistoryDescriptionTest extends MockeryTestCase
                 'bar',
                 '<a class="js-modal-ajax" href="bar">foo</a>'
             ],
+            'irhp application event history' => [
+                [
+                    'irhpApplication' => ['id' => 2],
+                    'id' => 1,
+                    'eventHistoryType' => [
+                        'description' => 'foo'
+                    ]
+                ],
+                'processing_history',
+                [
+                    'action' => 'edit',
+                    'irhpApplication' => 2,
+                    'id' => 1,
+                ],
+                'bar',
+                '<a class="js-modal-ajax" href="bar">foo</a>'
+            ],
         ];
     }
 
