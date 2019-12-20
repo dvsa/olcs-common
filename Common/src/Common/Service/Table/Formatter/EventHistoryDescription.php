@@ -22,6 +22,7 @@ class EventHistoryDescription implements FormatterInterface
      * @param null  $sm     Service Manager
      *
      * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public static function format($data, $column = [], $sm = null)
     {
@@ -74,7 +75,7 @@ class EventHistoryDescription implements FormatterInterface
      */
     private static function getEntityName($data)
     {
-        $possibleEntities = ['application', 'licence', 'busReg', 'transportManager', 'organisation', 'case'];
+        $possibleEntities = ['application', 'licence', 'busReg', 'transportManager', 'organisation', 'case', 'irhpApplication'];
 
         foreach ($possibleEntities as $possibleEntity) {
             if (isset($data[$possibleEntity])) {
