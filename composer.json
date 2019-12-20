@@ -28,7 +28,7 @@
         "olcs/olcs-devtools": "~4.206.0",
         "mikey179/vfsstream": "~1.4.0",
         "olcs/olcs-testhelpers": "~4.206.0",
-        "olcs/olcs-transfer": "dev-project/ecmt-migration",
+        "olcs/olcs-transfer": "~4.206.0",
         "olcs/olcs-utils": "~4.206.0",
         "olcs/olcs-logging": "~4.206.0",
         "phpstan/phpstan-shim": "^0.10.5",
