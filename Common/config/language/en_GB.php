@@ -3551,9 +3551,6 @@ return [
     'permits.page.confirmation.decline.title' => 'Permits declined',
     'permits.page.confirmation.decline.browser.title' => 'Permits declined',
 
-    'permits.page.confirmation.application-submitted.title' => 'Application submitted',
-    'permits.page.confirmation.application-submitted.browser.title' => 'Application submitted',
-
     'permits.page.confirmation.issue-submitted.title' => 'Payment successful',
     'permits.page.confirmation.issue-submitted.browser.title' => 'Payment successful',
 
