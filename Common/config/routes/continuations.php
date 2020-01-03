@@ -157,7 +157,7 @@ return [
                     'result' => [
                         'type' => Http\Segment::class,
                         'options' => [
-                            'route' => '/result[/]',
+                            'route' => 'result[/]',
                             'defaults' => [
                                 'action' => 'result',
                             ]
