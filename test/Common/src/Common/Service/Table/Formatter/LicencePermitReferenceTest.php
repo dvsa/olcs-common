@@ -24,18 +24,6 @@ class LicencePermitReferenceTest extends MockeryTestCase
     {
         $urlHelper = m::mock(UrlHelper::class);
         $urlHelper->shouldReceive('fromRoute')
-            ->with('permits/application-overview', ['id' => 3])
-            ->andReturn('http://selfserve/permits/application-overview/3')
-            ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-under-consideration', ['id' => 5])
-            ->andReturn('http://selfserve/permits/ecmt-under-consideration/5')
-            ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-awaiting-fee', ['id' => 7])
-            ->andReturn('http://selfserve/permits/ecmt-awaiting-fee/7')
-            ->shouldReceive('fromRoute')
-            ->with('permits/ecmt-valid-permits', ['licence' => 200])
-            ->andReturn('http://selfserve/permits/ecmt-valid-permits/200')
-            ->shouldReceive('fromRoute')
             ->with('permits/application', ['id' => 100])
             ->andReturn('http://selfserve/permits/application/100')
             ->shouldReceive('fromRoute')
@@ -69,37 +57,37 @@ class LicencePermitReferenceTest extends MockeryTestCase
         return [
             'ECMT Annual - not yet submitted' => [
                 [
-                    'id' => 3,
+                    'id' => 100,
                     'licenceId' => 200,
                     'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>1234567',
                     'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
                     'statusId' => RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED,
                 ],
-                '<span class="visually-hidden">Reference number</span> <a class="overview__link" href="http://selfserve/permits/application-overview/3">' .
+                '<span class="visually-hidden">Reference number</span> <a class="overview__link" href="http://selfserve/permits/application/100">' .
                     '<span class="overview__link--underline">ECMT&gt;1234567</span></a>'
             ],
             'ECMT Annual - under consideration' => [
-                [   'id' => 5,
+                [   'id' => 101,
                     'licenceId' => 200,
                     'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>2345678',
                     'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
                     'statusId' => RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION,
                 ],
-                '<span class="visually-hidden">Reference number</span> <a class="overview__link" href="http://selfserve/permits/ecmt-under-consideration/5">' .
+                '<span class="visually-hidden">Reference number</span> <a class="overview__link" href="http://selfserve/permits/application/101/under-consideration">' .
                     '<span class="overview__link--underline">ECMT&gt;2345678</span></a>'
             ],
             'ECMT Annual - awaiting fee' => [
                 [
-                    'id' => 7,
+                    'id' => 102,
                     'licenceId' => 200,
                     'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>3456789',
                     'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
                     'statusId' => RefData::PERMIT_APP_STATUS_AWAITING_FEE,
                 ],
-                '<span class="visually-hidden">Reference number</span> <a class="overview__link" href="http://selfserve/permits/ecmt-awaiting-fee/7">' .
+                '<span class="visually-hidden">Reference number</span> <a class="overview__link" href="http://selfserve/permits/application/102/awaiting-fee">' .
                     '<span class="overview__link--underline">ECMT&gt;3456789</span></a>'
             ],
             'ECMT Annual - fee paid' => [
@@ -126,14 +114,14 @@ class LicencePermitReferenceTest extends MockeryTestCase
             ],
             'ECMT Annual - valid' => [
                 [
-                    'id' => 9,
+                    'id' => 105,
                     'licenceId' => 200,
                     'licNo' => 'ECMT>',
                     'applicationRef' => 'ECMT>4567890',
                     'typeId' => RefData::ECMT_PERMIT_TYPE_ID,
                     'statusId' => RefData::PERMIT_APP_STATUS_VALID,
                 ],
-                '<span class="visually-hidden">Reference number</span> <a class="overview__link" href="http://selfserve/permits/ecmt-valid-permits/200">' .
+                '<span class="visually-hidden">Reference number</span> <a class="overview__link" href="http://selfserve/permits/valid/105">' .
                     '<span class="overview__link--underline">ECMT&gt;</span></a>'
             ],
             'ECMT Short Term app - not yet submitted' => [

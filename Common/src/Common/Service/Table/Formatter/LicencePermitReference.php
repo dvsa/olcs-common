@@ -20,12 +20,12 @@ class LicencePermitReference implements FormatterInterface
 {
     private static $routes = [
         RefData::ECMT_PERMIT_TYPE_ID => [
-            RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application-overview',
-            RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION => 'ecmt-under-consideration',
-            RefData::PERMIT_APP_STATUS_AWAITING_FEE => 'ecmt-awaiting-fee',
+            RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
+            RefData::PERMIT_APP_STATUS_UNDER_CONSIDERATION => 'application/under-consideration',
+            RefData::PERMIT_APP_STATUS_AWAITING_FEE => 'application/awaiting-fee',
             RefData::PERMIT_APP_STATUS_FEE_PAID => null,
             RefData::PERMIT_APP_STATUS_ISSUING => null,
-            RefData::PERMIT_APP_STATUS_VALID => 'ecmt-valid-permits',
+            RefData::PERMIT_APP_STATUS_VALID => 'valid',
         ],
         RefData::ECMT_SHORT_TERM_PERMIT_TYPE_ID => [
             RefData::PERMIT_APP_STATUS_NOT_YET_SUBMITTED => 'application',
@@ -109,13 +109,6 @@ class LicencePermitReference implements FormatterInterface
                 $params = [
                     'licence' => $row['licenceId'],
                     'type' => $row['typeId'],
-                ];
-                $text = $row['licNo'];
-                break;
-            case 'ecmt-valid-permits':
-                // specific for valid ECMT application
-                $params = [
-                    'licence' => $row['licenceId'],
                 ];
                 $text = $row['licNo'];
                 break;
